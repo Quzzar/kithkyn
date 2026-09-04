@@ -320,7 +320,7 @@ public final class MineStep implements BlockWorkStep {
       }
       BlockPos stand = this.placeFloor
           ? standToLayFloor(person, mouth, rotation, this.offset)
-          : standToMine(person, footingAt);
+          : standToMine(person, mouth, rotation, footingAt);
       if (stand == null) {
         // The swept face has no reachable footing: a fresh mine with nothing dug to
         // stand in yet, or a face across an undug gap. Recover from the entrance
@@ -396,7 +396,7 @@ public final class MineStep implements BlockWorkStep {
           && holdsBackFlood(serverLevel, mouth, rotation, local)) {
         continue;
       }
-      BlockPos frontierStand = standToMine(person, world);
+      BlockPos frontierStand = standToMine(person, mouth, rotation, world);
       if (frontierStand == null) {
         continue;
       }
@@ -502,7 +502,7 @@ public final class MineStep implements BlockWorkStep {
             cutting = false; // the rib has reached a cave: stop rather than floor it
             break;
           }
-          BlockPos stand = standToMine(person, world);
+          BlockPos stand = standToMine(person, mouth, rotation, world);
           if (stand == null) {
             continue; // no footing yet; a lower or inner cell opens the way first
           }
@@ -545,7 +545,7 @@ public final class MineStep implements BlockWorkStep {
     if (torchWall(level, rotation, world) == null) {
       return null; // no sturdy wall beside the cell (open on every side into a cave)
     }
-    BlockPos stand = standToMine(person, world);
+    BlockPos stand = standToMine(person, mouth, rotation, world);
     if (stand == null) {
       return null;
     }
@@ -773,7 +773,8 @@ public final class MineStep implements BlockWorkStep {
    * face is footing, which sends the caller back to the mouth.
    */
   @Nullable
-  private BlockPos standToMine(RealPerson person, BlockPos face) {
+  private BlockPos standToMine(RealPerson person, BlockPos mouth, Rotation rotation,
+      BlockPos face) {
     Level level = person.level();
     // Beside and above the block, as before, and now the cells one to three
     // below it too. In a five-tall shaft the only footing is the walk cell at
@@ -798,7 +799,10 @@ public final class MineStep implements BlockWorkStep {
     BlockPos best = null;
     double bestDist = Double.MAX_VALUE;
     for (BlockPos candidate : candidates) {
-      if (!standable(level, candidate)) {
+      BlockPos local = candidate.subtract(mouth).rotate(inverse(rotation));
+      boolean openedVeinCell = this.veinToSeal.contains(candidate);
+      if (!MineTopology.isNavigableStand(local, openedVeinCell)
+          || !standable(level, candidate)) {
         continue;
       }
       double dist = candidate.distSqr(person.blockPosition());
@@ -957,7 +961,7 @@ public final class MineStep implements BlockWorkStep {
     if (this.veinTaken < VEIN_CAP && MineSupportMaterials.held(person.personMainInv) > 0) {
       BlockPos ore = nearestShaftOre(person, mouth, rotation);
       if (ore != null) {
-        BlockPos stand = standToMine(person, ore);
+        BlockPos stand = standToMine(person, mouth, rotation, ore);
         if (stand != null) {
           this.oreTarget = ore;
           this.block = person.level().getBlockState(ore).getBlock();
@@ -971,7 +975,7 @@ public final class MineStep implements BlockWorkStep {
     // adjacent foothold is dropped rather than deadlocking the loop.
     while (!this.veinToSeal.isEmpty()) {
       BlockPos cell = this.veinToSeal.peek();
-      BlockPos stand = standToMine(person, cell);
+      BlockPos stand = standToMine(person, mouth, rotation, cell);
       if (stand != null) {
         this.sealTarget = cell;
         return stand;

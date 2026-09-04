@@ -74,6 +74,19 @@ class MineTopologyTest {
   }
 
   @Test
+  void miningStandCannotUseANaturalCaveLedge() {
+    BlockPos belowRamp = new BlockPos(0, -25, 22);
+    BlockPos sideLedge = new BlockPos(3, -24, 22);
+
+    assertFalse(MineTopology.isNavigableStand(belowRamp, false));
+    assertFalse(MineTopology.isNavigableStand(sideLedge, false));
+    assertTrue(MineTopology.isNavigableStand(sideLedge, true),
+        "an opened vein cell level with the ramp remains usable");
+    assertFalse(MineTopology.isNavigableStand(new BlockPos(3, -25, 22), true),
+        "even an opened vein cell below the ramp is unsafe footing");
+  }
+
+  @Test
   void offsetStepBesideFloodedRampCellIsExteriorLining() {
     BlockPos floodedRampCell = new BlockPos(-2, -3, 5);
     BlockPos offsetLeak = new BlockPos(-2, -3, 6);
