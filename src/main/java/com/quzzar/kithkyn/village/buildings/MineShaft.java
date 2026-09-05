@@ -49,12 +49,12 @@ public final class MineShaft {
   public static final int RIB_MIN_LINE = 4;
 
   /**
-   * Ramp columns one hop spans. A column is one block down and one forward, so
-   * eight columns is about eleven blocks as the crow flies, well inside the
-   * pathfinder's twenty, and the hop lands on a walk cell the ramp has always
-   * already dug, since the face is the deepest point of it.
+   * Ramp columns one hop spans. A longer A* hop can cut across a natural cave
+   * beneath the ramp even when both endpoints are valid walk cells. One column
+   * makes every hop the adjacent, already-dug stair, so entering and leaving the
+   * mine cannot shortcut off the built ramp.
    */
-  private static final int HOP = 8;
+  private static final int HOP = 1;
 
   /** How near the mouth counts as standing at it, squared. */
   private static final double AT_MOUTH_SQR = 9.0D;
