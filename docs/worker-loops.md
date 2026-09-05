@@ -546,8 +546,10 @@ from the top down before the face is touched, and a miner stalled at water she h
 still lights the ramp above it. Every pick re-walks the shaft from the mouth, an audit that costs a block read per
 open cell, so a cell an interruption skipped or gravel refilled behind the miner is dug on the next
 pass. Ore is taken from the shaft's own walls, floor and ceiling around the miner, the corridor's
-full width from either side, and followed into the rock only through the holes she opened, never
-out into a cave. And ore that a shaft or cave wall exposes is not left in the rock: the miner pulls the vein,
+full width from either side. Ore is followed only as far as the miner can reach while standing
+on the planned ramp or a prospecting rib. Opened vein pockets do not become standing positions:
+the shaft navigator must recognize every work destination, or it treats the target as an exit
+and sends the miner back up the ramp (Mosswood, 2026-09-05). And ore that a shaft or cave wall exposes is not left in the rock: the miner pulls the vein,
 capped so a rich seam is a detour and not a second career, and plugs the holes back up with
 whatever dirt or stone support she carries so the wall ends solid. **That pattern with deviation is probably what roaming really
 is** for most jobs, and the model has to be able to express it. Keep the excavation as it stands;
@@ -584,7 +586,7 @@ closest to the target as the crow flies. For a face twenty layers down that node
 above the shaft bottom, which is where Reed Macdonald kept walking, standing over his own work with
 no way down, and the walk back up to bed failed the same way in reverse until the stranded recovery
 teleported him home. `PersonPathNavigation` now routes any walk that starts or ends down a shaft by
-the ramp, a hop of eight columns at a time (`village/buildings/MineShaft`, which also holds the one
+the ramp, one adjacent column at a time (`village/buildings/MineShaft`, which also holds the one
 definition of the corridor's shape that `MineStep` digs to): in, the mouth first and then down the
 walk cells; out, up the walk cells to the mouth; between two points of one shaft, straight when they
 are within a hop. It sits under `moveTo`, so every goal gets it, the miner's descent, the haul to the

@@ -89,12 +89,23 @@ class MineTopologyTest {
     BlockPos belowRamp = new BlockPos(0, -25, 22);
     BlockPos sideLedge = new BlockPos(3, -24, 22);
 
-    assertFalse(MineTopology.isNavigableStand(belowRamp, false));
-    assertFalse(MineTopology.isNavigableStand(sideLedge, false));
-    assertTrue(MineTopology.isNavigableStand(sideLedge, true),
-        "an opened vein cell level with the ramp remains usable");
-    assertFalse(MineTopology.isNavigableStand(new BlockPos(3, -25, 22), true),
+    assertFalse(MineTopology.isNavigableStand(belowRamp));
+    assertFalse(MineTopology.isNavigableStand(sideLedge));
+    assertFalse(MineTopology.isNavigableStand(new BlockPos(3, -25, 22)),
         "even an opened vein cell below the ramp is unsafe footing");
+  }
+
+  @Test
+  void anOpenedVeinCannotSelectAStandOutsideMineNavigation() {
+    // Mosswood's failed target: mouth (157, 92, 798), stand (152, -6, 895).
+    BlockPos offRampVeinStand = new BlockPos(-5, -98, 97);
+
+    assertFalse(MineShaft.withinExcavation(offRampVeinStand));
+    assertFalse(MineTopology.isNavigableStand(offRampVeinStand),
+        "a work stand outside navigation geometry sends the miner back up the ramp");
+    BlockPos plannedRibStand = new BlockPos(-5, -98, 96);
+    assertTrue(MineTopology.isNavigableStand(plannedRibStand));
+    assertTrue(MineShaft.withinExcavation(plannedRibStand));
   }
 
   @Test

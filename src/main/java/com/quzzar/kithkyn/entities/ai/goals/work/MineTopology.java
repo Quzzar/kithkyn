@@ -106,14 +106,13 @@ final class MineTopology {
   }
 
   /**
-   * Whether a miner may use this cell as footing. Planned ramp and rib cells
-   * are always eligible; a vein cell the miner opened may also be used when it
-   * is not below the ramp floor at that depth. Natural cave ledges are never
-   * work stands merely because they happen to be near a face.
+   * Whether a miner may use this cell as footing. Work stands must belong to
+   * the planned ramp or ribs, which shaft navigation also recognizes. Even a
+   * cell opened while following ore is not safe footing outside that geometry:
+   * navigation would treat the work as an exit and send the miner up the ramp.
    */
-  static boolean isNavigableStand(BlockPos local, boolean openedVeinCell) {
-    return isInterior(local)
-        || (openedVeinCell && local.getY() >= floorY(local.getZ()));
+  static boolean isNavigableStand(BlockPos local) {
+    return isInterior(local);
   }
 
   /**

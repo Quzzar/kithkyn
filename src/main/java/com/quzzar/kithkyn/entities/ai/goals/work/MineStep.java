@@ -800,8 +800,7 @@ public final class MineStep implements BlockWorkStep {
     double bestDist = Double.MAX_VALUE;
     for (BlockPos candidate : candidates) {
       BlockPos local = candidate.subtract(mouth).rotate(inverse(rotation));
-      boolean openedVeinCell = this.veinToSeal.contains(candidate);
-      if (!MineTopology.isNavigableStand(local, openedVeinCell)
+      if (!MineTopology.isNavigableStand(local)
           || !standable(level, candidate)) {
         continue;
       }
