@@ -44,6 +44,17 @@ class MineTopologyTest {
   }
 
   @Test
+  void descendingBetweenRampStepsIsNotMistakenForACaveFall() {
+    BlockPos oneBlockBelowCurrentColumn = new BlockPos(0, -8, 5);
+    BlockPos genuinelyBelowRamp = new BlockPos(0, -9, 5);
+
+    assertFalse(MineShaft.withinExcavation(oneBlockBelowCurrentColumn));
+    assertFalse(MineShaft.belowExcavation(oneBlockBelowCurrentColumn),
+        "a diagonal step may cross Y before entering the next ramp column");
+    assertTrue(MineShaft.belowExcavation(genuinelyBelowRamp));
+  }
+
+  @Test
   void frontierRecoveryScansTheWholeRampIndependentOfWorkerPosition() {
     BlockPos deepRejectedFace = new BlockPos(1, -23, 24);
 

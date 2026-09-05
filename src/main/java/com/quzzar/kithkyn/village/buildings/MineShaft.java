@@ -49,12 +49,12 @@ public final class MineShaft {
   public static final int RIB_MIN_LINE = 4;
 
   /**
-   * Ramp columns one hop spans. A longer A* hop can cut across a natural cave
-   * beneath the ramp even when both endpoints are valid walk cells. One column
-   * makes every hop the adjacent, already-dug stair, so entering and leaving the
-   * mine cannot shortcut off the built ramp.
+   * Ramp columns one hop spans. A column is one block down and one forward, so
+   * eight columns is about eleven blocks as the crow flies, well inside the
+   * pathfinder's twenty, and the hop lands on a walk cell the ramp has always
+   * already dug, since the face is the deepest point of it.
    */
-  private static final int HOP = 1;
+  private static final int HOP = 8;
 
   /** How near the mouth counts as standing at it, squared. */
   private static final double AT_MOUTH_SQR = 9.0D;
@@ -104,15 +104,18 @@ public final class MineShaft {
   /**
    * Whether the feet have fallen beneath the planned ramp or a rib. Such a
    * position is horizontally inside the mine, but no longer connected to its
-   * navigable volume; aiming at the ramp from there produces a waypoint
-   * directly overhead.
+   * navigable volume. The ramp keeps one block of tolerance because a normal
+   * diagonal step can cross the lower Y boundary just before it crosses into
+   * the next forward column; that transition is still on the stair, not a cave
+   * fall. A miner below that margin is recovered instead of being routed to a
+   * waypoint overhead.
    */
   public static boolean belowExcavation(BlockPos local) {
     int z = local.getZ();
     int floorY = z < 0 ? -1 : -(z + 2);
     boolean belowRamp = Math.abs(local.getX()) <= RADIUS
         && z >= -(RADIUS - 1)
-        && local.getY() < floorY;
+        && local.getY() < floorY - 1;
     int ax = Math.abs(local.getX());
     boolean belowRib = z >= RIB_MIN_LINE
         && z % RIB_PITCH == 0
@@ -183,7 +186,7 @@ public final class MineShaft {
       if (Math.abs(ahead) <= HOP) {
         return null; // the ordinary path reaches it
       }
-      return walkCell(nextHopColumn(localFrom.getZ(), localTo.getZ()));
+      return walkCell(localFrom.getZ() + (ahead > 0 ? HOP : -HOP));
     }
     if (fromIn) {
       if (withinRib(localFrom)) {
@@ -198,7 +201,7 @@ public final class MineShaft {
       // the walk to the mouth is a no-op once they reach it, and the goal's real
       // up-top target (a bed, the day's work) never got a path, so a villager who
       // wandered onto the ramp could never climb back out of the shaft.
-      int z = nextHopColumn(localFrom.getZ(), -(RADIUS - 1));
+      int z = localFrom.getZ() - HOP;
       return z <= -(RADIUS - 1) ? null : walkCell(z);
     }
     // Going in: the mouth first, from wherever they are, then down the ramp.
@@ -206,15 +209,6 @@ public final class MineShaft {
       return this.mouth;
     }
     return walkCell(Math.min(localTo.getZ(), -(RADIUS - 1) + HOP));
-  }
-
-  /** The next adjacent ramp column in the direction of the destination. */
-  static int nextHopColumn(int fromZ, int toZ) {
-    int distance = toZ - fromZ;
-    if (Math.abs(distance) <= HOP) {
-      return toZ;
-    }
-    return fromZ + Integer.signum(distance) * HOP;
   }
 
   /** The cell a walker's feet occupy on the ramp at column {@code z}, in the world. */
