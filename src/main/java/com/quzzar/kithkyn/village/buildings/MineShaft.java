@@ -49,12 +49,12 @@ public final class MineShaft {
   public static final int RIB_MIN_LINE = 4;
 
   /**
-   * Ramp columns one hop spans. A column is one block down and one forward, so
-   * eight columns is about eleven blocks as the crow flies, well inside the
-   * pathfinder's twenty, and the hop lands on a walk cell the ramp has always
-   * already dug, since the face is the deepest point of it.
+   * Ramp columns one hop spans. A longer A* hop can cut across a natural cave
+   * beneath the ramp even when both endpoints are valid walk cells. One column
+   * makes every hop the adjacent, already-dug stair, so entering and leaving the
+   * mine cannot shortcut off the built ramp.
    */
-  private static final int HOP = 8;
+  private static final int HOP = 1;
 
   /** How near the mouth counts as standing at it, squared. */
   private static final double AT_MOUTH_SQR = 9.0D;
@@ -183,7 +183,7 @@ public final class MineShaft {
       if (Math.abs(ahead) <= HOP) {
         return null; // the ordinary path reaches it
       }
-      return walkCell(localFrom.getZ() + (ahead > 0 ? HOP : -HOP));
+      return walkCell(nextHopColumn(localFrom.getZ(), localTo.getZ()));
     }
     if (fromIn) {
       if (withinRib(localFrom)) {
@@ -198,7 +198,7 @@ public final class MineShaft {
       // the walk to the mouth is a no-op once they reach it, and the goal's real
       // up-top target (a bed, the day's work) never got a path, so a villager who
       // wandered onto the ramp could never climb back out of the shaft.
-      int z = localFrom.getZ() - HOP;
+      int z = nextHopColumn(localFrom.getZ(), -(RADIUS - 1));
       return z <= -(RADIUS - 1) ? null : walkCell(z);
     }
     // Going in: the mouth first, from wherever they are, then down the ramp.
@@ -206,6 +206,15 @@ public final class MineShaft {
       return this.mouth;
     }
     return walkCell(Math.min(localTo.getZ(), -(RADIUS - 1) + HOP));
+  }
+
+  /** The next adjacent ramp column in the direction of the destination. */
+  static int nextHopColumn(int fromZ, int toZ) {
+    int distance = toZ - fromZ;
+    if (Math.abs(distance) <= HOP) {
+      return toZ;
+    }
+    return fromZ + Integer.signum(distance) * HOP;
   }
 
   /** The cell a walker's feet occupy on the ramp at column {@code z}, in the world. */
