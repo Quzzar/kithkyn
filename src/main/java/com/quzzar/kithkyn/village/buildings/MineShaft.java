@@ -96,9 +96,17 @@ public final class MineShaft {
     return local.getY() >= floorY && local.getY() <= floorY + (RIB_HEIGHT - 1);
   }
 
-  /** Every position navigation should treat as belonging to this mine. */
+  /**
+   * Every position navigation should treat as belonging to this mine,
+   * including the one-block transition between diagonal ramp steps.
+   */
   public static boolean withinExcavation(BlockPos local) {
-    return withinCorridor(local) || withinRib(local);
+    int z = local.getZ();
+    int floorY = z < 0 ? -1 : -(z + 2);
+    boolean betweenRampSteps = Math.abs(local.getX()) <= RADIUS
+        && z >= -(RADIUS - 1)
+        && local.getY() == floorY - 1;
+    return withinCorridor(local) || withinRib(local) || betweenRampSteps;
   }
 
   /**
