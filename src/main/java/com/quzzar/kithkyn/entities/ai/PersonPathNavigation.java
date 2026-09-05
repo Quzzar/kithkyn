@@ -80,6 +80,9 @@ public final class PersonPathNavigation extends GroundPathNavigation {
   /** Bounded route-planning horizon, independent of a person's perception range. */
   private static final float MINIMUM_SEARCH_RANGE = 48.0F;
 
+  /** A one-step ramp waypoint must not accept the current cell as close enough. */
+  private static final int MINE_WAYPOINT_ACCURACY = 0;
+
   public PersonPathNavigation(Mob mob, Level level) {
     super(mob, level);
   }
@@ -124,7 +127,7 @@ public final class PersonPathNavigation extends GroundPathNavigation {
       }
       BlockPos hop = MineShaft.waypoint(person.getVillage(), this.mob.blockPosition(), pos);
       if (hop != null) {
-        return super.createPath(hop, accuracy);
+        return super.createPath(hop, MINE_WAYPOINT_ACCURACY);
       }
     }
     return super.createPath(pos, accuracy);
