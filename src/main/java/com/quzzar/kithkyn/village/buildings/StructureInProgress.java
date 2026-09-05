@@ -265,11 +265,12 @@ public class StructureInProgress {
             }
             java.util.List<Building> affected = new java.util.ArrayList<>(plan.removed());
             plan.source().map(village::getBuilding).ifPresent(affected::add);
-            if (!StorageEvacuation.evacuate(village, affected)) {
+            if (!StorageEvacuation.evacuate(village, affected,
+                    stack -> village.queueRedevelopmentItems(List.of(stack)))) {
                 return false;
             }
-            village.rehouseForRedevelopment(affected.stream().map(Building::getUUID)
-                    .collect(java.util.stream.Collectors.toSet()));
+            redevelopment.recordDisplacedResidents(village.rehouseForRedevelopment(
+                    affected.stream().map(Building::getUUID).collect(java.util.stream.Collectors.toSet())));
             payment.addAll(MaterialAmount.stacks(redevelopment.commitCredit()));
             village.removeForRedevelopment(plan);
         }

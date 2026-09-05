@@ -32,6 +32,7 @@ import com.quzzar.kithkyn.village.buildings.ConstructionChoice;
 import com.quzzar.kithkyn.village.buildings.ConstructionMode;
 import com.quzzar.kithkyn.village.buildings.MaterialAmount;
 import com.quzzar.kithkyn.village.buildings.RedevelopmentPlan;
+import com.quzzar.kithkyn.village.buildings.RedevelopmentItems;
 import com.quzzar.kithkyn.village.buildings.RedevelopmentPlanner;
 import com.quzzar.kithkyn.village.buildings.StorageEvacuation;
 import com.quzzar.kithkyn.village.buildings.InstantBuildStructure;
@@ -1019,30 +1020,38 @@ public class Village {
     rebuildBuildingClaims();
   }
 
-  /** Proves a home for each displaced bed holder, including residents whose chunks are unloaded. */
-  public boolean canRehouseForRedevelopment(java.util.Set<UUID> affected) {
-    long displaced = bedAssignments.values().stream().filter(bed -> affected.contains(bed.getBuildingUUID())).count();
-    long available = unassignedBeds.stream().filter(bed -> !affected.contains(bed.getBuildingUUID()))
-        .filter(bed -> !isReservedWorkplaceBed(bed) && !isBeingRebuilt(bed.getBuildingUUID())).count();
-    return available >= displaced;
-  }
-
-  /** Reassigns homes before demolition; dependent children continue following their parent's home. */
-  public void rehouseForRedevelopment(java.util.Set<UUID> affected) {
+  /** Uses available homes first; the project records any residents left temporarily without a bed. */
+  public List<UUID> rehouseForRedevelopment(java.util.Set<UUID> affected) {
     List<UUID> displaced = bedAssignments.entrySet().stream()
         .filter(entry -> affected.contains(entry.getValue().getBuildingUUID())).map(Map.Entry::getKey).toList();
     List<BedAssignment> available = unassignedBeds.stream()
         .filter(bed -> !affected.contains(bed.getBuildingUUID()) && !isReservedWorkplaceBed(bed)
             && !isBeingRebuilt(bed.getBuildingUUID())).toList();
-    if (available.size() < displaced.size()) {
-      throw new IllegalStateException("Redevelopment accommodation changed during server-thread commitment");
-    }
     unassignedBeds.removeIf(bed -> affected.contains(bed.getBuildingUUID()));
     for (int index = 0; index < displaced.size(); index++) {
-      BedAssignment replacement = available.get(index);
-      unassignedBeds.remove(replacement);
-      bedAssignments.put(displaced.get(index), replacement.setPersonUUID(displaced.get(index)));
+      UUID resident = displaced.get(index);
+      bedAssignments.remove(resident);
+      if (index < available.size()) {
+        BedAssignment replacement = available.get(index);
+        unassignedBeds.remove(replacement);
+        bedAssignments.put(resident, replacement.setPersonUUID(resident));
+      }
     }
+    return displaced;
+  }
+
+  /** Temporary displacement does not dismiss an existing worker before they can finish the project. */
+  public boolean keepsWorkDuringRedevelopment(UUID resident) {
+    if (currentProject == null || currentProject.isGathering() || currentProject.getRedevelopment() == null) {
+      return false;
+    }
+    var work = currentProject.getRedevelopment();
+    if (work.displaced(resident)) {
+      return true;
+    }
+    RealPerson person = level == null ? null : getPerson(level, resident);
+    return person != null && person.getLifeStage().isDependentlyHoused()
+        && person.getParentIds().stream().filter(people::contains).anyMatch(work::displaced);
   }
 
   /** Forgets services immediately at commitment while demolition retains the physical claim. */
@@ -1089,37 +1098,54 @@ public class Village {
     siteMemory.clear();
   }
 
-  /** Completed salvage waits here if real containers are full; it is never counted as available stock. */
-  public void queueRedevelopmentRefund(List<MaterialAmount> refund) {
-    if (refund.isEmpty()) {
+  /** Displaced contents and earned salvage wait for real storage without becoming available stock. */
+  public void queueRedevelopmentItems(List<ItemStack> items) {
+    if (items.isEmpty()) {
       return;
     }
-    List<MaterialAmount> combined = MaterialAmount.combine(pendingRedevelopmentRefund(), refund);
-    brain.getStrategy().put("redevelopment_refund", MaterialAmount.CODEC.listOf()
-        .encodeStart(net.minecraft.nbt.NbtOps.INSTANCE, combined).getOrThrow());
+    List<ItemStack> combined = new ArrayList<>(pendingRedevelopmentItems());
+    combined.addAll(items);
+    saveRedevelopmentItems(combined);
   }
 
-  public List<MaterialAmount> pendingRedevelopmentRefund() {
+  public List<ItemStack> pendingRedevelopmentItems() {
+    return readRedevelopmentItems().getOrThrow();
+  }
+
+  private com.mojang.serialization.DataResult<List<ItemStack>> readRedevelopmentItems() {
     var tag = brain.getStrategy().get("redevelopment_refund");
-    return tag == null ? List.of() : MaterialAmount.CODEC.listOf().parse(net.minecraft.nbt.NbtOps.INSTANCE, tag)
-        .resultOrPartial(error -> Kithkyn.LOGGER.error("Cannot read redevelopment refund for '{}': {}", name, error))
-        .orElse(List.of());
+    return tag == null ? com.mojang.serialization.DataResult.success(List.of()) : RedevelopmentItems.CODEC.parse(
+        level.getLevel().registryAccess().createSerializationContext(net.minecraft.nbt.NbtOps.INSTANCE), tag);
   }
 
-  private void releaseRedevelopmentRefund() {
-    List<MaterialAmount> pending = pendingRedevelopmentRefund();
+  private void saveRedevelopmentItems(List<ItemStack> items) {
+    if (items.isEmpty()) {
+      brain.getStrategy().remove("redevelopment_refund");
+      return;
+    }
+    // Keep the original key; the codec accepts old material-only refunds and writes full stacks.
+    brain.getStrategy().put("redevelopment_refund", RedevelopmentItems.CODEC.encodeStart(
+        level.getLevel().registryAccess().createSerializationContext(net.minecraft.nbt.NbtOps.INSTANCE), items).getOrThrow());
+  }
+
+  private void releaseRedevelopmentItems() {
+    var decoded = readRedevelopmentItems();
+    decoded.ifError(error -> Kithkyn.LOGGER.error("Cannot read redevelopment items for '{}': {}", name, error.message()));
+    if (decoded.result().isEmpty()) {
+      return; // Keep the entire saved queue intact if even one entry is unreadable.
+    }
+    List<ItemStack> pending = decoded.result().orElseThrow();
     if (pending.isEmpty()) {
       return;
     }
     List<ItemStack> remaining = new ArrayList<>();
-    for (ItemStack stack : MaterialAmount.stacks(pending)) {
+    for (ItemStack stack : pending) {
       ItemStack left = storeAwayFrom(stack, List.of());
       if (!left.isEmpty()) {
         remaining.add(left);
       }
     }
-    brain.getStrategy().remove("redevelopment_refund");
-    queueRedevelopmentRefund(MaterialAmount.fromStacks(remaining));
+    saveRedevelopmentItems(remaining);
   }
 
   /** Persistent totals plus an exact proposal ID distinguish offers, execution, and rebuilding churn. */
@@ -1412,7 +1438,7 @@ public class Village {
 
   private void checkCurrentProject() {
 
-    releaseRedevelopmentRefund();
+    releaseRedevelopmentItems();
 
     if (wallProject != null && !wallProject.isComplete()) {
       return; // the wall holds the village while it rises, like any project
@@ -1434,6 +1460,7 @@ public class Village {
         } else {
           addBuilding(finished);
         }
+        reconcileBeds(); // Rehouse displaced workers before their construction exemption ends.
         currentProject = null;
         // Start the build cooldown here, at the one point a building finishes:
         // the village raises nothing new for BuildCooldownDays, giving its
@@ -2916,7 +2943,21 @@ public class Village {
       preferWorkplaceBed(entry.getKey(), entry.getValue().getBuildingUUID());
     }
 
-    // A newly adult child gets first claim on general housing. That flag stays
+    // Residents displaced by the active project reclaim newly available homes before new arrivals.
+    if (currentProject != null && currentProject.getRedevelopment() != null) {
+      for (UUID personUUID : people) {
+        if (!currentProject.getRedevelopment().displaced(personUUID) || bedAssignments.containsKey(personUUID)) {
+          continue;
+        }
+        BedAssignment bed = takeGeneralBed();
+        if (bed == null) {
+          break;
+        }
+        bedAssignments.put(personUUID, bed.setPersonUUID(personUUID));
+      }
+    }
+
+    // A newly adult child gets first claim on the remaining general housing. That flag stays
     // on the person until this succeeds, so a full village keeps the priority.
     for (UUID personUUID : people) {
       RealPerson person = level == null ? null : getPerson(level, personUUID);

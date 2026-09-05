@@ -38,7 +38,8 @@ public final class RedevelopmentVerification {
     try {
       verify(event.getServer().overworld());
       Kithkyn.LOGGER.info("[redevelopment-verify] PASS: blocked upgrade, fresh replacement, player protection, "
-          + "own reservation, commitment, halfway save/reload, demolition, construction and single refund");
+          + "zero spare beds, full storage, displaced builder continuity, relaxed food/builder gates, "
+          + "own reservation, commitment, halfway save/reload, demolition, construction and single item delivery");
     } catch (Exception | AssertionError failure) {
       Kithkyn.LOGGER.error("[redevelopment-verify] FAIL", failure);
     } finally {
@@ -46,7 +47,7 @@ public final class RedevelopmentVerification {
     }
   }
 
-  private static void verify(ServerLevel level) throws java.io.IOException {
+  private static void verify(ServerLevel level) throws Exception {
     Fixture fixture = fixture(level);
     Village village = fixture.village();
     BlockPos ground = fixture.ground();
@@ -54,7 +55,8 @@ public final class RedevelopmentVerification {
     Building north = fixture.north();
     Building south = fixture.south();
     Building survivingFarm = fixture.survivingFarm();
-    village.assignJob(UUID.randomUUID(), village.getUnassignedJobs().stream()
+    UUID builderId = UUID.randomUUID();
+    village.assignJob(builderId, village.getUnassignedJobs().stream()
         .filter(job -> job.getOccupation() == Occupation.BUILDER).findFirst().orElseThrow());
     village.assignJob(UUID.randomUUID(), village.getUnassignedJobs().stream()
         .filter(job -> job.getBuildingUUID().equals(survivingFarm.getUUID())).findFirst().orElseThrow());
@@ -62,6 +64,25 @@ public final class RedevelopmentVerification {
     for (int resident = 0; resident < 6; resident++) {
       village.getPopulation().add(UUID.randomUUID());
     }
+    // Occupy every bed, putting the builder in the source house. These saved residents represent unloaded people.
+    CompoundTag occupiedState = (CompoundTag) Village.CODEC.encodeStart(NbtOps.INSTANCE, village).getOrThrow();
+    CompoundTag occupiedBeds = new CompoundTag();
+    List<UUID> residents = new ArrayList<>(village.getPopulation());
+    for (Building home : village.getBuildings()) {
+      for (int bedIndex = 0; bedIndex < home.getInfo().getBedLocations().size(); bedIndex++) {
+        UUID resident = home.getUUID().equals(source.getUUID()) ? builderId : UUID.randomUUID();
+        residents.add(resident);
+        occupiedBeds.put(resident.toString(), com.quzzar.kithkyn.village.BedAssignment.CODEC.encodeStart(NbtOps.INSTANCE,
+            new com.quzzar.kithkyn.village.BedAssignment(resident, home.getUUID(), bedIndex)).getOrThrow());
+      }
+    }
+    occupiedState.put("bed_assignments", occupiedBeds);
+    occupiedState.put("unassigned_beds", new net.minecraft.nbt.ListTag());
+    occupiedState.put("people", UUIDUtil.CODEC.listOf().encodeStart(NbtOps.INSTANCE, residents).getOrThrow());
+    village = Village.CODEC.parse(NbtOps.INSTANCE, occupiedState).getOrThrow();
+    village.attach(level);
+    source = village.getBuilding(source.getUUID());
+    check(village.getFreeGeneralBedCount() == 0, "fixture must have no spare beds");
     check(BuildingUpgrade.findPlacement(village, Buildings.getByName("house_plains_2")) == null,
         "ordinary upgrade unexpectedly fits through farms");
     var assessment = RedevelopmentPlanner.assess(village, Buildings.getByName("house_plains_2"), source,
@@ -93,8 +114,14 @@ public final class RedevelopmentVerification {
     Village noFood = Village.CODEC.parse(NbtOps.INSTANCE, noFoodState).getOrThrow();
     noFood.attach(level);
     check(RedevelopmentPlanner.assess(noFood, Buildings.getByName("house_plains_2"),
-        noFood.getBuilding(source.getUUID()), ground.offset(0, 0, -2), Rotation.NONE).plan().isEmpty(),
-        "last staffed food production was removable");
+        noFood.getBuilding(source.getUUID()), ground.offset(0, 0, -2), Rotation.NONE).plan().isPresent(),
+        "lack of surviving staffed food still prevents redevelopment");
+    noFoodState.put("job_assignments", new CompoundTag());
+    Village noBuilder = Village.CODEC.parse(NbtOps.INSTANCE, noFoodState).getOrThrow();
+    noBuilder.attach(level);
+    check(RedevelopmentPlanner.assess(noBuilder, Buildings.getByName("house_plains_2"),
+        noBuilder.getBuilding(source.getUUID()), ground.offset(0, 0, -2), Rotation.NONE).plan().isPresent(),
+        "outside-builder requirement still prevents proposals");
     var northBounds = RedevelopmentPlanner.worldBounds(village, north);
     CompoundTag noNeedState = (CompoundTag) Village.CODEC.encodeStart(NbtOps.INSTANCE, village).getOrThrow();
     noNeedState.put("people", new net.minecraft.nbt.ListTag());
@@ -137,6 +164,35 @@ public final class RedevelopmentVerification {
       ownership.markVillagePlaced(edit);
     }
 
+    // Fill all shared storage, including victim farms, so every displaced stack must be retained.
+    for (BlockPos at : village.getBrain().containerPositions()) {
+      if (level.getBlockEntity(at) instanceof net.minecraft.world.Container container) {
+        for (int slot = 0; slot < container.getContainerSize(); slot++) {
+          container.setItem(slot, new ItemStack(net.minecraft.world.item.Items.COBBLESTONE, 64));
+        }
+        container.setChanged();
+      }
+    }
+    List<Building> affected = new ArrayList<>(plan.removed());
+    affected.add(source);
+    BlockPos personalChest = StorageEvacuation.sources(village, List.of(source)).iterator().next();
+    var personal = (net.minecraft.world.Container) level.getBlockEntity(personalChest);
+    ItemStack namedTool = new ItemStack(net.minecraft.world.item.Items.IRON_PICKAXE);
+    namedTool.set(net.minecraft.core.component.DataComponents.CUSTOM_NAME,
+        net.minecraft.network.chat.Component.literal("Displaced builder's pick"));
+    namedTool.setDamageValue(73);
+    personal.setItem(0, namedTool);
+    List<ItemStack> displacedContents = new ArrayList<>();
+    for (BlockPos at : StorageEvacuation.sources(village, affected)) {
+      var container = (net.minecraft.world.Container) level.getBlockEntity(at);
+      for (int slot = 0; slot < container.getContainerSize(); slot++) {
+        if (!container.getItem(slot).isEmpty()) {
+          displacedContents.add(container.getItem(slot).copy());
+        }
+      }
+    }
+    var itemOps = level.registryAccess().createSerializationContext(NbtOps.INSTANCE);
+    var expectedContents = RedevelopmentItems.CODEC.encodeStart(itemOps, displacedContents).getOrThrow();
     check(village.startRedevelopment(new ConstructionChoice(Buildings.getByName(plan.target()), plan.mode(), plan)),
         "could not start exact proposal");
     check(village.getBuilding(north.getUUID()) != null && village.getBuilding(south.getUUID()) != null,
@@ -148,7 +204,12 @@ public final class RedevelopmentVerification {
     check(project.getProgress() == BuildProgress.DEMOLISHING, "missing demolition phase");
     check(village.getBuilding(north.getUUID()) == null && village.getBuilding(south.getUUID()) == null,
         "removed services still registered");
-    check(village.pendingRedevelopmentRefund().isEmpty(), "refund issued before dismantling");
+    check(expectedContents.equals(RedevelopmentItems.CODEC.encodeStart(itemOps, village.pendingRedevelopmentItems()).getOrThrow()),
+        "full storage lost or changed displaced contents");
+    check(village.getBedAssignment(builderId) == null && village.keepsWorkDuringRedevelopment(builderId),
+        "bedless builder was not protected during construction");
+    com.quzzar.kithkyn.village.JobClaiming.tick(village, level);
+    check(village.getJobAssignment(builderId) != null, "displaced builder lost the job needed to finish construction");
     int structuralIndex = 0;
     while (com.quzzar.kithkyn.village.BlockOwnership.isPlanted(plan.blocks().get(structuralIndex).state())) {
       check(project.demolishStep(village).isEmpty(), "plant removal failed");
@@ -161,7 +222,8 @@ public final class RedevelopmentVerification {
     ownership.clearPlaced(stolen);
     check(!project.demolishStep(village).isEmpty(), "missing committed material was silently credited");
     check(project.getRedevelopment().remainingBlocks() == securedCursor, "missing structural block consumed its queue entry");
-    check(village.pendingRedevelopmentRefund().isEmpty(), "missing material paid a refund");
+    check(expectedContents.equals(RedevelopmentItems.CODEC.encodeStart(itemOps, village.pendingRedevelopmentItems()).getOrThrow()),
+        "missing material changed the pending contents or paid salvage early");
     var pausedState = Village.CODEC.encodeStart(NbtOps.INSTANCE, village).getOrThrow();
     Village paused = Village.CODEC.parse(NbtOps.INSTANCE, pausedState).getOrThrow();
     paused.attach(level);
@@ -181,6 +243,9 @@ public final class RedevelopmentVerification {
     village.attach(level);
     project = village.getCurrentProject();
     check(project.getRedevelopment().remainingBlocks() == remaining, "removal cursor lost on reload");
+    check(village.keepsWorkDuringRedevelopment(builderId), "temporary work continuity lost on reload");
+    check(expectedContents.equals(RedevelopmentItems.CODEC.encodeStart(itemOps, village.pendingRedevelopmentItems()).getOrThrow()),
+        "displaced contents changed across village save/reload");
     for (int index = 0; index < 100_000 && project.getProgress() != BuildProgress.COMPLETE; index++) {
       if (project.getProgress() == BuildProgress.DEMOLISHING) {
         String blocker = project.demolishStep(village);
@@ -194,13 +259,42 @@ public final class RedevelopmentVerification {
       }
     }
     check(project.getProgress() == BuildProgress.COMPLETE, "construction did not complete");
-    List<MaterialAmount> refund = village.pendingRedevelopmentRefund();
+    List<MaterialAmount> refund = MaterialAmount.fromStacks(village.pendingRedevelopmentItems());
     project.demolishStep(village);
     project.getRedevelopment().finish(village);
-    check(refund.equals(village.pendingRedevelopmentRefund()), "refund was paid twice");
+    check(refund.equals(MaterialAmount.fromStacks(village.pendingRedevelopmentItems())), "refund was paid twice");
     check(project.getBuilding().getUUID().equals(source.getUUID()), "upgrade lost source identity");
     check(village.getBuilding(survivingFarm.getUUID()) != null, "surviving farm was removed");
     check(!village.hasClaimed(ground.offset(0, 0, -10)), "removed outer parcel remained claimed");
+    // Finish registration, then open real space and exercise the same release method used by village ticks.
+    var projectTick = Village.class.getDeclaredMethod("checkCurrentProject");
+    projectTick.setAccessible(true);
+    projectTick.invoke(village);
+    check(village.getCurrentProject() == null, "finished redevelopment was not registered");
+    check(village.getBedAssignment(builderId) != null, "displaced builder did not reclaim a replacement bed");
+    check(!village.keepsWorkDuringRedevelopment(builderId), "temporary employment exception survived the project");
+    var beforeRelease = RedevelopmentItems.CODEC.encodeStart(itemOps, village.pendingRedevelopmentItems()).getOrThrow();
+    var release = Village.class.getDeclaredMethod("releaseRedevelopmentItems");
+    release.setAccessible(true);
+    release.invoke(village);
+    check(beforeRelease.equals(RedevelopmentItems.CODEC.encodeStart(itemOps, village.pendingRedevelopmentItems()).getOrThrow()),
+        "full-storage retry lost queued items");
+    for (BlockPos at : village.getBrain().containerPositions()) {
+      if (level.getBlockEntity(at) instanceof net.minecraft.world.Container container) {
+        container.clearContent();
+      }
+    }
+    List<ItemStack> retained = village.pendingRedevelopmentItems();
+    release.invoke(village);
+    check(village.pendingRedevelopmentItems().isEmpty(), "available storage did not receive retained contents");
+    List<MaterialAmount> delivered = MaterialAmount.fromStacks(village.getVillageInventory());
+    check(MaterialAmount.tally(MaterialAmount.fromStacks(retained)).equals(MaterialAmount.tally(delivered)),
+        "delivered contents or salvage totals changed");
+    check(village.getVillageInventory().stream().anyMatch(stack -> ItemStack.isSameItemSameComponents(namedTool, stack)),
+        "delivered personal tool lost its name or damage");
+    release.invoke(village);
+    check(MaterialAmount.tally(delivered).equals(MaterialAmount.tally(MaterialAmount.fromStacks(village.getVillageInventory()))),
+        "retry delivered items twice");
     Kithkyn.LOGGER.info("[redevelopment-verify] blocks={} net={} recovered={} pendingRefund={}",
         plan.blocks().size(), MaterialAmount.describe(plan.netRequired()), MaterialAmount.describe(plan.salvage()),
         MaterialAmount.describe(refund));

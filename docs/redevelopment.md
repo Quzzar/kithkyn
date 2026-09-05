@@ -66,16 +66,17 @@ Removal is a prerequisite of a named construction project. The village does not 
 demolish something and then ask the model what to do with the empty land. Extend the existing
 construction lifecycle, including its save/resume behavior and material commitment.
 
-Before removal starts, the game must establish a feasible sequence with surviving builders,
-a place for displaced contents, and secured construction materials. If anticipated salvage
+Before removal starts, the game must secure the construction materials and preserve displaced
+contents. Builders work at the project site and do not require a separate surviving workplace. If anticipated salvage
 helps pay the recipe, it must be accounted for as part of that sequence; it is not spendable
 stock while the old building still stands. Removing a producer must not strand the project
 waiting for materials that only that producer can make.
 
-The conservative first implementation should withhold proposals that cannot maintain food
-production or accommodate displaced residents during the work. A proposed replacement only
-counts once the plan establishes how it is built first. These are provisional eligibility
-rules to validate in the benchmark, not evidence that every allowed trade is worthwhile.
+The initial implementation required spare beds, surviving staffed food production, an outside
+builder and enough surviving storage. The practicality audit found these rules blocked useful
+transitions. At the user's direction on 2026-09-05, they were removed. Temporary homelessness
+and food-production interruptions are consequences presented to the model, rather than eligibility
+vetoes. No temporary accommodation buildings or food-output forecasts are invented.
 
 Only the named village buildings belong to the removal plan. Player changes, other villages,
 protected world structures, unknown ownership, and terrain that remains unsuitable after
@@ -159,24 +160,34 @@ manufacture demand. This check runs again before commitment. It was added after 
 model repeatedly chose larger houses or stores even when the prompt explicitly said none were
 needed. Ordinary construction remains available under its existing rules.
 
-A proposal requires a staffed builder outside the affected buildings, enough surviving general
-beds for displaced residents, and a surviving staffed food building if food production is
-affected. Staffing is a minimum eligibility condition, not a guarantee of adequate output.
+A proposal no longer requires spare beds, an outside builder, another staffed food building,
+or free storage elsewhere. The description states displaced residents, affected workplaces,
+and surviving staffed food buildings; staffing does not guarantee adequate output.
 Village centers and mines cannot be demolition victims; mine upgrades retain their shaft origin.
 Surveyed blocks and containers must be loaded. Player changes, another village's claims and
 unknown structural ownership prevent removal.
 
 Builders gather the net recipe before commitment. Contents from all affected buildings,
-including the upgrade source and personal containers, must fit in surviving village storage;
-contents move in full, independently of salvage. Residents are rehoused and affected services
-are removed at commitment. A persisted `DEMOLISHING` phase advances one block per builder
+including the upgrade source and personal containers, move to surviving storage where possible;
+any overflow enters a saved queue with its full item components, independently of salvage.
+This queue belongs to the village, survives project completion, and retries delivery when real
+storage opens up. It is not counted as available stock. Ordinary upgrades without redevelopment
+retain their existing physical-storage requirement.
+
+Residents use spare general beds where available and otherwise lose their bed assignment.
+Displaced residents keep existing jobs during the project, including dependently housed workers
+whose resident parent was displaced. Removed workplaces still release their jobs normally.
+Displaced residents have priority for replacement beds, and ordinary employment housing rules
+resume when the project finishes. This is temporary homelessness, not simulated shelter.
+Affected services are removed at commitment. A persisted `DEMOLISHING` phase advances one block per builder
 swing, then enters ordinary preparation and construction. Removed parcels are restored with
 paid dirt. Claims remain during removal and are rebuilt afterward. Ownership, jobs, beds,
 containers, food records, capabilities and site memory are reconciled.
 
 Salvage used by the recipe stays within the committed project. Surplus becomes a persisted
 refund only after demolition finishes, and waits for real storage capacity. Blocks are removed
-without ordinary loot. Save/reload retains the removal cursor and unpaid surplus. Later player
+without ordinary loot. Save/reload retains the removal cursor, unpaid surplus, displaced residents and queued contents.
+The overflow queue also reads the older material-only refund format without losing its totals. Later player
 blocks and refilled containers pause work during demolition, ground work and construction.
 A missing pending structural block also pauses removal without advancing its cursor or paying
 salvage: harvesting it after commitment cannot produce both normal drops and promised credit.
@@ -214,3 +225,15 @@ expired, and one invalid offer reply. Neither enabled normal-founding run genera
 No redevelopment started or completed, and no building was demolished. Opportunity recognition
 is demonstrated; completed natural adoption and teardown frequency remain unproven. The report
 records the paired outcomes, a terrain-fixture amendment, model failures and full decision traces.
+
+
+On 2026-09-05, the four transition-capacity gates were removed following the
+[practicality audit](research/redevelopment-practicality-2026-09-05.md). The updated suite passed
+197 tests. The isolated lifecycle harness then completed a blocked house upgrade with zero
+spare beds and full shared storage: 3,456 cobblestone and a named, damaged pickaxe survived
+commitment and village save/reload, then reached newly available storage exactly once. The
+displaced builder retained its job and reclaimed a replacement bed at completion. Separate
+assessment checks accepted proposals without surviving staffed food or an outside builder.
+Player edits and missing committed structural blocks still paused or rejected work.
+The harness advances construction directly; this is lifecycle verification, not evidence of
+natural model adoption or a new teardown-frequency measurement.

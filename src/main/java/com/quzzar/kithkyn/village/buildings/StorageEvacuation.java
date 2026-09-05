@@ -5,12 +5,14 @@ import java.util.Collection;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.function.Consumer;
+
+import javax.annotation.Nullable;
 
 import com.quzzar.kithkyn.village.Village;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.Container;
-import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.HopperBlockEntity;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
@@ -41,21 +43,18 @@ public final class StorageEvacuation {
     return sources;
   }
 
-  public static boolean canEvacuate(Village village, Collection<Building> buildings) {
-    if (village.getLevel() == null || !allLoaded(village, buildings)) {
-      return false;
-    }
-    Set<BlockPos> sources = sources(village, buildings);
-    return canFit(containers(village, sources), destinations(village, sources));
+  /** Ordinary upgrades still wait for physical capacity; redevelopment can retain overflow. */
+  public static boolean evacuate(Village village, Collection<Building> buildings) {
+    return evacuate(village, buildings, null);
   }
 
-  /** Partial transfers also update their source, so a full destination never duplicates items. */
-  public static boolean evacuate(Village village, Collection<Building> buildings) {
+  /** Overflow is durably retained before its source slot is cleared. Loaded source footprints remain required. */
+  public static boolean evacuate(Village village, Collection<Building> buildings, @Nullable Consumer<ItemStack> overflow) {
     if (village.getLevel() == null || !allLoaded(village, buildings)) {
       return false;
     }
     Set<BlockPos> sources = sources(village, buildings);
-    return transfer(containers(village, sources), destinations(village, sources));
+    return transfer(containers(village, sources), destinations(village, sources), overflow);
   }
 
   private static boolean allLoaded(Village village, Collection<Building> buildings) {
@@ -92,13 +91,12 @@ public final class StorageEvacuation {
     return containers;
   }
 
-  /** Simulates the same insertion sequence and slot rules without changing real inventories. */
-  static boolean canFit(List<Container> sources, List<Container> destinations) {
-    return transfer(sources.stream().map(StorageEvacuation::copy).toList(),
-        destinations.stream().map(StorageEvacuation::copy).toList());
+  static boolean transfer(List<Container> sources, List<Container> destinations) {
+    return transfer(sources, destinations, null);
   }
 
-  static boolean transfer(List<Container> sources, List<Container> destinations) {
+  /** Every item either reaches a destination, remains in its source, or enters the supplied overflow store. */
+  static boolean transfer(List<Container> sources, List<Container> destinations, @Nullable Consumer<ItemStack> overflow) {
     for (Container source : sources) {
       for (int slot = 0; slot < source.getContainerSize(); slot++) {
         ItemStack remaining = source.getItem(slot).copy();
@@ -114,28 +112,15 @@ public final class StorageEvacuation {
         source.setItem(slot, remaining);
         source.setChanged();
         if (!remaining.isEmpty()) {
-          return false;
+          if (overflow == null) {
+            return false;
+          }
+          overflow.accept(remaining.copy());
+          source.setItem(slot, ItemStack.EMPTY);
+          source.setChanged();
         }
       }
     }
     return true;
-  }
-
-  private static Container copy(Container original) {
-    SimpleContainer copy = new SimpleContainer(original.getContainerSize()) {
-      @Override
-      public boolean canPlaceItem(int slot, ItemStack stack) {
-        return original.canPlaceItem(slot, stack);
-      }
-
-      @Override
-      public int getMaxStackSize() {
-        return original.getMaxStackSize();
-      }
-    };
-    for (int slot = 0; slot < original.getContainerSize(); slot++) {
-      copy.setItem(slot, original.getItem(slot).copy());
-    }
-    return copy;
   }
 }

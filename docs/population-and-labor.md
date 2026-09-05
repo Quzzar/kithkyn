@@ -105,6 +105,13 @@ expires. Losing a bed
 (house destroyed) still does not despawn a person; it makes them homeless, which hurts
 attractiveness (below) and idles them until rehoused.
 
+During an active redevelopment project, residents displaced from their homes keep existing
+jobs until construction finishes. Their dependently housed working children receive the same
+exception. They use spare beds first, remain temporarily bedless otherwise, and have priority
+for replacement housing. A demolished workplace still releases its jobs. The exception ends
+with the project; it does not let ordinary unhoused arrivals claim jobs. See
+[redevelopment](redevelopment.md) for the transition and saved contents.
+
 ## What drives inflow: attractiveness
 
 Stronghold's "popularity" score, renamed **attractiveness** for us: a 0 to 100 score owned by

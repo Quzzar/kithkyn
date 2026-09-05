@@ -14,7 +14,6 @@ import java.util.UUID;
 import com.quzzar.kithkyn.Kithkyn;
 import com.quzzar.kithkyn.savedata.PlacedBlockStore;
 import com.quzzar.kithkyn.village.BlockOwnership;
-import com.quzzar.kithkyn.village.Occupation;
 import com.quzzar.kithkyn.village.Village;
 import com.quzzar.kithkyn.village.VillageManager;
 
@@ -222,10 +221,6 @@ public final class RedevelopmentPlanner {
     if (source != null) {
       affected.add(source);
     }
-    String consequence = eligibility(village, affected);
-    if (!consequence.isEmpty()) {
-      return Assessment.refused(consequence);
-    }
     if (RedevelopmentDemand.reason(village, target, affected).isEmpty()) {
       return Assessment.refused("no current need for the net capacity or capability gained");
     }
@@ -285,9 +280,6 @@ public final class RedevelopmentPlanner {
         }
       }
     }
-    if (!StorageEvacuation.canEvacuate(village, affected)) {
-      return Assessment.refused("nowhere for displaced contents");
-    }
     ConstructionMode mode = source == null ? ConstructionMode.FRESH : ConstructionMode.UPGRADE;
     List<ItemStack> required = new ArrayList<>(ConstructionQuote.requiredFor(target, mode));
     if (!fill.isEmpty()) {
@@ -298,27 +290,6 @@ public final class RedevelopmentPlanner {
     return new Assessment(Optional.of(new RedevelopmentPlan(UUID.randomUUID(), target.getName(), mode,
         source == null ? Optional.empty() : Optional.of(source.getUUID()), ground.asLong(), rotation, targetFingerprint(village, target),
         removed, blocks, MaterialAmount.fromStacks(required), salvage, prep.toBreak(), fill)), "");
-  }
-
-  /** Only admissible transition states reach the model; worth remains its decision. */
-  static String eligibility(Village village, Collection<Building> affected) {
-    Set<UUID> ids = affected.stream().map(Building::getUUID).collect(java.util.stream.Collectors.toSet());
-    boolean builderSurvives = village.getJobAssignmentsView().values().stream()
-        .anyMatch(job -> job.getOccupation() == Occupation.BUILDER && !ids.contains(job.getBuildingUUID()));
-    if (!builderSurvives) {
-      return "no surviving builder workplace";
-    }
-    if (!village.canRehouseForRedevelopment(ids)) {
-      return "insufficient general beds for displaced residents";
-    }
-    boolean losesFood = affected.stream().anyMatch(RedevelopmentPlanner::foodBuilding);
-    boolean foodSurvives = village.getBuildings().stream().filter(building -> !ids.contains(building.getUUID()))
-        .filter(RedevelopmentPlanner::foodBuilding).anyMatch(building -> village.getJobAssignmentsView().values()
-            .stream().anyMatch(job -> job.getBuildingUUID().equals(building.getUUID())));
-    if (losesFood && !foodSurvives) {
-      return "no staffed food production remains during construction";
-    }
-    return "";
   }
 
   private static boolean foodBuilding(Building building) {
@@ -424,8 +395,9 @@ public final class RedevelopmentPlanner {
         + (target.getWorkLocations().size() - lostJobs) + " workplaces, "
         + (target.getContainerLocations().size() - lostStorage) + " shared containers, "
         + RedevelopmentDemand.netFoodPlots(village, target, affected) + " crop plots. Target capabilities: "
-        + target.getGrants() + ". Current need: " + RedevelopmentDemand.reason(village, target, affected) + ". During work: " + displaced + " residents rehoused, " + lostJobs
-        + " workplaces unavailable, " + remainingFood + " staffed food buildings remain; output not forecast. Recover: "
+        + target.getGrants() + ". Current need: " + RedevelopmentDemand.reason(village, target, affected) + ". During work: " + displaced + " residents displaced (spare beds used first; otherwise temporarily homeless), " + lostJobs
+        + " workplaces affected; builders can continue construction, " + remainingFood
+        + " staffed food buildings remain; output not forecast. Stored items are preserved; overflow waits for space. Recover: "
         + MaterialAmount.describe(plan.salvage()) + ". Still pay: " + MaterialAmount.describe(plan.netRequired())
         + ". Removal and ground work: " + work(plan) + " blocks, followed by construction.";
   }

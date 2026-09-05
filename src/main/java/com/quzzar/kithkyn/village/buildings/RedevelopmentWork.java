@@ -3,6 +3,9 @@ package com.quzzar.kithkyn.village.buildings;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
+
+import net.minecraft.core.UUIDUtil;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
@@ -22,25 +25,38 @@ public final class RedevelopmentWork {
   public static final Codec<RedevelopmentWork> CODEC = RecordCodecBuilder.create(instance -> instance.group(
       RedevelopmentPlan.CODEC.fieldOf("plan").forGetter(work -> work.plan),
       Codec.intRange(0, Integer.MAX_VALUE).fieldOf("cursor").forGetter(work -> work.cursor),
-      MaterialAmount.CODEC.listOf().fieldOf("refund").forGetter(work -> work.refund)
+      MaterialAmount.CODEC.listOf().fieldOf("refund").forGetter(work -> work.refund),
+      UUIDUtil.CODEC.listOf().optionalFieldOf("displaced_residents", List.of()).forGetter(work -> work.displacedResidents)
   ).apply(instance, RedevelopmentWork::new));
 
   private final RedevelopmentPlan plan;
   private int cursor;
   private List<MaterialAmount> refund;
+  private List<UUID> displacedResidents;
 
   public RedevelopmentWork(RedevelopmentPlan plan) {
-    this(plan, 0, List.of());
+    this(plan, 0, List.of(), List.of());
   }
 
-  private RedevelopmentWork(RedevelopmentPlan plan, int cursor, List<MaterialAmount> refund) {
+  private RedevelopmentWork(RedevelopmentPlan plan, int cursor, List<MaterialAmount> refund,
+      List<UUID> displacedResidents) {
     this.plan = plan;
     this.cursor = cursor;
     this.refund = List.copyOf(refund);
+    this.displacedResidents = List.copyOf(displacedResidents);
   }
 
   public RedevelopmentPlan plan() {
     return plan;
+  }
+
+  /** Bed holders displaced by this project keep existing work until the replacement is complete. */
+  public void recordDisplacedResidents(List<UUID> residents) {
+    displacedResidents = List.copyOf(residents);
+  }
+
+  public boolean displaced(UUID resident) {
+    return displacedResidents.contains(resident);
   }
 
   public int remainingBlocks() {
@@ -107,7 +123,7 @@ public final class RedevelopmentWork {
     if (remainingBlocks() != 0) {
       return;
     }
-    village.queueRedevelopmentRefund(refund);
+    village.queueRedevelopmentItems(MaterialAmount.stacks(refund));
     refund = List.of();
     village.rebuildBuildingClaims();
   }

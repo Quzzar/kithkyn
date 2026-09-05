@@ -1,0 +1,317 @@
+{
+  "runs": [
+    {
+      "run": "growth-off-1",
+      "freeGeneralBedsDay0To12": [
+        4,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "zeroBedPostInitialSamples": 12,
+      "postInitialSamples": 12
+    },
+    {
+      "run": "growth-off-2",
+      "freeGeneralBedsDay0To12": [
+        4,
+        1,
+        0,
+        0,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        0,
+        0,
+        0
+      ],
+      "zeroBedPostInitialSamples": 5,
+      "postInitialSamples": 12
+    },
+    {
+      "run": "growth-on-1",
+      "freeGeneralBedsDay0To12": [
+        4,
+        3,
+        2,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "zeroBedPostInitialSamples": 5,
+      "postInitialSamples": 12,
+      "surveyedPlacements": 385,
+      "firstRefusals": {
+        "protected center or mine": 305,
+        "no buildings need removal": 80
+      }
+    },
+    {
+      "run": "growth-on-2",
+      "freeGeneralBedsDay0To12": [
+        4,
+        4,
+        2,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "zeroBedPostInitialSamples": 9,
+      "postInitialSamples": 12,
+      "surveyedPlacements": 386,
+      "firstRefusals": {
+        "protected center or mine": 306,
+        "no buildings need removal": 80
+      }
+    },
+    {
+      "run": "opportunity-off-1",
+      "freeGeneralBedsDay0To12": [
+        3,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "zeroBedPostInitialSamples": 11,
+      "postInitialSamples": 12
+    },
+    {
+      "run": "opportunity-off-2",
+      "freeGeneralBedsDay0To12": [
+        3,
+        1,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "zeroBedPostInitialSamples": 4,
+      "postInitialSamples": 12
+    },
+    {
+      "run": "opportunity-on-1",
+      "freeGeneralBedsDay0To12": [
+        3,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "zeroBedPostInitialSamples": 12,
+      "postInitialSamples": 12,
+      "surveyedPlacements": 298,
+      "firstRefusals": {
+        "no current need for the net capacity or capability gained": 15,
+        "insufficient general beds for displaced residents": 26,
+        "protected center or mine": 252
+      }
+    },
+    {
+      "run": "opportunity-on-2",
+      "freeGeneralBedsDay0To12": [
+        3,
+        1,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "zeroBedPostInitialSamples": 10,
+      "postInitialSamples": 12,
+      "surveyedPlacements": 298,
+      "firstRefusals": {
+        "protected center or mine": 235,
+        "insufficient general beds for displaced residents": 41,
+        "no current need for the net capacity or capability gained": 7
+      }
+    }
+  ],
+  "totals": {
+    "zeroBedPostInitialSamples": 68,
+    "postInitialSamples": 96,
+    "enabledSurveyedPlacements": 1367,
+    "enabledFirstRefusals": {
+      "protected center or mine": 1098,
+      "no buildings need removal": 160,
+      "no current need for the net capacity or capability gained": 22,
+      "insufficient general beds for displaced residents": 67
+    }
+  },
+  "savedMosswoodStorageAudit": [
+    {
+      "building": "village_center_plains_1",
+      "id": [
+        313797915,
+        -1886303731,
+        -1244080356,
+        -1553170885
+      ],
+      "sourceStacks": 2,
+      "sourceItems": 5,
+      "destinationEmptySlots": 92,
+      "minimumNewSlotsAfterOptimisticMerging": 2,
+      "definitelyCannotFit": false
+    },
+    {
+      "building": "mine_plains_1",
+      "id": [
+        -362733728,
+        246695252,
+        -1374818572,
+        997669966
+      ],
+      "sourceStacks": 0,
+      "sourceItems": 0,
+      "destinationEmptySlots": 65,
+      "minimumNewSlotsAfterOptimisticMerging": 0,
+      "definitelyCannotFit": false
+    },
+    {
+      "building": "storehouse_plains_1",
+      "id": [
+        -1914135043,
+        519849245,
+        -1750924967,
+        -1213930322
+      ],
+      "sourceStacks": 81,
+      "sourceItems": 4158,
+      "destinationEmptySlots": 92,
+      "minimumNewSlotsAfterOptimisticMerging": 68,
+      "definitelyCannotFit": false
+    },
+    {
+      "building": "house_plains_3",
+      "id": [
+        1674898865,
+        -687714990,
+        -2092204438,
+        1141384468
+      ],
+      "sourceStacks": 1,
+      "sourceItems": 1,
+      "destinationEmptySlots": 92,
+      "minimumNewSlotsAfterOptimisticMerging": 0,
+      "definitelyCannotFit": false
+    },
+    {
+      "building": "lumberjack_plains_1",
+      "id": [
+        -936163811,
+        -1937552165,
+        -1458065772,
+        150993635
+      ],
+      "sourceStacks": 28,
+      "sourceItems": 1558,
+      "destinationEmptySlots": 92,
+      "minimumNewSlotsAfterOptimisticMerging": 26,
+      "definitelyCannotFit": false
+    },
+    {
+      "building": "farm_plains_1",
+      "id": [
+        -25604587,
+        1240025695,
+        -1148530523,
+        484157639
+      ],
+      "sourceStacks": 27,
+      "sourceItems": 1499,
+      "destinationEmptySlots": 92,
+      "minimumNewSlotsAfterOptimisticMerging": 23,
+      "definitelyCannotFit": false
+    },
+    {
+      "building": "farm_plains_3",
+      "id": [
+        -109112373,
+        -680702318,
+        -2068775162,
+        -1171940237
+      ],
+      "sourceStacks": 97,
+      "sourceItems": 4521,
+      "destinationEmptySlots": 27,
+      "minimumNewSlotsAfterOptimisticMerging": 75,
+      "definitelyCannotFit": true
+    },
+    {
+      "building": "house_plains_3",
+      "id": [
+        92273803,
+        -88849067,
+        -1692691827,
+        -151901300
+      ],
+      "sourceStacks": 1,
+      "sourceItems": 1,
+      "destinationEmptySlots": 92,
+      "minimumNewSlotsAfterOptimisticMerging": 0,
+      "definitelyCannotFit": false
+    }
+  ],
+  "limitations": [
+    "Daily samples are not continuous availability measurements or independent villages.",
+    "Refusal logs report only the first failing gate; surveyed placements can repeat.",
+    "Mosswood village and chunk files were read from a running server across successive saves, not an atomic world snapshot.",
+    "Inventory rows assess one existing building at a time, not a verified redevelopment footprint. Optimistic merging treats every stack as stackable to 64; a failure even under that bound proves insufficient capacity in the read inventories."
+  ]
+}

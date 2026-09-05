@@ -285,7 +285,8 @@ public final class JobClaiming {
    * the village can still house (a free general bed reconcile will take, or a
    * free bed in their own workplace) is left alone and housed within the tick;
    * only one it genuinely cannot house is released. A free bed in some OTHER
-   * workplace is reserved for that building and does not save them.
+   * workplace is reserved for that building and does not save them. Workers displaced
+   * by the active redevelopment keep their existing job until the project finishes.
    *
    * <p>Unlike {@link #releaseInvalidAssignments}, the released post is
    * re-queued: the station is fine, the worker just cannot keep it. An
@@ -295,7 +296,8 @@ public final class JobClaiming {
   private static void releaseUnhousedWorkers(Village village, ServerLevel level) {
     for (Map.Entry<UUID, JobAssignment> entry : village.getJobAssignmentsView().entrySet()) {
       UUID workerId = entry.getKey();
-      if (village.canHouseForJob(workerId, entry.getValue().getBuildingUUID())) {
+      if (village.keepsWorkDuringRedevelopment(workerId)
+          || village.canHouseForJob(workerId, entry.getValue().getBuildingUUID())) {
         continue; // housable this tick; reconcile or assignment will seat them
       }
       RealPerson person = village.getPerson(level, workerId);

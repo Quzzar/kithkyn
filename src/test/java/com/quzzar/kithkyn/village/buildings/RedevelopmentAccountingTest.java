@@ -54,9 +54,15 @@ class RedevelopmentAccountingTest {
   void onlySalvageUsedByTheNewRecipeBecomesNewInvestment() {
     RedevelopmentWork work = new RedevelopmentWork(plan(40, 60));
     assertEquals(List.of(new MaterialAmount(Items.COBBLESTONE, 40)), work.commitCredit());
+    UUID displaced = UUID.randomUUID();
+    work.recordDisplacedResidents(List.of(displaced));
     var saved = RedevelopmentWork.CODEC.encodeStart(NbtOps.INSTANCE, work).getOrThrow();
     RedevelopmentWork restored = RedevelopmentWork.CODEC.parse(NbtOps.INSTANCE, saved).getOrThrow();
     assertEquals(saved, RedevelopmentWork.CODEC.encodeStart(NbtOps.INSTANCE, restored).getOrThrow());
+    assertTrue(restored.displaced(displaced));
+    var legacy = ((net.minecraft.nbt.CompoundTag) saved).copy();
+    legacy.remove("displaced_residents");
+    assertTrue(!RedevelopmentWork.CODEC.parse(NbtOps.INSTANCE, legacy).getOrThrow().displaced(displaced));
   }
 
   private static RedevelopmentPlan plan(int cost, int salvage) {
