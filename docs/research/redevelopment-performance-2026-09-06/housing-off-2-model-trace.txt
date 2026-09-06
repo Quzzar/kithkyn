@@ -1,0 +1,229 @@
+[01:12:23.095] ==== #1 REQUEST decide | what Redevelopment verification builds next | temperature 0.1, up to 128 tokens
+--- system
+You are the mind of a villager in a village simulation. Choose the single most sensible action for the situation. Answer with ONLY a JSON object: {"reason": "<one short sentence weighing the situation>", "choice": <option number>, "action": "<the chosen option, copied exactly>"}
+--- example user
+Situation: The well has collapsed and there is no clean water. The sun is shining.
+
+Options:
+1. go swimming
+2. rebuild the well
+3. paint the fence
+
+Answer with ONLY the JSON object.
+--- example assistant
+{"reason": "We cannot live without clean water, so the well matters more than fun or chores.", "choice": 2, "action": "rebuild the well"}
+--- user
+Situation: You are the collective judgement of Redevelopment verification, a camp. 7 residents; 5 hold jobs; 2 work-eligible residents have no post. 6 independent beds total; 0 general beds free; 0 free live-in beds are reserved to their workplaces; 1 adult resident needs independent housing. There are no pre-adults awaiting family housing. 1 adult resident is already unhoused. They cannot take open work unless that workplace has a free live-in bed; another workshop without beds would not house them, while a house would add general beds. Already standing: farm x3, house x1, lumberjack x1, mine x1, storehouse x1, village center x1. Open work: builder x1, farmer x2, guard x17. Attractiveness is high, but the campfire's idle-labour capacity is full. Food stores stand at 54.9 items per person. Choose what to build next.
+
+Options:
+1. an on-site level 2 mine upgrade (net 0 general beds, 0 beds reserved for workers, +1 workplaces, +1 shared containers, 0 crop plots; provides fuel production, ore extraction)
+2. a mine (adds 0 general beds, 0 beds reserved for workers, 1 workplaces, 1 shared containers, 0 crop plots; jobs: miner; provides fuel production, ore extraction)
+3. a butchery (adds 0 general beds, 0 beds reserved for workers, 2 workplaces, 1 shared containers, 0 crop plots; jobs: butcher, herder; provides leather production, meat production, wool production), which provides the wool that other buildings are built from
+4. a lumberjack (adds 0 general beds, 1 beds reserved for workers, 1 workplaces, 1 shared containers, 0 crop plots; jobs: lumberjack; provides logging, plank production), which provides the logs that other buildings are built from
+5. a blacksmith (adds 0 general beds, 1 beds reserved for workers, 1 workplaces, 1 shared containers, 0 crop plots; jobs: blacksmith; provides gear repair, metal smelting), which provides the iron ingot that other buildings are built from
+6. a new level 3 farm on a separate site (adds 0 general beds, 0 beds reserved for workers, 2 workplaces, 6 shared containers, 76 crop plots; jobs: farmer; provides grain production)
+7. an on-site level 2 farm upgrade (net 0 general beds, 0 beds reserved for workers, 0 workplaces, +2 shared containers, +26 crop plots; provides grain production)
+8. a farm (adds 0 general beds, 0 beds reserved for workers, 1 workplaces, 1 shared containers, 26 crop plots; jobs: farmer; provides grain production)
+9. a market (adds 0 general beds, 0 beds reserved for workers, 1 workplaces, 1 shared containers, 0 crop plots; jobs: merchant; provides trade)
+10. a well (adds 0 general beds, 0 beds reserved for workers, 0 workplaces, 0 shared containers, 0 crop plots; provides fresh water)
+11. a fishery (adds 0 general beds, 0 beds reserved for workers, 1 workplaces, 1 shared containers, 0 crop plots; jobs: fisher; provides meat production, fresh water)
+12. an on-site level 2 storehouse upgrade (net 0 general beds, 0 beds reserved for workers, 0 workplaces, +3 shared containers, 0 crop plots; provides none)
+13. a new level 2 watchtower on a separate site (adds 0 general beds, 2 beds reserved for workers, 2 workplaces, 1 shared containers, 0 crop plots; jobs: guard; provides village defense)
+14. a watchtower (adds 0 general beds, 1 beds reserved for workers, 1 workplaces, 1 shared containers, 0 crop plots; jobs: guard; provides village defense)
+15. a hunting lodge (adds 0 general beds, 0 beds reserved for workers, 1 workplaces, 1 shared containers, 0 crop plots; jobs: hunter; provides leather production, meat production)
+16. a new level 3 house on a separate site (adds 4 general beds, 0 beds reserved for workers, 0 workplaces, 0 shared containers, 0 crop plots; provides none)
+17. a new level 2 house on a separate site (adds 2 general beds, 0 beds reserved for workers, 0 workplaces, 0 shared containers, 0 crop plots; provides none)
+18. a house (adds 1 general beds, 0 beds reserved for workers, 0 workplaces, 0 shared containers, 0 crop plots; provides none)
+19. a stoneworks (adds 0 general beds, 0 beds reserved for workers, 1 workplaces, 1 shared containers, 0 crop plots; jobs: mason; provides stone cutting), which provides the cobblestone that other buildings are built from
+20. nothing yet: keep what we have and wait
+
+Answer with ONLY the JSON object.
+
+[01:12:29.837] ==== #1 REPLY decide | what Redevelopment verification builds next | 6741 ms
+{"reason": "We need to address the lack of housing for the adult resident and the need for more food, so we should focus on providing basic necessities.", "choice": 8, "action": "farm"}
+
+[01:16:34.746] ==== #41 REQUEST decide | what Redevelopment verification builds next | temperature 0.1, up to 128 tokens
+--- system
+You are the mind of a villager in a village simulation. Choose the single most sensible action for the situation. Answer with ONLY a JSON object: {"reason": "<one short sentence weighing the situation>", "choice": <option number>, "action": "<the chosen option, copied exactly>"}
+--- example user
+Situation: The well has collapsed and there is no clean water. The sun is shining.
+
+Options:
+1. go swimming
+2. rebuild the well
+3. paint the fence
+
+Answer with ONLY the JSON object.
+--- example assistant
+{"reason": "We cannot live without clean water, so the well matters more than fun or chores.", "choice": 2, "action": "rebuild the well"}
+--- user
+Situation: You are the collective judgement of Redevelopment verification, a hamlet. 10 residents; 6 hold jobs; 4 work-eligible residents have no post. 6 independent beds total; 0 general beds free; 0 free live-in beds are reserved to their workplaces; 4 adult residents need independent housing. There are no pre-adults awaiting family housing. 4 adult residents are already unhoused. They cannot take open work unless that workplace has a free live-in bed; another workshop without beds would not house them, while a house would add general beds. Already standing: farm x3, house x1, lumberjack x1, mine x1, storehouse x1, village center x1. Open work: builder x1, farmer x2, guard x16, miner x1. Attractiveness is high, but housing capacity currently blocks another newcomer. Food stores stand at 37.8 items per person. Trouble your workers currently report: your lumberjack Amy Baxter-Sloan, since today: "I cannot get to my workbench."; your builder Owen Valencia, for 2 days: "I have no crafting table to keep at hand"; your farmer Horace Floyd, for 1 day: "There is nothing ripe in the field to harvest yet.". Choose what to build next.
+
+Options:
+1. a new level 2 mine on a separate site (adds 0 general beds, 0 beds reserved for workers, 2 workplaces, 2 shared containers, 0 crop plots; jobs: miner; provides fuel production, ore extraction)
+2. a mine (adds 0 general beds, 0 beds reserved for workers, 1 workplaces, 1 shared containers, 0 crop plots; jobs: miner; provides fuel production, ore extraction)
+3. a butchery (adds 0 general beds, 0 beds reserved for workers, 2 workplaces, 1 shared containers, 0 crop plots; jobs: butcher, herder; provides leather production, meat production, wool production), which provides the wool that other buildings are built from
+4. a lumberjack (adds 0 general beds, 1 beds reserved for workers, 1 workplaces, 1 shared containers, 0 crop plots; jobs: lumberjack; provides logging, plank production), which provides the logs that other buildings are built from
+5. a blacksmith (adds 0 general beds, 1 beds reserved for workers, 1 workplaces, 1 shared containers, 0 crop plots; jobs: blacksmith; provides gear repair, metal smelting), which provides the iron ingot that other buildings are built from
+6. a new level 3 farm on a separate site (adds 0 general beds, 0 beds reserved for workers, 2 workplaces, 6 shared containers, 76 crop plots; jobs: farmer; provides grain production)
+7. an on-site level 2 farm upgrade (net 0 general beds, 0 beds reserved for workers, 0 workplaces, +2 shared containers, +26 crop plots; provides grain production)
+8. a farm (adds 0 general beds, 0 beds reserved for workers, 1 workplaces, 1 shared containers, 26 crop plots; jobs: farmer; provides grain production)
+9. a market (adds 0 general beds, 0 beds reserved for workers, 1 workplaces, 1 shared containers, 0 crop plots; jobs: merchant; provides trade)
+10. a well (adds 0 general beds, 0 beds reserved for workers, 0 workplaces, 0 shared containers, 0 crop plots; provides fresh water)
+11. a fishery (adds 0 general beds, 0 beds reserved for workers, 1 workplaces, 1 shared containers, 0 crop plots; jobs: fisher; provides meat production, fresh water)
+12. an on-site level 2 storehouse upgrade (net 0 general beds, 0 beds reserved for workers, 0 workplaces, +3 shared containers, 0 crop plots; provides none)
+13. a new level 2 watchtower on a separate site (adds 0 general beds, 2 beds reserved for workers, 2 workplaces, 1 shared containers, 0 crop plots; jobs: guard; provides village defense)
+14. a watchtower (adds 0 general beds, 1 beds reserved for workers, 1 workplaces, 1 shared containers, 0 crop plots; jobs: guard; provides village defense)
+15. a hunting lodge (adds 0 general beds, 0 beds reserved for workers, 1 workplaces, 1 shared containers, 0 crop plots; jobs: hunter; provides leather production, meat production)
+16. a new level 3 house on a separate site (adds 4 general beds, 0 beds reserved for workers, 0 workplaces, 0 shared containers, 0 crop plots; provides none)
+17. a new level 2 house on a separate site (adds 2 general beds, 0 beds reserved for workers, 0 workplaces, 0 shared containers, 0 crop plots; provides none)
+18. a house (adds 1 general beds, 0 beds reserved for workers, 0 workplaces, 0 shared containers, 0 crop plots; provides none)
+19. a stoneworks (adds 0 general beds, 0 beds reserved for workers, 1 workplaces, 1 shared containers, 0 crop plots; jobs: mason; provides stone cutting), which provides the cobblestone that other buildings are built from
+20. nothing yet: keep what we have and wait
+
+Answer with ONLY the JSON object.
+
+[01:16:41.444] ==== #41 REPLY decide | what Redevelopment verification builds next | 6698 ms
+{"reason": "We need to address the immediate needs of our residents, particularly the 4 adult residents who need housing and the 4 work-eligible residents who need jobs.", "choice": 3, "action": "a butchery"}
+
+[01:17:45.426] ==== #54 REQUEST decide | what Redevelopment verification builds next | temperature 0.1, up to 128 tokens
+--- system
+You are the mind of a villager in a village simulation. Choose the single most sensible action for the situation. Answer with ONLY a JSON object: {"reason": "<one short sentence weighing the situation>", "choice": <option number>, "action": "<the chosen option, copied exactly>"}
+--- example user
+Situation: The well has collapsed and there is no clean water. The sun is shining.
+
+Options:
+1. go swimming
+2. rebuild the well
+3. paint the fence
+
+Answer with ONLY the JSON object.
+--- example assistant
+{"reason": "We cannot live without clean water, so the well matters more than fun or chores.", "choice": 2, "action": "rebuild the well"}
+--- user
+Situation: You are the collective judgement of Redevelopment verification, a hamlet. 10 residents; 6 hold jobs; 4 work-eligible residents have no post. 6 independent beds total; 0 general beds free; 0 free live-in beds are reserved to their workplaces; 4 adult residents need independent housing. There are no pre-adults awaiting family housing. 4 adult residents are already unhoused. They cannot take open work unless that workplace has a free live-in bed; another workshop without beds would not house them, while a house would add general beds. Already standing: butchery x1, farm x3, house x1, lumberjack x1, mine x1, storehouse x1, village center x1. Open work: builder x1, butcher x1, farmer x2, guard x16, herder x1, miner x1. Attractiveness is high, but housing capacity currently blocks another newcomer. Food stores stand at 37.8 items per person. Trouble your workers currently report: your builder Owen Valencia, for 4 days: "I have no crafting table to keep at hand". Choose what to build next.
+
+Options:
+1. a new level 2 mine on a separate site (adds 0 general beds, 0 beds reserved for workers, 2 workplaces, 2 shared containers, 0 crop plots; jobs: miner; provides fuel production, ore extraction)
+2. a mine (adds 0 general beds, 0 beds reserved for workers, 1 workplaces, 1 shared containers, 0 crop plots; jobs: miner; provides fuel production, ore extraction)
+3. a butchery (adds 0 general beds, 0 beds reserved for workers, 2 workplaces, 1 shared containers, 0 crop plots; jobs: butcher, herder; provides leather production, meat production, wool production), which provides the wool that other buildings are built from
+4. a lumberjack (adds 0 general beds, 1 beds reserved for workers, 1 workplaces, 1 shared containers, 0 crop plots; jobs: lumberjack; provides logging, plank production), which provides the logs that other buildings are built from
+5. a blacksmith (adds 0 general beds, 1 beds reserved for workers, 1 workplaces, 1 shared containers, 0 crop plots; jobs: blacksmith; provides gear repair, metal smelting), which provides the iron ingot that other buildings are built from
+6. a new level 3 farm on a separate site (adds 0 general beds, 0 beds reserved for workers, 2 workplaces, 6 shared containers, 76 crop plots; jobs: farmer; provides grain production)
+7. an on-site level 2 farm upgrade (net 0 general beds, 0 beds reserved for workers, 0 workplaces, +2 shared containers, +26 crop plots; provides grain production)
+8. a farm (adds 0 general beds, 0 beds reserved for workers, 1 workplaces, 1 shared containers, 26 crop plots; jobs: farmer; provides grain production)
+9. a market (adds 0 general beds, 0 beds reserved for workers, 1 workplaces, 1 shared containers, 0 crop plots; jobs: merchant; provides trade)
+10. a well (adds 0 general beds, 0 beds reserved for workers, 0 workplaces, 0 shared containers, 0 crop plots; provides fresh water)
+11. a fishery (adds 0 general beds, 0 beds reserved for workers, 1 workplaces, 1 shared containers, 0 crop plots; jobs: fisher; provides meat production, fresh water)
+12. an on-site level 2 storehouse upgrade (net 0 general beds, 0 beds reserved for workers, 0 workplaces, +3 shared containers, 0 crop plots; provides none)
+13. a new level 2 watchtower on a separate site (adds 0 general beds, 2 beds reserved for workers, 2 workplaces, 1 shared containers, 0 crop plots; jobs: guard; provides village defense)
+14. a watchtower (adds 0 general beds, 1 beds reserved for workers, 1 workplaces, 1 shared containers, 0 crop plots; jobs: guard; provides village defense)
+15. a hunting lodge (adds 0 general beds, 0 beds reserved for workers, 1 workplaces, 1 shared containers, 0 crop plots; jobs: hunter; provides leather production, meat production)
+16. a new level 3 house on a separate site (adds 4 general beds, 0 beds reserved for workers, 0 workplaces, 0 shared containers, 0 crop plots; provides none)
+17. a new level 2 house on a separate site (adds 2 general beds, 0 beds reserved for workers, 0 workplaces, 0 shared containers, 0 crop plots; provides none)
+18. a house (adds 1 general beds, 0 beds reserved for workers, 0 workplaces, 0 shared containers, 0 crop plots; provides none)
+19. a stoneworks (adds 0 general beds, 0 beds reserved for workers, 1 workplaces, 1 shared containers, 0 crop plots; jobs: mason; provides stone cutting), which provides the cobblestone that other buildings are built from
+20. nothing yet: keep what we have and wait
+21. save up for a new level 2 market on a separate site (adds 0 general beds, 0 beds reserved for workers, 2 workplaces, 2 shared containers, 0 crop plots; jobs: merchant; provides trade, trade outreach), still needs 12 wool
+22. save up for a new level 3 storehouse on a separate site (adds 0 general beds, 0 beds reserved for workers, 1 workplaces, 11 shared containers, 0 crop plots; jobs: quartermaster; provides none), still needs 4 wool
+23. save up for a storehouse (adds 0 general beds, 0 beds reserved for workers, 1 workplaces, 3 shared containers, 0 crop plots; jobs: quartermaster; provides none), still needs 4 wool
+
+Answer with ONLY the JSON object.
+
+[01:17:51.128] ==== #54 REPLY decide | what Redevelopment verification builds next | 5702 ms
+{"reason": "We need to address the lack of housing and the builder's crafting table issue, so we should build something that provides both.", "choice": 3, "action": "a butchery"}
+
+[01:19:04.887] ==== #73 REQUEST decide | what Redevelopment verification builds next | temperature 0.1, up to 128 tokens
+--- system
+You are the mind of a villager in a village simulation. Choose the single most sensible action for the situation. Answer with ONLY a JSON object: {"reason": "<one short sentence weighing the situation>", "choice": <option number>, "action": "<the chosen option, copied exactly>"}
+--- example user
+Situation: The well has collapsed and there is no clean water. The sun is shining.
+
+Options:
+1. go swimming
+2. rebuild the well
+3. paint the fence
+
+Answer with ONLY the JSON object.
+--- example assistant
+{"reason": "We cannot live without clean water, so the well matters more than fun or chores.", "choice": 2, "action": "rebuild the well"}
+--- user
+Situation: You are the collective judgement of Redevelopment verification, a hamlet. 10 residents; 6 hold jobs; 4 work-eligible residents have no post. 6 independent beds total; 0 general beds free; 0 free live-in beds are reserved to their workplaces; 4 adult residents need independent housing. There are no pre-adults awaiting family housing. 4 adult residents are already unhoused. They cannot take open work unless that workplace has a free live-in bed; another workshop without beds would not house them, while a house would add general beds. Already standing: butchery x2, farm x3, house x1, lumberjack x1, mine x1, storehouse x1, village center x1. Open work: builder x1, butcher x2, farmer x2, guard x16, herder x2, miner x1. Attractiveness is high, but housing capacity currently blocks another newcomer. Food stores stand at 37.8 items per person. Trouble your workers currently report: your builder Owen Valencia, for 7 days: "I have no crafting table to keep at hand". Choose what to build next.
+
+Options:
+1. a new level 2 mine on a separate site (adds 0 general beds, 0 beds reserved for workers, 2 workplaces, 2 shared containers, 0 crop plots; jobs: miner; provides fuel production, ore extraction)
+2. a mine (adds 0 general beds, 0 beds reserved for workers, 1 workplaces, 1 shared containers, 0 crop plots; jobs: miner; provides fuel production, ore extraction)
+3. a butchery (adds 0 general beds, 0 beds reserved for workers, 2 workplaces, 1 shared containers, 0 crop plots; jobs: butcher, herder; provides leather production, meat production, wool production), which provides the wool that other buildings are built from
+4. a lumberjack (adds 0 general beds, 1 beds reserved for workers, 1 workplaces, 1 shared containers, 0 crop plots; jobs: lumberjack; provides logging, plank production), which provides the logs that other buildings are built from
+5. a blacksmith (adds 0 general beds, 1 beds reserved for workers, 1 workplaces, 1 shared containers, 0 crop plots; jobs: blacksmith; provides gear repair, metal smelting), which provides the iron ingot that other buildings are built from
+6. a new level 3 farm on a separate site (adds 0 general beds, 0 beds reserved for workers, 2 workplaces, 6 shared containers, 76 crop plots; jobs: farmer; provides grain production)
+7. an on-site level 2 farm upgrade (net 0 general beds, 0 beds reserved for workers, 0 workplaces, +2 shared containers, +26 crop plots; provides grain production)
+8. a farm (adds 0 general beds, 0 beds reserved for workers, 1 workplaces, 1 shared containers, 26 crop plots; jobs: farmer; provides grain production)
+9. a market (adds 0 general beds, 0 beds reserved for workers, 1 workplaces, 1 shared containers, 0 crop plots; jobs: merchant; provides trade)
+10. a well (adds 0 general beds, 0 beds reserved for workers, 0 workplaces, 0 shared containers, 0 crop plots; provides fresh water)
+11. a fishery (adds 0 general beds, 0 beds reserved for workers, 1 workplaces, 1 shared containers, 0 crop plots; jobs: fisher; provides meat production, fresh water)
+12. an on-site level 2 storehouse upgrade (net 0 general beds, 0 beds reserved for workers, 0 workplaces, +3 shared containers, 0 crop plots; provides none)
+13. a new level 2 watchtower on a separate site (adds 0 general beds, 2 beds reserved for workers, 2 workplaces, 1 shared containers, 0 crop plots; jobs: guard; provides village defense)
+14. a watchtower (adds 0 general beds, 1 beds reserved for workers, 1 workplaces, 1 shared containers, 0 crop plots; jobs: guard; provides village defense)
+15. a hunting lodge (adds 0 general beds, 0 beds reserved for workers, 1 workplaces, 1 shared containers, 0 crop plots; jobs: hunter; provides leather production, meat production)
+16. a new level 3 house on a separate site (adds 4 general beds, 0 beds reserved for workers, 0 workplaces, 0 shared containers, 0 crop plots; provides none)
+17. a new level 2 house on a separate site (adds 2 general beds, 0 beds reserved for workers, 0 workplaces, 0 shared containers, 0 crop plots; provides none)
+18. a house (adds 1 general beds, 0 beds reserved for workers, 0 workplaces, 0 shared containers, 0 crop plots; provides none)
+19. a stoneworks (adds 0 general beds, 0 beds reserved for workers, 1 workplaces, 1 shared containers, 0 crop plots; jobs: mason; provides stone cutting), which provides the cobblestone that other buildings are built from
+20. nothing yet: keep what we have and wait
+21. save up for a new level 2 market on a separate site (adds 0 general beds, 0 beds reserved for workers, 2 workplaces, 2 shared containers, 0 crop plots; jobs: merchant; provides trade, trade outreach), still needs 12 wool
+22. save up for a new level 3 storehouse on a separate site (adds 0 general beds, 0 beds reserved for workers, 1 workplaces, 11 shared containers, 0 crop plots; jobs: quartermaster; provides none), still needs 4 wool
+23. save up for a storehouse (adds 0 general beds, 0 beds reserved for workers, 1 workplaces, 3 shared containers, 0 crop plots; jobs: quartermaster; provides none), still needs 4 wool
+
+Answer with ONLY the JSON object.
+
+[01:19:10.634] ==== #73 REPLY decide | what Redevelopment verification builds next | 5747 ms
+{"reason": "We need to address the immediate need for housing and provide a stable source of food and water for our residents.", "choice": 8, "action": "a farm"}
+
+[01:19:57.549] ==== #83 REQUEST decide | what Redevelopment verification builds next | temperature 0.1, up to 128 tokens
+--- system
+You are the mind of a villager in a village simulation. Choose the single most sensible action for the situation. Answer with ONLY a JSON object: {"reason": "<one short sentence weighing the situation>", "choice": <option number>, "action": "<the chosen option, copied exactly>"}
+--- example user
+Situation: The well has collapsed and there is no clean water. The sun is shining.
+
+Options:
+1. go swimming
+2. rebuild the well
+3. paint the fence
+
+Answer with ONLY the JSON object.
+--- example assistant
+{"reason": "We cannot live without clean water, so the well matters more than fun or chores.", "choice": 2, "action": "rebuild the well"}
+--- user
+Situation: You are the collective judgement of Redevelopment verification, a hamlet. 10 residents; 6 hold jobs; 4 work-eligible residents have no post. 6 independent beds total; 0 general beds free; 0 free live-in beds are reserved to their workplaces; 4 adult residents need independent housing. There are no pre-adults awaiting family housing. 4 adult residents are already unhoused. They cannot take open work unless that workplace has a free live-in bed; another workshop without beds would not house them, while a house would add general beds. Already standing: butchery x2, farm x4, house x1, lumberjack x1, mine x1, storehouse x1, village center x1. Open work: builder x1, butcher x2, farmer x3, guard x16, herder x2, miner x1. Attractiveness is high, but housing capacity currently blocks another newcomer. Food stores stand at 37.8 items per person. Trouble your workers currently report: your lumberjack Amy Baxter-Sloan, since today: "I cannot get to my workbench."; your builder Owen Valencia, for 9 days: "I have no crafting table to keep at hand". Choose what to build next.
+
+Options:
+1. a new level 2 mine on a separate site (adds 0 general beds, 0 beds reserved for workers, 2 workplaces, 2 shared containers, 0 crop plots; jobs: miner; provides fuel production, ore extraction)
+2. a mine (adds 0 general beds, 0 beds reserved for workers, 1 workplaces, 1 shared containers, 0 crop plots; jobs: miner; provides fuel production, ore extraction)
+3. a butchery (adds 0 general beds, 0 beds reserved for workers, 2 workplaces, 1 shared containers, 0 crop plots; jobs: butcher, herder; provides leather production, meat production, wool production), which provides the wool that other buildings are built from
+4. a lumberjack (adds 0 general beds, 1 beds reserved for workers, 1 workplaces, 1 shared containers, 0 crop plots; jobs: lumberjack; provides logging, plank production), which provides the logs that other buildings are built from
+5. a blacksmith (adds 0 general beds, 1 beds reserved for workers, 1 workplaces, 1 shared containers, 0 crop plots; jobs: blacksmith; provides gear repair, metal smelting), which provides the iron ingot that other buildings are built from
+6. a new level 3 farm on a separate site (adds 0 general beds, 0 beds reserved for workers, 2 workplaces, 6 shared containers, 76 crop plots; jobs: farmer; provides grain production)
+7. an on-site level 2 farm upgrade (net 0 general beds, 0 beds reserved for workers, 0 workplaces, +2 shared containers, +26 crop plots; provides grain production)
+8. a farm (adds 0 general beds, 0 beds reserved for workers, 1 workplaces, 1 shared containers, 26 crop plots; jobs: farmer; provides grain production)
+9. a market (adds 0 general beds, 0 beds reserved for workers, 1 workplaces, 1 shared containers, 0 crop plots; jobs: merchant; provides trade)
+10. a well (adds 0 general beds, 0 beds reserved for workers, 0 workplaces, 0 shared containers, 0 crop plots; provides fresh water)
+11. a fishery (adds 0 general beds, 0 beds reserved for workers, 1 workplaces, 1 shared containers, 0 crop plots; jobs: fisher; provides meat production, fresh water)
+12. an on-site level 2 storehouse upgrade (net 0 general beds, 0 beds reserved for workers, 0 workplaces, +3 shared containers, 0 crop plots; provides none)
+13. a new level 2 watchtower on a separate site (adds 0 general beds, 2 beds reserved for workers, 2 workplaces, 1 shared containers, 0 crop plots; jobs: guard; provides village defense)
+14. a watchtower (adds 0 general beds, 1 beds reserved for workers, 1 workplaces, 1 shared containers, 0 crop plots; jobs: guard; provides village defense)
+15. a hunting lodge (adds 0 general beds, 0 beds reserved for workers, 1 workplaces, 1 shared containers, 0 crop plots; jobs: hunter; provides leather production, meat production)
+16. a new level 3 house on a separate site (adds 4 general beds, 0 beds reserved for workers, 0 workplaces, 0 shared containers, 0 crop plots; provides none)
+17. a new level 2 house on a separate site (adds 2 general beds, 0 beds reserved for workers, 0 workplaces, 0 shared containers, 0 crop plots; provides none)
+18. a house (adds 1 general beds, 0 beds reserved for workers, 0 workplaces, 0 shared containers, 0 crop plots; provides none)
+19. a stoneworks (adds 0 general beds, 0 beds reserved for workers, 1 workplaces, 1 shared containers, 0 crop plots; jobs: mason; provides stone cutting), which provides the cobblestone that other buildings are built from
+20. nothing yet: keep what we have and wait
+21. save up for a new level 2 market on a separate site (adds 0 general beds, 0 beds reserved for workers, 2 workplaces, 2 shared containers, 0 crop plots; jobs: merchant; provides trade, trade outreach), still needs 12 wool
+22. save up for a new level 3 storehouse on a separate site (adds 0 general beds, 0 beds reserved for workers, 1 workplaces, 11 shared containers, 0 crop plots; jobs: quartermaster; provides none), still needs 4 wool
+23. save up for a storehouse (adds 0 general beds, 0 beds reserved for workers, 1 workplaces, 3 shared containers, 0 crop plots; jobs: quartermaster; provides none), still needs 4 wool
+
+Answer with ONLY the JSON object.
+
+[01:20:03.400] ==== #83 REPLY decide | what Redevelopment verification builds next | 5851 ms
+{"reason": "We need to address the housing shortage and provide a safe place for our residents, while also considering the availability of resources and the need for new buildings.", "choice": 18, "action": "a house"}
+

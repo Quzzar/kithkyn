@@ -1,0 +1,2265 @@
+[20:22:27.510] ==== #1 REQUEST background | a persona for Magnus Huffman | temperature 0.5, up to 120 tokens
+--- system
+You write character sheets for villagers in a medieval village. Given a villager's traits, respond with EXACTLY two lines in this format:
+BLURB: <2-3 sentences, third person, using every listed trait as written. No job.>
+QUIRK: <one observable habit, under 15 words>
+Start the first line with BLURB: and the second with QUIRK:. Write nothing else.
+--- example user
+Name: Doria Fenn (female). Personality: cheerful. Traits: notably strong, keen-eyed.
+--- example assistant
+BLURB: Doria Fenn is a stocky, bright-tempered woman who hauls twice her share without complaint. Even at a distance she spots ripe berries before anyone else has noticed them.
+QUIRK: Waves at every passing chicken as if greeting an old friend.
+--- example user
+Name: Orrin Blackwood (male). Personality: cranky. Traits: gravely frail, near-sighted, self-serving.
+--- example assistant
+BLURB: Orrin Blackwood is a thin, sour man whose health fails him more winters than not, and who squints at anything further than arm's reach. He looks after himself first and makes no apology for it.
+QUIRK: Counts his firewood twice every evening before bed.
+--- user
+Name: Magnus Huffman (male). Personality: stout-hearted. Traits: notably weak, sharp-minded, wise, near-sighted.
+
+[20:22:32.203] ==== #1 REPLY background | a persona for Magnus Huffman | 4692 ms
+BLURB: Magnus Huffman is a sturdy-built scholar who thinks before he acts, and often gets lost in thought. Despite his physical frailty, he has a wealth of knowledge at his fingertips.
+QUIRK: Fumbles with his spectacles more often than not.
+
+[20:22:32.357] ==== #2 REQUEST villager-chat | Magnus names their cat | temperature 0.5, up to 96 tokens, frequency penalty 0.3
+--- system
+You are Magnus Huffman, a man of New growth. About you: Magnus Huffman is a sturdy-built scholar who thinks before he acts, and often gets lost in thought. Despite his physical frailty, he has a wealth of knowledge at his fingertips. You have just been given a cat of your own, and it is yours to name and to make ready. Choose a name for it, a collar colour, and its coat, in keeping with who you are. Speak as yourself, in the first person, one short sentence a turn. When you have decided, state your choices in a decision. Reply with ONLY a JSON object: {"say":"<what you say>","decision":{"name":"<the cat's name>","collar":"<a collar colour>","variant":"<a coat>"}}. The collar must be exactly one of: "white", "orange", "magenta", "light_blue", "yellow", "lime", "pink", "gray", "light_gray", "cyan", "purple", "blue", "brown", "green", "red", "black". The coat must be exactly one of: "calico", "british_shorthair", "persian", "white", "red", "all_black", "black", "siamese", "tabby", "ragdoll", "jellie".
+--- user
+A cat of your own stands before you; name it and ready it.
+
+Your words so far:
+(nothing said yet)
+
+It is your turn, Magnus. Reply with ONLY the JSON object.
+
+[20:22:32.726] ==== #3 REQUEST decide | Magnus sees to their cat | temperature 0.1, up to 128 tokens
+--- system
+You are the mind of a villager in a village simulation. Choose the single most sensible action for the situation. Answer with ONLY a JSON object: {"reason": "<one short sentence weighing the situation>", "choice": <option number>, "action": "<the chosen option, copied exactly>"}
+--- example user
+Situation: The well has collapsed and there is no clean water. The sun is shining.
+
+Options:
+1. go swimming
+2. rebuild the well
+3. paint the fence
+
+Answer with ONLY the JSON object.
+--- example assistant
+{"reason": "We cannot live without clean water, so the well matters more than fun or chores.", "choice": 2, "action": "rebuild the well"}
+--- user
+Situation: You are Magnus Huffman, the quartermaster of New growth. Magnus Huffman is a sturdy-built scholar who thinks before he acts, and often gets lost in thought. Despite his physical frailty, he has a wealth of knowledge at his fingertips. You are going about your work as the quartermaster. Your Juniper is at your heel. Having your companion sit and stay can keep them safe when this is a good place to rest, especially at home. Having them follow keeps them close, gives you time together, and strengthens your bond. Decide whether to change what they are doing, and give your reason in a few words.
+
+Options:
+1. Have Juniper sit and stay here
+2. Let Juniper keep following you
+
+Answer with ONLY the JSON object.
+
+[20:22:37.269] ==== #2 REPLY villager-chat | Magnus names their cat | 4912 ms
+{"say":"I shall name this new companion Luna.","decision":{"name":"Luna","collar":"gray","variant":"calico"}}
+
+[20:22:37.404] ==== #3 REPLY decide | Magnus sees to their cat | 4676 ms
+{"reason": "Safety and companionship are priorities.", "choice": 1, "action": "Have Juniper sit and stay here"}
+
+[20:22:37.404] ==== #4 REQUEST background | a persona for Easton Conrad | temperature 0.5, up to 120 tokens
+--- system
+You write character sheets for villagers in a medieval village. Given a villager's traits, respond with EXACTLY two lines in this format:
+BLURB: <2-3 sentences, third person, using every listed trait as written. No job.>
+QUIRK: <one observable habit, under 15 words>
+Start the first line with BLURB: and the second with QUIRK:. Write nothing else.
+--- example user
+Name: Doria Fenn (female). Personality: cheerful. Traits: notably strong, keen-eyed.
+--- example assistant
+BLURB: Doria Fenn is a stocky, bright-tempered woman who hauls twice her share without complaint. Even at a distance she spots ripe berries before anyone else has noticed them.
+QUIRK: Waves at every passing chicken as if greeting an old friend.
+--- example user
+Name: Orrin Blackwood (male). Personality: cranky. Traits: gravely frail, near-sighted, self-serving.
+--- example assistant
+BLURB: Orrin Blackwood is a thin, sour man whose health fails him more winters than not, and who squints at anything further than arm's reach. He looks after himself first and makes no apology for it.
+QUIRK: Counts his firewood twice every evening before bed.
+--- user
+Name: Easton Conrad (male). Personality: lazy. Traits: quick-tempered, cautious for their own skin.
+
+[20:22:42.133] ==== #4 REPLY background | a persona for Easton Conrad | 4729 ms
+BLURB: Easton Conrad is a lean, easily-irritated young man who avoids work whenever possible, and who weighs his every decision by its potential impact on his own skin. He takes long, careful strolls through the village, eyeing every stranger.
+QUIRK: Spends an inordinate amount of time planning his route to the market.
+
+[20:22:42.133] ==== #5 REQUEST background | a persona for Cole Blackburn | temperature 0.5, up to 120 tokens
+--- system
+You write character sheets for villagers in a medieval village. Given a villager's traits, respond with EXACTLY two lines in this format:
+BLURB: <2-3 sentences, third person, using every listed trait as written. No job.>
+QUIRK: <one observable habit, under 15 words>
+Start the first line with BLURB: and the second with QUIRK:. Write nothing else.
+--- example user
+Name: Doria Fenn (female). Personality: cheerful. Traits: notably strong, keen-eyed.
+--- example assistant
+BLURB: Doria Fenn is a stocky, bright-tempered woman who hauls twice her share without complaint. Even at a distance she spots ripe berries before anyone else has noticed them.
+QUIRK: Waves at every passing chicken as if greeting an old friend.
+--- example user
+Name: Orrin Blackwood (male). Personality: cranky. Traits: gravely frail, near-sighted, self-serving.
+--- example assistant
+BLURB: Orrin Blackwood is a thin, sour man whose health fails him more winters than not, and who squints at anything further than arm's reach. He looks after himself first and makes no apology for it.
+QUIRK: Counts his firewood twice every evening before bed.
+--- user
+Name: Cole Blackburn (male). Personality: lazy. Traits: brilliant but utterly reckless, clumsy, tall, keen-eyed, gentle, self-serving.
+
+[20:22:45.916] ==== #6 REQUEST decide | Magnus sees to their cat | temperature 0.1, up to 128 tokens
+--- system
+You are the mind of a villager in a village simulation. Choose the single most sensible action for the situation. Answer with ONLY a JSON object: {"reason": "<one short sentence weighing the situation>", "choice": <option number>, "action": "<the chosen option, copied exactly>"}
+--- example user
+Situation: The well has collapsed and there is no clean water. The sun is shining.
+
+Options:
+1. go swimming
+2. rebuild the well
+3. paint the fence
+
+Answer with ONLY the JSON object.
+--- example assistant
+{"reason": "We cannot live without clean water, so the well matters more than fun or chores.", "choice": 2, "action": "rebuild the well"}
+--- user
+Situation: You are Magnus Huffman, the quartermaster of New growth. Magnus Huffman is a sturdy-built scholar who thinks before he acts, and often gets lost in thought. Despite his physical frailty, he has a wealth of knowledge at his fingertips. You are going about your work as the quartermaster. Your Luna is sitting where you left it. Having your companion sit and stay can keep them safe when this is a good place to rest, especially at home. Having them follow keeps them close, gives you time together, and strengthens your bond. Decide whether to change what they are doing, and give your reason in a few words.
+
+Options:
+1. Call Luna back to your side
+2. Let Luna keep resting where it is
+
+Answer with ONLY the JSON object.
+
+[20:22:47.406] ==== #5 REPLY background | a persona for Cole Blackburn | 5273 ms
+BLURB: Cole Blackburn is a lanky, brilliant inventor whose creations often destroy the very structures he's meant to improve. Despite his best efforts, his projects always seem to get the better of him.
+QUIRK: Lays down a perfectly good book to watch a single sunbeam dance on the floor.
+
+[20:22:48.541] ==== #6 REPLY decide | Magnus sees to their cat | 2625 ms
+{"reason": "Safety and companionship are paramount.", "choice": 1, "action": "call Luna back to my side"}
+
+[20:22:48.541] ==== #7 REQUEST background | a persona for Phoenix Mcbride | temperature 0.5, up to 120 tokens
+--- system
+You write character sheets for villagers in a medieval village. Given a villager's traits, respond with EXACTLY two lines in this format:
+BLURB: <2-3 sentences, third person, using every listed trait as written. No job.>
+QUIRK: <one observable habit, under 15 words>
+Start the first line with BLURB: and the second with QUIRK:. Write nothing else.
+--- example user
+Name: Doria Fenn (female). Personality: cheerful. Traits: notably strong, keen-eyed.
+--- example assistant
+BLURB: Doria Fenn is a stocky, bright-tempered woman who hauls twice her share without complaint. Even at a distance she spots ripe berries before anyone else has noticed them.
+QUIRK: Waves at every passing chicken as if greeting an old friend.
+--- example user
+Name: Orrin Blackwood (male). Personality: cranky. Traits: gravely frail, near-sighted, self-serving.
+--- example assistant
+BLURB: Orrin Blackwood is a thin, sour man whose health fails him more winters than not, and who squints at anything further than arm's reach. He looks after himself first and makes no apology for it.
+QUIRK: Counts his firewood twice every evening before bed.
+--- user
+Name: Phoenix Mcbride (nonbinary). Personality: sassy. Traits: tall, quick-tempered, self-serving, cautious for their own skin.
+
+[20:22:53.521] ==== #7 REPLY background | a persona for Phoenix Mcbride | 4980 ms
+BLURB: Phoenix Mcbride is a lean, sharp-tongued individual who takes long strides to get where they want to go, often leaving others in the dust. They're not one to volunteer for chores or put themselves in harm's way for anyone else's benefit.
+QUIRK: Darts a nervous glance over their shoulder before answering a question.
+
+[20:22:53.522] ==== #8 REQUEST background | a persona for Sunny Stephens | temperature 0.5, up to 120 tokens
+--- system
+You write character sheets for villagers in a medieval village. Given a villager's traits, respond with EXACTLY two lines in this format:
+BLURB: <2-3 sentences, third person, using every listed trait as written. No job.>
+QUIRK: <one observable habit, under 15 words>
+Start the first line with BLURB: and the second with QUIRK:. Write nothing else.
+--- example user
+Name: Doria Fenn (female). Personality: cheerful. Traits: notably strong, keen-eyed.
+--- example assistant
+BLURB: Doria Fenn is a stocky, bright-tempered woman who hauls twice her share without complaint. Even at a distance she spots ripe berries before anyone else has noticed them.
+QUIRK: Waves at every passing chicken as if greeting an old friend.
+--- example user
+Name: Orrin Blackwood (male). Personality: cranky. Traits: gravely frail, near-sighted, self-serving.
+--- example assistant
+BLURB: Orrin Blackwood is a thin, sour man whose health fails him more winters than not, and who squints at anything further than arm's reach. He looks after himself first and makes no apology for it.
+QUIRK: Counts his firewood twice every evening before bed.
+--- user
+Name: Sunny Stephens (nonbinary). Personality: bubbly. Traits: frail and often ill, instantly likable, endlessly curious, fiercely protective of others, cautious for their own skin.
+
+[20:22:55.044] ==== #9 REQUEST decide | Easton Conrad's chest at home | temperature 0.1, up to 128 tokens
+--- system
+You are the mind of a villager in a village simulation. Choose every option that makes sense for the situation, which may be several or none at all. Answer with ONLY a JSON object: {"reason": "<one short sentence weighing the situation>", "choices": [<the option numbers you choose, or an empty list>]}
+--- example user
+Situation: You are packing for a week of work at the quarry. On the table are these things.
+
+Options:
+1. Take the pickaxe
+2. Take the fishing rod
+3. Take the bread
+4. Take the wedding ring
+
+Answer with ONLY the JSON object.
+--- example assistant
+{"reason": "The quarry wants a pick and food; there is no water to fish and the ring is safer at home.", "choices": [1, 3]}
+--- user
+Situation: You are Easton Conrad, the builder of New growth. Easton Conrad is a lean, easily-irritated young man who avoids work whenever possible, and who weighs his every decision by its potential impact on his own skin. He takes long, careful strolls through the village, eyeing every stranger. You are turning in for the night carrying 5 snowball. Your home has a small chest for keepsakes; it is empty. It is not a store. The village lives on what its workers bring in each day: the stores are where everyone draws wood, food, wool and tools, and anything held back at home is lost to the village's work. The village is not short of anything for a build tonight. Most nights a worker keeps nothing. Hold something back only if it is truly personal, a gift, a memento or a bite of something you fancy, never supplies or your day's produce. Give your reason in a few words.
+
+Options:
+1. Hold back the 5 snowball from the village stores
+
+Answer with ONLY the JSON object.
+
+[20:22:57.572] ==== #9 REPLY decide | Easton Conrad's chest at home | 2528 ms
+{"reason": "Nothing personal.", "choices": []}
+
+[20:22:59.762] ==== #10 REQUEST decide | Magnus sees to their cat | temperature 0.1, up to 128 tokens
+--- system
+You are the mind of a villager in a village simulation. Choose the single most sensible action for the situation. Answer with ONLY a JSON object: {"reason": "<one short sentence weighing the situation>", "choice": <option number>, "action": "<the chosen option, copied exactly>"}
+--- example user
+Situation: The well has collapsed and there is no clean water. The sun is shining.
+
+Options:
+1. go swimming
+2. rebuild the well
+3. paint the fence
+
+Answer with ONLY the JSON object.
+--- example assistant
+{"reason": "We cannot live without clean water, so the well matters more than fun or chores.", "choice": 2, "action": "rebuild the well"}
+--- user
+Situation: You are Magnus Huffman, the quartermaster of New growth. Magnus Huffman is a sturdy-built scholar who thinks before he acts, and often gets lost in thought. Despite his physical frailty, he has a wealth of knowledge at his fingertips. You are going about your work as the quartermaster. Your Luna is at your heel. Having your companion sit and stay can keep them safe when this is a good place to rest, especially at home. Having them follow keeps them close, gives you time together, and strengthens your bond. Decide whether to change what they are doing, and give your reason in a few words.
+
+Options:
+1. Have Luna sit and stay here
+2. Let Luna keep following you
+
+Answer with ONLY the JSON object.
+
+[20:23:00.153] ==== #11 REQUEST decide | what New growth builds next | temperature 0.1, up to 128 tokens
+--- system
+You are the mind of a villager in a village simulation. Choose the single most sensible action for the situation. Answer with ONLY a JSON object: {"reason": "<one short sentence weighing the situation>", "choice": <option number>, "action": "<the chosen option, copied exactly>"}
+--- example user
+Situation: The well has collapsed and there is no clean water. The sun is shining.
+
+Options:
+1. go swimming
+2. rebuild the well
+3. paint the fence
+
+Answer with ONLY the JSON object.
+--- example assistant
+{"reason": "We cannot live without clean water, so the well matters more than fun or chores.", "choice": 2, "action": "rebuild the well"}
+--- user
+Situation: You are the collective judgement of New growth, a camp. 4 residents; 4 hold jobs; 0 work-eligible residents have no post. 4 independent beds total; 0 general beds free; 0 free live-in beds are reserved to their workplaces; no adult residents need independent housing. There are no pre-adults awaiting family housing. No general bed is free. A newcomer could only wait unhoused at the campfire if population limits allow; a workshop without beds would not add housing, while a house would. Already standing: mine x1, storehouse x1, village center x1. Conditions are poor, but the population floor prevents anyone leaving. Food stores stand at 0.0 items per person. Trouble your workers currently report: your builder Easton Conrad, since today: "We have no earth to grade the ground between our buildings.". No building grows or gathers food yet. You have no way to make logs of your own, and nearly everything you could build needs logs. A lumberjack turns stone into logs, so raising one is the way out of this shortage. Choose what to build next.
+
+Options:
+1. nothing yet: keep what we have and wait
+2. save up for a lumberjack (1 bed, work for a lumberjack, a store, fells logs, makes planks), which provides the logs that other buildings are built from, still needs 104 cobblestone
+
+Answer with ONLY the JSON object.
+
+[20:23:01.160] ==== #8 REPLY background | a persona for Sunny Stephens | 7638 ms
+BLURB: Sunny Stephens is a bright-eyed, fragile soul whose infectious laugh can lift even the heaviest of spirits. Though their own health often falters, they put the needs of others before their own with unwavering dedication.
+QUIRK: Insists on wearing a small pouch of herbs around their neck like a talisman against bad luck.
+
+[20:23:03.502] ==== #10 REPLY decide | Magnus sees to their cat | 3739 ms
+{"reason": "Safety and companionship are priorities.", "choice": 1, "action": "Have Luna sit and stay here"}
+
+[20:23:04.671] ==== #11 REPLY decide | what New growth builds next | 4518 ms
+{"reason": "We need to address the log shortage to build essential structures.", "choice": 2, "action": "save up for a lumberjack"}
+
+[20:23:04.671] ==== #12 REQUEST background | a persona for Gemma Vazquez | temperature 0.5, up to 120 tokens
+--- system
+You write character sheets for villagers in a medieval village. Given a villager's traits, respond with EXACTLY two lines in this format:
+BLURB: <2-3 sentences, third person, using every listed trait as written. No job.>
+QUIRK: <one observable habit, under 15 words>
+Start the first line with BLURB: and the second with QUIRK:. Write nothing else.
+--- example user
+Name: Doria Fenn (female). Personality: cheerful. Traits: notably strong, keen-eyed.
+--- example assistant
+BLURB: Doria Fenn is a stocky, bright-tempered woman who hauls twice her share without complaint. Even at a distance she spots ripe berries before anyone else has noticed them.
+QUIRK: Waves at every passing chicken as if greeting an old friend.
+--- example user
+Name: Orrin Blackwood (male). Personality: cranky. Traits: gravely frail, near-sighted, self-serving.
+--- example assistant
+BLURB: Orrin Blackwood is a thin, sour man whose health fails him more winters than not, and who squints at anything further than arm's reach. He looks after himself first and makes no apology for it.
+QUIRK: Counts his firewood twice every evening before bed.
+--- user
+Name: Gemma Vazquez (female). Personality: sassy. Traits: nimble, gravely frail, rash with poor judgment, awkward around others, short, quick-tempered, unhurried.
+
+[20:23:11.069] ==== #12 REPLY background | a persona for Gemma Vazquez | 6398 ms
+BLURB: Gemma Vazquez is a tiny, fast-talking woman whose haste often gets her into trouble, but she always manages to wriggle out of it unscathed. She's always the last to arrive at gatherings, but never the last to leave.
+QUIRK: Spends an inordinate amount of time deciding which shoes to wear.
+
+[20:23:11.070] ==== #13 REQUEST background | a persona for Amy Heath | temperature 0.5, up to 120 tokens
+--- system
+You write character sheets for villagers in a medieval village. Given a villager's traits, respond with EXACTLY two lines in this format:
+BLURB: <2-3 sentences, third person, using every listed trait as written. No job.>
+QUIRK: <one observable habit, under 15 words>
+Start the first line with BLURB: and the second with QUIRK:. Write nothing else.
+--- example user
+Name: Doria Fenn (female). Personality: cheerful. Traits: notably strong, keen-eyed.
+--- example assistant
+BLURB: Doria Fenn is a stocky, bright-tempered woman who hauls twice her share without complaint. Even at a distance she spots ripe berries before anyone else has noticed them.
+QUIRK: Waves at every passing chicken as if greeting an old friend.
+--- example user
+Name: Orrin Blackwood (male). Personality: cranky. Traits: gravely frail, near-sighted, self-serving.
+--- example assistant
+BLURB: Orrin Blackwood is a thin, sour man whose health fails him more winters than not, and who squints at anything further than arm's reach. He looks after himself first and makes no apology for it.
+QUIRK: Counts his firewood twice every evening before bed.
+--- user
+Name: Amy Heath (female). Personality: cheerful. Traits: nimble, hardy, sharp-minded, near-sighted, gentle, fiercely protective of others.
+
+[20:23:15.472] ==== #13 REPLY background | a persona for Amy Heath | 4402 ms
+BLURB: Amy Heath is a lithe, bright-eyed woman who leaps over streams and solves riddles with equal ease. She tends the village children with a quiet strength that brooks no argument.
+QUIRK: Knits intricate patterns into the hem of her apron with a steady, patient hand.
+
+[20:23:15.472] ==== #14 REQUEST background | a persona for Madisen Miles | temperature 0.5, up to 120 tokens
+--- system
+You write character sheets for villagers in a medieval village. Given a villager's traits, respond with EXACTLY two lines in this format:
+BLURB: <2-3 sentences, third person, using every listed trait as written. No job.>
+QUIRK: <one observable habit, under 15 words>
+Start the first line with BLURB: and the second with QUIRK:. Write nothing else.
+--- example user
+Name: Doria Fenn (female). Personality: cheerful. Traits: notably strong, keen-eyed.
+--- example assistant
+BLURB: Doria Fenn is a stocky, bright-tempered woman who hauls twice her share without complaint. Even at a distance she spots ripe berries before anyone else has noticed them.
+QUIRK: Waves at every passing chicken as if greeting an old friend.
+--- example user
+Name: Orrin Blackwood (male). Personality: cranky. Traits: gravely frail, near-sighted, self-serving.
+--- example assistant
+BLURB: Orrin Blackwood is a thin, sour man whose health fails him more winters than not, and who squints at anything further than arm's reach. He looks after himself first and makes no apology for it.
+QUIRK: Counts his firewood twice every evening before bed.
+--- user
+Name: Madisen Miles (nonbinary). Personality: cheerful. Traits: notably strong, slow-witted, gentle, endlessly curious, driven, self-serving, cautious for their own skin.
+
+[20:23:16.800] ==== #15 REQUEST decide | Magnus sees to their cat | temperature 0.1, up to 128 tokens
+--- system
+You are the mind of a villager in a village simulation. Choose the single most sensible action for the situation. Answer with ONLY a JSON object: {"reason": "<one short sentence weighing the situation>", "choice": <option number>, "action": "<the chosen option, copied exactly>"}
+--- example user
+Situation: The well has collapsed and there is no clean water. The sun is shining.
+
+Options:
+1. go swimming
+2. rebuild the well
+3. paint the fence
+
+Answer with ONLY the JSON object.
+--- example assistant
+{"reason": "We cannot live without clean water, so the well matters more than fun or chores.", "choice": 2, "action": "rebuild the well"}
+--- user
+Situation: You are Magnus Huffman, the quartermaster of New growth. Magnus Huffman is a sturdy-built scholar who thinks before he acts, and often gets lost in thought. Despite his physical frailty, he has a wealth of knowledge at his fingertips. You are going about your work as the quartermaster. Your Luna is sitting where you left it. Having your companion sit and stay can keep them safe when this is a good place to rest, especially at home. Having them follow keeps them close, gives you time together, and strengthens your bond. Decide whether to change what they are doing, and give your reason in a few words.
+
+Options:
+1. Call Luna back to your side
+2. Let Luna keep resting where it is
+
+Answer with ONLY the JSON object.
+
+[20:23:20.454] ==== #15 REPLY decide | Magnus sees to their cat | 3654 ms
+{"reason": "Safety and companionship are priorities.", "choice": 1, "action": "call Luna back to my side"}
+
+[20:23:22.025] ==== #14 REPLY background | a persona for Madisen Miles | 6553 ms
+BLURB: Madisen Miles is a sturdy, optimistic soul whose broad shoulders and boundless energy often mask a mind that needs a moment to catch up. Despite their strength, they are always poking around for the next thing that might be useful.
+QUIRK: Inspects every new tool before using it, sometimes for hours.
+
+[20:23:22.025] ==== #16 REQUEST background | who Easton Conrad takes to in New growth | temperature 0.6, up to 60 tokens
+--- system
+You know everyone in a medieval village. A newcomer has just arrived. From the resident list, choose up to 5 residents the newcomer would most plausibly form a real opinion about (or who would form one about them). Respond with ONLY the chosen residents' full names, one per line. No other text.
+--- example user
+Newcomer: Doria Fenn (female, cheerful; notably strong, keen-eyed).
+Residents:
+- Edda Sandoval (cranky): taps every doorframe twice before walking through
+- Tam Reed (bubbly): hums to the chickens at dawn
+- Osgood Vale (secluded): eats alone facing the wall
+--- example assistant
+Edda Sandoval
+Tam Reed
+--- user
+Newcomer: Easton Conrad (lazy): Spends an inordinate amount of time planning his route to the market..
+Residents:
+- Magnus Huffman (stout-hearted): Fumbles with his spectacles more often than not.
+
+
+[20:23:23.235] ==== #16 REPLY background | who Easton Conrad takes to in New growth | 1210 ms
+Magnus Huffman
+Easton Conrad
+
+[20:23:23.236] ==== #17 REQUEST background | a persona for Oswin Fleming | temperature 0.5, up to 120 tokens
+--- system
+You write character sheets for villagers in a medieval village. Given a villager's traits, respond with EXACTLY two lines in this format:
+BLURB: <2-3 sentences, third person, using every listed trait as written. No job.>
+QUIRK: <one observable habit, under 15 words>
+Start the first line with BLURB: and the second with QUIRK:. Write nothing else.
+--- example user
+Name: Doria Fenn (female). Personality: cheerful. Traits: notably strong, keen-eyed.
+--- example assistant
+BLURB: Doria Fenn is a stocky, bright-tempered woman who hauls twice her share without complaint. Even at a distance she spots ripe berries before anyone else has noticed them.
+QUIRK: Waves at every passing chicken as if greeting an old friend.
+--- example user
+Name: Orrin Blackwood (male). Personality: cranky. Traits: gravely frail, near-sighted, self-serving.
+--- example assistant
+BLURB: Orrin Blackwood is a thin, sour man whose health fails him more winters than not, and who squints at anything further than arm's reach. He looks after himself first and makes no apology for it.
+QUIRK: Counts his firewood twice every evening before bed.
+--- user
+Name: Oswin Fleming (male). Personality: secluded. Traits: frail and often ill, slow-witted, rash with poor judgment, nearly blind, incurious, self-serving.
+
+[20:23:28.211] ==== #17 REPLY background | a persona for Oswin Fleming | 4975 ms
+BLURB: Oswin Fleming spends most of his days holed up in his small cottage, rarely leaving unless necessity calls or a meal is served. His condition worsens with age, and his decisions often cause as much trouble as convenience.
+QUIRK: Tries to make decisions by tossing a coin, trusting chance to guide him.
+
+[20:23:28.212] ==== #18 REQUEST background | a persona for Mia Vance | temperature 0.5, up to 120 tokens
+--- system
+You write character sheets for villagers in a medieval village. Given a villager's traits, respond with EXACTLY two lines in this format:
+BLURB: <2-3 sentences, third person, using every listed trait as written. No job.>
+QUIRK: <one observable habit, under 15 words>
+Start the first line with BLURB: and the second with QUIRK:. Write nothing else.
+--- example user
+Name: Doria Fenn (female). Personality: cheerful. Traits: notably strong, keen-eyed.
+--- example assistant
+BLURB: Doria Fenn is a stocky, bright-tempered woman who hauls twice her share without complaint. Even at a distance she spots ripe berries before anyone else has noticed them.
+QUIRK: Waves at every passing chicken as if greeting an old friend.
+--- example user
+Name: Orrin Blackwood (male). Personality: cranky. Traits: gravely frail, near-sighted, self-serving.
+--- example assistant
+BLURB: Orrin Blackwood is a thin, sour man whose health fails him more winters than not, and who squints at anything further than arm's reach. He looks after himself first and makes no apology for it.
+QUIRK: Counts his firewood twice every evening before bed.
+--- user
+Name: Mia Vance (female). Personality: bubbly. Traits: very slow-witted, quick-tempered, endlessly curious, fiercely protective of others, cautious for their own skin.
+
+[20:23:29.265] ==== #19 REQUEST decide | Magnus sees to their cat | temperature 0.1, up to 128 tokens
+--- system
+You are the mind of a villager in a village simulation. Choose the single most sensible action for the situation. Answer with ONLY a JSON object: {"reason": "<one short sentence weighing the situation>", "choice": <option number>, "action": "<the chosen option, copied exactly>"}
+--- example user
+Situation: The well has collapsed and there is no clean water. The sun is shining.
+
+Options:
+1. go swimming
+2. rebuild the well
+3. paint the fence
+
+Answer with ONLY the JSON object.
+--- example assistant
+{"reason": "We cannot live without clean water, so the well matters more than fun or chores.", "choice": 2, "action": "rebuild the well"}
+--- user
+Situation: You are Magnus Huffman, the quartermaster of New growth. Magnus Huffman is a sturdy-built scholar who thinks before he acts, and often gets lost in thought. Despite his physical frailty, he has a wealth of knowledge at his fingertips. You are going about your work as the quartermaster. Your Luna is at your heel. Having your companion sit and stay can keep them safe when this is a good place to rest, especially at home. Having them follow keeps them close, gives you time together, and strengthens your bond. Decide whether to change what they are doing, and give your reason in a few words.
+
+Options:
+1. Have Luna sit and stay here
+2. Let Luna keep following you
+
+Answer with ONLY the JSON object.
+
+[20:23:33.199] ==== #19 REPLY decide | Magnus sees to their cat | 3934 ms
+{"reason": "Safety and companionship are priorities.", "choice": 1, "action": "Have Luna sit and stay here"}
+
+[20:23:36.473] ==== #18 REPLY background | a persona for Mia Vance | 8261 ms
+BLURB: Mia Vance is a lively, scatterbrained woman whose mind wanders so much that she forgets what day it is, yet her heart remains steadfast with loved ones. She can spot a stranger's malicious intent from a mile away.
+QUIRK: Repeats the same cautionary phrase to children ("Stay close, little one!") until they repeat it back to her.
+
+[20:23:36.474] ==== #20 REQUEST background | a persona for Bellamy Townsend | temperature 0.5, up to 120 tokens
+--- system
+You write character sheets for villagers in a medieval village. Given a villager's traits, respond with EXACTLY two lines in this format:
+BLURB: <2-3 sentences, third person, using every listed trait as written. No job.>
+QUIRK: <one observable habit, under 15 words>
+Start the first line with BLURB: and the second with QUIRK:. Write nothing else.
+--- example user
+Name: Doria Fenn (female). Personality: cheerful. Traits: notably strong, keen-eyed.
+--- example assistant
+BLURB: Doria Fenn is a stocky, bright-tempered woman who hauls twice her share without complaint. Even at a distance she spots ripe berries before anyone else has noticed them.
+QUIRK: Waves at every passing chicken as if greeting an old friend.
+--- example user
+Name: Orrin Blackwood (male). Personality: cranky. Traits: gravely frail, near-sighted, self-serving.
+--- example assistant
+BLURB: Orrin Blackwood is a thin, sour man whose health fails him more winters than not, and who squints at anything further than arm's reach. He looks after himself first and makes no apology for it.
+QUIRK: Counts his firewood twice every evening before bed.
+--- user
+Name: Bellamy Townsend (nonbinary). Personality: smug. Traits: sharp-minded, awkward around others, quick-tempered, driven, cautious for their own skin.
+
+[20:23:42.758] ==== #20 REPLY background | a persona for Bellamy Townsend | 6284 ms
+BLURB: Bellamy Townsend is a sharp-witted, yet socially awkward individual who can usually be found huddled in their own thoughts, weighing the risks and rewards of every decision. They speak their mind without filtering, often leaving others bewildered.
+QUIRK: Always keeps their hands visible, as if to prove they have nothing to hide.
+
+[20:23:42.758] ==== #21 REQUEST background | a persona for Delphine Mcbride | temperature 0.5, up to 120 tokens
+--- system
+You write character sheets for villagers in a medieval village. Given a villager's traits, respond with EXACTLY two lines in this format:
+BLURB: <2-3 sentences, third person, using every listed trait as written. No job.>
+QUIRK: <one observable habit, under 15 words>
+Start the first line with BLURB: and the second with QUIRK:. Write nothing else.
+--- example user
+Name: Doria Fenn (female). Personality: cheerful. Traits: notably strong, keen-eyed.
+--- example assistant
+BLURB: Doria Fenn is a stocky, bright-tempered woman who hauls twice her share without complaint. Even at a distance she spots ripe berries before anyone else has noticed them.
+QUIRK: Waves at every passing chicken as if greeting an old friend.
+--- example user
+Name: Orrin Blackwood (male). Personality: cranky. Traits: gravely frail, near-sighted, self-serving.
+--- example assistant
+BLURB: Orrin Blackwood is a thin, sour man whose health fails him more winters than not, and who squints at anything further than arm's reach. He looks after himself first and makes no apology for it.
+QUIRK: Counts his firewood twice every evening before bed.
+--- user
+Name: Delphine Mcbride (female). Personality: secluded. Traits: brilliant but utterly reckless, cripplingly weak, quick-tempered, unhurried, self-serving.
+
+[20:23:47.023] ==== #21 REPLY background | a persona for Delphine Mcbride | 4265 ms
+BLURB: Delphine Mcbride is a reclusive genius whose experiments have reduced her village to smoldering ruin, and whose temper matches her intellect.
+QUIRK: Ignites fires with a match that never seems to catch.
+
+[20:23:47.023] ==== #22 REQUEST background | a persona for Reeve Lopez | temperature 0.5, up to 120 tokens
+--- system
+You write character sheets for villagers in a medieval village. Given a villager's traits, respond with EXACTLY two lines in this format:
+BLURB: <2-3 sentences, third person, using every listed trait as written. No job.>
+QUIRK: <one observable habit, under 15 words>
+Start the first line with BLURB: and the second with QUIRK:. Write nothing else.
+--- example user
+Name: Doria Fenn (female). Personality: cheerful. Traits: notably strong, keen-eyed.
+--- example assistant
+BLURB: Doria Fenn is a stocky, bright-tempered woman who hauls twice her share without complaint. Even at a distance she spots ripe berries before anyone else has noticed them.
+QUIRK: Waves at every passing chicken as if greeting an old friend.
+--- example user
+Name: Orrin Blackwood (male). Personality: cranky. Traits: gravely frail, near-sighted, self-serving.
+--- example assistant
+BLURB: Orrin Blackwood is a thin, sour man whose health fails him more winters than not, and who squints at anything further than arm's reach. He looks after himself first and makes no apology for it.
+QUIRK: Counts his firewood twice every evening before bed.
+--- user
+Name: Reeve Lopez (male). Personality: sassy. Traits: painfully awkward, tall, quick-tempered, self-serving, cautious for their own skin.
+
+[20:23:51.953] ==== #22 REPLY background | a persona for Reeve Lopez | 4929 ms
+BLURB: Reeve Lopez is a gangly, sharp-tongued man whose large frame makes him an intimidating presence, though his clumsiness often betrays him. He is careful to keep his friends close and his enemies closer.
+QUIRK: Always wears his sword on his back, but not in a secure manner.
+
+[20:23:51.954] ==== #23 REQUEST background | a persona for Ada Cardenas | temperature 0.5, up to 120 tokens
+--- system
+You write character sheets for villagers in a medieval village. Given a villager's traits, respond with EXACTLY two lines in this format:
+BLURB: <2-3 sentences, third person, using every listed trait as written. No job.>
+QUIRK: <one observable habit, under 15 words>
+Start the first line with BLURB: and the second with QUIRK:. Write nothing else.
+--- example user
+Name: Doria Fenn (female). Personality: cheerful. Traits: notably strong, keen-eyed.
+--- example assistant
+BLURB: Doria Fenn is a stocky, bright-tempered woman who hauls twice her share without complaint. Even at a distance she spots ripe berries before anyone else has noticed them.
+QUIRK: Waves at every passing chicken as if greeting an old friend.
+--- example user
+Name: Orrin Blackwood (male). Personality: cranky. Traits: gravely frail, near-sighted, self-serving.
+--- example assistant
+BLURB: Orrin Blackwood is a thin, sour man whose health fails him more winters than not, and who squints at anything further than arm's reach. He looks after himself first and makes no apology for it.
+QUIRK: Counts his firewood twice every evening before bed.
+--- user
+Name: Ada Cardenas (female). Personality: secluded. Traits: brilliant but utterly reckless, clumsy, tall, unhurried.
+
+[20:23:53.777] ==== #24 REQUEST decide | Magnus sees to their cat | temperature 0.1, up to 128 tokens
+--- system
+You are the mind of a villager in a village simulation. Choose the single most sensible action for the situation. Answer with ONLY a JSON object: {"reason": "<one short sentence weighing the situation>", "choice": <option number>, "action": "<the chosen option, copied exactly>"}
+--- example user
+Situation: The well has collapsed and there is no clean water. The sun is shining.
+
+Options:
+1. go swimming
+2. rebuild the well
+3. paint the fence
+
+Answer with ONLY the JSON object.
+--- example assistant
+{"reason": "We cannot live without clean water, so the well matters more than fun or chores.", "choice": 2, "action": "rebuild the well"}
+--- user
+Situation: You are Magnus Huffman, the quartermaster of New growth. Magnus Huffman is a sturdy-built scholar who thinks before he acts, and often gets lost in thought. Despite his physical frailty, he has a wealth of knowledge at his fingertips. You are going about your work as the quartermaster. Your Luna is sitting where you left it. Having your companion sit and stay can keep them safe when this is a good place to rest, especially at home. Having them follow keeps them close, gives you time together, and strengthens your bond. Decide whether to change what they are doing, and give your reason in a few words.
+
+Options:
+1. Call Luna back to your side
+2. Let Luna keep resting where it is
+
+Answer with ONLY the JSON object.
+
+[20:23:57.310] ==== #24 REPLY decide | Magnus sees to their cat | 3533 ms
+{"reason": "Safety and companionship are paramount.", "choice": 1, "action": "call Luna back to my side"}
+
+[20:23:58.471] ==== #23 REPLY background | a persona for Ada Cardenas | 6517 ms
+BLURB: Ada Cardenas is a lanky, reserved woman whose intellect is as boundless as her recklessness, often leading to chaotic consequences. She moves at her own unhurried pace, no matter the urgency of others.
+QUIRK: Trips over her own feet more often than anyone else in the village.
+
+[20:23:58.471] ==== #25 REQUEST background | who Cole Blackburn takes to in New growth | temperature 0.6, up to 60 tokens
+--- system
+You know everyone in a medieval village. A newcomer has just arrived. From the resident list, choose up to 5 residents the newcomer would most plausibly form a real opinion about (or who would form one about them). Respond with ONLY the chosen residents' full names, one per line. No other text.
+--- example user
+Newcomer: Doria Fenn (female, cheerful; notably strong, keen-eyed).
+Residents:
+- Edda Sandoval (cranky): taps every doorframe twice before walking through
+- Tam Reed (bubbly): hums to the chickens at dawn
+- Osgood Vale (secluded): eats alone facing the wall
+--- example assistant
+Edda Sandoval
+Tam Reed
+--- user
+Newcomer: Cole Blackburn (lazy): Lays down a perfectly good book to watch a single sunbeam dance on the floor..
+Residents:
+- Easton Conrad (lazy): Spends an inordinate amount of time planning his route to the market.
+- Magnus Huffman (stout-hearted): Fumbles with his spectacles more often than not.
+
+
+[20:23:59.331] ==== #25 REPLY background | who Cole Blackburn takes to in New growth | 860 ms
+Easton Conrad
+Magnus Huffman
+
+[20:23:59.331] ==== #26 REQUEST background | a persona for Nadia Juarez | temperature 0.5, up to 120 tokens
+--- system
+You write character sheets for villagers in a medieval village. Given a villager's traits, respond with EXACTLY two lines in this format:
+BLURB: <2-3 sentences, third person, using every listed trait as written. No job.>
+QUIRK: <one observable habit, under 15 words>
+Start the first line with BLURB: and the second with QUIRK:. Write nothing else.
+--- example user
+Name: Doria Fenn (female). Personality: cheerful. Traits: notably strong, keen-eyed.
+--- example assistant
+BLURB: Doria Fenn is a stocky, bright-tempered woman who hauls twice her share without complaint. Even at a distance she spots ripe berries before anyone else has noticed them.
+QUIRK: Waves at every passing chicken as if greeting an old friend.
+--- example user
+Name: Orrin Blackwood (male). Personality: cranky. Traits: gravely frail, near-sighted, self-serving.
+--- example assistant
+BLURB: Orrin Blackwood is a thin, sour man whose health fails him more winters than not, and who squints at anything further than arm's reach. He looks after himself first and makes no apology for it.
+QUIRK: Counts his firewood twice every evening before bed.
+--- user
+Name: Nadia Juarez (female). Personality: sassy. Traits: notably strong, gentle, incurious, cautious for their own skin.
+
+[20:24:02.443] ==== #27 REQUEST decide | what New growth builds next | temperature 0.1, up to 128 tokens
+--- system
+You are the mind of a villager in a village simulation. Choose the single most sensible action for the situation. Answer with ONLY a JSON object: {"reason": "<one short sentence weighing the situation>", "choice": <option number>, "action": "<the chosen option, copied exactly>"}
+--- example user
+Situation: The well has collapsed and there is no clean water. The sun is shining.
+
+Options:
+1. go swimming
+2. rebuild the well
+3. paint the fence
+
+Answer with ONLY the JSON object.
+--- example assistant
+{"reason": "We cannot live without clean water, so the well matters more than fun or chores.", "choice": 2, "action": "rebuild the well"}
+--- user
+Situation: You are the collective judgement of New growth, a camp. 4 residents; 4 hold jobs; 0 work-eligible residents have no post. 4 independent beds total; 0 general beds free; 0 free live-in beds are reserved to their workplaces; no adult residents need independent housing. There are no pre-adults awaiting family housing. No general bed is free. A newcomer could only wait unhoused at the campfire if population limits allow; a workshop without beds would not add housing, while a house would. Already standing: mine x1, storehouse x1, village center x1. Conditions are poor, but the population floor prevents anyone leaving. Food stores stand at 0.0 items per person. No building grows or gathers food yet. You have no way to make logs of your own, and nearly everything you could build needs logs. A lumberjack turns stone into logs, so raising one is the way out of this shortage. Choose what to build next.
+
+Options:
+1. nothing yet: keep what we have and wait
+2. save up for a lumberjack (1 bed, work for a lumberjack, a store, fells logs, makes planks), which provides the logs that other buildings are built from, still needs 104 cobblestone
+
+Answer with ONLY the JSON object.
+
+[20:24:05.600] ==== #26 REPLY background | a persona for Nadia Juarez | 6269 ms
+BLURB: Nadia Juarez is a sturdy, soft-spoken woman whose reserve keeps many at bay, but those who earn her trust find a loyal ally. She keeps to herself, preferring to let her actions speak louder than words.
+QUIRK: Always wears the same pair of worn gloves, a habit started after a childhood accident.
+
+[20:24:05.812] ==== #27 REPLY decide | what New growth builds next | 3369 ms
+{"reason": "We need to address the log shortage to build essential structures.", "choice": 2, "action": "save up for a lumberjack"}
+
+[20:24:05.812] ==== #28 REQUEST background | a persona for Mircea Donaldson | temperature 0.5, up to 120 tokens
+--- system
+You write character sheets for villagers in a medieval village. Given a villager's traits, respond with EXACTLY two lines in this format:
+BLURB: <2-3 sentences, third person, using every listed trait as written. No job.>
+QUIRK: <one observable habit, under 15 words>
+Start the first line with BLURB: and the second with QUIRK:. Write nothing else.
+--- example user
+Name: Doria Fenn (female). Personality: cheerful. Traits: notably strong, keen-eyed.
+--- example assistant
+BLURB: Doria Fenn is a stocky, bright-tempered woman who hauls twice her share without complaint. Even at a distance she spots ripe berries before anyone else has noticed them.
+QUIRK: Waves at every passing chicken as if greeting an old friend.
+--- example user
+Name: Orrin Blackwood (male). Personality: cranky. Traits: gravely frail, near-sighted, self-serving.
+--- example assistant
+BLURB: Orrin Blackwood is a thin, sour man whose health fails him more winters than not, and who squints at anything further than arm's reach. He looks after himself first and makes no apology for it.
+QUIRK: Counts his firewood twice every evening before bed.
+--- user
+Name: Mircea Donaldson (female). Personality: lazy. Traits: near-sighted, fiercely protective of others.
+
+[20:24:06.684] ==== #29 REQUEST decide | Magnus sees to their cat | temperature 0.1, up to 128 tokens
+--- system
+You are the mind of a villager in a village simulation. Choose the single most sensible action for the situation. Answer with ONLY a JSON object: {"reason": "<one short sentence weighing the situation>", "choice": <option number>, "action": "<the chosen option, copied exactly>"}
+--- example user
+Situation: The well has collapsed and there is no clean water. The sun is shining.
+
+Options:
+1. go swimming
+2. rebuild the well
+3. paint the fence
+
+Answer with ONLY the JSON object.
+--- example assistant
+{"reason": "We cannot live without clean water, so the well matters more than fun or chores.", "choice": 2, "action": "rebuild the well"}
+--- user
+Situation: You are Magnus Huffman, the quartermaster of New growth. Magnus Huffman is a sturdy-built scholar who thinks before he acts, and often gets lost in thought. Despite his physical frailty, he has a wealth of knowledge at his fingertips. You are going about your work as the quartermaster. Your Luna is at your heel. Having your companion sit and stay can keep them safe when this is a good place to rest, especially at home. Having them follow keeps them close, gives you time together, and strengthens your bond. Decide whether to change what they are doing, and give your reason in a few words.
+
+Options:
+1. Have Luna sit and stay here
+2. Let Luna keep following you
+
+Answer with ONLY the JSON object.
+
+[20:24:06.809] ==== #30 REQUEST decide | should Easton Conrad and Cole Blackburn marry | temperature 0.1, up to 128 tokens
+--- system
+You are the mind of a villager in a village simulation. Choose the single most sensible action for the situation. Answer with ONLY a JSON object: {"reason": "<one short sentence weighing the situation>", "choice": <option number>, "action": "<the chosen option, copied exactly>"}
+--- example user
+Situation: The well has collapsed and there is no clean water. The sun is shining.
+
+Options:
+1. go swimming
+2. rebuild the well
+3. paint the fence
+
+Answer with ONLY the JSON object.
+--- example assistant
+{"reason": "We cannot live without clean water, so the well matters more than fun or chores.", "choice": 2, "action": "rebuild the well"}
+--- user
+Situation: You are the collective judgement of New growth. Easton Conrad (builder) and Cole Blackburn (guard) have each asked to marry the other. Their bond stands at 50 out of 100. A married couple is given a home of their own to raise, which the village will save toward once it is not already saving for something else. The settlement has 4 people. Bless this marriage, or decide the time is not right.
+
+Options:
+1. yes, they should marry
+2. not yet
+
+Answer with ONLY the JSON object.
+
+[20:24:09.891] ==== #29 REPLY decide | Magnus sees to their cat | 3207 ms
+{"reason": "Safety and companionship are priorities.", "choice": 1, "action": "Have Luna sit and stay here"}
+
+[20:24:15.730] ==== #28 REPLY background | a persona for Mircea Donaldson | 9918 ms
+BLURB: Mircea Donaldson is a gentle soul who'd rather spend the day lounging by the river than tending to the village's needs. Despite her near-sightedness, she's always the first to sound the alarm when danger draws near.
+QUIRK: Tends to get lost in familiar fields because she's too lazy to retrace her steps.
+
+[20:24:16.024] ==== #30 REPLY decide | should Easton Conrad and Cole Blackburn marry | 9214 ms
+{"reason": "Their bond is strong enough to support a lifelong commitment, and a home for their family would be a great blessing.", "choice": 1, "action": "yes, they should marry"}
+
+[20:24:16.024] ==== #31 REQUEST background | a persona for Marlowe Hicks | temperature 0.5, up to 120 tokens
+--- system
+You write character sheets for villagers in a medieval village. Given a villager's traits, respond with EXACTLY two lines in this format:
+BLURB: <2-3 sentences, third person, using every listed trait as written. No job.>
+QUIRK: <one observable habit, under 15 words>
+Start the first line with BLURB: and the second with QUIRK:. Write nothing else.
+--- example user
+Name: Doria Fenn (female). Personality: cheerful. Traits: notably strong, keen-eyed.
+--- example assistant
+BLURB: Doria Fenn is a stocky, bright-tempered woman who hauls twice her share without complaint. Even at a distance she spots ripe berries before anyone else has noticed them.
+QUIRK: Waves at every passing chicken as if greeting an old friend.
+--- example user
+Name: Orrin Blackwood (male). Personality: cranky. Traits: gravely frail, near-sighted, self-serving.
+--- example assistant
+BLURB: Orrin Blackwood is a thin, sour man whose health fails him more winters than not, and who squints at anything further than arm's reach. He looks after himself first and makes no apology for it.
+QUIRK: Counts his firewood twice every evening before bed.
+--- user
+Name: Marlowe Hicks (nonbinary). Personality: sassy. Traits: wise, gentle, endlessly curious, unhurried, self-serving, cautious for their own skin.
+
+[20:24:22.250] ==== #31 REPLY background | a persona for Marlowe Hicks | 6226 ms
+BLURB: Marlowe Hicks is a soft-spoken, observant soul who takes their time to learn and share knowledge, often leaving others in awe of their wisdom. Their love of discovery knows no bounds, and they'll ask questions until they're satisfied.
+QUIRK: Inspects every new arrival before accepting them as a friend, favoring those who prove worthy.
+
+[20:24:22.251] ==== #32 REQUEST background | a persona for Austin Townsend | temperature 0.5, up to 120 tokens
+--- system
+You write character sheets for villagers in a medieval village. Given a villager's traits, respond with EXACTLY two lines in this format:
+BLURB: <2-3 sentences, third person, using every listed trait as written. No job.>
+QUIRK: <one observable habit, under 15 words>
+Start the first line with BLURB: and the second with QUIRK:. Write nothing else.
+--- example user
+Name: Doria Fenn (female). Personality: cheerful. Traits: notably strong, keen-eyed.
+--- example assistant
+BLURB: Doria Fenn is a stocky, bright-tempered woman who hauls twice her share without complaint. Even at a distance she spots ripe berries before anyone else has noticed them.
+QUIRK: Waves at every passing chicken as if greeting an old friend.
+--- example user
+Name: Orrin Blackwood (male). Personality: cranky. Traits: gravely frail, near-sighted, self-serving.
+--- example assistant
+BLURB: Orrin Blackwood is a thin, sour man whose health fails him more winters than not, and who squints at anything further than arm's reach. He looks after himself first and makes no apology for it.
+QUIRK: Counts his firewood twice every evening before bed.
+--- user
+Name: Austin Townsend (male). Personality: stout-hearted. Traits: frail and often ill, driven.
+
+[20:24:27.578] ==== #32 REPLY background | a persona for Austin Townsend | 5327 ms
+BLURB: Austin Townsend is a sturdy man whose body betrays him with frequent bouts of sickness, yet still he pushes forward with unyielding determination. His will to succeed is as unshakeable as his resolve.
+QUIRK: Fumbles with his own belt buckle, often needing help fastening it.
+
+[20:24:27.578] ==== #33 REQUEST background | who Phoenix Mcbride takes to in New growth | temperature 0.6, up to 60 tokens
+--- system
+You know everyone in a medieval village. A newcomer has just arrived. From the resident list, choose up to 5 residents the newcomer would most plausibly form a real opinion about (or who would form one about them). Respond with ONLY the chosen residents' full names, one per line. No other text.
+--- example user
+Newcomer: Doria Fenn (female, cheerful; notably strong, keen-eyed).
+Residents:
+- Edda Sandoval (cranky): taps every doorframe twice before walking through
+- Tam Reed (bubbly): hums to the chickens at dawn
+- Osgood Vale (secluded): eats alone facing the wall
+--- example assistant
+Edda Sandoval
+Tam Reed
+--- user
+Newcomer: Phoenix Mcbride (sassy): Darts a nervous glance over their shoulder before answering a question..
+Residents:
+- Magnus Huffman (stout-hearted): Fumbles with his spectacles more often than not.
+- Easton Conrad (lazy): Spends an inordinate amount of time planning his route to the market.
+- Cole Blackburn (lazy): Lays down a perfectly good book to watch a single sunbeam dance on the floor.
+
+
+[20:24:28.742] ==== #33 REPLY background | who Phoenix Mcbride takes to in New growth | 1164 ms
+Magnus Huffman
+Easton Conrad
+Cole Blackburn
+
+[20:24:28.742] ==== #34 REQUEST background | Magnus Huffman shelves the storehouse, round 0 | temperature 0.3, up to 400 tokens
+--- system
+You are Magnus Huffman, quartermaster of New growth. You keep the storehouse and decide which slots hold what.
+--- user
+Our storehouse has 3 chest(s), 81 slots in total, numbered 1 to 81 (chest 1 is slots 1 to 27, chest 2 is slots 28 to 54, chest 3 is slots 55 to 81). It holds these goods, numbered 1 to 1, each with the count on hand and the slots that takes, the kind of thing it is, and the tags the game files it under:
+1. Snowball (x5, 1 stack), kind Combat
+
+Assign every slot to exactly one group, and every item to exactly one group. A group keeps its items in its slots. Reply with ONLY JSON:
+{"groups":[{"name":"...","items":[...],"slots":"..."}],"note":"..."}
+name is what the group is called; items lists the numbers of the goods in it, from the list above; slots is the run of slot numbers the group owns, written first-last; note is one short sentence in your own voice.
+Cover every slot from 1 to 81 once, with no gaps and no overlaps.
+
+[20:24:41.413] ==== #34 REPLY background | Magnus Huffman shelves the storehouse, round 0 | 12671 ms
+{"groups":[{"name":"Combat","items":[1],"slots":"1-27,28-54,55-81","note":"Our trusty warriors need all the gear they can get."},{"groups":[{"name":"Snowball","items":[1],"slots":"28-29,30-31,32-33,34-35,36-37,38-39,40-41,42-43,44-45,46-47,48-49,50-51,52-53,54-55,56-57,58-59,60-61,62-63,64-65,66-67,68-69,70-71,72-73,74-75,76-77,78-79,80-81","note":"We'll need a lot of ammo for our snowball fight."}]}
+
+[20:24:41.416] ==== #35 REQUEST background | who Sunny Stephens takes to in New growth | temperature 0.6, up to 60 tokens
+--- system
+You know everyone in a medieval village. A newcomer has just arrived. From the resident list, choose up to 5 residents the newcomer would most plausibly form a real opinion about (or who would form one about them). Respond with ONLY the chosen residents' full names, one per line. No other text.
+--- example user
+Newcomer: Doria Fenn (female, cheerful; notably strong, keen-eyed).
+Residents:
+- Edda Sandoval (cranky): taps every doorframe twice before walking through
+- Tam Reed (bubbly): hums to the chickens at dawn
+- Osgood Vale (secluded): eats alone facing the wall
+--- example assistant
+Edda Sandoval
+Tam Reed
+--- user
+Newcomer: Sunny Stephens (bubbly): Insists on wearing a small pouch of herbs around their neck like a talisman against bad luck..
+Residents:
+- Magnus Huffman (stout-hearted): Fumbles with his spectacles more often than not.
+- Easton Conrad (lazy): Spends an inordinate amount of time planning his route to the market.
+- Phoenix Mcbride (sassy): Darts a nervous glance over their shoulder before answering a question.
+- Cole Blackburn (lazy): Lays down a perfectly good book to watch a single sunbeam dance on the floor.
+
+
+[20:24:42.300] ==== #35 REPLY background | who Sunny Stephens takes to in New growth | 884 ms
+Magnus Huffman
+Phoenix Mcbride
+
+[20:24:42.300] ==== #36 REQUEST background | who Gemma Vazquez takes to in New growth | temperature 0.6, up to 60 tokens
+--- system
+You know everyone in a medieval village. A newcomer has just arrived. From the resident list, choose up to 5 residents the newcomer would most plausibly form a real opinion about (or who would form one about them). Respond with ONLY the chosen residents' full names, one per line. No other text.
+--- example user
+Newcomer: Doria Fenn (female, cheerful; notably strong, keen-eyed).
+Residents:
+- Edda Sandoval (cranky): taps every doorframe twice before walking through
+- Tam Reed (bubbly): hums to the chickens at dawn
+- Osgood Vale (secluded): eats alone facing the wall
+--- example assistant
+Edda Sandoval
+Tam Reed
+--- user
+Newcomer: Gemma Vazquez (sassy): Spends an inordinate amount of time deciding which shoes to wear..
+Residents:
+- Magnus Huffman (stout-hearted): Fumbles with his spectacles more often than not.
+- Phoenix Mcbride (sassy): Darts a nervous glance over their shoulder before answering a question.
+- Easton Conrad (lazy): Spends an inordinate amount of time planning his route to the market.
+- Cole Blackburn (lazy): Lays down a perfectly good book to watch a single sunbeam dance on the floor.
+
+
+[20:24:43.139] ==== #36 REPLY background | who Gemma Vazquez takes to in New growth | 839 ms
+Magnus Huffman
+Phoenix Mcbride
+Easton Conrad
+
+[20:24:43.139] ==== #37 REQUEST background | who Amy Heath takes to in New growth | temperature 0.6, up to 60 tokens
+--- system
+You know everyone in a medieval village. A newcomer has just arrived. From the resident list, choose up to 5 residents the newcomer would most plausibly form a real opinion about (or who would form one about them). Respond with ONLY the chosen residents' full names, one per line. No other text.
+--- example user
+Newcomer: Doria Fenn (female, cheerful; notably strong, keen-eyed).
+Residents:
+- Edda Sandoval (cranky): taps every doorframe twice before walking through
+- Tam Reed (bubbly): hums to the chickens at dawn
+- Osgood Vale (secluded): eats alone facing the wall
+--- example assistant
+Edda Sandoval
+Tam Reed
+--- user
+Newcomer: Amy Heath (cheerful): Knits intricate patterns into the hem of her apron with a steady, patient hand..
+Residents:
+- Phoenix Mcbride (sassy): Darts a nervous glance over their shoulder before answering a question.
+- Magnus Huffman (stout-hearted): Fumbles with his spectacles more often than not.
+- Cole Blackburn (lazy): Lays down a perfectly good book to watch a single sunbeam dance on the floor.
+- Easton Conrad (lazy): Spends an inordinate amount of time planning his route to the market.
+
+
+[20:24:44.165] ==== #37 REPLY background | who Amy Heath takes to in New growth | 1026 ms
+Phoenix Mcbride
+Magnus Huffman
+Cole Blackburn
+
+[20:24:44.165] ==== #38 REQUEST background | who Madisen Miles takes to in New growth | temperature 0.6, up to 60 tokens
+--- system
+You know everyone in a medieval village. A newcomer has just arrived. From the resident list, choose up to 5 residents the newcomer would most plausibly form a real opinion about (or who would form one about them). Respond with ONLY the chosen residents' full names, one per line. No other text.
+--- example user
+Newcomer: Doria Fenn (female, cheerful; notably strong, keen-eyed).
+Residents:
+- Edda Sandoval (cranky): taps every doorframe twice before walking through
+- Tam Reed (bubbly): hums to the chickens at dawn
+- Osgood Vale (secluded): eats alone facing the wall
+--- example assistant
+Edda Sandoval
+Tam Reed
+--- user
+Newcomer: Madisen Miles (cheerful): Inspects every new tool before using it, sometimes for hours..
+Residents:
+- Cole Blackburn (lazy): Lays down a perfectly good book to watch a single sunbeam dance on the floor.
+- Easton Conrad (lazy): Spends an inordinate amount of time planning his route to the market.
+- Magnus Huffman (stout-hearted): Fumbles with his spectacles more often than not.
+- Phoenix Mcbride (sassy): Darts a nervous glance over their shoulder before answering a question.
+
+
+[20:24:45.136] ==== #38 REPLY background | who Madisen Miles takes to in New growth | 971 ms
+Cole Blackburn
+Easton Conrad
+
+[20:24:45.136] ==== #39 REQUEST background | Easton Conrad and Magnus Huffman size each other up | temperature 0.6, up to 140 tokens
+--- system
+You judge how two villagers in a medieval village feel about each other. Their opinions of each other are usually close: a shared value with small personal leans. Set asymmetric true only when the two genuinely see each other differently, which is about one pair in ten; for every other pair it is false and the leans stay tiny. These two have only just met, so keep value between -60 and 60: adoration and hatred are earned over time, not assigned on arrival. The flavor must be about the PAIR: what passes between them, what they share, what grates. Never describe one villager on their own, and never write a line that would still make sense if the other person did not exist. Respond with ONLY a JSON object exactly like: {"value": <-60 to 60>, "lean_a": <-15 to 15>, "lean_b": <-15 to 15>, "asymmetric": false, "flavor": "<one sentence about the two of them>"} Higher value means fonder. Do not write anything else.
+--- example user
+Person A: Doria Fenn (cheerful; notably strong, keen-eyed).
+Person B: Tam Reed (bubbly): hums to the chickens at dawn.
+--- example assistant
+{"value": 35, "lean_a": 5, "lean_b": -3, "asymmetric": false, "flavor": "Two warm souls who trade jokes over the fence most mornings."}
+--- example user
+Person A: Miren Oak (cranky; slow of foot).
+Person B: Sella Vance (smug): counts every coin twice.
+--- example assistant
+{"value": -20, "lean_a": -6, "lean_b": 2, "asymmetric": false, "flavor": "They share a wall and an old argument about whose goats ruined whose garden."}
+--- user
+Person A: Easton Conrad (lazy): Spends an inordinate amount of time planning his route to the market..
+Person B: Magnus Huffman (stout-hearted): Fumbles with his spectacles more often than not..
+
+[20:24:49.949] ==== #39 REPLY background | Easton Conrad and Magnus Huffman size each other up | 4813 ms
+{"value": 25, "lean_a": 10, "lean_b": 5, "asymmetric": false, "flavor": "A lazy route planner and a fumbling hero find common ground in the market's chaotic aisles."}
+
+[20:24:49.950] ==== #40 REQUEST background | who Oswin Fleming takes to in New growth | temperature 0.6, up to 60 tokens
+--- system
+You know everyone in a medieval village. A newcomer has just arrived. From the resident list, choose up to 5 residents the newcomer would most plausibly form a real opinion about (or who would form one about them). Respond with ONLY the chosen residents' full names, one per line. No other text.
+--- example user
+Newcomer: Doria Fenn (female, cheerful; notably strong, keen-eyed).
+Residents:
+- Edda Sandoval (cranky): taps every doorframe twice before walking through
+- Tam Reed (bubbly): hums to the chickens at dawn
+- Osgood Vale (secluded): eats alone facing the wall
+--- example assistant
+Edda Sandoval
+Tam Reed
+--- user
+Newcomer: Oswin Fleming (secluded): Tries to make decisions by tossing a coin, trusting chance to guide him..
+Residents:
+- Cole Blackburn (lazy): Lays down a perfectly good book to watch a single sunbeam dance on the floor.
+- Phoenix Mcbride (sassy): Darts a nervous glance over their shoulder before answering a question.
+- Easton Conrad (lazy): Spends an inordinate amount of time planning his route to the market.
+- Magnus Huffman (stout-hearted): Fumbles with his spectacles more often than not.
+
+
+[20:24:50.869] ==== #40 REPLY background | who Oswin Fleming takes to in New growth | 919 ms
+Cole Blackburn
+Oswin Fleming
+
+[20:24:50.869] ==== #41 REQUEST background | who Mia Vance takes to in New growth | temperature 0.6, up to 60 tokens
+--- system
+You know everyone in a medieval village. A newcomer has just arrived. From the resident list, choose up to 5 residents the newcomer would most plausibly form a real opinion about (or who would form one about them). Respond with ONLY the chosen residents' full names, one per line. No other text.
+--- example user
+Newcomer: Doria Fenn (female, cheerful; notably strong, keen-eyed).
+Residents:
+- Edda Sandoval (cranky): taps every doorframe twice before walking through
+- Tam Reed (bubbly): hums to the chickens at dawn
+- Osgood Vale (secluded): eats alone facing the wall
+--- example assistant
+Edda Sandoval
+Tam Reed
+--- user
+Newcomer: Mia Vance (bubbly): Repeats the same cautionary phrase to children ("Stay close, little one!") until they repeat it back to her..
+Residents:
+- Phoenix Mcbride (sassy): Darts a nervous glance over their shoulder before answering a question.
+- Cole Blackburn (lazy): Lays down a perfectly good book to watch a single sunbeam dance on the floor.
+- Easton Conrad (lazy): Spends an inordinate amount of time planning his route to the market.
+- Magnus Huffman (stout-hearted): Fumbles with his spectacles more often than not.
+
+
+[20:24:51.671] ==== #41 REPLY background | who Mia Vance takes to in New growth | 802 ms
+Phoenix Mcbride
+Cole Blackburn
+
+[20:24:51.671] ==== #42 REQUEST background | who Bellamy Townsend takes to in New growth | temperature 0.6, up to 60 tokens
+--- system
+You know everyone in a medieval village. A newcomer has just arrived. From the resident list, choose up to 5 residents the newcomer would most plausibly form a real opinion about (or who would form one about them). Respond with ONLY the chosen residents' full names, one per line. No other text.
+--- example user
+Newcomer: Doria Fenn (female, cheerful; notably strong, keen-eyed).
+Residents:
+- Edda Sandoval (cranky): taps every doorframe twice before walking through
+- Tam Reed (bubbly): hums to the chickens at dawn
+- Osgood Vale (secluded): eats alone facing the wall
+--- example assistant
+Edda Sandoval
+Tam Reed
+--- user
+Newcomer: Bellamy Townsend (smug): Always keeps their hands visible, as if to prove they have nothing to hide..
+Residents:
+- Magnus Huffman (stout-hearted): Fumbles with his spectacles more often than not.
+- Easton Conrad (lazy): Spends an inordinate amount of time planning his route to the market.
+- Phoenix Mcbride (sassy): Darts a nervous glance over their shoulder before answering a question.
+- Cole Blackburn (lazy): Lays down a perfectly good book to watch a single sunbeam dance on the floor.
+
+
+[20:24:52.533] ==== #42 REPLY background | who Bellamy Townsend takes to in New growth | 861 ms
+Magnus Huffman
+Phoenix Mcbride
+
+[20:24:52.533] ==== #43 REQUEST background | who Delphine Mcbride takes to in New growth | temperature 0.6, up to 60 tokens
+--- system
+You know everyone in a medieval village. A newcomer has just arrived. From the resident list, choose up to 5 residents the newcomer would most plausibly form a real opinion about (or who would form one about them). Respond with ONLY the chosen residents' full names, one per line. No other text.
+--- example user
+Newcomer: Doria Fenn (female, cheerful; notably strong, keen-eyed).
+Residents:
+- Edda Sandoval (cranky): taps every doorframe twice before walking through
+- Tam Reed (bubbly): hums to the chickens at dawn
+- Osgood Vale (secluded): eats alone facing the wall
+--- example assistant
+Edda Sandoval
+Tam Reed
+--- user
+Newcomer: Delphine Mcbride (secluded): Ignites fires with a match that never seems to catch..
+Residents:
+- Easton Conrad (lazy): Spends an inordinate amount of time planning his route to the market.
+- Magnus Huffman (stout-hearted): Fumbles with his spectacles more often than not.
+- Cole Blackburn (lazy): Lays down a perfectly good book to watch a single sunbeam dance on the floor.
+- Phoenix Mcbride (sassy): Darts a nervous glance over their shoulder before answering a question.
+
+
+[20:24:53.436] ==== #43 REPLY background | who Delphine Mcbride takes to in New growth | 903 ms
+Magnus Huffman
+Phoenix Mcbride
+
+[20:24:53.436] ==== #44 REQUEST background | who Reeve Lopez takes to in New growth | temperature 0.6, up to 60 tokens
+--- system
+You know everyone in a medieval village. A newcomer has just arrived. From the resident list, choose up to 5 residents the newcomer would most plausibly form a real opinion about (or who would form one about them). Respond with ONLY the chosen residents' full names, one per line. No other text.
+--- example user
+Newcomer: Doria Fenn (female, cheerful; notably strong, keen-eyed).
+Residents:
+- Edda Sandoval (cranky): taps every doorframe twice before walking through
+- Tam Reed (bubbly): hums to the chickens at dawn
+- Osgood Vale (secluded): eats alone facing the wall
+--- example assistant
+Edda Sandoval
+Tam Reed
+--- user
+Newcomer: Reeve Lopez (sassy): Always wears his sword on his back, but not in a secure manner..
+Residents:
+- Cole Blackburn (lazy): Lays down a perfectly good book to watch a single sunbeam dance on the floor.
+- Phoenix Mcbride (sassy): Darts a nervous glance over their shoulder before answering a question.
+- Easton Conrad (lazy): Spends an inordinate amount of time planning his route to the market.
+- Magnus Huffman (stout-hearted): Fumbles with his spectacles more often than not.
+
+
+[20:24:54.235] ==== #44 REPLY background | who Reeve Lopez takes to in New growth | 799 ms
+Reeve Lopez
+Cole Blackburn
+
+[20:24:54.236] ==== #45 REQUEST background | who Ada Cardenas takes to in New growth | temperature 0.6, up to 60 tokens
+--- system
+You know everyone in a medieval village. A newcomer has just arrived. From the resident list, choose up to 5 residents the newcomer would most plausibly form a real opinion about (or who would form one about them). Respond with ONLY the chosen residents' full names, one per line. No other text.
+--- example user
+Newcomer: Doria Fenn (female, cheerful; notably strong, keen-eyed).
+Residents:
+- Edda Sandoval (cranky): taps every doorframe twice before walking through
+- Tam Reed (bubbly): hums to the chickens at dawn
+- Osgood Vale (secluded): eats alone facing the wall
+--- example assistant
+Edda Sandoval
+Tam Reed
+--- user
+Newcomer: Ada Cardenas (secluded): Trips over her own feet more often than anyone else in the village..
+Residents:
+- Easton Conrad (lazy): Spends an inordinate amount of time planning his route to the market.
+- Magnus Huffman (stout-hearted): Fumbles with his spectacles more often than not.
+- Phoenix Mcbride (sassy): Darts a nervous glance over their shoulder before answering a question.
+- Cole Blackburn (lazy): Lays down a perfectly good book to watch a single sunbeam dance on the floor.
+
+
+[20:24:55.411] ==== #45 REPLY background | who Ada Cardenas takes to in New growth | 1175 ms
+Easton Conrad
+Magnus Huffman
+Phoenix Mcbride
+
+[20:24:55.411] ==== #46 REQUEST background | Cole Blackburn and Easton Conrad size each other up | temperature 0.6, up to 140 tokens
+--- system
+You judge how two villagers in a medieval village feel about each other. Their opinions of each other are usually close: a shared value with small personal leans. Set asymmetric true only when the two genuinely see each other differently, which is about one pair in ten; for every other pair it is false and the leans stay tiny. These two have only just met, so keep value between -60 and 60: adoration and hatred are earned over time, not assigned on arrival. The flavor must be about the PAIR: what passes between them, what they share, what grates. Never describe one villager on their own, and never write a line that would still make sense if the other person did not exist. Respond with ONLY a JSON object exactly like: {"value": <-60 to 60>, "lean_a": <-15 to 15>, "lean_b": <-15 to 15>, "asymmetric": false, "flavor": "<one sentence about the two of them>"} Higher value means fonder. Do not write anything else.
+--- example user
+Person A: Doria Fenn (cheerful; notably strong, keen-eyed).
+Person B: Tam Reed (bubbly): hums to the chickens at dawn.
+--- example assistant
+{"value": 35, "lean_a": 5, "lean_b": -3, "asymmetric": false, "flavor": "Two warm souls who trade jokes over the fence most mornings."}
+--- example user
+Person A: Miren Oak (cranky; slow of foot).
+Person B: Sella Vance (smug): counts every coin twice.
+--- example assistant
+{"value": -20, "lean_a": -6, "lean_b": 2, "asymmetric": false, "flavor": "They share a wall and an old argument about whose goats ruined whose garden."}
+--- user
+Person A: Cole Blackburn (lazy): Lays down a perfectly good book to watch a single sunbeam dance on the floor..
+Person B: Easton Conrad (lazy): Spends an inordinate amount of time planning his route to the market..
+
+[20:24:59.280] ==== #46 REPLY background | Cole Blackburn and Easton Conrad size each other up | 3869 ms
+{"value": -25, "lean_a": -12, "lean_b": -13, "asymmetric": true, "flavor": "In each other, they see the luxury of half-hearted indulgence."}
+
+[20:24:59.280] ==== #47 REQUEST background | Cole Blackburn and Magnus Huffman size each other up | temperature 0.6, up to 140 tokens
+--- system
+You judge how two villagers in a medieval village feel about each other. Their opinions of each other are usually close: a shared value with small personal leans. Set asymmetric true only when the two genuinely see each other differently, which is about one pair in ten; for every other pair it is false and the leans stay tiny. These two have only just met, so keep value between -60 and 60: adoration and hatred are earned over time, not assigned on arrival. The flavor must be about the PAIR: what passes between them, what they share, what grates. Never describe one villager on their own, and never write a line that would still make sense if the other person did not exist. Respond with ONLY a JSON object exactly like: {"value": <-60 to 60>, "lean_a": <-15 to 15>, "lean_b": <-15 to 15>, "asymmetric": false, "flavor": "<one sentence about the two of them>"} Higher value means fonder. Do not write anything else.
+--- example user
+Person A: Doria Fenn (cheerful; notably strong, keen-eyed).
+Person B: Tam Reed (bubbly): hums to the chickens at dawn.
+--- example assistant
+{"value": 35, "lean_a": 5, "lean_b": -3, "asymmetric": false, "flavor": "Two warm souls who trade jokes over the fence most mornings."}
+--- example user
+Person A: Miren Oak (cranky; slow of foot).
+Person B: Sella Vance (smug): counts every coin twice.
+--- example assistant
+{"value": -20, "lean_a": -6, "lean_b": 2, "asymmetric": false, "flavor": "They share a wall and an old argument about whose goats ruined whose garden."}
+--- user
+Person A: Cole Blackburn (lazy): Lays down a perfectly good book to watch a single sunbeam dance on the floor..
+Person B: Magnus Huffman (stout-hearted): Fumbles with his spectacles more often than not..
+
+[20:25:02.970] ==== #47 REPLY background | Cole Blackburn and Magnus Huffman size each other up | 3690 ms
+{"value": 25, "lean_a": 10, "lean_b": 5, "asymmetric": false, "flavor": "Their contrasting habits create a soothing rhythm to each other's days."}
+
+[20:25:02.970] ==== #48 REQUEST background | who Nadia Juarez takes to in New growth | temperature 0.6, up to 60 tokens
+--- system
+You know everyone in a medieval village. A newcomer has just arrived. From the resident list, choose up to 5 residents the newcomer would most plausibly form a real opinion about (or who would form one about them). Respond with ONLY the chosen residents' full names, one per line. No other text.
+--- example user
+Newcomer: Doria Fenn (female, cheerful; notably strong, keen-eyed).
+Residents:
+- Edda Sandoval (cranky): taps every doorframe twice before walking through
+- Tam Reed (bubbly): hums to the chickens at dawn
+- Osgood Vale (secluded): eats alone facing the wall
+--- example assistant
+Edda Sandoval
+Tam Reed
+--- user
+Newcomer: Nadia Juarez (sassy): Always wears the same pair of worn gloves, a habit started after a childhood accident..
+Residents:
+- Magnus Huffman (stout-hearted): Fumbles with his spectacles more often than not.
+- Cole Blackburn (lazy): Lays down a perfectly good book to watch a single sunbeam dance on the floor.
+- Phoenix Mcbride (sassy): Darts a nervous glance over their shoulder before answering a question.
+- Easton Conrad (lazy): Spends an inordinate amount of time planning his route to the market.
+
+
+[20:25:04.162] ==== #48 REPLY background | who Nadia Juarez takes to in New growth | 1192 ms
+Magnus Huffman
+Nadia Juarez
+Phoenix Mcbride
+
+[20:25:04.162] ==== #49 REQUEST background | who Mircea Donaldson takes to in New growth | temperature 0.6, up to 60 tokens
+--- system
+You know everyone in a medieval village. A newcomer has just arrived. From the resident list, choose up to 5 residents the newcomer would most plausibly form a real opinion about (or who would form one about them). Respond with ONLY the chosen residents' full names, one per line. No other text.
+--- example user
+Newcomer: Doria Fenn (female, cheerful; notably strong, keen-eyed).
+Residents:
+- Edda Sandoval (cranky): taps every doorframe twice before walking through
+- Tam Reed (bubbly): hums to the chickens at dawn
+- Osgood Vale (secluded): eats alone facing the wall
+--- example assistant
+Edda Sandoval
+Tam Reed
+--- user
+Newcomer: Mircea Donaldson (lazy): Tends to get lost in familiar fields because she's too lazy to retrace her steps..
+Residents:
+- Cole Blackburn (lazy): Lays down a perfectly good book to watch a single sunbeam dance on the floor.
+- Easton Conrad (lazy): Spends an inordinate amount of time planning his route to the market.
+- Magnus Huffman (stout-hearted): Fumbles with his spectacles more often than not.
+- Phoenix Mcbride (sassy): Darts a nervous glance over their shoulder before answering a question.
+
+
+[20:25:04.943] ==== #49 REPLY background | who Mircea Donaldson takes to in New growth | 781 ms
+Cole Blackburn
+Magnus Huffman
+
+[20:25:04.943] ==== #50 REQUEST villager-chat | Easton and Cole name their household | temperature 0.4, up to 96 tokens, frequency penalty 0.3
+--- system
+You are Easton Conrad, a man, soon to marry Cole Blackburn. About you: Easton Conrad is a lean, easily-irritated young man who avoids work whenever possible, and who weighs his every decision by its potential impact on his own skin. He takes long, careful strolls through the village, eyeing every stranger. The two of you are choosing the family name your household will take. You may keep your name (Conrad), take Cole's (Blackburn), or join them (Conrad-Blackburn or Blackburn-Conrad). Speak as yourself, in the first person, one short sentence a turn. When you and Cole have agreed, state the name in a decision. Reply with ONLY a JSON object: {"say":"<what you say>","decision":{"surname":"<the household name>","reason":"<why, a few words>"}}. Leave out "decision" until you both agree. The surname must be exactly one of: "Conrad", "Blackburn", "Conrad-Blackburn", "Blackburn-Conrad".
+--- user
+New growth is about to see you wed; settle your married name together.
+
+Your talk so far:
+(nothing said yet)
+
+It is your turn, Easton. Reply with ONLY the JSON object.
+
+[20:25:08.190] ==== #50 REPLY villager-chat | Easton and Cole name their household | 3247 ms
+{"say":"I think we should keep my surname, Conrad, it's simple and easy to spell.","reason":"it's less complicated than combining our names."}
+
+[20:25:08.191] ==== #51 REQUEST background | who Marlowe Hicks takes to in New growth | temperature 0.6, up to 60 tokens
+--- system
+You know everyone in a medieval village. A newcomer has just arrived. From the resident list, choose up to 5 residents the newcomer would most plausibly form a real opinion about (or who would form one about them). Respond with ONLY the chosen residents' full names, one per line. No other text.
+--- example user
+Newcomer: Doria Fenn (female, cheerful; notably strong, keen-eyed).
+Residents:
+- Edda Sandoval (cranky): taps every doorframe twice before walking through
+- Tam Reed (bubbly): hums to the chickens at dawn
+- Osgood Vale (secluded): eats alone facing the wall
+--- example assistant
+Edda Sandoval
+Tam Reed
+--- user
+Newcomer: Marlowe Hicks (sassy): Inspects every new arrival before accepting them as a friend, favoring those who prove worthy..
+Residents:
+- Magnus Huffman (stout-hearted): Fumbles with his spectacles more often than not.
+- Phoenix Mcbride (sassy): Darts a nervous glance over their shoulder before answering a question.
+- Easton Conrad (lazy): Spends an inordinate amount of time planning his route to the market.
+- Cole Blackburn (lazy): Lays down a perfectly good book to watch a single sunbeam dance on the floor.
+- Mircea Donaldson (lazy): Tends to get lost in familiar fields because she's too lazy to retrace her steps.
+
+
+[20:25:10.062] ==== #51 REPLY background | who Marlowe Hicks takes to in New growth | 1871 ms
+Magnus Huffman
+Phoenix Mcbride
+Easton Conrad
+Cole Blackburn
+Mircea Donaldson
+
+[20:25:10.062] ==== #52 REQUEST background | who Austin Townsend takes to in New growth | temperature 0.6, up to 60 tokens
+--- system
+You know everyone in a medieval village. A newcomer has just arrived. From the resident list, choose up to 5 residents the newcomer would most plausibly form a real opinion about (or who would form one about them). Respond with ONLY the chosen residents' full names, one per line. No other text.
+--- example user
+Newcomer: Doria Fenn (female, cheerful; notably strong, keen-eyed).
+Residents:
+- Edda Sandoval (cranky): taps every doorframe twice before walking through
+- Tam Reed (bubbly): hums to the chickens at dawn
+- Osgood Vale (secluded): eats alone facing the wall
+--- example assistant
+Edda Sandoval
+Tam Reed
+--- user
+Newcomer: Austin Townsend (stout-hearted): Fumbles with his own belt buckle, often needing help fastening it..
+Residents:
+- Cole Blackburn (lazy): Lays down a perfectly good book to watch a single sunbeam dance on the floor.
+- Magnus Huffman (stout-hearted): Fumbles with his spectacles more often than not.
+- Phoenix Mcbride (sassy): Darts a nervous glance over their shoulder before answering a question.
+- Easton Conrad (lazy): Spends an inordinate amount of time planning his route to the market.
+- Marlowe Hicks (sassy): Inspects every new arrival before accepting them as a friend, favoring those who prove worthy.
+- Mircea Donaldson (lazy): Tends to get lost in familiar fields because she's too lazy to retrace her steps.
+
+
+[20:25:11.274] ==== #52 REPLY background | who Austin Townsend takes to in New growth | 1211 ms
+Cole Blackburn
+Magnus Huffman
+
+[20:25:11.275] ==== #53 REQUEST background | Phoenix Mcbride and Magnus Huffman size each other up | temperature 0.6, up to 140 tokens
+--- system
+You judge how two villagers in a medieval village feel about each other. Their opinions of each other are usually close: a shared value with small personal leans. Set asymmetric true only when the two genuinely see each other differently, which is about one pair in ten; for every other pair it is false and the leans stay tiny. These two have only just met, so keep value between -60 and 60: adoration and hatred are earned over time, not assigned on arrival. The flavor must be about the PAIR: what passes between them, what they share, what grates. Never describe one villager on their own, and never write a line that would still make sense if the other person did not exist. Respond with ONLY a JSON object exactly like: {"value": <-60 to 60>, "lean_a": <-15 to 15>, "lean_b": <-15 to 15>, "asymmetric": false, "flavor": "<one sentence about the two of them>"} Higher value means fonder. Do not write anything else.
+--- example user
+Person A: Doria Fenn (cheerful; notably strong, keen-eyed).
+Person B: Tam Reed (bubbly): hums to the chickens at dawn.
+--- example assistant
+{"value": 35, "lean_a": 5, "lean_b": -3, "asymmetric": false, "flavor": "Two warm souls who trade jokes over the fence most mornings."}
+--- example user
+Person A: Miren Oak (cranky; slow of foot).
+Person B: Sella Vance (smug): counts every coin twice.
+--- example assistant
+{"value": -20, "lean_a": -6, "lean_b": 2, "asymmetric": false, "flavor": "They share a wall and an old argument about whose goats ruined whose garden."}
+--- user
+Person A: Phoenix Mcbride (sassy): Darts a nervous glance over their shoulder before answering a question..
+Person B: Magnus Huffman (stout-hearted): Fumbles with his spectacles more often than not..
+
+[20:25:15.176] ==== #53 REPLY background | Phoenix Mcbride and Magnus Huffman size each other up | 3901 ms
+{"value": 10, "lean_a": 2, "lean_b": 4, "asymmetric": false, "flavor": "They exchange a wary smile, each sensing a hidden truth in the other's eyes."}
+
+[20:25:15.176] ==== #54 REQUEST background | Phoenix Mcbride and Easton Conrad size each other up | temperature 0.6, up to 140 tokens
+--- system
+You judge how two villagers in a medieval village feel about each other. Their opinions of each other are usually close: a shared value with small personal leans. Set asymmetric true only when the two genuinely see each other differently, which is about one pair in ten; for every other pair it is false and the leans stay tiny. These two have only just met, so keep value between -60 and 60: adoration and hatred are earned over time, not assigned on arrival. The flavor must be about the PAIR: what passes between them, what they share, what grates. Never describe one villager on their own, and never write a line that would still make sense if the other person did not exist. Respond with ONLY a JSON object exactly like: {"value": <-60 to 60>, "lean_a": <-15 to 15>, "lean_b": <-15 to 15>, "asymmetric": false, "flavor": "<one sentence about the two of them>"} Higher value means fonder. Do not write anything else.
+--- example user
+Person A: Doria Fenn (cheerful; notably strong, keen-eyed).
+Person B: Tam Reed (bubbly): hums to the chickens at dawn.
+--- example assistant
+{"value": 35, "lean_a": 5, "lean_b": -3, "asymmetric": false, "flavor": "Two warm souls who trade jokes over the fence most mornings."}
+--- example user
+Person A: Miren Oak (cranky; slow of foot).
+Person B: Sella Vance (smug): counts every coin twice.
+--- example assistant
+{"value": -20, "lean_a": -6, "lean_b": 2, "asymmetric": false, "flavor": "They share a wall and an old argument about whose goats ruined whose garden."}
+--- user
+Person A: Phoenix Mcbride (sassy): Darts a nervous glance over their shoulder before answering a question..
+Person B: Easton Conrad (lazy): Spends an inordinate amount of time planning his route to the market..
+
+[20:25:18.846] ==== #54 REPLY background | Phoenix Mcbride and Easton Conrad size each other up | 3670 ms
+{"value": 10, "lean_a": 2, "lean_b": -3, "asymmetric": false, "flavor": "Their differing pace makes for an interesting, if occasionally awkward, exchange."}
+
+[20:25:18.846] ==== #55 REQUEST background | Phoenix Mcbride and Cole Blackburn size each other up | temperature 0.6, up to 140 tokens
+--- system
+You judge how two villagers in a medieval village feel about each other. Their opinions of each other are usually close: a shared value with small personal leans. Set asymmetric true only when the two genuinely see each other differently, which is about one pair in ten; for every other pair it is false and the leans stay tiny. These two have only just met, so keep value between -60 and 60: adoration and hatred are earned over time, not assigned on arrival. The flavor must be about the PAIR: what passes between them, what they share, what grates. Never describe one villager on their own, and never write a line that would still make sense if the other person did not exist. Respond with ONLY a JSON object exactly like: {"value": <-60 to 60>, "lean_a": <-15 to 15>, "lean_b": <-15 to 15>, "asymmetric": false, "flavor": "<one sentence about the two of them>"} Higher value means fonder. Do not write anything else.
+--- example user
+Person A: Doria Fenn (cheerful; notably strong, keen-eyed).
+Person B: Tam Reed (bubbly): hums to the chickens at dawn.
+--- example assistant
+{"value": 35, "lean_a": 5, "lean_b": -3, "asymmetric": false, "flavor": "Two warm souls who trade jokes over the fence most mornings."}
+--- example user
+Person A: Miren Oak (cranky; slow of foot).
+Person B: Sella Vance (smug): counts every coin twice.
+--- example assistant
+{"value": -20, "lean_a": -6, "lean_b": 2, "asymmetric": false, "flavor": "They share a wall and an old argument about whose goats ruined whose garden."}
+--- user
+Person A: Phoenix Mcbride (sassy): Darts a nervous glance over their shoulder before answering a question..
+Person B: Cole Blackburn (lazy): Lays down a perfectly good book to watch a single sunbeam dance on the floor..
+
+[20:25:22.640] ==== #55 REPLY background | Phoenix Mcbride and Cole Blackburn size each other up | 3794 ms
+{"value": -12, "lean_a": -8, "lean_b": 4, "asymmetric": false, "flavor": "They both crave escape from their mundane routines, though they'd never admit it."}
+
+[20:25:22.640] ==== #56 REQUEST background | Sunny Stephens and Magnus Huffman size each other up | temperature 0.6, up to 140 tokens
+--- system
+You judge how two villagers in a medieval village feel about each other. Their opinions of each other are usually close: a shared value with small personal leans. Set asymmetric true only when the two genuinely see each other differently, which is about one pair in ten; for every other pair it is false and the leans stay tiny. These two have only just met, so keep value between -60 and 60: adoration and hatred are earned over time, not assigned on arrival. The flavor must be about the PAIR: what passes between them, what they share, what grates. Never describe one villager on their own, and never write a line that would still make sense if the other person did not exist. Respond with ONLY a JSON object exactly like: {"value": <-60 to 60>, "lean_a": <-15 to 15>, "lean_b": <-15 to 15>, "asymmetric": false, "flavor": "<one sentence about the two of them>"} Higher value means fonder. Do not write anything else.
+--- example user
+Person A: Doria Fenn (cheerful; notably strong, keen-eyed).
+Person B: Tam Reed (bubbly): hums to the chickens at dawn.
+--- example assistant
+{"value": 35, "lean_a": 5, "lean_b": -3, "asymmetric": false, "flavor": "Two warm souls who trade jokes over the fence most mornings."}
+--- example user
+Person A: Miren Oak (cranky; slow of foot).
+Person B: Sella Vance (smug): counts every coin twice.
+--- example assistant
+{"value": -20, "lean_a": -6, "lean_b": 2, "asymmetric": false, "flavor": "They share a wall and an old argument about whose goats ruined whose garden."}
+--- user
+Person A: Sunny Stephens (bubbly): Insists on wearing a small pouch of herbs around their neck like a talisman against bad luck..
+Person B: Magnus Huffman (stout-hearted): Fumbles with his spectacles more often than not..
+
+[20:25:26.426] ==== #56 REPLY background | Sunny Stephens and Magnus Huffman size each other up | 3786 ms
+{"value": 30, "lean_a": 10, "lean_b": 3, "asymmetric": false, "flavor": "A free spirit and a scatterbrain find common ground in their mutual clumsiness."}
+
+[20:25:26.426] ==== #57 REQUEST background | Sunny Stephens and Phoenix Mcbride size each other up | temperature 0.6, up to 140 tokens
+--- system
+You judge how two villagers in a medieval village feel about each other. Their opinions of each other are usually close: a shared value with small personal leans. Set asymmetric true only when the two genuinely see each other differently, which is about one pair in ten; for every other pair it is false and the leans stay tiny. These two have only just met, so keep value between -60 and 60: adoration and hatred are earned over time, not assigned on arrival. The flavor must be about the PAIR: what passes between them, what they share, what grates. Never describe one villager on their own, and never write a line that would still make sense if the other person did not exist. Respond with ONLY a JSON object exactly like: {"value": <-60 to 60>, "lean_a": <-15 to 15>, "lean_b": <-15 to 15>, "asymmetric": false, "flavor": "<one sentence about the two of them>"} Higher value means fonder. Do not write anything else.
+--- example user
+Person A: Doria Fenn (cheerful; notably strong, keen-eyed).
+Person B: Tam Reed (bubbly): hums to the chickens at dawn.
+--- example assistant
+{"value": 35, "lean_a": 5, "lean_b": -3, "asymmetric": false, "flavor": "Two warm souls who trade jokes over the fence most mornings."}
+--- example user
+Person A: Miren Oak (cranky; slow of foot).
+Person B: Sella Vance (smug): counts every coin twice.
+--- example assistant
+{"value": -20, "lean_a": -6, "lean_b": 2, "asymmetric": false, "flavor": "They share a wall and an old argument about whose goats ruined whose garden."}
+--- user
+Person A: Sunny Stephens (bubbly): Insists on wearing a small pouch of herbs around their neck like a talisman against bad luck..
+Person B: Phoenix Mcbride (sassy): Darts a nervous glance over their shoulder before answering a question..
+
+[20:25:30.242] ==== #57 REPLY background | Sunny Stephens and Phoenix Mcbride size each other up | 3816 ms
+{"value": 15, "lean_a": 8, "lean_b": 7, "asymmetric": false, "flavor": "Sunny's charms are tempered by Phoenix's subtle unease in their presence."}
+
+[20:25:30.242] ==== #58 REQUEST background | Gemma Vazquez and Magnus Huffman size each other up | temperature 0.6, up to 140 tokens
+--- system
+You judge how two villagers in a medieval village feel about each other. Their opinions of each other are usually close: a shared value with small personal leans. Set asymmetric true only when the two genuinely see each other differently, which is about one pair in ten; for every other pair it is false and the leans stay tiny. These two have only just met, so keep value between -60 and 60: adoration and hatred are earned over time, not assigned on arrival. The flavor must be about the PAIR: what passes between them, what they share, what grates. Never describe one villager on their own, and never write a line that would still make sense if the other person did not exist. Respond with ONLY a JSON object exactly like: {"value": <-60 to 60>, "lean_a": <-15 to 15>, "lean_b": <-15 to 15>, "asymmetric": false, "flavor": "<one sentence about the two of them>"} Higher value means fonder. Do not write anything else.
+--- example user
+Person A: Doria Fenn (cheerful; notably strong, keen-eyed).
+Person B: Tam Reed (bubbly): hums to the chickens at dawn.
+--- example assistant
+{"value": 35, "lean_a": 5, "lean_b": -3, "asymmetric": false, "flavor": "Two warm souls who trade jokes over the fence most mornings."}
+--- example user
+Person A: Miren Oak (cranky; slow of foot).
+Person B: Sella Vance (smug): counts every coin twice.
+--- example assistant
+{"value": -20, "lean_a": -6, "lean_b": 2, "asymmetric": false, "flavor": "They share a wall and an old argument about whose goats ruined whose garden."}
+--- user
+Person A: Gemma Vazquez (sassy): Spends an inordinate amount of time deciding which shoes to wear..
+Person B: Magnus Huffman (stout-hearted): Fumbles with his spectacles more often than not..
+
+[20:25:34.597] ==== #58 REPLY background | Gemma Vazquez and Magnus Huffman size each other up | 4355 ms
+{"value": 10, "lean_a": 3, "lean_b": 7, "asymmetric": false, "flavor": "They exchange a knowing glance when Gemma agonizes over her shoes, and Magnus sympathizes with her frustration."}
+
+[20:25:34.597] ==== #59 REQUEST background | Gemma Vazquez and Phoenix Mcbride size each other up | temperature 0.6, up to 140 tokens
+--- system
+You judge how two villagers in a medieval village feel about each other. Their opinions of each other are usually close: a shared value with small personal leans. Set asymmetric true only when the two genuinely see each other differently, which is about one pair in ten; for every other pair it is false and the leans stay tiny. These two have only just met, so keep value between -60 and 60: adoration and hatred are earned over time, not assigned on arrival. The flavor must be about the PAIR: what passes between them, what they share, what grates. Never describe one villager on their own, and never write a line that would still make sense if the other person did not exist. Respond with ONLY a JSON object exactly like: {"value": <-60 to 60>, "lean_a": <-15 to 15>, "lean_b": <-15 to 15>, "asymmetric": false, "flavor": "<one sentence about the two of them>"} Higher value means fonder. Do not write anything else.
+--- example user
+Person A: Doria Fenn (cheerful; notably strong, keen-eyed).
+Person B: Tam Reed (bubbly): hums to the chickens at dawn.
+--- example assistant
+{"value": 35, "lean_a": 5, "lean_b": -3, "asymmetric": false, "flavor": "Two warm souls who trade jokes over the fence most mornings."}
+--- example user
+Person A: Miren Oak (cranky; slow of foot).
+Person B: Sella Vance (smug): counts every coin twice.
+--- example assistant
+{"value": -20, "lean_a": -6, "lean_b": 2, "asymmetric": false, "flavor": "They share a wall and an old argument about whose goats ruined whose garden."}
+--- user
+Person A: Gemma Vazquez (sassy): Spends an inordinate amount of time deciding which shoes to wear..
+Person B: Phoenix Mcbride (sassy): Darts a nervous glance over their shoulder before answering a question..
+
+[20:25:38.175] ==== #59 REPLY background | Gemma Vazquez and Phoenix Mcbride size each other up | 3578 ms
+{"value": 20, "lean_a": 8, "lean_b": 12, "asymmetric": true, "flavor": "Their matching sass is offset by a small gap in their confidence."}
+
+[20:25:38.175] ==== #60 REQUEST background | Gemma Vazquez and Easton Conrad size each other up | temperature 0.6, up to 140 tokens
+--- system
+You judge how two villagers in a medieval village feel about each other. Their opinions of each other are usually close: a shared value with small personal leans. Set asymmetric true only when the two genuinely see each other differently, which is about one pair in ten; for every other pair it is false and the leans stay tiny. These two have only just met, so keep value between -60 and 60: adoration and hatred are earned over time, not assigned on arrival. The flavor must be about the PAIR: what passes between them, what they share, what grates. Never describe one villager on their own, and never write a line that would still make sense if the other person did not exist. Respond with ONLY a JSON object exactly like: {"value": <-60 to 60>, "lean_a": <-15 to 15>, "lean_b": <-15 to 15>, "asymmetric": false, "flavor": "<one sentence about the two of them>"} Higher value means fonder. Do not write anything else.
+--- example user
+Person A: Doria Fenn (cheerful; notably strong, keen-eyed).
+Person B: Tam Reed (bubbly): hums to the chickens at dawn.
+--- example assistant
+{"value": 35, "lean_a": 5, "lean_b": -3, "asymmetric": false, "flavor": "Two warm souls who trade jokes over the fence most mornings."}
+--- example user
+Person A: Miren Oak (cranky; slow of foot).
+Person B: Sella Vance (smug): counts every coin twice.
+--- example assistant
+{"value": -20, "lean_a": -6, "lean_b": 2, "asymmetric": false, "flavor": "They share a wall and an old argument about whose goats ruined whose garden."}
+--- user
+Person A: Gemma Vazquez (sassy): Spends an inordinate amount of time deciding which shoes to wear..
+Person B: Easton Conrad (lazy): Spends an inordinate amount of time planning his route to the market..
+
+[20:25:42.349] ==== #60 REPLY background | Gemma Vazquez and Easton Conrad size each other up | 4174 ms
+{"value": 38, "lean_a": 10, "lean_b": 12, "asymmetric": false, "flavor": "They commiserate about the perils of indecision, their shared exasperation palpable."}
+
+[20:25:42.349] ==== #61 REQUEST background | Amy Heath and Phoenix Mcbride size each other up | temperature 0.6, up to 140 tokens
+--- system
+You judge how two villagers in a medieval village feel about each other. Their opinions of each other are usually close: a shared value with small personal leans. Set asymmetric true only when the two genuinely see each other differently, which is about one pair in ten; for every other pair it is false and the leans stay tiny. These two have only just met, so keep value between -60 and 60: adoration and hatred are earned over time, not assigned on arrival. The flavor must be about the PAIR: what passes between them, what they share, what grates. Never describe one villager on their own, and never write a line that would still make sense if the other person did not exist. Respond with ONLY a JSON object exactly like: {"value": <-60 to 60>, "lean_a": <-15 to 15>, "lean_b": <-15 to 15>, "asymmetric": false, "flavor": "<one sentence about the two of them>"} Higher value means fonder. Do not write anything else.
+--- example user
+Person A: Doria Fenn (cheerful; notably strong, keen-eyed).
+Person B: Tam Reed (bubbly): hums to the chickens at dawn.
+--- example assistant
+{"value": 35, "lean_a": 5, "lean_b": -3, "asymmetric": false, "flavor": "Two warm souls who trade jokes over the fence most mornings."}
+--- example user
+Person A: Miren Oak (cranky; slow of foot).
+Person B: Sella Vance (smug): counts every coin twice.
+--- example assistant
+{"value": -20, "lean_a": -6, "lean_b": 2, "asymmetric": false, "flavor": "They share a wall and an old argument about whose goats ruined whose garden."}
+--- user
+Person A: Amy Heath (cheerful): Knits intricate patterns into the hem of her apron with a steady, patient hand..
+Person B: Phoenix Mcbride (sassy): Darts a nervous glance over their shoulder before answering a question..
+
+[20:25:46.449] ==== #61 REPLY background | Amy Heath and Phoenix Mcbride size each other up | 4100 ms
+{"value": 45, "lean_a": 10, "lean_b": 8, "asymmetric": false, "flavor": "Their hands, each moving with a quiet confidence, weave together in a dance of shared purpose."}
+
+[20:25:46.449] ==== #62 REQUEST background | Amy Heath and Magnus Huffman size each other up | temperature 0.6, up to 140 tokens
+--- system
+You judge how two villagers in a medieval village feel about each other. Their opinions of each other are usually close: a shared value with small personal leans. Set asymmetric true only when the two genuinely see each other differently, which is about one pair in ten; for every other pair it is false and the leans stay tiny. These two have only just met, so keep value between -60 and 60: adoration and hatred are earned over time, not assigned on arrival. The flavor must be about the PAIR: what passes between them, what they share, what grates. Never describe one villager on their own, and never write a line that would still make sense if the other person did not exist. Respond with ONLY a JSON object exactly like: {"value": <-60 to 60>, "lean_a": <-15 to 15>, "lean_b": <-15 to 15>, "asymmetric": false, "flavor": "<one sentence about the two of them>"} Higher value means fonder. Do not write anything else.
+--- example user
+Person A: Doria Fenn (cheerful; notably strong, keen-eyed).
+Person B: Tam Reed (bubbly): hums to the chickens at dawn.
+--- example assistant
+{"value": 35, "lean_a": 5, "lean_b": -3, "asymmetric": false, "flavor": "Two warm souls who trade jokes over the fence most mornings."}
+--- example user
+Person A: Miren Oak (cranky; slow of foot).
+Person B: Sella Vance (smug): counts every coin twice.
+--- example assistant
+{"value": -20, "lean_a": -6, "lean_b": 2, "asymmetric": false, "flavor": "They share a wall and an old argument about whose goats ruined whose garden."}
+--- user
+Person A: Amy Heath (cheerful): Knits intricate patterns into the hem of her apron with a steady, patient hand..
+Person B: Magnus Huffman (stout-hearted): Fumbles with his spectacles more often than not..
+
+[20:25:50.404] ==== #62 REPLY background | Amy Heath and Magnus Huffman size each other up | 3955 ms
+{"value": 30, "lean_a": 10, "lean_b": 5, "asymmetric": false, "flavor": "A soothing presence for Magnus's clumsy moments, and a comforting presence in the quiet moments."}
+
+[20:25:50.404] ==== #63 REQUEST background | Amy Heath and Cole Blackburn size each other up | temperature 0.6, up to 140 tokens
+--- system
+You judge how two villagers in a medieval village feel about each other. Their opinions of each other are usually close: a shared value with small personal leans. Set asymmetric true only when the two genuinely see each other differently, which is about one pair in ten; for every other pair it is false and the leans stay tiny. These two have only just met, so keep value between -60 and 60: adoration and hatred are earned over time, not assigned on arrival. The flavor must be about the PAIR: what passes between them, what they share, what grates. Never describe one villager on their own, and never write a line that would still make sense if the other person did not exist. Respond with ONLY a JSON object exactly like: {"value": <-60 to 60>, "lean_a": <-15 to 15>, "lean_b": <-15 to 15>, "asymmetric": false, "flavor": "<one sentence about the two of them>"} Higher value means fonder. Do not write anything else.
+--- example user
+Person A: Doria Fenn (cheerful; notably strong, keen-eyed).
+Person B: Tam Reed (bubbly): hums to the chickens at dawn.
+--- example assistant
+{"value": 35, "lean_a": 5, "lean_b": -3, "asymmetric": false, "flavor": "Two warm souls who trade jokes over the fence most mornings."}
+--- example user
+Person A: Miren Oak (cranky; slow of foot).
+Person B: Sella Vance (smug): counts every coin twice.
+--- example assistant
+{"value": -20, "lean_a": -6, "lean_b": 2, "asymmetric": false, "flavor": "They share a wall and an old argument about whose goats ruined whose garden."}
+--- user
+Person A: Amy Heath (cheerful): Knits intricate patterns into the hem of her apron with a steady, patient hand..
+Person B: Cole Blackburn (lazy): Lays down a perfectly good book to watch a single sunbeam dance on the floor..
+
+[20:25:54.570] ==== #63 REPLY background | Amy Heath and Cole Blackburn size each other up | 4166 ms
+{"value": 28, "lean_a": 8, "lean_b": -5, "asymmetric": false, "flavor": "The gentle hum of Amy's needles contrasts with Cole's languid surrender to the sun's warmth."}
+
+[20:25:54.570] ==== #64 REQUEST background | Madisen Miles and Cole Blackburn size each other up | temperature 0.6, up to 140 tokens
+--- system
+You judge how two villagers in a medieval village feel about each other. Their opinions of each other are usually close: a shared value with small personal leans. Set asymmetric true only when the two genuinely see each other differently, which is about one pair in ten; for every other pair it is false and the leans stay tiny. These two have only just met, so keep value between -60 and 60: adoration and hatred are earned over time, not assigned on arrival. The flavor must be about the PAIR: what passes between them, what they share, what grates. Never describe one villager on their own, and never write a line that would still make sense if the other person did not exist. Respond with ONLY a JSON object exactly like: {"value": <-60 to 60>, "lean_a": <-15 to 15>, "lean_b": <-15 to 15>, "asymmetric": false, "flavor": "<one sentence about the two of them>"} Higher value means fonder. Do not write anything else.
+--- example user
+Person A: Doria Fenn (cheerful; notably strong, keen-eyed).
+Person B: Tam Reed (bubbly): hums to the chickens at dawn.
+--- example assistant
+{"value": 35, "lean_a": 5, "lean_b": -3, "asymmetric": false, "flavor": "Two warm souls who trade jokes over the fence most mornings."}
+--- example user
+Person A: Miren Oak (cranky; slow of foot).
+Person B: Sella Vance (smug): counts every coin twice.
+--- example assistant
+{"value": -20, "lean_a": -6, "lean_b": 2, "asymmetric": false, "flavor": "They share a wall and an old argument about whose goats ruined whose garden."}
+--- user
+Person A: Madisen Miles (cheerful): Inspects every new tool before using it, sometimes for hours..
+Person B: Cole Blackburn (lazy): Lays down a perfectly good book to watch a single sunbeam dance on the floor..
+
+[20:25:58.722] ==== #64 REPLY background | Madisen Miles and Cole Blackburn size each other up | 4152 ms
+{"value": 10, "lean_a": -3, "lean_b": 6, "asymmetric": false, "flavor": "The contrast between their patience and each other's haste brings a faint smile to Madisen's face."}
+
+[20:25:58.722] ==== #65 REQUEST background | Madisen Miles and Easton Conrad size each other up | temperature 0.6, up to 140 tokens
+--- system
+You judge how two villagers in a medieval village feel about each other. Their opinions of each other are usually close: a shared value with small personal leans. Set asymmetric true only when the two genuinely see each other differently, which is about one pair in ten; for every other pair it is false and the leans stay tiny. These two have only just met, so keep value between -60 and 60: adoration and hatred are earned over time, not assigned on arrival. The flavor must be about the PAIR: what passes between them, what they share, what grates. Never describe one villager on their own, and never write a line that would still make sense if the other person did not exist. Respond with ONLY a JSON object exactly like: {"value": <-60 to 60>, "lean_a": <-15 to 15>, "lean_b": <-15 to 15>, "asymmetric": false, "flavor": "<one sentence about the two of them>"} Higher value means fonder. Do not write anything else.
+--- example user
+Person A: Doria Fenn (cheerful; notably strong, keen-eyed).
+Person B: Tam Reed (bubbly): hums to the chickens at dawn.
+--- example assistant
+{"value": 35, "lean_a": 5, "lean_b": -3, "asymmetric": false, "flavor": "Two warm souls who trade jokes over the fence most mornings."}
+--- example user
+Person A: Miren Oak (cranky; slow of foot).
+Person B: Sella Vance (smug): counts every coin twice.
+--- example assistant
+{"value": -20, "lean_a": -6, "lean_b": 2, "asymmetric": false, "flavor": "They share a wall and an old argument about whose goats ruined whose garden."}
+--- user
+Person A: Madisen Miles (cheerful): Inspects every new tool before using it, sometimes for hours..
+Person B: Easton Conrad (lazy): Spends an inordinate amount of time planning his route to the market..
+
+[20:26:03.035] ==== #65 REPLY background | Madisen Miles and Easton Conrad size each other up | 4313 ms
+{"value": 20, "lean_a": 7, "lean_b": 5, "asymmetric": false, "flavor": "While they work at opposite ends of the village, their conversations often overlap in a shared appreciation for the value of patience."}
+
+[20:26:03.035] ==== #66 REQUEST background | Oswin Fleming and Cole Blackburn size each other up | temperature 0.6, up to 140 tokens
+--- system
+You judge how two villagers in a medieval village feel about each other. Their opinions of each other are usually close: a shared value with small personal leans. Set asymmetric true only when the two genuinely see each other differently, which is about one pair in ten; for every other pair it is false and the leans stay tiny. These two have only just met, so keep value between -60 and 60: adoration and hatred are earned over time, not assigned on arrival. The flavor must be about the PAIR: what passes between them, what they share, what grates. Never describe one villager on their own, and never write a line that would still make sense if the other person did not exist. Respond with ONLY a JSON object exactly like: {"value": <-60 to 60>, "lean_a": <-15 to 15>, "lean_b": <-15 to 15>, "asymmetric": false, "flavor": "<one sentence about the two of them>"} Higher value means fonder. Do not write anything else.
+--- example user
+Person A: Doria Fenn (cheerful; notably strong, keen-eyed).
+Person B: Tam Reed (bubbly): hums to the chickens at dawn.
+--- example assistant
+{"value": 35, "lean_a": 5, "lean_b": -3, "asymmetric": false, "flavor": "Two warm souls who trade jokes over the fence most mornings."}
+--- example user
+Person A: Miren Oak (cranky; slow of foot).
+Person B: Sella Vance (smug): counts every coin twice.
+--- example assistant
+{"value": -20, "lean_a": -6, "lean_b": 2, "asymmetric": false, "flavor": "They share a wall and an old argument about whose goats ruined whose garden."}
+--- user
+Person A: Oswin Fleming (secluded): Tries to make decisions by tossing a coin, trusting chance to guide him..
+Person B: Cole Blackburn (lazy): Lays down a perfectly good book to watch a single sunbeam dance on the floor..
+
+[20:26:07.455] ==== #66 REPLY background | Oswin Fleming and Cole Blackburn size each other up | 4420 ms
+{"value": -40, "lean_a": -7, "lean_b": 3, "asymmetric": false, "flavor": "Their opposing natures collide in a daily ritual of Oswin's coin flip and Cole's sunbeam snooze."}
+
+[20:26:07.455] ==== #67 REQUEST background | Mia Vance and Phoenix Mcbride size each other up | temperature 0.6, up to 140 tokens
+--- system
+You judge how two villagers in a medieval village feel about each other. Their opinions of each other are usually close: a shared value with small personal leans. Set asymmetric true only when the two genuinely see each other differently, which is about one pair in ten; for every other pair it is false and the leans stay tiny. These two have only just met, so keep value between -60 and 60: adoration and hatred are earned over time, not assigned on arrival. The flavor must be about the PAIR: what passes between them, what they share, what grates. Never describe one villager on their own, and never write a line that would still make sense if the other person did not exist. Respond with ONLY a JSON object exactly like: {"value": <-60 to 60>, "lean_a": <-15 to 15>, "lean_b": <-15 to 15>, "asymmetric": false, "flavor": "<one sentence about the two of them>"} Higher value means fonder. Do not write anything else.
+--- example user
+Person A: Doria Fenn (cheerful; notably strong, keen-eyed).
+Person B: Tam Reed (bubbly): hums to the chickens at dawn.
+--- example assistant
+{"value": 35, "lean_a": 5, "lean_b": -3, "asymmetric": false, "flavor": "Two warm souls who trade jokes over the fence most mornings."}
+--- example user
+Person A: Miren Oak (cranky; slow of foot).
+Person B: Sella Vance (smug): counts every coin twice.
+--- example assistant
+{"value": -20, "lean_a": -6, "lean_b": 2, "asymmetric": false, "flavor": "They share a wall and an old argument about whose goats ruined whose garden."}
+--- user
+Person A: Mia Vance (bubbly): Repeats the same cautionary phrase to children ("Stay close, little one!") until they repeat it back to her..
+Person B: Phoenix Mcbride (sassy): Darts a nervous glance over their shoulder before answering a question..
+
+[20:26:11.006] ==== #67 REPLY background | Mia Vance and Phoenix Mcbride size each other up | 3550 ms
+{"value": 20, "lean_a": 5, "lean_b": -8, "asymmetric": false, "flavor": "The two mothers bond over their shared anxiety and soothing voices."}
+
+[20:26:11.006] ==== #68 REQUEST background | Mia Vance and Cole Blackburn size each other up | temperature 0.6, up to 140 tokens
+--- system
+You judge how two villagers in a medieval village feel about each other. Their opinions of each other are usually close: a shared value with small personal leans. Set asymmetric true only when the two genuinely see each other differently, which is about one pair in ten; for every other pair it is false and the leans stay tiny. These two have only just met, so keep value between -60 and 60: adoration and hatred are earned over time, not assigned on arrival. The flavor must be about the PAIR: what passes between them, what they share, what grates. Never describe one villager on their own, and never write a line that would still make sense if the other person did not exist. Respond with ONLY a JSON object exactly like: {"value": <-60 to 60>, "lean_a": <-15 to 15>, "lean_b": <-15 to 15>, "asymmetric": false, "flavor": "<one sentence about the two of them>"} Higher value means fonder. Do not write anything else.
+--- example user
+Person A: Doria Fenn (cheerful; notably strong, keen-eyed).
+Person B: Tam Reed (bubbly): hums to the chickens at dawn.
+--- example assistant
+{"value": 35, "lean_a": 5, "lean_b": -3, "asymmetric": false, "flavor": "Two warm souls who trade jokes over the fence most mornings."}
+--- example user
+Person A: Miren Oak (cranky; slow of foot).
+Person B: Sella Vance (smug): counts every coin twice.
+--- example assistant
+{"value": -20, "lean_a": -6, "lean_b": 2, "asymmetric": false, "flavor": "They share a wall and an old argument about whose goats ruined whose garden."}
+--- user
+Person A: Mia Vance (bubbly): Repeats the same cautionary phrase to children ("Stay close, little one!") until they repeat it back to her..
+Person B: Cole Blackburn (lazy): Lays down a perfectly good book to watch a single sunbeam dance on the floor..
+
+[20:26:14.994] ==== #68 REPLY background | Mia Vance and Cole Blackburn size each other up | 3988 ms
+{"value": 15, "lean_a": 8, "lean_b": -3, "asymmetric": false, "flavor": "A whirlwind of motherly love and a sunbeam's lazy charm find common ground."}
+
+[20:26:14.995] ==== #69 REQUEST background | Bellamy Townsend and Magnus Huffman size each other up | temperature 0.6, up to 140 tokens
+--- system
+You judge how two villagers in a medieval village feel about each other. Their opinions of each other are usually close: a shared value with small personal leans. Set asymmetric true only when the two genuinely see each other differently, which is about one pair in ten; for every other pair it is false and the leans stay tiny. These two have only just met, so keep value between -60 and 60: adoration and hatred are earned over time, not assigned on arrival. The flavor must be about the PAIR: what passes between them, what they share, what grates. Never describe one villager on their own, and never write a line that would still make sense if the other person did not exist. Respond with ONLY a JSON object exactly like: {"value": <-60 to 60>, "lean_a": <-15 to 15>, "lean_b": <-15 to 15>, "asymmetric": false, "flavor": "<one sentence about the two of them>"} Higher value means fonder. Do not write anything else.
+--- example user
+Person A: Doria Fenn (cheerful; notably strong, keen-eyed).
+Person B: Tam Reed (bubbly): hums to the chickens at dawn.
+--- example assistant
+{"value": 35, "lean_a": 5, "lean_b": -3, "asymmetric": false, "flavor": "Two warm souls who trade jokes over the fence most mornings."}
+--- example user
+Person A: Miren Oak (cranky; slow of foot).
+Person B: Sella Vance (smug): counts every coin twice.
+--- example assistant
+{"value": -20, "lean_a": -6, "lean_b": 2, "asymmetric": false, "flavor": "They share a wall and an old argument about whose goats ruined whose garden."}
+--- user
+Person A: Bellamy Townsend (smug): Always keeps their hands visible, as if to prove they have nothing to hide..
+Person B: Magnus Huffman (stout-hearted): Fumbles with his spectacles more often than not..
+
+[20:26:18.958] ==== #69 REPLY background | Bellamy Townsend and Magnus Huffman size each other up | 3963 ms
+{"value": -10, "lean_a": 3, "lean_b": -5, "asymmetric": true, "flavor": "The smugness of one man's transparency clashes with the other's clumsy confidence."}
+
+[20:26:18.958] ==== #70 REQUEST background | Bellamy Townsend and Phoenix Mcbride size each other up | temperature 0.6, up to 140 tokens
+--- system
+You judge how two villagers in a medieval village feel about each other. Their opinions of each other are usually close: a shared value with small personal leans. Set asymmetric true only when the two genuinely see each other differently, which is about one pair in ten; for every other pair it is false and the leans stay tiny. These two have only just met, so keep value between -60 and 60: adoration and hatred are earned over time, not assigned on arrival. The flavor must be about the PAIR: what passes between them, what they share, what grates. Never describe one villager on their own, and never write a line that would still make sense if the other person did not exist. Respond with ONLY a JSON object exactly like: {"value": <-60 to 60>, "lean_a": <-15 to 15>, "lean_b": <-15 to 15>, "asymmetric": false, "flavor": "<one sentence about the two of them>"} Higher value means fonder. Do not write anything else.
+--- example user
+Person A: Doria Fenn (cheerful; notably strong, keen-eyed).
+Person B: Tam Reed (bubbly): hums to the chickens at dawn.
+--- example assistant
+{"value": 35, "lean_a": 5, "lean_b": -3, "asymmetric": false, "flavor": "Two warm souls who trade jokes over the fence most mornings."}
+--- example user
+Person A: Miren Oak (cranky; slow of foot).
+Person B: Sella Vance (smug): counts every coin twice.
+--- example assistant
+{"value": -20, "lean_a": -6, "lean_b": 2, "asymmetric": false, "flavor": "They share a wall and an old argument about whose goats ruined whose garden."}
+--- user
+Person A: Bellamy Townsend (smug): Always keeps their hands visible, as if to prove they have nothing to hide..
+Person B: Phoenix Mcbride (sassy): Darts a nervous glance over their shoulder before answering a question..
+
+[20:26:23.373] ==== #70 REPLY background | Bellamy Townsend and Phoenix Mcbride size each other up | 4415 ms
+{"value": -10, "lean_a": 4, "lean_b": -5, "asymmetric": false, "flavor": "Their contrasting postures hint at a history of verbal sparring, but a begrudging respect for each other's wit."}
+
+[20:26:23.373] ==== #71 REQUEST background | Delphine Mcbride and Magnus Huffman size each other up | temperature 0.6, up to 140 tokens
+--- system
+You judge how two villagers in a medieval village feel about each other. Their opinions of each other are usually close: a shared value with small personal leans. Set asymmetric true only when the two genuinely see each other differently, which is about one pair in ten; for every other pair it is false and the leans stay tiny. These two have only just met, so keep value between -60 and 60: adoration and hatred are earned over time, not assigned on arrival. The flavor must be about the PAIR: what passes between them, what they share, what grates. Never describe one villager on their own, and never write a line that would still make sense if the other person did not exist. Respond with ONLY a JSON object exactly like: {"value": <-60 to 60>, "lean_a": <-15 to 15>, "lean_b": <-15 to 15>, "asymmetric": false, "flavor": "<one sentence about the two of them>"} Higher value means fonder. Do not write anything else.
+--- example user
+Person A: Doria Fenn (cheerful; notably strong, keen-eyed).
+Person B: Tam Reed (bubbly): hums to the chickens at dawn.
+--- example assistant
+{"value": 35, "lean_a": 5, "lean_b": -3, "asymmetric": false, "flavor": "Two warm souls who trade jokes over the fence most mornings."}
+--- example user
+Person A: Miren Oak (cranky; slow of foot).
+Person B: Sella Vance (smug): counts every coin twice.
+--- example assistant
+{"value": -20, "lean_a": -6, "lean_b": 2, "asymmetric": false, "flavor": "They share a wall and an old argument about whose goats ruined whose garden."}
+--- user
+Person A: Delphine Mcbride (secluded): Ignites fires with a match that never seems to catch..
+Person B: Magnus Huffman (stout-hearted): Fumbles with his spectacles more often than not..
+
+[20:26:27.326] ==== #71 REPLY background | Delphine Mcbride and Magnus Huffman size each other up | 3953 ms
+{"value": -10, "lean_a": -3, "lean_b": -4, "asymmetric": true, "flavor": "Despite their physical differences, they both struggle with the simple task of finding light in their lives."}
+
+[20:26:27.326] ==== #72 REQUEST background | Delphine Mcbride and Phoenix Mcbride size each other up | temperature 0.6, up to 140 tokens
+--- system
+You judge how two villagers in a medieval village feel about each other. Their opinions of each other are usually close: a shared value with small personal leans. Set asymmetric true only when the two genuinely see each other differently, which is about one pair in ten; for every other pair it is false and the leans stay tiny. These two have only just met, so keep value between -60 and 60: adoration and hatred are earned over time, not assigned on arrival. The flavor must be about the PAIR: what passes between them, what they share, what grates. Never describe one villager on their own, and never write a line that would still make sense if the other person did not exist. Respond with ONLY a JSON object exactly like: {"value": <-60 to 60>, "lean_a": <-15 to 15>, "lean_b": <-15 to 15>, "asymmetric": false, "flavor": "<one sentence about the two of them>"} Higher value means fonder. Do not write anything else.
+--- example user
+Person A: Doria Fenn (cheerful; notably strong, keen-eyed).
+Person B: Tam Reed (bubbly): hums to the chickens at dawn.
+--- example assistant
+{"value": 35, "lean_a": 5, "lean_b": -3, "asymmetric": false, "flavor": "Two warm souls who trade jokes over the fence most mornings."}
+--- example user
+Person A: Miren Oak (cranky; slow of foot).
+Person B: Sella Vance (smug): counts every coin twice.
+--- example assistant
+{"value": -20, "lean_a": -6, "lean_b": 2, "asymmetric": false, "flavor": "They share a wall and an old argument about whose goats ruined whose garden."}
+--- user
+Person A: Delphine Mcbride (secluded): Ignites fires with a match that never seems to catch..
+Person B: Phoenix Mcbride (sassy): Darts a nervous glance over their shoulder before answering a question..
+
+[20:26:31.894] ==== #72 REPLY background | Delphine Mcbride and Phoenix Mcbride size each other up | 4568 ms
+{"value": 30, "lean_a": 10, "lean_b": 5, "asymmetric": true, "flavor": "Delphine's secret fires burn brightest when Phoenix is near, but the sparks are always tempered by her guarded nature."}
+
+[20:26:31.894] ==== #73 REQUEST background | Reeve Lopez and Cole Blackburn size each other up | temperature 0.6, up to 140 tokens
+--- system
+You judge how two villagers in a medieval village feel about each other. Their opinions of each other are usually close: a shared value with small personal leans. Set asymmetric true only when the two genuinely see each other differently, which is about one pair in ten; for every other pair it is false and the leans stay tiny. These two have only just met, so keep value between -60 and 60: adoration and hatred are earned over time, not assigned on arrival. The flavor must be about the PAIR: what passes between them, what they share, what grates. Never describe one villager on their own, and never write a line that would still make sense if the other person did not exist. Respond with ONLY a JSON object exactly like: {"value": <-60 to 60>, "lean_a": <-15 to 15>, "lean_b": <-15 to 15>, "asymmetric": false, "flavor": "<one sentence about the two of them>"} Higher value means fonder. Do not write anything else.
+--- example user
+Person A: Doria Fenn (cheerful; notably strong, keen-eyed).
+Person B: Tam Reed (bubbly): hums to the chickens at dawn.
+--- example assistant
+{"value": 35, "lean_a": 5, "lean_b": -3, "asymmetric": false, "flavor": "Two warm souls who trade jokes over the fence most mornings."}
+--- example user
+Person A: Miren Oak (cranky; slow of foot).
+Person B: Sella Vance (smug): counts every coin twice.
+--- example assistant
+{"value": -20, "lean_a": -6, "lean_b": 2, "asymmetric": false, "flavor": "They share a wall and an old argument about whose goats ruined whose garden."}
+--- user
+Person A: Reeve Lopez (sassy): Always wears his sword on his back, but not in a secure manner..
+Person B: Cole Blackburn (lazy): Lays down a perfectly good book to watch a single sunbeam dance on the floor..
+
+[20:26:35.768] ==== #73 REPLY background | Reeve Lopez and Cole Blackburn size each other up | 3874 ms
+{"value": -30, "lean_a": -5, "lean_b": -10, "asymmetric": true, "flavor": "Their conflicting values collide in a dance of eye-rolling and wry smiles."}
+
+[20:26:35.768] ==== #74 REQUEST background | Ada Cardenas and Easton Conrad size each other up | temperature 0.6, up to 140 tokens
+--- system
+You judge how two villagers in a medieval village feel about each other. Their opinions of each other are usually close: a shared value with small personal leans. Set asymmetric true only when the two genuinely see each other differently, which is about one pair in ten; for every other pair it is false and the leans stay tiny. These two have only just met, so keep value between -60 and 60: adoration and hatred are earned over time, not assigned on arrival. The flavor must be about the PAIR: what passes between them, what they share, what grates. Never describe one villager on their own, and never write a line that would still make sense if the other person did not exist. Respond with ONLY a JSON object exactly like: {"value": <-60 to 60>, "lean_a": <-15 to 15>, "lean_b": <-15 to 15>, "asymmetric": false, "flavor": "<one sentence about the two of them>"} Higher value means fonder. Do not write anything else.
+--- example user
+Person A: Doria Fenn (cheerful; notably strong, keen-eyed).
+Person B: Tam Reed (bubbly): hums to the chickens at dawn.
+--- example assistant
+{"value": 35, "lean_a": 5, "lean_b": -3, "asymmetric": false, "flavor": "Two warm souls who trade jokes over the fence most mornings."}
+--- example user
+Person A: Miren Oak (cranky; slow of foot).
+Person B: Sella Vance (smug): counts every coin twice.
+--- example assistant
+{"value": -20, "lean_a": -6, "lean_b": 2, "asymmetric": false, "flavor": "They share a wall and an old argument about whose goats ruined whose garden."}
+--- user
+Person A: Ada Cardenas (secluded): Trips over her own feet more often than anyone else in the village..
+Person B: Easton Conrad (lazy): Spends an inordinate amount of time planning his route to the market..
+
+[20:26:39.936] ==== #74 REPLY background | Ada Cardenas and Easton Conrad size each other up | 4168 ms
+{"value": 20, "lean_a": 5, "lean_b": 15, "asymmetric": true, "flavor": "Easton admires Ada's unexpected agility as she navigates the village with her eyes closed."}
+
+[20:26:39.936] ==== #75 REQUEST background | Ada Cardenas and Magnus Huffman size each other up | temperature 0.6, up to 140 tokens
+--- system
+You judge how two villagers in a medieval village feel about each other. Their opinions of each other are usually close: a shared value with small personal leans. Set asymmetric true only when the two genuinely see each other differently, which is about one pair in ten; for every other pair it is false and the leans stay tiny. These two have only just met, so keep value between -60 and 60: adoration and hatred are earned over time, not assigned on arrival. The flavor must be about the PAIR: what passes between them, what they share, what grates. Never describe one villager on their own, and never write a line that would still make sense if the other person did not exist. Respond with ONLY a JSON object exactly like: {"value": <-60 to 60>, "lean_a": <-15 to 15>, "lean_b": <-15 to 15>, "asymmetric": false, "flavor": "<one sentence about the two of them>"} Higher value means fonder. Do not write anything else.
+--- example user
+Person A: Doria Fenn (cheerful; notably strong, keen-eyed).
+Person B: Tam Reed (bubbly): hums to the chickens at dawn.
+--- example assistant
+{"value": 35, "lean_a": 5, "lean_b": -3, "asymmetric": false, "flavor": "Two warm souls who trade jokes over the fence most mornings."}
+--- example user
+Person A: Miren Oak (cranky; slow of foot).
+Person B: Sella Vance (smug): counts every coin twice.
+--- example assistant
+{"value": -20, "lean_a": -6, "lean_b": 2, "asymmetric": false, "flavor": "They share a wall and an old argument about whose goats ruined whose garden."}
+--- user
+Person A: Ada Cardenas (secluded): Trips over her own feet more often than anyone else in the village..
+Person B: Magnus Huffman (stout-hearted): Fumbles with his spectacles more often than not..
+
+[20:26:43.776] ==== #75 REPLY background | Ada Cardenas and Magnus Huffman size each other up | 3840 ms
+{"value": 30, "lean_a": 12, "lean_b": 3, "asymmetric": false, "flavor": "A clumsy friend tries to help a clumsy friend, with some unexpected success."}
+
+[20:26:43.776] ==== #76 REQUEST background | Ada Cardenas and Phoenix Mcbride size each other up | temperature 0.6, up to 140 tokens
+--- system
+You judge how two villagers in a medieval village feel about each other. Their opinions of each other are usually close: a shared value with small personal leans. Set asymmetric true only when the two genuinely see each other differently, which is about one pair in ten; for every other pair it is false and the leans stay tiny. These two have only just met, so keep value between -60 and 60: adoration and hatred are earned over time, not assigned on arrival. The flavor must be about the PAIR: what passes between them, what they share, what grates. Never describe one villager on their own, and never write a line that would still make sense if the other person did not exist. Respond with ONLY a JSON object exactly like: {"value": <-60 to 60>, "lean_a": <-15 to 15>, "lean_b": <-15 to 15>, "asymmetric": false, "flavor": "<one sentence about the two of them>"} Higher value means fonder. Do not write anything else.
+--- example user
+Person A: Doria Fenn (cheerful; notably strong, keen-eyed).
+Person B: Tam Reed (bubbly): hums to the chickens at dawn.
+--- example assistant
+{"value": 35, "lean_a": 5, "lean_b": -3, "asymmetric": false, "flavor": "Two warm souls who trade jokes over the fence most mornings."}
+--- example user
+Person A: Miren Oak (cranky; slow of foot).
+Person B: Sella Vance (smug): counts every coin twice.
+--- example assistant
+{"value": -20, "lean_a": -6, "lean_b": 2, "asymmetric": false, "flavor": "They share a wall and an old argument about whose goats ruined whose garden."}
+--- user
+Person A: Ada Cardenas (secluded): Trips over her own feet more often than anyone else in the village..
+Person B: Phoenix Mcbride (sassy): Darts a nervous glance over their shoulder before answering a question..
+
+[20:26:47.502] ==== #76 REPLY background | Ada Cardenas and Phoenix Mcbride size each other up | 3726 ms
+{"value": -10, "lean_a": -3, "lean_b": 2, "asymmetric": false, "flavor": "Their contrasting styles make for an amusing game of verbal sparring."}
+
+[20:26:47.502] ==== #77 REQUEST background | Nadia Juarez and Magnus Huffman size each other up | temperature 0.6, up to 140 tokens
+--- system
+You judge how two villagers in a medieval village feel about each other. Their opinions of each other are usually close: a shared value with small personal leans. Set asymmetric true only when the two genuinely see each other differently, which is about one pair in ten; for every other pair it is false and the leans stay tiny. These two have only just met, so keep value between -60 and 60: adoration and hatred are earned over time, not assigned on arrival. The flavor must be about the PAIR: what passes between them, what they share, what grates. Never describe one villager on their own, and never write a line that would still make sense if the other person did not exist. Respond with ONLY a JSON object exactly like: {"value": <-60 to 60>, "lean_a": <-15 to 15>, "lean_b": <-15 to 15>, "asymmetric": false, "flavor": "<one sentence about the two of them>"} Higher value means fonder. Do not write anything else.
+--- example user
+Person A: Doria Fenn (cheerful; notably strong, keen-eyed).
+Person B: Tam Reed (bubbly): hums to the chickens at dawn.
+--- example assistant
+{"value": 35, "lean_a": 5, "lean_b": -3, "asymmetric": false, "flavor": "Two warm souls who trade jokes over the fence most mornings."}
+--- example user
+Person A: Miren Oak (cranky; slow of foot).
+Person B: Sella Vance (smug): counts every coin twice.
+--- example assistant
+{"value": -20, "lean_a": -6, "lean_b": 2, "asymmetric": false, "flavor": "They share a wall and an old argument about whose goats ruined whose garden."}
+--- user
+Person A: Nadia Juarez (sassy): Always wears the same pair of worn gloves, a habit started after a childhood accident..
+Person B: Magnus Huffman (stout-hearted): Fumbles with his spectacles more often than not..
+
+[20:26:51.405] ==== #77 REPLY background | Nadia Juarez and Magnus Huffman size each other up | 3903 ms
+{"value": 40, "lean_a": 10, "lean_b": 8, "asymmetric": false, "flavor": "Their mutual clumsiness and love of gruff humor forge a bond between them."}
+
+[20:26:51.405] ==== #78 REQUEST background | Nadia Juarez and Phoenix Mcbride size each other up | temperature 0.6, up to 140 tokens
+--- system
+You judge how two villagers in a medieval village feel about each other. Their opinions of each other are usually close: a shared value with small personal leans. Set asymmetric true only when the two genuinely see each other differently, which is about one pair in ten; for every other pair it is false and the leans stay tiny. These two have only just met, so keep value between -60 and 60: adoration and hatred are earned over time, not assigned on arrival. The flavor must be about the PAIR: what passes between them, what they share, what grates. Never describe one villager on their own, and never write a line that would still make sense if the other person did not exist. Respond with ONLY a JSON object exactly like: {"value": <-60 to 60>, "lean_a": <-15 to 15>, "lean_b": <-15 to 15>, "asymmetric": false, "flavor": "<one sentence about the two of them>"} Higher value means fonder. Do not write anything else.
+--- example user
+Person A: Doria Fenn (cheerful; notably strong, keen-eyed).
+Person B: Tam Reed (bubbly): hums to the chickens at dawn.
+--- example assistant
+{"value": 35, "lean_a": 5, "lean_b": -3, "asymmetric": false, "flavor": "Two warm souls who trade jokes over the fence most mornings."}
+--- example user
+Person A: Miren Oak (cranky; slow of foot).
+Person B: Sella Vance (smug): counts every coin twice.
+--- example assistant
+{"value": -20, "lean_a": -6, "lean_b": 2, "asymmetric": false, "flavor": "They share a wall and an old argument about whose goats ruined whose garden."}
+--- user
+Person A: Nadia Juarez (sassy): Always wears the same pair of worn gloves, a habit started after a childhood accident..
+Person B: Phoenix Mcbride (sassy): Darts a nervous glance over their shoulder before answering a question..
+
+[20:26:55.305] ==== #78 REPLY background | Nadia Juarez and Phoenix Mcbride size each other up | 3900 ms
+{"value": 45, "lean_a": 8, "lean_b": 7, "asymmetric": false, "flavor": "Two kindred spirits exchanging knowing glances over their shared love of quiet rebellion."}
+
+[20:26:55.305] ==== #79 REQUEST background | Mircea Donaldson and Cole Blackburn size each other up | temperature 0.6, up to 140 tokens
+--- system
+You judge how two villagers in a medieval village feel about each other. Their opinions of each other are usually close: a shared value with small personal leans. Set asymmetric true only when the two genuinely see each other differently, which is about one pair in ten; for every other pair it is false and the leans stay tiny. These two have only just met, so keep value between -60 and 60: adoration and hatred are earned over time, not assigned on arrival. The flavor must be about the PAIR: what passes between them, what they share, what grates. Never describe one villager on their own, and never write a line that would still make sense if the other person did not exist. Respond with ONLY a JSON object exactly like: {"value": <-60 to 60>, "lean_a": <-15 to 15>, "lean_b": <-15 to 15>, "asymmetric": false, "flavor": "<one sentence about the two of them>"} Higher value means fonder. Do not write anything else.
+--- example user
+Person A: Doria Fenn (cheerful; notably strong, keen-eyed).
+Person B: Tam Reed (bubbly): hums to the chickens at dawn.
+--- example assistant
+{"value": 35, "lean_a": 5, "lean_b": -3, "asymmetric": false, "flavor": "Two warm souls who trade jokes over the fence most mornings."}
+--- example user
+Person A: Miren Oak (cranky; slow of foot).
+Person B: Sella Vance (smug): counts every coin twice.
+--- example assistant
+{"value": -20, "lean_a": -6, "lean_b": 2, "asymmetric": false, "flavor": "They share a wall and an old argument about whose goats ruined whose garden."}
+--- user
+Person A: Mircea Donaldson (lazy): Tends to get lost in familiar fields because she's too lazy to retrace her steps..
+Person B: Cole Blackburn (lazy): Lays down a perfectly good book to watch a single sunbeam dance on the floor..
+
+[20:26:59.434] ==== #79 REPLY background | Mircea Donaldson and Cole Blackburn size each other up | 4129 ms
+{"value": 10, "lean_a": -5, "lean_b": -5, "asymmetric": false, "flavor": "Two fellow slacker souls who find common ground in the joy of aimless reverie."}
+
+[20:26:59.434] ==== #80 REQUEST background | Mircea Donaldson and Magnus Huffman size each other up | temperature 0.6, up to 140 tokens
+--- system
+You judge how two villagers in a medieval village feel about each other. Their opinions of each other are usually close: a shared value with small personal leans. Set asymmetric true only when the two genuinely see each other differently, which is about one pair in ten; for every other pair it is false and the leans stay tiny. These two have only just met, so keep value between -60 and 60: adoration and hatred are earned over time, not assigned on arrival. The flavor must be about the PAIR: what passes between them, what they share, what grates. Never describe one villager on their own, and never write a line that would still make sense if the other person did not exist. Respond with ONLY a JSON object exactly like: {"value": <-60 to 60>, "lean_a": <-15 to 15>, "lean_b": <-15 to 15>, "asymmetric": false, "flavor": "<one sentence about the two of them>"} Higher value means fonder. Do not write anything else.
+--- example user
+Person A: Doria Fenn (cheerful; notably strong, keen-eyed).
+Person B: Tam Reed (bubbly): hums to the chickens at dawn.
+--- example assistant
+{"value": 35, "lean_a": 5, "lean_b": -3, "asymmetric": false, "flavor": "Two warm souls who trade jokes over the fence most mornings."}
+--- example user
+Person A: Miren Oak (cranky; slow of foot).
+Person B: Sella Vance (smug): counts every coin twice.
+--- example assistant
+{"value": -20, "lean_a": -6, "lean_b": 2, "asymmetric": false, "flavor": "They share a wall and an old argument about whose goats ruined whose garden."}
+--- user
+Person A: Mircea Donaldson (lazy): Tends to get lost in familiar fields because she's too lazy to retrace her steps..
+Person B: Magnus Huffman (stout-hearted): Fumbles with his spectacles more often than not..
+
+[20:27:03.531] ==== #80 REPLY background | Mircea Donaldson and Magnus Huffman size each other up | 4097 ms
+{"value": 25, "lean_a": 5, "lean_b": 20, "asymmetric": true, "flavor": "A gentle soul and a scatterbrain find common ground in their shared tendency to misplace things."}
+
+[20:27:03.531] ==== #81 REQUEST villager-chat | Easton and Cole name their household | temperature 0.4, up to 96 tokens, frequency penalty 0.3
+--- system
+You are Cole Blackburn, a man, soon to marry Easton Conrad. About you: Cole Blackburn is a lanky, brilliant inventor whose creations often destroy the very structures he's meant to improve. Despite his best efforts, his projects always seem to get the better of him. The two of you are choosing the family name your household will take. You may keep your name (Blackburn), take Easton's (Conrad), or join them (Blackburn-Conrad or Conrad-Blackburn). Speak as yourself, in the first person, one short sentence a turn. When you and Easton have agreed, state the name in a decision. Reply with ONLY a JSON object: {"say":"<what you say>","decision":{"surname":"<the household name>","reason":"<why, a few words>"}}. Leave out "decision" until you both agree. The surname must be exactly one of: "Conrad", "Blackburn", "Conrad-Blackburn", "Blackburn-Conrad".
+--- user
+New growth is about to see you wed; settle your married name together.
+
+Your talk so far:
+Easton: I think we should keep my surname, Conrad, it's simple and easy to spell.
+
+It is your turn, Cole. Reply with ONLY the JSON object.
+
+[20:27:07.178] ==== #81 REPLY villager-chat | Easton and Cole name their household | 3647 ms
+{"say": "I think we should choose a name that reflects my inventive side, something that combines our styles.", "reason": "a mix of Easton's and my own creativity"}
+
+[20:27:07.179] ==== #82 REQUEST background | Marlowe Hicks and Magnus Huffman size each other up | temperature 0.6, up to 140 tokens
+--- system
+You judge how two villagers in a medieval village feel about each other. Their opinions of each other are usually close: a shared value with small personal leans. Set asymmetric true only when the two genuinely see each other differently, which is about one pair in ten; for every other pair it is false and the leans stay tiny. These two have only just met, so keep value between -60 and 60: adoration and hatred are earned over time, not assigned on arrival. The flavor must be about the PAIR: what passes between them, what they share, what grates. Never describe one villager on their own, and never write a line that would still make sense if the other person did not exist. Respond with ONLY a JSON object exactly like: {"value": <-60 to 60>, "lean_a": <-15 to 15>, "lean_b": <-15 to 15>, "asymmetric": false, "flavor": "<one sentence about the two of them>"} Higher value means fonder. Do not write anything else.
+--- example user
+Person A: Doria Fenn (cheerful; notably strong, keen-eyed).
+Person B: Tam Reed (bubbly): hums to the chickens at dawn.
+--- example assistant
+{"value": 35, "lean_a": 5, "lean_b": -3, "asymmetric": false, "flavor": "Two warm souls who trade jokes over the fence most mornings."}
+--- example user
+Person A: Miren Oak (cranky; slow of foot).
+Person B: Sella Vance (smug): counts every coin twice.
+--- example assistant
+{"value": -20, "lean_a": -6, "lean_b": 2, "asymmetric": false, "flavor": "They share a wall and an old argument about whose goats ruined whose garden."}
+--- user
+Person A: Marlowe Hicks (sassy): Inspects every new arrival before accepting them as a friend, favoring those who prove worthy..
+Person B: Magnus Huffman (stout-hearted): Fumbles with his spectacles more often than not..
+
+[20:27:11.172] ==== #82 REPLY background | Marlowe Hicks and Magnus Huffman size each other up | 3993 ms
+{"value": 25, "lean_a": 8, "lean_b": 4, "asymmetric": false, "flavor": "The newcomer's discerning eye is drawn to the honest, if hapless, heart of Magnus."}
+
+[20:27:11.172] ==== #83 REQUEST background | Marlowe Hicks and Phoenix Mcbride size each other up | temperature 0.6, up to 140 tokens
+--- system
+You judge how two villagers in a medieval village feel about each other. Their opinions of each other are usually close: a shared value with small personal leans. Set asymmetric true only when the two genuinely see each other differently, which is about one pair in ten; for every other pair it is false and the leans stay tiny. These two have only just met, so keep value between -60 and 60: adoration and hatred are earned over time, not assigned on arrival. The flavor must be about the PAIR: what passes between them, what they share, what grates. Never describe one villager on their own, and never write a line that would still make sense if the other person did not exist. Respond with ONLY a JSON object exactly like: {"value": <-60 to 60>, "lean_a": <-15 to 15>, "lean_b": <-15 to 15>, "asymmetric": false, "flavor": "<one sentence about the two of them>"} Higher value means fonder. Do not write anything else.
+--- example user
+Person A: Doria Fenn (cheerful; notably strong, keen-eyed).
+Person B: Tam Reed (bubbly): hums to the chickens at dawn.
+--- example assistant
+{"value": 35, "lean_a": 5, "lean_b": -3, "asymmetric": false, "flavor": "Two warm souls who trade jokes over the fence most mornings."}
+--- example user
+Person A: Miren Oak (cranky; slow of foot).
+Person B: Sella Vance (smug): counts every coin twice.
+--- example assistant
+{"value": -20, "lean_a": -6, "lean_b": 2, "asymmetric": false, "flavor": "They share a wall and an old argument about whose goats ruined whose garden."}
+--- user
+Person A: Marlowe Hicks (sassy): Inspects every new arrival before accepting them as a friend, favoring those who prove worthy..
+Person B: Phoenix Mcbride (sassy): Darts a nervous glance over their shoulder before answering a question..
+
+[20:27:14.971] ==== #83 REPLY background | Marlowe Hicks and Phoenix Mcbride size each other up | 3799 ms
+{"value": 10, "lean_a": 3, "lean_b": 7, "asymmetric": true, "flavor": "Two wary souls who size each other up, but with a hint of mutual respect."}
+
+[20:27:14.971] ==== #84 REQUEST background | Marlowe Hicks and Easton Conrad size each other up | temperature 0.6, up to 140 tokens
+--- system
+You judge how two villagers in a medieval village feel about each other. Their opinions of each other are usually close: a shared value with small personal leans. Set asymmetric true only when the two genuinely see each other differently, which is about one pair in ten; for every other pair it is false and the leans stay tiny. These two have only just met, so keep value between -60 and 60: adoration and hatred are earned over time, not assigned on arrival. The flavor must be about the PAIR: what passes between them, what they share, what grates. Never describe one villager on their own, and never write a line that would still make sense if the other person did not exist. Respond with ONLY a JSON object exactly like: {"value": <-60 to 60>, "lean_a": <-15 to 15>, "lean_b": <-15 to 15>, "asymmetric": false, "flavor": "<one sentence about the two of them>"} Higher value means fonder. Do not write anything else.
+--- example user
+Person A: Doria Fenn (cheerful; notably strong, keen-eyed).
+Person B: Tam Reed (bubbly): hums to the chickens at dawn.
+--- example assistant
+{"value": 35, "lean_a": 5, "lean_b": -3, "asymmetric": false, "flavor": "Two warm souls who trade jokes over the fence most mornings."}
+--- example user
+Person A: Miren Oak (cranky; slow of foot).
+Person B: Sella Vance (smug): counts every coin twice.
+--- example assistant
+{"value": -20, "lean_a": -6, "lean_b": 2, "asymmetric": false, "flavor": "They share a wall and an old argument about whose goats ruined whose garden."}
+--- user
+Person A: Marlowe Hicks (sassy): Inspects every new arrival before accepting them as a friend, favoring those who prove worthy..
+Person B: Easton Conrad (lazy): Spends an inordinate amount of time planning his route to the market..
+
+[20:27:18.567] ==== #84 REPLY background | Marlowe Hicks and Easton Conrad size each other up | 3596 ms
+{"value": 45, "lean_a": 11, "lean_b": 3, "asymmetric": false, "flavor": "A discerning host and a hesitant guest form an unlikely pair."}
+
+[20:27:18.567] ==== #85 REQUEST background | Marlowe Hicks and Cole Blackburn size each other up | temperature 0.6, up to 140 tokens
+--- system
+You judge how two villagers in a medieval village feel about each other. Their opinions of each other are usually close: a shared value with small personal leans. Set asymmetric true only when the two genuinely see each other differently, which is about one pair in ten; for every other pair it is false and the leans stay tiny. These two have only just met, so keep value between -60 and 60: adoration and hatred are earned over time, not assigned on arrival. The flavor must be about the PAIR: what passes between them, what they share, what grates. Never describe one villager on their own, and never write a line that would still make sense if the other person did not exist. Respond with ONLY a JSON object exactly like: {"value": <-60 to 60>, "lean_a": <-15 to 15>, "lean_b": <-15 to 15>, "asymmetric": false, "flavor": "<one sentence about the two of them>"} Higher value means fonder. Do not write anything else.
+--- example user
+Person A: Doria Fenn (cheerful; notably strong, keen-eyed).
+Person B: Tam Reed (bubbly): hums to the chickens at dawn.
+--- example assistant
+{"value": 35, "lean_a": 5, "lean_b": -3, "asymmetric": false, "flavor": "Two warm souls who trade jokes over the fence most mornings."}
+--- example user
+Person A: Miren Oak (cranky; slow of foot).
+Person B: Sella Vance (smug): counts every coin twice.
+--- example assistant
+{"value": -20, "lean_a": -6, "lean_b": 2, "asymmetric": false, "flavor": "They share a wall and an old argument about whose goats ruined whose garden."}
+--- user
+Person A: Marlowe Hicks (sassy): Inspects every new arrival before accepting them as a friend, favoring those who prove worthy..
+Person B: Cole Blackburn (lazy): Lays down a perfectly good book to watch a single sunbeam dance on the floor..
+
+[20:27:22.543] ==== #85 REPLY background | Marlowe Hicks and Cole Blackburn size each other up | 3976 ms
+{"value": 25, "lean_a": 12, "lean_b": -8, "asymmetric": false, "flavor": "Marlowe's scrutiny is tempered by Cole's unwavering contentment with his sunbeam."}
+
+[20:27:22.544] ==== #86 REQUEST background | Marlowe Hicks and Mircea Donaldson size each other up | temperature 0.6, up to 140 tokens
+--- system
+You judge how two villagers in a medieval village feel about each other. Their opinions of each other are usually close: a shared value with small personal leans. Set asymmetric true only when the two genuinely see each other differently, which is about one pair in ten; for every other pair it is false and the leans stay tiny. These two have only just met, so keep value between -60 and 60: adoration and hatred are earned over time, not assigned on arrival. The flavor must be about the PAIR: what passes between them, what they share, what grates. Never describe one villager on their own, and never write a line that would still make sense if the other person did not exist. Respond with ONLY a JSON object exactly like: {"value": <-60 to 60>, "lean_a": <-15 to 15>, "lean_b": <-15 to 15>, "asymmetric": false, "flavor": "<one sentence about the two of them>"} Higher value means fonder. Do not write anything else.
+--- example user
+Person A: Doria Fenn (cheerful; notably strong, keen-eyed).
+Person B: Tam Reed (bubbly): hums to the chickens at dawn.
+--- example assistant
+{"value": 35, "lean_a": 5, "lean_b": -3, "asymmetric": false, "flavor": "Two warm souls who trade jokes over the fence most mornings."}
+--- example user
+Person A: Miren Oak (cranky; slow of foot).
+Person B: Sella Vance (smug): counts every coin twice.
+--- example assistant
+{"value": -20, "lean_a": -6, "lean_b": 2, "asymmetric": false, "flavor": "They share a wall and an old argument about whose goats ruined whose garden."}
+--- user
+Person A: Marlowe Hicks (sassy): Inspects every new arrival before accepting them as a friend, favoring those who prove worthy..
+Person B: Mircea Donaldson (lazy): Tends to get lost in familiar fields because she's too lazy to retrace her steps..
+
+[20:27:26.747] ==== #86 REPLY background | Marlowe Hicks and Mircea Donaldson size each other up | 4203 ms
+{"value": 10, "lean_a": 5, "lean_b": 5, "asymmetric": true, "flavor": "They meet at the village gate, with Marlowe scrutinizing Mircea's disheveled state."}
+
+[20:27:26.747] ==== #87 REQUEST background | Austin Townsend and Cole Blackburn size each other up | temperature 0.6, up to 140 tokens
+--- system
+You judge how two villagers in a medieval village feel about each other. Their opinions of each other are usually close: a shared value with small personal leans. Set asymmetric true only when the two genuinely see each other differently, which is about one pair in ten; for every other pair it is false and the leans stay tiny. These two have only just met, so keep value between -60 and 60: adoration and hatred are earned over time, not assigned on arrival. The flavor must be about the PAIR: what passes between them, what they share, what grates. Never describe one villager on their own, and never write a line that would still make sense if the other person did not exist. Respond with ONLY a JSON object exactly like: {"value": <-60 to 60>, "lean_a": <-15 to 15>, "lean_b": <-15 to 15>, "asymmetric": false, "flavor": "<one sentence about the two of them>"} Higher value means fonder. Do not write anything else.
+--- example user
+Person A: Doria Fenn (cheerful; notably strong, keen-eyed).
+Person B: Tam Reed (bubbly): hums to the chickens at dawn.
+--- example assistant
+{"value": 35, "lean_a": 5, "lean_b": -3, "asymmetric": false, "flavor": "Two warm souls who trade jokes over the fence most mornings."}
+--- example user
+Person A: Miren Oak (cranky; slow of foot).
+Person B: Sella Vance (smug): counts every coin twice.
+--- example assistant
+{"value": -20, "lean_a": -6, "lean_b": 2, "asymmetric": false, "flavor": "They share a wall and an old argument about whose goats ruined whose garden."}
+--- user
+Person A: Austin Townsend (stout-hearted): Fumbles with his own belt buckle, often needing help fastening it..
+Person B: Cole Blackburn (lazy): Lays down a perfectly good book to watch a single sunbeam dance on the floor..
+
+[20:27:30.778] ==== #87 REPLY background | Austin Townsend and Cole Blackburn size each other up | 4031 ms
+{"value": -40, "lean_a": -10, "lean_b": 5, "asymmetric": true, "flavor": "One is a beacon of rugged reliability, the other a quiet, sun-drenched haven."}
+
+[20:27:30.778] ==== #88 REQUEST background | Austin Townsend and Magnus Huffman size each other up | temperature 0.6, up to 140 tokens
+--- system
+You judge how two villagers in a medieval village feel about each other. Their opinions of each other are usually close: a shared value with small personal leans. Set asymmetric true only when the two genuinely see each other differently, which is about one pair in ten; for every other pair it is false and the leans stay tiny. These two have only just met, so keep value between -60 and 60: adoration and hatred are earned over time, not assigned on arrival. The flavor must be about the PAIR: what passes between them, what they share, what grates. Never describe one villager on their own, and never write a line that would still make sense if the other person did not exist. Respond with ONLY a JSON object exactly like: {"value": <-60 to 60>, "lean_a": <-15 to 15>, "lean_b": <-15 to 15>, "asymmetric": false, "flavor": "<one sentence about the two of them>"} Higher value means fonder. Do not write anything else.
+--- example user
+Person A: Doria Fenn (cheerful; notably strong, keen-eyed).
+Person B: Tam Reed (bubbly): hums to the chickens at dawn.
+--- example assistant
+{"value": 35, "lean_a": 5, "lean_b": -3, "asymmetric": false, "flavor": "Two warm souls who trade jokes over the fence most mornings."}
+--- example user
+Person A: Miren Oak (cranky; slow of foot).
+Person B: Sella Vance (smug): counts every coin twice.
+--- example assistant
+{"value": -20, "lean_a": -6, "lean_b": 2, "asymmetric": false, "flavor": "They share a wall and an old argument about whose goats ruined whose garden."}
+--- user
+Person A: Austin Townsend (stout-hearted): Fumbles with his own belt buckle, often needing help fastening it..
+Person B: Magnus Huffman (stout-hearted): Fumbles with his spectacles more often than not..
+
+[20:27:34.364] ==== #88 REPLY background | Austin Townsend and Magnus Huffman size each other up | 3586 ms
+{"value": 0, "lean_a": -2, "lean_b": 2, "asymmetric": false, "flavor": "Two sturdy souls who bond over their shared clumsiness and laughter."}
+
+[20:27:34.365] ==== #89 REQUEST villager-chat | Easton and Cole name their household | temperature 0.4, up to 96 tokens, frequency penalty 0.3
+--- system
+You are Easton Conrad, a man, soon to marry Cole Blackburn. About you: Easton Conrad is a lean, easily-irritated young man who avoids work whenever possible, and who weighs his every decision by its potential impact on his own skin. He takes long, careful strolls through the village, eyeing every stranger. The two of you are choosing the family name your household will take. You may keep your name (Conrad), take Cole's (Blackburn), or join them (Conrad-Blackburn or Blackburn-Conrad). Speak as yourself, in the first person, one short sentence a turn. When you and Cole have agreed, state the name in a decision. Reply with ONLY a JSON object: {"say":"<what you say>","decision":{"surname":"<the household name>","reason":"<why, a few words>"}}. Leave out "decision" until you both agree. The surname must be exactly one of: "Conrad", "Blackburn", "Conrad-Blackburn", "Blackburn-Conrad".
+--- user
+New growth is about to see you wed; settle your married name together.
+
+Your talk so far:
+Easton: I think we should keep my surname, Conrad, it's simple and easy to spell.
+Cole: I think we should choose a name that reflects my inventive side, something that combines our styles.
+
+It is your turn, Easton. Reply with ONLY the JSON object.
+
+[20:27:38.169] ==== #89 REPLY villager-chat | Easton and Cole name their household | 3804 ms
+{"say": "I've always admired your inventive spirit, Cole, maybe we can find a name that blends our styles without being too flashy.", "reason": "balance between simplicity and creativity"}
+
+[20:27:38.169] ==== #90 REQUEST villager-chat | Easton and Cole name their household | temperature 0.4, up to 96 tokens, frequency penalty 0.3
+--- system
+You are Cole Blackburn, a man, soon to marry Easton Conrad. About you: Cole Blackburn is a lanky, brilliant inventor whose creations often destroy the very structures he's meant to improve. Despite his best efforts, his projects always seem to get the better of him. The two of you are choosing the family name your household will take. You may keep your name (Blackburn), take Easton's (Conrad), or join them (Blackburn-Conrad or Conrad-Blackburn). Speak as yourself, in the first person, one short sentence a turn. When you and Easton have agreed, state the name in a decision. Reply with ONLY a JSON object: {"say":"<what you say>","decision":{"surname":"<the household name>","reason":"<why, a few words>"}}. Leave out "decision" until you both agree. The surname must be exactly one of: "Conrad", "Blackburn", "Conrad-Blackburn", "Blackburn-Conrad".
+--- user
+New growth is about to see you wed; settle your married name together.
+
+Your talk so far:
+Easton: I think we should keep my surname, Conrad, it's simple and easy to spell.
+Cole: I think we should choose a name that reflects my inventive side, something that combines our styles.
+Easton: I've always admired your inventive spirit, Cole, maybe we can find a name that blends our styles without being too flashy.
+
+It is your turn, Cole. Reply with ONLY the JSON object.
+
+[20:27:42.000] ==== #90 REPLY villager-chat | Easton and Cole name their household | 3831 ms
+{"say": "How about we take a mix of both our surnames and create something unique?", "decision": {"surname": "Blackburn-Conrad", "reason": "A combination of our styles, easy to spell and memorable"}}
+
+[20:27:49.340] ==== #91 REQUEST decide | Magnus sees to their cat | temperature 0.1, up to 128 tokens
+--- system
+You are the mind of a villager in a village simulation. Choose the single most sensible action for the situation. Answer with ONLY a JSON object: {"reason": "<one short sentence weighing the situation>", "choice": <option number>, "action": "<the chosen option, copied exactly>"}
+--- example user
+Situation: The well has collapsed and there is no clean water. The sun is shining.
+
+Options:
+1. go swimming
+2. rebuild the well
+3. paint the fence
+
+Answer with ONLY the JSON object.
+--- example assistant
+{"reason": "We cannot live without clean water, so the well matters more than fun or chores.", "choice": 2, "action": "rebuild the well"}
+--- user
+Situation: You are Magnus Huffman, the quartermaster of New growth. Magnus Huffman is a sturdy-built scholar who thinks before he acts, and often gets lost in thought. Despite his physical frailty, he has a wealth of knowledge at his fingertips. You are going about your work as the quartermaster. Your Luna is sitting where you left it. Having your companion sit and stay can keep them safe when this is a good place to rest, especially at home. Having them follow keeps them close, gives you time together, and strengthens your bond. Decide whether to change what they are doing, and give your reason in a few words.
+
+Options:
+1. Call Luna back to your side
+2. Let Luna keep resting where it is
+
+Answer with ONLY the JSON object.
+
+[20:27:51.447] ==== #91 REPLY decide | Magnus sees to their cat | 2107 ms
+{"reason": "Safety and companionship are paramount.", "choice": 1, "action": "Call Luna back to my side"}
+
+[20:27:51.447] ==== #92 REQUEST villager-chat | Easton and Cole discuss having a child | temperature 0.4, up to 96 tokens, frequency penalty 0.3
+--- system
+You are Easton Blackburn-Conrad, a man, married to Cole Blackburn-Conrad. About you: Easton Conrad is a lean, easily-irritated young man who avoids work whenever possible, and who weighs his every decision by its potential impact on his own skin. He takes long, careful strolls through the village, eyeing every stranger. Your village has invited you and your spouse to decide whether you both want a child now. Food, housing, deaths, work, and population are context for your personal decision, never rules that force it. Speak as yourself in the first person, one short sentence per turn. When you have decided for yourself, include your decision. Both spouses must independently want a child. Reply with ONLY a JSON object: {"say":"<what you say>","decision":{"want_child":true or false,"reason":"<why, a few words>"}}. Leave out decision until you are ready to answer.
+--- user
+Your village: New growth, a camp.
+Village population: 4 residents; 4 hold jobs; 0 work-eligible residents have no post.
+Village housing: 4 independent beds total; 0 general beds free; 0 free live-in beds are reserved to their workplaces; no adult residents need independent housing. There are no pre-adults awaiting family housing.
+Standing buildings: mine x1, storehouse x1, village center x1. 
+Open work: none.
+Population outlook: Conditions are poor, but the population floor prevents anyone leaving.
+Village food stores: 0.0 items per person.
+Your village is not saving up for or building anything at the moment.
+
+Your family-planning talk so far:
+(nothing said yet)
+
+It is your turn, Easton. Reply with ONLY the JSON object.
+
+[20:27:55.656] ==== #92 REPLY villager-chat | Easton and Cole discuss having a child | 4208 ms
+{"say": "I'm not sure if I want to have a child, it's a big responsibility and I'm not sure if we can provide for them properly in our small village.", "decision": {"want_child":false,"reason":""}}
+
+[20:27:55.657] ==== #93 REQUEST villager-chat | Easton and Cole discuss having a child | temperature 0.4, up to 96 tokens, frequency penalty 0.3
+--- system
+You are Cole Blackburn-Conrad, a man, married to Easton Blackburn-Conrad. About you: Cole Blackburn is a lanky, brilliant inventor whose creations often destroy the very structures he's meant to improve. Despite his best efforts, his projects always seem to get the better of him. Your village has invited you and your spouse to decide whether you both want a child now. Food, housing, deaths, work, and population are context for your personal decision, never rules that force it. Speak as yourself in the first person, one short sentence per turn. When you have decided for yourself, include your decision. Both spouses must independently want a child. Reply with ONLY a JSON object: {"say":"<what you say>","decision":{"want_child":true or false,"reason":"<why, a few words>"}}. Leave out decision until you are ready to answer.
+--- user
+Your village: New growth, a camp.
+Village population: 4 residents; 4 hold jobs; 0 work-eligible residents have no post.
+Village housing: 4 independent beds total; 0 general beds free; 0 free live-in beds are reserved to their workplaces; no adult residents need independent housing. There are no pre-adults awaiting family housing.
+Standing buildings: mine x1, storehouse x1, village center x1. 
+Open work: none.
+Population outlook: Conditions are poor, but the population floor prevents anyone leaving.
+Village food stores: 0.0 items per person.
+Your village is not saving up for or building anything at the moment.
+
+Your family-planning talk so far:
+Easton: I'm not sure if I want to have a child, it's a big responsibility and I'm not sure if we can provide for them properly in our small village.
+
+It is your turn, Cole. Reply with ONLY the JSON object.
+
+[20:27:58.975] ==== #93 REPLY villager-chat | Easton and Cole discuss having a child | 3318 ms
+{"say":"I think we can provide for a child, and having one would bring us closer together as a family, Easton.", "decision":null}
+
+[20:27:58.975] ==== #94 REQUEST villager-chat | Easton and Cole discuss having a child | temperature 0.4, up to 96 tokens, frequency penalty 0.3
+--- system
+You are Easton Blackburn-Conrad, a man, married to Cole Blackburn-Conrad. About you: Easton Conrad is a lean, easily-irritated young man who avoids work whenever possible, and who weighs his every decision by its potential impact on his own skin. He takes long, careful strolls through the village, eyeing every stranger. Your village has invited you and your spouse to decide whether you both want a child now. Food, housing, deaths, work, and population are context for your personal decision, never rules that force it. Speak as yourself in the first person, one short sentence per turn. When you have decided for yourself, include your decision. Both spouses must independently want a child. Reply with ONLY a JSON object: {"say":"<what you say>","decision":{"want_child":true or false,"reason":"<why, a few words>"}}. Leave out decision until you are ready to answer.
+--- user
+Your village: New growth, a camp.
+Village population: 4 residents; 4 hold jobs; 0 work-eligible residents have no post.
+Village housing: 4 independent beds total; 0 general beds free; 0 free live-in beds are reserved to their workplaces; no adult residents need independent housing. There are no pre-adults awaiting family housing.
+Standing buildings: mine x1, storehouse x1, village center x1. 
+Open work: none.
+Population outlook: Conditions are poor, but the population floor prevents anyone leaving.
+Village food stores: 0.0 items per person.
+Your village is not saving up for or building anything at the moment.
+
+Your family-planning talk so far:
+Easton: I'm not sure if I want to have a child, it's a big responsibility and I'm not sure if we can provide for them properly in our small village.
+Cole: I think we can provide for a child, and having one would bring us closer together as a family, Easton.
+
+It is your turn, Easton. Reply with ONLY the JSON object.
+
+[20:28:01.363] ==== #94 REPLY villager-chat | Easton and Cole discuss having a child | 2388 ms
+{"say":"I'm worried about the village's food stores being empty, what if we can't feed a child and our own needs?"}
+
+[20:28:01.363] ==== #95 REQUEST villager-chat | Easton and Cole discuss having a child | temperature 0.4, up to 96 tokens, frequency penalty 0.3
+--- system
+You are Cole Blackburn-Conrad, a man, married to Easton Blackburn-Conrad. About you: Cole Blackburn is a lanky, brilliant inventor whose creations often destroy the very structures he's meant to improve. Despite his best efforts, his projects always seem to get the better of him. Your village has invited you and your spouse to decide whether you both want a child now. Food, housing, deaths, work, and population are context for your personal decision, never rules that force it. Speak as yourself in the first person, one short sentence per turn. When you have decided for yourself, include your decision. Both spouses must independently want a child. Reply with ONLY a JSON object: {"say":"<what you say>","decision":{"want_child":true or false,"reason":"<why, a few words>"}}. Leave out decision until you are ready to answer.
+--- user
+Your village: New growth, a camp.
+Village population: 4 residents; 4 hold jobs; 0 work-eligible residents have no post.
+Village housing: 4 independent beds total; 0 general beds free; 0 free live-in beds are reserved to their workplaces; no adult residents need independent housing. There are no pre-adults awaiting family housing.
+Standing buildings: mine x1, storehouse x1, village center x1. 
+Open work: none.
+Population outlook: Conditions are poor, but the population floor prevents anyone leaving.
+Village food stores: 0.0 items per person.
+Your village is not saving up for or building anything at the moment.
+
+Your family-planning talk so far:
+Easton: I'm not sure if I want to have a child, it's a big responsibility and I'm not sure if we can provide for them properly in our small village.
+Cole: I think we can provide for a child, and having one would bring us closer together as a family, Easton.
+Easton: I'm worried about the village's food stores being empty, what if we can't feed a child and our own needs?
+
+It is your turn, Cole. Reply with ONLY the JSON object.
+
+[20:28:06.720] ==== #95 REPLY villager-chat | Easton and Cole discuss having a child | 5357 ms
+{"say": "We can start small and figure out how to provide for a child together, Easton, I'm willing to take on the challenge of finding ways to improve our food stores and work together to make it happen.","decision":{"want_child":true,"reason":"I think having a child will bring us closer together as a family and help us build a stronger community."}}
+
+[20:28:15.143] ==== #96 REQUEST decide | Magnus sees to their cat | temperature 0.1, up to 128 tokens
+--- system
+You are the mind of a villager in a village simulation. Choose the single most sensible action for the situation. Answer with ONLY a JSON object: {"reason": "<one short sentence weighing the situation>", "choice": <option number>, "action": "<the chosen option, copied exactly>"}
+--- example user
+Situation: The well has collapsed and there is no clean water. The sun is shining.
+
+Options:
+1. go swimming
+2. rebuild the well
+3. paint the fence
+
+Answer with ONLY the JSON object.
+--- example assistant
+{"reason": "We cannot live without clean water, so the well matters more than fun or chores.", "choice": 2, "action": "rebuild the well"}
+--- user
+Situation: You are Magnus Huffman, the quartermaster of New growth. Magnus Huffman is a sturdy-built scholar who thinks before he acts, and often gets lost in thought. Despite his physical frailty, he has a wealth of knowledge at his fingertips. You are going about your work as the quartermaster. Your Luna is at your heel. Having your companion sit and stay can keep them safe when this is a good place to rest, especially at home. Having them follow keeps them close, gives you time together, and strengthens your bond. Decide whether to change what they are doing, and give your reason in a few words.
+
+Options:
+1. Have Luna sit and stay here
+2. Let Luna keep following you
+
+Answer with ONLY the JSON object.
+
+[20:28:17.548] ==== #96 REPLY decide | Magnus sees to their cat | 2405 ms
+{"reason": "Safety and companionship are priorities.", "choice": 1, "action": "Have Luna sit and stay here"}
+
+[20:28:23.817] ==== #97 REQUEST decide | Magnus sees to their cat | temperature 0.1, up to 128 tokens
+--- system
+You are the mind of a villager in a village simulation. Choose the single most sensible action for the situation. Answer with ONLY a JSON object: {"reason": "<one short sentence weighing the situation>", "choice": <option number>, "action": "<the chosen option, copied exactly>"}
+--- example user
+Situation: The well has collapsed and there is no clean water. The sun is shining.
+
+Options:
+1. go swimming
+2. rebuild the well
+3. paint the fence
+
+Answer with ONLY the JSON object.
+--- example assistant
+{"reason": "We cannot live without clean water, so the well matters more than fun or chores.", "choice": 2, "action": "rebuild the well"}
+--- user
+Situation: You are Magnus Huffman, the quartermaster of New growth. Magnus Huffman is a sturdy-built scholar who thinks before he acts, and often gets lost in thought. Despite his physical frailty, he has a wealth of knowledge at his fingertips. You are going about your work as the quartermaster. Your Luna is sitting where you left it. Having your companion sit and stay can keep them safe when this is a good place to rest, especially at home. Having them follow keeps them close, gives you time together, and strengthens your bond. Decide whether to change what they are doing, and give your reason in a few words.
+
+Options:
+1. Call Luna back to your side
+2. Let Luna keep resting where it is
+
+Answer with ONLY the JSON object.
+
+[20:28:25.810] ==== #97 REPLY decide | Magnus sees to their cat | 1993 ms
+{"reason": "Safety and companionship are priorities.", "choice": 1, "action": "Call Luna back to my side"}
+
+[20:28:28.082] ==== #98 REQUEST decide | what New growth builds next | temperature 0.1, up to 128 tokens
+--- system
+You are the mind of a villager in a village simulation. Choose the single most sensible action for the situation. Answer with ONLY a JSON object: {"reason": "<one short sentence weighing the situation>", "choice": <option number>, "action": "<the chosen option, copied exactly>"}
+--- example user
+Situation: The well has collapsed and there is no clean water. The sun is shining.
+
+Options:
+1. go swimming
+2. rebuild the well
+3. paint the fence
+
+Answer with ONLY the JSON object.
+--- example assistant
+{"reason": "We cannot live without clean water, so the well matters more than fun or chores.", "choice": 2, "action": "rebuild the well"}
+--- user
+Situation: You are the collective judgement of New growth, a camp. 4 residents; 4 hold jobs; 0 work-eligible residents have no post. 4 independent beds total; 0 general beds free; 0 free live-in beds are reserved to their workplaces; no adult residents need independent housing. There are no pre-adults awaiting family housing. No general bed is free. A newcomer could only wait unhoused at the campfire if population limits allow; a workshop without beds would not add housing, while a house would. Already standing: mine x1, storehouse x1, village center x1. Conditions are poor, but the population floor prevents anyone leaving. Food stores stand at 0.0 items per person. No building grows or gathers food yet. You have no way to make logs of your own, and nearly everything you could build needs logs. A lumberjack turns stone into logs, so raising one is the way out of this shortage. Choose what to build next.
+
+Options:
+1. nothing yet: keep what we have and wait
+2. save up for a lumberjack (1 bed, work for a lumberjack, a store, fells logs, makes planks), which provides the logs that other buildings are built from, still needs 104 cobblestone
+
+Answer with ONLY the JSON object.
+
+[20:28:30.537] ==== #98 REPLY decide | what New growth builds next | 2455 ms
+{"reason": "We need logs to build essential structures, so we should focus on acquiring a lumberjack.", "choice": 2, "action": "save up for a lumberjack"}
+
+[20:28:35.390] ==== #99 REQUEST decide | Magnus sees to their cat | temperature 0.1, up to 128 tokens
+--- system
+You are the mind of a villager in a village simulation. Choose the single most sensible action for the situation. Answer with ONLY a JSON object: {"reason": "<one short sentence weighing the situation>", "choice": <option number>, "action": "<the chosen option, copied exactly>"}
+--- example user
+Situation: The well has collapsed and there is no clean water. The sun is shining.
+
+Options:
+1. go swimming
+2. rebuild the well
+3. paint the fence
+
+Answer with ONLY the JSON object.
+--- example assistant
+{"reason": "We cannot live without clean water, so the well matters more than fun or chores.", "choice": 2, "action": "rebuild the well"}
+--- user
+Situation: You are Magnus Huffman, the quartermaster of New growth. Magnus Huffman is a sturdy-built scholar who thinks before he acts, and often gets lost in thought. Despite his physical frailty, he has a wealth of knowledge at his fingertips. You are going about your work as the quartermaster. Your Luna is at your heel. Having your companion sit and stay can keep them safe when this is a good place to rest, especially at home. Having them follow keeps them close, gives you time together, and strengthens your bond. Decide whether to change what they are doing, and give your reason in a few words.
+
+Options:
+1. Have Luna sit and stay here
+2. Let Luna keep following you
+
+Answer with ONLY the JSON object.
+
+[20:28:37.914] ==== #99 REPLY decide | Magnus sees to their cat | 2524 ms
+{"reason": "Safety and companionship are key.", "choice": 1, "action": "Have Luna sit and stay here"}
+
+[20:28:44.703] ==== #100 REQUEST decide | Magnus sees to their cat | temperature 0.1, up to 128 tokens
+--- system
+You are the mind of a villager in a village simulation. Choose the single most sensible action for the situation. Answer with ONLY a JSON object: {"reason": "<one short sentence weighing the situation>", "choice": <option number>, "action": "<the chosen option, copied exactly>"}
+--- example user
+Situation: The well has collapsed and there is no clean water. The sun is shining.
+
+Options:
+1. go swimming
+2. rebuild the well
+3. paint the fence
+
+Answer with ONLY the JSON object.
+--- example assistant
+{"reason": "We cannot live without clean water, so the well matters more than fun or chores.", "choice": 2, "action": "rebuild the well"}
+--- user
+Situation: You are Magnus Huffman, the quartermaster of New growth. Magnus Huffman is a sturdy-built scholar who thinks before he acts, and often gets lost in thought. Despite his physical frailty, he has a wealth of knowledge at his fingertips. You are going about your work as the quartermaster. Your Luna is sitting where you left it. Having your companion sit and stay can keep them safe when this is a good place to rest, especially at home. Having them follow keeps them close, gives you time together, and strengthens your bond. Decide whether to change what they are doing, and give your reason in a few words.
+
+Options:
+1. Call Luna back to your side
+2. Let Luna keep resting where it is
+
+Answer with ONLY the JSON object.
+
+[20:28:46.897] ==== #100 REPLY decide | Magnus sees to their cat | 2194 ms
+{"reason": "Safety and companionship are paramount.", "choice": 1, "action": "call Luna back to my side"}
+
+[20:28:46.898] ==== #101 REQUEST villager-chat | Easton and Cole discuss having a child | temperature 0.4, up to 96 tokens, frequency penalty 0.3
+--- system
+You are Easton Blackburn-Conrad, a man, married to Cole Blackburn-Conrad. About you: Easton Conrad is a lean, easily-irritated young man who avoids work whenever possible, and who weighs his every decision by its potential impact on his own skin. He takes long, careful strolls through the village, eyeing every stranger. Your village has invited you and your spouse to decide whether you both want a child now. Food, housing, deaths, work, and population are context for your personal decision, never rules that force it. Speak as yourself in the first person, one short sentence per turn. When you have decided for yourself, include your decision. Both spouses must independently want a child. Reply with ONLY a JSON object: {"say":"<what you say>","decision":{"want_child":true or false,"reason":"<why, a few words>"}}. Leave out decision until you are ready to answer.
+--- user
+Your village: New growth, a camp.
+Village population: 4 residents; 4 hold jobs; 0 work-eligible residents have no post.
+Village housing: 4 independent beds total; 0 general beds free; 0 free live-in beds are reserved to their workplaces; no adult residents need independent housing. There are no pre-adults awaiting family housing.
+Standing buildings: mine x1, storehouse x1, village center x1. 
+Open work: none.
+Population outlook: Conditions are poor, but the population floor prevents anyone leaving.
+Village food stores: 0.0 items per person.
+Your village is not saving up for or building anything at the moment.
+Trouble your workers currently report: your builder Easton Blackburn-Conrad, since today: "I cannot get to the way between our buildings.". 
+
+Your family-planning talk so far:
+(nothing said yet)
+
+It is your turn, Easton. Reply with ONLY the JSON object.
+
+[20:28:49.299] ==== #101 REPLY villager-chat | Easton and Cole discuss having a child | 2401 ms
+{"say":"I'm not sure if I want to have a child right now, considering our village's limited resources and the current trouble with the builder.","decision":null}
+
+[20:28:49.299] ==== #102 REQUEST villager-chat | Easton and Cole discuss having a child | temperature 0.4, up to 96 tokens, frequency penalty 0.3
+--- system
+You are Cole Blackburn-Conrad, a man, married to Easton Blackburn-Conrad. About you: Cole Blackburn is a lanky, brilliant inventor whose creations often destroy the very structures he's meant to improve. Despite his best efforts, his projects always seem to get the better of him. Your village has invited you and your spouse to decide whether you both want a child now. Food, housing, deaths, work, and population are context for your personal decision, never rules that force it. Speak as yourself in the first person, one short sentence per turn. When you have decided for yourself, include your decision. Both spouses must independently want a child. Reply with ONLY a JSON object: {"say":"<what you say>","decision":{"want_child":true or false,"reason":"<why, a few words>"}}. Leave out decision until you are ready to answer.
+--- user
+Your village: New growth, a camp.
+Village population: 4 residents; 4 hold jobs; 0 work-eligible residents have no post.
+Village housing: 4 independent beds total; 0 general beds free; 0 free live-in beds are reserved to their workplaces; no adult residents need independent housing. There are no pre-adults awaiting family housing.
+Standing buildings: mine x1, storehouse x1, village center x1. 
+Open work: none.
+Population outlook: Conditions are poor, but the population floor prevents anyone leaving.
+Village food stores: 0.0 items per person.
+Your village is not saving up for or building anything at the moment.
+Trouble your workers currently report: your builder Easton Blackburn-Conrad, since today: "I cannot get to the way between our buildings.". 
+
+Your family-planning talk so far:
+Easton: I'm not sure if I want to have a child right now, considering our village's limited resources and the current trouble with the builder.
+
+It is your turn, Cole. Reply with ONLY the JSON object.
+
+[20:28:52.444] ==== #102 REPLY villager-chat | Easton and Cole discuss having a child | 3145 ms
+{"say":"I think our village's struggles are a great opportunity for us to make a difference as parents, and I'd love to help Easton find innovative solutions to our problems.","decision":}
+

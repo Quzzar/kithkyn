@@ -1,0 +1,72 @@
+[
+  {
+    "elapsedTicks": 0,
+    "project": "none",
+    "stage": "none",
+    "unhousedAdults": 1,
+    "queuedItems": 0,
+    "displacedResidents": 0,
+    "freshWater": false,
+    "staffedFoodPosts": 1
+  },
+  {
+    "elapsedTicks": 243,
+    "project": "house_plains_2",
+    "stage": "GATHERING",
+    "unhousedAdults": 1,
+    "queuedItems": 0,
+    "displacedResidents": 0,
+    "freshWater": false,
+    "staffedFoodPosts": 1
+  },
+  {
+    "elapsedTicks": 560,
+    "project": "house_plains_2",
+    "stage": "DEMOLISHING",
+    "unhousedAdults": 2,
+    "queuedItems": 0,
+    "displacedResidents": 1,
+    "freshWater": false,
+    "staffedFoodPosts": 1
+  },
+  {
+    "elapsedTicks": 4200,
+    "project": "house_plains_2",
+    "stage": "PREPARING",
+    "unhousedAdults": 2,
+    "queuedItems": 0,
+    "displacedResidents": 1,
+    "freshWater": false,
+    "staffedFoodPosts": 1
+  },
+  {
+    "elapsedTicks": 6440,
+    "project": "house_plains_2",
+    "stage": "CONSTRUCTING",
+    "unhousedAdults": 2,
+    "queuedItems": 0,
+    "displacedResidents": 1,
+    "freshWater": false,
+    "staffedFoodPosts": 1
+  },
+  {
+    "elapsedTicks": 11020,
+    "project": "house_plains_2",
+    "stage": "COMPLETE",
+    "unhousedAdults": 2,
+    "queuedItems": 0,
+    "displacedResidents": 1,
+    "freshWater": false,
+    "staffedFoodPosts": 1
+  },
+  {
+    "elapsedTicks": 12040,
+    "project": "none",
+    "stage": "none",
+    "unhousedAdults": 0,
+    "queuedItems": 0,
+    "displacedResidents": 0,
+    "freshWater": false,
+    "staffedFoodPosts": 1
+  }
+]

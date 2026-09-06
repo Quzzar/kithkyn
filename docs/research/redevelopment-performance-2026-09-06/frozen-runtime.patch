@@ -1,0 +1,1505 @@
+--- /dev/null
++++ b/src/main/java/com/quzzar/kithkyn/village/buildings/ConstructionAccess.java
+@@ -0,0 +1,203 @@
++package com.quzzar.kithkyn.village.buildings;
++
++import java.util.ArrayList;
++import java.util.Comparator;
++import java.util.HashMap;
++import java.util.LinkedHashSet;
++import java.util.List;
++import java.util.Map;
++import java.util.Set;
++import java.util.UUID;
++
++import javax.annotation.Nullable;
++
++import com.quzzar.kithkyn.Kithkyn;
++import com.quzzar.kithkyn.entities.RealPerson;
++
++import net.minecraft.core.BlockPos;
++import net.minecraft.core.Direction;
++import net.minecraft.world.level.levelgen.structure.BoundingBox;
++import net.minecraft.world.level.pathfinder.Path;
++import net.minecraft.world.phys.AABB;
++
++/**
++ * Worker-specific approaches to a redevelopment site. Positions stay outside both
++ * the replacement and the buildings being removed, including their ground work.
++ * Routes are transient: reloads and replacement builders find their own way in.
++ */
++public final class ConstructionAccess {
++  private static final int PATHS_PER_SCAN = 8;
++  private static final long RETRY_TICKS = 200;
++  /** Longer than the shared work loop's 600-tick stand-down after physical failure. */
++  private static final long STALLED_RETRY_TICKS = 1200;
++  private static final String BLOCKER = "I cannot reach a clear position outside the redevelopment site.";
++
++  private final Map<UUID, Approach> approaches = new HashMap<>();
++  private List<BoundingBox> footprints;
++  private Set<Long> groundWork;
++
++  private static final class Approach {
++    private BlockPos position;
++    private int cursor;
++    private long nextScan;
++    private boolean blocked;
++    private final Map<BlockPos, Long> failedUntil = new HashMap<>();
++  }
++
++  /** Selects a bounded batch of paths; later scans continue around the perimeter. */
++  @Nullable
++  public BlockPos select(RealPerson person, StructureInProgress project) {
++    if (!initialize(person, project)) {
++      person.logBlocker(BLOCKER);
++      return null;
++    }
++    Approach approach = approaches.computeIfAbsent(person.getUUID(), ignored -> new Approach());
++    long now = person.level().getGameTime();
++    approach.failedUntil.entrySet().removeIf(entry -> entry.getValue() <= now);
++    if (approach.position != null && safe(person, approach.position)) {
++      return approach.position;
++    }
++    approach.position = null;
++    if (now < approach.nextScan) {
++      return null;
++    }
++    List<BlockPos> candidates = candidates(person, project);
++    int checked = 0;
++    int visited = 0;
++    while (visited < candidates.size() && checked < PATHS_PER_SCAN) {
++      BlockPos candidate = candidates.get(Math.floorMod(approach.cursor++, candidates.size()));
++      visited++;
++      if (approach.failedUntil.containsKey(candidate)) {
++        continue;
++      }
++      checked++;
++      Path path = person.getNavigation().createPath(candidate, 0);
++      if (path == null || !path.canReach() || path.getEndNode() == null
++          || !path.getEndNode().asBlockPos().equals(candidate)) {
++        approach.failedUntil.put(candidate, now + RETRY_TICKS);
++        continue;
++      }
++      approach.position = candidate;
++      approach.blocked = false;
++      person.clearBlocker(BLOCKER);
++      Kithkyn.LOGGER.debug("[construction-access] {} will work on {} from outside at {}",
++          person.getFullName(), project.getBuilding().getName(), candidate.toShortString());
++      return candidate;
++    }
++    approach.nextScan = now + 20;
++    approach.blocked = true;
++    person.logBlocker(BLOCKER);
++    return null;
++  }
++
++  /** A route that looked feasible but physically stalled must yield to another approach. */
++  public void unreachable(RealPerson person, BlockPos position) {
++    Approach approach = approaches.computeIfAbsent(person.getUUID(), ignored -> new Approach());
++    approach.failedUntil.put(position, person.level().getGameTime() + STALLED_RETRY_TICKS);
++    approach.position = null;
++    approach.nextScan = 0;
++    approach.blocked = true;
++    person.logBlocker(BLOCKER);
++  }
++
++  /** Both the selected spot and the worker's body must remain outside the changing site. */
++  public boolean inReach(RealPerson person, BlockPos position) {
++    return person.blockPosition().distSqr(position) <= 1.0D
++        && safe(person, person.blockPosition())
++        && outside(footprints, person.getX(), person.getZ(), person.getBbWidth());
++  }
++
++  /** Rechecked before every builder swing, so a changed approach releases its target. */
++  public boolean safe(RealPerson person, BlockPos position) {
++    if (footprints == null || !person.level().hasChunkAt(position)
++        || !outside(footprints, position.getX() + 0.5D, position.getZ() + 0.5D, person.getBbWidth())) {
++      return false;
++    }
++    BlockPos below = position.below();
++    if (groundWork.contains(new BlockPos(position.getX(), 0, position.getZ()).asLong())
++        || !person.level().getFluidState(position).isEmpty()
++        || !person.level().getBlockState(below).isFaceSturdy(person.level(), below, Direction.UP)) {
++      return false;
++    }
++    double half = person.getBbWidth() / 2.0D;
++    AABB body = new AABB(position.getX() + 0.5D - half, position.getY(), position.getZ() + 0.5D - half,
++        position.getX() + 0.5D + half, position.getY() + person.getBbHeight(), position.getZ() + 0.5D + half);
++    return person.level().noCollision(person, body);
++  }
++
++  /** Explains a gather timeout without confusing inaccessible work with missing materials. */
++  public String failureReason() {
++    return approaches.values().stream().anyMatch(approach -> approach.blocked)
++        ? "builders could not reach a clear position outside the redevelopment site" : "";
++  }
++
++  /** Geometry includes the replacement, victims, and all changed ground columns. */
++  private boolean initialize(RealPerson person, StructureInProgress project) {
++    if (footprints != null) {
++      return true;
++    }
++    var village = person.getVillage();
++    if (village == null || project.getRedevelopment() == null) {
++      return false;
++    }
++    List<Building> affected = new ArrayList<>(project.getRedevelopment().plan().removed());
++    affected.add(project.getBuilding());
++    List<BoundingBox> boxes = new ArrayList<>();
++    for (Building building : affected) {
++      BoundingBox bounds = RedevelopmentPlanner.worldBounds(village, building);
++      if (bounds == null) {
++        return false;
++      }
++      boxes.add(bounds);
++    }
++    Set<Long> columns = new java.util.HashSet<>();
++    var plan = project.getRedevelopment().plan();
++    for (long packed : java.util.stream.Stream.concat(plan.prepBreak().stream(), plan.prepFill().stream()).toList()) {
++      BlockPos at = BlockPos.of(packed);
++      columns.add(new BlockPos(at.getX(), 0, at.getZ()).asLong());
++    }
++    footprints = List.copyOf(boxes);
++    groundWork = Set.copyOf(columns);
++    return true;
++  }
++
++  /** Nearby ground heights, without assuming the surface is the roof of an old building. */
++  private List<BlockPos> candidates(RealPerson person, StructureInProgress project) {
++    Set<BlockPos> candidates = new LinkedHashSet<>();
++    int ground = BlockPos.of(project.getRedevelopment().plan().ground()).getY();
++    for (BlockPos column : perimeter(footprints)) {
++      for (int y = ground + 3; y >= ground - 4; y--) {
++        BlockPos at = new BlockPos(column.getX(), y, column.getZ());
++        if (safe(person, at)) {
++          candidates.add(at);
++        }
++      }
++    }
++    return candidates.stream().sorted(Comparator.comparingDouble(at -> at.distSqr(person.blockPosition()))).toList();
++  }
++
++  /** Columns beside each footprint, excluding overlapping footprints even for wide workers. */
++  static List<BlockPos> perimeter(List<BoundingBox> boxes) {
++    Set<BlockPos> columns = new LinkedHashSet<>();
++    for (BoundingBox box : boxes) {
++      for (int margin = 1; margin <= 2; margin++) {
++        for (int x = box.minX() - margin; x <= box.maxX() + margin; x++) {
++          columns.add(new BlockPos(x, 0, box.minZ() - margin));
++          columns.add(new BlockPos(x, 0, box.maxZ() + margin));
++        }
++        for (int z = box.minZ() - margin + 1; z < box.maxZ() + margin; z++) {
++          columns.add(new BlockPos(box.minX() - margin, 0, z));
++          columns.add(new BlockPos(box.maxX() + margin, 0, z));
++        }
++      }
++    }
++    return columns.stream().filter(at -> outside(boxes, at.getX() + 0.5D, at.getZ() + 0.5D, 0)).toList();
++  }
++
++  /** Checks full horizontal body clearance, rather than only the feet's block coordinate. */
++  static boolean outside(List<BoundingBox> boxes, double x, double z, double width) {
++    double half = width / 2.0D;
++    return boxes.stream().noneMatch(box -> x + half > box.minX() && x - half < box.maxX() + 1
++        && z + half > box.minZ() && z - half < box.maxZ() + 1);
++  }
++}
+--- a/src/main/java/com/quzzar/kithkyn/village/buildings/StructureInProgress.java
++++ b/src/main/java/com/quzzar/kithkyn/village/buildings/StructureInProgress.java
+@@ -131,6 +131,20 @@
+ 
+     private final ConstructionMode constructionMode;
+     private RedevelopmentWork redevelopment;
++    private final ConstructionAccess constructionAccess = new ConstructionAccess();
++
++    /** Exterior routes are recomputed for this project's workers after reload. */
++    public ConstructionAccess constructionAccess() {
++        return constructionAccess;
++    }
++
++    /** The reason gathering stalled, retaining access failures as a distinct outcome. */
++    public String gatheringFailureReason(boolean materialsAvailable) {
++        String access = constructionAccess.failureReason();
++        return !access.isEmpty() ? access : materialsAvailable
++                ? "construction materials were available but builders could not deliver them to the site"
++                : "the construction recipe never came together";
++    }
+ 
+     /** Freezes the exact reviewed proposal before gathering any materials. */
+     public void setRedevelopment(RedevelopmentPlan plan) {
+--- a/src/main/java/com/quzzar/kithkyn/entities/ai/goals/work/GatherStep.java
++++ b/src/main/java/com/quzzar/kithkyn/entities/ai/goals/work/GatherStep.java
+@@ -7,7 +7,6 @@
+ import com.quzzar.kithkyn.Kithkyn;
+ import com.quzzar.kithkyn.entities.RealPerson;
+ import com.quzzar.kithkyn.village.Village;
+-import com.quzzar.kithkyn.village.buildings.ConstructionQuote;
+ import com.quzzar.kithkyn.village.buildings.Materials;
+ import com.quzzar.kithkyn.village.buildings.StructureInProgress;
+ 
+@@ -40,10 +39,14 @@
+  * name: a log cost is met by any log the village has.
+  */
+ public final class GatherStep implements BlockWorkStep {
++  private StructureInProgress deliveryProject;
++  private BlockPos deliveryPosition;
+ 
+   @Override
+   @Nullable
+   public BlockPos select(RealPerson person) {
++    deliveryProject = null;
++    deliveryPosition = null;
+     Village village = person.getVillage();
+     if (village == null) {
+       return null;
+@@ -52,10 +55,14 @@
+     if (project == null || !project.isGathering()) {
+       return null; // not this project's phase; BuildStep or nobody owns it
+     }
+-    List<ItemStack> recipe = recipe(person, project);
++    List<ItemStack> recipe = recipe(project);
+     // The whole recipe is in the pack: go to the site and commit it.
+     if (!PackLogistics.packShort(person, recipe)) {
+-      return BlockPos.of(project.getBuilding().getCenterLocation());
++      deliveryProject = project;
++      deliveryPosition = project.getRedevelopment() == null
++          ? BlockPos.of(project.getBuilding().getCenterLocation())
++          : project.constructionAccess().select(person, project);
++      return deliveryPosition;
+     }
+     // Otherwise fetch the next chest that holds something still wanted. None
+     // found leaves the step dormant, and the village's abandon path reclaims a
+@@ -73,16 +80,38 @@
+     if (project == null || !project.isGathering()) {
+       return false; // committed or abandoned out from under us
+     }
+-    Container chest = PackLogistics.containerAt(person, target);
+-    if (chest != null) {
+-      PackLogistics.pullWanted(person, chest, recipe(person, project), "BUILDER");
+-      return false; // re-select: more chests, or the site to commit
++    if (deliveryProject == project && target.equals(deliveryPosition)) {
++      if (project.getRedevelopment() != null && !project.constructionAccess().safe(person, target)) {
++        project.constructionAccess().unreachable(person, target);
++        return false;
++      }
++      if (project.commitFromBuilder(person.personMainInv, village)) {
++        Kithkyn.LOGGER.debug("[resource-flow] {} (BUILDER) delivered a full recipe and is raising the {}",
++            person.getName().getString(), project.getBuilding().getName());
++      }
++    } else {
++      Container chest = PackLogistics.containerAt(person, target);
++      if (chest != null) {
++        PackLogistics.pullWanted(person, chest, recipe(project), "BUILDER");
++      }
+     }
+-    // Not a container: this is the build site, and the pack should be full.
+-    Kithkyn.LOGGER.debug("[resource-flow] {} (BUILDER) delivered a full recipe and is raising the {}",
+-        person.getName().getString(), project.getBuilding().getName());
+-    project.commitFromBuilder(person.personMainInv, village);
+     return false;
++  }
++
++  @Override
++  public boolean inReach(RealPerson person, BlockPos target) {
++    return deliveryProject != null && deliveryProject.getRedevelopment() != null
++        && target.equals(deliveryPosition)
++        ? deliveryProject.constructionAccess().inReach(person, target)
++        : BlockWorkStep.super.inReach(person, target);
++  }
++
++  @Override
++  public void unreachable(RealPerson person, BlockPos target) {
++    if (deliveryProject != null && deliveryProject.getRedevelopment() != null
++        && target.equals(deliveryPosition)) {
++      deliveryProject.constructionAccess().unreachable(person, target);
++    }
+   }
+ 
+   @Override
+@@ -101,7 +130,7 @@
+   }
+ 
+   /** The stable recipe owed by this project's chosen construction mode. */
+-  private List<ItemStack> recipe(RealPerson person, StructureInProgress project) {
++  private List<ItemStack> recipe(StructureInProgress project) {
+     return project.requiredMaterials();
+   }
+ }
+--- a/src/main/java/com/quzzar/kithkyn/entities/ai/goals/work/BuildStep.java
++++ b/src/main/java/com/quzzar/kithkyn/entities/ai/goals/work/BuildStep.java
+@@ -45,7 +45,8 @@
+     if (project.getProgress() == BuildProgress.GATHERING) {
+       return null;
+     }
+-    return BlockPos.of(project.getBuilding().getCenterLocation());
++    return project.getRedevelopment() == null ? BlockPos.of(project.getBuilding().getCenterLocation())
++        : project.constructionAccess().select(person, project);
+   }
+ 
+   @Override
+@@ -60,6 +61,10 @@
+   public boolean act(RealPerson person, BlockPos target) {
+     StructureInProgress project = project(person);
+     if (project == null || project.getProgress() == BuildProgress.COMPLETE) {
++      return false;
++    }
++    if (project.getRedevelopment() != null && !project.constructionAccess().safe(person, target)) {
++      project.constructionAccess().unreachable(person, target);
+       return false;
+     }
+     if (project.getProgress() == BuildProgress.DEMOLISHING) {
+@@ -107,6 +112,22 @@
+     StructureInProgress project = project(person);
+     if (project != null) {
+       project.stopBuilding();
++    }
++  }
++
++  @Override
++  public boolean inReach(RealPerson person, BlockPos target) {
++    StructureInProgress project = project(person);
++    return project != null && project.getRedevelopment() != null
++        ? project.constructionAccess().inReach(person, target)
++        : BlockWorkStep.super.inReach(person, target);
++  }
++
++  @Override
++  public void unreachable(RealPerson person, BlockPos target) {
++    StructureInProgress project = project(person);
++    if (project != null && project.getRedevelopment() != null) {
++      project.constructionAccess().unreachable(person, target);
+     }
+   }
+ 
+--- /dev/null
++++ b/src/main/java/com/quzzar/kithkyn/village/buildings/BuildingImpact.java
+@@ -0,0 +1,191 @@
++package com.quzzar.kithkyn.village.buildings;
++
++import java.util.ArrayList;
++import java.util.Collection;
++import java.util.HashMap;
++import java.util.HashSet;
++import java.util.List;
++import java.util.Map;
++import java.util.Set;
++import java.util.UUID;
++import java.util.function.Predicate;
++
++import com.quzzar.kithkyn.Kithkyn;
++import com.quzzar.kithkyn.village.Occupation;
++import com.quzzar.kithkyn.village.Village;
++
++import net.minecraft.resources.ResourceLocation;
++import net.minecraft.tags.BlockTags;
++import net.minecraft.world.item.Item;
++import net.minecraft.world.item.ItemStack;
++
++/** Calculated construction facts shared by demand checks and every planner option. */
++public final class BuildingImpact {
++  private static final Set<String> FOOD_GRANTS = Set.of("GRAIN", "MEAT", "BREAD");
++  private static final Map<String, String> SERVICE_NAMES = Map.ofEntries(
++      Map.entry("WATER", "fresh water"), Map.entry("ORES", "ore extraction"),
++      Map.entry("FUEL", "fuel production"), Map.entry("PROTECTION", "village defense"),
++      Map.entry("GRAIN", "grain production"), Map.entry("TRADE", "trade"),
++      Map.entry("TRADE_INITIATIVE", "trade outreach"), Map.entry("REPAIR", "gear repair"),
++      Map.entry("SMELTING", "metal smelting"), Map.entry("CUT_STONE", "stone cutting"),
++      Map.entry("LOGS", "logging"), Map.entry("PLANKS", "plank production"),
++      Map.entry("MEAT", "meat production"), Map.entry("BREAD", "bread production"),
++      Map.entry("LEATHER", "leather production"), Map.entry("WOOL", "wool production"),
++      Map.entry("HEALING", "healing"), Map.entry("WANDERERS", "newcomer attraction"));
++
++  private BuildingImpact() {
++  }
++
++  public record Capacity(int generalBeds, int workerBeds, int containers, Map<Occupation, Integer> jobs,
++      int cropPlots) {
++    public Capacity {
++      jobs = Map.copyOf(jobs);
++    }
++
++    public int workplaces() {
++      return jobs.values().stream().mapToInt(Integer::intValue).sum();
++    }
++
++    /** Zero general beds is stated too, so storage and worker accommodation cannot look like housing. */
++    public String describe(boolean net) {
++      return number(generalBeds, net) + " general beds, " + number(workerBeds, net)
++          + " beds reserved for workers, " + number(workplaces(), net) + " workplaces, "
++          + number(containers, net) + " shared containers, " + number(cropPlots, net) + " crop plots";
++    }
++  }
++
++  public record Services(Set<String> lostDuring, Set<String> lostAfter, Set<String> gained) {
++    public Services {
++      lostDuring = Set.copyOf(lostDuring);
++      lostAfter = Set.copyOf(lostAfter);
++      gained = Set.copyOf(gained);
++    }
++
++    public String describe() {
++      Set<String> restored = new HashSet<>(lostDuring);
++      restored.removeAll(lostAfter);
++      return "Services unavailable only during work: " + describeServices(restored)
++          + ". Services lost after completion: " + describeServices(lostAfter)
++          + (lostAfter.contains("WATER") ? " (removes the village's last fresh-water source)" : "")
++          + ". New services: " + describeServices(gained) + ".";
++    }
++  }
++
++  public record Redevelopment(Capacity net, Services services, int displacedResidents, int affectedWorkplaces,
++      int staffedFoodRemaining) {
++  }
++
++  /** Matches the housing rule: only the village center's workplace beds are general housing. */
++  public static int generalBeds(BuildingInfo info) {
++    return info.getWorkLocations().isEmpty() || Buildings.VILLAGE_CENTER_CATEGORY.equals(info.getCategory())
++        ? info.getBedLocations().size() : 0;
++  }
++
++  public static Capacity capacity(BuildingInfo info, int cropPlots) {
++    Map<Occupation, Integer> jobs = new HashMap<>();
++    info.getWorkLocations().values().forEach(job -> jobs.merge(job, 1, Integer::sum));
++    int general = generalBeds(info);
++    return new Capacity(general, info.getBedLocations().size() - general,
++        info.getContainerLocations().size(), jobs, cropPlots);
++  }
++
++  public static Capacity net(Capacity target, Collection<Capacity> affected) {
++    int general = target.generalBeds();
++    int workers = target.workerBeds();
++    int stores = target.containers();
++    int plots = target.cropPlots();
++    Map<Occupation, Integer> jobs = new HashMap<>(target.jobs());
++    for (Capacity loss : affected) {
++      general -= loss.generalBeds();
++      workers -= loss.workerBeds();
++      stores -= loss.containers();
++      plots -= loss.cropPlots();
++      loss.jobs().forEach((job, count) -> jobs.merge(job, -count, Integer::sum));
++    }
++    jobs.values().removeIf(count -> count == 0);
++    return new Capacity(general, workers, stores, jobs, plots);
++  }
++
++  public static Capacity capacity(Village village, BuildingInfo info) {
++    return capacity(info, foodPlots(village, info));
++  }
++
++  public static Capacity net(Village village, BuildingInfo target, Collection<Building> affected) {
++    return net(capacity(village, target), affected.stream().map(building -> capacity(village, building.getInfo())).toList());
++  }
++
++  /** Uses the same conditional capability resolution as the live village, holding observed supplies fixed. */
++  public static Services services(Collection<BuildingInfo> before, Collection<BuildingInfo> surviving,
++      BuildingInfo target, Predicate<Item> hasSupply) {
++    Set<String> original = VillageCapabilities.resolve(before, hasSupply);
++    Set<String> during = VillageCapabilities.resolve(surviving, hasSupply);
++    List<BuildingInfo> completed = new ArrayList<>(surviving);
++    completed.add(target);
++    Set<String> after = VillageCapabilities.resolve(completed, hasSupply);
++    return new Services(difference(original, during), difference(original, after), difference(after, original));
++  }
++
++  public static List<Building> affected(Village village, RedevelopmentPlan plan) {
++    List<Building> affected = new ArrayList<>(plan.removed());
++    plan.source().map(village::getBuilding).ifPresent(affected::add);
++    return affected;
++  }
++
++  public static Redevelopment redevelopment(Village village, RedevelopmentPlan plan) {
++    BuildingInfo target = Buildings.getByName(plan.target());
++    List<Building> affected = affected(village, plan);
++    Set<UUID> ids = affected.stream().map(Building::getUUID).collect(java.util.stream.Collectors.toSet());
++    Set<UUID> displaced = village.getBedAssignmentsView().entrySet().stream()
++        .filter(entry -> ids.contains(entry.getValue().getBuildingUUID())).map(Map.Entry::getKey)
++        .collect(java.util.stream.Collectors.toSet());
++    for (UUID resident : village.getPopulation()) {
++      var person = village.getPerson(village.getLevel(), resident);
++      Building home = person == null ? null : village.dependentHome(person);
++      if (home != null && ids.contains(home.getUUID())) {
++        displaced.add(resident);
++      }
++    }
++    List<Building> surviving = village.getBuildings().stream()
++        .filter(building -> !ids.contains(building.getUUID()) && building.getInfo() != null).toList();
++    int staffedFood = (int) surviving.stream().filter(building -> isFood(building.getInfo()))
++        .filter(building -> village.getJobAssignmentsView().values().stream()
++            .anyMatch(job -> job.getBuildingUUID().equals(building.getUUID()))).count();
++    Services services = services(village.getBuildings().stream().map(Building::getInfo)
++        .filter(java.util.Objects::nonNull).toList(), surviving.stream().map(Building::getInfo).toList(), target,
++        item -> village.hasItemStackInVillage(new ItemStack(item, 1)));
++    return new Redevelopment(net(village, target, affected), services, displaced.size(),
++        affected.stream().mapToInt(building -> building.getInfo().getWorkLocations().size()).sum(), staffedFood);
++  }
++
++  /** Authored crop capacity is measurable; food yield is not predicted. */
++  public static int foodPlots(Village village, BuildingInfo info) {
++    if (!isFood(info)) {
++      return 0;
++    }
++    var template = village.getLevel().getStructureManager().getOrCreate(
++        ResourceLocation.fromNamespaceAndPath(Kithkyn.MODID, info.getPath()));
++    return template.palettes.isEmpty() ? 0 : (int) template.palettes.getFirst().blocks().stream()
++        .filter(block -> block.state().is(BlockTags.CROPS)).count();
++  }
++
++  public static String describeServices(Collection<String> services) {
++    List<String> names = services.stream().filter(service -> !service.equals("STORAGE"))
++        .sorted().map(service -> SERVICE_NAMES.getOrDefault(service, service.toLowerCase().replace('_', ' '))).toList();
++    return names.isEmpty() ? "none" : String.join(", ", names);
++  }
++
++  private static Set<String> difference(Set<String> first, Set<String> second) {
++    Set<String> difference = new HashSet<>(first);
++    difference.removeAll(second);
++    difference.remove("STORAGE");
++    return difference;
++  }
++
++  private static boolean isFood(BuildingInfo info) {
++    return info.getGrants().stream().anyMatch(FOOD_GRANTS::contains);
++  }
++
++  private static String number(int number, boolean signed) {
++    return signed && number > 0 ? "+" + number : Integer.toString(number);
++  }
++}
+--- /dev/null
++++ b/src/main/java/com/quzzar/kithkyn/village/buildings/RedevelopmentAlternatives.java
+@@ -0,0 +1,96 @@
++package com.quzzar.kithkyn.village.buildings;
++
++import java.util.ArrayList;
++import java.util.Comparator;
++import java.util.LinkedHashMap;
++import java.util.List;
++import java.util.Map;
++import java.util.Optional;
++import java.util.UUID;
++
++import com.quzzar.kithkyn.village.Village;
++
++import net.minecraft.world.item.Item;
++
++/** Groups placements for one project while retaining real service, capacity, and material tradeoffs. */
++public final class RedevelopmentAlternatives {
++  private RedevelopmentAlternatives() {
++  }
++
++  public record Evaluated(ConstructionChoice choice, BuildingImpact.Redevelopment impact, boolean affordable) {
++    private RedevelopmentPlan plan() {
++      return choice.redevelopment();
++    }
++
++    private int work() {
++      return plan().blocks().size() + plan().prepBreak().size() + plan().prepFill().size();
++    }
++  }
++
++  public record Option(Evaluated evaluated, boolean preferred, boolean hasAlternatives) {
++    public String preference() {
++      if (!hasAlternatives) {
++        return "";
++      }
++      return preferred ? "Preferred placement for this target. " : "Alternative placement for the same target. ";
++    }
++  }
++
++  private record Project(String target, ConstructionMode mode, Optional<UUID> source) {
++  }
++
++  public static List<Option> select(Village village, List<ConstructionChoice> choices, Map<Item, Integer> stock) {
++    return select(choices.stream().map(choice -> new Evaluated(choice,
++        BuildingImpact.redevelopment(village, choice.redevelopment()),
++        ConstructionQuote.capture(choice, stock).affordable())).toList());
++  }
++
++  /**
++   * Among equivalent impacts, only an alternative no dearer in every material and no more work can replace
++   * another. Different salvage totals remain visible because unused salvage is returned later.
++   * Across different impacts, affordability comes first, then service preservation, displacement,
++   * affected workplaces and removal work. This is an explicit placement preference, never an eligibility gate.
++   */
++  public static List<Option> select(List<Evaluated> evaluated) {
++    Map<Project, List<Evaluated>> groups = new LinkedHashMap<>();
++    for (Evaluated alternative : evaluated) {
++      RedevelopmentPlan plan = alternative.plan();
++      Project group = new Project(plan.target(), plan.mode(), plan.source());
++      List<Evaluated> retained = groups.computeIfAbsent(group, ignored -> new ArrayList<>());
++      if (retained.stream().anyMatch(prior -> replaces(prior, alternative))) {
++        continue;
++      }
++      retained.removeIf(prior -> replaces(alternative, prior));
++      retained.add(alternative);
++    }
++    Comparator<Evaluated> order = Comparator.comparing((Evaluated value) -> !value.affordable())
++        .thenComparingInt(value -> value.impact().services().lostAfter().size())
++        .thenComparingInt(value -> value.impact().services().lostDuring().size())
++        .thenComparingInt(value -> value.impact().displacedResidents())
++        .thenComparingInt(value -> value.impact().affectedWorkplaces())
++        .thenComparingInt(value -> value.plan().removed().size())
++        .thenComparingInt(Evaluated::work)
++        .thenComparingLong(value -> value.plan().ground())
++        .thenComparing(value -> value.plan().rotation());
++    List<Option> result = new ArrayList<>();
++    for (List<Evaluated> group : groups.values()) {
++      group.sort(order);
++      for (int index = 0; index < group.size(); index++) {
++        result.add(new Option(group.get(index), index == 0, group.size() > 1));
++      }
++    }
++    return List.copyOf(result);
++  }
++
++  private static boolean replaces(Evaluated better, Evaluated other) {
++    if (!better.impact().equals(other.impact())
++        || !MaterialAmount.tally(better.plan().salvage()).equals(MaterialAmount.tally(other.plan().salvage()))
++        || better.work() > other.work()
++        || better.plan().removed().size() > other.plan().removed().size()) {
++      return false;
++    }
++    Map<Item, Integer> cost = MaterialAmount.tally(better.plan().netRequired());
++    Map<Item, Integer> otherCost = MaterialAmount.tally(other.plan().netRequired());
++    return cost.entrySet().stream().allMatch(entry -> entry.getValue() <= otherCost.getOrDefault(entry.getKey(), 0));
++  }
++}
+--- a/src/main/java/com/quzzar/kithkyn/village/buildings/BuildingUpgrade.java
++++ b/src/main/java/com/quzzar/kithkyn/village/buildings/BuildingUpgrade.java
+@@ -11,7 +11,6 @@
+ import javax.annotation.Nullable;
+ 
+ import com.quzzar.kithkyn.Kithkyn;
+-import com.quzzar.kithkyn.village.Occupation;
+ import com.quzzar.kithkyn.village.Village;
+ 
+ import net.minecraft.core.BlockPos;
+@@ -271,43 +270,17 @@
+     return StorageEvacuation.evacuate(village, List.of(from));
+   }
+ 
+-  /** What the village would gain, in the model's own terms. */
+-  public static String describe(Building from, BuildingInfo to) {
++  /** The same net-capacity facts used for fresh construction and redevelopment. */
++  public static String describe(Village village, Building from, BuildingInfo to) {
+     BuildingInfo current = from.getInfo();
+     String name = to.displayLabel();
+     String target = to.hasWellFormedId() ? "level " + to.getLevel() + " " + name : name;
+     if (current == null) {
+       return "an on-site " + target + " upgrade";
+     }
+-    List<String> gains = new ArrayList<>();
+-    int beds = to.getBedLocations().size() - current.getBedLocations().size();
+-    if (beds > 0) {
+-      gains.add(beds + (beds == 1 ? " more bed" : " more beds"));
+-    }
+-    int stores = to.getContainerLocations().size() - current.getContainerLocations().size();
+-    if (stores > 0) {
+-      gains.add(stores == 1 ? "another store" : stores + " more stores");
+-    }
+-    for (Occupation occupation : to.getWorkLocations().values().stream().distinct().toList()) {
+-      int added = count(to, occupation) - count(current, occupation);
+-      if (added > 0) {
+-        gains.add("work for " + (added == 1 ? "another " : added + " more ")
+-            + occupation.name().toLowerCase());
+-      }
+-    }
+-    return gains.isEmpty()
+-        ? "an on-site " + target + " upgrade"
+-        : "an on-site " + target + " upgrade (" + String.join(", ", gains) + ")";
+-  }
+-
+-  private static int count(BuildingInfo info, Occupation occupation) {
+-    int count = 0;
+-    for (Occupation station : info.getWorkLocations().values()) {
+-      if (station == occupation) {
+-        count++;
+-      }
+-    }
+-    return count;
++    BuildingImpact.Capacity net = BuildingImpact.net(village, to, List.of(from));
++    return "an on-site " + target + " upgrade (net " + net.describe(true)
++        + "; provides " + BuildingImpact.describeServices(to.getGrants()) + ")";
+   }
+ 
+   /** The footprint a standing building actually occupies, in its own frame. */
+--- a/src/main/java/com/quzzar/kithkyn/village/buildings/RedevelopmentDemand.java
++++ b/src/main/java/com/quzzar/kithkyn/village/buildings/RedevelopmentDemand.java
+@@ -1,7 +1,6 @@
+ package com.quzzar.kithkyn.village.buildings;
+ 
+ import java.util.Collection;
+-import java.util.HashMap;
+ import java.util.Map;
+ import java.util.Set;
+ import java.util.stream.Collectors;
+@@ -66,41 +65,18 @@
+   }
+ 
+   public static String reason(Village village, BuildingInfo target, Collection<Building> affected) {
+-    int beds = generalBeds(target);
+-    int storage = target.getContainerLocations().size();
+-    Map<Occupation, Integer> jobs = new HashMap<>();
+-    target.getWorkLocations().values().forEach(job -> jobs.merge(job, 1, Integer::sum));
+-    for (Building building : affected) {
+-      beds -= generalBeds(building.getInfo());
+-      storage -= building.getInfo().getContainerLocations().size();
+-      building.getInfo().getWorkLocations().values().forEach(job -> jobs.merge(job, -1, Integer::sum));
+-    }
++    BuildingImpact.Capacity net = BuildingImpact.net(village, target, affected);
+     Needs needs = new Needs(Math.max(0, village.getUnhousedAdultResidentCount() + village.getPendingArrivalCount()
+         - village.getFreeGeneralBedCount()), village.isStorageStrained(),
+         village.getAttractiveness().foodPerCapita() < KithkynConfig.AttractivenessFoodTargetPerCapita,
+         village.idlePeople().size(), village.claimableJobs().stream().map(job -> job.getOccupation()).collect(Collectors.toSet()),
+         target.getGrants().stream().filter(village::canDo).collect(Collectors.toSet()));
+-    return reason(needs, new Change(beds, storage, Map.copyOf(jobs), Set.copyOf(target.getGrants()),
+-        netFoodPlots(village, target, affected)));
++    return reason(needs, new Change(net.generalBeds(), net.containers(), net.jobs(), Set.copyOf(target.getGrants()),
++        net.cropPlots()));
+   }
+ 
+   /** Authored crop capacity is measurable; food yield and completion time are not predicted. */
+   public static int netFoodPlots(Village village, BuildingInfo target, Collection<Building> affected) {
+-    return foodPlots(village, target) - affected.stream().mapToInt(building -> foodPlots(village, building.getInfo())).sum();
+-  }
+-
+-  private static int foodPlots(Village village, BuildingInfo info) {
+-    if (info.getGrants().stream().noneMatch(FOOD_GRANTS::contains)) {
+-      return 0;
+-    }
+-    var template = village.getLevel().getLevel().getStructureManager().getOrCreate(
+-        net.minecraft.resources.ResourceLocation.fromNamespaceAndPath(com.quzzar.kithkyn.Kithkyn.MODID, info.getPath()));
+-    return template.palettes.isEmpty() ? 0 : (int) template.palettes.getFirst().blocks().stream()
+-        .filter(block -> block.state().is(net.minecraft.tags.BlockTags.CROPS)).count();
+-  }
+-
+-  private static int generalBeds(BuildingInfo info) {
+-    return info.getWorkLocations().isEmpty() || Buildings.VILLAGE_CENTER_CATEGORY.equals(info.getCategory())
+-        ? info.getBedLocations().size() : 0;
++    return BuildingImpact.net(village, target, affected).cropPlots();
+   }
+ }
+--- a/src/main/java/com/quzzar/kithkyn/village/buildings/RedevelopmentPlanner.java
++++ b/src/main/java/com/quzzar/kithkyn/village/buildings/RedevelopmentPlanner.java
+@@ -32,7 +32,6 @@
+   private static final int MAX_SURVEYS = 96;
+   private static final long SEARCH_BUDGET_NANOS = 50_000_000L;
+   private static final int MAX_BLOCKS_PER_REMOVAL = 32_768;
+-  private static final Set<String> FOOD = Set.of("GRAIN", "MEAT", "BREAD");
+ 
+   private RedevelopmentPlanner() {
+   }
+@@ -109,7 +108,8 @@
+             }
+             RedevelopmentPlan plan = assessment.plan().orElseThrow();
+             String key = target.getName() + "/" + plan.mode() + "/" + plan.source() + "/"
+-                + plan.removed().stream().map(building -> building.getUUID().toString()).sorted().toList();
++                + plan.removed().stream().map(building -> building.getUUID().toString()).sorted().toList()
++                + "/" + MaterialAmount.tally(plan.required()) + "/" + MaterialAmount.tally(plan.salvage());
+             ConstructionChoice prior = distinct.get(key);
+             if (prior == null || work(plan) < work(prior.redevelopment())) {
+               distinct.put(key, new ConstructionChoice(target, plan.mode(), plan));
+@@ -292,10 +292,6 @@
+         removed, blocks, MaterialAmount.fromStacks(required), salvage, prep.toBreak(), fill)), "");
+   }
+ 
+-  private static boolean foodBuilding(Building building) {
+-    return building.getInfo() != null && building.getInfo().getGrants().stream().anyMatch(FOOD::contains);
+-  }
+-
+   private static String scanRemoval(Village village, Building victim,
+       List<RedevelopmentPlan.RemovalBlock> blocks, Set<Long> positions) {
+     BoundingBox box = worldBounds(village, victim);
+@@ -371,18 +367,11 @@
+   }
+ 
+   public static String describe(Village village, RedevelopmentPlan plan) {
++    return describe(village, plan, BuildingImpact.redevelopment(village, plan));
++  }
++
++  public static String describe(Village village, RedevelopmentPlan plan, BuildingImpact.Redevelopment impact) {
+     BuildingInfo target = Buildings.getByName(plan.target());
+-    List<Building> affected = new ArrayList<>(plan.removed());
+-    plan.source().map(village::getBuilding).ifPresent(affected::add);
+-    Set<UUID> ids = affected.stream().map(Building::getUUID).collect(java.util.stream.Collectors.toSet());
+-    int lostBeds = affected.stream().mapToInt(building -> building.getInfo().getBedLocations().size()).sum();
+-    int lostJobs = affected.stream().mapToInt(building -> building.getInfo().getWorkLocations().size()).sum();
+-    int lostStorage = affected.stream().mapToInt(building -> building.getInfo().getContainerLocations().size()).sum();
+-    long displaced = village.getBedAssignmentsView().values().stream()
+-        .filter(bed -> ids.contains(bed.getBuildingUUID())).count();
+-    long remainingFood = village.getBuildings().stream().filter(building -> !ids.contains(building.getUUID()))
+-        .filter(RedevelopmentPlanner::foodBuilding).filter(building -> village.getJobAssignmentsView().values()
+-            .stream().anyMatch(job -> job.getBuildingUUID().equals(building.getUUID()))).count();
+     String removal = plan.removed().stream().map(building -> {
+       BlockPos at = BlockPos.of(building.getOriginLocation());
+       return "level " + building.getInfo().getLevel() + " " + building.getInfo().displayLabel()
+@@ -390,16 +379,14 @@
+     }).collect(java.util.stream.Collectors.joining("; "));
+     Building source = plan.source().map(village::getBuilding).orElse(null);
+     return (source != null ? "Upgrade the existing level " + source.getInfo().getLevel() + " "
+-        + source.getInfo().displayLabel() + " to " : "Build separate ") + "level " + target.getLevel() + " " + target.displayLabel() + ". Remove: " + removal
+-        + ". Net change after completion: " + (target.getBedLocations().size() - lostBeds) + " beds, "
+-        + (target.getWorkLocations().size() - lostJobs) + " workplaces, "
+-        + (target.getContainerLocations().size() - lostStorage) + " shared containers, "
+-        + RedevelopmentDemand.netFoodPlots(village, target, affected) + " crop plots. Target capabilities: "
+-        + target.getGrants() + ". Current need: " + RedevelopmentDemand.reason(village, target, affected) + ". During work: " + displaced + " residents displaced (spare beds used first; otherwise temporarily homeless), " + lostJobs
+-        + " workplaces affected; builders can continue construction, " + remainingFood
+-        + " staffed food buildings remain; output not forecast. Stored items are preserved; overflow waits for space. Recover: "
+-        + MaterialAmount.describe(plan.salvage()) + ". Still pay: " + MaterialAmount.describe(plan.netRequired())
+-        + ". Removal and ground work: " + work(plan) + " blocks, followed by construction.";
++        + source.getInfo().displayLabel() + " to " : "Build separate ") + "level " + target.getLevel() + " "
++        + target.displayLabel() + ". Need: "
++        + RedevelopmentDemand.reason(village, target, BuildingImpact.affected(village, plan)) + ". Remove: " + removal
++        + ". Net after completion: " + impact.net().describe(true) + ". " + impact.services().describe()
++        + " During work: " + impact.displacedResidents() + " residents displaced, " + impact.affectedWorkplaces()
++        + " workplaces affected; " + impact.staffedFoodRemaining() + " staffed food buildings remain (yield unknown)."
++        + " Recover 50% paid investment: " + MaterialAmount.describe(plan.salvage()) + ". Still pay: "
++        + MaterialAmount.describe(plan.netRequired()) + ". Removal/ground work: " + work(plan) + " blocks.";
+   }
+ 
+   private static int targetFingerprint(Village village, BuildingInfo target) {
+--- a/src/main/java/com/quzzar/kithkyn/village/buildings/UrbanPlanner.java
++++ b/src/main/java/com/quzzar/kithkyn/village/buildings/UrbanPlanner.java
+@@ -31,10 +31,10 @@
+  * afford, what it is short of and which building would produce it, so the model
+  * can see the chain for itself: a farm needs oak logs, oak logs come from a
+  * lumberjack, so the lumberjack is the way to the farm. All of that is data,
+- * derived from each building's cost and grants. The model is handed the whole
+- * field of legal options with those facts attached and chooses among them; a
+- * failed, slow, or absent model costs nothing but the flavour of the choice, and
+- * the first thing the village could build stands in.
++ * derived from each building's cost and grants. Equivalent redevelopment placements
++ * are grouped, with an explicit preference for affordable placements that preserve
++ * services. The model still chooses the project and sees materially different
++ * tradeoffs. A failed, slow, or absent model can fall back only to ordinary construction.
+  */
+ public class UrbanPlanner {
+ 
+@@ -180,8 +180,9 @@
+     }
+ 
+     // Everything the village could start this minute, and everything it could
+-    // work toward. Neither list is ranked: the model is shown the whole field
+-    // and decides for itself. Each option carries what it would give the village
++    // work toward. The model chooses the project; equivalent redevelopment
++    // placements are grouped and their service-preserving preference is explicit.
++    // Each option carries what it would give the village
+     // (see describe), and a goal carries what it still needs and what would
+     // produce it (see shortfall), so the model can weigh the chain.
+     PlanningOptions planningOptions = optionsFor(village, stock);
+@@ -215,6 +216,13 @@
+     // for anything is indistinguishable from one that was never offered the
+     // chance, and the same ambiguity hid a broken site search for a day.
+     String situation = situationOf(village, stock);
++    if (includesRedevelopment) {
++      situation += "\nRedevelopment: gather the net payment before demolition. Contents are preserved; overflow waits"
++          + " for storage. Displaced residents use spare beds first, otherwise remain temporarily homeless; existing"
++          + " jobs outside removed workplaces can continue. Service facts hold current supplies fixed, not future yield."
++          + " Preferred placements for the same target favor affordability, then preserving services, then less"
++          + " displacement and demolition. Alternatives retain different capacity or material costs.";
++    }
+     for (int index = 0; index < buildable.size() + goals.size(); index++) {
+       Candidate candidate = index < buildable.size() ? buildable.get(index) : goals.get(index - buildable.size());
+       RedevelopmentPlan plan = candidate.choice().redevelopment();
+@@ -384,15 +392,25 @@
+     List<Candidate> saveable = new ArrayList<>(outOfReach(village, stock));
+     if (com.quzzar.kithkyn.configuration.KithkynConfig.RedevelopmentEnabled) {
+       RedevelopmentPlanner.Search search = RedevelopmentPlanner.find(village);
+-      Kithkyn.LOGGER.debug("[redevelopment-search] village={} examined={} generated={} refused={} budgetExhausted={} ms={}",
+-          village.getName(), search.examined(), search.choices().size(), search.refused(), search.budgetExhausted(),
+-          search.nanos() / 1_000_000.0);
+-      for (ConstructionChoice choice : search.choices()) {
+-        Candidate candidate = new Candidate(choice, RedevelopmentPlanner.describe(village, choice.redevelopment()));
+-        if (hasMaterialsToConstruct(stock, choice)) {
++      List<ConstructionChoice> materialViable = search.choices().stream()
++          .filter(choice -> hasMaterialsToConstruct(stock, choice)
++              || withinReach(village, stock, choice)
++                  && !choice.info().getName().equals(VillageGoal.stalled(village, village.getVillageTime())))
++          .toList();
++      long groupingStart = System.nanoTime();
++      List<RedevelopmentAlternatives.Option> alternatives = RedevelopmentAlternatives.select(village, materialViable, stock);
++      long groupingNanos = System.nanoTime() - groupingStart;
++      Kithkyn.LOGGER.debug("[redevelopment-search] village={} examined={} generated={} materialViable={} retained={} refused={} budgetExhausted={} ms={} groupingMs={}",
++          village.getName(), search.examined(), search.choices().size(), materialViable.size(), alternatives.size(),
++          search.refused(), search.budgetExhausted(), search.nanos() / 1_000_000.0, groupingNanos / 1_000_000.0);
++      for (RedevelopmentAlternatives.Option alternative : alternatives) {
++        RedevelopmentAlternatives.Evaluated evaluated = alternative.evaluated();
++        ConstructionChoice choice = evaluated.choice();
++        Candidate candidate = new Candidate(choice, alternative.preference()
++            + RedevelopmentPlanner.describe(village, choice.redevelopment(), evaluated.impact()));
++        if (evaluated.affordable()) {
+           affordable.add(candidate);
+-        } else if (withinReach(village, stock, choice)
+-            && !choice.info().getName().equals(VillageGoal.stalled(village, village.getVillageTime()))) {
++        } else {
+           saveable.add(candidate);
+         }
+       }
+@@ -561,66 +579,23 @@
+     if (choice.mode() == ConstructionMode.UPGRADE) {
+       Building standing = BuildingUpgrade.standingSource(village, choice.info());
+       if (standing != null) {
+-        return new Candidate(choice, BuildingUpgrade.describe(standing, choice.info()));
+-      }
+-    }
+-    return new Candidate(choice, describeFresh(choice.info()));
+-  }
+-
+-  /**
+-   * The datapack effects a building grants, in plain words: what it lets the
+-   * village do or make, beyond the beds, jobs, and stores describe already reads
+-   * off its structure. STORAGE is left out, as the container count already says it.
+-   */
+-  private static final Map<String, String> GRANT_EFFECT = Map.ofEntries(
+-      Map.entry("WATER", "fresh water"),
+-      Map.entry("ORES", "digs ore"),
+-      Map.entry("FUEL", "makes fuel"),
+-      Map.entry("PROTECTION", "defends the village"),
+-      Map.entry("GRAIN", "grows grain"),
+-      Map.entry("TRADE", "a place to trade"),
+-      Map.entry("TRADE_INITIATIVE", "drums up trade"),
+-      Map.entry("REPAIR", "mends gear"),
+-      Map.entry("SMELTING", "smelts metal"),
+-      Map.entry("CUT_STONE", "cuts stone"),
+-      Map.entry("LOGS", "fells logs"),
+-      Map.entry("PLANKS", "makes planks"),
+-      Map.entry("MEAT", "provides meat"),
+-      Map.entry("BREAD", "bakes bread"),
+-      Map.entry("LEATHER", "tans leather"),
+-      Map.entry("WOOL", "gives wool"),
+-      Map.entry("HEALING", "heals the sick"),
+-      Map.entry("WANDERERS", "draws newcomers"));
+-
+-  /** A plain-language option line: what it is, and what it would give the village. */
+-  private static String describeFresh(BuildingInfo info) {
++        return new Candidate(choice, BuildingUpgrade.describe(village, standing, choice.info()));
++      }
++    }
++    return new Candidate(choice, describeFresh(village, choice.info()));
++  }
++
++  /** A plain-language option line with general housing distinct from live-in workplace beds. */
++  private static String describeFresh(Village village, BuildingInfo info) {
+     String name = info.displayLabel();
+-    List<String> gives = new ArrayList<>();
+-    int bedCount = info.getBedLocations().size();
+-    if (bedCount > 0) {
+-      gives.add(bedCount + (bedCount == 1 ? " bed" : " beds"));
+-    }
+-    info.getWorkLocations().values().stream().distinct().forEach(occupation ->
+-        gives.add("work for a " + occupation.name().toLowerCase()));
+-    if (bedCount == 0 && !info.getWorkLocations().isEmpty()) {
+-      gives.add("no beds");
+-    }
+-    int containers = info.getContainerLocations().size();
+-    if (containers > 0) {
+-      gives.add(containers == 1 ? "a store" : containers + " stores");
+-    }
+-    // What it lets the village do or make, on top of its beds/jobs/stores.
+-    for (String grant : info.getGrants()) {
+-      String effect = GRANT_EFFECT.get(grant);
+-      if (effect != null) {
+-        gives.add(effect);
+-      }
+-    }
+     String subject = info.hasWellFormedId() && info.getLevel() > 1
+         ? "a new level " + info.getLevel() + " " + name + " on a separate site"
+         : "a " + name;
+-    String base = gives.isEmpty() ? subject : subject + " (" + String.join(", ", gives) + ")";
+-    return base + unlockNote(info);
++    String jobs = info.getWorkLocations().values().stream().distinct().sorted()
++        .map(occupation -> occupation.name().toLowerCase()).collect(java.util.stream.Collectors.joining(", "));
++    return subject + " (adds " + BuildingImpact.capacity(village, info).describe(false)
++        + (jobs.isEmpty() ? "" : "; jobs: " + jobs)
++        + "; provides " + BuildingImpact.describeServices(info.getGrants()) + ")" + unlockNote(info);
+   }
+ 
+   /**
+--- a/src/main/java/com/quzzar/kithkyn/village/buildings/VillageCapabilities.java
++++ b/src/main/java/com/quzzar/kithkyn/village/buildings/VillageCapabilities.java
+@@ -1,6 +1,8 @@
+ package com.quzzar.kithkyn.village.buildings;
+ 
++import java.util.Collection;
+ import java.util.HashSet;
++import java.util.function.Predicate;
+ import java.util.List;
+ import java.util.Set;
+ 
+@@ -37,14 +39,17 @@
+    * simply never grant, which is the correct quiet failure.
+    */
+   public static Set<String> resolve(Village village) {
++    return resolve(village.getBuildings().stream().map(Building::getInfo)
++        .filter(java.util.Objects::nonNull).toList(),
++        item -> village.hasItemStackInVillage(new ItemStack(item, 1)));
++  }
++
++  /** Resolves hypothetical building sets against observed supplies without changing village state. */
++  public static Set<String> resolve(Collection<BuildingInfo> buildings, Predicate<Item> hasSupply) {
+     List<Grant> conditional = new java.util.ArrayList<>();
+     Set<String> capabilities = new HashSet<>();
+ 
+-    for (Building building : village.getBuildings()) {
+-      BuildingInfo info = building.getInfo();
+-      if (info == null) {
+-        continue;
+-      }
++    for (BuildingInfo info : buildings) {
+       capabilities.addAll(info.getGrants());
+       for (Grant grant : info.getConditionalGrants()) {
+         if (grant.isUnconditional()) {
+@@ -63,7 +68,7 @@
+           iterator.remove();
+           continue;
+         }
+-        if (isSatisfied(village, grant, capabilities)) {
++        if (isSatisfied(hasSupply, grant, capabilities)) {
+           capabilities.add(grant.capability());
+           iterator.remove();
+           grewThisPass = true;
+@@ -77,7 +82,7 @@
+     return capabilities;
+   }
+ 
+-  private static boolean isSatisfied(Village village, Grant grant, Set<String> capabilities) {
++  private static boolean isSatisfied(Predicate<Item> hasSupply, Grant grant, Set<String> capabilities) {
+     for (String required : grant.requiresCapability()) {
+       if (!capabilities.contains(required)) {
+         return false;
+@@ -90,7 +95,7 @@
+       if (required == net.minecraft.world.item.Items.EMERALD) {
+         continue;
+       }
+-      if (!village.hasItemStackInVillage(new ItemStack(required, 1))) {
++      if (!hasSupply.test(required)) {
+         return false;
+       }
+     }
+--- a/src/main/java/com/quzzar/kithkyn/dev/RedevelopmentBenchmark.java
++++ b/src/main/java/com/quzzar/kithkyn/dev/RedevelopmentBenchmark.java
+@@ -55,6 +55,13 @@
+   private static long lastCompletion;
+   private static int builds;
+   private static final List<Observation> observations = new ArrayList<>();
++  private static final List<Transition> transitions = new ArrayList<>();
++  private static String lastProjectStage = "";
++
++  /** Stage boundaries retain short disruptions that can fall between daily observations. */
++  private record Transition(long elapsedTicks, String project, String stage, int unhousedAdults,
++      int queuedItems, int displacedResidents, boolean freshWater, int staffedFoodPosts) {
++  }
+ 
+   private RedevelopmentBenchmark() {
+   }
+@@ -66,7 +73,17 @@
+       return;
+     }
+     try {
+-      if (MODE.equals("seed")) {
++      if (!MODE.equals("model")) {
++        for (int x = 2; x <= 18; x++) {
++          for (int z = 2; z <= 18; z++) {
++            server.overworld().setChunkForced(x, z, true);
++          }
++        }
++      }
++      if (MODE.equals("seed-housing")) {
++        seedHousing(server.overworld());
++        server.halt(false);
++      } else if (MODE.equals("seed")) {
+         seed(server.overworld());
+         server.halt(false);
+       } else if (MODE.equals("seed-opportunity") || MODE.equals("seed-growth")) {
+@@ -123,6 +140,33 @@
+     }
+     Kithkyn.LOGGER.info("[redevelopment-benchmark] seed population={} buildings={} stock={}",
+         village.getPopulation().size(), village.getBuildings().size(), village.stockTally());
++  }
++
++  /** An occupied, blocked house upgrade with no spare general beds and a real housing shortage. */
++  private static void seedHousing(ServerLevel level) throws Exception {
++    seed(level);
++    Village village = VillageManager.get(level).getVillages().values().iterator().next();
++    spawnFixtureResident(level, village, Occupation.WANDERER, 6);
++    // Run only ordinary housing reconciliation; setup must not trigger a construction choice.
++    var reconcile = Village.class.getDeclaredMethod("reconcileBeds");
++    reconcile.setAccessible(true);
++    reconcile.invoke(village);
++    village.devBuildWall(com.quzzar.kithkyn.village.buildings.WallTier.STONE);
++    level.getServer().getWorldData().overworldData().setGameTime(144_000L);
++    Building source = village.getBuildings().stream().filter(building -> building.getName().equals("house_plains_1"))
++        .findFirst().orElseThrow();
++    BlockPos ground = BlockPos.of(source.getOriginLocation()).above(source.getInfo().getSink()).offset(0, 0, -2);
++    var assessment = RedevelopmentPlanner.assess(village, Buildings.getByName("house_plains_2"), source, ground, source.getRotation());
++    if (village.getFreeGeneralBedCount() != 0 || village.getUnhousedAdultResidentCount() < 1
++        || village.getBedAssignmentsView().values().stream().noneMatch(bed -> bed.getBuildingUUID().equals(source.getUUID()))
++        || assessment.plan().isEmpty()) {
++      throw new IllegalStateException("Housing opportunity preflight failed: " + assessment.reason());
++    }
++    write("redevelopment-initial-opportunity.json", List.of(RedevelopmentPlanner.label(assessment.plan().orElseThrow()),
++        RedevelopmentPlanner.describe(village, assessment.plan().orElseThrow())));
++    write("redevelopment-initial-state.json", VillageContextSnapshot.capture(village, village.stockTally()).plannerBriefing());
++    Kithkyn.LOGGER.info("[redevelopment-benchmark] seeded scenario=housing population={} buildings={} freeBeds={} unhoused={}",
++        village.getPopulation().size(), village.getBuildings().size(), village.getFreeGeneralBedCount(), village.getUnhousedAdultResidentCount());
+   }
+ 
+   /** Seeds facts once; subsequent planning, material gathering and construction remain autonomous. */
+@@ -299,7 +343,9 @@
+ 
+   private record Observation(long elapsedTicks, int builds, int population, int buildings, String project,
+       String stock, String metrics, String briefing, List<BuildingObservation> standing,
+-      int unhousedAdults, int staffedFoodPosts, double foodPerPerson, String siteBlocker) {
++      int unhousedAdults, int staffedFoodPosts, double foodPerPerson, String siteBlocker,
++      int freeGeneralBeds, int queuedItems, int displacedResidents, boolean freshWater,
++      String constructionAccessBlocker, int demolitionBlocksRemaining) {
+   }
+ 
+   @SubscribeEvent
+@@ -342,11 +388,34 @@
+       lastCompletion = village.getLastBuildCompletedTime();
+       builds++;
+     }
++    var activeProject = village.getCurrentProject();
++    String stage = activeProject == null ? "none" : switch (activeProject.getProgress()) {
++      case IN_PROGRESS_PAUSED, IN_PROGRESS_WORKING -> "CONSTRUCTING";
++      default -> activeProject.getProgress().name();
++    };
++    String projectStage = activeProject == null ? "none"
++        : activeProject.getBuilding().getUUID() + ":" + stage;
++    if (!projectStage.equals(lastProjectStage)) {
++      lastProjectStage = projectStage;
++      transitions.add(new Transition(elapsed, activeProject == null ? "none" : activeProject.getBuilding().getName(),
++          stage, village.getUnhousedAdultResidentCount(),
++          village.pendingRedevelopmentItems().stream().mapToInt(ItemStack::getCount).sum(),
++          (int) village.getPopulation().stream().filter(village::keepsWorkDuringRedevelopment).count(),
++          village.canDo("WATER"), (int) village.getJobAssignmentsView().values().stream()
++              .filter(job -> List.of(Occupation.FARMER, Occupation.FISHER, Occupation.HUNTER).contains(job.getOccupation())).count()));
++      try {
++        write("redevelopment-transitions.json", transitions);
++      } catch (java.io.IOException failure) {
++        throw new IllegalStateException("Cannot write benchmark transitions", failure);
++      }
++      Kithkyn.LOGGER.info("[redevelopment-transition] {}", transitions.getLast());
++    }
+     if (elapsed / 24_000 != lastDay || elapsed >= HORIZON) {
+       lastDay = elapsed / 24_000;
+       var project = village.getCurrentProject();
+       var strategy = village.getBrain().getStrategy();
+-      String metrics = strategy.getAllKeys().stream().filter(key -> key.startsWith("redevelopment_"))
++      String metrics = strategy.getAllKeys().stream().filter(key -> key.startsWith("redevelopment_")
++          && !key.equals("redevelopment_refund"))
+           .sorted().map(key -> key + "=" + strategy.get(key)).collect(java.util.stream.Collectors.joining(";"));
+       Observation observation = new Observation(elapsed, builds, village.getPopulation().size(),
+           village.getBuildings().size(), project == null ? "none" : project.getBuilding().getName() + ":" + project.getProgress(),
+@@ -357,7 +426,11 @@
+               building.getName(), building.getOriginLocation())).sorted(java.util.Comparator.comparing(BuildingObservation::id)).toList(),
+           village.getUnhousedAdultResidentCount(), (int) village.getJobAssignmentsView().values().stream()
+               .filter(job -> List.of(Occupation.FARMER, Occupation.FISHER, Occupation.HUNTER).contains(job.getOccupation())).count(),
+-          village.getAttractiveness().foodPerCapita(), project == null ? "" : project.siteBlocker());
++          village.getAttractiveness().foodPerCapita(), project == null ? "" : project.siteBlocker(),
++          village.getFreeGeneralBedCount(), village.pendingRedevelopmentItems().stream().mapToInt(ItemStack::getCount).sum(),
++          (int) village.getPopulation().stream().filter(village::keepsWorkDuringRedevelopment).count(), village.canDo("WATER"),
++          project == null ? "" : project.constructionAccess().failureReason(),
++          project == null || project.getRedevelopment() == null ? 0 : project.getRedevelopment().remainingBlocks());
+       observations.add(observation);
+       try {
+         write("redevelopment-timelapse-results.json", observations);
+--- /dev/null
++++ b/src/test/java/com/quzzar/kithkyn/village/buildings/ConstructionAccessTest.java
+@@ -0,0 +1,40 @@
++package com.quzzar.kithkyn.village.buildings;
++
++import static org.junit.jupiter.api.Assertions.assertFalse;
++import static org.junit.jupiter.api.Assertions.assertTrue;
++
++import java.util.List;
++
++import org.junit.jupiter.api.Test;
++
++import net.minecraft.core.BlockPos;
++import net.minecraft.world.level.levelgen.structure.BoundingBox;
++
++class ConstructionAccessTest {
++  @Test
++  void approachesStayOutsideTheReplacementAndEveryVictim() {
++    var boxes = List.of(new BoundingBox(0, 0, 0, 8, 5, 8), new BoundingBox(8, 0, 3, 12, 4, 6));
++    var positions = ConstructionAccess.perimeter(boxes);
++    assertFalse(positions.isEmpty());
++    assertFalse(positions.contains(new BlockPos(9, 0, 4)), "Outside the new house is still inside a victim");
++    assertTrue(positions.contains(new BlockPos(-1, 0, 4)));
++    assertTrue(positions.stream().allMatch(at -> ConstructionAccess.outside(boxes,
++        at.getX() + 0.5, at.getZ() + 0.5, 0.8)));
++  }
++
++  @Test
++  void wideWorkersNeedBodyClearanceRatherThanJustAnOutsideFootCoordinate() {
++    var boxes = List.of(new BoundingBox(0, 0, 0, 8, 5, 8));
++    assertTrue(ConstructionAccess.outside(boxes, -0.5, 4.5, 0.8));
++    assertFalse(ConstructionAccess.outside(boxes, -0.5, 4.5, 1.2));
++    assertTrue(ConstructionAccess.outside(boxes, -1.5, 4.5, 1.2));
++    assertFalse(ConstructionAccess.outside(boxes, 4.5, 4.5, 0.6));
++  }
++
++  @Test
++  void aSafeGapBetweenBuildingsRemainsUsable() {
++    var boxes = List.of(new BoundingBox(0, 0, 0, 4, 5, 4), new BoundingBox(8, 0, 0, 12, 4, 4));
++    assertTrue(ConstructionAccess.outside(boxes, 6.5, 2.5, 0.8));
++    assertTrue(ConstructionAccess.perimeter(boxes).contains(new BlockPos(6, 0, 2)));
++  }
++}
+--- /dev/null
++++ b/src/test/java/com/quzzar/kithkyn/village/buildings/BuildingImpactTest.java
+@@ -0,0 +1,104 @@
++package com.quzzar.kithkyn.village.buildings;
++
++import static org.junit.jupiter.api.Assertions.assertEquals;
++import static org.junit.jupiter.api.Assertions.assertFalse;
++import static org.junit.jupiter.api.Assertions.assertTrue;
++
++import java.util.List;
++import java.util.Map;
++import java.util.Set;
++
++import org.junit.jupiter.api.Test;
++
++import com.google.gson.JsonParser;
++import com.mojang.serialization.JsonOps;
++import com.quzzar.kithkyn.village.Occupation;
++
++class BuildingImpactTest {
++  @Test
++  void workplaceBedsCannotMasqueradeAsGeneralHousing() {
++    BuildingInfo hut = new BuildingInfo("lumberjack_plains_1").addBedLocation(0, 1, 0)
++        .addWorkLocation(1, 1, 0, Occupation.LUMBERJACK);
++    BuildingImpact.Capacity capacity = BuildingImpact.capacity(hut, 0);
++    assertEquals(0, capacity.generalBeds());
++    assertEquals(1, capacity.workerBeds());
++    assertTrue(capacity.describe(false).contains("0 general beds, 1 beds reserved for workers"));
++  }
++
++  @Test
++  void centerBedsRemainGeneralEvenWhenItHasWorkstations() {
++    BuildingInfo center = new BuildingInfo("village_center_plains_1").addBedLocation(0, 1, 0)
++        .addWorkLocation(1, 1, 0, Occupation.BUILDER);
++    assertEquals(1, BuildingImpact.capacity(center, 0).generalBeds());
++    assertEquals(0, BuildingImpact.capacity(center, 0).workerBeds());
++  }
++
++  @Test
++  void storageAndCropExpansionDoesNotClaimToHouseAnybody() {
++    BuildingImpact.Capacity first = new BuildingImpact.Capacity(0, 0, 1, Map.of(Occupation.FARMER, 1), 26);
++    BuildingImpact.Capacity larger = new BuildingImpact.Capacity(0, 0, 3, Map.of(Occupation.FARMER, 1), 52);
++    BuildingImpact.Capacity net = BuildingImpact.net(larger, List.of(first));
++    assertEquals(0, net.generalBeds());
++    assertEquals(0, net.workplaces());
++    assertEquals(2, net.containers());
++    assertEquals(26, net.cropPlots());
++    assertTrue(net.describe(true).contains("0 general beds"));
++    assertTrue(net.describe(true).contains("+26 crop plots"));
++  }
++
++  @Test
++  void removedHousingAndWorkerBedsAreSubtractedSeparately() {
++    var net = BuildingImpact.net(new BuildingImpact.Capacity(5, 0, 1, Map.of(), 0), List.of(
++        new BuildingImpact.Capacity(3, 0, 1, Map.of(), 0),
++        new BuildingImpact.Capacity(0, 1, 1, Map.of(Occupation.BUILDER, 1), 0)));
++    assertEquals(2, net.generalBeds());
++    assertEquals(-1, net.workerBeds());
++    assertEquals(Map.of(Occupation.BUILDER, -1), net.jobs());
++  }
++
++  @Test
++  void losingBothWellsExplicitlyLosesLastWaterSourceButRemovingOneDoesNot() {
++    BuildingInfo well = definition("well_plains_1", "\"grants\":[\"WATER\"]");
++    BuildingInfo farm = definition("farm_plains_2", "\"grants\":[\"GRAIN\"]");
++    var one = BuildingImpact.services(List.of(well, well, farm), List.of(well), farm, item -> true);
++    var both = BuildingImpact.services(List.of(well, well, farm), List.of(), farm, item -> true);
++    assertTrue(one.lostAfter().isEmpty());
++    assertEquals(Set.of("WATER"), both.lostAfter());
++    assertTrue(both.describe().contains("last fresh-water source"));
++    assertFalse(one.describe().contains("last fresh-water source"));
++  }
++
++  @Test
++  void replacingOnlyFoodBuildingReportsTemporaryRatherThanPermanentServiceLoss() {
++    BuildingInfo farm = definition("farm_plains_1", "\"grants\":[\"GRAIN\"]");
++    var effects = BuildingImpact.services(List.of(farm), List.of(), farm, item -> true);
++    assertEquals(Set.of("GRAIN"), effects.lostDuring());
++    assertTrue(effects.lostAfter().isEmpty());
++    assertTrue(effects.describe().contains("unavailable only during work: grain production"));
++  }
++
++  @Test
++  void removingAPrerequisiteAlsoReportsItsDependentService() {
++    BuildingInfo well = definition("well_plains_1", "\"grants\":[\"WATER\"]");
++    BuildingInfo producer = definition("farm_plains_1",
++        "\"grants_if\":[{\"capability\":\"GRAIN\",\"requires_capability\":[\"WATER\"]}]");
++    BuildingInfo house = definition("house_plains_1", "\"grants\":[]");
++    var effects = BuildingImpact.services(List.of(well, producer), List.of(producer), house, item -> true);
++    assertEquals(Set.of("WATER", "GRAIN"), effects.lostAfter());
++  }
++
++  @Test
++  void supplyConditionsUseObservedStockInsteadOfPromisingUnavailableServices() {
++    BuildingInfo workshop = definition("blacksmith_plains_1",
++        "\"grants_if\":[{\"capability\":\"REPAIR\",\"requires_supply\":[\"minecraft:iron_ingot\"]}]");
++    var unavailable = BuildingImpact.services(List.of(), List.of(), workshop, item -> false);
++    var supplied = BuildingImpact.services(List.of(), List.of(), workshop, item -> true);
++    assertTrue(unavailable.gained().isEmpty());
++    assertEquals(Set.of("REPAIR"), supplied.gained());
++  }
++
++  private static BuildingInfo definition(String name, String fields) {
++    return BuildingInfo.CODEC.parse(JsonOps.INSTANCE,
++        JsonParser.parseString("{\"structure\":\"" + name + "\"," + fields + "}")).getOrThrow();
++  }
++}
+--- /dev/null
++++ b/src/test/java/com/quzzar/kithkyn/village/buildings/RedevelopmentAlternativesTest.java
+@@ -0,0 +1,121 @@
++package com.quzzar.kithkyn.village.buildings;
++
++import static org.junit.jupiter.api.Assertions.assertEquals;
++import static org.junit.jupiter.api.Assertions.assertFalse;
++import static org.junit.jupiter.api.Assertions.assertTrue;
++
++import java.util.List;
++import java.util.Map;
++import java.util.Optional;
++import java.util.Set;
++import java.util.UUID;
++import java.util.stream.LongStream;
++
++import org.junit.jupiter.api.Test;
++
++import net.minecraft.world.item.Items;
++import net.minecraft.world.level.block.Rotation;
++
++class RedevelopmentAlternativesTest {
++  private static final BuildingImpact.Capacity FARM_GAIN =
++      new BuildingImpact.Capacity(0, 0, 2, Map.of(), 26);
++
++  @Test
++  void affordableWaterPreservingPlacementIsPreferredButCheaperDestructiveTradeoffRemains() {
++    var both = option("farm_plains_2", Optional.empty(), true, 2, 2, 120, Set.of("WATER"));
++    var one = option("farm_plains_2", Optional.empty(), true, 1, 4, 52, Set.of());
++    var result = RedevelopmentAlternatives.select(List.of(both, one));
++    assertEquals(2, result.size());
++    assertEquals(one, result.getFirst().evaluated());
++    assertTrue(result.getFirst().preferred());
++    assertTrue(result.getFirst().preference().contains("Preferred placement"));
++    assertFalse(result.getLast().preferred());
++    assertEquals(both, result.getLast().evaluated());
++  }
++
++  @Test
++  void unavailableServicePreservingAlternativeDoesNotHideAffordableDemolition() {
++    var saveForOne = option("farm_plains_2", Optional.empty(), false, 1, 4, 52, Set.of());
++    var affordableBoth = option("farm_plains_2", Optional.empty(), true, 2, 2, 120, Set.of("WATER"));
++    var result = RedevelopmentAlternatives.select(List.of(saveForOne, affordableBoth));
++    assertEquals(2, result.size());
++    assertEquals(affordableBoth, result.getFirst().evaluated());
++  }
++
++  @Test
++  void sameImpactAndMaterialsNeedsOnlyTheLowerWorkPlacement() {
++    var costly = option("farm_plains_2", Optional.empty(), true, 1, 4, 75, Set.of());
++    var simple = option("farm_plains_2", Optional.empty(), true, 1, 4, 52, Set.of());
++    var result = RedevelopmentAlternatives.select(List.of(costly, simple));
++    assertEquals(1, result.size());
++    assertEquals(simple, result.getFirst().evaluated());
++    assertFalse(result.getFirst().hasAlternatives());
++  }
++
++  @Test
++  void lowerMaterialCostVersusLessWorkRemainsARealTradeoff() {
++    var lessWork = option("farm_plains_2", Optional.empty(), true, 1, 4, 52, Set.of());
++    var lessMaterial = option("farm_plains_2", Optional.empty(), true, 1, 2, 75, Set.of());
++    assertEquals(2, RedevelopmentAlternatives.select(List.of(lessWork, lessMaterial)).size());
++  }
++
++  @Test
++  void materialCountsAreComparedByItemRatherThanAddingUnlikeResources() {
++    var logs = option("farm_plains_2", Optional.empty(), true, 1, 4, 52, Set.of());
++    var stone = withEconomics(logs, List.of(new MaterialAmount(Items.COBBLESTONE, 1)), List.of());
++    assertEquals(2, RedevelopmentAlternatives.select(List.of(logs, stone)).size());
++  }
++
++  @Test
++  void differentSurplusSalvageIsNotDiscardedJustBecauseBothNetRecipesAreFree() {
++    var original = option("farm_plains_2", Optional.empty(), true, 1, 4, 52, Set.of());
++    var noSurplus = withEconomics(original, List.of(new MaterialAmount(Items.OAK_LOG, 4)),
++        List.of(new MaterialAmount(Items.OAK_LOG, 4)));
++    var surplus = withEconomics(original, List.of(new MaterialAmount(Items.OAK_LOG, 4)),
++        List.of(new MaterialAmount(Items.OAK_LOG, 8)));
++    assertEquals(2, RedevelopmentAlternatives.select(List.of(noSurplus, surplus)).size());
++  }
++
++  @Test
++  void differentTargetsAndUpgradeSourcesCannotBeGroupedAway() {
++    var first = option("farm_plains_2", Optional.of(UUID.randomUUID()), true, 1, 4, 52, Set.of());
++    var second = option("farm_plains_2", Optional.of(UUID.randomUUID()), true, 1, 4, 52, Set.of());
++    var house = option("house_plains_2", Optional.empty(), true, 1, 4, 52, Set.of());
++    assertEquals(3, RedevelopmentAlternatives.select(List.of(first, second, house)).size());
++  }
++
++  @Test
++  void displacementAndBedCapacityTradeoffsRemainVisible() {
++    var original = option("farm_plains_2", Optional.empty(), true, 1, 4, 52, Set.of());
++    var displaced = new RedevelopmentAlternatives.Evaluated(original.choice(),
++        new BuildingImpact.Redevelopment(FARM_GAIN, original.impact().services(), 3, 0, 1), true);
++    var moreHousing = new RedevelopmentAlternatives.Evaluated(original.choice(),
++        new BuildingImpact.Redevelopment(new BuildingImpact.Capacity(2, 0, 2, Map.of(), 26),
++            original.impact().services(), 0, 0, 1), true);
++    assertEquals(3, RedevelopmentAlternatives.select(List.of(original, displaced, moreHousing)).size());
++  }
++
++  private static RedevelopmentAlternatives.Evaluated option(String target, Optional<UUID> source,
++      boolean affordable, int removed, int logs, int work, Set<String> lost) {
++    List<Building> victims = java.util.stream.IntStream.range(0, removed)
++        .mapToObj(index -> new Building("well_plains_1", Rotation.NONE)).toList();
++    RedevelopmentPlan plan = new RedevelopmentPlan(UUID.randomUUID(), target,
++        source.isPresent() ? ConstructionMode.UPGRADE : ConstructionMode.FRESH, source, 0, Rotation.NONE, 0,
++        victims, List.of(), List.of(new MaterialAmount(Items.OAK_LOG, logs)), List.of(),
++        List.of(), LongStream.range(0, work).boxed().toList());
++    var services = new BuildingImpact.Services(lost, lost, Set.of());
++    return new RedevelopmentAlternatives.Evaluated(
++        new ConstructionChoice(new BuildingInfo(target), plan.mode(), plan),
++        new BuildingImpact.Redevelopment(FARM_GAIN, services, 0, 0, 1), affordable);
++  }
++
++  private static RedevelopmentAlternatives.Evaluated withEconomics(RedevelopmentAlternatives.Evaluated original,
++      List<MaterialAmount> required, List<MaterialAmount> salvage) {
++    RedevelopmentPlan before = original.choice().redevelopment();
++    RedevelopmentPlan plan = new RedevelopmentPlan(UUID.randomUUID(), before.target(), before.mode(), before.source(),
++        before.ground(), before.rotation(), before.targetFingerprint(), before.removed(), before.blocks(), required,
++        salvage, before.prepBreak(), before.prepFill());
++    return new RedevelopmentAlternatives.Evaluated(new ConstructionChoice(original.choice().info(), plan.mode(), plan),
++        original.impact(), original.affordable());
++  }
++}
+--- a/src/main/java/com/quzzar/kithkyn/village/Village.java
++++ b/src/main/java/com/quzzar/kithkyn/village/Village.java
+@@ -1489,9 +1489,7 @@
+             ? MAX_TRANSIT_CHECKS
+             : MAX_GATHERING_CHECKS;
+         if (gatheringChecks > cap) {
+-          Kithkyn.LOGGER.info("Village '{}' abandons {}: its recipe never came together",
+-              name, currentProject.getBuilding().getInfo().getName());
+-          cancelGatheringProject("its recipe never came together");
++          cancelGatheringProject(currentProject.gatheringFailureReason(recipeMateriallyPossible(currentProject)));
+         }
+ 
+       } else {
+--- a/src/main/java/com/quzzar/kithkyn/llm/provider/LocalRuntimeProvider.java
++++ b/src/main/java/com/quzzar/kithkyn/llm/provider/LocalRuntimeProvider.java
+@@ -37,7 +37,7 @@
+  */
+ public final class LocalRuntimeProvider implements LlmProvider {
+ 
+-  private static final int PORT = 8127;
++  private static final int PORT = Integer.getInteger("kithkyn.benchmark.modelPort", 8127);
+   // Total context, split across the launcher's parallel slots (-np 2), so each
+   // request gets half. At 4096 that left 2048 per request, which a long villager
+   // conversation and the quartermaster's repair rounds could both overrun; 8192

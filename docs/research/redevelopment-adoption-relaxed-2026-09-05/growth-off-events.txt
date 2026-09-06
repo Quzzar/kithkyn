@@ -1,0 +1,4 @@
+[20:23:04] [Server thread/INFO] [co.qu.ki.Kithkyn/]: Village 'New growth' decided to save up for lumberjack_plains_1: We need to address the log shortage to build essential structures.
+[20:24:05] [Server thread/INFO] [co.qu.ki.Kithkyn/]: Village 'New growth' decided to save up for lumberjack_plains_1: We need to address the log shortage to build essential structures.
+[20:28:30] [Server thread/INFO] [co.qu.ki.Kithkyn/]: Village 'New growth' decided to save up for lumberjack_plains_1: We need logs to build essential structures, so we should focus on acquiring a lumberjack.
+[20:29:00] [Server thread/INFO] [co.qu.ki.Kithkyn/]: [redevelopment-benchmark] COMPLETE enabled=false elapsed=288000 builds=0

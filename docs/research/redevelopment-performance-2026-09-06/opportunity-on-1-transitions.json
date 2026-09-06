@@ -1,0 +1,42 @@
+[
+  {
+    "elapsedTicks": 0,
+    "project": "none",
+    "stage": "none",
+    "unhousedAdults": 2,
+    "queuedItems": 0,
+    "displacedResidents": 0,
+    "freshWater": true,
+    "staffedFoodPosts": 2
+  },
+  {
+    "elapsedTicks": 905,
+    "project": "storehouse_plains_2",
+    "stage": "GATHERING",
+    "unhousedAdults": 0,
+    "queuedItems": 0,
+    "displacedResidents": 0,
+    "freshWater": true,
+    "staffedFoodPosts": 2
+  },
+  {
+    "elapsedTicks": 3729,
+    "project": "storehouse_plains_2",
+    "stage": "NOT_STARTED",
+    "unhousedAdults": 0,
+    "queuedItems": 0,
+    "displacedResidents": 0,
+    "freshWater": true,
+    "staffedFoodPosts": 2
+  },
+  {
+    "elapsedTicks": 3731,
+    "project": "storehouse_plains_2",
+    "stage": "CONSTRUCTING",
+    "unhousedAdults": 0,
+    "queuedItems": 0,
+    "displacedResidents": 0,
+    "freshWater": true,
+    "staffedFoodPosts": 2
+  }
+]

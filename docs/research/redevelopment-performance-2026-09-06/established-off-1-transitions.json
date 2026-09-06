@@ -1,0 +1,62 @@
+[
+  {
+    "elapsedTicks": 0,
+    "project": "none",
+    "stage": "none",
+    "unhousedAdults": 4,
+    "queuedItems": 0,
+    "displacedResidents": 0,
+    "freshWater": false,
+    "staffedFoodPosts": 1
+  },
+  {
+    "elapsedTicks": 38556,
+    "project": "well_plains_1",
+    "stage": "GATHERING",
+    "unhousedAdults": 4,
+    "queuedItems": 0,
+    "displacedResidents": 0,
+    "freshWater": false,
+    "staffedFoodPosts": 1
+  },
+  {
+    "elapsedTicks": 47839,
+    "project": "well_plains_1",
+    "stage": "NOT_STARTED",
+    "unhousedAdults": 4,
+    "queuedItems": 0,
+    "displacedResidents": 0,
+    "freshWater": false,
+    "staffedFoodPosts": 1
+  },
+  {
+    "elapsedTicks": 47841,
+    "project": "well_plains_1",
+    "stage": "CONSTRUCTING",
+    "unhousedAdults": 4,
+    "queuedItems": 0,
+    "displacedResidents": 0,
+    "freshWater": false,
+    "staffedFoodPosts": 1
+  },
+  {
+    "elapsedTicks": 48879,
+    "project": "well_plains_1",
+    "stage": "COMPLETE",
+    "unhousedAdults": 4,
+    "queuedItems": 0,
+    "displacedResidents": 0,
+    "freshWater": false,
+    "staffedFoodPosts": 1
+  },
+  {
+    "elapsedTicks": 49240,
+    "project": "none",
+    "stage": "none",
+    "unhousedAdults": 4,
+    "queuedItems": 0,
+    "displacedResidents": 0,
+    "freshWater": true,
+    "staffedFoodPosts": 1
+  }
+]

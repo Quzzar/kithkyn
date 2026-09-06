@@ -1,0 +1,145 @@
+{
+  "baseline": "73b5b4d19b88858ab094d95a71c5fd7f40e14172",
+  "order": [
+    "housing-on-1",
+    "housing-off-1",
+    "opportunity-on-1",
+    "opportunity-off-1",
+    "established-on-1",
+    "established-off-1",
+    "housing-off-2",
+    "housing-on-2",
+    "opportunity-off-2",
+    "opportunity-on-2",
+    "established-off-2",
+    "established-on-2"
+  ],
+  "jobs": {
+    "housing-on-1": {
+      "status": "complete",
+      "pid": 40677,
+      "startedAt": "2026-09-06T03:22:45.617190+00:00",
+      "runDirectory": "/Users/quzzar/Projects/kithkyn/run/redevelopment-performance-2026-09-06/housing-on-1",
+      "log": "/Users/quzzar/Projects/kithkyn/run/redevelopment-performance-2026-09-06/housing-on-1.log",
+      "finishedAt": "2026-09-06T03:44:17.125113+00:00",
+      "exitCode": 143
+    },
+    "housing-off-1": {
+      "status": "complete",
+      "pid": 43171,
+      "startedAt": "2026-09-06T03:44:17.177558+00:00",
+      "runDirectory": "/Users/quzzar/Projects/kithkyn/run/redevelopment-performance-2026-09-06/housing-off-1",
+      "log": "/Users/quzzar/Projects/kithkyn/run/redevelopment-performance-2026-09-06/housing-off-1.log",
+      "finishedAt": "2026-09-06T04:04:40.889685+00:00",
+      "exitCode": 143
+    },
+    "opportunity-on-1": {
+      "status": "complete",
+      "pid": 47605,
+      "startedAt": "2026-09-06T04:04:40.969353+00:00",
+      "runDirectory": "/Users/quzzar/Projects/kithkyn/run/redevelopment-performance-2026-09-06/opportunity-on-1",
+      "log": "/Users/quzzar/Projects/kithkyn/run/redevelopment-performance-2026-09-06/opportunity-on-1.log",
+      "finishedAt": "2026-09-06T04:17:13.311022+00:00",
+      "exitCode": 143
+    },
+    "opportunity-off-1": {
+      "status": "complete",
+      "pid": 52992,
+      "startedAt": "2026-09-06T04:17:23.454391+00:00",
+      "runDirectory": "/Users/quzzar/Projects/kithkyn/run/redevelopment-performance-2026-09-06/opportunity-off-1",
+      "log": "/Users/quzzar/Projects/kithkyn/run/redevelopment-performance-2026-09-06/opportunity-off-1.log",
+      "finishedAt": "2026-09-06T04:27:42.887956+00:00",
+      "exitCode": 143
+    },
+    "established-on-1": {
+      "status": "complete",
+      "pid": 57007,
+      "startedAt": "2026-09-06T04:27:53.070300+00:00",
+      "runDirectory": "/Users/quzzar/Projects/kithkyn/run/redevelopment-performance-2026-09-06/established-on-1",
+      "log": "/Users/quzzar/Projects/kithkyn/run/redevelopment-performance-2026-09-06/established-on-1.log",
+      "finishedAt": "2026-09-06T04:53:30.282675+00:00",
+      "exitCode": 143
+    },
+    "established-off-1": {
+      "status": "complete",
+      "pid": 65214,
+      "startedAt": "2026-09-06T04:53:30.332471+00:00",
+      "runDirectory": "/Users/quzzar/Projects/kithkyn/run/redevelopment-performance-2026-09-06/established-off-1",
+      "log": "/Users/quzzar/Projects/kithkyn/run/redevelopment-performance-2026-09-06/established-off-1.log",
+      "finishedAt": "2026-09-06T05:11:56.243971+00:00",
+      "exitCode": 143
+    },
+    "housing-off-2": {
+      "status": "complete",
+      "pid": 69457,
+      "startedAt": "2026-09-06T05:11:56.279260+00:00",
+      "runDirectory": "/Users/quzzar/Projects/kithkyn/run/redevelopment-performance-2026-09-06/housing-off-2",
+      "log": "/Users/quzzar/Projects/kithkyn/run/redevelopment-performance-2026-09-06/housing-off-2.log",
+      "finishedAt": "2026-09-06T05:23:14.882834+00:00",
+      "exitCode": 143
+    },
+    "housing-on-2": {
+      "status": "complete",
+      "pid": 69975,
+      "startedAt": "2026-09-06T05:23:27.971573+00:00",
+      "runDirectory": "/Users/quzzar/Projects/kithkyn/run/redevelopment-performance-2026-09-06/housing-on-2",
+      "log": "/Users/quzzar/Projects/kithkyn/run/redevelopment-performance-2026-09-06/housing-on-2.log",
+      "finishedAt": "2026-09-06T05:34:42.405695+00:00",
+      "exitCode": 143
+    },
+    "opportunity-off-2": {
+      "status": "complete",
+      "pid": 70340,
+      "startedAt": "2026-09-06T05:34:42.428235+00:00",
+      "runDirectory": "/Users/quzzar/Projects/kithkyn/run/redevelopment-performance-2026-09-06/opportunity-off-2",
+      "log": "/Users/quzzar/Projects/kithkyn/run/redevelopment-performance-2026-09-06/opportunity-off-2.log",
+      "finishedAt": "2026-09-06T05:46:09.006997+00:00",
+      "exitCode": 143
+    },
+    "opportunity-on-2": {
+      "status": "complete",
+      "pid": 70803,
+      "startedAt": "2026-09-06T05:46:09.029777+00:00",
+      "runDirectory": "/Users/quzzar/Projects/kithkyn/run/redevelopment-performance-2026-09-06/opportunity-on-2",
+      "log": "/Users/quzzar/Projects/kithkyn/run/redevelopment-performance-2026-09-06/opportunity-on-2.log",
+      "finishedAt": "2026-09-06T05:58:59.290159+00:00",
+      "exitCode": 143
+    },
+    "established-off-2": {
+      "status": "complete",
+      "pid": 73757,
+      "startedAt": "2026-09-06T05:59:11.355728+00:00",
+      "runDirectory": "/Users/quzzar/Projects/kithkyn/run/redevelopment-performance-2026-09-06/established-off-2",
+      "log": "/Users/quzzar/Projects/kithkyn/run/redevelopment-performance-2026-09-06/established-off-2.log",
+      "finishedAt": "2026-09-06T06:07:09.447525+00:00",
+      "exitCode": 143
+    },
+    "established-on-2": {
+      "status": "complete",
+      "pid": 74431,
+      "startedAt": "2026-09-06T06:07:17.473013+00:00",
+      "runDirectory": "/Users/quzzar/Projects/kithkyn/run/redevelopment-performance-2026-09-06/established-on-2",
+      "log": "/Users/quzzar/Projects/kithkyn/run/redevelopment-performance-2026-09-06/established-on-2.log",
+      "finishedAt": "2026-09-06T06:15:30.536960+00:00",
+      "exitCode": 0
+    }
+  },
+  "createdAt": "2026-09-06T03:22:45.550525+00:00",
+  "status": "complete",
+  "runnerPid": 40674,
+  "updatedAt": "2026-09-06T06:22:55.810053+00:00",
+  "active": null,
+  "postRunCleanup": {
+    "checkedAt": "2026-09-06T06:22:55.810053+00:00",
+    "originalError": "[Errno 48] Address already in use",
+    "classification": "Post-horizon cleanup port-release check; all twelve runs were already COMPLETE and saved.",
+    "ports": {
+      "25696": "bind succeeded",
+      "8131": "bind succeeded"
+    },
+    "action": "No process signals or reruns. Mark monitoring state complete after confirming all fixed horizons and ports.",
+    "failedScoredRuns": 0,
+    "exclusions": []
+  },
+  "finalizedAt": "2026-09-06T06:22:55.810053+00:00"
+}

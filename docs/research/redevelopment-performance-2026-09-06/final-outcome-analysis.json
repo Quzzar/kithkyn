@@ -1,0 +1,610 @@
+{
+  "funnel": {
+    "offered": 21,
+    "chosen": 4,
+    "started": 4,
+    "committed": 4,
+    "buildings_removed": 7,
+    "completed": 4,
+    "declined": 6,
+    "no_answer": 11
+  },
+  "runs": {
+    "housing-on-1": {
+      "observedChanges": [
+        {
+          "tick": 24000,
+          "added": [],
+          "removed": [
+            "farm_plains_1",
+            "farm_plains_1"
+          ],
+          "upgraded": [
+            [
+              "house_plains_1",
+              "house_plains_2"
+            ]
+          ]
+        },
+        {
+          "tick": 96000,
+          "added": [
+            "house_plains_1"
+          ],
+          "removed": [],
+          "upgraded": []
+        },
+        {
+          "tick": 144000,
+          "added": [
+            "house_plains_1"
+          ],
+          "removed": [],
+          "upgraded": []
+        },
+        {
+          "tick": 192000,
+          "added": [
+            "house_plains_1"
+          ],
+          "removed": [],
+          "upgraded": []
+        },
+        {
+          "tick": 264000,
+          "added": [
+            "house_plains_1"
+          ],
+          "removed": [],
+          "upgraded": []
+        }
+      ],
+      "maxQueued": 0,
+      "maxDisplaced": 1,
+      "minStaffedFood": 1,
+      "finalJobs": "You are the collective judgement of Redevelopment verification, a hamlet. 15 residents; 11 hold jobs; 4 work-eligible residents have no post. 11 independent beds total; 0 general beds free; 0 free live-in beds are reserved to their workplaces; 4 adult residents need independent housing. There are no pre-adults awaiting family housing. 4 adult residents are already unhoused. They cannot take open work unless that workplace has a free live-in bed; another workshop without beds would not house them, while a house would add general beds. ",
+      "stock": "1 stone pickaxe, 1 stone hoe, 169 dirt, 1216 planks, 1 stone axe, 1 wheat, 308 logs, 275 cobblestone, 348 cooked beef, 43 wheat seeds"
+    },
+    "housing-off-1": {
+      "observedChanges": [
+        {
+          "tick": 24000,
+          "added": [
+            "butchery_plains_1"
+          ],
+          "removed": [],
+          "upgraded": []
+        },
+        {
+          "tick": 72000,
+          "added": [
+            "house_plains_1"
+          ],
+          "removed": [],
+          "upgraded": []
+        },
+        {
+          "tick": 144000,
+          "added": [
+            "blacksmith_plains_1"
+          ],
+          "removed": [],
+          "upgraded": []
+        },
+        {
+          "tick": 216000,
+          "added": [
+            "butchery_plains_1"
+          ],
+          "removed": [],
+          "upgraded": []
+        },
+        {
+          "tick": 264000,
+          "added": [
+            "butchery_plains_1"
+          ],
+          "removed": [],
+          "upgraded": []
+        }
+      ],
+      "maxQueued": 0,
+      "maxDisplaced": 0,
+      "minStaffedFood": 1,
+      "finalJobs": "You are the collective judgement of Redevelopment verification, a hamlet. 11 residents; 7 hold jobs; 4 work-eligible residents have no post. 8 independent beds total; 0 general beds free; 1 free live-in bed is reserved to their workplaces; 4 adult residents need independent housing. There are no pre-adults awaiting family housing. 4 adult residents are already unhoused. They cannot take open work unless that workplace has a free live-in bed; another workshop without beds would not house them, while a house would add general beds. ",
+      "stock": "348 dirt, 249 logs, 1 stone pickaxe, 378 cooked beef, 672 planks, 194 cobblestone, 1 stone hoe, 10 wool, 43 wheat seeds"
+    },
+    "opportunity-on-1": {
+      "observedChanges": [],
+      "maxQueued": 0,
+      "maxDisplaced": 0,
+      "minStaffedFood": 0,
+      "finalJobs": "You are the collective judgement of Willowfield opportunity, a hamlet. 4 residents; 4 hold jobs; 0 work-eligible residents have no post. 9 independent beds total; 5 general beds free; 0 free live-in beds are reserved to their workplaces; no adult residents need independent housing. There are no pre-adults awaiting family housing. 5 general beds stand free. ",
+      "stock": "4 wheat, 1 stone hoe, 291 cobblestone, 329 logs, 256 dirt, 3 stone sword, 512 planks, 10 wheat seeds"
+    },
+    "opportunity-off-1": {
+      "observedChanges": [
+        {
+          "tick": 24000,
+          "added": [
+            "blacksmith_plains_1"
+          ],
+          "removed": [],
+          "upgraded": []
+        },
+        {
+          "tick": 96000,
+          "added": [
+            "farm_plains_1"
+          ],
+          "removed": [],
+          "upgraded": []
+        },
+        {
+          "tick": 144000,
+          "added": [
+            "farm_plains_1"
+          ],
+          "removed": [],
+          "upgraded": []
+        },
+        {
+          "tick": 192000,
+          "added": [
+            "farm_plains_1"
+          ],
+          "removed": [],
+          "upgraded": []
+        },
+        {
+          "tick": 240000,
+          "added": [
+            "farm_plains_1"
+          ],
+          "removed": [],
+          "upgraded": []
+        }
+      ],
+      "maxQueued": 0,
+      "maxDisplaced": 0,
+      "minStaffedFood": 1,
+      "finalJobs": "You are the collective judgement of Willowfield opportunity, a hamlet. 4 residents; 4 hold jobs; 0 work-eligible residents have no post. 10 independent beds total; 4 general beds free; 2 free live-in beds are reserved to their workplaces; no adult residents need independent housing. There are no pre-adults awaiting family housing. 4 general beds stand free. ",
+      "stock": "1 crafting table, 5 stone sword, 1 stone pickaxe, 5 wheat, 382 dirt, 602 planks, 311 cobblestone, 66 wheat seeds, 3 stone hoe, 338 logs"
+    },
+    "established-on-1": {
+      "observedChanges": [
+        {
+          "tick": 24000,
+          "added": [],
+          "removed": [],
+          "upgraded": [
+            [
+              "farm_plains_1",
+              "farm_plains_2"
+            ]
+          ]
+        }
+      ],
+      "maxQueued": 0,
+      "maxDisplaced": 0,
+      "minStaffedFood": 1,
+      "finalJobs": "You are the collective judgement of Redevelopment verification, a village. 27 residents; 19 hold jobs; 8 work-eligible residents have no post. 19 independent beds total; 0 general beds free; 0 free live-in beds are reserved to their workplaces; 8 adult residents need independent housing. There are no pre-adults awaiting family housing. 8 adult residents are already unhoused. They cannot take open work unless that workplace has a free live-in bed; another workshop without beds would not house them, while a house would add general beds. ",
+      "stock": "1 stone axe, 8 carrot, 17 baked potato, 1 crossbow, 348 dirt, 2928 planks, 2 cobblestone, 1 wheat, 294 cooked beef, 1 rose bush, 61 wheat seeds, 1 stone hoe, 112 logs, 1 stone pickaxe"
+    },
+    "established-off-1": {
+      "observedChanges": [
+        {
+          "tick": 72000,
+          "added": [
+            "well_plains_1"
+          ],
+          "removed": [],
+          "upgraded": []
+        }
+      ],
+      "maxQueued": 0,
+      "maxDisplaced": 0,
+      "minStaffedFood": 1,
+      "finalJobs": "You are the collective judgement of Redevelopment verification, a village. 27 residents; 19 hold jobs; 8 work-eligible residents have no post. 19 independent beds total; 0 general beds free; 0 free live-in beds are reserved to their workplaces; 8 adult residents need independent housing. There are no pre-adults awaiting family housing. 8 adult residents are already unhoused. They cannot take open work unless that workplace has a free live-in bed; another workshop without beds would not house them, while a house would add general beds. ",
+      "stock": "1 stone axe, 45 wheat seeds, 1 cobblestone, 1 crossbow, 1 stone hoe, 294 cooked beef, 121 logs, 3152 planks, 1 stone pickaxe, 330 dirt, 1 wheat"
+    },
+    "housing-off-2": {
+      "observedChanges": [
+        {
+          "tick": 24000,
+          "added": [],
+          "removed": [],
+          "upgraded": [
+            [
+              "mine_plains_1",
+              "mine_plains_2"
+            ]
+          ]
+        },
+        {
+          "tick": 72000,
+          "added": [
+            "butchery_plains_1"
+          ],
+          "removed": [],
+          "upgraded": []
+        },
+        {
+          "tick": 144000,
+          "added": [
+            "butchery_plains_1"
+          ],
+          "removed": [],
+          "upgraded": []
+        },
+        {
+          "tick": 192000,
+          "added": [
+            "farm_plains_1"
+          ],
+          "removed": [],
+          "upgraded": []
+        },
+        {
+          "tick": 264000,
+          "added": [
+            "house_plains_1"
+          ],
+          "removed": [],
+          "upgraded": []
+        }
+      ],
+      "maxQueued": 0,
+      "maxDisplaced": 0,
+      "minStaffedFood": 1,
+      "finalJobs": "You are the collective judgement of Redevelopment verification, a hamlet. 15 residents; 7 hold jobs; 8 work-eligible residents have no post. 7 independent beds total; 0 general beds free; 0 free live-in beds are reserved to their workplaces; 8 adult residents need independent housing. There are no pre-adults awaiting family housing. 8 adult residents are already unhoused. They cannot take open work unless that workplace has a free live-in bed; another workshop without beds would not house them, while a house would add general beds. ",
+      "stock": "59 wheat seeds, 261 cobblestone, 1 stone hoe, 13 wool, 378 cooked beef, 1 writable book, 298 logs, 1 stone pickaxe, 1040 planks, 344 dirt"
+    },
+    "housing-on-2": {
+      "observedChanges": [
+        {
+          "tick": 24000,
+          "added": [],
+          "removed": [
+            "farm_plains_1",
+            "farm_plains_1"
+          ],
+          "upgraded": [
+            [
+              "house_plains_1",
+              "house_plains_2"
+            ]
+          ]
+        },
+        {
+          "tick": 96000,
+          "added": [
+            "farm_plains_1"
+          ],
+          "removed": [],
+          "upgraded": []
+        },
+        {
+          "tick": 144000,
+          "added": [
+            "mine_plains_1"
+          ],
+          "removed": [],
+          "upgraded": []
+        },
+        {
+          "tick": 192000,
+          "added": [
+            "house_plains_2"
+          ],
+          "removed": [],
+          "upgraded": []
+        },
+        {
+          "tick": 264000,
+          "added": [
+            "house_plains_2"
+          ],
+          "removed": [],
+          "upgraded": []
+        }
+      ],
+      "maxQueued": 0,
+      "maxDisplaced": 1,
+      "minStaffedFood": 1,
+      "finalJobs": "You are the collective judgement of Redevelopment verification, a hamlet. 15 residents; 11 hold jobs; 4 work-eligible residents have no post. 11 independent beds total; 0 general beds free; 0 free live-in beds are reserved to their workplaces; 4 adult residents need independent housing. There are no pre-adults awaiting family housing. 4 adult residents are already unhoused. They cannot take open work unless that workplace has a free live-in bed; another workshop without beds would not house them, while a house would add general beds. ",
+      "stock": "1 stone axe, 59 wheat seeds, 241 cobblestone, 1 stone hoe, 342 cooked beef, 274 logs, 1 stone sword, 720 planks, 1 stone pickaxe, 173 dirt, 1 wheat"
+    },
+    "opportunity-off-2": {
+      "observedChanges": [
+        {
+          "tick": 24000,
+          "added": [
+            "lumberjack_plains_1"
+          ],
+          "removed": [],
+          "upgraded": []
+        },
+        {
+          "tick": 96000,
+          "added": [],
+          "removed": [],
+          "upgraded": [
+            [
+              "farm_plains_2",
+              "farm_plains_3"
+            ]
+          ]
+        },
+        {
+          "tick": 168000,
+          "added": [
+            "farm_plains_3"
+          ],
+          "removed": [],
+          "upgraded": []
+        },
+        {
+          "tick": 216000,
+          "added": [
+            "farm_plains_3"
+          ],
+          "removed": [],
+          "upgraded": []
+        },
+        {
+          "tick": 288000,
+          "added": [
+            "farm_plains_1"
+          ],
+          "removed": [],
+          "upgraded": []
+        }
+      ],
+      "maxQueued": 0,
+      "maxDisplaced": 0,
+      "minStaffedFood": 2,
+      "finalJobs": "You are the collective judgement of Willowfield opportunity, a hamlet. 13 residents; 9 hold jobs; 4 work-eligible residents have no post. 10 independent beds total; 0 general beds free; 1 free live-in bed is reserved to their workplaces; 4 adult residents need independent housing. There are no pre-adults awaiting family housing. 4 adult residents are already unhoused. They cannot take open work unless that workplace has a free live-in bed; another workshop without beds would not house them, while a house would add general beds. ",
+      "stock": "256 logs, 4 wheat, 30 beetroot seeds, 1 stone pickaxe, 1 stone sword, 90 wheat seeds, 69 cobblestone, 53 carrot, 8 melon seeds, 41 baked potato, 2208 planks, 1 crafting table, 8 pumpkin seeds, 2 stone hoe, 335 dirt"
+    },
+    "opportunity-on-2": {
+      "observedChanges": [
+        {
+          "tick": 48000,
+          "added": [],
+          "removed": [
+            "well_plains_1",
+            "well_plains_1"
+          ],
+          "upgraded": [
+            [
+              "farm_plains_1",
+              "farm_plains_2"
+            ]
+          ]
+        },
+        {
+          "tick": 120000,
+          "added": [
+            "butchery_plains_1"
+          ],
+          "removed": [],
+          "upgraded": []
+        },
+        {
+          "tick": 168000,
+          "added": [
+            "couple_cottage_plains_1"
+          ],
+          "removed": [],
+          "upgraded": []
+        },
+        {
+          "tick": 216000,
+          "added": [
+            "house_plains_1"
+          ],
+          "removed": [],
+          "upgraded": []
+        },
+        {
+          "tick": 288000,
+          "added": [
+            "butchery_plains_1"
+          ],
+          "removed": [],
+          "upgraded": []
+        }
+      ],
+      "maxQueued": 1,
+      "maxDisplaced": 0,
+      "minStaffedFood": 2,
+      "finalJobs": "You are the collective judgement of Willowfield opportunity, a hamlet. 15 residents; 12 hold jobs; 3 work-eligible residents have no post. 12 independent beds total; 0 general beds free; 0 free live-in beds are reserved to their workplaces; 3 adult residents need independent housing. There are no pre-adults awaiting family housing. 3 adult residents are already unhoused. They cannot take open work unless that workplace has a free live-in bed; another workshop without beds would not house them, while a house would add general beds. ",
+      "stock": "266 logs, 1 stone pickaxe, 43 wheat seeds, 1 stone sword, 250 cobblestone, 1 rose bush, 15 carrot, 13 wool, 2 baked potato, 1920 planks, 1 crafting table, 2 stone hoe, 302 dirt"
+    },
+    "established-off-2": {
+      "observedChanges": [],
+      "maxQueued": 0,
+      "maxDisplaced": 0,
+      "minStaffedFood": 1,
+      "finalJobs": "You are the collective judgement of Redevelopment verification, a village. 27 residents; 19 hold jobs; 8 work-eligible residents have no post. 19 independent beds total; 0 general beds free; 0 free live-in beds are reserved to their workplaces; 8 adult residents need independent housing. There are no pre-adults awaiting family housing. 8 adult residents are already unhoused. They cannot take open work unless that workplace has a free live-in bed; another workshop without beds would not house them, while a house would add general beds. ",
+      "stock": "1 stone axe, 45 wheat seeds, 9 cobblestone, 1 crossbow, 1 stone hoe, 294 cooked beef, 126 logs, 2928 planks, 1 stone pickaxe, 332 dirt, 1 wheat"
+    },
+    "established-on-2": {
+      "observedChanges": [
+        {
+          "tick": 24000,
+          "added": [
+            "well_plains_1"
+          ],
+          "removed": [],
+          "upgraded": []
+        },
+        {
+          "tick": 192000,
+          "added": [],
+          "removed": [
+            "house_plains_2"
+          ],
+          "upgraded": [
+            [
+              "mine_plains_1",
+              "mine_plains_2"
+            ]
+          ]
+        },
+        {
+          "tick": 264000,
+          "added": [
+            "stoneworks_plains_1"
+          ],
+          "removed": [],
+          "upgraded": []
+        }
+      ],
+      "maxQueued": 24,
+      "maxDisplaced": 2,
+      "minStaffedFood": 1,
+      "finalJobs": "You are the collective judgement of Redevelopment verification, a hamlet. 23 residents; 17 hold jobs; 6 work-eligible residents have no post. 17 independent beds total; 0 general beds free; 0 free live-in beds are reserved to their workplaces; 6 adult residents need independent housing. There are no pre-adults awaiting family housing. 6 adult residents are already unhoused. They cannot take open work unless that workplace has a free live-in bed; another workshop without beds would not house them, while a house would add general beds. ",
+      "stock": "1 stone axe, 294 cooked beef, 1 wheat, 1 crossbow, 44 wheat seeds, 1 stone hoe, 1 rose bush, 3392 planks, 122 logs, 284 dirt, 3 cobblestone, 1 stone pickaxe"
+    }
+  },
+  "logWarnings": {
+    "housing-on-1": [],
+    "housing-off-1": [
+      "[23:53:27] [ForkJoinPool.commonPool-worker-8/WARN] [co.qu.ki.Kithkyn/]: Local request failed: java.net.http.HttpTimeoutException: request timed out",
+      "[23:54:26] [ForkJoinPool.commonPool-worker-8/WARN] [co.qu.ki.Kithkyn/]: Local request failed: java.net.http.HttpTimeoutException: request timed out",
+      "[23:55:13] [ForkJoinPool.commonPool-worker-8/WARN] [co.qu.ki.Kithkyn/]: Local request failed: java.net.http.HttpTimeoutException: request timed out",
+      "[00:00:01] [ForkJoinPool.commonPool-worker-7/WARN] [co.qu.ki.Kithkyn/]: LLM answer is inconsistent: choice 7 but action 'new level 3 farm on a separate site' (option 19), discarding"
+    ],
+    "opportunity-on-1": [],
+    "opportunity-off-1": [
+      "[00:20:27] [ForkJoinPool.commonPool-worker-9/WARN] [co.qu.ki.Kithkyn/]: Local request failed: java.net.http.HttpTimeoutException: request timed out",
+      "[00:21:26] [ForkJoinPool.commonPool-worker-9/WARN] [co.qu.ki.Kithkyn/]: Local request failed: java.io.IOException: HTTP/1.1 header parser received no bytes",
+      "[00:23:44] [ForkJoinPool.commonPool-worker-9/WARN] [co.qu.ki.Kithkyn/]: Local request failed: java.net.http.HttpTimeoutException: request timed out"
+    ],
+    "established-on-1": [
+      "[00:31:59] [ForkJoinPool.commonPool-worker-2/WARN] [co.qu.ki.Kithkyn/]: Local request failed: java.net.http.HttpTimeoutException: request timed out",
+      "[00:32:46] [ForkJoinPool.commonPool-worker-2/WARN] [co.qu.ki.Kithkyn/]: Local request failed: java.net.http.HttpTimeoutException: request timed out"
+    ],
+    "established-off-1": [],
+    "housing-off-2": [
+      "[01:12:29] [ForkJoinPool.commonPool-worker-6/WARN] [co.qu.ki.Kithkyn/]: LLM answer is inconsistent: choice 8 but action 'farm' (option 6), discarding",
+      "[01:15:33] [ForkJoinPool.commonPool-worker-6/WARN] [co.qu.ki.Kithkyn/]: Local request failed: java.net.http.HttpTimeoutException: request timed out",
+      "[01:21:05] [ForkJoinPool.commonPool-worker-6/WARN] [co.qu.ki.Kithkyn/]: Local request failed: java.net.http.HttpTimeoutException: request timed out"
+    ],
+    "housing-on-2": [
+      "[01:27:30] [ForkJoinPool.commonPool-worker-3/WARN] [co.qu.ki.Kithkyn/]: Local request failed: java.net.http.HttpTimeoutException: request timed out",
+      "[01:28:17] [ForkJoinPool.commonPool-worker-3/WARN] [co.qu.ki.Kithkyn/]: Local request failed: java.net.http.HttpTimeoutException: request timed out"
+    ],
+    "opportunity-off-2": [
+      "[01:35:11] [ForkJoinPool.commonPool-worker-6/WARN] [co.qu.ki.Kithkyn/]: LLM answer is inconsistent: choice 5 but action 'farm' (option 3), discarding",
+      "[01:36:17] [ForkJoinPool.commonPool-worker-6/WARN] [co.qu.ki.Kithkyn/]: Local request failed: java.net.http.HttpTimeoutException: request timed out",
+      "[01:40:38] [ForkJoinPool.commonPool-worker-5/WARN] [co.qu.ki.Kithkyn/]: Local request failed: java.net.http.HttpTimeoutException: request timed out"
+    ],
+    "opportunity-on-2": [
+      "[01:48:21] [ForkJoinPool.commonPool-worker-7/WARN] [co.qu.ki.Kithkyn/]: Local request failed: java.net.http.HttpTimeoutException: request timed out",
+      "[01:49:58] [ForkJoinPool.commonPool-worker-7/WARN] [co.qu.ki.Kithkyn/]: Local request failed: java.net.http.HttpTimeoutException: request timed out",
+      "[01:50:45] [ForkJoinPool.commonPool-worker-7/WARN] [co.qu.ki.Kithkyn/]: Local request failed: java.net.http.HttpTimeoutException: request timed out",
+      "[01:53:14] [ForkJoinPool.commonPool-worker-7/WARN] [co.qu.ki.Kithkyn/]: Local request failed: java.net.http.HttpTimeoutException: request timed out"
+    ],
+    "established-off-2": [],
+    "established-on-2": []
+  },
+  "performance": {
+    "searchCount": 35,
+    "searchMedianMs": 26.364042,
+    "searchMaxMs": 355.058458,
+    "groupingMedianMs": 0.136792,
+    "groupingMaxMs": 65.851292,
+    "planningReplies": 77,
+    "latencyMedianMs": 6726,
+    "latencyMaxMs": 13358,
+    "runs": {
+      "housing-on-1": {
+        "maxObservedSequenceTokens": 2109,
+        "warnings": 0,
+        "planningReplies": 5,
+        "latencyMedianMs": 6847,
+        "latencyMaxMs": 9686
+      },
+      "housing-off-1": {
+        "maxObservedSequenceTokens": 1696,
+        "warnings": 4,
+        "planningReplies": 5,
+        "latencyMedianMs": 8643,
+        "latencyMaxMs": 10927
+      },
+      "opportunity-on-1": {
+        "maxObservedSequenceTokens": 2072,
+        "warnings": 0,
+        "planningReplies": 1,
+        "latencyMedianMs": 7844,
+        "latencyMaxMs": 7844
+      },
+      "opportunity-off-1": {
+        "maxObservedSequenceTokens": 1387,
+        "warnings": 3,
+        "planningReplies": 6,
+        "latencyMedianMs": 5947.0,
+        "latencyMaxMs": 7071
+      },
+      "established-on-1": {
+        "maxObservedSequenceTokens": 2493,
+        "warnings": 2,
+        "planningReplies": 13,
+        "latencyMedianMs": 9221,
+        "latencyMaxMs": 13358
+      },
+      "established-off-1": {
+        "maxObservedSequenceTokens": 1551,
+        "warnings": 0,
+        "planningReplies": 10,
+        "latencyMedianMs": 6703.5,
+        "latencyMaxMs": 8987
+      },
+      "housing-off-2": {
+        "maxObservedSequenceTokens": 1560,
+        "warnings": 3,
+        "planningReplies": 5,
+        "latencyMedianMs": 5851,
+        "latencyMaxMs": 6741
+      },
+      "housing-on-2": {
+        "maxObservedSequenceTokens": 2105,
+        "warnings": 2,
+        "planningReplies": 5,
+        "latencyMedianMs": 6479,
+        "latencyMaxMs": 7153
+      },
+      "opportunity-off-2": {
+        "maxObservedSequenceTokens": 1388,
+        "warnings": 3,
+        "planningReplies": 5,
+        "latencyMedianMs": 5121,
+        "latencyMaxMs": 10964
+      },
+      "opportunity-on-2": {
+        "maxObservedSequenceTokens": 2311,
+        "warnings": 4,
+        "planningReplies": 4,
+        "latencyMedianMs": 8348.0,
+        "latencyMaxMs": 9800
+      },
+      "established-off-2": {
+        "maxObservedSequenceTokens": 1549,
+        "warnings": 0,
+        "planningReplies": 11,
+        "latencyMedianMs": 5653,
+        "latencyMaxMs": 9698
+      },
+      "established-on-2": {
+        "maxObservedSequenceTokens": 2410,
+        "warnings": 0,
+        "planningReplies": 7,
+        "latencyMedianMs": 7194,
+        "latencyMaxMs": 8173
+      }
+    }
+  }
+}

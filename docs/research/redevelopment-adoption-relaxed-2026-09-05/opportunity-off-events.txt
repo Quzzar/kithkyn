@@ -1,0 +1,4 @@
+[20:07:15] [Server thread/INFO] [co.qu.ki.Kithkyn/]: Village 'Willowfield opportunity' decided to build butchery_plains_1: We need to address the lack of essential resources like food, leather, and metal to sustain our residents and build new structures.
+[20:08:09] [Server thread/INFO] [co.qu.ki.Kithkyn/]: Village 'Willowfield opportunity' decided to build butchery_plains_1: We need to build essential structures to support our residents' daily needs and provide a foundation for future growth.
+[20:09:23] [Server thread/INFO] [co.qu.ki.Kithkyn/]: Village 'Willowfield opportunity' decided to build lumberjack_plains_1: We need to address the lack of food and the broken lumberjack, so we should build something that provides both.
+[20:15:21] [Server thread/INFO] [co.qu.ki.Kithkyn/]: [redevelopment-benchmark] COMPLETE enabled=false elapsed=288000 builds=5

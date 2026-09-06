@@ -1,0 +1,78 @@
+{
+  "createdAt": "2026-09-06T03:09:48.981959+00:00",
+  "baselineCommit": "73b5b4d19b88858ab094d95a71c5fd7f40e14172",
+  "horizonTicksPerRun": 288000,
+  "runOrder": [
+    "housing-on-1",
+    "housing-off-1",
+    "opportunity-on-1",
+    "opportunity-off-1",
+    "established-on-1",
+    "established-off-1",
+    "housing-off-2",
+    "housing-on-2",
+    "opportunity-off-2",
+    "opportunity-on-2",
+    "established-off-2",
+    "established-on-2"
+  ],
+  "model": "Llama-3.2-3B-Instruct-Q4_K_M",
+  "repetitionsPerScenario": 2,
+  "seedSources": {
+    "housing": "/Users/quzzar/Projects/kithkyn/run/redevelopment-adoption-2026-09-05/seed-housing/world",
+    "opportunity": "/Users/quzzar/Projects/kithkyn/run/redevelopment-adoption-2026-09-05/seed-opportunity/world",
+    "established": "/Users/quzzar/Projects/kithkyn/run/redevelopment-adoption-2026-09-05/housing-off/world"
+  },
+  "seedLevelDataSha256": {
+    "housing": "144a135328e58f34b183af4d12917ea5ec7c03297247ead4b7df551f6967ba6c",
+    "opportunity": "d8d23e3e31d0e95bad3aff44c445a4404908357d20c7b3b3b5c960209a8fb3a9",
+    "established": "3912faa15bf7bb4f7fa9a73fe06b161c1fe9af51847dd2eec5288be038ed2178"
+  },
+  "scope": "New implementation on frozen previous production baseline. Two enabled/disabled pairs each from housing and food opportunity fixtures, and a continuation of the prior autonomously developed housing-off village. Twelve-day fixed horizons. No forced project decisions in scored runs. Existing earlier study retained as historical baseline, not a matched causal control.",
+  "sourceOverlaySha256": {
+    "src/main/java/com/quzzar/kithkyn/village/buildings/ConstructionAccess.java": "e2b5490a63c74932508303b862e190407ffae12885245bdcb125e9bdbebbd11a",
+    "src/main/java/com/quzzar/kithkyn/village/buildings/StructureInProgress.java": "02f80436918bf84239be81458e3016933fc1ecbd30f1bfcccd0ab696a29bc15f",
+    "src/main/java/com/quzzar/kithkyn/entities/ai/goals/work/GatherStep.java": "3d141381f7eb4db5bd95fff3924c8ba790937e3cf8c076d38a53bd74bd4325b4",
+    "src/main/java/com/quzzar/kithkyn/entities/ai/goals/work/BuildStep.java": "9f8836b32f7ab18a14ce23e92fbaa6cc7836b2b5279da217f53d680d08e02084",
+    "src/main/java/com/quzzar/kithkyn/village/buildings/BuildingImpact.java": "4ca5e33ce736da79c8b6748b4d1b3ceb803686ef08f8ca173199964337901e22",
+    "src/main/java/com/quzzar/kithkyn/village/buildings/RedevelopmentAlternatives.java": "7ed6597f7e9e6bf4fdcc11508416dc810098fc89be340a528d459614c59f9fce",
+    "src/main/java/com/quzzar/kithkyn/village/buildings/BuildingUpgrade.java": "56c212ec9fbf5e5b96deedb98a73a93cddd881cd00aa4276605e634fe8d46d2f",
+    "src/main/java/com/quzzar/kithkyn/village/buildings/RedevelopmentDemand.java": "5e0dc7e336824c81960df78ee314d3bdec3f836aa309872e0d5ef47f9b01dc81",
+    "src/main/java/com/quzzar/kithkyn/village/buildings/RedevelopmentPlanner.java": "15e8143262e96eeaa1e3c04facdffd1b0ab9d0c6c7082e90ded5e4d881863c56",
+    "src/main/java/com/quzzar/kithkyn/village/buildings/UrbanPlanner.java": "4cafdb26c7fd5a6b2e9a2a43969de5831b357cfb951e4f1187c974e087c213f6",
+    "src/main/java/com/quzzar/kithkyn/village/buildings/VillageCapabilities.java": "2cf2bb54db233e6698a0173a39f2991e6968497513dacff59a4417b9e264649a",
+    "src/main/java/com/quzzar/kithkyn/dev/RedevelopmentBenchmark.java": "1a9c40ecfa5c6fa13b54128102c5e66419265e18fa14e6486e00e2a0e519017a",
+    "src/test/java/com/quzzar/kithkyn/village/buildings/ConstructionAccessTest.java": "d129753eab27152671de0c4717ffe343061151e666ee53dcd1201dd511dd4c8e",
+    "src/test/java/com/quzzar/kithkyn/village/buildings/BuildingImpactTest.java": "213d3b344a8921591627ce809db015c26d74644197d9c6277d3ba1f4d3275500",
+    "src/test/java/com/quzzar/kithkyn/village/buildings/RedevelopmentAlternativesTest.java": "b12a698bb9314e2ccc97cb90ef55dca66445b5b83ca4230eb6a4a004f6e33b75",
+    "src/main/java/com/quzzar/kithkyn/village/Village.java": "159c1e3529baf019d72d3c3925d8b3cdb62e351a6de7fd30641b5007e2778412"
+  },
+  "gamePort": 25696,
+  "modelPort": 8131,
+  "llamaCpp": "b10653",
+  "totalContext": 8192,
+  "slots": 2,
+  "perRequestContext": 4096,
+  "scoredRuns": 12,
+  "concurrentScoredServers": 1,
+  "javaHeap": "2G",
+  "transportOverride": "Frozen prior LocalRuntimeProvider reads kithkyn.benchmark.modelPort; no other model settings or parser changes.",
+  "diagnosticMode": "No benchmark stage forces project selection, commitment or worker progression during scored runs.",
+  "providerSha256": {
+    "src/main/java/com/quzzar/kithkyn/llm/provider/LocalRuntimeProvider.java": "9c426c0cf00f5b53e475b4fc625909c314f06f46d6faf2bedbd05cdd5d504132"
+  },
+  "configSha256": {
+    "base-common.toml": "1d332b5d48da6a7bbec413065299ba9242610c734d49fabeef68dad27dd1c533",
+    "base-advanced.toml": "95021d1d08d3bfb36731d04c5fe48b0c4192745f30b96cd6d694748315e6ec79"
+  },
+  "runnerSha256": "e8bdc7776af204613505356e727203bff429c34fbcd208a74520d4cca3fd01fa",
+  "unitChecks": {
+    "tests": 216,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "preparedAt": "2026-09-06T03:22:00.573783+00:00",
+  "launchedAt": "2026-09-06T03:22:45.308942+00:00",
+  "runnerPid": 40674
+}

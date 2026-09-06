@@ -1025,3 +1025,14 @@ forests persist and wood is genuinely renewable. Everything else stays exactly a
 village left it: the stump field, the old quarry face, the mouth of the shaft. The
 landscape becomes a record of what this village did and for how long, which is legible in a
 way that self-repairing terrain is not.
+
+
+## Redevelopment access
+
+A builder delivering a redevelopment recipe and working through its demolition and construction
+uses a reachable exterior position supplied by `ConstructionAccess`. It stays outside the target,
+removed buildings and changed ground columns, rather than requiring entry to an old building's
+center. `GatherStep` keeps delivery separate from fetching a chest; `BuildStep` keeps the builder
+outside through preparation and replacement. Failed approaches yield to another perimeter spot,
+and routes are recomputed after village reload. A gathering timeout reports access failure when
+observed, instead of describing every stalled delivery as a missing recipe.

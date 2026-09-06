@@ -1,0 +1,4 @@
+[
+  "redevelop at 128,126 for level 2 house",
+  "Upgrade the existing level 1 house to level 2 house. Remove: level 1 farm at 128,118; level 1 farm at 128,136. Net change after completion: 1 beds, -2 workplaces, -2 shared containers, -52 crop plots. Target capabilities: []. Current need: independent housing is short by 1 beds. During work: 1 residents displaced (spare beds used first; otherwise temporarily homeless), 2 workplaces affected; builders can continue construction, 1 staffed food buildings remain; output not forecast. Stored items are preserved; overflow waits for space. Recover: 2 logs, 4 cobblestone. Still pay: 20 logs, 25 cobblestone, 112 dirt. Removal and ground work: 294 blocks, followed by construction."
+]

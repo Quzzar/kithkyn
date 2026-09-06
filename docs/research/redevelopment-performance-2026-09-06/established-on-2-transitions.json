@@ -1,0 +1,172 @@
+[
+  {
+    "elapsedTicks": 0,
+    "project": "none",
+    "stage": "none",
+    "unhousedAdults": 4,
+    "queuedItems": 0,
+    "displacedResidents": 0,
+    "freshWater": false,
+    "staffedFoodPosts": 1
+  },
+  {
+    "elapsedTicks": 7405,
+    "project": "well_plains_1",
+    "stage": "GATHERING",
+    "unhousedAdults": 4,
+    "queuedItems": 0,
+    "displacedResidents": 0,
+    "freshWater": false,
+    "staffedFoodPosts": 1
+  },
+  {
+    "elapsedTicks": 7640,
+    "project": "well_plains_1",
+    "stage": "NOT_STARTED",
+    "unhousedAdults": 4,
+    "queuedItems": 0,
+    "displacedResidents": 0,
+    "freshWater": false,
+    "staffedFoodPosts": 1
+  },
+  {
+    "elapsedTicks": 7642,
+    "project": "well_plains_1",
+    "stage": "CONSTRUCTING",
+    "unhousedAdults": 4,
+    "queuedItems": 0,
+    "displacedResidents": 0,
+    "freshWater": false,
+    "staffedFoodPosts": 1
+  },
+  {
+    "elapsedTicks": 8760,
+    "project": "well_plains_1",
+    "stage": "COMPLETE",
+    "unhousedAdults": 4,
+    "queuedItems": 0,
+    "displacedResidents": 0,
+    "freshWater": false,
+    "staffedFoodPosts": 1
+  },
+  {
+    "elapsedTicks": 9640,
+    "project": "none",
+    "stage": "none",
+    "unhousedAdults": 4,
+    "queuedItems": 0,
+    "displacedResidents": 0,
+    "freshWater": true,
+    "staffedFoodPosts": 1
+  },
+  {
+    "elapsedTicks": 164605,
+    "project": "mine_plains_2",
+    "stage": "GATHERING",
+    "unhousedAdults": 4,
+    "queuedItems": 0,
+    "displacedResidents": 0,
+    "freshWater": true,
+    "staffedFoodPosts": 1
+  },
+  {
+    "elapsedTicks": 168904,
+    "project": "mine_plains_2",
+    "stage": "DEMOLISHING",
+    "unhousedAdults": 6,
+    "queuedItems": 0,
+    "displacedResidents": 2,
+    "freshWater": true,
+    "staffedFoodPosts": 1
+  },
+  {
+    "elapsedTicks": 173784,
+    "project": "mine_plains_2",
+    "stage": "PREPARING",
+    "unhousedAdults": 6,
+    "queuedItems": 24,
+    "displacedResidents": 2,
+    "freshWater": true,
+    "staffedFoodPosts": 1
+  },
+  {
+    "elapsedTicks": 174684,
+    "project": "mine_plains_2",
+    "stage": "CONSTRUCTING",
+    "unhousedAdults": 6,
+    "queuedItems": 0,
+    "displacedResidents": 2,
+    "freshWater": true,
+    "staffedFoodPosts": 1
+  },
+  {
+    "elapsedTicks": 176804,
+    "project": "mine_plains_2",
+    "stage": "COMPLETE",
+    "unhousedAdults": 6,
+    "queuedItems": 0,
+    "displacedResidents": 2,
+    "freshWater": true,
+    "staffedFoodPosts": 1
+  },
+  {
+    "elapsedTicks": 177640,
+    "project": "none",
+    "stage": "none",
+    "unhousedAdults": 6,
+    "queuedItems": 0,
+    "displacedResidents": 0,
+    "freshWater": true,
+    "staffedFoodPosts": 1
+  },
+  {
+    "elapsedTicks": 243765,
+    "project": "stoneworks_plains_1",
+    "stage": "GATHERING",
+    "unhousedAdults": 6,
+    "queuedItems": 0,
+    "displacedResidents": 0,
+    "freshWater": true,
+    "staffedFoodPosts": 1
+  },
+  {
+    "elapsedTicks": 244060,
+    "project": "stoneworks_plains_1",
+    "stage": "NOT_STARTED",
+    "unhousedAdults": 6,
+    "queuedItems": 0,
+    "displacedResidents": 0,
+    "freshWater": true,
+    "staffedFoodPosts": 1
+  },
+  {
+    "elapsedTicks": 244062,
+    "project": "stoneworks_plains_1",
+    "stage": "CONSTRUCTING",
+    "unhousedAdults": 6,
+    "queuedItems": 0,
+    "displacedResidents": 0,
+    "freshWater": true,
+    "staffedFoodPosts": 1
+  },
+  {
+    "elapsedTicks": 245980,
+    "project": "stoneworks_plains_1",
+    "stage": "COMPLETE",
+    "unhousedAdults": 6,
+    "queuedItems": 0,
+    "displacedResidents": 0,
+    "freshWater": true,
+    "staffedFoodPosts": 1
+  },
+  {
+    "elapsedTicks": 246040,
+    "project": "none",
+    "stage": "none",
+    "unhousedAdults": 6,
+    "queuedItems": 0,
+    "displacedResidents": 0,
+    "freshWater": true,
+    "staffedFoodPosts": 1
+  }
+]

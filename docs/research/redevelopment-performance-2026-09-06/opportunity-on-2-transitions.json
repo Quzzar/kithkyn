@@ -1,0 +1,272 @@
+[
+  {
+    "elapsedTicks": 0,
+    "project": "none",
+    "stage": "none",
+    "unhousedAdults": 2,
+    "queuedItems": 0,
+    "displacedResidents": 0,
+    "freshWater": true,
+    "staffedFoodPosts": 2
+  },
+  {
+    "elapsedTicks": 900,
+    "project": "farm_plains_2",
+    "stage": "GATHERING",
+    "unhousedAdults": 0,
+    "queuedItems": 0,
+    "displacedResidents": 0,
+    "freshWater": true,
+    "staffedFoodPosts": 2
+  },
+  {
+    "elapsedTicks": 24020,
+    "project": "farm_plains_2",
+    "stage": "DEMOLISHING",
+    "unhousedAdults": 0,
+    "queuedItems": 0,
+    "displacedResidents": 0,
+    "freshWater": false,
+    "staffedFoodPosts": 2
+  },
+  {
+    "elapsedTicks": 26100,
+    "project": "farm_plains_2",
+    "stage": "PREPARING",
+    "unhousedAdults": 0,
+    "queuedItems": 1,
+    "displacedResidents": 0,
+    "freshWater": false,
+    "staffedFoodPosts": 2
+  },
+  {
+    "elapsedTicks": 26420,
+    "project": "farm_plains_2",
+    "stage": "CONSTRUCTING",
+    "unhousedAdults": 1,
+    "queuedItems": 1,
+    "displacedResidents": 0,
+    "freshWater": false,
+    "staffedFoodPosts": 2
+  },
+  {
+    "elapsedTicks": 29100,
+    "project": "farm_plains_2",
+    "stage": "COMPLETE",
+    "unhousedAdults": 1,
+    "queuedItems": 0,
+    "displacedResidents": 0,
+    "freshWater": false,
+    "staffedFoodPosts": 2
+  },
+  {
+    "elapsedTicks": 29540,
+    "project": "none",
+    "stage": "none",
+    "unhousedAdults": 1,
+    "queuedItems": 0,
+    "displacedResidents": 0,
+    "freshWater": false,
+    "staffedFoodPosts": 2
+  },
+  {
+    "elapsedTicks": 77739,
+    "project": "butchery_plains_1",
+    "stage": "GATHERING",
+    "unhousedAdults": 1,
+    "queuedItems": 0,
+    "displacedResidents": 0,
+    "freshWater": false,
+    "staffedFoodPosts": 2
+  },
+  {
+    "elapsedTicks": 77920,
+    "project": "butchery_plains_1",
+    "stage": "NOT_STARTED",
+    "unhousedAdults": 1,
+    "queuedItems": 0,
+    "displacedResidents": 0,
+    "freshWater": false,
+    "staffedFoodPosts": 2
+  },
+  {
+    "elapsedTicks": 77922,
+    "project": "butchery_plains_1",
+    "stage": "CONSTRUCTING",
+    "unhousedAdults": 1,
+    "queuedItems": 0,
+    "displacedResidents": 0,
+    "freshWater": false,
+    "staffedFoodPosts": 2
+  },
+  {
+    "elapsedTicks": 96039,
+    "project": "butchery_plains_1",
+    "stage": "COMPLETE",
+    "unhousedAdults": 1,
+    "queuedItems": 0,
+    "displacedResidents": 0,
+    "freshWater": false,
+    "staffedFoodPosts": 2
+  },
+  {
+    "elapsedTicks": 96740,
+    "project": "none",
+    "stage": "none",
+    "unhousedAdults": 1,
+    "queuedItems": 0,
+    "displacedResidents": 0,
+    "freshWater": false,
+    "staffedFoodPosts": 2
+  },
+  {
+    "elapsedTicks": 144740,
+    "project": "couple_cottage_plains_1",
+    "stage": "GATHERING",
+    "unhousedAdults": 5,
+    "queuedItems": 0,
+    "displacedResidents": 0,
+    "freshWater": false,
+    "staffedFoodPosts": 2
+  },
+  {
+    "elapsedTicks": 144979,
+    "project": "couple_cottage_plains_1",
+    "stage": "NOT_STARTED",
+    "unhousedAdults": 5,
+    "queuedItems": 0,
+    "displacedResidents": 0,
+    "freshWater": false,
+    "staffedFoodPosts": 2
+  },
+  {
+    "elapsedTicks": 144981,
+    "project": "couple_cottage_plains_1",
+    "stage": "CONSTRUCTING",
+    "unhousedAdults": 5,
+    "queuedItems": 0,
+    "displacedResidents": 0,
+    "freshWater": false,
+    "staffedFoodPosts": 2
+  },
+  {
+    "elapsedTicks": 150619,
+    "project": "couple_cottage_plains_1",
+    "stage": "COMPLETE",
+    "unhousedAdults": 5,
+    "queuedItems": 0,
+    "displacedResidents": 0,
+    "freshWater": false,
+    "staffedFoodPosts": 2
+  },
+  {
+    "elapsedTicks": 150740,
+    "project": "none",
+    "stage": "none",
+    "unhousedAdults": 3,
+    "queuedItems": 0,
+    "displacedResidents": 0,
+    "freshWater": false,
+    "staffedFoodPosts": 2
+  },
+  {
+    "elapsedTicks": 198877,
+    "project": "house_plains_1",
+    "stage": "GATHERING",
+    "unhousedAdults": 4,
+    "queuedItems": 0,
+    "displacedResidents": 0,
+    "freshWater": false,
+    "staffedFoodPosts": 2
+  },
+  {
+    "elapsedTicks": 199159,
+    "project": "house_plains_1",
+    "stage": "NOT_STARTED",
+    "unhousedAdults": 4,
+    "queuedItems": 0,
+    "displacedResidents": 0,
+    "freshWater": false,
+    "staffedFoodPosts": 2
+  },
+  {
+    "elapsedTicks": 199161,
+    "project": "house_plains_1",
+    "stage": "CONSTRUCTING",
+    "unhousedAdults": 4,
+    "queuedItems": 0,
+    "displacedResidents": 0,
+    "freshWater": false,
+    "staffedFoodPosts": 2
+  },
+  {
+    "elapsedTicks": 202339,
+    "project": "house_plains_1",
+    "stage": "COMPLETE",
+    "unhousedAdults": 4,
+    "queuedItems": 0,
+    "displacedResidents": 0,
+    "freshWater": false,
+    "staffedFoodPosts": 2
+  },
+  {
+    "elapsedTicks": 202340,
+    "project": "none",
+    "stage": "none",
+    "unhousedAdults": 3,
+    "queuedItems": 0,
+    "displacedResidents": 0,
+    "freshWater": false,
+    "staffedFoodPosts": 2
+  },
+  {
+    "elapsedTicks": 250522,
+    "project": "butchery_plains_1",
+    "stage": "GATHERING",
+    "unhousedAdults": 3,
+    "queuedItems": 0,
+    "displacedResidents": 0,
+    "freshWater": false,
+    "staffedFoodPosts": 2
+  },
+  {
+    "elapsedTicks": 250859,
+    "project": "butchery_plains_1",
+    "stage": "NOT_STARTED",
+    "unhousedAdults": 3,
+    "queuedItems": 0,
+    "displacedResidents": 0,
+    "freshWater": false,
+    "staffedFoodPosts": 2
+  },
+  {
+    "elapsedTicks": 250861,
+    "project": "butchery_plains_1",
+    "stage": "CONSTRUCTING",
+    "unhousedAdults": 3,
+    "queuedItems": 0,
+    "displacedResidents": 0,
+    "freshWater": false,
+    "staffedFoodPosts": 2
+  },
+  {
+    "elapsedTicks": 268899,
+    "project": "butchery_plains_1",
+    "stage": "COMPLETE",
+    "unhousedAdults": 3,
+    "queuedItems": 0,
+    "displacedResidents": 0,
+    "freshWater": false,
+    "staffedFoodPosts": 2
+  },
+  {
+    "elapsedTicks": 269540,
+    "project": "none",
+    "stage": "none",
+    "unhousedAdults": 3,
+    "queuedItems": 0,
+    "displacedResidents": 0,
+    "freshWater": false,
+    "staffedFoodPosts": 2
+  }
+]

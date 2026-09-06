@@ -1,7 +1,6 @@
 package com.quzzar.kithkyn.village.buildings;
 
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -66,41 +65,18 @@ public final class RedevelopmentDemand {
   }
 
   public static String reason(Village village, BuildingInfo target, Collection<Building> affected) {
-    int beds = generalBeds(target);
-    int storage = target.getContainerLocations().size();
-    Map<Occupation, Integer> jobs = new HashMap<>();
-    target.getWorkLocations().values().forEach(job -> jobs.merge(job, 1, Integer::sum));
-    for (Building building : affected) {
-      beds -= generalBeds(building.getInfo());
-      storage -= building.getInfo().getContainerLocations().size();
-      building.getInfo().getWorkLocations().values().forEach(job -> jobs.merge(job, -1, Integer::sum));
-    }
+    BuildingImpact.Capacity net = BuildingImpact.net(village, target, affected);
     Needs needs = new Needs(Math.max(0, village.getUnhousedAdultResidentCount() + village.getPendingArrivalCount()
         - village.getFreeGeneralBedCount()), village.isStorageStrained(),
         village.getAttractiveness().foodPerCapita() < KithkynConfig.AttractivenessFoodTargetPerCapita,
         village.idlePeople().size(), village.claimableJobs().stream().map(job -> job.getOccupation()).collect(Collectors.toSet()),
         target.getGrants().stream().filter(village::canDo).collect(Collectors.toSet()));
-    return reason(needs, new Change(beds, storage, Map.copyOf(jobs), Set.copyOf(target.getGrants()),
-        netFoodPlots(village, target, affected)));
+    return reason(needs, new Change(net.generalBeds(), net.containers(), net.jobs(), Set.copyOf(target.getGrants()),
+        net.cropPlots()));
   }
 
   /** Authored crop capacity is measurable; food yield and completion time are not predicted. */
   public static int netFoodPlots(Village village, BuildingInfo target, Collection<Building> affected) {
-    return foodPlots(village, target) - affected.stream().mapToInt(building -> foodPlots(village, building.getInfo())).sum();
-  }
-
-  private static int foodPlots(Village village, BuildingInfo info) {
-    if (info.getGrants().stream().noneMatch(FOOD_GRANTS::contains)) {
-      return 0;
-    }
-    var template = village.getLevel().getLevel().getStructureManager().getOrCreate(
-        net.minecraft.resources.ResourceLocation.fromNamespaceAndPath(com.quzzar.kithkyn.Kithkyn.MODID, info.getPath()));
-    return template.palettes.isEmpty() ? 0 : (int) template.palettes.getFirst().blocks().stream()
-        .filter(block -> block.state().is(net.minecraft.tags.BlockTags.CROPS)).count();
-  }
-
-  private static int generalBeds(BuildingInfo info) {
-    return info.getWorkLocations().isEmpty() || Buildings.VILLAGE_CENTER_CATEGORY.equals(info.getCategory())
-        ? info.getBedLocations().size() : 0;
+    return BuildingImpact.net(village, target, affected).cropPlots();
   }
 }

@@ -1,0 +1,12 @@
+{
+  "checkedAt": "2026-09-06T06:22:55.810053+00:00",
+  "originalError": "[Errno 48] Address already in use",
+  "classification": "Post-horizon cleanup port-release check; all twelve runs were already COMPLETE and saved.",
+  "ports": {
+    "25696": "bind succeeded",
+    "8131": "bind succeeded"
+  },
+  "action": "No process signals or reruns. Mark monitoring state complete after confirming all fixed horizons and ports.",
+  "failedScoredRuns": 0,
+  "exclusions": []
+}

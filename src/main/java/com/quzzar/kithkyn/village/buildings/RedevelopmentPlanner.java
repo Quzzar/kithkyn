@@ -32,7 +32,6 @@ public final class RedevelopmentPlanner {
   private static final int MAX_SURVEYS = 96;
   private static final long SEARCH_BUDGET_NANOS = 50_000_000L;
   private static final int MAX_BLOCKS_PER_REMOVAL = 32_768;
-  private static final Set<String> FOOD = Set.of("GRAIN", "MEAT", "BREAD");
 
   private RedevelopmentPlanner() {
   }
@@ -109,7 +108,8 @@ public final class RedevelopmentPlanner {
             }
             RedevelopmentPlan plan = assessment.plan().orElseThrow();
             String key = target.getName() + "/" + plan.mode() + "/" + plan.source() + "/"
-                + plan.removed().stream().map(building -> building.getUUID().toString()).sorted().toList();
+                + plan.removed().stream().map(building -> building.getUUID().toString()).sorted().toList()
+                + "/" + MaterialAmount.tally(plan.required()) + "/" + MaterialAmount.tally(plan.salvage());
             ConstructionChoice prior = distinct.get(key);
             if (prior == null || work(plan) < work(prior.redevelopment())) {
               distinct.put(key, new ConstructionChoice(target, plan.mode(), plan));
@@ -292,10 +292,6 @@ public final class RedevelopmentPlanner {
         removed, blocks, MaterialAmount.fromStacks(required), salvage, prep.toBreak(), fill)), "");
   }
 
-  private static boolean foodBuilding(Building building) {
-    return building.getInfo() != null && building.getInfo().getGrants().stream().anyMatch(FOOD::contains);
-  }
-
   private static String scanRemoval(Village village, Building victim,
       List<RedevelopmentPlan.RemovalBlock> blocks, Set<Long> positions) {
     BoundingBox box = worldBounds(village, victim);
@@ -371,18 +367,11 @@ public final class RedevelopmentPlanner {
   }
 
   public static String describe(Village village, RedevelopmentPlan plan) {
+    return describe(village, plan, BuildingImpact.redevelopment(village, plan));
+  }
+
+  public static String describe(Village village, RedevelopmentPlan plan, BuildingImpact.Redevelopment impact) {
     BuildingInfo target = Buildings.getByName(plan.target());
-    List<Building> affected = new ArrayList<>(plan.removed());
-    plan.source().map(village::getBuilding).ifPresent(affected::add);
-    Set<UUID> ids = affected.stream().map(Building::getUUID).collect(java.util.stream.Collectors.toSet());
-    int lostBeds = affected.stream().mapToInt(building -> building.getInfo().getBedLocations().size()).sum();
-    int lostJobs = affected.stream().mapToInt(building -> building.getInfo().getWorkLocations().size()).sum();
-    int lostStorage = affected.stream().mapToInt(building -> building.getInfo().getContainerLocations().size()).sum();
-    long displaced = village.getBedAssignmentsView().values().stream()
-        .filter(bed -> ids.contains(bed.getBuildingUUID())).count();
-    long remainingFood = village.getBuildings().stream().filter(building -> !ids.contains(building.getUUID()))
-        .filter(RedevelopmentPlanner::foodBuilding).filter(building -> village.getJobAssignmentsView().values()
-            .stream().anyMatch(job -> job.getBuildingUUID().equals(building.getUUID()))).count();
     String removal = plan.removed().stream().map(building -> {
       BlockPos at = BlockPos.of(building.getOriginLocation());
       return "level " + building.getInfo().getLevel() + " " + building.getInfo().displayLabel()
@@ -390,16 +379,14 @@ public final class RedevelopmentPlanner {
     }).collect(java.util.stream.Collectors.joining("; "));
     Building source = plan.source().map(village::getBuilding).orElse(null);
     return (source != null ? "Upgrade the existing level " + source.getInfo().getLevel() + " "
-        + source.getInfo().displayLabel() + " to " : "Build separate ") + "level " + target.getLevel() + " " + target.displayLabel() + ". Remove: " + removal
-        + ". Net change after completion: " + (target.getBedLocations().size() - lostBeds) + " beds, "
-        + (target.getWorkLocations().size() - lostJobs) + " workplaces, "
-        + (target.getContainerLocations().size() - lostStorage) + " shared containers, "
-        + RedevelopmentDemand.netFoodPlots(village, target, affected) + " crop plots. Target capabilities: "
-        + target.getGrants() + ". Current need: " + RedevelopmentDemand.reason(village, target, affected) + ". During work: " + displaced + " residents displaced (spare beds used first; otherwise temporarily homeless), " + lostJobs
-        + " workplaces affected; builders can continue construction, " + remainingFood
-        + " staffed food buildings remain; output not forecast. Stored items are preserved; overflow waits for space. Recover: "
-        + MaterialAmount.describe(plan.salvage()) + ". Still pay: " + MaterialAmount.describe(plan.netRequired())
-        + ". Removal and ground work: " + work(plan) + " blocks, followed by construction.";
+        + source.getInfo().displayLabel() + " to " : "Build separate ") + "level " + target.getLevel() + " "
+        + target.displayLabel() + ". Need: "
+        + RedevelopmentDemand.reason(village, target, BuildingImpact.affected(village, plan)) + ". Remove: " + removal
+        + ". Net after completion: " + impact.net().describe(true) + ". " + impact.services().describe()
+        + " During work: " + impact.displacedResidents() + " residents displaced, " + impact.affectedWorkplaces()
+        + " workplaces affected; " + impact.staffedFoodRemaining() + " staffed food buildings remain (yield unknown)."
+        + " Recover 50% paid investment: " + MaterialAmount.describe(plan.salvage()) + ". Still pay: "
+        + MaterialAmount.describe(plan.netRequired()) + ". Removal/ground work: " + work(plan) + " blocks.";
   }
 
   private static int targetFingerprint(Village village, BuildingInfo target) {

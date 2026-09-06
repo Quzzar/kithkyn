@@ -1,6 +1,8 @@
 package com.quzzar.kithkyn.village.buildings;
 
+import java.util.Collection;
 import java.util.HashSet;
+import java.util.function.Predicate;
 import java.util.List;
 import java.util.Set;
 
@@ -37,14 +39,17 @@ public final class VillageCapabilities {
    * simply never grant, which is the correct quiet failure.
    */
   public static Set<String> resolve(Village village) {
+    return resolve(village.getBuildings().stream().map(Building::getInfo)
+        .filter(java.util.Objects::nonNull).toList(),
+        item -> village.hasItemStackInVillage(new ItemStack(item, 1)));
+  }
+
+  /** Resolves hypothetical building sets against observed supplies without changing village state. */
+  public static Set<String> resolve(Collection<BuildingInfo> buildings, Predicate<Item> hasSupply) {
     List<Grant> conditional = new java.util.ArrayList<>();
     Set<String> capabilities = new HashSet<>();
 
-    for (Building building : village.getBuildings()) {
-      BuildingInfo info = building.getInfo();
-      if (info == null) {
-        continue;
-      }
+    for (BuildingInfo info : buildings) {
       capabilities.addAll(info.getGrants());
       for (Grant grant : info.getConditionalGrants()) {
         if (grant.isUnconditional()) {
@@ -63,7 +68,7 @@ public final class VillageCapabilities {
           iterator.remove();
           continue;
         }
-        if (isSatisfied(village, grant, capabilities)) {
+        if (isSatisfied(hasSupply, grant, capabilities)) {
           capabilities.add(grant.capability());
           iterator.remove();
           grewThisPass = true;
@@ -77,7 +82,7 @@ public final class VillageCapabilities {
     return capabilities;
   }
 
-  private static boolean isSatisfied(Village village, Grant grant, Set<String> capabilities) {
+  private static boolean isSatisfied(Predicate<Item> hasSupply, Grant grant, Set<String> capabilities) {
     for (String required : grant.requiresCapability()) {
       if (!capabilities.contains(required)) {
         return false;
@@ -90,7 +95,7 @@ public final class VillageCapabilities {
       if (required == net.minecraft.world.item.Items.EMERALD) {
         continue;
       }
-      if (!village.hasItemStackInVillage(new ItemStack(required, 1))) {
+      if (!hasSupply.test(required)) {
         return false;
       }
     }

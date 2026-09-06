@@ -1,0 +1,53 @@
+{
+  "baselineCommit": "73b5b4d19b88858ab094d95a71c5fd7f40e14172",
+  "horizonTicksPerRun": 288000,
+  "scoredRuns": 6,
+  "runOrder": [
+    "housing-on",
+    "housing-off",
+    "opportunity-on",
+    "opportunity-off",
+    "growth-on",
+    "growth-off"
+  ],
+  "model": "Llama-3.2-3B-Instruct Q4_K_M",
+  "llamaCpp": "b10653",
+  "totalContext": 8192,
+  "slots": 2,
+  "gamePort": 25696,
+  "modelPort": 8131,
+  "concurrentScoredServers": 1,
+  "javaHeap": "2G",
+  "forcedChunks": {
+    "x": [
+      2,
+      18
+    ],
+    "z": [
+      2,
+      18
+    ]
+  },
+  "initialTerrain": {
+    "housing": "64 stone layers; 3 dirt; grass over bedrock",
+    "opportunity": "64 stone layers; 3 dirt; grass over bedrock",
+    "growth": "normal generation, structures disabled, level seed 2468013579"
+  },
+  "harnessSha256": "37175dc0dbe4835a8a717a96aced39af7070bbb51d60c5fb653efcaad80738ea",
+  "providerSha256": "9c426c0cf00f5b53e475b4fc625909c314f06f46d6faf2bedbd05cdd5d504132",
+  "transportOverride": "Only LocalRuntimeProvider.PORT reads kithkyn.benchmark.modelPort in isolated runtime; inference/prompt/parser settings unchanged.",
+  "seedLevelDataSha256": {
+    "housing": "144a135328e58f34b183af4d12917ea5ec7c03297247ead4b7df551f6967ba6c",
+    "opportunity": "d8d23e3e31d0e95bad3aff44c445a4404908357d20c7b3b3b5c960209a8fb3a9",
+    "growth": "20d052608fd6052ce3e709550ba7148c5b4d1118a07c1dde4020ff31af1506c1"
+  },
+  "configSha256": {
+    "base-common.toml": "1d332b5d48da6a7bbec413065299ba9242610c734d49fabeef68dad27dd1c533",
+    "base-advanced.toml": "95021d1d08d3bfb36731d04c5fe48b0c4192745f30b96cd6d694748315e6ec79"
+  },
+  "modelStartupPauseEndedAt": "2026-09-05T18:35:13-04:00",
+  "studyStatus": "complete",
+  "finishedAt": "2026-09-06T00:29:29.378055+00:00",
+  "allRunHorizonsVerified": true,
+  "diagnosticAmendment": "Five separate house-access diagnostic trials briefly shared host CPU during housing-off. They did not modify scored worlds or frozen production classes and are excluded from scored counts."
+}

@@ -1,0 +1,32 @@
+{
+  "createdAt": "2026-09-06T03:09:48.981959+00:00",
+  "baselineCommit": "73b5b4d19b88858ab094d95a71c5fd7f40e14172",
+  "horizonTicksPerRun": 288000,
+  "runOrder": [
+    "housing-on-1",
+    "housing-off-1",
+    "opportunity-on-1",
+    "opportunity-off-1",
+    "established-on-1",
+    "established-off-1",
+    "housing-off-2",
+    "housing-on-2",
+    "opportunity-off-2",
+    "opportunity-on-2",
+    "established-off-2",
+    "established-on-2"
+  ],
+  "model": "Llama-3.2-3B-Instruct-Q4_K_M",
+  "repetitionsPerScenario": 2,
+  "seedSources": {
+    "housing": "/Users/quzzar/Projects/kithkyn/run/redevelopment-adoption-2026-09-05/seed-housing/world",
+    "opportunity": "/Users/quzzar/Projects/kithkyn/run/redevelopment-adoption-2026-09-05/seed-opportunity/world",
+    "established": "/Users/quzzar/Projects/kithkyn/run/redevelopment-adoption-2026-09-05/housing-off/world"
+  },
+  "seedLevelDataSha256": {
+    "housing": "144a135328e58f34b183af4d12917ea5ec7c03297247ead4b7df551f6967ba6c",
+    "opportunity": "d8d23e3e31d0e95bad3aff44c445a4404908357d20c7b3b3b5c960209a8fb3a9",
+    "established": "3912faa15bf7bb4f7fa9a73fe06b161c1fe9af51847dd2eec5288be038ed2178"
+  },
+  "scope": "New implementation on frozen previous production baseline. Two enabled/disabled pairs each from housing and food opportunity fixtures, and a continuation of the prior autonomously developed housing-off village. Twelve-day fixed horizons. No forced project decisions in scored runs. Existing earlier study retained as historical baseline, not a matched causal control."
+}

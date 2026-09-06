@@ -1,0 +1,22 @@
+{
+  "baseline": {
+    "result": "FAIL",
+    "resultLine": "[19:10:32] [Server thread/INFO] [co.qu.ki.Kithkyn/]: [house-access] RESULT FAIL mode=baseline ticks=1200 progress=GATHERING position=(128.69400000572205, 5.0, 131.50019851175568)"
+  },
+  "baseline-repeat": {
+    "result": "FAIL",
+    "resultLine": "[19:12:48] [Server thread/INFO] [co.qu.ki.Kithkyn/]: [house-access] RESULT FAIL mode=baseline-repeat ticks=1200 progress=GATHERING position=(128.69400000572205, 5.0, 131.50020535730502)"
+  },
+  "entrance-step": {
+    "result": "PASS",
+    "resultLine": "[19:13:48] [Server thread/INFO] [co.qu.ki.Kithkyn/]: [house-access] RESULT PASS mode=entrance-step ticks=380 progress=DEMOLISHING position=(129.19718354924635, 6.0, 131.50165752758213)"
+  },
+  "open-door": {
+    "result": "FAIL",
+    "resultLine": "[19:14:43] [Server thread/INFO] [co.qu.ki.Kithkyn/]: [house-access] RESULT FAIL mode=open-door ticks=1200 progress=GATHERING position=(128.69400000572205, 5.0, 131.50020521652334)"
+  },
+  "clear-overhead": {
+    "result": "PASS",
+    "resultLine": "[19:15:23] [Server thread/INFO] [co.qu.ki.Kithkyn/]: [house-access] RESULT PASS mode=clear-overhead ticks=380 progress=DEMOLISHING position=(129.22942668365582, 6.0, 131.4490779033059)"
+  }
+}

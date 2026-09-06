@@ -1,0 +1,258 @@
+[00:18:44.639] ==== #2 REQUEST decide | what Willowfield opportunity builds next | temperature 0.1, up to 128 tokens
+--- system
+You are the mind of a villager in a village simulation. Choose the single most sensible action for the situation. Answer with ONLY a JSON object: {"reason": "<one short sentence weighing the situation>", "choice": <option number>, "action": "<the chosen option, copied exactly>"}
+--- example user
+Situation: The well has collapsed and there is no clean water. The sun is shining.
+
+Options:
+1. go swimming
+2. rebuild the well
+3. paint the fence
+
+Answer with ONLY the JSON object.
+--- example assistant
+{"reason": "We cannot live without clean water, so the well matters more than fun or chores.", "choice": 2, "action": "rebuild the well"}
+--- user
+Situation: You are the collective judgement of Willowfield opportunity, a camp. 8 residents; 8 hold jobs; 0 work-eligible residents have no post. 9 independent beds total; 1 general bed free; 0 free live-in beds are reserved to their workplaces; no adult residents need independent housing. There are no pre-adults awaiting family housing. 1 general bed stands free. Already standing: farm x2, house x1, lumberjack x1, mine x1, storehouse x1, village center x1, well x2. Open work: builder x1, guard x15. Conditions and capacity allow newcomers, though each arrival is still a chance. Food stores stand at 2.0 items per person. Trouble your workers currently report: your builder Tam Moran, since today: "I have no crafting table to keep at hand"; your quartermaster Flint Anthony, since today: "I have no book and quill to keep at hand". Choose what to build next.
+
+Options:
+1. a butchery (adds 0 general beds, 0 beds reserved for workers, 2 workplaces, 1 shared containers, 0 crop plots; jobs: butcher, herder; provides leather production, meat production, wool production), which provides the wool that other buildings are built from
+2. a mine (adds 0 general beds, 0 beds reserved for workers, 1 workplaces, 1 shared containers, 0 crop plots; jobs: miner; provides fuel production, ore extraction)
+3. an on-site level 2 mine upgrade (net 0 general beds, 0 beds reserved for workers, +1 workplaces, +1 shared containers, 0 crop plots; provides fuel production, ore extraction)
+4. a stoneworks (adds 0 general beds, 0 beds reserved for workers, 1 workplaces, 1 shared containers, 0 crop plots; jobs: mason; provides stone cutting), which provides the stone bricks that other buildings are built from
+5. a house (adds 1 general beds, 0 beds reserved for workers, 0 workplaces, 0 shared containers, 0 crop plots; provides none)
+6. a new level 2 house on a separate site (adds 2 general beds, 0 beds reserved for workers, 0 workplaces, 0 shared containers, 0 crop plots; provides none)
+7. a new level 3 house on a separate site (adds 4 general beds, 0 beds reserved for workers, 0 workplaces, 0 shared containers, 0 crop plots; provides none)
+8. a hunting lodge (adds 0 general beds, 0 beds reserved for workers, 1 workplaces, 1 shared containers, 0 crop plots; jobs: hunter; provides leather production, meat production)
+9. a watchtower (adds 0 general beds, 1 beds reserved for workers, 1 workplaces, 1 shared containers, 0 crop plots; jobs: guard; provides village defense)
+10. a new level 2 watchtower on a separate site (adds 0 general beds, 2 beds reserved for workers, 2 workplaces, 1 shared containers, 0 crop plots; jobs: guard; provides village defense)
+11. an on-site level 2 storehouse upgrade (net 0 general beds, 0 beds reserved for workers, 0 workplaces, +3 shared containers, 0 crop plots; provides none)
+12. a fishery (adds 0 general beds, 0 beds reserved for workers, 1 workplaces, 1 shared containers, 0 crop plots; jobs: fisher; provides meat production, fresh water)
+13. a market (adds 0 general beds, 0 beds reserved for workers, 1 workplaces, 1 shared containers, 0 crop plots; jobs: merchant; provides trade)
+14. a farm (adds 0 general beds, 0 beds reserved for workers, 1 workplaces, 1 shared containers, 26 crop plots; jobs: farmer; provides grain production)
+15. a new level 2 farm on a separate site (adds 0 general beds, 0 beds reserved for workers, 1 workplaces, 3 shared containers, 52 crop plots; jobs: farmer; provides grain production)
+16. an on-site level 3 farm upgrade (net 0 general beds, 0 beds reserved for workers, +1 workplaces, +3 shared containers, +24 crop plots; provides grain production)
+17. a blacksmith (adds 0 general beds, 1 beds reserved for workers, 1 workplaces, 1 shared containers, 0 crop plots; jobs: blacksmith; provides gear repair, metal smelting), which provides the iron ingot that other buildings are built from
+18. a lumberjack (adds 0 general beds, 1 beds reserved for workers, 1 workplaces, 1 shared containers, 0 crop plots; jobs: lumberjack; provides logging, plank production), which provides the logs that other buildings are built from
+19. nothing yet: keep what we have and wait
+
+Answer with ONLY the JSON object.
+
+[00:18:49.829] ==== #2 REPLY decide | what Willowfield opportunity builds next | 5190 ms
+{"reason": "We need to address the immediate needs of our workers, specifically Tam and Flint, who lack essential crafting tools.", "choice": 17, "action": "build a blacksmith"}
+
+[00:22:03.235] ==== #32 REQUEST decide | what Willowfield opportunity builds next | temperature 0.1, up to 128 tokens
+--- system
+You are the mind of a villager in a village simulation. Choose the single most sensible action for the situation. Answer with ONLY a JSON object: {"reason": "<one short sentence weighing the situation>", "choice": <option number>, "action": "<the chosen option, copied exactly>"}
+--- example user
+Situation: The well has collapsed and there is no clean water. The sun is shining.
+
+Options:
+1. go swimming
+2. rebuild the well
+3. paint the fence
+
+Answer with ONLY the JSON object.
+--- example assistant
+{"reason": "We cannot live without clean water, so the well matters more than fun or chores.", "choice": 2, "action": "rebuild the well"}
+--- user
+Situation: You are the collective judgement of Willowfield opportunity, a hamlet. 10 residents; 10 hold jobs; 0 work-eligible residents have no post. 10 independent beds total; 0 general beds free; 0 free live-in beds are reserved to their workplaces; no adult residents need independent housing. There are no pre-adults awaiting family housing. No general bed is free. Open work can only be taken by someone already housed or at a workplace with its own free live-in bed; another workshop without beds would not create housing, while a house would. Already standing: blacksmith x1, farm x2, house x1, lumberjack x1, mine x1, storehouse x1, village center x1, well x2. Open work: builder x1, guard x14. The population is holding steady. Food stores stand at 0.0 items per person. Trouble your workers currently report: your quartermaster Flint Anthony, for 2 days: "I have no book and quill to keep at hand"; your farmer Azim Brewer, for 1 day: "There is nothing ripe in the field to harvest yet."; your farmer Tam Moran, for 1 day: "There is nothing ripe in the field to harvest yet."; your lumberjack Arabella Williamson, since today: "I cannot get to my workbench.". Choose what to build next.
+
+Options:
+1. a butchery (adds 0 general beds, 0 beds reserved for workers, 2 workplaces, 1 shared containers, 0 crop plots; jobs: butcher, herder; provides leather production, meat production, wool production), which provides the wool that other buildings are built from
+2. a mine (adds 0 general beds, 0 beds reserved for workers, 1 workplaces, 1 shared containers, 0 crop plots; jobs: miner; provides fuel production, ore extraction)
+3. an on-site level 2 mine upgrade (net 0 general beds, 0 beds reserved for workers, +1 workplaces, +1 shared containers, 0 crop plots; provides fuel production, ore extraction)
+4. a stoneworks (adds 0 general beds, 0 beds reserved for workers, 1 workplaces, 1 shared containers, 0 crop plots; jobs: mason; provides stone cutting), which provides the stone bricks that other buildings are built from
+5. a house (adds 1 general beds, 0 beds reserved for workers, 0 workplaces, 0 shared containers, 0 crop plots; provides none)
+6. a new level 2 house on a separate site (adds 2 general beds, 0 beds reserved for workers, 0 workplaces, 0 shared containers, 0 crop plots; provides none)
+7. a new level 3 house on a separate site (adds 4 general beds, 0 beds reserved for workers, 0 workplaces, 0 shared containers, 0 crop plots; provides none)
+8. a hunting lodge (adds 0 general beds, 0 beds reserved for workers, 1 workplaces, 1 shared containers, 0 crop plots; jobs: hunter; provides leather production, meat production)
+9. a watchtower (adds 0 general beds, 1 beds reserved for workers, 1 workplaces, 1 shared containers, 0 crop plots; jobs: guard; provides village defense)
+10. a new level 2 watchtower on a separate site (adds 0 general beds, 2 beds reserved for workers, 2 workplaces, 1 shared containers, 0 crop plots; jobs: guard; provides village defense)
+11. a fishery (adds 0 general beds, 0 beds reserved for workers, 1 workplaces, 1 shared containers, 0 crop plots; jobs: fisher; provides meat production, fresh water)
+12. a market (adds 0 general beds, 0 beds reserved for workers, 1 workplaces, 1 shared containers, 0 crop plots; jobs: merchant; provides trade)
+13. a farm (adds 0 general beds, 0 beds reserved for workers, 1 workplaces, 1 shared containers, 26 crop plots; jobs: farmer; provides grain production)
+14. a new level 2 farm on a separate site (adds 0 general beds, 0 beds reserved for workers, 1 workplaces, 3 shared containers, 52 crop plots; jobs: farmer; provides grain production)
+15. an on-site level 3 farm upgrade (net 0 general beds, 0 beds reserved for workers, +1 workplaces, +3 shared containers, +24 crop plots; provides grain production)
+16. a blacksmith (adds 0 general beds, 1 beds reserved for workers, 1 workplaces, 1 shared containers, 0 crop plots; jobs: blacksmith; provides gear repair, metal smelting), which provides the iron ingot that other buildings are built from
+17. a lumberjack (adds 0 general beds, 1 beds reserved for workers, 1 workplaces, 1 shared containers, 0 crop plots; jobs: lumberjack; provides logging, plank production), which provides the logs that other buildings are built from
+18. nothing yet: keep what we have and wait
+19. save up for an on-site level 2 blacksmith upgrade (net 0 general beds, 0 beds reserved for workers, 0 workplaces, +1 shared containers, 0 crop plots; provides gear repair, metal smelting), still needs 6 iron ingot
+
+Answer with ONLY the JSON object.
+
+[00:22:09.611] ==== #32 REPLY decide | what Willowfield opportunity builds next | 6371 ms
+{"reason": "We need to address the immediate needs of our residents, including the lack of food and the inability of our lumberjack to work.", "choice": 13, "action": "a farm"}
+
+[00:24:26.184] ==== #51 REQUEST decide | what Willowfield opportunity builds next | temperature 0.1, up to 128 tokens
+--- system
+You are the mind of a villager in a village simulation. Choose the single most sensible action for the situation. Answer with ONLY a JSON object: {"reason": "<one short sentence weighing the situation>", "choice": <option number>, "action": "<the chosen option, copied exactly>"}
+--- example user
+Situation: The well has collapsed and there is no clean water. The sun is shining.
+
+Options:
+1. go swimming
+2. rebuild the well
+3. paint the fence
+
+Answer with ONLY the JSON object.
+--- example assistant
+{"reason": "We cannot live without clean water, so the well matters more than fun or chores.", "choice": 2, "action": "rebuild the well"}
+--- user
+Situation: You are the collective judgement of Willowfield opportunity, a hamlet. 4 residents; 4 hold jobs; 0 work-eligible residents have no post. 10 independent beds total; 5 general beds free; 1 free live-in bed is reserved to their workplaces; no adult residents need independent housing. There are no pre-adults awaiting family housing. 5 general beds stand free. Already standing: blacksmith x1, farm x3, house x1, lumberjack x1, mine x1, storehouse x1, village center x1, well x2. Open work: farmer x1, guard x17, lumberjack x1, miner x1, quartermaster x1. The population is holding steady. Food stores stand at 0.0 items per person. Trouble your workers currently report: your farmer Chastain Stout, since today: "There is nothing ripe in the field to harvest yet."; your farmer Jedrick Parrish, since today: "There is nothing ripe in the field to harvest yet.". Choose what to build next.
+
+Options:
+1. a butchery (adds 0 general beds, 0 beds reserved for workers, 2 workplaces, 1 shared containers, 0 crop plots; jobs: butcher, herder; provides leather production, meat production, wool production), which provides the wool that other buildings are built from
+2. a mine (adds 0 general beds, 0 beds reserved for workers, 1 workplaces, 1 shared containers, 0 crop plots; jobs: miner; provides fuel production, ore extraction)
+3. an on-site level 2 mine upgrade (net 0 general beds, 0 beds reserved for workers, +1 workplaces, +1 shared containers, 0 crop plots; provides fuel production, ore extraction)
+4. a stoneworks (adds 0 general beds, 0 beds reserved for workers, 1 workplaces, 1 shared containers, 0 crop plots; jobs: mason; provides stone cutting), which provides the stone bricks that other buildings are built from
+5. a house (adds 1 general beds, 0 beds reserved for workers, 0 workplaces, 0 shared containers, 0 crop plots; provides none)
+6. a new level 2 house on a separate site (adds 2 general beds, 0 beds reserved for workers, 0 workplaces, 0 shared containers, 0 crop plots; provides none)
+7. a new level 3 house on a separate site (adds 4 general beds, 0 beds reserved for workers, 0 workplaces, 0 shared containers, 0 crop plots; provides none)
+8. a hunting lodge (adds 0 general beds, 0 beds reserved for workers, 1 workplaces, 1 shared containers, 0 crop plots; jobs: hunter; provides leather production, meat production)
+9. a watchtower (adds 0 general beds, 1 beds reserved for workers, 1 workplaces, 1 shared containers, 0 crop plots; jobs: guard; provides village defense)
+10. a new level 2 watchtower on a separate site (adds 0 general beds, 2 beds reserved for workers, 2 workplaces, 1 shared containers, 0 crop plots; jobs: guard; provides village defense)
+11. a fishery (adds 0 general beds, 0 beds reserved for workers, 1 workplaces, 1 shared containers, 0 crop plots; jobs: fisher; provides meat production, fresh water)
+12. a market (adds 0 general beds, 0 beds reserved for workers, 1 workplaces, 1 shared containers, 0 crop plots; jobs: merchant; provides trade)
+13. a farm (adds 0 general beds, 0 beds reserved for workers, 1 workplaces, 1 shared containers, 26 crop plots; jobs: farmer; provides grain production)
+14. an on-site level 2 farm upgrade (net 0 general beds, 0 beds reserved for workers, 0 workplaces, +2 shared containers, +26 crop plots; provides grain production)
+15. an on-site level 3 farm upgrade (net 0 general beds, 0 beds reserved for workers, +1 workplaces, +3 shared containers, +24 crop plots; provides grain production)
+16. a blacksmith (adds 0 general beds, 1 beds reserved for workers, 1 workplaces, 1 shared containers, 0 crop plots; jobs: blacksmith; provides gear repair, metal smelting), which provides the iron ingot that other buildings are built from
+17. a lumberjack (adds 0 general beds, 1 beds reserved for workers, 1 workplaces, 1 shared containers, 0 crop plots; jobs: lumberjack; provides logging, plank production), which provides the logs that other buildings are built from
+18. nothing yet: keep what we have and wait
+19. save up for an on-site level 2 blacksmith upgrade (net 0 general beds, 0 beds reserved for workers, 0 workplaces, +1 shared containers, 0 crop plots; provides gear repair, metal smelting), still needs 6 iron ingot
+
+Answer with ONLY the JSON object.
+
+[00:24:31.014] ==== #51 REPLY decide | what Willowfield opportunity builds next | 4830 ms
+{"reason": "We need to address the food shortage and provide a reliable source of food, so we should build a farm.", "choice": 13, "action": "a farm"}
+
+[00:25:19.387] ==== #66 REQUEST decide | what Willowfield opportunity builds next | temperature 0.1, up to 128 tokens
+--- system
+You are the mind of a villager in a village simulation. Choose the single most sensible action for the situation. Answer with ONLY a JSON object: {"reason": "<one short sentence weighing the situation>", "choice": <option number>, "action": "<the chosen option, copied exactly>"}
+--- example user
+Situation: The well has collapsed and there is no clean water. The sun is shining.
+
+Options:
+1. go swimming
+2. rebuild the well
+3. paint the fence
+
+Answer with ONLY the JSON object.
+--- example assistant
+{"reason": "We cannot live without clean water, so the well matters more than fun or chores.", "choice": 2, "action": "rebuild the well"}
+--- user
+Situation: You are the collective judgement of Willowfield opportunity, a hamlet. 4 residents; 4 hold jobs; 0 work-eligible residents have no post. 10 independent beds total; 4 general beds free; 2 free live-in beds are reserved to their workplaces; no adult residents need independent housing. There are no pre-adults awaiting family housing. 4 general beds stand free. Already standing: blacksmith x1, farm x4, house x1, lumberjack x1, mine x1, storehouse x1, village center x1, well x2. Open work: blacksmith x1, farmer x2, guard x16, lumberjack x1, miner x1, quartermaster x1. Conditions are poor, but the population floor prevents anyone leaving. Food stores stand at 0.0 items per person. Trouble your workers currently report: your builder Poppy Foster-Gomez, since today: "I cannot get to the way between our buildings."; your farmer Tully Foster-Gomez, for 1 day: "There is nothing ripe in the field to harvest yet.". Choose what to build next.
+
+Options:
+1. a butchery (adds 0 general beds, 0 beds reserved for workers, 2 workplaces, 1 shared containers, 0 crop plots; jobs: butcher, herder; provides leather production, meat production, wool production), which provides the wool that other buildings are built from
+2. a mine (adds 0 general beds, 0 beds reserved for workers, 1 workplaces, 1 shared containers, 0 crop plots; jobs: miner; provides fuel production, ore extraction)
+3. an on-site level 2 mine upgrade (net 0 general beds, 0 beds reserved for workers, +1 workplaces, +1 shared containers, 0 crop plots; provides fuel production, ore extraction)
+4. a stoneworks (adds 0 general beds, 0 beds reserved for workers, 1 workplaces, 1 shared containers, 0 crop plots; jobs: mason; provides stone cutting), which provides the stone bricks that other buildings are built from
+5. a house (adds 1 general beds, 0 beds reserved for workers, 0 workplaces, 0 shared containers, 0 crop plots; provides none)
+6. a new level 2 house on a separate site (adds 2 general beds, 0 beds reserved for workers, 0 workplaces, 0 shared containers, 0 crop plots; provides none)
+7. a new level 3 house on a separate site (adds 4 general beds, 0 beds reserved for workers, 0 workplaces, 0 shared containers, 0 crop plots; provides none)
+8. a hunting lodge (adds 0 general beds, 0 beds reserved for workers, 1 workplaces, 1 shared containers, 0 crop plots; jobs: hunter; provides leather production, meat production)
+9. a watchtower (adds 0 general beds, 1 beds reserved for workers, 1 workplaces, 1 shared containers, 0 crop plots; jobs: guard; provides village defense)
+10. a new level 2 watchtower on a separate site (adds 0 general beds, 2 beds reserved for workers, 2 workplaces, 1 shared containers, 0 crop plots; jobs: guard; provides village defense)
+11. a fishery (adds 0 general beds, 0 beds reserved for workers, 1 workplaces, 1 shared containers, 0 crop plots; jobs: fisher; provides meat production, fresh water)
+12. a market (adds 0 general beds, 0 beds reserved for workers, 1 workplaces, 1 shared containers, 0 crop plots; jobs: merchant; provides trade)
+13. a farm (adds 0 general beds, 0 beds reserved for workers, 1 workplaces, 1 shared containers, 26 crop plots; jobs: farmer; provides grain production)
+14. an on-site level 2 farm upgrade (net 0 general beds, 0 beds reserved for workers, 0 workplaces, +2 shared containers, +26 crop plots; provides grain production)
+15. an on-site level 3 farm upgrade (net 0 general beds, 0 beds reserved for workers, +1 workplaces, +3 shared containers, +24 crop plots; provides grain production)
+16. a blacksmith (adds 0 general beds, 1 beds reserved for workers, 1 workplaces, 1 shared containers, 0 crop plots; jobs: blacksmith; provides gear repair, metal smelting), which provides the iron ingot that other buildings are built from
+17. a lumberjack (adds 0 general beds, 1 beds reserved for workers, 1 workplaces, 1 shared containers, 0 crop plots; jobs: lumberjack; provides logging, plank production), which provides the logs that other buildings are built from
+18. nothing yet: keep what we have and wait
+19. save up for an on-site level 2 blacksmith upgrade (net 0 general beds, 0 beds reserved for workers, 0 workplaces, +1 shared containers, 0 crop plots; provides gear repair, metal smelting), still needs 6 iron ingot
+
+Answer with ONLY the JSON object.
+
+[00:25:25.227] ==== #66 REPLY decide | what Willowfield opportunity builds next | 5840 ms
+{"reason": "We need to address the immediate needs of our residents, including food and shelter, before we can focus on luxury or convenience.", "choice": 13, "action": "a farm"}
+
+[00:26:05.489] ==== #75 REQUEST decide | what Willowfield opportunity builds next | temperature 0.1, up to 128 tokens
+--- system
+You are the mind of a villager in a village simulation. Choose the single most sensible action for the situation. Answer with ONLY a JSON object: {"reason": "<one short sentence weighing the situation>", "choice": <option number>, "action": "<the chosen option, copied exactly>"}
+--- example user
+Situation: The well has collapsed and there is no clean water. The sun is shining.
+
+Options:
+1. go swimming
+2. rebuild the well
+3. paint the fence
+
+Answer with ONLY the JSON object.
+--- example assistant
+{"reason": "We cannot live without clean water, so the well matters more than fun or chores.", "choice": 2, "action": "rebuild the well"}
+--- user
+Situation: You are the collective judgement of Willowfield opportunity, a hamlet. 4 residents; 4 hold jobs; 0 work-eligible residents have no post. 10 independent beds total; 4 general beds free; 2 free live-in beds are reserved to their workplaces; no adult residents need independent housing. There are no pre-adults awaiting family housing. 4 general beds stand free. Already standing: blacksmith x1, farm x5, house x1, lumberjack x1, mine x1, storehouse x1, village center x1, well x2. Open work: blacksmith x1, farmer x3, guard x16, lumberjack x1, miner x1, quartermaster x1. Conditions are poor, but the population floor prevents anyone leaving. Food stores stand at 0.0 items per person. Choose what to build next.
+
+Options:
+1. a butchery (adds 0 general beds, 0 beds reserved for workers, 2 workplaces, 1 shared containers, 0 crop plots; jobs: butcher, herder; provides leather production, meat production, wool production), which provides the wool that other buildings are built from
+2. a mine (adds 0 general beds, 0 beds reserved for workers, 1 workplaces, 1 shared containers, 0 crop plots; jobs: miner; provides fuel production, ore extraction)
+3. an on-site level 2 mine upgrade (net 0 general beds, 0 beds reserved for workers, +1 workplaces, +1 shared containers, 0 crop plots; provides fuel production, ore extraction)
+4. a stoneworks (adds 0 general beds, 0 beds reserved for workers, 1 workplaces, 1 shared containers, 0 crop plots; jobs: mason; provides stone cutting), which provides the stone bricks that other buildings are built from
+5. a house (adds 1 general beds, 0 beds reserved for workers, 0 workplaces, 0 shared containers, 0 crop plots; provides none)
+6. a new level 2 house on a separate site (adds 2 general beds, 0 beds reserved for workers, 0 workplaces, 0 shared containers, 0 crop plots; provides none)
+7. a new level 3 house on a separate site (adds 4 general beds, 0 beds reserved for workers, 0 workplaces, 0 shared containers, 0 crop plots; provides none)
+8. a hunting lodge (adds 0 general beds, 0 beds reserved for workers, 1 workplaces, 1 shared containers, 0 crop plots; jobs: hunter; provides leather production, meat production)
+9. a watchtower (adds 0 general beds, 1 beds reserved for workers, 1 workplaces, 1 shared containers, 0 crop plots; jobs: guard; provides village defense)
+10. a new level 2 watchtower on a separate site (adds 0 general beds, 2 beds reserved for workers, 2 workplaces, 1 shared containers, 0 crop plots; jobs: guard; provides village defense)
+11. a fishery (adds 0 general beds, 0 beds reserved for workers, 1 workplaces, 1 shared containers, 0 crop plots; jobs: fisher; provides meat production, fresh water)
+12. a market (adds 0 general beds, 0 beds reserved for workers, 1 workplaces, 1 shared containers, 0 crop plots; jobs: merchant; provides trade)
+13. a farm (adds 0 general beds, 0 beds reserved for workers, 1 workplaces, 1 shared containers, 26 crop plots; jobs: farmer; provides grain production)
+14. an on-site level 2 farm upgrade (net 0 general beds, 0 beds reserved for workers, 0 workplaces, +2 shared containers, +26 crop plots; provides grain production)
+15. an on-site level 3 farm upgrade (net 0 general beds, 0 beds reserved for workers, +1 workplaces, +3 shared containers, +24 crop plots; provides grain production)
+16. a blacksmith (adds 0 general beds, 1 beds reserved for workers, 1 workplaces, 1 shared containers, 0 crop plots; jobs: blacksmith; provides gear repair, metal smelting), which provides the iron ingot that other buildings are built from
+17. a lumberjack (adds 0 general beds, 1 beds reserved for workers, 1 workplaces, 1 shared containers, 0 crop plots; jobs: lumberjack; provides logging, plank production), which provides the logs that other buildings are built from
+18. nothing yet: keep what we have and wait
+19. save up for a new level 2 blacksmith on a separate site (adds 0 general beds, 1 beds reserved for workers, 1 workplaces, 2 shared containers, 0 crop plots; jobs: blacksmith; provides gear repair, metal smelting), which provides the iron ingot that other buildings are built from, still needs 6 iron ingot
+
+Answer with ONLY the JSON object.
+
+[00:26:12.572] ==== #75 REPLY decide | what Willowfield opportunity builds next | 7071 ms
+{"reason": "We need to address the food shortage and provide a reliable source of food, as well as improve our infrastructure to support the population.", "choice": 13, "action": "a farm"}
+
+[00:27:05.015] ==== #83 REQUEST decide | what Willowfield opportunity builds next | temperature 0.1, up to 128 tokens
+--- system
+You are the mind of a villager in a village simulation. Choose the single most sensible action for the situation. Answer with ONLY a JSON object: {"reason": "<one short sentence weighing the situation>", "choice": <option number>, "action": "<the chosen option, copied exactly>"}
+--- example user
+Situation: The well has collapsed and there is no clean water. The sun is shining.
+
+Options:
+1. go swimming
+2. rebuild the well
+3. paint the fence
+
+Answer with ONLY the JSON object.
+--- example assistant
+{"reason": "We cannot live without clean water, so the well matters more than fun or chores.", "choice": 2, "action": "rebuild the well"}
+--- user
+Situation: You are the collective judgement of Willowfield opportunity, a hamlet. 4 residents; 4 hold jobs; 0 work-eligible residents have no post. 10 independent beds total; 4 general beds free; 2 free live-in beds are reserved to their workplaces; no adult residents need independent housing. There are no pre-adults awaiting family housing. 4 general beds stand free. Already standing: blacksmith x1, farm x6, house x1, lumberjack x1, mine x1, storehouse x1, village center x1, well x2. Open work: blacksmith x1, farmer x4, guard x16, lumberjack x1, miner x1, quartermaster x1. The population is holding steady. Food stores stand at 0.0 items per person. Trouble your workers currently report: your farmer Casey Bean, for 1 day: "There is nothing ripe in the field to harvest yet.". Choose what to build next.
+
+Options:
+1. a butchery (adds 0 general beds, 0 beds reserved for workers, 2 workplaces, 1 shared containers, 0 crop plots; jobs: butcher, herder; provides leather production, meat production, wool production), which provides the wool that other buildings are built from
+2. a mine (adds 0 general beds, 0 beds reserved for workers, 1 workplaces, 1 shared containers, 0 crop plots; jobs: miner; provides fuel production, ore extraction)
+3. an on-site level 2 mine upgrade (net 0 general beds, 0 beds reserved for workers, +1 workplaces, +1 shared containers, 0 crop plots; provides fuel production, ore extraction)
+4. a stoneworks (adds 0 general beds, 0 beds reserved for workers, 1 workplaces, 1 shared containers, 0 crop plots; jobs: mason; provides stone cutting), which provides the stone bricks that other buildings are built from
+5. a house (adds 1 general beds, 0 beds reserved for workers, 0 workplaces, 0 shared containers, 0 crop plots; provides none)
+6. a new level 2 house on a separate site (adds 2 general beds, 0 beds reserved for workers, 0 workplaces, 0 shared containers, 0 crop plots; provides none)
+7. a new level 3 house on a separate site (adds 4 general beds, 0 beds reserved for workers, 0 workplaces, 0 shared containers, 0 crop plots; provides none)
+8. a hunting lodge (adds 0 general beds, 0 beds reserved for workers, 1 workplaces, 1 shared containers, 0 crop plots; jobs: hunter; provides leather production, meat production)
+9. a watchtower (adds 0 general beds, 1 beds reserved for workers, 1 workplaces, 1 shared containers, 0 crop plots; jobs: guard; provides village defense)
+10. a new level 2 watchtower on a separate site (adds 0 general beds, 2 beds reserved for workers, 2 workplaces, 1 shared containers, 0 crop plots; jobs: guard; provides village defense)
+11. a fishery (adds 0 general beds, 0 beds reserved for workers, 1 workplaces, 1 shared containers, 0 crop plots; jobs: fisher; provides meat production, fresh water)
+12. a market (adds 0 general beds, 0 beds reserved for workers, 1 workplaces, 1 shared containers, 0 crop plots; jobs: merchant; provides trade)
+13. a farm (adds 0 general beds, 0 beds reserved for workers, 1 workplaces, 1 shared containers, 26 crop plots; jobs: farmer; provides grain production)
+14. an on-site level 2 farm upgrade (net 0 general beds, 0 beds reserved for workers, 0 workplaces, +2 shared containers, +26 crop plots; provides grain production)
+15. an on-site level 3 farm upgrade (net 0 general beds, 0 beds reserved for workers, +1 workplaces, +3 shared containers, +24 crop plots; provides grain production)
+16. a blacksmith (adds 0 general beds, 1 beds reserved for workers, 1 workplaces, 1 shared containers, 0 crop plots; jobs: blacksmith; provides gear repair, metal smelting), which provides the iron ingot that other buildings are built from
+17. a lumberjack (adds 0 general beds, 1 beds reserved for workers, 1 workplaces, 1 shared containers, 0 crop plots; jobs: lumberjack; provides logging, plank production), which provides the logs that other buildings are built from
+18. nothing yet: keep what we have and wait
+19. save up for a new level 2 blacksmith on a separate site (adds 0 general beds, 1 beds reserved for workers, 1 workplaces, 2 shared containers, 0 crop plots; jobs: blacksmith; provides gear repair, metal smelting), which provides the iron ingot that other buildings are built from, still needs 6 iron ingot
+
+Answer with ONLY the JSON object.
+
+[00:27:11.069] ==== #83 REPLY decide | what Willowfield opportunity builds next | 6054 ms
+{"reason": "We need to address the lack of food and the farmer's report of no ripe crops, so we should build something that can provide food.", "choice": 13, "action": "a farm"}
+

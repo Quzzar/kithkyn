@@ -1,0 +1,444 @@
+[
+  {
+    "elapsedTicks": 0,
+    "builds": 0,
+    "population": 0,
+    "buildings": 3,
+    "project": "none",
+    "stock": "none",
+    "metrics": "",
+    "briefing": "You are the collective judgement of New growth, a camp. 0 residents; 0 hold jobs; 0 work-eligible residents have no post. 4 independent beds total; 4 general beds free; 0 free live-in beds are reserved to their workplaces; no adult residents need independent housing. There are no pre-adults awaiting family housing. 4 general beds stand free. Already standing: mine x1, storehouse x1, village center x1. Open work: builder x1, guard x1, miner x1, quartermaster x1. The village is below its population floor and will call in newcomers. Food stores stand at 0.0 items per person. ",
+    "standing": [
+      {
+        "id": "12024f92-26ac-4e3a-a8d2-53a183a6eccf",
+        "name": "mine_plains_1",
+        "origin": 34359738912849
+      },
+      {
+        "id": "24bf99fe-2ba5-4d0c-80e6-266664ee3e54",
+        "name": "storehouse_plains_1",
+        "origin": 34634616746065
+      },
+      {
+        "id": "73fafdb7-3a7c-4d52-bb71-1c4d83572c75",
+        "name": "village_center_plains_1",
+        "origin": 34084861001809
+      }
+    ],
+    "unhousedAdults": 0,
+    "staffedFoodPosts": 0,
+    "foodPerPerson": 0.0,
+    "siteBlocker": "",
+    "freeGeneralBeds": 4,
+    "queuedItems": 0,
+    "displacedResidents": 0
+  },
+  {
+    "elapsedTicks": 24000,
+    "builds": 0,
+    "population": 2,
+    "buildings": 3,
+    "project": "none",
+    "stock": "none",
+    "metrics": "",
+    "briefing": "You are the collective judgement of New growth, a camp. 2 residents; 2 hold jobs; 0 work-eligible residents have no post. 4 independent beds total; 2 general beds free; 0 free live-in beds are reserved to their workplaces; no adult residents need independent housing. There are no pre-adults awaiting family housing. 2 general beds stand free. Already standing: mine x1, storehouse x1, village center x1. Open work: guard x1, miner x1. The village is below its population floor and will call in newcomers. Food stores stand at 0.0 items per person. ",
+    "standing": [
+      {
+        "id": "12024f92-26ac-4e3a-a8d2-53a183a6eccf",
+        "name": "mine_plains_1",
+        "origin": 34359738912849
+      },
+      {
+        "id": "24bf99fe-2ba5-4d0c-80e6-266664ee3e54",
+        "name": "storehouse_plains_1",
+        "origin": 34634616746065
+      },
+      {
+        "id": "73fafdb7-3a7c-4d52-bb71-1c4d83572c75",
+        "name": "village_center_plains_1",
+        "origin": 34084861001809
+      }
+    ],
+    "unhousedAdults": 0,
+    "staffedFoodPosts": 0,
+    "foodPerPerson": 0.0,
+    "siteBlocker": "",
+    "freeGeneralBeds": 2,
+    "queuedItems": 0,
+    "displacedResidents": 0
+  },
+  {
+    "elapsedTicks": 48000,
+    "builds": 0,
+    "population": 4,
+    "buildings": 3,
+    "project": "none",
+    "stock": "none",
+    "metrics": "",
+    "briefing": "You are the collective judgement of New growth, a camp. 4 residents; 4 hold jobs; 0 work-eligible residents have no post. 4 independent beds total; 0 general beds free; 0 free live-in beds are reserved to their workplaces; no adult residents need independent housing. There are no pre-adults awaiting family housing. No general bed is free. A newcomer could only wait unhoused at the campfire if population limits allow; a workshop without beds would not add housing, while a house would. Already standing: mine x1, storehouse x1, village center x1. Conditions are poor, but the population floor prevents anyone leaving. Food stores stand at 0.0 items per person. ",
+    "standing": [
+      {
+        "id": "12024f92-26ac-4e3a-a8d2-53a183a6eccf",
+        "name": "mine_plains_1",
+        "origin": 34359738912849
+      },
+      {
+        "id": "24bf99fe-2ba5-4d0c-80e6-266664ee3e54",
+        "name": "storehouse_plains_1",
+        "origin": 34634616746065
+      },
+      {
+        "id": "73fafdb7-3a7c-4d52-bb71-1c4d83572c75",
+        "name": "village_center_plains_1",
+        "origin": 34084861001809
+      }
+    ],
+    "unhousedAdults": 0,
+    "staffedFoodPosts": 0,
+    "foodPerPerson": 0.0,
+    "siteBlocker": "",
+    "freeGeneralBeds": 0,
+    "queuedItems": 0,
+    "displacedResidents": 0
+  },
+  {
+    "elapsedTicks": 72000,
+    "builds": 0,
+    "population": 5,
+    "buildings": 3,
+    "project": "none",
+    "stock": "none",
+    "metrics": "",
+    "briefing": "You are the collective judgement of New growth, a camp. 5 residents; 4 hold jobs; 1 work-eligible resident has no post. 4 independent beds total; 0 general beds free; 0 free live-in beds are reserved to their workplaces; 1 adult resident needs independent housing. There are no pre-adults awaiting family housing. 1 adult resident is already unhoused. Another workshop without beds would not house them, while a house would add general beds. Already standing: mine x1, storehouse x1, village center x1. Conditions are poor enough that a resident may leave. Food stores stand at 0.0 items per person. Trouble your workers currently report: your builder Crispin Moreno, since today: \"We have no earth to grade the ground between our buildings.\". ",
+    "standing": [
+      {
+        "id": "12024f92-26ac-4e3a-a8d2-53a183a6eccf",
+        "name": "mine_plains_1",
+        "origin": 34359738912849
+      },
+      {
+        "id": "24bf99fe-2ba5-4d0c-80e6-266664ee3e54",
+        "name": "storehouse_plains_1",
+        "origin": 34634616746065
+      },
+      {
+        "id": "73fafdb7-3a7c-4d52-bb71-1c4d83572c75",
+        "name": "village_center_plains_1",
+        "origin": 34084861001809
+      }
+    ],
+    "unhousedAdults": 1,
+    "staffedFoodPosts": 0,
+    "foodPerPerson": 0.0,
+    "siteBlocker": "",
+    "freeGeneralBeds": 0,
+    "queuedItems": 0,
+    "displacedResidents": 0
+  },
+  {
+    "elapsedTicks": 96000,
+    "builds": 0,
+    "population": 4,
+    "buildings": 3,
+    "project": "none",
+    "stock": "none",
+    "metrics": "",
+    "briefing": "You are the collective judgement of New growth, a camp. 4 residents; 4 hold jobs; 0 work-eligible residents have no post. 4 independent beds total; 0 general beds free; 0 free live-in beds are reserved to their workplaces; no adult residents need independent housing. There are no pre-adults awaiting family housing. No general bed is free. A newcomer could only wait unhoused at the campfire if population limits allow; a workshop without beds would not add housing, while a house would. Already standing: mine x1, storehouse x1, village center x1. Conditions are poor, but the population floor prevents anyone leaving. Food stores stand at 0.0 items per person. Trouble your workers currently report: your builder Crispin Moreno, since today: \"I cannot get to the way between our buildings.\". ",
+    "standing": [
+      {
+        "id": "12024f92-26ac-4e3a-a8d2-53a183a6eccf",
+        "name": "mine_plains_1",
+        "origin": 34359738912849
+      },
+      {
+        "id": "24bf99fe-2ba5-4d0c-80e6-266664ee3e54",
+        "name": "storehouse_plains_1",
+        "origin": 34634616746065
+      },
+      {
+        "id": "73fafdb7-3a7c-4d52-bb71-1c4d83572c75",
+        "name": "village_center_plains_1",
+        "origin": 34084861001809
+      }
+    ],
+    "unhousedAdults": 0,
+    "staffedFoodPosts": 0,
+    "foodPerPerson": 0.0,
+    "siteBlocker": "",
+    "freeGeneralBeds": 0,
+    "queuedItems": 0,
+    "displacedResidents": 0
+  },
+  {
+    "elapsedTicks": 120000,
+    "builds": 0,
+    "population": 4,
+    "buildings": 3,
+    "project": "none",
+    "stock": "none",
+    "metrics": "",
+    "briefing": "You are the collective judgement of New growth, a camp. 4 residents; 4 hold jobs; 0 work-eligible residents have no post. 4 independent beds total; 0 general beds free; 0 free live-in beds are reserved to their workplaces; no adult residents need independent housing. There are no pre-adults awaiting family housing. No general bed is free. A newcomer could only wait unhoused at the campfire if population limits allow; a workshop without beds would not add housing, while a house would. Already standing: mine x1, storehouse x1, village center x1. Conditions are poor, but the population floor prevents anyone leaving. Food stores stand at 0.0 items per person. ",
+    "standing": [
+      {
+        "id": "12024f92-26ac-4e3a-a8d2-53a183a6eccf",
+        "name": "mine_plains_1",
+        "origin": 34359738912849
+      },
+      {
+        "id": "24bf99fe-2ba5-4d0c-80e6-266664ee3e54",
+        "name": "storehouse_plains_1",
+        "origin": 34634616746065
+      },
+      {
+        "id": "73fafdb7-3a7c-4d52-bb71-1c4d83572c75",
+        "name": "village_center_plains_1",
+        "origin": 34084861001809
+      }
+    ],
+    "unhousedAdults": 0,
+    "staffedFoodPosts": 0,
+    "foodPerPerson": 0.0,
+    "siteBlocker": "",
+    "freeGeneralBeds": 0,
+    "queuedItems": 0,
+    "displacedResidents": 0
+  },
+  {
+    "elapsedTicks": 144000,
+    "builds": 0,
+    "population": 4,
+    "buildings": 3,
+    "project": "none",
+    "stock": "none",
+    "metrics": "",
+    "briefing": "You are the collective judgement of New growth, a camp. 4 residents; 4 hold jobs; 0 work-eligible residents have no post. 4 independent beds total; 0 general beds free; 0 free live-in beds are reserved to their workplaces; no adult residents need independent housing. There are no pre-adults awaiting family housing. No general bed is free. A newcomer could only wait unhoused at the campfire if population limits allow; a workshop without beds would not add housing, while a house would. Already standing: mine x1, storehouse x1, village center x1. Conditions are poor, but the population floor prevents anyone leaving. Food stores stand at 0.0 items per person. Trouble your workers currently report: your builder Crispin Walsh-Moreno, since today: \"I cannot get to the way between our buildings.\". ",
+    "standing": [
+      {
+        "id": "12024f92-26ac-4e3a-a8d2-53a183a6eccf",
+        "name": "mine_plains_1",
+        "origin": 34359738912849
+      },
+      {
+        "id": "24bf99fe-2ba5-4d0c-80e6-266664ee3e54",
+        "name": "storehouse_plains_1",
+        "origin": 34634616746065
+      },
+      {
+        "id": "73fafdb7-3a7c-4d52-bb71-1c4d83572c75",
+        "name": "village_center_plains_1",
+        "origin": 34084861001809
+      }
+    ],
+    "unhousedAdults": 0,
+    "staffedFoodPosts": 0,
+    "foodPerPerson": 0.0,
+    "siteBlocker": "",
+    "freeGeneralBeds": 0,
+    "queuedItems": 0,
+    "displacedResidents": 0
+  },
+  {
+    "elapsedTicks": 168000,
+    "builds": 0,
+    "population": 4,
+    "buildings": 3,
+    "project": "none",
+    "stock": "none",
+    "metrics": "",
+    "briefing": "You are the collective judgement of New growth, a camp. 4 residents; 3 hold jobs; 0 work-eligible residents have no post. 1 is a pre-adult; working teenagers also appear in the job counts. 4 independent beds total; 1 general bed free; 0 free live-in beds are reserved to their workplaces; no adult residents need independent housing. The pre-adult is housed with a resident parent. 1 general bed stands free. Already standing: mine x1, storehouse x1, village center x1. Open work: guard x1. Conditions are poor, but the population floor prevents anyone leaving. Food stores stand at 0.0 items per person. ",
+    "standing": [
+      {
+        "id": "12024f92-26ac-4e3a-a8d2-53a183a6eccf",
+        "name": "mine_plains_1",
+        "origin": 34359738912849
+      },
+      {
+        "id": "24bf99fe-2ba5-4d0c-80e6-266664ee3e54",
+        "name": "storehouse_plains_1",
+        "origin": 34634616746065
+      },
+      {
+        "id": "73fafdb7-3a7c-4d52-bb71-1c4d83572c75",
+        "name": "village_center_plains_1",
+        "origin": 34084861001809
+      }
+    ],
+    "unhousedAdults": 0,
+    "staffedFoodPosts": 0,
+    "foodPerPerson": 0.0,
+    "siteBlocker": "",
+    "freeGeneralBeds": 1,
+    "queuedItems": 0,
+    "displacedResidents": 0
+  },
+  {
+    "elapsedTicks": 192000,
+    "builds": 0,
+    "population": 4,
+    "buildings": 3,
+    "project": "none",
+    "stock": "none",
+    "metrics": "",
+    "briefing": "You are the collective judgement of New growth, a camp. 4 residents; 4 hold jobs; 0 work-eligible residents have no post. 4 independent beds total; 0 general beds free; 0 free live-in beds are reserved to their workplaces; no adult residents need independent housing. There are no pre-adults awaiting family housing. No general bed is free. A newcomer could only wait unhoused at the campfire if population limits allow; a workshop without beds would not add housing, while a house would. Already standing: mine x1, storehouse x1, village center x1. Conditions are poor, but the population floor prevents anyone leaving. Food stores stand at 0.0 items per person. ",
+    "standing": [
+      {
+        "id": "12024f92-26ac-4e3a-a8d2-53a183a6eccf",
+        "name": "mine_plains_1",
+        "origin": 34359738912849
+      },
+      {
+        "id": "24bf99fe-2ba5-4d0c-80e6-266664ee3e54",
+        "name": "storehouse_plains_1",
+        "origin": 34634616746065
+      },
+      {
+        "id": "73fafdb7-3a7c-4d52-bb71-1c4d83572c75",
+        "name": "village_center_plains_1",
+        "origin": 34084861001809
+      }
+    ],
+    "unhousedAdults": 0,
+    "staffedFoodPosts": 0,
+    "foodPerPerson": 0.0,
+    "siteBlocker": "",
+    "freeGeneralBeds": 0,
+    "queuedItems": 0,
+    "displacedResidents": 0
+  },
+  {
+    "elapsedTicks": 216000,
+    "builds": 0,
+    "population": 4,
+    "buildings": 3,
+    "project": "none",
+    "stock": "none",
+    "metrics": "",
+    "briefing": "You are the collective judgement of New growth, a camp. 4 residents; 4 hold jobs; 0 work-eligible residents have no post. 4 independent beds total; 0 general beds free; 0 free live-in beds are reserved to their workplaces; no adult residents need independent housing. There are no pre-adults awaiting family housing. No general bed is free. A newcomer could only wait unhoused at the campfire if population limits allow; a workshop without beds would not add housing, while a house would. Already standing: mine x1, storehouse x1, village center x1. Conditions are poor, but the population floor prevents anyone leaving. Food stores stand at 0.0 items per person. Trouble your workers currently report: your builder Crispin Walsh-Moreno, since today: \"I cannot get to the way between our buildings.\". ",
+    "standing": [
+      {
+        "id": "12024f92-26ac-4e3a-a8d2-53a183a6eccf",
+        "name": "mine_plains_1",
+        "origin": 34359738912849
+      },
+      {
+        "id": "24bf99fe-2ba5-4d0c-80e6-266664ee3e54",
+        "name": "storehouse_plains_1",
+        "origin": 34634616746065
+      },
+      {
+        "id": "73fafdb7-3a7c-4d52-bb71-1c4d83572c75",
+        "name": "village_center_plains_1",
+        "origin": 34084861001809
+      }
+    ],
+    "unhousedAdults": 0,
+    "staffedFoodPosts": 0,
+    "foodPerPerson": 0.0,
+    "siteBlocker": "",
+    "freeGeneralBeds": 0,
+    "queuedItems": 0,
+    "displacedResidents": 0
+  },
+  {
+    "elapsedTicks": 240000,
+    "builds": 0,
+    "population": 4,
+    "buildings": 3,
+    "project": "none",
+    "stock": "none",
+    "metrics": "",
+    "briefing": "You are the collective judgement of New growth, a camp. 4 residents; 4 hold jobs; 0 work-eligible residents have no post. 4 independent beds total; 0 general beds free; 0 free live-in beds are reserved to their workplaces; no adult residents need independent housing. There are no pre-adults awaiting family housing. No general bed is free. A newcomer could only wait unhoused at the campfire if population limits allow; a workshop without beds would not add housing, while a house would. Already standing: mine x1, storehouse x1, village center x1. Conditions are poor, but the population floor prevents anyone leaving. Food stores stand at 0.0 items per person. Trouble your workers currently report: your builder Crispin Walsh-Moreno, since today: \"I cannot get to the way between our buildings.\". ",
+    "standing": [
+      {
+        "id": "12024f92-26ac-4e3a-a8d2-53a183a6eccf",
+        "name": "mine_plains_1",
+        "origin": 34359738912849
+      },
+      {
+        "id": "24bf99fe-2ba5-4d0c-80e6-266664ee3e54",
+        "name": "storehouse_plains_1",
+        "origin": 34634616746065
+      },
+      {
+        "id": "73fafdb7-3a7c-4d52-bb71-1c4d83572c75",
+        "name": "village_center_plains_1",
+        "origin": 34084861001809
+      }
+    ],
+    "unhousedAdults": 0,
+    "staffedFoodPosts": 0,
+    "foodPerPerson": 0.0,
+    "siteBlocker": "",
+    "freeGeneralBeds": 0,
+    "queuedItems": 0,
+    "displacedResidents": 0
+  },
+  {
+    "elapsedTicks": 264000,
+    "builds": 0,
+    "population": 4,
+    "buildings": 3,
+    "project": "none",
+    "stock": "none",
+    "metrics": "",
+    "briefing": "You are the collective judgement of New growth, a camp. 4 residents; 4 hold jobs; 0 work-eligible residents have no post. 4 independent beds total; 0 general beds free; 0 free live-in beds are reserved to their workplaces; no adult residents need independent housing. There are no pre-adults awaiting family housing. No general bed is free. A newcomer could only wait unhoused at the campfire if population limits allow; a workshop without beds would not add housing, while a house would. Already standing: mine x1, storehouse x1, village center x1. Conditions are poor, but the population floor prevents anyone leaving. Food stores stand at 0.0 items per person. Trouble your workers currently report: your builder Crispin Walsh-Moreno, for 1 day: \"I cannot get to the way between our buildings.\". ",
+    "standing": [
+      {
+        "id": "12024f92-26ac-4e3a-a8d2-53a183a6eccf",
+        "name": "mine_plains_1",
+        "origin": 34359738912849
+      },
+      {
+        "id": "24bf99fe-2ba5-4d0c-80e6-266664ee3e54",
+        "name": "storehouse_plains_1",
+        "origin": 34634616746065
+      },
+      {
+        "id": "73fafdb7-3a7c-4d52-bb71-1c4d83572c75",
+        "name": "village_center_plains_1",
+        "origin": 34084861001809
+      }
+    ],
+    "unhousedAdults": 0,
+    "staffedFoodPosts": 0,
+    "foodPerPerson": 0.0,
+    "siteBlocker": "",
+    "freeGeneralBeds": 0,
+    "queuedItems": 0,
+    "displacedResidents": 0
+  },
+  {
+    "elapsedTicks": 288000,
+    "builds": 0,
+    "population": 4,
+    "buildings": 3,
+    "project": "none",
+    "stock": "none",
+    "metrics": "",
+    "briefing": "You are the collective judgement of New growth, a camp. 4 residents; 4 hold jobs; 0 work-eligible residents have no post. 4 independent beds total; 0 general beds free; 0 free live-in beds are reserved to their workplaces; no adult residents need independent housing. There are no pre-adults awaiting family housing. No general bed is free. A newcomer could only wait unhoused at the campfire if population limits allow; a workshop without beds would not add housing, while a house would. Already standing: mine x1, storehouse x1, village center x1. Conditions are poor, but the population floor prevents anyone leaving. Food stores stand at 0.0 items per person. Trouble your workers currently report: your builder Crispin Walsh-Moreno, for 2 days: \"I cannot get to the way between our buildings.\". ",
+    "standing": [
+      {
+        "id": "12024f92-26ac-4e3a-a8d2-53a183a6eccf",
+        "name": "mine_plains_1",
+        "origin": 34359738912849
+      },
+      {
+        "id": "24bf99fe-2ba5-4d0c-80e6-266664ee3e54",
+        "name": "storehouse_plains_1",
+        "origin": 34634616746065
+      },
+      {
+        "id": "73fafdb7-3a7c-4d52-bb71-1c4d83572c75",
+        "name": "village_center_plains_1",
+        "origin": 34084861001809
+      }
+    ],
+    "unhousedAdults": 0,
+    "staffedFoodPosts": 0,
+    "foodPerPerson": 0.0,
+    "siteBlocker": "",
+    "freeGeneralBeds": 0,
+    "queuedItems": 0,
+    "displacedResidents": 0
+  }
+]

@@ -60,6 +60,23 @@ redevelopment is inherently better. Preserve ordinary alternatives and waiting. 
 placements may share one proposal, but do not quietly trim economically different choices
 just because the model is small. Compare prompt length and option-order sensitivity in tests.
 
+### Placement comparison and explicit effects
+
+All planner descriptions distinguish general housing from beds reserved for workplace occupants.
+Farm upgrades report their measured crop-plot increase even when no new farmer post is added.
+Redevelopment compares the village's services before removal, during work, and after completion,
+using the existing capability resolver with current supplies held fixed. Losing the last fresh-water
+source is explicit; these facts do not predict future food output or future supplies.
+
+Placements for the same target, construction mode and source are compared together. A placement
+with identical effects and salvage can be omitted when another needs no more of any material,
+no more removal/ground work and no more removed buildings. Different net effects or salvage remain
+visible. Among retained placements, the stated preference is affordability first, then fewer services
+lost after completion, fewer services interrupted, fewer displaced residents and affected workplaces,
+then fewer buildings removed and less ground/removal work. This preference does not make a
+service-losing proposal ineligible. In particular, the cheaper two-well farm expansion remains a
+tradeoff alongside the preferred affordable one-well expansion.
+
 ## Execution must be one construction project
 
 Removal is a prerequisite of a named construction project. The village does not independently
@@ -167,7 +184,13 @@ Village centers and mines cannot be demolition victims; mine upgrades retain the
 Surveyed blocks and containers must be loaded. Player changes, another village's claims and
 unknown structural ownership prevent removal.
 
-Builders gather the net recipe before commitment. Contents from all affected buildings,
+Builders gather the net recipe before commitment. For redevelopment they deliver it to a reachable
+position outside the replacement footprint, every demolition victim and affected ground columns.
+The same exterior access handles demolition, preparation and construction. Routes account for
+worker body size and are recomputed after reload; a physically stalled approach is skipped on
+retry. Positions are checked before work, and access failures are distinguished from material
+shortages when gathering times out. Gathering explicitly distinguishes chest visits from recipe
+delivery, so a container at a delivery coordinate cannot turn commitment into another fetch. Contents from all affected buildings,
 including the upgrade source and personal containers, move to surviving storage where possible;
 any overflow enters a saved queue with its full item components, independently of salvage.
 This queue belongs to the village, survives project completion, and retries delivery when real
@@ -237,3 +260,19 @@ assessment checks accepted proposals without surviving staffed food or an outsid
 Player edits and missing committed structural blocks still paused or rejected work.
 The harness advances construction directly; this is lifecycle verification, not evidence of
 natural model adoption or a new teardown-frequency measurement.
+
+
+The [exterior-access and planner follow-up](research/redevelopment-performance-2026-09-06.md)
+passed 216 checks against an isolated production baseline plus the new changes. The previously
+inaccessible house completed through real builder navigation with its doorway untouched, and
+again after a halfway village reload. The zero-spare-bed/full-storage lifecycle checks also
+passed. All twelve autonomous comparisons completed their twelve-day horizons with the default
+model: 21 offers across 21 calls led to four chosen, started, committed and completed replacements,
+seven removed buildings, six declines and eleven invalid replies. No redevelopment was cancelled
+or repeated within a run. Both blocked house upgrades completed from outside and rehoused their
+displaced occupant. Decision quality remains unresolved: a farm removed both wells without
+restoring water, and a mine removed occupied housing while the model incorrectly claimed it
+would address housing. The first food searches never offered the one-well alternatives. The
+report records outcome comparisons, overflow recovery, model errors, timing, frozen inputs and
+the post-run cleanup-status resolution. Higher-level village-center upgrades were not available
+in the frozen baseline and were not tested.

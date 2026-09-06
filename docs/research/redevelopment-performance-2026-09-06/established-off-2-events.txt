@@ -1,0 +1,2 @@
+[01:59:19] [Server thread/INFO] [co.qu.ki.Kithkyn/]: [redevelopment-transition] Transition[elapsedTicks=0, project=none, stage=none, unhousedAdults=4, queuedItems=0, displacedResidents=0, freshWater=false, staffedFoodPosts=1]
+[02:06:51] [Server thread/INFO] [co.qu.ki.Kithkyn/]: [redevelopment-benchmark] COMPLETE enabled=false elapsed=288000 builds=0

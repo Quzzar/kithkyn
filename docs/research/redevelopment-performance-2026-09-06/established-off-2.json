@@ -1,0 +1,1133 @@
+[
+  {
+    "elapsedTicks": 0,
+    "builds": 0,
+    "population": 23,
+    "buildings": 13,
+    "project": "none",
+    "stock": "1 stone axe, 44 wheat seeds, 9 cobblestone, 1 crossbow, 1 stone hoe, 294 cooked beef, 126 logs, 1200 planks, 1 stone pickaxe, 330 dirt, 1 wheat",
+    "metrics": "",
+    "briefing": "You are the collective judgement of Redevelopment verification, a hamlet. 23 residents; 19 hold jobs; 4 work-eligible residents have no post. 19 independent beds total; 0 general beds free; 0 free live-in beds are reserved to their workplaces; 4 adult residents need independent housing. There are no pre-adults awaiting family housing. 4 adult residents are already unhoused. They cannot take open work unless that workplace has a free live-in bed; another workshop without beds would not house them, while a house would add general beds. Already standing: couple cottage x1, farm x3, house x5, lumberjack x1, mine x1, storehouse x1, village center x1. Open work: builder x2, farmer x2, guard x3. Attractiveness is high, but housing capacity currently blocks another newcomer. Food stores stand at 12.8 items per person. Trouble your workers currently report: your quartermaster Horace Floyd, for 11 days: \"I have no book and quill to keep at hand\"; your builder Owen Valencia-Buchanan, for 11 days: \"I have no crafting table to keep at hand\". ",
+    "standing": [
+      {
+        "id": "0cf0857f-c542-4d79-a2c7-20d6edf2e062",
+        "name": "house_plains_1",
+        "origin": 35184372613125
+      },
+      {
+        "id": "4cc3c899-cf2e-4793-8bc2-9d5c41fdc65b",
+        "name": "lumberjack_plains_1",
+        "origin": 42056320389125
+      },
+      {
+        "id": "762c1657-b15c-4f4c-9bb5-3dce9fec5c95",
+        "name": "farm_plains_1",
+        "origin": 35184372645893
+      },
+      {
+        "id": "7f1435fa-3925-494b-9ad8-4cedce4d5bf8",
+        "name": "farm_plains_1",
+        "origin": 35184372572165
+      },
+      {
+        "id": "96eed131-37fe-4336-84ed-706b3fef03d4",
+        "name": "storehouse_plains_1",
+        "origin": 28312424980485
+      },
+      {
+        "id": "ac21fb55-e730-4c04-8e81-83c8593f8fb0",
+        "name": "farm_plains_1",
+        "origin": 42056320286725
+      },
+      {
+        "id": "b8e68b62-bc71-42d2-9727-6c3bee3d849b",
+        "name": "house_plains_2",
+        "origin": 31885837852676
+      },
+      {
+        "id": "c8616cfa-bdf8-41ec-86a6-effd9e6aa63f",
+        "name": "house_plains_3",
+        "origin": 26938035478532
+      },
+      {
+        "id": "db208944-467c-4500-8bfe-f92661dedb96",
+        "name": "house_plains_3",
+        "origin": 29961692405764
+      },
+      {
+        "id": "efc6528a-8b8b-42f5-a09c-f73dfd0aa8ce",
+        "name": "mine_plains_1",
+        "origin": 26938035527685
+      },
+      {
+        "id": "f363db98-f04b-44e9-aff8-e9637db640f3",
+        "name": "house_plains_1",
+        "origin": 26113401749508
+      },
+      {
+        "id": "f4ce5355-13ef-43a6-ab9f-23d75b69d020",
+        "name": "couple_cottage_plains_1",
+        "origin": 31336082030596
+      },
+      {
+        "id": "f876b1b9-7f76-45aa-b92c-218ba5bf56ad",
+        "name": "village_center_plains_1",
+        "origin": 25563645767685
+      }
+    ],
+    "unhousedAdults": 4,
+    "staffedFoodPosts": 1,
+    "foodPerPerson": 12.782608695652174,
+    "siteBlocker": "",
+    "freeGeneralBeds": 0,
+    "queuedItems": 0,
+    "displacedResidents": 0,
+    "freshWater": false,
+    "constructionAccessBlocker": "",
+    "demolitionBlocksRemaining": 0
+  },
+  {
+    "elapsedTicks": 24000,
+    "builds": 0,
+    "population": 23,
+    "buildings": 13,
+    "project": "none",
+    "stock": "1 stone axe, 44 wheat seeds, 9 cobblestone, 1 crossbow, 1 stone hoe, 294 cooked beef, 126 logs, 1344 planks, 1 stone pickaxe, 331 dirt, 1 wheat",
+    "metrics": "",
+    "briefing": "You are the collective judgement of Redevelopment verification, a hamlet. 23 residents; 19 hold jobs; 4 work-eligible residents have no post. 19 independent beds total; 0 general beds free; 0 free live-in beds are reserved to their workplaces; 4 adult residents need independent housing. There are no pre-adults awaiting family housing. 4 adult residents are already unhoused. They cannot take open work unless that workplace has a free live-in bed; another workshop without beds would not house them, while a house would add general beds. Already standing: couple cottage x1, farm x3, house x5, lumberjack x1, mine x1, storehouse x1, village center x1. Open work: builder x2, farmer x2, guard x3. Attractiveness is high, but housing capacity currently blocks another newcomer. Food stores stand at 12.8 items per person. Trouble your workers currently report: your quartermaster Horace Floyd, for 12 days: \"I have no book and quill to keep at hand\"; your farmer Gil Cox, since today: \"There is nothing ripe in the field to harvest yet.\"; your lumberjack Rowan Harris-Dyer, since today: \"The tree at my stand is felled; I have no wood to cut until it grows back.\"; your builder Owen Valencia-Buchanan, for 12 days: \"I have no crafting table to keep at hand\". ",
+    "standing": [
+      {
+        "id": "0cf0857f-c542-4d79-a2c7-20d6edf2e062",
+        "name": "house_plains_1",
+        "origin": 35184372613125
+      },
+      {
+        "id": "4cc3c899-cf2e-4793-8bc2-9d5c41fdc65b",
+        "name": "lumberjack_plains_1",
+        "origin": 42056320389125
+      },
+      {
+        "id": "762c1657-b15c-4f4c-9bb5-3dce9fec5c95",
+        "name": "farm_plains_1",
+        "origin": 35184372645893
+      },
+      {
+        "id": "7f1435fa-3925-494b-9ad8-4cedce4d5bf8",
+        "name": "farm_plains_1",
+        "origin": 35184372572165
+      },
+      {
+        "id": "96eed131-37fe-4336-84ed-706b3fef03d4",
+        "name": "storehouse_plains_1",
+        "origin": 28312424980485
+      },
+      {
+        "id": "ac21fb55-e730-4c04-8e81-83c8593f8fb0",
+        "name": "farm_plains_1",
+        "origin": 42056320286725
+      },
+      {
+        "id": "b8e68b62-bc71-42d2-9727-6c3bee3d849b",
+        "name": "house_plains_2",
+        "origin": 31885837852676
+      },
+      {
+        "id": "c8616cfa-bdf8-41ec-86a6-effd9e6aa63f",
+        "name": "house_plains_3",
+        "origin": 26938035478532
+      },
+      {
+        "id": "db208944-467c-4500-8bfe-f92661dedb96",
+        "name": "house_plains_3",
+        "origin": 29961692405764
+      },
+      {
+        "id": "efc6528a-8b8b-42f5-a09c-f73dfd0aa8ce",
+        "name": "mine_plains_1",
+        "origin": 26938035527685
+      },
+      {
+        "id": "f363db98-f04b-44e9-aff8-e9637db640f3",
+        "name": "house_plains_1",
+        "origin": 26113401749508
+      },
+      {
+        "id": "f4ce5355-13ef-43a6-ab9f-23d75b69d020",
+        "name": "couple_cottage_plains_1",
+        "origin": 31336082030596
+      },
+      {
+        "id": "f876b1b9-7f76-45aa-b92c-218ba5bf56ad",
+        "name": "village_center_plains_1",
+        "origin": 25563645767685
+      }
+    ],
+    "unhousedAdults": 4,
+    "staffedFoodPosts": 1,
+    "foodPerPerson": 12.782608695652174,
+    "siteBlocker": "",
+    "freeGeneralBeds": 0,
+    "queuedItems": 0,
+    "displacedResidents": 0,
+    "freshWater": false,
+    "constructionAccessBlocker": "",
+    "demolitionBlocksRemaining": 0
+  },
+  {
+    "elapsedTicks": 48000,
+    "builds": 0,
+    "population": 23,
+    "buildings": 13,
+    "project": "none",
+    "stock": "1 stone axe, 45 wheat seeds, 9 cobblestone, 1 crossbow, 1 stone hoe, 294 cooked beef, 126 logs, 1424 planks, 1 stone pickaxe, 333 dirt, 1 wheat",
+    "metrics": "",
+    "briefing": "You are the collective judgement of Redevelopment verification, a hamlet. 23 residents; 19 hold jobs; 4 work-eligible residents have no post. 19 independent beds total; 0 general beds free; 0 free live-in beds are reserved to their workplaces; 4 adult residents need independent housing. There are no pre-adults awaiting family housing. 4 adult residents are already unhoused. They cannot take open work unless that workplace has a free live-in bed; another workshop without beds would not house them, while a house would add general beds. Already standing: couple cottage x1, farm x3, house x5, lumberjack x1, mine x1, storehouse x1, village center x1. Open work: builder x2, farmer x2, guard x3. Attractiveness is high, but housing capacity currently blocks another newcomer. Food stores stand at 12.8 items per person. Trouble your workers currently report: your quartermaster Horace Floyd, for 13 days: \"I have no book and quill to keep at hand\"; your farmer Gil Cox, for 1 day: \"There is nothing ripe in the field to harvest yet.\"; your lumberjack Rowan Harris-Dyer, for 1 day: \"The tree at my stand is felled; I have no wood to cut until it grows back.\"; your builder Owen Valencia-Buchanan, for 13 days: \"I have no crafting table to keep at hand\". ",
+    "standing": [
+      {
+        "id": "0cf0857f-c542-4d79-a2c7-20d6edf2e062",
+        "name": "house_plains_1",
+        "origin": 35184372613125
+      },
+      {
+        "id": "4cc3c899-cf2e-4793-8bc2-9d5c41fdc65b",
+        "name": "lumberjack_plains_1",
+        "origin": 42056320389125
+      },
+      {
+        "id": "762c1657-b15c-4f4c-9bb5-3dce9fec5c95",
+        "name": "farm_plains_1",
+        "origin": 35184372645893
+      },
+      {
+        "id": "7f1435fa-3925-494b-9ad8-4cedce4d5bf8",
+        "name": "farm_plains_1",
+        "origin": 35184372572165
+      },
+      {
+        "id": "96eed131-37fe-4336-84ed-706b3fef03d4",
+        "name": "storehouse_plains_1",
+        "origin": 28312424980485
+      },
+      {
+        "id": "ac21fb55-e730-4c04-8e81-83c8593f8fb0",
+        "name": "farm_plains_1",
+        "origin": 42056320286725
+      },
+      {
+        "id": "b8e68b62-bc71-42d2-9727-6c3bee3d849b",
+        "name": "house_plains_2",
+        "origin": 31885837852676
+      },
+      {
+        "id": "c8616cfa-bdf8-41ec-86a6-effd9e6aa63f",
+        "name": "house_plains_3",
+        "origin": 26938035478532
+      },
+      {
+        "id": "db208944-467c-4500-8bfe-f92661dedb96",
+        "name": "house_plains_3",
+        "origin": 29961692405764
+      },
+      {
+        "id": "efc6528a-8b8b-42f5-a09c-f73dfd0aa8ce",
+        "name": "mine_plains_1",
+        "origin": 26938035527685
+      },
+      {
+        "id": "f363db98-f04b-44e9-aff8-e9637db640f3",
+        "name": "house_plains_1",
+        "origin": 26113401749508
+      },
+      {
+        "id": "f4ce5355-13ef-43a6-ab9f-23d75b69d020",
+        "name": "couple_cottage_plains_1",
+        "origin": 31336082030596
+      },
+      {
+        "id": "f876b1b9-7f76-45aa-b92c-218ba5bf56ad",
+        "name": "village_center_plains_1",
+        "origin": 25563645767685
+      }
+    ],
+    "unhousedAdults": 4,
+    "staffedFoodPosts": 1,
+    "foodPerPerson": 12.782608695652174,
+    "siteBlocker": "",
+    "freeGeneralBeds": 0,
+    "queuedItems": 0,
+    "displacedResidents": 0,
+    "freshWater": false,
+    "constructionAccessBlocker": "",
+    "demolitionBlocksRemaining": 0
+  },
+  {
+    "elapsedTicks": 72000,
+    "builds": 0,
+    "population": 23,
+    "buildings": 13,
+    "project": "none",
+    "stock": "1 stone axe, 45 wheat seeds, 9 cobblestone, 1 crossbow, 1 stone hoe, 294 cooked beef, 126 logs, 1600 planks, 1 stone pickaxe, 331 dirt, 1 wheat",
+    "metrics": "",
+    "briefing": "You are the collective judgement of Redevelopment verification, a hamlet. 23 residents; 19 hold jobs; 4 work-eligible residents have no post. 19 independent beds total; 0 general beds free; 0 free live-in beds are reserved to their workplaces; 4 adult residents need independent housing. There are no pre-adults awaiting family housing. 4 adult residents are already unhoused. They cannot take open work unless that workplace has a free live-in bed; another workshop without beds would not house them, while a house would add general beds. Already standing: couple cottage x1, farm x3, house x5, lumberjack x1, mine x1, storehouse x1, village center x1. Open work: builder x2, farmer x2, guard x3. Attractiveness is high, but housing capacity currently blocks another newcomer. Food stores stand at 12.8 items per person. Trouble your workers currently report: your quartermaster Horace Floyd, for 14 days: \"I have no book and quill to keep at hand\"; your builder Owen Valencia-Buchanan, for 14 days: \"I have no crafting table to keep at hand\". ",
+    "standing": [
+      {
+        "id": "0cf0857f-c542-4d79-a2c7-20d6edf2e062",
+        "name": "house_plains_1",
+        "origin": 35184372613125
+      },
+      {
+        "id": "4cc3c899-cf2e-4793-8bc2-9d5c41fdc65b",
+        "name": "lumberjack_plains_1",
+        "origin": 42056320389125
+      },
+      {
+        "id": "762c1657-b15c-4f4c-9bb5-3dce9fec5c95",
+        "name": "farm_plains_1",
+        "origin": 35184372645893
+      },
+      {
+        "id": "7f1435fa-3925-494b-9ad8-4cedce4d5bf8",
+        "name": "farm_plains_1",
+        "origin": 35184372572165
+      },
+      {
+        "id": "96eed131-37fe-4336-84ed-706b3fef03d4",
+        "name": "storehouse_plains_1",
+        "origin": 28312424980485
+      },
+      {
+        "id": "ac21fb55-e730-4c04-8e81-83c8593f8fb0",
+        "name": "farm_plains_1",
+        "origin": 42056320286725
+      },
+      {
+        "id": "b8e68b62-bc71-42d2-9727-6c3bee3d849b",
+        "name": "house_plains_2",
+        "origin": 31885837852676
+      },
+      {
+        "id": "c8616cfa-bdf8-41ec-86a6-effd9e6aa63f",
+        "name": "house_plains_3",
+        "origin": 26938035478532
+      },
+      {
+        "id": "db208944-467c-4500-8bfe-f92661dedb96",
+        "name": "house_plains_3",
+        "origin": 29961692405764
+      },
+      {
+        "id": "efc6528a-8b8b-42f5-a09c-f73dfd0aa8ce",
+        "name": "mine_plains_1",
+        "origin": 26938035527685
+      },
+      {
+        "id": "f363db98-f04b-44e9-aff8-e9637db640f3",
+        "name": "house_plains_1",
+        "origin": 26113401749508
+      },
+      {
+        "id": "f4ce5355-13ef-43a6-ab9f-23d75b69d020",
+        "name": "couple_cottage_plains_1",
+        "origin": 31336082030596
+      },
+      {
+        "id": "f876b1b9-7f76-45aa-b92c-218ba5bf56ad",
+        "name": "village_center_plains_1",
+        "origin": 25563645767685
+      }
+    ],
+    "unhousedAdults": 4,
+    "staffedFoodPosts": 1,
+    "foodPerPerson": 12.782608695652174,
+    "siteBlocker": "",
+    "freeGeneralBeds": 0,
+    "queuedItems": 0,
+    "displacedResidents": 0,
+    "freshWater": false,
+    "constructionAccessBlocker": "",
+    "demolitionBlocksRemaining": 0
+  },
+  {
+    "elapsedTicks": 96000,
+    "builds": 0,
+    "population": 23,
+    "buildings": 13,
+    "project": "none",
+    "stock": "1 stone axe, 45 wheat seeds, 9 cobblestone, 1 crossbow, 1 stone hoe, 294 cooked beef, 118 logs, 1808 planks, 1 stone pickaxe, 332 dirt, 1 wheat",
+    "metrics": "",
+    "briefing": "You are the collective judgement of Redevelopment verification, a hamlet. 23 residents; 19 hold jobs; 4 work-eligible residents have no post. 19 independent beds total; 0 general beds free; 0 free live-in beds are reserved to their workplaces; 4 adult residents need independent housing. There are no pre-adults awaiting family housing. 4 adult residents are already unhoused. They cannot take open work unless that workplace has a free live-in bed; another workshop without beds would not house them, while a house would add general beds. Already standing: couple cottage x1, farm x3, house x5, lumberjack x1, mine x1, storehouse x1, village center x1. Open work: builder x2, farmer x2, guard x3. Attractiveness is high, but housing capacity currently blocks another newcomer. Food stores stand at 12.8 items per person. Trouble your workers currently report: your quartermaster Horace Floyd, for 15 days: \"I have no book and quill to keep at hand\"; your builder Owen Valencia-Buchanan, for 15 days: \"I have no crafting table to keep at hand\". ",
+    "standing": [
+      {
+        "id": "0cf0857f-c542-4d79-a2c7-20d6edf2e062",
+        "name": "house_plains_1",
+        "origin": 35184372613125
+      },
+      {
+        "id": "4cc3c899-cf2e-4793-8bc2-9d5c41fdc65b",
+        "name": "lumberjack_plains_1",
+        "origin": 42056320389125
+      },
+      {
+        "id": "762c1657-b15c-4f4c-9bb5-3dce9fec5c95",
+        "name": "farm_plains_1",
+        "origin": 35184372645893
+      },
+      {
+        "id": "7f1435fa-3925-494b-9ad8-4cedce4d5bf8",
+        "name": "farm_plains_1",
+        "origin": 35184372572165
+      },
+      {
+        "id": "96eed131-37fe-4336-84ed-706b3fef03d4",
+        "name": "storehouse_plains_1",
+        "origin": 28312424980485
+      },
+      {
+        "id": "ac21fb55-e730-4c04-8e81-83c8593f8fb0",
+        "name": "farm_plains_1",
+        "origin": 42056320286725
+      },
+      {
+        "id": "b8e68b62-bc71-42d2-9727-6c3bee3d849b",
+        "name": "house_plains_2",
+        "origin": 31885837852676
+      },
+      {
+        "id": "c8616cfa-bdf8-41ec-86a6-effd9e6aa63f",
+        "name": "house_plains_3",
+        "origin": 26938035478532
+      },
+      {
+        "id": "db208944-467c-4500-8bfe-f92661dedb96",
+        "name": "house_plains_3",
+        "origin": 29961692405764
+      },
+      {
+        "id": "efc6528a-8b8b-42f5-a09c-f73dfd0aa8ce",
+        "name": "mine_plains_1",
+        "origin": 26938035527685
+      },
+      {
+        "id": "f363db98-f04b-44e9-aff8-e9637db640f3",
+        "name": "house_plains_1",
+        "origin": 26113401749508
+      },
+      {
+        "id": "f4ce5355-13ef-43a6-ab9f-23d75b69d020",
+        "name": "couple_cottage_plains_1",
+        "origin": 31336082030596
+      },
+      {
+        "id": "f876b1b9-7f76-45aa-b92c-218ba5bf56ad",
+        "name": "village_center_plains_1",
+        "origin": 25563645767685
+      }
+    ],
+    "unhousedAdults": 4,
+    "staffedFoodPosts": 1,
+    "foodPerPerson": 12.782608695652174,
+    "siteBlocker": "",
+    "freeGeneralBeds": 0,
+    "queuedItems": 0,
+    "displacedResidents": 0,
+    "freshWater": false,
+    "constructionAccessBlocker": "",
+    "demolitionBlocksRemaining": 0
+  },
+  {
+    "elapsedTicks": 120000,
+    "builds": 0,
+    "population": 23,
+    "buildings": 13,
+    "project": "none",
+    "stock": "1 stone axe, 45 wheat seeds, 9 cobblestone, 1 crossbow, 1 stone hoe, 294 cooked beef, 126 logs, 1968 planks, 1 stone pickaxe, 332 dirt, 1 wheat",
+    "metrics": "",
+    "briefing": "You are the collective judgement of Redevelopment verification, a hamlet. 23 residents; 19 hold jobs; 4 work-eligible residents have no post. 19 independent beds total; 0 general beds free; 0 free live-in beds are reserved to their workplaces; 4 adult residents need independent housing. There are no pre-adults awaiting family housing. 4 adult residents are already unhoused. They cannot take open work unless that workplace has a free live-in bed; another workshop without beds would not house them, while a house would add general beds. Already standing: couple cottage x1, farm x3, house x5, lumberjack x1, mine x1, storehouse x1, village center x1. Open work: builder x2, farmer x2, guard x3. Attractiveness is high, but housing capacity currently blocks another newcomer. Food stores stand at 12.8 items per person. Trouble your workers currently report: your quartermaster Horace Floyd, for 16 days: \"I have no book and quill to keep at hand\"; your lumberjack Rowan Harris-Dyer, since today: \"I cannot get to my workbench.\"; your builder Owen Valencia-Buchanan, for 16 days: \"I have no crafting table to keep at hand\". ",
+    "standing": [
+      {
+        "id": "0cf0857f-c542-4d79-a2c7-20d6edf2e062",
+        "name": "house_plains_1",
+        "origin": 35184372613125
+      },
+      {
+        "id": "4cc3c899-cf2e-4793-8bc2-9d5c41fdc65b",
+        "name": "lumberjack_plains_1",
+        "origin": 42056320389125
+      },
+      {
+        "id": "762c1657-b15c-4f4c-9bb5-3dce9fec5c95",
+        "name": "farm_plains_1",
+        "origin": 35184372645893
+      },
+      {
+        "id": "7f1435fa-3925-494b-9ad8-4cedce4d5bf8",
+        "name": "farm_plains_1",
+        "origin": 35184372572165
+      },
+      {
+        "id": "96eed131-37fe-4336-84ed-706b3fef03d4",
+        "name": "storehouse_plains_1",
+        "origin": 28312424980485
+      },
+      {
+        "id": "ac21fb55-e730-4c04-8e81-83c8593f8fb0",
+        "name": "farm_plains_1",
+        "origin": 42056320286725
+      },
+      {
+        "id": "b8e68b62-bc71-42d2-9727-6c3bee3d849b",
+        "name": "house_plains_2",
+        "origin": 31885837852676
+      },
+      {
+        "id": "c8616cfa-bdf8-41ec-86a6-effd9e6aa63f",
+        "name": "house_plains_3",
+        "origin": 26938035478532
+      },
+      {
+        "id": "db208944-467c-4500-8bfe-f92661dedb96",
+        "name": "house_plains_3",
+        "origin": 29961692405764
+      },
+      {
+        "id": "efc6528a-8b8b-42f5-a09c-f73dfd0aa8ce",
+        "name": "mine_plains_1",
+        "origin": 26938035527685
+      },
+      {
+        "id": "f363db98-f04b-44e9-aff8-e9637db640f3",
+        "name": "house_plains_1",
+        "origin": 26113401749508
+      },
+      {
+        "id": "f4ce5355-13ef-43a6-ab9f-23d75b69d020",
+        "name": "couple_cottage_plains_1",
+        "origin": 31336082030596
+      },
+      {
+        "id": "f876b1b9-7f76-45aa-b92c-218ba5bf56ad",
+        "name": "village_center_plains_1",
+        "origin": 25563645767685
+      }
+    ],
+    "unhousedAdults": 4,
+    "staffedFoodPosts": 1,
+    "foodPerPerson": 12.782608695652174,
+    "siteBlocker": "",
+    "freeGeneralBeds": 0,
+    "queuedItems": 0,
+    "displacedResidents": 0,
+    "freshWater": false,
+    "constructionAccessBlocker": "",
+    "demolitionBlocksRemaining": 0
+  },
+  {
+    "elapsedTicks": 144000,
+    "builds": 0,
+    "population": 23,
+    "buildings": 13,
+    "project": "none",
+    "stock": "1 stone axe, 45 wheat seeds, 9 cobblestone, 1 crossbow, 1 stone hoe, 294 cooked beef, 126 logs, 2064 planks, 1 stone pickaxe, 346 dirt, 1 wheat",
+    "metrics": "",
+    "briefing": "You are the collective judgement of Redevelopment verification, a hamlet. 23 residents; 19 hold jobs; 4 work-eligible residents have no post. 19 independent beds total; 0 general beds free; 0 free live-in beds are reserved to their workplaces; 4 adult residents need independent housing. There are no pre-adults awaiting family housing. 4 adult residents are already unhoused. They cannot take open work unless that workplace has a free live-in bed; another workshop without beds would not house them, while a house would add general beds. Already standing: couple cottage x1, farm x3, house x5, lumberjack x1, mine x1, storehouse x1, village center x1. Open work: builder x2, farmer x2, guard x3. Attractiveness is high, but housing capacity currently blocks another newcomer. Food stores stand at 12.8 items per person. Trouble your workers currently report: your quartermaster Horace Floyd, for 17 days: \"I have no book and quill to keep at hand\"; your builder Owen Valencia-Buchanan, for 17 days: \"I have no crafting table to keep at hand\". ",
+    "standing": [
+      {
+        "id": "0cf0857f-c542-4d79-a2c7-20d6edf2e062",
+        "name": "house_plains_1",
+        "origin": 35184372613125
+      },
+      {
+        "id": "4cc3c899-cf2e-4793-8bc2-9d5c41fdc65b",
+        "name": "lumberjack_plains_1",
+        "origin": 42056320389125
+      },
+      {
+        "id": "762c1657-b15c-4f4c-9bb5-3dce9fec5c95",
+        "name": "farm_plains_1",
+        "origin": 35184372645893
+      },
+      {
+        "id": "7f1435fa-3925-494b-9ad8-4cedce4d5bf8",
+        "name": "farm_plains_1",
+        "origin": 35184372572165
+      },
+      {
+        "id": "96eed131-37fe-4336-84ed-706b3fef03d4",
+        "name": "storehouse_plains_1",
+        "origin": 28312424980485
+      },
+      {
+        "id": "ac21fb55-e730-4c04-8e81-83c8593f8fb0",
+        "name": "farm_plains_1",
+        "origin": 42056320286725
+      },
+      {
+        "id": "b8e68b62-bc71-42d2-9727-6c3bee3d849b",
+        "name": "house_plains_2",
+        "origin": 31885837852676
+      },
+      {
+        "id": "c8616cfa-bdf8-41ec-86a6-effd9e6aa63f",
+        "name": "house_plains_3",
+        "origin": 26938035478532
+      },
+      {
+        "id": "db208944-467c-4500-8bfe-f92661dedb96",
+        "name": "house_plains_3",
+        "origin": 29961692405764
+      },
+      {
+        "id": "efc6528a-8b8b-42f5-a09c-f73dfd0aa8ce",
+        "name": "mine_plains_1",
+        "origin": 26938035527685
+      },
+      {
+        "id": "f363db98-f04b-44e9-aff8-e9637db640f3",
+        "name": "house_plains_1",
+        "origin": 26113401749508
+      },
+      {
+        "id": "f4ce5355-13ef-43a6-ab9f-23d75b69d020",
+        "name": "couple_cottage_plains_1",
+        "origin": 31336082030596
+      },
+      {
+        "id": "f876b1b9-7f76-45aa-b92c-218ba5bf56ad",
+        "name": "village_center_plains_1",
+        "origin": 25563645767685
+      }
+    ],
+    "unhousedAdults": 4,
+    "staffedFoodPosts": 1,
+    "foodPerPerson": 12.782608695652174,
+    "siteBlocker": "",
+    "freeGeneralBeds": 0,
+    "queuedItems": 0,
+    "displacedResidents": 0,
+    "freshWater": false,
+    "constructionAccessBlocker": "",
+    "demolitionBlocksRemaining": 0
+  },
+  {
+    "elapsedTicks": 168000,
+    "builds": 0,
+    "population": 23,
+    "buildings": 13,
+    "project": "none",
+    "stock": "1 stone axe, 46 wheat seeds, 9 cobblestone, 1 crossbow, 1 stone hoe, 294 cooked beef, 126 logs, 2240 planks, 1 stone pickaxe, 333 dirt, 1 wheat",
+    "metrics": "",
+    "briefing": "You are the collective judgement of Redevelopment verification, a hamlet. 23 residents; 19 hold jobs; 4 work-eligible residents have no post. 19 independent beds total; 0 general beds free; 0 free live-in beds are reserved to their workplaces; 4 adult residents need independent housing. There are no pre-adults awaiting family housing. 4 adult residents are already unhoused. They cannot take open work unless that workplace has a free live-in bed; another workshop without beds would not house them, while a house would add general beds. Already standing: couple cottage x1, farm x3, house x5, lumberjack x1, mine x1, storehouse x1, village center x1. Open work: builder x2, farmer x2, guard x3. Attractiveness is high, but housing capacity currently blocks another newcomer. Food stores stand at 12.8 items per person. Trouble your workers currently report: your quartermaster Horace Floyd, for 18 days: \"I have no book and quill to keep at hand\"; your builder Owen Valencia-Buchanan, for 18 days: \"I have no crafting table to keep at hand\". ",
+    "standing": [
+      {
+        "id": "0cf0857f-c542-4d79-a2c7-20d6edf2e062",
+        "name": "house_plains_1",
+        "origin": 35184372613125
+      },
+      {
+        "id": "4cc3c899-cf2e-4793-8bc2-9d5c41fdc65b",
+        "name": "lumberjack_plains_1",
+        "origin": 42056320389125
+      },
+      {
+        "id": "762c1657-b15c-4f4c-9bb5-3dce9fec5c95",
+        "name": "farm_plains_1",
+        "origin": 35184372645893
+      },
+      {
+        "id": "7f1435fa-3925-494b-9ad8-4cedce4d5bf8",
+        "name": "farm_plains_1",
+        "origin": 35184372572165
+      },
+      {
+        "id": "96eed131-37fe-4336-84ed-706b3fef03d4",
+        "name": "storehouse_plains_1",
+        "origin": 28312424980485
+      },
+      {
+        "id": "ac21fb55-e730-4c04-8e81-83c8593f8fb0",
+        "name": "farm_plains_1",
+        "origin": 42056320286725
+      },
+      {
+        "id": "b8e68b62-bc71-42d2-9727-6c3bee3d849b",
+        "name": "house_plains_2",
+        "origin": 31885837852676
+      },
+      {
+        "id": "c8616cfa-bdf8-41ec-86a6-effd9e6aa63f",
+        "name": "house_plains_3",
+        "origin": 26938035478532
+      },
+      {
+        "id": "db208944-467c-4500-8bfe-f92661dedb96",
+        "name": "house_plains_3",
+        "origin": 29961692405764
+      },
+      {
+        "id": "efc6528a-8b8b-42f5-a09c-f73dfd0aa8ce",
+        "name": "mine_plains_1",
+        "origin": 26938035527685
+      },
+      {
+        "id": "f363db98-f04b-44e9-aff8-e9637db640f3",
+        "name": "house_plains_1",
+        "origin": 26113401749508
+      },
+      {
+        "id": "f4ce5355-13ef-43a6-ab9f-23d75b69d020",
+        "name": "couple_cottage_plains_1",
+        "origin": 31336082030596
+      },
+      {
+        "id": "f876b1b9-7f76-45aa-b92c-218ba5bf56ad",
+        "name": "village_center_plains_1",
+        "origin": 25563645767685
+      }
+    ],
+    "unhousedAdults": 4,
+    "staffedFoodPosts": 1,
+    "foodPerPerson": 12.782608695652174,
+    "siteBlocker": "",
+    "freeGeneralBeds": 0,
+    "queuedItems": 0,
+    "displacedResidents": 0,
+    "freshWater": false,
+    "constructionAccessBlocker": "",
+    "demolitionBlocksRemaining": 0
+  },
+  {
+    "elapsedTicks": 192000,
+    "builds": 0,
+    "population": 23,
+    "buildings": 13,
+    "project": "none",
+    "stock": "1 stone axe, 45 wheat seeds, 9 cobblestone, 1 crossbow, 1 stone hoe, 294 cooked beef, 118 logs, 2432 planks, 1 stone pickaxe, 333 dirt, 1 wheat",
+    "metrics": "",
+    "briefing": "You are the collective judgement of Redevelopment verification, a hamlet. 23 residents; 19 hold jobs; 4 work-eligible residents have no post. 19 independent beds total; 0 general beds free; 0 free live-in beds are reserved to their workplaces; 4 adult residents need independent housing. There are no pre-adults awaiting family housing. 4 adult residents are already unhoused. They cannot take open work unless that workplace has a free live-in bed; another workshop without beds would not house them, while a house would add general beds. Already standing: couple cottage x1, farm x3, house x5, lumberjack x1, mine x1, storehouse x1, village center x1. Open work: builder x2, farmer x2, guard x3. Attractiveness is high, but housing capacity currently blocks another newcomer. Food stores stand at 12.8 items per person. Trouble your workers currently report: your quartermaster Horace Floyd, for 19 days: \"I have no book and quill to keep at hand\"; your builder Owen Valencia-Buchanan, for 19 days: \"I have no crafting table to keep at hand\". ",
+    "standing": [
+      {
+        "id": "0cf0857f-c542-4d79-a2c7-20d6edf2e062",
+        "name": "house_plains_1",
+        "origin": 35184372613125
+      },
+      {
+        "id": "4cc3c899-cf2e-4793-8bc2-9d5c41fdc65b",
+        "name": "lumberjack_plains_1",
+        "origin": 42056320389125
+      },
+      {
+        "id": "762c1657-b15c-4f4c-9bb5-3dce9fec5c95",
+        "name": "farm_plains_1",
+        "origin": 35184372645893
+      },
+      {
+        "id": "7f1435fa-3925-494b-9ad8-4cedce4d5bf8",
+        "name": "farm_plains_1",
+        "origin": 35184372572165
+      },
+      {
+        "id": "96eed131-37fe-4336-84ed-706b3fef03d4",
+        "name": "storehouse_plains_1",
+        "origin": 28312424980485
+      },
+      {
+        "id": "ac21fb55-e730-4c04-8e81-83c8593f8fb0",
+        "name": "farm_plains_1",
+        "origin": 42056320286725
+      },
+      {
+        "id": "b8e68b62-bc71-42d2-9727-6c3bee3d849b",
+        "name": "house_plains_2",
+        "origin": 31885837852676
+      },
+      {
+        "id": "c8616cfa-bdf8-41ec-86a6-effd9e6aa63f",
+        "name": "house_plains_3",
+        "origin": 26938035478532
+      },
+      {
+        "id": "db208944-467c-4500-8bfe-f92661dedb96",
+        "name": "house_plains_3",
+        "origin": 29961692405764
+      },
+      {
+        "id": "efc6528a-8b8b-42f5-a09c-f73dfd0aa8ce",
+        "name": "mine_plains_1",
+        "origin": 26938035527685
+      },
+      {
+        "id": "f363db98-f04b-44e9-aff8-e9637db640f3",
+        "name": "house_plains_1",
+        "origin": 26113401749508
+      },
+      {
+        "id": "f4ce5355-13ef-43a6-ab9f-23d75b69d020",
+        "name": "couple_cottage_plains_1",
+        "origin": 31336082030596
+      },
+      {
+        "id": "f876b1b9-7f76-45aa-b92c-218ba5bf56ad",
+        "name": "village_center_plains_1",
+        "origin": 25563645767685
+      }
+    ],
+    "unhousedAdults": 4,
+    "staffedFoodPosts": 1,
+    "foodPerPerson": 12.782608695652174,
+    "siteBlocker": "",
+    "freeGeneralBeds": 0,
+    "queuedItems": 0,
+    "displacedResidents": 0,
+    "freshWater": false,
+    "constructionAccessBlocker": "",
+    "demolitionBlocksRemaining": 0
+  },
+  {
+    "elapsedTicks": 216000,
+    "builds": 0,
+    "population": 28,
+    "buildings": 13,
+    "project": "none",
+    "stock": "1 stone axe, 45 wheat seeds, 9 cobblestone, 1 crossbow, 1 stone hoe, 294 cooked beef, 126 logs, 2560 planks, 1 stone pickaxe, 348 dirt, 1 wheat",
+    "metrics": "",
+    "briefing": "You are the collective judgement of Redevelopment verification, a village. 28 residents; 19 hold jobs; 8 work-eligible residents have no post. 1 is a pre-adult; working teenagers also appear in the job counts. 19 independent beds total; 0 general beds free; 0 free live-in beds are reserved to their workplaces; 8 adult residents need independent housing. The pre-adult is housed with a resident parent. 8 adult residents are already unhoused. They cannot take open work unless that workplace has a free live-in bed; another workshop without beds would not house them, while a house would add general beds. Already standing: couple cottage x1, farm x3, house x5, lumberjack x1, mine x1, storehouse x1, village center x1. Open work: builder x2, farmer x2, guard x3. Attractiveness is high, but housing capacity currently blocks another newcomer. Food stores stand at 10.5 items per person. Trouble your workers currently report: your quartermaster Horace Floyd, for 20 days: \"I have no book and quill to keep at hand\"; your lumberjack Rowan Harris-Dyer, since today: \"I cannot get to my workbench.\"; your builder Owen Valencia-Buchanan, for 20 days: \"I have no crafting table to keep at hand\". ",
+    "standing": [
+      {
+        "id": "0cf0857f-c542-4d79-a2c7-20d6edf2e062",
+        "name": "house_plains_1",
+        "origin": 35184372613125
+      },
+      {
+        "id": "4cc3c899-cf2e-4793-8bc2-9d5c41fdc65b",
+        "name": "lumberjack_plains_1",
+        "origin": 42056320389125
+      },
+      {
+        "id": "762c1657-b15c-4f4c-9bb5-3dce9fec5c95",
+        "name": "farm_plains_1",
+        "origin": 35184372645893
+      },
+      {
+        "id": "7f1435fa-3925-494b-9ad8-4cedce4d5bf8",
+        "name": "farm_plains_1",
+        "origin": 35184372572165
+      },
+      {
+        "id": "96eed131-37fe-4336-84ed-706b3fef03d4",
+        "name": "storehouse_plains_1",
+        "origin": 28312424980485
+      },
+      {
+        "id": "ac21fb55-e730-4c04-8e81-83c8593f8fb0",
+        "name": "farm_plains_1",
+        "origin": 42056320286725
+      },
+      {
+        "id": "b8e68b62-bc71-42d2-9727-6c3bee3d849b",
+        "name": "house_plains_2",
+        "origin": 31885837852676
+      },
+      {
+        "id": "c8616cfa-bdf8-41ec-86a6-effd9e6aa63f",
+        "name": "house_plains_3",
+        "origin": 26938035478532
+      },
+      {
+        "id": "db208944-467c-4500-8bfe-f92661dedb96",
+        "name": "house_plains_3",
+        "origin": 29961692405764
+      },
+      {
+        "id": "efc6528a-8b8b-42f5-a09c-f73dfd0aa8ce",
+        "name": "mine_plains_1",
+        "origin": 26938035527685
+      },
+      {
+        "id": "f363db98-f04b-44e9-aff8-e9637db640f3",
+        "name": "house_plains_1",
+        "origin": 26113401749508
+      },
+      {
+        "id": "f4ce5355-13ef-43a6-ab9f-23d75b69d020",
+        "name": "couple_cottage_plains_1",
+        "origin": 31336082030596
+      },
+      {
+        "id": "f876b1b9-7f76-45aa-b92c-218ba5bf56ad",
+        "name": "village_center_plains_1",
+        "origin": 25563645767685
+      }
+    ],
+    "unhousedAdults": 8,
+    "staffedFoodPosts": 1,
+    "foodPerPerson": 10.5,
+    "siteBlocker": "",
+    "freeGeneralBeds": 0,
+    "queuedItems": 0,
+    "displacedResidents": 0,
+    "freshWater": false,
+    "constructionAccessBlocker": "",
+    "demolitionBlocksRemaining": 0
+  },
+  {
+    "elapsedTicks": 240000,
+    "builds": 0,
+    "population": 27,
+    "buildings": 13,
+    "project": "none",
+    "stock": "1 stone axe, 45 wheat seeds, 9 cobblestone, 1 crossbow, 1 stone hoe, 294 cooked beef, 118 logs, 2656 planks, 1 stone pickaxe, 346 dirt, 1 wheat",
+    "metrics": "",
+    "briefing": "You are the collective judgement of Redevelopment verification, a village. 27 residents; 19 hold jobs; 8 work-eligible residents have no post. 19 independent beds total; 0 general beds free; 0 free live-in beds are reserved to their workplaces; 8 adult residents need independent housing. There are no pre-adults awaiting family housing. 8 adult residents are already unhoused. They cannot take open work unless that workplace has a free live-in bed; another workshop without beds would not house them, while a house would add general beds. Already standing: couple cottage x1, farm x3, house x5, lumberjack x1, mine x1, storehouse x1, village center x1. Open work: builder x2, farmer x2, guard x3. Attractiveness is high, but housing capacity currently blocks another newcomer. Food stores stand at 10.9 items per person. Trouble your workers currently report: your quartermaster Horace Floyd, for 21 days: \"I have no book and quill to keep at hand\"; your builder Owen Valencia-Buchanan, for 21 days: \"I have no crafting table to keep at hand\". ",
+    "standing": [
+      {
+        "id": "0cf0857f-c542-4d79-a2c7-20d6edf2e062",
+        "name": "house_plains_1",
+        "origin": 35184372613125
+      },
+      {
+        "id": "4cc3c899-cf2e-4793-8bc2-9d5c41fdc65b",
+        "name": "lumberjack_plains_1",
+        "origin": 42056320389125
+      },
+      {
+        "id": "762c1657-b15c-4f4c-9bb5-3dce9fec5c95",
+        "name": "farm_plains_1",
+        "origin": 35184372645893
+      },
+      {
+        "id": "7f1435fa-3925-494b-9ad8-4cedce4d5bf8",
+        "name": "farm_plains_1",
+        "origin": 35184372572165
+      },
+      {
+        "id": "96eed131-37fe-4336-84ed-706b3fef03d4",
+        "name": "storehouse_plains_1",
+        "origin": 28312424980485
+      },
+      {
+        "id": "ac21fb55-e730-4c04-8e81-83c8593f8fb0",
+        "name": "farm_plains_1",
+        "origin": 42056320286725
+      },
+      {
+        "id": "b8e68b62-bc71-42d2-9727-6c3bee3d849b",
+        "name": "house_plains_2",
+        "origin": 31885837852676
+      },
+      {
+        "id": "c8616cfa-bdf8-41ec-86a6-effd9e6aa63f",
+        "name": "house_plains_3",
+        "origin": 26938035478532
+      },
+      {
+        "id": "db208944-467c-4500-8bfe-f92661dedb96",
+        "name": "house_plains_3",
+        "origin": 29961692405764
+      },
+      {
+        "id": "efc6528a-8b8b-42f5-a09c-f73dfd0aa8ce",
+        "name": "mine_plains_1",
+        "origin": 26938035527685
+      },
+      {
+        "id": "f363db98-f04b-44e9-aff8-e9637db640f3",
+        "name": "house_plains_1",
+        "origin": 26113401749508
+      },
+      {
+        "id": "f4ce5355-13ef-43a6-ab9f-23d75b69d020",
+        "name": "couple_cottage_plains_1",
+        "origin": 31336082030596
+      },
+      {
+        "id": "f876b1b9-7f76-45aa-b92c-218ba5bf56ad",
+        "name": "village_center_plains_1",
+        "origin": 25563645767685
+      }
+    ],
+    "unhousedAdults": 8,
+    "staffedFoodPosts": 1,
+    "foodPerPerson": 10.88888888888889,
+    "siteBlocker": "",
+    "freeGeneralBeds": 0,
+    "queuedItems": 0,
+    "displacedResidents": 0,
+    "freshWater": false,
+    "constructionAccessBlocker": "",
+    "demolitionBlocksRemaining": 0
+  },
+  {
+    "elapsedTicks": 264000,
+    "builds": 0,
+    "population": 27,
+    "buildings": 13,
+    "project": "none",
+    "stock": "1 stone axe, 45 wheat seeds, 9 cobblestone, 1 crossbow, 1 stone hoe, 294 cooked beef, 126 logs, 2816 planks, 1 stone pickaxe, 347 dirt, 1 wheat",
+    "metrics": "",
+    "briefing": "You are the collective judgement of Redevelopment verification, a village. 27 residents; 19 hold jobs; 8 work-eligible residents have no post. 19 independent beds total; 0 general beds free; 0 free live-in beds are reserved to their workplaces; 8 adult residents need independent housing. There are no pre-adults awaiting family housing. 8 adult residents are already unhoused. They cannot take open work unless that workplace has a free live-in bed; another workshop without beds would not house them, while a house would add general beds. Already standing: couple cottage x1, farm x3, house x5, lumberjack x1, mine x1, storehouse x1, village center x1. Open work: builder x2, farmer x2, guard x3. Attractiveness is high, but housing capacity currently blocks another newcomer. Food stores stand at 10.9 items per person. Trouble your workers currently report: your quartermaster Horace Floyd, for 22 days: \"I have no book and quill to keep at hand\"; your builder Owen Valencia-Buchanan, for 22 days: \"I have no crafting table to keep at hand\". ",
+    "standing": [
+      {
+        "id": "0cf0857f-c542-4d79-a2c7-20d6edf2e062",
+        "name": "house_plains_1",
+        "origin": 35184372613125
+      },
+      {
+        "id": "4cc3c899-cf2e-4793-8bc2-9d5c41fdc65b",
+        "name": "lumberjack_plains_1",
+        "origin": 42056320389125
+      },
+      {
+        "id": "762c1657-b15c-4f4c-9bb5-3dce9fec5c95",
+        "name": "farm_plains_1",
+        "origin": 35184372645893
+      },
+      {
+        "id": "7f1435fa-3925-494b-9ad8-4cedce4d5bf8",
+        "name": "farm_plains_1",
+        "origin": 35184372572165
+      },
+      {
+        "id": "96eed131-37fe-4336-84ed-706b3fef03d4",
+        "name": "storehouse_plains_1",
+        "origin": 28312424980485
+      },
+      {
+        "id": "ac21fb55-e730-4c04-8e81-83c8593f8fb0",
+        "name": "farm_plains_1",
+        "origin": 42056320286725
+      },
+      {
+        "id": "b8e68b62-bc71-42d2-9727-6c3bee3d849b",
+        "name": "house_plains_2",
+        "origin": 31885837852676
+      },
+      {
+        "id": "c8616cfa-bdf8-41ec-86a6-effd9e6aa63f",
+        "name": "house_plains_3",
+        "origin": 26938035478532
+      },
+      {
+        "id": "db208944-467c-4500-8bfe-f92661dedb96",
+        "name": "house_plains_3",
+        "origin": 29961692405764
+      },
+      {
+        "id": "efc6528a-8b8b-42f5-a09c-f73dfd0aa8ce",
+        "name": "mine_plains_1",
+        "origin": 26938035527685
+      },
+      {
+        "id": "f363db98-f04b-44e9-aff8-e9637db640f3",
+        "name": "house_plains_1",
+        "origin": 26113401749508
+      },
+      {
+        "id": "f4ce5355-13ef-43a6-ab9f-23d75b69d020",
+        "name": "couple_cottage_plains_1",
+        "origin": 31336082030596
+      },
+      {
+        "id": "f876b1b9-7f76-45aa-b92c-218ba5bf56ad",
+        "name": "village_center_plains_1",
+        "origin": 25563645767685
+      }
+    ],
+    "unhousedAdults": 8,
+    "staffedFoodPosts": 1,
+    "foodPerPerson": 10.88888888888889,
+    "siteBlocker": "",
+    "freeGeneralBeds": 0,
+    "queuedItems": 0,
+    "displacedResidents": 0,
+    "freshWater": false,
+    "constructionAccessBlocker": "",
+    "demolitionBlocksRemaining": 0
+  },
+  {
+    "elapsedTicks": 288000,
+    "builds": 0,
+    "population": 27,
+    "buildings": 13,
+    "project": "none",
+    "stock": "1 stone axe, 45 wheat seeds, 9 cobblestone, 1 crossbow, 1 stone hoe, 294 cooked beef, 126 logs, 2928 planks, 1 stone pickaxe, 332 dirt, 1 wheat",
+    "metrics": "",
+    "briefing": "You are the collective judgement of Redevelopment verification, a village. 27 residents; 19 hold jobs; 8 work-eligible residents have no post. 19 independent beds total; 0 general beds free; 0 free live-in beds are reserved to their workplaces; 8 adult residents need independent housing. There are no pre-adults awaiting family housing. 8 adult residents are already unhoused. They cannot take open work unless that workplace has a free live-in bed; another workshop without beds would not house them, while a house would add general beds. Already standing: couple cottage x1, farm x3, house x5, lumberjack x1, mine x1, storehouse x1, village center x1. Open work: builder x2, farmer x2, guard x3. Attractiveness is high, but housing capacity currently blocks another newcomer. Food stores stand at 10.9 items per person. Trouble your workers currently report: your quartermaster Horace Floyd, for 23 days: \"I have no book and quill to keep at hand\"; your builder Owen Valencia-Buchanan, for 23 days: \"I have no crafting table to keep at hand\". ",
+    "standing": [
+      {
+        "id": "0cf0857f-c542-4d79-a2c7-20d6edf2e062",
+        "name": "house_plains_1",
+        "origin": 35184372613125
+      },
+      {
+        "id": "4cc3c899-cf2e-4793-8bc2-9d5c41fdc65b",
+        "name": "lumberjack_plains_1",
+        "origin": 42056320389125
+      },
+      {
+        "id": "762c1657-b15c-4f4c-9bb5-3dce9fec5c95",
+        "name": "farm_plains_1",
+        "origin": 35184372645893
+      },
+      {
+        "id": "7f1435fa-3925-494b-9ad8-4cedce4d5bf8",
+        "name": "farm_plains_1",
+        "origin": 35184372572165
+      },
+      {
+        "id": "96eed131-37fe-4336-84ed-706b3fef03d4",
+        "name": "storehouse_plains_1",
+        "origin": 28312424980485
+      },
+      {
+        "id": "ac21fb55-e730-4c04-8e81-83c8593f8fb0",
+        "name": "farm_plains_1",
+        "origin": 42056320286725
+      },
+      {
+        "id": "b8e68b62-bc71-42d2-9727-6c3bee3d849b",
+        "name": "house_plains_2",
+        "origin": 31885837852676
+      },
+      {
+        "id": "c8616cfa-bdf8-41ec-86a6-effd9e6aa63f",
+        "name": "house_plains_3",
+        "origin": 26938035478532
+      },
+      {
+        "id": "db208944-467c-4500-8bfe-f92661dedb96",
+        "name": "house_plains_3",
+        "origin": 29961692405764
+      },
+      {
+        "id": "efc6528a-8b8b-42f5-a09c-f73dfd0aa8ce",
+        "name": "mine_plains_1",
+        "origin": 26938035527685
+      },
+      {
+        "id": "f363db98-f04b-44e9-aff8-e9637db640f3",
+        "name": "house_plains_1",
+        "origin": 26113401749508
+      },
+      {
+        "id": "f4ce5355-13ef-43a6-ab9f-23d75b69d020",
+        "name": "couple_cottage_plains_1",
+        "origin": 31336082030596
+      },
+      {
+        "id": "f876b1b9-7f76-45aa-b92c-218ba5bf56ad",
+        "name": "village_center_plains_1",
+        "origin": 25563645767685
+      }
+    ],
+    "unhousedAdults": 8,
+    "staffedFoodPosts": 1,
+    "foodPerPerson": 10.88888888888889,
+    "siteBlocker": "",
+    "freeGeneralBeds": 0,
+    "queuedItems": 0,
+    "displacedResidents": 0,
+    "freshWater": false,
+    "constructionAccessBlocker": "",
+    "demolitionBlocksRemaining": 0
+  }
+]

@@ -31,10 +31,10 @@ import net.minecraft.world.item.Items;
  * afford, what it is short of and which building would produce it, so the model
  * can see the chain for itself: a farm needs oak logs, oak logs come from a
  * lumberjack, so the lumberjack is the way to the farm. All of that is data,
- * derived from each building's cost and grants. The model is handed the whole
- * field of legal options with those facts attached and chooses among them; a
- * failed, slow, or absent model costs nothing but the flavour of the choice, and
- * the first thing the village could build stands in.
+ * derived from each building's cost and grants. Equivalent redevelopment placements
+ * are grouped, with an explicit preference for affordable placements that preserve
+ * services. The model still chooses the project and sees materially different
+ * tradeoffs. A failed, slow, or absent model can fall back only to ordinary construction.
  */
 public class UrbanPlanner {
 
@@ -180,8 +180,9 @@ public class UrbanPlanner {
     }
 
     // Everything the village could start this minute, and everything it could
-    // work toward. Neither list is ranked: the model is shown the whole field
-    // and decides for itself. Each option carries what it would give the village
+    // work toward. The model chooses the project; equivalent redevelopment
+    // placements are grouped and their service-preserving preference is explicit.
+    // Each option carries what it would give the village
     // (see describe), and a goal carries what it still needs and what would
     // produce it (see shortfall), so the model can weigh the chain.
     PlanningOptions planningOptions = optionsFor(village, stock);
@@ -215,6 +216,13 @@ public class UrbanPlanner {
     // for anything is indistinguishable from one that was never offered the
     // chance, and the same ambiguity hid a broken site search for a day.
     String situation = situationOf(village, stock);
+    if (includesRedevelopment) {
+      situation += "\nRedevelopment: gather the net payment before demolition. Contents are preserved; overflow waits"
+          + " for storage. Displaced residents use spare beds first, otherwise remain temporarily homeless; existing"
+          + " jobs outside removed workplaces can continue. Service facts hold current supplies fixed, not future yield."
+          + " Preferred placements for the same target favor affordability, then preserving services, then less"
+          + " displacement and demolition. Alternatives retain different capacity or material costs.";
+    }
     for (int index = 0; index < buildable.size() + goals.size(); index++) {
       Candidate candidate = index < buildable.size() ? buildable.get(index) : goals.get(index - buildable.size());
       RedevelopmentPlan plan = candidate.choice().redevelopment();
@@ -384,15 +392,25 @@ public class UrbanPlanner {
     List<Candidate> saveable = new ArrayList<>(outOfReach(village, stock));
     if (com.quzzar.kithkyn.configuration.KithkynConfig.RedevelopmentEnabled) {
       RedevelopmentPlanner.Search search = RedevelopmentPlanner.find(village);
-      Kithkyn.LOGGER.debug("[redevelopment-search] village={} examined={} generated={} refused={} budgetExhausted={} ms={}",
-          village.getName(), search.examined(), search.choices().size(), search.refused(), search.budgetExhausted(),
-          search.nanos() / 1_000_000.0);
-      for (ConstructionChoice choice : search.choices()) {
-        Candidate candidate = new Candidate(choice, RedevelopmentPlanner.describe(village, choice.redevelopment()));
-        if (hasMaterialsToConstruct(stock, choice)) {
+      List<ConstructionChoice> materialViable = search.choices().stream()
+          .filter(choice -> hasMaterialsToConstruct(stock, choice)
+              || withinReach(village, stock, choice)
+                  && !choice.info().getName().equals(VillageGoal.stalled(village, village.getVillageTime())))
+          .toList();
+      long groupingStart = System.nanoTime();
+      List<RedevelopmentAlternatives.Option> alternatives = RedevelopmentAlternatives.select(village, materialViable, stock);
+      long groupingNanos = System.nanoTime() - groupingStart;
+      Kithkyn.LOGGER.debug("[redevelopment-search] village={} examined={} generated={} materialViable={} retained={} refused={} budgetExhausted={} ms={} groupingMs={}",
+          village.getName(), search.examined(), search.choices().size(), materialViable.size(), alternatives.size(),
+          search.refused(), search.budgetExhausted(), search.nanos() / 1_000_000.0, groupingNanos / 1_000_000.0);
+      for (RedevelopmentAlternatives.Option alternative : alternatives) {
+        RedevelopmentAlternatives.Evaluated evaluated = alternative.evaluated();
+        ConstructionChoice choice = evaluated.choice();
+        Candidate candidate = new Candidate(choice, alternative.preference()
+            + RedevelopmentPlanner.describe(village, choice.redevelopment(), evaluated.impact()));
+        if (evaluated.affordable()) {
           affordable.add(candidate);
-        } else if (withinReach(village, stock, choice)
-            && !choice.info().getName().equals(VillageGoal.stalled(village, village.getVillageTime()))) {
+        } else {
           saveable.add(candidate);
         }
       }
@@ -561,66 +579,23 @@ public class UrbanPlanner {
     if (choice.mode() == ConstructionMode.UPGRADE) {
       Building standing = BuildingUpgrade.standingSource(village, choice.info());
       if (standing != null) {
-        return new Candidate(choice, BuildingUpgrade.describe(standing, choice.info()));
+        return new Candidate(choice, BuildingUpgrade.describe(village, standing, choice.info()));
       }
     }
-    return new Candidate(choice, describeFresh(choice.info()));
+    return new Candidate(choice, describeFresh(village, choice.info()));
   }
 
-  /**
-   * The datapack effects a building grants, in plain words: what it lets the
-   * village do or make, beyond the beds, jobs, and stores describe already reads
-   * off its structure. STORAGE is left out, as the container count already says it.
-   */
-  private static final Map<String, String> GRANT_EFFECT = Map.ofEntries(
-      Map.entry("WATER", "fresh water"),
-      Map.entry("ORES", "digs ore"),
-      Map.entry("FUEL", "makes fuel"),
-      Map.entry("PROTECTION", "defends the village"),
-      Map.entry("GRAIN", "grows grain"),
-      Map.entry("TRADE", "a place to trade"),
-      Map.entry("TRADE_INITIATIVE", "drums up trade"),
-      Map.entry("REPAIR", "mends gear"),
-      Map.entry("SMELTING", "smelts metal"),
-      Map.entry("CUT_STONE", "cuts stone"),
-      Map.entry("LOGS", "fells logs"),
-      Map.entry("PLANKS", "makes planks"),
-      Map.entry("MEAT", "provides meat"),
-      Map.entry("BREAD", "bakes bread"),
-      Map.entry("LEATHER", "tans leather"),
-      Map.entry("WOOL", "gives wool"),
-      Map.entry("HEALING", "heals the sick"),
-      Map.entry("WANDERERS", "draws newcomers"));
-
-  /** A plain-language option line: what it is, and what it would give the village. */
-  private static String describeFresh(BuildingInfo info) {
+  /** A plain-language option line with general housing distinct from live-in workplace beds. */
+  private static String describeFresh(Village village, BuildingInfo info) {
     String name = info.displayLabel();
-    List<String> gives = new ArrayList<>();
-    int bedCount = info.getBedLocations().size();
-    if (bedCount > 0) {
-      gives.add(bedCount + (bedCount == 1 ? " bed" : " beds"));
-    }
-    info.getWorkLocations().values().stream().distinct().forEach(occupation ->
-        gives.add("work for a " + occupation.name().toLowerCase()));
-    if (bedCount == 0 && !info.getWorkLocations().isEmpty()) {
-      gives.add("no beds");
-    }
-    int containers = info.getContainerLocations().size();
-    if (containers > 0) {
-      gives.add(containers == 1 ? "a store" : containers + " stores");
-    }
-    // What it lets the village do or make, on top of its beds/jobs/stores.
-    for (String grant : info.getGrants()) {
-      String effect = GRANT_EFFECT.get(grant);
-      if (effect != null) {
-        gives.add(effect);
-      }
-    }
     String subject = info.hasWellFormedId() && info.getLevel() > 1
         ? "a new level " + info.getLevel() + " " + name + " on a separate site"
         : "a " + name;
-    String base = gives.isEmpty() ? subject : subject + " (" + String.join(", ", gives) + ")";
-    return base + unlockNote(info);
+    String jobs = info.getWorkLocations().values().stream().distinct().sorted()
+        .map(occupation -> occupation.name().toLowerCase()).collect(java.util.stream.Collectors.joining(", "));
+    return subject + " (adds " + BuildingImpact.capacity(village, info).describe(false)
+        + (jobs.isEmpty() ? "" : "; jobs: " + jobs)
+        + "; provides " + BuildingImpact.describeServices(info.getGrants()) + ")" + unlockNote(info);
   }
 
   /**

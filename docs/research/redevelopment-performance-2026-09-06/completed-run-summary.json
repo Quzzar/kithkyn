@@ -1,0 +1,392 @@
+{
+  "checkedAt": "2026-09-06T06:27:59.156328+00:00",
+  "studyStatus": "complete",
+  "runs": {
+    "housing-on-1": {
+      "funnel": {
+        "offered": 1,
+        "chosen": 1,
+        "started": 1,
+        "committed": 1,
+        "buildings_removed": 2,
+        "completed": 1
+      },
+      "planningCallsWithOffers": 1,
+      "planningRequests": 5,
+      "planningReplies": 5,
+      "examinedGeneratedMaterialViableRetained": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "maxSearchMs": 135.353083,
+      "maxGroupingMs": 20.095292,
+      "maxEvaluatedPromptTokens": 2060,
+      "contextOrBenchmarkErrors": [],
+      "final": {
+        "builds": 5,
+        "population": 15,
+        "project": "none",
+        "unhousedAdults": 4,
+        "staffedFoodPosts": 1,
+        "foodPerPerson": 23.2,
+        "freeGeneralBeds": 0,
+        "queuedItems": 0,
+        "displacedResidents": 0,
+        "freshWater": false
+      },
+      "fixedHorizonAndCountersVerified": true
+    },
+    "housing-off-1": {
+      "funnel": {},
+      "planningCallsWithOffers": 0,
+      "planningRequests": 5,
+      "planningReplies": 5,
+      "examinedGeneratedMaterialViableRetained": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "maxSearchMs": 0,
+      "maxGroupingMs": 0,
+      "maxEvaluatedPromptTokens": 1457,
+      "contextOrBenchmarkErrors": [],
+      "final": {
+        "builds": 5,
+        "population": 11,
+        "project": "none",
+        "unhousedAdults": 4,
+        "staffedFoodPosts": 1,
+        "foodPerPerson": 34.36363636363637,
+        "freeGeneralBeds": 0,
+        "queuedItems": 0,
+        "displacedResidents": 0,
+        "freshWater": false
+      },
+      "fixedHorizonAndCountersVerified": true
+    },
+    "opportunity-on-1": {
+      "funnel": {
+        "offered": 1,
+        "declined": 1
+      },
+      "planningCallsWithOffers": 1,
+      "planningRequests": 1,
+      "planningReplies": 1,
+      "examinedGeneratedMaterialViableRetained": [
+        2,
+        1,
+        1,
+        1
+      ],
+      "maxSearchMs": 52.160458,
+      "maxGroupingMs": 12.835708,
+      "maxEvaluatedPromptTokens": 2035,
+      "contextOrBenchmarkErrors": [],
+      "final": {
+        "builds": 0,
+        "population": 4,
+        "project": "storehouse_plains_2:IN_PROGRESS_PAUSED",
+        "unhousedAdults": 0,
+        "staffedFoodPosts": 0,
+        "foodPerPerson": 0.0,
+        "freeGeneralBeds": 5,
+        "queuedItems": 0,
+        "displacedResidents": 0,
+        "freshWater": true
+      },
+      "fixedHorizonAndCountersVerified": true
+    },
+    "opportunity-off-1": {
+      "funnel": {},
+      "planningCallsWithOffers": 0,
+      "planningRequests": 6,
+      "planningReplies": 6,
+      "examinedGeneratedMaterialViableRetained": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "maxSearchMs": 0,
+      "maxGroupingMs": 0,
+      "maxEvaluatedPromptTokens": 1158,
+      "contextOrBenchmarkErrors": [],
+      "final": {
+        "builds": 5,
+        "population": 4,
+        "project": "farm_plains_1:IN_PROGRESS_WORKING",
+        "unhousedAdults": 0,
+        "staffedFoodPosts": 2,
+        "foodPerPerson": 0.0,
+        "freeGeneralBeds": 4,
+        "queuedItems": 0,
+        "displacedResidents": 0,
+        "freshWater": true
+      },
+      "fixedHorizonAndCountersVerified": true
+    },
+    "established-on-1": {
+      "funnel": {
+        "offered": 11,
+        "declined": 1,
+        "no_answer": 10
+      },
+      "planningCallsWithOffers": 11,
+      "planningRequests": 13,
+      "planningReplies": 13,
+      "examinedGeneratedMaterialViableRetained": [
+        786,
+        11,
+        11,
+        11
+      ],
+      "maxSearchMs": 253.520584,
+      "maxGroupingMs": 65.851292,
+      "maxEvaluatedPromptTokens": 2408,
+      "contextOrBenchmarkErrors": [],
+      "final": {
+        "builds": 1,
+        "population": 27,
+        "project": "none",
+        "unhousedAdults": 8,
+        "staffedFoodPosts": 1,
+        "foodPerPerson": 11.814814814814815,
+        "freeGeneralBeds": 0,
+        "queuedItems": 0,
+        "displacedResidents": 0,
+        "freshWater": false
+      },
+      "fixedHorizonAndCountersVerified": true
+    },
+    "established-off-1": {
+      "funnel": {},
+      "planningCallsWithOffers": 0,
+      "planningRequests": 10,
+      "planningReplies": 10,
+      "examinedGeneratedMaterialViableRetained": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "maxSearchMs": 0,
+      "maxGroupingMs": 0,
+      "maxEvaluatedPromptTokens": 1312,
+      "contextOrBenchmarkErrors": [],
+      "final": {
+        "builds": 1,
+        "population": 27,
+        "project": "none",
+        "unhousedAdults": 8,
+        "staffedFoodPosts": 1,
+        "foodPerPerson": 10.88888888888889,
+        "freeGeneralBeds": 0,
+        "queuedItems": 0,
+        "displacedResidents": 0,
+        "freshWater": true
+      },
+      "fixedHorizonAndCountersVerified": true
+    },
+    "housing-off-2": {
+      "funnel": {},
+      "planningCallsWithOffers": 0,
+      "planningRequests": 5,
+      "planningReplies": 5,
+      "examinedGeneratedMaterialViableRetained": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "maxSearchMs": 0,
+      "maxGroupingMs": 0,
+      "maxEvaluatedPromptTokens": 1327,
+      "contextOrBenchmarkErrors": [],
+      "final": {
+        "builds": 5,
+        "population": 15,
+        "project": "none",
+        "unhousedAdults": 8,
+        "staffedFoodPosts": 1,
+        "foodPerPerson": 25.2,
+        "freeGeneralBeds": 0,
+        "queuedItems": 0,
+        "displacedResidents": 0,
+        "freshWater": false
+      },
+      "fixedHorizonAndCountersVerified": true
+    },
+    "housing-on-2": {
+      "funnel": {
+        "offered": 1,
+        "chosen": 1,
+        "started": 1,
+        "committed": 1,
+        "buildings_removed": 2,
+        "completed": 1
+      },
+      "planningCallsWithOffers": 1,
+      "planningRequests": 5,
+      "planningReplies": 5,
+      "examinedGeneratedMaterialViableRetained": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "maxSearchMs": 355.058458,
+      "maxGroupingMs": 9.844375,
+      "maxEvaluatedPromptTokens": 2061,
+      "contextOrBenchmarkErrors": [],
+      "final": {
+        "builds": 5,
+        "population": 15,
+        "project": "none",
+        "unhousedAdults": 4,
+        "staffedFoodPosts": 1,
+        "foodPerPerson": 22.8,
+        "freeGeneralBeds": 0,
+        "queuedItems": 0,
+        "displacedResidents": 0,
+        "freshWater": false
+      },
+      "fixedHorizonAndCountersVerified": true
+    },
+    "opportunity-off-2": {
+      "funnel": {},
+      "planningCallsWithOffers": 0,
+      "planningRequests": 5,
+      "planningReplies": 5,
+      "examinedGeneratedMaterialViableRetained": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "maxSearchMs": 0,
+      "maxGroupingMs": 0,
+      "maxEvaluatedPromptTokens": 1303,
+      "contextOrBenchmarkErrors": [],
+      "final": {
+        "builds": 5,
+        "population": 13,
+        "project": "none",
+        "unhousedAdults": 4,
+        "staffedFoodPosts": 2,
+        "foodPerPerson": 7.230769230769231,
+        "freeGeneralBeds": 0,
+        "queuedItems": 0,
+        "displacedResidents": 0,
+        "freshWater": true
+      },
+      "fixedHorizonAndCountersVerified": true
+    },
+    "opportunity-on-2": {
+      "funnel": {
+        "offered": 2,
+        "chosen": 1,
+        "started": 1,
+        "committed": 1,
+        "buildings_removed": 2,
+        "completed": 1,
+        "declined": 1
+      },
+      "planningCallsWithOffers": 2,
+      "planningRequests": 4,
+      "planningReplies": 4,
+      "examinedGeneratedMaterialViableRetained": [
+        194,
+        4,
+        4,
+        2
+      ],
+      "maxSearchMs": 79.427417,
+      "maxGroupingMs": 12.255583,
+      "maxEvaluatedPromptTokens": 2242,
+      "contextOrBenchmarkErrors": [],
+      "final": {
+        "builds": 5,
+        "population": 15,
+        "project": "none",
+        "unhousedAdults": 3,
+        "staffedFoodPosts": 2,
+        "foodPerPerson": 1.1333333333333333,
+        "freeGeneralBeds": 0,
+        "queuedItems": 0,
+        "displacedResidents": 0,
+        "freshWater": false
+      },
+      "fixedHorizonAndCountersVerified": true
+    },
+    "established-off-2": {
+      "funnel": {},
+      "planningCallsWithOffers": 0,
+      "planningRequests": 11,
+      "planningReplies": 11,
+      "examinedGeneratedMaterialViableRetained": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "maxSearchMs": 0,
+      "maxGroupingMs": 0,
+      "maxEvaluatedPromptTokens": 1313,
+      "contextOrBenchmarkErrors": [],
+      "final": {
+        "builds": 0,
+        "population": 27,
+        "project": "none",
+        "unhousedAdults": 8,
+        "staffedFoodPosts": 1,
+        "foodPerPerson": 10.88888888888889,
+        "freeGeneralBeds": 0,
+        "queuedItems": 0,
+        "displacedResidents": 0,
+        "freshWater": false
+      },
+      "fixedHorizonAndCountersVerified": true
+    },
+    "established-on-2": {
+      "funnel": {
+        "offered": 5,
+        "declined": 3,
+        "no_answer": 1,
+        "chosen": 1,
+        "started": 1,
+        "committed": 1,
+        "buildings_removed": 1,
+        "completed": 1
+      },
+      "planningCallsWithOffers": 5,
+      "planningRequests": 7,
+      "planningReplies": 7,
+      "examinedGeneratedMaterialViableRetained": [
+        672,
+        5,
+        5,
+        5
+      ],
+      "maxSearchMs": 42.654625,
+      "maxGroupingMs": 2.158792,
+      "maxEvaluatedPromptTokens": 2288,
+      "contextOrBenchmarkErrors": [],
+      "final": {
+        "builds": 3,
+        "population": 23,
+        "project": "none",
+        "unhousedAdults": 6,
+        "staffedFoodPosts": 1,
+        "foodPerPerson": 12.782608695652174,
+        "freeGeneralBeds": 0,
+        "queuedItems": 0,
+        "displacedResidents": 0,
+        "freshWater": true
+      },
+      "fixedHorizonAndCountersVerified": true
+    }
+  }
+}

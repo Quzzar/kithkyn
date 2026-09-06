@@ -45,7 +45,8 @@ public final class BuildStep implements BlockWorkStep {
     if (project.getProgress() == BuildProgress.GATHERING) {
       return null;
     }
-    return BlockPos.of(project.getBuilding().getCenterLocation());
+    return project.getRedevelopment() == null ? BlockPos.of(project.getBuilding().getCenterLocation())
+        : project.constructionAccess().select(person, project);
   }
 
   @Override
@@ -60,6 +61,10 @@ public final class BuildStep implements BlockWorkStep {
   public boolean act(RealPerson person, BlockPos target) {
     StructureInProgress project = project(person);
     if (project == null || project.getProgress() == BuildProgress.COMPLETE) {
+      return false;
+    }
+    if (project.getRedevelopment() != null && !project.constructionAccess().safe(person, target)) {
+      project.constructionAccess().unreachable(person, target);
       return false;
     }
     if (project.getProgress() == BuildProgress.DEMOLISHING) {
@@ -107,6 +112,22 @@ public final class BuildStep implements BlockWorkStep {
     StructureInProgress project = project(person);
     if (project != null) {
       project.stopBuilding();
+    }
+  }
+
+  @Override
+  public boolean inReach(RealPerson person, BlockPos target) {
+    StructureInProgress project = project(person);
+    return project != null && project.getRedevelopment() != null
+        ? project.constructionAccess().inReach(person, target)
+        : BlockWorkStep.super.inReach(person, target);
+  }
+
+  @Override
+  public void unreachable(RealPerson person, BlockPos target) {
+    StructureInProgress project = project(person);
+    if (project != null && project.getRedevelopment() != null) {
+      project.constructionAccess().unreachable(person, target);
     }
   }
 

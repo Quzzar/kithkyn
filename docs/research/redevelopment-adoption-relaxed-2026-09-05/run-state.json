@@ -1,0 +1,99 @@
+{
+  "baseline": "73b5b4d19b88858ab094d95a71c5fd7f40e14172",
+  "order": [
+    "housing-on",
+    "housing-off",
+    "opportunity-on",
+    "opportunity-off",
+    "growth-on",
+    "growth-off"
+  ],
+  "jobs": {
+    "seed-housing": {
+      "status": "complete",
+      "pid": 14070,
+      "startedAt": "2026-09-05T22:30:46.475134+00:00",
+      "runDirectory": "/Users/quzzar/Projects/kithkyn/run/redevelopment-adoption-2026-09-05/seed-housing",
+      "log": "/Users/quzzar/Projects/kithkyn/run/redevelopment-adoption-2026-09-05/seed-housing.log",
+      "finishedAt": "2026-09-05T22:31:41.005881+00:00",
+      "exitCode": 143
+    },
+    "seed-opportunity": {
+      "status": "complete",
+      "pid": 14178,
+      "startedAt": "2026-09-05T22:31:41.015357+00:00",
+      "runDirectory": "/Users/quzzar/Projects/kithkyn/run/redevelopment-adoption-2026-09-05/seed-opportunity",
+      "log": "/Users/quzzar/Projects/kithkyn/run/redevelopment-adoption-2026-09-05/seed-opportunity.log",
+      "finishedAt": "2026-09-05T22:32:26.577163+00:00",
+      "exitCode": 143
+    },
+    "seed-growth": {
+      "status": "complete",
+      "pid": 14318,
+      "startedAt": "2026-09-05T22:32:26.583544+00:00",
+      "runDirectory": "/Users/quzzar/Projects/kithkyn/run/redevelopment-adoption-2026-09-05/seed-growth",
+      "log": "/Users/quzzar/Projects/kithkyn/run/redevelopment-adoption-2026-09-05/seed-growth.log",
+      "finishedAt": "2026-09-05T22:33:45.190292+00:00",
+      "exitCode": 143
+    },
+    "housing-on": {
+      "status": "complete",
+      "pid": 14445,
+      "startedAt": "2026-09-05T22:33:45.221656+00:00",
+      "runDirectory": "/Users/quzzar/Projects/kithkyn/run/redevelopment-adoption-2026-09-05/housing-on",
+      "log": "/Users/quzzar/Projects/kithkyn/run/redevelopment-adoption-2026-09-05/housing-on.log",
+      "finishedAt": "2026-09-05T22:44:38.021759+00:00",
+      "exitCode": 143
+    },
+    "housing-off": {
+      "status": "complete",
+      "pid": 16204,
+      "startedAt": "2026-09-05T22:44:50.089994+00:00",
+      "runDirectory": "/Users/quzzar/Projects/kithkyn/run/redevelopment-adoption-2026-09-05/housing-off",
+      "log": "/Users/quzzar/Projects/kithkyn/run/redevelopment-adoption-2026-09-05/housing-off.log",
+      "finishedAt": "2026-09-05T23:48:47.661090+00:00",
+      "exitCode": 143
+    },
+    "opportunity-on": {
+      "status": "complete",
+      "pid": 25019,
+      "startedAt": "2026-09-05T23:48:47.692390+00:00",
+      "runDirectory": "/Users/quzzar/Projects/kithkyn/run/redevelopment-adoption-2026-09-05/opportunity-on",
+      "log": "/Users/quzzar/Projects/kithkyn/run/redevelopment-adoption-2026-09-05/opportunity-on.log",
+      "finishedAt": "2026-09-06T00:06:07.811569+00:00",
+      "exitCode": 143
+    },
+    "opportunity-off": {
+      "status": "complete",
+      "pid": 26208,
+      "startedAt": "2026-09-06T00:06:20.959771+00:00",
+      "runDirectory": "/Users/quzzar/Projects/kithkyn/run/redevelopment-adoption-2026-09-05/opportunity-off",
+      "log": "/Users/quzzar/Projects/kithkyn/run/redevelopment-adoption-2026-09-05/opportunity-off.log",
+      "finishedAt": "2026-09-06T00:15:40.531756+00:00",
+      "exitCode": 143
+    },
+    "growth-on": {
+      "status": "complete",
+      "pid": 27147,
+      "startedAt": "2026-09-06T00:15:51.605245+00:00",
+      "runDirectory": "/Users/quzzar/Projects/kithkyn/run/redevelopment-adoption-2026-09-05/growth-on",
+      "log": "/Users/quzzar/Projects/kithkyn/run/redevelopment-adoption-2026-09-05/growth-on.log",
+      "finishedAt": "2026-09-06T00:22:01.952206+00:00",
+      "exitCode": 143
+    },
+    "growth-off": {
+      "status": "complete",
+      "pid": 27638,
+      "startedAt": "2026-09-06T00:22:02.019764+00:00",
+      "runDirectory": "/Users/quzzar/Projects/kithkyn/run/redevelopment-adoption-2026-09-05/growth-off",
+      "log": "/Users/quzzar/Projects/kithkyn/run/redevelopment-adoption-2026-09-05/growth-off.log",
+      "finishedAt": "2026-09-06T00:29:18.329103+00:00",
+      "exitCode": 143
+    }
+  },
+  "createdAt": "2026-09-05T22:30:46.442213+00:00",
+  "status": "complete",
+  "runnerPid": 14055,
+  "updatedAt": "2026-09-06T00:29:29.378055+00:00",
+  "active": null
+}

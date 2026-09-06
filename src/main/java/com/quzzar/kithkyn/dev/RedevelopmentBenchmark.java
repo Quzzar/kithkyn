@@ -55,6 +55,13 @@ public final class RedevelopmentBenchmark {
   private static long lastCompletion;
   private static int builds;
   private static final List<Observation> observations = new ArrayList<>();
+  private static final List<Transition> transitions = new ArrayList<>();
+  private static String lastProjectStage = "";
+
+  /** Stage boundaries retain short disruptions that can fall between daily observations. */
+  private record Transition(long elapsedTicks, String project, String stage, int unhousedAdults,
+      int queuedItems, int displacedResidents, boolean freshWater, int staffedFoodPosts) {
+  }
 
   private RedevelopmentBenchmark() {
   }
@@ -66,7 +73,17 @@ public final class RedevelopmentBenchmark {
       return;
     }
     try {
-      if (MODE.equals("seed")) {
+      if (!MODE.equals("model")) {
+        for (int x = 2; x <= 18; x++) {
+          for (int z = 2; z <= 18; z++) {
+            server.overworld().setChunkForced(x, z, true);
+          }
+        }
+      }
+      if (MODE.equals("seed-housing")) {
+        seedHousing(server.overworld());
+        server.halt(false);
+      } else if (MODE.equals("seed")) {
         seed(server.overworld());
         server.halt(false);
       } else if (MODE.equals("seed-opportunity") || MODE.equals("seed-growth")) {
@@ -123,6 +140,33 @@ public final class RedevelopmentBenchmark {
     }
     Kithkyn.LOGGER.info("[redevelopment-benchmark] seed population={} buildings={} stock={}",
         village.getPopulation().size(), village.getBuildings().size(), village.stockTally());
+  }
+
+  /** An occupied, blocked house upgrade with no spare general beds and a real housing shortage. */
+  private static void seedHousing(ServerLevel level) throws Exception {
+    seed(level);
+    Village village = VillageManager.get(level).getVillages().values().iterator().next();
+    spawnFixtureResident(level, village, Occupation.WANDERER, 6);
+    // Run only ordinary housing reconciliation; setup must not trigger a construction choice.
+    var reconcile = Village.class.getDeclaredMethod("reconcileBeds");
+    reconcile.setAccessible(true);
+    reconcile.invoke(village);
+    village.devBuildWall(com.quzzar.kithkyn.village.buildings.WallTier.STONE);
+    level.getServer().getWorldData().overworldData().setGameTime(144_000L);
+    Building source = village.getBuildings().stream().filter(building -> building.getName().equals("house_plains_1"))
+        .findFirst().orElseThrow();
+    BlockPos ground = BlockPos.of(source.getOriginLocation()).above(source.getInfo().getSink()).offset(0, 0, -2);
+    var assessment = RedevelopmentPlanner.assess(village, Buildings.getByName("house_plains_2"), source, ground, source.getRotation());
+    if (village.getFreeGeneralBedCount() != 0 || village.getUnhousedAdultResidentCount() < 1
+        || village.getBedAssignmentsView().values().stream().noneMatch(bed -> bed.getBuildingUUID().equals(source.getUUID()))
+        || assessment.plan().isEmpty()) {
+      throw new IllegalStateException("Housing opportunity preflight failed: " + assessment.reason());
+    }
+    write("redevelopment-initial-opportunity.json", List.of(RedevelopmentPlanner.label(assessment.plan().orElseThrow()),
+        RedevelopmentPlanner.describe(village, assessment.plan().orElseThrow())));
+    write("redevelopment-initial-state.json", VillageContextSnapshot.capture(village, village.stockTally()).plannerBriefing());
+    Kithkyn.LOGGER.info("[redevelopment-benchmark] seeded scenario=housing population={} buildings={} freeBeds={} unhoused={}",
+        village.getPopulation().size(), village.getBuildings().size(), village.getFreeGeneralBedCount(), village.getUnhousedAdultResidentCount());
   }
 
   /** Seeds facts once; subsequent planning, material gathering and construction remain autonomous. */
@@ -299,7 +343,9 @@ public final class RedevelopmentBenchmark {
 
   private record Observation(long elapsedTicks, int builds, int population, int buildings, String project,
       String stock, String metrics, String briefing, List<BuildingObservation> standing,
-      int unhousedAdults, int staffedFoodPosts, double foodPerPerson, String siteBlocker) {
+      int unhousedAdults, int staffedFoodPosts, double foodPerPerson, String siteBlocker,
+      int freeGeneralBeds, int queuedItems, int displacedResidents, boolean freshWater,
+      String constructionAccessBlocker, int demolitionBlocksRemaining) {
   }
 
   @SubscribeEvent
@@ -342,11 +388,34 @@ public final class RedevelopmentBenchmark {
       lastCompletion = village.getLastBuildCompletedTime();
       builds++;
     }
+    var activeProject = village.getCurrentProject();
+    String stage = activeProject == null ? "none" : switch (activeProject.getProgress()) {
+      case IN_PROGRESS_PAUSED, IN_PROGRESS_WORKING -> "CONSTRUCTING";
+      default -> activeProject.getProgress().name();
+    };
+    String projectStage = activeProject == null ? "none"
+        : activeProject.getBuilding().getUUID() + ":" + stage;
+    if (!projectStage.equals(lastProjectStage)) {
+      lastProjectStage = projectStage;
+      transitions.add(new Transition(elapsed, activeProject == null ? "none" : activeProject.getBuilding().getName(),
+          stage, village.getUnhousedAdultResidentCount(),
+          village.pendingRedevelopmentItems().stream().mapToInt(ItemStack::getCount).sum(),
+          (int) village.getPopulation().stream().filter(village::keepsWorkDuringRedevelopment).count(),
+          village.canDo("WATER"), (int) village.getJobAssignmentsView().values().stream()
+              .filter(job -> List.of(Occupation.FARMER, Occupation.FISHER, Occupation.HUNTER).contains(job.getOccupation())).count()));
+      try {
+        write("redevelopment-transitions.json", transitions);
+      } catch (java.io.IOException failure) {
+        throw new IllegalStateException("Cannot write benchmark transitions", failure);
+      }
+      Kithkyn.LOGGER.info("[redevelopment-transition] {}", transitions.getLast());
+    }
     if (elapsed / 24_000 != lastDay || elapsed >= HORIZON) {
       lastDay = elapsed / 24_000;
       var project = village.getCurrentProject();
       var strategy = village.getBrain().getStrategy();
-      String metrics = strategy.getAllKeys().stream().filter(key -> key.startsWith("redevelopment_"))
+      String metrics = strategy.getAllKeys().stream().filter(key -> key.startsWith("redevelopment_")
+          && !key.equals("redevelopment_refund"))
           .sorted().map(key -> key + "=" + strategy.get(key)).collect(java.util.stream.Collectors.joining(";"));
       Observation observation = new Observation(elapsed, builds, village.getPopulation().size(),
           village.getBuildings().size(), project == null ? "none" : project.getBuilding().getName() + ":" + project.getProgress(),
@@ -357,7 +426,11 @@ public final class RedevelopmentBenchmark {
               building.getName(), building.getOriginLocation())).sorted(java.util.Comparator.comparing(BuildingObservation::id)).toList(),
           village.getUnhousedAdultResidentCount(), (int) village.getJobAssignmentsView().values().stream()
               .filter(job -> List.of(Occupation.FARMER, Occupation.FISHER, Occupation.HUNTER).contains(job.getOccupation())).count(),
-          village.getAttractiveness().foodPerCapita(), project == null ? "" : project.siteBlocker());
+          village.getAttractiveness().foodPerCapita(), project == null ? "" : project.siteBlocker(),
+          village.getFreeGeneralBedCount(), village.pendingRedevelopmentItems().stream().mapToInt(ItemStack::getCount).sum(),
+          (int) village.getPopulation().stream().filter(village::keepsWorkDuringRedevelopment).count(), village.canDo("WATER"),
+          project == null ? "" : project.constructionAccess().failureReason(),
+          project == null || project.getRedevelopment() == null ? 0 : project.getRedevelopment().remainingBlocks());
       observations.add(observation);
       try {
         write("redevelopment-timelapse-results.json", observations);

@@ -11,7 +11,6 @@ import java.util.Set;
 import javax.annotation.Nullable;
 
 import com.quzzar.kithkyn.Kithkyn;
-import com.quzzar.kithkyn.village.Occupation;
 import com.quzzar.kithkyn.village.Village;
 
 import net.minecraft.core.BlockPos;
@@ -271,43 +270,17 @@ public final class BuildingUpgrade {
     return StorageEvacuation.evacuate(village, List.of(from));
   }
 
-  /** What the village would gain, in the model's own terms. */
-  public static String describe(Building from, BuildingInfo to) {
+  /** The same net-capacity facts used for fresh construction and redevelopment. */
+  public static String describe(Village village, Building from, BuildingInfo to) {
     BuildingInfo current = from.getInfo();
     String name = to.displayLabel();
     String target = to.hasWellFormedId() ? "level " + to.getLevel() + " " + name : name;
     if (current == null) {
       return "an on-site " + target + " upgrade";
     }
-    List<String> gains = new ArrayList<>();
-    int beds = to.getBedLocations().size() - current.getBedLocations().size();
-    if (beds > 0) {
-      gains.add(beds + (beds == 1 ? " more bed" : " more beds"));
-    }
-    int stores = to.getContainerLocations().size() - current.getContainerLocations().size();
-    if (stores > 0) {
-      gains.add(stores == 1 ? "another store" : stores + " more stores");
-    }
-    for (Occupation occupation : to.getWorkLocations().values().stream().distinct().toList()) {
-      int added = count(to, occupation) - count(current, occupation);
-      if (added > 0) {
-        gains.add("work for " + (added == 1 ? "another " : added + " more ")
-            + occupation.name().toLowerCase());
-      }
-    }
-    return gains.isEmpty()
-        ? "an on-site " + target + " upgrade"
-        : "an on-site " + target + " upgrade (" + String.join(", ", gains) + ")";
-  }
-
-  private static int count(BuildingInfo info, Occupation occupation) {
-    int count = 0;
-    for (Occupation station : info.getWorkLocations().values()) {
-      if (station == occupation) {
-        count++;
-      }
-    }
-    return count;
+    BuildingImpact.Capacity net = BuildingImpact.net(village, to, List.of(from));
+    return "an on-site " + target + " upgrade (net " + net.describe(true)
+        + "; provides " + BuildingImpact.describeServices(to.getGrants()) + ")";
   }
 
   /** The footprint a standing building actually occupies, in its own frame. */

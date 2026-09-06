@@ -1,0 +1,21 @@
+[20:17:09] [Server thread/DEBUG] [co.qu.ki.Kithkyn/]: [redevelopment-search] village=New growth examined=1 generated=0 refused={protected center or mine=1} budgetExhausted=false ms=212.768667
+[20:17:14] [Server thread/INFO] [co.qu.ki.Kithkyn/]: Village 'New growth' decided to save up for lumberjack_plains_1: We need logs to build essential structures, so we should focus on acquiring a lumberjack.
+[20:17:46] [Server thread/DEBUG] [co.qu.ki.Kithkyn/]: [redevelopment-search] village=New growth examined=1 generated=0 refused={protected center or mine=1} budgetExhausted=false ms=12.656541
+[20:17:53] [Server thread/DEBUG] [co.qu.ki.Kithkyn/]: [redevelopment-search] village=New growth examined=1 generated=0 refused={protected center or mine=1} budgetExhausted=false ms=10.29325
+[20:17:58] [Server thread/DEBUG] [co.qu.ki.Kithkyn/]: [redevelopment-search] village=New growth examined=1 generated=0 refused={protected center or mine=1} budgetExhausted=false ms=7.734708
+[20:20:02] [Server thread/DEBUG] [co.qu.ki.Kithkyn/]: [redevelopment-search] village=New growth examined=1 generated=0 refused={protected center or mine=1} budgetExhausted=false ms=10.967292
+[20:20:35] [Server thread/DEBUG] [co.qu.ki.Kithkyn/]: [redevelopment-search] village=New growth examined=1 generated=0 refused={protected center or mine=1} budgetExhausted=false ms=4.053583
+[20:20:38] [Server thread/DEBUG] [co.qu.ki.Kithkyn/]: [redevelopment-search] village=New growth examined=1 generated=0 refused={protected center or mine=1} budgetExhausted=false ms=3.384708
+[20:20:41] [Server thread/INFO] [co.qu.ki.Kithkyn/]: Village 'New growth' decided to save up for lumberjack_plains_1: We need to address the log shortage to build essential structures.
+[20:20:54] [Server thread/DEBUG] [co.qu.ki.Kithkyn/]: [redevelopment-search] village=New growth examined=1 generated=0 refused={protected center or mine=1} budgetExhausted=false ms=3.361459
+[20:20:59] [Server thread/DEBUG] [co.qu.ki.Kithkyn/]: [redevelopment-search] village=New growth examined=1 generated=0 refused={protected center or mine=1} budgetExhausted=false ms=4.8675
+[20:21:04] [Server thread/DEBUG] [co.qu.ki.Kithkyn/]: [redevelopment-search] village=New growth examined=1 generated=0 refused={protected center or mine=1} budgetExhausted=false ms=5.137458
+[20:21:07] [Server thread/DEBUG] [co.qu.ki.Kithkyn/]: [redevelopment-search] village=New growth examined=1 generated=0 refused={protected center or mine=1} budgetExhausted=false ms=2.593542
+[20:21:11] [Server thread/DEBUG] [co.qu.ki.Kithkyn/]: [redevelopment-search] village=New growth examined=1 generated=0 refused={protected center or mine=1} budgetExhausted=false ms=3.486625
+[20:21:14] [Server thread/DEBUG] [co.qu.ki.Kithkyn/]: [redevelopment-search] village=New growth examined=1 generated=0 refused={protected center or mine=1} budgetExhausted=false ms=3.379125
+[20:21:16] [Server thread/INFO] [co.qu.ki.Kithkyn/]: Village 'New growth' decided to save up for lumberjack_plains_1: We need to address the log shortage to build essential structures.
+[20:21:24] [Server thread/DEBUG] [co.qu.ki.Kithkyn/]: [redevelopment-search] village=New growth examined=1 generated=0 refused={protected center or mine=1} budgetExhausted=false ms=2.6005
+[20:21:28] [Server thread/DEBUG] [co.qu.ki.Kithkyn/]: [redevelopment-search] village=New growth examined=1 generated=0 refused={protected center or mine=1} budgetExhausted=false ms=3.933334
+[20:21:38] [Server thread/DEBUG] [co.qu.ki.Kithkyn/]: [redevelopment-search] village=New growth examined=1 generated=0 refused={protected center or mine=1} budgetExhausted=false ms=14.0455
+[20:21:43] [Server thread/DEBUG] [co.qu.ki.Kithkyn/]: [redevelopment-search] village=New growth examined=1 generated=0 refused={protected center or mine=1} budgetExhausted=false ms=2.644625
+[20:21:43] [Server thread/INFO] [co.qu.ki.Kithkyn/]: [redevelopment-benchmark] COMPLETE enabled=true elapsed=288000 builds=0

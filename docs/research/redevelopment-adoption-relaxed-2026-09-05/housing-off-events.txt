@@ -1,0 +1,5 @@
+[18:46:15] [Server thread/INFO] [co.qu.ki.Kithkyn/]: Village 'Redevelopment verification' decided to build house_plains_3: We need to provide housing for the adult resident who needs it, and also have a reliable source of food and water.
+[18:58:22] [Server thread/INFO] [co.qu.ki.Kithkyn/]: Village 'Redevelopment verification' decided to build house_plains_3: We need to address the housing shortage and provide a place for our unhoused residents, as well as the workers who need it.
+[19:19:29] [Server thread/INFO] [co.qu.ki.Kithkyn/]: Village 'Redevelopment verification' decided to build house_plains_2: We need to address the immediate needs of our residents, especially those without housing, before considering new buildings.
+[19:37:58] [Server thread/INFO] [co.qu.ki.Kithkyn/]: Village 'Redevelopment verification' decided to build house_plains_1: We need to address the immediate needs of our residents, particularly the lack of housing and food, before considering new buildings.
+[19:48:29] [Server thread/INFO] [co.qu.ki.Kithkyn/]: [redevelopment-benchmark] COMPLETE enabled=false elapsed=288000 builds=5

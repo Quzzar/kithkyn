@@ -1489,9 +1489,7 @@ public class Village {
             ? MAX_TRANSIT_CHECKS
             : MAX_GATHERING_CHECKS;
         if (gatheringChecks > cap) {
-          Kithkyn.LOGGER.info("Village '{}' abandons {}: its recipe never came together",
-              name, currentProject.getBuilding().getInfo().getName());
-          cancelGatheringProject("its recipe never came together");
+          cancelGatheringProject(currentProject.gatheringFailureReason(recipeMateriallyPossible(currentProject)));
         }
 
       } else {

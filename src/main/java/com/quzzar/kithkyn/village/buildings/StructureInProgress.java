@@ -131,6 +131,20 @@ public class StructureInProgress {
 
     private final ConstructionMode constructionMode;
     private RedevelopmentWork redevelopment;
+    private final ConstructionAccess constructionAccess = new ConstructionAccess();
+
+    /** Exterior routes are recomputed for this project's workers after reload. */
+    public ConstructionAccess constructionAccess() {
+        return constructionAccess;
+    }
+
+    /** The reason gathering stalled, retaining access failures as a distinct outcome. */
+    public String gatheringFailureReason(boolean materialsAvailable) {
+        String access = constructionAccess.failureReason();
+        return !access.isEmpty() ? access : materialsAvailable
+                ? "construction materials were available but builders could not deliver them to the site"
+                : "the construction recipe never came together";
+    }
 
     /** Freezes the exact reviewed proposal before gathering any materials. */
     public void setRedevelopment(RedevelopmentPlan plan) {

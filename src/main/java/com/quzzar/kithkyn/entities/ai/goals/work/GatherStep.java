@@ -7,7 +7,6 @@ import javax.annotation.Nullable;
 import com.quzzar.kithkyn.Kithkyn;
 import com.quzzar.kithkyn.entities.RealPerson;
 import com.quzzar.kithkyn.village.Village;
-import com.quzzar.kithkyn.village.buildings.ConstructionQuote;
 import com.quzzar.kithkyn.village.buildings.Materials;
 import com.quzzar.kithkyn.village.buildings.StructureInProgress;
 
@@ -40,10 +39,14 @@ import net.minecraft.world.item.ItemStack;
  * name: a log cost is met by any log the village has.
  */
 public final class GatherStep implements BlockWorkStep {
+  private StructureInProgress deliveryProject;
+  private BlockPos deliveryPosition;
 
   @Override
   @Nullable
   public BlockPos select(RealPerson person) {
+    deliveryProject = null;
+    deliveryPosition = null;
     Village village = person.getVillage();
     if (village == null) {
       return null;
@@ -52,10 +55,14 @@ public final class GatherStep implements BlockWorkStep {
     if (project == null || !project.isGathering()) {
       return null; // not this project's phase; BuildStep or nobody owns it
     }
-    List<ItemStack> recipe = recipe(person, project);
+    List<ItemStack> recipe = recipe(project);
     // The whole recipe is in the pack: go to the site and commit it.
     if (!PackLogistics.packShort(person, recipe)) {
-      return BlockPos.of(project.getBuilding().getCenterLocation());
+      deliveryProject = project;
+      deliveryPosition = project.getRedevelopment() == null
+          ? BlockPos.of(project.getBuilding().getCenterLocation())
+          : project.constructionAccess().select(person, project);
+      return deliveryPosition;
     }
     // Otherwise fetch the next chest that holds something still wanted. None
     // found leaves the step dormant, and the village's abandon path reclaims a
@@ -73,16 +80,38 @@ public final class GatherStep implements BlockWorkStep {
     if (project == null || !project.isGathering()) {
       return false; // committed or abandoned out from under us
     }
-    Container chest = PackLogistics.containerAt(person, target);
-    if (chest != null) {
-      PackLogistics.pullWanted(person, chest, recipe(person, project), "BUILDER");
-      return false; // re-select: more chests, or the site to commit
+    if (deliveryProject == project && target.equals(deliveryPosition)) {
+      if (project.getRedevelopment() != null && !project.constructionAccess().safe(person, target)) {
+        project.constructionAccess().unreachable(person, target);
+        return false;
+      }
+      if (project.commitFromBuilder(person.personMainInv, village)) {
+        Kithkyn.LOGGER.debug("[resource-flow] {} (BUILDER) delivered a full recipe and is raising the {}",
+            person.getName().getString(), project.getBuilding().getName());
+      }
+    } else {
+      Container chest = PackLogistics.containerAt(person, target);
+      if (chest != null) {
+        PackLogistics.pullWanted(person, chest, recipe(project), "BUILDER");
+      }
     }
-    // Not a container: this is the build site, and the pack should be full.
-    Kithkyn.LOGGER.debug("[resource-flow] {} (BUILDER) delivered a full recipe and is raising the {}",
-        person.getName().getString(), project.getBuilding().getName());
-    project.commitFromBuilder(person.personMainInv, village);
     return false;
+  }
+
+  @Override
+  public boolean inReach(RealPerson person, BlockPos target) {
+    return deliveryProject != null && deliveryProject.getRedevelopment() != null
+        && target.equals(deliveryPosition)
+        ? deliveryProject.constructionAccess().inReach(person, target)
+        : BlockWorkStep.super.inReach(person, target);
+  }
+
+  @Override
+  public void unreachable(RealPerson person, BlockPos target) {
+    if (deliveryProject != null && deliveryProject.getRedevelopment() != null
+        && target.equals(deliveryPosition)) {
+      deliveryProject.constructionAccess().unreachable(person, target);
+    }
   }
 
   @Override
@@ -101,7 +130,7 @@ public final class GatherStep implements BlockWorkStep {
   }
 
   /** The stable recipe owed by this project's chosen construction mode. */
-  private List<ItemStack> recipe(RealPerson person, StructureInProgress project) {
+  private List<ItemStack> recipe(StructureInProgress project) {
     return project.requiredMaterials();
   }
 }

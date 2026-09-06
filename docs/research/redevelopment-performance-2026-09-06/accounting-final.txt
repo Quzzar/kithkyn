@@ -1,0 +1,7 @@
+[23:19:14] [Server thread/INFO] [co.qu.ki.Kithkyn/]: [redevelopment-verify] examined=1 generated=1 searchMs=165.884625
+[23:19:15] [Server thread/INFO] [co.qu.ki.Kithkyn/]: [redevelopment-verify] warm=0 examined=5 generated=3 searchMs=145.164417
+[23:19:15] [Server thread/INFO] [co.qu.ki.Kithkyn/]: [redevelopment-verify] warm=1 examined=5 generated=3 searchMs=27.380875
+[23:19:15] [Server thread/INFO] [co.qu.ki.Kithkyn/]: [redevelopment-verify] warm=2 examined=5 generated=3 searchMs=20.222083
+[23:19:15] [Server thread/INFO] [co.qu.ki.Kithkyn/]: [redevelopment-verify] warm=3 examined=5 generated=3 searchMs=19.851417
+[23:19:15] [Server thread/INFO] [co.qu.ki.Kithkyn/]: [redevelopment-verify] blocks=182 net=20 logs, 25 cobblestone, 112 dirt recovered=2 logs, 4 cobblestone pendingRefund=3456 cobblestone, 1 iron pickaxe
+[23:19:15] [Server thread/INFO] [co.qu.ki.Kithkyn/]: [redevelopment-verify] PASS: blocked upgrade, fresh replacement, player protection, zero spare beds, full storage, displaced builder continuity, relaxed food/builder gates, own reservation, commitment, halfway save/reload, demolition, construction and single item delivery
