@@ -781,7 +781,7 @@ public class Village {
     // chest and its treasury with it.
     LocationValidator.Search search = LocationValidator.findValidLocation(level,
         BlockPos.of(getTownCenter().getCenterLocation()).below(), template,
-        List.of(Rotation.values()), this, random);
+        Buildings.getByName(buildingName).getEntranceFacing(), List.of(Rotation.values()), this, random);
     if (!search.found()) {
       // Remembered exactly as a real project's refusal is, so a dev-placed
       // building that finds no room leaves the village able to say so: that is
@@ -1567,7 +1567,7 @@ public class Village {
 
       LocationValidator.Search search = LocationValidator.findValidLocation(level,
           BlockPos.of(getTownCenter().getCenterLocation()).below(), template,
-          List.of(Rotation.values()), this, random);
+          buildingInfo.getEntranceFacing(), List.of(Rotation.values()), this, random);
 
       if (!search.found()) {
         // Remember it, or the planner will keep choosing this and failing here

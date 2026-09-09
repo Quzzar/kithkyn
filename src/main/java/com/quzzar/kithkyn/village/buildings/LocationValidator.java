@@ -15,6 +15,7 @@ import com.quzzar.kithkyn.Kithkyn;
 import com.quzzar.kithkyn.village.Village;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.Blocks;
@@ -22,15 +23,14 @@ import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.chunk.LevelChunk;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
-import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
 
 /**
  * Finds a spot for a new building near the village (docs/site-selection.md).
  *
  * The search first tries frontage slots beside buildings already standing. Each
- * slot aligns an edge across a one-block lane, which lets repeated local choices
- * grow into rows, streets and courtyards without a global grid. If terrain or
+ * slot aligns an edge across a preferred two-block lane or a tight one-block lane.
+ * Repeated local choices grow into rows, streets and courtyards without a global grid. If terrain or
  * other buildings rule those slots out, a nearest-first sweep finds ordinary
  * open ground as a fallback.
  *
@@ -39,13 +39,13 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemp
  * other facing could not. A snug gap is held between footprints so lanes stay
  * walkable and the cluster reads as planned rather than piled. Existing worn
  * paths are never built over, and a legal site beside one is preferred. Equal
- * fits are broken randomly, which keeps local order from becoming a rigid grid.
+ * fits prefer an authored front toward the town center before random tie-breaking.
  *
  * Ground heights for the whole search square are read once from the chunk
  * heightmaps ({@link HeightGrid}), so screening a candidate is arithmetic, and
  * the volume scan ({@link SitePreparation#score}) is spent only on ground the
- * heightmap and the claim grid could not rule out. Relational fit, path access,
- * preparation cost, and distance rank legal candidates in that order. The
+ * heightmap and the claim grid could not rule out. Spacing, inward front, relational
+ * fit, path access, preparation cost, and distance rank legal candidates. The
  * fallback sweep remains limited to a short band around the first usable ground,
  * so a village does not reach far beyond a preparable nearby site.
  */
@@ -68,7 +68,7 @@ public class LocationValidator {
    * already claimed. One block is a walkable lane and reads as deliberate
    * spacing; zero would let buildings share a wall.
    */
-  public static final int MIN_GAP = 1;
+  public static final int MIN_GAP = TownLayout.MIN_GAP;
 
   /** How far past the village's own ring the sweep looks before it gives up. */
   public static final int SWEEP_BEYOND = 32;
@@ -105,7 +105,7 @@ public class LocationValidator {
    * whichever way slots in. Pass a single rotation to search one fixed facing.
    */
   public static Search findValidLocation(ServerLevelAccessor levelAccess, BlockPos centerPos,
-      StructureTemplate template, List<Rotation> rotations, Village village, Random random) {
+      StructureTemplate template, Direction entranceFacing, List<Rotation> rotations, Village village, Random random) {
     ServerLevel level = levelAccess.getLevel();
 
     // The village grows outwards as it builds, but the ring never collapses: a
@@ -129,18 +129,18 @@ public class LocationValidator {
       maxSpan = Math.max(maxSpan, Math.max(rotated.getXSpan(), rotated.getZSpan()));
     }
     HeightGrid grid = new HeightGrid(level, centerPos, sweepRadius + maxSpan);
-    Hunt hunt = new Hunt(level, village, boundsByRotation, grid, centerPos, random);
+    Hunt hunt = new Hunt(level, village, boundsByRotation, grid, centerPos, entranceFacing, random);
 
     // City form comes from relationships, not a radial lot lottery. Try the
-    // exact one-lane frontage slots around every completed building before the
-    // general sweep. They are cheap to enumerate: at most twelve alignments per
-    // anchor and orientation, independent of the search area's size.
+    // exact frontage slots at both lane widths around every completed building
+    // before the general sweep. The scan cap reserves candidates for tight sites
+    // and turned buildings so preferred geometry cannot exhaust every fallback.
     for (PlannedCandidate candidate : plannedCandidates(level, village, boundsByRotation,
-        centerPos, sweepRadius)) {
+        centerPos, entranceFacing, sweepRadius)) {
       hunt.consider(candidate.origin().x() - centerPos.getX(),
           candidate.origin().z() - centerPos.getZ(), candidate.rotation(), true);
     }
-    if (hunt.hasFit()) {
+    if (hunt.hasPreferredFit()) {
       return hunt.result(ringRadius, sweepRadius);
     }
 
@@ -164,7 +164,7 @@ public class LocationValidator {
     // whole reach put Wildflower Downs' lumberjack 90 blocks from its fire, 78
     // blocks of work there against 211 within 50; a village that sprawls has a
     // wall ring it cannot afford.
-    int settledAt = -1;
+    int settledAt = hunt.hasFit() ? (int) Math.ceil(Math.sqrt(hunt.best.distanceSqr())) : -1;
     for (int[] offset : offsets) {
       double distance = Math.sqrt((double) offset[0] * offset[0] + (double) offset[1] * offset[1]);
       if (settledAt >= 0 && distance > settledAt + SWEEP_BAND) {
@@ -182,13 +182,21 @@ public class LocationValidator {
     return Math.max(bounds.getXSpan()/2, bounds.getZSpan()/2);
   }
 
-  private record PlannedCandidate(TownLayout.Origin origin, Rotation rotation,
-      TownLayout.Relationship relationship, int distanceSqr) {
+  record PlannedCandidate(TownLayout.Origin origin, Rotation rotation,
+      TownLayout.Preference preference, TownLayout.Relationship relationship, int distanceSqr) {
   }
+
+  private static final Comparator<PlannedCandidate> PLANNED_ORDER = Comparator
+      .comparing(PlannedCandidate::preference, TownLayout.PREFERRED_FIRST)
+      .thenComparing(Comparator
+          .comparingInt((PlannedCandidate candidate) -> candidate.relationship().adjacentSides()).reversed())
+      .thenComparing(Comparator
+          .comparingInt((PlannedCandidate candidate) -> candidate.relationship().frontage()).reversed())
+      .thenComparingInt(PlannedCandidate::distanceSqr);
 
   /** Exact edge-aligned growth slots around the village's completed fabric. */
   private static List<PlannedCandidate> plannedCandidates(ServerLevelAccessor level, Village village,
-      EnumMap<Rotation, BoundingBox> boundsByRotation, BlockPos centre, int reach) {
+      EnumMap<Rotation, BoundingBox> boundsByRotation, BlockPos centre, Direction entranceFacing, int reach) {
     List<TownLayout.Footprint> anchors = new ArrayList<>();
     for (Building building : village.getBuildings()) {
       BoundingBox local = BuildingUpgrade.footprintOf(level, building);
@@ -206,29 +214,47 @@ public class LocationValidator {
     for (var entry : boundsByRotation.entrySet()) {
       TownLayout.Footprint local = footprint(entry.getValue());
       for (TownLayout.Footprint anchor : anchors) {
-        for (TownLayout.Origin origin : TownLayout.frontageOrigins(anchor, local, MIN_GAP)) {
-          TownLayout.Footprint placed = local.moved(origin);
-          int centerX = Math.floorDiv(placed.minX() + placed.maxX(), 2);
-          int centerZ = Math.floorDiv(placed.minZ() + placed.maxZ(), 2);
-          int relX = centerX - centre.getX();
-          int relZ = centerZ - centre.getZ();
-          int distanceSqr = relX * relX + relZ * relZ;
-          if (distanceSqr <= reachSqr && claimFree(village, placed, MIN_GAP)) {
-            TownLayout.Relationship relationship = TownLayout.relationship(placed, MIN_GAP,
-                (x, z) -> village.hasClaimed(new BlockPos(x, 0, z)));
-            candidates.add(new PlannedCandidate(origin, entry.getKey(), relationship, distanceSqr));
+        for (int gap = TownLayout.PREFERRED_GAP; gap >= MIN_GAP; gap--) {
+          for (TownLayout.Origin origin : TownLayout.frontageOrigins(anchor, local, gap)) {
+            TownLayout.Footprint placed = local.moved(origin);
+            int centerX = Math.floorDiv(placed.minX() + placed.maxX(), 2);
+            int centerZ = Math.floorDiv(placed.minZ() + placed.maxZ(), 2);
+            int relX = centerX - centre.getX();
+            int relZ = centerZ - centre.getZ();
+            int distanceSqr = relX * relX + relZ * relZ;
+            if (distanceSqr <= reachSqr && claimFree(village, placed, MIN_GAP)) {
+              TownLayout.Relationship relationship = TownLayout.relationship(placed,
+                  (x, z) -> village.hasClaimed(new BlockPos(x, 0, z)));
+              TownLayout.Preference preference = TownLayout.preference(placed, entry.getKey().rotate(entranceFacing),
+                  new TownLayout.Origin(centre.getX(), centre.getZ()),
+                  (x, z) -> village.hasClaimed(new BlockPos(x, 0, z)));
+              candidates.add(new PlannedCandidate(origin, entry.getKey(), preference, relationship, distanceSqr));
+            }
           }
         }
       }
     }
-    return candidates.stream()
-        .sorted(Comparator
-            .comparingInt((PlannedCandidate candidate) -> candidate.relationship().adjacentSides()).reversed()
-            .thenComparing(Comparator
-                .comparingInt((PlannedCandidate candidate) -> candidate.relationship().frontage()).reversed())
-            .thenComparingInt(PlannedCandidate::distanceSqr))
-        .limit(MAX_PLANNED_CANDIDATES)
-        .toList();
+    return plannedCandidatesWithinBudget(new ArrayList<>(candidates), MAX_PLANNED_CANDIDATES);
+  }
+
+  /** Shares the existing scan budget among preference tiers instead of starving tight or turned sites. */
+  static List<PlannedCandidate> plannedCandidatesWithinBudget(List<PlannedCandidate> candidates, int budget) {
+    List<List<PlannedCandidate>> tiers = TownLayout.PREFERENCES.stream()
+        .map(preference -> candidates.stream().filter(candidate -> candidate.preference().equals(preference))
+            .sorted(PLANNED_ORDER).toList()).toList();
+    List<PlannedCandidate> selected = new ArrayList<>();
+    for (int index = 0; selected.size() < budget; index++) {
+      boolean added = false;
+      for (List<PlannedCandidate> tier : tiers) {
+        if (index < tier.size() && selected.size() < budget) {
+          selected.add(tier.get(index));
+          added = true;
+        }
+      }
+      if (!added) break;
+    }
+    selected.sort(PLANNED_ORDER);
+    return List.copyOf(selected);
   }
 
   private static TownLayout.Footprint footprint(BoundingBox bounds) {
@@ -236,14 +262,8 @@ public class LocationValidator {
   }
 
   private static boolean claimFree(Village village, TownLayout.Footprint footprint, int padding) {
-    for (int x = footprint.minX() - padding; x <= footprint.maxX() + padding; x++) {
-      for (int z = footprint.minZ() - padding; z <= footprint.maxZ() + padding; z++) {
-        if (village.hasClaimed(new BlockPos(x, 0, z))) {
-          return false;
-        }
-      }
-    }
-    return true;
+    BlockPos.MutableBlockPos probe = new BlockPos.MutableBlockPos();
+    return TownLayout.hasClearance(footprint, padding, (x, z) -> village.hasClaimed(probe.set(x, 0, z)));
   }
 
   /**
@@ -385,8 +405,17 @@ public class LocationValidator {
   }
 
   /** One orientation weighed at one candidate, including its urban relationship. */
-  private record Fit(Rotation rotation, BlockPos site, SitePreparation.SiteCost cost,
+  record Fit(Rotation rotation, BlockPos site, SitePreparation.SiteCost cost, TownLayout.Preference preference,
       TownLayout.Relationship relationship, int pathFrontage, int distanceSqr, boolean planned) {}
+
+  /** Layout wishes rank only candidates that have already passed every terrain and access protection. */
+  static final Comparator<Fit> FIT_ORDER = Comparator.comparing(Fit::preference, TownLayout.PREFERRED_FIRST)
+      .thenComparing(Comparator.comparing(Fit::planned).reversed())
+      .thenComparing(Comparator.comparingInt((Fit fit) -> fit.relationship().adjacentSides()).reversed())
+      .thenComparing(Comparator.comparingInt(Fit::pathFrontage).reversed())
+      .thenComparing(Comparator.comparingInt((Fit fit) -> fit.relationship().frontage()).reversed())
+      .thenComparingInt(fit -> fit.cost().blocksMoved())
+      .thenComparingInt(Fit::distanceSqr);
 
   /**
    * One search's running state: the candidates considered so far and what they
@@ -400,6 +429,7 @@ public class LocationValidator {
     private final EnumMap<Rotation, BoundingBox> boundsByRotation;
     private final HeightGrid grid;
     private final BlockPos centre;
+    private final Direction entranceFacing;
     private final Random random;
 
     @Nullable
@@ -414,12 +444,13 @@ public class LocationValidator {
     private int unloaded;
 
     Hunt(ServerLevel level, Village village, EnumMap<Rotation, BoundingBox> boundsByRotation, HeightGrid grid,
-        BlockPos centre, Random random) {
+        BlockPos centre, Direction entranceFacing, Random random) {
       this.level = level;
       this.village = village;
       this.boundsByRotation = boundsByRotation;
       this.grid = grid;
       this.centre = centre;
+      this.entranceFacing = entranceFacing;
       this.random = random;
     }
 
@@ -477,13 +508,16 @@ public class LocationValidator {
       }
 
       TownLayout.Footprint placed = footprint(bounds).moved(new TownLayout.Origin(x, z));
-      TownLayout.Relationship relationship = TownLayout.relationship(placed, MIN_GAP,
+      TownLayout.Relationship relationship = TownLayout.relationship(placed,
+          (claimX, claimZ) -> village.hasClaimed(new BlockPos(claimX, 0, claimZ)));
+      TownLayout.Preference preference = TownLayout.preference(placed, rotation.rotate(entranceFacing),
+          new TownLayout.Origin(centre.getX(), centre.getZ()),
           (claimX, claimZ) -> village.hasClaimed(new BlockPos(claimX, 0, claimZ)));
       int centerX = Math.floorDiv(placed.minX() + placed.maxX(), 2);
       int centerZ = Math.floorDiv(placed.minZ() + placed.maxZ(), 2);
       int centerRelX = centerX - centre.getX();
       int centerRelZ = centerZ - centre.getZ();
-      Fit fit = new Fit(rotation, candidate, cost, relationship, pathFrontage(placed),
+      Fit fit = new Fit(rotation, candidate, cost, preference, relationship, pathFrontage(placed),
           centerRelX * centerRelX + centerRelZ * centerRelZ, planned);
       if (betterThan(fit, best)) {
         best = fit;
@@ -494,34 +528,22 @@ public class LocationValidator {
       return best != null;
     }
 
+    /** A tight or turned frontage still lets the bounded sweep look for a preferred nearby fit. */
+    boolean hasPreferredFit() {
+      return best != null && best.preference().gap() == TownLayout.PREFERRED_GAP
+          && best.preference().inwardFronts() > 0;
+    }
+
     /**
-     * Planned fabric wins first, then corners/rows, then an existing path edge,
-     * preparation cost and compactness. An exact tie is random so repeated local
-     * rules do not produce identical villages.
+     * Prefer two clear blocks and an inward front, then planned fabric, corners/rows,
+     * an existing path edge, preparation cost and compactness. Exact ties remain random.
      */
     private boolean betterThan(Fit candidate, @Nullable Fit incumbent) {
       if (incumbent == null) {
         return true;
       }
-      if (candidate.planned() != incumbent.planned()) {
-        return candidate.planned();
-      }
-      if (candidate.relationship().adjacentSides() != incumbent.relationship().adjacentSides()) {
-        return candidate.relationship().adjacentSides() > incumbent.relationship().adjacentSides();
-      }
-      if (candidate.pathFrontage() != incumbent.pathFrontage()) {
-        return candidate.pathFrontage() > incumbent.pathFrontage();
-      }
-      if (candidate.relationship().frontage() != incumbent.relationship().frontage()) {
-        return candidate.relationship().frontage() > incumbent.relationship().frontage();
-      }
-      if (candidate.cost().blocksMoved() != incumbent.cost().blocksMoved()) {
-        return candidate.cost().blocksMoved() < incumbent.cost().blocksMoved();
-      }
-      if (candidate.distanceSqr() != incumbent.distanceSqr()) {
-        return candidate.distanceSqr() < incumbent.distanceSqr();
-      }
-      return random.nextBoolean();
+      int comparison = FIT_ORDER.compare(candidate, incumbent);
+      return comparison < 0 || comparison == 0 && random.nextBoolean();
     }
 
     private boolean coversPath(int originX, int originZ, BoundingBox bounds) {
@@ -581,16 +603,7 @@ public class LocationValidator {
 
     /** Whether the footprint at (originX, originZ), grown by {@code pad}, touches any claimed column. */
     private boolean overlapsClaim(int originX, int originZ, BoundingBox bounds, int pad) {
-      BlockPos.MutableBlockPos probe = new BlockPos.MutableBlockPos();
-      for (int x = bounds.minX() - pad; x <= bounds.maxX() + pad; x++) {
-        for (int z = bounds.minZ() - pad; z <= bounds.maxZ() + pad; z++) {
-          probe.set(originX + x, 0, originZ + z);
-          if (village.hasClaimed(probe)) {
-            return true;
-          }
-        }
-      }
-      return false;
+      return !claimFree(village, footprint(bounds).moved(new TownLayout.Origin(originX, originZ)), pad);
     }
 
     Search result(int ringRadius, int sweepRadius) {
@@ -606,8 +619,9 @@ public class LocationValidator {
           screened, scanned, claimed, paths, unloaded);
       if (best != null) {
         Kithkyn.LOGGER.debug(
-            "Taking {} facing {}: {} claimed frontage on {} sides, {} path frontage, {} blocks moved{}",
-            best.site().toShortString(), best.rotation(), best.relationship().frontage(),
+            "Taking {} facing {}: gap {}, inward {}, {} claimed frontage on {} sides, {} path frontage, {} blocks moved{}",
+            best.site().toShortString(), best.rotation(), best.preference().gap(), best.preference().inwardFronts() > 0,
+            best.relationship().frontage(),
             best.relationship().adjacentSides(), best.pathFrontage(), best.cost().blocksMoved(),
             best.planned() ? ", planned slot" : "");
         return new Search(best.site(), best.rotation(), null, reach);

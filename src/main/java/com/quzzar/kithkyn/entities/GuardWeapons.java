@@ -222,15 +222,8 @@ public final class GuardWeapons {
     person.stopUsingItem();
     person.setChargingCrossbow(false);
     person.setItemSlot(EquipmentSlot.MAINHAND,
-        exchange(person.personMainInv, slot, person.getMainHandItem()));
+        EquipmentSwap.exchange(person.personMainInv, slot, person.getMainHandItem()));
     return true;
-  }
-
-  /** The freed slot receives the old hand, even when every pack slot was occupied. */
-  static ItemStack exchange(Container pack, int slot, ItemStack hand) {
-    ItemStack next = pack.getItem(slot);
-    pack.setItem(slot, hand);
-    return next;
   }
 
   private static int find(Container pack, JobTool tool) {

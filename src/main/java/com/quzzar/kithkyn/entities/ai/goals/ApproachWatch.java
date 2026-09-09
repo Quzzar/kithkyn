@@ -2,6 +2,7 @@ package com.quzzar.kithkyn.entities.ai.goals;
 
 import com.quzzar.kithkyn.Kithkyn;
 import com.quzzar.kithkyn.entities.RealPerson;
+import com.quzzar.kithkyn.village.buildings.MineShaft;
 
 import net.minecraft.core.BlockPos;
 
@@ -33,6 +34,11 @@ public final class ApproachWatch {
   /** Give-ups in a row before the villager is stranded rather than unlucky. */
   private static final int STRANDED_AFTER = 3;
 
+  private static final String MINE_ENTRANCE_BLOCKER =
+      "I cannot get through the mine entrance to reach the work below. The approach is not passable for me.";
+  private static final String MINE_RAMP_BLOCKER =
+      "I cannot walk along the mine ramp to reach my work. The route inside the shaft is blocked for me.";
+
   private final RealPerson person;
   private final String work;
 
@@ -63,7 +69,7 @@ public final class ApproachWatch {
 
   /** Call on arrival: getting there clears the record of failed attempts. */
   public void arrived() {
-    person.clearBlocker(blockerText());
+    clearApproachBlockers("");
     consecutiveGiveUps = 0;
     begin();
   }
@@ -84,7 +90,9 @@ public final class ApproachWatch {
       return false;
     }
 
-    person.logBlocker(blockerText());
+    String blocker = blockerText(target);
+    clearApproachBlockers(blocker);
+    person.logBlocker(blocker);
     Kithkyn.LOGGER.debug("{} cannot reach {} at {} and is standing down",
         person.getFullName(), work, target.toShortString());
     standDownUntil = person.tickCount + STAND_DOWN_TICKS;
@@ -103,8 +111,26 @@ public final class ApproachWatch {
     return true;
   }
 
-  private String blockerText() {
+  private String blockerText(BlockPos target) {
+    if (work.equals("the mine") && person.getVillage() != null) {
+      BlockPos hop = MineShaft.waypoint(person.getVillage(), person.blockPosition(), target);
+      if (hop != null) {
+        boolean entrance = MineShaft.of(person.getVillage()).stream()
+            .anyMatch(shaft -> shaft.generation() == 0 && shaft.entry().equals(hop));
+        return entrance ? MINE_ENTRANCE_BLOCKER : MINE_RAMP_BLOCKER;
+      }
+    }
     return "I cannot get to " + work + ".";
+  }
+
+  /** Clear the persisted generic message too, including saves from before route details existed. */
+  private void clearApproachBlockers(String keep) {
+    String generic = "I cannot get to " + work + ".";
+    if (!generic.equals(keep)) person.clearBlocker(generic);
+    if (work.equals("the mine")) {
+      if (!MINE_ENTRANCE_BLOCKER.equals(keep)) person.clearBlocker(MINE_ENTRANCE_BLOCKER);
+      if (!MINE_RAMP_BLOCKER.equals(keep)) person.clearBlocker(MINE_RAMP_BLOCKER);
+    }
   }
 
 }

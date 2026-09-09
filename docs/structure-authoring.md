@@ -137,8 +137,10 @@ step above the ground on purpose.
 
 Negative `sink` raises the template: the approved Birch storehouse uses `-1` so its first step
 is visible above ground. `entrance_facing` declares the horizontal direction an authored front
-door faces; founding turns mine and storehouse doors inward using it. The default is north,
-except storehouses default south to retain existing catalog behavior. A mine may also declare
+door approaches from; founding and ordinary growth prefer this side toward the town center.
+Declare the outward public approach explicitly when it differs from north, including doorless
+workplaces. This is not the door block's `facing` property, which may point inward. Storehouses
+without metadata retain their old south default. A mine may also declare
 `mine_entrance: {"facing": "east", "offset": [0, 0, 1]}`. The offset is from its unchanged
 miner station, in template coordinates; facing is the direction the ramp descends. Both rotate
 with the building, and excavation and navigation share that resulting frame. Without this field,

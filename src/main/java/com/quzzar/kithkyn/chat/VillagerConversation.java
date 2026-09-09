@@ -321,12 +321,12 @@ public final class VillagerConversation {
   /**
    * Night has fallen on a villager who sleeps at night: their bed outranks the
    * talk, so the pair parts and {@link #finish} folds it into memory the same
-   * as any other end. A guard never reaches bedtime and will talk till dawn; a
+   * as any other end. A guard on watch tonight can talk until dawn; a
    * chat that ran past dusk used to freeze a sleeper in place all night, since
    * PauseForConversationGoal outranks SleepAtNightGoal.
    */
   private static boolean pastBedtime(RealPerson person) {
-    return person.level().isNight() && person.getOccupation().sleepsAtNight();
+    return person.level().isNight() && person.shouldSleepAtNight();
   }
 
   /**

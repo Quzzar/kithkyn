@@ -43,5 +43,6 @@
       "item": "minecraft:cobblestone",
       "count": 101
     }
-  ]
+  ],
+  "entrance_facing": "west"
 }

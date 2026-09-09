@@ -12,7 +12,6 @@ import com.quzzar.kithkyn.Kithkyn;
 import com.quzzar.kithkyn.economy.Treasury;
 import com.quzzar.kithkyn.entities.RealPerson;
 import com.quzzar.kithkyn.llm.LlmService;
-import com.quzzar.kithkyn.village.LocationManager;
 import com.quzzar.kithkyn.village.QuartermasterPlanner;
 import com.quzzar.kithkyn.village.ShelvingPlan;
 import com.quzzar.kithkyn.village.Storehouse;
@@ -23,165 +22,144 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.Container;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.block.entity.HopperBlockEntity;
+import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.phys.Vec3;
 
 /**
- * What a quartermaster does: consolidate the village's scattered stores into one
- * place (docs/worker-loops.md). A CARRY step with two phases, the mirror of
- * {@link MarketStep}.
- *
- * Every workplace keeps its own container - the barrel at the mine, the chest at
- * the lumberyard - so a village's goods end up spread across a dozen buildings.
- * The quartermaster sweeps those chests, carries the goods to the storehouse,
- * and empties them in, so anyone looking for anything has one organised place to
- * look. It changes nothing about what a village can AFFORD, since affordability
- * already reads every container at once; it makes the stores findable, and it
- * surfaces when they overflow.
- *
- * Two kinds of chest are never swept. The storehouse's own containers are the
- * destination, not a source; and the market's chests hold the treasury and the
- * merchant's goods (a quartermaster shelving those would move the village's money
- * into a barrel and fight the merchant). A home's own chest never comes up at
- * all: it is not village storage (PersonalChest), so the sweep cannot see it.
- *
- * When the shelves fall quiet the quartermaster tidies the storehouse: laid out
- * to the village's {@link ShelvingPlan} when it has one, and with like goods
- * simply ordered together until then, so a full sweep leaves one organised store
- * rather than a heap. The plan itself is the quartermaster's to draw up. Minding
- * a stocked storehouse that has no plan, or whose shelves have outgrown the plan
- * they have, starts the {@link QuartermasterPlanner} dialogue; the plan it
- * settles is stored, and the next quiet moment shelves to it.
- *
- * A full storehouse is not an error. Whatever will not fit stays in the pack and
- * the strain flag goes up, which the planner reads as a reason to want a bigger
- * storehouse - a village that has outgrown its shelves.
+ * Carries workplace output to the storehouse, then visits its shelves to maintain the shelving plan.
+ * Every inventory write is to the container being visited or the quartermaster's own pack.
+ * Market stock and personal chests are outside this route.
  */
 public final class ConsolidateStep implements BlockWorkStep {
-
-  /** Of 36 slots. Collect at least this much before a delivery trip is worth it. */
   private static final int SLOTS_BEFORE_TRIP = 18;
-
-  /** How long the quartermaster minds the storehouse when there is nothing to move. */
-  private static final int MIND_TICKS = 200;
-
-  /** Dead container positions to step past before giving up on a source. */
+  private static final int TRANSFER_TICKS = 30;
+  private static final int INSPECTION_TICKS = 60;
+  private static final int INSPECTION_COOLDOWN_TICKS = 200;
+  private static final int MOVES_PER_VISIT = 6;
   private static final int MAX_STALE_CHESTS = 8;
-
-  /**
-   * Ticks between shelving-plan attempts: one Minecraft day. New kinds of goods
-   * arrive a few at a time, so the plan is redrawn at most daily, taking the
-   * day's arrivals together rather than reshuffling the shelves for each one,
-   * and a model that cannot settle a plan is not asked again every quiet spell.
-   */
   private static final int PLAN_COOLDOWN_TICKS = 24000;
 
-  /** Set in select, read in act: which phase this target belongs to. */
-  private boolean delivering;
-  private int mindingTicks;
-  /** Raised by a delivery or a new plan, cleared by the next idle tidy: the shelves need laying out. */
-  private boolean needsTidy;
-  /** A shelving dialogue is under way for this quartermaster; never two at once. */
+  private enum Phase { COLLECT, DELIVER, INSPECT }
+
+  private Phase phase = Phase.INSPECT;
+  private boolean preferredDelivery;
+  private boolean returningToShelf;
   private boolean planning;
-  /** Game time before which no shelving dialogue starts. */
   private long nextPlanTick;
+  private long openedAt;
+  private long nextTransferTick;
+  private int moves;
   private BlockPos approach;
-  private boolean mindingStorehouse;
+  private ContainerVisit visit;
   private final Map<BlockPos, Long> failedUntil = new HashMap<>();
+  private final Map<BlockPos, Long> inspectedAt = new HashMap<>();
 
   @Override
   @Nullable
   public BlockPos select(RealPerson person) {
     Village village = person.getVillage();
-    if (village == null) {
-      return null;
-    }
-    this.mindingTicks = 0;
+    if (village == null || !(person.level() instanceof ServerLevel)) return null;
     this.approach = null;
-    this.mindingStorehouse = false;
-    this.failedUntil.entrySet().removeIf(entry -> entry.getValue() <= person.level().getGameTime());
+    this.moves = 0;
+    long now = person.level().getGameTime();
+    this.failedUntil.entrySet().removeIf(entry -> entry.getValue() <= now);
 
     int used = usedSlots(person);
-    // Keep collecting until the pack is worth a trip; only then deliver. This
-    // is what stops the quartermaster ping-ponging one stack at a time.
-    BlockPos source = used >= SLOTS_BEFORE_TRIP ? null : sourceChest(person, village);
+    if (used == 0) this.returningToShelf = false;
+    BlockPos delivery = used == 0 ? null : storehouseChest(person);
+    BlockPos deliveryApproach = this.approach;
+    if (used > 0 && delivery == null) {
+      village.setStorageStrained(true);
+      return inspectionChest(person);
+    }
+    BlockPos source = used >= SLOTS_BEFORE_TRIP || this.returningToShelf ? null : sourceChest(person, village);
     if (source != null) {
-      this.delivering = false;
+      this.phase = Phase.COLLECT;
       return source;
     }
-    if (used > 0) {
-      this.delivering = true;
-      return storehouseChest(person);
+    if (delivery != null) {
+      this.phase = Phase.DELIVER;
+      this.approach = deliveryApproach;
+      return delivery;
     }
-    // Nothing to carry and nothing to fetch: mind the storehouse, if there is one.
-    // The delivery flag must drop here, or act would run an empty delivery
-    // against the station on every visit and never mind the shelves at all.
-    this.delivering = false;
-    this.mindingStorehouse = true;
-    BlockPos station = LocationManager.getJobLocation(person);
-    if (station.equals(BlockPos.ZERO)) return null;
-    this.approach = approachTo(person, station);
-    if (this.approach == null && person.level() instanceof ServerLevel level) {
-      var building = LocationManager.getJobBuilding(person);
-      var entrance = building == null ? null : LocationManager.getEntrance(level, building);
-      if (entrance != null) this.approach = approachTo(person, entrance.doorstep());
-    }
-    return this.approach == null ? null : station;
+    village.setStorageStrained(false);
+    return inspectionChest(person);
   }
 
   @Override
   public boolean act(RealPerson person, BlockPos target) {
-    if (this.delivering) {
-      deliver(person, target);
-      return false; // the next select decides whether to fetch more or deliver again
+    if (!inReach(person, target) || !(person.level().getBlockEntity(target) instanceof Container container)) return false;
+    person.getLookControl().setLookAt(target.getX() + 0.5D, target.getY() + 0.5D, target.getZ() + 0.5D);
+    long now = person.level().getGameTime();
+    if (this.visit == null) {
+      this.visit = ContainerVisit.open(person, target);
+      this.openedAt = now;
+      this.nextTransferTick = now + TRANSFER_TICKS;
+      person.swing(InteractionHand.MAIN_HAND);
+      return true;
     }
+    if (now < this.nextTransferTick) return true;
+    this.nextTransferTick = now + TRANSFER_TICKS;
 
-    if (this.mindingStorehouse || !(person.level().getBlockEntity(target) instanceof Container source)) {
-      // The chest went, or this is the storehouse station and there is simply
-      // nothing to move. One organise pass when the shelves first fall quiet
-      // after a delivery, then standing is bounded so the legs come free again.
-      if (this.mindingTicks == 0) {
-        if (this.needsTidy) {
-          tidyStorehouse(person);
-          this.needsTidy = false;
-        }
-        planIfOutgrown(person);
+    if (this.phase == Phase.COLLECT) {
+      int moved = ShelfTransfers.collectOne(container, person.personMainInv);
+      return moved > 0 && ++this.moves < MOVES_PER_VISIT && usedSlots(person) < SLOTS_BEFORE_TRIP;
+    }
+    if (this.phase == Phase.DELIVER) {
+      int moved = ShelfTransfers.depositOne(person.personMainInv, container, shelfOffset(person, target),
+          ShelvingPlan.load(person.getVillage()), this.preferredDelivery);
+      if (moved > 0) {
+        Kithkyn.LOGGER.debug("[resource-flow] {} (QUARTERMASTER) shelved {} item(s) at {}",
+            person.getName().getString(), moved, target.toShortString());
       }
-      return ++this.mindingTicks < MIND_TICKS;
+      if (person.personMainInv.isEmpty()) person.getVillage().setStorageStrained(false);
+      return moved > 0 && ++this.moves < MOVES_PER_VISIT && !person.personMainInv.isEmpty();
     }
-    ItemStack taken = takeOneStack(person, source);
-    return !taken.isEmpty(); // keep draining this chest while it still gives
+    if (this.moves++ == 0) {
+      tidyVisitedShelf(person, target, container);
+      planIfOutgrown(person);
+      if (collectMisfiled(person, target, container)) {
+        this.returningToShelf = true;
+        return false;
+      }
+    }
+    return now - this.openedAt < INSPECTION_TICKS;
   }
 
-  @Override
-  public String describe() {
-    return "the storehouse";
+  @Override public String describe() { return "the storehouse containers"; }
+  @Override public String activity() {
+    return switch (this.phase) {
+      case COLLECT -> "collecting goods from the village's workplace containers";
+      case DELIVER -> "carrying goods to their storehouse shelves";
+      case INSPECT -> "checking and organizing the storehouse containers";
+    };
   }
-
-  @Override
-  public String activity() {
-    return "sorting the storehouse shelves";
-  }
-
-  @Override
-  public double reachSqr(RealPerson person) {
-    return 6.0D;
-  }
-
-  @Override
-  public BlockPos positionOf(BlockPos target) {
-    return this.approach == null ? target : this.approach;
-  }
+  @Override public int actEveryTicks() { return 1; }
+  @Override public boolean requiresUpdateEveryTick() { return true; }
+  @Override public boolean swingsOnAct() { return false; }
+  @Override public double reachSqr(RealPerson person) { return 6.0D; }
+  @Override public BlockPos positionOf(BlockPos target) { return this.approach == null ? target : this.approach; }
+  @Override public boolean requiresExactArrival() { return true; }
 
   @Override
   public boolean inReach(RealPerson person, BlockPos target) {
-    return person.blockPosition().distSqr(this.mindingStorehouse ? positionOf(target) : target) <= reachSqr(person);
+    boolean arrived = this.approach != null
+        && person.position().distanceToSqr(Vec3.atBottomCenterOf(this.approach)) <= 0.36D
+        && person.blockPosition().distSqr(target) <= reachSqr(person)
+        && canReachContainer(person, person.getEyePosition(), target);
+    if (!arrived && this.visit != null) closeVisit();
+    return arrived;
   }
 
   @Override
-  public boolean requiresExactArrival() {
-    return true;
+  public void released(RealPerson person, BlockPos target) {
+    closeVisit();
+    if (this.phase == Phase.INSPECT) this.inspectedAt.put(target, person.level().getGameTime());
   }
 
   @Override
@@ -189,17 +167,24 @@ public final class ConsolidateStep implements BlockWorkStep {
     this.failedUntil.put(target, person.level().getGameTime() + 1200);
   }
 
-  /** Navigate to supported ground within arm's reach; containers themselves are solid. */
+  private void closeVisit() {
+    if (this.visit != null) this.visit.close();
+    this.visit = null;
+  }
+
+  /** Supported ground beside the actual container, with an exact navigable endpoint. */
   @Nullable
   private BlockPos approachTo(RealPerson person, BlockPos target) {
     if (this.failedUntil.containsKey(target)) return null;
     List<BlockPos> candidates = new ArrayList<>();
     for (BlockPos pos : BlockPos.betweenClosed(target.offset(-2, -2, -2), target.offset(2, 2, 2))) {
-      if (pos.distSqr(target) <= reachSqr(person) && WorkerFooting.canStand(person, pos)) {
+      if (pos.distSqr(target) <= reachSqr(person) && WorkerFooting.canStand(person, pos)
+          && canReachContainer(person, Vec3.atBottomCenterOf(pos).add(0.0D, person.getEyeHeight(), 0.0D), target)) {
         candidates.add(pos.immutable());
       }
     }
-    candidates.sort(Comparator.comparingDouble(pos -> pos.distSqr(person.blockPosition())));
+    candidates.sort(Comparator.<BlockPos>comparingDouble(pos -> pos.distSqr(target))
+        .thenComparingDouble(pos -> pos.distSqr(person.blockPosition())));
     for (BlockPos candidate : candidates.stream().limit(12).toList()) {
       var path = person.getNavigation().createPath(candidate, 0);
       if (path != null && path.canReach() && path.getEndNode() != null
@@ -209,99 +194,139 @@ public final class ConsolidateStep implements BlockWorkStep {
     return null;
   }
 
-  /**
-   * Empty the pack into the storehouse, across all of its containers. Whatever
-   * does not fit stays in the pack and raises the strain flag; a clean empty
-   * lowers it, so the signal tracks the shelves rather than latching on.
-   */
-  private void deliver(RealPerson person, BlockPos target) {
-    Village village = person.getVillage();
-    Container pack = person.personMainInv;
-    List<BlockPos> stores = new ArrayList<>();
-    stores.add(target);
-    for (BlockPos other : Storehouse.chests(person)) {
-      if (!other.equals(target)) {
-        stores.add(other);
-      }
-    }
-    int moved = 0;
-    for (BlockPos pos : stores) {
-      if (!(person.level().getBlockEntity(pos) instanceof Container into)) {
-        continue;
-      }
-      for (int slot = 0; slot < pack.getContainerSize(); slot++) {
-        ItemStack stack = pack.getItem(slot);
-        if (stack.isEmpty()) {
-          continue;
-        }
-        int before = stack.getCount();
-        pack.setItem(slot, HopperBlockEntity.addItem(pack, into, stack, null));
-        moved += before - pack.getItem(slot).getCount();
-      }
-    }
-    if (moved > 0) {
-      this.needsTidy = true;
-      Kithkyn.LOGGER.debug("[resource-flow] {} (QUARTERMASTER) consolidated {} item(s) into the storehouse at {}",
-          person.getName().getString(), moved, target.toShortString());
-    }
-    if (village != null) {
-      village.setStorageStrained(!packIsEmpty(pack));
-    }
+  /** A nearby wall does not turn an outdoor foothold into access to an indoor shelf. */
+  private static boolean canReachContainer(RealPerson person, Vec3 eye, BlockPos target) {
+    var hit = person.level().clip(new ClipContext(eye, Vec3.atCenterOf(target),
+        ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, person));
+    return hit.getType() == HitResult.Type.MISS || hit.getBlockPos().equals(target);
   }
 
-  /**
-   * Tidy the storehouse when it is quiet: lift every stack out and lay it back
-   * shelved. With a {@link ShelvingPlan} each item goes to its category's chest
-   * (spilling to the others only when that chest is full); with no plan yet, like
-   * goods are simply ordered together as before.
-   * {@link HopperBlockEntity#addItem} merges compatible stacks as it refills,
-   * compacting partial stacks and respecting item components, so enchanted or
-   * named items are never wrongly merged. Count-preserving: exactly what came out
-   * goes back into the same shelves, and merging only ever frees room, so it
-   * always fits. Public and static so the plan prototype command can apply a
-   * fresh plan at once, rather than waiting for the next quiet spell.
-   */
-  public static void tidyStorehouse(RealPerson person) {
-    Village village = person.getVillage();
-    ShelvingPlan plan = village == null ? null : ShelvingPlan.load(village);
+  /** Sources remain the village's shared workplace containers, excluding the market and storehouse. */
+  @Nullable
+  private BlockPos sourceChest(RealPerson person, Village village) {
+    List<BlockPos> skip = new ArrayList<>(Storehouse.chests(person));
+    skip.addAll(Treasury.chestPositions(village, (ServerLevel) person.level()));
+    for (int attempt = 0; attempt < MAX_STALE_CHESTS; attempt++) {
+      BlockPos found = village.getNearestContainer(person.blockPosition(), skip);
+      if (found.equals(BlockPos.ZERO)) return null;
+      Container container = containerAt(person, found);
+      if (container != null && !container.isEmpty()) {
+        this.approach = approachTo(person, found);
+        if (this.approach != null) return found;
+      }
+      skip.add(found);
+    }
+    return null;
+  }
+
+  /** Prefer the actual shelf that owns carried goods; visit overflow shelves only when needed. */
+  @Nullable
+  private BlockPos storehouseChest(RealPerson person) {
+    ShelvingPlan plan = ShelvingPlan.load(person.getVillage());
+    for (boolean preferred : new boolean[] {true, false}) {
+      int offset = 0;
+      for (BlockPos pos : Storehouse.chests(person)) {
+        Container shelf = containerAt(person, pos);
+        if (shelf == null) continue;
+        if (ShelfTransfers.canDeposit(person.personMainInv, shelf, offset, plan, preferred)) {
+          this.approach = approachTo(person, pos);
+          if (this.approach != null) {
+            this.preferredDelivery = preferred;
+            return pos;
+          }
+        }
+        offset += shelf.getContainerSize();
+      }
+    }
+    return null;
+  }
+
+  /** Quiet work rotates across real shelves instead of holding the movement goal at the job station. */
+  @Nullable
+  private BlockPos inspectionChest(RealPerson person) {
+    this.phase = Phase.INSPECT;
+    long now = person.level().getGameTime();
+    List<BlockPos> shelves = new ArrayList<>(Storehouse.chests(person));
+    shelves.sort(Comparator.comparingLong(pos -> this.inspectedAt.getOrDefault(pos, Long.MIN_VALUE)));
+    for (BlockPos shelf : shelves) {
+      Long visited = this.inspectedAt.get(shelf);
+      if (visited != null && now - visited < INSPECTION_COOLDOWN_TICKS) continue;
+      if (containerAt(person, shelf) == null) continue;
+      this.approach = approachTo(person, shelf);
+      if (this.approach != null) return shelf;
+    }
+    return null;
+  }
+
+  /** Applies the shared layout algorithm to just the shelf in arm's reach. */
+  private static void tidyVisitedShelf(RealPerson person, BlockPos target, Container shelf) {
+    ShelvingPlan plan = ShelvingPlan.load(person.getVillage());
     if (plan != null) {
-      // A plan owns the slot layout; the storehouse lays itself out to match it.
-      Storehouse.applyPlan(person, plan);
-      Kithkyn.LOGGER.debug("[quartermaster] {} shelved the storehouse to plan",
-          person.getName().getString());
-      return;
-    }
-
-    // No plan yet: the original behaviour, order like goods together and compact.
-    List<Container> stores = new ArrayList<>();
-    for (BlockPos pos : Storehouse.chests(person)) {
-      if (person.level().getBlockEntity(pos) instanceof Container store) {
-        stores.add(store);
+      int offset = shelfOffset(person, target);
+      List<ShelvingPlan.Category> categories = new ArrayList<>();
+      for (ShelvingPlan.Category category : plan.categories()) {
+        int first = Math.max(0, category.firstSlot() - offset);
+        int end = Math.min(shelf.getContainerSize(), category.firstSlot() + category.slotCount() - offset);
+        if (end > first) categories.add(new ShelvingPlan.Category(category.name(), category.itemIds(), first, end - first));
       }
+      plan = new ShelvingPlan(categories, shelf.getContainerSize());
     }
-    if (stores.isEmpty()) {
-      return;
-    }
-    List<ItemStack> goods = new ArrayList<>();
-    for (Container store : stores) {
-      for (int slot = 0; slot < store.getContainerSize(); slot++) {
-        ItemStack stack = store.getItem(slot);
-        if (!stack.isEmpty()) {
-          goods.add(stack.copy());
-          store.setItem(slot, ItemStack.EMPTY);
-        }
-      }
-    }
-    goods.sort(Comparator.comparing((ItemStack stack) -> stack.getItem().toString()));
-    for (ItemStack stack : goods) {
-      reseat(stores, stack);
-    }
-    if (goods.size() > 1) {
-      Kithkyn.LOGGER.debug("[quartermaster] {} tidied the storehouse ({} stacks)",
-          person.getName().getString(), goods.size());
-    }
+    Storehouse.arrange(List.of(shelf), plan);
+    shelf.setChanged();
   }
 
+  /** Carry a misplaced stack only when its intended shelf can accept it or exchange another misplaced stack. */
+  private boolean collectMisfiled(RealPerson person, BlockPos target, Container source) {
+    ShelvingPlan plan = ShelvingPlan.load(person.getVillage());
+    if (plan == null || !person.personMainInv.isEmpty()) return false;
+    int sourceOffset = shelfOffset(person, target);
+    for (int slot = 0; slot < source.getContainerSize(); slot++) {
+      ItemStack stack = source.getItem(slot);
+      if (stack.isEmpty() || plan.categoryFor(stack.getItem()) == null
+          || ShelfTransfers.owns(plan, stack, sourceOffset + slot)) continue;
+      Container carried = ShelfTransfers.copy(person.personMainInv);
+      if (!HopperBlockEntity.addItem(null, carried, stack.copy(), null).isEmpty()) continue;
+      int offset = 0;
+      for (BlockPos other : Storehouse.chests(person)) {
+        Container shelf = containerAt(person, other);
+        if (shelf == null) continue;
+        if (!other.equals(target) && ShelfTransfers.canDeposit(carried, shelf, offset, plan, true)
+            && approachTo(person, other) != null) {
+          return ShelfTransfers.collectSlot(source, slot, person.personMainInv) > 0;
+        }
+        offset += shelf.getContainerSize();
+      }
+    }
+    return false;
+  }
+
+  @Nullable
+  private static Container containerAt(RealPerson person, BlockPos pos) {
+    return person.level().hasChunkAt(pos) && person.level().getBlockEntity(pos) instanceof Container container ? container : null;
+  }
+
+  private static int shelfOffset(RealPerson person, BlockPos target) {
+    int offset = 0;
+    for (BlockPos pos : Storehouse.chests(person)) {
+      if (pos.equals(target)) break;
+      Container shelf = containerAt(person, pos);
+      if (shelf != null) offset += shelf.getContainerSize();
+    }
+    return offset;
+  }
+
+  private static int usedSlots(RealPerson person) {
+    int used = 0;
+    for (int slot = 0; slot < person.personMainInv.getContainerSize(); slot++) {
+      if (!person.personMainInv.getItem(slot).isEmpty()) used++;
+    }
+    return used;
+  }
+
+  /** Explicit developer command only; ordinary work visits and mutates each shelf separately. */
+  public static void tidyStorehouse(RealPerson person) {
+    Storehouse.arrange(Storehouse.containers(person), person.getVillage() == null ? null : ShelvingPlan.load(person.getVillage()));
+  }
   /**
    * Redraws the shelving plan when the shelves have outgrown it: no plan yet (the
    * first stocked storehouse), a storehouse of another size, or goods on the
@@ -344,7 +369,7 @@ public final class ConsolidateStep implements BlockWorkStep {
         }
         QuartermasterPlanner.Outcome settled = outcome.get();
         ShelvingPlan.store(home, settled.plan());
-        this.needsTidy = true; // laid out to the new plan on the next quiet moment, in person
+        this.inspectedAt.clear(); // visit each shelf to put the new plan into practice
         Kithkyn.LOGGER.info("[quartermaster] {} adopted a shelving plan of {} categories: \"{}\"",
             person.getName().getString(), settled.plan().categories().size(), settled.note());
         for (ShelvingPlan.Category category : settled.plan().categories()) {
@@ -369,103 +394,4 @@ public final class ConsolidateStep implements BlockWorkStep {
     return false;
   }
 
-  /** Lay a stack back across the storehouse, merging where it can; warns only if nothing fits. */
-  private static void reseat(List<Container> stores, ItemStack stack) {
-    ItemStack remaining = stack;
-    for (Container store : stores) {
-      if (remaining.isEmpty()) {
-        return;
-      }
-      remaining = HopperBlockEntity.addItem(null, store, remaining, null);
-    }
-    if (!remaining.isEmpty()) {
-      Kithkyn.LOGGER.warn("[quartermaster] storehouse tidy could not reseat {} x{}",
-          remaining.getItem(), remaining.getCount());
-    }
-  }
-
-  /** Lift one stack out of a source chest and into the pack; empty if none fit. */
-  private ItemStack takeOneStack(RealPerson person, Container source) {
-    Container pack = person.personMainInv;
-    for (int slot = 0; slot < source.getContainerSize(); slot++) {
-      ItemStack stack = source.getItem(slot);
-      if (stack.isEmpty()) {
-        continue;
-      }
-      ItemStack offered = stack.copy();
-      ItemStack leftover = HopperBlockEntity.addItem(source, pack, stack, null);
-      source.setItem(slot, leftover);
-      if (leftover.getCount() < offered.getCount()) {
-        return offered.copyWithCount(offered.getCount() - leftover.getCount());
-      }
-    }
-    return ItemStack.EMPTY;
-  }
-
-  /**
-   * The nearest village container that is neither the storehouse nor the market,
-   * and actually holds something. Stale positions - a chest broken or built
-   * over - are skipped rather than walked to.
-   */
-  @Nullable
-  private BlockPos sourceChest(RealPerson person, Village village) {
-    if (!(person.level() instanceof ServerLevel level)) {
-      return null;
-    }
-    List<BlockPos> skip = new ArrayList<>(Storehouse.chests(person));
-    skip.addAll(Treasury.chestPositions(village, level));
-    for (int attempt = 0; attempt < MAX_STALE_CHESTS; attempt++) {
-      BlockPos found = village.getNearestContainer(person.blockPosition(), skip);
-      if (found.equals(BlockPos.ZERO)) {
-        return null;
-      }
-      if (level.getBlockEntity(found) instanceof Container container && hasGoods(container)) {
-        this.approach = approachTo(person, found);
-        if (this.approach != null) return found;
-      }
-      skip.add(found); // empty, gone, or inaccessible: try another source
-    }
-    return null;
-  }
-
-  /** The first storehouse container that exists, as the walk target for a delivery. */
-  @Nullable
-  private BlockPos storehouseChest(RealPerson person) {
-    for (BlockPos pos : Storehouse.chests(person)) {
-      if (person.level().getBlockEntity(pos) instanceof Container) {
-        this.approach = approachTo(person, pos);
-        if (this.approach != null) return pos;
-      }
-    }
-    return null;
-  }
-
-  private boolean hasGoods(Container container) {
-    for (int slot = 0; slot < container.getContainerSize(); slot++) {
-      if (!container.getItem(slot).isEmpty()) {
-        return true;
-      }
-    }
-    return false;
-  }
-
-  private boolean packIsEmpty(Container pack) {
-    for (int slot = 0; slot < pack.getContainerSize(); slot++) {
-      if (!pack.getItem(slot).isEmpty()) {
-        return false;
-      }
-    }
-    return true;
-  }
-
-  private int usedSlots(RealPerson person) {
-    Container pack = person.personMainInv;
-    int used = 0;
-    for (int slot = 0; slot < pack.getContainerSize(); slot++) {
-      if (!pack.getItem(slot).isEmpty()) {
-        used++;
-      }
-    }
-    return used;
-  }
 }

@@ -79,6 +79,7 @@ public class SeekConversationGoal extends Goal {
   @Override
   public boolean canContinueToUse() {
     return !done && partner != null && partner.isAlive() && !person.isSleeping()
+        && !(person.level().isNight() && person.shouldSleepAtNight())
         && ticksTrying < GIVE_UP_TICKS
         && VillagerConversation.readyToTalk(partner)
         && person.distanceToSqr(partner) < LOSE_RANGE_SQR;

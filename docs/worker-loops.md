@@ -135,6 +135,12 @@ uses that genetically varied perception range as its whole horizon. `PersonPathN
 the stock search a minimum 48-block window while retaining the roughly 1,280-node hard ceiling
 and vanilla's loaded-chunk-only navigation region. The mine-ramp waypoints and `ApproachWatch`
 recovery remain in place; the wider window is not permission to load terrain or search forever.
+An adult whose genetic height exceeds a two-block doorway retries a failed route with their
+actual crouching body. The worker ducks through the passage and stands once stopped somewhere
+with enough headroom. Work-footing checks accept that same clearance, so a quartermaster can
+select a shelf inside a low storehouse before starting the walk. Mine approach failures identify
+the entrance or the ramp in the villager's conversation context, and arrival clears both those
+details and the older generic access blocker.
 The work loop checks distance and progress every tick but refreshes a route at most every 10 ticks.
 An animal can still be followed twice a second, while one unreachable block cannot spend the same
 hundreds of node expansions on every server tick until `ApproachWatch` stands the worker down.
@@ -235,20 +241,27 @@ should stay outside:
   ranged, shield, defend-others. Do not give them a work array.
 - **`LEADER`** is not physical work. It marks that the brain has a voice.
 
-**Built, 2026-09-01: guards do not sleep.** Whether a job beds down is a fact of the job
-(`Occupation.sleepsAtNight()`), and the guard's answer is no: they stand watch through the
-night. A sleepless job still keeps its bed and passes the housing gate in `JobClaiming`
-unchanged; only the lying-down is skipped. Bedtime is also when the village hands out gear
-and rations, so the watch runs the same stow-and-restock at their post instead
-(`NightWatchRestockGoal`, sharing `goToBed`'s cadence), and a bell ring restocks a guard
-without walking them to bed. The village center's guard slot is the **Guard Captain**
+**Night routines, 2026-09-09.** Every guard, including the captain, has a 20% chance each
+night to go home and sleep. Of the posted guards staying awake, 30% spend that night
+patrolling the village instead of holding their station; the others keep their post.
+An awake captain always patrols. `GuardNightRoutine` derives one choice from the person's
+UUID and world day, so a goal interruption or reload cannot reroll it. At dawn posted
+guards return to their stations. Sleep and patrol never change the job, post ownership,
+weapon loadout, or assigned bed. Combat outranks the routine and wakes a sleeping guard.
+
+`RealPerson.shouldSleepAtNight()` supplies the same person-level decision to sleep,
+restocking, bell recall and conversation. Guards staying awake run bedtime's usual gear
+and ration restock where they stand (`NightWatchRestockGoal`, sharing `goToBed`'s cadence).
+A bell restocks a guard on watch; on a sleeping night it sends them home. The ordinary
+housing gate in `JobClaiming` still applies to every guard.
+The village center's guard slot is the **Guard Captain**
 (2026-09-08). This is a station-derived display role, still `Occupation.GUARD`, with
 ordinary guard behavior. It is synchronized to clients, re-derived after loading, and
 removed when the person changes jobs. It does not consume or replace a personal honorific.
 Any distinct barracks-captain mechanics remain future work.
 
 **Bell gathering (2026-09-08).** Right-clicking a bell keeps the existing 48-block
-recall: housed civilians head home, and guards only stow and restock. Truly unhoused
+recall: housed civilians head home, and guards on watch stow and restock. Truly unhoused
 residents instead take a one-shot walk to reachable dry ground near that exact bell,
 including below an elevated bell. Dependent children with a family home still go home.
 Gathering shares directed travel, preserves existing arrival/departure/commute targets,
@@ -557,7 +570,10 @@ shaft's outer floor, walls, or ceiling are sealing work first. The miner closes 
 breach one block at a time before clearing liquid. A bucket-holder then drains the connected water
 that is reachable from the dry side, exposing any farther boundary for the next sealing pass. The bucket
 moves into the off hand before that act, swings from the off hand, remains visible for a short
-beat, and then returns to the pack. It is a reusable tool, never filled or consumed. Sealing itself
+beat, and then returns to the pack. It is a reusable tool, never filled or consumed. Bailing
+is still possible with food or another item in the off hand: equipping the bucket exchanges the
+whole bucket stack with that hand through its existing pack slot. This preserves both stacks even
+when the pack is full. An active meal finishes before the miner takes out the bucket. Sealing itself
 does not require the bucket, so a miner without one still makes the lining safe and only then
 reports that the enclosed water or lava is blocking progress. If a later break exposes a fresh
 breach, the next audit seals it before another bucket act.
@@ -860,7 +876,9 @@ The initial basic sidearm belongs to the ordinary one-time job kit. Wall
 loadouts remain unchanged. Fixed ranged guards defend in place without chasing or strafing off
 the platform, and a weapon switch preserves the combat target. Crossbow friendly-fire checks
 test the finite firing corridor, so an adjacent fellow sentry does not suppress every shot.
-Their assigned beds retain normal ownership; guards still do not sleep.
+Their assigned beds retain normal ownership. On a sleeping night they use those beds;
+on a patrol night they keep the same ranged loadout but use mobile combat, then resume
+their fixed watch at dawn.
 
 Patrolling guards use the same physical loadout system for a sword and axe (2026-09-08).
 They start with the existing axe kit, not a free sword. A sword supplied through village
@@ -1059,8 +1077,7 @@ structures ([structure-sourcing.md](structure-sourcing.md)) and checking content
 Builders delivering a complete recipe count as on site at the same distance used by
 construction. They can hand over materials from the surface before grading lowers the
 terrain to the planned center. Quartermasters choose reachable, supported ground within
-container reach, retry inaccessible stores later, and can mind the storehouse from its
-doorstep when their height prevents them from entering.
+container reach with a clear line to the container, and retry inaccessible stores later.
 
 ## The quartermaster shelves by plan
 
@@ -1069,12 +1086,30 @@ doorstep when their height prevents them from entering.
 already sweeps every workplace chest into the storehouse (`ConsolidateStep`, a CARRY loop). On
 top of that it now organises the storehouse to a **shelving plan**: a partition of the
 storehouse's numbered slots into named categories, each owning a contiguous run of slots and
-the items that live there. The tidy pass lays the shelves out to match, with no model in the
-loop.
+the items that live there. The worker lays the shelves out to match during physical container visits, with no model in the
+transfer loop.
+
+**Physical rounds (2026-09-09).** Collection, delivery and quiet shelf checks all target an
+individual container. The quartermaster walks to supported ground beside it, opens its native
+chest lid or barrel, and moves one stack every 1.5 seconds. A visit handles at most six moves
+before selecting again. Only that container and the worker's carried pack change; arriving at
+one storehouse chest no longer deposits into or sorts every other chest remotely. Quiet rounds
+check different storehouse containers for three seconds each, with a cooldown before revisiting
+one. The ledger swings once when a container opens, rather than throughout a long stationary
+waiting loop. Conversation, danger, night, walking away, removal and shutdown close the visit;
+a player using the same container keeps it open.
+
+Deliveries prefer the slots owned by the goods' shelving category and use spare space elsewhere
+when necessary. During a shelf check, local stacks are compacted and sorted, and misplaced goods
+are carried to a reachable shelf with room. Two full but misfiled shelves can exchange goods via
+the quartermaster's pack. Correctly shelved full containers are never emptied merely to make an
+endless delivery cycle; rejected goods remain in the pack, raise storage strain, and suspend more
+workplace collection until space is available. The route stays within this village's shared
+storage, excluding homes and market stock.
 
 The plan is built by a conversation, not by rules. The storehouse's slots are numbered across
 its chests as one slot space (chest one is slots 1 to 27, chest two 28 to 54, and so on; what
-sits where today is not mentioned, since the tidy re-lays every chest anyway), and the model is
+sits where today is not mentioned, since physical rounds gradually re-lay the shelves), and the model is
 asked to assign every slot to one category
 and every item to one category, dividing the slots however it likes, across chests or not. Each
 good is listed with its count and the slots that takes, the creative-inventory tab it sits in (Building
@@ -1118,15 +1153,16 @@ Whenever the quartermaster settles in to mind a stocked storehouse, they redraw 
 there is none yet, if the storehouse has changed size, or if the shelves hold goods the plan
 never placed. One dialogue at a time and at most one a day, so a day's new arrivals are planned
 together and a model that cannot converge is not asked again every quiet spell. A settled plan
-is stored, and the next quiet moment shelves to it in person. `/kkdev llm plan <quartermaster>`
+is stored, and subsequent container visits put it into practice in person. `/kkdev llm plan <quartermaster>`
 runs the same dialogue on demand, prints the result and the quartermaster's note, and applies
 it at once; watch the `[quartermaster]` log lines for the round-by-round convergence.
 
 - `village/QuartermasterPlanner.java`: the iterate-until-valid dialogue and the validator.
 - `village/ShelvingPlan.java`: the slot partition, persisted in the brain's strategy tag.
 - `village/Storehouse.java`: the shared storehouse chests, slot flattening, and plan execution.
-- `entities/ai/goals/work/ConsolidateStep.java`: the tidy pass that applies a plan or, with
-  none, falls back to ordering like goods together.
+- `entities/ai/goals/work/ConsolidateStep.java`: physical collection, delivery and inspection rounds.
+- `entities/ai/goals/work/ShelfTransfers.java`: paced, count-preserving inventory moves and exchanges.
+- `entities/ai/goals/work/ContainerVisit.java`: native container opening and interruption cleanup.
 
 ## Still open
 

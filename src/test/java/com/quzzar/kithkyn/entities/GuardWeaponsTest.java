@@ -30,10 +30,10 @@ class GuardWeaponsTest {
     sword.setDamageValue(29);
     SimpleContainer pack = new SimpleContainer(sword, new ItemStack(Items.DIAMOND, 64));
 
-    ItemStack hand = GuardWeapons.exchange(pack, 0, crossbow);
+    ItemStack hand = EquipmentSwap.exchange(pack, 0, crossbow);
     assertSame(sword, hand);
     assertSame(crossbow, pack.getItem(0));
-    hand = GuardWeapons.exchange(pack, 0, hand);
+    hand = EquipmentSwap.exchange(pack, 0, hand);
 
     assertSame(crossbow, hand);
     assertSame(sword, pack.getItem(0));
@@ -109,10 +109,10 @@ class GuardWeaponsTest {
         Set.of(), stack -> ItemStack.EMPTY));
     assertSame(axe, pack.getItem(0));
     assertTrue(pack.getItem(1).isEmpty());
-    ItemStack hand = GuardWeapons.exchange(pack, 0, sword);
+    ItemStack hand = EquipmentSwap.exchange(pack, 0, sword);
     assertSame(axe, hand);
     assertSame(sword, pack.getItem(0));
-    assertSame(sword, GuardWeapons.exchange(pack, 0, hand));
+    assertSame(sword, EquipmentSwap.exchange(pack, 0, hand));
     assertEquals(42, pack.getItem(0).getDamageValue());
     assertEquals("Captain's axe", pack.getItem(0).getHoverName().getString());
   }

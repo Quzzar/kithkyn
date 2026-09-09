@@ -8,7 +8,8 @@ import org.junit.jupiter.api.Test;
 
 class FoundingLayoutTest {
   private static FoundingLayout.Candidate candidate(Direction side, int x, int z, int cost) {
-    return new FoundingLayout.Candidate(null, side, new BoundingBox(x, 60, z, x + 4, 70, z + 4), cost);
+    return new FoundingLayout.Candidate(null, side, new BoundingBox(x, 60, z, x + 4, 70, z + 4), cost,
+        new TownLayout.Preference(2, 1));
   }
 
   @Test
@@ -38,25 +39,61 @@ class FoundingLayoutTest {
       for (var local : List.of(new BoundingBox(-18, 0, 4, -4, 8, 12),
           new BoundingBox(4, 0, -18, 12, 8, -4))) {
         for (Direction side : Direction.Plane.HORIZONTAL) {
-          var origins = FoundingLayout.frontageOrigins(anchor, local, side);
-          assertEquals(1, origins.size(), "Founding must not offer off-center edge alignments");
-          var origin = origins.getFirst();
-          var placed = local.moved(origin.x(), 0, origin.z());
-          int doubledCenterError = side.getAxis() == Direction.Axis.X
-              ? placed.minZ() + placed.maxZ() - anchor.minZ() - anchor.maxZ()
-              : placed.minX() + placed.maxX() - anchor.minX() - anchor.maxX();
-          assertTrue(Math.abs(doubledCenterError) <= 1, "Center must match to the nearest half-block");
-          int gap = switch (side) {
-            case NORTH -> anchor.minZ() - placed.maxZ() - 1;
-            case SOUTH -> placed.minZ() - anchor.maxZ() - 1;
-            case EAST -> placed.minX() - anchor.maxX() - 1;
-            case WEST -> anchor.minX() - placed.maxX() - 1;
-            default -> throw new AssertionError(side);
-          };
-          assertEquals(1, gap);
+          for (int lane : List.of(2, 1)) {
+            var origins = FoundingLayout.frontageOrigins(anchor, local, side, lane);
+            assertEquals(1, origins.size(), "Founding must not offer off-center edge alignments");
+            var origin = origins.getFirst();
+            var placed = local.moved(origin.x(), 0, origin.z());
+            int doubledCenterError = side.getAxis() == Direction.Axis.X
+                ? placed.minZ() + placed.maxZ() - anchor.minZ() - anchor.maxZ()
+                : placed.minX() + placed.maxX() - anchor.minX() - anchor.maxX();
+            assertTrue(Math.abs(doubledCenterError) <= 1, "Center must match to the nearest half-block");
+            int gap = switch (side) {
+              case NORTH -> anchor.minZ() - placed.maxZ() - 1;
+              case SOUTH -> placed.minZ() - anchor.maxZ() - 1;
+              case EAST -> placed.minX() - anchor.maxX() - 1;
+              case WEST -> anchor.minX() - placed.maxX() - 1;
+              default -> throw new AssertionError(side);
+            };
+            assertEquals(lane, gap);
+          }
         }
       }
     }
+  }
+
+  @Test
+  void widerFoundingLanesWinAndATightPairRemainsAvailable() {
+    var mine = candidate(Direction.NORTH, -2, -10, 0);
+    var tight = new FoundingLayout.Candidate(null, Direction.EAST,
+        new BoundingBox(10, 60, -2, 14, 70, 2), 0, new TownLayout.Preference(1, 1));
+    var roomy = new FoundingLayout.Candidate(null, Direction.EAST,
+        new BoundingBox(11, 60, -2, 15, 70, 2), 10, new TownLayout.Preference(2, 1));
+
+    assertEquals(roomy, FoundingLayout.choose(List.of(mine), List.of(tight, roomy)).orElseThrow().storehouse());
+    assertEquals(tight, FoundingLayout.choose(List.of(mine), List.of(tight)).orElseThrow().storehouse());
+  }
+
+  @Test
+  void inwardFoundingFrontsWinAndOtherRotationsRemainFallbacks() {
+    var mine = candidate(Direction.NORTH, -2, -10, 0);
+    var inward = candidate(Direction.EAST, 10, -2, 10);
+    var turned = new FoundingLayout.Candidate(null, Direction.EAST, inward.worldBounds(), 0,
+        new TownLayout.Preference(2, 0));
+
+    assertEquals(inward, FoundingLayout.choose(List.of(mine), List.of(turned, inward)).orElseThrow().storehouse());
+    assertEquals(turned, FoundingLayout.choose(List.of(mine), List.of(turned)).orElseThrow().storehouse());
+  }
+
+  @Test
+  void aNarrowGapBetweenCompanionsCannotPretendToHaveTwoBlocksOfClearance() {
+    var mine = candidate(Direction.NORTH, 0, 0, 0);
+    var tightCorner = candidate(Direction.WEST, 6, 0, 0);
+    var roomyCorner = candidate(Direction.WEST, 7, 0, 10);
+
+    assertEquals(1, FoundingLayout.choose(List.of(mine), List.of(tightCorner)).orElseThrow().preference().gap());
+    assertEquals(roomyCorner,
+        FoundingLayout.choose(List.of(mine), List.of(tightCorner, roomyCorner)).orElseThrow().storehouse());
   }
 
   @Test

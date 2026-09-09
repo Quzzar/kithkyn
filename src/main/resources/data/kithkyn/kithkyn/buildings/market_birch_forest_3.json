@@ -75,5 +75,6 @@
     "secondary_blocks": [],
     "banners": []
   },
-  "upgrades_from": "market_birch_forest_2"
+  "upgrades_from": "market_birch_forest_2",
+  "entrance_facing": "south"
 }

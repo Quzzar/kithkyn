@@ -40,5 +40,6 @@
     ],
     "secondary_blocks": [],
     "banners": []
-  }
+  },
+  "entrance_facing": "west"
 }

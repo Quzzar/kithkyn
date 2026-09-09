@@ -1,9 +1,12 @@
 package com.quzzar.kithkyn.village;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.annotation.Nullable;
 
 import com.quzzar.kithkyn.Kithkyn;
 import com.quzzar.kithkyn.entities.RealPerson;
@@ -91,7 +94,11 @@ public final class Storehouse {
    * so what came out always goes back.
    */
   public static void applyPlan(RealPerson quartermaster, ShelvingPlan plan) {
-    List<Container> containers = containers(quartermaster);
+    arrange(containers(quartermaster), plan);
+  }
+
+  /** Shared slot layout, also used on the one container a quartermaster is visiting. */
+  public static void arrange(List<Container> containers, @Nullable ShelvingPlan plan) {
     if (containers.isEmpty()) {
       return;
     }
@@ -116,7 +123,7 @@ public final class Storehouse {
 
     boolean[] filled = new boolean[total];
     List<ItemStack> spill = new ArrayList<>();
-    for (ShelvingPlan.Category category : plan.categories()) {
+    for (ShelvingPlan.Category category : plan == null ? List.<ShelvingPlan.Category>of() : plan.categories()) {
       int start = clamp(category.firstSlot(), total);
       int end = clamp(category.firstSlot() + category.slotCount(), total);
       int cursor = start;
@@ -140,6 +147,7 @@ public final class Storehouse {
     for (List<ItemStack> remaining : byItem.values()) {
       spill.addAll(remaining);
     }
+    if (plan == null) spill.sort(Comparator.comparing(stack -> idOf(stack.getItem())));
     int free = 0;
     for (ItemStack stack : spill) {
       while (free < total && filled[free]) {

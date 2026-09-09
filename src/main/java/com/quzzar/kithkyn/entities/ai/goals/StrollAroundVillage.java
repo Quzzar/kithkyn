@@ -4,6 +4,7 @@ import javax.annotation.Nullable;
 
 import com.quzzar.kithkyn.entities.RealPerson;
 import com.quzzar.kithkyn.village.LocationManager;
+import com.quzzar.kithkyn.village.Occupation;
 import com.quzzar.kithkyn.village.Village;
 
 import net.minecraft.core.BlockPos;
@@ -42,7 +43,17 @@ public class StrollAroundVillage extends RandomStrollGoal {
     /** A wanderer on the road walks it ({@link RoamGoal}); strolling is for people with somewhere to be. */
     @Override
     public boolean canUse() {
-        return !person.isRoaming() && person.getWallPost() == null && super.canUse();
+        return !guardBedtime() && !person.isRoaming() && person.getWallPost() == null && super.canUse();
+    }
+
+    @Override
+    public boolean canContinueToUse() {
+        return !guardBedtime() && super.canContinueToUse();
+    }
+
+    /** A captain's between-round stroll must yield when this is one of their sleeping nights. */
+    private boolean guardBedtime() {
+        return person.getOccupation() == Occupation.GUARD && person.shouldSleepAtNight();
     }
 
     @Override

@@ -5,6 +5,7 @@ import java.util.Comparator;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
+import net.minecraft.core.Direction;
 
 /**
  * Block-space geometry for compact village growth.
@@ -15,6 +16,19 @@ import java.util.Set;
  * courtyards without imposing a rigid town plan on uneven terrain.</p>
  */
 final class TownLayout {
+
+  static final int MIN_GAP = 1;
+  static final int PREFERRED_GAP = 2;
+
+  /** Legal placement preferences, best first; tight and turned sites remain usable. */
+  record Preference(int gap, int inwardFronts) { }
+
+  static final Comparator<Preference> PREFERRED_FIRST = Comparator.comparingInt(Preference::gap).reversed()
+      .thenComparing(Comparator.comparingInt(Preference::inwardFronts).reversed());
+
+  static final List<Preference> PREFERENCES = List.of(
+      new Preference(PREFERRED_GAP, 1), new Preference(PREFERRED_GAP, 0),
+      new Preference(MIN_GAP, 1), new Preference(MIN_GAP, 0));
 
   @FunctionalInterface
   interface ClaimedGround {
@@ -125,16 +139,15 @@ final class TownLayout {
     return List.copyOf(origins);
   }
 
-  /** Measures claimed frontage across the lane on each of a site's four sides. */
-  static Relationship relationship(Footprint candidate, int laneWidth, ClaimedGround claimed) {
-    int separation = laneWidth + 1;
+  /** Counts each edge column once across either permitted lane width. */
+  static Relationship relationship(Footprint candidate, ClaimedGround claimed) {
     int sides = 0;
     int frontage = 0;
 
-    int west = claimedAlongZ(candidate.minX() - separation, candidate.minZ(), candidate.maxZ(), claimed);
-    int east = claimedAlongZ(candidate.maxX() + separation, candidate.minZ(), candidate.maxZ(), claimed);
-    int north = claimedAlongX(candidate.minZ() - separation, candidate.minX(), candidate.maxX(), claimed);
-    int south = claimedAlongX(candidate.maxZ() + separation, candidate.minX(), candidate.maxX(), claimed);
+    int west = claimedAlongZ(candidate.minX(), -1, candidate.minZ(), candidate.maxZ(), claimed);
+    int east = claimedAlongZ(candidate.maxX(), 1, candidate.minZ(), candidate.maxZ(), claimed);
+    int north = claimedAlongX(candidate.minZ(), -1, candidate.minX(), candidate.maxX(), claimed);
+    int south = claimedAlongX(candidate.maxZ(), 1, candidate.minX(), candidate.maxX(), claimed);
     for (int edge : new int[] {west, east, north, south}) {
       if (edge > 0) {
         sides++;
@@ -142,6 +155,37 @@ final class TownLayout {
       }
     }
     return new Relationship(sides, frontage);
+  }
+
+  /** True when a footprint leaves the requested number of clear columns around every edge. */
+  static boolean hasClearance(Footprint footprint, int gap, ClaimedGround claimed) {
+    for (int x = footprint.minX() - gap; x <= footprint.maxX() + gap; x++) {
+      for (int z = footprint.minZ() - gap; z <= footprint.maxZ() + gap; z++) {
+        if (claimed.contains(x, z)) return false;
+      }
+    }
+    return true;
+  }
+
+  /** Inclusive bounds leave this many walking blocks between the nearest edges. */
+  static int clearGap(Footprint first, Footprint second) {
+    return Math.max(Math.max(second.minX() - first.maxX() - 1, first.minX() - second.maxX() - 1),
+        Math.max(second.minZ() - first.maxZ() - 1, first.minZ() - second.maxZ() - 1));
+  }
+
+  /** The front points along a closest cardinal direction to the center; diagonal ties allow both. */
+  static boolean facesCenter(Footprint footprint, Direction front, Origin center) {
+    int towardX = 2 * center.x() - footprint.minX() - footprint.maxX();
+    int towardZ = 2 * center.z() - footprint.minZ() - footprint.maxZ();
+    int forward = front.getStepX() * towardX + front.getStepZ() * towardZ;
+    int sideways = front.getAxis() == Direction.Axis.X ? towardZ : towardX;
+    return forward > 0 && forward >= Math.abs(sideways);
+  }
+
+  /** Preferences are measured from the placed footprint, independently of its authored origin. */
+  static Preference preference(Footprint footprint, Direction front, Origin center, ClaimedGround claimed) {
+    return new Preference(hasClearance(footprint, PREFERRED_GAP, claimed) ? PREFERRED_GAP : MIN_GAP,
+        facesCenter(footprint, front, center) ? 1 : 0);
   }
 
   private static List<Integer> alignedOrigins(int anchorMin, int anchorMax, int candidateMin, int candidateMax) {
@@ -158,21 +202,27 @@ final class TownLayout {
     return deltaX * deltaX + deltaZ * deltaZ;
   }
 
-  private static int claimedAlongZ(int x, int minZ, int maxZ, ClaimedGround claimed) {
+  private static int claimedAlongZ(int x, int outward, int minZ, int maxZ, ClaimedGround claimed) {
     int count = 0;
     for (int z = minZ; z <= maxZ; z++) {
-      if (claimed.contains(x, z)) {
-        count++;
+      for (int gap = MIN_GAP; gap <= PREFERRED_GAP; gap++) {
+        if (claimed.contains(x + outward * (gap + 1), z)) {
+          count++;
+          break;
+        }
       }
     }
     return count;
   }
 
-  private static int claimedAlongX(int z, int minX, int maxX, ClaimedGround claimed) {
+  private static int claimedAlongX(int z, int outward, int minX, int maxX, ClaimedGround claimed) {
     int count = 0;
     for (int x = minX; x <= maxX; x++) {
-      if (claimed.contains(x, z)) {
-        count++;
+      for (int gap = MIN_GAP; gap <= PREFERRED_GAP; gap++) {
+        if (claimed.contains(x, z + outward * (gap + 1))) {
+          count++;
+          break;
+        }
       }
     }
     return count;

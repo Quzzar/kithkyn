@@ -87,6 +87,7 @@ import net.minecraft.world.item.SplashPotionItem;
 import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.ProjectileWeaponItem;
+import net.minecraft.world.item.component.ChargedProjectiles;
 import net.minecraft.world.item.enchantment.EnchantmentEffectComponents;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
@@ -96,6 +97,7 @@ import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.common.ItemAbilities;
 import net.neoforged.neoforge.event.EventHooks;
 
@@ -1128,32 +1130,75 @@ public class Person extends PathfinderMob implements CrossbowAttackMob, NeutralM
     if (this.getMainHandItem().getItem() instanceof CrossbowItem)
       this.performCrossbowAttack(this, 6.0F);
     if (this.getMainHandItem().getItem() instanceof BowItem) {
-      shootArrowAt(target, distanceFactor, (float) (14 - this.level().getDifficulty().getId() * 4));
+      shootArrowAt(target, distanceFactor, combatInaccuracy(), 3.0F);
     }
   }
 
+  /** Skilled aim still has some spread, without skeleton-scale misses across a village. */
+  private float combatInaccuracy() {
+    return 1.5F - this.level().getDifficulty().getId() * 0.25F;
+  }
+
+  /** Keep the held crossbow's real loading, ammunition, enchantments and wear behavior. */
+  @Override
+  public void performCrossbowAttack(LivingEntity user, float velocity) {
+    LivingEntity target = getTarget();
+    InteractionHand hand = ProjectileUtil.getWeaponHoldingHand(user, item -> item instanceof CrossbowItem);
+    ItemStack weapon = user.getItemInHand(hand);
+    if (target == null || !(weapon.getItem() instanceof CrossbowItem crossbow)) return;
+    boolean rocket = weapon.getOrDefault(DataComponents.CHARGED_PROJECTILES, ChargedProjectiles.EMPTY)
+        .contains(Items.FIREWORK_ROCKET);
+    Vec3 origin = new Vec3(user.getX(), user.getEyeY() - (rocket ? 0.15F : 0.1F), user.getZ());
+    Optional<Vec3> aim = RangedAim.velocity(origin, target.getBoundingBox().getCenter(), targetMotion(target),
+        velocity, rocket ? 0 : 0.05D, rocket ? 1 : RangedAim.ARROW_DRAG);
+    if (aim.isEmpty()) return;
+    Vec3 direction = aim.get();
+    float pitch = user.getXRot();
+    float headYaw = user.getYHeadRot();
+    try {
+      user.setXRot((float) -Math.toDegrees(Math.atan2(direction.y, direction.horizontalDistance())));
+      user.setYHeadRot((float) Math.toDegrees(Math.atan2(-direction.x, direction.z)));
+      // A null aiming target selects the weapon's view direction and avoids vanilla's extra lift.
+      crossbow.performShooting(user.level(), user, hand, weapon, velocity, combatInaccuracy(), null);
+    } finally {
+      user.setXRot(pitch);
+      user.setYHeadRot(headYaw);
+    }
+    onCrossbowAttackPerformed();
+  }
+
+  /** Ground contact cancels the residual downward velocity that must not become aim lead. */
+  private static Vec3 targetMotion(LivingEntity target) {
+    Vec3 motion = target.getDeltaMovement();
+    return target.onGround() ? new Vec3(motion.x, 0, motion.z) : motion;
+  }
+
   /**
-   * Looses one arrow from the held bow. Combat keeps vanilla's
-   * difficulty-scaled spread (performRangedAttack above); the hunter passes a
-   * tight spread of its own, because a hunter who misses half their shots
-   * starves the lodge (HuntStep).
+   * Looses a hunting arrow with the caller's spread and the existing hunting speed.
+   * Combat uses full-draw bow speed so its longer engagement range is reachable.
    *
    * The projectile comes from getProjectile: a special arrow is a real item
    * and is spent on the shot, while the plain-arrow fallback is conjured and
    * never counted (docs/worker-loops.md).
    */
   public void shootArrowAt(LivingEntity target, float power, float inaccuracy) {
+    shootArrowAt(target, power, inaccuracy, 1.6F);
+  }
+
+  private void shootArrowAt(LivingEntity target, float power, float inaccuracy, float speed) {
     ItemStack bow = this.getItemInHand(Utils.getHandWith(this, item -> item instanceof BowItem));
     if (!(bow.getItem() instanceof BowItem)) {
       return; // callers gate on the bow, but a hand swapped mid-tick stays safe
     }
     ItemStack projectile = this.getProjectile(bow);
     AbstractArrow arrow = ProjectileUtil.getMobArrow(this, projectile, power, bow);
-    double d0 = target.getX() - this.getX();
-    double d1 = target.getY(0.3333333333333333D) - arrow.getY();
-    double d2 = target.getZ() - this.getZ();
-    double d3 = Mth.sqrt((float) (d0 * d0 + d2 * d2));
-    arrow.shoot(d0, d1 + d3 * (double) 0.2F, d2, 1.6F, inaccuracy);
+    // Arrow damage multiplies impact speed; improved reach must not also double bow damage.
+    arrow.setBaseDamage(arrow.getBaseDamage() * 1.6F / speed);
+    Optional<Vec3> aim = RangedAim.velocity(arrow.position(), target.getBoundingBox().getCenter(), targetMotion(target),
+        speed, arrow.getGravity(), RangedAim.ARROW_DRAG);
+    if (aim.isEmpty()) return;
+    Vec3 direction = aim.get();
+    arrow.shoot(direction.x, direction.y, direction.z, speed, inaccuracy);
     this.playSound(SoundEvents.SKELETON_SHOOT, 1.0F, 1.0F / (this.getRandom().nextFloat() * 0.4F + 0.8F));
     this.level().addFreshEntity(arrow);
     if (!projectile.is(Items.ARROW)) {

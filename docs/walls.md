@@ -230,6 +230,16 @@ radius adjusted by existing eyesight/wisdom variation. A visible ranged target
 does not need a walking route from the platform. Sight obstruction and friendly
 fire still prevent shots. Low-health recovery remains available.
 
+Ranged aim accounts for the projectile's flight time, drag, gravity and the target's
+current motion. The nominal watch range remains 48 blocks. Combat bows use full-draw
+arrow speed (3 blocks per tick); hunting retains its slower 1.6 speed, and crossbows
+retain their existing 6 speed. Combat bow base damage is reduced in proportion to
+the speed increase to preserve its damage at close range. Both weapons aim at the
+target's body with modest, difficulty-adjusted spread. This replaces the skeleton-style fixed upward correction,
+which sent fast crossbow bolts over targets while slow bow arrows fell short. Special
+bolts, multishot, loaded ammunition and weapon wear still use the actual held weapon.
+Firework rockets use straight flight rather than arrow gravity compensation.
+
 Ladder navigation is shared with all workers. Before descending, a resident's
 whole body must clear the landing edge before horizontal motion stops. This
 keeps workers from becoming stranded at the ladder top. Routes descend high

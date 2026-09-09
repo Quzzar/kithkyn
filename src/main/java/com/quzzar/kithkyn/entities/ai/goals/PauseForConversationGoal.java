@@ -43,9 +43,9 @@ public class PauseForConversationGoal extends Goal {
     // SleepAtNightGoal walk them home (VillagerConversation parts the pair on
     // its own side too). But a chat with a PLAYER is never walked out of: when
     // someone has the screen open the villager stays and talks, night or not,
-    // and only the player's own leave-taking ends it. A guard, who never sleeps,
+    // and only the player's own leave-taking ends it. A guard on watch tonight
     // keeps talking to anyone.
-    if (person.getOccupation().sleepsAtNight() && person.level().isNight()
+    if (person.shouldSleepAtNight() && person.level().isNight()
         && !conversingWithPlayer()) {
       return false;
     }

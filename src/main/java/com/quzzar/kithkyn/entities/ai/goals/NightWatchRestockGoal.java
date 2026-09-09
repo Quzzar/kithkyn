@@ -5,8 +5,8 @@ import com.quzzar.kithkyn.entities.RealPerson;
 import net.minecraft.world.entity.ai.goal.Goal;
 
 /**
- * The sleepless job's half of bedtime. A job that stands watch through the
- * night (Occupation.sleepsAtNight() false) never runs SleepAtNightGoal, but
+ * The active watch's half of bedtime. A guard assigned to stand watch this
+ * night does not run SleepAtNightGoal, but
  * bedtime is when the village hands out gear, rations and upgrades, so the
  * watch runs the same stow-and-restock where they stand instead of at a bed.
  *
@@ -25,7 +25,7 @@ public class NightWatchRestockGoal extends Goal {
 
   @Override
   public boolean canUse() {
-    return person.level().isNight() && person.callToBedCoolDown <= 0;
+    return person.level().isNight() && !person.shouldSleepAtNight() && person.callToBedCoolDown <= 0;
   }
 
   @Override

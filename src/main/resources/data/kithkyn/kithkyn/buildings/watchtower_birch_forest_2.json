@@ -72,5 +72,6 @@
     ],
     "banners": []
   },
-  "upgrades_from": "watchtower_birch_forest_1"
+  "upgrades_from": "watchtower_birch_forest_1",
+  "entrance_facing": "south"
 }

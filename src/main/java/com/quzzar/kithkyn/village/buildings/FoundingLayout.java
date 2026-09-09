@@ -11,69 +11,86 @@ import java.util.Optional;
 import java.util.Random;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
 
-/** Chooses two inward-facing founding companions without claiming or modifying trial sites. */
+/** Chooses centered founding companions, preferring two-block lanes and inward fronts. */
 public final class FoundingLayout {
   private FoundingLayout() { }
 
   public record Plan(InstantBuildStructure mine, InstantBuildStructure storehouse, int blocksMoved) { }
 
-  record Candidate(InstantBuildStructure structure, Direction side, BoundingBox worldBounds, int cost) { }
+  record Candidate(InstantBuildStructure structure, Direction side, BoundingBox worldBounds, int cost,
+      TownLayout.Preference preference) { }
   record Pair(Candidate mine, Candidate storehouse) {
     int cost() { return mine.cost() + storehouse.cost(); }
     boolean opposite() { return mine.side().getOpposite() == storehouse.side(); }
+    TownLayout.Preference preference() {
+      int gap = Math.min(TownLayout.clearGap(footprint(mine.worldBounds()), footprint(storehouse.worldBounds())),
+          Math.min(mine.preference().gap(), storehouse.preference().gap()));
+      return new TownLayout.Preference(gap,
+          mine.preference().inwardFronts() + storehouse.preference().inwardFronts());
+    }
   }
 
-  /** Terrain cost comes first; equal-cost sites prefer an adjacent-side courtyard. */
+  /** Tries preferred geometry first; fallback scans are spent only when it cannot form a safe pair. */
   public static Optional<Plan> plan(Village village, InstantBuildStructure center, int planeY, Random random,
       boolean loadChunks) {
     BoundingBox anchor = worldBounds(center);
     if (!suitable(village, center, planeY, loadChunks)) return Optional.empty();
-    List<Candidate> mines = candidates(village, anchor, Buildings.FOUNDING_MINE_CATEGORY, planeY, random, loadChunks);
-    List<Candidate> stores = candidates(village, anchor, Buildings.FOUNDING_STOREHOUSE_CATEGORY, planeY, random, loadChunks);
-    return choose(mines, stores).map(pair -> new Plan(pair.mine().structure(), pair.storehouse().structure(), pair.cost()));
+    List<Candidate> mines = new ArrayList<>();
+    List<Candidate> stores = new ArrayList<>();
+    for (TownLayout.Preference preference : TownLayout.PREFERENCES) {
+      mines.addAll(candidates(village, anchor, Buildings.FOUNDING_MINE_CATEGORY,
+          planeY, preference, random, loadChunks));
+      stores.addAll(candidates(village, anchor, Buildings.FOUNDING_STOREHOUSE_CATEGORY,
+          planeY, preference, random, loadChunks));
+      Optional<Pair> pair = choose(mines, stores);
+      if (pair.isPresent() && pair.get().preference().gap() >= preference.gap()
+          && pair.get().preference().inwardFronts() >= preference.inwardFronts() * 2) {
+        return pair.map(chosen -> new Plan(chosen.mine().structure(), chosen.storehouse().structure(), chosen.cost()));
+      }
+    }
+    return Optional.empty();
   }
 
   static Optional<Pair> choose(List<Candidate> mines, List<Candidate> stores) {
     List<Pair> pairs = new ArrayList<>();
     for (Candidate mine : mines) {
       for (Candidate store : stores) {
-        if (mine.side() != store.side() && separated(mine.worldBounds(), store.worldBounds())) {
+        if (mine.side() != store.side()
+            && TownLayout.clearGap(footprint(mine.worldBounds()), footprint(store.worldBounds())) >= TownLayout.MIN_GAP) {
           pairs.add(new Pair(mine, store));
         }
       }
     }
-    return pairs.stream().min(Comparator.comparingInt(Pair::cost).thenComparing(Pair::opposite));
-  }
-
-  /** Inclusive bounds: the next footprint begins after one unclaimed walking block. */
-  private static boolean separated(BoundingBox a, BoundingBox b) {
-    int gap = LocationValidator.MIN_GAP;
-    return a.maxX() + gap < b.minX() || b.maxX() + gap < a.minX()
-        || a.maxZ() + gap < b.minZ() || b.maxZ() + gap < a.minZ();
+    return pairs.stream().min(Comparator.comparing(Pair::preference, TownLayout.PREFERRED_FIRST)
+        .thenComparingInt(Pair::cost).thenComparing(Pair::opposite));
   }
 
   private static List<Candidate> candidates(Village village, BoundingBox anchor, String category,
-      int planeY, Random random, boolean loadChunks) {
+      int planeY, TownLayout.Preference preference, Random random, boolean loadChunks) {
     BuildingInfo info = Buildings.resolve(category, 1, village.getStyle());
     if (info == null) return List.of();
     var level = village.getLevel();
     List<Candidate> result = new ArrayList<>();
     for (Direction side : Direction.Plane.HORIZONTAL) {
-      var rotation = info.rotationFacing(side.getOpposite());
-      var probe = new InstantBuildStructure(new Building(info.getName(), rotation), random, level);
-      BoundingBox bounds = probe.getBounds();
-      for (var origin : frontageOrigins(anchor, bounds, side)) {
-        BlockPos at = new BlockPos(origin.x(), planeY - 1 - info.getSink(), origin.z());
-        var structure = new InstantBuildStructure(new Building(info.getName(), rotation), random, level)
-            .withIdentity(village.getIdentity()).seatAtOrigin(at, new HashSet<>());
-        BoundingBox world = worldBounds(structure);
-        if (!readable(village, world, loadChunks)) continue;
-        // Score local bounds once at the shared ground plane, not the sunk basement origin.
-        var cost = SitePreparation.score(level, village, new BlockPos(at.getX(), planeY - 1, at.getZ()), bounds);
-        if (!cost.impossible() && unowned(village, world, planeY)) {
-          result.add(new Candidate(structure, side, world, cost.blocksMoved()));
+      Rotation inward = info.rotationFacing(side.getOpposite());
+      for (Rotation rotation : Rotation.values()) {
+        if ((rotation == inward) != (preference.inwardFronts() > 0)) continue;
+        var probe = new InstantBuildStructure(new Building(info.getName(), rotation), random, level);
+        BoundingBox bounds = probe.getBounds();
+        for (var origin : frontageOrigins(anchor, bounds, side, preference.gap())) {
+          BlockPos at = new BlockPos(origin.x(), planeY - 1 - info.getSink(), origin.z());
+          var structure = new InstantBuildStructure(new Building(info.getName(), rotation), random, level)
+              .withIdentity(village.getIdentity()).seatAtOrigin(at, new HashSet<>());
+          BoundingBox world = worldBounds(structure);
+          if (!readable(village, world, loadChunks)) continue;
+          // Score local bounds once at the shared ground plane, not the sunk basement origin.
+          var cost = SitePreparation.score(level, village, new BlockPos(at.getX(), planeY - 1, at.getZ()), bounds);
+          if (!cost.impossible() && unowned(village, world, planeY)) {
+            result.add(new Candidate(structure, side, world, cost.blocksMoved(), preference));
+          }
         }
       }
     }
@@ -81,9 +98,9 @@ public final class FoundingLayout {
   }
 
   /** Founding centers each companion on its chosen side instead of offering edge-aligned alternatives. */
-  static List<TownLayout.Origin> frontageOrigins(BoundingBox anchor, BoundingBox candidate, Direction side) {
+  static List<TownLayout.Origin> frontageOrigins(BoundingBox anchor, BoundingBox candidate, Direction side, int gap) {
     return List.of(TownLayout.centeredFrontageOrigin(
-        footprint(anchor), footprint(candidate), LocationValidator.MIN_GAP, side));
+        footprint(anchor), footprint(candidate), gap, side));
   }
 
   /** Refuse protected columns before founding's instant clearing can touch them. */

@@ -52,5 +52,6 @@
     ],
     "banners": []
   },
-  "upgrades_from": "house_birch_forest_1"
+  "upgrades_from": "house_birch_forest_1",
+  "entrance_facing": "west"
 }

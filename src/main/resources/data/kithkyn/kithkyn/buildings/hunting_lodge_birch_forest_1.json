@@ -52,5 +52,6 @@
       ]
     ],
     "banners": []
-  }
+  },
+  "entrance_facing": "west"
 }

@@ -98,10 +98,18 @@ entrance toward the center. The Birch mine's shaft runs east from local `[9,0,8]
 stairs before the first dug step; the former `[8,0,8]` mouth produced an unclimbable
 one-and-a-half-block exit. Worker excavation and navigation use the same frame. Existing
 mines retain their saved mouths so their already-dug tunnels and branches do not move.
-Other families retain their original entrance/shaft conventions.
+The catalog also declares the other authored fronts: the homes, cottage, bakery, blacksmith,
+butcher compound, church, fishery, hunter, stoneworks and first tower approach from the west;
+the lumberjack and two-stall market approach from the north; the second tower and three-stall
+market approach from the south. The single stall opens west. Fields, the well and center
+retain the north convention for their multiple equivalent approaches. These directions describe
+the public approach, not a door block's often inward-facing state. Ordinary growth now uses
+these fronts when it prefers entrances toward the town center.
 
 Each founding companion is centered along its selected side of the center's tight footprint,
-within half a block for mixed odd/even widths, retaining one walking block between footprints.
+within half a block for mixed odd/even widths, preferring two walking blocks between footprints
+and accepting one when space is tight. Inward fronts are preferred; another rotation may fit
+where the inward one cannot, as described in [site-selection.md](site-selection.md).
 Terrain chooses the two sides, not an off-center alignment within a side. All completed buildings
 use the same three-block natural tree line and one-block foliage clearance as walls, including
 command/natural founding and upgrades. The approved planting, crops and sapling are protected;

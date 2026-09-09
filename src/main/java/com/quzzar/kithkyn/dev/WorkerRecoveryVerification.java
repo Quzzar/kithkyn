@@ -4,6 +4,7 @@ import com.quzzar.kithkyn.Kithkyn;
 import com.quzzar.kithkyn.PersonEntityType;
 import com.quzzar.kithkyn.entities.FishingCast;
 import com.quzzar.kithkyn.entities.RealPerson;
+import com.quzzar.kithkyn.entities.ai.goals.ApproachWatch;
 import com.quzzar.kithkyn.entities.ai.goals.work.FishStep;
 import com.quzzar.kithkyn.entities.ai.goals.work.MineStep;
 import com.quzzar.kithkyn.entities.ai.goals.work.WorkLoopGoal;
@@ -40,8 +41,9 @@ public final class WorkerRecoveryVerification {
       level.setDayTime(6000);
       level.updateSkyBrightness();
       for (Rotation rotation : Rotation.values()) verifyMine(level, rotation);
+      verifyMine(level, Rotation.NONE, true);
       verifyFishing(level);
-      Kithkyn.LOGGER.info("[workers-verify] RESULT PASS: flooded frontier seals then cuts ribs in all rotations; fishing catch and interruption lifecycle");
+      Kithkyn.LOGGER.info("[workers-verify] RESULT PASS: flooded frontier seals then cuts ribs in all rotations; occupied offhand and full-pack bucket exchange; fishing catch and interruption lifecycle");
     } catch (Exception | AssertionError failure) {
       Kithkyn.LOGGER.error("[workers-verify] RESULT FAIL", failure);
     } finally {
@@ -50,10 +52,15 @@ public final class WorkerRecoveryVerification {
   }
 
   private static void verifyMine(ServerLevel level, Rotation rotation) {
-    FixtureVillage village = new FixtureVillage(new BlockPos(-6000 + rotation.ordinal() * 100, 150, -6000),
+    verifyMine(level, rotation, false);
+  }
+
+  private static void verifyMine(ServerLevel level, Rotation rotation, boolean bucket) {
+    FixtureVillage village = new FixtureVillage(new BlockPos(-6000 + rotation.ordinal() * 100, 150, bucket ? -6100 : -6000),
         "mine_birch_forest_1", rotation, Occupation.MINER);
     RealPerson miner = worker(level, village);
     MineShaft shaft = MineShaft.root(village.building, LocationManager.getJobLocation(miner));
+    if (rotation == Rotation.NONE && !bucket) verifyMineMessages(level, village, miner, shaft);
     // Intact ceiling beyond a dry ramp hides the lower water in row-sweep order.
     for (BlockPos local : BlockPos.betweenClosed(-12, -28, -3, 12, 3, 25)) {
       level.setBlock(world(shaft, local), Blocks.STONE.defaultBlockState(), 2);
@@ -76,10 +83,18 @@ public final class WorkerRecoveryVerification {
     }
     miner.setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(Items.STONE_PICKAXE));
     miner.personMainInv.setItem(0, new ItemStack(Items.DIRT, 64));
+    if (bucket) {
+      for (int slot = 1; slot < miner.personMainInv.getContainerSize(); slot++) {
+        miner.personMainInv.setItem(slot, new ItemStack(Items.APPLE, 64));
+      }
+      miner.personMainInv.setItem(1, new ItemStack(Items.BUCKET, 16));
+      miner.setItemSlot(EquipmentSlot.OFFHAND, new ItemStack(Items.COOKED_SALMON, 6));
+    }
     standAt(miner, world(shaft, new BlockPos(0, -2, 0)));
     MineStep mine = new MineStep();
     BlockPos leftRib = world(shaft, new BlockPos(-3, -18, 16));
     BlockPos rightRib = world(shaft, new BlockPos(3, -18, 16));
+    BlockPos flooded = world(shaft, new BlockPos(0, -19, 17));
     for (int pick = 0; pick < 50 && !level.getBlockState(leftRib).isAir()
         && !level.getBlockState(rightRib).isAir(); pick++) {
       BlockPos stand = mine.select(miner);
@@ -88,12 +103,58 @@ public final class WorkerRecoveryVerification {
       mine.acquired(miner, stand);
       for (int act = 0; act < 2000 && mine.act(miner, stand); act++) { }
       mine.released(miner, stand);
+      if (bucket && level.getFluidState(flooded).isEmpty()) break;
+    }
+    if (bucket) {
+      check(level.getFluidState(flooded).isEmpty(), "food in the offhand prevented bailing");
+      check(miner.personMainInv.countItem(Items.COOKED_SALMON) == 6, "bucket exchange lost the held meal");
+      int buckets = miner.personMainInv.countItem(Items.BUCKET)
+          + (miner.getOffhandItem().is(Items.BUCKET) ? miner.getOffhandItem().getCount() : 0);
+      int droppedBuckets = level.getEntitiesOfClass(net.minecraft.world.entity.item.ItemEntity.class,
+          miner.getBoundingBox().inflate(4.0D)).stream()
+          .filter(item -> item.getItem().is(Items.BUCKET)).mapToInt(item -> item.getItem().getCount()).sum();
+      check(buckets == 16 && droppedBuckets == 0, "full-pack exchange lost or copied buckets: carried="
+          + buckets + ", dropped=" + droppedBuckets + ", offhand=" + miner.getOffhandItem());
+      check(miner.getMainHandItem().is(Items.STONE_PICKAXE), "bailing displaced the pickaxe");
+      miner.discard();
+      return;
     }
     check(level.getBlockState(leftRib).isAir() || level.getBlockState(rightRib).isAir(),
         "miner never resumed dry side cuts: " + rotation);
     check(miner.personMainInv.countItem(Items.DIRT) < 64, "miner skipped reachable lining: " + rotation);
     check(miner.personMainInv.countItem(Items.BUCKET) == 0, "fixture unexpectedly supplied a bucket");
     miner.discard();
+  }
+
+  private static void verifyMineMessages(ServerLevel level, FixtureVillage village, RealPerson miner, MineShaft shaft) {
+    BlockPos target = world(shaft, new BlockPos(0, -18, 16));
+    standAt(miner, shaft.mouth().offset(-20, 2, -20));
+    ApproachWatch approach = new ApproachWatch(miner, "the mine");
+    for (int tick = 0; tick <= 200; tick++) approach.giveUp(target);
+    check(blockers(miner).stream().anyMatch(text -> text.contains("mine entrance")),
+        "outside approach did not explain the entrance failure");
+    standAt(miner, world(shaft, new BlockPos(0, -10, 8)));
+    approach.begin();
+    for (int tick = 0; tick <= 200; tick++) approach.giveUp(target);
+    check(blockers(miner).stream().anyMatch(text -> text.contains("mine ramp"))
+        && blockers(miner).stream().noneMatch(text -> text.contains("mine entrance")),
+        "ramp failure retained the old entrance explanation");
+    miner.logBlocker("I cannot get to the mine.");
+    net.minecraft.nbt.CompoundTag saved = new net.minecraft.nbt.CompoundTag();
+    miner.saveWithoutId(saved);
+    RealPerson restored = worker(level, village);
+    restored.load(saved);
+    new ApproachWatch(restored, "the mine").arrived();
+    check(blockers(restored).stream().noneMatch(text -> text.contains("mine")),
+        "arrival after reload retained an old access complaint");
+    restored.discard();
+    approach.arrived();
+  }
+
+  private static java.util.List<String> blockers(RealPerson person) {
+    return person.getData(com.quzzar.kithkyn.entities.KithkynAttachments.PERSONAL_LOG.get()).entries().stream()
+        .filter(entry -> entry.kind().equals(com.quzzar.kithkyn.entities.PersonalLogData.KIND_BLOCKER))
+        .map(com.quzzar.kithkyn.entities.PersonalLogData.Entry::text).toList();
   }
 
   private static void verifyFishing(ServerLevel level) {
@@ -175,6 +236,7 @@ public final class WorkerRecoveryVerification {
     }
 
     @Override public Building getBuilding(UUID id) { return building; }
+    @Override public java.util.Collection<Building> getBuildings() { return java.util.List.of(building); }
     @Override public JobAssignment getJobAssignment(UUID id) {
       return new JobAssignment(id, occupation, building.getUUID(), 0);
     }

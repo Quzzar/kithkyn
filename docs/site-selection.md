@@ -28,10 +28,11 @@ candidates in unloaded chunks are skipped before any scan rather than being scor
 impossible one at a time.
 
 The planner takes ground that needs work. It first tries edge-aligned frontage slots beside
-completed buildings, with one clear block between footprints as a shared lane. A corner or
-row that continues more existing frontage wins, then frontage beside an already worn path,
-then preparation cost and distance. If no frontage slot works, the nearest-first terrain
-sweep is the fallback. Heightmap-first screening is built, and a refused search leaves the
+completed buildings, preferring two clear blocks between footprints and allowing one block
+where space is tight. Among legal sites it prefers the authored front toward the town center,
+then a corner or row that continues existing frontage, frontage beside an already worn path,
+preparation cost and distance. A frontage that cannot meet both preferences also lets the
+nearest-first terrain sweep look for a better nearby fit. Heightmap-first screening is built, and a refused search leaves the
 village knowing where its room ran out. Still unbuilt: the resumable budgeted search and the
 site cache.
 
@@ -41,8 +42,8 @@ and took the first free one, which put buildings a long way from the fire: open 
 out is free, while near ground is often claimed or wants a little levelling.
 
 The planner now enumerates the beginnings, centres and ends of each completed footprint's
-four edges. It puts the candidate one lane away in every offered rotation, then prefers a
-site that lines more than one edge because that is natural infill. Repeating this local
+four edges. It puts the candidate one or two clear blocks away in every offered rotation,
+then ranks the legal fits by spacing, inward front and existing frontage. Repeating this local
 relationship produces rows, narrow streets and small courtyards without forcing the village
 onto a global grid. Later growth starts by asking how it relates to the town already standing,
 not only how far it is from the fire.
@@ -56,9 +57,12 @@ nothing. Candidates stand off the centre rather than starting on it.
 
 Every candidate is tried in each rotation the caller offers (the planner offers all four),
 and the facing that fits the slot is the one kept: a long building turns to fit a gap its
-other facing could not, and among equally free facings the pick is random, which is where a
-village's variety of orientation comes from now that placement no longer scatters. A clear
-gap of `MIN_GAP` blocks is held between a new footprint and everything already claimed, so
+other facing could not. When that direction fits, the actual authored entrance side faces
+the town center; both closest cardinal directions are equally inward on a diagonal.
+Only ties after layout, preparation cost and distance are random. Two clear blocks are the
+preferred spacing, with a hard minimum of one clear block between a new footprint and every
+claim. These are preferences among safe sites, never permission to exceed the terrain budget,
+erase a path or overlap a building. A clear gap of `MIN_GAP` blocks is held, so
 lanes stay walkable and the cluster reads as planned rather than piled; a candidate whose
 footprint, grown by that gap, touches a claim is passed over. A worn dirt path is public
 space: a building may line it and gains a placement preference for doing so, but may not
@@ -72,10 +76,14 @@ past the levelling budget across the rest, is refused without a block scan. A fe
 are let through because a tree reads as a tall column and is cleared, not levelled; one outlier
 is always allowed through even on a small footprint. The exact scan also uses that allowance for
 a compact low corner, but not for high ground or a broad depression. Only
-survivors get the volume scan. In the fallback, the first candidate that is free or
-preparable settles a band and the sweep reads 8 blocks further out. Relationship to claimed
-edges and paths breaks up the old first-grid-point behavior, followed by preparation cost
-and distance. Taking the cheapest ground in the whole reach (2026-09-02)
+survivors get the volume scan. Frontage scans retain their cap of 160 candidates, sharing
+that budget across two-block/inward, two-block/turned, one-block/inward and one-block/turned
+tiers. Empty tiers return their share to available candidates. This keeps terrain-rejected
+preferred sites from consuming every opportunity to try a tight or turned fallback.
+In the fallback, an existing usable frontage or the first free/preparable sweep candidate
+settles a band and the sweep reads 8 blocks further out. Spacing and inward front come first,
+then relationship to claimed edges and paths, preparation cost and distance. Taking the
+cheapest ground in the whole reach (2026-09-02)
 put Wildflower Downs' lumberjack 90 blocks from its fire, 78 blocks of work there against 211
 within 50; a village that sprawls has a wall ring it cannot afford and ground it cannot finish
 grading. The grid's stride is 2, fine enough to pack the ring in snugly, and a footprint is
@@ -91,7 +99,7 @@ could act on, so an unwatched village waits rather than planning.
 
 Every search leaves one debug line saying what it saw: how many candidates were scored, how
 many sat on claimed ground, how many covered a path, and how many were in unloaded chunks.
-The selected site's claimed frontage, adjacent sides, path frontage and preparation cost are
+The selected site's spacing, inward front, claimed frontage, adjacent sides, path frontage and preparation cost are
 logged too. A search that skips every
 candidate before scoring is otherwise indistinguishable from one where every site was
 genuinely bad, and that ambiguity hid the zero-radius bug above for as long as it existed.
@@ -268,15 +276,20 @@ Founding measures each building's ground footprint from its placed origin plus i
 `BuildingFootprint` bounds, not a rounded half-width around its center. These bounds enclose
 authored non-air blocks across all palettes, including decorations, but exclude empty capture
 borders. Placement, claims, site searches and upgrades use the same envelope with zero capture
-padding; the shared one-block walking lane is separate. Odd and even dimensions keep
+padding; the one- or two-block walking lane is separate. Odd and even dimensions keep
 their exact extent, including negative offsets after rotation. Sunken templates still prepare
 the chosen surface plane; their underground blocks and explicit air are placed afterward.
-`FoundingLayout` tries inward-facing companions centered on all four edges using the shared
+`FoundingLayout` first tries inward-facing companions two blocks away, centered on all four edges using the shared
 `TownLayout` frontage geometry. Unlike later growth, founding never offers off-center start/end
 alignments: each companion's footprint midpoint matches the center's midpoint along that edge,
 within the unavoidable half-block for mixed odd/even widths. It scores local bounds at the
 actual world ground origin before committing any claims.
-The lowest-cost nonoverlapping pair on distinct sides wins, preferring adjacent sides on ties.
+If those sites cannot form a pair, founding tries other rotations at two blocks, inward
+fronts at one block, then other rotations at one block. The actual gap between the companions
+counts too: two roomy center approaches do not disguise a one-block corner between them.
+Among pairs with the same spacing and inward-front preference, the lowest terrain cost wins,
+preferring adjacent sides on ties. Existing structures retain their placement; this changes
+new sites. In-place upgrades retain the source building's rotation and mine-shaft alignment.
 Impossible sites never rank as zero-cost sites. Only chosen footprints are cleared: no union
 rectangle or extra flank margin. If two safe sites are unavailable, founding leaves the world
 unchanged and asks for a more open spot.
@@ -305,7 +318,7 @@ register as village buildings and are not retroactively swept.
 
 ## What it costs at runtime
 
-The one-block founding gap is also an access lane, not extra terrain-clearing padding. After
+The founding gap is also an access lane, not extra terrain-clearing padding. After
 placement, `GradingSurvey` identifies narrow gaps (up to three columns) between overlapping
 footprint edges and small doorway approaches. Those movable columns receive the gentler path
 grade before a path exists. Saved sink offsets and exact rotated footprints supply floor anchors.

@@ -4,6 +4,7 @@ import com.quzzar.kithkyn.entities.RealPerson;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.Pose;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 
@@ -11,9 +12,11 @@ import net.minecraft.world.phys.AABB;
 public final class WorkerFooting {
   private WorkerFooting() { }
 
-  /** Dry, supported ground with clearance for this worker's actual body, not a two-block proxy. */
+  /** Dry, supported ground with clearance for this worker, including a passage they can duck through. */
   public static boolean canStand(RealPerson person, BlockPos position) {
-    return canStand(person.level(), position, person, person.getBbWidth(), person.getBbHeight());
+    return canStand(person.level(), position, person, person.getBbWidth(), person.getBbHeight())
+        || canStand(person.level(), position, person, person.getBbWidth(),
+            person.getDimensions(Pose.CROUCHING).height());
   }
 
   /** A resident-sized access check for surveys that have no particular worker yet. */

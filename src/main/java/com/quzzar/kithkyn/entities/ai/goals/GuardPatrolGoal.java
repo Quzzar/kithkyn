@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.function.Supplier;
 
 import com.quzzar.kithkyn.entities.RealPerson;
+import com.quzzar.kithkyn.entities.ai.GuardNightRoutine;
 import com.quzzar.kithkyn.village.Village;
 import com.quzzar.kithkyn.village.buildings.Building;
 
@@ -27,10 +28,10 @@ import net.minecraft.world.entity.PathfinderMob;
  * pace, facing the building as it circles, rather than walking to its centre and
  * standing there (Aaron, 2026-09-03: the old watch parked on doorsteps). One
  * activation is one full lap; the unhurried pause falls between laps, before the
- * next building. A village always has buildings to round — a camp is founded
- * with three — so there is no campfire fallback. Guards do not sleep, so the
- * watch stands day and night; those pauses are where the night restock and the
- * odd tree still fit.
+ * next building. A village always has buildings to round: a camp is founded
+ * with three, so there is no campfire fallback. Human guards patrol when their
+ * nightly routine allows it; golems keep their day-and-night watch. The pauses
+ * are where restocking and the odd tree still fit.
  */
 public class GuardPatrolGoal extends Goal {
 
@@ -79,7 +80,8 @@ public class GuardPatrolGoal extends Goal {
 
   @Override
   public boolean canUse() {
-    if (village.get() == null || guard.getTarget() != null || guard.level().getGameTime() < resumeAt) {
+    if (!onPatrol() || village.get() == null || guard.getTarget() != null
+        || guard.level().getGameTime() < resumeAt) {
       return false;
     }
     planLap();
@@ -88,7 +90,12 @@ public class GuardPatrolGoal extends Goal {
 
   @Override
   public boolean canContinueToUse() {
-    return village.get() != null && guard.getTarget() == null && legIndex < lap.size();
+    return onPatrol() && village.get() != null && guard.getTarget() == null && legIndex < lap.size();
+  }
+
+  /** Golems never take a human sleep shift; posted people resume their station at dawn. */
+  private boolean onPatrol() {
+    return !(guard instanceof RealPerson person) || person.guardRoutine() == GuardNightRoutine.PATROL;
   }
 
   @Override
@@ -150,7 +157,7 @@ public class GuardPatrolGoal extends Goal {
   /**
    * Lay out one lap: a ring of waypoints around a random building's edge. Left
    * empty (which ends the goal) only in the moment before a founding village has
-   * placed its buildings — a standing village always has some to round.
+   * placed its buildings; a standing village always has some to round.
    */
   private void planLap() {
     lap.clear();

@@ -3,6 +3,7 @@ package com.quzzar.kithkyn.entities.ai.goals;
 import java.util.EnumSet;
 
 import com.quzzar.kithkyn.entities.RealPerson;
+import com.quzzar.kithkyn.entities.ai.GuardNightRoutine;
 import com.quzzar.kithkyn.village.GuardDuty;
 
 import net.minecraft.core.BlockPos;
@@ -24,12 +25,12 @@ public final class GuardPostGoal extends Goal {
 
   @Override
   public boolean canUse() {
-    return GuardDuty.available(guard) != null;
+    return guard.guardRoutine() == GuardNightRoutine.POST && GuardDuty.available(guard) != null;
   }
 
   @Override
   public boolean canContinueToUse() {
-    return GuardDuty.available(guard) != null;
+    return canUse();
   }
 
   @Override

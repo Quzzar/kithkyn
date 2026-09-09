@@ -10,6 +10,7 @@ import javax.annotation.Nullable;
 
 import com.quzzar.kithkyn.Kithkyn;
 import com.quzzar.kithkyn.entities.RealPerson;
+import com.quzzar.kithkyn.entities.EquipmentSwap;
 import com.quzzar.kithkyn.savedata.PlacedBlockStore;
 import com.quzzar.kithkyn.village.LocationManager;
 import com.quzzar.kithkyn.village.buildings.Building;
@@ -1705,7 +1706,6 @@ public final class MineStep implements BlockWorkStep {
       return false; // the world changed on the walk; seal this reachable edge first
     }
     if (!showBucket(person)) {
-      person.logBlocker("I need my off hand free to use the bucket in my mine");
       return false;
     }
     Deque<BlockPos> frontier = new ArrayDeque<>();
@@ -1809,28 +1809,33 @@ public final class MineStep implements BlockWorkStep {
    * in the server log ([mine]).
    */
   private boolean showBucket(RealPerson person) {
+    if (person.isEating()) return false;
     ItemStack offhand = person.getItemBySlot(EquipmentSlot.OFFHAND);
     if (offhand.is(Items.BUCKET)) {
       this.bucketShownTicks = BUCKET_SHOWN_TICKS;
+      person.clearBlocker("I need my off hand free to use the bucket in my mine");
       return true;
-    }
-    if (!offhand.isEmpty()) {
-      return false;
     }
     ItemStack mainhand = person.getMainHandItem();
     if (mainhand.is(Items.BUCKET)) {
-      person.setItemSlot(EquipmentSlot.MAINHAND, ItemStack.EMPTY);
+      person.stopUsingItem();
+      person.setItemSlot(EquipmentSlot.MAINHAND, offhand);
       person.setItemSlot(EquipmentSlot.OFFHAND, mainhand);
       this.bucketShownTicks = BUCKET_SHOWN_TICKS;
+      person.clearBlocker("I need my off hand free to use the bucket in my mine");
       return true;
     }
-    ItemStack pulled = person.removeItem(Items.BUCKET, 1);
-    if (pulled.getCount() == 1) {
-      person.setItemSlot(EquipmentSlot.OFFHAND, pulled);
-      this.bucketShownTicks = BUCKET_SHOWN_TICKS;
-      Kithkyn.LOGGER.info("[mine] {} brought its bucket to its off hand",
-          person.getName().getString());
-      return true;
+    for (int slot = 0; slot < person.personMainInv.getContainerSize(); slot++) {
+      if (person.personMainInv.getItem(slot).is(Items.BUCKET)) {
+        person.stopUsingItem();
+        person.setItemSlot(EquipmentSlot.OFFHAND,
+            EquipmentSwap.exchange(person.personMainInv, slot, offhand));
+        this.bucketShownTicks = BUCKET_SHOWN_TICKS;
+        person.clearBlocker("I need my off hand free to use the bucket in my mine");
+        Kithkyn.LOGGER.info("[mine] {} brought its bucket to its off hand",
+            person.getName().getString());
+        return true;
+      }
     }
     return false;
   }
@@ -1843,11 +1848,13 @@ public final class MineStep implements BlockWorkStep {
    */
   private void stowBucket(RealPerson person) {
     ItemStack offhand = person.getItemBySlot(EquipmentSlot.OFFHAND);
-    if (!offhand.is(Items.BUCKET) || person.isInventoryFull()) {
+    if (!offhand.is(Items.BUCKET)) {
       return;
     }
-    person.setItemSlot(EquipmentSlot.OFFHAND, ItemStack.EMPTY);
-    person.addItems(List.of(offhand));
+    // A partly filled food or dirt stack is not free space for a bucket.
+    // Keep any actual insertion remainder in hand, without the drop-on-overflow helper.
+    ItemStack remaining = person.personMainInv.addItem(offhand);
+    person.setItemSlot(EquipmentSlot.OFFHAND, remaining);
   }
 
   /**

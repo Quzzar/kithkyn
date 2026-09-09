@@ -36,6 +36,24 @@ class BuildingEntranceTest {
   }
 
   @Test
+  void buildingFrontsUseThePublicApproachInsteadOfTheOldNorthDefaultOrInwardDoorState() throws Exception {
+    for (String category : new String[]{"house", "couple_cottage", "bakery", "blacksmith", "butchery",
+        "church", "fishery", "hunting_lodge", "stoneworks", "watchtower", "market"}) {
+      assertEquals(Direction.WEST, definition(category + "_birch_forest_1").getEntranceFacing(), category);
+    }
+    assertEquals(Direction.WEST, definition("house_birch_forest_2").getEntranceFacing());
+    assertEquals(Direction.NORTH, definition("lumberjack_birch_forest_1").getEntranceFacing());
+    assertEquals(Direction.NORTH, definition("market_birch_forest_2").getEntranceFacing());
+    assertEquals(Direction.SOUTH, definition("market_birch_forest_3").getEntranceFacing());
+    assertEquals(Direction.SOUTH, definition("watchtower_birch_forest_2").getEntranceFacing());
+    for (String style : new String[]{"plains", "taiga", "snowy", "desert", "savanna"}) {
+      for (int level = 1; level <= 3; level++) {
+        assertEquals(Direction.WEST, definition("house_" + style + "_" + level).getEntranceFacing());
+      }
+    }
+  }
+
+  @Test
   void minerAndNavigationShareTheCenteredAuthoredShaftInEveryRotation() throws Exception {
     BuildingInfo info = definition("mine_birch_forest_1");
     Buildings.reload(Map.of(info.getName(), info));

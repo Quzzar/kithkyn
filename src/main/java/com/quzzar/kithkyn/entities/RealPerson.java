@@ -57,6 +57,7 @@ import net.neoforged.neoforge.network.PacketDistributor;
 import javax.annotation.Nullable;
 
 import com.quzzar.kithkyn.Kithkyn;
+import com.quzzar.kithkyn.entities.ai.GuardNightRoutine;
 import com.quzzar.kithkyn.entities.ai.goals.work.ConsolidateStep;
 import com.quzzar.kithkyn.entities.ai.goals.work.GatherStep;
 import com.quzzar.kithkyn.entities.ai.goals.work.WorkLoopGoal;
@@ -858,9 +859,8 @@ public class RealPerson extends Person {
     for (int slot = 0; slot < this.personMainInv.getContainerSize(); slot++) {
       ItemStack stack = this.personMainInv.getItem(slot);
       if (!stack.isEmpty() && tool.kind().isInstance(stack.getItem())) {
-        ItemStack held = this.getMainHandItem();
-        this.setItemSlot(EquipmentSlot.MAINHAND, stack);
-        this.personMainInv.setItem(slot, held);
+        this.setItemSlot(EquipmentSlot.MAINHAND,
+            EquipmentSwap.exchange(this.personMainInv, slot, this.getMainHandItem()));
         return true;
       }
     }
@@ -1262,12 +1262,9 @@ public class RealPerson extends Person {
    * whatever they held, and refilled a hand that had just given its axe away.
    */
   public void reloadState() {
-    // A villager reassigned mid-sleep must wake. The new occupation may have no sleep
-    // goal to stop on the way out - a butcher asleep at night, swapped to guard, loses
-    // its SleepAtNightGoal and with it the stopSleeping that goal's stop would have
-    // called - so the sleeping pose would carry into the new job and the guard "sleeps"
-    // in daylight. Wake explicitly here, the one chokepoint every occupation change
-    // passes through; stopSleeping is a no-op when they are already awake.
+    // A villager reassigned mid-sleep must wake before the new routine takes
+    // over. The replacement may be on watch or have no sleep goal at all.
+    // stopSleeping is a no-op when they are already awake.
     this.stopSleeping();
     // Running goals are stopped on the way out, or they hold the villager's
     // legs for good (clearGoals). The target selector is rebuilt the same way;
@@ -1333,9 +1330,9 @@ public class RealPerson extends Person {
     stowPackAndRestock();
   }
 
-  /** Housed civilians return home; truly unhoused residents gather near the bell. Guards only restock. */
+  /** Housed sleepers return home; unhoused residents gather near the bell; guards on watch restock. */
   public void respondToBell(BlockPos bell) {
-    if (!this.getOccupation().sleepsAtNight()) {
+    if (!this.shouldSleepAtNight()) {
       restockForNightWatch();
       return;
     }
@@ -1413,8 +1410,8 @@ public class RealPerson extends Person {
   }
 
   /**
-   * The bedtime stow-and-restock without the bed. Jobs that stand watch through
-   * the night (Occupation.sleepsAtNight() false) never run goToBed, but bedtime
+   * The bedtime stow-and-restock without the bed. Guards standing watch this
+   * night do not run goToBed, but bedtime
    * is when the village hands out gear, rations and upgrades, so the night
    * watch runs the same routine at their post (NightWatchRestockGoal). Shares
    * goToBed's cooldown, so a bell ring and the nightly cadence cannot
@@ -2047,10 +2044,23 @@ public class RealPerson extends Person {
     return village == null ? null : village.getWallPost(getUUID());
   }
 
-  /** Wall and opted-in building sentries hold their elevated post while firing. */
+  /** The current routine affects movement only; GuardDuty retains the assigned post and equipment. */
+  public GuardNightRoutine guardRoutine() {
+    return GuardNightRoutine.choose(this.getUUID(), this.level().getDayTime(), this.level().isNight(),
+        com.quzzar.kithkyn.village.GuardDuty.isCaptain(this),
+        com.quzzar.kithkyn.village.GuardDuty.of(this) != null);
+  }
+
+  /** Person-level bedtime is shared by sleeping, night restocking, bell recall and conversations. */
+  public boolean shouldSleepAtNight() {
+    return this.getOccupation() == Occupation.GUARD ? guardRoutine() == GuardNightRoutine.SLEEP
+        : !this.isWanderingMerchant();
+  }
+
+  /** Ranged sentries hold position on post duty; a night patrol uses ordinary mobile combat. */
   public boolean isFixedRangedGuard() {
     com.quzzar.kithkyn.village.GuardDuty duty = com.quzzar.kithkyn.village.GuardDuty.of(this);
-    return duty != null && duty.ranged();
+    return duty != null && duty.ranged() && guardRoutine() == GuardNightRoutine.POST;
   }
 
   protected void setVirtue(Virtue virtue, float value) {
@@ -2620,11 +2630,9 @@ public class RealPerson extends Person {
     if (getOccupation() == Occupation.GUARD) {
       com.quzzar.kithkyn.village.GuardDuty guardDuty = com.quzzar.kithkyn.village.GuardDuty.of(this);
       if (guardDuty != null) {
-        // Combat outranks this post. Once the threat is gone, a base guard or
-        // crossbowman returns to this exact station instead of joining the
-        // ordinary patrol or the founding guard's occasional lumber work.
+        // The night's routine gates return to this exact station. A temporary
+        // patrol retains the same assigned post and loadout, and combat wins.
         this.goalSelector.addGoal(5, new GuardPostGoal(this));
-        this.goalSelector.addGoal(8, new RandomLookAroundGoal(this));
       } else {
       // Guarding always wins on priority. In a quiet spell, a guard very
       // occasionally clears one natural tree around their post using the exact
@@ -2657,10 +2665,10 @@ public class RealPerson extends Person {
       // neighbour, and parked on a worker it kept pulling off the job (Aaron,
       // 2026-09-02: the miner and guard just standing together). A chat fits the
       // pauses between the watch's legs.
+      }
       this.goalSelector.addGoal(5,
           new com.quzzar.kithkyn.entities.ai.goals.GuardPatrolGoal(this));
       this.goalSelector.addGoal(8, new RandomLookAroundGoal(this));
-      }
     }
     if (getOccupation() == Occupation.MINER) {
       // Ahead of the work goal: a full pack is worth a trip before more digging.
@@ -2922,17 +2930,15 @@ public class RealPerson extends Person {
     this.goalSelector.addGoal(6, new com.quzzar.kithkyn.entities.ai.goals.FollowFamilyGoal(this));
     this.goalSelector.addGoal(6, new com.quzzar.kithkyn.entities.ai.goals.RoamGoal(this));
 
-    // Safe to decide at registration: every occupation change goes through
-    // setOccupation + reloadState, which rebuilds all goals.
-    if (getOccupation().sleepsAtNight()) {
+    // Guards have both paths because their routine changes each night without
+    // a job reassignment. Each goal consults the same person-level bedtime.
+    if (!isWanderingMerchant()) {
       // Ahead of sleep: what the bedtime chest question held back is set down
       // at home first, and only then does the bed take over.
       this.goalSelector.addGoal(5, new com.quzzar.kithkyn.entities.ai.goals.StashAtHomeGoal(this));
       this.goalSelector.addGoal(6, new SleepAtNightGoal(this));
-    } else {
-      // The watch stands all night. They keep their bed (the JobClaiming
-      // housing gate is untouched); only the sleeping is skipped, and the
-      // bedtime stow-and-restock runs at their post instead.
+    }
+    if (getOccupation() == Occupation.GUARD || isWanderingMerchant()) {
       this.goalSelector.addGoal(6, new NightWatchRestockGoal(this));
     }
     // this.goalSelector.addGoal(6, new RunToClericGoal(this)); Don't need it seems

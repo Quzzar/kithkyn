@@ -11,6 +11,7 @@ import com.quzzar.kithkyn.village.buildings.MineShaft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.navigation.GroundPathNavigation;
 import net.minecraft.world.level.Level;
@@ -94,6 +95,9 @@ public final class PersonPathNavigation extends GroundPathNavigation {
   @Nullable
   private String lastMinePathFailure;
 
+  private boolean duckingForRoute;
+  private int keepDuckingUntil;
+
   public PersonPathNavigation(Mob mob, Level level) {
     super(mob, level);
   }
@@ -114,6 +118,32 @@ public final class PersonPathNavigation extends GroundPathNavigation {
   @Override
   @Nullable
   protected Path createPath(Set<BlockPos> targets, int regionOffset, boolean offsetUpward, int accuracy) {
+    Path route = searchRoute(targets, regionOffset, offsetUpward, accuracy);
+    if ((route == null || !route.canReach()) && this.mob.getPose() == Pose.STANDING
+        && this.mob instanceof RealPerson && !this.mob.isPassenger()
+        && (int)(this.mob.getBbHeight() + 1) >
+            (int)(this.mob.getDimensions(Pose.CROUCHING).height() + 1)) {
+      // Genetics can make an adult slightly taller than a two-block doorway.
+      // Recompute with the real crouching hitbox; a cached standing path must
+      // not be reused for the smaller body.
+      Path previous = this.path;
+      this.path = null;
+      this.mob.setPose(Pose.CROUCHING);
+      Path ducked = searchRoute(targets, regionOffset, offsetUpward, accuracy);
+      if (ducked != null && ducked.canReach()) {
+        this.duckingForRoute = true;
+        route = ducked;
+      } else {
+        this.mob.setPose(Pose.STANDING);
+      }
+      this.path = previous;
+    }
+    if (this.duckingForRoute) this.keepDuckingUntil = this.mob.tickCount + 20;
+    return route;
+  }
+
+  @Nullable
+  private Path searchRoute(Set<BlockPos> targets, int regionOffset, boolean offsetUpward, int accuracy) {
     float perceptionRange = (float)this.mob.getAttributeValue(Attributes.FOLLOW_RANGE);
     float range = Math.max(MINIMUM_SEARCH_RANGE, perceptionRange);
     Path route = super.createPath(targets, regionOffset, offsetUpward, accuracy, range);
@@ -251,6 +281,16 @@ public final class PersonPathNavigation extends GroundPathNavigation {
 
   @Override
   public void tick() {
+    if (this.duckingForRoute) {
+      if (this.mob.getPose() != Pose.CROUCHING) {
+        this.duckingForRoute = false;
+      } else if (this.isDone() && this.mob.tickCount >= this.keepDuckingUntil
+          && this.level.noCollision(this.mob,
+              this.mob.getDimensions(Pose.STANDING).makeBoundingBox(this.mob.position()))) {
+        this.mob.setPose(Pose.STANDING);
+        this.duckingForRoute = false;
+      }
+    }
     super.tick();
     if (this.path == null || this.isDone()) {
       return;

@@ -5,6 +5,7 @@ import java.util.EnumSet;
 import com.quzzar.kithkyn.entities.RealPerson;
 import com.quzzar.kithkyn.entities.ai.FamilySleepPolicy;
 import com.quzzar.kithkyn.village.LocationManager;
+import com.quzzar.kithkyn.village.Occupation;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.ai.goal.Goal;
@@ -44,16 +45,16 @@ public class SleepAtNightGoal extends Goal {
     // villager is given its bed after its goals are built, so a cached location
     // was ZERO for life and the villager stood at the campfire all night
     // without ever resting (1d4523f).
-    return FamilySleepPolicy.shouldRest(
-        person.getLifeStage(), person.level().getDayTime(), person.level().isNight())
+    return person.shouldSleepAtNight()
+        && (person.getOccupation() != Occupation.GUARD || person.getTarget() == null)
+        && FamilySleepPolicy.shouldRest(
+            person.getLifeStage(), person.level().getDayTime(), person.level().isNight())
         && !LocationManager.getNightRestLocation(person).equals(BlockPos.ZERO);
   }
 
   @Override
   public boolean canContinueToUse() {
-    return FamilySleepPolicy.shouldRest(
-        person.getLifeStage(), person.level().getDayTime(), person.level().isNight())
-        && !LocationManager.getNightRestLocation(person).equals(BlockPos.ZERO);
+    return canUse();
   }
 
   @Override

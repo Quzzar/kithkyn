@@ -49,6 +49,17 @@ REVISIONS={'village_center_1':'birch-center-20260908.json',
            'fishery_1':'birch-fishery-20260908.json',
            'mine_1':'birch-mine-20260908.json'}
 
+# The outward approach in the approved capture, not the door block's facing,
+# which often points into the room. Open compounds use their public entry edge.
+ENTRANCE_FRONTS = {
+ 'house_1':'west', 'house_2':'west', 'couples_cottage_1':'west',
+ 'bakery_1':'west', 'blacksmith_1':'west', 'butchery_1':'west', 'church_1':'west',
+ 'fishery_1':'west', 'hunting_lodge_1':'west', 'lumberjack_1':'north',
+ 'stoneworks_1':'west', 'watchtower_1':'west', 'watchtower_2':'south',
+ 'market_1':'west', 'market_2':'north', 'market_3':'south',
+ 'storehouse_1':'west', 'mine_1':'west',
+}
+
 def enclosed_air(grid, width, depth, y):
     """Only carve enclosed basement rooms, leaving surrounding subterranean terrain intact."""
     vacant={(x,y,z) for x in range(width) for z in range(depth) if (x,y,z) not in grid}
@@ -120,9 +131,10 @@ for item in inventory:
     if 'grants_if' in base:info['grants_if']=base['grants_if']
     if int(level)>1:info['upgrades_from']=f'{category}_birch_forest_{int(level)-1}'
     if name=='village_center_1':info['gathering_point']=[14,1,14]
-    if name=='storehouse_1':info.update(sink=-1,entrance_facing='west')
+    if name in ENTRANCE_FRONTS:info['entrance_facing']=ENTRANCE_FRONTS[name]
+    if name=='storehouse_1':info.update(sink=-1)
     # Leave one ground-level landing after the authored stair before excavation descends.
-    if name=='mine_1':info.update(entrance_facing='west',mine_entrance={'facing':'east','offset':[1,0,1]})
+    if name=='mine_1':info.update(mine_entrance={'facing':'east','offset':[1,0,1]})
     if category=='watchtower':info['grants']=list(dict.fromkeys(info['grants']+['RANGED_GUARD_POSTS']))
     if name=='bakery_1':info['grants']=['BREAD','WANDERERS']
     if name=='butchery_1':info['grants']=[g for g in info['grants'] if g not in ('WOOL','CLOTH')]
