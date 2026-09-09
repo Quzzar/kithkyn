@@ -1,0 +1,81 @@
+{
+  "structure": "bakery_birch_forest_1",
+  "category": "bakery",
+  "variant": "birch_forest",
+  "beds": [
+    [
+      7,
+      5,
+      11
+    ],
+    [
+      9,
+      5,
+      11
+    ]
+  ],
+  "work_stations": [
+    {
+      "occupation": "BAKER",
+      "pos": [
+        7,
+        1,
+        6
+      ]
+    },
+    {
+      "occupation": "INNKEEPER",
+      "pos": [
+        9,
+        1,
+        8
+      ]
+    }
+  ],
+  "personal_containers": [
+    [
+      8,
+      5,
+      10
+    ]
+  ],
+  "containers": [
+    [
+      10,
+      2,
+      6
+    ]
+  ],
+  "cost": [
+    {
+      "item": "minecraft:oak_log",
+      "count": 124
+    },
+    {
+      "item": "minecraft:stone_bricks",
+      "count": 112
+    }
+  ],
+  "grants": [
+    "BREAD",
+    "WANDERERS"
+  ],
+  "sink": 0,
+  "village_identity": {
+    "primary_blocks": [
+      [
+        7,
+        5,
+        11
+      ]
+    ],
+    "secondary_blocks": [
+      [
+        9,
+        5,
+        11
+      ]
+    ],
+    "banners": []
+  }
+}

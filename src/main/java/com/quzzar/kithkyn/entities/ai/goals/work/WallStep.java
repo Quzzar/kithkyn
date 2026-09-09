@@ -1,6 +1,10 @@
 package com.quzzar.kithkyn.entities.ai.goals.work;
 
 import java.util.List;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.annotation.Nullable;
 
@@ -12,14 +16,13 @@ import com.quzzar.kithkyn.village.buildings.Materials;
 import com.quzzar.kithkyn.village.buildings.WallProject;
 import com.quzzar.kithkyn.village.buildings.WallRaiser;
 import com.quzzar.kithkyn.village.buildings.WallTier;
+import com.quzzar.kithkyn.village.buildings.WorkerFooting;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.pathfinder.Path;
 
 /**
@@ -34,11 +37,20 @@ public final class WallStep implements BlockWorkStep {
 
   private static final int LOAD_PER_TRIP = 64;
   private static final int LOW_WATER = 8;
+  private static final int PATHS_PER_SCAN = 8;
+  /** Wall foundations and overhead courses are built from nearby ground, not by diving or climbing each cell. */
+  private static final int VERTICAL_REACH = 12;
 
   /** Paid-for wall cells left from the current abstract material item. */
   private int credit;
   @Nullable
   private WallRaiser.WallWork targetedWork;
+  private WallProject reviewedFoundations;
+  private BlockPos lastStand;
+  private BlockPos searchCell;
+  private List<BlockPos> candidates = List.of();
+  private int candidateCursor;
+  private final Map<BlockPos, Long> failedUntil = new HashMap<>();
 
   @Override
   @Nullable
@@ -48,7 +60,11 @@ public final class WallStep implements BlockWorkStep {
       return null;
     }
     WallProject wall = village.getWallProject();
-    if (wall == null || wall.isComplete()) {
+    if (wall != null && wall != reviewedFoundations) {
+      WallRaiser.settleFoundations(person.level(), wall);
+      reviewedFoundations = wall;
+    }
+    if (wall == null || wall.isComplete() || !wall.isSiteCleared()) {
       return null;
     }
 
@@ -71,7 +87,15 @@ public final class WallStep implements BlockWorkStep {
       return null;
     }
     this.targetedWork = work;
-    return standFor(person, village, work.block().pos());
+    BlockPos stand = standFor(person, village, work.block().pos());
+    if (stand == null && candidateCursor >= candidates.size()) {
+      wall.defer(person.getUUID(), work.section(), person.level().getGameTime());
+      person.logBlocker("I cannot find safe footing within reach of this wall section.");
+      searchCell = null;
+    } else if (stand != null) {
+      person.clearBlocker("I cannot find safe footing within reach of this wall section.");
+    }
+    return stand;
   }
 
   @Override
@@ -94,8 +118,12 @@ public final class WallStep implements BlockWorkStep {
     if (work == null || !WallRaiser.isCurrent(wall, person.getUUID(), work)) {
       return false;
     }
+    if (!inReach(person, target)) return false;
+    // Never place the next course into a worker or another living body.
+    if (!person.level().getEntitiesOfClass(net.minecraft.world.entity.LivingEntity.class,
+        new net.minecraft.world.phys.AABB(work.block().pos())).isEmpty()) return false;
     if (WallRaiser.isSatisfied(
-        person.level(), work.block(), wall.getTier(), wall.getStyle())) {
+        person.level(), work.block(), wall)) {
       wall.advance(person.getUUID(), work.section());
       finishCompletedWall(person, wall);
       return false;
@@ -104,8 +132,11 @@ public final class WallStep implements BlockWorkStep {
       return false;
     }
 
-    WallRaiser.place(person.level(), work.block(), wall.getTier(), wall.getStyle());
+    WallRaiser.place(person.level(), work.block(), wall);
     wall.advance(person.getUUID(), work.section());
+    if (wall.section(work.section()).isComplete() && !wall.isComplete()) {
+      WallRaiser.settleFoundations(person.level(), wall);
+    }
     finishCompletedWall(person, wall);
     BlockPos pos = work.block().pos();
     person.level().playSound((Player) null, pos,
@@ -145,6 +176,9 @@ public final class WallStep implements BlockWorkStep {
   /** Postpones one inaccessible section while every other section remains available. */
   @Override
   public void unreachable(RealPerson person, BlockPos target) {
+    failedUntil.put(target, person.level().getGameTime() + 1200);
+    lastStand = null;
+    searchCell = null;
     WallRaiser.WallWork work = this.targetedWork;
     Village village = person.getVillage();
     WallProject wall = village == null ? null : village.getWallProject();
@@ -185,57 +219,75 @@ public final class WallStep implements BlockWorkStep {
 
   @Override
   public double reachSqr(RealPerson person) {
-    return 6.0D;
+    return targetedWork == null ? 6.0D : 1.0D;
   }
 
-  /** Chooses a reachable foothold on the village side of a planned cell. */
+  @Override
+  public boolean requiresExactArrival() {
+    return targetedWork != null;
+  }
+
+  /** A wider build radius does not let a worker act while still in water or far from its safe foothold. */
+  @Override
+  public boolean inReach(RealPerson person, BlockPos target) {
+    if (targetedWork == null) return person.blockPosition().distSqr(target) <= reachSqr(person);
+    return person.position().distanceToSqr(net.minecraft.world.phys.Vec3.atBottomCenterOf(target)) <= 1.0D
+        && WorkerFooting.canStand(person, target)
+        && person.level().getFluidState(person.blockPosition()).isEmpty()
+        && person.level().noCollision(person, person.getBoundingBox())
+        && withinWorkRange(person.blockPosition(), targetedWork.block().pos());
+  }
+
+  private static boolean withinWorkRange(BlockPos stand, BlockPos cell) {
+    long dx = (long) stand.getX() - cell.getX(), dz = (long) stand.getZ() - cell.getZ();
+    return dx * dx + dz * dz > 0
+        && dx * dx + dz * dz <= WallWorkPlanner.MAXIMUM_OFFSET * WallWorkPlanner.MAXIMUM_OFFSET
+        && Math.abs(stand.getY() - cell.getY()) <= VERTICAL_REACH;
+  }
+
+  /** Searches real walking surfaces in bounded path batches, including side approaches and raised ground. */
   @Nullable
   private BlockPos standFor(RealPerson person, Village village, BlockPos wallCell) {
-    Level level = person.level();
-    int x = wallCell.getX();
-    int z = wallCell.getZ();
-    BlockPos centre = village.getTownCenter() == null
-        ? new BlockPos(x, 0, z)
-        : BlockPos.of(village.getTownCenter().getCenterLocation());
-    int dx = Integer.signum(centre.getX() - x);
-    int dz = Integer.signum(centre.getZ() - z);
-    int inwardX = dx == 0 ? 1 : dx;
-    int inwardZ = dz == 0 ? 1 : dz;
-
-    WallWorkPlanner.Offset reachable = WallWorkPlanner.choose(inwardX, inwardZ, offset -> {
-      BlockPos spot = standingSpot(level, x + offset.x(), z + offset.z());
-      return spot != null && reachable(person, spot);
-    });
-    if (reachable != null) {
-      return standingSpot(level, x + reachable.x(), z + reachable.z());
+    long now = person.level().getGameTime();
+    failedUntil.entrySet().removeIf(entry -> entry.getValue() <= now);
+    if (lastStand != null && !failedUntil.containsKey(lastStand)
+        && withinWorkRange(lastStand, wallCell) && WorkerFooting.canStand(person, lastStand)
+        && reachable(person, lastStand)) return lastStand;
+    lastStand = null;
+    if (!wallCell.equals(searchCell)) {
+      searchCell = wallCell;
+      candidateCursor = 0;
+      BlockPos centre = village.getCampfirePosition();
+      int inwardX = Integer.signum(centre.getX() - wallCell.getX());
+      int inwardZ = Integer.signum(centre.getZ() - wallCell.getZ());
+      List<BlockPos> found = new ArrayList<>();
+      for (WallWorkPlanner.Offset offset : WallWorkPlanner.offsets(inwardX, inwardZ)) {
+        for (int dy = -VERTICAL_REACH; dy <= VERTICAL_REACH; dy++) {
+          BlockPos at = wallCell.offset(offset.x(), dy, offset.z());
+          if (WorkerFooting.canStand(person, at)) found.add(at);
+        }
+      }
+      found.sort(Comparator.comparingDouble(at -> at.distSqr(person.blockPosition())));
+      candidates = List.copyOf(found);
     }
-    WallWorkPlanner.Offset standable = WallWorkPlanner.choose(inwardX, inwardZ,
-        offset -> standingSpot(level, x + offset.x(), z + offset.z()) != null);
-    if (standable != null) {
-      return standingSpot(level, x + standable.x(), z + standable.z());
+    for (int tested = 0; tested < PATHS_PER_SCAN && candidateCursor < candidates.size();) {
+      BlockPos at = candidates.get(candidateCursor++);
+      if (failedUntil.containsKey(at) || !WorkerFooting.canStand(person, at)) continue;
+      tested++;
+      if (reachable(person, at)) {
+        lastStand = at;
+        return at;
+      }
     }
-    return new BlockPos(x + inwardX, WallRaiser.surfaceY(level, x + inwardX, z + inwardZ),
-        z + inwardZ);
-  }
-
-  @Nullable
-  private static BlockPos standingSpot(Level level, int x, int z) {
-    BlockPos feet = new BlockPos(x, WallRaiser.surfaceY(level, x, z), z);
-    BlockPos ground = feet.below();
-    if (!level.hasChunkAt(feet)
-        || !level.getBlockState(feet).getCollisionShape(level, feet).isEmpty()
-        || !level.getBlockState(feet.above()).getCollisionShape(level, feet.above()).isEmpty()
-        || !level.getBlockState(ground).isFaceSturdy(level, ground, Direction.UP)) {
-      return null;
-    }
-    return feet;
+    return null;
   }
 
   private static boolean reachable(RealPerson person, BlockPos spot) {
-    if (person.blockPosition().distSqr(spot) <= 1.0D) {
+    if (person.position().distanceToSqr(net.minecraft.world.phys.Vec3.atBottomCenterOf(spot)) < 0.25D) {
       return true;
     }
-    Path path = person.getNavigation().createPath(spot, 1);
-    return path != null && path.canReach();
+    Path path = person.getNavigation().createPath(spot, 0);
+    return path != null && path.canReach() && path.getEndNode() != null
+        && path.getEndNode().asBlockPos().equals(spot);
   }
 }

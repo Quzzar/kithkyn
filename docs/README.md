@@ -53,9 +53,15 @@ in it, and update it in the same change that moves what it describes.
   → town → city) as datapack data. A tier is a read-out of population, never a gate:
   tier format, the 4-bed village center bootstrap, and why building is constrained by
   resources and space instead.
+- [village-identity.md](village-identity.md): the primary and secondary dye colors and generated
+  banner chosen with the village name, plus the semantic structure slots that apply them.
+- [iron-golem-guards.md](iron-golem-guards.md): natural guard recruitment of nearby iron and snow golems,
+  names, auxiliary membership, shared day-and-night patrols, defense and persistence without beds.
 - [buildings.md](buildings.md): the building catalog. The categories a village can
   build, the three axes they vary on (category, variant, level), the production chains
   that connect them, and which biomes can support which. Proposed, not yet decided.
+- [birch-village.md](birch-village.md): the approved playable Birch Forest catalog, exact
+  amenities and intentionally omitted tiers, biome selection, identity slots and preservation.
 - [appearance.md](appearance.md): why villagers use the player model and not the vanilla
   villager model, the wide/slim model split by gender, and the client-side runtime skin
   compositor that bakes a villager's look from inherited skin, hair, and eye structures,
@@ -110,6 +116,9 @@ carry the decisions; these carry the evidence behind them.
   worth reimplementing ourselves: a tick-priced movement cost model with break and place folded
   into the A* edge weights, and a weighted A* that returns a best-so-far segment on timeout and
   never expands into unloaded chunks. The real alternative to teleport-on-stuck.
+- [research/forest-village-worldgen.md](research/forest-village-worldgen.md): Minecraft 1.21.1
+  forest-village eligibility, spacing and terrain checks in Towns and Towers and Repurposed
+  Structures, with pinned upstream sources and limits on what those checks guarantee.
 - [research/poi-gathering-points.md](research/poi-gathering-points.md): POI types on NeoForge
   1.21.1 for the campfire gathering point. Why a custom `kithkyn:campfire` POI beats reusing
   `minecraft:meeting`, and what goal-based claiming costs without the Brain system.

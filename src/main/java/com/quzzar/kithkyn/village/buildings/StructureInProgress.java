@@ -62,7 +62,8 @@ public class StructureInProgress {
             Codec.LONG.listOf().optionalFieldOf("liquid_sources", List.of()).forGetter(s -> listOrEmpty(s.list2)),
             PlacedBlock.CODEC.listOf().optionalFieldOf("placed_blocks", List.of()).forGetter(s -> listOrEmpty(s.list3)),
             Codec.INT.listOf().fieldOf("bounds").forGetter(s -> List.of(s.i, s.j, s.k, s.l, s.i1, s.j1)),
-            RedevelopmentWork.CODEC.optionalFieldOf("redevelopment").forGetter(s -> Optional.ofNullable(s.redevelopment))
+            RedevelopmentWork.CODEC.optionalFieldOf("redevelopment").forGetter(s -> Optional.ofNullable(s.redevelopment)),
+            KithkynCodecs.EXACT_NBT.optionalFieldOf("template_snapshot").forGetter(StructureInProgress::templateSnapshot)
     ).apply(inst, StructureInProgress::fromCodec));
 
     private static <T> List<T> listOrEmpty(List<T> list) {
@@ -73,15 +74,18 @@ public class StructureInProgress {
             Optional<ConstructionMode> constructionMode,
             java.util.List<Long> prepBreak, java.util.List<Long> prepFill, int index, long location1,
             long location2, Rotation rotation, int magicInt, List<Long> list1, List<Long> list2,
-            List<PlacedBlock> list3, List<Integer> bounds, Optional<RedevelopmentWork> redevelopment) {
+            List<PlacedBlock> list3, List<Integer> bounds, Optional<RedevelopmentWork> redevelopment,
+            Optional<net.minecraft.nbt.CompoundTag> templateSnapshot) {
         StructureInProgress s = new StructureInProgress(building, new Random(),
                 constructionMode.orElseGet(() -> legacyMode(building)));
+        building.resumeLegacyInitialEntities(progress == BuildProgress.COMPLETE, s.constructionMode);
         // A project can only be saved while its transient placement state is gone, so
         // it resumes as paused; startBuilding() rebuilds the block list from the template.
         s.progress = progress == BuildProgress.IN_PROGRESS_WORKING ? BuildProgress.IN_PROGRESS_PAUSED : progress;
         s.prepBreak = new java.util.ArrayList<>(prepBreak);
         s.prepFill = new java.util.ArrayList<>(prepFill);
         s.redevelopment = redevelopment.orElse(null);
+        s.savedTemplate = templateSnapshot.map(net.minecraft.nbt.CompoundTag::copy).orElse(null);
         s.index = index;
         s.location1 = location1;
         s.location2 = location2;
@@ -174,14 +178,48 @@ public class StructureInProgress {
     // Runtime-only: the level this project builds in, re-attached by the owning
     // Village whenever the project is accessed. Never persisted.
     private ServerLevelAccessor level;
+    private com.quzzar.kithkyn.village.VillageIdentity identity;
+    private VillageIdentityApplier.Placement identityPlacement;
+    private net.minecraft.nbt.CompoundTag savedTemplate;
+    private StructureTemplate frozenTemplate;
 
     public void attach(ServerLevelAccessor level) {
         this.level = level;
     }
 
+    /** Rebinds the permanent village identity along with the world after a save is loaded. */
+    public void attach(ServerLevelAccessor level, com.quzzar.kithkyn.village.VillageIdentity identity) {
+        attach(level);
+        if (!java.util.Objects.equals(this.identity, identity)) {
+            this.identity = identity;
+            this.identityPlacement = null;
+        }
+    }
+
+    private VillageIdentityApplier.Placement identityPlacement() {
+        if (identityPlacement == null) {
+            identityPlacement = VillageIdentityApplier.placement(building, identity);
+        }
+        return identityPlacement;
+    }
+
     public StructureTemplate getStructureTemplate(){
-        return level.getLevel().getStructureManager()
-                .getOrCreate(ResourceLocation.fromNamespaceAndPath(Kithkyn.MODID, building.getInfo().getName()));
+        if (frozenTemplate == null) {
+            if (savedTemplate == null) {
+                savedTemplate = level.getLevel().getStructureManager()
+                        .getOrCreate(ResourceLocation.fromNamespaceAndPath(Kithkyn.MODID, building.getInfo().getName()))
+                        .save(new net.minecraft.nbt.CompoundTag()).copy();
+            }
+            frozenTemplate = new StructureTemplate();
+            frozenTemplate.load(level.registryAccess().lookupOrThrow(net.minecraft.core.registries.Registries.BLOCK), savedTemplate.copy());
+        }
+        return frozenTemplate;
+    }
+
+    /** The persisted cursor belongs to this exact block list, even after a datapack/build update. */
+    private Optional<net.minecraft.nbt.CompoundTag> templateSnapshot() {
+        if (savedTemplate == null && level != null) getStructureTemplate();
+        return Optional.ofNullable(savedTemplate).map(net.minecraft.nbt.CompoundTag::copy);
     }
 
     public StructurePlaceSettings getStructurePlaceSettings(){
@@ -227,6 +265,8 @@ public class StructureInProgress {
 
     public StructureInProgress setOriginLocation(BlockPos location){
 
+        identityPlacement = null;
+
         this.building.setOriginLocation(location.asLong());
 
         this.location1 = location.asLong();
@@ -271,6 +311,24 @@ public class StructureInProgress {
             return false; // the recipe is not all here yet
         }
         java.util.List<ItemStack> payment = new java.util.ArrayList<>();
+        if (redevelopment == null && constructionMode == ConstructionMode.UPGRADE) {
+            // Keep the standing building's stores available while the builder
+            // gathers the recipe. Only now, with the complete payment secured in
+            // the pack, move everything else out before construction overwrites
+            // the old containers. Full destinations spill into the persisted
+            // structural queue, so storage can expand without free storage.
+            Building standing = village.getBuilding(building.getUUID());
+            if (standing == null) {
+                village.cancelGatheringProject("the building being upgraded no longer stands");
+                return false;
+            }
+            java.util.Set<BlockPos> sources = StorageEvacuation.sources(village, List.of(standing));
+            if (!StorageEvacuation.evacuate(village, List.of(standing),
+                    stack -> village.queuePendingVillageItems(List.of(stack)))) {
+                return false;
+            }
+            village.getBrain().forgetContainers(sources);
+        }
         if (redevelopment != null) {
             RedevelopmentPlan plan = redevelopment.plan();
             if (!RedevelopmentPlanner.stillValid(village, plan)) {
@@ -280,7 +338,7 @@ public class StructureInProgress {
             java.util.List<Building> affected = new java.util.ArrayList<>(plan.removed());
             plan.source().map(village::getBuilding).ifPresent(affected::add);
             if (!StorageEvacuation.evacuate(village, affected,
-                    stack -> village.queueRedevelopmentItems(List.of(stack)))) {
+                    stack -> village.queuePendingVillageItems(List.of(stack)))) {
                 return false;
             }
             redevelopment.recordDisplacedResidents(village.rehouseForRedevelopment(
@@ -475,7 +533,9 @@ public class StructureInProgress {
                 index++;
                 return;
             }
-            buildLastPhase();
+            if (!buildLastPhase()) {
+                return;
+            }
             stopBuilding();
             progress = BuildProgress.COMPLETE;
         }
@@ -523,7 +583,8 @@ public class StructureInProgress {
 
     private BlockState placedState(StructureTemplate.StructureBlockInfo info) {
         StructurePlaceSettings settings = getStructurePlaceSettings();
-        return info.state().mirror(settings.getMirror()).rotate(settings.getRotation());
+        return identityPlacement().state(info.pos(),
+                info.state().mirror(settings.getMirror()).rotate(settings.getRotation()));
     }
 
     private boolean buildFirstPhase() {
@@ -626,6 +687,7 @@ public class StructureInProgress {
                         blockentity1.loadWithComponents(structBlockInfo.nbt(), levelAccess.registryAccess());
                     }
                 }
+                identityPlacement().afterBlockPlaced(levelAccess.getLevel(), blockpos);
 
                 if (fluidstate != null) {
                     if (blockstate.getFluidState().isSource()) {
@@ -643,7 +705,7 @@ public class StructureInProgress {
 
     }
 
-    private void buildLastPhase() {
+    private boolean buildLastPhase() {
 
         ServerLevelAccessor levelAccess = this.level;
         StructureTemplate template = getStructureTemplate();
@@ -720,13 +782,9 @@ public class StructureInProgress {
         }
 
         if (!settings.isIgnoreEntities()) {
-            template.addEntitiesToWorld(levelAccess, BlockPos.of(location1), settings);
-            // Stock a building ships with belongs to the village from its first breath:
-            // marked before the hunter's next scan can read the pen as game.
-            com.quzzar.kithkyn.village.FarmedStock.markAnimalsWithin(levelAccess,
-                    template.getBoundingBox(settings, BlockPos.of(location1)));
+            return BuildingEntities.placeOnce(levelAccess, building, template, BlockPos.of(location1), settings);
         }
-
+        return true;
     }
 
 }

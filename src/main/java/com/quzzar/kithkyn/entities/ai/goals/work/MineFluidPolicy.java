@@ -6,7 +6,6 @@ final class MineFluidPolicy {
   enum Action {
     SEAL,
     BULKHEAD,
-    COFFERDAM,
     BAIL,
     BLOCKED
   }
@@ -15,7 +14,7 @@ final class MineFluidPolicy {
   }
 
   static Action next(boolean boundaryOpen, boolean boundaryReachable,
-      boolean bulkheadReachable, boolean cofferdamReachable, boolean hasBucket) {
+      boolean bulkheadReachable, boolean waterReachable, boolean hasBucket) {
     if (boundaryOpen) {
       if (boundaryReachable) {
         return Action.SEAL;
@@ -23,7 +22,9 @@ final class MineFluidPolicy {
       if (bulkheadReachable) {
         return Action.BULKHEAD;
       }
-      return cofferdamReachable ? Action.COFFERDAM : Action.BLOCKED;
+      // Draining reachable water exposes the rest of the boundary. Filling the
+      // mine interior instead eventually walls the miner off from that leak.
+      return waterReachable && hasBucket ? Action.BAIL : Action.BLOCKED;
     }
     return hasBucket ? Action.BAIL : Action.BLOCKED;
   }

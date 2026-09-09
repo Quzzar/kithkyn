@@ -9,7 +9,7 @@ import javax.annotation.Nullable;
 
 import com.quzzar.kithkyn.Kithkyn;
 import com.quzzar.kithkyn.village.Occupation;
-import com.quzzar.kithkyn.village.buildings.WallPost;
+import com.quzzar.kithkyn.village.GuardDuty;
 import com.quzzar.kithkyn.village.bookkeeping.NoResourceBookkeepingEvent;
 
 import net.minecraft.core.BlockPos;
@@ -101,14 +101,12 @@ public enum JobTool {
     };
   }
 
-  /** The person's exact tool, including their specialized wall-defense post. */
+  /** The person's exact tool, including a wall or authored fixed-defense post. */
   @Nullable
   public static JobTool of(RealPerson person) {
-    if (person.getVillage() != null) {
-      WallPost post = person.getVillage().getWallPost(person.getUUID());
-      if (post != null) {
-        return post.duty().usesCrossbow() ? CROSSBOW : SWORD;
-      }
+    GuardDuty duty = GuardDuty.of(person);
+    if (duty != null) {
+      return duty.ranged() ? CROSSBOW : SWORD;
     }
     return of(person.getOccupation());
   }

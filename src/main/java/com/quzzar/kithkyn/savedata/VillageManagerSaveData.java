@@ -47,6 +47,61 @@ public class VillageManagerSaveData extends SavedData {
     // generation tick cannot found the same site twice while the name is in
     // flight. Touched on the server thread only.
     private final Set<Long> pendingFoundings = new HashSet<>();
+    private final com.quzzar.kithkyn.village.VillageGeneration generation =
+            new com.quzzar.kithkyn.village.VillageGeneration();
+
+    /** Natural search state is scoped to this world and shared across its players. */
+    public void generateVillages(ServerLevel level) {
+        generation.tick(level);
+    }
+
+    public boolean naturalSiteAvailable(BlockPos location) {
+        return naturalSiteAvailable(location, null);
+    }
+
+    /** Pending names reserve horizontal space just like already founded villages. */
+    private boolean naturalSiteAvailable(BlockPos location, Long ownReservation) {
+        for (long pending : pendingFoundings) {
+            if (ownReservation != null && pending == ownReservation.longValue()) continue;
+            if (com.quzzar.kithkyn.village.VillageGeneration.tooClose(location, BlockPos.of(pending))) return false;
+        }
+        for (Village village : villages.values()) {
+            if (village.getTownCenter() != null && com.quzzar.kithkyn.village.VillageGeneration.tooClose(location,
+                    village.getCampfirePosition())) return false;
+        }
+        return true;
+    }
+
+    /** Names only viable sites, then rechecks the exact prepared geometry before committing. */
+    public boolean registerNaturalVillage(BlockPos location,
+            com.quzzar.kithkyn.village.buildings.VillageStyle style, Village.FoundingPlan plan,
+            java.util.function.Consumer<Boolean> onComplete) {
+        if (level == null || !naturalSiteAvailable(location)) return false;
+        long reservation = location.asLong();
+        if (!pendingFoundings.add(reservation)) return false;
+        ServerLevel serverLevel = level;
+        com.quzzar.kithkyn.village.VillageNamer.requestFoundingName(serverLevel, style, name -> {
+            boolean founded = false;
+            try {
+                if (naturalSiteAvailable(location, reservation)) {
+                    var identity = com.quzzar.kithkyn.village.VillageIdentity.generate(name, serverLevel.getRandom());
+                    Village village = new Village(identity);
+                    village.setStyle(style);
+                    village.attach(serverLevel);
+                    founded = village.found(plan);
+                    if (founded) {
+                        villages.put(village.getID(), village);
+                        setDirty();
+                    }
+                }
+                if (!founded) Kithkyn.LOGGER.debug("Natural founding at {} changed while naming; resuming site search", location);
+            } finally {
+                pendingFoundings.remove(reservation);
+                onComplete.accept(founded);
+            }
+        });
+        return true;
+    }
 
     public VillageManagerSaveData() {
     }
@@ -125,15 +180,22 @@ public class VillageManagerSaveData extends SavedData {
             return;
         }
         ServerLevel serverLevel = level != null ? level : levelAccess.getLevel();
-        com.quzzar.kithkyn.village.VillageNamer.requestFoundingName(serverLevel, location, name -> {
-            pendingFoundings.remove(site);
-            Village village = new Village(name);
-            village.setStyle(style != null ? style
-                    : com.quzzar.kithkyn.village.buildings.VillageStyle.fromBiome(serverLevel.getBiome(location)));
-            village.attach(serverLevel);
-            villages.put(village.getID(), village);
-            village.initNew(location);
-            setDirty();
+        var selectedStyle = style != null ? style
+                : com.quzzar.kithkyn.village.buildings.VillageStyle.fromBiome(
+                        serverLevel.getBiome(location), serverLevel.getSeed(), location);
+        com.quzzar.kithkyn.village.VillageNamer.requestFoundingName(serverLevel, selectedStyle, name -> {
+            try {
+                var identity = com.quzzar.kithkyn.village.VillageIdentity.generate(name, serverLevel.getRandom());
+                Village village = new Village(identity);
+                village.setStyle(selectedStyle);
+                village.attach(serverLevel);
+                village.initNew(location);
+                if (village.getTownCenter() == null) return;
+                villages.put(village.getID(), village);
+                setDirty();
+            } finally {
+                pendingFoundings.remove(site);
+            }
         });
     }
 

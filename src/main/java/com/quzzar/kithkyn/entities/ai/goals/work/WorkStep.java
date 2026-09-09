@@ -124,9 +124,24 @@ public interface WorkStep<T> {
     return person.getUsedItemHand();
   }
 
+  /** Timed acts such as fishing animate their cast and catch, rather than every waiting tick. */
+  default boolean swingsOnAct() {
+    return true;
+  }
+
+  /** Timed animation can opt out of Minecraft's alternate-tick goal scheduling. */
+  default boolean requiresUpdateEveryTick() {
+    return false;
+  }
+
   /** How fast to walk to it. */
   default double speed() {
     return 0.5D;
+  }
+
+  /** A chosen foothold needs an exact endpoint, not the navigator's normal one-block arrival slack. */
+  default boolean requiresExactArrival() {
+    return false;
   }
 
   /**

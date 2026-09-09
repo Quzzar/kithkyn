@@ -1,0 +1,897 @@
+{
+  "description": "User-approved 2026-09-08 sky-workshop town-center revision. Seventy-five authored block edits plus the native bell attachment settling. Preserve original typed initial golem and unchanged basement/amenities; exclude platform.",
+  "size": [
+    29,
+    11,
+    29
+  ],
+  "base_sha256": "c33e77711bfdec28a552cfbf332bfddc1cd6d2b2b544e94268dc3508d86c5f23",
+  "approved_source_sha256": "eb0282f85126ea2032c3644a11201bdbd9d3d1c56548c6b6fa4c7a0b50550cfc",
+  "capture": "run/world/generated/kithkyn/structures/birch_center_margin_20260908175033.nbt",
+  "capture_sha256": "1f7e38585fa202d080d69badb0ee88b1d3f13a72a021043a13422a2fce62d3e7",
+  "overrides": [
+    {
+      "pos": [
+        5,
+        6,
+        6
+      ],
+      "name": "minecraft:short_grass",
+      "properties": {}
+    },
+    {
+      "pos": [
+        5,
+        6,
+        7
+      ],
+      "name": "minecraft:air",
+      "properties": {}
+    },
+    {
+      "pos": [
+        5,
+        6,
+        21
+      ],
+      "name": "minecraft:short_grass",
+      "properties": {}
+    },
+    {
+      "pos": [
+        6,
+        6,
+        5
+      ],
+      "name": "minecraft:short_grass",
+      "properties": {}
+    },
+    {
+      "pos": [
+        6,
+        6,
+        7
+      ],
+      "name": "minecraft:short_grass",
+      "properties": {}
+    },
+    {
+      "pos": [
+        6,
+        6,
+        21
+      ],
+      "name": "minecraft:short_grass",
+      "properties": {}
+    },
+    {
+      "pos": [
+        6,
+        6,
+        23
+      ],
+      "name": "minecraft:short_grass",
+      "properties": {}
+    },
+    {
+      "pos": [
+        6,
+        10,
+        6
+      ],
+      "name": "minecraft:birch_leaves",
+      "properties": {
+        "waterlogged": "false",
+        "distance": "2",
+        "persistent": "true"
+      }
+    },
+    {
+      "pos": [
+        6,
+        10,
+        22
+      ],
+      "name": "minecraft:birch_leaves",
+      "properties": {
+        "waterlogged": "false",
+        "distance": "2",
+        "persistent": "true"
+      }
+    },
+    {
+      "pos": [
+        7,
+        6,
+        5
+      ],
+      "name": "minecraft:air",
+      "properties": {}
+    },
+    {
+      "pos": [
+        7,
+        6,
+        21
+      ],
+      "name": "minecraft:short_grass",
+      "properties": {}
+    },
+    {
+      "pos": [
+        7,
+        6,
+        22
+      ],
+      "name": "minecraft:air",
+      "properties": {}
+    },
+    {
+      "pos": [
+        7,
+        6,
+        23
+      ],
+      "name": "minecraft:short_grass",
+      "properties": {}
+    },
+    {
+      "pos": [
+        8,
+        5,
+        8
+      ],
+      "name": "minecraft:short_grass",
+      "properties": {}
+    },
+    {
+      "pos": [
+        8,
+        5,
+        9
+      ],
+      "name": "minecraft:short_grass",
+      "properties": {}
+    },
+    {
+      "pos": [
+        8,
+        5,
+        10
+      ],
+      "name": "minecraft:air",
+      "properties": {}
+    },
+    {
+      "pos": [
+        8,
+        5,
+        18
+      ],
+      "name": "minecraft:short_grass",
+      "properties": {}
+    },
+    {
+      "pos": [
+        8,
+        5,
+        19
+      ],
+      "name": "minecraft:air",
+      "properties": {}
+    },
+    {
+      "pos": [
+        8,
+        5,
+        20
+      ],
+      "name": "minecraft:short_grass",
+      "properties": {}
+    },
+    {
+      "pos": [
+        8,
+        6,
+        8
+      ],
+      "name": "minecraft:air",
+      "properties": {}
+    },
+    {
+      "pos": [
+        8,
+        6,
+        19
+      ],
+      "name": "minecraft:air",
+      "properties": {}
+    },
+    {
+      "pos": [
+        9,
+        5,
+        8
+      ],
+      "name": "minecraft:short_grass",
+      "properties": {}
+    },
+    {
+      "pos": [
+        9,
+        5,
+        9
+      ],
+      "name": "minecraft:short_grass",
+      "properties": {}
+    },
+    {
+      "pos": [
+        9,
+        5,
+        10
+      ],
+      "name": "minecraft:short_grass",
+      "properties": {}
+    },
+    {
+      "pos": [
+        9,
+        5,
+        18
+      ],
+      "name": "minecraft:short_grass",
+      "properties": {}
+    },
+    {
+      "pos": [
+        9,
+        5,
+        19
+      ],
+      "name": "minecraft:short_grass",
+      "properties": {}
+    },
+    {
+      "pos": [
+        9,
+        6,
+        18
+      ],
+      "name": "minecraft:air",
+      "properties": {}
+    },
+    {
+      "pos": [
+        10,
+        5,
+        8
+      ],
+      "name": "minecraft:short_grass",
+      "properties": {}
+    },
+    {
+      "pos": [
+        10,
+        5,
+        9
+      ],
+      "name": "minecraft:air",
+      "properties": {}
+    },
+    {
+      "pos": [
+        10,
+        5,
+        20
+      ],
+      "name": "minecraft:short_grass",
+      "properties": {}
+    },
+    {
+      "pos": [
+        10,
+        6,
+        9
+      ],
+      "name": "minecraft:air",
+      "properties": {}
+    },
+    {
+      "pos": [
+        10,
+        6,
+        10
+      ],
+      "name": "minecraft:candle",
+      "properties": {
+        "waterlogged": "false",
+        "lit": "true",
+        "candles": "3"
+      }
+    },
+    {
+      "pos": [
+        10,
+        6,
+        18
+      ],
+      "name": "minecraft:candle",
+      "properties": {
+        "waterlogged": "false",
+        "lit": "true",
+        "candles": "4"
+      }
+    },
+    {
+      "pos": [
+        13,
+        8,
+        14
+      ],
+      "name": "minecraft:wall_torch",
+      "properties": {
+        "facing": "west"
+      }
+    },
+    {
+      "pos": [
+        14,
+        7,
+        14
+      ],
+      "name": "minecraft:bell",
+      "properties": {
+        "attachment": "single_wall",
+        "powered": "false",
+        "facing": "south"
+      }
+    },
+    {
+      "pos": [
+        14,
+        8,
+        13
+      ],
+      "name": "minecraft:cobblestone_stairs",
+      "properties": {
+        "half": "bottom",
+        "waterlogged": "false",
+        "shape": "straight",
+        "facing": "south"
+      }
+    },
+    {
+      "pos": [
+        14,
+        8,
+        14
+      ],
+      "name": "minecraft:chiseled_stone_bricks",
+      "properties": {}
+    },
+    {
+      "pos": [
+        14,
+        8,
+        15
+      ],
+      "name": "minecraft:cobblestone_stairs",
+      "properties": {
+        "half": "bottom",
+        "waterlogged": "false",
+        "shape": "straight",
+        "facing": "north"
+      }
+    },
+    {
+      "pos": [
+        14,
+        9,
+        14
+      ],
+      "name": "minecraft:cobblestone_slab",
+      "properties": {
+        "waterlogged": "false",
+        "type": "bottom"
+      }
+    },
+    {
+      "pos": [
+        15,
+        8,
+        14
+      ],
+      "name": "minecraft:wall_torch",
+      "properties": {
+        "facing": "east"
+      }
+    },
+    {
+      "pos": [
+        18,
+        5,
+        8
+      ],
+      "name": "minecraft:short_grass",
+      "properties": {}
+    },
+    {
+      "pos": [
+        18,
+        5,
+        9
+      ],
+      "name": "minecraft:short_grass",
+      "properties": {}
+    },
+    {
+      "pos": [
+        18,
+        5,
+        19
+      ],
+      "name": "minecraft:short_grass",
+      "properties": {}
+    },
+    {
+      "pos": [
+        18,
+        5,
+        20
+      ],
+      "name": "minecraft:short_grass",
+      "properties": {}
+    },
+    {
+      "pos": [
+        18,
+        6,
+        10
+      ],
+      "name": "minecraft:candle",
+      "properties": {
+        "waterlogged": "false",
+        "lit": "true",
+        "candles": "2"
+      }
+    },
+    {
+      "pos": [
+        18,
+        6,
+        18
+      ],
+      "name": "minecraft:candle",
+      "properties": {
+        "waterlogged": "false",
+        "lit": "true",
+        "candles": "3"
+      }
+    },
+    {
+      "pos": [
+        18,
+        6,
+        19
+      ],
+      "name": "minecraft:air",
+      "properties": {}
+    },
+    {
+      "pos": [
+        19,
+        5,
+        8
+      ],
+      "name": "minecraft:short_grass",
+      "properties": {}
+    },
+    {
+      "pos": [
+        19,
+        5,
+        9
+      ],
+      "name": "minecraft:tall_grass",
+      "properties": {
+        "half": "lower"
+      }
+    },
+    {
+      "pos": [
+        19,
+        5,
+        10
+      ],
+      "name": "minecraft:air",
+      "properties": {}
+    },
+    {
+      "pos": [
+        19,
+        5,
+        18
+      ],
+      "name": "minecraft:short_grass",
+      "properties": {}
+    },
+    {
+      "pos": [
+        19,
+        5,
+        19
+      ],
+      "name": "minecraft:short_grass",
+      "properties": {}
+    },
+    {
+      "pos": [
+        19,
+        5,
+        20
+      ],
+      "name": "minecraft:air",
+      "properties": {}
+    },
+    {
+      "pos": [
+        19,
+        6,
+        9
+      ],
+      "name": "minecraft:tall_grass",
+      "properties": {
+        "half": "upper"
+      }
+    },
+    {
+      "pos": [
+        20,
+        5,
+        8
+      ],
+      "name": "minecraft:short_grass",
+      "properties": {}
+    },
+    {
+      "pos": [
+        20,
+        5,
+        9
+      ],
+      "name": "minecraft:short_grass",
+      "properties": {}
+    },
+    {
+      "pos": [
+        20,
+        5,
+        10
+      ],
+      "name": "minecraft:air",
+      "properties": {}
+    },
+    {
+      "pos": [
+        20,
+        5,
+        18
+      ],
+      "name": "minecraft:short_grass",
+      "properties": {}
+    },
+    {
+      "pos": [
+        20,
+        5,
+        19
+      ],
+      "name": "minecraft:short_grass",
+      "properties": {}
+    },
+    {
+      "pos": [
+        20,
+        5,
+        20
+      ],
+      "name": "minecraft:air",
+      "properties": {}
+    },
+    {
+      "pos": [
+        20,
+        6,
+        8
+      ],
+      "name": "minecraft:air",
+      "properties": {}
+    },
+    {
+      "pos": [
+        20,
+        6,
+        10
+      ],
+      "name": "minecraft:air",
+      "properties": {}
+    },
+    {
+      "pos": [
+        20,
+        6,
+        20
+      ],
+      "name": "minecraft:air",
+      "properties": {}
+    },
+    {
+      "pos": [
+        21,
+        6,
+        5
+      ],
+      "name": "minecraft:air",
+      "properties": {}
+    },
+    {
+      "pos": [
+        21,
+        6,
+        6
+      ],
+      "name": "minecraft:short_grass",
+      "properties": {}
+    },
+    {
+      "pos": [
+        21,
+        6,
+        7
+      ],
+      "name": "minecraft:short_grass",
+      "properties": {}
+    },
+    {
+      "pos": [
+        21,
+        6,
+        21
+      ],
+      "name": "minecraft:short_grass",
+      "properties": {}
+    },
+    {
+      "pos": [
+        21,
+        6,
+        23
+      ],
+      "name": "minecraft:air",
+      "properties": {}
+    },
+    {
+      "pos": [
+        22,
+        6,
+        5
+      ],
+      "name": "minecraft:short_grass",
+      "properties": {}
+    },
+    {
+      "pos": [
+        22,
+        6,
+        7
+      ],
+      "name": "minecraft:short_grass",
+      "properties": {}
+    },
+    {
+      "pos": [
+        22,
+        10,
+        6
+      ],
+      "name": "minecraft:birch_leaves",
+      "properties": {
+        "waterlogged": "false",
+        "distance": "2",
+        "persistent": "true"
+      }
+    },
+    {
+      "pos": [
+        22,
+        10,
+        22
+      ],
+      "name": "minecraft:birch_leaves",
+      "properties": {
+        "waterlogged": "false",
+        "distance": "2",
+        "persistent": "true"
+      }
+    },
+    {
+      "pos": [
+        23,
+        6,
+        5
+      ],
+      "name": "minecraft:short_grass",
+      "properties": {}
+    },
+    {
+      "pos": [
+        23,
+        6,
+        6
+      ],
+      "name": "minecraft:short_grass",
+      "properties": {}
+    },
+    {
+      "pos": [
+        23,
+        6,
+        22
+      ],
+      "name": "minecraft:short_grass",
+      "properties": {}
+    },
+    {
+      "pos": [
+        23,
+        6,
+        23
+      ],
+      "name": "minecraft:short_grass",
+      "properties": {}
+    },
+    {
+      "pos": [
+        14,
+        4,
+        9
+      ],
+      "name": "minecraft:air",
+      "properties": {}
+    },
+    {
+      "pos": [
+        9,
+        4,
+        14
+      ],
+      "name": "minecraft:air",
+      "properties": {}
+    },
+    {
+      "pos": [
+        19,
+        4,
+        14
+      ],
+      "name": "minecraft:air",
+      "properties": {}
+    },
+    {
+      "pos": [
+        14,
+        4,
+        19
+      ],
+      "name": "minecraft:air",
+      "properties": {}
+    },
+    {
+      "pos": [
+        14,
+        4,
+        10
+      ],
+      "name": "minecraft:white_wall_banner",
+      "properties": {
+        "facing": "north"
+      }
+    },
+    {
+      "pos": [
+        10,
+        4,
+        14
+      ],
+      "name": "minecraft:white_wall_banner",
+      "properties": {
+        "facing": "west"
+      }
+    },
+    {
+      "pos": [
+        18,
+        4,
+        14
+      ],
+      "name": "minecraft:white_wall_banner",
+      "properties": {
+        "facing": "east"
+      }
+    },
+    {
+      "pos": [
+        14,
+        4,
+        18
+      ],
+      "name": "minecraft:white_wall_banner",
+      "properties": {
+        "facing": "south"
+      }
+    },
+    {
+      "pos": [
+        14,
+        5,
+        9
+      ],
+      "name": "minecraft:air",
+      "properties": {}
+    },
+    {
+      "pos": [
+        9,
+        5,
+        14
+      ],
+      "name": "minecraft:air",
+      "properties": {}
+    },
+    {
+      "pos": [
+        19,
+        5,
+        14
+      ],
+      "name": "minecraft:air",
+      "properties": {}
+    },
+    {
+      "pos": [
+        14,
+        5,
+        19
+      ],
+      "name": "minecraft:air",
+      "properties": {}
+    }
+  ],
+  "banners": [
+    [
+      14,
+      4,
+      10
+    ],
+    [
+      10,
+      4,
+      14
+    ],
+    [
+      18,
+      4,
+      14
+    ],
+    [
+      14,
+      4,
+      18
+    ]
+  ],
+  "access_revision": "Approved live-village 2026-09-08: open all four low stone/slab exit overhangs and move the village banners one block inward; original beds, basement, planting, canopy, bell and golem remain intact.",
+  "access_capture": "run/valecraft-gallery/birch-access-approved-20260908-205309/world-snapshot",
+  "access_base_sha256": "0b1d9b2a890bf660ba08dc8dfc38192226f5c0eec6cec280f8d8f5fb6f3e6f6f",
+  "access_region_sha256": "65a3cd1867ffdebb56db621bc779190d52f0c3ba9f42d76455226dce7b93b1f7"
+}

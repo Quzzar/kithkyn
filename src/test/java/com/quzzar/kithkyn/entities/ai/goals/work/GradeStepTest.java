@@ -38,6 +38,14 @@ class GradeStepTest {
   }
 
   @Test
+  void canRemoveALipAboveAnExistingPathWithoutTreatingThePathAsAHole() {
+    BlockGetter ground = new Ground(Map.of(
+        CUT, Blocks.GRASS_BLOCK.defaultBlockState(),
+        CUT.below(), Blocks.DIRT_PATH.defaultBlockState()));
+    assertTrue(GradeStep.hasSupportBelowCut(ground, CUT));
+  }
+
+  @Test
   void cannotExposeWaterBeneathTheCut() {
     BlockGetter ground = new Ground(Map.of(
         CUT, Blocks.GRASS_BLOCK.defaultBlockState(),

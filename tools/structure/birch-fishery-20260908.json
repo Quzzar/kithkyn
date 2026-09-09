@@ -1,0 +1,177 @@
+{
+  "approved_source_sha256": "734c3438904623cccacfa10b9958309b70740bb33ee0cbf30cc8038728d53fb3",
+  "workshop_initial_sha256": "4883bbd71d8035a7d6257b634f1196a5e4198b3f520a795b398d8ae44db40651",
+  "workshop_approved_sha256": "a9b0db74808c1166ecc6e38f1297818bc4ae34fe317427f07bc130bb9f93f98e",
+  "size": [
+    17,
+    8,
+    21
+  ],
+  "overrides": [
+    {
+      "pos": [
+        3,
+        0,
+        12
+      ],
+      "name": "minecraft:cobblestone",
+      "properties": {}
+    },
+    {
+      "pos": [
+        3,
+        0,
+        13
+      ],
+      "name": "minecraft:cobblestone",
+      "properties": {}
+    },
+    {
+      "pos": [
+        3,
+        0,
+        14
+      ],
+      "name": "minecraft:cobblestone",
+      "properties": {}
+    },
+    {
+      "pos": [
+        4,
+        0,
+        11
+      ],
+      "name": "minecraft:cobblestone",
+      "properties": {}
+    },
+    {
+      "pos": [
+        4,
+        0,
+        12
+      ],
+      "name": "minecraft:cobblestone",
+      "properties": {}
+    },
+    {
+      "pos": [
+        4,
+        0,
+        13
+      ],
+      "name": "minecraft:cobblestone",
+      "properties": {}
+    },
+    {
+      "pos": [
+        4,
+        0,
+        14
+      ],
+      "name": "minecraft:cobblestone",
+      "properties": {}
+    },
+    {
+      "pos": [
+        4,
+        0,
+        15
+      ],
+      "name": "minecraft:cobblestone",
+      "properties": {}
+    },
+    {
+      "pos": [
+        4,
+        1,
+        12
+      ],
+      "name": "minecraft:cobblestone_stairs",
+      "properties": {
+        "half": "bottom",
+        "waterlogged": "false",
+        "shape": "straight",
+        "facing": "east"
+      }
+    },
+    {
+      "pos": [
+        4,
+        1,
+        13
+      ],
+      "name": "minecraft:cobblestone_stairs",
+      "properties": {
+        "half": "bottom",
+        "waterlogged": "false",
+        "shape": "straight",
+        "facing": "east"
+      }
+    },
+    {
+      "pos": [
+        4,
+        1,
+        14
+      ],
+      "name": "minecraft:cobblestone_stairs",
+      "properties": {
+        "half": "bottom",
+        "waterlogged": "false",
+        "shape": "straight",
+        "facing": "east"
+      }
+    },
+    {
+      "pos": [
+        8,
+        2,
+        11
+      ],
+      "name": "minecraft:air",
+      "properties": {}
+    },
+    {
+      "pos": [
+        10,
+        2,
+        9
+      ],
+      "name": "minecraft:birch_fence",
+      "properties": {
+        "east": "true",
+        "waterlogged": "false",
+        "south": "true",
+        "north": "false",
+        "west": "true"
+      }
+    },
+    {
+      "pos": [
+        10,
+        2,
+        10
+      ],
+      "name": "minecraft:barrel",
+      "properties": {
+        "facing": "west",
+        "open": "false"
+      }
+    },
+    {
+      "pos": [
+        11,
+        2,
+        10
+      ],
+      "name": "minecraft:birch_fence",
+      "properties": {
+        "east": "false",
+        "waterlogged": "false",
+        "south": "true",
+        "north": "true",
+        "west": "true"
+      }
+    }
+  ]
+}

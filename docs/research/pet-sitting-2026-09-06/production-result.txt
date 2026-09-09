@@ -1,0 +1,7 @@
+[10:16:01] [Server thread/INFO] [co.qu.ki.Kithkyn/]: [companion-verify] entity.minecraft.cat spawn, explicit sit/recall, idempotent join, ordinary pet and NBT reload PASS
+[10:16:01] [Server thread/INFO] [co.qu.ki.Kithkyn/]: [companion-verify] entity.minecraft.wolf spawn, explicit sit/recall, idempotent join, ordinary pet and NBT reload PASS
+[10:16:06] [Server thread/INFO] [co.qu.ki.Kithkyn/]: [companion-verify] entity.minecraft.cat walked to owner, distance=2.074266195297241 PASS
+[10:16:06] [Server thread/INFO] [co.qu.ki.Kithkyn/]: [companion-verify] entity.minecraft.wolf walked to owner, distance=2.2386562824249268 PASS
+[10:16:06] [Server thread/INFO] [co.qu.ki.Kithkyn/]: [companion-verify] entity.minecraft.cat rest persistence, repeated sit, recall and old-save migration PASS
+[10:16:06] [Server thread/INFO] [co.qu.ki.Kithkyn/]: [companion-verify] entity.minecraft.wolf rest persistence, repeated sit, recall and old-save migration PASS
+[10:16:06] [Server thread/INFO] [co.qu.ki.Kithkyn/]: [companion-verify] RESULT PASS

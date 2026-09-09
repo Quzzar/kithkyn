@@ -1,18 +1,22 @@
 package com.quzzar.kithkyn.entities.ai.goals.work;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.annotation.Nullable;
 
 import com.quzzar.kithkyn.entities.RealPerson;
+import com.quzzar.kithkyn.savedata.PlacedBlockStore;
 import com.quzzar.kithkyn.village.LocationManager;
 import com.quzzar.kithkyn.village.Village;
+import com.quzzar.kithkyn.village.VillagePaths;
 import com.quzzar.kithkyn.village.buildings.Building;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -51,6 +55,15 @@ import net.minecraft.world.level.block.SaplingBlock;
  */
 public final class PathStep implements BlockWorkStep {
 
+  private final boolean initialOnly;
+  private final Map<String, Long> retryAfter = new HashMap<>();
+  private static final String INITIAL_PATHS = "initial_building_paths";
+
+  public PathStep() { this(false); }
+
+  /** One successful access trip per building revision; ordinary maintenance remains lower priority. */
+  public PathStep(boolean initialOnly) { this.initialOnly = initialOnly; }
+
   private static final List<Block> PAVEABLE = Arrays.asList(
       Blocks.GRASS_BLOCK, Blocks.MYCELIUM, Blocks.STONE, Blocks.SAND, Blocks.RED_SAND,
       Blocks.GRAVEL, Blocks.CLAY, Blocks.DIRT, Blocks.COARSE_DIRT, Blocks.ROOTED_DIRT,
@@ -59,15 +72,10 @@ public final class PathStep implements BlockWorkStep {
   /** Fraction of a building's radius that counts as having arrived at it. */
   private static final double ARRIVAL_FRACTION = 0.4D;
 
-  /** Close enough to a doorstep to count as arrived: right at the door, not its whole radius. */
-  private static final double DOOR_REACH_SQR = 6.25D;
-
   private Building nearEnd;
-  private Building destination;
+  private VillagePaths.Destination destination;
   @Nullable
   private BlockPos destinationTarget;
-  /** Whether the far end is a doorstep (arrive right at it) or a doorless building's middle (arrive within its radius). */
-  private boolean toDoor;
   private boolean laying;
 
   @Override
@@ -84,27 +92,22 @@ public final class PathStep implements BlockWorkStep {
       return this.destinationTarget; // still treading the spoke out to the far end
     }
     Building hub = village.getTownCenter();
-    List<Building> buildings = new ArrayList<>(village.getBuildings());
-    if (hub == null || buildings.size() < 2) {
-      return null; // a spoke runs from the campfire out to a building
+    List<VillagePaths.Destination> destinations = VillagePaths.destinations(level, village);
+    if (hub == null || destinations.isEmpty()) {
+      return null;
     }
-    Building to = buildings.get(person.getRandom().nextInt(buildings.size()));
-    if (to == hub) {
-      return null; // try again next scan
-    }
-    LocationManager.Entrance entrance = LocationManager.getEntrance(level, to);
+    retryAfter.entrySet().removeIf(entry -> entry.getValue() <= level.getGameTime());
+    CompoundTag done = village.getBrain().getStrategyData().getCompound(INITIAL_PATHS);
+    List<VillagePaths.Destination> available = destinations.stream()
+        .filter(entry -> entry.target() != null && !retryAfter.containsKey(entry.id()))
+        .filter(entry -> !initialOnly || entry.initialEligible()
+            && !entry.revision().equals(done.getString(entry.id()))).toList();
+    VillagePaths.Destination to = available.isEmpty() ? null : initialOnly ? available.getFirst()
+        : available.get(person.getRandom().nextInt(available.size()));
+    if (to == null) return null;
     this.nearEnd = hub;
     this.destination = to;
-    if (entrance != null) {
-      this.destinationTarget = entrance.doorstep();
-      this.toDoor = true;
-    } else {
-      // No door (an open structure), or its chunks are not resident this scan:
-      // fall back to the building's middle so a path is still laid, the way it
-      // always was, rather than leaving that building with no route to it.
-      this.destinationTarget = BlockPos.of(to.getCenterLocation());
-      this.toDoor = false;
-    }
+    this.destinationTarget = to.target();
     this.laying = false;
     return BlockPos.of(hub.getCenterLocation());
   }
@@ -117,6 +120,17 @@ public final class PathStep implements BlockWorkStep {
       return false;
     }
     if (arrived(person)) {
+      Village village = person.getVillage();
+      if (village != null && destination != null) {
+        CompoundTag strategy = village.getBrain().getStrategyData();
+        CompoundTag done = strategy.getCompound(INITIAL_PATHS);
+        var registered = VillagePaths.registeredIds(village);
+        done.getAllKeys().removeIf(key -> !registered.contains(key));
+        done.putString(destination.id(), destination.revision());
+        strategy.put(INITIAL_PATHS, done);
+        if (person.level() instanceof ServerLevel level)
+          com.quzzar.kithkyn.village.VillageManager.get(level).setDirty();
+      }
       this.laying = false;
       this.nearEnd = null;
       this.destination = null;
@@ -137,13 +151,19 @@ public final class PathStep implements BlockWorkStep {
   }
 
   @Override
+  public void unreachable(RealPerson person, BlockPos target) {
+    if (destination != null) retryAfter.put(destination.id(), person.level().getGameTime() + 1200);
+    laying = false;
+  }
+
+  @Override
   public String describe() {
-    return "the way between our buildings";
+    return "the way between our buildings and gates";
   }
 
   @Override
   public String activity() {
-    return "laying paths between our buildings";
+    return "laying paths between our buildings and gates";
   }
 
   /** Laying happens on the move; walking to the near end does not. */
@@ -185,11 +205,7 @@ public final class PathStep implements BlockWorkStep {
 
   /** How close counts as arrived at the far end: right at a doorstep, or within a doorless building's radius. */
   private double farReachSqr() {
-    if (this.toDoor) {
-      return DOOR_REACH_SQR;
-    }
-    double radius = this.destination == null ? 3.0D : this.destination.getRadius();
-    return radius * radius * ARRIVAL_FRACTION;
+    return this.destination == null ? 3.6D : this.destination.reachSqr();
   }
 
   private boolean arrived(RealPerson person) {
@@ -208,12 +224,21 @@ public final class PathStep implements BlockWorkStep {
       case 4 -> person.getOnPos().relative(Direction.WEST);
       default -> person.getOnPos();
     };
-    if (!PAVEABLE.contains(person.level().getBlockState(ground).getBlock())) {
+    if (!(person.level() instanceof ServerLevel level)) return;
+    PlacedBlockStore placed = PlacedBlockStore.get(level);
+    Village village = person.getVillage();
+    if (placed.isVillagePlaced(ground) || placed.isPlayerPlaced(ground)
+        || placed.isVillagePlaced(ground.above()) || placed.isPlayerPlaced(ground.above())
+        || level.getBlockEntity(ground) != null || level.getBlockEntity(ground.above()) != null
+        || (village != null && village.hasClaimed(ground))
+        || !level.getFluidState(ground).isEmpty() || !level.getFluidState(ground.above()).isEmpty()
+        || !PAVEABLE.contains(level.getBlockState(ground).getBlock())) {
       return;
     }
     // Never pave out something that is growing.
     Block above = person.level().getBlockState(ground.above()).getBlock();
-    if (above instanceof SaplingBlock || above instanceof CropBlock) {
+    if (above instanceof SaplingBlock || above instanceof CropBlock
+        || !level.getBlockState(ground.above()).getCollisionShape(level, ground.above()).isEmpty()) {
       return;
     }
     person.level().setBlock(ground, Blocks.DIRT_PATH.defaultBlockState(), 2);

@@ -10,7 +10,9 @@ import net.minecraft.world.entity.ai.goal.Goal;
 /**
  * Walks the person toward a village-directed travel target: an arriving
  * newcomer heading for the campfire, an emigrant heading for the village edge,
- * or a worker walking to a job they have just been given.
+ * a worker walking to a job they have just been given, or an unhoused resident
+ * gathering near a rung bell. Bell-origin walks yield to danger and expire;
+ * ordinary village travel keeps its existing lifecycle.
  *
  * The goal ends itself on arrival. It has to: it holds the movement flag at the
  * highest priority any villager goal has, and the village only clears the
@@ -40,12 +42,13 @@ public class VillageTravelGoal extends Goal {
 
     @Override
     public boolean canUse() {
+        person.cancelUnsafeBellRecall();
         return person.getTravelTarget() != null;
     }
 
     @Override
     public boolean canContinueToUse() {
-        return person.getTravelTarget() != null;
+        return canUse();
     }
 
     @Override

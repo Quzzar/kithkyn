@@ -60,7 +60,31 @@ reason, and the aptitude best stands in whenever the model is absent, slow, or u
 contested post is the only thing ever handed over and competence is never traded for
 character. See
 [population-and-labor.md](population-and-labor.md). The swap pass that reorganizes existing
-workers stays purely rule-based.
+workers stays purely rule-based. `LaborPlanner` handles the separate deadlock where nobody is
+idle: food shortages first, then a saved construction goal whose required material can be made
+by an existing vacant post. Food reprioritization remains a midnight decision; a blocked saved
+goal runs on the ordinary labor cadence so it cannot expire before the next midnight. It offers movable workers to the brain in aptitude order, falls back
+to the aptitude best when the model is unavailable or unusable, and revalidates the vacancy when
+the answer arrives. An urgent pass may break the ordinary job-swap cooldown because that cooldown
+outlives a saved goal, but it still preserves the village's last builder and miner, its last
+active food producer while the village is hungry, and its only quartermaster while storage is strained.
+
+The shared snapshot also states when workers or persisted structural contents have overflowed
+shared storage. The collective planning prompt calls additional shared storage urgent, and the
+same fact appears in resident conversation. Production projects whose every job already
+has a standing vacancy and whose capabilities are already present are withheld from both the
+build-now and save-for lists; upgrades, housing, storage, and genuinely new capabilities remain
+eligible. Storage is capacity in its own right, so a storehouse is never mistaken for a duplicate
+producer merely because its quartermaster post is vacant.
+
+The snapshot keeps the causal links as well as the totals. Every workplace is reported by its
+current building age, staffed and claimable-open posts, and free live-in beds. It also states
+whether anyone is actually arriving, whether staffing or reassignment is currently being decided,
+the attractiveness score and newcomer threshold, food per person and its target, and any active
+death, violence, shortage, or theft penalties. A standing lumberjack therefore no longer implies
+that logs are being produced: the brain can see whether that particular post is filled, newly
+built, waiting for a worker, or still has its worker bed available. `PopulationOutlook` remains
+the canonical final growth gate; these details explain why its state is what it is.
 
 Further consumers follow the same shape. `VillageTrading.consider` proposes every legal,
 beneficial bank trade plus an explicit "trade nothing", and the best deal stands in for a

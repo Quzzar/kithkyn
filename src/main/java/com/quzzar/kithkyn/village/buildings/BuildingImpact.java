@@ -28,6 +28,8 @@ public final class BuildingImpact {
       Map.entry("GRAIN", "grain production"), Map.entry("TRADE", "trade"),
       Map.entry("TRADE_INITIATIVE", "trade outreach"), Map.entry("REPAIR", "gear repair"),
       Map.entry("SMELTING", "metal smelting"), Map.entry("CUT_STONE", "stone cutting"),
+      Map.entry("TOOLS_IRON", "iron tools, swords and buckets"),
+      Map.entry("ARMOR_IRON", "iron armor"), Map.entry("SHIELDS", "shield production"),
       Map.entry("LOGS", "logging"), Map.entry("PLANKS", "plank production"),
       Map.entry("MEAT", "meat production"), Map.entry("BREAD", "bread production"),
       Map.entry("LEATHER", "leather production"), Map.entry("WOOL", "wool production"),

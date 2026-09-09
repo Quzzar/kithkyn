@@ -47,11 +47,11 @@ public final class WallPosts {
     }
     for (long tower : towers) {
       posts.add(topPost(wall, blocks, occupied, center, tower,
-          WallPost.Duty.WATCHTOWER_CROSSBOW));
+          WallPost.Duty.WATCHTOWER_CROSSBOW, level));
     }
     for (long gate : gates) {
       posts.add(topPost(wall, blocks, occupied, center, gate,
-          WallPost.Duty.GATE_CROSSBOW));
+          WallPost.Duty.GATE_CROSSBOW, level));
     }
     for (long gate : gates) {
       posts.add(gateBasePost(wall, occupied, center, gate, true, level));
@@ -66,12 +66,12 @@ public final class WallPosts {
     BlockPos anchor = BlockPos.of(anchorLong);
     Vector inward = inwardFrom(center, anchor);
     Vector tangent = tangentAt(ring, index);
-    int side = second ? 1 : -1;
     int baseY = wall.getGround().get(index);
+    int inset = second ? 3 : 1;
     BlockPos preferred = new BlockPos(
-        anchor.getX() + inward.x() * 2 + tangent.x() * 3 * side,
+        anchor.getX() + inward.x() * inset,
         baseY,
-        anchor.getZ() + inward.z() * 2 + tangent.z() * 3 * side);
+        anchor.getZ() + inward.z() * inset);
     BlockPos station = nearestClear(preferred, occupied, inward, tangent, level);
     BlockPos lookAt = new BlockPos(
         anchor.getX() - inward.x() * 4,
@@ -93,20 +93,19 @@ public final class WallPosts {
       candidates.add(preferred.offset(-tangent.x() * distance, 0, -tangent.z() * distance));
     }
     for (BlockPos horizontal : candidates) {
-      BlockPos candidate = level == null
-          ? horizontal
-          : new BlockPos(horizontal.getX(),
-              WallRaiser.surfaceY(level, horizontal.getX(), horizontal.getZ()),
-              horizontal.getZ());
-      if (isOpen(candidate, occupied)) {
-        return candidate;
+      // Post access uses the saved surface and constructed floors. Natural-terrain
+      // sampling intentionally ignores those floors and can land in a cave below.
+      for (int dy : new int[] {0, 1, -1, 2, -2}) {
+        BlockPos candidate = horizontal.above(dy);
+        if (isOpen(candidate, occupied)
+            && (level == null || WorkerFooting.canStand(level, candidate))) return candidate;
       }
     }
     return preferred;
   }
 
   private static WallPost topPost(WallProject wall, List<WallBlockPlan> blocks,
-      Set<Long> occupied, Center center, long anchorLong, WallPost.Duty duty) {
+      Set<Long> occupied, Center center, long anchorLong, WallPost.Duty duty, @Nullable Level level) {
     BlockPos anchor = BlockPos.of(anchorLong);
     Set<Long> footprint = featureFootprint(wall, anchorLong, duty);
     BlockPos station = blocks.stream()
@@ -115,6 +114,7 @@ public final class WallPosts {
         .filter(floor -> footprint.contains(column(floor)))
         .map(BlockPos::above)
         .filter(candidate -> isOpen(candidate, occupied))
+        .filter(candidate -> level == null || !level.hasChunkAt(candidate) || WorkerFooting.canStand(level, candidate))
         .min(Comparator
             .comparingInt((BlockPos candidate) -> candidate.getY()).reversed()
             .thenComparingLong(candidate -> horizontalDistance(candidate, anchor)))
@@ -135,7 +135,9 @@ public final class WallPosts {
         ? WallSectionKind.CORNER_TOWER
         : WallSectionKind.GATEHOUSE;
     if (wall.getTier() == WallTier.WOOD) {
-      return AuthoredWoodWallSegments.INSTANCE.footprintAt(ring, index, kind);
+      AuthoredWoodWallSegments segments = wall.getStyle() == VillageStyle.BIRCH_FOREST
+          ? AuthoredWoodWallSegments.BIRCH_FOREST : AuthoredWoodWallSegments.INSTANCE;
+      return segments.footprintAt(ring, index, kind);
     }
     BlockPos center = BlockPos.of(anchor);
     Set<Long> footprint = new HashSet<>();
@@ -156,6 +158,9 @@ public final class WallPosts {
   private static boolean isFloor(WallBlockPlan.Piece piece) {
     return piece == WallBlockPlan.Piece.WALKWAY
         || piece == WallBlockPlan.Piece.SLAB
+        || piece == WallBlockPlan.Piece.COBBLE_POST
+        || piece == WallBlockPlan.Piece.MOSSY_POST
+        || piece == WallBlockPlan.Piece.COBBLE_SLAB_TOP
         || piece.name().startsWith("STEP_");
   }
 

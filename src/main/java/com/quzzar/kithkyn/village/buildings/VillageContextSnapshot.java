@@ -2,11 +2,17 @@ package com.quzzar.kithkyn.village.buildings;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 import java.util.TreeMap;
+import java.util.TreeSet;
+import java.util.UUID;
 
+import com.quzzar.kithkyn.configuration.KithkynConfig;
 import com.quzzar.kithkyn.entities.PersonalLogData;
 import com.quzzar.kithkyn.entities.RealPerson;
 import com.quzzar.kithkyn.entities.SimulationClock;
@@ -41,8 +47,12 @@ public record VillageContextSnapshot(
     Map<String, Integer> buildings,
     Map<String, Integer> openPosts,
     PopulationOutlook populationOutlook,
-    double foodPerCapita,
+    RecruitmentStatus recruitment,
+    boolean storageStrained,
     boolean recentDeaths,
+    boolean jobDecisionPending,
+    boolean laborDecisionPending,
+    List<WorkplaceStatus> workplaceStatuses,
     Optional<ConstructionPlan> currentProject,
     Optional<ConstructionPlan> savedGoal,
     List<String> recentBuilds,
@@ -63,11 +73,46 @@ public record VillageContextSnapshot(
       long standingTicks) {
   }
 
+  /** Facts that explain whether the village can attract another resident. */
+  public record RecruitmentStatus(
+      double score,
+      double newcomerThreshold,
+      double foodPerCapita,
+      double foodTargetPerCapita,
+      double deathPenalty,
+      double violencePenalty,
+      double shortagePenalty,
+      double theftPenalty) {
+
+    static RecruitmentStatus capture(VillageAttractiveness attractiveness) {
+      return new RecruitmentStatus(
+          attractiveness.total(), KithkynConfig.AttractivenessArriveThreshold,
+          attractiveness.foodPerCapita(), KithkynConfig.AttractivenessFoodTargetPerCapita,
+          attractiveness.deathComponent(), attractiveness.hurtComponent(),
+          attractiveness.shortageComponent(), attractiveness.theftComponent());
+    }
+  }
+
+  /** One workplace's age, staffing, open posts, and worker-only housing. */
+  public record WorkplaceStatus(
+      String label,
+      long ageTicks,
+      Map<String, Integer> staffedPosts,
+      Map<String, Integer> openPosts,
+      int freeLiveInBeds) {
+
+    public WorkplaceStatus {
+      staffedPosts = Collections.unmodifiableMap(new TreeMap<>(staffedPosts));
+      openPosts = Collections.unmodifiableMap(new TreeMap<>(openPosts));
+    }
+  }
+
   public VillageContextSnapshot {
     buildings = Collections.unmodifiableMap(new TreeMap<>(buildings));
     openPosts = Collections.unmodifiableMap(new TreeMap<>(openPosts));
     currentProject = currentProject == null ? Optional.empty() : currentProject;
     savedGoal = savedGoal == null ? Optional.empty() : savedGoal;
+    workplaceStatuses = List.copyOf(workplaceStatuses);
     recentBuilds = List.copyOf(recentBuilds);
     workerBlockers = List.copyOf(workerBlockers);
     roomReport = roomReport == null ? Optional.empty() : roomReport;
@@ -118,6 +163,7 @@ public record VillageContextSnapshot(
     }
 
     List<WorkerBlocker> blockers = activeWorkerBlockers(village);
+    List<WorkplaceStatus> workplaces = captureWorkplaces(village);
     int freeReserved = Math.max(0, village.getFreeBedCount() - village.getFreeGeneralBedCount());
     return new VillageContextSnapshot(
         village.getName(), tierName(village), village.getPopulation().size(),
@@ -126,8 +172,11 @@ public record VillageContextSnapshot(
         village.getDependentWithoutResidentParentCount(), village.getPendingArrivalCount(),
         village.getTotalBeds(), village.getFreeGeneralBedCount(), freeReserved,
         village.getUnhousedAdultResidentCount(), standing, openings,
-        village.getPopulationOutlook(), attractiveness.foodPerCapita(),
-        attractiveness.deathImpact() > 0.5F, project, goalPlan, completed, blockers,
+        village.getPopulationOutlook(), RecruitmentStatus.capture(attractiveness),
+        village.isStorageBackedUp(),
+        attractiveness.deathImpact() > 0.5F,
+        village.isJobDecisionPending(), village.isLaborDecisionPending(), workplaces,
+        project, goalPlan, completed, blockers,
         Optional.ofNullable(village.describeRoom()));
   }
 
@@ -142,10 +191,20 @@ public record VillageContextSnapshot(
             openPosts.values().stream().mapToInt(Integer::intValue).sum()))
         .append(PlannerFacts.existingBuildings(buildings))
         .append(PlannerFacts.openPosts(openPosts))
-        .append(outlookFacts()).append(' ')
-        .append(String.format("Food stores stand at %.1f items per person. ", foodPerCapita));
+        .append(outlookFacts()).append(' ');
+    appendRecruitment(text);
+    appendWorkplaceStatuses(text);
+    appendStaffingDecisions(text);
+    if (storageStrained) {
+      text.append("Shared storage is full: workers are carrying goods that its containers cannot accept. "
+          + "More shared storage is urgent. ");
+    }
     if (recentDeaths) {
       text.append("There have been deaths recently. ");
+    }
+    appendConstruction(text);
+    if (!recentBuilds.isEmpty()) {
+      text.append("Lately the village finished building ").append(joinNatural(recentBuilds)).append(". ");
     }
     appendWorkerBlockers(text);
     return text.toString();
@@ -163,7 +222,20 @@ public record VillageContextSnapshot(
     String work = PlannerFacts.openPosts(openPosts);
     text.append(work.isEmpty() ? "Open work: none.\n" : work + "\n");
     text.append("Population outlook: ").append(outlookFacts()).append('\n');
-    text.append(String.format("Village food stores: %.1f items per person.\n", foodPerCapita));
+    appendRecruitment(text);
+    text.append('\n');
+    appendWorkplaceStatuses(text);
+    if (!workplaceStatuses.isEmpty()) {
+      text.append('\n');
+    }
+    appendStaffingDecisions(text);
+    if (jobDecisionPending || laborDecisionPending) {
+      text.append('\n');
+    }
+    if (storageStrained) {
+      text.append("Shared storage: full; workers are carrying goods that its containers cannot accept, "
+          + "so more shared storage is urgent.\n");
+    }
     appendConstruction(text);
     if (!recentBuilds.isEmpty()) {
       text.append("Lately the village finished building ").append(joinNatural(recentBuilds)).append(".\n");
@@ -187,7 +259,9 @@ public record VillageContextSnapshot(
     }
     if (pendingArrivals > 0) {
       text.append(". ").append(pendingArrivals).append(pendingArrivals == 1 ? " person is" : " people are")
-          .append(" still arriving");
+          .append(" still arriving, but newcomers are not promised to any post until it is assigned");
+    } else {
+      text.append(". No newcomers are currently arriving");
     }
     return text.append('.').toString();
   }
@@ -239,6 +313,73 @@ public record VillageContextSnapshot(
 
   private String outlookFacts() {
     return populationOutlook.describe();
+  }
+
+  private void appendRecruitment(StringBuilder text) {
+    String thresholdPosition = recruitment.score() > recruitment.newcomerThreshold()
+        ? "above" : recruitment.score() < recruitment.newcomerThreshold() ? "below" : "at";
+    text.append(String.format("Attractiveness is %.1f/100, %s the newcomer threshold of %.1f. ",
+        recruitment.score(), thresholdPosition, recruitment.newcomerThreshold()));
+    text.append(String.format("Food is %.1f items per person against a target of %.1f. ",
+        recruitment.foodPerCapita(), recruitment.foodTargetPerCapita()));
+
+    List<String> penalties = new ArrayList<>();
+    addPenalty(penalties, "recent deaths", recruitment.deathPenalty());
+    addPenalty(penalties, "player violence", recruitment.violencePenalty());
+    addPenalty(penalties, "shortages", recruitment.shortagePenalty());
+    addPenalty(penalties, "theft", recruitment.theftPenalty());
+    if (!penalties.isEmpty()) {
+      text.append("Active attractiveness penalties: ").append(String.join(", ", penalties)).append(". ");
+    }
+  }
+
+  private static void addPenalty(List<String> penalties, String label, double value) {
+    if (value < -0.05D) {
+      penalties.add(String.format("%s %.1f", label, value));
+    }
+  }
+
+  private void appendWorkplaceStatuses(StringBuilder text) {
+    if (workplaceStatuses.isEmpty()) {
+      return;
+    }
+    text.append("Workplace staffing and age: ");
+    List<String> descriptions = new ArrayList<>();
+    for (WorkplaceStatus workplace : workplaceStatuses) {
+      Set<String> occupations = new TreeSet<>();
+      occupations.addAll(workplace.staffedPosts().keySet());
+      occupations.addAll(workplace.openPosts().keySet());
+      List<String> posts = new ArrayList<>();
+      for (String occupation : occupations) {
+        posts.add(occupation + ": " + workplace.staffedPosts().getOrDefault(occupation, 0)
+            + " staffed, " + workplace.openPosts().getOrDefault(occupation, 0) + " open");
+      }
+      String beds = workplace.freeLiveInBeds() + " free live-in "
+          + (workplace.freeLiveInBeds() == 1 ? "bed" : "beds");
+      descriptions.add(workplace.label() + " " + buildingAge(workplace.ageTicks())
+          + " (" + String.join(", ", posts) + "; " + beds + ")");
+    }
+    text.append(String.join("; ", descriptions)).append(". ");
+  }
+
+  private void appendStaffingDecisions(StringBuilder text) {
+    if (jobDecisionPending) {
+      text.append("A staffing decision is currently in progress. ");
+    }
+    if (laborDecisionPending) {
+      text.append("A worker-reassignment decision is currently in progress. ");
+    }
+  }
+
+  private static String buildingAge(long ageTicks) {
+    if (ageTicks < 0L) {
+      return "has an unknown completion date";
+    }
+    long days = ageTicks / 24_000L;
+    if (days == 0L) {
+      return "completed today";
+    }
+    return "completed " + days + (days == 1L ? " day" : " days") + " ago";
   }
 
   private void appendConstruction(StringBuilder text) {
@@ -308,6 +449,47 @@ public record VillageContextSnapshot(
           blocker.get().text(), age));
     }
     return blockers;
+  }
+
+  private static List<WorkplaceStatus> captureWorkplaces(Village village) {
+    Map<UUID, Map<String, Integer>> staffedByBuilding = new HashMap<>();
+    for (JobAssignment assignment : village.getJobAssignmentsView().values()) {
+      staffedByBuilding.computeIfAbsent(assignment.getBuildingUUID(), ignored -> new TreeMap<>())
+          .merge(assignment.getOccupation().name().toLowerCase(), 1, Integer::sum);
+    }
+
+    Map<UUID, Map<String, Integer>> openByBuilding = new HashMap<>();
+    for (JobAssignment assignment : village.claimableJobs()) {
+      openByBuilding.computeIfAbsent(assignment.getBuildingUUID(), ignored -> new TreeMap<>())
+          .merge(assignment.getOccupation().name().toLowerCase(), 1, Integer::sum);
+    }
+
+    ServerLevel level = village.getLevel();
+    long now = level == null ? -1L : level.getGameTime();
+    List<WorkplaceStatus> statuses = new ArrayList<>();
+    for (Building building : village.getBuildings()) {
+      BuildingInfo info = building.getInfo();
+      if (info == null || info.getWorkLocations().isEmpty()) {
+        continue;
+      }
+      Map<String, Integer> staffed = new TreeMap<>(
+          staffedByBuilding.getOrDefault(building.getUUID(), Map.of()));
+      Map<String, Integer> open = new TreeMap<>(
+          openByBuilding.getOrDefault(building.getUUID(), Map.of()));
+      for (var occupation : info.getWorkLocations().values()) {
+        String name = occupation.name().toLowerCase();
+        staffed.putIfAbsent(name, 0);
+        open.putIfAbsent(name, 0);
+      }
+      long age = SimulationClock.elapsed(now, building.getCompletedAt()).orElse(-1L);
+      statuses.add(new WorkplaceStatus(info.displayLabel(), age, staffed, open,
+          village.getFreeReservedBedCountIn(building.getUUID())));
+    }
+    statuses.sort(Comparator
+        .comparingLong((WorkplaceStatus status) -> status.ageTicks() < 0L
+            ? Long.MAX_VALUE : status.ageTicks())
+        .thenComparing(WorkplaceStatus::label));
+    return List.copyOf(statuses);
   }
 
   private static String tierName(Village village) {

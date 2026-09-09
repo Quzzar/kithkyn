@@ -5,11 +5,13 @@ import java.util.List;
 import javax.annotation.Nullable;
 
 import com.quzzar.kithkyn.entities.RealPerson;
+import com.quzzar.kithkyn.entities.FishingCast;
 import com.quzzar.kithkyn.village.LocationManager;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -43,11 +45,15 @@ public final class FishStep implements BlockWorkStep {
   /** How far above and below the station water counts: the pool sits a step down. */
   private static final int DEPTH = 2;
 
+  private BlockPos water;
+  private int fishingTicks;
+
   @Override
   @Nullable
   public BlockPos select(RealPerson person) {
     BlockPos station = LocationManager.getJobLocation(person);
-    if (station == BlockPos.ZERO || !waterNear(person, station)) {
+    water = station == BlockPos.ZERO ? null : waterNear(person, station);
+    if (water == null) {
       return null;
     }
     return station;
@@ -55,16 +61,60 @@ public final class FishStep implements BlockWorkStep {
 
   @Override
   public boolean act(RealPerson person, BlockPos target) {
-    if (!waterNear(person, target)) {
+    if (water == null || !openWater(person, water)) {
       return false; // the water dried up or was built over: look again
     }
-    person.swing(person.getUsedItemHand());
-    person.level().playSound((Player) null, target.getX(), target.getY(), target.getZ(),
+    person.getLookControl().setLookAt(water.getX() + 0.5D, water.getY() + 0.9D,
+        water.getZ() + 0.5D, 30.0F, 30.0F);
+    if (fishingTicks == 0) {
+      person.castFishingLine(water);
+      person.swing(person.getMainHandItem().is(Items.FISHING_ROD)
+          ? InteractionHand.MAIN_HAND : InteractionHand.OFF_HAND);
+      person.playSound(SoundEvents.FISHING_BOBBER_THROW, 0.5F, 1.0F);
+    }
+    if (++fishingTicks == FishingCast.CAST_TICKS) {
+      person.level().playSound((Player) null, water.getX(), water.getY(), water.getZ(),
         SoundEvents.FISHING_BOBBER_SPLASH, SoundSource.PLAYERS, 0.5F,
         0.8F + person.getRandom().nextFloat() * 0.4F);
+    }
+    if (fishingTicks < FishingCast.CATCH_TICKS) {
+      return true;
+    }
+    person.swing(person.getMainHandItem().is(Items.FISHING_ROD)
+          ? InteractionHand.MAIN_HAND : InteractionHand.OFF_HAND);
+    person.playSound(SoundEvents.FISHING_BOBBER_RETRIEVE, 0.5F, 1.0F);
     ItemStack caught = new ItemStack(person.getRandom().nextInt(4) == 0 ? Items.SALMON : Items.COD);
     person.addItems(List.of(caught));
+    person.clearFishingLine();
+    fishingTicks = 0;
     return true; // keep fishing; the loop's interrupts and its night check end it
+  }
+
+  @Override
+  public boolean inReach(RealPerson person, BlockPos target) {
+    boolean atStation = BlockWorkStep.super.inReach(person, target);
+    if (!atStation) {
+      person.clearFishingLine();
+      fishingTicks = 0;
+    }
+    return atStation;
+  }
+
+  @Override
+  public void released(RealPerson person, BlockPos target) {
+    person.clearFishingLine();
+    fishingTicks = 0;
+    water = null;
+  }
+
+  @Override
+  public boolean swingsOnAct() {
+    return false;
+  }
+
+  @Override
+  public boolean requiresUpdateEveryTick() {
+    return true;
   }
 
   @Override
@@ -77,19 +127,27 @@ public final class FishStep implements BlockWorkStep {
     return "fishing at the water's edge";
   }
 
-  /** A catch every twenty seconds -- the waiting is the point, not the throughput. */
+  /** Advance the cast and wait every tick; catching still takes twenty seconds at the station. */
   @Override
   public int actEveryTicks() {
-    return 20 * 20;
+    return 1;
   }
 
-  private boolean waterNear(RealPerson person, BlockPos station) {
+  @Nullable
+  private BlockPos waterNear(RealPerson person, BlockPos station) {
+    BlockPos nearest = null;
     for (BlockPos p : BlockPos.betweenClosed(station.offset(-SEARCH, -DEPTH, -SEARCH),
         station.offset(SEARCH, DEPTH, SEARCH))) {
-      if (person.level().getBlockState(p).is(Blocks.WATER)) {
-        return true;
+      if (openWater(person, p) && (nearest == null || p.distSqr(station) < nearest.distSqr(station))) {
+        nearest = p.immutable();
       }
     }
-    return false;
+    return nearest;
+  }
+
+  private boolean openWater(RealPerson person, BlockPos pos) {
+    return person.level().hasChunkAt(pos)
+        && person.level().getBlockState(pos).is(Blocks.WATER)
+        && person.level().getBlockState(pos.above()).isAir();
   }
 }

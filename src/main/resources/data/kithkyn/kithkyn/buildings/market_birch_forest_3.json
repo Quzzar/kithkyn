@@ -1,0 +1,79 @@
+{
+  "structure": "market_birch_forest_3",
+  "category": "market",
+  "variant": "birch_forest",
+  "beds": [],
+  "work_stations": [
+    {
+      "occupation": "MERCHANT",
+      "pos": [
+        10,
+        1,
+        8
+      ]
+    },
+    {
+      "occupation": "MERCHANT",
+      "pos": [
+        7,
+        1,
+        15
+      ]
+    },
+    {
+      "occupation": "MERCHANT",
+      "pos": [
+        15,
+        1,
+        15
+      ]
+    }
+  ],
+  "personal_containers": [],
+  "containers": [
+    [
+      9,
+      0,
+      8
+    ],
+    [
+      7,
+      0,
+      14
+    ],
+    [
+      15,
+      0,
+      14
+    ]
+  ],
+  "cost": [
+    {
+      "item": "minecraft:oak_log",
+      "count": 48
+    },
+    {
+      "item": "minecraft:cobblestone",
+      "count": 42
+    },
+    {
+      "item": "minecraft:white_wool",
+      "count": 18
+    },
+    {
+      "item": "minecraft:iron_ingot",
+      "count": 4
+    }
+  ],
+  "grants": [
+    "TRADE",
+    "TRADE_INITIATIVE"
+  ],
+  "sink": 0,
+  "village_identity": {
+    "primary_blocks": [],
+    "secondary_blocks": [],
+    "banners": []
+  },
+  "upgrades_from": "market_birch_forest_2"
+}

@@ -1,0 +1,14 @@
+{
+  "PetSittingProbe-baseline.java.txt": "7dbaf72f05d7ecb5dc75e7df9a4fa259871872ad7d5f3b0f2c505131bf86326d",
+  "PetSittingProbe.java": "a9e8de8a13e2ef7626ac0f9b0fd2a4bf07a493959f79e8fe6533c93ced908ea6",
+  "baseline-result.txt": "8a9fdbe8e9f38995d0ca470724045118a6383b7210b37ec22517c8954eed9ee8",
+  "control-result.txt": "1b49def89763075c752eaad77634703ca0790fc488780df9148d69895a8d12d5",
+  "initial-monitor-state.json": "483fe5289fdc3b2fd915701d5bdec7160a03fad60932533107b215c2e89a0c3f",
+  "live-pet-choices.json": "7a6df32b6362b8862b160342f61c3e717f2a9a4515d7866fc20b7bf99f2f6a8d",
+  "live-pet-trace.txt": "a314eb4986cd516238d4b20f55eb706d5a5aecb61d266de33d275326acf5e77f",
+  "monitor.py": "6d3c556152a698f90da55f8a6971f71f138722fcd45d5774c417087103bc5179",
+  "production-class-checksums.json": "98c62177b07a47c52c423958bd3227677bd9615ff5376d43c06738b906f28ddf",
+  "production-result.txt": "6bb29901d8d6106065b689588ed0fcc2e40d3c627c13238b62740e0d48b4a09a",
+  "run_probe.py": "c2162aef946cbe290478ee961a8810d667110b9c9d95719ca409ceec4ca9b31a",
+  "verify_production.py": "78ff05100e5e7739f8f7b9f0678e81d1cecf0e6c73300348e0011989cfbf4387"
+}

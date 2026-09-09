@@ -1,0 +1,44 @@
+{
+  "structure": "fishery_birch_forest_1",
+  "category": "fishery",
+  "variant": "birch_forest",
+  "beds": [],
+  "work_stations": [
+    {
+      "occupation": "FISHER",
+      "pos": [
+        10,
+        2,
+        10
+      ]
+    }
+  ],
+  "personal_containers": [],
+  "containers": [
+    [
+      10,
+      2,
+      10
+    ]
+  ],
+  "cost": [
+    {
+      "item": "minecraft:oak_log",
+      "count": 15
+    },
+    {
+      "item": "minecraft:cobblestone",
+      "count": 20
+    }
+  ],
+  "grants": [
+    "MEAT",
+    "WATER"
+  ],
+  "sink": 0,
+  "village_identity": {
+    "primary_blocks": [],
+    "secondary_blocks": [],
+    "banners": []
+  }
+}

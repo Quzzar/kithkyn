@@ -237,23 +237,82 @@ A `NoResourceBookkeepingEvent` fires when fill is short, exactly as it does for 
 materials, so a village that cannot afford to level a site complains in the way it already
 complains about everything else.
 
+## Natural founding searches nearby land
+
+Natural villages do not depend on vanilla village-biome eligibility. During exploration,
+each seeded 34-chunk region offers 25 candidate anchors, nearest-first on a 32-block grid
+within 64 blocks per axis of its original point. The search shares its cursor across nearby
+players and allows at most two exact layout probes per second across the level, inspecting
+at most 32 nearby regions in that pass. Unloaded sites are deferred, never generated for a
+probe. Tested unsuitable sites are skipped for the rest of the session; failed delayed
+commits resume the remaining search. The grid and original seed salt remain unchanged.
+
+Manual and natural founding share the same prepared plan: the exact center, its rotation,
+mine, storehouse and ground plane. All three footprints receive the existing terrain-cost
+and ownership checks, including the center. Only a viable natural plan requests a village
+name. That request reserves a 272-block horizontal separation from other pending names and
+standing villages. Immediately before placement, separation, loaded chunks, protected blocks
+and the exact prepared footprints are checked again. The final village identity is applied
+without rerolling the geometry. A failed preflight or stale plan creates no claims and
+changes no blocks. Manual founding may load its requested camp area as before; natural
+preflight and delayed commit do not.
+
+The search deliberately reuses footprint scoring rather than adding a second slope policy.
+The [upstream comparison](research/forest-village-worldgen.md) informed the separation of
+biome eligibility, spacing and terrain checks; nearby retries are our own adaptation for a
+living village's three-building founding layout.
+
 ## What stands over the roof
 
-Ground clearing stops at the footprint's headroom: founding cuts each building's own columns,
-and the prepare phase clears `CLEARANCE_HEIGHT` blocks above the plane. A tall tree outreaches
-both, and a neighbour's branch can hang over the footprint without a single log in it at ground
-level. So the moment a building is added to the village (`Village.addBuilding`, and
-`replaceBuilding` for an upgrade) it fells whatever tree still has a log in or over its volume:
-`TreeFelling.fellOver` reads each footprint column from the world surface down to the
-building's floor and brings every fellable tree it meets down whole, under the same canopy and
-ownership guards the lumberjack's axe uses ([block-ownership.md](block-ownership.md)), which is
-also what keeps it off the building's own timber. That covers every way a building arrives:
-founding, `/kkdev village place`, the builder finishing a project, and an upgrade. The wood
-goes to village storage like any clearing yield; what will not fit drops where the tree stood.
-A canopy with no log over the footprint is left alone: a tree beside a house is scenery, not
-an obstruction.
+Founding measures each building's ground footprint from its placed origin plus its rotated
+`BuildingFootprint` bounds, not a rounded half-width around its center. These bounds enclose
+authored non-air blocks across all palettes, including decorations, but exclude empty capture
+borders. Placement, claims, site searches and upgrades use the same envelope with zero capture
+padding; the shared one-block walking lane is separate. Odd and even dimensions keep
+their exact extent, including negative offsets after rotation. Sunken templates still prepare
+the chosen surface plane; their underground blocks and explicit air are placed afterward.
+`FoundingLayout` tries inward-facing companions centered on all four edges using the shared
+`TownLayout` frontage geometry. Unlike later growth, founding never offers off-center start/end
+alignments: each companion's footprint midpoint matches the center's midpoint along that edge,
+within the unavoidable half-block for mixed odd/even widths. It scores local bounds at the
+actual world ground origin before committing any claims.
+The lowest-cost nonoverlapping pair on distinct sides wins, preferring adjacent sides on ties.
+Impossible sites never rank as zero-cost sites. Only chosen footprints are cleared: no union
+rectangle or extra flank margin. If two safe sites are unavailable, founding leaves the world
+unchanged and asks for a more open spot.
+
+Ground preparation stops at its headroom, but completed buildings also use the wall's natural
+vegetation clearance. `SiteClearance` expands the actual footprint by three horizontal blocks
+for whole-tree felling, then by one block for a top-down foliage sweep. Overhead remnants and
+branches are included; leaves above the roof and brush beside the building are cleared too.
+These are vegetation radii, not terrain padding or claims: no soil is cut or filled by this pass.
+
+`Village.addBuilding` and `replaceBuilding` are the common completion hooks for command/natural
+founding, `/kkdev village place`, ordinary builder completion, redevelopment and upgrades.
+`WallRaiser` uses the same clearance engine with its irregular route footprint, so it never
+clears the whole perimeter interior. Both skip unloaded columns and retain the lumberjack's
+natural-canopy and per-log ownership guards ([block-ownership.md](block-ownership.md)).
+Player/village timber and block entities are protected. Connected branches may extend beyond
+the three-block seed radius; disconnected trees beyond it remain.
+
+The foliage sweep stops at terrain or protected construction. Authored plants in the new and
+neighboring registered buildings are protected at their rotated template positions. In
+particular, flowers, crops and the lumberjack sapling stay unowned for growth/harvesting, but
+are not mistaken for brush during this one cleanup pass. Authored tall grass is already
+ownership-protected. Village clearing yields go into storage, with overflow at the tree's
+position; wall yields drop for villagers to collect. Raw authoring-gallery stamps do not
+register as village buildings and are not retroactively swept.
 
 ## What it costs at runtime
+
+The one-block founding gap is also an access lane, not extra terrain-clearing padding. After
+placement, `GradingSurvey` identifies narrow gaps (up to three columns) between overlapping
+footprint edges and small doorway approaches. Those movable columns receive the gentler path
+grade before a path exists. Saved sink offsets and exact rotated footprints supply floor anchors.
+The ordinary builder performs the cut/fill physically in an early, filtered pass, then returns to
+wall or building duties. Broader landscape grading remains lower priority; it does not flatten
+the village's entire apron. Doorless structures use a supported opening on their authored front.
+See [worker-loops.md](worker-loops.md) for scheduling and protection rules.
 
 The expensive part is **finding** sites, not clearing them. Clearing is a villager breaking a
 few hundred blocks over several minutes, which is nothing. Scoring candidate sites is a

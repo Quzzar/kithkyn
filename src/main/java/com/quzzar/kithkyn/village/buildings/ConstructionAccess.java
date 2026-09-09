@@ -15,10 +15,8 @@ import com.quzzar.kithkyn.Kithkyn;
 import com.quzzar.kithkyn.entities.RealPerson;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraft.world.level.pathfinder.Path;
-import net.minecraft.world.phys.AABB;
 
 /**
  * Worker-specific approaches to a redevelopment site. Positions stay outside both
@@ -113,16 +111,8 @@ public final class ConstructionAccess {
         || !outside(footprints, position.getX() + 0.5D, position.getZ() + 0.5D, person.getBbWidth())) {
       return false;
     }
-    BlockPos below = position.below();
-    if (groundWork.contains(new BlockPos(position.getX(), 0, position.getZ()).asLong())
-        || !person.level().getFluidState(position).isEmpty()
-        || !person.level().getBlockState(below).isFaceSturdy(person.level(), below, Direction.UP)) {
-      return false;
-    }
-    double half = person.getBbWidth() / 2.0D;
-    AABB body = new AABB(position.getX() + 0.5D - half, position.getY(), position.getZ() + 0.5D - half,
-        position.getX() + 0.5D + half, position.getY() + person.getBbHeight(), position.getZ() + 0.5D + half);
-    return person.level().noCollision(person, body);
+    return !groundWork.contains(new BlockPos(position.getX(), 0, position.getZ()).asLong())
+        && WorkerFooting.canStand(person, position);
   }
 
   /** Explains a gather timeout without confusing inaccessible work with missing materials. */

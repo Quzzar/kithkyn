@@ -3,12 +3,15 @@ package com.quzzar.kithkyn.entities.ai.goals;
 import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
+import java.util.function.Supplier;
 
 import com.quzzar.kithkyn.entities.RealPerson;
+import com.quzzar.kithkyn.village.Village;
 import com.quzzar.kithkyn.village.buildings.Building;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.ai.goal.Goal;
+import net.minecraft.world.entity.PathfinderMob;
 
 /**
  * A guard's loose watch: pick a building, walk a lap around it looking it over,
@@ -32,7 +35,7 @@ import net.minecraft.world.entity.ai.goal.Goal;
 public class GuardPatrolGoal extends Goal {
 
   /** A leisurely walk, below the guard's combat pace: this is a round, not a march. */
-  private static final double SPEED = 0.45D;
+  private static final double HUMAN_SPEED = 0.45D;
 
   /** Close enough that a ring point counts as reached. */
   private static final double ARRIVED_SQR = 2.5D * 2.5D;
@@ -53,7 +56,9 @@ public class GuardPatrolGoal extends Goal {
   /** A ring point the guard cannot reach is skipped rather than ground against. */
   private static final int LEG_TIMEOUT_TICKS = 100;
 
-  private final RealPerson guard;
+  private final PathfinderMob guard;
+  private final Supplier<Village> village;
+  private final double speedModifier;
   private final List<BlockPos> lap = new ArrayList<>();
   private BlockPos lookAt;
   private int legIndex;
@@ -61,13 +66,20 @@ public class GuardPatrolGoal extends Goal {
   private long resumeAt;
 
   public GuardPatrolGoal(RealPerson guard) {
+    this(guard, guard::getVillage, HUMAN_SPEED);
+  }
+
+  /** Shared random rounds, at the species' strolling multiplier on its own movement attribute. */
+  public GuardPatrolGoal(PathfinderMob guard, Supplier<Village> village, double speedModifier) {
     this.guard = guard;
+    this.village = village;
+    this.speedModifier = speedModifier;
     this.setFlags(EnumSet.of(Flag.MOVE, Flag.LOOK));
   }
 
   @Override
   public boolean canUse() {
-    if (guard.getVillage() == null || guard.level().getGameTime() < resumeAt) {
+    if (village.get() == null || guard.getTarget() != null || guard.level().getGameTime() < resumeAt) {
       return false;
     }
     planLap();
@@ -76,7 +88,7 @@ public class GuardPatrolGoal extends Goal {
 
   @Override
   public boolean canContinueToUse() {
-    return legIndex < lap.size();
+    return village.get() != null && guard.getTarget() == null && legIndex < lap.size();
   }
 
   @Override
@@ -131,7 +143,7 @@ public class GuardPatrolGoal extends Goal {
 
   private void walkTo(BlockPos target) {
     if (target != null) {
-      guard.getNavigation().moveTo(target.getX() + 0.5D, target.getY(), target.getZ() + 0.5D, SPEED);
+      guard.getNavigation().moveTo(target.getX() + 0.5D, target.getY(), target.getZ() + 0.5D, speedModifier);
     }
   }
 
@@ -145,7 +157,7 @@ public class GuardPatrolGoal extends Goal {
     legIndex = 0;
     lookAt = null;
 
-    List<Building> buildings = new ArrayList<>(guard.getVillage().getBuildings());
+    List<Building> buildings = new ArrayList<>(village.get().getBuildings());
     if (buildings.isEmpty()) {
       return;
     }

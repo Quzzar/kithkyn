@@ -1,0 +1,528 @@
+{
+  "description": "User's September 8 wall-showcase masonry edits. Positions are local to the cropped runtime pieces, not the padded source captures.",
+  "capture": "run/wall-showcase-20260908/revisions/20260908-183204/manifest.json",
+  "pieces": {
+    "wall_straight": {
+      "approved_source_sha256": "c25d7c90af8fa970cae94cd76887c3cd077167453ba97f1c879c2ba6cd1aed33",
+      "edited_capture_sha256": "007d83a0f47238308079cb143eb0078d383a33e0495ae85014ab85e66a1a737a",
+      "size": [
+        7,
+        8,
+        1
+      ],
+      "overrides": [
+        {
+          "pos": [
+            1,
+            0,
+            0
+          ],
+          "name": "minecraft:mossy_cobblestone",
+          "properties": {}
+        },
+        {
+          "pos": [
+            1,
+            4,
+            0
+          ],
+          "name": "minecraft:mossy_cobblestone",
+          "properties": {}
+        },
+        {
+          "pos": [
+            2,
+            5,
+            0
+          ],
+          "name": "minecraft:mossy_cobblestone_wall",
+          "properties": {
+            "east": "none",
+            "waterlogged": "false",
+            "south": "none",
+            "north": "none",
+            "west": "low",
+            "up": "true"
+          }
+        },
+        {
+          "pos": [
+            3,
+            2,
+            0
+          ],
+          "name": "minecraft:cobblestone",
+          "properties": {}
+        },
+        {
+          "pos": [
+            3,
+            3,
+            0
+          ],
+          "name": "minecraft:cobblestone",
+          "properties": {}
+        },
+        {
+          "pos": [
+            4,
+            2,
+            0
+          ],
+          "name": "minecraft:cobblestone",
+          "properties": {}
+        },
+        {
+          "pos": [
+            4,
+            3,
+            0
+          ],
+          "name": "minecraft:cobblestone",
+          "properties": {}
+        },
+        {
+          "pos": [
+            5,
+            2,
+            0
+          ],
+          "name": "minecraft:mossy_cobblestone",
+          "properties": {}
+        },
+        {
+          "pos": [
+            6,
+            0,
+            0
+          ],
+          "name": "minecraft:mossy_cobblestone",
+          "properties": {}
+        }
+      ]
+    },
+    "wall_diagonal": {
+      "approved_source_sha256": "793872444f0ec6bc920b9a637fe326106fe8845c19edb2c4abcae2b55a38b63b",
+      "edited_capture_sha256": "309234afe770bc4290eef45daad802b22e58ede6c28c0893df9c588dcf56677e",
+      "size": [
+        7,
+        8,
+        7
+      ],
+      "overrides": [
+        {
+          "pos": [
+            3,
+            3,
+            3
+          ],
+          "name": "minecraft:mossy_cobblestone",
+          "properties": {}
+        },
+        {
+          "pos": [
+            3,
+            4,
+            3
+          ],
+          "name": "minecraft:mossy_cobblestone",
+          "properties": {}
+        },
+        {
+          "pos": [
+            3,
+            5,
+            3
+          ],
+          "name": "minecraft:mossy_cobblestone",
+          "properties": {}
+        },
+        {
+          "pos": [
+            4,
+            4,
+            4
+          ],
+          "name": "minecraft:mossy_cobblestone_wall",
+          "properties": {
+            "east": "none",
+            "waterlogged": "false",
+            "south": "none",
+            "north": "none",
+            "west": "none",
+            "up": "true"
+          }
+        },
+        {
+          "pos": [
+            6,
+            2,
+            6
+          ],
+          "name": "minecraft:mossy_cobblestone",
+          "properties": {}
+        },
+        {
+          "pos": [
+            6,
+            3,
+            6
+          ],
+          "name": "minecraft:mossy_cobblestone_wall",
+          "properties": {
+            "east": "none",
+            "waterlogged": "false",
+            "south": "none",
+            "north": "none",
+            "west": "none",
+            "up": "true"
+          }
+        }
+      ]
+    },
+    "wall_terrace": {
+      "approved_source_sha256": "61c91485659a352d4a97c4f3c539fc38512467631f81626abe34ef3de21969f5",
+      "edited_capture_sha256": "5a95f4c4522dd4cac2d007bef710b92b47825758fb571b29261fa8e705a4fdf3",
+      "size": [
+        8,
+        9,
+        1
+      ],
+      "overrides": [
+        {
+          "pos": [
+            1,
+            0,
+            0
+          ],
+          "name": "minecraft:mossy_cobblestone",
+          "properties": {}
+        },
+        {
+          "pos": [
+            2,
+            5,
+            0
+          ],
+          "name": "minecraft:mossy_cobblestone",
+          "properties": {}
+        },
+        {
+          "pos": [
+            3,
+            2,
+            0
+          ],
+          "name": "minecraft:cobblestone",
+          "properties": {}
+        },
+        {
+          "pos": [
+            3,
+            4,
+            0
+          ],
+          "name": "minecraft:mossy_cobblestone",
+          "properties": {}
+        },
+        {
+          "pos": [
+            3,
+            5,
+            0
+          ],
+          "name": "minecraft:mossy_cobblestone_wall",
+          "properties": {
+            "east": "none",
+            "waterlogged": "false",
+            "south": "none",
+            "north": "none",
+            "west": "low",
+            "up": "true"
+          }
+        },
+        {
+          "pos": [
+            4,
+            3,
+            0
+          ],
+          "name": "minecraft:cobblestone",
+          "properties": {}
+        },
+        {
+          "pos": [
+            5,
+            1,
+            0
+          ],
+          "name": "minecraft:mossy_cobblestone",
+          "properties": {}
+        },
+        {
+          "pos": [
+            6,
+            2,
+            0
+          ],
+          "name": "minecraft:mossy_cobblestone",
+          "properties": {}
+        },
+        {
+          "pos": [
+            7,
+            4,
+            0
+          ],
+          "name": "minecraft:cobblestone",
+          "properties": {}
+        }
+      ]
+    },
+    "wall_corner": {
+      "approved_source_sha256": "555dfbacbd9bc3a319e0753770a0340b0ca1295402faabba249010a5226d6df3",
+      "edited_capture_sha256": "795d52c409eb1a0af5ea78cb103fde99eaa9af95d4db8ba36defcb6cc179ec71",
+      "size": [
+        12,
+        8,
+        6
+      ],
+      "overrides": [
+        {
+          "pos": [
+            0,
+            2,
+            0
+          ],
+          "name": "minecraft:cobblestone",
+          "properties": {}
+        },
+        {
+          "pos": [
+            3,
+            3,
+            0
+          ],
+          "name": "minecraft:cobblestone",
+          "properties": {}
+        },
+        {
+          "pos": [
+            4,
+            1,
+            0
+          ],
+          "name": "minecraft:cobblestone",
+          "properties": {}
+        },
+        {
+          "pos": [
+            4,
+            2,
+            0
+          ],
+          "name": "minecraft:cobblestone",
+          "properties": {}
+        },
+        {
+          "pos": [
+            4,
+            3,
+            0
+          ],
+          "name": "minecraft:cobblestone",
+          "properties": {}
+        },
+        {
+          "pos": [
+            5,
+            1,
+            0
+          ],
+          "name": "minecraft:mossy_cobblestone",
+          "properties": {}
+        },
+        {
+          "pos": [
+            6,
+            0,
+            0
+          ],
+          "name": "minecraft:mossy_cobblestone",
+          "properties": {}
+        },
+        {
+          "pos": [
+            8,
+            0,
+            0
+          ],
+          "name": "minecraft:mossy_cobblestone",
+          "properties": {}
+        },
+        {
+          "pos": [
+            8,
+            1,
+            0
+          ],
+          "name": "minecraft:mossy_cobblestone_wall",
+          "properties": {
+            "east": "none",
+            "waterlogged": "false",
+            "south": "none",
+            "north": "none",
+            "west": "none",
+            "up": "true"
+          }
+        },
+        {
+          "pos": [
+            8,
+            2,
+            0
+          ],
+          "name": "minecraft:mossy_cobblestone_wall",
+          "properties": {
+            "east": "none",
+            "waterlogged": "false",
+            "south": "none",
+            "north": "none",
+            "west": "none",
+            "up": "true"
+          }
+        },
+        {
+          "pos": [
+            10,
+            0,
+            4
+          ],
+          "name": "minecraft:mossy_cobblestone",
+          "properties": {}
+        },
+        {
+          "pos": [
+            11,
+            4,
+            5
+          ],
+          "name": "minecraft:cobblestone",
+          "properties": {}
+        }
+      ]
+    },
+    "gatehouse": {
+      "approved_source_sha256": "7ff2763f62ac456c42ff94c2d9f179930e4cdf873699b86c4d0d17fbc3204b23",
+      "edited_capture_sha256": "432e4371297faa7d93f97ae894453adf13f968dc386d13fb8d30c5d735ef06f9",
+      "banner_reference": "Mallowen north gate, saved 2026-09-09 00:50:58: (10392,70,9006), (10396,70,9006) face north; (10392,70,9012), (10396,70,9012) face south. Expand the crop by one on both faces; existing masonry is unchanged.",
+      "crop": [4, 0, 3],
+      "size": [
+        17,
+        8,
+        7
+      ],
+      "overrides": [
+        {
+          "pos": [
+            6,
+            1,
+            2
+          ],
+          "name": "minecraft:cobblestone",
+          "properties": {}
+        },
+        {
+          "pos": [
+            6,
+            2,
+            2
+          ],
+          "name": "minecraft:cobblestone",
+          "properties": {}
+        },
+        {
+          "pos": [
+            6,
+            4,
+            1
+          ],
+          "name": "minecraft:mossy_cobblestone_wall",
+          "properties": {
+            "east": "none",
+            "waterlogged": "false",
+            "south": "tall",
+            "north": "none",
+            "west": "none",
+            "up": "true"
+          }
+        },
+        {
+          "pos": [
+            6,
+            5,
+            1
+          ],
+          "name": "minecraft:mossy_cobblestone",
+          "properties": {}
+        },
+        {
+          "pos": [
+            8,
+            5,
+            1
+          ],
+          "name": "minecraft:cobblestone",
+          "properties": {}
+        },
+        {
+          "pos": [
+            10,
+            0,
+            2
+          ],
+          "name": "minecraft:cobblestone",
+          "properties": {}
+        },
+        {
+          "pos": [
+            10,
+            1,
+            2
+          ],
+          "name": "minecraft:cobblestone",
+          "properties": {}
+        },
+        {
+          "pos": [
+            14,
+            1,
+            3
+          ],
+          "name": "minecraft:mossy_cobblestone",
+          "properties": {}
+        },
+        {
+          "pos": [6, 4, 0],
+          "name": "minecraft:white_wall_banner",
+          "properties": {"facing": "north"}
+        },
+        {
+          "pos": [10, 4, 0],
+          "name": "minecraft:white_wall_banner",
+          "properties": {"facing": "north"}
+        },
+        {
+          "pos": [6, 4, 6],
+          "name": "minecraft:white_wall_banner",
+          "properties": {"facing": "south"}
+        },
+        {
+          "pos": [10, 4, 6],
+          "name": "minecraft:white_wall_banner",
+          "properties": {"facing": "south"}
+        }
+      ]
+    }
+  }
+}

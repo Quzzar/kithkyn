@@ -1,0 +1,3 @@
+[09:54:24] [Server thread/INFO] [co.qu.ki.Kithkyn/]: [pet-sitting-probe] type=entity.minecraft.cat commandSit=false vanillaOwnerNull=true companionOwnerFound=true vanillaSitPriority=2 vanillaSitCanUse=true sittingPose=true verdict=FAIL_UNREQUESTED_SITTING
+[09:54:24] [Server thread/INFO] [co.qu.ki.Kithkyn/]: [pet-sitting-probe] type=entity.minecraft.wolf commandSit=false vanillaOwnerNull=true companionOwnerFound=true vanillaSitPriority=2 vanillaSitCanUse=true sittingPose=true verdict=FAIL_UNREQUESTED_SITTING
+[09:54:24] [Server thread/INFO] [co.qu.ki.Kithkyn/]: [pet-sitting-probe] RESULT FAIL

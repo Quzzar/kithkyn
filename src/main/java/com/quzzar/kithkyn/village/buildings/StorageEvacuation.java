@@ -43,7 +43,7 @@ public final class StorageEvacuation {
     return sources;
   }
 
-  /** Ordinary upgrades still wait for physical capacity; redevelopment can retain overflow. */
+  /** Callers without a durable overflow store still wait for physical capacity. */
   public static boolean evacuate(Village village, Collection<Building> buildings) {
     return evacuate(village, buildings, null);
   }

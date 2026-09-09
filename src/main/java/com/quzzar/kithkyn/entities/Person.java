@@ -71,7 +71,6 @@ import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.navigation.GroundPathNavigation;
-import net.minecraft.world.entity.animal.IronGolem;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.monster.CrossbowAttackMob;
 import net.minecraft.world.entity.npc.Villager;
@@ -248,7 +247,8 @@ public class Person extends PathfinderMob implements CrossbowAttackMob, NeutralM
   protected void doPush(Entity entityIn) {
     if (entityIn instanceof PathfinderMob) {
       PathfinderMob living = (PathfinderMob) entityIn;
-      boolean attackTargets = living.getTarget() instanceof Villager || living.getTarget() instanceof IronGolem
+      boolean attackTargets = living.getTarget() instanceof Villager
+          || com.quzzar.kithkyn.village.VillageGolems.supports(living.getTarget())
           || living.getTarget() instanceof Person;
       if (attackTargets)
         this.setTarget(living);

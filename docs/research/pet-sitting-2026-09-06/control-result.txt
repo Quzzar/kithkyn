@@ -1,0 +1,5 @@
+[09:57:30] [Server thread/INFO] [co.qu.ki.Kithkyn/]: [pet-sitting-probe] type=entity.minecraft.cat commandSit=false vanillaOwnerNull=true companionOwnerFound=true vanillaSitPriority=2 vanillaSitCanUse=false sittingPose=false verdict=PASS
+[09:57:30] [Server thread/INFO] [co.qu.ki.Kithkyn/]: [pet-sitting-probe] CONTROL type=entity.minecraft.cat explicitSitWorks=true recallClearsPose=true followingGoalRunning=true
+[09:57:30] [Server thread/INFO] [co.qu.ki.Kithkyn/]: [pet-sitting-probe] type=entity.minecraft.wolf commandSit=false vanillaOwnerNull=true companionOwnerFound=true vanillaSitPriority=2 vanillaSitCanUse=false sittingPose=false verdict=PASS
+[09:57:30] [Server thread/INFO] [co.qu.ki.Kithkyn/]: [pet-sitting-probe] CONTROL type=entity.minecraft.wolf explicitSitWorks=true recallClearsPose=true followingGoalRunning=true
+[09:57:30] [Server thread/INFO] [co.qu.ki.Kithkyn/]: [pet-sitting-probe] RESULT PASS

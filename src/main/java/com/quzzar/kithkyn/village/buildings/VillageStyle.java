@@ -1,11 +1,19 @@
 package com.quzzar.kithkyn.village.buildings;
 
+import java.util.List;
 import java.util.Locale;
+import java.util.function.Predicate;
 
 import javax.annotation.Nullable;
 
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.TagKey;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.levelgen.RandomSupport;
 import net.neoforged.neoforge.common.Tags;
 
 /**
@@ -14,17 +22,27 @@ import net.neoforged.neoforge.common.Tags;
  * stands in, and kept for the village's life. Every later building takes this
  * family's variant, so a village reads as one place rather than a sampler.
  *
- * The biome is read through the conventional biome tags rather than vanilla
- * ids, so a modded desert that tags itself {@code c:is_desert} founds a desert
- * camp instead of defaulting to plains. The order below settles biomes that
- * carry more than one tag: a snowy taiga is snowy before it is taiga.
+ * Explicit datapack style tags take precedence over conventional biome families.
+ * An unfamiliar family chooses among climate-compatible loaded catalogs using
+ * the world seed and founding site, not the world's mutable random stream.
  */
 public enum VillageStyle {
-  PLAINS, TAIGA, SNOWY, DESERT, SAVANNA;
+  PLAINS, TAIGA, SNOWY, DESERT, SAVANNA, BIRCH_FOREST;
 
   /** The token this style takes in a building id, {@code house_<style>_1}. */
   public String id() {
     return name().toLowerCase(Locale.ROOT);
+  }
+
+  /** The approved Birch catalog is complete and deliberately omits some roles and levels. */
+  public boolean usesPlainsFallback() {
+    return this != BIRCH_FOREST;
+  }
+
+  /** Modpacks can assign a biome without introducing a separate mapping loader. */
+  public TagKey<Biome> biomeTag() {
+    return TagKey.create(Registries.BIOME,
+        ResourceLocation.fromNamespaceAndPath("kithkyn", "village_style/" + id()));
   }
 
   /** The style for an id token, or null when no such style exists. */
@@ -44,21 +62,101 @@ public enum VillageStyle {
     return style != null ? style : PLAINS;
   }
 
-  /** Which family a camp founded in this biome builds in. */
+  /** Biome-only selection for previews that have no founding seed or position. */
   public static VillageStyle fromBiome(Holder<Biome> biome) {
-    if (biome.is(Tags.Biomes.IS_DESERT) || biome.is(Tags.Biomes.IS_BADLANDS) || biome.is(Tags.Biomes.IS_SANDY)) {
+    return fromBiome(biome, 0L, BlockPos.ZERO);
+  }
+
+  /** The one selector used by both manual and naturally generated village founding. */
+  public static VillageStyle fromBiome(Holder<Biome> biome, long worldSeed, BlockPos site) {
+    long biomeSeed = biome.unwrapKey().map(key -> (long) key.location().toString().hashCode()).orElse(0L);
+    Biome climate = biome.value();
+    String biomePath = biome.unwrapKey().map(key -> key.location().getPath()).orElse("");
+    return select(biome::is, biomePath, climate.getBaseTemperature(), climate.hasPrecipitation(),
+        climate.getModifiedClimateSettings().downfall(), worldSeed ^ site.asLong() ^ biomeSeed,
+        Buildings::hasFoundingSet);
+  }
+
+  /** Pure selector seam: tags carry architecture, climate only fills an unclassified family's gap. */
+  static VillageStyle select(Predicate<TagKey<Biome>> tagged, String biomePath, float temperature,
+      boolean precipitation, float downfall, long siteSeed, Predicate<VillageStyle> available) {
+    for (VillageStyle style : values()) {
+      if (tagged.test(style.biomeTag()) && available.test(style)) {
+        return style;
+      }
+    }
+    VillageStyle known = conventionalStyle(tagged, biomePath);
+    if (known != null && available.test(known)) {
+      return known;
+    }
+
+    List<VillageStyle> candidates = climateStyles(tagged, temperature, precipitation, downfall).stream()
+        .filter(available).toList();
+    if (!candidates.isEmpty()) {
+      return candidates.get(RandomSource.create(RandomSupport.mixStafford13(siteSeed)).nextInt(candidates.size()));
+    }
+    // A partial datapack can omit an entire climate group. Prefer the existing
+    // neutral fallback, then an actual founding set, never a random missing style.
+    if (available.test(PLAINS)) {
+      return PLAINS;
+    }
+    for (VillageStyle style : values()) {
+      if (available.test(style)) {
+        return style;
+      }
+    }
+    // With no founding content at all, initNew reports its existing missing-center error.
+    return PLAINS;
+  }
+
+  @Nullable
+  private static VillageStyle conventionalStyle(Predicate<TagKey<Biome>> tagged, String biomePath) {
+    // Some biome mods omit conventional tags. A birch-named family is still
+    // recognizable, while an explicit style tag above can correct an exception.
+    if (tagged.test(Tags.Biomes.IS_BIRCH_FOREST) || biomePath.toLowerCase(Locale.ROOT).contains("birch")) {
+      return BIRCH_FOREST;
+    }
+    if (tagged.test(Tags.Biomes.IS_DESERT) || tagged.test(Tags.Biomes.IS_BADLANDS)
+        || tagged.test(Tags.Biomes.IS_SANDY)) {
       return DESERT;
     }
-    if (biome.is(Tags.Biomes.IS_SNOWY) || biome.is(Tags.Biomes.IS_ICY)) {
+    if (tagged.test(Tags.Biomes.IS_SNOWY) || tagged.test(Tags.Biomes.IS_ICY)) {
       return SNOWY;
     }
-    if (biome.is(Tags.Biomes.IS_SAVANNA) || biome.is(Tags.Biomes.IS_JUNGLE)) {
+    if (tagged.test(Tags.Biomes.IS_SAVANNA) || tagged.test(Tags.Biomes.IS_JUNGLE)) {
       return SAVANNA;
     }
-    if (biome.is(Tags.Biomes.IS_TAIGA) || biome.is(Tags.Biomes.IS_CONIFEROUS_TREE)
-        || biome.is(Tags.Biomes.IS_MOUNTAIN)) {
+    if (tagged.test(Tags.Biomes.IS_TAIGA) || tagged.test(Tags.Biomes.IS_CONIFEROUS_TREE)
+        || tagged.test(Tags.Biomes.IS_MOUNTAIN)) {
       return TAIGA;
     }
-    return PLAINS;
+    if (tagged.test(Tags.Biomes.IS_PLAINS) || tagged.test(Tags.Biomes.IS_FOREST)
+        || tagged.test(Tags.Biomes.IS_DECIDUOUS_TREE) || tagged.test(Tags.Biomes.IS_SWAMP)) {
+      return PLAINS;
+    }
+    return null;
+  }
+
+  /**
+   * Architecture candidates, not survival rules. Precipitation and wet/dry tags
+   * keep an unclassified rainy tropical biome out of the desert cluster.
+   */
+  static List<VillageStyle> climateStyles(Predicate<TagKey<Biome>> tagged, float temperature,
+      boolean precipitation, float downfall) {
+    boolean cold = tagged.test(Tags.Biomes.IS_COLD) || tagged.test(Tags.Biomes.IS_COLD_OVERWORLD)
+        || temperature < 0.4F;
+    boolean hot = tagged.test(Tags.Biomes.IS_HOT) || tagged.test(Tags.Biomes.IS_HOT_OVERWORLD)
+        || temperature >= 1.0F;
+    boolean wet = precipitation && (tagged.test(Tags.Biomes.IS_WET)
+        || tagged.test(Tags.Biomes.IS_WET_OVERWORLD) || downfall >= 0.7F);
+    boolean dry = !precipitation || (!wet && (tagged.test(Tags.Biomes.IS_DRY)
+        || tagged.test(Tags.Biomes.IS_DRY_OVERWORLD) || downfall <= 0.3F));
+    if (cold) {
+      return temperature < 0.15F && precipitation ? List.of(SNOWY, TAIGA) : List.of(TAIGA, PLAINS);
+    }
+    if (hot) {
+      return dry ? List.of(DESERT, SAVANNA) : List.of(SAVANNA, PLAINS);
+    }
+    return dry ? List.of(PLAINS, SAVANNA) : List.of(PLAINS, BIRCH_FOREST);
   }
 }

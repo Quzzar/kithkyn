@@ -1,0 +1,79 @@
+{
+  "structure": "storehouse_birch_forest_1",
+  "category": "storehouse",
+  "variant": "birch_forest",
+  "beds": [],
+  "work_stations": [
+    {
+      "occupation": "QUARTERMASTER",
+      "pos": [
+        8,
+        1,
+        8
+      ]
+    }
+  ],
+  "personal_containers": [],
+  "containers": [
+    [
+      9,
+      1,
+      7
+    ],
+    [
+      9,
+      1,
+      8
+    ],
+    [
+      9,
+      1,
+      9
+    ],
+    [
+      9,
+      1,
+      11
+    ],
+    [
+      8,
+      1,
+      12
+    ],
+    [
+      9,
+      2,
+      12
+    ]
+  ],
+  "cost": [
+    {
+      "item": "minecraft:oak_log",
+      "count": 5
+    },
+    {
+      "item": "minecraft:cobblestone",
+      "count": 6
+    },
+    {
+      "item": "minecraft:white_wool",
+      "count": 4
+    }
+  ],
+  "grants": [
+    "STORAGE"
+  ],
+  "sink": -1,
+  "entrance_facing": "west",
+  "village_identity": {
+    "primary_blocks": [],
+    "secondary_blocks": [],
+    "banners": [
+      [
+        5,
+        2,
+        9
+      ]
+    ]
+  }
+}

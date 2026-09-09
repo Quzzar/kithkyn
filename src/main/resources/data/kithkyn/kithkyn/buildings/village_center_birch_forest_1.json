@@ -1,0 +1,134 @@
+{
+  "structure": "village_center_birch_forest_1",
+  "category": "village_center",
+  "variant": "birch_forest",
+  "beds": [
+    [
+      10,
+      1,
+      10
+    ],
+    [
+      10,
+      1,
+      18
+    ],
+    [
+      18,
+      1,
+      10
+    ],
+    [
+      18,
+      1,
+      18
+    ]
+  ],
+  "work_stations": [
+    {
+      "occupation": "BUILDER",
+      "pos": [
+        12,
+        1,
+        12
+      ]
+    },
+    {
+      "occupation": "BUILDER",
+      "pos": [
+        13,
+        1,
+        12
+      ]
+    },
+    {
+      "occupation": "BUILDER",
+      "pos": [
+        15,
+        1,
+        12
+      ]
+    },
+    {
+      "occupation": "GUARD",
+      "pos": [
+        14,
+        5,
+        5
+      ]
+    }
+  ],
+  "personal_containers": [
+    [
+      18,
+      1,
+      16
+    ]
+  ],
+  "containers": [],
+  "cost": [
+    {
+      "item": "minecraft:oak_log",
+      "count": 32
+    },
+    {
+      "item": "minecraft:cobblestone",
+      "count": 44
+    }
+  ],
+  "grants": [],
+  "sink": 4,
+  "village_identity": {
+    "primary_blocks": [
+      [
+        10,
+        1,
+        10
+      ],
+      [
+        18,
+        1,
+        18
+      ]
+    ],
+    "secondary_blocks": [
+      [
+        18,
+        1,
+        10
+      ],
+      [
+        10,
+        1,
+        18
+      ]
+    ],
+    "banners": [
+      [
+        14,
+        4,
+        10
+      ],
+      [
+        10,
+        4,
+        14
+      ],
+      [
+        18,
+        4,
+        14
+      ],
+      [
+        14,
+        4,
+        18
+      ]
+    ]
+  },
+  "gathering_point": [
+    14,
+    1,
+    14
+  ]
+}

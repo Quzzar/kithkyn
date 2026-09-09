@@ -1,0 +1,70 @@
+{
+  "structure": "butchery_birch_forest_1",
+  "category": "butchery",
+  "variant": "birch_forest",
+  "beds": [
+    [
+      8,
+      1,
+      6
+    ]
+  ],
+  "work_stations": [
+    {
+      "occupation": "BUTCHER",
+      "pos": [
+        8,
+        1,
+        9
+      ]
+    },
+    {
+      "occupation": "HERDER",
+      "pos": [
+        11,
+        1,
+        9
+      ]
+    }
+  ],
+  "personal_containers": [
+    [
+      8,
+      1,
+      7
+    ]
+  ],
+  "containers": [
+    [
+      8,
+      1,
+      9
+    ]
+  ],
+  "cost": [
+    {
+      "item": "minecraft:oak_log",
+      "count": 31
+    },
+    {
+      "item": "minecraft:cobblestone",
+      "count": 41
+    }
+  ],
+  "grants": [
+    "MEAT",
+    "LEATHER"
+  ],
+  "sink": 0,
+  "village_identity": {
+    "primary_blocks": [],
+    "secondary_blocks": [
+      [
+        8,
+        1,
+        6
+      ]
+    ],
+    "banners": []
+  }
+}

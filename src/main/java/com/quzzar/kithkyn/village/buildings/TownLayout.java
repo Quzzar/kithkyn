@@ -51,18 +51,42 @@ final class TownLayout {
    * beginnings, centres and ends of the two edges aligned.
    */
   static List<Origin> frontageOrigins(Footprint anchor, Footprint candidate, int laneWidth) {
-    int separation = laneWidth + 1;
     Set<Origin> origins = new LinkedHashSet<>();
-
-    for (int z : alignedOrigins(anchor.minZ(), anchor.maxZ(), candidate.minZ(), candidate.maxZ())) {
-      origins.add(new Origin(anchor.minX() - separation - candidate.maxX(), z));
-      origins.add(new Origin(anchor.maxX() + separation - candidate.minX(), z));
-    }
-    for (int x : alignedOrigins(anchor.minX(), anchor.maxX(), candidate.minX(), candidate.maxX())) {
-      origins.add(new Origin(x, anchor.minZ() - separation - candidate.maxZ()));
-      origins.add(new Origin(x, anchor.maxZ() + separation - candidate.minZ()));
+    for (var side : net.minecraft.core.Direction.Plane.HORIZONTAL) {
+      origins.addAll(frontageOrigins(anchor, candidate, laneWidth, side));
     }
     return List.copyOf(origins);
+  }
+
+  /** One edge of the same frontage search, for candidates whose entrance must face inward. */
+  static List<Origin> frontageOrigins(Footprint anchor, Footprint candidate, int laneWidth,
+      net.minecraft.core.Direction side) {
+    int separation = laneWidth + 1;
+    Set<Origin> origins = new LinkedHashSet<>();
+    if (side.getAxis() == net.minecraft.core.Direction.Axis.X) {
+      int x = side == net.minecraft.core.Direction.WEST
+          ? anchor.minX() - separation - candidate.maxX() : anchor.maxX() + separation - candidate.minX();
+      for (int z : alignedOrigins(anchor.minZ(), anchor.maxZ(), candidate.minZ(), candidate.maxZ())) {
+        origins.add(new Origin(x, z));
+      }
+    } else if (side.getAxis() == net.minecraft.core.Direction.Axis.Z) {
+      int z = side == net.minecraft.core.Direction.NORTH
+          ? anchor.minZ() - separation - candidate.maxZ() : anchor.maxZ() + separation - candidate.minZ();
+      for (int x : alignedOrigins(anchor.minX(), anchor.maxX(), candidate.minX(), candidate.maxX())) {
+        origins.add(new Origin(x, z));
+      }
+    } else {
+      throw new IllegalArgumentException("Frontage must use a horizontal side");
+    }
+    return List.copyOf(origins);
+  }
+
+  /** The centered slot on one side, rounded by at most half a block for mixed odd/even spans. */
+  static Origin centeredFrontageOrigin(Footprint anchor, Footprint candidate, int laneWidth,
+      net.minecraft.core.Direction side) {
+    return frontageOrigins(anchor, candidate, laneWidth, side).stream()
+        .min(Comparator.comparingInt(origin -> centreShiftSqr(anchor, candidate.moved(origin))))
+        .orElseThrow();
   }
 
   /**
@@ -78,6 +102,18 @@ final class TownLayout {
     if (minOriginX > maxOriginX || minOriginZ > maxOriginZ) {
       return List.of();
     }
+
+    return replacementOrigins(standing, candidate);
+  }
+
+  /** Alignments for growing or shrinking a parcel; callers validate any uncovered old cells. */
+  static List<Origin> replacementOrigins(Footprint standing, Footprint candidate) {
+    int edgeX = standing.maxX() - candidate.maxX();
+    int otherX = standing.minX() - candidate.minX();
+    int edgeZ = standing.maxZ() - candidate.maxZ();
+    int otherZ = standing.minZ() - candidate.minZ();
+    int minOriginX = Math.min(edgeX, otherX), maxOriginX = Math.max(edgeX, otherX);
+    int minOriginZ = Math.min(edgeZ, otherZ), maxOriginZ = Math.max(edgeZ, otherZ);
 
     List<Origin> origins = new ArrayList<>();
     for (int x = minOriginX; x <= maxOriginX; x++) {

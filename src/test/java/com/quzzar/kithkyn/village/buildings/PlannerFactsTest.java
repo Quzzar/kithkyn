@@ -1,11 +1,17 @@
 package com.quzzar.kithkyn.village.buildings;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.util.List;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Set;
 
 import org.junit.jupiter.api.Test;
+
+import com.quzzar.kithkyn.village.Occupation;
 
 class PlannerFactsTest {
 
@@ -37,5 +43,25 @@ class PlannerFactsTest {
             + "population limits allow; a workshop without beds would not add housing, while a "
             + "house would. ",
         PlannerFacts.housingConstraint(0, 0, 0));
+  }
+
+  @Test
+  void vacantExistingProductionMakesAnotherFreshCopyRedundant() {
+    Set<Occupation> open = Set.of(Occupation.LUMBERJACK);
+
+    assertTrue(WorkplaceDemand.duplicatesVacantProduction(
+        Set.of(Occupation.LUMBERJACK), List.of("LOGS", "PLANKS"), open,
+        capability -> Set.of("LOGS", "PLANKS").contains(capability)));
+    assertFalse(WorkplaceDemand.duplicatesVacantProduction(
+        Set.of(Occupation.FARMER), List.of("GRAIN"), open,
+        capability -> Set.of("LOGS", "PLANKS").contains(capability)));
+    assertFalse(WorkplaceDemand.duplicatesVacantProduction(
+        Set.of(Occupation.LUMBERJACK), List.of("LOGS", "CHARCOAL"), open,
+        capability -> Set.of("LOGS", "PLANKS").contains(capability)));
+    assertFalse(WorkplaceDemand.duplicatesVacantProduction(
+        Set.of(), List.of("STORAGE"), open, capability -> true));
+    assertFalse(WorkplaceDemand.duplicatesVacantProduction(
+        Set.of(Occupation.QUARTERMASTER), List.of("STORAGE"),
+        Set.of(Occupation.QUARTERMASTER), capability -> true));
   }
 }

@@ -33,7 +33,8 @@ class WallTerrainTest {
         BlockPos.asLong(10, 0, 20),
         BlockPos.asLong(11, 0, 20));
 
-    Set<Long> buffer = WallTerrain.horizontalBuffer(occupied);
+    Set<Long> buffer = new java.util.HashSet<>(SiteClearance.horizontalReach(occupied, SiteClearance.FOLIAGE_RADIUS));
+    buffer.removeAll(occupied);
 
     assertEquals(10, buffer.size());
     assertTrue(buffer.contains(BlockPos.asLong(10, 0, 19)));
@@ -48,7 +49,7 @@ class WallTerrainTest {
   void treeClearanceIncludesTheWallAndReachesThreeBlocks() {
     long wallColumn = BlockPos.asLong(10, 0, 20);
 
-    Set<Long> reach = WallTerrain.horizontalReach(Set.of(wallColumn), 3);
+    Set<Long> reach = SiteClearance.horizontalReach(Set.of(wallColumn), SiteClearance.TREE_RADIUS);
 
     assertEquals(49, reach.size());
     assertTrue(reach.contains(wallColumn));

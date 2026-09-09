@@ -26,6 +26,7 @@ import com.quzzar.kithkyn.village.bookkeeping.BookkeepingEvent;
 import com.quzzar.kithkyn.village.buildings.BuildProgress;
 import com.quzzar.kithkyn.village.buildings.Building;
 import com.quzzar.kithkyn.village.buildings.BuildingInfo;
+import com.quzzar.kithkyn.village.buildings.BuildingFootprint;
 import com.quzzar.kithkyn.village.buildings.BuildingUpgrade;
 import com.quzzar.kithkyn.village.buildings.Buildings;
 import com.quzzar.kithkyn.village.buildings.ConstructionChoice;
@@ -72,9 +73,9 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemp
 
 public class Village {
 
-  public static final Codec<Village> CODEC = RecordCodecBuilder.create(inst -> inst.group(
+  private static final com.mojang.serialization.MapCodec<Village> BASE_CODEC = RecordCodecBuilder.mapCodec(inst -> inst.group(
       Codec.STRING.fieldOf("id").forGetter(Village::getID),
-      Codec.STRING.fieldOf("name").forGetter(Village::getName),
+      VillageIdentity.CODEC.fieldOf("name").forGetter(Village::getIdentity),
       Codec.INT.fieldOf("time").forGetter(v -> v.time),
       VillageBrain.CODEC.fieldOf("brain").forGetter(v -> v.brain),
       UUIDUtil.CODEC.optionalFieldOf("town_center").forGetter(v -> Optional.ofNullable(v.townCenterUUID)),
@@ -94,6 +95,15 @@ public class Village {
       LoadingState.CODEC.optionalFieldOf("loading", LoadingState.NONE)
           .forGetter(v -> new LoadingState(v.lastVisitedTick, Map.copyOf(v.memberChunks)))
   ).apply(inst, Village::fromCodec));
+
+  /** Compose flat save sections without changing existing fields or the sixteen-field builder limit. */
+  public static final Codec<Village> CODEC = RecordCodecBuilder.create(inst -> inst.group(
+      BASE_CODEC.forGetter((Village village) -> village),
+      GolemRoster.CODEC.optionalFieldOf("golems").forGetter(village -> Optional.of(village.golems))
+  ).apply(inst, (village, roster) -> {
+    village.golems = roster.orElseGet(GolemRoster::new);
+    return village;
+  }));
 
   /** Someone mid-walk: arriving at the campfire or leaving for the village edge. */
   public record PendingTraveler(UUID personId, long deadline, long target) {
@@ -171,18 +181,20 @@ public class Village {
     ).apply(inst, ActiveProjects::new));
   }
 
-  private static Village fromCodec(String id, String name, int time, VillageBrain brain, Optional<UUID> townCenter,
+  private static Village fromCodec(String id, VillageIdentity identity, int time, VillageBrain brain,
+      Optional<UUID> townCenter,
       List<Long> claimGrid, ActiveProjects project, List<UUID> people, List<Building> buildings,
       Map<UUID, JobAssignment> jobAssignments, Map<UUID, BedAssignment> bedAssignments,
       List<JobAssignment> unassignedJobs, List<BedAssignment> unassignedBeds, String tierId,
       Travelers travelers, LoadingState loading) {
-    Village village = new Village(id, name);
+    Village village = new Village(id, identity);
     village.time = time;
     village.brain = brain;
     village.townCenterUUID = townCenter.orElse(null);
     village.claimGrid = new HashSet<>(claimGrid);
     village.currentProject = project.building().orElse(null);
     village.wallProject = project.wall().orElse(null);
+    if (village.wallProject != null) village.wallProject.bindIdentity(identity);
     village.lastBuildCompletedTime = project.lastBuildCompletedTime();
     village.recentBuilds.addAll(project.recentBuilds());
     village.people = new ArrayList<>(people);
@@ -236,7 +248,15 @@ public class Village {
   private final List<CompletedBuild> recentBuilds = new ArrayList<>();
 
   private final String id;
-  private String name;
+  private final String name;
+  private final VillageIdentity identity;
+
+  private GolemRoster golems = new GolemRoster();
+
+  /** Village-owned defenders do not consume human guard posts, beds or rations. */
+  public GolemRoster getGolems() {
+    return golems;
+  }
 
   private VillageBrain brain;
   private UUID townCenterUUID;
@@ -343,13 +363,18 @@ public class Village {
   private static final String STYLE_KEY = "style";
 
   public Village(String name) {
-    this(UUID.randomUUID().toString(), name);
+    this(VillageIdentity.legacy(name));
   }
 
-  private Village(String id, String name) {
+  public Village(VillageIdentity identity) {
+    this(UUID.randomUUID().toString(), identity);
+  }
+
+  private Village(String id, VillageIdentity identity) {
 
     this.id = id;
-    this.name = name;
+    this.identity = identity;
+    this.name = identity.name();
 
     this.brain = new VillageBrain();
 
@@ -366,7 +391,7 @@ public class Village {
   public void attach(ServerLevel level) {
     this.level = level;
     if (this.currentProject != null) {
-      this.currentProject.attach(level);
+      this.currentProject.attach(level, identity);
     }
   }
 
@@ -389,18 +414,41 @@ public class Village {
   }
 
   public void initNew(BlockPos centerLoc) {
+    var plan = planFounding(centerLoc, Rotation.values()[random.nextInt(Rotation.values().length)], true);
+    if (plan.isPresent() && found(plan.get())) return;
+    Kithkyn.LOGGER.warn("Cannot found '{}' at {}: no safe center and two open companion sides", name, centerLoc);
+    if (level != null) {
+      for (var player : level.players()) {
+        if (player.blockPosition().distSqr(centerLoc) < 128 * 128) {
+          player.sendSystemMessage(net.minecraft.network.chat.Component.literal(
+              "Village needs a clear center and two gently sloping sides. Try a more open spot nearby."));
+        }
+      }
+    }
+  }
+
+  /** Exact geometry shared by immediate manual founding and delayed natural founding. */
+  public record FoundingPlan(InstantBuildStructure center,
+      com.quzzar.kithkyn.village.buildings.FoundingLayout.Plan companions, int planeY) {
+    public java.util.List<InstantBuildStructure> structures() {
+      return java.util.List.of(center, companions.mine(), companions.storehouse());
+    }
+  }
+
+  /** Surveys without claims or block writes; natural callers forbid loading absent chunks. */
+  public java.util.Optional<FoundingPlan> planFounding(BlockPos centerLoc, Rotation rotation, boolean loadChunks) {
     if (this.townCenterUUID != null || this.buildings.size() > 0) {
-      return;
+      return java.util.Optional.empty();
     }
     if (this.level == null) {
       Kithkyn.LOGGER.error("Village {} cannot init without an attached level", id);
-      return;
+      return java.util.Optional.empty();
     }
 
     BuildingInfo centerInfo = Buildings.resolve(Buildings.VILLAGE_CENTER_CATEGORY, 1, getStyle());
     if (centerInfo == null) {
       Kithkyn.LOGGER.error("No village center is loaded for the {} style or for plains; cannot found a village", getStyle().id());
-      return;
+      return java.util.Optional.empty();
     }
 
     // The whole camp sits on ONE plane, so it reads as a level camp rather than
@@ -408,7 +456,7 @@ public class Village {
     // founding did before, and why a camp on any slope came out as scattered
     // buildings at scattered elevations (docs/building-spec.md, "The camp is
     // placed as one plat"). The plane is the ground at the founding point; the
-    // centre sits at the middle with a companion a clearance out on each side.
+    // companions use the two best available sides, facing back toward the center.
     int centerSpan = templateSpan(centerInfo);
     int clearance = centerSpan + 4;
     int half = (maxFoundingSpan(centerSpan) + 1) / 2 + 1;
@@ -417,7 +465,8 @@ public class Village {
     // camp will touch first, so the heightmap, the site check and the levelling
     // read real terrain rather than an unloaded default - which otherwise reads
     // as the world floor and founds the whole camp far underground.
-    forceLoadCamp(centerLoc, clearance + half);
+    if (loadChunks) forceLoadCamp(centerLoc, clearance + half);
+    else if (!level.isLoaded(centerLoc)) return java.util.Optional.empty();
 
     // MOTION_BLOCKING_NO_LEAVES gives the top block that stops movement but ISN'T a leaf,
     // i.e. the real ground UNDER a tree canopy -- WORLD_SURFACE counts leaves/branches as
@@ -437,11 +486,11 @@ public class Village {
     // where the fire would land, then platCenter shifts by that offset so the fire lands
     // exactly on the requested point. Rotation is fixed up front so probe and real agree;
     // if the centre defines no gathering point, the probe returns platCenter and nothing shifts.
-    Building centerBuilding = new Building(centerInfo.getName(),
-        Rotation.values()[random.nextInt(Rotation.values().length)]);
+    Building centerBuilding = new Building(centerInfo.getName(), rotation);
     Rotation centreRot = centerBuilding.getRotation();
     BlockPos probeFire = campfireWorldPos(
-        new InstantBuildStructure(centerBuilding, random, level).setOriginLocation(platCenter, new java.util.HashSet<>()),
+        new InstantBuildStructure(centerBuilding, random, level).withIdentity(identity)
+            .setOriginLocation(platCenter.below(centerInfo.getSink()), new java.util.HashSet<>()),
         centerInfo, centreRot, platCenter);
     platCenter = platCenter.offset(centerLoc.getX() - probeFire.getX(), 0, centerLoc.getZ() - probeFire.getZ());
 
@@ -449,44 +498,35 @@ public class Village {
     // and where its campfire lands, before deciding how much ground to level and where
     // the companions sit.
     InstantBuildStructure centerStruct =
-        new InstantBuildStructure(centerBuilding, random, level).setOriginLocation(platCenter, claimGrid);
-    BoundingBox centreBounds = centerStruct.getBounds();
+        new InstantBuildStructure(centerBuilding, random, level).withIdentity(identity)
+            .setOriginLocation(platCenter.below(centerInfo.getSink()), new java.util.HashSet<>());
+    var layout = com.quzzar.kithkyn.village.buildings.FoundingLayout.plan(this, centerStruct, planeY, random, loadChunks);
+    return layout.map(companions -> new FoundingPlan(centerStruct, companions, planeY));
+  }
 
-    // Flank the CAMPFIRE, not the centre building's midpoint. The gathering point
-    // sits toward one end of the long centre (local [4,1,4]), so seating the mine
-    // and store either side of the fire pulls them to that end rather than the dead
-    // middle of the wall. They flank across the centre's SHORT axis, aligned with
-    // the fire on the long axis, two blocks off the wall - unstuck from the centre
-    // but still one tight cluster.
-    BlockPos fire = campfireWorldPos(centerStruct, centerInfo, centreRot, platCenter);
-    boolean flankAlongX = centreBounds.getXSpan() <= centreBounds.getZSpan();
-    int centreHalfShort = (flankAlongX ? centreBounds.getXSpan() : centreBounds.getZSpan()) / 2;
-    InstantBuildStructure mineStruct = planFlankingCompanion(
-        Buildings.FOUNDING_MINE_CATEGORY, fire, platCenter, flankAlongX, +1, centreHalfShort, FOUNDING_FLANK_GAP);
-    InstantBuildStructure storeStruct = planFlankingCompanion(
-        Buildings.FOUNDING_STOREHOUSE_CATEGORY, fire, platCenter, flankAlongX, -1, centreHalfShort, FOUNDING_FLANK_GAP);
-
-    // Level only the ground the three buildings actually stand on, plus a small
-    // margin - not a generous strip. Founding used to flatten a ~71-wide field for
-    // a ~35-wide cluster, which read in-world as the camp "clearing land far out in
-    // every direction". The union of the placed footprints is exactly what is built on.
-    BoundingBox plat = campFootprint(planeY, centerStruct, mineStruct, storeStruct);
-
-    // One site check over the whole footprint (docs: "one composite footprint,
-    // one site check"), taken BEFORE anything is placed so it reads the terrain and
-    // not the village's own fresh claims. Founding is pickier than growth because it
-    // needs the entire plat at once, and pays preparation an ordinary placement would
-    // refuse - so this reports how rough the ground was but does not refuse a camp a
-    // caller asked to found here.
-    SitePreparation.SiteCost cost = SitePreparation.score(level, this, platCenter, plat);
-    // The score is advisory - founding levels and builds regardless - so an
-    // "impossible" here is a note about the ground, not a failure. In practice
-    // it only reads impossible when a plat column reports unloaded, which the
-    // levelling then works on anyway (the block ops load on demand where the
-    // stricter isLoaded check does not).
-    Kithkyn.LOGGER.info("Founding '{}' in the {} style on a {}x{} plat at {}: {}", name, getStyle().id(),
-        plat.getXSpan(), plat.getZSpan(), platCenter.toShortString(),
-        cost.impossible() ? "settling rough or unassessed ground (" + cost.reason() + ")" : cost.describe());
+  /** Revalidates a prepared layout immediately before any terrain or claim mutation. */
+  public boolean found(FoundingPlan plan) {
+    if (level == null || townCenterUUID != null || !buildings.isEmpty()) return false;
+    for (var structure : plan.structures()) {
+      if (!com.quzzar.kithkyn.village.buildings.FoundingLayout.suitable(this, structure, plan.planeY(), false)) {
+        return false;
+      }
+    }
+    InstantBuildStructure centerStruct = plan.center();
+    Building centerBuilding = centerStruct.getBuilding();
+    InstantBuildStructure mineStruct = plan.companions().mine();
+    InstantBuildStructure storeStruct = plan.companions().storehouse();
+    int planeY = plan.planeY();
+    // Publish only the winning claims, after every terrain probe has finished.
+    for (var structure : new InstantBuildStructure[] {centerStruct, mineStruct, storeStruct}) {
+      structure.withIdentity(identity);
+      structure.seatAtOrigin(BlockPos.of(structure.getBuilding().getOriginLocation()), claimGrid);
+    }
+    Kithkyn.LOGGER.info("Founding '{}' in the {} style at {}: inward-facing mine {} and storehouse {}; {} blocks of companion preparation",
+        name, getStyle().id(), BlockPos.of(centerBuilding.getOriginLocation()).toShortString(),
+        mineStruct.getRotation().rotate(mineStruct.getBuilding().getInfo().getEntranceFacing()).getOpposite(),
+        storeStruct.getRotation().rotate(storeStruct.getBuilding().getInfo().getEntranceFacing()).getOpposite(),
+        plan.companions().blocksMoved());
 
     // Level ONLY the ground each building stands on -- not a shared plat -- so the camp
     // reads as buildings plopped on the natural surface, with no grass/dirt platform
@@ -512,7 +552,7 @@ public class Village {
     // No founding crew is spawned directly: personas are generated before any
     // spawn (persona map #4), so the first villagers arrive through the
     // campfire loop like everyone else.
-
+    return true;
   }
 
   /**
@@ -549,12 +589,9 @@ public class Village {
   private int templateSpan(BuildingInfo info) {
     var template = level.getStructureManager().getOrCreate(
         net.minecraft.resources.ResourceLocation.fromNamespaceAndPath(Kithkyn.MODID, info.getPath()));
-    var size = template.getSize();
-    return Math.max(size.getX(), size.getZ());
+    var bounds = BuildingFootprint.bounds(template, Rotation.NONE);
+    return Math.max(bounds.getXSpan(), bounds.getZSpan());
   }
-
-  /** Blocks of breathing room left between the centre wall and each flanking companion. */
-  private static final int FOUNDING_FLANK_GAP = 2;
 
   /**
    * The campfire's world position for a freshly planned centre, mirroring
@@ -572,72 +609,17 @@ public class Village {
   }
 
   /**
-   * A founding companion turned a quarter-turn and seated beside the campfire: out
-   * along the centre's short axis (its own half-span plus the gap past the centre
-   * wall), aligned with the fire on the long axis. {@code side} is +1 or -1 for the
-   * two sides. Null when the definition is not loaded, so the camp founds without it.
-   */
-  @javax.annotation.Nullable
-  private InstantBuildStructure planFlankingCompanion(String category, BlockPos fire, BlockPos platCenter,
-      boolean flankAlongX, int side, int centreHalfShort, int gap) {
-    BuildingInfo info = Buildings.resolve(category, 1, getStyle());
-    if (info == null) {
-      Kithkyn.LOGGER.warn("No {} is loaded for the {} style or for plains; the camp founds without it", category, getStyle().id());
-      return null;
-    }
-    // Turn each companion so its DOOR faces the campfire. The mine's front is local
-    // -Z (verified in-world) and the storehouse's is local +Z (authored opposite) --
-    // so from opposite sides of the fire they take the SAME rotation to point inward.
-    // (The store came out 180 off when this assumed a shared -Z front; hence no `side`
-    // term.) Both companions are odd-dimensioned, so rotation only changes facing.
-    Rotation facing = flankAlongX ? Rotation.COUNTERCLOCKWISE_90 : Rotation.NONE;
-    InstantBuildStructure struct =
-        new InstantBuildStructure(new Building(info.getName(), facing), random, level);
-    BoundingBox bounds = struct.getBounds();
-    int companionHalfShort = (flankAlongX ? bounds.getXSpan() : bounds.getZSpan()) / 2;
-    int out = centreHalfShort + gap + companionHalfShort;
-    BlockPos at = flankAlongX
-        ? new BlockPos(platCenter.getX() + side * out, platCenter.getY(), fire.getZ())
-        : new BlockPos(fire.getX(), platCenter.getY(), platCenter.getZ() + side * out);
-    return struct.setOriginLocation(at, claimGrid);
-  }
-
-  /**
    * A single building's own footprint at the plane, no margin -- the exact ground it
    * stands on. Levelling each companion by its own footprint (rather than the union)
    * keeps the terrain BETWEEN buildings natural, so no platform shows.
    */
   private BoundingBox buildingFootprint(InstantBuildStructure struct, int planeY) {
-    BlockPos center = BlockPos.of(struct.getBuilding().getCenterLocation());
-    BoundingBox bounds = struct.getBounds();
-    int halfX = (bounds.getXSpan() + 1) / 2;
-    int halfZ = (bounds.getZSpan() + 1) / 2;
-    return new BoundingBox(center.getX() - halfX, planeY, center.getZ() - halfZ,
-        center.getX() + halfX, planeY, center.getZ() + halfZ);
+    return buildingFootprint(BlockPos.of(struct.getBuilding().getOriginLocation()), struct.getBounds(), planeY);
   }
 
-  /**
-   * The union footprint of the founding buildings at the plane, with a small margin,
-   * so levelling touches only the ground the camp actually stands on. Skips any
-   * companion that failed to plan.
-   */
-  private BoundingBox campFootprint(int planeY, InstantBuildStructure... structs) {
-    int minX = Integer.MAX_VALUE, minZ = Integer.MAX_VALUE, maxX = Integer.MIN_VALUE, maxZ = Integer.MIN_VALUE;
-    for (InstantBuildStructure struct : structs) {
-      if (struct == null) {
-        continue;
-      }
-      BlockPos center = BlockPos.of(struct.getBuilding().getCenterLocation());
-      BoundingBox bounds = struct.getBounds();
-      int halfX = (bounds.getXSpan() + 1) / 2;
-      int halfZ = (bounds.getZSpan() + 1) / 2;
-      minX = Math.min(minX, center.getX() - halfX);
-      maxX = Math.max(maxX, center.getX() + halfX);
-      minZ = Math.min(minZ, center.getZ() - halfZ);
-      maxZ = Math.max(maxZ, center.getZ() + halfZ);
-    }
-    return new BoundingBox(minX - FOUNDING_FLANK_GAP, planeY, minZ - FOUNDING_FLANK_GAP,
-        maxX + FOUNDING_FLANK_GAP, planeY, maxZ + FOUNDING_FLANK_GAP);
+  static BoundingBox buildingFootprint(BlockPos origin, BoundingBox rotatedBounds, int planeY) {
+    return new BoundingBox(origin.getX() + rotatedBounds.minX(), planeY, origin.getZ() + rotatedBounds.minZ(),
+        origin.getX() + rotatedBounds.maxX(), planeY, origin.getZ() + rotatedBounds.maxZ());
   }
 
   /** Raises a planned companion on the prepared plat, or does nothing when it was skipped. */
@@ -804,12 +786,13 @@ public class Village {
       // Remembered exactly as a real project's refusal is, so a dev-placed
       // building that finds no room leaves the village able to say so: that is
       // the on-demand way to see the room sentence in a briefing.
-      BoundingBox bounds = template.getBoundingBox(new StructurePlaceSettings(), BlockPos.ZERO);
+      BoundingBox bounds = BuildingFootprint.bounds(template, Rotation.NONE);
       siteMemory.noSiteFor(bounds, time, search.reach(), search.nearMiss());
       Kithkyn.LOGGER.info("Village '{}' has nowhere to put a {}. {}", name, buildingName, describeRoom());
       return false;
     }
-    InstantBuildStructure struct = new InstantBuildStructure(new Building(buildingName, search.rotation()), random, level);
+    InstantBuildStructure struct = new InstantBuildStructure(new Building(buildingName, search.rotation()), random, level)
+        .withIdentity(identity);
     return seatDevBuilding(struct, search.site());
   }
 
@@ -839,7 +822,7 @@ public class Village {
     if (Buildings.getByName(buildingName) == null) {
       return null;
     }
-    return new InstantBuildStructure(new Building(buildingName, Rotation.NONE), random, level);
+    return new InstantBuildStructure(new Building(buildingName, Rotation.NONE), random, level).withIdentity(identity);
   }
 
   /**
@@ -862,6 +845,9 @@ public class Village {
   protected void addBuilding(Building building) {
     building.markCompletedAt(level == null ? -1L : level.getLevel().getGameTime());
     this.buildings.put(building.getUUID(), building);
+    if (level != null) {
+      com.quzzar.kithkyn.village.buildings.VillageIdentityApplier.apply(level, building, identity);
+    }
     this.brain.processNewBuilding(building, unassignedBeds, unassignedJobs);
     // A couple's cottage moves the newlyweds it was raised for into its beds
     // (docs/marriage.md); a no-op for every other building.
@@ -869,7 +855,7 @@ public class Village {
       com.quzzar.kithkyn.relationships.MarriageService.onHomeBuilt(
           this, level, building.getUUID(), building.getInfo());
     }
-    fellTreesOver(building);
+    clearBuildingVegetation(building);
     this.capabilities = null;
     // Raising something changes what will fit next, so what the village had
     // learned about its room no longer applies.
@@ -977,10 +963,13 @@ public class Village {
   protected void replaceBuilding(Building upgraded) {
     upgraded.markCompletedAt(level == null ? -1L : level.getLevel().getGameTime());
     this.buildings.put(upgraded.getUUID(), upgraded);
+    if (level != null) {
+      com.quzzar.kithkyn.village.buildings.VillageIdentityApplier.apply(level, upgraded, identity);
+    }
     this.brain.registerNewContainers(upgraded);
     JobClaiming.registerMissingStations(this);
     JobClaiming.registerMissingBeds(this);
-    fellTreesOver(upgraded);
+    clearBuildingVegetation(upgraded);
     this.capabilities = null;
     Kithkyn.LOGGER.info("Village '{}' finished upgrading to {}", name, upgraded.getName());
   }
@@ -996,7 +985,7 @@ public class Village {
     Building target = source == null ? new Building(plan.target(), plan.rotation())
         : Building.upgradeOf(source, plan.target(), ground.below(choice.info().getSink()), plan.rotation());
     StructureInProgress project = new StructureInProgress(target, random, plan.mode());
-    project.attach(level);
+    project.attach(level, identity);
     project.setRedevelopment(plan);
     BoundingBox bounds = RedevelopmentPlanner.targetBounds(this, choice.info(), plan.rotation());
     boolean started = bounds != null && beginProject(project, bounds, ground);
@@ -1098,27 +1087,33 @@ public class Village {
     siteMemory.clear();
   }
 
-  /** Displaced contents and earned salvage wait for real storage without becoming available stock. */
-  public void queueRedevelopmentItems(List<ItemStack> items) {
+  /** Displaced structural contents wait durably for real storage without becoming available stock. */
+  public void queuePendingVillageItems(List<ItemStack> items) {
     if (items.isEmpty()) {
       return;
     }
-    List<ItemStack> combined = new ArrayList<>(pendingRedevelopmentItems());
+    List<ItemStack> combined = new ArrayList<>(pendingVillageItems());
     combined.addAll(items);
-    saveRedevelopmentItems(combined);
+    savePendingVillageItems(combined);
+    storageStrained = true;
   }
 
-  public List<ItemStack> pendingRedevelopmentItems() {
-    return readRedevelopmentItems().getOrThrow();
+  public List<ItemStack> pendingVillageItems() {
+    return readPendingVillageItems().getOrThrow();
   }
 
-  private com.mojang.serialization.DataResult<List<ItemStack>> readRedevelopmentItems() {
+  /** True even after reload when displaced items are still waiting outside usable storage. */
+  public boolean hasPendingStorageOverflow() {
+    return readPendingVillageItems().result().map(items -> !items.isEmpty()).orElse(false);
+  }
+
+  private com.mojang.serialization.DataResult<List<ItemStack>> readPendingVillageItems() {
     var tag = brain.getStrategy().get("redevelopment_refund");
     return tag == null ? com.mojang.serialization.DataResult.success(List.of()) : RedevelopmentItems.CODEC.parse(
         level.getLevel().registryAccess().createSerializationContext(net.minecraft.nbt.NbtOps.INSTANCE), tag);
   }
 
-  private void saveRedevelopmentItems(List<ItemStack> items) {
+  private void savePendingVillageItems(List<ItemStack> items) {
     if (items.isEmpty()) {
       brain.getStrategy().remove("redevelopment_refund");
       return;
@@ -1128,9 +1123,9 @@ public class Village {
         level.getLevel().registryAccess().createSerializationContext(net.minecraft.nbt.NbtOps.INSTANCE), items).getOrThrow());
   }
 
-  private void releaseRedevelopmentItems() {
-    var decoded = readRedevelopmentItems();
-    decoded.ifError(error -> Kithkyn.LOGGER.error("Cannot read redevelopment items for '{}': {}", name, error.message()));
+  private void releasePendingVillageItems() {
+    var decoded = readPendingVillageItems();
+    decoded.ifError(error -> Kithkyn.LOGGER.error("Cannot read pending village items for '{}': {}", name, error.message()));
     if (decoded.result().isEmpty()) {
       return; // Keep the entire saved queue intact if even one entry is unreadable.
     }
@@ -1145,7 +1140,7 @@ public class Village {
         remaining.add(left);
       }
     }
-    saveRedevelopmentItems(remaining);
+    savePendingVillageItems(remaining);
   }
 
   /** Persistent totals plus an exact proposal ID distinguish offers, execution, and rebuilding churn. */
@@ -1160,18 +1155,14 @@ public class Village {
   }
 
   /**
-   * Whatever natural tree still stands over a building the moment it goes up
-   * comes down with it, whole (docs/site-selection.md). Founding cuts only the
-   * footprint's own columns and the prepare phase clears a fixed headroom, so
-   * what survives either is the top of a tall tree, a trunk remnant, or a
-   * branch reaching in from a neighbour: all of it a tree, none of it the
-   * village's, and none of it wanted floating over a roof. Every way a
+   * Opens the same natural tree line and foliage verge as wall completion,
+   * preserving owned timber and authored plants (docs/site-selection.md). Every way a
    * building arrives passes through here, founding, the dev command, a
    * finished project and an upgrade alike. The wood goes to village storage,
    * as clearing yields do; what will not fit lies where the tree stood, as it
    * would for anyone else who felled it.
    */
-  private void fellTreesOver(Building building) {
+  private void clearBuildingVegetation(Building building) {
     if (level == null) {
       return;
     }
@@ -1183,8 +1174,10 @@ public class Village {
     BoundingBox volume = new BoundingBox(
         origin.getX() + footprint.minX(), origin.getY() + footprint.minY(), origin.getZ() + footprint.minZ(),
         origin.getX() + footprint.maxX(), origin.getY() + footprint.maxY(), origin.getZ() + footprint.maxZ());
-    List<TreeFelling.FelledTree> felled = TreeFelling.fellOver(level, volume);
-    if (felled.isEmpty()) {
+    var columns = com.quzzar.kithkyn.village.buildings.SiteClearance.columns(volume);
+    List<TreeFelling.FelledTree> felled = com.quzzar.kithkyn.village.buildings.SiteClearance.fellTrees(level, columns);
+    int foliage = com.quzzar.kithkyn.village.buildings.SiteClearance.clearFoliage(level, columns, getBuildings());
+    if (felled.isEmpty() && foliage == 0) {
       return;
     }
     int logs = 0;
@@ -1197,8 +1190,8 @@ public class Village {
         }
       }
     }
-    Kithkyn.LOGGER.info("Village '{}' felled {} tree(s) standing over its new {}: {} logs to store",
-        name, felled.size(), building.getName(), logs);
+    Kithkyn.LOGGER.info("Village '{}' cleared {} nearby/overhead tree(s) and {} foliage blocks for {}: {} logs to store",
+        name, felled.size(), foliage, building.getName(), logs);
   }
 
   /**
@@ -1323,6 +1316,7 @@ public class Village {
     List<Integer> deck = WallRaiser.deckProfile(level, ring, ground, tier.height());
     WallProject candidate = new WallProject(new ArrayList<>(ring), new HashSet<>(gates),
         new ArrayList<>(ground), deck, tier, getStyle(), new HashSet<>(towerExclusions));
+    candidate.bindIdentity(identity);
     // Existing collidable blocks already satisfy the barrier, so affordability
     // is based on the exact open cells that the builder will actually fill.
     int requiredBlocks = WallRaiser.requiredBlocks(level, candidate);
@@ -1332,6 +1326,7 @@ public class Village {
       return false;
     }
     wallProject = candidate;
+    WallRaiser.prepareWall(level, wallProject);
     Kithkyn.LOGGER.info("Village '{}' raises a {} wall around itself: {} sections, {} route blocks",
         name, tier.name().toLowerCase(), wallProject.sectionCount(), ring.size());
     return true;
@@ -1358,9 +1353,11 @@ public class Village {
     List<Integer> deck = WallRaiser.deckProfile(level, ring, ground, tier.height());
     WallProject preview = new WallProject(new ArrayList<>(ring), new HashSet<>(gates),
         new ArrayList<>(ground), deck, tier, getStyle(), features.towerExclusions());
+    preview.bindIdentity(identity);
     int placed = WallRaiser.placeAll(level, preview);
     wallProject = WallProject.completed(new ArrayList<>(ring), new HashSet<>(gates),
         new ArrayList<>(ground), deck, tier, getStyle(), features.towerExclusions());
+    wallProject.bindIdentity(identity);
     JobClaiming.registerMissingStations(this);
     Kithkyn.LOGGER.info("Village '{}' ringed with a {} wall (dev): {} sections, {} blocks placed",
         name, tier.name().toLowerCase(), preview.sectionCount(), placed);
@@ -1438,7 +1435,7 @@ public class Village {
 
   private void checkCurrentProject() {
 
-    releaseRedevelopmentItems();
+    releasePendingVillageItems();
 
     if (wallProject != null && !wallProject.isComplete()) {
       return; // the wall holds the village while it rises, like any project
@@ -1576,7 +1573,7 @@ public class Village {
         // Remember it, or the planner will keep choosing this and failing here
         // for as long as the village stands hemmed in. The search swept the
         // ground before saying so, which makes this worth a line of its own.
-        BoundingBox bounds = template.getBoundingBox(new StructurePlaceSettings(), BlockPos.ZERO);
+      BoundingBox bounds = BuildingFootprint.bounds(template, Rotation.NONE);
         siteMemory.noSiteFor(bounds, time, search.reach(), search.nearMiss());
         Kithkyn.LOGGER.info("Village '{}' has no site for a {} ({}x{}). {}",
             name, buildingInfo.getName(), bounds.getXSpan(), bounds.getZSpan(), describeRoom());
@@ -1585,9 +1582,8 @@ public class Village {
 
       Building building = new Building(buildingInfo.getName(), search.rotation());
       StructureInProgress project = new StructureInProgress(building, random, ConstructionMode.FRESH);
-      project.attach(level);
-      BoundingBox bounds = project.getStructureTemplate().getBoundingBox(project.getStructurePlaceSettings(),
-          BlockPos.ZERO);
+      project.attach(level, identity);
+      BoundingBox bounds = BuildingFootprint.bounds(project.getStructureTemplate(), project.getRotation());
       return beginProject(project, bounds, search.site());
   }
 
@@ -1596,10 +1592,11 @@ public class Village {
    * sliding the larger footprint around the old one to find the viable expansion
    * direction (docs/building-spec.md). The old footprint stays fully contained.
    *
-   * The old building's stores are carried out to the rest of the village first.
-   * If they will not fit anywhere, that is a storage shortage and the upgrade
-   * waits rather than proceeding, because nothing is ever destroyed to make
-   * room for construction.
+   * The old building remains usable while the builder gathers the recipe. At
+   * commit, after the recipe is safely in the builder's pack, its stores are
+   * evacuated into other containers or durable overflow before any block is
+   * touched. A full storehouse can therefore supply its own upgrade materials
+   * without needing external evacuation room.
    */
   private boolean startUpgrade(BuildingInfo buildingInfo) {
     com.quzzar.kithkyn.village.buildings.BuildingUpgrade.Placement placement =
@@ -1610,20 +1607,11 @@ public class Village {
       return false;
     }
     Building standing = placement.standing();
-    if (!com.quzzar.kithkyn.village.buildings.BuildingUpgrade.clearStorage(this, standing)) {
-      // Not a missing material: the village is out of somewhere to put things,
-      // which is what a village short of chests actually feels.
-      maybeLogShortage(new ItemStack(net.minecraft.world.item.Items.CHEST, 1));
-      Kithkyn.LOGGER.debug("Village '{}' cannot empty its {} yet, so the upgrade waits",
-          name, standing.getName());
-      return false;
-    }
-
     BlockPos upgradedOrigin = placement.ground().below(buildingInfo.getSink());
     Building upgraded = Building.upgradeOf(standing, buildingInfo.getName(),
         upgradedOrigin, placement.rotation());
     StructureInProgress project = new StructureInProgress(upgraded, random, ConstructionMode.UPGRADE);
-    project.attach(level);
+    project.attach(level, identity);
     Kithkyn.LOGGER.info("Village '{}' is upgrading its {} to {} at {} ({} blocks of site work)",
         name, standing.getName(), buildingInfo.getName(), placement.ground().toShortString(),
         placement.cost().blocksMoved());
@@ -1646,9 +1634,8 @@ public class Village {
     Building building = new Building(buildingInfo.getName(),
         Rotation.values()[random.nextInt(Rotation.values().length)]);
     StructureInProgress project = new StructureInProgress(building, random, ConstructionMode.FRESH);
-    project.attach(level);
-    BoundingBox bounds = project.getStructureTemplate().getBoundingBox(project.getStructurePlaceSettings(),
-        BlockPos.ZERO);
+    project.attach(level, identity);
+    BoundingBox bounds = BuildingFootprint.bounds(project.getStructureTemplate(), project.getRotation());
     return beginProject(project, bounds, location);
   }
 
@@ -1853,9 +1840,9 @@ public class Village {
       VillageProfile.end("family planning", t);
     }
 
-    // A hungry village with an empty field and no one spare asks the brain to
-    // move a worker onto it, phase-staggered like the build decision because
-    // the verdict is an LLM call (docs/population-and-labor.md).
+    // An urgent food or saved-project production vacancy with no one spare asks
+    // the brain to move a worker onto it, phase-staggered like the build
+    // decision because the verdict may be an LLM call (docs/population-and-labor.md).
     if ((time + Math.floorMod(id.hashCode(), LaborPlanner.LABOR_INTERVAL_SECONDS)) % LaborPlanner.LABOR_INTERVAL_SECONDS == 0) {
       long t = VillageProfile.start();
       LaborPlanner.tick(this, level);
@@ -1874,6 +1861,11 @@ public class Village {
     long tl = VillageProfile.start();
     tickLoading(level);
     VillageProfile.end("loading", tl);
+
+    // Old in-progress walls and newly loaded routes receive the same preparation before workers resume.
+    if (wallProject != null && !wallProject.isComplete() && !wallProject.isSiteCleared()) {
+      WallRaiser.prepareWall(level, wallProject);
+    }
 
     time++;
   }
@@ -1947,6 +1939,10 @@ public class Village {
       if (chunk != null) {
         addRing(chunks, ChunkPos.getX(chunk), ChunkPos.getZ(chunk), VillageChunkLoader.MEMBER_BUBBLE_CHUNKS);
       }
+    }
+    for (GolemRoster.Member golem : golems.members().values()) {
+      addRing(chunks, ChunkPos.getX(golem.chunk()), ChunkPos.getZ(golem.chunk()),
+          VillageChunkLoader.MEMBER_BUBBLE_CHUNKS);
     }
     return chunks;
   }
@@ -3138,12 +3134,21 @@ public class Village {
     return this.storageStrained;
   }
 
+  /** One canonical signal for storage that is rejecting or still holding displaced goods. */
+  public boolean isStorageBackedUp() {
+    return storageStrained || hasPendingStorageOverflow();
+  }
+
   public String getID() {
     return id;
   }
 
   public String getName() {
     return name;
+  }
+
+  public VillageIdentity getIdentity() {
+    return identity;
   }
 
   public ArrayList<UUID> getPopulation() {
@@ -3356,10 +3361,16 @@ public class Village {
 
   /** Puts a stack anywhere in village storage except the containers listed. */
   public ItemStack storeAwayFrom(ItemStack stack, java.util.Collection<BlockPos> excluding) {
+    return storeAwayFrom(stack, excluding, null);
+  }
+
+  /** Puts a stack into village storage, trying containers nearest this location first. */
+  public ItemStack storeAwayFrom(ItemStack stack, java.util.Collection<BlockPos> excluding,
+      BlockPos preferNearestToLoc) {
     if (level == null) {
       return stack;
     }
-    return this.brain.storeAwayFrom(level, stack, excluding);
+    return this.brain.storeAwayFrom(level, stack, excluding, preferNearestToLoc);
   }
 
   public boolean hasItemStackInVillage(ItemStack itemStack) {
@@ -3481,7 +3492,7 @@ public class Village {
 
   public StructureInProgress getCurrentProject() {
     if (currentProject != null && level != null) {
-      currentProject.attach(level);
+      currentProject.attach(level, identity);
     }
     return currentProject;
   }

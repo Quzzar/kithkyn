@@ -75,8 +75,8 @@ import net.minecraft.world.phys.shapes.CollisionContext;
  * ({@code kithkyn:gradeable}) is moved: never a block the village placed,
  * never a block entity, never ground the village has claimed for a building
  * or that lies under a village torch or a sapling, and never beside water. A
- * player's placed blocks are not protected here: a dirt hummock is a hummock
- * whoever piled it. And every move is checked against the height the column
+ * player's placed blocks are protected too, including edits made after the
+ * survey. Every move is checked against the height the column
  * had before grading began ({@link GradedColumnStore}), so the village smooths
  * the surface of its land and never reshapes it. A cliff stays a cliff, a hill
  * stays a hill, and after a hundred hours the valley is still a valley.
@@ -89,6 +89,13 @@ import net.minecraft.world.phys.shapes.CollisionContext;
  * other building.
  */
 public final class GradeStep implements WorkStep<GradeStep.Job> {
+
+  private final boolean accessOnly;
+
+  public GradeStep() { this(false); }
+
+  /** The early pass uses the ordinary grading executor, but only for narrow access lanes. */
+  public GradeStep(boolean accessOnly) { this.accessOnly = accessOnly; }
 
   /** Ticks digging one block takes. */
   private static final int DIG_TICKS = 20;
@@ -303,7 +310,8 @@ public final class GradeStep implements WorkStep<GradeStep.Job> {
     job.plan.clear();
     int covers = 0;
     int cuts = 0;
-    for (GradingSurvey.Column column : survey.uneven(person.blockPosition())) {
+    for (GradingSurvey.Column column : accessOnly ? survey.accessWork(person.blockPosition())
+        : survey.uneven(person.blockPosition())) {
       job.plan.add(new Planned(column));
       covers += column.cover() ? 1 : 0;
       cuts += !column.cover() && column.wantsCut() ? 1 : 0;
@@ -519,7 +527,8 @@ public final class GradeStep implements WorkStep<GradeStep.Job> {
     BlockState state = level.getBlockState(top);
     if (!hasSupportBelowCut(level, top)
         || !state.is(GradingSurvey.GRADEABLE) || level.getBlockEntity(top) != null
-        || PlacedBlockStore.get(level).isVillagePlaced(top)) {
+        || PlacedBlockStore.get(level).isVillagePlaced(top)
+        || PlacedBlockStore.get(level).isPlayerPlaced(top)) {
       return false;
     }
     BlockPos above = top.above();
@@ -547,7 +556,9 @@ public final class GradeStep implements WorkStep<GradeStep.Job> {
   static boolean hasSupportBelowCut(BlockGetter level, BlockPos top) {
     BlockPos below = top.below();
     BlockState support = level.getBlockState(below);
-    return support.getFluidState().isEmpty() && support.isFaceSturdy(level, below, Direction.UP);
+    // A worn path is only 1/16 below a full block, not a cavity. Keep slabs and real drops excluded.
+    return support.getFluidState().isEmpty()
+        && (support.isFaceSturdy(level, below, Direction.UP) || support.is(Blocks.DIRT_PATH));
   }
 
   /**
@@ -619,6 +630,7 @@ public final class GradeStep implements WorkStep<GradeStep.Job> {
    */
   private static boolean looseCover(ServerLevel level, BlockPos pos) {
     BlockState state = level.getBlockState(pos);
+    if (PlacedBlockStore.get(level).isPlayerPlaced(pos) || PlacedBlockStore.get(level).isVillagePlaced(pos)) return false;
     if (state.isAir()) {
       return true;
     }
@@ -653,7 +665,7 @@ public final class GradeStep implements WorkStep<GradeStep.Job> {
     BlockState ground = level.getBlockState(top);
     spoil.addAll(Block.getDrops(ground, level, top, null, person, person.getMainHandItem()));
     level.removeBlock(top, false);
-    PlacedBlockStore.get(level).clearPlaced(top); // a player's dirt, once dug, is nobody's record
+    PlacedBlockStore.get(level).clearPlaced(top);
     level.playSound((Player) null, top, ground.getSoundType().getBreakSound(), SoundSource.BLOCKS, 1.0F,
         person.getRandom().nextFloat() * 0.4F + 0.8F);
     person.addItems(spoil);

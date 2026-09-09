@@ -21,10 +21,10 @@ class MineFluidPolicyTest {
   }
 
   @Test
-  void anUnreachableBoundaryBuildsAWorkingFrontBeforeUsingTheBucket() {
-    assertEquals(MineFluidPolicy.Action.COFFERDAM,
+  void anUnreachableBoundaryDrainsReachableWaterToExposeTheRemainingLeak() {
+    assertEquals(MineFluidPolicy.Action.BAIL,
         MineFluidPolicy.next(true, false, false, true, true));
-    assertEquals(MineFluidPolicy.Action.COFFERDAM,
+    assertEquals(MineFluidPolicy.Action.BLOCKED,
         MineFluidPolicy.next(true, false, false, true, false));
   }
 
@@ -37,7 +37,7 @@ class MineFluidPolicyTest {
   }
 
   @Test
-  void bailsOnlyAfterTheBoundaryIsClosed() {
+  void bailsAClosedFloodWhenTheMinerHasABucket() {
     assertEquals(MineFluidPolicy.Action.BAIL,
         MineFluidPolicy.next(false, false, false, false, true));
   }

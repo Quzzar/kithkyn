@@ -1,8 +1,10 @@
 package com.quzzar.kithkyn.village.buildings;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Consumer;
 
 import javax.annotation.Nullable;
 
@@ -13,15 +15,15 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.Rotation;
 
 /**
- * A mine's shaft as a place a villager can be, and its ramp as the way in and
- * out.
+ * One frame in a mine's bounded shaft network, and the ramps and parent ribs
+ * that form the way in and out.
  *
  * <p>The shaft is the corridor the miner's cursor digs (MineStep): {@link #RADIUS}
  * either side of the mouth's centre line, ramping one block down for every
  * block forward, so the walk cell of column {@code z} sits {@code z + 2} below
  * the mouth. In the mine's own frame the mouth is the origin, forward is +z,
- * and a world position is read into that frame by undoing the building's
- * rotation.
+ * and a world position is read into that frame by undoing the shaft's rotation
+ * (the building rotation composed with its authored descent direction).
  *
  * <p>Why the ramp has to be spelled out to the navigator: a villager's
  * pathfinder only expands nodes within their follow range, twenty blocks, of
@@ -31,10 +33,10 @@ import net.minecraft.world.level.block.Rotation;
  * where the miner kept walking, standing over his own work with no way down;
  * and from the face the walk to bed or the storehouse failed the same way in
  * reverse, until the stranded recovery teleported him home. {@link #waypoint}
- * gives the navigator the ramp a hop at a time instead: in, the mouth and then
- * down the walk cells; out, up the walk cells to the mouth; between two points
- * of one shaft, straight when they are within a hop of each other. Every
- * goal gets it, since it sits under {@code moveTo}
+ * gives the navigator the ramp a hop at a time instead. A child frame first
+ * routes through its root ramp and source rib, and leaving reverses that chain.
+ * Between two points of one shaft it walks straight when they are within a hop
+ * of each other. Every goal gets it, since it sits under {@code moveTo}
  * ({@code entities/ai/PersonPathNavigation}).
  */
 public final class MineShaft {
@@ -61,10 +63,109 @@ public final class MineShaft {
 
   private final BlockPos mouth;
   private final Rotation rotation;
+  private final long rootStation;
+  @Nullable
+  private final MineShaft parent;
+  @Nullable
+  private final MineBranch branch;
 
-  private MineShaft(BlockPos mouth, Rotation rotation) {
+  private MineShaft(BlockPos mouth, Rotation rotation, long rootStation,
+      @Nullable MineShaft parent, @Nullable MineBranch branch) {
     this.mouth = mouth;
     this.rotation = rotation;
+    this.rootStation = rootStation;
+    this.parent = parent;
+    this.branch = branch;
+  }
+
+  /** The original shaft anchored at a mine work station. */
+  public static MineShaft root(BlockPos mouth, Rotation rotation, long rootStation) {
+    return new MineShaft(mouth, rotation, rootStation, null, null);
+  }
+
+  /** The same authored frame for excavation, navigation, and child-shaft planning. */
+  public static MineShaft root(Building building, BlockPos station) {
+    BuildingInfo.MineEntrance entrance = building.getMineEntrance();
+    BlockPos mouth = station.offset(entrance.offset().rotate(building.getRotation()));
+    var forward = building.getRotation().rotate(entrance.facing());
+    for (Rotation rotation : Rotation.values()) {
+      if (rotation.rotate(net.minecraft.core.Direction.SOUTH) == forward) {
+        return root(mouth, rotation, rootStation(building, station));
+      }
+    }
+    throw new IllegalArgumentException("Mine entrances must face horizontally");
+  }
+
+  /** A bounded second-generation shaft descending outward from a root rib. */
+  public static MineShaft child(MineShaft root, MineBranch branch) {
+    if (root.parent != null || root.rootStation != branch.rootStation()) {
+      throw new IllegalArgumentException("A child shaft must belong to its root work station");
+    }
+    BlockPos mouth = childMouth(root.mouth, root.rotation, branch.sourceDepth(), branch.side());
+    Rotation rotation = outwardRotation(root.rotation, branch.side());
+    return new MineShaft(mouth, rotation, root.rootStation, root, branch);
+  }
+
+  public BlockPos mouth() {
+    return mouth;
+  }
+
+  public Rotation rotation() {
+    return rotation;
+  }
+
+  public long rootStation() {
+    return rootStation;
+  }
+
+  public int generation() {
+    return parent == null ? 0 : 1;
+  }
+
+  @Nullable
+  public MineBranch branch() {
+    return branch;
+  }
+
+  /** The parent-rib walk cell where this child shaft begins. */
+  public BlockPos entry() {
+    return walkCell(-(RADIUS - 1));
+  }
+
+  /**
+   * The extra headroom needed to step from the parent rib onto this shaft's
+   * first descending stair. The entry is one block higher than that stair, so
+   * a two-high opening measured from the lower floor is not enough while the
+   * walker's body is still at entry height.
+   */
+  public BlockPos entranceClearance() {
+    return mouth;
+  }
+
+  /** The work station's stable local key, reconstructed from its world mouth. */
+  public static long rootStation(Building building, BlockPos mouth) {
+    return mouth.subtract(BlockPos.of(building.getOriginLocation()))
+        .rotate(inverse(building.getRotation())).asLong();
+  }
+
+  /**
+   * Child anchor one block above and one block beyond the completed rib end.
+   * Its first ramp walk cell is therefore exactly the rib's far-end cell.
+   */
+  public static BlockPos childMouth(BlockPos rootMouth, Rotation rootRotation,
+      int sourceDepth, int side) {
+    int end = side * (RADIUS + RIB_LENGTH + 1);
+    int y = floorY(sourceDepth) + 1;
+    return rootMouth.offset(new BlockPos(end, y, sourceDepth).rotate(rootRotation));
+  }
+
+  /** Rotation whose local +Z points outward along the chosen root rib. */
+  public static Rotation outwardRotation(Rotation rootRotation, int side) {
+    if (side != -1 && side != 1) {
+      throw new IllegalArgumentException("A mine branch side must be -1 or 1");
+    }
+    int turn = side > 0 ? 3 : 1;
+    return fromQuarterTurns((quarterTurns(rootRotation) + turn) % 4);
   }
 
   /**
@@ -106,7 +207,13 @@ public final class MineShaft {
     boolean betweenRampSteps = Math.abs(local.getX()) <= RADIUS
         && z >= -(RADIUS - 1)
         && local.getY() == floorY - 1;
-    return withinCorridor(local) || withinRib(local) || betweenRampSteps;
+    return withinCorridor(local) || withinRib(local)
+        || withinEntranceClearance(local) || betweenRampSteps;
+  }
+
+  /** The single non-standing cell that gives a descending entrance headroom. */
+  public static boolean withinEntranceClearance(BlockPos local) {
+    return local.equals(BlockPos.ZERO);
   }
 
   /**
@@ -137,20 +244,60 @@ public final class MineShaft {
   public static List<MineShaft> of(Village village) {
     List<MineShaft> out = new ArrayList<>();
     for (Building building : village.getBuildings()) {
-      BuildingInfo info = building == null ? null : building.getInfo();
-      if (info == null) {
-        continue;
-      }
-      for (Map.Entry<Long, Occupation> station : info.getWorkLocations().entrySet()) {
-        if (station.getValue() != Occupation.MINER) {
-          continue;
-        }
-        BlockPos mouth = BlockPos.of(building.getOriginLocation())
-            .offset(BlockPos.of(station.getKey()).rotate(building.getRotation()));
-        out.add(new MineShaft(mouth, building.getRotation()));
-      }
+      out.addAll(of(building));
     }
     return out;
+  }
+
+  /** Root and child frames owned by one building, in root-then-children order. */
+  public static List<MineShaft> of(@Nullable Building building) {
+    BuildingInfo info = building == null ? null : building.getInfo();
+    if (info == null) {
+      return List.of();
+    }
+    List<MineShaft> out = new ArrayList<>();
+    for (Map.Entry<Long, Occupation> station : info.getWorkLocations().entrySet()) {
+      if (station.getValue() != Occupation.MINER) {
+        continue;
+      }
+      BlockPos mouth = BlockPos.of(building.getOriginLocation())
+          .offset(BlockPos.of(station.getKey()).rotate(building.getRotation()));
+      MineShaft root = root(building, mouth);
+      out.add(root);
+      building.getMineBranches().stream()
+          .filter(branch -> branch.rootStation() == station.getKey())
+          .map(branch -> child(root, branch))
+          .forEach(out::add);
+    }
+    return List.copyOf(out);
+  }
+
+  /**
+   * Whether a child plan would remove a cell already owned by another planned
+   * shaft. Its one intentional intersection with its parent, the far-end rib
+   * entry, is allowed. The finite scan ends at the world's minimum build height
+   * and includes ordinary ribs, not only central ramps.
+   */
+  public static boolean overlapsPlannedExcavation(MineShaft first, MineShaft second,
+      int minimumBuildY) {
+    if (first.generation() == 0) {
+      throw new IllegalArgumentException("The candidate must be a child shaft");
+    }
+    HashSet<Long> occupied = new HashSet<>();
+    plannedCells(first, minimumBuildY, cell -> occupied.add(cell.asLong()));
+    boolean ownParent = second.generation() == 0
+        && second.rootStation == first.rootStation
+        && second.mouth.equals(first.parent.mouth);
+    long allowedEntry = first.entry().asLong();
+    final boolean[] overlap = {false};
+    plannedCells(second, minimumBuildY, cell -> {
+      long packed = cell.asLong();
+      if (!overlap[0] && occupied.contains(packed)
+          && !(ownParent && packed == allowedEntry)) {
+        overlap[0] = true;
+      }
+    });
+    return overlap[0];
   }
 
   /**
@@ -161,18 +308,65 @@ public final class MineShaft {
    */
   @Nullable
   public static BlockPos waypoint(Village village, BlockPos from, BlockPos to) {
-    for (MineShaft shaft : of(village)) {
-      BlockPos hop = shaft.hop(from, to);
-      if (hop != null) {
-        return hop;
+    return waypoint(of(village), from, to);
+  }
+
+  /** Package-visible pure routing seam used by the geometry tests. */
+  @Nullable
+  static BlockPos waypoint(List<MineShaft> shafts, BlockPos from, BlockPos to) {
+    for (MineShaft root : shafts) {
+      if (root.parent != null) {
+        continue;
       }
+      List<MineShaft> children = shafts.stream()
+          .filter(shaft -> shaft.parent == root)
+          .toList();
+      MineShaft fromChild = deepestContaining(children, from, true);
+      MineShaft toChild = deepestContaining(children, to, false);
+      boolean involved = fromChild != null || toChild != null
+          || root.contains(from) || root.contains(to);
+      if (!involved) {
+        continue;
+      }
+
+      if (fromChild != null && fromChild != toChild) {
+        BlockPos hop = fromChild.hop(from, fromChild.entry());
+        if (hop != null) {
+          return hop;
+        }
+        if (!from.equals(fromChild.entry())) {
+          return fromChild.entry();
+        }
+      }
+
+      if (toChild != null) {
+        if (fromChild != toChild) {
+          BlockPos hop = root.hop(from, toChild.entry());
+          if (hop != null) {
+            return hop;
+          }
+          if (!from.equals(toChild.entry())) {
+            return toChild.entry();
+          }
+        }
+        return toChild.hop(from, to);
+      }
+      return root.hop(from, to);
     }
     return null;
   }
 
   /** Whether a world position has fallen below any planned shaft in this village. */
   public static boolean belowExcavation(Village village, BlockPos world) {
-    for (MineShaft shaft : of(village)) {
+    return belowExcavation(of(village), world);
+  }
+
+  /** Package-visible pure fall-classification seam used by geometry tests. */
+  static boolean belowExcavation(List<MineShaft> shafts, BlockPos world) {
+    if (shafts.stream().anyMatch(shaft -> shaft.contains(world))) {
+      return false;
+    }
+    for (MineShaft shaft : shafts) {
       if (belowExcavation(shaft.local(world))) {
         return true;
       }
@@ -185,13 +379,39 @@ public final class MineShaft {
     BlockPos localFrom = local(from);
     BlockPos localTo = local(to);
     boolean fromIn = withinExcavation(localFrom);
+    // The root mouth is also the surface work-station anchor. Its clearance
+    // belongs to excavation, but approaching that station from outside must
+    // not require walking into the first stair before it has been dug.
+    if (this.parent == null && !fromIn && localTo.equals(BlockPos.ZERO)) {
+      return null;
+    }
     boolean toIn = withinExcavation(localTo);
     if (!fromIn && !toIn) {
       return null;
     }
     if (fromIn && toIn) {
+      // A child entrance sits at the far end of its parent rib. Treat that
+      // horizontal connection like the ramp itself: one adjacent, known-open
+      // footing at a time. Looking only at forward (z) distance made the two
+      // points appear colocated in the shaft frame, so vanilla was asked to
+      // solve the whole ten-block rib in one path. It can reject that exact
+      // route even though every planned footing is open, leaving the miner to
+      // repeat the child target from the village center forever.
+      if (localFrom.getZ() == localTo.getZ()
+          && (withinRib(localFrom) || withinRib(localTo))
+          && Math.abs(localTo.getX() - localFrom.getX()) > HOP) {
+        return ribWalkCell(localFrom, localTo.getX());
+      }
       int ahead = localTo.getZ() - localFrom.getZ();
       if (Math.abs(ahead) <= HOP) {
+        // The last diagonal hop can leave the walker one level and one lateral
+        // cell from the source line. The target is still far down the rib, so
+        // first land on the ramp's centre doorway; the next request will begin
+        // the adjacent horizontal hops above.
+        if (withinRib(localTo)
+            && Math.abs(localTo.getX() - localFrom.getX()) > HOP) {
+          return walkCell(localTo.getZ());
+        }
         return null; // the ordinary path reaches it
       }
       return walkCell(localFrom.getZ() + (ahead > 0 ? HOP : -HOP));
@@ -201,7 +421,7 @@ public final class MineShaft {
         // First leave a rib through its doorway. Treating every non-corridor
         // target as outside the mine sent a miner UP the ramp while their work
         // waited four blocks farther along this same branch.
-        return walkCell(localFrom.getZ());
+        return ribWalkCell(localFrom, 0);
       }
       // Climbing out: up the ramp a hop at a time, and within a hop of the mouth
       // hand back to the ordinary path so it climbs the last steps out to the real
@@ -212,9 +432,12 @@ public final class MineShaft {
       int z = localFrom.getZ() - HOP;
       return z <= -(RADIUS - 1) ? null : walkCell(z);
     }
-    // Going in: the mouth first, from wherever they are, then down the ramp.
+    // Going in: the first walk cell first, from wherever they are, then down
+    // the ramp. The work-station anchor itself can be open over the entrance;
+    // asking for that exact block made an accuracy-zero path impossible even
+    // though the real stair one block behind and below was sound.
     if (from.distSqr(this.mouth) > AT_MOUTH_SQR) {
-      return this.mouth;
+      return entry();
     }
     return walkCell(Math.min(localTo.getZ(), -(RADIUS - 1) + HOP));
   }
@@ -224,6 +447,14 @@ public final class MineShaft {
     int column = Math.max(z, -(RADIUS - 1));
     int y = column < 0 ? -1 : -(column + 2);
     return this.mouth.offset(new BlockPos(0, y, column).rotate(this.rotation));
+  }
+
+  /** The adjacent supported footing along a rib toward {@code targetX}. */
+  private BlockPos ribWalkCell(BlockPos localFrom, int targetX) {
+    int step = Integer.compare(targetX, localFrom.getX());
+    int nextX = localFrom.getX() + step * HOP;
+    int y = floorY(localFrom.getZ());
+    return this.mouth.offset(new BlockPos(nextX, y, localFrom.getZ()).rotate(this.rotation));
   }
 
   /** A world position in the mine's frame: the mouth at the origin, forward along +z. */
@@ -237,5 +468,78 @@ public final class MineShaft {
       case COUNTERCLOCKWISE_90 -> Rotation.CLOCKWISE_90;
       default -> rotation;
     };
+  }
+
+  private boolean contains(BlockPos world) {
+    return withinExcavation(local(world));
+  }
+
+  @Nullable
+  private static MineShaft deepestContaining(List<MineShaft> children, BlockPos world,
+      boolean leaving) {
+    for (MineShaft child : children) {
+      BlockPos local = child.local(world);
+      if (withinExcavation(local) && (!leaving || local.getZ() >= 0)) {
+        return child;
+      }
+    }
+    return null;
+  }
+
+  private static int floorY(int z) {
+    return z < 0 ? -1 : -(z + 2);
+  }
+
+  private static int quarterTurns(Rotation rotation) {
+    return switch (rotation) {
+      case NONE -> 0;
+      case CLOCKWISE_90 -> 1;
+      case CLOCKWISE_180 -> 2;
+      case COUNTERCLOCKWISE_90 -> 3;
+    };
+  }
+
+  private static Rotation fromQuarterTurns(int turns) {
+    return switch (turns) {
+      case 0 -> Rotation.NONE;
+      case 1 -> Rotation.CLOCKWISE_90;
+      case 2 -> Rotation.CLOCKWISE_180;
+      case 3 -> Rotation.COUNTERCLOCKWISE_90;
+      default -> throw new IllegalArgumentException("Quarter turns must be in [0, 3]");
+    };
+  }
+
+  private static void plannedCells(MineShaft shaft, int minimumBuildY,
+      Consumer<BlockPos> consumer) {
+    if (shaft.mouth.getY() >= minimumBuildY) {
+      consumer.accept(shaft.entranceClearance());
+    }
+    int deepest = Math.max(0, shaft.mouth.getY() - minimumBuildY + 2);
+    for (int z = -(RADIUS - 1); z <= deepest; z++) {
+      int floor = floorY(z);
+      int ceiling = Math.min(floor + 4, -1);
+      for (int y = floor; y <= ceiling; y++) {
+        for (int x = -RADIUS; x <= RADIUS; x++) {
+          BlockPos world = shaft.mouth.offset(new BlockPos(x, y, z).rotate(shaft.rotation));
+          if (world.getY() >= minimumBuildY) {
+            consumer.accept(world);
+          }
+        }
+      }
+      if (z < RIB_MIN_LINE || z % RIB_PITCH != 0) {
+        continue;
+      }
+      for (int side = 1; side >= -1; side -= 2) {
+        for (int step = 1; step <= RIB_LENGTH; step++) {
+          int x = side * (RADIUS + step);
+          for (int y = floor; y < floor + RIB_HEIGHT; y++) {
+            BlockPos world = shaft.mouth.offset(new BlockPos(x, y, z).rotate(shaft.rotation));
+            if (world.getY() >= minimumBuildY) {
+              consumer.accept(world);
+            }
+          }
+        }
+      }
+    }
   }
 }

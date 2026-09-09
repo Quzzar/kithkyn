@@ -11,11 +11,22 @@ import com.quzzar.kithkyn.utils.KithkynCodecs;
 import com.quzzar.kithkyn.village.Occupation;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.world.level.block.Rotation;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 
 public class BuildingInfo {
+
+  /** A mine's excavation frame, independent of the building's front and job station. */
+  public record MineEntrance(Direction facing, BlockPos offset) {
+    public static final MineEntrance DEFAULT = new MineEntrance(Direction.SOUTH, BlockPos.ZERO);
+    public static final Codec<MineEntrance> CODEC = RecordCodecBuilder.create(inst -> inst.group(
+        Direction.CODEC.optionalFieldOf("facing", Direction.SOUTH).forGetter(MineEntrance::facing),
+        BlockPos.CODEC.optionalFieldOf("offset", BlockPos.ZERO).forGetter(MineEntrance::offset)
+    ).apply(inst, MineEntrance::new));
+  }
 
   /** A work station inside a building: a position (relative to the structure origin) plus the job worked there. */
   public record WorkStation(BlockPos pos, Occupation occupation) {
@@ -48,14 +59,21 @@ public class BuildingInfo {
       Codec.STRING.optionalFieldOf("category").forGetter(info -> java.util.Optional.ofNullable(info.explicitCategory)),
       Codec.STRING.optionalFieldOf("variant").forGetter(info -> java.util.Optional.ofNullable(info.explicitVariant)),
       Codec.STRING.optionalFieldOf("upgrades_from").forGetter(info -> java.util.Optional.ofNullable(info.upgradesFrom)),
-      Codec.INT.optionalFieldOf("sink", 0).forGetter(BuildingInfo::getSink)
+      VillageIdentitySlots.CODEC.optionalFieldOf("village_identity", VillageIdentitySlots.EMPTY)
+          .forGetter(BuildingInfo::getVillageIdentitySlots),
+      Codec.INT.optionalFieldOf("sink", 0).forGetter(BuildingInfo::getSink),
+      Direction.CODEC.optionalFieldOf("entrance_facing")
+          .forGetter(info -> java.util.Optional.ofNullable(info.entranceFacing)),
+      MineEntrance.CODEC.optionalFieldOf("mine_entrance", MineEntrance.DEFAULT)
+          .forGetter(BuildingInfo::getMineEntrance)
   ).apply(inst, BuildingInfo::fromCodec));
 
   private static BuildingInfo fromCodec(String structure, List<BlockPos> beds, List<WorkStation> workStations,
       List<BlockPos> containers, List<BlockPos> personalContainers, List<ItemCost> costs, List<String> grants,
       List<Grant> conditionalGrants, java.util.Optional<BlockPos> gatheringPoint,
       java.util.Optional<String> category, java.util.Optional<String> variant,
-      java.util.Optional<String> upgradesFrom, int sink) {
+      java.util.Optional<String> upgradesFrom, VillageIdentitySlots villageIdentitySlots, int sink,
+      java.util.Optional<Direction> entranceFacing, MineEntrance mineEntrance) {
     BuildingInfo info = new BuildingInfo(structure);
     beds.forEach(pos -> info.addBedLocation(pos.getX(), pos.getY(), pos.getZ()));
     workStations.forEach(station -> info.addWorkLocation(
@@ -69,7 +87,10 @@ public class BuildingInfo {
     info.explicitCategory = category.orElse(null);
     info.explicitVariant = variant.orElse(null);
     info.upgradesFrom = upgradesFrom.orElse(null);
+    info.villageIdentitySlots = villageIdentitySlots;
     info.sink = sink;
+    info.entranceFacing = entranceFacing.orElse(null);
+    info.mineEntrance = mineEntrance;
     return info;
   }
 
@@ -93,7 +114,28 @@ public class BuildingInfo {
   private String explicitVariant;
   // The id this building can replace in place; it also defines the fresh-build cost chain.
   private String upgradesFrom;
+  private VillageIdentitySlots villageIdentitySlots = VillageIdentitySlots.EMPTY;
   private int sink;
+  private Direction entranceFacing;
+  private MineEntrance mineEntrance = MineEntrance.DEFAULT;
+
+  /** Authored outward door direction; old catalogs keep their established fronts. */
+  public Direction getEntranceFacing() {
+    return entranceFacing != null ? entranceFacing
+        : "storehouse".equals(getCategory()) ? Direction.SOUTH : Direction.NORTH;
+  }
+
+  public MineEntrance getMineEntrance() {
+    return mineEntrance;
+  }
+
+  /** Turns the authored front toward the center, independently for each companion. */
+  public Rotation rotationFacing(Direction toward) {
+    for (Rotation rotation : Rotation.values()) {
+      if (rotation.rotate(getEntranceFacing()) == toward) return rotation;
+    }
+    throw new IllegalArgumentException("Building entrances must face horizontally");
+  }
 
   public BuildingInfo(String path) {
 
@@ -116,46 +158,64 @@ public class BuildingInfo {
 
   /**
    * The id scheme is {@code <category>_<variant>_<level>} (docs/building-spec.md):
-   * the last token is the level, the token before it the variant, everything
-   * before that the category (which may itself contain underscores).
+   * the last token is the level, then the longest registered style suffix
+   * separates variant from category. Unknown custom variants retain the old
+   * single-token convention, including the developer placeholder catalog.
    */
-  private String[] idTokens() {
-    return path.split("_");
+  @javax.annotation.Nullable
+  private ParsedId parsedId() {
+    int levelSeparator = path.lastIndexOf('_');
+    if (levelSeparator <= 0 || levelSeparator == path.length() - 1) {
+      return null;
+    }
+    int level;
+    try {
+      level = Integer.parseInt(path.substring(levelSeparator + 1));
+    } catch (NumberFormatException e) {
+      return null;
+    }
+    String stem = path.substring(0, levelSeparator);
+    String variant = null;
+    for (VillageStyle style : VillageStyle.values()) {
+      String candidate = style.id();
+      if (stem.endsWith("_" + candidate) && stem.length() > candidate.length() + 1
+          && (variant == null || candidate.length() > variant.length())) {
+        variant = candidate;
+      }
+    }
+    if (variant == null) {
+      int variantSeparator = stem.lastIndexOf('_');
+      if (variantSeparator <= 0 || variantSeparator == stem.length() - 1) {
+        return null;
+      }
+      variant = stem.substring(variantSeparator + 1);
+    }
+    return new ParsedId(stem.substring(0, stem.length() - variant.length() - 1), variant, level);
   }
+
+  private record ParsedId(String category, String variant, int level) {}
 
   /** True when the id parses as {@code <category>_<variant>_<level>}. */
   public boolean hasWellFormedId() {
-    String[] tokens = idTokens();
-    if (tokens.length < 3) {
-      return false;
-    }
-    try {
-      Integer.parseInt(tokens[tokens.length - 1]);
-      return true;
-    } catch (NumberFormatException e) {
-      return false;
-    }
+    return parsedId() != null;
   }
 
   public String getCategory() {
     if (explicitCategory != null) {
       return explicitCategory;
     }
-    String[] tokens = idTokens();
-    return String.join("_", java.util.Arrays.copyOf(tokens, tokens.length - 2));
+    return java.util.Objects.requireNonNull(parsedId(), "Malformed building id: " + path).category();
   }
 
   public String getVariant() {
     if (explicitVariant != null) {
       return explicitVariant;
     }
-    String[] tokens = idTokens();
-    return tokens[tokens.length - 2];
+    return java.util.Objects.requireNonNull(parsedId(), "Malformed building id: " + path).variant();
   }
 
   public int getLevel() {
-    String[] tokens = idTokens();
-    return Integer.parseInt(tokens[tokens.length - 1]);
+    return java.util.Objects.requireNonNull(parsedId(), "Malformed building id: " + path).level();
   }
 
   /**
@@ -185,6 +245,10 @@ public class BuildingInfo {
     return upgradesFrom;
   }
 
+  public VillageIdentitySlots getVillageIdentitySlots() {
+    return villageIdentitySlots;
+  }
+
   /**
    * Definition-consistency check, run by the loader: a malformed id, an explicit
    * category/variant contradicting the id, or a level above 1 with no
@@ -196,9 +260,12 @@ public class BuildingInfo {
     if (!hasWellFormedId()) {
       return "id '" + path + "' does not match <category>_<variant>_<level>";
     }
-    String[] tokens = idTokens();
-    String derivedCategory = String.join("_", java.util.Arrays.copyOf(tokens, tokens.length - 2));
-    String derivedVariant = tokens[tokens.length - 2];
+    if (getEntranceFacing().getAxis().isVertical() || mineEntrance.facing().getAxis().isVertical()) {
+      return "building and mine entrances must face horizontally";
+    }
+    ParsedId parsed = parsedId();
+    String derivedCategory = parsed.category();
+    String derivedVariant = parsed.variant();
     if (explicitCategory != null && !explicitCategory.equals(derivedCategory)) {
       return "category '" + explicitCategory + "' contradicts id-derived '" + derivedCategory + "'";
     }

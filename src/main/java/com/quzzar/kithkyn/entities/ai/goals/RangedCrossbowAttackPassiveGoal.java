@@ -1,13 +1,10 @@
 package com.quzzar.kithkyn.entities.ai.goals;
 
 import java.util.EnumSet;
-import java.util.List;
 
 import com.quzzar.kithkyn.entities.RealPerson;
-import com.quzzar.kithkyn.PersonEntityType;
 import com.quzzar.kithkyn.Utils;
 
-import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.Pose;
@@ -16,7 +13,6 @@ import net.minecraft.world.entity.monster.CrossbowAttackMob;
 import net.minecraft.world.entity.monster.RangedAttackMob;
 import net.minecraft.world.item.CrossbowItem;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.phys.Vec3;
 
 public class RangedCrossbowAttackPassiveGoal<T extends PathfinderMob & RangedAttackMob & CrossbowAttackMob> extends Goal {
     private final T entity;
@@ -35,7 +31,15 @@ public class RangedCrossbowAttackPassiveGoal<T extends PathfinderMob & RangedAtt
 
     @Override
     public boolean canUse() {
-        return this.hasAttackTarget() && this.isHoldingCrossbow() && !((RealPerson) this.entity).isEating();
+        return this.hasAttackTarget() && this.isHoldingCrossbow() && !((RealPerson) this.entity).isEating()
+                && inRange();
+    }
+
+    private boolean inRange() {
+        RealPerson person = (RealPerson) this.entity;
+        return person.getOccupation() != com.quzzar.kithkyn.village.Occupation.GUARD
+                || person.getTarget() != null && person.distanceToSqr(person.getTarget())
+                <= Math.pow(GuardThreatGoal.range(person), 2);
     }
 
     private boolean isHoldingCrossbow() {
@@ -44,7 +48,7 @@ public class RangedCrossbowAttackPassiveGoal<T extends PathfinderMob & RangedAtt
 
     @Override
     public boolean canContinueToUse() {
-        return this.hasAttackTarget() && (this.canUse() || !this.entity.getNavigation().isDone()) && this.isHoldingCrossbow();
+        return this.hasAttackTarget() && (this.canUse() || !this.entity.getNavigation().isDone()) && this.isHoldingCrossbow() && inRange();
     }
 
     private boolean hasAttackTarget() {
@@ -52,11 +56,21 @@ public class RangedCrossbowAttackPassiveGoal<T extends PathfinderMob & RangedAtt
     }
 
     @Override
+    public void start() {
+        this.crossbowState = CrossbowItem.isCharged(this.entity.getMainHandItem())
+                ? CrossbowState.READY_TO_ATTACK : CrossbowState.UNCHARGED;
+        this.timeUntilStrike = 0;
+    }
+
+    @Override
     public void stop() {
         super.stop();
         this.entity.setAggressive(false);
-        this.entity.setTarget((LivingEntity) null);
+        // The target belongs to target selection. Drawing a sword or pausing
+        // to eat must not erase it before the other combat goal can take over.
         this.seeTicks = 0;
+        this.timeUntilStrike = 0;
+        this.crossbowState = CrossbowState.UNCHARGED;
         if (this.entity.getPose() == Pose.CROUCHING)
             this.entity.setPose(Pose.STANDING);
         if (this.entity.isUsingItem()) {
@@ -66,22 +80,8 @@ public class RangedCrossbowAttackPassiveGoal<T extends PathfinderMob & RangedAtt
     }
 
     public boolean checkFriendlyFire() {
-        List<LivingEntity> list = this.entity.level().getEntitiesOfClass(LivingEntity.class, this.entity.getBoundingBox().inflate(5.0D, 1.0D, 5.0D));
-        for (LivingEntity guard : list) {
-            if (entity != guard || guard != entity) {
-                if (guard != entity.getTarget()) {
-                    boolean isVillager = guard.getType() == EntityType.VILLAGER || guard.getType() == PersonEntityType.PERSON.get() || guard.getType() == EntityType.IRON_GOLEM;
-                    if (isVillager) {
-                        Vec3 vector3d = entity.getLookAngle();
-                        Vec3 vector3d1 = guard.position().vectorTo(entity.position()).normalize();
-                        vector3d1 = new Vec3(vector3d1.x, vector3d1.y, vector3d1.z);
-                        if (vector3d1.dot(vector3d) < 1.0D && entity.hasLineOfSight(guard))
-                            return true;
-                    }
-                }
-            }
-        }
-        return false;
+        LivingEntity target = this.entity.getTarget();
+        return target != null && RangedShotSafety.blockedByFriendly(this.entity, target);
     }
 
     @Override
@@ -101,7 +101,9 @@ public class RangedCrossbowAttackPassiveGoal<T extends PathfinderMob & RangedAtt
                 --this.seeTicks;
             }
 
-            if (this.entity.getPose() == Pose.STANDING && this.entity.level().random.nextInt(4) == 0 && entity.tickCount % 50 == 0) {
+            boolean holdsPost = ((RealPerson) this.entity).isFixedRangedGuard();
+            if (holdsPost && this.entity.getPose() == Pose.CROUCHING) this.entity.setPose(Pose.STANDING);
+            if (!holdsPost && this.entity.getPose() == Pose.STANDING && this.entity.level().random.nextInt(4) == 0 && entity.tickCount % 50 == 0) {
                 this.entity.setPose(Pose.CROUCHING);
             }
 
@@ -110,15 +112,14 @@ public class RangedCrossbowAttackPassiveGoal<T extends PathfinderMob & RangedAtt
             }
 
             double d1 = livingentity.distanceTo(entity);
-            boolean holdsWallPost = ((RealPerson) this.entity).isWallCrossbowman();
-            if (d1 <= 2.0D && !holdsWallPost) {
+            if (d1 <= 2.0D && !holdsPost) {
                 this.entity.getMoveControl().strafe(this.entity.isUsingItem() ?- 0.5F : -3.0F, 0.0F);
                 this.entity.lookAt(livingentity, 30.0F, 30.0F);
             }
 
             double d0 = this.entity.distanceToSqr(livingentity);
             boolean flag2 = (d0 > (double) this.distanceMoveToEntity || this.seeTicks < 5) && this.timeUntilStrike == 0;
-            if (flag2 && !holdsWallPost) {
+            if (flag2 && !holdsPost) {
                 this.entity.getNavigation().moveTo(livingentity, this.isCrossbowUncharged() ? this.speed : this.speed * 0.5D);
             } else {
                 this.entity.getNavigation().stop();

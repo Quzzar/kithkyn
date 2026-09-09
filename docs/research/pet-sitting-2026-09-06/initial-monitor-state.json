@@ -1,0 +1,52 @@
+{
+  "checkedAt": "2026-09-06T13:59:16.361547+00:00",
+  "serverProcesses": [
+    {
+      "pid": 73854,
+      "ppid": 38454,
+      "identity": "Kithkyn development server from this project"
+    }
+  ],
+  "logModifiedAt": "2026-09-06T13:59:16.284321+00:00",
+  "petChoices": {
+    "Magnus sees to their cat": {
+      "requests": 41,
+      "replies": 41,
+      "keep_sitting": 26,
+      "recall": 1,
+      "keep_following": 14
+    },
+    "Easton sees to their cat": {
+      "requests": 42,
+      "replies": 42,
+      "keep_following": 14,
+      "sit": 2,
+      "keep_sitting": 25,
+      "recall": 1
+    },
+    "Joy sees to their cat": {
+      "requests": 1,
+      "replies": 1,
+      "keep_following": 1
+    }
+  },
+  "redevelopmentEventsInCurrentLog": {},
+  "newEvents": [
+    "[06Sep2026 03:12:26.545] [Server thread/INFO] [com.quzzar.kithkyn.Kithkyn/]: 'Easton Donovan' sits down Peril: My reckless work could put Peril in danger, so staying put is safer.",
+    "[06Sep2026 04:32:26.666] [Server thread/INFO] [com.quzzar.kithkyn.Kithkyn/]: 'Easton Donovan' calls back Peril: Peril should stay close while I work so I can keep an eye on them.",
+    "[06Sep2026 06:12:27.361] [Server thread/INFO] [com.quzzar.kithkyn.Kithkyn/]: 'Easton Donovan' sits down Peril: Building work can be hazardous, so Peril should stay safely out of the way.",
+    "[06Sep2026 08:32:26.368] [Server thread/INFO] [com.quzzar.kithkyn.Kithkyn/]: 'Magnus Estes-Holland' calls back Button: Keeping Button close is safer while I work away from home.",
+    "[06Sep2026 09:45:47.143] [Server thread/INFO] [com.quzzar.kithkyn.Kithkyn/]: [companion pet] Joy Mendoza takes in a cat named Clover",
+    "[06Sep2026 09:45:48.717] [Server thread/INFO] [com.quzzar.kithkyn.Kithkyn/]: [companion pet] Joy Mendoza settles on Moxie for their cat"
+  ],
+  "baseline": true,
+  "limits": "Pet choices describe ordered state, not observed physical pose. Log rotation resets current-log counts; new events use content hashes. No game mutation.",
+  "seenEvents": [
+    "848751fa245c093b9a7cd7e748195c9146a7c5f578bdff70e166bc73d3ddc19f",
+    "7a9564a37c4a92070003a1842d6573dacdfdf0a7af45ea1ef26c480e4334c3de",
+    "6f552fc3c83bd9ffc7ab245b98310e6ec3683898bf39a570a2d88575f6470e9a",
+    "757d6c38cae2734f9223f7fcb3d0805cea30385d052feeba3c669e3df250c60d",
+    "2c94cc55f375539fcfbdb6693a58116280e496e19b03e9192a39e9f9ef6cd990",
+    "f0a9e360ad1bdd842407c772e3b47e71c0062d2e91704df93ee1675866f91477"
+  ]
+}

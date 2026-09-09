@@ -68,33 +68,48 @@ sampled as terrain, and natural vegetation intersecting a planned wall cell is
 replaced by that wall cell. Player blocks and earlier village construction are
 still preserved.
 
-When construction finishes, its last builder first opens a three-block tree
-line around the complete footprint using the same `TreeFelling` verdict as a
+Before the first construction cell, the project opens a three-block tree
+line around the complete footprint through `SiteClearance`, also used by buildings,
+using the same `TreeFelling` verdict as a
 lumberjack. Only natural trees come down, never player-owned or village-owned
 timber, and the logs drop into the world for villagers to collect. The pass is
 route-shaped, so it does not clear the whole interior of the perimeter.
+
+The saved `site_cleared` marker makes this an idempotent preparation phase. An older unfinished
+wall defaults to uncleared and receives the same pass before workers resume its saved cursors.
+Preparation waits for the route's clearance chunks to be resident, without loading them itself.
+The final completion pass also checks for remaining or regrown foliage.
 
 After the trunks are felled, the wall clears tagged vegetation through its own
 columns and one horizontal block on both the village and wilderness sides. The
 clearance follows gates and towers as well as ordinary runs, removing leaves
 above the palisade along with adjacent saplings, brush, vines, and other
 foliage down to real ground. Player-owned and village-owned construction stays
-protected. This leaves no canopy over the wall and no vegetation close enough
+protected, as do authored plants in neighboring registered village buildings. Unloaded columns
+are skipped rather than synchronously loaded. This leaves no canopy over the wall and no vegetation close enough
 to give mobs a step onto it.
 
 Large authored pieces remain coherent instead of shearing with every terrain
 sample. Their vertical posts extend to the live natural ground in each post's
-exact column. A watchtower's low fence, trapdoor, and ladder shaft uses the same
+exact column. For rigid gatehouses and corner towers, only post columns touching
+the template's local Y=0 are foundation legs. Suspended masonry roof beams stay
+at their authored height; extending those down would seal the gate passage.
+A watchtower's low fence, trapdoor, and ladder shaft uses the same
 foundation rule, so a raised terrace or off-route downhill leg cannot leave the
 tower or its access hanging above the ground. Ordinary authored runs keep no
 more than two courses of decorative silhouette above their local deck, which
 preserves uneven posts without allowing one terrain step to become a tall mast.
 
-After the final wall cell is placed, structural foundations are checked against
-their completed surroundings. When a natural dirt course has a side exposed to
+Structural foundations, including Birch cobblestone and mossy cobblestone posts,
+embed exposed soil during placement. Built sections are checked when wall work resumes
+and after each section finishes, so a distant unfinished water section cannot delay
+the cleanup. When a natural dirt course has a side exposed to
 air, the foundation replaces that one course. Buried dirt and player-owned or
 village-owned ground remain untouched. This makes an edge wall read as sunk
 into the bank instead of balanced on its visible dirt face.
+Repeated checks never descend below the original foundation's single soil course.
+Lower run caps and torches that directly meet the underside of an overlapping rigid
+corner are solidified into the join; the corner's own decorations remain authored.
 
 ## Segment projects
 
@@ -112,6 +127,16 @@ Each section owns an ordered list of construction cells and a saved cursor.
 lease is runtime-only and expires if its builder disappears, while the cursor
 is persistent. An unreachable section waits briefly and releases its builder;
 all other sections remain available.
+
+Workers choose dry, supported positions using `WorkerFooting`, shared with redevelopment solely
+for actual-body collision and footing safety. Wall access retains its own policy: up to twelve
+blocks horizontally and twelve vertically from the construction cell, including side and outer
+approaches to a gatehouse. Selection checks at most eight new paths per scan and continues its
+candidate list on later scans. Routes must actually reach the selected endpoint. There is no
+one-block navigation slack for this foothold: the shared work loop delivers an exact path too,
+so the builder does not stop just short of the chosen construction radius. There is no
+fallback to an unreachable riverbed; exhausted searches defer that section. Acting still requires
+arrival at safe footing, and never places a cell through a living entity.
 
 Structural cells are ordered before ladders, trapdoors, campfires, and
 lanterns. In particular, the beam above a hanging lantern is placed first, so
@@ -172,6 +197,17 @@ watchtower has one elevated crossbow post. Elevated stations are selected from
 real walkway or roof support cells with two blocks of headroom, so wood, stone,
 and terrain-following walls share the same job model.
 
+Birch masonry and top slabs count as platform support, using the Birch feature's
+own footprint. Ground sentries stand on the gate centerline, with the second
+post farther inside. Their height is resolved within two blocks of the saved
+surface, including constructed floors, never by searching down to unowned terrain.
+Posts use live safe footing, exact reachable routes, and an eye-level outward
+look. An unreachable station is retried at most once every two seconds.
+Exact work destinations can retry a failed 48-block route with a 96-block
+walking horizon, retaining the same bounded search budget. This accounts for
+detours to the ladder and the climb without accepting an endpoint underneath
+the intended platform.
+
 Open wall posts are registered in four village-wide staffing tiers:
 
 1. one stone-sword guard at every gate,
@@ -187,6 +223,21 @@ pathing off the wall for a blocked shot. Better swords, crossbows, armor,
 shields, and special arrows come from the same physical village inventory rules
 as the existing guard and hunter equipment. A wall under construction or being
 upgraded publishes no posts; the completed geometry registers the new set.
+
+Guard duty always includes defending against hostiles, even for gentle residents.
+Ranged guards search vertically as well as horizontally, with a nominal 48-block
+radius adjusted by existing eyesight/wisdom variation. A visible ranged target
+does not need a walking route from the platform. Sight obstruction and friendly
+fire still prevent shots. Low-health recovery remains available.
+
+Ladder navigation is shared with all workers. Before descending, a resident's
+whole body must clear the landing edge before horizontal motion stops. This
+keeps workers from becoming stranded at the ladder top. Routes descend high
+rungs vertically rather than taking a sideways drop that can catch on a rail.
+
+Wall placement computes connection arms against existing neighbors. Maintenance
+also reconnects old village-owned masonry/fences, preserving player-owned edits
+and the existing block material instead of repainting the gate.
 
 Ground mobs are stopped by the continuous shell outside its open gates. The wooden
 silhouette includes authored overhangs, while spider-proof behavior remains a
@@ -221,7 +272,27 @@ a fixed biome palette into every village.
 The existing structure capture loop in [structure-authoring.md](structure-authoring.md)
 is used to revise the NBT files. The wall lab remains the visual authoring
 gallery. Replacing a captured piece changes the catalog without another builder
-or save-system rewrite.
+or save-system rewrite. A finished project's persisted completion marker survives
+changed section signatures, so an artwork update cannot restart its construction.
+Incomplete projects still require matching signatures to restore their cursors.
+
+Birch uses the separate approved masonry captures in
+`data/kithkyn/structure/wall/birch_forest/`. The September 8 showcase revision adds
+44 user-authored cobblestone/mossy-cobblestone swaps across all five pieces,
+without changing their bounds or importing the display platform. These edits are
+reproducible through `tools/structure/birch-walls-20260908.json` and the Birch exporter.
+Changing the catalog does not automatically repaint or clear an existing world;
+existing-wall repairs must compare old/new plans and protect player-owned blocks.
+
+The September 9 gatehouse revision adds the user's four white banner placeholders, two on
+each face. Its NBT crop grows one block on each face and the gate anchor stays centered;
+structural clearance and all 159 preceding masonry/detail cells remain unchanged. Directional
+banner pieces rotate with the gate and are placed after their supports. They use the shared
+[village identity](village-identity.md#gatehouse-flags) application, not a separate flag design.
+New piece values are appended because saved section signatures include their enum ordinals.
+The opt-in `kithkyn.gateBanner.verify=true` disposable-server check exercises actual patterned
+block entities, white-primary villages, instant and incremental construction, save/rebind,
+attachment survival, and player-edit protection.
 
 ## Planning and developer preview
 

@@ -9,6 +9,13 @@ record WoodWallPalette(Block strippedLog, Block planks, Block stairs, Block slab
 
   static WoodWallPalette forStyle(VillageStyle style) {
     return switch (style) {
+      case BIRCH_FOREST -> new WoodWallPalette(
+          Blocks.STRIPPED_BIRCH_LOG,
+          Blocks.BIRCH_PLANKS,
+          Blocks.BIRCH_STAIRS,
+          Blocks.BIRCH_SLAB,
+          Blocks.BIRCH_FENCE,
+          Blocks.BIRCH_TRAPDOOR);
       case TAIGA, SNOWY -> new WoodWallPalette(
           Blocks.STRIPPED_SPRUCE_LOG,
           Blocks.SPRUCE_PLANKS,

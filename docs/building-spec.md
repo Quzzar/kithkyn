@@ -1,5 +1,11 @@
 # Building spec: every building, variant, level, recipe, and unlock
 
+**Birch Forest integration, 2026-09-07:** [birch-village.md](birch-village.md) is the current
+approved catalog for `birch_forest`. Its 22 templates and exact amenities supersede this
+document's older generic tier counts, founding contents and candidate choices for that family.
+In particular it has no tier-3 house/farm, higher center/storehouse/mine/church, or separate
+tavern; workplace beds and the shared bakery/tavern are intentional.
+
 **The catalogue below enumerates 36 categories; 22 of them survived the cut.** The totals in
 this document count the full map of the possible, not the shipping set — see
 [The cut](#the-cut) for which categories stand and why the rest went.
@@ -21,7 +27,7 @@ outright, so such a building cannot load at all. MASON and TANNER were added whe
 their buildings shipped. Anything below that names a worker should be checked
 against the enum before it is authored.
 
-**A mine cannot ship its shaft.** A structure's y=0 lands on the topmost solid block
+**A mine cannot ship its shaft network.** A structure's y=0 lands on the topmost solid block
 (`InstantBuildStructure.setOriginLocation` subtracts one from the WORLD_SURFACE
 heightmap), so nothing in a file can sit below ground: the footprint below is dug at
 runtime. `mine_*_1` is therefore a headframe over an open mouth, and its MINER station
@@ -29,9 +35,12 @@ sits in the middle of that mouth so `WorkInMineGoal` deepens the hole rather tha
 undermining the apron. The 7x7 footprint in the table is the headframe, not the mine.
 `mine_*_2` (2026-09-02) is that headframe grown toward local +X into a 13x7 pavilion over
 TWO mouths, stations at [3,0,3] and [9,0,3]. An upgrade keeps the origin corner, and the
-shaft ramps toward local +Z from its mouth (`MineStep`), so a second mouth behind the first
+root shaft ramps toward local +Z from its mouth (`MineStep`), so a second mouth behind the first
 would have run one ramp a block over the other; six blocks to the side leaves one block of
-rock between two five-wide ramps. It is not authored by hand: `tools/structure/mine-level-2.py`
+rock between two five-wide roots. After a root reaches bedrock and finishes its ordinary ribs,
+eligible full ribs may seed one bounded generation of outward child shafts. Their identities are
+saved on the `Building`; their dug progress remains world geometry. It is not authored by hand:
+`tools/structure/mine-level-2.py`
 derives all five families from their level-1 files, so re-run it after touching any of them
 ([structure-authoring.md](structure-authoring.md)).
 
@@ -83,25 +92,26 @@ at the fire where the campfire model wants them
 deliberate: danger is the pressure that makes the first watchtower worth building, and deaths
 already feed attractiveness, so the cost of having no guard is priced in without a rule saying so.
 
-### The camp is placed as one plat
+### Founding shares a ground plane, not a cleared rectangle
 
-**Not implemented as described.** Founding currently places the center and then each
-companion independently at a fixed offset, each snapped to its own heightmap, with no
-composite footprint and no site check. The intent below stands.
+The requested location anchors the center's actual campfire. All three founding buildings
+share that surface elevation, with each definition's basement sink applied separately.
+Their tight authored footprints contain no capture border. Only those three footprints are
+leveled and claimed; the space between them and around the cluster stays natural.
 
-The three buildings are not sited independently. Founding places a single composite footprint,
-roughly 20x20, with the campfire and bell at its center and the three 7x7 buildings arranged around
-it facing the fire. One site check, one claim, and the camp reads as a camp by construction rather
-than by luck.
+Founding reuses growth's frontage geometry to try north, east, south and west, with three
+edge alignments per side. Both companion entrances face inward. Among safe pairs on distinct
+sides, the least combined clearing/cut/fill cost wins; adjacent sides win an equal-cost tie.
+Exactly one walking block separates footprints. Rotated even/odd dimensions and negative
+coordinates use their inclusive edges, not rounded half-widths.
 
-It also composes forward: once site-finding lands, the founding check is just the composite
-footprint through the same gate as any other placement, with no special path.
-
-**The consequence to watch:** founding needs a 20x20 site where adding a building later needs a 7x7
-one. Where a village *can* be founded is therefore much pickier than where it can grow, and in
-mountains, dense forest, or broken terrain that gap is large. If founding starts failing or
-clustering onto flat ground in testing, this is why, and the fix is either a tighter plat or
-letting founding pay preparation cost that ordinary placement would refuse.
+Trials use scratch claims and loaded terrain. Protected blocks, other village claims and
+sites beyond the ordinary companion earthwork budget are refused. If no complete layout
+fits, founding explains the refusal without creating an empty village or clearing anything.
+This is necessarily pickier than placing one later building: a nearby open spot may work
+where the chosen point does not. Natural generation attempts each site once per server session
+so refused ground does not trigger a naming/placement loop; the manual command can retry after
+terrain edits. Existing villages are not relocated by this change.
 
 ## What is actually needed
 
@@ -319,7 +329,11 @@ The consequences that follow, and which the implementation owes:
   worker gives up rather than spinning.
 - **A full chest is a storage shortage.** A worker with nowhere to deposit carries to the
   next container with room; when none has room, that is an event, and it is what should make
-  a village decide to build another storehouse.
+  a village decide to build another storehouse. The collective planning context states that
+  shared storage is full and that more shared storage is urgent. The worker keeps any rejected
+  bedtime deposit in their pack. Storehouse containers add capacity even when their attached
+  quartermaster job is open, so duplicate-vacancy filtering never hides a storehouse or its
+  upgrade during the shortage.
 
 **Who may take from a chest.** Any villager, for a real need: there is no ownership between
 residents over the village's stores. A home's own chest is the one exception: only the people
@@ -352,19 +366,27 @@ each old block: the containing rule ensures the new template replaces the whole 
 and leaves no fragment behind. It lets a house grow west when its east side is blocked. The same
 one-block lane is still required around every other building.
 
-The mine is the exception. Its shaft is runtime geometry below the saved template, so moving the
-headframe would strand the old shaft. A mine upgrade retains its exact origin and uses the fresh
-higher-level path elsewhere when that authored expansion direction is blocked.
+A narrower authored upgrade is also valid when the only old cells left outside the target
+are dirt, grass blocks, plants or air. Those remain natural landscaping, not demolition targets.
+Every structural block must still be inside the replacement parcel. This handles the Birch
+watchtower's one-column grass border without adding artificial padding to its second tier.
+
+The mine is the exception. Its root and child shafts are runtime geometry below the saved template,
+so moving the headframe would strand the network. A mine upgrade retains its exact origin and its
+saved child plans, and uses the fresh higher-level path elsewhere when that authored expansion
+direction is blocked.
 
 If no containing position works, that reuse path is refused and the lower-level building simply
 stands. The higher level may still be planned elsewhere at its full combined cost. Nothing is
 reserved in advance.
 
-**The chest is emptied into the rest of the village before work starts.** Contents are
-carried out to other village containers, which the one-pool decision on
-[#49](https://github.com/Quzzar/kithkyn/issues/49) already makes the natural move.
-Nothing is ever destroyed. If the village genuinely has nowhere to put it, that is a storage
-shortage and the upgrade waits rather than proceeding.
+**The chest is emptied before work starts.** Contents are carried into other village containers
+first, which the one-pool decision on [#49](https://github.com/Quzzar/kithkyn/issues/49) already
+makes the natural move. Anything they reject enters the village's persisted structural-overflow
+queue with full item components. The old container positions are unregistered once construction
+starts, so queued goods cannot be put back into blocks about to be overwritten. They are retried
+against real storage until the rebuilt containers come online. Nothing is destroyed, and a full
+storehouse can therefore upgrade into the capacity needed to receive its own displaced contents.
 
 **The worker keeps their job and waits.** The assignment is held, the station is unusable
 for the duration, and the worker idles at the campfire until it is ready. The alternative —

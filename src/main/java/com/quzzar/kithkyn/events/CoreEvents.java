@@ -9,12 +9,12 @@ import java.util.UUID;
 import com.quzzar.kithkyn.Kithkyn;
 import com.quzzar.kithkyn.entities.Person;
 import com.quzzar.kithkyn.entities.RealPerson;
+import com.quzzar.kithkyn.entities.ai.goals.CompanionSitGoal;
 import com.quzzar.kithkyn.entities.ai.goals.PetFollowOwnerGoal;
 import com.quzzar.kithkyn.entities.ai.goals.PetVillageTetherGoal;
 import com.quzzar.kithkyn.village.CompanionPets;
 import com.quzzar.kithkyn.village.FarmedStock;
 import com.quzzar.kithkyn.village.VillageManager;
-import com.quzzar.kithkyn.village.VillageGeneration;
 import com.quzzar.kithkyn.village.bookkeeping.DeathBookkeepingEvent;
 import com.quzzar.kithkyn.village.bookkeeping.HurtByPlayerBookkeepingEvent;
 import com.quzzar.kithkyn.village.buildings.Building;
@@ -85,10 +85,21 @@ public class CoreEvents {
     // a mob that may still carry them.
     if (event.getLevel() instanceof ServerLevel
         && event.getEntity() instanceof TamableAnimal pet
-        && CompanionPets.isCompanionPet(pet)
-        && !hasGoal(pet, PetFollowOwnerGoal.class)) {
-      pet.goalSelector.addGoal(4, new PetFollowOwnerGoal(pet));
-      pet.goalSelector.addGoal(7, new PetVillageTetherGoal(pet));
+        && CompanionPets.isCompanionPet(pet)) {
+      // Use vanilla's crosshair-only nameplate, including pets saved with the old always-visible flag.
+      pet.setCustomNameVisible(false);
+      // Vanilla seats a tamed animal with no player owner even without a sit order.
+      // Replace only that vanilla goal, preserving its priority and other mods' goals.
+      for (var goal : pet.goalSelector.getAvailableGoals().stream()
+          .filter(goal -> goal.getGoal().getClass() == net.minecraft.world.entity.ai.goal.SitWhenOrderedToGoal.class)
+          .toList()) {
+        pet.goalSelector.removeGoal(goal.getGoal());
+        pet.goalSelector.addGoal(goal.getPriority(), new CompanionSitGoal(pet));
+      }
+      if (!hasGoal(pet, PetFollowOwnerGoal.class)) {
+        pet.goalSelector.addGoal(4, new PetFollowOwnerGoal(pet));
+        pet.goalSelector.addGoal(7, new PetVillageTetherGoal(pet));
+      }
     }
 
     if (event.getEntity() instanceof Enemy
@@ -291,14 +302,7 @@ public class CoreEvents {
 
       for (RealPerson person : nearbyPeople) {
         if (person.isAlive() && !person.isRemoved()) {
-          if (person.getOccupation().sleepsAtNight()) {
-            person.goToBed(0.7D);
-          } else {
-            // The watch does not bed down on a bell: no walk to the bed and no
-            // interrupting whatever they are doing, but the stow-and-restock
-            // half of bedtime still applies.
-            person.restockForNightWatch();
-          }
+          person.respondToBell(event.getPos());
         }
       }
 
@@ -314,7 +318,7 @@ public class CoreEvents {
     // Every 1 second
     if (serverLevel.getGameTime() % 20 == 0) {
       VillageManager.get(serverLevel).tick(serverLevel);
-      VillageGeneration.tick(serverLevel);
+      VillageManager.get(serverLevel).generateVillages(serverLevel);
     }
   }
 

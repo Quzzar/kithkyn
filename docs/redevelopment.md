@@ -194,8 +194,10 @@ delivery, so a container at a delivery coordinate cannot turn commitment into an
 including the upgrade source and personal containers, move to surviving storage where possible;
 any overflow enters a saved queue with its full item components, independently of salvage.
 This queue belongs to the village, survives project completion, and retries delivery when real
-storage opens up. It is not counted as available stock. Ordinary upgrades without redevelopment
-retain their existing physical-storage requirement.
+storage opens up. It is not counted as available stock. The queue is structural rather than
+redevelopment-specific: ordinary on-site upgrades use the same path for contents that other
+containers reject, and unregister the old container positions once construction starts. This lets
+a full storehouse expand without destroying items or requiring capacity elsewhere first.
 
 Residents use spare general beds where available and otherwise lose their bed assignment.
 Displaced residents keep existing jobs during the project, including dependently housed workers

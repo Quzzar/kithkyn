@@ -14,13 +14,17 @@ import com.quzzar.kithkyn.Kithkyn;
 import com.quzzar.kithkyn.village.Village;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.Container;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.Rotation;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.BushBlock;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
 
 /**
  * Improving a building the village already has (docs/building-spec.md, "How
@@ -29,7 +33,7 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlac
  *
  * An upgrade is ordinary construction with the new template over the old. It
  * keeps the standing orientation, but the larger footprint may slide in either
- * horizontal direction as long as it fully contains the old footprint. That is
+ * horizontal direction as long as it replaces every old structural block. That is
  * how a house can extend west when its east side is blocked. Two things have to
  * be true before one can start: some containing placement has to fit, and
  * whatever the old building was storing has to have somewhere else to go.
@@ -195,7 +199,7 @@ public final class BuildingUpgrade {
       return null;
     }
     BlockPos standingOrigin = BlockPos.of(from.getOriginLocation());
-    BlockPos standingGround = standingOrigin.above(from.getInfo().getSink());
+    BlockPos standingGround = standingOrigin.above(from.getPlacedSink());
     TownLayout.Footprint standingWorld = new TownLayout.Footprint(
         standingOrigin.getX() + standing.minX(), standingOrigin.getZ() + standing.minZ(),
         standingOrigin.getX() + standing.maxX(), standingOrigin.getZ() + standing.maxZ());
@@ -203,7 +207,9 @@ public final class BuildingUpgrade {
         wanted.minX(), wanted.minZ(), wanted.maxX(), wanted.maxZ());
 
     Placement best = null;
-    for (TownLayout.Origin origin : TownLayout.containingOrigins(standingWorld, targetLocal)) {
+    var sourceTemplate = level.getLevel().getStructureManager().getOrCreate(
+        ResourceLocation.fromNamespaceAndPath(Kithkyn.MODID, from.getName()));
+    for (TownLayout.Origin origin : TownLayout.replacementOrigins(standingWorld, targetLocal)) {
       // A mine owns a runtime-dug shaft below its template. Re-seating the
       // headframe would strand that shaft, so mines retain the authored origin
       // and use the fresh higher-level path when that one direction is blocked.
@@ -212,6 +218,14 @@ public final class BuildingUpgrade {
         continue;
       }
       TownLayout.Footprint targetWorld = targetLocal.moved(origin);
+      boolean containsStanding = targetWorld.minX() <= standingWorld.minX()
+          && targetWorld.maxX() >= standingWorld.maxX()
+          && targetWorld.minZ() <= standingWorld.minZ()
+          && targetWorld.maxZ() >= standingWorld.maxZ();
+      if (!containsStanding
+          && !leavesOnlyLandscape(sourceTemplate, standingOrigin, from.getRotation(), targetWorld)) {
+        continue;
+      }
       if (touchesOtherClaim(village, targetWorld, standingWorld, LocationValidator.MIN_GAP)) {
         continue;
       }
@@ -227,7 +241,7 @@ public final class BuildingUpgrade {
       Placement placement = new Placement(from, ground, from.getRotation(), wanted, cost,
           centreShiftSqr);
       if (cost.isFree()) {
-        // containingOrigins is centred-first, and no preparation can beat zero
+        // replacementOrigins is centred-first, and no preparation can beat zero
         return placement;
       }
       if (best == null || cost.blocksMoved() < best.cost().blocksMoved()
@@ -261,13 +275,39 @@ public final class BuildingUpgrade {
   }
 
   /**
-   * Carries everything the old building was storing out to the rest of the
-   * village before a block is touched. Returns false when it will not all fit,
-   * which is a storage shortage rather than a reason to destroy someone's
-   * items: the upgrade waits instead.
+   * A narrower upgrade may leave authored soil and grass as natural ground.
+   * Every wall, floor, container and other structural block must still be replaced.
+   * Nothing outside the new parcel is cleared to make this fit.
+   */
+  static boolean leavesOnlyLandscape(StructureTemplate template,
+      BlockPos origin, Rotation rotation, TownLayout.Footprint target) {
+    for (var palette : template.palettes) {
+      for (var block : palette.blocks()) {
+        BlockPos world = origin.offset(block.pos().rotate(rotation));
+        if (world.getX() >= target.minX() && world.getX() <= target.maxX()
+            && world.getZ() >= target.minZ() && world.getZ() <= target.maxZ()) {
+          continue;
+        }
+        var state = block.state();
+        if (!state.isAir() && !state.is(Blocks.STRUCTURE_VOID)
+            && !state.is(Blocks.DIRT) && !state.is(Blocks.GRASS_BLOCK)
+            && !(state.getBlock() instanceof BushBlock)) {
+          return false;
+        }
+      }
+    }
+    return true;
+  }
+
+  /**
+   * Carries everything the old building was storing out before a block is
+   * touched. Anything other containers reject enters the same persisted
+   * structural-overflow queue redevelopment uses, so expanding storage cannot
+   * be blocked by the shortage it is meant to solve.
    */
   public static boolean clearStorage(Village village, Building from) {
-    return StorageEvacuation.evacuate(village, List.of(from));
+    return StorageEvacuation.evacuate(village, List.of(from),
+        stack -> village.queuePendingVillageItems(List.of(stack)));
   }
 
   /** The same net-capacity facts used for fresh construction and redevelopment. */
@@ -303,8 +343,7 @@ public final class BuildingUpgrade {
     if (template.isEmpty()) {
       return null;
     }
-    return template.get().getBoundingBox(
-        new StructurePlaceSettings().setRotation(rotation), BlockPos.ZERO);
+    return BuildingFootprint.bounds(template.get(), rotation);
   }
 
 }

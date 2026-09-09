@@ -13,14 +13,17 @@ import net.minecraft.core.Direction;
 /** The procedural starter catalog behind the authored wall-segment seam. */
 final class BuiltInWallSegmentCatalog implements WallSegmentCatalog {
 
-  static final BuiltInWallSegmentCatalog INSTANCE = new BuiltInWallSegmentCatalog();
+  static final BuiltInWallSegmentCatalog INSTANCE = new BuiltInWallSegmentCatalog(AuthoredWoodWallSegments.INSTANCE);
+  static final BuiltInWallSegmentCatalog BIRCH_FOREST = new BuiltInWallSegmentCatalog(AuthoredWoodWallSegments.BIRCH_FOREST);
+  private final AuthoredWoodWallSegments authored;
 
   /** Long enough to read as a structure, short enough for several builders to share the ring. */
   private static final int MAX_SECTION_LENGTH = 7;
   private static final int WOOD_GATEHOUSE_RADIUS = 8;
   private static final int STONE_GATEHOUSE_RADIUS = 2;
 
-  private BuiltInWallSegmentCatalog() {
+  private BuiltInWallSegmentCatalog(AuthoredWoodWallSegments authored) {
+    this.authored = authored;
   }
 
   @Override
@@ -48,19 +51,63 @@ final class BuiltInWallSegmentCatalog implements WallSegmentCatalog {
           blocksFor(ring, gates, ground, deck, tier, from, to, kind)));
       from = to;
     }
-    List<WallSection> normalized = withoutUnsupportedLanterns(
-        withoutOverlaps(sections));
+    List<WallSection> normalized = withoutUnsupportedAttachments(
+        solidifyCoveredLinearToppers(withoutOverlaps(sections)));
     return tier == WallTier.WOOD
         ? thinLinearLanterns(normalized)
         : normalized;
   }
 
+  /** A lower run joins the underside of a rigid feature as masonry, not buried battlements. */
+  private static List<WallSection> solidifyCoveredLinearToppers(List<WallSection> sections) {
+    Set<Long> rigidCells = new HashSet<>();
+    for (WallSection section : sections) {
+      if (isLinear(section.kind())) continue;
+      for (WallBlockPlan cell : section.blocks()) {
+        rigidCells.add(cell.position());
+      }
+    }
+    List<WallSection> result = new ArrayList<>();
+    for (WallSection section : sections) {
+      if (!isLinear(section.kind())) {
+        result.add(section);
+        continue;
+      }
+      Map<Long, Integer> tops = new java.util.HashMap<>();
+      for (WallBlockPlan cell : section.blocks()) {
+        BlockPos pos = cell.pos();
+        tops.merge(BlockPos.asLong(pos.getX(), 0, pos.getZ()), pos.getY(), Math::max);
+      }
+      Set<Long> covered = new HashSet<>();
+      tops.forEach((column, y) -> {
+        if (rigidCells.contains(BlockPos.of(column).atY(y + 1).asLong())) covered.add(column);
+      });
+      List<WallBlockPlan> cells = section.blocks().stream().map(cell -> {
+        BlockPos pos = cell.pos();
+        if (!isTopper(cell.piece()) || !covered.contains(BlockPos.asLong(pos.getX(), 0, pos.getZ()))) return cell;
+        WallBlockPlan.Piece piece = cell.piece() == WallBlockPlan.Piece.MOSSY_WALL
+            ? WallBlockPlan.Piece.MOSSY_POST : WallBlockPlan.Piece.BODY;
+        return new WallBlockPlan(cell.position(), piece, cell.role());
+      }).toList();
+      result.add(new WallSection(section.kind(), cells));
+    }
+    return List.copyOf(result);
+  }
+
+  private static boolean isTopper(WallBlockPlan.Piece piece) {
+    return switch (piece) {
+      case PARAPET, SLAB, COBBLE_WALL, MOSSY_WALL, COBBLE_SLAB_BOTTOM, COBBLE_SLAB_TOP,
+          TORCH, TORCH_NORTH, TORCH_EAST, TORCH_SOUTH, TORCH_WEST,
+          LANTERN, LANTERN_HANGING -> true;
+      default -> false;
+    };
+  }
+
   /**
-   * Feature clearance may win an overlap containing a lamp's support without
-   * touching the lamp itself. Drop that orphaned detail rather than placing a
-   * lantern that immediately breaks or hangs in the air.
+   * Feature clearance may win an overlap containing an attachment's support
+   * without touching the detail itself. Drop the orphan rather than placing it.
    */
-  private static List<WallSection> withoutUnsupportedLanterns(
+  private static List<WallSection> withoutUnsupportedAttachments(
       List<WallSection> sections) {
     Set<Long> positions = sections.stream()
         .flatMap(section -> section.blocks().stream())
@@ -73,6 +120,10 @@ final class BuiltInWallSegmentCatalog implements WallSegmentCatalog {
             BlockPos support = switch (block.piece()) {
               case LANTERN -> block.pos().below();
               case LANTERN_HANGING -> block.pos().above();
+              case BANNER_NORTH -> block.pos().south();
+              case BANNER_EAST -> block.pos().west();
+              case BANNER_SOUTH -> block.pos().north();
+              case BANNER_WEST -> block.pos().east();
               default -> null;
             };
             return support == null || positions.contains(support.asLong());
@@ -187,7 +238,7 @@ final class BuiltInWallSegmentCatalog implements WallSegmentCatalog {
     return kinds;
   }
 
-  private static List<WallBlockPlan> blocksFor(List<Long> ring, Set<Long> gates,
+  private List<WallBlockPlan> blocksFor(List<Long> ring, Set<Long> gates,
       List<Integer> ground, List<Integer> deck, WallTier tier, int from, int to,
       WallSectionKind sectionKind) {
     Map<Long, WallBlockPlan> blocks = new LinkedHashMap<>();
@@ -218,7 +269,7 @@ final class BuiltInWallSegmentCatalog implements WallSegmentCatalog {
       }
     }
     if (tier == WallTier.WOOD) {
-      for (WallBlockPlan block : AuthoredWoodWallSegments.INSTANCE.cellsFor(
+      for (WallBlockPlan block : this.authored.cellsFor(
           ring, gates, ground, deck, from, to, sectionKind)) {
         put(blocks, block.pos().getX(), block.pos().getY(), block.pos().getZ(),
             block.piece(), block.role());

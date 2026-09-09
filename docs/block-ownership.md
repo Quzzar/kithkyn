@@ -66,7 +66,8 @@ places structural village blocks, it records them; that is the contract.
   each log's record as it goes. The lodge now ships a sapling, which is nobody's from the
   start; the exemption stays so nothing placed against the stand can jam the loop. A player's
   log that touches the stand's tree comes down with it; the stand is the one place the store
-  is not consulted.
+  is not consulted for logs. Attached bee nests and hives still ask ownership, even at
+  the stand: a player's or village's apiary must not be removed with a neighboring tree.
 - `isPlayerPlaced` / `isVillagePlaced`: the stored facts individually.
 
 ## No backfill
@@ -93,6 +94,7 @@ exist today.
   `query` rather than re-deriving ownership. The second caller is the builder's ground grading
   ([worker-loops.md](worker-loops.md)): `GradeStep` never cuts a village-placed block or the
   ground under one, reads village-placed and player-placed tops as not-ground in its survey,
-  grades a player's placed dirt like any other (a hummock is a hummock whoever piled it), and
-  prunes the record of what it digs so a player's dug dirt does not linger as "the player's".
-  Its fill is dirt and is not recorded, per the contract above.
+  and rechecks both ownership sets before acting, protecting player edits made after the survey.
+  `PathStep` likewise protects ownership-marked blocks and registered building footprints while
+  wearing paths. Crops and saplings remain protected by plant rules, not placement records.
+  Grading fill is dirt and is not recorded, per the contract above.

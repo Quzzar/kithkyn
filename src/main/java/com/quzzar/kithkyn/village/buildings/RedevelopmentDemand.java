@@ -41,7 +41,7 @@ public final class RedevelopmentDemand {
       return "food is below target and the plan adds " + change.foodPlots() + " crop plots";
     }
     for (var job : change.jobs().entrySet()) {
-      if (job.getValue() <= 0 || needs.vacantJobs().contains(job.getKey())) {
+      if (job.getValue() <= 0 || WorkplaceDemand.alreadyVacant(job.getKey(), needs.vacantJobs())) {
         continue;
       }
       if (FOOD_JOBS.contains(job.getKey())) {
@@ -67,7 +67,7 @@ public final class RedevelopmentDemand {
   public static String reason(Village village, BuildingInfo target, Collection<Building> affected) {
     BuildingImpact.Capacity net = BuildingImpact.net(village, target, affected);
     Needs needs = new Needs(Math.max(0, village.getUnhousedAdultResidentCount() + village.getPendingArrivalCount()
-        - village.getFreeGeneralBedCount()), village.isStorageStrained(),
+        - village.getFreeGeneralBedCount()), village.isStorageBackedUp(),
         village.getAttractiveness().foodPerCapita() < KithkynConfig.AttractivenessFoodTargetPerCapita,
         village.idlePeople().size(), village.claimableJobs().stream().map(job -> job.getOccupation()).collect(Collectors.toSet()),
         target.getGrants().stream().filter(village::canDo).collect(Collectors.toSet()));

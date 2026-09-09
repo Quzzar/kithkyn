@@ -73,6 +73,9 @@ public final class CompanionPets {
   /** Beyond this from its owner, a pet stops pathing and teleports to their side (vanilla's own threshold). */
   private static final double UNSIT_TELEPORT_DISTANCE = 12.0D;
 
+  /** First observed tick of the current rest; kept on the pet so reloads do not erase the wait. */
+  private static final String REST_STARTED_KEY = "kithkyn:petRestStarted";
+
   /** A pet marks a chance out of one; these are those chances by job. */
   private static final double HUNTER_DOG_CHANCE = 1.0D;
   private static final double GUARD_DOG_CHANCE = 0.25D;
@@ -202,7 +205,6 @@ public final class CompanionPets {
     DyeColor collar = DyeColor.byId(random.nextInt(DyeColor.values().length));
     String name = species.randomFallbackName(random);
     applyLook(level, pet, species, name, collar, randomVariant(level, species));
-    pet.setCustomNameVisible(true);
 
     level.addFreshEntity(pet);
 
@@ -265,16 +267,37 @@ public final class CompanionPets {
    */
   public static void commandSit(TamableAnimal pet, boolean sit) {
     if (sit) {
+      if (!pet.isOrderedToSit() || !pet.getPersistentData().contains(REST_STARTED_KEY)) {
+        pet.getPersistentData().putLong(REST_STARTED_KEY, pet.level().getGameTime());
+      }
       pet.setOrderedToSit(true);
       pet.setInSittingPose(true);
       return;
     }
     pet.setOrderedToSit(false);
     pet.setInSittingPose(false);
+    pet.getPersistentData().remove(REST_STARTED_KEY);
     RealPerson owner = loadedOwner(pet);
     if (owner != null && pet.distanceToSqr(owner) > UNSIT_TELEPORT_DISTANCE * UNSIT_TELEPORT_DISTANCE) {
       teleportNear(pet, owner);
     }
+  }
+
+  /**
+   * Observed duration of the current sit order. Older pets start an observation now,
+   * so callers describe a lower bound rather than inventing their earlier rest history.
+   */
+  public static long observedRestTicks(TamableAnimal pet) {
+    if (!pet.isOrderedToSit()) {
+      pet.getPersistentData().remove(REST_STARTED_KEY);
+      return 0;
+    }
+    CompoundTag data = pet.getPersistentData();
+    long now = pet.level().getGameTime();
+    if (!data.contains(REST_STARTED_KEY) || data.getLong(REST_STARTED_KEY) > now) {
+      data.putLong(REST_STARTED_KEY, now);
+    }
+    return now - data.getLong(REST_STARTED_KEY);
   }
 
   /**

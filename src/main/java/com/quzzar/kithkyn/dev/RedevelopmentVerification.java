@@ -204,7 +204,7 @@ public final class RedevelopmentVerification {
     check(project.getProgress() == BuildProgress.DEMOLISHING, "missing demolition phase");
     check(village.getBuilding(north.getUUID()) == null && village.getBuilding(south.getUUID()) == null,
         "removed services still registered");
-    check(expectedContents.equals(RedevelopmentItems.CODEC.encodeStart(itemOps, village.pendingRedevelopmentItems()).getOrThrow()),
+    check(expectedContents.equals(RedevelopmentItems.CODEC.encodeStart(itemOps, village.pendingVillageItems()).getOrThrow()),
         "full storage lost or changed displaced contents");
     check(village.getBedAssignment(builderId) == null && village.keepsWorkDuringRedevelopment(builderId),
         "bedless builder was not protected during construction");
@@ -222,7 +222,7 @@ public final class RedevelopmentVerification {
     ownership.clearPlaced(stolen);
     check(!project.demolishStep(village).isEmpty(), "missing committed material was silently credited");
     check(project.getRedevelopment().remainingBlocks() == securedCursor, "missing structural block consumed its queue entry");
-    check(expectedContents.equals(RedevelopmentItems.CODEC.encodeStart(itemOps, village.pendingRedevelopmentItems()).getOrThrow()),
+    check(expectedContents.equals(RedevelopmentItems.CODEC.encodeStart(itemOps, village.pendingVillageItems()).getOrThrow()),
         "missing material changed the pending contents or paid salvage early");
     var pausedState = Village.CODEC.encodeStart(NbtOps.INSTANCE, village).getOrThrow();
     Village paused = Village.CODEC.parse(NbtOps.INSTANCE, pausedState).getOrThrow();
@@ -244,7 +244,7 @@ public final class RedevelopmentVerification {
     project = village.getCurrentProject();
     check(project.getRedevelopment().remainingBlocks() == remaining, "removal cursor lost on reload");
     check(village.keepsWorkDuringRedevelopment(builderId), "temporary work continuity lost on reload");
-    check(expectedContents.equals(RedevelopmentItems.CODEC.encodeStart(itemOps, village.pendingRedevelopmentItems()).getOrThrow()),
+    check(expectedContents.equals(RedevelopmentItems.CODEC.encodeStart(itemOps, village.pendingVillageItems()).getOrThrow()),
         "displaced contents changed across village save/reload");
     for (int index = 0; index < 100_000 && project.getProgress() != BuildProgress.COMPLETE; index++) {
       if (project.getProgress() == BuildProgress.DEMOLISHING) {
@@ -259,10 +259,10 @@ public final class RedevelopmentVerification {
       }
     }
     check(project.getProgress() == BuildProgress.COMPLETE, "construction did not complete");
-    List<MaterialAmount> refund = MaterialAmount.fromStacks(village.pendingRedevelopmentItems());
+    List<MaterialAmount> refund = MaterialAmount.fromStacks(village.pendingVillageItems());
     project.demolishStep(village);
     project.getRedevelopment().finish(village);
-    check(refund.equals(MaterialAmount.fromStacks(village.pendingRedevelopmentItems())), "refund was paid twice");
+    check(refund.equals(MaterialAmount.fromStacks(village.pendingVillageItems())), "refund was paid twice");
     check(project.getBuilding().getUUID().equals(source.getUUID()), "upgrade lost source identity");
     check(village.getBuilding(survivingFarm.getUUID()) != null, "surviving farm was removed");
     check(!village.hasClaimed(ground.offset(0, 0, -10)), "removed outer parcel remained claimed");
@@ -273,20 +273,20 @@ public final class RedevelopmentVerification {
     check(village.getCurrentProject() == null, "finished redevelopment was not registered");
     check(village.getBedAssignment(builderId) != null, "displaced builder did not reclaim a replacement bed");
     check(!village.keepsWorkDuringRedevelopment(builderId), "temporary employment exception survived the project");
-    var beforeRelease = RedevelopmentItems.CODEC.encodeStart(itemOps, village.pendingRedevelopmentItems()).getOrThrow();
-    var release = Village.class.getDeclaredMethod("releaseRedevelopmentItems");
+    var beforeRelease = RedevelopmentItems.CODEC.encodeStart(itemOps, village.pendingVillageItems()).getOrThrow();
+    var release = Village.class.getDeclaredMethod("releasePendingVillageItems");
     release.setAccessible(true);
     release.invoke(village);
-    check(beforeRelease.equals(RedevelopmentItems.CODEC.encodeStart(itemOps, village.pendingRedevelopmentItems()).getOrThrow()),
+    check(beforeRelease.equals(RedevelopmentItems.CODEC.encodeStart(itemOps, village.pendingVillageItems()).getOrThrow()),
         "full-storage retry lost queued items");
     for (BlockPos at : village.getBrain().containerPositions()) {
       if (level.getBlockEntity(at) instanceof net.minecraft.world.Container container) {
         container.clearContent();
       }
     }
-    List<ItemStack> retained = village.pendingRedevelopmentItems();
+    List<ItemStack> retained = village.pendingVillageItems();
     release.invoke(village);
-    check(village.pendingRedevelopmentItems().isEmpty(), "available storage did not receive retained contents");
+    check(village.pendingVillageItems().isEmpty(), "available storage did not receive retained contents");
     List<MaterialAmount> delivered = MaterialAmount.fromStacks(village.getVillageInventory());
     check(MaterialAmount.tally(MaterialAmount.fromStacks(retained)).equals(MaterialAmount.tally(delivered)),
         "delivered contents or salvage totals changed");

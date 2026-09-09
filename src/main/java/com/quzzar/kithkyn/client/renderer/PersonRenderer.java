@@ -46,6 +46,10 @@ public class PersonRenderer extends HumanoidMobRenderer<Person, HumanoidModel<Pe
         this.model = bodyModelFor(entityIn);
         this.setModelVisibilities(entityIn);
         super.render(entityIn, entityYaw, partialTicks, matrixStackIn, bufferIn, packedLightIn);
+        if (entityIn instanceof RealPerson fisher) {
+            FishingLineRenderer.render(fisher, partialTicks, matrixStackIn, bufferIn,
+                    packedLightIn, this.entityRenderDispatcher.cameraOrientation());
+        }
     }
 
     /**

@@ -23,4 +23,10 @@ public interface WallSegmentCatalog {
   static WallSegmentCatalog builtIn() {
     return BuiltInWallSegmentCatalog.INSTANCE;
   }
+
+  /** Regional art uses the same route compiler and persistent section model. */
+  static WallSegmentCatalog forStyle(VillageStyle style) {
+    return style == VillageStyle.BIRCH_FOREST
+        ? BuiltInWallSegmentCatalog.BIRCH_FOREST : builtIn();
+  }
 }

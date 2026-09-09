@@ -79,7 +79,13 @@ public class RangedBowAttackPassiveGoal<T extends RealPerson & RangedAttackMob> 
                 --this.seeTime;
             }
 
-            if (!(d0 > (double) this.maxAttackDistance) && this.seeTime >= 20) {
+            boolean holdsPost = this.entity.isFixedRangedGuard();
+            double rangeSqr = this.entity.getOccupation() == com.quzzar.kithkyn.village.Occupation.GUARD
+                    ? Math.pow(GuardThreatGoal.range(this.entity), 2) : this.maxAttackDistance;
+            if (holdsPost) {
+                this.entity.getNavigation().stop();
+                this.strafingTime = -1;
+            } else if (d0 <= rangeSqr && this.seeTime >= 20) {
                 this.entity.getNavigation().stop();
                 ++this.strafingTime;
             } else {
@@ -116,7 +122,7 @@ public class RangedBowAttackPassiveGoal<T extends RealPerson & RangedAttackMob> 
                     this.entity.stopUsingItem();
                 } else if (flag) {
                     int i = this.entity.getTicksUsingItem();
-                    if (i >= 20) {
+                    if (i >= 20 && d0 <= rangeSqr && !RangedShotSafety.blockedByFriendly(this.entity, livingentity)) {
                         this.entity.stopUsingItem();
                         this.entity.performRangedAttack(livingentity, BowItem.getPowerForTime(i));
                         this.attackTime = this.attackCooldown;

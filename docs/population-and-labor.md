@@ -335,23 +335,32 @@ A workplace building finishing construction registers its work stations as open
   from the idle pool; neither ever takes a settled worker off a job the village can spare and
   moves them to one it cannot. So a village that raised a farm but never grew a farmer starves
   beside it, and the starving is itself what stops it drawing the newcomer who would farm: a
-  deadlock it cannot break from inside. During the midnight window, then, a village that is
-  **short of
-  food** (stored food below the per-capita target that `VillageAttractiveness` reads) with a
+  deadlock it cannot break from inside. The same cycle occurs when a saved farm is two logs short
+  while a built lumberjack post stands vacant. During the midnight window, then, a village that is
+  **short of food** (stored food below the per-capita target that `VillageAttractiveness` reads) with a
   **food post open** (farmer, fisher, or hunter), its building standing, and **no one idle**
-  to take it, asks the brain who to move onto the field, or whether to leave the crew be. The
-  facts are laid out and the model chooses, the same way it picks a build; competence is not
-  consulted here, because need, not aptitude, is the point. This request and its applied result
-  are both gated to the same midnight window as aptitude swaps. Only loaded workers can be moved;
+  to take it handles food first. Otherwise, a current saved project may name a vacancy whose
+  standing building grants the capability for one of its missing materials. This is derived from
+  the same shared material-source facts used by `UrbanPlanner`, not a second occupation table. A
+  saved-project shortage runs on the ordinary labor cadence rather than waiting for midnight,
+  because a saved goal may expire before the next midnight window. The brain
+  chooses who moves or may leave the crew as it is. Candidates are ordered by aptitude, and the
+  aptitude best acts when the model is absent, fails, or returns an unusable answer. Food
+  reprioritization is gated to the midnight window; material and backed-up-storage vacancies use
+  the ordinary labor cadence so the village can recover before a saved goal expires. A valid
+  answer may be applied later because the vacancy and worker are checked again against live state.
+  Only loaded workers can be moved;
   a reassignment awakens the worker, cancels the old route, moves them to the campfire, and
   rebuilds their goals in the world. One decision is in flight per village
   (`Village.laborDecisionPending`), and a brain that leaves the crew as it is sits the question
-  out a while before it is asked again. **The last builder is off the table while a build is in
-  progress** (2026-09-03): the crew offered to the field never includes a village's only builder
-  when a construction project stands, since moving them leaves no one to finish it,
-  the build stalls, and the village sits stuck on it, never advancing to houses (a farm that
-  hung half-built with its builder gone to the field, while every villager's briefing kept
-  saying "building a farm"). A second builder, if there is one, may still move.
+  out a while before it is asked again. If every otherwise-valid worker is inside the normal
+  job-swap cooldown, an urgent shortage gets one pass that may break that cooldown because the
+  cooldown lasts longer than a saved goal. The last builder and miner are always protected. Every
+  staffed farmer, fisher, or hunter is protected while the village is hungry, and the only
+  quartermaster is protected while goods are backed up. If a disruption already left that
+  strained village with an open quartermaster post, the urgent labor pass may fill it. A second
+  builder, miner, or quartermaster may still move when its corresponding protection applies; food
+  workers remain on food until the shortage clears.
 - The person walks from the campfire to the workplace, takes on the `Occupation` of the
   station, and holds it until the job stops existing. Taking the job is the one moment a
   bare starting kit appears from nothing: the mark of the trade, a stone axe, sword, pickaxe or
@@ -364,8 +373,22 @@ A workplace building finishing construction registers its work stations as open
 - **Vacancy refills**: a worker dying or the building being removed puts the
   `JobAssignment` back in `unassignedJobs`, and the next idle person claims it. A building
   with no available worker just sits unstaffed until someone new arrives.
+- **Guard Captain** is the center's existing guard assignment, not another occupation or
+  a permanent promotion attached to the founding person. Its holder patrols normally,
+  retains an axe for woodcutting, and prefers a sword from village stock when available.
+  Reassignment removes the display role; the next holder inherits it. Fixed wall and
+  watchtower stations keep their own equipment behavior.
 - **Job removal returns the person**: if the building is removed but the person survives,
   they return to the campfire pool and are immediately claimable by other open jobs.
+
+The village planning snapshot preserves these same relationships per workplace rather than
+showing only separate building and vacancy totals. For each standing workplace it reports the
+age of the current building incarnation, which occupations are staffed there, which posts are
+claimable and open, and how many of its live-in beds remain free. Pending newcomers are stated
+separately because they are not promised to a job before assignment. The same briefing gives the
+attractiveness score and threshold, food level and target, housing headroom, current population
+outlook, and any staffing decision already in flight. This lets the planner distinguish a useful
+new producer from a recently built but unstaffed duplicate.
 
 Guards and any future military work the same way: recruiting consumes an idle person.
 Equipment is not consumed at recruitment beyond that bare kit; better gear is drawn from the
@@ -435,9 +458,10 @@ Earlier entries here are now decided and described above: positive player standi
 in per-villager opinion shaped in conversation, never in attractiveness; emigrants become
 wanderers, take to the road, and come back in at whichever village grows next; stat-based
 job matching with threshold-gated swaps replaced pure FIFO (FIFO remains the tiebreaker). Villages are also named at founding:
-the LLM names the settlement from its biome and natural terrain on the low-priority queue.
-Temporary founding structures such as the gathering-point campfire are not part of the naming
-context. The name is
+the LLM names the settlement from the selected village style's short cultural and architectural
+description and varied illustrative names on the low-priority queue. It must invent a fresh name,
+not copy an example or an existing village. Nearby terrain is not the naming brief; see
+[village-identity.md](village-identity.md). The name is
 requested before the camp is placed and founding waits the moment it takes to land, so
 a village only ever has one name (a word-list name stands only if generation fails
 twice); the name is permanent, with no rename mechanism by decision.

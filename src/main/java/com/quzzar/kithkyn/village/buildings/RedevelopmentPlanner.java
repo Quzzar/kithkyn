@@ -100,7 +100,7 @@ public final class RedevelopmentPlanner {
             }
             examined++;
             BlockPos ground = new BlockPos(origin.x(), BlockPos.of(anchor.getOriginLocation()).getY()
-                + anchor.getInfo().getSink(), origin.z());
+                + anchor.getPlacedSink(), origin.z());
             Assessment assessment = assess(village, target, upgrade ? anchor : null, ground, rotation);
             if (assessment.plan().isEmpty()) {
               refused.merge(assessment.reason(), 1, Integer::sum);
@@ -161,7 +161,7 @@ public final class RedevelopmentPlanner {
       BlockPos origin = BlockPos.of(source.getOriginLocation());
       if (source != village.getBuilding(source.getUUID()) || !source.getName().equals(target.getUpgradesFrom())
           || rotation != source.getRotation() || standing == null
-          || ground.getY() != origin.getY() + source.getInfo().getSink()
+          || ground.getY() != origin.getY() + source.getPlacedSink()
           || !contains(targetFootprint, standing.minX(), standing.minZ())
           || !contains(targetFootprint, standing.maxX(), standing.maxZ())
           || Buildings.FOUNDING_MINE_CATEGORY.equals(source.getInfo().getCategory())
@@ -271,7 +271,7 @@ public final class RedevelopmentPlanner {
     List<Long> fill = new ArrayList<>(prep.toFill());
     // Removed foundations outside the new footprint also get restored, using paid dirt.
     for (Building victim : removed) {
-      int floor = BlockPos.of(victim.getOriginLocation()).getY() + victim.getInfo().getSink();
+      int floor = BlockPos.of(victim.getOriginLocation()).getY() + victim.getPlacedSink();
       for (RedevelopmentPlan.RemovalBlock block : blocks) {
         BlockPos at = BlockPos.of(block.position());
         if (worldBounds(village, victim).isInside(at) && at.getY() <= floor
@@ -299,7 +299,7 @@ public final class RedevelopmentPlanner {
       return "removal survey exceeds block budget";
     }
     PlacedBlockStore ownership = PlacedBlockStore.get(village.getLevel().getLevel());
-    int ground = BlockPos.of(victim.getOriginLocation()).getY() + victim.getInfo().getSink();
+    int ground = BlockPos.of(victim.getOriginLocation()).getY() + victim.getPlacedSink();
     for (BlockPos at : BlockPos.betweenClosed(box.minX(), box.minY(), box.minZ(), box.maxX(), box.maxY(), box.maxZ())) {
       if (!village.getLevel().getLevel().hasChunkAt(at) || ownership.isPlayerPlaced(at)) {
         return "unloaded or player-modified building";
@@ -428,7 +428,7 @@ public final class RedevelopmentPlanner {
   public static BoundingBox targetBounds(Village village, BuildingInfo target, Rotation rotation) {
     return village.getLevel().getLevel().getStructureManager()
         .get(ResourceLocation.fromNamespaceAndPath(Kithkyn.MODID, target.getPath()))
-        .map(template -> template.getBoundingBox(new StructurePlaceSettings().setRotation(rotation), BlockPos.ZERO))
+        .map(template -> BuildingFootprint.bounds(template, rotation))
         .orElse(null);
   }
 

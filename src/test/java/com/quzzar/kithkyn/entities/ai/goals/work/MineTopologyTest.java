@@ -27,6 +27,28 @@ class MineTopologyTest {
   }
 
   @Test
+  void descendingEntranceHeadroomIsInteriorRatherThanSealableLining() {
+    BlockPos clearance = BlockPos.ZERO;
+    BlockPos firstStairHead = new BlockPos(0, -1, 0);
+
+    assertTrue(MineShaft.withinEntranceClearance(clearance));
+    assertTrue(MineTopology.isInterior(clearance));
+    assertFalse(MineTopology.crossesExteriorBoundary(firstStairHead, clearance));
+  }
+
+  @Test
+  void childEntranceTorchPositionsMarkEitherWallAboveTheFirstStair() {
+    assertEquals(java.util.List.of(
+        new BlockPos(-MineShaft.RADIUS, -1, 0),
+        new BlockPos(MineShaft.RADIUS, -1, 0)),
+        MineTopology.entranceTorchCells());
+    assertTrue(MineTopology.entranceTorchCells().stream()
+        .allMatch(MineShaft::withinCorridor));
+    assertTrue(MineTopology.entranceTorchCells().stream()
+        .allMatch(cell -> MineShaft.withinCorridor(cell.below())));
+  }
+
+  @Test
   void branchWorkPositionBelongsToTheNavigableMine() {
     BlockPos fourBlocksAlongRib = new BlockPos(6, -10, 8);
 
@@ -85,6 +107,16 @@ class MineTopologyTest {
   }
 
   @Test
+  void routeAuditCanAnchorPastADecorativeEntranceStep() {
+    var candidates = MineTopology.entranceStandCandidates();
+
+    assertEquals(new BlockPos(0, -1, -1), candidates.getFirst());
+    assertTrue(candidates.contains(new BlockPos(0, -2, 0)),
+        "the first ordinary ramp floor can anchor a route when the threshold is a stair");
+    assertTrue(candidates.stream().allMatch(MineTopology::isRamp));
+  }
+
+  @Test
   void miningStandCannotUseANaturalCaveLedge() {
     BlockPos belowRamp = new BlockPos(0, -25, 22);
     BlockPos sideLedge = new BlockPos(3, -24, 22);
@@ -93,6 +125,37 @@ class MineTopologyTest {
     assertFalse(MineTopology.isNavigableStand(sideLedge));
     assertFalse(MineTopology.isNavigableStand(new BlockPos(3, -25, 22)),
         "even an opened vein cell below the ramp is unsafe footing");
+  }
+
+  @Test
+  void descendingFrontCanBeWorkedFromHigherFootingTwoColumnsBack() {
+    BlockPos rejectedFace = new BlockPos(-2, -52, 50);
+    BlockPos lastDryFooting = new BlockPos(0, -50, 48);
+
+    var candidates = MineTopology.workStandCandidates(rejectedFace, 12.0D);
+
+    assertTrue(candidates.contains(lastDryFooting),
+        "the last dry ramp step is exactly within the miner's configured reach");
+    assertTrue(candidates.stream().allMatch(MineTopology::isNavigableStand));
+    assertTrue(candidates.stream().allMatch(candidate -> candidate.distSqr(rejectedFace) <= 12.0D));
+    assertFalse(candidates.contains(rejectedFace),
+        "an air work target cannot also be chosen as the place to stand");
+  }
+
+  @Test
+  void aSuccessfulFirstRampHopDoesNotHideASolidBarrierFartherDown() {
+    BlockPos start = new BlockPos(0, MineTopology.floorY(0), 0);
+    BlockPos target = new BlockPos(0, MineTopology.floorY(6), 6);
+    Set<BlockPos> openRamp = new java.util.HashSet<>();
+    for (int z = 0; z <= 6; z++) {
+      openRamp.add(new BlockPos(0, MineTopology.floorY(z), z));
+    }
+
+    assertTrue(MineTopology.standPathExists(start, target, openRamp::contains, 128));
+
+    openRamp.remove(new BlockPos(0, MineTopology.floorY(3), 3));
+    assertFalse(MineTopology.standPathExists(start, target, openRamp::contains, 128),
+        "a reachable first waypoint cannot make work beyond a sealed ramp selectable");
   }
 
   @Test
@@ -136,53 +199,4 @@ class MineTopologyTest {
     assertNull(MineTopology.ribDoorway(new BlockPos(-2, -10, 8)));
   }
 
-  @Test
-  void floodedRibIsIndependentFromTheDescendingRamp() {
-    BlockPos rampEdge = new BlockPos(-2, -10, 8);
-    BlockPos ribDoorway = new BlockPos(-3, -10, 8);
-
-    assertFalse(MineTopology.sameFront(rampEdge, ribDoorway));
-  }
-
-  @Test
-  void eachRibIsAnIndependentExcavationFront() {
-    BlockPos leftRib = new BlockPos(-4, -10, 8);
-    BlockPos fartherAlongLeftRib = new BlockPos(-8, -10, 8);
-    BlockPos rightRib = new BlockPos(4, -10, 8);
-    BlockPos deeperLeftRib = new BlockPos(-4, -14, 12);
-
-    assertTrue(MineTopology.sameFront(leftRib, fartherAlongLeftRib));
-    assertFalse(MineTopology.sameFront(leftRib, rightRib));
-    assertFalse(MineTopology.sameFront(leftRib, deeperLeftRib));
-  }
-
-  @Test
-  void dryRampCellsRemainOneExcavationFront() {
-    BlockPos upperRamp = new BlockPos(2, -10, 8);
-    BlockPos lowerRamp = new BlockPos(-2, -13, 11);
-
-    assertTrue(MineTopology.sameFront(upperRamp, lowerRamp));
-  }
-
-  @Test
-  void floodedRibDoesNotMarkConnectedRampSupportAsFloodWork() {
-    BlockPos rampSupport = new BlockPos(2, -10, 8);
-    BlockPos ribDoorwaySupport = new BlockPos(3, -10, 8);
-    BlockPos ribWater = new BlockPos(4, -10, 8);
-    Set<BlockPos> supports = Set.of(rampSupport, ribDoorwaySupport);
-
-    assertFalse(MineTopology.supportClusterTouchesWater(
-        rampSupport, supports::contains, ribWater::equals, 128));
-  }
-
-  @Test
-  void rampWorkingFrontStillRemainsUntilItsOwnWaterIsCleared() {
-    BlockPos upperSupport = new BlockPos(0, -10, 8);
-    BlockPos lowerSupport = new BlockPos(0, -10, 9);
-    BlockPos rampWater = new BlockPos(0, -10, 10);
-    Set<BlockPos> supports = Set.of(upperSupport, lowerSupport);
-
-    assertTrue(MineTopology.supportClusterTouchesWater(
-        upperSupport, supports::contains, rampWater::equals, 128));
-  }
 }

@@ -2,6 +2,7 @@ package com.quzzar.kithkyn.entities.ai.goals.work;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -16,6 +17,7 @@ import com.quzzar.kithkyn.village.QuartermasterPlanner;
 import com.quzzar.kithkyn.village.ShelvingPlan;
 import com.quzzar.kithkyn.village.Storehouse;
 import com.quzzar.kithkyn.village.Village;
+import com.quzzar.kithkyn.village.buildings.WorkerFooting;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.MinecraftServer;
@@ -84,6 +86,9 @@ public final class ConsolidateStep implements BlockWorkStep {
   private boolean planning;
   /** Game time before which no shelving dialogue starts. */
   private long nextPlanTick;
+  private BlockPos approach;
+  private boolean mindingStorehouse;
+  private final Map<BlockPos, Long> failedUntil = new HashMap<>();
 
   @Override
   @Nullable
@@ -93,6 +98,9 @@ public final class ConsolidateStep implements BlockWorkStep {
       return null;
     }
     this.mindingTicks = 0;
+    this.approach = null;
+    this.mindingStorehouse = false;
+    this.failedUntil.entrySet().removeIf(entry -> entry.getValue() <= person.level().getGameTime());
 
     int used = usedSlots(person);
     // Keep collecting until the pack is worth a trip; only then deliver. This
@@ -110,8 +118,16 @@ public final class ConsolidateStep implements BlockWorkStep {
     // The delivery flag must drop here, or act would run an empty delivery
     // against the station on every visit and never mind the shelves at all.
     this.delivering = false;
+    this.mindingStorehouse = true;
     BlockPos station = LocationManager.getJobLocation(person);
-    return station.equals(BlockPos.ZERO) ? null : station;
+    if (station.equals(BlockPos.ZERO)) return null;
+    this.approach = approachTo(person, station);
+    if (this.approach == null && person.level() instanceof ServerLevel level) {
+      var building = LocationManager.getJobBuilding(person);
+      var entrance = building == null ? null : LocationManager.getEntrance(level, building);
+      if (entrance != null) this.approach = approachTo(person, entrance.doorstep());
+    }
+    return this.approach == null ? null : station;
   }
 
   @Override
@@ -121,7 +137,7 @@ public final class ConsolidateStep implements BlockWorkStep {
       return false; // the next select decides whether to fetch more or deliver again
     }
 
-    if (!(person.level().getBlockEntity(target) instanceof Container source)) {
+    if (this.mindingStorehouse || !(person.level().getBlockEntity(target) instanceof Container source)) {
       // The chest went, or this is the storehouse station and there is simply
       // nothing to move. One organise pass when the shelves first fall quiet
       // after a delivery, then standing is bounded so the legs come free again.
@@ -151,6 +167,46 @@ public final class ConsolidateStep implements BlockWorkStep {
   @Override
   public double reachSqr(RealPerson person) {
     return 6.0D;
+  }
+
+  @Override
+  public BlockPos positionOf(BlockPos target) {
+    return this.approach == null ? target : this.approach;
+  }
+
+  @Override
+  public boolean inReach(RealPerson person, BlockPos target) {
+    return person.blockPosition().distSqr(this.mindingStorehouse ? positionOf(target) : target) <= reachSqr(person);
+  }
+
+  @Override
+  public boolean requiresExactArrival() {
+    return true;
+  }
+
+  @Override
+  public void unreachable(RealPerson person, BlockPos target) {
+    this.failedUntil.put(target, person.level().getGameTime() + 1200);
+  }
+
+  /** Navigate to supported ground within arm's reach; containers themselves are solid. */
+  @Nullable
+  private BlockPos approachTo(RealPerson person, BlockPos target) {
+    if (this.failedUntil.containsKey(target)) return null;
+    List<BlockPos> candidates = new ArrayList<>();
+    for (BlockPos pos : BlockPos.betweenClosed(target.offset(-2, -2, -2), target.offset(2, 2, 2))) {
+      if (pos.distSqr(target) <= reachSqr(person) && WorkerFooting.canStand(person, pos)) {
+        candidates.add(pos.immutable());
+      }
+    }
+    candidates.sort(Comparator.comparingDouble(pos -> pos.distSqr(person.blockPosition())));
+    for (BlockPos candidate : candidates.stream().limit(12).toList()) {
+      var path = person.getNavigation().createPath(candidate, 0);
+      if (path != null && path.canReach() && path.getEndNode() != null
+          && path.getEndNode().asBlockPos().equals(candidate)) return candidate;
+    }
+    this.failedUntil.put(target, person.level().getGameTime() + 200);
+    return null;
   }
 
   /**
@@ -336,10 +392,11 @@ public final class ConsolidateStep implements BlockWorkStep {
       if (stack.isEmpty()) {
         continue;
       }
+      ItemStack offered = stack.copy();
       ItemStack leftover = HopperBlockEntity.addItem(source, pack, stack, null);
       source.setItem(slot, leftover);
-      if (leftover.getCount() < stack.getCount()) {
-        return stack; // moved at least some of it
+      if (leftover.getCount() < offered.getCount()) {
+        return offered.copyWithCount(offered.getCount() - leftover.getCount());
       }
     }
     return ItemStack.EMPTY;
@@ -363,9 +420,10 @@ public final class ConsolidateStep implements BlockWorkStep {
         return null;
       }
       if (level.getBlockEntity(found) instanceof Container container && hasGoods(container)) {
-        return found;
+        this.approach = approachTo(person, found);
+        if (this.approach != null) return found;
       }
-      skip.add(found); // empty or gone: never a source
+      skip.add(found); // empty, gone, or inaccessible: try another source
     }
     return null;
   }
@@ -375,7 +433,8 @@ public final class ConsolidateStep implements BlockWorkStep {
   private BlockPos storehouseChest(RealPerson person) {
     for (BlockPos pos : Storehouse.chests(person)) {
       if (person.level().getBlockEntity(pos) instanceof Container) {
-        return pos;
+        this.approach = approachTo(person, pos);
+        if (this.approach != null) return pos;
       }
     }
     return null;

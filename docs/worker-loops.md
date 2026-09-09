@@ -49,6 +49,12 @@ than a near one, which makes storage placement matter. What it costs is pathing:
 can fail the way any walk can, and a loop that cannot reach a chest waits rather than
 conjuring - which reads, correctly, as a village whose storage is badly placed.
 
+Bedtime stowing obeys the same conservation boundary even though its provisioning remains
+distance-based. Each non-personal stack is offered directly to shared storage and only the
+accepted portion leaves the pack. A rejected remainder stays in its original pack slot and raises
+the village's storage-strain fact. It is never spawned as a loose item, so full shelves cannot turn
+a quartermaster's or miner's carried surplus into a despawning ground entity.
+
 Two knowing remainders, kept deliberately for now: **bedtime provisioning** (workers pulling
 their role's gear, torches, and seeds at the end of the day, plus the silent bedtime crafts)
 still draws from stores at a distance, pending a design for a morning provisioning round that
@@ -235,9 +241,19 @@ night. A sleepless job still keeps its bed and passes the housing gate in `JobCl
 unchanged; only the lying-down is skipped. Bedtime is also when the village hands out gear
 and rations, so the watch runs the same stow-and-restock at their post instead
 (`NightWatchRestockGoal`, sharing `goToBed`'s cadence), and a bell ring restocks a guard
-without walking them to bed. The village center's guard slot is intended as the **guard
-captain**, the founding twin of the barracks captain station above; the rename and any
-captain-specific behavior are not built yet.
+without walking them to bed. The village center's guard slot is the **Guard Captain**
+(2026-09-08). This is a station-derived display role, still `Occupation.GUARD`, with
+ordinary guard behavior. It is synchronized to clients, re-derived after loading, and
+removed when the person changes jobs. It does not consume or replace a personal honorific.
+Any distinct barracks-captain mechanics remain future work.
+
+**Bell gathering (2026-09-08).** Right-clicking a bell keeps the existing 48-block
+recall: housed civilians head home, and guards only stow and restock. Truly unhoused
+residents instead take a one-shot walk to reachable dry ground near that exact bell,
+including below an elevated bell. Dependent children with a family home still go home.
+Gathering shares directed travel, preserves existing arrival/departure/commute targets,
+and releases movement on arrival, danger, route failure or a one-minute timeout. This
+does not add bedless sleeping or change redstone/projectile bell behavior.
 
 **Built, 2026-09-01: a villager who cannot get home is brought home.** Unslept nights are
 counted at daybreak for every villager, whatever goal held them through the night; after three
@@ -285,6 +301,23 @@ starting. Each person's one-minute cooldown is persisted on the entity, so chang
 reloading cannot reset it.
 
 ## The builder builds, and between builds it makes the village walkable
+
+**Access first, 2026-09-08.** A short priority-3 `GradeStep(true)` pass uses the ordinary grading
+executor only on one-to-three-block shared gaps and small entrance approaches. It applies the
+gentler path grade before any path is worn, so a one-block lip between equal floor planes is
+smoothed rather than merely accepted as climbable. Floor anchors use actual rotated footprints
+and saved sink offsets. Water, structures, protected plants and player edits remain untouched.
+General landscape grading keeps its lower priority and existing stable-height limits.
+An existing dirt path under a lip counts as safe near-full-height support. Real holes, fluids
+and half-slabs do not, so removing a lip never opens a hidden drop.
+
+After that, `PathStep(true)` gives each building revision one early access trip from the center,
+ahead of wall work. Completed trips are saved under the existing village-brain strategy data;
+failed destinations wait before retrying. Upgrades and moved buildings get a fresh trip. The
+ordinary lower-priority path-maintenance pass remains. Open-front buildings use their rotated
+authored entrance direction rather than requiring a door block. Paving protects claimed building
+ground, ownership-marked blocks, block entities, crops, saplings and fluid. The following describes
+the wider maintenance work; the small early access pass is its deliberate exception.
 
 The BUILDER has two duties, not one. The first is construction: preparing a site, then
 placing the chosen structure block by block. The second runs whenever there is no project to
@@ -383,8 +416,9 @@ interruption cannot ratchet a target farther down, and no column ever stands mor
 blocks from where it started. A later pass may refill an earlier partial cut when the stable
 target calls for it. Ownership is the felling rule's neighbour
 ([block-ownership.md](block-ownership.md)): a
-village-placed block is never cut and nothing under one is; a player's placed dirt is graded
-like any other, and its record is dropped when it is dug.
+village-placed block is never cut and nothing under one is; ownership-marked player blocks
+are likewise protected, including changes made after the survey. Crops and saplings retain
+their separate plant protections.
 
 **Built, 2026-09-03: a small deep hole is covered, not graded from its floor.** A cave mouth
 open to the sky used to enter the heightmap as a column of ground at the cave floor. A gradual
@@ -429,6 +463,15 @@ at the near wall when the door faces away. The worn spoke is then settled into a
 by the path pass (`GradingSurvey.smoothPaths`), so a villager walks from the campfire to the
 door on an even grade. The just-finished building is served first for free: the builder stands
 at it when it completes, so its apron is the nearest uneven ground the grading picks up.
+
+**Gate spokes, 2026-09-08.** `VillagePaths` registers building doors and saved wall gate
+passages in the same destination list. A dry, supported gate opening is eligible before
+the rest of the wall finishes. The existing directed walking, paving and smoothing do
+the work; gates connect to the center network rather than creating a separate all-pairs
+road graph. Gate approaches use saved ground, not the gatehouse roof heightmap. Blocked,
+flooded or unloaded openings wait without losing their saved route identity. Gate approach
+columns join the grading access mask and survey bounds, retaining the 96-block scan cap
+and all building, crop and block-ownership protections.
 
 ## The farmer's idle hands feed the composter
 
@@ -498,15 +541,21 @@ build to a batch worth the walk to the fire, and cooks it down before the next c
 the pack and stows to the food stores at bedtime, which is how a lone fishery feeds a village
 that has no bakery or butchery yet.
 
+`FishStep` casts a visible bobber into nearby open water, waits twenty seconds at the
+station, then reels it in with the catch. The server synchronizes the selected water and
+cast start to observers; the client draws the rod's line and bobber through the cast,
+float, and retrieve. Travel does not count toward the wait. Leaving the station, stopping
+work, and nightfall clear the line and start the next cast with a fresh wait.
+
 ## Roaming, fixed, and the shape in between
 
 **Roaming by default, fixed where a job is simpler that way.** Per job, not global.
 
 The miner is neither: it sweeps a pattern outward and downward from its work station, digging a
 real shaft, treating lava and water and bedrock and wrong-tool as obstacles. Air and fluid at the
-shaft's outer floor, walls, or ceiling are sealing work first. The miner closes those reachable
-breaches one block at a time before clearing any liquid. Only once the flooded pocket's boundary
-is sound does a bucket-holder walk down and bail the whole connected interior at once. The bucket
+shaft's outer floor, walls, or ceiling are sealing work first. The miner closes every reachable
+breach one block at a time before clearing liquid. A bucket-holder then drains the connected water
+that is reachable from the dry side, exposing any farther boundary for the next sealing pass. The bucket
 moves into the off hand before that act, swings from the off hand, remains visible for a short
 beat, and then returns to the pack. It is a reusable tool, never filled or consumed. Sealing itself
 does not require the bucket, so a miner without one still makes the lining safe and only then
@@ -518,9 +567,16 @@ intentional doorway through the ramp wall, so the lining pass never fills it bac
 pocket is followed through both ramp and rib cells, and every six-direction transition from that
 interior to air or fluid outside it is a breach. This includes the offset front and back faces made
 by the diagonal ramp, not only the floor, side walls, and ceiling. If a breach cannot currently be
-reached, the pocket remains blocked instead of being declared sealed and repeatedly bucket-cleared.
-An unreachable breach is an obstacle, not seal work: the ramp switches to its ordinary rib-mining
-fallback instead of repeatedly selecting a place the miner cannot stand.
+reached, the miner first finishes every boundary cell she can reach, then drains reachable water as
+one quiet pocket update and seals the newly exposed source edge before excavating farther. Applying
+neighbour updates per removed cell is not equivalent: the source can refill the head of the pocket
+while its tail is still being emptied. Any already-scheduled fluid ticks inside that drained pocket
+are cancelled; sealing its source edge performs the normal neighbour update that resumes the
+surrounding simulation outside the mine. She never fills planned walking cells with a temporary wall:
+that wall eventually separated her from the leak it was meant to approach.
+A flooded rib whose outside edge still cannot be reached is closed at its own doorway, so its water
+does not block another rib or the main ramp. With no bucket, genuinely unreachable water remains an
+obstacle and only that excavation front falls back to its ordinary rib-mining behavior.
 
 Mine supports are a family, not exact cobblestone. Any placeable dirt-family block, natural stone,
 cobbled stone, or sandstone can pay for a floor, wall, ceiling, or vein plug, and the actual block
@@ -556,6 +612,15 @@ is** for most jobs, and the model has to be able to express it. Keep the excavat
 the miner floors a cave rather than exploring it and works the veins its own shaft exposes, while a
 prospector that roams to find caves and hunt veins is a better story still deliberately left as fog.
 
+When the row sweep finds stone beyond reachable footing, its entrance-first recovery also
+audits the first flooded pocket for reachable seals and bucket work. If neither the face
+nor that frontier can advance, it tries the dry ribs before going idle. This matters when
+ceiling rock sorts before lower water: that rock must not hide the leak or the side cuts.
+The Mallowen replay closed five reachable lining cells, then opened a three-block rib
+entrance without a bucket. `WorkerRecoveryVerification` exercises this flooded-frontier
+case in every rotation and the fisher's catch/interruption lifecycle in a disposable world
+with `-Dkithkyn.workers.verify=true`.
+
 **The ramp fans out when it can go no deeper** (2026-09-03). The descent is always tried first,
 and only when the ramp is genuinely stopped, at bedrock, at lava or water the miner has no bucket
 for, or at a flooded pocket whose remaining breach cannot be reached, does she stop driving it down.
@@ -567,8 +632,9 @@ mechanism: it is pulled and plugged by the very vein detour that works the shaft
 now reads a rib cell as dug space and scans the rock around wherever the miner stands rather than the
 corridor's fixed width, so out in a rib she still sees what she has exposed. A cut rib is lit with a
 single wall torch near its mouth, whose fourteen light covers the whole hop. A rib that meets liquid,
-bedrock or a cave simply stops there; it is a prospect cut, not a second shaft, so it never bails or
-floors or bores on the way the ramp does. Each rib and the descending ramp advance as independent
+bedrock or a cave simply stops there; while it is being cut it remains a prospect cut, so it never
+bails, floors, or bores on the way a diagonal shaft does. Each rib and the descending ramp advance
+as independent
 fronts: water at one cut cannot hold the opposite cut, another depth, or the ramp itself. They share
 navigation, not a blocked state. The one number that matters is the eight-block reach: a rib
 is kept to a single pathfinder hop precisely so `MineShaft` needs no waypoints of its own for it. From
@@ -577,8 +643,26 @@ hop-by-hop waypoints carry the miner the rest of the way out. Rib cells count as
 that routing decision; otherwise a target four blocks along a branch looks like an outside destination
 and the shaft navigator sends the miner back up the ramp. A longer rib would strand her the way a
 deep face once stranded her over the shaft. That the pathfinder hands her back onto the ramp is the
-live-verify item, not a proof. When every rib off the ramp is cut, the mine is worked out and the
-miner stands down.
+live-verify item, not a proof.
+
+**Finished root ribs seed one more generation of shafts** (2026-09-05). Reaching a temporary
+water or lava stop does not count as finishing a shaft. Once the original diagonal reaches bedrock
+and every ordinary rib has either been cut or honestly stopped, the miner revisits the root ribs
+from the shallowest down. A dry, fully open, fully supported eight-block rib may become an entrance:
+from its far end the miner drives a new five-wide diagonal outward. That child uses the exact same
+loop, including flooring, lining, bailing, lighting, vein detours, and its own eight-block ribs. The
+miner finishes the entire child before considering the next root rib. Child ribs do not seed more
+shafts, so growth is deliberately bounded to one extra generation.
+
+Placement is planned before a child is opened. Parallel children on consecutive same-side root ribs
+would touch because the ribs are four layers apart while each shaft is five wide and five high, so
+that candidate is skipped; the next safely separated root rib can still be used. Opposite sides are
+independent. The full three-dimensional child plan, including its future ribs, is also compared with
+every existing root and child owned by the building; only the single intended parent-rib entry may
+intersect. A shortened rib, a cave edge, liquid, bedrock, a waterproofing bulkhead, or missing floor
+also prevents that rib from seeding a child. The owning `Building` saves only each child's source rib,
+side, order, and completion. Actual excavation progress is still read from the blocks, which keeps
+restarts, gravel, fluids, and player edits honest.
 
 **The ramp is the way in and out** (2026-09-02). A villager's pathfinder expands nodes only within
 twenty blocks of where they stand and, past that, hands back the partial path to whichever node lies
@@ -589,12 +673,19 @@ teleported him home. `PersonPathNavigation` now routes any walk that starts or e
 the ramp, one adjacent column at a time (`village/buildings/MineShaft`, which also holds the one
 definition of the corridor's shape that `MineStep` digs to): in, the mouth first and then down the
 walk cells; out, up the walk cells to the mouth; between two points of one shaft, straight when they
-are within a hop. It sits under `moveTo`, so every goal gets it, the miner's descent, the haul to the
+are within a hop. A child adds an explicit parent chain: root mouth, root ramp, source rib, child
+entry, then child ramp, reversed on the way out and joined through the root for a sibling. It sits
+under `moveTo`, so every goal gets it, the miner's descent, the haul to the
 storehouse, the walk to bed. That corridor definition is bounded vertically to the ramp floor and its
 five-block headroom; a person far below it is no longer mistaken for a valid ramp occupant. If a route
 request finds a villager below that planned excavation, they are returned immediately to the village
 center rather than spending multiple nights aiming at an overhead waypoint. The ordinary stranded
 teleport remains the broader last resort for a cave or obstruction the ramp does not reach.
+
+Approaching a root mine's surface work-station anchor from outside uses ordinary ground navigation.
+That anchor is also excavation headroom, but it must not force a newcomer into the first underground
+step before the step has been dug. The Birch integration exposed this at initial mine staffing.
+Targets farther down the shaft, exits from inside, and child entrances retain ramp waypoints.
 
 **The hunter is bounded roaming, not a chase.** It works a hunting ground rather than pursuing
 animals wherever they wander. Pure roaming would walk a hunter arbitrarily far into danger, and
@@ -682,6 +773,12 @@ seconds; the guard's roll was one in twenty until 2026-09-01, which left a fresh
 quarter of an hour per tree for the lodge it could not yet afford); combat goals outrank the
 guard's chopping.
 
+**Attached bee nests (2026-09-08).** Shared tree felling also removes unowned bee nests
+and beehives touching a log actually removed, once each. It releases occupants normally;
+Silk Touch preserves bees in the native hive drop instead. Player/village-owned hives,
+disconnected nests and unrelated block entities stay put. This applies to worker chops,
+stand chops and construction clearing; the stand's ownership exemption is for logs only.
+
 **Built, 2026-09-02: the stand is a loop.** The lumberjack's station is the sapling the lodge
 is authored with (local `[17,1,3]` in every family), on a block of dirt the structure carries
 so it stands on ground whatever the terrain under the footprint does. Two things had kept the
@@ -744,8 +841,46 @@ occupation by station: the two base posts at each gate carry swords, and the ele
 watchtower posts carry crossbows. Each draws upgrades of its own weapon kind from village stores,
 uses special arrows before the infinite plain fallback, shares the guard's armor, shield, ration,
 and offhand-eating behavior, and returns to its assigned wall post after combat (`JobTool`,
-`WallGuardPostGoal`, [walls.md](walls.md)). A lost basic weapon is replaced from physical stock or
+`GuardPostGoal`, [walls.md](walls.md)). A lost basic weapon is replaced from physical stock or
 made from the documented simplified materials, never conjured.
+
+An authored building opts into that same fixed watch with its own `RANGED_GUARD_POSTS` grant.
+Its `GUARD` workstations determine the count and exact rotated positions: Birch watchtower T1
+has one, T2 has two. `GuardDuty` resolves both building and wall assignments without a second
+roster. A building being rebuilt temporarily suspends return-to-post movement while preserving
+the sentry's role and equipment. Existing unmarked watchtowers retain their patrol behavior.
+
+These opted-in building sentries carry a crossbow and one real backup sword (`GuardWeapons`).
+Within three blocks of a visible threat they draw the sword; they return to the crossbow beyond
+four blocks, or when that close threat is gone. The hand and pack exchange the same stacks,
+preserving wear, custom components and loaded bolts even with a full pack. The backup is kept
+when stowing other goods; both kinds upgrade at night restock and missing weapons are restored
+by the normal maintenance check, through the ordinary village-stock path and outside combat.
+The initial basic sidearm belongs to the ordinary one-time job kit. Wall
+loadouts remain unchanged. Fixed ranged guards defend in place without chasing or strafing off
+the platform, and a weapon switch preserves the combat target. Crossbow friendly-fire checks
+test the finite firing corridor, so an adjacent fellow sentry does not suppress every shot.
+Their assigned beds retain normal ownership; guards still do not sleep.
+
+Patrolling guards use the same physical loadout system for a sword and axe (2026-09-08).
+They start with the existing axe kit, not a free sword. A sword supplied through village
+storage becomes their preferred weapon; without one the axe remains their fallback.
+The axe is retained through stowing and upgraded alongside the sword at night. During
+`ChopStep` the guard draws that carried axe, then restores the preferred weapon on completion,
+unreachable-work release or interruption. A live combat target overrides chopping intent.
+Daytime maintenance restores missing gear without treating a carried sword as the wrong
+job tool. Existing fixed wall loadouts, building-sentry range switching, shields and
+offhand meals retain their own behavior.
+
+The smith forges a bounded spare stock of buckets, iron tools, swords, shields and armor.
+Shields cost one iron ingot plus six planks, accepting the ordinary material system's
+mixed woods and log-to-plank substitution. The smith fetches ingredients, spends the
+whole recipe at the forge, then delivers the result to physical storage. Delivery does
+not depend on an in-memory recipe selection, so finished gear survives reload and can
+still be shelved. The guard's existing personal shield offer shares the same cost facts
+but remains a separate fallback when no ready shield is available. Forge definitions
+advertise `TOOLS_IRON`, `ARMOR_IRON` and `SHIELDS` as well as repair and smelting, so the
+planner can see their actual value. This does not force a forge ahead of housing or food.
 
 ## When there is nothing to work on
 
@@ -921,6 +1056,12 @@ the rewrite, because the ranking it encodes is the same ranking `SELECT` will wa
 by category and level, so a whole catalog can be walked end to end. Built for reviewing candidate
 structures ([structure-sourcing.md](structure-sourcing.md)) and checking content passes.
 
+Builders delivering a complete recipe count as on site at the same distance used by
+construction. They can hand over materials from the surface before grading lowers the
+terrain to the planned center. Quartermasters choose reachable, supported ground within
+container reach, retry inaccessible stores later, and can mind the storehouse from its
+doorstep when their height prevents them from entering.
+
 ## The quartermaster shelves by plan
 
 *2026-09-01: the dialogue has converged live on Llama-3.2-3B (one round, four item types over
@@ -989,8 +1130,9 @@ it at once; watch the `[quartermaster]` log lines for the round-by-round converg
 
 ## Still open
 
-- **Resource depletion** ([#54](https://github.com/Quzzar/kithkyn/issues/54)): trees replant,
-  ore does not. What a mined-out village does, and whether the mine is allowed to be a fiction.
+- **After the bounded mine is depleted** ([#54](https://github.com/Quzzar/kithkyn/issues/54)):
+  trees replant, ore does not. The physical root and child network now ends honestly; what economic
+  pressure or new building follows that exhaustion is still open.
 - **Where output goes** ([#49](https://github.com/Quzzar/kithkyn/issues/49)): per-building
   chests or one pool. Note the research found a third answer neither option covered: MineColonies
   uses a **priority ladder** where the worker's own building resolves above the warehouse, and the
@@ -1005,11 +1147,11 @@ Decided on [#54](https://github.com/Quzzar/kithkyn/issues/54). Workers harvest r
 blocks, so a village genuinely consumes its surroundings, and these are the rules that stop
 that ending badly.
 
-**The mine deepens; it never runs dry.** As the ore within reach is taken, the miner
-extends the shaft downward and outward rather than idling or producing from nothing. A
-Minecraft world is effectively infinite downward, so the mine is inexhaustible in practice
-without ever violating the rule that nothing spawns items. It also means an old village's
-mine is a real hole you can climb into and read: this is how far they got, over how long.
+**The mine deepens, branches once, and eventually runs dry.** As the ore within reach is taken,
+the miner extends the root shaft down to bedrock, cuts its prospecting ribs, then works eligible
+root ribs from the top down into bounded child shafts. It never produces from nothing, and it does
+not recurse forever. An old village's mine is a real network you can climb into and read: this is
+how far they got, which branches fit, and where rock, caves, or water stopped them.
 
 **Underground is exempt from the surface rule.** See
 [site-selection.md](site-selection.md): a village never reshapes what you see, and may dig

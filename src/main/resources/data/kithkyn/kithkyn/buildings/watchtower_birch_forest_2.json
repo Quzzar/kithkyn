@@ -1,0 +1,76 @@
+{
+  "structure": "watchtower_birch_forest_2",
+  "category": "watchtower",
+  "variant": "birch_forest",
+  "beds": [
+    [
+      7,
+      1,
+      6
+    ],
+    [
+      7,
+      5,
+      8
+    ]
+  ],
+  "work_stations": [
+    {
+      "occupation": "GUARD",
+      "pos": [
+        7,
+        10,
+        8
+      ]
+    },
+    {
+      "occupation": "GUARD",
+      "pos": [
+        9,
+        10,
+        8
+      ]
+    }
+  ],
+  "personal_containers": [
+    [
+      10,
+      1,
+      9
+    ]
+  ],
+  "containers": [],
+  "cost": [
+    {
+      "item": "minecraft:oak_log",
+      "count": 20
+    },
+    {
+      "item": "minecraft:cobblestone",
+      "count": 60
+    }
+  ],
+  "grants": [
+    "PROTECTION",
+    "RANGED_GUARD_POSTS"
+  ],
+  "sink": 0,
+  "village_identity": {
+    "primary_blocks": [
+      [
+        7,
+        1,
+        6
+      ]
+    ],
+    "secondary_blocks": [
+      [
+        7,
+        5,
+        8
+      ]
+    ],
+    "banners": []
+  },
+  "upgrades_from": "watchtower_birch_forest_1"
+}

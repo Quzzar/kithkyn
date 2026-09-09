@@ -363,20 +363,72 @@ CTOV fortified plains is a defense or development state of `plains`, while Chris
 Halloween are possible seasonal treatments. This keeps biome, progression, and event state from
 becoming one overloaded axis.
 
-Unknown world biomes fall back to `plains`. The eventual resolver should first honor an explicit
-datapack mapping, then use conventional biome tags and climate properties, and finally use the
-fallback. This lets modpacks classify unusual biomes precisely without hard-coding every registry
-id in Kithkyn.
+### Current runtime selection: 2026-09-07
 
-**Current implementation, built 2026-09-01:** `VillageStyle` supports only `plains`, `taiga`,
-`snowy`, `desert`, and `savanna`. It remains a useful bootstrap, not the target catalog. The
-refactor keeps the invariant that a village chooses once at founding and retains the result.
-Recipes remain identical across village biomes, and an upgrade follows the village biome of the
-building already standing.
+The available architecture families are `plains`, `taiga`, `snowy`, `desert`, `savanna`, and
+the approved `birch_forest` selection. The reference roster above reserves future work, not
+phantom runtime catalogs. In particular, the approved custom Birch selection supersedes the
+earlier Romanian/Dungeons and Taverns allocation for this implementation; ordinary and old-growth
+Birch biomes use this one approved catalog rather than two identical architecture sets.
+
+Manual `/kithkyn create-village` and naturally founded villages use the same selection path.
+A village chooses its style once, before placing the founding set, and persists it for life.
+Moving its borders, changing a biome tag, reloading resources, or restarting the server does not
+reroll an existing village. An explicit style argument on the command still overrides selection.
+
+Selection first honors `kithkyn:village_style/<style>` biome tags, so a datapack can map a
+vanilla or modded biome precisely without a second mapping format. If a biome has several
+explicit tags, the stable order is Plains, Taiga, Snowy, Desert, Savanna, Birch Forest. Only
+styles whose own center, mine, and storehouse definitions are loaded are automatic candidates.
+
+Conventional families then retain deterministic assignments:
+
+| Family | Village style |
+| --- | --- |
+| Birch, including `c:is_birch_forest` and untagged registry paths containing `birch` | Birch Forest |
+| Desert, badlands, sandy | Desert |
+| Snowy or icy | Snowy |
+| Savanna or jungle | Savanna |
+| Taiga, coniferous, mountain | Taiga |
+| Plains, other forest/deciduous, swamp | Plains |
+
+Birch wins before broader family tags; an explicit style tag can override even a birch-named
+biome. This name heuristic is a compatibility fallback for mods that omit conventional tags,
+not a substitute for those tags.
+
+An unfamiliar family uses its precipitation, base temperature, downfall, and conventional
+hot/cold/wet/dry tags to choose a compatible cluster. The choice is randomly varied between
+founding sites but deterministic for the same world seed, biome, and site:
+
+| Unclassified climate | Candidate architecture cluster |
+| --- | --- |
+| Freezing with precipitation | Snowy, Taiga |
+| Other cold/cool | Taiga, Plains |
+| Hot and dry | Desert, Savanna |
+| Hot with rain/moisture | Savanna, Plains |
+| Temperate and dry | Plains, Savanna |
+| Other temperate | Plains, Birch Forest |
+
+Cold means a cold tag or base temperature below `0.4`; freezing is below `0.15`. Hot means
+a hot tag or temperature at least `1.0`. No precipitation is dry. Otherwise wet tags or
+downfall at least `0.7` take precedence over dry tags or downfall at most `0.3`. An absent
+cluster member is never selected. If a datapack removes a whole climate cluster, selection
+uses the loaded Plains founding set, then another loaded founding set in the stable style
+order. With no founding content loaded, the existing missing-center failure remains visible.
+These are architecture choices, not new restrictions on survival or work.
+
+Birch is a strict, deliberately sparse catalog. It never borrows an omitted Plains building
+or higher tier: no four-bed House L3, Mine L2, Storehouse upgrade, Farm L3, Center upgrade,
+Church L2, or separate Tavern appears implicitly. Its shared bakery/tavern declares both
+workplaces in one building. The five older catalogs retain their existing Plains fallback
+and upgrade compatibility. Multiword variant IDs such as `house_birch_forest_1` now use the
+longest known style suffix; custom single-token variants retain the existing naming format.
+Recipes remain identical across village biomes, and an upgrade follows the explicitly named
+predecessor of the building already standing.
 
 ### Village identity is separate from village biome
 
-Every village will also establish a persistent **village identity**: an ordered primary and
+Every village establishes a persistent **village identity**: an ordered primary and
 secondary Minecraft dye color plus a layered banner design using those colors. Village biome
 answers how the village builds; village identity answers which particular community built it.
 Two villages may therefore share the same architecture while using different banners and color
@@ -384,8 +436,8 @@ accents.
 
 Buildings that support identity need intentionally authored banner sockets and semantic color
 anchors. The colors must not be implemented as a blind replacement of every block with a
-matching material. The exact point when a village establishes its identity, at founding or
-during early growth, remains to be decided before implementation.
+matching material. The identity is selected with the village name at founding and retained
+for all later buildings; see [village-identity.md](village-identity.md).
 
 How a village survives where it is:
 
@@ -413,7 +465,7 @@ the player, with a caravan, or abstract is an open question below.
 | | Count |
 | --- | --- |
 | Categories | 37 |
-| Implemented village biomes | 5 |
+| Implemented village biomes | 6 |
 | Towns and Towers Overworld village-biome floor | 26 |
 | Additional village biomes already justified by reviewed families | 6 |
 | Existing structure-plan estimate, based on five village biomes | ~130 |

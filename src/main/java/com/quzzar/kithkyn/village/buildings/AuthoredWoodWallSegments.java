@@ -30,14 +30,14 @@ import net.minecraft.nbt.Tag;
  */
 final class AuthoredWoodWallSegments {
 
-  static final AuthoredWoodWallSegments INSTANCE = loadBundled();
+  static final AuthoredWoodWallSegments INSTANCE = loadBundled("wood");
+  static final AuthoredWoodWallSegments BIRCH_FOREST = loadBundled("birch_forest");
 
   private static final String RESOURCE_ROOT =
-      "data/kithkyn/structure/wall/wood/";
+      "data/kithkyn/structure/wall/";
   private static final int CORNER_ANCHOR_X = 6;
   private static final int CORNER_ANCHOR_Z = 0;
   private static final int GATEHOUSE_ANCHOR_X = 8;
-  private static final int GATEHOUSE_ANCHOR_Z = 2;
   /** Keeps irregular posts visible without letting a terrain step turn one into a mast. */
   private static final int LINEAR_DETAIL_HEADROOM = 2;
 
@@ -116,7 +116,7 @@ final class AuthoredWoodWallSegments {
       int y = base + cell.y() - template.baseY(ordinal) - topShift;
       put(blocks, new BlockPos(route.getX(), y, route.getZ()),
           transform.piece(cell.piece()));
-      if (cell.piece() == WallBlockPlan.Piece.POST) {
+      if (isPost(cell.piece())) {
         postBottoms.merge(ringIndex, y, Math::min);
       }
     }
@@ -161,7 +161,7 @@ final class AuthoredWoodWallSegments {
       int base = deck.get(index) - (WallTier.WOOD.height() - 1);
       addRigid(blocks, template, ring, ground, anchor, base,
           Transform.along(tangentAt(ring, index)),
-          GATEHOUSE_ANCHOR_X, GATEHOUSE_ANCHOR_Z, WallSectionKind.GATEHOUSE);
+          GATEHOUSE_ANCHOR_X, template.sizeZ() / 2, WallSectionKind.GATEHOUSE);
     }
   }
 
@@ -170,7 +170,7 @@ final class AuthoredWoodWallSegments {
       Transform transform, int anchorX, int anchorZ, WallSectionKind kind) {
     for (int x = 0; x < template.sizeX(); x++) {
       for (int y = 0; y < template.sizeY(); y++) {
-        for (int z = 0; z < template.sizeZ(); z++) {
+        for (int z = template.structuralMinZ(); z <= template.structuralMaxZ(); z++) {
           Vec offset = transform.apply(x - anchorX, z - anchorZ);
           put(blocks, new BlockPos(anchor.getX() + offset.x(), baseY + y,
               anchor.getZ() + offset.z()), WallBlockPlan.Piece.BODY,
@@ -181,7 +181,7 @@ final class AuthoredWoodWallSegments {
     List<PlacedCell> placedCells = new ArrayList<>(template.cells().size());
     Map<Long, Integer> postBottoms = new LinkedHashMap<>();
     for (Cell cell : template.cells()) {
-      if (isInwardRoofLantern(kind, cell)) {
+      if (isInwardRoofLantern(kind, cell, template.structuralMinZ())) {
         continue;
       }
       Vec offset = transform.apply(cell.x() - anchorX, cell.z() - anchorZ);
@@ -190,7 +190,9 @@ final class AuthoredWoodWallSegments {
       WallBlockPlan.Piece piece = transform.piece(cell.piece());
       placedCells.add(new PlacedCell(position, piece));
       put(blocks, position, piece);
-      if (piece == WallBlockPlan.Piece.POST) {
+      // Only authored ground-contact legs need foundations. Masonry roof beams
+      // use the same block as legs but must retain the open space below them.
+      if (isPost(piece) && cell.y() == 0) {
         long column = BlockPos.asLong(position.getX(), 0, position.getZ());
         postBottoms.merge(column, position.getY(), Math::min);
       }
@@ -208,12 +210,12 @@ final class AuthoredWoodWallSegments {
   }
 
   /** The live review keeps the outward lamps and removes the visually busy inward pair. */
-  private static boolean isInwardRoofLantern(WallSectionKind kind, Cell cell) {
+  private static boolean isInwardRoofLantern(WallSectionKind kind, Cell cell, int minZ) {
     if (cell.piece() != WallBlockPlan.Piece.LANTERN) {
       return false;
     }
     return switch (kind) {
-      case GATEHOUSE -> cell.y() == 7 && cell.z() == 0
+      case GATEHOUSE -> cell.y() == 7 && cell.z() == minZ
           && (cell.x() == 6 || cell.x() == 10);
       case CORNER_TOWER -> cell.y() == 6 && cell.z() == 2
           && (cell.x() == 6 || cell.x() == 8);
@@ -236,7 +238,8 @@ final class AuthoredWoodWallSegments {
     Map<Long, PlacedCell> bottoms = new LinkedHashMap<>();
     for (PlacedCell cell : placedCells) {
       boolean climbPiece = isClimbPiece(cell.piece());
-      boolean lowAdjacentFence = cell.piece() == WallBlockPlan.Piece.PARAPET
+      boolean lowAdjacentFence = (cell.piece() == WallBlockPlan.Piece.PARAPET
+          || cell.piece() == WallBlockPlan.Piece.COBBLE_WALL || cell.piece() == WallBlockPlan.Piece.MOSSY_WALL)
           && cell.position().getY() <= baseY + 1
           && isAdjacentToAny(column(cell.position()), climbColumns);
       if (climbPiece || lowAdjacentFence) {
@@ -312,13 +315,18 @@ final class AuthoredWoodWallSegments {
     return ground.get(nearest);
   }
 
-  private static AuthoredWoodWallSegments loadBundled() {
+  private static boolean isPost(WallBlockPlan.Piece piece) {
+    return piece == WallBlockPlan.Piece.POST || piece == WallBlockPlan.Piece.COBBLE_POST
+        || piece == WallBlockPlan.Piece.MOSSY_POST;
+  }
+
+  private static AuthoredWoodWallSegments loadBundled(String family) {
     Map<WallSectionKind, Template> templates = new EnumMap<>(WallSectionKind.class);
-    load(templates, WallSectionKind.STRAIGHT, "straight.nbt");
-    load(templates, WallSectionKind.DIAGONAL, "diagonal.nbt");
-    load(templates, WallSectionKind.TERRACE, "terrace.nbt");
-    load(templates, WallSectionKind.CORNER_TOWER, "corner_tower.nbt");
-    load(templates, WallSectionKind.GATEHOUSE, "gatehouse.nbt");
+    load(templates, WallSectionKind.STRAIGHT, family + "/straight.nbt");
+    load(templates, WallSectionKind.DIAGONAL, family + "/diagonal.nbt");
+    load(templates, WallSectionKind.TERRACE, family + "/terrace.nbt");
+    load(templates, WallSectionKind.CORNER_TOWER, family + "/corner_tower.nbt");
+    load(templates, WallSectionKind.GATEHOUSE, family + "/gatehouse.nbt");
     return new AuthoredWoodWallSegments(templates);
   }
 
@@ -375,13 +383,17 @@ final class AuthoredWoodWallSegments {
         topY[index] = 0;
       }
     }
+    // Face-mounted flags do not enlarge rigid clearance or displace nearby wall sections.
+    List<Cell> structure = cells.stream().filter(cell -> !isBanner(cell.piece())).toList();
+    int minZ = structure.stream().mapToInt(Cell::z).min().orElse(0);
+    int maxZ = structure.stream().mapToInt(Cell::z).max().orElse(size.getInt(2) - 1);
     return new Template(List.copyOf(cells), baseY, topY,
-        size.getInt(0), size.getInt(1), size.getInt(2));
+        size.getInt(0), size.getInt(1), size.getInt(2), minZ, maxZ);
   }
 
   private static int supportPriority(WallBlockPlan.Piece piece) {
     return switch (piece) {
-      case POST, BEAM_NORTH_SOUTH, BEAM_EAST_WEST, BODY, WALKWAY -> 0;
+      case POST, COBBLE_POST, MOSSY_POST, BEAM_NORTH_SOUTH, BEAM_EAST_WEST, BODY, WALKWAY -> 0;
       case SLAB, PARAPET, STEP_NORTH, STEP_EAST, STEP_SOUTH, STEP_WEST -> 1;
       default -> 2;
     };
@@ -392,7 +404,8 @@ final class AuthoredWoodWallSegments {
     return switch (piece) {
       case TRAPDOOR_NORTH, TRAPDOOR_EAST, TRAPDOOR_SOUTH, TRAPDOOR_WEST,
           LADDER_NORTH, LADDER_EAST, LADDER_SOUTH, LADDER_WEST,
-          LANTERN, LANTERN_HANGING,
+          LANTERN, LANTERN_HANGING, TORCH, TORCH_NORTH, TORCH_EAST, TORCH_SOUTH, TORCH_WEST,
+          BANNER_NORTH, BANNER_EAST, BANNER_SOUTH, BANNER_WEST,
           CAMPFIRE_NORTH, CAMPFIRE_EAST, CAMPFIRE_SOUTH, CAMPFIRE_WEST -> 1;
       default -> 0;
     };
@@ -401,7 +414,21 @@ final class AuthoredWoodWallSegments {
   private static WallBlockPlan.Piece pieceFor(CompoundTag paletteEntry) {
     String name = paletteEntry.getString("Name");
     CompoundTag properties = paletteEntry.getCompound("Properties");
+    if (name.startsWith("minecraft:") && name.endsWith("_wall_banner")) {
+      return WallBlockPlan.bannerPiece(horizontal(properties.getString("facing")));
+    }
     return switch (name) {
+      case "minecraft:cobblestone" -> WallBlockPlan.Piece.COBBLE_POST;
+      case "minecraft:mossy_cobblestone" -> WallBlockPlan.Piece.MOSSY_POST;
+      case "minecraft:cobblestone_wall" -> WallBlockPlan.Piece.COBBLE_WALL;
+      case "minecraft:mossy_cobblestone_wall" -> WallBlockPlan.Piece.MOSSY_WALL;
+      case "minecraft:cobblestone_slab" -> switch (properties.getString("type")) {
+        case "bottom" -> WallBlockPlan.Piece.COBBLE_SLAB_BOTTOM;
+        case "double" -> WallBlockPlan.Piece.COBBLE_POST;
+        default -> WallBlockPlan.Piece.COBBLE_SLAB_TOP;
+      };
+      case "minecraft:torch" -> WallBlockPlan.Piece.TORCH;
+      case "minecraft:wall_torch" -> WallBlockPlan.torchPiece(horizontal(properties.getString("facing")));
       case "minecraft:stripped_oak_log" -> switch (properties.getString("axis")) {
         case "x" -> WallBlockPlan.Piece.BEAM_EAST_WEST;
         case "z" -> WallBlockPlan.Piece.BEAM_NORTH_SOUTH;
@@ -469,7 +496,7 @@ final class AuthoredWoodWallSegments {
     if (kind == WallSectionKind.GATEHOUSE) {
       transform = Transform.along(tangentAt(ring, index));
       anchorX = GATEHOUSE_ANCHOR_X;
-      anchorZ = GATEHOUSE_ANCHOR_Z;
+      anchorZ = template.sizeZ() / 2;
     } else if (kind == WallSectionKind.CORNER_TOWER) {
       Vec incoming = delta(ring, previous(index, ring.size()), index);
       Vec outgoing = delta(ring, index, next(index, ring.size()));
@@ -485,7 +512,7 @@ final class AuthoredWoodWallSegments {
     BlockPos anchor = BlockPos.of(ring.get(index));
     java.util.Set<Long> footprint = new java.util.HashSet<>();
     for (int x = 0; x < template.sizeX(); x++) {
-      for (int z = 0; z < template.sizeZ(); z++) {
+      for (int z = template.structuralMinZ(); z <= template.structuralMaxZ(); z++) {
         Vec offset = transform.apply(x - anchorX, z - anchorZ);
         footprint.add(BlockPos.asLong(anchor.getX() + offset.x(), 0,
             anchor.getZ() + offset.z()));
@@ -494,8 +521,15 @@ final class AuthoredWoodWallSegments {
     return Set.copyOf(footprint);
   }
 
+  private static boolean isBanner(WallBlockPlan.Piece piece) {
+    return switch (piece) {
+      case BANNER_NORTH, BANNER_EAST, BANNER_SOUTH, BANNER_WEST -> true;
+      default -> false;
+    };
+  }
+
   private record Template(List<Cell> cells, int[] baseY, int[] topY,
-      int sizeX, int sizeY, int sizeZ) {
+      int sizeX, int sizeY, int sizeZ, int structuralMinZ, int structuralMaxZ) {
     int routeLength() {
       return this.baseY.length;
     }
@@ -567,6 +601,10 @@ final class AuthoredWoodWallSegments {
             WallBlockPlan.ladderPiece(direction(apply(directionVector(piece))));
         case CAMPFIRE_NORTH, CAMPFIRE_EAST, CAMPFIRE_SOUTH, CAMPFIRE_WEST ->
             WallBlockPlan.campfirePiece(direction(apply(directionVector(piece))));
+        case TORCH_NORTH, TORCH_EAST, TORCH_SOUTH, TORCH_WEST ->
+            WallBlockPlan.torchPiece(direction(apply(directionVector(piece))));
+        case BANNER_NORTH, BANNER_EAST, BANNER_SOUTH, BANNER_WEST ->
+            WallBlockPlan.bannerPiece(direction(apply(directionVector(piece))));
         default -> piece;
       };
     }
@@ -593,10 +631,10 @@ final class AuthoredWoodWallSegments {
 
     private static Vec directionVector(WallBlockPlan.Piece piece) {
       return switch (piece) {
-        case TRAPDOOR_NORTH, LADDER_NORTH, CAMPFIRE_NORTH -> new Vec(0, -1);
-        case TRAPDOOR_EAST, LADDER_EAST, CAMPFIRE_EAST -> new Vec(1, 0);
-        case TRAPDOOR_SOUTH, LADDER_SOUTH, CAMPFIRE_SOUTH -> new Vec(0, 1);
-        case TRAPDOOR_WEST, LADDER_WEST, CAMPFIRE_WEST -> new Vec(-1, 0);
+        case TRAPDOOR_NORTH, LADDER_NORTH, CAMPFIRE_NORTH, TORCH_NORTH, BANNER_NORTH -> new Vec(0, -1);
+        case TRAPDOOR_EAST, LADDER_EAST, CAMPFIRE_EAST, TORCH_EAST, BANNER_EAST -> new Vec(1, 0);
+        case TRAPDOOR_SOUTH, LADDER_SOUTH, CAMPFIRE_SOUTH, TORCH_SOUTH, BANNER_SOUTH -> new Vec(0, 1);
+        case TRAPDOOR_WEST, LADDER_WEST, CAMPFIRE_WEST, TORCH_WEST, BANNER_WEST -> new Vec(-1, 0);
         default -> throw new IllegalArgumentException("Piece has no horizontal direction: " + piece);
       };
     }

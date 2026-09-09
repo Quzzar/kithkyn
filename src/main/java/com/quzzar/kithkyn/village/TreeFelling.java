@@ -11,22 +11,27 @@ import com.quzzar.kithkyn.savedata.PlacedBlockStore;
 
 import it.unimi.dsi.fastutil.longs.LongOpenHashSet;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.EnchantmentTags;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.LeavesBlock;
+import net.minecraft.world.level.block.entity.BeehiveBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.Heightmap;
-import net.minecraft.world.level.levelgen.structure.BoundingBox;
 
 /**
  * Bringing a natural tree down whole. One log is struck and every log
  * connected to it comes away at once, a bounded flood fill over the trunk and
- * its branches, each log yielding its drops. The leaves are left to decay on
+ * its branches, each log yielding its drops. Unowned bee nests or hives attached
+ * to removed logs come down too, with normal bee release and Silk Touch loot.
+ * The leaves are left to decay on
  * their own schedule, as natural leaves do once their tree is gone.
  *
  * <b>It only ever cuts real trees.</b> Two guards keep it off the village's
@@ -43,8 +48,8 @@ import net.minecraft.world.level.levelgen.structure.BoundingBox;
  *
  * Workers and construction cleanup share it: the lumberjack's and guard's
  * {@code ChopStep} fells one tree per chop and pockets the wood, building
- * placement clears trees over a finished roof ({@link #fellOver}), and wall
- * completion opens a narrow tree line ({@link #fellWithin}). Where the drops
+ * placement and wall completion open a shared narrow tree line, including
+ * overhead trunks ({@link #fellWithin}). Where the drops
  * go is each caller's business. The one
  * tree the ownership guard does not cover is the lumberjack's own stand, the
  * lumberjack's to cut whatever the store says of it ({@link #fellStand}).
@@ -72,6 +77,7 @@ public final class TreeFelling {
   public static boolean isFellableLog(ServerLevel level, BlockPos pos) {
     return level.hasChunkAt(pos)
         && level.getBlockState(pos).is(BlockTags.LOGS_THAT_BURN)
+        && !level.getBlockState(pos).hasBlockEntity()
         && BlockOwnership.mayFell(level, pos)
         && hasNaturalCanopy(level, pos);
   }
@@ -90,14 +96,15 @@ public final class TreeFelling {
 
   /**
    * Brings down the tree at a lumberjack's stand. Ownership is not asked at
-   * all here (Aaron, 2026-09-02): every log connected to the station comes
+   * all for logs here (Aaron, 2026-09-02): every log connected to the station comes
    * down, whoever placed it, whatever its height and however far its branches
    * reach, and each one's record goes with it. The lodge once shipped a grown
    * tree, stamped as the village's, and under {@link #fell} the lumberjack
    * struck that trunk, nothing came away, and the loop offered the same log
    * again; the lodge now ships a sapling, and the exemption stays so that
    * nothing anyone places against the stand can jam the loop. Otherwise
-   * identical: whole tree, drops returned, leaves left to decay.
+   * identical: whole tree, drops returned, leaves left to decay. Attached hives
+   * still respect ownership, so a nearby apiary cannot be lost to stand work.
    */
   public static List<ItemStack> fellStand(ServerLevel level, BlockPos struck, @Nullable Entity feller,
       ItemStack tool) {
@@ -113,10 +120,12 @@ public final class TreeFelling {
       ItemStack tool, boolean stand) {
     List<ItemStack> drops = new ArrayList<>();
     BlockState soundFrom = null;
+    LongOpenHashSet attachedHives = new LongOpenHashSet();
     PlacedBlockStore placed = PlacedBlockStore.get(level);
     for (BlockPos pos : treeLogs(level, struck)) {
       BlockState state = level.getBlockState(pos);
-      if (!state.is(BlockTags.LOGS_THAT_BURN) || (!stand && !BlockOwnership.mayFell(level, pos))) {
+      if (!state.is(BlockTags.LOGS_THAT_BURN) || state.hasBlockEntity()
+          || (!stand && !BlockOwnership.mayFell(level, pos))) {
         continue;
       }
       drops.addAll(Block.getDrops(state, level, pos, level.getBlockEntity(pos), feller, tool));
@@ -125,6 +134,15 @@ public final class TreeFelling {
       }
       level.removeBlock(pos, false);
       placed.clearPlaced(pos);
+      for (Direction direction : Direction.values()) {
+        BlockPos adjacent = pos.relative(direction);
+        if (level.hasChunkAt(adjacent) && level.getBlockState(adjacent).is(BlockTags.BEEHIVES)) {
+          attachedHives.add(adjacent.asLong());
+        }
+      }
+    }
+    for (long hive : attachedHives) {
+      fellAttachedHive(level, BlockPos.of(hive), feller, tool, drops);
     }
     if (soundFrom != null) {
       level.playSound((Player) null, struck.getX(), struck.getY(), struck.getZ(),
@@ -134,30 +152,27 @@ public final class TreeFelling {
     return drops;
   }
 
-  /**
-   * Fells every tree with a log in or over {@code bounds}, a building's volume
-   * in world coordinates. Each column is read from the world surface down to
-   * the box's floor, so the top of a tall tree, a trunk remnant the ground
-   * clearing stopped short of, or a branch reaching in from a neighbour all
-   * come down with the rest of their tree rather than being left floating
-   * over the roof. The building's own timber is safe: it was recorded as the
-   * village's the instant it was stamped, and {@link BlockOwnership#mayFell}
-   * refuses it. Columns in unloaded chunks are skipped, never paged in.
-   */
-  public static List<FelledTree> fellOver(ServerLevel level, BoundingBox bounds) {
-    List<FelledTree> felled = new ArrayList<>();
-    for (int x = bounds.minX(); x <= bounds.maxX(); x++) {
-      for (int z = bounds.minZ(); z <= bounds.maxZ(); z++) {
-        fellColumn(level, x, z, bounds.minY(), felled);
-      }
+  /** Only hives touching a removed log come down; even stand felling preserves owned apiaries. */
+  private static void fellAttachedHive(ServerLevel level, BlockPos pos, @Nullable Entity feller,
+      ItemStack tool, List<ItemStack> drops) {
+    BlockState state = level.getBlockState(pos);
+    if (!state.is(BlockTags.BEEHIVES) || !BlockOwnership.mayFell(level, pos)
+        || !(level.getBlockEntity(pos) instanceof BeehiveBlockEntity hive)) return;
+    if (!EnchantmentHelper.hasTag(tool, EnchantmentTags.PREVENTS_BEE_SPAWNS_WHEN_MINING)) {
+      hive.emptyAllLivingFromHive(feller instanceof Player player ? player : null,
+          state, BeehiveBlockEntity.BeeReleaseStatus.EMERGENCY);
     }
-    return felled;
+    drops.addAll(Block.getDrops(state, level, pos, hive, feller, tool));
+    level.removeBlock(pos, false);
+    PlacedBlockStore.get(level).clearPlaced(pos);
+    level.updateNeighbourForOutputSignal(pos, state.getBlock());
   }
 
   /**
    * Fells every natural tree with a trunk crossing one of the supplied columns.
-   * This is the irregular-footprint counterpart to {@link #fellOver}: callers
-   * can clear along a route without also cutting every tree inside its bounds.
+   * Callers can clear a building footprint or follow a wall route without also
+   * cutting every tree inside its enclosing rectangle. Reads canopy downwards,
+   * covering tall remnants and overhead branches, and never loads unseen chunks.
    */
   public static List<FelledTree> fellWithin(ServerLevel level, Set<Long> columns) {
     List<FelledTree> felled = new ArrayList<>();

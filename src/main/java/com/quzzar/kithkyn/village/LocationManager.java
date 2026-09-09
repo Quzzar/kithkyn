@@ -11,6 +11,7 @@ import com.quzzar.kithkyn.entities.RealPerson;
 import com.quzzar.kithkyn.village.buildings.Building;
 import com.quzzar.kithkyn.village.buildings.BuildingUpgrade;
 import com.quzzar.kithkyn.village.buildings.WallPost;
+import com.quzzar.kithkyn.village.buildings.WorkerFooting;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -102,6 +103,21 @@ public class LocationManager {
         }
         Building home = village.dependentHome(person);
         return home == null ? BlockPos.ZERO : BlockPos.of(home.getCenterLocation());
+    }
+
+    /** A reachable dry gathering spot near the rung bell, including ground below an elevated bell. */
+    @Nullable
+    public static BlockPos getBellApproach(RealPerson person, BlockPos bell) {
+        java.util.Set<BlockPos> candidates = new java.util.HashSet<>();
+        for (BlockPos pos : BlockPos.betweenClosed(bell.offset(-4, -8, -4), bell.offset(4, 2, 4))) {
+            if (!pos.equals(bell) && WorkerFooting.canStand(person, pos)) candidates.add(pos.immutable());
+        }
+        if (candidates.isEmpty()) return null;
+        // Set-based search checks the actual destinations, not a partial route or mine waypoint.
+        var path = person.getNavigation().createPath(candidates, 0);
+        if (path == null || !path.canReach() || path.getEndNode() == null) return null;
+        BlockPos end = path.getEndNode().asBlockPos();
+        return candidates.contains(end) ? end : null;
     }
 
     public static BlockPos getVillageCenter(RealPerson person){
@@ -218,9 +234,10 @@ public class LocationManager {
      * pathfinder's budget runs out on the open ground before it finds the way
      * round (the level-3 house at Wildflower Downs, whose door faced away from
      * the village: everyone stopped under the upstairs chest, outside). From
-     * the doorstep the rest is a dozen nodes. Null when the building has no
-     * door, its footprint is unknown, or its chunks are not resident: this
-     * never pages a chunk in.
+     * the doorstep the rest is a dozen nodes. Doorless buildings use a clear,
+     * supported opening on their rotated authored front. Null when no such
+     * opening exists, the footprint is unknown, or chunks are not resident.
+     * This never pages a chunk in.
      */
     @Nullable
     public static Entrance getEntrance(ServerLevel level, Building building){
@@ -246,7 +263,36 @@ public class LocationManager {
                 door = pos.immutable();
             }
         }
-        if(door == null){ return null; }
+        if(door == null){
+            if(building.getInfo() == null) return null;
+            Direction front = building.getRotation().rotate(building.getInfo().getEntranceFacing());
+            int floor = origin.getY() + building.getPlacedSink();
+            BlockPos middle = openFront(bounds, front, floor + 1);
+            Direction across = front.getClockWise();
+            int half = (front.getAxis() == Direction.Axis.X ? bounds.getZSpan() : bounds.getXSpan()) / 2;
+            for(int offset = 0; offset <= half; offset++) {
+                for(int sign : offset == 0 ? new int[]{1} : new int[]{1, -1}) {
+                    for(int dy : new int[]{0, 1, -1, 2, -2}) {
+                        BlockPos outside = middle.relative(across, offset * sign).above(dy);
+                        BlockPos inside = outside.relative(front.getOpposite());
+                        if(!level.hasChunkAt(outside) || !level.hasChunkAt(inside)) continue;
+                        BlockPos support = outside.below();
+                        if(!level.getFluidState(support).isEmpty()
+                                || !level.getBlockState(support).isFaceSturdy(level, support, Direction.UP)) continue;
+                        boolean open = true;
+                        for(BlockPos feet : List.of(outside, inside)) {
+                            for(int head = 0; head < 3; head++) {
+                                BlockPos body = feet.above(head);
+                                if(!level.getFluidState(body).isEmpty()
+                                        || !level.getBlockState(body).getCollisionShape(level, body).isEmpty()) open = false;
+                            }
+                        }
+                        if(open) return new Entrance(outside, bounds);
+                    }
+                }
+            }
+            return null;
+        }
 
         // A door sits in a wall; of its two neighbours the one farther from the
         // building's middle is the outside.
@@ -256,6 +302,19 @@ public class LocationManager {
         BlockPos back = door.relative(facing.getOpposite());
         return new Entrance(front.distSqr(centre) >= back.distSqr(centre) ? front : back, bounds);
 
+    }
+
+    /** World-space front of a rotated, doorless footprint. */
+    public static BlockPos openFront(BoundingBox bounds, Direction front, int feetY) {
+        int x = (bounds.minX() + bounds.maxX()) / 2;
+        int z = (bounds.minZ() + bounds.maxZ()) / 2;
+        return switch(front) {
+            case EAST -> new BlockPos(bounds.maxX() + 1, feetY, z);
+            case WEST -> new BlockPos(bounds.minX() - 1, feetY, z);
+            case SOUTH -> new BlockPos(x, feetY, bounds.maxZ() + 1);
+            case NORTH -> new BlockPos(x, feetY, bounds.minZ() - 1);
+            default -> throw new IllegalArgumentException("Entrance fronts must be horizontal");
+        };
     }
 
 }

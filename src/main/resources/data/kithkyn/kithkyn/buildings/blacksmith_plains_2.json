@@ -46,6 +46,9 @@
   ],
   "grants": [
     "REPAIR",
-    "SMELTING"
+    "SMELTING",
+    "TOOLS_IRON",
+    "ARMOR_IRON",
+    "SHIELDS"
   ]
 }

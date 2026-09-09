@@ -5,6 +5,26 @@ import com.mojang.serialization.DataResult;
 
 public final class KithkynCodecs {
 
+    /** Opaque native NBT: RegistryOps must not normalize coordinate ListTags into array tags. */
+    public static final Codec<net.minecraft.nbt.CompoundTag> EXACT_NBT = Codec.BYTE_BUFFER.comapFlatMap(buffer -> {
+        try {
+            byte[] bytes = new byte[buffer.remaining()];
+            buffer.duplicate().get(bytes);
+            return DataResult.success(net.minecraft.nbt.NbtIo.readCompressed(new java.io.ByteArrayInputStream(bytes),
+                    net.minecraft.nbt.NbtAccounter.create(64L * 1024 * 1024)));
+        } catch (java.io.IOException | RuntimeException error) {
+            return DataResult.error(() -> "Invalid native NBT snapshot: " + error.getMessage());
+        }
+    }, tag -> {
+        try {
+            var output = new java.io.ByteArrayOutputStream();
+            net.minecraft.nbt.NbtIo.writeCompressed(tag, output);
+            return java.nio.ByteBuffer.wrap(output.toByteArray());
+        } catch (java.io.IOException error) {
+            throw new java.io.UncheckedIOException(error);
+        }
+    });
+
     private KithkynCodecs() {
     }
 

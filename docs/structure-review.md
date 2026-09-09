@@ -5,6 +5,19 @@ design trail for Kithkyn's own structure work: what earned a prototype, what was
 and why. The local gallery and its exact reference templates remain under the gitignored `run/`
 tree.
 
+## Current Birch decision
+
+The current `birch_polish` selection is **design-approved by Aaron as of 2026-09-07**.
+Its 27 final exhibits are preserved in `run/valecraft-gallery/birch-approved-20260907/`,
+with `approval.json` identifying the accepted captures, checks, and remaining integration.
+Use that snapshot, including its authored tall grass, rather than regenerating an earlier
+Romanian or Dungeons and Taverns proposal. The historical passes below explain how this
+selection was reached; they do not override the approved current geometry.
+
+Design approval is not production readiness. No production catalog replacement is made by
+this lock-in. Metadata/export, real village navigation and occupancy, construction/upgrades,
+and the remaining shared-workplace/guard integration still need implementation and verification.
+
 ## Review pass: 2026-09-04
 
 ### Defensive buildings
@@ -55,7 +68,7 @@ selected Kithkyn building. Keep them in the gallery rather than starting a proto
 | Dungeons and Taverns birch animal pen | Strong candidate | Use its readable livestock layout as the leading animal-farm reference. |
 | Dungeons and Taverns birch cleric | Do not prototype in the current pass | The building does not add enough beyond the stronger church references. |
 | Towns and Towers classic family | Reserve `alpha_islands`, at low priority | Several buildings read close to generic Minecraft structures, but the family remains a distinct catalog rather than being pooled into Plains. |
-| Towns and Towers Romanian center | Prototype as a level-3 cathedral reference | The gallery label is `Romanian Center`, from `birch_forest_meeting_point_1`, although its large church-like silhouette makes it useful for the cathedral progression. |
+| Towns and Towers Romanian center | Use as the level-2 village center reference | The selected civic-center schematic is `birch_forest_meeting_point_1`. It belongs in the center progression and must not be relabeled or duplicated as the Romanian church. |
 | Towns and Towers Romanian large house | Strong high-capacity house candidate | Preserve the convincing multi-room massing and evaluate it as a four-bedroom house. |
 | Towns and Towers Romanian farm and fishery | Strong candidates | Keep both for the food-building comparison pass. |
 | Towns and Towers Romanian armor-and-tools and weaponsmith buildings | Strong blacksmith candidates | Compare both as blacksmith levels or regional variants rather than separate professions by default. |
@@ -92,10 +105,8 @@ identity:
 - semantic palette anchors that can use the two village colors without blindly replacing every
   block of the same material.
 
-The village should establish this identity early in its life. The exact moment is still open:
-either at the founding camp or during the transition to hamlet. The choice should belong to the
-village's decision process and then be stored with the village so every later structure uses the
-same identity.
+The village establishes this identity at founding, immediately after its permanent name is chosen.
+It is stored with the village so every later structure uses the same identity.
 
 The primary and secondary colors are ordered Minecraft dye colors, suitable for wool, banners,
 and deliberately chosen accent blocks. The banner is a layered Minecraft banner design using
@@ -104,13 +115,15 @@ both colors. A dragon-like emblem is one possible outcome, not a required univer
 Village identity is independent of village biome. The village biome supplies the architecture; the
 identity makes two villages using the same catalog visibly distinct.
 
-Implementation order:
+Implemented foundation:
 
-1. Decide when the identity is established and how the village chooses it.
-2. Persist the two colors and banner pattern in village save data.
-3. Define banner sockets and semantic color anchors in the structure-authoring format.
-4. Prototype the level-1 forest firewatch tower, the level-2 flower tower, and the desert tavern.
-5. Run villager navigation through every occupied floor before accepting a structure.
+1. Generate the two colors and banner when the founding name lands.
+2. Persist the complete identity in village save data, with deterministic migration for old saves.
+3. Let building definitions declare banner sockets and semantic primary or secondary color anchors.
+
+The remaining structure work is to author those slots in the selected buildings, prototype the
+level-1 forest firewatch tower, level-2 flower tower, and desert tavern, then run villager navigation
+through every occupied floor before accepting a structure.
 
 ## Gallery expansion
 
@@ -245,3 +258,321 @@ The local gallery generator also corrects absolute attachment coordinates found 
 source paintings and item frames. For an already-built wing carried through a server restart, run
 `/function valecraft_gallery:repair_birch_selection_decorations` once to restore those decorations
 without rebuilding any structure.
+
+## Birch Forest second-pass selection
+
+The spoken review narrowed the Birch Forest catalog to 33 provisional exhibits in 11 rows. This is
+a visual editing set, not a production lock-in: mechanically safe wood-profile-to-birch substitutions are
+already applied to retained Kithkyn structures, while footprint, interior, navigation, banner, and
+accent edits remain for the next in-world pass.
+
+| Role | Provisional Birch Forest choice | Next-pass work |
+| --- | --- | --- |
+| Village center L1 | Current Kithkyn camp, birch profile | Restyle beyond the mechanical palette swap. |
+| Village center L2 | Towns and Towers Romanian center | Use the actual `birch_forest_meeting_point_1` town-center schematic as the upgraded center reference. |
+| House L1 | Romanian small house 6 | Keep its two-bed capacity. |
+| House L2 | Romanian small house 1 | Keep its two-bed capacity. |
+| House L3 | Romanian medium house 1 | Accept three beds; variants do not need identical capacities. |
+| Well | Dungeons and Taverns birch well | Lower its height. |
+| Storehouse L1 | Current Kithkyn tent, birch profile | Cobbled deepslate floor is applied; restyle and verify storage access. |
+| Storehouse L2 | Romanian medium house 2 | Adapt the interior as a warehouse; omit L3 for now. |
+| Watchtower L1 | Current Kithkyn watchpost, birch profile | Cobbled deepslate is applied; reshape toward the Romanian Birch Forest language. |
+| Watchtower L2 | Towns and Towers flower tower, birch profile | Test villager access to every floor and add village-banner sockets. |
+| Farm L1 | One Dungeons and Taverns birch farm 1 | Edit the retained base. |
+| Farm L2 | Folded pair of birch farm 1 | Join and clean the seam. |
+| Farm L3 | L-shaped group of three birch farm 1 footprints | Join and clean both seams. |
+| Lumberjack | Current Kithkyn lumberjack, unified birch roof and deepslate base | Reshape toward the Romanian language. |
+| Stoneworks | Romanian mason | Adapt its stations and functional interior. |
+| Mine L1 | Current Kithkyn mine, birch profile | Retain as the small mine starting point. |
+| Mine L2 | Duplicate of the current mine L1 | Redesign into a genuinely different upgrade. |
+| Hunting lodge | Romanian fletcher | Adapt the shell to the hunter role. |
+| Fishery | Romanian fisher | Adapt the chosen shell. |
+| Bakery | Romanian medium house 2 | Convert the interior to the bakery role. |
+| Butchery | Romanian butcher and leatherworker | Adapt the chosen shell. |
+| Blacksmith | Romanian weaponsmith | Use one level only for now; the broader request to remove blacksmith L2 everywhere is deferred to the production pass. |
+| Markets L1-L3 | Current Kithkyn markets, birch profile | Restyle each level; keep the existing progression. |
+| Church L1 | Towns and Towers Swiss church | Adapt as the smaller church. |
+| Church L2 | Current Kithkyn large church, pending replacement review | Keep the center schematic out of this row. The intended Romanian church reference still needs to be identified independently. |
+| Tavern | Romanian large house 1 | Convert the ground floor to tavern use while retaining upper lodging. |
+| Perimeter | Current straight, diagonal, terrace, corner-tower, and gatehouse pieces, birch profile | Restyle the full wall family consistently. |
+
+There is no Church L3 in the current Birch Forest plan. A third tier is a possible future addition,
+not a current gallery or implementation target.
+
+Run `/function valecraft_gallery:tour_birch_final` to enter this compact selection wing. Rebuild it
+with `/function valecraft_gallery:build_birch_final` after regenerating the review datapack. The
+live review world currently places the wing east of the earlier galleries, beginning near
+`609 171 907`.
+
+### Production model decisions exposed by the review
+
+Building level is a capability progression, not a universal amenity contract. A role and level
+may have different bed counts, workstations, storage, or secondary amenities in different village
+biomes. Each concrete variant must declare what it actually provides, and village planning must
+read those declared amenities instead of assuming that every level-3 house, for example, contains
+four beds.
+
+Village visual identity is also a separate axis from village biome. A village owns an ordered
+primary and secondary Minecraft dye color plus a generated banner pattern using those colors.
+Structures may expose authored banner sockets and semantic accent anchors, allowing the same Birch
+Forest catalog to retain a coherent architecture while different villages remain recognizable.
+The implementation and authoring format are documented in [village-identity.md](village-identity.md).
+
+## Complete Dungeons and Taverns Birch comparison
+
+The later Birch Village I/II review is separate from the Romanian selection above. Its local
+comparison catalog covers all 18 building roles, including the couples cottage, across 29
+role-and-tier rows, followed by five wooden perimeter pieces and one explicitly unresolved
+stone-perimeter row. There are 35 rows and 66 placed exhibits in total.
+
+Run `/function birch_catalog:tour` to enter at `1004 241 155` in the overworld. Follow the aisle
+south. Each row has an A/gray current Kithkyn baseline and a B/yellow Birch proposal. Empty pads
+identify a missing baseline or unresolved design rather than pretending it already exists.
+`ADAPT` and `RESTYLE` labels are unfinished conversions, not production-ready role assignments.
+The catalog retains only church T1/T2, storehouse T1/T2, and blacksmith T1, as requested.
+
+The source is `run/valecraft-gallery/build-birch-catalog.py`, the exact exhibit inventory is
+`run/valecraft-gallery/birch-catalog.json`, and the generated private review pack is
+`run/world/datapacks/birch-catalog`. On first `/reload`, the pack builds scheduled rows and saves
+completion flags so subsequent reloads preserve in-world edits. It does not change production
+building definitions. Saved-world checks verified all 66 exhibit signs and nonempty structure
+footprints; a complete in-game visual and functional pass is still required.
+
+## Preserved Birch editing pass: 2026-09-06
+
+Aaron edited the complete Dungeons and Taverns comparison in-world. That original wing must
+never be rebuilt, replaced, or removed. A flushed saved-world copy is kept under
+`run/valecraft-gallery/backups/birch-edits-20260906-1109/`; all 66 original exhibits were
+captured independently with native Minecraft NBT types, including chest contents and banner
+data. `run/valecraft-gallery/revision-20260906/` holds the captures, checksums, exact selection
+manifest, and village-center amenity markers.
+
+The new review pack is `birch-revision`, with `/function birch_revision:tour` entering at
+`1287 201 72` in the overworld. It has 28 exhibits in fourteen paired rows: follow the aisle
+south, reviewing left then right. Only the new gallery volume is assigned the warm Plains
+biome. Weather snow is omitted and frozen fishery water is thawed in the copies. Existing
+galleries, their biomes, and global weather rules are untouched. Reload completion flags
+protect this new editing copy from being rebuilt too.
+
+| Birch role | Revised editing selection |
+| --- | --- |
+| Center T1 | Old B Center T2, including Aaron's four-block-deep basement; no center upgrade. |
+| House T1 / T2 | Saved one-bed and edited two-bed houses; no House T3/four-bed house. |
+| Couples cottage | Saved two-bed couple home. |
+| Well | Earlier narrow 3-by-3, eleven-block-tall D&T Birch well. |
+| Storehouse T1 | Old B Storehouse T2 becomes the sole storehouse; no tent or upgrade. |
+| Watchtower T1 | Old B Market T1 (D&T cartographer), confirmed explicitly by Aaron. |
+| Watchtower T2 | Current Kithkyn T1 watchtower, converted to Birch. |
+| Farm T1 / T2 | Saved single farm, then a merged pair with one central composter; no Farm T3. |
+| Lumberjack / Stoneworks | Saved toolsmith and mason proposals. |
+| Mine T1 | Saved weaponsmith shell for Aaron to edit; no Mine T2. |
+| Hunting lodge / Fishery | Saved fletcher and fishery proposals. |
+| Bakery | Retained current B bakery proposal pending another choice. |
+| Butchery | Old B Tavern (shepherd shell). |
+| Blacksmith | Retained weaponsmith proposal. |
+| Market T1 | Current Kithkyn baseline, converted to Birch. |
+| Market T2 / T3 | Retained saved Birch baseline conversions. |
+| Church T1 | Small saved cleric chapel only; no Church T2. |
+| Tavern | Separate copy of old B Bakery (butcher shell) for interior editing. |
+| Wooden perimeter | All five saved Birch wall/gatehouse pieces. |
+
+Stone perimeter T2 remains unresolved, not silently considered complete or removed. The bakery
+and tavern deliberately share a starting shell in this pass; only the tavern's replacement was
+requested. Mine, tavern, and other role conversions remain editing shells, not finished workplaces.
+
+The center's basement begins at old world Y237, with the beds and personal chest at Y238.
+The old smooth-stone review platform at Y240 is excluded from the captured building, but
+every other basement block is retained. Its one personal chest is intended to be shared by
+the four residents, not counted as village storage. The four bed heads, chest, and four
+placed banners are recorded as relative amenity/identity positions. Two northern beds use
+primary and two southern beds use secondary. Blue/yellow and matching rhombus/border banners
+are preview colors, not a universal Birch identity. A bed identity slot now recolors both
+halves together; actual village identities continue to supply their own colors.
+
+The new center includes one ordinary iron golem at the reference's authored location. It is
+not pre-enrolled, pre-named, or made into an artificial guard. A real village guard can recruit
+it through the normal encounter behavior. These are private review structures and staging
+markers only: the production building catalog, costs, upgrade chains, and finished-building
+golem spawning are not changed by this gallery pass.
+
+Verification: all 28 new exhibits and signs were checked in the live saved world after the
+dev server restarted. Offline comparison found exactly twelve changed cells in the center:
+eight bed halves and four banners, with the remaining basement/building cells preserved.
+The full Gradle check passed. A disposable real-server check verified that bed recoloring
+keeps both halves and their block entities through repeated application, all four facings,
+either authored half, and later neighbor updates. Its late golem query ran after the center
+unloaded; the saved entity data independently confirms the ordinary golem. The new wing's
+visual walkthrough remains pending: the Minecraft client was disconnected at screenshot time.
+
+### Live review follow-up: center, homes, storage, towers, and farms
+
+Aaron is now reviewing and editing the warm `birch_revision` wing. He approved the center's
+overall layout, all three home designs, the narrow tall well, and the storehouse. The farm
+pair with one central composter is the right direction; he is still making final block edits.
+This records his visual review, not a completed agent navigation or occupancy test.
+
+The following identity assignments supersede the initial gallery preview arrangement:
+
+| Building | Required identity assignments |
+| --- | --- |
+| Center | Four beds in an alternating diagonal arrangement: primary/secondary on one side, secondary/primary on the opposite side. Keep two of each. All designated center banners use the village flag. |
+| One-bed home | Its bed uses primary. |
+| Two-bed home | One bed uses primary and the other uses secondary. |
+| Couples cottage | Both adjacent beds use primary, visually forming one shared double bed. This does not reduce the two occupants to one bed entitlement. |
+| Storehouse | Capture the banner Aaron is adding and mark it as a village-banner slot. |
+| Watchtower T1 | The bed Aaron is adding uses primary. Preserve his moved chest, candles, and other interior edits. |
+| Watchtower T2 | One bed uses primary and the other uses secondary. Preserve his interior edits. |
+
+Watchtower T1 should have one stationed guard; T2 should have two. Each is a crossbow guard
+with a sword for close combat. These are requested staffing/loadout changes, not claims that
+the current gallery shells already grant those jobs or that the combat behavior is implemented.
+The final layouts need reachable guard posts, beds, and storage before production acceptance.
+
+The intended flags and bed colors are village-specific, never fixed blue and yellow. The
+current identity applier supports these semantic slots on building completion and upgrade;
+the private gallery uses preview colors, and arbitrary hand-placed banners do not currently
+auto-convert. Final template capture must register the new and moved slots, and the placement
+timing requirement must be checked when integrating these structures into the village catalog.
+No village identity or new flag should be rerolled for an individual building or banner.
+
+Do not overwrite, regenerate, or recolor this active editing wing while Aaron is still working.
+These follow-up decisions are recorded only. After he finishes, obtain a fresh saved-world
+flush and backup, then capture his actual final blocks before applying the requested identity
+metadata and staffing changes. Coordinate main-server restarts before interrupting his review.
+
+### Final-edit copy: farms, industry, shared hospitality, and stone perimeter
+
+The next spoken review completed the warm-wing edits. A console `save-all flush` was issued
+without restarting the server, and a separate world snapshot was taken at
+`run/valecraft-gallery/backups/birch-final-edits-20260906-1242/`. The capture confirms the new
+tower beds and moved chest, both farms' barrels, the lumberjack dead-bush marker, the mine
+banner, the hunter and butcher beds, and the bakery's two upstairs beds and personal chest.
+All 28 original edited exhibits, including the now-unselected separate tavern, were preserved
+as native NBT captures under `run/valecraft-gallery/revision-20260906-polish/captures/`.
+
+The follow-up copy has 27 exhibits. Its pack is `birch-polish`, namespace `birch_polish`,
+with `/function birch_polish:tour` entering at `1447 201 72`. The convenience functions
+`birch_polish:basement`, `birch_polish:bakery`, `birch_polish:butcher`, and
+`birch_polish:walls` lead to the key changes. `birch_polish:previous` returns to the
+unedited source wing. The new destination volume was verified empty in already-generated
+saved chunks, and only its own biome becomes Plains. Existing galleries are never rebuilt.
+
+| Area | Applied in the new templates |
+| --- | --- |
+| Center, homes, and towers | All bed-color assignments from the preceding review, including the diagonal primary/secondary center arrangement and both primary-colored halves of the couples' double bed. The center basement and ordinary golem remain. |
+| Village banners | The four center banners and the new storehouse and mine banners are authored village-identity slots, previewed in blue/yellow. Existing decorative market banners stay unchanged. |
+| Farm T1 / T2 | Preserve both final layouts and their new barrels; T2 still has one central composter. |
+| Lumberjack | Replace the one authored dead bush at relative `[2,1,3]` with a birch sapling on existing dirt, and record it as the chopping station. No grown tree was present in the capture. |
+| Stoneworks, mine, blacksmith, markets, and chapel | Preserve Aaron's final blocks and choices, with inventory cleanup only where applicable. |
+| Hunting lodge | Preserve the added upstairs bed and color it secondary. |
+| Butchery | Secondary-colored resident bed, inside personal chest, outside communal barrel, and three cows plus three chickens inside the pen. Sheep were superseded by the final chicken choice. |
+| Bakery + tavern | One shared building using the edited bakery, two upstairs beds colored primary/secondary, one shared upstairs personal chest, separate communal storage, and staged BAKER and INNKEEPER stations. Omit the separate tavern only from this new copy. |
+| Perimeter | Replace birch log columns across all five wall/gatehouse pieces with cobblestone and clustered mossy cobblestone. Replace their lanterns with supported standing/wall torches. Keep the remaining wooden rails, platforms, and functional details. This is a Birch style choice, not a global stone-wall-tier change. |
+| Containers | Clear inventories and remove unopened loot tables/seeds in every copied exhibit, so reference loot cannot generate when a chest is opened. Original containers and backup contents remain intact. |
+
+The generator is `run/valecraft-gallery/build-birch-polish.py`. The `selection.json`,
+`amenities.json`, `changes.json`, and `template-verification.json` beside its captures retain
+the exact mapping and verification evidence. All 27 templates passed exact requested-edit
+and native block-entity preservation checks, inventory/loot cleanup, bed/color assignments,
+and animal counts. There are no new structural support warnings. The four inherited
+corner-tower ladder/trapdoor support warnings remain recorded for in-game review.
+
+These are still private review templates, not replacements for the production catalog.
+The existing building model supports two distinct professions and a shared personal chest,
+so the bakery/tavern does not require a new multi-workplace system. INNKEEPER currently lacks
+a work routine. Standalone watchtower GUARD stations also need the requested fixed-post,
+crossbow-and-backup-sword behavior; ordinary guard jobs currently use the patrol/axe path.
+The desired one/two tower guards are recorded, not falsely reported as implemented combat.
+Village identity slots are staged for integration, while blue/yellow remain gallery previews.
+
+The server subsequently shut down cleanly when the other task's console session ended.
+It was started again for this review, and startup loaded the new pack. All 27 exhibits and
+their signs are now confirmed in the saved world by
+`revision-20260906-polish/live-verification/placement-verification.json`. Fresh native
+captures also confirm the bed colors, designated banners, empty containers, lumberjack
+sapling, center golem, and exactly three cows plus three chickens at the butchery. No
+`/reload` is needed to see the gallery.
+
+A placement-time item-frame warning prompted a narrowly scoped missing-frame fallback.
+Inspection of the saved bakery confirms the original pie frame is already at the correct
+position with the correct attachment coordinates, so no live repair is necessary. The
+fallback, when loaded in a future reload, skips an existing frame and cannot rebuild the
+gallery. Source captures and the original editing wing were not changed.
+
+The rendered in-game visual walkthrough and worker navigation/occupancy checks remain
+pending. Saved-world checks establish placement and contents, not those runtime behaviors.
+
+### Polished-gallery review and wall finish: 2026-09-07
+
+Aaron reviewed `birch_polish` in-game and approved the overall catalog. His further edits
+include stone/moss accents on Watchtower T1, a mine chest, and another decorative item frame
+in the shared bakery/tavern. All are present in a fresh saved-world capture. The bakery/tavern
+remains one building for two residents and two professions. Nothing in this follow-up changes
+the production catalog or the remaining runtime integration work.
+
+The remaining requested edits are confined to the five perimeter exhibits:
+
+- 61 birch fences become 47 cobblestone walls and 14 mossy cobblestone walls. Moss follows
+  the supporting mossy blocks, keeping the already-approved mixed-stone palette.
+- All ten birch slabs become cobblestone slabs, retaining their top/bottom/double state.
+- The four birch ladder-backing trapdoors become oak, retaining their orientation, half,
+  and open state. Ladders and lighting are not replaced.
+
+The mine already has the requested single chest at world `1405 202 264` (relative `[5,1,5]`).
+Keep it instead of adding a duplicate or a barrel. All 22 non-perimeter exhibits are outside
+the patch. In particular, do not rebuild the user's towers or bakery/tavern from older templates.
+
+The relevant saved region and entity region were cloned into
+`run/valecraft-gallery/backups/birch-polish-wall-finish-20260907-2130/`. Their clone hashes
+matched the live source hashes immediately after the copy. This was a saved-world snapshot,
+not an acknowledged player-issued flush. All 27 exhibits were then captured from that backup
+under `revision-20260906-polish/wall-finish-20260907/captures/`, including the newer watchtower
+blocks, mine chest, and bakery potion frame. Original captures remain immutable.
+
+`build-birch-polish.py finish-walls BACKUP` reuses the native capture/patch tools and prepares
+75 individual block substitutions, not structure placement or a broad fill. Before changing
+anything, the in-game function checks every target against the captured state or its intended
+replacement. An unexpected edit stops the pass. A completion flag prevents later reloads from
+reapplying it. Temporary chunk tickets are removed only when this patch added them.
+
+At the end of that patch-preparation turn, the patch awaited `/reload`. The existing `/function birch_polish:walls`
+still leads to the same exhibits. Template checks confirm only the 75 intended substitutions,
+unchanged block-entity/entity data, and preserved slab/trapdoor geometry. The four old
+corner-ladder support warnings are identical except for the requested trapdoor species;
+their real Minecraft support depends on the preserved open, north-facing trapdoor state.
+Live application and ladder survival were subsequently confirmed in the approval capture below.
+The independent agent-rendered visual check remains pending. The available
+computer-use surfaces do not expose the Minecraft window, so no agent visual verification is claimed.
+
+For subsequent reference examples, plain white beds and blank white banners are acceptable
+placeholders for dynamic village colors/flags. Keep the primary/secondary/banner role metadata
+even when those placeholders look identical. This permission does not require recoloring the
+current approved examples. Aaron also observed the ordinary center golem walking/falling off
+the raised gallery platform; do not duplicate it or freeze its normal AI just for the display.
+
+### Birch design approval: 2026-09-07
+
+After updating the exhibits and landscaping, Aaron approved the set for Birch. Preserve the
+latest in-world geometry as the chosen design, including intentional short and tall grass.
+This concludes the selection/design pass, not the gameplay integration pass.
+
+`run/valecraft-gallery/birch-approved-20260907/` contains an independent saved-region snapshot,
+all 27 native captures, their actual world origins and dimensions, and `approval.json`.
+The snapshot's region/entity hashes matched the live files after copying. It is explicitly a
+saved-world snapshot, not a claim that a newly requested player flush was acknowledged.
+Capture bounds include a one-block horizontal margin so new edge landscaping is retained;
+the smooth-stone review platforms at Y196/Y200 are excluded. Final production metadata must
+therefore be rebased against `captures/inventory.json`, not copied blindly from the earlier
+amenity file retained as a reference.
+
+The saved completion flag confirms the wall patch ran. Comparison against the actual captured
+blocks confirms all 75 substitutions, all five corner-tower ladders and all six gatehouse
+ladders, and the new mine chest. The captures also retain 30 tall-grass halves across six
+buildings, the lumberjack sapling, both bakery item frames, three cows and three chickens,
+and one ordinary center golem. No live-world blocks were changed during this approval capture.
+
+The final design is frozen unless Aaron requests another revision. Before production use,
+export and validate the concrete templates, empty copied inventories/loot as already requested,
+recheck every bed/container/station/identity slot, verify the shared bakery/tavern and intended
+tower staffing/loadouts, and test actual rotated placement, navigation, occupancy, construction,
+and upgrade behavior. The user's visual approval is recorded separately from those checks.

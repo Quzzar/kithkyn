@@ -1,0 +1,102 @@
+{
+  "approved_source_sha256": "d8177876e4de0f8cfd870e01f3e030975028535703f8af00865a0c0f3e23a891",
+  "workshop_initial_sha256": "61a579ac14add164574b234ee61f8620c5f690e75f5b713bb9f2a212ab9ffe8f",
+  "workshop_approved_sha256": "2ac3b01baed291fa8dab21df7e85fbee836e671541c04a98bb756a569834ec5e",
+  "size": [
+    16,
+    8,
+    19
+  ],
+  "overrides": [
+    {
+      "pos": [
+        4,
+        0,
+        5
+      ],
+      "name": "minecraft:air",
+      "properties": {}
+    },
+    {
+      "pos": [
+        4,
+        0,
+        6
+      ],
+      "name": "minecraft:air",
+      "properties": {}
+    },
+    {
+      "pos": [
+        4,
+        0,
+        7
+      ],
+      "name": "minecraft:air",
+      "properties": {}
+    },
+    {
+      "pos": [
+        4,
+        0,
+        8
+      ],
+      "name": "minecraft:air",
+      "properties": {}
+    },
+    {
+      "pos": [
+        4,
+        0,
+        9
+      ],
+      "name": "minecraft:air",
+      "properties": {}
+    },
+    {
+      "pos": [
+        5,
+        0,
+        5
+      ],
+      "name": "minecraft:air",
+      "properties": {}
+    },
+    {
+      "pos": [
+        5,
+        0,
+        6
+      ],
+      "name": "minecraft:air",
+      "properties": {}
+    },
+    {
+      "pos": [
+        5,
+        0,
+        7
+      ],
+      "name": "minecraft:air",
+      "properties": {}
+    },
+    {
+      "pos": [
+        5,
+        0,
+        8
+      ],
+      "name": "minecraft:air",
+      "properties": {}
+    },
+    {
+      "pos": [
+        5,
+        0,
+        9
+      ],
+      "name": "minecraft:air",
+      "properties": {}
+    }
+  ]
+}

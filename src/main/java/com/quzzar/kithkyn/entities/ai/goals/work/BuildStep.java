@@ -157,6 +157,11 @@ public final class BuildStep implements BlockWorkStep {
     if (project == null) {
       return 9.0D;
     }
+    return siteReachSqr(project);
+  }
+
+  /** Gathering and construction attend the same site, including terrain awaiting grading. */
+  static double siteReachSqr(StructureInProgress project) {
     double radius = project.getBuilding().getRadius();
     return radius * radius * RADIUS_SLACK;
   }

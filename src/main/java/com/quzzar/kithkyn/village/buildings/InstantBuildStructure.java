@@ -49,6 +49,13 @@ public class InstantBuildStructure {
     private Random random;
 
     private int magicInt;
+    private com.quzzar.kithkyn.village.VillageIdentity identity;
+
+    /** The village's permanent identity; raw template previews may deliberately omit it. */
+    public InstantBuildStructure withIdentity(com.quzzar.kithkyn.village.VillageIdentity identity) {
+        this.identity = identity;
+        return this;
+    }
     
     public InstantBuildStructure(Building building, Random random, ServerLevelAccessor levelAccess) {
 
@@ -77,7 +84,7 @@ public class InstantBuildStructure {
 
     public InstantBuildStructure setOriginLocation(BlockPos location, HashSet<Long> claimGrid){
 
-        BoundingBox bounds = this.template.getBoundingBox(this.settings, BlockPos.ZERO);
+        BoundingBox bounds = BuildingFootprint.bounds(this.template, this.rotation);
 
         BlockPos centerOffset = bounds.getCenter();
         centerOffset = centerOffset.subtract(new Vec3i(0, centerOffset.getY()-1, 0));
@@ -115,7 +122,7 @@ public class InstantBuildStructure {
      */
     public InstantBuildStructure seatAtOrigin(BlockPos origin, HashSet<Long> claimGrid){
 
-        BoundingBox bounds = this.template.getBoundingBox(this.settings, BlockPos.ZERO);
+        BoundingBox bounds = BuildingFootprint.bounds(this.template, this.rotation);
 
         this.building.setOriginLocation(origin.asLong());
         BlockPos centerOffset = new BlockPos(bounds.getCenter().getX(), 0, bounds.getCenter().getZ());
@@ -137,7 +144,7 @@ public class InstantBuildStructure {
 
     /** The footprint this structure will occupy, before it is given a place. */
     public BoundingBox getBounds(){
-        return this.template.getBoundingBox(this.settings, BlockPos.ZERO);
+        return BuildingFootprint.bounds(this.template, this.rotation);
     }
 
     public Rotation getRotation(){
@@ -149,6 +156,8 @@ public class InstantBuildStructure {
     }
 
     public boolean buildInstantly() {
+
+        VillageIdentityApplier.Placement identityPlacement = VillageIdentityApplier.placement(building, identity);
 
         // Opened up via META-INF/accesstransformer.cfg instead of reflection.
         List<Palette> palettesValue = template.palettes;
@@ -181,6 +190,7 @@ public class InstantBuildStructure {
                                 : null;
                         BlockState blockstate = structuretemplate$structureblockinfo.state().mirror(settings.getMirror())
                                 .rotate(settings.getRotation());
+                        blockstate = identityPlacement.state(blockpos, blockstate);
                         if (structuretemplate$structureblockinfo.nbt() != null) {
                             BlockEntity blockentity = levelAccess.getBlockEntity(blockpos);
                             Clearable.tryClear(blockentity);
@@ -217,6 +227,7 @@ public class InstantBuildStructure {
                                     blockentity1.loadWithComponents(structuretemplate$structureblockinfo.nbt(), levelAccess.registryAccess());
                                 }
                             }
+                            identityPlacement.afterBlockPlaced(levelAccess.getLevel(), blockpos);
 
                             if (fluidstate != null) {
                                 if (blockstate.getFluidState().isSource()) {
@@ -306,11 +317,7 @@ public class InstantBuildStructure {
                 }
 
                 if (!settings.isIgnoreEntities()) {
-                    template.addEntitiesToWorld(levelAccess, location1, settings);
-                    // Stock a building ships with belongs to the village from its first breath:
-                    // marked before the hunter's next scan can read the pen as game.
-                    com.quzzar.kithkyn.village.FarmedStock.markAnimalsWithin(levelAccess,
-                            template.getBoundingBox(settings, location1));
+                    return BuildingEntities.placeOnce(levelAccess, building, template, location1, settings);
                 }
 
                 return true;

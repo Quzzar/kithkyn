@@ -23,12 +23,31 @@ import net.minecraft.core.Direction;
  */
 final class MineTopology {
 
+  /** Diagnostic detail for a planned-mine connectivity search. */
+  record StandPath(boolean connected, int reachableCount, BlockPos furthest) {
+  }
+
   static final int FAN_LENGTH = MineShaft.RIB_LENGTH;
   static final int FAN_PITCH = MineShaft.RIB_PITCH;
   static final int FAN_HEIGHT = MineShaft.RIB_HEIGHT;
   static final int FAN_MIN_LINE = MineShaft.RIB_MIN_LINE;
 
+  /**
+   * The two wall positions that can mark the top of an underground child shaft.
+   * They sit at head height above its first full-width stair. The selector uses
+   * the first supported side and treats either occupied light position as the
+   * one entrance marker, so a child gets a visible threshold without wasting a
+   * torch on both walls.
+   */
+  private static final List<BlockPos> ENTRANCE_TORCH_CELLS = List.of(
+      new BlockPos(-MineShaft.RADIUS, -1, 0),
+      new BlockPos(MineShaft.RADIUS, -1, 0));
+
   private MineTopology() {
+  }
+
+  static List<BlockPos> entranceTorchCells() {
+    return ENTRANCE_TORCH_CELLS;
   }
 
   /** The walk-cell Y shared by a ramp column and any rib cut from it. */
@@ -75,6 +94,104 @@ final class MineTopology {
         .toList();
   }
 
+  /**
+   * Supported footholds that may anchor a route into the mine. The structure's
+   * visible threshold may be a stair or another walkable partial block, so the
+   * route audit must not require that single decorative block to expose a full
+   * sturdy top face. The first ordinary supported ramp cell just beyond it is
+   * an equally valid connectivity anchor.
+   */
+  static List<BlockPos> entranceStandCandidates() {
+    List<BlockPos> candidates = new ArrayList<>();
+    int[] across = {0, -1, 1, -2, 2};
+    for (int z = -(MineShaft.RADIUS - 1); z <= 1; z++) {
+      int y = floorY(z);
+      for (int x : across) {
+        BlockPos candidate = new BlockPos(x, y, z);
+        if (isRamp(candidate)) {
+          candidates.add(candidate);
+        }
+      }
+    }
+    return List.copyOf(candidates);
+  }
+
+  /**
+   * Planned mine cells close enough to work one target. A descending front can
+   * leave its nearest dry footing both higher and behind the target, so this is
+   * a reach sphere rather than only the target's cardinal neighbours.
+   */
+  static List<BlockPos> workStandCandidates(BlockPos target, double reachSqr) {
+    List<BlockPos> candidates = new ArrayList<>();
+    int search = (int) Math.ceil(Math.sqrt(reachSqr));
+    for (int dz = -search; dz <= search; dz++) {
+      for (int dy = -search; dy <= search; dy++) {
+        for (int dx = -search; dx <= search; dx++) {
+          BlockPos candidate = target.offset(dx, dy, dz);
+          if (!candidate.equals(target)
+              && candidate.distSqr(target) <= reachSqr
+              && isNavigableStand(candidate)) {
+            candidates.add(candidate);
+          }
+        }
+      }
+    }
+    return candidates;
+  }
+
+  /**
+   * Whether two open footholds are connected through the planned mine. This is
+   * deliberately a geometry walk rather than a Minecraft path search: the mine
+   * navigator searches one ramp waypoint at a time, so a successful first hop
+   * says nothing about a solid column farther down the requested route.
+   *
+   * <p>A ramp step changes one horizontal coordinate and may rise or fall one
+   * block. Restricting neighbours to that shape avoids cutting diagonally through
+   * a solid corner while still joining every ordinary stair and horizontal rib.
+   */
+  static boolean standPathExists(BlockPos start, BlockPos target,
+      Predicate<BlockPos> isOpenStand, int maxCells) {
+    return standPath(start, target, isOpenStand, maxCells).connected();
+  }
+
+  /**
+   * The route result plus its farthest reachable foothold. Keeping this detail
+   * beside the geometry search makes a live damaged mine explain where its
+   * connected walkable volume actually ends, rather than merely saying that a
+   * deep face is unreachable.
+   */
+  static StandPath standPath(BlockPos start, BlockPos target,
+      Predicate<BlockPos> isOpenStand, int maxCells) {
+    if (!isNavigableStand(start) || !isNavigableStand(target)
+        || !isOpenStand.test(start) || !isOpenStand.test(target)) {
+      return new StandPath(false, 0, start);
+    }
+    Deque<BlockPos> frontier = new ArrayDeque<>();
+    Set<BlockPos> seen = new HashSet<>();
+    frontier.add(start);
+    seen.add(start);
+    BlockPos furthest = start;
+    while (!frontier.isEmpty() && seen.size() <= maxCells) {
+      BlockPos current = frontier.poll();
+      if (current.getZ() > furthest.getZ()
+          || current.getZ() == furthest.getZ() && current.getY() < furthest.getY()) {
+        furthest = current;
+      }
+      if (current.equals(target)) {
+        return new StandPath(true, seen.size(), furthest);
+      }
+      for (Direction direction : Direction.Plane.HORIZONTAL) {
+        for (int dy = -1; dy <= 1; dy++) {
+          BlockPos next = current.relative(direction).offset(0, dy, 0);
+          if (isNavigableStand(next) && seen.add(next) && isOpenStand.test(next)) {
+            frontier.add(next);
+          }
+        }
+      }
+    }
+    return new StandPath(false, seen.size(), furthest);
+  }
+
   /** The five-cell-high descending shaft, capped below the surface structure. */
   static boolean isRamp(BlockPos local) {
     return MineShaft.withinCorridor(local)
@@ -102,7 +219,7 @@ final class MineTopology {
 
   /** Every cell the mine deliberately opens, whether it belongs to the ramp or a rib. */
   static boolean isInterior(BlockPos local) {
-    return isRamp(local) || isRib(local);
+    return isRamp(local) || isRib(local) || MineShaft.withinEntranceClearance(local);
   }
 
   /**
@@ -113,57 +230,6 @@ final class MineTopology {
    */
   static boolean isNavigableStand(BlockPos local) {
     return isInterior(local);
-  }
-
-  /**
-   * Whether two cells belong to one independently advancing excavation front.
-   *
-   * <p>The descending ramp is one front. Each rib is its own front, identified
-   * by its depth and side of the ramp. They remain one connected navigable mine,
-   * but a flood at the end of one rib must not make supports in the ramp, the
-   * opposite rib, or another depth look like part of that flood barrier.
-   */
-  static boolean sameFront(BlockPos first, BlockPos second) {
-    boolean firstRamp = isRamp(first);
-    boolean secondRamp = isRamp(second);
-    if (firstRamp || secondRamp) {
-      return firstRamp && secondRamp;
-    }
-    if (!isRib(first) || !isRib(second)) {
-      return false;
-    }
-    return first.getZ() == second.getZ()
-        && Integer.signum(first.getX()) == Integer.signum(second.getX());
-  }
-
-  /**
-   * Whether the connected support cluster at {@code start} touches water on
-   * that same excavation front. The supplied predicates keep this topology
-   * rule independent of world storage and make the flooded-rib boundary
-   * deterministic to test.
-   */
-  static boolean supportClusterTouchesWater(BlockPos start,
-      Predicate<BlockPos> isPlacedSupport, Predicate<BlockPos> isWater, int maxCells) {
-    Deque<BlockPos> frontier = new ArrayDeque<>();
-    Set<BlockPos> seen = new HashSet<>();
-    frontier.add(start);
-    seen.add(start);
-    while (!frontier.isEmpty() && seen.size() <= maxCells) {
-      BlockPos local = frontier.poll();
-      for (Direction direction : Direction.values()) {
-        BlockPos next = local.relative(direction);
-        if (!sameFront(start, next)) {
-          continue;
-        }
-        if (isWater.test(next)) {
-          return true;
-        }
-        if (isPlacedSupport.test(next) && seen.add(next)) {
-          frontier.add(next);
-        }
-      }
-    }
-    return false;
   }
 
   /**

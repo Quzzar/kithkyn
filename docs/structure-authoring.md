@@ -25,9 +25,10 @@ commands. This is the loop the current `village_center_plains_1` was built with.
    verify the capture (step 7).
 3. **Capture it**: `/kkdev village save-structure <from> <to> <name>`, where the two
    positions are opposite corners INCLUSIVE. The file lands in
-   `<world>/generated/kithkyn/structures/<name>.nbt`. Entities are deliberately not
-   captured; the existing legacy structures carry broken item frames precisely because
-   entities were baked in.
+   `<world>/generated/kithkyn/structures/<name>.nbt`. This command captures blocks only.
+   An approved capture/export may additionally retain deliberately authored initial entities,
+   such as livestock, a center golem, and decorative item frames. Do not copy arbitrary
+   nearby mobs or dropped items into a production template.
 4. **Ship it**: copy that file to `src/main/resources/data/kithkyn/structure/<name>.nbt`.
    The id in the building JSON's `structure` field, the file name, and the `.nbt` name are
    all the same string, so a definition and its structure can never drift apart.
@@ -62,6 +63,40 @@ commands. This is the loop the current `village_center_plains_1` was built with.
   or sign in the way makes a site impossible rather than clearable
   ([site-selection.md](site-selection.md)).
 
+## Initial entities and decorations
+
+Both instant placement and incremental construction use `BuildingEntities` after the final
+block-shape pass. It transforms the template's entity positions and rewrites a hanging entity's
+`TileX/Y/Z` to its world attachment cell before loading its NBT. Local coordinates alone are not
+enough for item frames: vanilla validates those tile coordinates against the world position.
+Facing is rotated once, and the displayed item and item rotation remain authored data. Verify
+each frame remains attached after at least 100 world ticks in all four building rotations.
+
+The approved Birch center starts with one ordinary iron golem. It is not pre-adopted: a guard
+can later adopt it through the normal mechanic. The butchery starts with three cows and three
+chickens, marked as farmed before joining the world; nearby wildlife is not marked as a side
+effect of construction. The bakery retains its two decorative item frames.
+
+Each building saves which initial entity entries were placed, plus a completion flag. A normal
+save/reload, repeat completion, or upgrade retains those receipts and does not replenish dead
+stock, a lost golem, or a removed decoration. Legacy standing buildings are treated as already
+initialized, while a legacy unfinished fresh project may run its initial spawn phase. An old
+upgrade is already initialized because its prior building supplied its inhabitants. Future
+upgrades that introduce or relocate decorations require an explicit authored transition; they
+must not silently reseed the whole original template population.
+
+Receipts and entity data live in Minecraft's separate saved-data and entity-region files. They
+are tested for ordinary saves and reloads, not claimed to form a crash-atomic transaction.
+Failed entity placement remains pending and is logged rather than silently considered complete.
+
+The disposable real-asset check is `BuildingPlacementVerification`, enabled only with the JVM
+property `kithkyn.buildingPlacement.verify=true`. It builds the approved center, butchery and
+bakery in all rotations through both placement paths, exercises mid-construction save/reload,
+entity save/reload and idempotent upgrade receipts, then exits with a logged PASS or FAIL. Run
+that same disposable world a second time to verify its saved manifest and actual entity-region
+files survived a complete server shutdown/restart. Never enable it on the user's world; it
+clears test plots near X/Z 2000 and stops its server afterward.
+
 ## Why headless
 
 Building in a client with WorldEdit is faster for a human, but the command loop is
@@ -81,6 +116,11 @@ building's are left absent so the world's own ground stays. The mine is the one 
 exception: its ground-layer air is the shaft mouth. Above the ground layer, air is wanted, it is
 what clears grass, flowers and branches out of the footprint.
 
+Air must stay inside the authored building envelope, never fill an empty capture border.
+`BuildingFootprint` derives gameplay bounds from non-air/non-structure-void blocks across the
+template palettes. Capture dimensions and local coordinates can remain unchanged: this preserves
+amenity offsets while giving planning, ground preparation and claims zero capture padding.
+
 A tree a worker is meant to cut is authored as a sapling, never as a grown tree (the lumberjack
 lodge, 2026-09-02): the sapling sits on a block of dirt in the ground layer, since the world's
 own top block may be sand or, on a slope, air, and the sapling is the work station. The first
@@ -95,6 +135,15 @@ the ground layer, beds and work stations likewise. Fisheries and level-1 watchto
 extra course below that and now declare `"sink": 1`; taverns and bakeries keep their floor a
 step above the ground on purpose.
 
+Negative `sink` raises the template: the approved Birch storehouse uses `-1` so its first step
+is visible above ground. `entrance_facing` declares the horizontal direction an authored front
+door faces; founding turns mine and storehouse doors inward using it. The default is north,
+except storehouses default south to retain existing catalog behavior. A mine may also declare
+`mine_entrance: {"facing": "east", "offset": [0, 0, 1]}`. The offset is from its unchanged
+miner station, in template coordinates; facing is the direction the ramp descends. Both rotate
+with the building, and excavation and navigation share that resulting frame. Without this field,
+the shaft retains the original local-south, zero-offset convention.
+
 ## Deriving a level from a shipped structure
 
 A level above 1 is rebuilt in the level-1's orientation. At runtime the new footprint may be
@@ -103,7 +152,9 @@ translated to any position that fully contains the old one
 in any horizontal world direction even though its authored local footprint still grows toward
 +X or +Z. This re-seats the whole template within the old parcel; it does not preserve old cells
 one for one. A structure with important runtime geometry outside its template needs an explicit
-exception. Mines retain the exact origin because their shafts are dug below the file. Where a
+exception. A narrower upgrade may leave only dirt/grass landscaping and plants outside its
+target; structural remnants are refused. Mines retain the exact origin because their shafts
+are dug below the file. Where a
 level is the level-1 developed rather than a different building, author it as
 a script over the level-1 file instead of by hand. `tools/structure/mine-level-2.py` writes the
 level-2 mine in all five families from the five level-1 files: the layout is written once, in the plains file's own
@@ -118,6 +169,7 @@ python3 mine-level-2.py ../../src/main/resources/data/kithkyn/structure
 
 then `validate.py` over the output, as for anything else. What no script checks is the shaft:
 where the stations go is `MineStep`'s geometry (a five-wide ramp toward local +Z from each
-mouth), and a second mouth is placed so the two ramps never meet. The level-2 mine has been
+mouth in these original families; `mine_entrance` can override that frame), and a second mouth
+is placed so the two ramps never meet. The level-2 mine has been
 validated and rendered offline only; the gallery and a real upgrade in a live village are the
 checks still owed.

@@ -16,6 +16,14 @@ import com.quzzar.kithkyn.village.Occupation;
 
 class BuildingImpactTest {
   @Test
+  void forgeDescriptionsExposeActualEquipmentProduction() {
+    String services = BuildingImpact.describeServices(Set.of("TOOLS_IRON", "ARMOR_IRON", "SHIELDS"));
+    assertTrue(services.contains("iron tools, swords and buckets"));
+    assertTrue(services.contains("iron armor"));
+    assertTrue(services.contains("shield production"));
+  }
+
+  @Test
   void workplaceBedsCannotMasqueradeAsGeneralHousing() {
     BuildingInfo hut = new BuildingInfo("lumberjack_plains_1").addBedLocation(0, 1, 0)
         .addWorkLocation(1, 1, 0, Occupation.LUMBERJACK);

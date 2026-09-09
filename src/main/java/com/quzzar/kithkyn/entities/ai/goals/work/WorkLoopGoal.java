@@ -80,6 +80,11 @@ public class WorkLoopGoal<T> extends Goal {
   }
 
   @Override
+  public final boolean requiresUpdateEveryTick() {
+    return this.step.requiresUpdateEveryTick();
+  }
+
+  @Override
   public final boolean canContinueToUse() {
     return this.target != null && !interrupted() && !this.approach.standingDown();
   }
@@ -139,8 +144,12 @@ public class WorkLoopGoal<T> extends Goal {
       }
       if (this.person.tickCount >= this.nextNavigationTick) {
         this.nextNavigationTick = this.person.tickCount + NAVIGATION_REFRESH_TICKS;
-        this.person.getNavigation().moveTo(
-            where.getX() + 0.5D, where.getY(), where.getZ() + 0.5D, this.step.speed());
+        if (this.step.requiresExactArrival()) {
+          this.person.getNavigation().moveTo(this.person.getNavigation().createPath(where, 0), this.step.speed());
+        } else {
+          this.person.getNavigation().moveTo(
+              where.getX() + 0.5D, where.getY(), where.getZ() + 0.5D, this.step.speed());
+        }
       }
       // Most work happens on arrival. Laying a path happens on the way.
       if (!this.step.actWhileTravelling()) {
@@ -156,7 +165,7 @@ public class WorkLoopGoal<T> extends Goal {
     if (this.ticksInReach % this.step.actEveryTicks() != 0) {
       return;
     }
-    if (!this.person.swinging) {
+    if (this.step.swingsOnAct() && !this.person.swinging) {
       this.person.swing(this.step.animationHand(this.person, this.target));
     }
     if (!this.step.act(this.person, this.target)) {

@@ -1,0 +1,54 @@
+{
+  "structure": "couple_cottage_birch_forest_1",
+  "category": "couple_cottage",
+  "variant": "birch_forest",
+  "beds": [
+    [
+      8,
+      1,
+      7
+    ],
+    [
+      8,
+      1,
+      8
+    ]
+  ],
+  "work_stations": [],
+  "personal_containers": [
+    [
+      8,
+      1,
+      12
+    ]
+  ],
+  "containers": [],
+  "cost": [
+    {
+      "item": "minecraft:oak_log",
+      "count": 32
+    },
+    {
+      "item": "minecraft:cobblestone",
+      "count": 24
+    }
+  ],
+  "grants": [],
+  "sink": 0,
+  "village_identity": {
+    "primary_blocks": [
+      [
+        8,
+        1,
+        7
+      ],
+      [
+        8,
+        1,
+        8
+      ]
+    ],
+    "secondary_blocks": [],
+    "banners": []
+  }
+}

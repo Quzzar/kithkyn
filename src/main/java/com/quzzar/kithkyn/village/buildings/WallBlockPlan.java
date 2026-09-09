@@ -42,7 +42,12 @@ public record WallBlockPlan(long position, Piece piece, WallCellRole role) {
     CAMPFIRE_NORTH,
     CAMPFIRE_EAST,
     CAMPFIRE_SOUTH,
-    CAMPFIRE_WEST;
+    CAMPFIRE_WEST,
+    COBBLE_POST, MOSSY_POST, COBBLE_WALL, MOSSY_WALL,
+    COBBLE_SLAB_BOTTOM, COBBLE_SLAB_TOP,
+    TORCH, TORCH_NORTH, TORCH_EAST, TORCH_SOUTH, TORCH_WEST,
+    // Append only: saved section signatures include these ordinals.
+    BANNER_NORTH, BANNER_EAST, BANNER_SOUTH, BANNER_WEST;
   }
 
   public BlockPos pos() {
@@ -57,6 +62,10 @@ public record WallBlockPlan(long position, Piece piece, WallCellRole role) {
   /** Resolves the catalog's semantic piece through the village's regional palette. */
   public BlockState desiredState(WallTier tier, VillageStyle style) {
     WoodWallPalette wood = WoodWallPalette.forStyle(style);
+    if (style == VillageStyle.BIRCH_FOREST) {
+      BlockState regional = birchState();
+      if (regional != null) return regional;
+    }
     return switch (this.piece) {
       case BODY -> tier == WallTier.STONE
           ? tier.block().defaultBlockState()
@@ -91,6 +100,81 @@ public record WallBlockPlan(long position, Piece piece, WallCellRole role) {
       case CAMPFIRE_EAST -> campfire(Direction.EAST);
       case CAMPFIRE_SOUTH -> campfire(Direction.SOUTH);
       case CAMPFIRE_WEST -> campfire(Direction.WEST);
+      case COBBLE_POST -> Blocks.COBBLESTONE.defaultBlockState();
+      case MOSSY_POST -> Blocks.MOSSY_COBBLESTONE.defaultBlockState();
+      case COBBLE_WALL -> Blocks.COBBLESTONE_WALL.defaultBlockState();
+      case MOSSY_WALL -> Blocks.MOSSY_COBBLESTONE_WALL.defaultBlockState();
+      case COBBLE_SLAB_BOTTOM -> Blocks.COBBLESTONE_SLAB.defaultBlockState();
+      case COBBLE_SLAB_TOP -> Blocks.COBBLESTONE_SLAB.defaultBlockState().setValue(SlabBlock.TYPE, SlabType.TOP);
+      case TORCH -> Blocks.TORCH.defaultBlockState();
+      case TORCH_NORTH -> wallTorch(Direction.NORTH);
+      case TORCH_EAST -> wallTorch(Direction.EAST);
+      case TORCH_SOUTH -> wallTorch(Direction.SOUTH);
+      case TORCH_WEST -> wallTorch(Direction.WEST);
+      case BANNER_NORTH -> wallBanner(Direction.NORTH);
+      case BANNER_EAST -> wallBanner(Direction.EAST);
+      case BANNER_SOUTH -> wallBanner(Direction.SOUTH);
+      case BANNER_WEST -> wallBanner(Direction.WEST);
+    };
+  }
+
+  /** Procedural joins and foundations use the approved stone vocabulary too. */
+  @javax.annotation.Nullable
+  private BlockState birchState() {
+    return switch (this.piece) {
+      case BODY, POST, BEAM_NORTH_SOUTH, BEAM_EAST_WEST, WALKWAY -> Blocks.COBBLESTONE.defaultBlockState();
+      case PARAPET -> Blocks.COBBLESTONE_WALL.defaultBlockState();
+      case SLAB -> Blocks.COBBLESTONE_SLAB.defaultBlockState().setValue(SlabBlock.TYPE, SlabType.TOP);
+      case STEP_NORTH -> cobbleStair(Direction.NORTH);
+      case STEP_EAST -> cobbleStair(Direction.EAST);
+      case STEP_SOUTH -> cobbleStair(Direction.SOUTH);
+      case STEP_WEST -> cobbleStair(Direction.WEST);
+      case TRAPDOOR_NORTH -> trapdoor(WoodWallPalette.forStyle(VillageStyle.PLAINS), Direction.NORTH);
+      case TRAPDOOR_EAST -> trapdoor(WoodWallPalette.forStyle(VillageStyle.PLAINS), Direction.EAST);
+      case TRAPDOOR_SOUTH -> trapdoor(WoodWallPalette.forStyle(VillageStyle.PLAINS), Direction.SOUTH);
+      case TRAPDOOR_WEST -> trapdoor(WoodWallPalette.forStyle(VillageStyle.PLAINS), Direction.WEST);
+      default -> null;
+    };
+  }
+
+  private static BlockState cobbleStair(Direction direction) {
+    return Blocks.COBBLESTONE_STAIRS.defaultBlockState().setValue(StairBlock.FACING, direction);
+  }
+
+  private static BlockState wallTorch(Direction direction) {
+    return Blocks.WALL_TORCH.defaultBlockState().setValue(net.minecraft.world.level.block.WallTorchBlock.FACING, direction);
+  }
+
+  /** A neutral authored flag; the owning village supplies its colors and layers. */
+  private static BlockState wallBanner(Direction direction) {
+    return Blocks.WHITE_WALL_BANNER.defaultBlockState()
+        .setValue(net.minecraft.world.level.block.WallBannerBlock.FACING, direction);
+  }
+
+  public boolean isBanner() {
+    return switch (piece) {
+      case BANNER_NORTH, BANNER_EAST, BANNER_SOUTH, BANNER_WEST -> true;
+      default -> false;
+    };
+  }
+
+  static Piece bannerPiece(Direction direction) {
+    return switch (direction) {
+      case NORTH -> Piece.BANNER_NORTH;
+      case EAST -> Piece.BANNER_EAST;
+      case SOUTH -> Piece.BANNER_SOUTH;
+      case WEST -> Piece.BANNER_WEST;
+      default -> throw new IllegalArgumentException("Wall banners must face horizontally");
+    };
+  }
+
+  static Piece torchPiece(Direction direction) {
+    return switch (direction) {
+      case NORTH -> Piece.TORCH_NORTH;
+      case EAST -> Piece.TORCH_EAST;
+      case SOUTH -> Piece.TORCH_SOUTH;
+      case WEST -> Piece.TORCH_WEST;
+      default -> throw new IllegalArgumentException("Wall torches must face horizontally");
     };
   }
 

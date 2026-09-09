@@ -123,7 +123,7 @@ public final class RedevelopmentWork {
     if (remainingBlocks() != 0) {
       return;
     }
-    village.queueRedevelopmentItems(MaterialAmount.stacks(refund));
+    village.queuePendingVillageItems(MaterialAmount.stacks(refund));
     refund = List.of();
     village.rebuildBuildingClaims();
   }

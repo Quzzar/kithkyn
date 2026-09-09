@@ -8,6 +8,8 @@ import javax.annotation.Nullable;
 
 import com.quzzar.kithkyn.Kithkyn;
 import com.quzzar.kithkyn.entities.RealPerson;
+import com.quzzar.kithkyn.entities.GuardWeapons;
+import com.quzzar.kithkyn.entities.JobTool;
 import com.quzzar.kithkyn.entities.ai.goals.ShortageWatch;
 import com.quzzar.kithkyn.village.LocationManager;
 import com.quzzar.kithkyn.village.TreeFelling;
@@ -160,6 +162,7 @@ public final class ChopStep implements WorkStep<ChopStep.Cut> {
     if (!(person.level() instanceof ServerLevel level)) {
       return null;
     }
+    if (GuardWeapons.isPatrol(person) && !GuardWeapons.carries(person, JobTool.AXE)) return null;
     if (this.woodlandRadius > 0) {
       // The guard's pass sweeps a bubble around wherever they patrol; the
       // lumberjack's sweeps the whole village claim, so a wild tree anywhere in
@@ -205,7 +208,13 @@ public final class ChopStep implements WorkStep<ChopStep.Cut> {
   }
 
   @Override
+  public void acquired(RealPerson person, Cut cut) {
+    GuardWeapons.chopping(person, true);
+  }
+
+  @Override
   public boolean act(RealPerson person, Cut cut) {
+    if (GuardWeapons.isPatrol(person) && !JobTool.AXE.inHand(person)) return false;
     BlockPos target = cut.log();
     if (!target.equals(this.chopping)) {
       this.chopping = target;
@@ -251,6 +260,7 @@ public final class ChopStep implements WorkStep<ChopStep.Cut> {
 
   @Override
   public void released(RealPerson person, Cut cut) {
+    GuardWeapons.chopping(person, false);
     person.level().destroyBlockProgress(person.getId(), cut.log(), -1);
     this.chopping = null;
     this.chopTime = 0;

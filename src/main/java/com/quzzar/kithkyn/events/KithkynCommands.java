@@ -80,7 +80,7 @@ public class KithkynCommands {
     private static int createVillage(CommandSourceStack source, BlockPos pos, @javax.annotation.Nullable VillageStyle style) {
         ServerLevel level = source.getLevel();
         VillageManager.get(level).registerVillage(level, pos, style);
-        source.sendSuccess(() -> Component.literal("Village created at " + pos.toShortString()
+        source.sendSuccess(() -> Component.literal("Village founding requested at " + pos.toShortString()
                 + (style == null ? "" : " in the " + style.id() + " style")), true);
         return 1;
     }

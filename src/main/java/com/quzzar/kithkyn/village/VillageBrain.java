@@ -165,8 +165,14 @@ public class VillageBrain {
    */
   public ItemStack storeAwayFrom(ServerLevelAccessor levelAccess, ItemStack stack,
       java.util.Collection<BlockPos> excluding) {
+    return storeAwayFrom(levelAccess, stack, excluding, null);
+  }
+
+  /** The same count-preserving insertion, with containers nearest a worker tried first. */
+  public ItemStack storeAwayFrom(ServerLevelAccessor levelAccess, ItemStack stack,
+      java.util.Collection<BlockPos> excluding, BlockPos preferNearestToLoc) {
     ItemStack remaining = stack;
-    for (Long longLoc : containerLocs) {
+    for (Long longLoc : orderedContainers(preferNearestToLoc)) {
       if (excluding.contains(BlockPos.of(longLoc))) {
         continue;
       }

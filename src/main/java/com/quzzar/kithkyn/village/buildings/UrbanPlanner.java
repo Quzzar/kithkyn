@@ -18,7 +18,6 @@ import javax.annotation.Nullable;
 
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 
 /**
  * Decides what a village builds next.
@@ -74,16 +73,28 @@ public class UrbanPlanner {
   /**
    * A building that would add the village nothing it lacks, and so is not offered
    * (Ember Hill built six wells, 2026-09-02). A second farm, house, mine or
-   * storehouse always earns its place, another field, more beds, another seam, more
-   * shelves, so anything that brings a bed, a job, or a store is never redundant.
-   * What is left is a building whose whole worth is the capabilities it grants, and
+   * storehouse can earn its place through more field, bed, seam, or shelf capacity.
+   * A producer project is withheld, however, when every job it adds already stands
+   * vacant and every capability it grants is already present. An ancillary live-in
+   * bed or work chest does not turn that duplicate into productive capacity.
+   * What remains is a building whose whole worth is the capabilities it grants, and
    * a well is the case in point: it grants WATER, and WATER is a yes-or-no the
    * village either has or has not. Once one well stands, a second grants nothing,
    * so a building whose every grant is already provided and which adds no bed, job,
    * or store is kept off the table. The first well, when the village has no water,
    * grants WATER and is offered as normal; only the redundant ones are dropped.
    */
-  private static boolean isRedundant(Village village, BuildingInfo info) {
+  private static boolean isRedundant(Village village, ConstructionChoice choice) {
+    BuildingInfo info = choice.info();
+    if (info.getConditionalGrants().isEmpty()) {
+      java.util.Set<Occupation> openings = village.claimableJobs().stream()
+          .map(post -> post.getOccupation()).collect(java.util.stream.Collectors.toSet());
+      if (WorkplaceDemand.duplicatesVacantProduction(
+          info.getWorkLocations().values().stream().distinct().toList(),
+          info.getGrants(), openings, village::canDo)) {
+        return true;
+      }
+    }
     if (!info.getBedLocations().isEmpty()
         || !info.getWorkLocations().isEmpty()
         || !info.getContainerLocations().isEmpty()
@@ -253,28 +264,6 @@ public class UrbanPlanner {
   }
 
   /**
-   * Materials a village cannot simply dig up: each needs some building standing
-   * before any of it exists. Anything absent from this map comes straight out of
-   * the ground, and a village that has founded can always get it. This is also
-   * the source of the dependency chain the model is shown: an item's capability
-   * names the building that produces it (see producerFor). Ask through
-   * {@link #sourceOf}: any log waits on LOGS and any wool on WOOL, since any log
-   * pays a log cost and any wool a wool cost ({@link Materials}), and oak and
-   * white stand here for all of theirs. Iron waits on SMELTING: until 2026-09-02
-   * it was absent, read as dug-up, and a village with no forge was offered a
-   * forge that cost the very ingots only a forge can make.
-   */
-  private static final Map<Item, String> MATERIAL_SOURCE = Map.of(
-      Items.OAK_LOG, "LOGS",
-      Items.OAK_PLANKS, "PLANKS",
-      Items.STONE, "CUT_STONE",
-      Items.STONE_BRICKS, "CUT_STONE",
-      Items.SANDSTONE, "CUT_STONE",
-      Items.CUT_SANDSTONE, "CUT_STONE",
-      Items.WHITE_WOOL, "WOOL",
-      Items.IRON_INGOT, "SMELTING");
-
-  /**
    * The least wasteful legal way to raise this definition now. A compatible
    * building with room is reused; otherwise this village may build only its own
    * regional variant (or the plains fallback) on a new site.
@@ -319,18 +308,6 @@ public class UrbanPlanner {
     return fallback;
   }
 
-  /** The capability a material waits on, or null when it comes out of the ground. */
-  @Nullable
-  private static String sourceOf(Item item) {
-    if (Materials.isLog(item) || Materials.isPlank(item)) {
-      return "LOGS";
-    }
-    if (Materials.isWool(item)) {
-      return "WOOL";
-    }
-    return MATERIAL_SOURCE.get(item);
-  }
-
   /**
    * Whether a village could ever pay for this, which is a different question
    * from whether it can today. A goal it has no way to work toward is not a
@@ -339,7 +316,7 @@ public class UrbanPlanner {
    */
   private static boolean withinReach(Village village, Map<Item, Integer> stock, ConstructionChoice choice) {
     for (ItemStack cost : ConstructionQuote.capture(choice, Map.of()).required()) {
-      String capability = sourceOf(cost.getItem());
+      String capability = MaterialProduction.capabilityFor(cost.getItem());
       if (capability == null || village.canDo(capability)) {
         continue;
       }
@@ -364,7 +341,7 @@ public class UrbanPlanner {
     String stalled = VillageGoal.stalled(village, village.getVillageTime());
     for (BuildingInfo info : Buildings.catalogue(village.getStyle())) {
       ConstructionChoice choice = preferredChoice(village, info);
-      if (choice == null || isFoundingOnly(choice) || isMarriageOnly(info) || isRedundant(village, info)
+      if (choice == null || isFoundingOnly(choice) || isMarriageOnly(info) || isRedundant(village, choice)
           || hasMaterialsToConstruct(stock, choice)) {
         continue;
       }
@@ -561,7 +538,7 @@ public class UrbanPlanner {
     List<Candidate> candidates = new ArrayList<>();
     for (BuildingInfo info : Buildings.catalogue(village.getStyle())) {
       ConstructionChoice choice = preferredChoice(village, info);
-      if (choice == null || isFoundingOnly(choice) || isMarriageOnly(info) || isRedundant(village, info)) {
+      if (choice == null || isFoundingOnly(choice) || isMarriageOnly(info) || isRedundant(village, choice)) {
         continue;
       }
       if (!hasMaterialsToConstruct(stock, choice)) {
@@ -607,11 +584,10 @@ public class UrbanPlanner {
    */
   private static String unlockNote(BuildingInfo info) {
     for (String grant : info.getGrants()) {
-      for (Map.Entry<Item, String> source : MATERIAL_SOURCE.entrySet()) {
-        if (source.getValue().equals(grant)) {
-          return ", which provides the " + Materials.describe(source.getKey())
-              + " that other buildings are built from";
-        }
+      Item example = MaterialProduction.representativeFor(grant);
+      if (example != null) {
+        return ", which provides the " + Materials.describe(example)
+            + " that other buildings are built from";
       }
     }
     return "";
@@ -663,7 +639,7 @@ public class UrbanPlanner {
    * material the goal is short of, resolved to the building that produces it.
    */
   private static String producerHint(Village village, Item item) {
-    String capability = sourceOf(item);
+    String capability = MaterialProduction.capabilityFor(item);
     if (capability == null || village.canDo(capability)) {
       return "";
     }

@@ -1,0 +1,56 @@
+{
+  "structure": "hunting_lodge_birch_forest_1",
+  "category": "hunting_lodge",
+  "variant": "birch_forest",
+  "beds": [
+    [
+      9,
+      4,
+      8
+    ]
+  ],
+  "work_stations": [
+    {
+      "occupation": "HUNTER",
+      "pos": [
+        7,
+        1,
+        8
+      ]
+    }
+  ],
+  "personal_containers": [
+    [
+      6,
+      4,
+      9
+    ]
+  ],
+  "containers": [],
+  "cost": [
+    {
+      "item": "minecraft:oak_log",
+      "count": 4
+    },
+    {
+      "item": "minecraft:cobblestone",
+      "count": 5
+    }
+  ],
+  "grants": [
+    "MEAT",
+    "LEATHER"
+  ],
+  "sink": 0,
+  "village_identity": {
+    "primary_blocks": [],
+    "secondary_blocks": [
+      [
+        9,
+        4,
+        8
+      ]
+    ],
+    "banners": []
+  }
+}

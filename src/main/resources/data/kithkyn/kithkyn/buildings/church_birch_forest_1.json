@@ -1,0 +1,43 @@
+{
+  "structure": "church_birch_forest_1",
+  "category": "church",
+  "variant": "birch_forest",
+  "beds": [],
+  "work_stations": [
+    {
+      "occupation": "CLERIC",
+      "pos": [
+        8,
+        3,
+        10
+      ]
+    }
+  ],
+  "personal_containers": [],
+  "containers": [
+    [
+      9,
+      3,
+      9
+    ]
+  ],
+  "cost": [
+    {
+      "item": "minecraft:stone_bricks",
+      "count": 380
+    },
+    {
+      "item": "minecraft:oak_log",
+      "count": 133
+    }
+  ],
+  "grants": [
+    "HEALING"
+  ],
+  "sink": 0,
+  "village_identity": {
+    "primary_blocks": [],
+    "secondary_blocks": [],
+    "banners": []
+  }
+}

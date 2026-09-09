@@ -16,6 +16,7 @@ import net.minecraft.world.entity.ai.navigation.GroundPathNavigation;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.PathNavigationRegion;
 import net.minecraft.world.level.block.FenceGateBlock;
+import net.minecraft.world.level.block.LadderBlock;
 import net.minecraft.world.level.block.TrapDoorBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.pathfinder.Node;
@@ -67,21 +68,31 @@ import net.minecraft.world.phys.Vec3;
  * vanilla's best partial path end at the surface directly above it. Any route
  * that starts or ends down a shaft is therefore routed by the ramp a hop at a
  * time ({@link MineShaft#waypoint}), under {@code moveTo}, so every goal gets
- * it.
+ * it. Child shafts use the same hook, with the root ramp and source rib as an
+ * explicit parent chain.
  */
 public final class PersonPathNavigation extends GroundPathNavigation {
 
   /** Vanilla's climb, which LivingEntity grants only to a mob pressing into the ladder. */
   private static final double CLIMB_SPEED = 0.2D;
 
-  /** Squared: the next node is in this ladder's column, not off to one side of it. */
-  private static final double SAME_COLUMN_SQR = 0.25D;
+  /** Maximum horizontal error before committing to a ladder descent. */
+  private static final double MAX_LADDER_OFFSET = 0.025D;
 
   /** Bounded route-planning horizon, independent of a person's perception range. */
   private static final float MINIMUM_SEARCH_RANGE = 48.0F;
 
+  /** Exact work posts can require a detour to a ladder before climbing back toward the target. */
+  private static final float EXACT_SEARCH_RANGE = 96.0F;
+
   /** A one-step ramp waypoint must not accept the current cell as close enough. */
   private static final int MINE_WAYPOINT_ACCURACY = 0;
+
+  /** Squared distance of one diagonal stair step in the mine. */
+  private static final double ADJACENT_MINE_STEP_SQR = 3.0D;
+
+  @Nullable
+  private String lastMinePathFailure;
 
   public PersonPathNavigation(Mob mob, Level level) {
     super(mob, level);
@@ -104,8 +115,17 @@ public final class PersonPathNavigation extends GroundPathNavigation {
   @Nullable
   protected Path createPath(Set<BlockPos> targets, int regionOffset, boolean offsetUpward, int accuracy) {
     float perceptionRange = (float)this.mob.getAttributeValue(Attributes.FOLLOW_RANGE);
-    return super.createPath(targets, regionOffset, offsetUpward, accuracy,
-        Math.max(MINIMUM_SEARCH_RANGE, perceptionRange));
+    float range = Math.max(MINIMUM_SEARCH_RANGE, perceptionRange);
+    Path route = super.createPath(targets, regionOffset, offsetUpward, accuracy, range);
+    // Reaching a watch platform can take more than 48 blocks of walking even
+    // when it is nearby in a straight line. Retry exact work destinations with
+    // a longer horizon, retaining the same hard node budget and loaded chunks.
+    if (accuracy == 0 && range < EXACT_SEARCH_RANGE && (route == null || !route.canReach())) {
+      Path longer = super.createPath(targets, regionOffset, offsetUpward, accuracy, EXACT_SEARCH_RANGE);
+      if (longer != null && (route == null || longer.canReach()
+          || longer.getDistToTarget() < route.getDistToTarget())) route = longer;
+    }
+    return route;
   }
 
   /**
@@ -127,16 +147,100 @@ public final class PersonPathNavigation extends GroundPathNavigation {
       }
       BlockPos hop = MineShaft.waypoint(person.getVillage(), this.mob.blockPosition(), pos);
       if (hop != null) {
-        return super.createPath(hop, MINE_WAYPOINT_ACCURACY);
+        Path path = super.createPath(hop, MINE_WAYPOINT_ACCURACY);
+        if (path == null || !path.canReach()) {
+          BlockState at = this.level.getBlockState(hop);
+          BlockState above = this.level.getBlockState(hop.above());
+          BlockState below = this.level.getBlockState(hop.below());
+          String failure = this.mob.blockPosition().toShortString() + " toward "
+              + pos.toShortString() + " via " + hop.toShortString() + ": path="
+              + (path == null ? "none" : "partial to "
+                  + path.getEndNode().asBlockPos().toShortString())
+              + ", at=" + at.getBlock().getName().getString()
+              + ", above=" + above.getBlock().getName().getString()
+              + ", below=" + below.getBlock().getName().getString();
+          if (!failure.equals(this.lastMinePathFailure)) {
+            this.lastMinePathFailure = failure;
+            Kithkyn.LOGGER.info("[mine-path] {} cannot route from {}",
+                person.getFullName(), failure);
+          }
+        } else {
+          this.lastMinePathFailure = null;
+        }
+        // A partial route to a mine waypoint is actively harmful: vanilla's
+        // closest node is commonly the solid roof directly above the ramp.
+        // Walking that partial path strands the miner over her own work and the
+        // next hop is then an even steeper drop through stone. A waypoint is a
+        // required link in the shaft route, so unlike an ordinary destination it
+        // is useful only when the pathfinder can actually reach it.
+        return path != null && path.canReach() ? path : null;
       }
     }
     return super.createPath(pos, accuracy);
   }
 
+  /**
+   * Route coordinate-based movement through the same block-position entry point.
+   * PathNavigation's vanilla implementation calls its protected set-based path
+   * search directly, bypassing {@link #createPath(BlockPos, int)} and therefore
+   * every mine waypoint above. WorkLoopGoal uses this overload, so without this
+   * bridge miners appeared to have waypoint routing while their actual work walk
+   * still followed vanilla's partial path onto the roof over a deep target.
+   */
+  @Override
+  public boolean moveTo(double x, double y, double z, double speed) {
+    BlockPos requested = BlockPos.containing(x, y, z);
+    if (this.mob instanceof RealPerson person && person.getVillage() != null) {
+      BlockPos hop = MineShaft.waypoint(
+          person.getVillage(), this.mob.blockPosition(), requested);
+      if (hop != null
+          && this.mob.blockPosition().distSqr(hop) <= ADJACENT_MINE_STEP_SQR
+          && isOpenFooting(hop)) {
+        // Vanilla occasionally refuses an exact path to the next one-down ramp
+        // cell while the walker is between stair heights. This is already the
+        // validated adjacent waypoint, so keep collision handling and hand that
+        // single step directly to the ordinary move control.
+        this.path = null;
+        this.lastMinePathFailure = null;
+        this.mob.getMoveControl().setWantedPosition(
+            hop.getX() + 0.5D, hop.getY(), hop.getZ() + 0.5D, speed);
+        return true;
+      }
+    }
+    Path path = createPath(requested, 1);
+    return moveTo(path, speed);
+  }
+
+  private boolean isOpenFooting(BlockPos pos) {
+    BlockState support = this.level.getBlockState(pos.below());
+    return this.level.getBlockState(pos).isAir()
+        && this.level.getBlockState(pos.above()).isAir()
+        && support.entityCanStandOnFace(
+            this.level, pos.below(), this.mob, net.minecraft.core.Direction.UP);
+  }
+
   /** A climb is a path in progress, though the feet are off the ground. */
   @Override
   protected boolean canUpdatePath() {
-    return super.canUpdatePath() || this.mob.onClimbable();
+    return super.canUpdatePath() || this.mob.onClimbable()
+        || isClimbable(this.level.getBlockState(this.mob.blockPosition().below()));
+  }
+
+  /** A vertical rung must actually be reached, never skipped by ground corner-cutting. */
+  @Override
+  protected void followThePath() {
+    if (this.path != null && !this.path.isDone()
+        && isClimbable(this.level.getBlockState(this.path.getNextNodePos()))) {
+      Vec3 next = this.path.getNextEntityPos(this.mob);
+      if (!descendingTowards(next)) next = ladderApproach(next,
+          this.level.getBlockState(this.path.getNextNodePos()));
+      if (Math.abs(this.mob.getX() - next.x) < 0.45D
+          && Math.abs(this.mob.getZ() - next.z) < 0.45D
+          && Math.abs(this.mob.getY() - next.y) < 0.35D) this.path.advance();
+      this.doStuckDetection(this.getTempMobPos());
+      return;
+    }
+    super.followThePath();
   }
 
   /** On a rung the feet go at the rung, not on the floor beneath the ladder. */
@@ -152,12 +256,33 @@ public final class PersonPathNavigation extends GroundPathNavigation {
       return;
     }
     Vec3 next = this.path.getNextEntityPos(this.mob);
+    boolean onLadder = this.mob.onClimbable();
+    boolean descending = descendingTowards(next);
+    BlockPos rungPos = this.path.getNextNodePos();
+    if (descending && onLadder && next.y < this.mob.getY() - 0.5D
+        && isClimbable(this.level.getBlockState(this.mob.blockPosition().below()))) {
+      // Do not step sideways toward the ground exit while still several rungs up.
+      rungPos = this.mob.blockPosition();
+      next = new Vec3(rungPos.getX() + 0.5D, next.y, rungPos.getZ() + 0.5D);
+    }
+    BlockState rungState = this.level.getBlockState(rungPos);
+    boolean ladder = rungState.getBlock() instanceof LadderBlock;
+    boolean descendingLadder = descending && ladder;
+    next = ladderApproach(next, rungState);
     double dx = next.x - this.mob.getX();
     double dz = next.z - this.mob.getZ();
-    if (dx * dx + dz * dz > SAME_COLUMN_SQR) {
+    // Merely sharing the rung's block is not enough: the trailing half of the
+    // body can still rest on the landing. Center fully before stopping the walk,
+    // or a descending resident hangs at the top forever without ever falling.
+    double clearance = Math.max(0.0D, (1.0D - this.mob.getBbWidth()) / 2.0D - 0.025D);
+    double alignment = descending ? Math.min(MAX_LADDER_OFFSET, clearance) : 0.4D;
+    if (Math.abs(dx) > alignment || Math.abs(dz) > alignment) {
+      if (ladder) {
+        this.mob.getMoveControl().setWantedPosition(next.x, descending ? this.mob.getY() : next.y,
+            next.z, this.speedModifier);
+      }
       return; // leaving the ladder sideways is the move control's ordinary walk
     }
-    boolean onLadder = this.mob.onClimbable();
     if (!onLadder && !isClimbable(this.level.getBlockState(this.path.getNextNodePos()))) {
       return;
     }
@@ -170,6 +295,10 @@ public final class PersonPathNavigation extends GroundPathNavigation {
     // they bobbed at the ladder's top for good. Held from here, they simply
     // fall into the shaft and slide.
     this.mob.getMoveControl().setWantedPosition(this.mob.getX(), this.mob.getY(), this.mob.getZ(), 0.0D);
+    if (descendingLadder) {
+      Vec3 motion = this.mob.getDeltaMovement();
+      this.mob.setDeltaMovement(0.0D, motion.y, 0.0D);
+    }
     if (onLadder && next.y > this.mob.getY() + 0.05D) {
       Vec3 motion = this.mob.getDeltaMovement();
       this.mob.setDeltaMovement(motion.x, CLIMB_SPEED, motion.z);
@@ -179,6 +308,22 @@ public final class PersonPathNavigation extends GroundPathNavigation {
 
   private static boolean isClimbable(BlockState state) {
     return state.is(BlockTags.CLIMBABLE);
+  }
+
+  private Vec3 ladderApproach(Vec3 target, BlockState state) {
+    if (!(state.getBlock() instanceof LadderBlock)) return target;
+    // Clear the three-pixel ladder lip both when entering from the side and
+    // when descending. Entry movement and arrival agree on the approach point;
+    // descent still requires the body to pass over the rung before advancing.
+    var facing = state.getValue(LadderBlock.FACING);
+    double offset = Math.max(0.125D, this.mob.getBbWidth() / 2.0D - 0.2625D);
+    return target.add(facing.getStepX() * offset, 0, facing.getStepZ() * offset);
+  }
+
+  private boolean descendingTowards(Vec3 next) {
+    boolean upcomingAscent = this.path.getNextNodeIndex() + 1 < this.path.getNodeCount()
+        && this.path.getNode(this.path.getNextNodeIndex() + 1).y > next.y;
+    return !upcomingAscent && next.y < this.mob.getY() - 0.05D;
   }
 
   /** Debug-only measurements around the stock weighted A* search. */
@@ -282,6 +427,15 @@ public final class PersonPathNavigation extends GroundPathNavigation {
       if (!isClimbable(this.currentContext.getBlockState(new BlockPos(node.x, node.y, node.z)))) {
         return count;
       }
+      // Vanilla may offer a fall to the ground beside a high rung. Taking that
+      // edge leaves the ladder early and can strand the body on a nearby rail.
+      // Descend the rungs first; ordinary same-height and one-step exits remain.
+      int safeCount = 0;
+      for (int i = 0; i < count; i++) {
+        Node neighbor = outputArray[i];
+        if (neighbor.y >= node.y - 1) outputArray[safeCount++] = neighbor;
+      }
+      count = safeCount;
       for (int step : new int[] {1, -1}) {
         Node rung = rung(node.x, node.y + step, node.z);
         if (this.isNeighborValid(rung, node)) {

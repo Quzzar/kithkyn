@@ -12,6 +12,7 @@ import com.quzzar.kithkyn.Kithkyn;
 import com.quzzar.kithkyn.savedata.GradedColumnStore;
 import com.quzzar.kithkyn.savedata.PlacedBlockStore;
 import com.quzzar.kithkyn.village.buildings.Building;
+import com.quzzar.kithkyn.village.buildings.BuildingUpgrade;
 import com.quzzar.kithkyn.village.buildings.SitePreparation;
 
 import net.minecraft.core.BlockPos;
@@ -23,6 +24,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.Heightmap;
+import net.minecraft.world.level.levelgen.structure.BoundingBox;
 
 /**
  * One reading of the ground around a village's buildings, and the walkable
@@ -129,6 +131,8 @@ public final class GradingSurvey {
   private final boolean[] apron;
   /** Columns whose top is a worn path, given a gentler grade than the rest. */
   private final boolean[] path;
+  /** Narrow shared gaps and doorstep approaches, worked before the wider landscape. */
+  private final boolean[] access;
   /** Original cave-floor height for a column whose opening will be covered. */
   private final int[] coverFrom;
   private final int[] target;
@@ -144,6 +148,7 @@ public final class GradingSurvey {
     this.claimed = new boolean[width * depth];
     this.apron = new boolean[width * depth];
     this.path = new boolean[width * depth];
+    this.access = new boolean[width * depth];
     this.coverFrom = new int[width * depth];
     Arrays.fill(this.coverFrom, HoleCoverPlanner.NO_COVER);
     this.target = new int[width * depth];
@@ -172,6 +177,12 @@ public final class GradingSurvey {
       minZ = Math.min(minZ, centre.getZ() - radius);
       maxZ = Math.max(maxZ, centre.getZ() + radius);
     }
+    for (VillagePaths.Gate gate : VillagePaths.gates(village.getWallProject())) {
+      minX = Math.min(minX, gate.anchor().getX());
+      maxX = Math.max(maxX, gate.anchor().getX());
+      minZ = Math.min(minZ, gate.anchor().getZ());
+      maxZ = Math.max(maxZ, gate.anchor().getZ());
+    }
     minX -= MARGIN;
     maxX += MARGIN;
     minZ -= MARGIN;
@@ -190,9 +201,18 @@ public final class GradingSurvey {
     }
 
     GradingSurvey survey = new GradingSurvey(minX, minZ, maxX - minX + 1, maxZ - minZ + 1);
-    survey.read(level, village, buildings);
+    List<BuildingGround> grounds = new ArrayList<>();
+    for (Building building : buildings) {
+      BoundingBox local = BuildingUpgrade.footprintOf(level, building);
+      if (local == null) continue;
+      BlockPos origin = BlockPos.of(building.getOriginLocation());
+      grounds.add(new BuildingGround(local.moved(origin.getX(), origin.getY(), origin.getZ()),
+          origin.getY() + building.getPlacedSink()));
+    }
+    survey.read(level, village, grounds);
     survey.planHoleCovers();
     survey.markApron();
+    survey.markAccess(level, village, grounds);
     survey.aim();
     return survey;
   }
@@ -244,11 +264,68 @@ public final class GradingSurvey {
     return out;
   }
 
+  /** The same grading plan, restricted to the small connections needed first. */
+  public List<Column> accessWork(BlockPos from) {
+    return uneven(from).stream().filter(column -> !column.cover()
+        && access[(column.z() - minZ) * width + column.x() - minX]).toList();
+  }
+
+  private record BuildingGround(BoundingBox bounds, int floor) { }
+
+  private void markAccess(ServerLevel level, Village village, List<BuildingGround> grounds) {
+    Building hub = village.getTownCenter();
+    LocationManager.Entrance hubEntrance = hub == null ? null : LocationManager.getEntrance(level, hub);
+    if (hubEntrance != null) {
+      BlockPos door = hubEntrance.doorstep();
+      markAccess(new BoundingBox(door.getX() - 1, 0, door.getZ() - 1,
+          door.getX() + 1, 0, door.getZ() + 1));
+    }
+    for (int a = 0; a < grounds.size(); a++) {
+      for (int b = a + 1; b < grounds.size(); b++) {
+        BoundingBox lane = sharedGap(grounds.get(a).bounds(), grounds.get(b).bounds());
+        if (lane != null) markAccess(lane);
+      }
+    }
+    for (VillagePaths.Destination destination : VillagePaths.destinations(level, village)) {
+      if (!destination.initialEligible() || destination.target() == null) continue;
+      BlockPos door = destination.target();
+      // Only movable columns survive this mask; the building itself stays fixed.
+      markAccess(new BoundingBox(door.getX() - 1, 0, door.getZ() - 1,
+          door.getX() + 1, 0, door.getZ() + 1));
+    }
+  }
+
+  private void markAccess(BoundingBox lane) {
+    for (int z = Math.max(minZ, lane.minZ()); z <= Math.min(minZ + depth - 1, lane.maxZ()); z++) {
+      for (int x = Math.max(minX, lane.minX()); x <= Math.min(minX + width - 1, lane.maxX()); x++) {
+        int i = (z - minZ) * width + x - minX;
+        if (height[i] != NO_GROUND && !fixed[i]) access[i] = path[i] = true;
+      }
+    }
+  }
+
+  /** One to three unclaimed columns between overlapping facing edges, never a broad apron. */
+  @Nullable
+  static BoundingBox sharedGap(BoundingBox a, BoundingBox b) {
+    if (a.minX() > b.maxX()) return sharedGap(b, a);
+    int gapX = b.minX() - a.maxX() - 1;
+    int minZ = Math.max(a.minZ(), b.minZ()), maxZ = Math.min(a.maxZ(), b.maxZ());
+    if (gapX >= 1 && gapX <= APRON && minZ <= maxZ)
+      return new BoundingBox(a.maxX() + 1, 0, minZ, b.minX() - 1, 0, maxZ);
+    if (a.minZ() > b.maxZ()) {
+      BoundingBox swap = a; a = b; b = swap;
+    }
+    int gapZ = b.minZ() - a.maxZ() - 1;
+    int minX = Math.max(a.minX(), b.minX()), maxX = Math.min(a.maxX(), b.maxX());
+    return gapZ >= 1 && gapZ <= APRON && minX <= maxX
+        ? new BoundingBox(minX, 0, a.maxZ() + 1, maxX, 0, b.minZ() - 1) : null;
+  }
+
   /**
    * Reads every column: what stands on top once loose cover is looked past,
    * and whether the builder may move it, must respect it, or should ignore it.
    */
-  private void read(ServerLevel level, Village village, Collection<Building> buildings) {
+  private void read(ServerLevel level, Village village, List<BuildingGround> grounds) {
     PlacedBlockStore placed = PlacedBlockStore.get(level);
     GradedColumnStore graded = GradedColumnStore.get(level);
     BlockPos.MutableBlockPos cursor = new BlockPos.MutableBlockPos();
@@ -268,12 +345,11 @@ public final class GradingSurvey {
         claimed[i] = isClaimed;
         if (isClaimed) {
           // A building's ground is its plane, whatever the roof above it reads.
-          Building owner = buildingOver(buildings, worldX, worldZ);
+          BuildingGround owner = buildingOver(grounds, worldX, worldZ);
           if (owner != null) {
             // A sunk building's origin is below its ground; the plane is what
             // the surrounding ground is graded to.
-            int sink = owner.getInfo() == null ? 0 : owner.getInfo().getSink();
-            height[i] = BlockPos.of(owner.getOriginLocation()).getY() + sink;
+            height[i] = owner.floor();
             referenceHeight[i] = height[i];
             continue;
           }
@@ -330,23 +406,14 @@ public final class GradingSurvey {
     }
   }
 
-  /** The building whose circle covers this column, nearest first, or null. */
+  /** Use the actual rotated footprint, the same geometry that owns the ground. */
   @Nullable
-  private static Building buildingOver(Collection<Building> buildings, int x, int z) {
-    Building nearest = null;
-    double nearestSqr = Double.MAX_VALUE;
-    for (Building building : buildings) {
-      BlockPos centre = BlockPos.of(building.getCenterLocation());
-      double dx = centre.getX() - x;
-      double dz = centre.getZ() - z;
-      double distSqr = dx * dx + dz * dz;
-      double radius = building.getRadius();
-      if (distSqr <= radius * radius && distSqr < nearestSqr) {
-        nearestSqr = distSqr;
-        nearest = building;
-      }
+  private static BuildingGround buildingOver(List<BuildingGround> grounds, int x, int z) {
+    for (BuildingGround ground : grounds) {
+      BoundingBox box = ground.bounds();
+      if (x >= box.minX() && x <= box.maxX() && z >= box.minZ() && z <= box.maxZ()) return ground;
     }
-    return nearest;
+    return null;
   }
 
   /** Chooses the stable, fill-biased target for every movable column. */

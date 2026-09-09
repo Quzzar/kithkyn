@@ -1,0 +1,83 @@
+{
+  "description": "User-approved 2026-09-08: move the rear row of three upside-down mine stairs one block east; six changed cells. Leave front steps, mine frame, containers and banner unchanged.",
+  "size": [
+    17,
+    10,
+    17
+  ],
+  "approved_source_sha256": "39eff2fefdc2e1373c968d33c663b5edb7331b6516c97736bc8c32ad4d547aa4",
+  "overrides": [
+    {
+      "pos": [
+        10,
+        0,
+        7
+      ],
+      "name": "minecraft:air",
+      "properties": {}
+    },
+    {
+      "pos": [
+        11,
+        0,
+        7
+      ],
+      "name": "minecraft:cobblestone_stairs",
+      "properties": {
+        "waterlogged": "false",
+        "half": "top",
+        "shape": "straight",
+        "facing": "east"
+      }
+    },
+    {
+      "pos": [
+        10,
+        0,
+        8
+      ],
+      "name": "minecraft:air",
+      "properties": {}
+    },
+    {
+      "pos": [
+        11,
+        0,
+        8
+      ],
+      "name": "minecraft:cobblestone_stairs",
+      "properties": {
+        "waterlogged": "false",
+        "half": "top",
+        "shape": "straight",
+        "facing": "east"
+      }
+    },
+    {
+      "pos": [
+        10,
+        0,
+        9
+      ],
+      "name": "minecraft:air",
+      "properties": {}
+    },
+    {
+      "pos": [
+        11,
+        0,
+        9
+      ],
+      "name": "minecraft:mossy_cobblestone_stairs",
+      "properties": {
+        "waterlogged": "false",
+        "half": "top",
+        "shape": "straight",
+        "facing": "east"
+      }
+    }
+  ],
+  "access_capture": "run/valecraft-gallery/birch-access-approved-20260908-205309/world-snapshot",
+  "access_base_sha256": "d5406ba0280a371a2b781c3171e6036ca8b8779319402e366d0e3f537cc28f13",
+  "access_region_sha256": "65a3cd1867ffdebb56db621bc779190d52f0c3ba9f42d76455226dce7b93b1f7"
+}

@@ -104,7 +104,7 @@ import com.quzzar.kithkyn.entities.ai.goals.SleepAtNightGoal;
 import com.quzzar.kithkyn.entities.ai.goals.SlowToAngerGoal;
 import com.quzzar.kithkyn.entities.ai.goals.StrollAroundVillage;
 import com.quzzar.kithkyn.entities.ai.goals.UnstuckPersonGoal;
-import com.quzzar.kithkyn.entities.ai.goals.WallGuardPostGoal;
+import com.quzzar.kithkyn.entities.ai.goals.GuardPostGoal;
 import com.quzzar.kithkyn.entities.ai.HealthRecoveryPolicy;
 import com.quzzar.kithkyn.entities.ai.SelfDefensePolicy;
 import com.quzzar.kithkyn.other.EquipmentUpgrade;
@@ -170,6 +170,29 @@ public class RealPerson extends Person {
   }
 
   // Variables
+  private static final EntityDataAccessor<Optional<BlockPos>> FISHING_TARGET = SynchedEntityData.defineId(
+      RealPerson.class, EntityDataSerializers.OPTIONAL_BLOCK_POS);
+  private static final EntityDataAccessor<Long> FISHING_STARTED = SynchedEntityData.defineId(
+      RealPerson.class, EntityDataSerializers.LONG);
+
+  /** Transient fishing visuals follow the active work step and never survive a world reload. */
+  public void castFishingLine(BlockPos water) {
+    this.entityData.set(FISHING_STARTED, level().getGameTime());
+    this.entityData.set(FISHING_TARGET, Optional.of(water.immutable()));
+  }
+
+  public void clearFishingLine() {
+    this.entityData.set(FISHING_TARGET, Optional.empty());
+  }
+
+  public Optional<BlockPos> fishingTarget() {
+    return this.entityData.get(FISHING_TARGET);
+  }
+
+  public long fishingStarted() {
+    return this.entityData.get(FISHING_STARTED);
+  }
+
   private static final EntityDataAccessor<String> FIRST_NAME = SynchedEntityData.defineId(RealPerson.class,
       EntityDataSerializers.STRING);
   private static final EntityDataAccessor<String> LAST_NAME = SynchedEntityData.defineId(RealPerson.class,
@@ -201,6 +224,17 @@ public class RealPerson extends Person {
    */
   private static final EntityDataAccessor<Boolean> WANDERING_MERCHANT = SynchedEntityData.defineId(RealPerson.class,
       EntityDataSerializers.BOOLEAN);
+
+  /** Derived from the town-center assignment, not a separate saved rank or personal honorific. */
+  private static final EntityDataAccessor<Boolean> GUARD_CAPTAIN = SynchedEntityData.defineId(RealPerson.class,
+      EntityDataSerializers.BOOLEAN);
+
+  /** Transient work intent, always released with the active chopping goal. */
+  private boolean guardChopping;
+
+  public boolean isGuardChopping() { return this.guardChopping; }
+
+  public void setGuardChopping(boolean active) { this.guardChopping = active; }
 
   /** Torches the miner's bedtime restock tops the pack up to; MineStep spends them lighting the shaft. */
   private static final int TORCH_PACK_TARGET = 16;
@@ -310,6 +344,7 @@ public class RealPerson extends Person {
   // Village-directed walk target (arriving at the campfire / leaving the
   // village); driven by Village.tickTravelers, executed by VillageTravelGoal.
   private transient BlockPos travelTarget;
+  private transient long bellRecallExpiresAt;
 
   @Nullable
   public BlockPos getTravelTarget() {
@@ -318,6 +353,17 @@ public class RealPerson extends Person {
 
   public void setTravelTarget(@Nullable BlockPos target) {
     this.travelTarget = target;
+    this.bellRecallExpiresAt = 0;
+  }
+
+  /** Bell gathering is optional: danger or a minute without arrival gives movement back to normal AI. */
+  public void cancelUnsafeBellRecall() {
+    if (this.bellRecallExpiresAt != 0 && (this.level().getGameTime() >= this.bellRecallExpiresAt
+        || this.isOnFire() || this.hurtTime > 0 || this.getTarget() != null
+        || (this.getLastDamageSource() != null && this.getLastDamageSource().is(
+            net.minecraft.tags.DamageTypeTags.PANIC_CAUSES)))) {
+      setTravelTarget(null);
+    }
   }
 
   // The road (docs/population-and-labor.md): where a wanderer set out from,
@@ -570,6 +616,8 @@ public class RealPerson extends Person {
   @Override
   protected void defineSynchedData(SynchedEntityData.Builder builder) {
     super.defineSynchedData(builder);
+    builder.define(FISHING_TARGET, Optional.empty());
+    builder.define(FISHING_STARTED, 0L);
     builder.define(FIRST_NAME, "");
     builder.define(LAST_NAME, "");
 
@@ -582,6 +630,7 @@ public class RealPerson extends Person {
     builder.define(GENDER, "NONBINARY");
     builder.define(TITLE, "");
     builder.define(WANDERING_MERCHANT, false);
+    builder.define(GUARD_CAPTAIN, false);
 
   }
 
@@ -745,6 +794,10 @@ public class RealPerson extends Person {
     if (!this.level().isClientSide && this.tickCount % 200 == 113) {
       maybeOrderPet();
     }
+    if (!this.level().isClientSide) {
+      if (this.tickCount % 20 == 0) refreshGuardCaptain();
+      GuardWeapons.tick(this);
+    }
     super.aiStep();
 
     // A wandering merchant keeps its own clock: it counts down to its departure
@@ -766,6 +819,10 @@ public class RealPerson extends Person {
    * pickaxe was in his pack, not his hand, so he never mined).
    */
   public void tendJobTool() {
+    if (GuardWeapons.usesLoadout(this)) {
+      GuardWeapons.tend(this, LocationManager.getJobLocation(this));
+      return;
+    }
     JobTool tool = JobTool.of(this);
     if (tool == null || tool.inHand(this) || getVillage() == null) {
       return;
@@ -1143,9 +1200,8 @@ public class RealPerson extends Person {
 
   /**
    * The line shown under the villager's name: their honorific title if they have
-   * one, otherwise their occupation. Titles are not granted anywhere yet (the
-   * slot is reserved, docs/genetics-and-attributes.md), so today this reads as
-   * the occupation for everyone.
+   * one, otherwise their station role or occupation. The captain role is synced
+   * separately so a reassignment never overwrites a personal honorific.
    */
   public String getRoleLabel() {
     AgeStage lifeStage = getLifeStage();
@@ -1155,7 +1211,7 @@ public class RealPerson extends Person {
     if (lifeStage == AgeStage.TEENAGER) {
       return getOccupation().isIdle()
           ? lifeStage.ageLabel()
-          : Utils.capitalize(getOccupation().name().toLowerCase());
+          : occupationLabel();
     }
     String title = getTitle();
     if (!title.isBlank()) {
@@ -1164,7 +1220,20 @@ public class RealPerson extends Person {
     if (isWanderingMerchant()) {
       return "Wandering Merchant";
     }
-    return Utils.capitalize(getOccupation().name().toLowerCase());
+    return occupationLabel();
+  }
+
+  private String occupationLabel() {
+    boolean captain = this.level().isClientSide ? this.entityData.get(GUARD_CAPTAIN)
+        : com.quzzar.kithkyn.village.GuardDuty.isCaptain(this);
+    return getOccupation() == Occupation.GUARD && captain ? "Guard Captain"
+        : Utils.capitalize(getOccupation().name().toLowerCase());
+  }
+
+  private void refreshGuardCaptain() {
+    if (!this.level().isClientSide) {
+      this.entityData.set(GUARD_CAPTAIN, com.quzzar.kithkyn.village.GuardDuty.isCaptain(this));
+    }
   }
 
   @Override
@@ -1205,6 +1274,8 @@ public class RealPerson extends Person {
     // it used to gain another copy of every target goal on each reload.
     clearGoals(this.goalSelector);
     clearGoals(this.targetSelector);
+    this.guardChopping = false;
+    refreshGuardCaptain();
     this.registerGoals();
   }
 
@@ -1260,6 +1331,26 @@ public class RealPerson extends Person {
       return;
     }
     stowPackAndRestock();
+  }
+
+  /** Housed civilians return home; truly unhoused residents gather near the bell. Guards only restock. */
+  public void respondToBell(BlockPos bell) {
+    if (!this.getOccupation().sleepsAtNight()) {
+      restockForNightWatch();
+      return;
+    }
+    Village village = this.getVillage();
+    if (this.callToBedCoolDown > 0 || village == null) return;
+    boolean unhoused = LocationManager.getNightRestLocation(this).equals(BlockPos.ZERO);
+    goToBed(0.7D);
+    if (!unhoused || this.travelTarget != null || !village.hasResident(this.getUUID())
+        || village.isTraveler(this.getUUID())) return;
+    BlockPos approach = LocationManager.getBellApproach(this, bell);
+    if (approach != null) {
+      setTravelTarget(approach);
+      this.bellRecallExpiresAt = this.level().getGameTime() + 1200;
+      cancelUnsafeBellRecall();
+    }
   }
 
   /**
@@ -1345,26 +1436,18 @@ public class RealPerson extends Person {
       depositToLoc = null;
     }
 
-    // Put items in main inventory away, all but what tonight's chest question
-    // held back: that stays in the pack for the walk home (StashAtHomeGoal).
-    List<ItemStack> items = this.clearMainInventory();
-    List<ItemStack> kept = new ArrayList<>();
-    for (ItemStack item : items) {
-      if (this.keepingForHome.contains(item.getItem())) {
-        kept.add(item);
-        continue;
-      }
-      boolean addedItem = this.getVillage().placeItemStackIntoVillage(item, this, depositToLoc);
-      if (!addedItem) {
-        // Storage is full and the item stays in the pack rather than dropping on
-        // the ground silently. Flag the village so it knows to build more storage,
-        // the same signal ConsolidateStep raises on storehouse overflow. (Not a
-        // NoResourceBookkeepingEvent: that reports a shortage, and a surplus we
-        // cannot shelve is the opposite of one.)
-        this.getVillage().setStorageStrained(true);
-      }
+    // Put away everything except what tonight's chest question held back for
+    // the walk home (StashAtHomeGoal). Store directly instead of spawning a
+    // loose item first: each rejected remainder is written back to the same pack
+    // slot, so full shelves cannot destroy it after the entity despawns.
+    final BlockPos preferredStorage = depositToLoc;
+    boolean storedAll = GuardWeapons.stowUnkept(this, this.keepingForHome,
+        stack -> this.getVillage().storeAwayFrom(stack, List.of(), preferredStorage));
+    if (!storedAll) {
+      // Not a NoResourceBookkeepingEvent: that reports a shortage, while a
+      // surplus the village cannot shelve is the opposite problem.
+      this.getVillage().setStorageStrained(true);
     }
-    this.addItems(kept);
 
     // Re-gear for the job, from real stock only. Set down first whatever is in
     // hand that is not a tool of THIS job's kind: a guard's old sword, or the
@@ -1379,16 +1462,20 @@ public class RealPerson extends Person {
     // stores, or its absence logged (JobTool.replace). Nothing is conjured: a
     // guard once gave their weapon away in conversation and had a new one in hand
     // five seconds later.
-    JobTool tool = JobTool.of(this);
-    ItemStack held = this.getItemBySlot(EquipmentSlot.MAINHAND);
-    if (!held.isEmpty() && tool != null && !tool.kind().isInstance(held.getItem())) {
-      this.getVillage().placeItemStackIntoVillage(held, this, depositToLoc);
-      this.setItemSlot(EquipmentSlot.MAINHAND, ItemStack.EMPTY);
-    }
-    equipBestPossibleGear(tool == null ? null : tool.kind(), null,
-        getOccupation() == Occupation.GUARD, depositToLoc);
-    if (tool != null && !tool.inHand(this)) {
-      JobTool.replace(this, tool, depositToLoc);
+    if (GuardWeapons.usesLoadout(this)) {
+      GuardWeapons.restock(this, depositToLoc);
+    } else {
+      JobTool tool = JobTool.of(this);
+      ItemStack held = this.getItemBySlot(EquipmentSlot.MAINHAND);
+      if (!held.isEmpty() && tool != null && !tool.kind().isInstance(held.getItem())) {
+        this.getVillage().placeItemStackIntoVillage(held, this, depositToLoc);
+        this.setItemSlot(EquipmentSlot.MAINHAND, ItemStack.EMPTY);
+      }
+      equipBestPossibleGear(tool == null ? null : tool.kind(), null,
+          getOccupation() == Occupation.GUARD, depositToLoc);
+      if (tool != null && !tool.inHand(this)) {
+        JobTool.replace(this, tool, depositToLoc);
+      }
     }
     if (getOccupation() == Occupation.GUARD) {
       // A shield first, so it takes the off hand before the rations do (which then
@@ -1589,7 +1676,7 @@ public class RealPerson extends Person {
     }
     this.shieldOfferDay = day;
     String situation = CraftOffer.identityLead(this)
-        + "You stand the night watch with only your axe to defend yourself. The village "
+        + "You stand the night watch without a shield. The village "
         + "stores hold iron and planks, and a shield takes one iron ingot and six planks. "
         + "Decide whether to forge yourself a shield to block with, and give your reason in a few words.";
     CraftOffer.offerCraft(this, situation,
@@ -1614,14 +1701,14 @@ public class RealPerson extends Person {
 
   /** Whether the stores hold a shield's worth: an iron ingot and six planks of any wood. */
   private boolean storesCanForgeShield() {
-    if (com.quzzar.kithkyn.economy.VillagePricing.countHeld(this.getVillage(), Items.IRON_INGOT) < 1) {
+    if (com.quzzar.kithkyn.economy.VillagePricing.countHeld(this.getVillage(), Items.IRON_INGOT) < ShieldRecipe.IRON) {
       return false;
     }
     int planks = 0;
     for (net.minecraft.core.Holder<Item> plank : net.minecraft.core.registries.BuiltInRegistries.ITEM
         .getTagOrEmpty(net.minecraft.tags.ItemTags.PLANKS)) {
       planks += com.quzzar.kithkyn.economy.VillagePricing.countHeld(this.getVillage(), plank.value());
-      if (planks >= 6) {
+      if (planks >= ShieldRecipe.PLANKS) {
         return true;
       }
     }
@@ -1642,26 +1729,26 @@ public class RealPerson extends Person {
    */
   private boolean forgeShield(BlockPos depositToLoc) {
     List<ItemStack> paid = new ArrayList<>();
-    ItemStack iron = this.getVillage().gatherItemStackFromVillage(new ItemStack(Items.IRON_INGOT, 1), depositToLoc);
+    ItemStack iron = this.getVillage().gatherItemStackFromVillage(new ItemStack(Items.IRON_INGOT, ShieldRecipe.IRON), depositToLoc);
     if (!iron.isEmpty()) {
       paid.add(iron);
     }
     int planks = 0;
-    if (iron.getCount() >= 1) {
+    if (iron.getCount() >= ShieldRecipe.IRON) {
       for (net.minecraft.core.Holder<Item> plank : net.minecraft.core.registries.BuiltInRegistries.ITEM
           .getTagOrEmpty(net.minecraft.tags.ItemTags.PLANKS)) {
-        if (planks >= 6) {
+        if (planks >= ShieldRecipe.PLANKS) {
           break;
         }
         ItemStack pull = this.getVillage()
-            .gatherItemStackFromVillage(new ItemStack(plank.value(), 6 - planks), depositToLoc);
+            .gatherItemStackFromVillage(new ItemStack(plank.value(), ShieldRecipe.PLANKS - planks), depositToLoc);
         if (!pull.isEmpty()) {
           planks += pull.getCount();
           paid.add(pull);
         }
       }
     }
-    if (iron.getCount() >= 1 && planks >= 6) {
+    if (iron.getCount() >= ShieldRecipe.IRON && planks >= ShieldRecipe.PLANKS) {
       Kithkyn.LOGGER.info("[guard] {} forged a shield from an iron ingot and six planks",
           this.getFullName());
       return true;
@@ -1703,17 +1790,7 @@ public class RealPerson extends Person {
     }
     this.petOrderDay = day;
 
-    String activity = getOccupation().isIdle()
-        ? "You are idling near the campfire between jobs."
-        : "You are going about your work as the " + getOccupation().name().toLowerCase(java.util.Locale.ROOT) + ".";
-    String posture = pet.isOrderedToSit()
-        ? "Your " + pet.getName().getString() + " is sitting where you left it."
-        : "Your " + pet.getName().getString() + " is at your heel.";
-    String situation = CraftOffer.identityLead(this) + activity + " " + posture
-        + " Having your companion sit and stay can keep them safe when this is a good place to rest, "
-        + "especially at home. Having them follow keeps them close, gives you time together, and strengthens your bond. "
-        + "Decide whether to change what they are doing, and give your reason in a few words.";
-    PetOrder.offer(this, pet, situation);
+    PetOrder.offer(this, pet);
   }
 
   /**
@@ -1970,10 +2047,10 @@ public class RealPerson extends Person {
     return village == null ? null : village.getWallPost(getUUID());
   }
 
-  /** Ranged wall defenders hold their elevated post while firing. */
-  public boolean isWallCrossbowman() {
-    WallPost post = getWallPost();
-    return post != null && post.duty().usesCrossbow();
+  /** Wall and opted-in building sentries hold their elevated post while firing. */
+  public boolean isFixedRangedGuard() {
+    com.quzzar.kithkyn.village.GuardDuty duty = com.quzzar.kithkyn.village.GuardDuty.of(this);
+    return duty != null && duty.ranged();
   }
 
   protected void setVirtue(Virtue virtue, float value) {
@@ -1988,8 +2065,9 @@ public class RealPerson extends Person {
   protected void populateDefaultEquipmentSlots(RandomSource random, DifficultyInstance difficulty) {
     switch (getOccupation()) {
       case GUARD:
-        // Ordinary patrols begin with an axe. A wall post specializes the same
-        // guard into a stone sword at a gate or a crossbow above it. It stays
+        // Ordinary patrols begin with an axe. A fixed post specializes the same
+        // guard into a stone sword at a gate or a crossbow above it; opted-in
+        // building sentries also carry a basic backup sword. The kit stays
         // basic until the village can make or supply better;
         // armour waits on the leather chain. No rations on taking the post:
         // food is never conjured. The first bedtime restock draws apples from
@@ -1998,6 +2076,7 @@ public class RealPerson extends Person {
         JobTool guardTool = JobTool.of(this);
         kit(EquipmentSlot.MAINHAND,
             guardTool == null ? new ItemStack(Items.STONE_AXE) : guardTool.basicStack());
+        GuardWeapons.issueSidearm(this);
         break;
       case LUMBERJACK:
         kit(EquipmentSlot.MAINHAND, new ItemStack(Items.STONE_AXE));
@@ -2070,7 +2149,7 @@ public class RealPerson extends Person {
   private void kit(EquipmentSlot slot, ItemStack stack) {
     ItemStack held = this.getItemBySlot(slot);
     if (!held.isEmpty()) {
-      this.personMainInv.addItem(held);
+      this.addItems(List.of(held));
     }
     this.setItemSlot(slot, stack);
   }
@@ -2255,8 +2334,9 @@ public class RealPerson extends Person {
         // An idle resident's response to danger is personal rather than a job duty.
         break;
       case GUARD:
-        i += 0.8;
-        break;
+        // Guarding is a duty, including for a naturally gentle resident.
+        // Otherwise low aggression installs civilian panic instead of combat.
+        return true;
       case HUNTER:
         // Below the guard, above everyone else: killing is the trade, so most
         // hunters take on nearby monsters, but they are not the watch.
@@ -2507,7 +2587,7 @@ public class RealPerson extends Person {
 
     if (willInitiateCombat()) {// Actively seeks out combat
 
-      this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, Mob.class, 5, true, true, (mob) -> {
+      this.targetSelector.addGoal(3, new com.quzzar.kithkyn.entities.ai.goals.GuardThreatGoal(this, (mob) -> {
         return isCampfireThreat(mob);
       }));
 
@@ -2538,12 +2618,12 @@ public class RealPerson extends Person {
       this.goalSelector.addGoal(2, new WorkLoopGoal<>(this, new HealStep(1, 7, 7.0F)));
     }
     if (getOccupation() == Occupation.GUARD) {
-      WallPost wallPost = getWallPost();
-      if (wallPost != null) {
+      com.quzzar.kithkyn.village.GuardDuty guardDuty = com.quzzar.kithkyn.village.GuardDuty.of(this);
+      if (guardDuty != null) {
         // Combat outranks this post. Once the threat is gone, a base guard or
         // crossbowman returns to this exact station instead of joining the
         // ordinary patrol or the founding guard's occasional lumber work.
-        this.goalSelector.addGoal(5, new WallGuardPostGoal(this));
+        this.goalSelector.addGoal(5, new GuardPostGoal(this));
         this.goalSelector.addGoal(8, new RandomLookAroundGoal(this));
       } else {
       // Guarding always wins on priority. In a quiet spell, a guard very
@@ -2603,6 +2683,9 @@ public class RealPerson extends Person {
         default -> new int[] {3, 4, 4, 7, 8};
       };
       this.goalSelector.addGoal(order[0], new WorkLoopGoal<>(this, new GatherStep()));
+      // Short access repairs get a turn before a long wall project. Landscape grading stays below it.
+      this.goalSelector.addGoal(3, new WorkLoopGoal<>(this, new GradeStep(true)));
+      this.goalSelector.addGoal(3, new WorkLoopGoal<>(this, new PathStep(true)));
       this.goalSelector.addGoal(order[1], new WorkLoopGoal<>(this, new BuildStep()));
       this.goalSelector.addGoal(order[2], new WorkLoopGoal<>(this, new WallStep()));
       this.goalSelector.addGoal(order[3], new WorkLoopGoal<>(this, new GradeStep()));

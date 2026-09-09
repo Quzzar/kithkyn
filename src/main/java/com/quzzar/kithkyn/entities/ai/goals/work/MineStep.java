@@ -13,6 +13,7 @@ import com.quzzar.kithkyn.entities.RealPerson;
 import com.quzzar.kithkyn.savedata.PlacedBlockStore;
 import com.quzzar.kithkyn.village.LocationManager;
 import com.quzzar.kithkyn.village.buildings.Building;
+import com.quzzar.kithkyn.village.buildings.MineBranch;
 import com.quzzar.kithkyn.village.buildings.MineShaft;
 import com.quzzar.kithkyn.village.buildings.MineSupportMaterials;
 
@@ -32,6 +33,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.WallTorchBlock;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.levelgen.structure.BoundingBox;
 
 import net.neoforged.neoforge.common.Tags;
 
@@ -66,14 +68,11 @@ import net.neoforged.neoforge.common.Tags;
  * <p>Water and lava are second-stage work. The sweep first closes every reachable
  * air or fluid breach in the flooded pocket's floor, walls, and ceiling with the
  * dirt or stone the miner carries. If a water source is farther down a flooded
- * ramp than the miner can reach, she lays a temporary dirt or stone working front
- * through the water until the real perimeter comes within arm's reach. Those
- * supports remain in place while they touch the flooded pocket, so the next sweep
- * cannot immediately dig them back out. A flooded rib is instead closed at its
- * doorway. Only after the boundary is sound does a miner with a bucket walk down,
- * move it into the off hand, and bail the connected water in one act; once the
- * water is gone, ordinary mining removes the temporary front. Clearing water first
- * lost the race to sources flowing back between picks.
+ * ramp than the miner can reach, she drains the reachable connected water without
+ * filling planned walking cells, then seals the newly exposed source boundary
+ * before driving farther. A flooded rib is instead closed at its doorway. Water
+ * removal is applied as one quiet pocket update, so Minecraft's neighbour updates
+ * cannot refill the first cell while the last cell is still being emptied.
  *
  * <p>Light is work the same way. The sweep that re-walks the shaft from the mouth
  * on every pick reads the light in each open head-height cell along the ramp's
@@ -92,7 +91,7 @@ import net.neoforged.neoforge.common.Tags;
  * and ceiling around the miner, the full width of the corridor, and followed
  * into the rock only through the holes she opened herself.
  *
- * <p>When the ramp can drive no deeper - bedrock, or lava or water she has no
+ * <p>When a ramp can drive no deeper - bedrock, or lava or water she has no
  * bucket for - she does not simply stand down. She fans short horizontal ribs out
  * of the ramp instead ({@link #selectFan}): one block wide, {@link #FAN_HEIGHT}
  * tall, at most {@link #FAN_LENGTH} out to each side, cut on a fixed grid every
@@ -102,7 +101,16 @@ import net.neoforged.neoforge.common.Tags;
  * reaches back onto the ramp, which does have waypoints (MineShaft). The ore a rib
  * wall exposes is worked by the same vein detour as the shaft's, since it reads a
  * rib cell as dug space, and a cut rib is lit with a torch; a rib that meets liquid
- * or a cave simply stops there, a prospect cut rather than a second shaft.
+ * or a cave simply stops there.
+ *
+ * <p>Bedrock plus a finished set of root ribs opens a bounded second pass. The
+ * miner revisits complete eight-block root ribs from the top down and, where a
+ * five-wide corridor will not overlap an existing child, drives a new diagonal
+ * shaft outward from the rib end. A child runs this exact same excavation loop,
+ * including its own ordinary ribs, before the next root rib is considered. Only
+ * root ribs seed children, so this is one extra generation rather than recursive
+ * growth. The world remains the record of every dug block; the owning Building
+ * persists only child identity, order, and completion.
  */
 public final class MineStep implements BlockWorkStep {
 
@@ -119,9 +127,10 @@ public final class MineStep implements BlockWorkStep {
 
 
   /**
-   * Torches only start once the shaft has dropped this far below its mouth: the
-   * entrance and the first steps down catch daylight, so torching there just
-   * litters a lit approach. Below it the shaft is dark and actually wants light.
+   * Ordinary torches only start once the shaft has dropped this far below its
+   * mouth: a surface entrance and the first steps down catch daylight, so
+   * torching there just litters a lit approach. An underground child shaft is
+   * the exception: one torch explicitly marks its entrance (see wantsTorch).
    */
   private static final int TORCH_MIN_DEPTH = 10;
 
@@ -196,12 +205,30 @@ public final class MineStep implements BlockWorkStep {
   /** A hard cap on how deep {@link #deepestDugColumn} scans, well below any real shaft. */
   private static final int FAN_SCAN_MAX = 384;
 
+  /** Upper bound for one connectivity check across a root or child mine. */
+  private static final int CONNECTIVITY_SCAN_MAX = 16_384;
+
   private BlockPos offset;
   private Block block;
   private int inward = 1;
   private int breakTime;
   private int lastProgress = -1;
   private int bucketShownTicks;
+  private BlockPos activeMouth;
+  private Rotation activeRotation;
+
+  /** Last fluid dead end reported, so a stuck selector emits one useful snapshot. */
+  private String lastFluidDeadEnd;
+
+  /** Last no-work selector outcome, emitted only when the reason changes. */
+  private String lastIdleState;
+
+  /** Most informative failed topology check from the current selector pass. */
+  private String lastRouteDeadEnd;
+
+  /** A source boundary exposed by draining a formerly unreachable pocket. */
+  private BlockPos pendingFloodBoundary;
+  private BlockPos pendingFloodInside;
 
   /**
    * True when the cursor cell is an open head-height cell on the ramp's edge that
@@ -232,7 +259,6 @@ public final class MineStep implements BlockWorkStep {
   private BlockPos sealCell;
   private BlockPos sealFooting;
   private BlockPos sealStand;
-  private boolean temporaryFloodSupport;
 
 
   // A wall vein under extraction: ore already pulled and awaiting its support
@@ -262,23 +288,78 @@ public final class MineStep implements BlockWorkStep {
     DRY_HOLE,
   }
 
+  /** A shaft either offered work, must wait, or has reached bedrock and finished every rib. */
+  private record ShaftPick(@Nullable BlockPos stand, boolean exhausted) {
+  }
+
   @Override
   @Nullable
   public BlockPos select(RealPerson person) {
-    BlockPos mouth = LocationManager.getJobLocation(person);
-    if (mouth == BlockPos.ZERO) {
+    BlockPos rootMouth = LocationManager.getJobLocation(person);
+    Building building = LocationManager.getJobBuilding(person);
+    if (rootMouth == BlockPos.ZERO || building == null) {
+      logIdleState(person, "missing workplace: mouth=" + rootMouth.toShortString()
+          + ", building=" + (building == null ? "none" : building.getName()));
       return null;
     }
-    Rotation rotation = rotation(person);
+    long rootStation = MineShaft.rootStation(building, rootMouth);
+    MineShaft root = MineShaft.root(building, rootMouth);
+    rootMouth = root.mouth();
+
+    MineBranch branch = activeBranch(building, rootStation);
+    while (branch != null) {
+      MineShaft child = MineShaft.child(root, branch);
+      ShaftPick pick = selectShaft(person, child);
+      if (pick.stand() != null || !pick.exhausted()) {
+        clearIdleState(pick.stand());
+        return pick.stand();
+      }
+      building.completeMineBranch(branch);
+      Kithkyn.LOGGER.info("[mine] {} finished the child shaft from root rib {} side {}",
+          person.getName().getString(), branch.sourceDepth(), branch.side());
+      branch = nextBranch(person, building, root, deepestDugColumn(person, rootMouth, root.rotation()));
+    }
+
+    ShaftPick rootPick = selectShaft(person, root);
+    if (rootPick.stand() != null || !rootPick.exhausted()) {
+      clearIdleState(rootPick.stand());
+      return rootPick.stand();
+    }
+
+    branch = nextBranch(person, building, root,
+        deepestDugColumn(person, rootMouth, root.rotation()));
+    if (branch == null) {
+      logIdleState(person, "root exhausted with no eligible child shaft");
+      return null;
+    }
+    MineShaft child = MineShaft.child(root, branch);
+    BlockPos stand = selectShaft(person, child).stand();
+    clearIdleState(stand);
+    return stand;
+  }
+
+  /** Run the existing complete mining loop in one supplied shaft frame. */
+  private ShaftPick selectShaft(RealPerson person, MineShaft shaft) {
+    BlockPos mouth = shaft.mouth();
+    Rotation rotation = shaft.rotation();
+    activateShaft(mouth, rotation);
+    ShaftPick entrance = selectEntranceClearance(person, shaft);
+    if (entrance != null) {
+      return entrance;
+    }
+    BlockPos pendingFloodStand = pendingFloodSeal(person, mouth, rotation);
+    if (pendingFloodStand != null) {
+      return new ShaftPick(pendingFloodStand, false);
+    }
     // A wall vein takes priority over driving the shaft on: pull the exposed ore,
     // then plug the holes with a support block, before the descent picks back up. It
     // reads rib cells as dug space too, so ore a rib wall exposes is worked the same
     // way as ore in the shaft's own walls.
     BlockPos veinStand = selectVein(person, mouth, rotation);
     if (veinStand != null) {
-      return veinStand;
+      return new ShaftPick(veinStand, false);
     }
-    RampScan scan = locateNext(person, mouth, rotation);
+    RampScan scan = locateNext(person, shaft);
     if (scan == RampScan.WORK) {
       // Bridging a cave - laying a floor cell or lining a wall - is the one ramp work
       // that needs dirt or stone the miner may not have. With an empty pack, do not stand
@@ -293,12 +374,14 @@ public final class MineStep implements BlockWorkStep {
           && MineSupportMaterials.held(person.personMainInv) == 0) {
         BlockPos fanStand = selectFan(person, mouth, rotation);
         if (fanStand != null) {
-          return fanStand;
+          return new ShaftPick(fanStand, false);
         }
         // No rib left to cut either: fall through to standing down, so a mine with
         // nothing to quarry still waits on a restock the way it always did.
         resetShaft();
-        return null;
+        logIdleState(person, "support-gated shaft has no rib work: mouth="
+            + mouth.toShortString());
+        return new ShaftPick(null, false);
       }
       this.fanning = false;
       // Stand next to the face and work it, walking down into the shaft as it
@@ -311,12 +394,14 @@ public final class MineStep implements BlockWorkStep {
       // footing at the column's floor, and placing the lining from there, the way a
       // player lines a tunnel from inside it. Everything else stands beside the face.
       if (this.placeSeal && this.sealStand != null) {
-        return this.sealStand;
+        return new ShaftPick(this.sealStand, false);
       }
       BlockPos footingAt = this.placeSeal ? this.sealFooting : face;
       if (footingAt == null) {
         resetShaft();
-        return null;
+        logIdleState(person, "selected work has no footing target: mouth="
+            + mouth.toShortString());
+        return new ShaftPick(null, false);
       }
       BlockPos stand = this.placeFloor
           ? standToLayFloor(person, mouth, rotation, this.offset)
@@ -328,28 +413,214 @@ public final class MineStep implements BlockWorkStep {
         // solid cell, until the swept face comes within reach.
         BlockPos frontierStand = carveFrontier(person, mouth, rotation);
         if (frontierStand != null) {
-          return frontierStand;
+          return new ShaftPick(frontierStand, false);
         }
+        BlockPos fanStand = selectFan(person, mouth, rotation);
+        if (fanStand != null) {
+          return new ShaftPick(fanStand, false);
+        }
+        String deadEnd = "selected face and frontier have no reachable stand: mouth="
+            + mouth.toShortString()
+            + ", face=" + face.toShortString()
+            + ", local=" + this.offset.toShortString()
+            + ", block=" + this.block.getName().getString()
+            + ", deepest=" + deepestDugColumn(person, mouth, rotation)
+            + ", route=" + this.lastRouteDeadEnd;
         resetShaft();
-        return null;
+        logIdleState(person, deadEnd);
+        return new ShaftPick(null, false);
       }
-      return stand;
+      return new ShaftPick(stand, false);
     }
     if (scan == RampScan.BLOCKED) {
+      // A distant fluid pocket can be blocked while ordinary stone earlier in
+      // the same ramp is still reachable. Finish that dry frontier first. A side
+      // leak must not make the whole diagonal skip intact columns and jump
+      // directly to rib work.
+      BlockPos frontierStand = carveFrontier(person, mouth, rotation);
+      if (frontierStand != null) {
+        this.fanning = false;
+        return new ShaftPick(frontierStand, false);
+      }
       // The ramp can drive no deeper. Rather than stand down, fan short horizontal
       // ribs out of it to prospect the surrounding rock (see the class note). The
       // obstacle that ended the descent is logged once, on the way in.
       onRampBlocked(person, mouth, rotation);
       BlockPos fanStand = selectFan(person, mouth, rotation);
       if (fanStand != null) {
-        return fanStand;
+        return new ShaftPick(fanStand, false);
       }
+      boolean exhausted = this.block == Blocks.BEDROCK;
+      logIdleState(person, "blocked shaft has no rib work: mouth=" + mouth.toShortString()
+          + ", block=" + this.block.getName().getString()
+          + ", exhausted=" + exhausted);
       resetShaft();
-      return null;
+      return new ShaftPick(null, exhausted);
     }
     // DRY_HOLE.
     resetShaft();
+    logIdleState(person, "shaft scan reached a dry hole: mouth=" + mouth.toShortString());
+    return new ShaftPick(null, false);
+  }
+
+  /**
+   * Open the one ceiling cell needed to turn from a level parent rib onto a
+   * child shaft's first one-down stair. The ordinary shaft sweep opens two
+   * blocks above the lower floor, which is enough once inside, but a person
+   * entering from the higher rib collides with the untouched third block
+   * before gravity can lower them. Mining it from the rib makes the transition
+   * physical work and keeps existing persisted branches compatible.
+   */
+  @Nullable
+  private ShaftPick selectEntranceClearance(RealPerson person, MineShaft shaft) {
+    if (shaft.generation() == 0) {
+      return null;
+    }
+    BlockPos clearance = shaft.entranceClearance();
+    BlockState state = person.level().getBlockState(clearance);
+    if (state.getCollisionShape(person.level(), clearance).isEmpty()
+        && state.getFluidState().isEmpty()) {
+      return null;
+    }
+    this.offset = BlockPos.ZERO;
+    this.block = state.getBlock();
+    if (impassable(person)) {
+      logIdleState(person, "child entrance clearance is blocked: cell="
+          + clearance.toShortString() + ", block=" + this.block.getName().getString());
+      resetShaft();
+      return new ShaftPick(null, false);
+    }
+    return new ShaftPick(shaft.entry(), false);
+  }
+
+  private void clearIdleState(@Nullable BlockPos stand) {
+    if (stand != null) {
+      this.lastIdleState = null;
+    }
+  }
+
+  private void logIdleState(RealPerson person, String state) {
+    if (!state.equals(this.lastIdleState)) {
+      this.lastIdleState = state;
+      Kithkyn.LOGGER.info("[mine-state] {} selected no work: {}",
+          person.getName().getString(), state);
+    }
+  }
+
+  @Nullable
+  private MineBranch activeBranch(Building building, long rootStation) {
+    return building.getMineBranches().stream()
+        .filter(branch -> branch.rootStation() == rootStation && !branch.complete())
+        .findFirst()
+        .orElse(null);
+  }
+
+  /**
+   * Open the next full root rib in shallowest-first order. Consecutive same-side
+   * ribs are four layers apart and their five-wide child shafts overlap, so that
+   * candidate is skipped while the next eight-layer-spaced rib remains eligible.
+   */
+  @Nullable
+  private MineBranch nextBranch(RealPerson person, Building building, MineShaft root,
+      int deepestRootColumn) {
+    for (MineBranch candidate : MineBranch.candidates(root.rootStation(), deepestRootColumn)) {
+      boolean alreadyPlanned = building.getMineBranches().stream()
+          .anyMatch(existing -> sameSource(existing, candidate));
+      if (alreadyPlanned) {
+        continue;
+      }
+      if (!fullRibCanSeed(person, root, candidate.sourceDepth(), candidate.side())) {
+        continue;
+      }
+      MineShaft candidateShaft = MineShaft.child(root, candidate);
+      boolean overlaps = building.getMineBranches().stream()
+          .anyMatch(candidate::overlapsRootSibling);
+      if (!overlaps) {
+        overlaps = MineShaft.of(building).stream()
+            .anyMatch(existing -> MineShaft.overlapsPlannedExcavation(
+                candidateShaft, existing, person.level().getMinBuildHeight()));
+      }
+      if (overlaps) {
+        continue;
+      }
+      building.addMineBranch(candidate);
+      Kithkyn.LOGGER.info("[mine] {} opened a child shaft from root rib {} side {} at {}",
+          person.getName().getString(), candidate.sourceDepth(), candidate.side(),
+          candidateShaft.entry().toShortString());
+      return candidate;
+    }
     return null;
+  }
+
+  private static boolean sameSource(MineBranch first, MineBranch second) {
+    return first.rootStation() == second.rootStation()
+        && first.sourceDepth() == second.sourceDepth()
+        && first.side() == second.side();
+  }
+
+  /** A child only starts from a genuinely complete, dry, fully supported eight-block rib. */
+  private boolean fullRibCanSeed(RealPerson person, MineShaft root, int depth, int side) {
+    Level level = person.level();
+    int floor = ribFloorY(depth);
+    for (int step = 1; step <= FAN_LENGTH; step++) {
+      int x = side * (RADIUS + step);
+      for (int dy = 0; dy < FAN_HEIGHT; dy++) {
+        BlockPos cell = root.mouth().offset(new BlockPos(x, floor + dy, depth).rotate(root.rotation()));
+        BlockState state = level.getBlockState(cell);
+        if (!state.getFluidState().isEmpty()
+            || !state.getCollisionShape(level, cell).isEmpty()) {
+          return false;
+        }
+      }
+      BlockPos feet = root.mouth().offset(new BlockPos(x, floor, depth).rotate(root.rotation()));
+      if (!level.getBlockState(feet.below()).isFaceSturdy(level, feet.below(), Direction.UP)) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  private void activateShaft(BlockPos mouth, Rotation rotation) {
+    if (mouth.equals(this.activeMouth) && rotation == this.activeRotation) {
+      return;
+    }
+    this.activeMouth = mouth;
+    this.activeRotation = rotation;
+    this.fanning = false;
+    this.veinToSeal.clear();
+    this.oreTarget = null;
+    this.sealTarget = null;
+    this.veinTaken = 0;
+    this.pendingFloodBoundary = null;
+    this.pendingFloodInside = null;
+    resetShaft();
+  }
+
+  /** Seal a source edge made reachable by the last drain before excavating on. */
+  @Nullable
+  private BlockPos pendingFloodSeal(RealPerson person, BlockPos mouth, Rotation rotation) {
+    if (this.pendingFloodBoundary == null || this.pendingFloodInside == null) {
+      return null;
+    }
+    if (!needsSeal(person.level(), this.pendingFloodBoundary)) {
+      this.pendingFloodBoundary = null;
+      this.pendingFloodInside = null;
+      return null;
+    }
+    BlockPos stand = nearestMineStand(person, mouth, rotation, this.pendingFloodInside);
+    if (stand == null) {
+      return null; // another floor or drain pass may still be needed first
+    }
+    this.offset = this.pendingFloodInside;
+    this.block = person.level().getBlockState(face(mouth, rotation)).getBlock();
+    this.placeFloor = false;
+    this.placeTorch = false;
+    this.bailWater = false;
+    this.placeSeal = true;
+    this.sealCell = this.pendingFloodBoundary;
+    this.sealFooting = null;
+    this.sealStand = stand;
+    return stand;
   }
 
   /**
@@ -361,7 +632,10 @@ public final class MineStep implements BlockWorkStep {
   @Nullable
   private BlockPos carveFrontier(RealPerson person, BlockPos mouth, Rotation rotation) {
     Level level = person.level();
-    int throughZ = this.offset.getZ();
+    BlockPos selectedOffset = this.offset;
+    Block selectedBlock = this.block;
+    int throughZ = selectedOffset.getZ();
+    boolean inspectedFluid = false;
     // Walk the planned ramp from its entrance toward the rejected face. The
     // former four-block cube followed the miner, so once an idle miner wandered
     // back to the surface it never intersected a deep shaft and work vanished.
@@ -375,7 +649,8 @@ public final class MineStep implements BlockWorkStep {
       // face has no footing, advance the earliest reachable floor edge first.
       // Otherwise the miner sees valid stone but rejects it forever while the
       // missing bridge work sits later in the cursor order.
-      if (columnBottom(local) && needsSeal(level, world.below())) {
+      if (columnBottom(local) && needsSeal(level, world.below())
+          && MineSupportMaterials.held(person.personMainInv) > 0) {
         BlockPos floorStand = standToLayFloor(person, mouth, rotation, local);
         if (floorStand != null) {
           this.offset = local;
@@ -387,13 +662,37 @@ public final class MineStep implements BlockWorkStep {
           return floorStand;
         }
       }
-      if (here == Blocks.AIR || here == Blocks.WATER || here == Blocks.LAVA
-          || here == Blocks.BEDROCK || isLight(level, world)) {
+      if (isLiquid(level, world)) {
+        if (inspectedFluid) {
+          continue;
+        }
+        inspectedFluid = true;
+        // Audit the first pocket once; its connected-water search covers the
+        // remaining cells without repeating the same flood scan for each one.
+        // The row sweep can meet unreachable ceiling rock before the water at
+        // the miner's feet. Audit that water during recovery as well, or the
+        // same distant rock hides every reachable seal on each later pick.
+        this.offset = local;
+        this.block = here;
+        this.placeFloor = false;
+        this.placeTorch = false;
+        this.placeSeal = false;
+        this.bailWater = false;
+        this.sealStand = null;
+        if (selectFluidWork(person, mouth, rotation) == RampScan.WORK) {
+          BlockPos fluidStand = this.placeSeal ? this.sealStand
+              : standToMine(person, mouth, rotation, face(mouth, rotation));
+          if (fluidStand != null && (!this.placeSeal
+              || MineSupportMaterials.held(person.personMainInv) > 0)) {
+            return fluidStand;
+          }
+        }
+        this.placeSeal = false;
+        this.bailWater = false;
         continue;
       }
-      if (level instanceof ServerLevel serverLevel
-          && PlacedBlockStore.get(serverLevel).isVillagePlaced(world)
-          && holdsBackFlood(serverLevel, mouth, rotation, local)) {
+      if (here == Blocks.AIR
+          || here == Blocks.BEDROCK || isLight(level, world)) {
         continue;
       }
       BlockPos frontierStand = standToMine(person, mouth, rotation, world);
@@ -408,6 +707,8 @@ public final class MineStep implements BlockWorkStep {
       this.placeSeal = false;
       return frontierStand;
     }
+    this.offset = selectedOffset;
+    this.block = selectedBlock;
     return null;
   }
 
@@ -421,7 +722,7 @@ public final class MineStep implements BlockWorkStep {
    * rib wall exposes is pulled by the same vein detour that works the shaft
    * ({@link #selectVein}, which reads rib cells as dug space), and a finished rib is
    * lit with a single wall torch. Returns a foothold to work the next bit of rib, or
-   * null when every rib off the ramp is cut and the mine is worked out. Kept to one
+   * null when every rib off this ramp is cut. Kept to one
    * hop out so the ordinary pathfinder always hands the miner back onto the ramp,
    * with no waypoints of its own (MineShaft plans none for a rib).
    */
@@ -605,8 +906,9 @@ public final class MineStep implements BlockWorkStep {
       stowBucket(person);
       return false;
     }
-    BlockPos mouth = LocationManager.getJobLocation(person);
-    if (mouth == BlockPos.ZERO) {
+    BlockPos mouth = this.activeMouth;
+    Rotation rotation = this.activeRotation;
+    if (mouth == null || rotation == null) {
       return false;
     }
     // A vein detour outranks the shaft: seal the cell chosen for plugging, or pull
@@ -620,13 +922,13 @@ public final class MineStep implements BlockWorkStep {
     if (this.block == null || this.offset == null) {
       return false;
     }
-    BlockPos face = face(mouth, rotation(person));
+    BlockPos face = face(mouth, rotation);
     if (this.placeFloor) {
       layFloor(person, face);
       return false; // floored (or out of support); the next select re-scans
     }
     if (this.placeTorch) {
-      hangTorch(person, rotation(person), face);
+      hangTorch(person, rotation, face);
       return false; // lit (or out of torches); the next select re-scans
     }
     if (this.placeSeal) {
@@ -634,7 +936,7 @@ public final class MineStep implements BlockWorkStep {
       return false; // walled (or out of support); the next select re-scans
     }
     if (this.bailWater) {
-      return bailAct(person, mouth, rotation(person), face);
+      return bailAct(person, mouth, rotation, face);
     }
     return breakAct(person, mouth, face, false);
   }
@@ -679,7 +981,7 @@ public final class MineStep implements BlockWorkStep {
     if (!person.level().isClientSide) {
       // An open boundary beside the block about to fall is supported first, standing
       // right here, so it cannot flood the shaft the moment the block goes.
-      if (!sealAround(person, mouth, rotation(person), pos)) {
+      if (!sealAround(person, mouth, this.activeRotation, pos)) {
         person.level().destroyBlockProgress(person.getId(), pos, -1);
         this.breakTime = 0;
         this.lastProgress = -1;
@@ -709,9 +1011,10 @@ public final class MineStep implements BlockWorkStep {
 
   @Override
   public void released(RealPerson person, BlockPos standTarget) {
-    BlockPos mouth = LocationManager.getJobLocation(person);
+    BlockPos mouth = this.activeMouth;
     BlockPos breaking = this.oreTarget != null ? this.oreTarget
-        : (mouth != BlockPos.ZERO && this.offset != null ? face(mouth, rotation(person)) : null);
+        : (mouth != null && this.activeRotation != null && this.offset != null
+            ? face(mouth, this.activeRotation) : null);
     if (breaking != null) {
       person.level().destroyBlockProgress(person.getId(), breaking, -1);
     }
@@ -761,11 +1064,6 @@ public final class MineStep implements BlockWorkStep {
     return mouth.offset(this.offset.rotate(rotation));
   }
 
-  private Rotation rotation(RealPerson person) {
-    Building building = LocationManager.getJobBuilding(person);
-    return building == null ? Rotation.NONE : building.getRotation();
-  }
-
   /**
    * A block the miner can stand on to work {@code face}: the one nearest to
    * where they already are, so each pick is a short reachable step deeper rather
@@ -775,42 +1073,8 @@ public final class MineStep implements BlockWorkStep {
   @Nullable
   private BlockPos standToMine(RealPerson person, BlockPos mouth, Rotation rotation,
       BlockPos face) {
-    Level level = person.level();
-    // Beside and above the block, as before, and now the cells one to three
-    // below it too. In a five-tall shaft the only footing is the walk cell at
-    // the bottom, so a wall ore at head height or in the ceiling, or a face cell
-    // high in its column, had no standable neighbour at its own level and was
-    // silently dropped: that, not the scan's reach, is why a miner walked past
-    // copper in the ceiling and iron mid-wall. Three below is a raised arm's
-    // reach, and the same reach a player mines a ceiling with.
-    java.util.List<BlockPos> candidates = new java.util.ArrayList<>();
-    candidates.add(face.above());
-    for (Direction d : Direction.Plane.HORIZONTAL) {
-      candidates.add(face.relative(d));
-      candidates.add(face.above().relative(d));
-    }
-    for (int down = 1; down <= 3; down++) {
-      BlockPos under = face.below(down);
-      candidates.add(under);
-      for (Direction d : Direction.Plane.HORIZONTAL) {
-        candidates.add(under.relative(d));
-      }
-    }
-    BlockPos best = null;
-    double bestDist = Double.MAX_VALUE;
-    for (BlockPos candidate : candidates) {
-      BlockPos local = candidate.subtract(mouth).rotate(inverse(rotation));
-      if (!MineTopology.isNavigableStand(local)
-          || !standable(level, candidate)) {
-        continue;
-      }
-      double dist = candidate.distSqr(person.blockPosition());
-      if (dist < bestDist) {
-        bestDist = dist;
-        best = candidate;
-      }
-    }
-    return best;
+    BlockPos local = face.subtract(mouth).rotate(inverse(rotation));
+    return nearestMineStand(person, mouth, rotation, local);
   }
 
   /**
@@ -824,20 +1088,14 @@ public final class MineStep implements BlockWorkStep {
   @Nullable
   private BlockPos standToLayFloor(RealPerson person, BlockPos mouth, Rotation rotation,
       BlockPos localFloorCell) {
-    BlockPos best = null;
-    double bestDist = Double.MAX_VALUE;
-    for (BlockPos local : MineTopology.floorStandCandidates(localFloorCell)) {
-      BlockPos candidate = mouth.offset(local.rotate(rotation));
-      if (!standable(person.level(), candidate)) {
-        continue;
-      }
-      double distance = candidate.distSqr(person.blockPosition());
-      if (distance < bestDist) {
-        bestDist = distance;
-        best = candidate;
-      }
-    }
-    return best;
+    return MineTopology.floorStandCandidates(localFloorCell).stream()
+        .map(local -> mouth.offset(local.rotate(rotation)))
+        .filter(candidate -> standable(person.level(), candidate))
+        .sorted(java.util.Comparator.comparingDouble(
+            candidate -> candidate.distSqr(person.blockPosition())))
+        .filter(candidate -> canReachStand(person, mouth, rotation, candidate))
+        .findFirst()
+        .orElse(null);
   }
 
   /** Air to occupy, air above for headroom, and a sturdy top below to stand on. */
@@ -880,8 +1138,6 @@ public final class MineStep implements BlockWorkStep {
    */
   private void laySeal(RealPerson person, BlockPos cell) {
     this.placeSeal = false;
-    boolean workingFront = this.temporaryFloodSupport;
-    this.temporaryFloodSupport = false;
     if (cell == null) {
       return;
     }
@@ -894,13 +1150,12 @@ public final class MineStep implements BlockWorkStep {
       resetShaft();
       return;
     }
-    if (workingFront) {
-      Kithkyn.LOGGER.info("[mine] {} advanced the flooded shaft's working front at {}",
-          person.getName().getString(), cell.toShortString());
-    } else {
-      Kithkyn.LOGGER.info("[mine] {} sealed the shaft lining at {}",
-          person.getName().getString(), cell.toShortString());
+    if (cell.equals(this.pendingFloodBoundary)) {
+      this.pendingFloodBoundary = null;
+      this.pendingFloodInside = null;
     }
+    Kithkyn.LOGGER.info("[mine] {} sealed the shaft lining at {}",
+        person.getName().getString(), cell.toShortString());
   }
 
   /** Spends and places the actual support block the miner carries. */
@@ -920,25 +1175,6 @@ public final class MineStep implements BlockWorkStep {
         placed.getSoundType().getPlaceSound(), SoundSource.BLOCKS,
         1.0F, person.getRandom().nextFloat() * 0.4F + 0.8F);
     return true;
-  }
-
-  /**
-   * Whether a village support inside the ramp still belongs to an active flooded
-   * working front. The check walks the connected cluster of village blocks only
-   * within the start cell's independently advancing front and stops as soon as
-   * that cluster touches water in the same front. This makes the front persistent
-   * across saves without inventing a second ownership store, lets the ordinary
-   * cursor remove it once a bucket has cleared the water, and prevents a flooded
-   * rib from preserving supports throughout the otherwise dry descending ramp.
-   */
-  private boolean holdsBackFlood(ServerLevel level, BlockPos mouth, Rotation rotation,
-      BlockPos start) {
-    PlacedBlockStore placed = PlacedBlockStore.get(level);
-    return MineTopology.supportClusterTouchesWater(
-        start,
-        local -> placed.isVillagePlaced(mouth.offset(local.rotate(rotation))),
-        local -> level.getBlockState(mouth.offset(local.rotate(rotation))).is(Blocks.WATER),
-        BAIL_CAP);
   }
 
   /**
@@ -1105,7 +1341,7 @@ public final class MineStep implements BlockWorkStep {
   private record Bulkhead(BlockPos inside, BlockPos cell, BlockPos stand) {
   }
 
-  private record Cofferdam(BlockPos inside, BlockPos cell, BlockPos stand) {
+  private record ReachableWater(BlockPos inside, BlockPos cell, BlockPos stand) {
   }
 
   /**
@@ -1200,13 +1436,12 @@ public final class MineStep implements BlockWorkStep {
   }
 
   /**
-   * A water cell the miner can replace with support to advance a dry working
-   * front toward an otherwise unreachable leak. Only ramp water is considered:
-   * a flooded rib has its narrower doorway bulkhead, and lava remains an honest
-   * stop rather than a surface to build through.
+   * Water the miner can drain from the connected side of an otherwise
+   * unreachable leak. Only ramp water is considered: a flooded rib has its
+   * narrower doorway bulkhead, and lava remains an honest stop.
    */
   @Nullable
-  private Cofferdam reachableCofferdam(RealPerson person, BlockPos mouth,
+  private ReachableWater reachableWater(RealPerson person, BlockPos mouth,
       Rotation rotation, BlockPos start) {
     Level level = person.level();
     Deque<BlockPos> frontier = new ArrayDeque<>();
@@ -1222,7 +1457,7 @@ public final class MineStep implements BlockWorkStep {
       if (onRamp(local)) {
         BlockPos stand = nearestMineStand(person, mouth, rotation, local);
         if (stand != null) {
-          return new Cofferdam(local, world, stand);
+          return new ReachableWater(local, world, stand);
         }
       }
       for (Direction direction : Direction.values()) {
@@ -1240,28 +1475,65 @@ public final class MineStep implements BlockWorkStep {
   @Nullable
   private BlockPos nearestMineStand(RealPerson person, BlockPos mouth,
       Rotation rotation, BlockPos targetLocal) {
-    BlockPos target = mouth.offset(targetLocal.rotate(rotation));
-    BlockPos best = null;
-    double bestDist = Double.MAX_VALUE;
-    int search = 3;
-    for (int dz = -search; dz <= search; dz++) {
-      for (int dy = -search; dy <= 1; dy++) {
-        for (int dx = -search; dx <= search; dx++) {
-          BlockPos local = targetLocal.offset(dx, dy, dz);
-          BlockPos candidate = mouth.offset(local.rotate(rotation));
-          if (!isDugSpace(local) || !standable(person.level(), candidate)
-              || candidate.distSqr(target) > reachSqr(person)) {
-            continue;
-          }
-          double distance = candidate.distSqr(person.blockPosition());
-          if (distance < bestDist) {
-            bestDist = distance;
-            best = candidate;
-          }
-        }
+    return MineTopology.workStandCandidates(targetLocal, reachSqr(person)).stream()
+        .map(local -> mouth.offset(local.rotate(rotation)))
+        .filter(candidate -> standable(person.level(), candidate))
+        .sorted(java.util.Comparator.comparingDouble(
+            candidate -> candidate.distSqr(person.blockPosition())))
+        .filter(candidate -> canReachStand(person, mouth, rotation, candidate))
+        .findFirst()
+        .orElse(null);
+  }
+
+  /**
+   * Whether this foothold belongs to the miner's connected side of the shaft.
+   * A cave can leave perfectly good floor beyond an undug wall, and the flooded
+   * working front can temporarily make the cursor treat support blocks as open.
+   * Merely checking the target cell's floor therefore selects islands the miner
+   * cannot walk to. Nearby footing needs no route; everything else must have a
+   * complete route to its next explicit mine waypoint.
+   */
+  private boolean canReachStand(RealPerson person, BlockPos mouth,
+      Rotation rotation, BlockPos candidate) {
+    if (person.blockPosition().distSqr(candidate) <= reachSqr(person)) {
+      return true;
+    }
+    BlockPos start = person.blockPosition();
+    BlockPos startLocal = start.subtract(mouth).rotate(inverse(rotation));
+    if (!isDugSpace(startLocal) || !standable(person.level(), start)) {
+      startLocal = MineTopology.entranceStandCandidates().stream()
+          .filter(local -> standable(person.level(), mouth.offset(local.rotate(rotation))))
+          .findFirst()
+          .orElse(null);
+      if (startLocal == null) {
+        this.lastRouteDeadEnd = "no supported entrance foothold";
+        return false;
       }
     }
-    return best;
+    BlockPos targetLocal = candidate.subtract(mouth).rotate(inverse(rotation));
+    BlockPos connectedFrom = startLocal;
+    MineTopology.StandPath route = MineTopology.standPath(connectedFrom, targetLocal,
+        local -> standable(person.level(), mouth.offset(local.rotate(rotation))),
+        CONNECTIVITY_SCAN_MAX);
+    if (!route.connected()
+        && (this.lastRouteDeadEnd == null
+            || route.furthest().getZ() > routeDeadEndDepth(this.lastRouteDeadEnd))) {
+      this.lastRouteDeadEnd = "from=" + connectedFrom.toShortString()
+          + ", target=" + targetLocal.toShortString()
+          + ", reachable=" + route.reachableCount()
+          + ", furthest=" + route.furthest().toShortString();
+    }
+    return route.connected();
+  }
+
+  /** Extract the final local-Z component from our compact route diagnostic. */
+  private static int routeDeadEndDepth(String diagnostic) {
+    int comma = diagnostic.lastIndexOf(',');
+    try {
+      return Integer.parseInt(diagnostic.substring(comma + 1).trim());
+    } catch (RuntimeException ignored) {
+      return Integer.MIN_VALUE;
+    }
   }
 
   /** Any open floor, side wall, or ceiling cell around one corridor cell. */
@@ -1326,15 +1598,24 @@ public final class MineStep implements BlockWorkStep {
    * costs about two per layer, so at a floor of 4 the next torch hangs about six
    * layers on. A torch counts as light, so a lit cell is never picked twice.
    */
-  private boolean wantsTorch(RealPerson person, BlockPos mouth, Rotation rotation, BlockPos cell) {
+  private boolean wantsTorch(RealPerson person, MineShaft shaft, BlockPos cell) {
     BlockPos local = this.offset;
     if (Math.abs(local.getX()) != RADIUS || local.getY() != -(local.getZ() + 1)) {
       return false;
     }
+    BlockPos mouth = shaft.mouth();
+    Rotation rotation = shaft.rotation();
     Level level = person.level();
-    return mouth.getY() - cell.getY() >= TORCH_MIN_DEPTH
+    boolean childEntrance = shaft.generation() > 0
+        && MineTopology.entranceTorchCells().contains(local);
+    boolean entranceAlreadyMarked = childEntrance
+        && MineTopology.entranceTorchCells().stream()
+            .map(marker -> mouth.offset(marker.rotate(rotation)))
+            .anyMatch(marker -> isLight(level, marker));
+    return !entranceAlreadyMarked
+        && (childEntrance || mouth.getY() - cell.getY() >= TORCH_MIN_DEPTH)
         && level.getBlockState(cell.below()).isAir()
-        && level.getMaxLocalRawBrightness(cell) < TORCH_LIGHT_FLOOR
+        && (childEntrance || level.getMaxLocalRawBrightness(cell) < TORCH_LIGHT_FLOOR)
         && person.hasItem(Items.TORCH)
         && torchWall(level, rotation, cell) != null;
   }
@@ -1419,8 +1700,9 @@ public final class MineStep implements BlockWorkStep {
       return false; // handed away since the pick; the next pick treats it as an obstacle
     }
     BlockPos start = face.subtract(mouth).rotate(inverse(rotation));
-    if (openBoundaryAroundFluidPocket(person, mouth, rotation, start) != null) {
-      return false; // the world changed on the walk; the next selection seals it first
+    BoundaryBreach boundary = openBoundaryAroundFluidPocket(person, mouth, rotation, start);
+    if (boundary != null && boundary.reachable()) {
+      return false; // the world changed on the walk; seal this reachable edge first
     }
     if (!showBucket(person)) {
       person.logBlocker("I need my off hand free to use the bucket in my mine");
@@ -1428,10 +1710,10 @@ public final class MineStep implements BlockWorkStep {
     }
     Deque<BlockPos> frontier = new ArrayDeque<>();
     Set<BlockPos> seen = new HashSet<>();
+    List<BlockPos> water = new java.util.ArrayList<>();
     frontier.add(start);
     seen.add(start);
-    int cleared = 0;
-    while (!frontier.isEmpty() && cleared < BAIL_CAP) {
+    while (!frontier.isEmpty() && water.size() < BAIL_CAP) {
       BlockPos local = frontier.poll();
       BlockPos world = mouth.offset(local.rotate(rotation));
       if (!isLiquid(level, world)) {
@@ -1444,13 +1726,32 @@ public final class MineStep implements BlockWorkStep {
           frontier.add(next);
         }
       }
-      level.setBlock(world, Blocks.AIR.defaultBlockState(), 3);
-      cleared++;
+      water.add(world);
+    }
+    // Apply the connected drain as one logical bucket operation. UPDATE_ALL
+    // notified the outside source after every individual cell, so the head of
+    // the pocket refilled while its tail was still being emptied and the miner
+    // could bail the same water forever. Client-only updates hold this pocket
+    // dry until the newly reachable source edge is sealed. Old fluid ticks in
+    // this same pocket are cancelled as well: a stable pool can retain queued
+    // updates from earlier sealing work and otherwise regenerate without a new
+    // neighbour notification. The eventual support placement uses ordinary
+    // neighbour updates and reconciles the surrounding fluid simulation.
+    for (BlockPos waterCell : water) {
+      level.setBlock(waterCell, Blocks.AIR.defaultBlockState(), Block.UPDATE_CLIENTS);
+    }
+    if (level instanceof ServerLevel serverLevel) {
+      BoundingBox.encapsulatingPositions(water).ifPresent(bounds ->
+          serverLevel.getFluidTicks().clearArea(bounds.inflatedBy(1)));
+    }
+    if (boundary != null) {
+      this.pendingFloodInside = boundary.inside();
+      this.pendingFloodBoundary = boundary.boundary();
     }
     level.playSound((Player) null, face.getX(), face.getY(), face.getZ(),
         SoundEvents.BUCKET_FILL, SoundSource.BLOCKS, 1.0F, 1.0F);
     Kithkyn.LOGGER.info("[mine] {} bailed the sealed shaft at {}: {} cell(s) cleared",
-        person.getName().getString(), face.toShortString(), cleared);
+        person.getName().getString(), face.toShortString(), water.size());
     return true; // hold this target while the off-hand bucket remains visible
   }
 
@@ -1557,7 +1858,9 @@ public final class MineStep implements BlockWorkStep {
    * in conversation ("the mine is full of lava") as the seed of a quest anyone or no
    * one may resolve; {@code DRY_HOLE} when nothing solid lay within the pattern.
    */
-  private RampScan locateNext(RealPerson person, BlockPos mouth, Rotation rotation) {
+  private RampScan locateNext(RealPerson person, MineShaft shaft) {
+    BlockPos mouth = shaft.mouth();
+    Rotation rotation = shaft.rotation();
     // The shaft ramps down and AWAY from the mouth, toward local +Z. Local -Z is
     // the mine's entrance/front, its opening and both chests sit there, so leaning
     // the descent toward +Z digs deeper into the ground behind the mine instead of
@@ -1575,7 +1878,6 @@ public final class MineStep implements BlockWorkStep {
     this.sealCell = null;
     this.sealFooting = null;
     this.sealStand = null;
-    this.temporaryFloodSupport = false;
     int steps = 0;
     BlockPos facePos = null;
     do {
@@ -1592,18 +1894,6 @@ public final class MineStep implements BlockWorkStep {
       }
       facePos = face(mouth, rotation);
       this.block = person.level().getBlockState(facePos).getBlock();
-      // A temporary working front is planned mine interior, but it is not a face
-      // to dig while its connected support cluster still touches water. Treat it
-      // as already-audited space and continue toward the flooded cells beyond it.
-      // Once bailing removes that water, the same cursor sees the support as solid
-      // again and ordinary mining dismantles it.
-      if (person.level() instanceof ServerLevel serverLevel
-          && onRamp(this.offset)
-          && PlacedBlockStore.get(serverLevel).isVillagePlaced(facePos)
-          && holdsBackFlood(serverLevel, mouth, rotation, this.offset)) {
-        this.block = Blocks.AIR;
-        continue;
-      }
       // The shaft has broken into a cave here: this cell is the bottom of its
       // column's dug span and there is nothing under it to walk on. Completing
       // the floor IS the work at this cell - one dirt or stone block along the cave's
@@ -1638,50 +1928,11 @@ public final class MineStep implements BlockWorkStep {
         }
       }
       if (liquid) {
-        BoundaryBreach breach = openBoundaryAroundFluidPocket(person, mouth, rotation, this.offset);
-        Bulkhead bulkhead = breach != null && !breach.reachable()
-            ? reachableRibBulkhead(person, mouth, rotation, breach)
-            : null;
-        Cofferdam cofferdam = breach != null && !breach.reachable() && bulkhead == null
-            ? reachableCofferdam(person, mouth, rotation, this.offset)
-            : null;
-        MineFluidPolicy.Action action = MineFluidPolicy.next(
-            breach != null, breach != null && breach.reachable(), bulkhead != null,
-            cofferdam != null, carriesBucket(person));
-        if (action == MineFluidPolicy.Action.SEAL) {
-          this.offset = breach.inside();
-          this.block = person.level().getBlockState(face(mouth, rotation)).getBlock();
-          this.sealCell = breach.boundary();
-          this.sealStand = breach.stand();
-          this.placeSeal = true;
-          return RampScan.WORK;
-        }
-        if (action == MineFluidPolicy.Action.BULKHEAD) {
-          this.offset = bulkhead.inside();
-          this.block = person.level().getBlockState(bulkhead.cell()).getBlock();
-          this.sealCell = bulkhead.cell();
-          this.sealStand = bulkhead.stand();
-          this.placeSeal = true;
-          return RampScan.WORK;
-        }
-        if (action == MineFluidPolicy.Action.COFFERDAM) {
-          this.offset = cofferdam.inside();
-          this.block = person.level().getBlockState(cofferdam.cell()).getBlock();
-          this.sealCell = cofferdam.cell();
-          this.sealStand = cofferdam.stand();
-          this.temporaryFloodSupport = true;
-          this.placeSeal = true;
-          return RampScan.WORK;
-        }
-        if (action == MineFluidPolicy.Action.BAIL) {
-          this.bailWater = true;
-          return RampScan.WORK;
-        }
-        return RampScan.BLOCKED;
+        return selectFluidWork(person, mouth, rotation);
       }
       // An open cell of the shaft gone dark is work after its lining is sound:
       // hang a torch there before the sweep goes on toward the face.
-      if (this.block == Blocks.AIR && wantsTorch(person, mouth, rotation, facePos)) {
+      if (this.block == Blocks.AIR && wantsTorch(person, shaft, facePos)) {
         this.placeTorch = true;
         return RampScan.WORK;
       }
@@ -1697,6 +1948,47 @@ public final class MineStep implements BlockWorkStep {
       return RampScan.BLOCKED; // the fan-out takes over; the obstacle is logged once, on the way in
     }
     return RampScan.WORK;
+  }
+
+  /** Select reachable lining or draining work for the current flooded cell. */
+  private RampScan selectFluidWork(RealPerson person, BlockPos mouth, Rotation rotation) {
+    BoundaryBreach breach = openBoundaryAroundFluidPocket(person, mouth, rotation, this.offset);
+    Bulkhead bulkhead = breach != null && !breach.reachable()
+        ? reachableRibBulkhead(person, mouth, rotation, breach)
+        : null;
+    ReachableWater reachableWater = breach != null && !breach.reachable() && bulkhead == null
+        ? reachableWater(person, mouth, rotation, this.offset)
+        : null;
+    MineFluidPolicy.Action action = MineFluidPolicy.next(
+        breach != null, breach != null && breach.reachable(), bulkhead != null,
+        reachableWater != null, carriesBucket(person));
+    if (action == MineFluidPolicy.Action.SEAL) {
+      this.offset = breach.inside();
+      this.block = person.level().getBlockState(face(mouth, rotation)).getBlock();
+      this.sealCell = breach.boundary();
+      this.sealStand = breach.stand();
+      this.placeSeal = true;
+      return RampScan.WORK;
+    }
+    if (action == MineFluidPolicy.Action.BULKHEAD) {
+      this.offset = bulkhead.inside();
+      this.block = person.level().getBlockState(bulkhead.cell()).getBlock();
+      this.sealCell = bulkhead.cell();
+      this.sealStand = bulkhead.stand();
+      this.placeSeal = true;
+      return RampScan.WORK;
+    }
+    if (action == MineFluidPolicy.Action.BAIL) {
+      if (reachableWater != null) {
+        this.offset = reachableWater.inside();
+        this.block = person.level().getBlockState(reachableWater.cell()).getBlock();
+      }
+      this.bailWater = true;
+      this.lastFluidDeadEnd = null;
+      return RampScan.WORK;
+    }
+    logFluidDeadEnd(person, mouth, rotation, breach, bulkhead, reachableWater);
+    return RampScan.BLOCKED;
   }
 
   /**
@@ -1716,6 +2008,29 @@ public final class MineStep implements BlockWorkStep {
       person.level().setBlock(face(mouth, rotation), Blocks.SPONGE.defaultBlockState(), 2);
     }
     logObstacle(person);
+  }
+
+  private void logFluidDeadEnd(RealPerson person, BlockPos mouth, Rotation rotation,
+      @Nullable BoundaryBreach breach, @Nullable Bulkhead bulkhead,
+      @Nullable ReachableWater reachableWater) {
+    BlockPos world = face(mouth, rotation);
+    String state = "mouth=" + mouth.toShortString()
+        + ", face=" + world.toShortString()
+        + ", local=" + this.offset.toShortString()
+        + ", block=" + this.block.getName().getString()
+        + ", bucket=" + carriesBucket(person)
+        + ", breachInside=" + (breach == null ? "none" : breach.inside().toShortString())
+        + ", boundary=" + (breach == null ? "none" : breach.boundary().toShortString())
+        + ", breachStand=" + (breach == null || breach.stand() == null
+            ? "none" : breach.stand().toShortString())
+        + ", bulkhead=" + (bulkhead == null ? "none" : bulkhead.cell().toShortString())
+        + ", reachableWater=" + (reachableWater == null
+            ? "none" : reachableWater.cell().toShortString());
+    if (!state.equals(this.lastFluidDeadEnd)) {
+      this.lastFluidDeadEnd = state;
+      Kithkyn.LOGGER.info("[mine-state] {} cannot advance flooded shaft: {}",
+          person.getName().getString(), state);
+    }
   }
 
   private boolean impassable(RealPerson person) {
@@ -1748,7 +2063,6 @@ public final class MineStep implements BlockWorkStep {
     this.sealCell = null;
     this.sealFooting = null;
     this.sealStand = null;
-    this.temporaryFloodSupport = false;
   }
 
 }

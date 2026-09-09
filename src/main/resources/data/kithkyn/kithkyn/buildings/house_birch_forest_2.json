@@ -1,0 +1,56 @@
+{
+  "structure": "house_birch_forest_2",
+  "category": "house",
+  "variant": "birch_forest",
+  "beds": [
+    [
+      9,
+      1,
+      6
+    ],
+    [
+      11,
+      1,
+      6
+    ]
+  ],
+  "work_stations": [],
+  "personal_containers": [
+    [
+      7,
+      1,
+      6
+    ]
+  ],
+  "containers": [],
+  "cost": [
+    {
+      "item": "minecraft:oak_log",
+      "count": 36
+    },
+    {
+      "item": "minecraft:cobblestone",
+      "count": 48
+    }
+  ],
+  "grants": [],
+  "sink": 0,
+  "village_identity": {
+    "primary_blocks": [
+      [
+        9,
+        1,
+        6
+      ]
+    ],
+    "secondary_blocks": [
+      [
+        11,
+        1,
+        6
+      ]
+    ],
+    "banners": []
+  },
+  "upgrades_from": "house_birch_forest_1"
+}

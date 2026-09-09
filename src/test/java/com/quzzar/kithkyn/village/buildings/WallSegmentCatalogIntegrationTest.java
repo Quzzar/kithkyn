@@ -1,5 +1,7 @@
 package com.quzzar.kithkyn.village.buildings;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -492,11 +494,17 @@ class WallSegmentCatalogIntegrationTest {
     List<Integer> ground = Collections.nCopies(ring.size(), 64);
     WallProject project = new WallProject(
         ring, Set.of(), ground, WallTier.WOOD, VillageStyle.TAIGA);
+    assertFalse(project.isSiteCleared());
+    project.markSiteCleared();
 
     var encoded = WallProject.CODEC.encodeStart(JsonOps.INSTANCE, project).getOrThrow();
     WallProject restored = WallProject.CODEC.parse(JsonOps.INSTANCE, encoded).getOrThrow();
+    assertTrue(restored.isSiteCleared());
+    assertEquals(project.section(0).cursor(), restored.section(0).cursor());
     encoded.getAsJsonObject().remove("style");
+    encoded.getAsJsonObject().remove("site_cleared");
     WallProject restoredLegacy = WallProject.CODEC.parse(JsonOps.INSTANCE, encoded).getOrThrow();
+    assertFalse(restoredLegacy.isSiteCleared());
 
     assertEquals(VillageStyle.TAIGA, restored.getStyle());
     assertEquals(VillageStyle.PLAINS, restoredLegacy.getStyle());

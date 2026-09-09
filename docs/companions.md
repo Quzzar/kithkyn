@@ -58,23 +58,28 @@ blocker: the animal is given a random collar, coat, and name the moment it spawn
 and the deliberation only overwrites them if it lands a valid choice. The owner's
 voice is honoured when they use it, and the pet is never nameless when they do not.
 
+Named pets show their name only when the player's crosshair points at them, using
+Minecraft's normal mob nameplate behavior. The join handler clears the old
+always-visible flag for existing saved companions as well as new pets.
+
 ## Following
 
 A tamed wolf or cat in vanilla follows its owner on its own, but only a **player**
 owner: `TamableAnimal.getOwner()` resolves the owner id through the player list, and
-a villager is a `PathfinderMob`, never a player. So vanilla's follow, teleport, and
-sit-by-owner goals find no owner and quietly do nothing. Rather than force the
-animal to see a mob as a player (a change that would touch every tamed animal in the
-game), the pet carries one small goal of its own that resolves its owner the way the
-rest of the mod resolves a villager: by UUID, through the server
-(`ServerLevel#getEntity`), exactly as a married villager finds their spouse on the
-road (`FollowFamilyGoal`). Everything else about the animal, its coat, its collar,
-its no-despawn, its sitting pose, is vanilla and untouched.
+a villager is a `PathfinderMob`, never a player. The custom follow goal resolves
+its owner by UUID through `ServerLevel#getEntity`, as a married villager finds their
+spouse on the road (`FollowFamilyGoal`).
 
-The goal is attached where the mod already attaches goals to freshly-joined vanilla
-mobs: the `EntityJoinLevelEvent` handler in `CoreEvents`. Because goals are not
-saved, attaching there means the follow behaviour comes back on every world load as
-surely as on the first spawn, keyed off a marker on the animal's persistent data.
+Vanilla's sitting goal needs a separate correction: when it cannot resolve a player
+owner, it can seat a tamed animal even without a sit order. For marked companion
+pets, `CompanionSitGoal` replaces that vanilla goal at the same priority and requires
+an explicit sit order before applying vanilla's remaining checks. Ordinary player
+pets retain their vanilla goals. The animal's coat, collar and persistence remain
+vanilla.
+
+The goals are attached in `CoreEvents` on `EntityJoinLevelEvent`. This happens on
+fresh spawn and every reload, including existing saved pets. Repeated joins do not
+duplicate the companion goals.
 
 ## When the owner is gone
 
@@ -110,10 +115,18 @@ still be able to call back a pet told to stay. The daily limit keeps it a quiet,
 occasional thing rather than a fidget; and silence leaves the pet exactly as it is,
 so a mute model never moves an animal on its own.
 
-The choice gives the owner a reason in either direction. Sitting can keep a pet safe
-when the present spot is suitable, especially at home. Following keeps the pet close,
-gives owner and companion time together, and strengthens their bond. These are
-considerations for the owner's personality to weigh, not rules that force a posture.
+The choice supplies observed facts: whether the owner is sleeping or moving, their
+recent activity, the pet's distance, its current order, the observed duration of its
+rest, nearby visible hostile creatures, and immediate fire or lava danger. It asks
+owners to normally keep their companion with them and treat sitting as temporary,
+without inferring danger merely from an occupation or personality. The model still
+chooses; there is no forced recall timer.
+
+The start of a rest is stored on the pet and survives saving and loading. Repeating
+a sit order preserves that start; recall clears it. Older saves without a timestamp
+begin observation when first considered, so prompts report a lower bound rather
+than inventing earlier history. A delayed decision is discarded if the pet's order,
+owner or dimension has changed, or either participant is no longer alive and loaded.
 
 Sitting reuses vanilla's own ordered-to-sit state, so the animal stays put and the
 follow goal yields to it. Recalling clears it, and if the animal is far off when
@@ -138,11 +151,14 @@ teleport vanilla gives a player's pet that has fallen too far behind.
 - `entities/PetOrder.java`: the owner's occasional sit-or-recall decision, on the
   one-shot `decide` primitive, default no-op.
 - `entities/ai/goals/PetFollowOwnerGoal.java`: the follow, resolving the owner by
-  UUID; yields to a sitting pose; teleports when far. Modelled on `FollowFamilyGoal`.
+  UUID; yields to a sit order; teleports when far. Modelled on `FollowFamilyGoal`.
 - `entities/ai/goals/PetVillageTetherGoal.java`: keeps an ownerless or owner-away pet
   to its village.
-- `events/CoreEvents.java`: attaches the two goals to a marked Wolf/Cat on join, so
-  they return on every load.
+- `entities/ai/goals/CompanionSitGoal.java`: permits sitting only when ordered.
+- `events/CoreEvents.java`: attaches follow/tether and replaces vanilla sitting for a
+  marked Wolf/Cat on join, including existing pets on reload.
+- `dev/CompanionPetVerification.java`: isolated Minecraft regression for actual
+  following, explicit sit/recall, ordinary pets, reloads and rest persistence.
 - `entities/RealPerson.java`: the `maybeOrderPet` trigger, a once-a-day slot in the
   villager's own AI step.
 - `village/JobClaiming.java`: the grant hook, in `startJob` after the occupation is set.

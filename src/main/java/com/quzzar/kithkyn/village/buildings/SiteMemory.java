@@ -174,8 +174,7 @@ public final class SiteMemory {
   public static BoundingBox footprintOf(ServerLevelAccessor level, String definition) {
     var template = level.getLevel().getStructureManager().get(
         net.minecraft.resources.ResourceLocation.fromNamespaceAndPath(Kithkyn.MODID, definition));
-    return template.map(t -> t.getBoundingBox(
-        new StructurePlaceSettings().setRotation(Rotation.NONE), BlockPos.ZERO)).orElse(null);
+    return template.map(t -> BuildingFootprint.bounds(t, Rotation.NONE)).orElse(null);
   }
 
 }

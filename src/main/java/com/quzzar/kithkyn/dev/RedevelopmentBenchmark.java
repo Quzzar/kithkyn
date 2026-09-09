@@ -155,7 +155,7 @@ public final class RedevelopmentBenchmark {
     level.getServer().getWorldData().overworldData().setGameTime(144_000L);
     Building source = village.getBuildings().stream().filter(building -> building.getName().equals("house_plains_1"))
         .findFirst().orElseThrow();
-    BlockPos ground = BlockPos.of(source.getOriginLocation()).above(source.getInfo().getSink()).offset(0, 0, -2);
+    BlockPos ground = BlockPos.of(source.getOriginLocation()).above(source.getPlacedSink()).offset(0, 0, -2);
     var assessment = RedevelopmentPlanner.assess(village, Buildings.getByName("house_plains_2"), source, ground, source.getRotation());
     if (village.getFreeGeneralBedCount() != 0 || village.getUnhousedAdultResidentCount() < 1
         || village.getBedAssignmentsView().values().stream().noneMatch(bed -> bed.getBuildingUUID().equals(source.getUUID()))
@@ -399,7 +399,7 @@ public final class RedevelopmentBenchmark {
       lastProjectStage = projectStage;
       transitions.add(new Transition(elapsed, activeProject == null ? "none" : activeProject.getBuilding().getName(),
           stage, village.getUnhousedAdultResidentCount(),
-          village.pendingRedevelopmentItems().stream().mapToInt(ItemStack::getCount).sum(),
+          village.pendingVillageItems().stream().mapToInt(ItemStack::getCount).sum(),
           (int) village.getPopulation().stream().filter(village::keepsWorkDuringRedevelopment).count(),
           village.canDo("WATER"), (int) village.getJobAssignmentsView().values().stream()
               .filter(job -> List.of(Occupation.FARMER, Occupation.FISHER, Occupation.HUNTER).contains(job.getOccupation())).count()));
@@ -427,7 +427,7 @@ public final class RedevelopmentBenchmark {
           village.getUnhousedAdultResidentCount(), (int) village.getJobAssignmentsView().values().stream()
               .filter(job -> List.of(Occupation.FARMER, Occupation.FISHER, Occupation.HUNTER).contains(job.getOccupation())).count(),
           village.getAttractiveness().foodPerCapita(), project == null ? "" : project.siteBlocker(),
-          village.getFreeGeneralBedCount(), village.pendingRedevelopmentItems().stream().mapToInt(ItemStack::getCount).sum(),
+          village.getFreeGeneralBedCount(), village.pendingVillageItems().stream().mapToInt(ItemStack::getCount).sum(),
           (int) village.getPopulation().stream().filter(village::keepsWorkDuringRedevelopment).count(), village.canDo("WATER"),
           project == null ? "" : project.constructionAccess().failureReason(),
           project == null || project.getRedevelopment() == null ? 0 : project.getRedevelopment().remainingBlocks());

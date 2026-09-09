@@ -2,14 +2,17 @@ package com.quzzar.kithkyn.entities.ai.goals.work;
 
 import java.util.List;
 import java.util.Map;
+import java.util.HashMap;
 
 import javax.annotation.Nullable;
 
 import com.quzzar.kithkyn.Utils;
 import com.quzzar.kithkyn.Kithkyn;
 import com.quzzar.kithkyn.entities.RealPerson;
+import com.quzzar.kithkyn.entities.ShieldRecipe;
 import com.quzzar.kithkyn.village.LocationManager;
 import com.quzzar.kithkyn.village.Village;
+import com.quzzar.kithkyn.village.buildings.Materials;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvents;
@@ -40,8 +43,11 @@ import net.minecraft.world.item.Items;
  */
 public final class BlacksmithStep implements BlockWorkStep {
 
-  /** One thing the forge can make: the ingot cost, the gear, and the stock to keep. */
-  private record Gear(ItemStack cost, ItemStack output, int keep) {
+  /** One thing the forge can make: all ingredients, the gear, and the stock to keep. */
+  record Gear(List<ItemStack> cost, ItemStack output, int keep) {
+    private Gear(int iron, Item output, int keep) {
+      this(List.of(new ItemStack(Items.IRON_INGOT, iron)), new ItemStack(output), keep);
+    }
   }
 
   /**
@@ -52,16 +58,17 @@ public final class BlacksmithStep implements BlockWorkStep {
    * on iron still gets its tools before a spare breastplate.
    */
   private static final List<Gear> GEAR = List.of(
-      new Gear(new ItemStack(Items.IRON_INGOT, 3), new ItemStack(Items.BUCKET), 2),
-      new Gear(new ItemStack(Items.IRON_INGOT, 3), new ItemStack(Items.IRON_PICKAXE), 1),
-      new Gear(new ItemStack(Items.IRON_INGOT, 3), new ItemStack(Items.IRON_AXE), 1),
-      new Gear(new ItemStack(Items.IRON_INGOT, 1), new ItemStack(Items.IRON_SHOVEL), 1),
-      new Gear(new ItemStack(Items.IRON_INGOT, 2), new ItemStack(Items.IRON_HOE), 1),
-      new Gear(new ItemStack(Items.IRON_INGOT, 2), new ItemStack(Items.IRON_SWORD), 1),
-      new Gear(new ItemStack(Items.IRON_INGOT, 5), new ItemStack(Items.IRON_HELMET), 1),
-      new Gear(new ItemStack(Items.IRON_INGOT, 8), new ItemStack(Items.IRON_CHESTPLATE), 1),
-      new Gear(new ItemStack(Items.IRON_INGOT, 7), new ItemStack(Items.IRON_LEGGINGS), 1),
-      new Gear(new ItemStack(Items.IRON_INGOT, 4), new ItemStack(Items.IRON_BOOTS), 1));
+      new Gear(3, Items.BUCKET, 2),
+      new Gear(3, Items.IRON_PICKAXE, 1),
+      new Gear(3, Items.IRON_AXE, 1),
+      new Gear(1, Items.IRON_SHOVEL, 1),
+      new Gear(2, Items.IRON_HOE, 1),
+      new Gear(2, Items.IRON_SWORD, 1),
+      new Gear(ShieldRecipe.ingredients(), new ItemStack(Items.SHIELD), 1),
+      new Gear(5, Items.IRON_HELMET, 1),
+      new Gear(8, Items.IRON_CHESTPLATE, 1),
+      new Gear(7, Items.IRON_LEGGINGS, 1),
+      new Gear(4, Items.IRON_BOOTS, 1));
 
   /** Seconds at the forge per item, matching the smelting cadence in the loop. */
   private static final int FORGE_SECONDS = 8;
@@ -72,6 +79,7 @@ public final class BlacksmithStep implements BlockWorkStep {
   @Override
   @Nullable
   public BlockPos select(RealPerson person) {
+    this.making = null;
     Village village = person.getVillage();
     if (village == null) {
       return null;
@@ -82,23 +90,23 @@ public final class BlacksmithStep implements BlockWorkStep {
     if (forged != null) {
       return PackLogistics.chestWithRoomFor(person, village, new ItemStack(forged));
     }
-    Gear need = nextNeed(person, village);
+    Gear need = nextNeed(village.stockTally(), person.personMainInv);
     if (need == null) {
       return null;
     }
     this.making = need;
     // Iron in hand: to the anvil. Short: to a chest that holds the rest.
-    if (!PackLogistics.packShort(person, List.of(need.cost()))) {
+    if (!PackLogistics.packShort(person, need.cost())) {
       BlockPos station = LocationManager.getJobLocation(person);
       return station == BlockPos.ZERO ? null : station;
     }
-    return PackLogistics.chestHolding(person, village, List.of(need.cost()));
+    return PackLogistics.chestHolding(person, village, need.cost());
   }
 
   @Override
   public boolean act(RealPerson person, BlockPos target) {
     Village village = person.getVillage();
-    if (village == null || this.making == null) {
+    if (village == null) {
       return false;
     }
     Container chest = PackLogistics.containerAt(person, target);
@@ -107,16 +115,18 @@ public final class BlacksmithStep implements BlockWorkStep {
       if (forged != null) {
         PackLogistics.depositCarried(person, chest, forged, "BLACKSMITH");
       }
-      PackLogistics.pullWanted(person, chest, List.of(this.making.cost()), "BLACKSMITH");
+      if (this.making != null) {
+        PackLogistics.pullWanted(person, chest, this.making.cost(), "BLACKSMITH");
+      }
       return false; // re-select: the anvil if paid up, another chest if not
     }
-    if (PackLogistics.packShort(person, List.of(this.making.cost()))) {
+    if (this.making == null || PackLogistics.packShort(person, this.making.cost())) {
       return false; // robbed or wrong anvil; back to select
     }
     person.setPose(Pose.CROUCHING);
     person.level().playSound((Player) null, target.getX(), target.getY(), target.getZ(),
         SoundEvents.ANVIL_USE, SoundSource.PLAYERS, 0.4F, person.getRandom().nextFloat() * 0.4F + 0.6F);
-    Utils.removeItem(person.personMainInv, this.making.cost().getItem(), this.making.cost().getCount());
+    Materials.spend(person.personMainInv, this.making.cost());
     // Copy the template output - the gear list is shared, so the forged stack
     // must not be the one the recipe is defined with.
     Utils.insertItems(person.personMainInv, List.of(this.making.output().copy()), person);
@@ -158,19 +168,18 @@ public final class BlacksmithStep implements BlockWorkStep {
   }
 
   /**
-   * The first gear the village is short of and can pay the iron for - counting
+   * The first gear the village is short of and can pay every ingredient for, counting
    * the smith's own pack, so a fetched load still counts while it is carried.
    */
   @Nullable
-  private Gear nextNeed(RealPerson person, Village village) {
-    Map<Item, Integer> stock = village.stockTally();
+  static Gear nextNeed(Map<Item, Integer> stock, Container pack) {
+    Map<Item, Integer> available = new HashMap<>(stock);
+    Materials.tally(pack).forEach((item, count) -> available.merge(item, count, Integer::sum));
     for (Gear gear : GEAR) {
-      if (stock.getOrDefault(gear.output().getItem(), 0) >= gear.keep()) {
+      if (available.getOrDefault(gear.output().getItem(), 0) >= gear.keep()) {
         continue;
       }
-      int onHand = stock.getOrDefault(gear.cost().getItem(), 0)
-          + PackLogistics.carried(person, gear.cost().getItem());
-      if (onHand < gear.cost().getCount()) {
+      if (!Materials.covers(available, gear.cost())) {
         continue;
       }
       return gear;

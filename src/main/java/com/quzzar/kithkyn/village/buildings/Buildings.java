@@ -19,8 +19,8 @@ import net.minecraft.world.item.ItemStack;
  * a village builds in one style for life ({@link VillageStyle}). Everything that
  * asks "what can this village build" goes through {@link #resolve} or
  * {@link #catalogue}, which hand back that style's variant and fall back to
- * plains where a category has no other, so no caller ever sees five look-alike
- * lodges.
+ * plains only for the older fallback-enabled families. An explicitly complete
+ * catalog can omit a role or tier without borrowing another architecture.
  */
 public class Buildings {
 
@@ -46,6 +46,7 @@ public class Buildings {
 
   /** Replaces the whole registry; called on datapack (re)load. */
   public static void reload(Map<String, BuildingInfo> newRegistry) {
+    BuildingFootprint.clearCache();
     registry = Map.copyOf(newRegistry);
     warnOnDivergentRecipes();
   }
@@ -61,8 +62,8 @@ public class Buildings {
 
   /**
    * The variant of a category and level a village of this style builds: the
-   * style's own when the datapack has one, the plains variant otherwise. Null
-   * when neither exists.
+   * style's own when the datapack has one. Older regional catalogs may borrow
+   * plains; the approved Birch catalog intentionally has no implicit fallback.
    */
   @Nullable
   public static BuildingInfo resolve(String category, int level, VillageStyle style) {
@@ -70,19 +71,34 @@ public class Buildings {
     if (own != null) {
       return own;
     }
-    return registry.get(category + "_" + VillageStyle.PLAINS.id() + "_" + level);
+    return style.usesPlainsFallback()
+        ? registry.get(category + "_" + VillageStyle.PLAINS.id() + "_" + level) : null;
+  }
+
+  /** Only offer automatic founding in a style whose own complete starting set is loaded. */
+  public static boolean hasFoundingSet(VillageStyle style) {
+    return registry.containsKey(VILLAGE_CENTER_CATEGORY + "_" + style.id() + "_1")
+        && registry.containsKey(FOUNDING_MINE_CATEGORY + "_" + style.id() + "_1")
+        && registry.containsKey(FOUNDING_STOREHOUSE_CATEGORY + "_" + style.id() + "_1");
   }
 
   /**
    * The catalogue as one style sees it: a single level-1 building per category
-   * (that style's variant, or plains), plus every higher level. Higher levels stay
-   * in full because one may upgrade whatever variant is already standing; the
-   * planner separately limits fresh builds to the village's regional variant.
+   * (that style's variant, or plains), plus every higher level for fallback-enabled
+   * families. Those higher levels can upgrade a borrowed variant already standing;
+   * the planner separately limits fresh builds to the village's regional variant.
+   * A strict catalog exposes only its own authored definitions at every level.
    * Definitions whose id does not parse pass through untouched.
    */
   public static List<BuildingInfo> catalogue(VillageStyle style) {
     List<BuildingInfo> out = new ArrayList<>();
     for (BuildingInfo info : registry.values()) {
+      if (!style.usesPlainsFallback() && info.hasWellFormedId()) {
+        if (info.getVariant().equals(style.id())) {
+          out.add(info);
+        }
+        continue;
+      }
       if (!info.hasWellFormedId() || info.getLevel() > 1
           || info == resolve(info.getCategory(), 1, style)) {
         out.add(info);

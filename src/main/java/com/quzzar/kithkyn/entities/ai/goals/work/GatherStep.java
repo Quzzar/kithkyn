@@ -126,7 +126,8 @@ public final class GatherStep implements BlockWorkStep {
 
   @Override
   public double reachSqr(RealPerson person) {
-    return 6.0D;
+    return deliveryProject != null && deliveryProject.getRedevelopment() == null
+        ? BuildStep.siteReachSqr(deliveryProject) : 6.0D;
   }
 
   /** The stable recipe owed by this project's chosen construction mode. */

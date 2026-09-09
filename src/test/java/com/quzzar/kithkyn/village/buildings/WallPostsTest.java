@@ -49,12 +49,13 @@ class WallPostsTest {
   @Test
   void everyElevatedPostHasSupportAndHeadroomInWoodAndStone() {
     for (WallTier tier : WallTier.values()) {
+      for (VillageStyle style : List.of(VillageStyle.PLAINS, VillageStyle.BIRCH_FOREST)) {
       List<Long> ring = WallRoute.aroundBox(0, 64, 0, 64);
       Set<Long> gates = Set.of(BlockPos.asLong(32, 0, 0));
       List<Integer> ground = Collections.nCopies(ring.size(), 64);
       List<Integer> deck = WallTerraces.deckProfile(ground, tier.height());
       WallProject wall = WallProject.completed(
-          ring, gates, ground, deck, tier, VillageStyle.PLAINS, Set.of());
+          ring, gates, ground, deck, tier, style, Set.of());
       Set<Long> occupied = wall.plannedBlocks().stream()
           .map(WallBlockPlan::position)
           .collect(Collectors.toSet());
@@ -68,6 +69,25 @@ class WallPostsTest {
           assertTrue(occupied.contains(post.position().below().asLong()),
               () -> tier + " elevated post has no support at " + post.position());
         }
+      }
+      }
+    }
+  }
+
+  @Test
+  void primaryGuardsStandOnTheGateCenterlineInEveryDirection() {
+    List<Long> ring = WallRoute.aroundBox(0, 64, 0, 64);
+    Set<Long> gates = Set.of(BlockPos.asLong(32, 0, 0), BlockPos.asLong(64, 0, 32),
+        BlockPos.asLong(32, 0, 64), BlockPos.asLong(0, 0, 32));
+    List<Integer> ground = Collections.nCopies(ring.size(), 64);
+    for (VillageStyle style : List.of(VillageStyle.PLAINS, VillageStyle.BIRCH_FOREST)) {
+      WallProject wall = WallProject.completed(ring, gates, ground,
+          WallTerraces.deckProfile(ground, WallTier.WOOD.height()), WallTier.WOOD, style, Set.of());
+      for (WallPost post : WallPosts.plan(wall)) {
+        if (post.duty() != WallPost.Duty.GATE_SWORD_PRIMARY) continue;
+        BlockPos anchor = BlockPos.of(post.anchor());
+        if (anchor.getX() == 32) assertEquals(32, post.position().getX());
+        else assertEquals(32, post.position().getZ());
       }
     }
   }

@@ -2,6 +2,8 @@ package com.quzzar.kithkyn.entities.ai.goals.work;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.function.UnaryOperator;
 
 import javax.annotation.Nullable;
 
@@ -147,6 +149,32 @@ public final class PackLogistics {
           person.getName().getString(), role, moved);
     }
     return moved;
+  }
+
+  /**
+   * Offers every non-kept pack stack to a storage operation and writes the
+   * returned remainder back into the same slot. Nothing leaves the pack until
+   * the destination accepts it, so a full village cannot turn a failed bedtime
+   * stow into a loose item that later despawns.
+   *
+   * @return true when every offered stack was accepted
+   */
+  public static boolean stowUnkept(Container pack, Set<Item> keeping,
+      UnaryOperator<ItemStack> store) {
+    boolean storedAll = true;
+    for (int slot = 0; slot < pack.getContainerSize(); slot++) {
+      ItemStack stack = pack.getItem(slot);
+      if (stack.isEmpty() || keeping.contains(stack.getItem())) {
+        continue;
+      }
+      ItemStack leftover = store.apply(stack);
+      pack.setItem(slot, leftover);
+      if (!leftover.isEmpty()) {
+        storedAll = false;
+      }
+    }
+    pack.setChanged();
+    return storedAll;
   }
 
   /**

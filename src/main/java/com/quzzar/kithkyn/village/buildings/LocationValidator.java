@@ -124,7 +124,7 @@ public class LocationValidator {
     EnumMap<Rotation, BoundingBox> boundsByRotation = new EnumMap<>(Rotation.class);
     int maxSpan = 0;
     for (Rotation rotation : rotations) {
-      BoundingBox rotated = template.getBoundingBox(new StructurePlaceSettings().setRotation(rotation), BlockPos.ZERO);
+      BoundingBox rotated = BuildingFootprint.bounds(template, rotation);
       boundsByRotation.put(rotation, rotated);
       maxSpan = Math.max(maxSpan, Math.max(rotated.getXSpan(), rotated.getZSpan()));
     }

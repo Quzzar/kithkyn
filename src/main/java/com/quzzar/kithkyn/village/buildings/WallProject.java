@@ -10,6 +10,7 @@ import java.util.UUID;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import com.quzzar.kithkyn.village.VillageIdentity;
 
 import net.minecraft.core.BlockPos;
 
@@ -38,7 +39,8 @@ public final class WallProject {
       Codec.INT.optionalFieldOf("cursor", 0).forGetter(WallProject::legacyCursor),
       Codec.INT.listOf().optionalFieldOf("deferred", List.of()).forGetter(wall -> List.of()),
       Codec.INT.listOf().optionalFieldOf("deck", List.of()).forGetter(wall -> wall.deck),
-      SavedSection.CODEC.listOf().optionalFieldOf("sections", List.of()).forGetter(WallProject::savedSections)
+      SavedSection.CODEC.listOf().optionalFieldOf("sections", List.of()).forGetter(WallProject::savedSections),
+      Codec.BOOL.optionalFieldOf("site_cleared", false).forGetter(WallProject::isSiteCleared)
   ).apply(inst, WallProject::fromCodec));
 
   private final List<Long> ring;
@@ -49,6 +51,18 @@ public final class WallProject {
   private final VillageStyle style;
   private final WallTier tier;
   private final List<WallSection> sections;
+  private boolean siteCleared;
+  private transient VillageIdentity identity;
+
+  /** The village owns persistence; bind its existing identity again after loading. */
+  public void bindIdentity(VillageIdentity identity) {
+    this.identity = identity;
+  }
+
+  @javax.annotation.Nullable
+  public VillageIdentity getIdentity() {
+    return identity;
+  }
 
   /** Runtime leases only. A crashed or unloaded builder cannot strand saved work. */
   private final transient Map<UUID, Claim> claimsByBuilder = new HashMap<>();
@@ -88,7 +102,7 @@ public final class WallProject {
     this.deck = deck.size() == ring.size()
         ? List.copyOf(deck)
         : WallTerraces.deckProfile(ground, tier.height());
-    List<WallSection> compiled = WallSegmentCatalog.builtIn()
+    List<WallSection> compiled = WallSegmentCatalog.forStyle(style)
         .compile(this.ring, this.gates, this.ground, this.deck, tier,
             this.towerExclusions);
     this.sections = new ArrayList<>(compiled);
@@ -126,29 +140,29 @@ public final class WallProject {
   private static WallProject fromCodec(List<Long> ring, List<Long> gates,
       List<Long> towerExclusions, List<Integer> ground, String styleName,
       String tierName, int legacyCursor, List<Integer> legacyDeferred,
-      List<Integer> deck, List<SavedSection> sections) {
+      List<Integer> deck, List<SavedSection> sections, boolean siteCleared) {
     WallTier tier = WallTier.valueOf(tierName);
-    boolean oldSaveWasComplete = sections.isEmpty()
-        && legacyCursor >= ring.size()
+    // Modern saves also write this completion marker. Preserve finished walls
+    // when revised artwork changes their compiled section signatures.
+    boolean oldSaveWasComplete = legacyCursor >= ring.size()
         && legacyDeferred.isEmpty();
-    return new WallProject(new ArrayList<>(ring), new HashSet<>(gates), new ArrayList<>(ground),
+    WallProject result = new WallProject(new ArrayList<>(ring), new HashSet<>(gates), new ArrayList<>(ground),
         VillageStyle.fromId(styleName), tier, new HashSet<>(towerExclusions),
         new ArrayList<>(deck), new ArrayList<>(sections), oldSaveWasComplete);
+    result.siteCleared = siteCleared;
+    return result;
   }
 
-  /** Restores cursors only when the catalog still describes the same section sequence. */
+  /** Unchanged sections retain progress when a local artwork repair revises another section. */
   private void restoreProgress(List<SavedSection> savedSections) {
     if (savedSections.size() != this.sections.size()) {
       return;
     }
     for (int i = 0; i < this.sections.size(); i++) {
-      if (savedSections.get(i).kind() != this.sections.get(i).kind()
-          || savedSections.get(i).signature() != this.sections.get(i).signature()) {
-        return;
+      if (savedSections.get(i).kind() == this.sections.get(i).kind()
+          && savedSections.get(i).signature() == this.sections.get(i).signature()) {
+        this.sections.get(i).restoreCursor(savedSections.get(i).cursor());
       }
-    }
-    for (int i = 0; i < this.sections.size(); i++) {
-      this.sections.get(i).restoreCursor(savedSections.get(i).cursor());
     }
   }
 
@@ -161,6 +175,15 @@ public final class WallProject {
   /** True once every authored construction cell in every section has been visited. */
   public boolean isComplete() {
     return this.sections.stream().allMatch(WallSection::isComplete);
+  }
+
+  /** Old incomplete saves default to needing the same pre-construction cleanup as a new wall. */
+  public boolean isSiteCleared() {
+    return siteCleared;
+  }
+
+  public void markSiteCleared() {
+    siteCleared = true;
   }
 
   /**
