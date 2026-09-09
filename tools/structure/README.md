@@ -64,6 +64,12 @@ golem NBT are unchanged. `birch-mine-20260908.json` records the separate six-cel
 front steps, workstation and shaft frame remain unchanged. Review platforms, runtime path wear,
 excavated tunnels and frozen preview entities are not imported.
 
+The September 9 center approval supersedes the earlier entrance opening: the same center
+revision now restores four chiseled-stone lintels and outer slabs and returns the dynamic
+banners to their outward positions. Villager collision heights are capped separately from
+their visible models. The immutable sky capture and initial comparison are recorded in the
+revision's `collision_capture` fields; all twelve edits are reproduced by the existing exporter.
+
 `birch-walls-20260908.json` records 44 masonry swaps from the wall showcase across
 straight, diagonal, terrace, corner-tower and gatehouse pieces. These positions
 are local to the cropped runtime pieces: the native writer crops the original

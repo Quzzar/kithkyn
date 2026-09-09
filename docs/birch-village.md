@@ -245,8 +245,22 @@ Saved claim grids also need deliberate rebuilding for an existing village.
 A fresh disposable village verifies the corrected placement without repairing or overwriting
 the player's old site.
 
-The catalog check pins ordinary adult genetics to average scores for reproducibility. A separate
-`-Dkithkyn.birch.probeSize=15` run reproduces a pre-existing global clearance issue: genetic
-scale makes taller adults exceed two-block doors, and automatic ducking is not implemented.
-This affects other architectural families too. Do not interpret average-size route success as
-proof that every genetic size can enter every room.
+The September 9 sky-workshop approval is archived at
+`run/valecraft-gallery/birch-center-approved-20260909-120936/`. The user restored twelve cells:
+four chiseled-stone exit lintels, the four outer cobblestone slabs, and the outward banners at
+`[14,4,9]`, `[9,4,14]`, `[19,4,14]`, and `[14,4,19]`. The definition and checked-in center
+revision use these banner positions as dynamic village identity slots. The 29x11x29 bounds,
+basement, beds, storage, work stations, planting, bell, canopy and typed golem are unchanged.
+Only this center asset changes. The edited sky copy remains at `[10640,190,9020]`, with its
+smooth-stone platform below the capture at Y=189; preserve it for further user edits.
+
+The catalog check pins ordinary adult genetics to average scores for reproducibility and
+separately exercises larger residents through all four center exits. Collision height is now
+capped at two blocks for teenagers/adults and one block for toddlers/kids, independently of
+visual scale. This replaces the old tall-resident clearance failure and permits the restored
+lintels. Existing village centers are not regenerated when the source asset is updated.
+This approval passed 371 JUnit tests, 88 rotated-template checks, 396 planned access routes,
+and 32 actual walks, including tall-resident exit and re-entry in all center rotations.
+Native placement verified 24 fixtures through both construction paths; a complete server restart
+retained all 72 original entities without replenishment. Exterior and basement previews were
+rendered in a separate Minecraft client before deployment.

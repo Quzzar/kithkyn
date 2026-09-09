@@ -90,18 +90,19 @@ class BirchAssetsTest {
             }
           }
           assertEquals("minecraft:chiseled_stone_bricks", states.get(new BlockPos(14, 8, 14)).getString("Name"));
-          Set<BlockPos> bannerSlots = Set.of(new BlockPos(14,4,10), new BlockPos(10,4,14),
-              new BlockPos(18,4,14), new BlockPos(14,4,18));
+          Set<BlockPos> bannerSlots = Set.of(new BlockPos(14,4,9), new BlockPos(9,4,14),
+              new BlockPos(19,4,14), new BlockPos(14,4,19));
           assertEquals(bannerSlots, Set.copyOf(info.getVillageIdentitySlots().banners()));
           for (BlockPos pos : bannerSlots) {
             assertEquals("minecraft:white_wall_banner", states.get(pos).getString("Name"),
-                "The moved flags remain dynamic identity slots, not the old low stone lintels");
+                "The restored outward flags remain dynamic village identity slots");
+            assertEquals("minecraft:cobblestone_slab", states.get(pos.above()).getString("Name"));
+            assertEquals("bottom", states.get(pos.above()).getCompound("Properties").getString("type"));
           }
-          for (BlockPos pos : List.of(new BlockPos(14,4,9), new BlockPos(9,4,14),
-              new BlockPos(19,4,14), new BlockPos(14,4,19))) {
-            assertEquals("minecraft:air", states.get(pos).getString("Name"));
-            assertEquals("minecraft:air", states.get(pos.above()).getString("Name"),
-                "Do not restore the slabs that trapped taller residents downstairs");
+          for (BlockPos pos : List.of(new BlockPos(14,4,10), new BlockPos(10,4,14),
+              new BlockPos(18,4,14), new BlockPos(14,4,18))) {
+            assertEquals("minecraft:chiseled_stone_bricks", states.get(pos).getString("Name"),
+                "Preserve the approved restored exit lintels");
           }
           for (int x : new int[]{10, 18}) {
             for (int z : new int[]{10, 18}) {

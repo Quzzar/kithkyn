@@ -1,5 +1,5 @@
 {
-  "description": "User-approved 2026-09-08 sky-workshop town-center revision. Seventy-five authored block edits plus the native bell attachment settling. Preserve original typed initial golem and unchanged basement/amenities; exclude platform.",
+  "description": "User-approved Birch center revisions. Preserve the September 8 planting, candles, bell, canopy and original typed golem; restore the four exit lintels, slabs and outward banners from the September 9 sky workshop.",
   "size": [
     29,
     11,
@@ -757,42 +757,6 @@
         4,
         9
       ],
-      "name": "minecraft:air",
-      "properties": {}
-    },
-    {
-      "pos": [
-        9,
-        4,
-        14
-      ],
-      "name": "minecraft:air",
-      "properties": {}
-    },
-    {
-      "pos": [
-        19,
-        4,
-        14
-      ],
-      "name": "minecraft:air",
-      "properties": {}
-    },
-    {
-      "pos": [
-        14,
-        4,
-        19
-      ],
-      "name": "minecraft:air",
-      "properties": {}
-    },
-    {
-      "pos": [
-        14,
-        4,
-        10
-      ],
       "name": "minecraft:white_wall_banner",
       "properties": {
         "facing": "north"
@@ -800,7 +764,7 @@
     },
     {
       "pos": [
-        10,
+        9,
         4,
         14
       ],
@@ -811,7 +775,7 @@
     },
     {
       "pos": [
-        18,
+        19,
         4,
         14
       ],
@@ -824,7 +788,7 @@
       "pos": [
         14,
         4,
-        18
+        19
       ],
       "name": "minecraft:white_wall_banner",
       "properties": {
@@ -834,11 +798,50 @@
     {
       "pos": [
         14,
+        4,
+        10
+      ],
+      "name": "minecraft:chiseled_stone_bricks",
+      "properties": {}
+    },
+    {
+      "pos": [
+        10,
+        4,
+        14
+      ],
+      "name": "minecraft:chiseled_stone_bricks",
+      "properties": {}
+    },
+    {
+      "pos": [
+        18,
+        4,
+        14
+      ],
+      "name": "minecraft:chiseled_stone_bricks",
+      "properties": {}
+    },
+    {
+      "pos": [
+        14,
+        4,
+        18
+      ],
+      "name": "minecraft:chiseled_stone_bricks",
+      "properties": {}
+    },
+    {
+      "pos": [
+        14,
         5,
         9
       ],
-      "name": "minecraft:air",
-      "properties": {}
+      "name": "minecraft:cobblestone_slab",
+      "properties": {
+        "waterlogged": "false",
+        "type": "bottom"
+      }
     },
     {
       "pos": [
@@ -846,8 +849,11 @@
         5,
         14
       ],
-      "name": "minecraft:air",
-      "properties": {}
+      "name": "minecraft:cobblestone_slab",
+      "properties": {
+        "waterlogged": "false",
+        "type": "bottom"
+      }
     },
     {
       "pos": [
@@ -855,8 +861,11 @@
         5,
         14
       ],
-      "name": "minecraft:air",
-      "properties": {}
+      "name": "minecraft:cobblestone_slab",
+      "properties": {
+        "waterlogged": "false",
+        "type": "bottom"
+      }
     },
     {
       "pos": [
@@ -864,34 +873,41 @@
         5,
         19
       ],
-      "name": "minecraft:air",
-      "properties": {}
+      "name": "minecraft:cobblestone_slab",
+      "properties": {
+        "waterlogged": "false",
+        "type": "bottom"
+      }
     }
   ],
   "banners": [
     [
       14,
       4,
-      10
+      9
     ],
     [
-      10,
+      9,
       4,
       14
     ],
     [
-      18,
+      19,
       4,
       14
     ],
     [
       14,
       4,
-      18
+      19
     ]
   ],
   "access_revision": "Approved live-village 2026-09-08: open all four low stone/slab exit overhangs and move the village banners one block inward; original beds, basement, planting, canopy, bell and golem remain intact.",
   "access_capture": "run/valecraft-gallery/birch-access-approved-20260908-205309/world-snapshot",
   "access_base_sha256": "0b1d9b2a890bf660ba08dc8dfc38192226f5c0eec6cec280f8d8f5fb6f3e6f6f",
-  "access_region_sha256": "65a3cd1867ffdebb56db621bc779190d52f0c3ba9f42d76455226dce7b93b1f7"
+  "access_region_sha256": "65a3cd1867ffdebb56db621bc779190d52f0c3ba9f42d76455226dce7b93b1f7",
+  "collision_revision": "Approved 2026-09-09: restore twelve cells around the four exits after capping villager collision height at two blocks. Beds, basement, planting, bell, canopy and golem remain unchanged.",
+  "collision_capture": "run/valecraft-gallery/birch-center-approved-20260909-120936/capture.nbt",
+  "collision_capture_sha256": "8adfd8924a561772f5c1410748ce43e0fd8142f58e1082bfee9d26ddd2a6768c",
+  "collision_base_sha256": "995e4fe3466ac186929170af2508f67610bda43ff894d20c74a28950f9ed5f76"
 }
