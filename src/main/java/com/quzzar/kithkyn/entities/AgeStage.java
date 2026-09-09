@@ -13,9 +13,9 @@ import java.util.Locale;
 public enum AgeStage {
 
   TODDLER(2.05F / 1.95F, false, true, true, "Toddler"),
-  // Young-model heads render at 75% scale, so 2.60 / 1.95 gives a Kid
-  // the same absolute head size as an Adult while keeping child proportions.
-  KID(2.60F / 1.95F, false, true, true, "Kid"),
+  // Five percent smaller than the former 2.60 / 1.95 model. The young head
+  // transform now gives Kids 95% of an adult's head size, with child proportions.
+  KID(2.47F / 1.95F, false, true, true, "Kid"),
   TEENAGER(0.9275F, true, true, false, "Teenager"),
   ADULT(1.0F, true, false, false, "");
 

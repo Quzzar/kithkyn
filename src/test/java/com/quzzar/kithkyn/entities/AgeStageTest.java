@@ -36,8 +36,8 @@ class AgeStageTest {
   @Test
   void toddlerAndKidUseYoungProportionsWhileTeenagerUsesASmallerAdultModel() {
     assertEquals(2.05F, 1.95F * AgeStage.TODDLER.scale(), 0.01F);
-    assertEquals(2.60F, 1.95F * AgeStage.KID.scale(), 0.01F);
-    assertEquals(1.0F, 0.75F * AgeStage.KID.scale(), 0.01F);
+    assertEquals(2.47F, 1.95F * AgeStage.KID.scale(), 0.01F);
+    assertEquals(0.95F, 0.75F * AgeStage.KID.scale(), 0.01F);
     assertTrue(AgeStage.TODDLER.usesYoungModel());
     assertTrue(AgeStage.KID.usesYoungModel());
     assertFalse(AgeStage.TEENAGER.usesYoungModel());
@@ -48,7 +48,7 @@ class AgeStageTest {
   @Test
   void nameplateAttachmentsFollowEachStagesRenderedHeight() {
     assertEquals(1.13F, 1.95F * AgeStage.TODDLER.dimensionsScale(), 0.01F);
-    assertEquals(1.41F, 1.95F * AgeStage.KID.dimensionsScale(), 0.01F);
+    assertEquals(1.34F, 1.95F * AgeStage.KID.dimensionsScale(), 0.01F);
     assertEquals(1.81F, 1.95F * AgeStage.TEENAGER.dimensionsScale(), 0.01F);
     assertEquals(1.95F, 1.95F * AgeStage.ADULT.dimensionsScale(), 0.01F);
   }
