@@ -157,7 +157,9 @@ public class PersonRenderer extends HumanoidMobRenderer<Person, HumanoidModel<Pe
         poseStack.pushPose();
         // Anchor the bubble's top so its tail ends just above the floating name.
         float clearance = BUBBLE_CLEARANCE + (bodyHeight + BUBBLE_TAIL_HEIGHT + 2) * BUBBLE_SCALE;
-        poseStack.translate(0.0D, entity.getBbHeight() + 0.5D + clearance, 0.0D);
+        double nameHeight = entity.getAttachments()
+                .get(net.minecraft.world.entity.EntityAttachment.NAME_TAG, 0, entity.getYRot()).y;
+        poseStack.translate(0.0D, nameHeight + 0.5D + clearance, 0.0D);
         poseStack.mulPose(this.entityRenderDispatcher.cameraOrientation());
         poseStack.scale(BUBBLE_SCALE, -BUBBLE_SCALE, BUBBLE_SCALE);
         org.joml.Matrix4f matrix = poseStack.last().pose();

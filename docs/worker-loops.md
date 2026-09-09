@@ -135,10 +135,11 @@ uses that genetically varied perception range as its whole horizon. `PersonPathN
 the stock search a minimum 48-block window while retaining the roughly 1,280-node hard ceiling
 and vanilla's loaded-chunk-only navigation region. The mine-ramp waypoints and `ApproachWatch`
 recovery remain in place; the wider window is not permission to load terrain or search forever.
-An adult whose genetic height exceeds a two-block doorway retries a failed route with their
-actual crouching body. The worker ducks through the passage and stands once stopped somewhere
-with enough headroom. Work-footing checks accept that same clearance, so a quartermaster can
-select a shelf inside a low storehouse before starting the walk. Mine approach failures identify
+Collision height is capped at two blocks for teenagers and adults, and one block for toddlers
+and kids, independently of visual height. Navigation counts exact integer heights without an
+extra clearance block, so residents walk through those openings standing. Work-footing checks
+use the same collision box, so a quartermaster can select a shelf inside a low storehouse
+before starting the walk. Mine approach failures identify
 the entrance or the ramp in the villager's conversation context, and arrival clears both those
 details and the older generic access blocker.
 The work loop checks distance and progress every tick but refreshes a route at most every 10 ticks.

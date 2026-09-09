@@ -2,13 +2,16 @@ package com.quzzar.kithkyn.dev;
 
 import com.quzzar.kithkyn.Kithkyn;
 import com.quzzar.kithkyn.PersonEntityType;
+import com.quzzar.kithkyn.entities.AgeStage;
 import com.quzzar.kithkyn.entities.RealPerson;
 import com.quzzar.kithkyn.village.buildings.WorkerFooting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.entity.EntityAttachment;
+import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.entity.Pose;
-import net.minecraft.world.entity.ai.navigation.GroundPathNavigation;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.phys.Vec3;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.tick.ServerTickEvent;
@@ -18,9 +21,10 @@ import net.neoforged.neoforge.event.tick.ServerTickEvent;
 public final class LowPassageVerification {
   private static final BlockPos START = new BlockPos(-7500, 151, -7500);
   private static final BlockPos END = START.east(10);
-  private static TallWalker walker;
+  private static VerificationWalker walker;
   private static int ticks;
-  private static int arrivedAt;
+  private static int stageIndex;
+  private static boolean stoppedUnderRoof;
 
   private LowPassageVerification() { }
 
@@ -36,76 +40,124 @@ public final class LowPassageVerification {
         }
         event.getServer().tickRateManager().setTickRate(100);
       }
-      if (ticks == 40) start(level);
+      if (ticks == 40) {
+        verifyDimensions(level);
+        start(level);
+      }
       if (walker == null) return;
-      if (walker.position().distanceToSqr(net.minecraft.world.phys.Vec3.atBottomCenterOf(END)) < 0.4D) {
-        if (arrivedAt == 0) arrivedAt = ticks;
-        if (ticks - arrivedAt > 30) {
-          check(walker.getPose() == Pose.STANDING, "walker did not stand after leaving the passage");
-          verifyStoppedUnderRoof(level);
-          Kithkyn.LOGGER.info("[low-passage-verify] RESULT PASS: tall resident walked through a two-high opening, stood outside and stayed ducked beneath a roof");
-          walker.discard();
+      check(walker.getPose() == Pose.STANDING, "navigation changed the standing pose");
+      check(level.noCollision(walker), "walker collided with the passage ceiling");
+      if (!stoppedUnderRoof && walker.getX() >= START.getX() + 4.5D) {
+        check(walker.getX() < START.getX() + 6.0D, "missed the roof stopping check");
+        walker.getNavigation().stop();
+        walker.getNavigation().tick();
+        check(walker.getPose() == Pose.STANDING && level.noCollision(walker),
+            "stopping under the ceiling changed posture or collided");
+        var exit = walker.getNavigation().createPath(END, 0);
+        check(exit != null && exit.canReach(), "could not plan an exit beneath the roof");
+        check(walker.getNavigation().moveTo(exit, 0.5D), "exit route did not start");
+        stoppedUnderRoof = true;
+      }
+      if (walker.position().distanceToSqr(Vec3.atBottomCenterOf(END)) < 0.4D) {
+        check(stoppedUnderRoof, "walk did not cross the passage");
+        Kithkyn.LOGGER.info("[low-passage-verify] {} walked through a {}-block opening standing",
+            walker.getLifeStage(), walker.getLifeStage().collisionHeightLimit());
+        walker.discard();
+        walker = null;
+        stageIndex++;
+        if (stageIndex < AgeStage.values().length) {
+          start(level);
+        } else {
+          Kithkyn.LOGGER.info("[low-passage-verify] RESULT PASS: all ages crossed their capped opening; shorter openings rejected; natural widths and visual attachments preserved across scales");
           event.getServer().halt(false);
         }
       }
-      if (ticks > 1200) throw new AssertionError("Physical route stalled at " + walker.position());
+      if (ticks > 1600) throw new AssertionError("Physical route stalled at " + walker.position());
     } catch (Exception | AssertionError failure) {
       Kithkyn.LOGGER.error("[low-passage-verify] RESULT FAIL", failure);
       event.getServer().halt(false);
     }
   }
 
+  /** Exercise actual LivingEntity scaling, including division/multiplication rounding at the cap. */
+  private static void verifyDimensions(ServerLevel level) {
+    VerificationWalker sample = new VerificationWalker(level);
+    sample.setPos(Vec3.atBottomCenterOf(START));
+    for (AgeStage stage : AgeStage.values()) {
+      sample.setLifeStage(stage);
+      for (int percent = 65; percent <= 150; percent++) {
+        sample.scale = percent / 100.0F;
+        for (Pose pose : new Pose[] {Pose.STANDING, Pose.CROUCHING, Pose.SWIMMING}) {
+          float baseHeight = pose == Pose.STANDING ? 1.95F : pose == Pose.CROUCHING ? 1.75F : 0.6F;
+          EntityDimensions natural = EntityDimensions.scalable(0.6F, baseHeight)
+              .scale(stage.dimensionsScale()).scale(sample.getScale());
+          EntityDimensions actual = sample.getDimensions(pose);
+          float expectedHeight = Math.min(natural.height(), stage.collisionHeightLimit());
+          check(actual.height() <= stage.collisionHeightLimit(), "scaled height exceeded " + stage);
+          check(Math.abs(actual.height() - expectedHeight) < 0.000001F, "smaller body was enlarged");
+          check(actual.width() == natural.width(), "collision width changed");
+          check(actual.eyeHeight() < actual.height(), "eyes exceeded the collision ceiling");
+          check(actual.attachments().get(EntityAttachment.NAME_TAG, 0, 0)
+              .equals(natural.attachments().get(EntityAttachment.NAME_TAG, 0, 0)),
+              "visual nameplate anchor moved with the capped body");
+        }
+        check(sample.getDimensions(Pose.SLEEPING).height() == 0.2F, "sleeping body changed");
+      }
+    }
+    sample.discard();
+  }
+
   private static void start(ServerLevel level) {
     level.setDayTime(6000);
     level.updateSkyBrightness();
+    AgeStage stage = AgeStage.values()[stageIndex];
+    int openingHeight = (int)stage.collisionHeightLimit();
     for (BlockPos pos : BlockPos.betweenClosed(START.offset(-2, -1, -5), END.offset(2, 5, 5))) {
       int x = pos.getX() - START.getX();
       boolean floor = pos.getY() == START.getY() - 1;
       boolean wall = x >= 3 && x <= 6;
       boolean tunnel = pos.getZ() == START.getZ()
-          && pos.getY() >= START.getY() && pos.getY() < START.getY() + 2;
+          && pos.getY() >= START.getY() && pos.getY() < START.getY() + openingHeight;
       level.setBlock(pos, floor || (wall && !tunnel)
           ? Blocks.STONE.defaultBlockState() : Blocks.AIR.defaultBlockState(), 2);
     }
-    walker = new TallWalker(level);
+    walker = new VerificationWalker(level);
+    walker.scale = 1.28F;
+    walker.setLifeStage(stage);
     walker.refreshDimensions();
-    walker.setPos(START.getX() + 0.5D, START.getY(), START.getZ() + 0.5D);
+    walker.setPos(Vec3.atBottomCenterOf(START));
     walker.setOnGround(true);
     level.addFreshEntity(walker);
-    check(walker.getBbHeight() > 2.0F, "fixture was not taller than the doorway");
-    var standing = new GroundPathNavigation(walker, level).createPath(END, 0);
-    check(standing == null || !standing.canReach(), "standing control unexpectedly crossed the wall");
-    check(WorkerFooting.canStand(walker, START.east(4)), "low work footing was rejected before navigation");
-    var ducked = walker.getNavigation().createPath(END, 0);
-    check(ducked != null && ducked.canReach() && walker.getPose() == Pose.CROUCHING,
-        "navigator did not choose a reachable ducking route");
-    check(walker.getNavigation().moveTo(ducked, 0.5D), "route did not start");
-  }
+    stoppedUnderRoof = false;
+    check(Math.abs(walker.getBbHeight() - openingHeight) < 0.000001F,
+        "fixture did not exercise the collision cap");
+    check(WorkerFooting.canStand(walker, START.east(4)), "low work footing was rejected");
 
-  private static void verifyStoppedUnderRoof(ServerLevel level) {
-    walker.setPos(START.getX() + 4.5D, START.getY(), START.getZ() + 0.5D);
-    walker.setOnGround(true);
-    walker.setPose(Pose.STANDING);
-    var exit = walker.getNavigation().createPath(END, 0);
-    check(exit != null && exit.canReach(), "could not plan an exit from beneath the roof");
-    walker.getNavigation().stop();
-    walker.tickCount += 40;
-    walker.getNavigation().tick();
-    check(walker.getPose() == Pose.CROUCHING && level.noCollision(walker),
-        "stopping stood the worker inside the ceiling");
+    // Reject a passage one block too short before opening the intended route.
+    BlockPos ceiling = START.east(4).above(openingHeight - 1);
+    level.setBlock(ceiling, Blocks.STONE.defaultBlockState(), 2);
+    check(!WorkerFooting.canStand(walker, START.east(4)), "solid ceiling passed footing checks");
+    var blocked = walker.getNavigation().createPath(END, 0);
+    check(blocked == null || !blocked.canReach(), "navigator routed through a solid ceiling");
+    level.setBlock(ceiling, Blocks.AIR.defaultBlockState(), 2);
+    var route = walker.getNavigation().createPath(END, 0);
+    check(route != null && route.canReach(), "navigator rejected the capped standing route");
+    check(walker.getNavigation().moveTo(route, 0.5D), "route did not start");
   }
 
   private static void check(boolean condition, String reason) {
     if (!condition) throw new AssertionError(reason);
   }
 
-  private static final class TallWalker extends RealPerson {
-    private TallWalker(ServerLevel level) {
+  private static final class VerificationWalker extends RealPerson {
+    private float scale = 1.0F;
+
+    private VerificationWalker(ServerLevel level) {
       super(PersonEntityType.PERSON.get(), level);
       reloadState();
     }
 
-    @Override public float getScale() { return 1.03F; }
+    @Override public float getScale() { return scale == 0.0F ? 1.0F : scale; }
 
     @Override public void reloadState() {
       super.reloadState();

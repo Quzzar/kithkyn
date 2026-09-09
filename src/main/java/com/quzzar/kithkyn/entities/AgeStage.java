@@ -53,7 +53,8 @@ public enum AgeStage {
   }
 
   /**
-   * Scale used by collision, eye height, and entity attachments such as the nameplate.
+   * Natural scale used by eye height and entity attachments such as the nameplate,
+   * before applying the separate collision-height limit.
    * Toddler and Kid expand Minecraft's nominal one-block young model. Teenager and Adult
    * use the normal adult model, so their model height scales with the adult render height.
    * Every stage keeps the same small model-to-bounds clearance.
@@ -65,6 +66,11 @@ public enum AgeStage {
     }
     float relativeModelHeight = YOUNG_MODEL_BASE_HEIGHT * scale;
     return (relativeModelHeight + ADULT_NAMEPLATE_CLEARANCE) / PERSON_BASE_HEIGHT;
+  }
+
+  /** Young children fit one-block passages; working-age residents fit two-block passages. */
+  public float collisionHeightLimit() {
+    return usesYoungModel ? 1.0F : 2.0F;
   }
 
   /** Presentation-only padding above pre-adult models for their full label stack. */

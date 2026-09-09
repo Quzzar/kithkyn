@@ -530,8 +530,20 @@ public class Person extends PathfinderMob implements CrossbowAttackMob, NeutralM
 
   @Override
   protected EntityDimensions getDefaultDimensions(Pose poseIn) {
-    return SIZE_BY_POSE.getOrDefault(poseIn, EntityDimensions.scalable(0.6F, 1.95F).withEyeHeight(1.62F))
+    EntityDimensions dimensions = SIZE_BY_POSE.getOrDefault(poseIn, SIZE_BY_POSE.get(Pose.STANDING))
         .scale(this.getAgeScale());
+    float scale = this.getScale();
+    float limit = this.getLifeStage().collisionHeightLimit();
+    if (dimensions.fixed() || dimensions.height() * scale <= limit) return dimensions;
+
+    // LivingEntity applies genetic SCALE after this method. Compensate here so
+    // rendering and attachment heights retain their natural size. Round down if
+    // float division would put the final box fractionally inside the ceiling.
+    float height = limit / scale;
+    if (height * scale > limit) height = Math.nextDown(height);
+    float eyeHeight = Math.min(dimensions.eyeHeight(), height - 0.1F / scale);
+    return new EntityDimensions(dimensions.width(), height, eyeHeight,
+        dimensions.attachments(), dimensions.fixed());
   }
 
   @Override

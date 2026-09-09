@@ -92,9 +92,14 @@ point off 10, a **minor** is 1% per point. All weights are tunables.
 | `SCALE` | Size | |
 | `FOLLOW_RANGE` | Eyesight | WIS |
 
-`SCALE` is Size's headline output and the one gene players see at a glance: it resizes
-hitbox, eye height, and render together. Keep its range tight, roughly +-8% at the
-extremes, so villagers read as people, not gnomes and giants.
+`SCALE` is Size's headline output and the one gene players see at a glance. It resizes
+the model, collision width, and natural eye and attachment heights. Collision height is
+capped independently: toddlers and kids at one block, teenagers and adults at two blocks.
+Smaller bodies stay smaller, and a capped body's eyes stay below its collision ceiling.
+Models, nameplates, and speech bubbles retain their natural height; tall residents can
+therefore walk ordinary passages even when their visible heads overlap a low ceiling.
+Keep the ordinary scale range tight, roughly +-8% at the extremes, so villagers read as
+people, not gnomes and giants.
 
 Notice both of the crossovers this matrix encodes: knockback resistance comes from being
 tough (CON) *and* from being big (Size); attack damage comes from strength *and* mass.
