@@ -12,7 +12,7 @@ import java.util.Locale;
  */
 public enum AgeStage {
 
-  TODDLER(2.05F / 1.95F, false, true, true, "Toddler"),
+  TODDLER(1.9475F / 1.95F, false, true, true, "Toddler"),
   // Five percent smaller than the former 2.60 / 1.95 model. The young head
   // transform now gives Kids 95% of an adult's head size, with child proportions.
   KID(2.47F / 1.95F, false, true, true, "Kid"),
@@ -55,7 +55,7 @@ public enum AgeStage {
   /**
    * Natural scale used by eye height and entity attachments such as the nameplate,
    * before applying the separate collision-height limit.
-   * Toddler and Kid expand Minecraft's nominal one-block young model. Teenager and Adult
+   * Toddler and Kid scale Minecraft's nominal one-block young model. Teenager and Adult
    * use the normal adult model, so their model height scales with the adult render height.
    * Every stage keeps the same small model-to-bounds clearance.
    */
