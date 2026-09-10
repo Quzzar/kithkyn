@@ -1,6 +1,6 @@
 {
   "variant": "floodplain",
-  "status": "verified_pending_local_deployment",
+  "status": "verified_and_locally_deployed",
   "source_policy": "Locally approved playable datapack, excluded from public distribution. Source provenance is retained; written redistribution permission is not asserted.",
   "manifests": [
     "tools/structure/nilotic-selections-20260910.json"
@@ -365,5 +365,33 @@
     "storehouse_floodplain_1": {
       "allay": 2
     }
+  },
+  "deployment": {
+    "date": "2026-09-10",
+    "commit": "6a949d63ba486e6f968adad702a2895fc078bc1b",
+    "jar_sha256": "1c33d852a5a7c05673501e9e6e868de7df7225c960701e74f32605cb0e1e9a95",
+    "release": "20260910-163427-floodplain-village",
+    "datapack": "run/world/datapacks/kithkyn-floodplain",
+    "building_definitions_loaded": 104,
+    "removed_old_family_villages": [
+      "Emscott",
+      "Tanswick",
+      "Marnock",
+      "Marnwick",
+      "Tallowen",
+      "Brenavai",
+      "Avercombe"
+    ],
+    "world_backup": "before-floodplain-village-20260910-163427-floodplain-village",
+    "first_village": {
+      "name": "Ruwaleni",
+      "centre": [
+        -3982,
+        67,
+        5344
+      ],
+      "buildings": 6
+    },
+    "note": "The first start was killed by the server watchdog while a console force-load generated 81 unvisited chunks for the test village; the server was restarted from the same release and the site is now loaded a few chunks at a time."
   }
 }
