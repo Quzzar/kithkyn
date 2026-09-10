@@ -2748,6 +2748,10 @@ public class RealPerson extends Person {
       // five seconds). Level with strolling for the reason given at the guard's.
       this.goalSelector.addGoal(5, new WorkLoopGoal<>(this,
           new ChopStep(16, 0.4F, 100, true)));
+      // Felled canopies drop more saplings than one stand needs. The lodge's
+      // composter turns the surplus into bone meal for the stand, the same
+      // physical loop the farmer runs on brush, so a lodge feeds itself.
+      this.goalSelector.addGoal(8, new WorkLoopGoal<>(this, new CompostStep(CompostStep.Diet.TIMBER)));
       this.goalSelector.addGoal(8, new WorkLoopGoal<>(this, new CraftStep(
           new ItemStack(Items.STRIPPED_OAK_LOG, 4),
           new ItemStack(Items.OAK_PLANKS, 16),
@@ -2810,7 +2814,7 @@ public class RealPerson extends Person {
       // composter also eats surplus sowing seeds (CompostStep), which is what
       // replaced the abstract seeds-to-bone-meal craft that used to sit here:
       // the farmer has a real composter at the station, so it uses that.
-      this.goalSelector.addGoal(8, new WorkLoopGoal<>(this, new CompostStep()));
+      this.goalSelector.addGoal(8, new WorkLoopGoal<>(this, new CompostStep(CompostStep.Diet.FARM)));
       this.goalSelector.addGoal(8, new WorkLoopGoal<>(this, new StashBonemealStep()));
       this.goalSelector.addGoal(8, new WorkLoopGoal<>(this, new ClearBrushStep()));
     }

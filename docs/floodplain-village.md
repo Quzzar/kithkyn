@@ -21,7 +21,7 @@ definitions, all new ids, so the pack needs no filter:
 | Id | Source exhibit | Beds | Stations |
 | --- | --- | --- | --- |
 | `village_center_floodplain_1` | Nilotic cartographer house with four white banners and the green carpet cross | 0 | quartermaster, builder, guard captain |
-| `mine_floodplain_1` | Nilotic armorer house with the authored pit floor | 0 | miner in the 3x3 pit; the shaft leaves east |
+| `mine_floodplain_1` | Nilotic armorer house with the authored pit floor | 0 | miner in the 3x3 pit; the ramp starts at the pit's middle column and leaves east under the wall |
 | `storehouse_floodplain_1` | small house draft with barrels, a note block and two authored allays | 0 | none; the quartermaster keeps the centre post |
 | `church_floodplain_1` | Nilotic temple | 0 | cleric |
 | `lumberjack_floodplain_1` | Nilotic farmer house | 1 | lumberjack on the jungle sapling |
@@ -30,7 +30,7 @@ definitions, all new ids, so the pack needs no filter:
 | `stoneworks_floodplain_1` | Nilotic mason house | 1 | mason |
 | `blacksmith_floodplain_1` | Nilotic toolsmith | 0 | blacksmith |
 | `fishery_floodplain_1` | desert oasis pool draft with a barrel and a lantern | 0 | fisher on the pool rim |
-| `well_floodplain_1` | mangrove tavern well draft | 0 | none |
+| `well_floodplain_1` | mangrove tavern well draft, sunk one block so its rim sits flush with the ground | 0 | none |
 | `watchtower_floodplain_1` | firewatch tower draft with four white banners | 1 | crossbow post |
 | `house_floodplain_1` | Nilotic small house 2 | 1 | none |
 | `house_floodplain_2` | Nilotic large house, standalone | 2 | none |

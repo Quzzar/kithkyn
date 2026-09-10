@@ -82,3 +82,14 @@ roster. `ShelvingTest` covers the shelf arithmetic both keepers share, with a on
 server, exercises the storehouse tether, quartermaster-only adoption, duplicate claims, a full
 collect-and-deliver haul from a workplace chest to the shelves, reload persistence and death removal. Never enable that
 flag on a review or play world: it creates its own fixture and stops the server when finished.
+
+## Getting around
+
+A keeper plans its flights with its own evaluator (`entities/ai/AllayPathNavigation`).
+Vanilla flight admits every trapdoor cell whether the panel is open or closed, so a keeper
+whose route crossed a closed hatch flew into it and pressed there; nobody in this mod opens
+trapdoors, people included, so a closed trapdoor is a wall to a keeper and its route goes
+round. Wooden doors are different: a keeper's route may pass through one, and the keeper
+opens the door it is brushing past itself, since allays have no door behaviour of their own.
+Buildings should therefore leave keepers an open panel or a door into every room they
+serve; the floodplain storehouse exports its doorway trapdoor open for exactly this reason.

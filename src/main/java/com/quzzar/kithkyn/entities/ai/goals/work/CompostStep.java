@@ -21,8 +21,9 @@ import net.minecraft.world.level.block.ComposterBlock;
 import net.minecraft.world.level.block.state.BlockState;
 
 /**
- * Feeding the farm's composter and taking what it makes: a CONVERT step, and
- * the second link in the farmer's idle chain (brush in, bone meal out).
+ * Feeding a trade's composter and taking what it makes: a CONVERT step, the
+ * second link in the farmer's idle chain (brush in, bone meal out) and the
+ * lumberjack's way of turning spare saplings into feed for the stand.
  *
  * Physical the whole way (docs/worker-loops.md): the composter is a real block
  * every farm structure ships, each fill spends one plant out of the pack rolled
@@ -38,8 +39,33 @@ import net.minecraft.world.level.block.state.BlockState;
  */
 public final class CompostStep implements BlockWorkStep {
 
+  /**
+   * What a trade may spend on its composter. A farm eats the brush its clearing
+   * gathered and any sowing seed past the keep; a lumber lodge eats the saplings
+   * its felled canopies drop past what {@link PlantStep} needs for the stand.
+   */
+  public enum Diet {
+    FARM("the farm's composter"),
+    TIMBER("the lodge's composter");
+
+    private final String composter;
+
+    Diet(String composter) {
+      this.composter = composter;
+    }
+  }
+
   /** The composter sits inside the farm, so the station scan stays tight. */
   private static final int STATION_RADIUS = 8;
+
+  /** Saplings the lodge keeps for replanting; only what the pack holds past this is compost. */
+  private static final int SAPLINGS_KEPT_FOR_PLANTING = 4;
+
+  private final Diet diet;
+
+  public CompostStep(Diet diet) {
+    this.diet = diet;
+  }
 
   /**
    * Seeds kept back for sowing, per type; only what the pack holds past this is
@@ -106,12 +132,12 @@ public final class CompostStep implements BlockWorkStep {
 
   @Override
   public String describe() {
-    return "the farm's composter";
+    return this.diet.composter;
   }
 
   @Override
   public String activity() {
-    return "feeding the farm's composter";
+    return "feeding " + this.diet.composter;
   }
 
   /** A fill every second or so reads as work without eating the whole day. */
@@ -121,12 +147,16 @@ public final class CompostStep implements BlockWorkStep {
   }
 
   /**
-   * What to spend next: cleared brush first, then any sowing seed the pack
-   * holds past its keep. The keep is what makes the seed half safe - the
-   * farmer never composts what they still need to plant.
+   * What to spend next. A farm spends cleared brush first, then any sowing seed
+   * the pack holds past its keep; a lodge spends saplings past its keep. The
+   * keeps are what make it safe: nobody composts what they still need to plant.
    */
   @Nullable
   private Item findFeedItem(RealPerson person) {
+    if (this.diet == Diet.TIMBER) {
+      Item sapling = PlantStep.saplingIn(person);
+      return sapling != null && person.personMainInv.countItem(sapling) > SAPLINGS_KEPT_FOR_PLANTING ? sapling : null;
+    }
     for (int slot = 0; slot < person.personMainInv.getContainerSize(); slot++) {
       ItemStack stack = person.personMainInv.getItem(slot);
       if (ClearBrushStep.brushItem(stack)) {

@@ -21,6 +21,7 @@ import net.minecraft.world.level.PathNavigationRegion;
 import net.minecraft.world.level.block.DoorBlock;
 import net.minecraft.world.level.block.FenceGateBlock;
 import net.minecraft.world.level.block.LadderBlock;
+import net.minecraft.world.level.block.CandleBlock;
 import net.minecraft.world.level.block.TrapDoorBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
@@ -500,6 +501,12 @@ public final class PersonPathNavigation extends GroundPathNavigation {
       // market counters even when the roof prevents stepping onto them.
       if (type == PathType.TRAPDOOR && state.getBlock() instanceof TrapDoorBlock
           && !state.getValue(TrapDoorBlock.OPEN)) {
+        return PathType.BLOCKED;
+      }
+      // A candle cluster is too low for vanilla to plan around and too tall to
+      // step onto under an indoor ceiling, so a body walks into it and stays
+      // there. It is an obstacle: people go round it.
+      if (state.getBlock() instanceof CandleBlock) {
         return PathType.BLOCKED;
       }
       if (type == PathType.FENCE && state.getBlock() instanceof FenceGateBlock) {
