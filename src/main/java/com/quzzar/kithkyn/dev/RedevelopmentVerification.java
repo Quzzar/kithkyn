@@ -83,10 +83,10 @@ public final class RedevelopmentVerification {
     village.attach(level);
     source = village.getBuilding(source.getUUID());
     check(village.getFreeGeneralBedCount() == 0, "fixture must have no spare beds");
-    check(BuildingUpgrade.findPlacement(village, Buildings.getByName("house_plains_2")) == null,
+    check(BuildingUpgrade.findPlacement(village, Buildings.getByName("house_birch_forest_2")) == null,
         "ordinary upgrade unexpectedly fits through farms");
-    var assessment = RedevelopmentPlanner.assess(village, Buildings.getByName("house_plains_2"), source,
-        ground.offset(0, 0, -2), Rotation.NONE);
+    var assessment = RedevelopmentPlanner.assess(village, Buildings.getByName("house_birch_forest_2"), source,
+        ground.offset(UPGRADE_SHIFT), Rotation.NONE);
     check(assessment.plan().isPresent(), "blocked upgrade refused: " + assessment.reason());
     RedevelopmentPlan plan = assessment.plan().orElseThrow();
     check(plan.removed().size() == 2, "both blocking farms must be named");
@@ -95,7 +95,7 @@ public final class RedevelopmentVerification {
         RedevelopmentPlanner.label(plan) + "\n" + RedevelopmentPlanner.describe(village, plan));
     long surveyStart = System.nanoTime();
     var search = RedevelopmentPlanner.find(village);
-    check(search.choices().stream().anyMatch(choice -> choice.info().getName().equals("house_plains_2")),
+    check(search.choices().stream().anyMatch(choice -> choice.info().getName().equals("house_birch_forest_2")),
         "blocked upgrade was not discovered by the normal candidate search");
     Kithkyn.LOGGER.info("[redevelopment-verify] examined={} generated={} searchMs={}", search.examined(),
         search.choices().size(), (System.nanoTime() - surveyStart) / 1_000_000.0);
@@ -113,22 +113,22 @@ public final class RedevelopmentVerification {
     });
     Village noFood = Village.CODEC.parse(NbtOps.INSTANCE, noFoodState).getOrThrow();
     noFood.attach(level);
-    check(RedevelopmentPlanner.assess(noFood, Buildings.getByName("house_plains_2"),
-        noFood.getBuilding(source.getUUID()), ground.offset(0, 0, -2), Rotation.NONE).plan().isPresent(),
+    check(RedevelopmentPlanner.assess(noFood, Buildings.getByName("house_birch_forest_2"),
+        noFood.getBuilding(source.getUUID()), ground.offset(UPGRADE_SHIFT), Rotation.NONE).plan().isPresent(),
         "lack of surviving staffed food still prevents redevelopment");
     noFoodState.put("job_assignments", new CompoundTag());
     Village noBuilder = Village.CODEC.parse(NbtOps.INSTANCE, noFoodState).getOrThrow();
     noBuilder.attach(level);
-    check(RedevelopmentPlanner.assess(noBuilder, Buildings.getByName("house_plains_2"),
-        noBuilder.getBuilding(source.getUUID()), ground.offset(0, 0, -2), Rotation.NONE).plan().isPresent(),
+    check(RedevelopmentPlanner.assess(noBuilder, Buildings.getByName("house_birch_forest_2"),
+        noBuilder.getBuilding(source.getUUID()), ground.offset(UPGRADE_SHIFT), Rotation.NONE).plan().isPresent(),
         "outside-builder requirement still prevents proposals");
     var northBounds = RedevelopmentPlanner.worldBounds(village, north);
     CompoundTag noNeedState = (CompoundTag) Village.CODEC.encodeStart(NbtOps.INSTANCE, village).getOrThrow();
     noNeedState.put("people", new net.minecraft.nbt.ListTag());
     Village noNeed = Village.CODEC.parse(NbtOps.INSTANCE, noNeedState).getOrThrow();
     noNeed.attach(level);
-    check(RedevelopmentPlanner.assess(noNeed, Buildings.getByName("house_plains_2"),
-        noNeed.getBuilding(source.getUUID()), ground.offset(0, 0, -2), Rotation.NONE).plan().isEmpty(),
+    check(RedevelopmentPlanner.assess(noNeed, Buildings.getByName("house_birch_forest_2"),
+        noNeed.getBuilding(source.getUUID()), ground.offset(UPGRADE_SHIFT), Rotation.NONE).plan().isEmpty(),
         "unneeded housing redevelopment was offered");
     var farmBlock = plan.blocks().stream().filter(block -> !block.state().isAir()
         && !com.quzzar.kithkyn.village.BlockOwnership.isPlanted(block.state())
@@ -137,13 +137,15 @@ public final class RedevelopmentVerification {
     BlockPos damaged = BlockPos.of(farmBlock.position());
     level.setBlock(damaged, Blocks.AIR.defaultBlockState(), 2 | 16 | 32);
     PlacedBlockStore.get(level).clearPlaced(damaged);
-    var damagedPlan = RedevelopmentPlanner.assess(village, Buildings.getByName("house_plains_2"), source,
-        ground.offset(0, 0, -2), Rotation.NONE).plan().orElseThrow();
+    var damagedPlan = RedevelopmentPlanner.assess(village, Buildings.getByName("house_birch_forest_2"), source,
+        ground.offset(UPGRADE_SHIFT), Rotation.NONE).plan().orElseThrow();
     check(!damagedPlan.salvage().equals(plan.salvage()), "damaged building still refunded its full investment");
     level.setBlock(damaged, farmBlock.state(), 2 | 16 | 32);
     PlacedBlockStore.get(level).markVillagePlaced(damaged);
     village.setStorageStrained(true);
-    var fresh = RedevelopmentPlanner.assess(village, Buildings.getByName("storehouse_plains_2"), null,
+    // Birch bundles no second storehouse tier, so the fresh replacement that strained
+    // storage justifies is a second level-1 storehouse over the house and both farms.
+    var fresh = RedevelopmentPlanner.assess(village, Buildings.getByName("storehouse_birch_forest_1"), null,
         ground.offset(-2, 0, -2), Rotation.NONE);
     check(fresh.plan().isPresent(), "fresh replacement refused: " + fresh.reason());
     java.nio.file.Files.writeString(java.nio.file.Path.of("redevelopment-proposal.txt"),
@@ -304,6 +306,14 @@ public final class RedevelopmentVerification {
       Building survivingFarm) {
   }
 
+  /**
+   * Where the level-2 house's origin sits relative to the level-1 house it grows
+   * from: the Birch house grows by two cells in x and z (17x15 to 19x17), and
+   * seating it one cell back on both axes keeps the standing house inside the
+   * new footprint, which is what an on-site upgrade requires.
+   */
+  static final BlockPos UPGRADE_SHIFT = new BlockPos(-1, 0, -1);
+
   static Fixture fixture(ServerLevel level) {
     for (int x = 4; x <= 14; x++) {
       for (int z = 4; z <= 14; z++) {
@@ -314,17 +324,19 @@ public final class RedevelopmentVerification {
     BlockPos ground = new BlockPos(128, y, 128);
     Village village = new FixtureVillage();
     village.attach(level);
-    village.setStyle(VillageStyle.PLAINS);
-    Building center = place(village, "village_center_plains_1", ground.offset(-35, 0, -25));
+    village.setStyle(VillageStyle.BIRCH_FOREST);
+    Building center = place(village, "village_center_birch_forest_1", ground.offset(-35, 0, -25));
     CompoundTag initial = (CompoundTag) Village.CODEC.encodeStart(NbtOps.INSTANCE, village).getOrThrow();
     initial.put("town_center", UUIDUtil.CODEC.encodeStart(NbtOps.INSTANCE, center.getUUID()).getOrThrow());
     village = Village.CODEC.parse(NbtOps.INSTANCE, initial).getOrThrow();
     village.attach(level);
-    place(village, "storehouse_plains_1", ground.offset(-25, 0, 10));
-    Building source = place(village, "house_plains_1", ground);
-    Building north = place(village, "farm_plains_1", ground.offset(0, 0, -10));
-    Building south = place(village, "farm_plains_1", ground.offset(0, 0, 8));
-    Building survivingFarm = place(village, "farm_plains_1", ground.offset(25, 0, 0));
+    place(village, "storehouse_birch_forest_1", ground.offset(-25, 0, 10));
+    Building source = place(village, "house_birch_forest_1", ground);
+    // The 15x17 farms sit one cell off the 17x15 house on either side in z, so the
+    // 19x17 upgrade cannot slide past them and can only be raised by removing both.
+    Building north = place(village, "farm_birch_forest_1", ground.offset(0, 0, -18));
+    Building south = place(village, "farm_birch_forest_1", ground.offset(0, 0, 16));
+    Building survivingFarm = place(village, "farm_birch_forest_1", ground.offset(25, 0, 0));
     return new Fixture(village, ground, source, north, south, survivingFarm);
   }
 

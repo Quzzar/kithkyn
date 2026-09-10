@@ -340,18 +340,18 @@ class WallSegmentCatalogIntegrationTest {
   }
 
   @Test
-  void authoredWoodResolvesThroughTheVillageStyle() {
+  void authoredGeometryResolvesThroughTheVillageStylePalette() {
     WallBlockPlan post = new WallBlockPlan(
         BlockPos.ZERO.asLong(), WallBlockPlan.Piece.POST, WallCellRole.EXACT);
     WallBlockPlan slab = new WallBlockPlan(
         BlockPos.ZERO.asLong(), WallBlockPlan.Piece.SLAB, WallCellRole.EXACT);
 
-    assertEquals(Blocks.STRIPPED_SPRUCE_LOG,
-        post.desiredState(WallTier.WOOD, VillageStyle.TAIGA).getBlock());
-    assertEquals(Blocks.SPRUCE_SLAB,
-        slab.desiredState(WallTier.WOOD, VillageStyle.SNOWY).getBlock());
-    assertEquals(Blocks.STRIPPED_ACACIA_LOG,
-        post.desiredState(WallTier.WOOD, VillageStyle.SAVANNA).getBlock());
+    assertEquals(Blocks.COBBLESTONE,
+        post.desiredState(WallTier.WOOD, VillageStyle.BIRCH_FOREST).getBlock());
+    assertEquals(Blocks.SMOOTH_SANDSTONE_SLAB,
+        slab.desiredState(WallTier.WOOD, VillageStyle.DESERT).getBlock());
+    assertEquals(Blocks.SMOOTH_RED_SANDSTONE,
+        post.desiredState(WallTier.WOOD, VillageStyle.BADLANDS).getBlock());
   }
 
   @Test
@@ -481,11 +481,11 @@ class WallSegmentCatalogIntegrationTest {
   }
 
   @Test
-  void wallProjectPersistsItsRegionalStyleAndDefaultsOldSavesToPlains() {
+  void wallProjectPersistsItsRegionalStyleAndReadsOldSavesAsBirch() {
     List<Long> ring = WallRoute.aroundBox(0, 30, 0, 30);
     List<Integer> ground = Collections.nCopies(ring.size(), 64);
     WallProject project = new WallProject(
-        ring, Set.of(), ground, WallTier.WOOD, VillageStyle.TAIGA);
+        ring, Set.of(), ground, WallTier.WOOD, VillageStyle.DESERT);
     assertFalse(project.isSiteCleared());
     project.markSiteCleared();
 
@@ -498,8 +498,12 @@ class WallSegmentCatalogIntegrationTest {
     WallProject restoredLegacy = WallProject.CODEC.parse(JsonOps.INSTANCE, encoded).getOrThrow();
     assertFalse(restoredLegacy.isSiteCleared());
 
-    assertEquals(VillageStyle.TAIGA, restored.getStyle());
-    assertEquals(VillageStyle.PLAINS, restoredLegacy.getStyle());
+    assertEquals(VillageStyle.DESERT, restored.getStyle());
+    assertEquals(VillageStyle.BIRCH_FOREST, restoredLegacy.getStyle());
+    encoded.getAsJsonObject().addProperty("style", "taiga");
+    assertEquals(VillageStyle.BIRCH_FOREST,
+        WallProject.CODEC.parse(JsonOps.INSTANCE, encoded).getOrThrow().getStyle(),
+        "a wall saved in a removed family reads as the bundled catalog");
   }
 
   @Test
@@ -508,7 +512,7 @@ class WallSegmentCatalogIntegrationTest {
     List<Integer> ground = Collections.nCopies(ring.size(), 64);
     long excluded = firstTowerAnchor(ring);
     WallProject project = new WallProject(
-        ring, Set.of(), ground, WallTier.WOOD, VillageStyle.PLAINS,
+        ring, Set.of(), ground, WallTier.WOOD, VillageStyle.BIRCH_FOREST,
         Set.of(excluded));
 
     var encoded = WallProject.CODEC.encodeStart(JsonOps.INSTANCE, project).getOrThrow();

@@ -29,7 +29,8 @@ These decisions supersede the older candidate-gallery choices and generic counts
 | Church | 1 | Approved cleric building |
 
 This is 23 concrete building templates plus five authored wall pieces. Missing tiers and
-categories are intentional: the Birch catalog never silently borrows a Plains building.
+categories are intentional: no catalog borrows another family's building, and Birch is the
+only catalog bundled in the jar.
 Costs retain the existing per-category/per-tier recipes. Higher tiers elsewhere are unaffected.
 Amenities come from the actual selected definition, not a global bed or chest count for its tier.
 
@@ -53,13 +54,12 @@ Priority is:
    precipitation, downfall and conventional hot/cold/wet/dry tags inform the cluster. World
    seed, biome ID and founding location seed the choice.
 
-Current loaded families are Plains, Taiga, Snowy, Desert, Savanna and Birch Forest. Unknown
-hot/dry biomes choose Desert or Savanna; hot/wet biomes choose Savanna or Plains. Unknown
-temperate/wet biomes choose Plains or Birch Forest. Cold families choose from the available
-Taiga/Snowy/Plains cluster according to temperature and precipitation. This is a practical
-fallback, not a claim that temperature identifies a biome's trees or culture. A modpack tag
-can explicitly correct any ambiguous match. Future styles enter these clusters only once
-their own founding set is loaded.
+The styles are Birch Forest (bundled), Desert and Badlands (private datapacks). Only birch,
+desert/sandy and mesa/badlands/savanna families map conventionally; every other family goes by
+climate, where a hot, dry biome chooses between Desert and Badlands and everything else builds
+Birch Forest. This is a practical fallback, not a claim that temperature identifies a biome's
+trees or culture. A modpack tag can explicitly correct any ambiguous match. Future styles enter
+these clusters only once their own founding set is loaded.
 
 An explicit dev override remains available:
 

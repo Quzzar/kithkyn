@@ -255,12 +255,34 @@ public final class AllayQuartermasterBehavior extends Behavior<Allay> {
     return null;
   }
 
-  /** Between rounds the keeper waits above its counter, or over the first shelf when there is none. */
+  /** Between rounds the keeper waits by its counter, or by the first shelf when there is none. */
   private static void hoverHome(ServerLevel level, Allay allay, Village village) {
     BlockPos home = VillageAllays.home(level, village);
-    if (home != null && allay.position().distanceToSqr(Vec3.atCenterOf(home.above())) > 9.0D) {
-      BehaviorUtils.setWalkAndLookTargetMemories(allay, home.above(), SPEED, 2);
+    if (home == null) {
+      return;
     }
+    BlockPos perch = perch(level, home);
+    if (allay.position().distanceToSqr(Vec3.atCenterOf(perch)) > 9.0D) {
+      BehaviorUtils.setWalkAndLookTargetMemories(allay, perch, SPEED, 2);
+    }
+  }
+
+  /**
+   * The open cell the keeper can actually hover in: the counter often carries a
+   * candle or a lamp, so the cell above it is taken and a neighbour serves.
+   */
+  private static BlockPos perch(ServerLevel level, BlockPos home) {
+    BlockPos above = home.above();
+    if (level.getBlockState(above).isAir()) {
+      return above;
+    }
+    for (net.minecraft.core.Direction side : net.minecraft.core.Direction.Plane.HORIZONTAL) {
+      BlockPos beside = above.relative(side);
+      if (level.getBlockState(beside).isAir() && level.getBlockState(beside.below()).isAir()) {
+        return beside;
+      }
+    }
+    return above;
   }
 
   /** Allays cannot open doors on their own; the keeper opens the wooden ones it brushes past. */

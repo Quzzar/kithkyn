@@ -418,7 +418,7 @@ public final class GolemVerification {
 
   /** A fixed small settlement avoids unrelated construction and model calls during the test. */
   private static final class FixtureVillage extends Village {
-    private final Building center = new Building(new BlockPos(84, 5, 84), "house_plains_1", Rotation.NONE);
+    private final Building center = new Building(new BlockPos(84, 5, 84), "house_birch_forest_1", Rotation.NONE);
 
     private FixtureVillage() {
       super("Golem Test Village");

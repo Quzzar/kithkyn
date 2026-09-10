@@ -28,8 +28,7 @@ public interface WallSegmentCatalog {
   static WallSegmentCatalog forStyle(VillageStyle style) {
     return switch (style) {
       case BIRCH_FOREST -> BuiltInWallSegmentCatalog.BIRCH_FOREST;
-      case DESERT, BADLANDS -> BuiltInWallSegmentCatalog.ARID;
-      default -> builtIn();
+      case DESERT, BADLANDS, FLOODPLAIN -> BuiltInWallSegmentCatalog.ARID;
     };
   }
 }

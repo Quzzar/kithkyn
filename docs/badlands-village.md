@@ -53,7 +53,8 @@ Both beds in every couple pair match. Nine actual flags use the saved village ba
 Market awnings have 48 colored hanging strips (32 primary and 16 secondary) and 30 white
 strips. The colored strips follow village colors while retaining plain cloth; they do
 not become repeated village flags. Architectural clay, masonry and white cloth retain
-their authored colors. The standard terrain-following perimeter uses the acacia palette.
+their authored colors. The standard terrain-following perimeter uses the smooth red
+sandstone palette.
 
 The naming profile describes a close community of clay courtyards, stepped roof terraces,
 shared households, shaded markets, acacia workshops and protected water. Kestara, Oravel,
@@ -69,7 +70,7 @@ stay Desert; these recognized families do not randomly alternate between archite
 An explicit style tag can narrow this temporary coverage when another catalog is ready.
 Generic arid climate does not select this catalog. Automatic selection requires its center,
 mine and storehouse to be loaded.
-Badlands never substitutes Plains designs for missing roles or levels. Existing villages
+Badlands never substitutes another family's designs for missing roles or levels. Existing villages
 retain their saved style and names; activation does not reconstruct their buildings.
 
 ## Authoring and local installation

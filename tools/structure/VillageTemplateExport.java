@@ -3,7 +3,19 @@ import net.minecraft.nbt.*;
 import java.nio.file.*;
 import java.util.*;
 
-/** Converts approved captures into runtime assets without rewriting native NBT tag types. */
+/**
+ * Converts approved captures into runtime assets without rewriting native NBT tag types.
+ *
+ * <p>Plan keys per entry: {@code source}, {@code output}, {@code size}, {@code white}, {@code air},
+ * and optionally {@code crop}, {@code overrides}, {@code horizontal_bounds}, {@code ground_layer}.
+ * An optional {@code entities} list bakes authored initial entities (livestock, an allay) into a
+ * capture that has none: each entry is {@code {"pos": [x, y, z], "nbt": ...}} with {@code pos} in
+ * cropped template coordinates (doubles allowed) and {@code nbt} either an SNBT string, which keeps
+ * exact tag types such as {@code Health:10.0f}, or a JSON object parsed as SNBT text (integers become
+ * ints, decimals doubles, booleans bytes). Entries are appended to the template's entity list as
+ * {@code pos}, {@code blockPos} (the floor of {@code pos}) and {@code nbt}, then pass through the same
+ * hygiene as captured entities below.
+ */
 public final class VillageTemplateExport {
   static ListTag ints(int... values) {
     ListTag result = new ListTag();
@@ -99,6 +111,21 @@ public final class VillageTemplateExport {
         });
       }
       root.put("size", ints(vector(spec.get("size"))));
+      if (spec.has("entities")) {
+        ListTag entities = root.getList("entities", Tag.TAG_COMPOUND);
+        for (JsonElement value : spec.getAsJsonArray("entities")) {
+          JsonObject addition = value.getAsJsonObject();
+          double[] position = new Gson().fromJson(addition.get("pos"), double[].class);
+          JsonElement data = addition.get("nbt");
+          CompoundTag nbt = TagParser.parseTag(data.isJsonPrimitive() ? data.getAsString() : data.toString());
+          CompoundTag entity = new CompoundTag();
+          entity.put("pos", doubles(position));
+          entity.put("blockPos", ints((int)Math.floor(position[0]), (int)Math.floor(position[1]), (int)Math.floor(position[2])));
+          entity.put("nbt", nbt);
+          entities.add(entity);
+        }
+        root.put("entities", entities);
+      }
       for (Tag value : root.getList("entities", Tag.TAG_COMPOUND)) {
         CompoundTag entity = ((CompoundTag)value).getCompound("nbt");
         for (String key : List.of("UUID", "Leash", "AngryAt", "NeoForgeData")) entity.remove(key);

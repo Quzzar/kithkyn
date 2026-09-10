@@ -28,9 +28,8 @@ themselves — they only transform files you point them at.
 | `validate.py` | Flag blocks that would drop on placement — bed and door halves, wall torches, gravity-affected stacks, carpet on nothing |
 | `navcheck.py` | Score how walkable a finished structure is for a villager |
 | `roof.py` | Fix roof-stair facing |
-| `mine-level-2.py` | Derive the level-2 mine, in every family, from the shipped level-1 files |
 | `export-birch.py` | Derive the approved Birch assets from the immutable capture manifest, rebase amenities, and print new definitions as an apply_patch patch |
-| `VillageTemplateExport.java` | Native Minecraft NBT export preserving typed entity data, clearing gameplay inventories, neutralizing explicit identity slots, and carving declared air |
+| `VillageTemplateExport.java` | Native Minecraft NBT export preserving typed entity data, clearing gameplay inventories, neutralizing explicit identity slots, and carving declared air | An optional `entities` plan key adds authored livestock or allays to a template.
 
 Each script's `__main__` is an example driver; point the glob at your own
 structure directory. Run them from this directory so their imports resolve.

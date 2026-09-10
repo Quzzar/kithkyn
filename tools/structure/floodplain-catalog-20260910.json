@@ -1,0 +1,369 @@
+{
+  "variant": "floodplain",
+  "status": "verified_pending_local_deployment",
+  "source_policy": "Locally approved playable datapack, excluded from public distribution. Source provenance is retained; written redistribution permission is not asserted.",
+  "manifests": [
+    "tools/structure/nilotic-selections-20260910.json"
+  ],
+  "selected": [
+    {
+      "exhibit": "NA01.1",
+      "structure": "church_floodplain_1",
+      "manifest": "tools/structure/nilotic-selections-20260910.json",
+      "recipe": "church_1",
+      "source_mod": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar",
+      "source_mod_structure": "data/kaisyn/structure/village/exclusives/nilotic/houses/nilotic_temple_1.nbt",
+      "asset": "run/floodplain-integration/datapack/data/kithkyn/structure/church_floodplain_1.nbt",
+      "asset_sha256": "7daf80af3591d47a6558736e2b6c15d596c03483e54568a8fcebfdb399e8e44c",
+      "definition": "run/floodplain-integration/datapack/data/kithkyn/kithkyn/buildings/church_floodplain_1.json",
+      "definition_sha256": "c8727cc970b5c79d4cbe7fb2ec7f93aeae2170b04142ff848ab0e38e16b82921",
+      "reviewed_capture": "run/nilotic-showcase/selection-20260910-floodplain/captures/NA01.1.nbt",
+      "reviewed_capture_sha256": "e5109d99eddc84f4b9d9ddf671da7974489bffbcd58c1c1990cedf18b08e10eb"
+    },
+    {
+      "exhibit": "NA01.2",
+      "structure": "mine_floodplain_1",
+      "manifest": "tools/structure/nilotic-selections-20260910.json",
+      "recipe": "mine_1",
+      "source_mod": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar",
+      "source_mod_structure": "data/kaisyn/structure/village/exclusives/nilotic/houses/nilotic_armorer_1.nbt",
+      "asset": "run/floodplain-integration/datapack/data/kithkyn/structure/mine_floodplain_1.nbt",
+      "asset_sha256": "0ccb8540bf93b76078dbab52543fbe468b530b6479410b1165c7ffde28bd3813",
+      "definition": "run/floodplain-integration/datapack/data/kithkyn/kithkyn/buildings/mine_floodplain_1.json",
+      "definition_sha256": "49d526c21dc6a6c649649098f0533a92a16bf8a1836c7849032c8f5f1128c472",
+      "reviewed_capture": "run/nilotic-showcase/selection-20260910-floodplain/captures/NA01.2.nbt",
+      "reviewed_capture_sha256": "e0e431c2d95541390431579ad67c5f17c306ceedfc2c64022e251e0c6c2d2371"
+    },
+    {
+      "exhibit": "NA01.4",
+      "structure": "village_center_floodplain_1",
+      "manifest": "tools/structure/nilotic-selections-20260910.json",
+      "recipe": "village_center_1",
+      "source_mod": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar",
+      "source_mod_structure": "data/kaisyn/structure/village/exclusives/nilotic/houses/nilotic_cartographer_1.nbt",
+      "asset": "run/floodplain-integration/datapack/data/kithkyn/structure/village_center_floodplain_1.nbt",
+      "asset_sha256": "774eb12e306a5362a91cdbadd87bcd084a39a3e1c34e0a6d55c6b3d87f4161d4",
+      "definition": "run/floodplain-integration/datapack/data/kithkyn/kithkyn/buildings/village_center_floodplain_1.json",
+      "definition_sha256": "7e92483a0111d68e26168dbc2eeefdf61a4e7890671442c76cbea2039071b247",
+      "reviewed_capture": "run/nilotic-showcase/selection-20260910-floodplain/captures/NA01.4.nbt",
+      "reviewed_capture_sha256": "0a2ee1771d5e52e70fcc2569afa308d4dfd9bfe39703178c3f7b7e61317b095c"
+    },
+    {
+      "exhibit": "NA01.5",
+      "structure": "lumberjack_floodplain_1",
+      "manifest": "tools/structure/nilotic-selections-20260910.json",
+      "recipe": "lumberjack_1",
+      "source_mod": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar",
+      "source_mod_structure": "data/kaisyn/structure/village/exclusives/nilotic/houses/nilotic_farmer_1.nbt",
+      "asset": "run/floodplain-integration/datapack/data/kithkyn/structure/lumberjack_floodplain_1.nbt",
+      "asset_sha256": "fb7f0374193700ad0a7cfa70fb2bf22dd25042bf0202ff1f29f904c0742f50b9",
+      "definition": "run/floodplain-integration/datapack/data/kithkyn/kithkyn/buildings/lumberjack_floodplain_1.json",
+      "definition_sha256": "2eafcd206108e5b50f7a67f46647f760b9d881ef58420fea7529d6eed49278d3",
+      "reviewed_capture": "run/nilotic-showcase/selection-20260910-floodplain/captures/NA01.5.nbt",
+      "reviewed_capture_sha256": "83cb171ffc237e5a54bfc12933307c2e285c6cc3391ca0d20eb7c8ad5727e536"
+    },
+    {
+      "exhibit": "NA01.6",
+      "structure": "hunting_lodge_floodplain_1",
+      "manifest": "tools/structure/nilotic-selections-20260910.json",
+      "recipe": "hunting_lodge_1",
+      "source_mod": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar",
+      "source_mod_structure": "data/kaisyn/structure/village/exclusives/nilotic/houses/nilotic_fletcher_1.nbt",
+      "asset": "run/floodplain-integration/datapack/data/kithkyn/structure/hunting_lodge_floodplain_1.nbt",
+      "asset_sha256": "dd6ca693ac86d184bd9cef0df53c4ee69799d7f3478c45a39434d0783b7b719e",
+      "definition": "run/floodplain-integration/datapack/data/kithkyn/kithkyn/buildings/hunting_lodge_floodplain_1.json",
+      "definition_sha256": "3081b79653f273c749c3950a803c6ffedb0919a3ad8da7fd92fce05b5898eec7",
+      "reviewed_capture": "run/nilotic-showcase/selection-20260910-floodplain/captures/NA01.6.nbt",
+      "reviewed_capture_sha256": "5f84a5253a9e779d3ba19f0481c7c5d81aee770dfbce5fb93db524d900590a0a"
+    },
+    {
+      "exhibit": "NA01.7",
+      "structure": "house_floodplain_2",
+      "manifest": "tools/structure/nilotic-selections-20260910.json",
+      "recipe": "house_2",
+      "source_mod": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar",
+      "source_mod_structure": "data/kaisyn/structure/village/exclusives/nilotic/houses/nilotic_large_house_1.nbt",
+      "asset": "run/floodplain-integration/datapack/data/kithkyn/structure/house_floodplain_2.nbt",
+      "asset_sha256": "dff31a2bfcf7439b00e311c449ea4f0c836993165cb13bdf887d1a7042427fc0",
+      "definition": "run/floodplain-integration/datapack/data/kithkyn/kithkyn/buildings/house_floodplain_2.json",
+      "definition_sha256": "961a35e92e3850f001ae2346111b5764de444cf31ae49d67ce96b36196840790",
+      "reviewed_capture": "run/nilotic-showcase/selection-20260910-floodplain/captures/NA01.7.nbt",
+      "reviewed_capture_sha256": "c26d52278fed94094ae93eb675cb9524e7954dc75fcac9fa91c1e5dac9574b84"
+    },
+    {
+      "exhibit": "NA01.8",
+      "structure": "butchery_floodplain_1",
+      "manifest": "tools/structure/nilotic-selections-20260910.json",
+      "recipe": "butchery_1",
+      "source_mod": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar",
+      "source_mod_structure": "data/kaisyn/structure/village/exclusives/nilotic/houses/nilotic_leatherworker_and_shepherd_1.nbt",
+      "asset": "run/floodplain-integration/datapack/data/kithkyn/structure/butchery_floodplain_1.nbt",
+      "asset_sha256": "4e2d584cf4e443892500bff33f2c157013beb09576e8b990460810d904f60e32",
+      "definition": "run/floodplain-integration/datapack/data/kithkyn/kithkyn/buildings/butchery_floodplain_1.json",
+      "definition_sha256": "0407b8f4ba04fe624a638ec9b8e073f707cb1795ee67798a5a5dbb5484a7f00e",
+      "reviewed_capture": "run/nilotic-showcase/selection-20260910-floodplain/captures/NA01.8.nbt",
+      "reviewed_capture_sha256": "128c36c00ada8e29b4f7ed36179b0de2518e1aa4d30d1d58c6b4cae454ebac4a"
+    },
+    {
+      "exhibit": "NA01.9",
+      "structure": "stoneworks_floodplain_1",
+      "manifest": "tools/structure/nilotic-selections-20260910.json",
+      "recipe": "stoneworks_1",
+      "source_mod": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar",
+      "source_mod_structure": "data/kaisyn/structure/village/exclusives/nilotic/houses/nilotic_mason_1.nbt",
+      "asset": "run/floodplain-integration/datapack/data/kithkyn/structure/stoneworks_floodplain_1.nbt",
+      "asset_sha256": "739d19b91b0504c511320fa3439743b49f1333ce0f4b9763ca30a54177fcb716",
+      "definition": "run/floodplain-integration/datapack/data/kithkyn/kithkyn/buildings/stoneworks_floodplain_1.json",
+      "definition_sha256": "001f1f8ece22d93f46f620ebc62c25bd0ab7689696e219e87380ec2d79347922",
+      "reviewed_capture": "run/nilotic-showcase/selection-20260910-floodplain/captures/NA01.9.nbt",
+      "reviewed_capture_sha256": "9c00217902535c77a185e250397129018b1e9262bc7aac0961ac71426d32aff6"
+    },
+    {
+      "exhibit": "NA02.1",
+      "structure": "couple_cottage_floodplain_1",
+      "manifest": "tools/structure/nilotic-selections-20260910.json",
+      "recipe": "couple_cottage_1",
+      "source_mod": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar",
+      "source_mod_structure": "data/kaisyn/structure/village/exclusives/nilotic/houses/nilotic_small_house_1.nbt",
+      "asset": "run/floodplain-integration/datapack/data/kithkyn/structure/couple_cottage_floodplain_1.nbt",
+      "asset_sha256": "96aa5d71b8b27398ca9c8a483baf7bc9bd857004d7bd2bd985cb3695d665ac7d",
+      "definition": "run/floodplain-integration/datapack/data/kithkyn/kithkyn/buildings/couple_cottage_floodplain_1.json",
+      "definition_sha256": "6ba3390d9148153a429a3bd5c6839657e9932c1f1535a83075f92fa62a3d7407",
+      "reviewed_capture": "run/nilotic-showcase/selection-20260910-floodplain/captures/NA02.1.nbt",
+      "reviewed_capture_sha256": "257b9b749b3e68d4b0aaf21c2e519b6e4736e400330ce4a99b86880398629cd6"
+    },
+    {
+      "exhibit": "NA02.2",
+      "structure": "house_floodplain_1",
+      "manifest": "tools/structure/nilotic-selections-20260910.json",
+      "recipe": "house_1",
+      "source_mod": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar",
+      "source_mod_structure": "data/kaisyn/structure/village/exclusives/nilotic/houses/nilotic_small_house_2.nbt",
+      "asset": "run/floodplain-integration/datapack/data/kithkyn/structure/house_floodplain_1.nbt",
+      "asset_sha256": "e3ab1aaf9666e73048575cab41aedc41ff99bf2779c8b5182f61ca1916926bc7",
+      "definition": "run/floodplain-integration/datapack/data/kithkyn/kithkyn/buildings/house_floodplain_1.json",
+      "definition_sha256": "4700e71b92b99ea5681fcc148ce6eb4e3da9237948fe7831c7d3114ffe1f15fa",
+      "reviewed_capture": "run/nilotic-showcase/selection-20260910-floodplain/captures/NA02.2.nbt",
+      "reviewed_capture_sha256": "3f103a34f7636f8feeeb6823b046c416bb4c37d2f9aa81b699ce4d5e09253193"
+    },
+    {
+      "exhibit": "NA02.3",
+      "structure": "blacksmith_floodplain_1",
+      "manifest": "tools/structure/nilotic-selections-20260910.json",
+      "recipe": "blacksmith_1",
+      "source_mod": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar",
+      "source_mod_structure": "data/kaisyn/structure/village/exclusives/nilotic/houses/nilotic_toolsmith_and_weaponsmith_1.nbt",
+      "asset": "run/floodplain-integration/datapack/data/kithkyn/structure/blacksmith_floodplain_1.nbt",
+      "asset_sha256": "08a49177906b519671de69f8753541df1e5f7618664e96838f2057aef5267eda",
+      "definition": "run/floodplain-integration/datapack/data/kithkyn/kithkyn/buildings/blacksmith_floodplain_1.json",
+      "definition_sha256": "37a1c12c8bb2ffdea7c9f69c0f2d7fbaf949829ed5d00ce2169428aac6994eda",
+      "reviewed_capture": "run/nilotic-showcase/selection-20260910-floodplain/captures/NA02.3.nbt",
+      "reviewed_capture_sha256": "9baff46416f3c97ea32d59fef88695696e148551228bee139d04b4761ed2f8fa"
+    },
+    {
+      "exhibit": "NA02.4",
+      "structure": "storehouse_floodplain_1",
+      "manifest": "tools/structure/nilotic-selections-20260910.json",
+      "recipe": "storehouse_1",
+      "source_mod": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar",
+      "source_mod_structure": "data/kaisyn/structure/village/exclusives/nilotic/houses/nilotic_small_house_1.nbt",
+      "asset": "run/floodplain-integration/datapack/data/kithkyn/structure/storehouse_floodplain_1.nbt",
+      "asset_sha256": "5f23186d9542ff59d1e0d3fc35f39f75794246d331478f746862f15e6179b3a6",
+      "definition": "run/floodplain-integration/datapack/data/kithkyn/kithkyn/buildings/storehouse_floodplain_1.json",
+      "definition_sha256": "6f7e7acdca735d22b7531b28a9fe4ae2ffb56c50fb9514eec01508ac2e5334ee",
+      "reviewed_capture": "run/nilotic-showcase/selection-20260910-floodplain/captures/NA02.4.nbt",
+      "reviewed_capture_sha256": "74a857c1c4e572bcd40a688180aa07cffa09bbc5b6d91db34db8628fab9eb305"
+    },
+    {
+      "exhibit": "NA03.2",
+      "structure": "fishery_floodplain_1",
+      "manifest": "tools/structure/nilotic-selections-20260910.json",
+      "recipe": "fishery_1",
+      "source_mod": "[Neoforge]ctov-3.6.3.jar",
+      "source_mod_structure": "data/ctov/structure/village/desert/deco/oasis.nbt",
+      "asset": "run/floodplain-integration/datapack/data/kithkyn/structure/fishery_floodplain_1.nbt",
+      "asset_sha256": "4ce85e302bc89c231c1227f19e947b8e9937b174aae5a9e1c7ec5ec7f8fccf5a",
+      "definition": "run/floodplain-integration/datapack/data/kithkyn/kithkyn/buildings/fishery_floodplain_1.json",
+      "definition_sha256": "a4735d7857e30e6fff59f55a5a778e1421c2bc022889103c1fb9466b68d8bde2",
+      "reviewed_capture": "run/nilotic-showcase/selection-20260910-floodplain/captures/NA03.2.nbt",
+      "reviewed_capture_sha256": "49c102697d552f9d693c0a31ed77db2f107edccecc5e21fb28a97327fd13ba1d"
+    },
+    {
+      "exhibit": "NA03.3",
+      "structure": "well_floodplain_1",
+      "manifest": "tools/structure/nilotic-selections-20260910.json",
+      "recipe": "well_1",
+      "source_mod": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+      "source_mod_structure": "data/nova_structures/structure/tavern/tavern_event_well_mangrove.nbt",
+      "asset": "run/floodplain-integration/datapack/data/kithkyn/structure/well_floodplain_1.nbt",
+      "asset_sha256": "78889aedcbbc479b26683e97fcf03c61fe6a34a5ecb81f26b65de97d71a8f9d3",
+      "definition": "run/floodplain-integration/datapack/data/kithkyn/kithkyn/buildings/well_floodplain_1.json",
+      "definition_sha256": "94ef065ad2f677949855e2f4093d51cccef68c16c5824bf7707a64e94fd179e6",
+      "reviewed_capture": "run/nilotic-showcase/selection-20260910-floodplain/captures/NA03.3.nbt",
+      "reviewed_capture_sha256": "6f4c58e15620f197febdfc2a366cd37c6dfc8c2235f2b9fa1481b7aa272b8349"
+    },
+    {
+      "exhibit": "NA03.4",
+      "structure": "watchtower_floodplain_1",
+      "manifest": "tools/structure/nilotic-selections-20260910.json",
+      "recipe": "watchtower_1",
+      "source_mod": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+      "source_mod_structure": "data/nova_structures/structure/firewatch_tower/firewatch_savanna.nbt",
+      "asset": "run/floodplain-integration/datapack/data/kithkyn/structure/watchtower_floodplain_1.nbt",
+      "asset_sha256": "803294452c952107a216afb7015132904cdd09157e75ddae632e145112d63e7e",
+      "definition": "run/floodplain-integration/datapack/data/kithkyn/kithkyn/buildings/watchtower_floodplain_1.json",
+      "definition_sha256": "6a09e0acf7eb49381076f1f468ae50d0f7be4d3cd8ef257f67cfca2328dc5209",
+      "reviewed_capture": "run/nilotic-showcase/selection-20260910-floodplain/captures/NA03.4.nbt",
+      "reviewed_capture_sha256": "bc6947e4659c03ec9dfc6cff389c33239804c172b4653cb40e4308c599213165"
+    },
+    {
+      "exhibit": "NA04.1",
+      "structure": "market_floodplain_1",
+      "manifest": "tools/structure/nilotic-selections-20260910.json",
+      "recipe": "market_1",
+      "source_mod": "kithkyn-desert",
+      "source_mod_structure": "run/world/datapacks/kithkyn-desert/data/kithkyn/structure/market_desert_1.nbt",
+      "asset": "run/floodplain-integration/datapack/data/kithkyn/structure/market_floodplain_1.nbt",
+      "asset_sha256": "c539143f131d25839049a805e493be5a9476cd65f4b3d8419403d6a9714d8f27",
+      "definition": "run/floodplain-integration/datapack/data/kithkyn/kithkyn/buildings/market_floodplain_1.json",
+      "definition_sha256": "f54f4e3afd89976e381b955207eedb74ff8ed194bb9e40738f77966dc7168b02",
+      "reviewed_capture": "run/nilotic-showcase/selection-20260910-floodplain/captures/NA04.1.nbt",
+      "reviewed_capture_sha256": "23f0709c6e0c90bb50377beae0d4d23b8dfdca4e3bd36edf1bae4fa298976e7b"
+    },
+    {
+      "exhibit": "NA04.2",
+      "structure": "market_floodplain_2",
+      "manifest": "tools/structure/nilotic-selections-20260910.json",
+      "recipe": "market_2",
+      "source_mod": "kithkyn-desert",
+      "source_mod_structure": "run/world/datapacks/kithkyn-desert/data/kithkyn/structure/market_desert_2.nbt",
+      "asset": "run/floodplain-integration/datapack/data/kithkyn/structure/market_floodplain_2.nbt",
+      "asset_sha256": "d2a6a2eab39a74f84f2a03f13fcba8b7f951b07873c213a4991f4796a2ffe42d",
+      "definition": "run/floodplain-integration/datapack/data/kithkyn/kithkyn/buildings/market_floodplain_2.json",
+      "definition_sha256": "ee001c9c9c964d484fa560c10e067a95696294271e862b578d68bf68e573dcf2",
+      "reviewed_capture": "run/nilotic-showcase/selection-20260910-floodplain/captures/NA04.2.nbt",
+      "reviewed_capture_sha256": "b6336ae9cff0345b7771dd37613faabdd6e3adb3002fd57e3b0fd6cd455d8b7f"
+    },
+    {
+      "exhibit": "NA04.3",
+      "structure": "market_floodplain_3",
+      "manifest": "tools/structure/nilotic-selections-20260910.json",
+      "recipe": "market_3",
+      "source_mod": "kithkyn-desert",
+      "source_mod_structure": "run/world/datapacks/kithkyn-desert/data/kithkyn/structure/market_desert_3.nbt",
+      "asset": "run/floodplain-integration/datapack/data/kithkyn/structure/market_floodplain_3.nbt",
+      "asset_sha256": "1232b70a001dccfd587f210419aa4fd268799b92d58d6b35435f0ff3a698dd1a",
+      "definition": "run/floodplain-integration/datapack/data/kithkyn/kithkyn/buildings/market_floodplain_3.json",
+      "definition_sha256": "1b83ebcb6238412a8d8d6ba44dee1c3ad29b6548ce4f27e901aad008fd09aa1d",
+      "reviewed_capture": "run/nilotic-showcase/selection-20260910-floodplain/captures/NA04.3.nbt",
+      "reviewed_capture_sha256": "bcaf156d1b04e697c22fd05ed37a1af041c6a856334e0607bd6fb77c06d7c7d0"
+    },
+    {
+      "exhibit": "NG04.2",
+      "structure": "farm_floodplain_1",
+      "manifest": "tools/structure/nilotic-selections-20260910.json",
+      "recipe": "farm_1",
+      "source_mod": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar",
+      "source_mod_structure": "data/kaisyn/structure/village/sparse_jungle_polynesian/houses/sparse_jungle_small_farm_1.nbt",
+      "asset": "run/floodplain-integration/datapack/data/kithkyn/structure/farm_floodplain_1.nbt",
+      "asset_sha256": "03d6613a27484c6d5eb7c14080a653e3038b12b3d078d1b776830ba455cd55b4",
+      "definition": "run/floodplain-integration/datapack/data/kithkyn/kithkyn/buildings/farm_floodplain_1.json",
+      "definition_sha256": "7b7bd052fcf3b3e48090c032111ad5ba874bf966148c7610ebf89c3471223770",
+      "reviewed_capture": "run/nilotic-showcase/selection-20260910-floodplain/captures/NG04.2.nbt",
+      "reviewed_capture_sha256": "8cd26ad998ffe6f798e906b2c585493c3e777d43f1b77aaed7024d2b0062e9dd"
+    },
+    {
+      "exhibit": "NG04.1",
+      "structure": "farm_floodplain_2",
+      "manifest": "tools/structure/nilotic-selections-20260910.json",
+      "recipe": "farm_2",
+      "source_mod": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar",
+      "source_mod_structure": "data/kaisyn/structure/village/sparse_jungle_polynesian/houses/sparse_jungle_large_farm_1.nbt",
+      "asset": "run/floodplain-integration/datapack/data/kithkyn/structure/farm_floodplain_2.nbt",
+      "asset_sha256": "c5b145ef4ce56efbefc04e87646e4e5027dc980c0eae1a6828f2e000b25161a1",
+      "definition": "run/floodplain-integration/datapack/data/kithkyn/kithkyn/buildings/farm_floodplain_2.json",
+      "definition_sha256": "e14c5fc8f76598f8cb743864e94c4e91a21114b196e3232d0210e5b7f7dd6755",
+      "reviewed_capture": "run/nilotic-showcase/selection-20260910-floodplain/captures/NG04.1.nbt",
+      "reviewed_capture_sha256": "9bf52e9a72cb1b3e75c194d6d6d19b4431b7d82d43b72defcb203caeedc00e74"
+    }
+  ],
+  "excluded": [
+    {
+      "exhibit": "NA01.3",
+      "reason": "candidate fishery for a floodplain village"
+    },
+    {
+      "exhibit": "NA03.1",
+      "reason": "not chosen as the watchtower; NH06.7 firewatch tower chosen instead"
+    },
+    {
+      "exhibit": "NA05.1",
+      "reason": "Wall section reference only; the runtime paints walls from its own templates."
+    },
+    {
+      "exhibit": "NA05.2",
+      "reason": "Wall section reference only; the runtime paints walls from its own templates."
+    },
+    {
+      "exhibit": "NA05.3",
+      "reason": "Wall section reference only; the runtime paints walls from its own templates."
+    },
+    {
+      "exhibit": "NA05.4",
+      "reason": "Wall section reference only; the runtime paints walls from its own templates."
+    },
+    {
+      "exhibit": "NA05.5",
+      "reason": "Wall section reference only; the runtime paints walls from its own templates."
+    }
+  ],
+  "exporter": "run/floodplain-integration/prepare.py",
+  "native_writer": "tools/structure/VillageTemplateExport.java (with the entities plan key)",
+  "verification": {
+    "static": "run/floodplain-integration/check.py: 20 definitions and templates",
+    "unit_tests": "470 tests, 0 failures, on the floodplain-village branch",
+    "placement": "run/floodplain-integration/placement/verification.json",
+    "restart": "run/floodplain-integration/placement/verification.json",
+    "center": "run/floodplain-integration/center/verification.json",
+    "access": "run/floodplain-integration/access/verification.json",
+    "founding": "run/floodplain-integration/founding/verification.json",
+    "results": {
+      "placement": "[building-placement-verify] RESULT PASS: 160 real-template placements, both paths, four rotations, colors, frames, entity/save receipts and upgrade preservation",
+      "restart": "[building-placement-verify] RESTART PASS: 160 saved buildings and 64 original entities survived real server shutdown/restart without replenishment",
+      "center": "[approved-house-verify] RESULT PASS: 4 rotated structures, 12 access routes, 0 physical room walks and assigned-bed sleeps, 0 physical personal-container deposits, 0 failed placements; probe size=18; station walks=12, shared deposits=0, mine walks=0, review walks=0",
+      "access": "[approved-house-verify] RESULT PASS: 72 rotated structures, 188 access routes, 40 physical room walks and assigned-bed sleeps, 16 physical personal-container deposits, 0 failed placements; probe size=18; station walks=68, shared deposits=72, mine walks=8, review walks=0",
+      "founding": "[floodplain-verify] RESULT PASS: 20 strict native templates, 2 housing alternatives, 12 upgrade fits, four founding rotations and codec reloads, natural biome selection, 5 beds, 4 positions, distinct meeting/fire locations and village identity"
+    }
+  },
+  "datapack": "run/floodplain-integration/datapack",
+  "recipe_catalog": "src/main/resources/data/kithkyn/kithkyn/construction_recipes",
+  "market_color_policy": "Market tent fabrics and decorative banners retain their original authored colors, independent of village identity; regional timber, masonry and plants may change.",
+  "ground_course": "Each house template carries its captured earthen ground course as layer 0 with sink 0, replacing the terrain surface the way the Desert catalog seats its foundations.",
+  "founding": {
+    "center": "village_center_floodplain_1",
+    "center_beds": 0,
+    "starting_buildings": [
+      "mine_floodplain_1",
+      "storehouse_floodplain_1",
+      "house_floodplain_2",
+      "house_floodplain_2",
+      "house_floodplain_1"
+    ],
+    "founding_beds": 5,
+    "founding_jobs": [
+      "QUARTERMASTER",
+      "BUILDER",
+      "GUARD/CAPTAIN",
+      "MINER"
+    ]
+  },
+  "initial_entities": {
+    "butchery_floodplain_1": {
+      "cow": 3,
+      "pig": 3
+    },
+    "storehouse_floodplain_1": {
+      "allay": 2
+    }
+  }
+}

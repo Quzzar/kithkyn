@@ -166,5 +166,5 @@ reproduces them and their manifests deterministically.
 `scripts/export-appearance-assets.mjs` promotes the audited catalog into
 `assets/kithkyn/appearance/catalog.json` and
 `textures/entity/person/parts/<asset-id>/<layer>.png`, normalizing every shipped layer to binary
-alpha. Regional plains, taiga, snowy, desert, and savanna variants remain the next broader art
-axis.
+alpha. Regional variants matching the village styles (Birch Forest, Desert, Badlands) remain the
+next broader art axis.

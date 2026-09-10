@@ -1,8 +1,7 @@
 package com.quzzar.kithkyn.village.buildings;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 import java.util.EnumSet;
 import java.util.HashSet;
@@ -29,6 +28,31 @@ import org.junit.jupiter.api.Test;
 
 class VillageStyleTest {
   private static final Predicate<VillageStyle> ALL_STYLES = ignored -> true;
+  private static final Predicate<TagKey<Biome>> NO_TAGS = ignored -> false;
+
+  @AfterEach
+  void clearRegistry() {
+    Buildings.reload(Map.of());
+  }
+
+  @Test
+  void bundledBirchLeadsTheEnumAndIsWhatUnknownSavedStylesReadAs() {
+    assertEquals(List.of(VillageStyle.BIRCH_FOREST, VillageStyle.DESERT, VillageStyle.BADLANDS,
+        VillageStyle.FLOODPLAIN), List.of(VillageStyle.values()));
+    assertEquals(VillageStyle.BIRCH_FOREST, VillageStyle.DEFAULT);
+    assertEquals(VillageStyle.BIRCH_FOREST, VillageStyle.fromId(""));
+    assertEquals(VillageStyle.BIRCH_FOREST, VillageStyle.fromId("plains"));
+    assertEquals(VillageStyle.BIRCH_FOREST, VillageStyle.fromId("removed_family"));
+    assertEquals(VillageStyle.DESERT, VillageStyle.fromId("DESERT"));
+    assertNull(VillageStyle.parse("taiga"));
+  }
+
+  @Test
+  void explicitDatapackMappingWinsOverConventionalAndNamedFamilies() {
+    Set<TagKey<Biome>> tags = Set.of(VillageStyle.DESERT.biomeTag(), Tags.Biomes.IS_BIRCH_FOREST);
+    assertEquals(VillageStyle.DESERT,
+        VillageStyle.select(tags::contains, "birch_hills", 0.6F, true, 0.6F, 7L, ALL_STYLES));
+  }
 
   @Test
   void puebloCoversMesaAndSavannaWhileSandyDesertsStayDistinct() {
@@ -39,14 +63,15 @@ class VillageStyleTest {
         VillageStyle.select(Tags.Biomes.IS_BADLANDS::equals, "wooded_badlands", 2F, false, 0F, 7L, ALL_STYLES));
     assertEquals(VillageStyle.DESERT,
         VillageStyle.select(Tags.Biomes.IS_DESERT::equals, "desert", 2F, false, 0F, 7L, ALL_STYLES));
+    // A mapped style that is not loaded falls through to the hot, dry cluster's other member.
     assertEquals(VillageStyle.DESERT,
         VillageStyle.select(mapped::contains, "badlands", 2F, false, 0F, 7L,
             style -> style == VillageStyle.DESERT));
-    assertFalse(VillageStyle.BADLANDS.usesPlainsFallback());
     for (long seed = 0; seed < 20; seed++) {
       assertFamily(Tags.Biomes.IS_BADLANDS, VillageStyle.BADLANDS, seed);
       assertFamily(Tags.Biomes.IS_SAVANNA, VillageStyle.BADLANDS, seed);
       assertFamily(Tags.Biomes.IS_SANDY, VillageStyle.DESERT, seed);
+      assertFamily(Tags.Biomes.IS_DESERT, VillageStyle.DESERT, seed);
       Set<TagKey<Biome>> sandyMesa = Set.of(Tags.Biomes.IS_BADLANDS, Tags.Biomes.IS_SANDY);
       assertEquals(VillageStyle.BADLANDS,
           VillageStyle.select(sandyMesa::contains, "red_cliffs", 2F, false, 0F, seed, ALL_STYLES));
@@ -57,36 +82,12 @@ class VillageStyleTest {
   void untaggedMesaAndSavannaNamesHaveStableCoverageThatExplicitTagsCanNarrow() {
     for (String path : List.of("wooded_mesa", "red_badlands", "dry_savanna", "savannah_hills")) {
       assertEquals(VillageStyle.BADLANDS,
-          VillageStyle.select(ignored -> false, path, 1.2F, false, 0F, 12L, ALL_STYLES));
+          VillageStyle.select(NO_TAGS, path, 1.2F, false, 0F, 12L, ALL_STYLES));
       assertEquals(VillageStyle.DESERT,
           VillageStyle.select(VillageStyle.DESERT.biomeTag()::equals, path, 1.2F, false, 0F, 12L, ALL_STYLES));
     }
     assertEquals(VillageStyle.BIRCH_FOREST,
         VillageStyle.select(Tags.Biomes.IS_SAVANNA::equals, "birch_savanna", 1F, false, 0F, 12L, ALL_STYLES));
-    assertFalse(VillageStyle.DESERT.usesPlainsFallback());
-  }
-
-  @Test
-  void badlandsStyleSurvivesSavingWithoutRestylingExistingDesertVillages() {
-    for (VillageStyle style : List.of(VillageStyle.BADLANDS, VillageStyle.DESERT)) {
-      Village village = new Village("Oravel");
-      village.setStyle(style);
-      Village restored = Village.CODEC.parse(NbtOps.INSTANCE,
-          Village.CODEC.encodeStart(NbtOps.INSTANCE, village).getOrThrow()).getOrThrow();
-      assertEquals(style, restored.getStyle());
-    }
-  }
-
-  @AfterEach
-  void clearRegistry() {
-    Buildings.reload(Map.of());
-  }
-
-  @Test
-  void explicitDatapackMappingWinsOverConventionalAndNamedFamilies() {
-    Set<TagKey<Biome>> tags = Set.of(VillageStyle.DESERT.biomeTag(), Tags.Biomes.IS_BIRCH_FOREST);
-    assertEquals(VillageStyle.DESERT,
-        VillageStyle.select(tags::contains, "birch_hills", 0.6F, true, 0.6F, 7L, ALL_STYLES));
   }
 
   @Test
@@ -100,115 +101,155 @@ class VillageStyleTest {
   @Test
   void untaggedModdedBirchNameStillSelectsBirch() {
     assertEquals(VillageStyle.BIRCH_FOREST,
-        VillageStyle.select(ignored -> false, "old_birch_woodland", 0.7F, true, 0.6F, 1L, ALL_STYLES));
+        VillageStyle.select(NO_TAGS, "old_birch_woodland", 0.7F, true, 0.6F, 1L, ALL_STYLES));
   }
 
   @Test
-  void familiarBiomeFamiliesDoNotRollDifferentArchitectures() {
+  void unfinishedConventionalFamiliesBuildBirchRatherThanARemovedCatalog() {
+    List<TagKey<Biome>> unfinished = List.of(Tags.Biomes.IS_PLAINS, Tags.Biomes.IS_FOREST,
+        Tags.Biomes.IS_DECIDUOUS_TREE, Tags.Biomes.IS_SWAMP, Tags.Biomes.IS_TAIGA,
+        Tags.Biomes.IS_CONIFEROUS_TREE, Tags.Biomes.IS_MOUNTAIN, Tags.Biomes.IS_JUNGLE);
     for (long seed = 0; seed < 20; seed++) {
-      assertFamily(Tags.Biomes.IS_DESERT, VillageStyle.DESERT, seed);
-      assertFamily(Tags.Biomes.IS_SNOWY, VillageStyle.SNOWY, seed);
-      assertFamily(Tags.Biomes.IS_JUNGLE, VillageStyle.SAVANNA, seed);
-      assertFamily(Tags.Biomes.IS_TAIGA, VillageStyle.TAIGA, seed);
-      assertFamily(Tags.Biomes.IS_FOREST, VillageStyle.PLAINS, seed);
-      assertFamily(Tags.Biomes.IS_PLAINS, VillageStyle.PLAINS, seed);
+      for (TagKey<Biome> tag : unfinished) {
+        assertFamily(tag, VillageStyle.BIRCH_FOREST, seed);
+      }
+      // Snow and ice used to map to their own family; a freezing biome is Birch now too.
+      assertEquals(VillageStyle.BIRCH_FOREST,
+          VillageStyle.select(Tags.Biomes.IS_SNOWY::equals, "snowy_plains", 0.0F, true, 0.5F, seed, ALL_STYLES));
+      assertEquals(VillageStyle.BIRCH_FOREST,
+          VillageStyle.select(Tags.Biomes.IS_ICY::equals, "ice_spikes", 0.0F, true, 0.5F, seed, ALL_STYLES));
     }
   }
 
   @Test
-  void unknownWetAndDryTropicalBiomesUseDifferentClusters() {
-    Predicate<TagKey<Biome>> noTags = ignored -> false;
-    assertEquals(List.of(VillageStyle.DESERT, VillageStyle.SAVANNA),
-        VillageStyle.climateStyles(noTags, 1.3F, false, 0.9F));
-    assertEquals(List.of(VillageStyle.SAVANNA, VillageStyle.PLAINS),
-        VillageStyle.climateStyles(noTags, 1.3F, true, 0.9F));
+  void onlyAHotDryClimateChoosesBetweenTheAridCatalogs() {
+    List<VillageStyle> arid = List.of(VillageStyle.DESERT, VillageStyle.BADLANDS);
+    List<VillageStyle> birch = List.of(VillageStyle.BIRCH_FOREST);
+    assertEquals(arid, VillageStyle.climateStyles(NO_TAGS, 1.3F, false, 0.9F), "no precipitation is dry");
+    assertEquals(arid, VillageStyle.climateStyles(NO_TAGS, 1.0F, true, 0.2F), "hot with little downfall");
+    assertEquals(List.of(VillageStyle.FLOODPLAIN), VillageStyle.climateStyles(NO_TAGS, 1.3F, true, 0.9F),
+        "hot and wet is floodplain country");
+    assertEquals(birch, VillageStyle.climateStyles(NO_TAGS, 0.7F, true, 0.5F), "temperate");
+    assertEquals(birch, VillageStyle.climateStyles(NO_TAGS, 0.7F, false, 0.5F), "temperate and dry");
+    assertEquals(birch, VillageStyle.climateStyles(NO_TAGS, 0.0F, true, 0.5F), "freezing");
+    assertEquals(birch, VillageStyle.climateStyles(NO_TAGS, 0.0F, false, 0.5F), "cold and dry");
+    Set<TagKey<Biome>> hotWet = Set.of(Tags.Biomes.IS_HOT_OVERWORLD, Tags.Biomes.IS_WET_OVERWORLD);
+    assertEquals(List.of(VillageStyle.FLOODPLAIN), VillageStyle.climateStyles(hotWet::contains, 0.7F, true, 0.1F),
+        "explicit hot and wet tags protect a low-downfall biome from the arid pair");
+    Set<TagKey<Biome>> hotDry = Set.of(Tags.Biomes.IS_HOT, Tags.Biomes.IS_DRY);
+    assertEquals(arid, VillageStyle.climateStyles(hotDry::contains, 0.7F, true, 0.5F),
+        "explicit hot and dry tags need no temperature threshold");
   }
 
   @Test
-  void explicitHotWetClimateTagsProtectAgainstDesertWithoutFamilyTags() {
-    Set<TagKey<Biome>> tags = Set.of(Tags.Biomes.IS_HOT_OVERWORLD, Tags.Biomes.IS_WET_OVERWORLD);
-    assertEquals(List.of(VillageStyle.SAVANNA, VillageStyle.PLAINS),
-        VillageStyle.climateStyles(tags::contains, 0.7F, true, 0.1F));
+  void mangroveFamiliesAreFloodplainWhilePlainSwampWaitsForItsOwnCatalog() {
+    assertEquals(VillageStyle.FLOODPLAIN,
+        VillageStyle.select(VillageStyle.FLOODPLAIN.biomeTag()::equals, "mangrove_swamp", 0.8F, true, 0.9F, 3L, ALL_STYLES));
+    assertEquals(VillageStyle.FLOODPLAIN,
+        VillageStyle.select(Tags.Biomes.IS_SWAMP::equals, "mangrove_swamp", 0.8F, true, 0.9F, 3L, ALL_STYLES),
+        "vanilla mangrove swamp is recognizable by name even without the style tag");
+    assertEquals(VillageStyle.FLOODPLAIN,
+        VillageStyle.select(NO_TAGS, "mangrove_bayou", 0.8F, true, 0.9F, 3L, ALL_STYLES));
+    Set<TagKey<Biome>> swamp = Set.of(Tags.Biomes.IS_SWAMP, Tags.Biomes.IS_HOT_OVERWORLD, Tags.Biomes.IS_WET_OVERWORLD);
+    assertEquals(VillageStyle.FLOODPLAIN,
+        VillageStyle.select(swamp::contains, "swamp", 0.8F, true, 0.9F, 3L, ALL_STYLES),
+        "plain swamp has no mapping of its own; hot and wet under the conventional tags, it builds floodplain meanwhile");
+    assertEquals(VillageStyle.BIRCH_FOREST,
+        VillageStyle.select(Tags.Biomes.IS_SWAMP::equals, "swamp", 0.8F, true, 0.9F, 3L, ALL_STYLES),
+        "a modded swamp without the hot tag is temperate and builds the bundled set");
+    for (long seed = 0; seed < 20; seed++) {
+      assertEquals(VillageStyle.FLOODPLAIN,
+          VillageStyle.select(NO_TAGS, "steaming_marsh", 1.2F, true, 0.9F, seed, ALL_STYLES),
+          "an unclassified hot, wet biome builds the floodplain catalog");
+      assertEquals(VillageStyle.BIRCH_FOREST,
+          VillageStyle.select(NO_TAGS, "steaming_marsh", 1.2F, true, 0.9F, seed,
+              style -> style != VillageStyle.FLOODPLAIN),
+          "without the floodplain pack the first loaded founding set stands in");
+    }
   }
 
   @Test
-  void precipitationAlsoDistinguishesFreezingAndDryColdClusters() {
-    Predicate<TagKey<Biome>> noTags = ignored -> false;
-    assertEquals(List.of(VillageStyle.SNOWY, VillageStyle.TAIGA),
-        VillageStyle.climateStyles(noTags, 0.0F, true, 0.5F));
-    assertEquals(List.of(VillageStyle.TAIGA, VillageStyle.PLAINS),
-        VillageStyle.climateStyles(noTags, 0.0F, false, 0.5F));
-    Set<TagKey<Biome>> cold = Set.of(Tags.Biomes.IS_COLD_OVERWORLD);
-    assertEquals(List.of(VillageStyle.TAIGA, VillageStyle.PLAINS),
-        VillageStyle.climateStyles(cold::contains, 0.7F, true, 0.5F));
-  }
-
-  @Test
-  void unknownSiteChoiceIsStableAndVariesOnlyWithinItsAvailableCluster() {
+  void unknownHotDrySiteChoiceIsStableAndVariesOnlyWithinTheAridPair() {
     Set<VillageStyle> seen = new HashSet<>();
     for (long seed = 0; seed < 100; seed++) {
-      VillageStyle chosen = VillageStyle.select(ignored -> false, "unclassified", 0.7F, true, 0.5F,
-          seed, ALL_STYLES);
-      assertEquals(chosen, VillageStyle.select(ignored -> false, "unclassified", 0.7F, true, 0.5F,
-          seed, ALL_STYLES));
+      VillageStyle chosen = VillageStyle.select(NO_TAGS, "unclassified", 1.5F, false, 0F, seed, ALL_STYLES);
+      assertEquals(chosen, VillageStyle.select(NO_TAGS, "unclassified", 1.5F, false, 0F, seed, ALL_STYLES));
       seen.add(chosen);
     }
-    assertEquals(Set.of(VillageStyle.PLAINS, VillageStyle.BIRCH_FOREST), seen);
-    assertEquals(VillageStyle.BIRCH_FOREST,
-        VillageStyle.select(ignored -> false, "unclassified", 0.7F, true, 0.5F,
-            5L, style -> style == VillageStyle.BIRCH_FOREST));
+    assertEquals(Set.of(VillageStyle.DESERT, VillageStyle.BADLANDS), seen);
+    assertEquals(VillageStyle.BADLANDS,
+        VillageStyle.select(NO_TAGS, "unclassified", 1.5F, false, 0F, 5L, style -> style == VillageStyle.BADLANDS));
+    for (long seed = 0; seed < 100; seed++) {
+      assertEquals(VillageStyle.BIRCH_FOREST,
+          VillageStyle.select(NO_TAGS, "unclassified", 0.7F, true, 0.5F, seed, ALL_STYLES),
+          "a temperate site never rolls an arid catalog");
+    }
   }
 
   @Test
-  void unavailableMappedStyleCannotBeAutomaticallyFounded() {
+  void unavailableMappedStyleFallsBackToTheFirstLoadedFoundingSetInEnumOrder() {
     Set<TagKey<Biome>> tags = Set.of(VillageStyle.BIRCH_FOREST.biomeTag(), Tags.Biomes.IS_BIRCH_FOREST);
-    EnumSet<VillageStyle> loaded = EnumSet.of(VillageStyle.PLAINS, VillageStyle.TAIGA);
-    assertEquals(VillageStyle.PLAINS,
-        VillageStyle.select(tags::contains, "birch", 0.7F, true, 0.5F, 5L, loaded::contains));
-    assertEquals(VillageStyle.TAIGA,
-        VillageStyle.select(ignored -> false, "unknown", 2.0F, false, 0.0F, 5L,
-            style -> style == VillageStyle.TAIGA));
+    EnumSet<VillageStyle> arid = EnumSet.of(VillageStyle.DESERT, VillageStyle.BADLANDS);
+    assertEquals(VillageStyle.DESERT,
+        VillageStyle.select(tags::contains, "birch", 0.7F, true, 0.5F, 5L, arid::contains));
+    assertEquals(VillageStyle.BADLANDS,
+        VillageStyle.select(tags::contains, "birch", 0.7F, true, 0.5F, 5L, style -> style == VillageStyle.BADLANDS));
+    assertEquals(VillageStyle.BIRCH_FOREST,
+        VillageStyle.select(NO_TAGS, "unknown", 2.0F, false, 0.0F, 5L, ignored -> false),
+        "with nothing loaded the default lets founding report its missing centre");
   }
 
   @Test
-  void savedBirchStyleDoesNotGetReclassifiedOnReload() {
-    Village village = new Village("Birchstead");
-    village.setStyle(VillageStyle.BIRCH_FOREST);
-    Village restored = Village.CODEC.parse(NbtOps.INSTANCE,
-        Village.CODEC.encodeStart(NbtOps.INSTANCE, village).getOrThrow()).getOrThrow();
-    assertEquals(VillageStyle.BIRCH_FOREST, restored.getStyle());
-    assertEquals(VillageStyle.PLAINS, new Village("Oldstead").getStyle());
-    assertEquals(VillageStyle.PLAINS, VillageStyle.fromId("removed_family"));
-    assertFalse(VillageStyle.BIRCH_FOREST.usesPlainsFallback());
-    assertTrue(VillageStyle.TAIGA.usesPlainsFallback());
+  void savedStylesSurviveSavingAndRemovedFamiliesReadAsBirch() {
+    for (VillageStyle style : VillageStyle.values()) {
+      Village village = new Village("Oravel");
+      village.setStyle(style);
+      assertEquals(style, roundTrip(village).getStyle());
+    }
+    assertEquals(VillageStyle.BIRCH_FOREST, new Village("Oldstead").getStyle());
+    // A village founded in one of the removed families keeps its saved token and reads as Birch.
+    Village legacy = new Village("Wetherby");
+    legacy.getBrain().getStrategy().putString("style", "plains");
+    assertEquals(VillageStyle.BIRCH_FOREST, roundTrip(legacy).getStyle());
   }
 
   @Test
   void foundingApiReadsActualBiomeClimateAndOnlyLoadedCatalogs() {
     Map<String, BuildingInfo> definitions = new HashMap<>();
-    for (VillageStyle style : List.of(VillageStyle.PLAINS, VillageStyle.BIRCH_FOREST)) {
+    for (VillageStyle style : List.of(VillageStyle.DESERT, VillageStyle.BADLANDS)) {
       for (String category : List.of("village_center", "mine", "storehouse")) {
         BuildingInfo info = new BuildingInfo(category + "_" + style.id() + "_1");
         definitions.put(info.getName(), info);
       }
     }
     Buildings.reload(definitions);
-    Holder<Biome> biome = Holder.direct(new Biome.BiomeBuilder().temperature(0.7F).downfall(0.5F)
-        .hasPrecipitation(true).generationSettings(BiomeGenerationSettings.EMPTY)
-        .mobSpawnSettings(MobSpawnSettings.EMPTY).specialEffects(new BiomeSpecialEffects.Builder()
-            .fogColor(0).waterColor(0).waterFogColor(0).skyColor(0).build()).build());
+    Holder<Biome> scrub = biome(2.0F, false, 0.0F);
     Set<VillageStyle> seen = new HashSet<>();
     for (int x = 0; x < 100; x++) {
       BlockPos site = new BlockPos(x * 48, 64, 96);
-      VillageStyle selected = VillageStyle.fromBiome(biome, 42L, site);
-      assertEquals(selected, VillageStyle.fromBiome(biome, 42L, site));
+      VillageStyle selected = VillageStyle.fromBiome(scrub, 42L, site);
+      assertEquals(selected, VillageStyle.fromBiome(scrub, 42L, site));
       seen.add(selected);
     }
-    assertEquals(Set.of(VillageStyle.PLAINS, VillageStyle.BIRCH_FOREST), seen);
+    assertEquals(Set.of(VillageStyle.DESERT, VillageStyle.BADLANDS), seen);
+    // Birch is the temperate answer, but it is not loaded here, so the first loaded set wins.
+    assertEquals(VillageStyle.DESERT, VillageStyle.fromBiome(biome(0.7F, true, 0.5F), 42L, BlockPos.ZERO));
   }
 
   private static void assertFamily(TagKey<Biome> tag, VillageStyle expected, long seed) {
     assertEquals(expected,
         VillageStyle.select(tag::equals, "familiar", 0.7F, true, 0.5F, seed, ALL_STYLES));
+  }
+
+  private static Village roundTrip(Village village) {
+    return Village.CODEC.parse(NbtOps.INSTANCE,
+        Village.CODEC.encodeStart(NbtOps.INSTANCE, village).getOrThrow()).getOrThrow();
+  }
+
+  private static Holder<Biome> biome(float temperature, boolean precipitation, float downfall) {
+    return Holder.direct(new Biome.BiomeBuilder().temperature(temperature).downfall(downfall)
+        .hasPrecipitation(precipitation).generationSettings(BiomeGenerationSettings.EMPTY)
+        .mobSpawnSettings(MobSpawnSettings.EMPTY).specialEffects(new BiomeSpecialEffects.Builder()
+            .fogColor(0).waterColor(0).waterFogColor(0).skyColor(0).build()).build());
   }
 }

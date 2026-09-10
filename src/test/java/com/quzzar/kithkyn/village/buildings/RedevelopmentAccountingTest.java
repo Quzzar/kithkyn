@@ -26,15 +26,15 @@ class RedevelopmentAccountingTest {
 
   @Test
   void freeAndLegacyBuildingsHaveNoInventedRefund() {
-    Building building = new Building("house_plains_1", Rotation.NONE);
+    Building building = new Building("house_birch_forest_1", Rotation.NONE);
     assertTrue(MaterialAmount.salvage(building.getInvestment()).isEmpty());
   }
 
   @Test
   void anUpgradeKeepsPreviouslyPaidMaterialsAndAddsItsActualNewPayment() {
-    Building first = new Building("house_plains_1", Rotation.NONE);
+    Building first = new Building("house_birch_forest_1", Rotation.NONE);
     first.recordInvestment(List.of(new MaterialAmount(Items.DARK_OAK_LOG, 15)));
-    Building upgraded = Building.upgradeOf(first, "house_plains_2", net.minecraft.core.BlockPos.ZERO, Rotation.NONE);
+    Building upgraded = Building.upgradeOf(first, "house_birch_forest_2", net.minecraft.core.BlockPos.ZERO, Rotation.NONE);
     upgraded.recordInvestment(List.of(new MaterialAmount(Items.BIRCH_LOG, 9)));
     assertEquals(List.of(new MaterialAmount(Items.DARK_OAK_LOG, 7), new MaterialAmount(Items.BIRCH_LOG, 4)),
         MaterialAmount.salvage(upgraded.getInvestment()));
@@ -66,7 +66,7 @@ class RedevelopmentAccountingTest {
   }
 
   private static RedevelopmentPlan plan(int cost, int salvage) {
-    return new RedevelopmentPlan(UUID.randomUUID(), "house_plains_2", ConstructionMode.FRESH,
+    return new RedevelopmentPlan(UUID.randomUUID(), "house_birch_forest_2", ConstructionMode.FRESH,
         Optional.empty(), 0L, Rotation.NONE, 0, List.of(), List.of(),
         List.of(new MaterialAmount(Items.COBBLESTONE, cost)),
         List.of(new MaterialAmount(Items.COBBLESTONE, salvage)), List.of(), List.of());

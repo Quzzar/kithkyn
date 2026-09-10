@@ -139,31 +139,18 @@ public final class VillageNamer {
               + " An intimate, gently whimsical old-world sound, earthy rather than grandiose.",
           List.of("Brindle", "Tallowick", "Dunmere", "Bellamere", "Heartham"),
           List.of("Brin", "Tallow", "Dun", "Bellen", "Wick", "Hearth", "Mallow", "Fen"));
-      case PLAINS -> new NamingProfile(
-          "An open, sociable farming community of timber homes, shared markets and busy workshops."
-              + " Familiar, warm, practical place-names with a little age to them.",
-          List.of("Wetherby", "Alderton", "Merrivale"),
-          List.of("Alder", "Merri", "Wether", "Fair", "Amber", "Elm", "Bell", "Barley"));
-      case TAIGA -> new NamingProfile(
-          "A sheltered conifer settlement of dark timber, sturdy workshops and close hearths."
-              + " Steady, compact, weather-worn names with a strong sound.",
-          List.of("Valdren", "Harrowfell", "Ostwick"),
-          List.of("Val", "Harrow", "Ost", "Raven", "Alder", "Grey", "Wold", "Tor"));
-      case SNOWY -> new NamingProfile(
-          "A close-knit cold-country settlement built around shelter, stores and enduring warm interiors."
-              + " Spare, resonant, resilient names rather than a list of snow synonyms.",
-          List.of("Eldvik", "Halden", "Varnholt"),
-          List.of("Eld", "Hal", "Varn", "Keld", "Haven", "Auren", "Bryn", "Nord"));
       case DESERT -> new NamingProfile(
           "An arid-country settlement of sheltered courtyards, pale masonry, shade and hospitable traders."
               + " Warm, flowing, memorable invented place-names.",
           List.of("Darava", "Serevan", "Amarin"),
           List.of("Dara", "Sere", "Amar", "Tala", "Aven", "Sola", "Nara", "Kes"));
-      case SAVANNA -> new NamingProfile(
-          "A sunlit, open-country community of warm timber, gathering spaces and lively trade."
-              + " Bright, rhythmic, grounded invented place-names.",
-          List.of("Talora", "Orendi", "Marava"),
-          List.of("Talo", "Oren", "Mara", "Kera", "Noma", "Ari", "Kasa", "Vela"));
+      case FLOODPLAIN -> new NamingProfile(
+          "A riverside community on a mangrove floodplain: mud-brick homes on packed earth,"
+              + " roots and reeds, fish traps, drying racks and boats drawn up on the bank."
+              + " Soft, flowing invented names with a river sound, unhurried and warm.",
+          List.of("Nilora", "Kemwari", "Sefuna", "Abaresh"),
+          List.of("Nil", "Kem", "Sef", "Aba", "Mer", "Tam", "Wad", "Osa"),
+          List.of("ora", "ari", "wari", "una", "esh", "ai", "oma", "eni"));
     };
   }
 

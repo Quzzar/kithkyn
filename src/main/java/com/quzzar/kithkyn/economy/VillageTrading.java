@@ -45,9 +45,8 @@ public final class VillageTrading {
 
   /**
    * What a market grants when the village may trade unattended. The design puts
-   * this on a level-2 market; the placeholder market carries it for now, so the
-   * behaviour is exercisable before the real market levels are authored, and
-   * moving it is a datapack edit rather than a code change.
+   * this on a level-2 market, and that is where the bundled Birch catalog grants
+   * it; moving it is a datapack edit rather than a code change.
    */
   public static final String INITIATIVE = "TRADE_INITIATIVE";
 

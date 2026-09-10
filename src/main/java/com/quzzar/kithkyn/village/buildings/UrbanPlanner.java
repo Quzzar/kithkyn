@@ -294,7 +294,7 @@ public class UrbanPlanner {
   /**
    * The least wasteful legal way to raise this definition now. A compatible
    * building with room is reused; otherwise this village may build only its own
-   * regional variant (or the plains fallback) on a new site.
+   * regional variant on a new site.
    */
   @Nullable
   private static ConstructionChoice preferredChoice(Village village, BuildingInfo info) {
@@ -341,8 +341,8 @@ public class UrbanPlanner {
   /**
    * Whether a village could ever pay for this, which is a different question
    * from whether it can today. A goal it has no way to work toward is not a
-   * goal, it is a wait until the timeout: a plains village that names a snowy
-   * farm saves for stone brick it cannot make, expires, and names another.
+   * goal, it is a wait until the timeout: a village that names a farm priced in
+   * stone brick it cannot make saves for it, expires, and names another.
    */
   private static boolean withinReach(Village village, Map<Item, Integer> stock, ConstructionChoice choice) {
     for (ItemStack cost : ConstructionQuote.capture(choice, Map.of()).required()) {

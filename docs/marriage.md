@@ -1,6 +1,6 @@
 # Marriage
 
-**Implemented (plains).** Two villagers who have grown close ask the village brain
+**Implemented.** Two villagers who have grown close ask the village brain
 to wed them, and the brain decides, the same way a villager petitions it to build
 something ([villager-requests.md](villager-requests.md)). A married pair is given a
 home of its own to raise. The whole feature rides rails that already existed:
@@ -178,25 +178,24 @@ A new building category, `couple_cottage`. Unlike every other category it is
 options it deliberates over (`UrbanPlanner.isMarriageOnly`), so it is built only as
 the goal a marriage sets. A village should not raise one for no one.
 
-The plains cottage (`couple_cottage_plains_1`) is a 9x7x11 one-room home with a
-pitched oak-stair roof, glass windows, and a small front garden of flowers and a
-path. Its one defining feature is the **double bed**: two beds side by side, the
-couple's shared sleeping nook, rather than the separate beds a shared house
-carries. Its beds are named at the **foot** block, the coordinate the building
-definition's `beds` array expects.
+The bundled cottage is the approved Birch one (`couple_cottage_birch_forest_1`, a 15x7x19
+home from the Birch selection in [birch-village.md](birch-village.md)). Its one defining
+feature is the **double bed**: two beds side by side in the primary village color, the
+couple's shared sleeping nook, rather than the separate beds a shared house carries. Its beds
+are named at the **foot** block, the coordinate the building definition's `beds` array
+expects.
 
-It was authored the way the repo's structures are meant to be
-([structure-authoring.md](structure-authoring.md)): built by hand in-world, then
-captured with `/kkdev village save-structure`, and copied into `resources/`. On the
-bottom layer, every cell that is not floor or garden is left as nothing (captured as
-structure-void, absent from the file), so placing the cottage on real ground lays
-its floor without carving a pit where the footprint has no floor. It is checked with
-`validate.py` (nothing drops on placement) and `navcheck.py` (both beds reachable
-and on the ground floor, the door reachable).
+The first cottage, the hand-built plains one, was authored the way the repo's structures are
+meant to be ([structure-authoring.md](structure-authoring.md)): built by hand in-world, then
+captured with `/kkdev village save-structure`, and copied into `resources/`, with every
+bottom-layer cell that is not floor or garden left as structure-void so placing it on real
+ground lays its floor without carving a pit, and checked with `validate.py` (nothing drops
+on placement) and `navcheck.py` (both beds reachable and on the ground floor, the door
+reachable). It went with the old Village Life families on 2026-09-10, along with the taiga,
+snowy, desert and savanna cottages that were derived from it.
 
-The taiga, snowy, desert and savanna variants, plus the approved Birch cottage, are
-also present. These existing dedicated cottages retain their housing behavior; new regional
-catalogs may instead supply mixed houses with explicit couple rooms.
+The Birch cottage retains the dedicated-cottage housing behavior; new regional catalogs may
+instead supply mixed houses with explicit couple rooms.
 
 ## Code map
 
@@ -218,5 +217,5 @@ catalogs may instead supply mixed houses with explicit couple rooms.
   real shortfall so it stalls honestly.
 - `chat/PersonChatContext#spouseLine`: a married villager's own knowledge of who
   they are wed to, derived from the edge.
-- `src/main/resources/data/kithkyn/kithkyn/buildings/couple_cottage_plains_1.json`
-  and its `.nbt`; hand-built in-world and captured with `/kkdev village save-structure`.
+- `src/main/resources/data/kithkyn/kithkyn/buildings/couple_cottage_birch_forest_1.json`
+  and its `.nbt`; the approved Birch capture.

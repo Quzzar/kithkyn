@@ -15,9 +15,9 @@ import javax.annotation.Nullable;
  * Definitions come in regional variants, {@code <category>_<style>_<level>[__<design>]}, and
  * a village builds in one style for life ({@link VillageStyle}). Everything that
  * asks "what can this village build" goes through {@link #resolve} or
- * {@link #catalogue}, which hand back that style's variant and fall back to
- * plains only for the older fallback-enabled families. An explicitly complete
- * catalog can omit a role or tier without borrowing another architecture.
+ * {@link #catalogue}, which hand back that style's own family and nothing else:
+ * a catalog omits a role or tier by not authoring it, and no style ever borrows
+ * another architecture to fill the gap.
  */
 public class Buildings {
 
@@ -68,7 +68,7 @@ public class Buildings {
 
   /**
    * The canonical design, or the first named alternative when no canonical is
-   * authored. All regional and fallback rules are shared with {@link #alternatives}.
+   * authored. The regional rule is shared with {@link #alternatives}.
    */
   @Nullable
   public static BuildingInfo resolve(String category, int level, VillageStyle style) {
@@ -76,17 +76,9 @@ public class Buildings {
     return choices.isEmpty() ? null : choices.getFirst();
   }
 
-  /** Every layout in a regional family, canonical first, then stable by id. */
+  /** Every layout in a regional family, canonical first, then stable by id; empty when the family has none. */
   public static List<BuildingInfo> alternatives(String category, int level, VillageStyle style) {
-    return alternatives(registry, category, level, style);
-  }
-
-  private static List<BuildingInfo> alternatives(Registry snapshot, String category, int level, VillageStyle style) {
-    List<BuildingInfo> own = snapshot.families().get(new Family(category, style.id(), level));
-    if (own != null) return own;
-    return style.usesPlainsFallback()
-        ? snapshot.families().getOrDefault(new Family(category, VillageStyle.PLAINS.id(), level), List.of())
-        : List.of();
+    return registry.families().getOrDefault(new Family(category, style.id(), level), List.of());
   }
 
   /** Whether this exact loaded design is legal on a fresh site for the village. */
@@ -126,29 +118,14 @@ public class Buildings {
   }
 
   /**
-   * The catalogue as one style sees it: every level-1 design per category
-   * (that style's family, or plains), plus every higher level for fallback-enabled
-   * families. Those higher levels can upgrade a borrowed variant already standing;
-   * the planner separately limits fresh builds to the village's regional variant.
-   * A strict catalog exposes only its own authored definitions at every level.
-   * Definitions whose id does not parse pass through untouched.
+   * The catalogue as one style sees it: every authored definition in its own
+   * family, at every level, and nothing borrowed from another family. A
+   * definition whose id does not parse belongs to no family and is never listed.
    */
   public static List<BuildingInfo> catalogue(VillageStyle style) {
-    Registry snapshot = registry;
-    List<BuildingInfo> out = new ArrayList<>();
-    for (BuildingInfo info : snapshot.byName().values()) {
-      if (!style.usesPlainsFallback() && info.hasWellFormedId()) {
-        if (info.getVariant().equals(style.id())) {
-          out.add(info);
-        }
-        continue;
-      }
-      if (!info.hasWellFormedId() || info.getLevel() > 1
-          || alternatives(snapshot, info.getCategory(), 1, style).contains(info)) {
-        out.add(info);
-      }
-    }
-    return out.stream().sorted(Comparator.comparing(BuildingInfo::getName)).toList();
+    return registry.byName().values().stream()
+        .filter(info -> info.hasWellFormedId() && info.getVariant().equals(style.id()))
+        .sorted(Comparator.comparing(BuildingInfo::getName)).toList();
   }
 
 }

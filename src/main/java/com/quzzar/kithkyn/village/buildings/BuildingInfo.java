@@ -248,7 +248,7 @@ public class BuildingInfo {
    * The id scheme is {@code <category>_<variant>_<level>[__<design>]}:
    * after separating the optional design, the last token is the level, then the longest registered style suffix
    * separates variant from category. Unknown custom variants retain the old
-   * single-token convention, including the developer placeholder catalog.
+   * single-token convention.
    */
   @javax.annotation.Nullable
   private ParsedId parsedId() {

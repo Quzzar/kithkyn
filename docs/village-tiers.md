@@ -128,7 +128,7 @@ shape its history takes.
 
 **The table below is superseded.** The shipped id scheme is
 `<category>_<variant>_<level>` from [building-spec.md](building-spec.md), which the loader
-validates: `house_plains_1`, not `house_wood_s`. The axes it describes are still the
+validates: `house_birch_forest_1`, not `house_wood_s`. The axes it describes are still the
 intent; only the naming changed.
 
 |            | wood variant                    | stone variant                    |

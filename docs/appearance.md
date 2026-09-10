@@ -266,7 +266,7 @@ compositing:
 | Layer | Now |
 | --- | --- |
 | **Base skin** | No longer one curated skin — composited from discrete inherited skin, hair, and eye structures plus continuous inherited pigment ranges. |
-| **Regional dress** | Per-region palettes and part-sets (matched to the village's variant family: plains, taiga, snowy, desert, savanna) rather than per-region whole-skin pools. Same axis as building variants. Future. |
+| **Regional dress** | Per-region palettes and part-sets (matched to the village's variant family: Birch Forest, Desert, Badlands) rather than per-region whole-skin pools. Same axis as building variants. Future. |
 | **Occupation** | A **clothing** swap layer — apron on the baker, workwear on the miner — selected live from the current job under the campfire model ([population-and-labor.md](population-and-labor.md)) without changing the person underneath. |
 
 ## Current state and the gap

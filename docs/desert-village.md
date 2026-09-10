@@ -3,7 +3,7 @@
 The September 9 selection uses the edited Desert Oasis buildings from the dry-biome
 gallery. Sandy desert biomes select this catalog. Mesa, badlands, and the savanna
 family select [Pueblo](badlands-village.md); Birch biomes retain the Birch catalog.
-Desert has a strict catalog and does not borrow missing buildings from plains.
+Desert has a strict catalog and does not borrow missing buildings from any other family.
 
 The private catalog contains 30 selected building definitions:
 

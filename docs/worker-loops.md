@@ -872,7 +872,7 @@ fell the tree at the station whole, whoever planted it (`TreeFelling.fellStand` 
 connected to the station without asking ownership, whatever its height or how far the branches
 reach, and drops each record as it goes); the grown tree's natural canopy decays and drops its
 saplings; set a sapling from the pack
-on the stump, any kind (a plains lodge whose oak is down grows a spruce if spruce is what the
+on the stump, any kind (a Birch lodge whose birch is down grows a spruce if spruce is what the
 pack holds), and it is nobody's, so the next fell is an ordinary one; feed it while there is
 bone meal in the pack; fell it again when it is a tree. Saplings reach the pack three ways:
 picked up under the decaying canopy, picked up in the woods, or drawn from the stores at

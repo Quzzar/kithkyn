@@ -86,7 +86,7 @@ public final class CampfireAccessVerification {
   private static void beginCookingWalk(ServerLevel level) {
     BlockPos origin = new BlockPos(-7400, 150, -7000);
     BuildingInfo info = BuildingInfo.CODEC.parse(JsonOps.INSTANCE, JsonParser.parseString("""
-        {"structure":"village_center_plains_1", "meeting_point":[0,1,0], "campfires":[[12,1,0]]}
+        {"structure":"village_center_birch_forest_1", "meeting_point":[0,1,0], "campfires":[[12,1,0]]}
         """)).getOrThrow();
     pantryPosition = origin.offset(-10,1,0);
     FixtureVillage village = new FixtureVillage(level, info, origin, Rotation.NONE) {
@@ -120,7 +120,7 @@ public final class CampfireAccessVerification {
 
   private static void verifyCooking(ServerLevel level, BlockWorkStep cook, int offset) throws Exception {
     BuildingInfo info = BuildingInfo.CODEC.parse(JsonOps.INSTANCE, JsonParser.parseString("""
-        {"structure":"village_center_plains_1", "meeting_point":[0,1,0],
+        {"structure":"village_center_birch_forest_1", "meeting_point":[0,1,0],
          "campfires":[[4,1,0],[10,1,0]]}
         """)).getOrThrow();
     BlockPos origin = new BlockPos(-7000 + offset, 150, -7000);

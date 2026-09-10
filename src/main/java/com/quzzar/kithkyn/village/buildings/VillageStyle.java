@@ -22,21 +22,26 @@ import net.neoforged.neoforge.common.Tags;
  * stands in, and kept for the village's life. Every later building takes this
  * family's variant, so a village reads as one place rather than a sampler.
  *
+ * Every style is a strict catalog: a village raises only what its own family
+ * authored and never borrows another family's building to fill a gap. Birch
+ * Forest is the one bundled catalog and so the default; Desert, Badlands and
+ * Floodplain arrive through private datapacks (docs/desert-village.md,
+ * docs/badlands-village.md, docs/floodplain-village.md), so they are only
+ * automatic candidates while their founding sets are loaded.
+ *
  * Explicit datapack style tags take precedence over conventional biome families.
  * An unfamiliar family chooses among climate-compatible loaded catalogs using
  * the world seed and founding site, not the world's mutable random stream.
  */
 public enum VillageStyle {
-  PLAINS, TAIGA, SNOWY, DESERT, SAVANNA, BIRCH_FOREST, BADLANDS;
+  BIRCH_FOREST, DESERT, BADLANDS, FLOODPLAIN;
+
+  /** The bundled catalog: what a blank or unknown saved style reads as, and the last resort. */
+  public static final VillageStyle DEFAULT = BIRCH_FOREST;
 
   /** The token this style takes in a building id, {@code house_<style>_1}. */
   public String id() {
     return name().toLowerCase(Locale.ROOT);
-  }
-
-  /** Approved catalogs deliberately omit roles and levels that have no selected design. */
-  public boolean usesPlainsFallback() {
-    return this != BIRCH_FOREST && this != BADLANDS && this != DESERT;
   }
 
   /** Modpacks can assign a biome without introducing a separate mapping loader. */
@@ -56,10 +61,14 @@ public enum VillageStyle {
     return null;
   }
 
-  /** The style for an id token, plains for anything unknown or blank. */
+  /**
+   * The style for an id token, or {@link #DEFAULT} for anything unknown or
+   * blank: a village saved in one of the removed Village Life families keeps
+   * its name and people and reads as the bundled catalog from then on.
+   */
   public static VillageStyle fromId(String id) {
     VillageStyle style = parse(id);
-    return style != null ? style : PLAINS;
+    return style != null ? style : DEFAULT;
   }
 
   /** Biome-only selection for previews that have no founding seed or position. */
@@ -69,15 +78,28 @@ public enum VillageStyle {
 
   /** The one selector used by both manual and naturally generated village founding. */
   public static VillageStyle fromBiome(Holder<Biome> biome, long worldSeed, BlockPos site) {
+    return fromBiome(biome, worldSeed, site, Buildings::hasFoundingSet);
+  }
+
+  /**
+   * The same selection with an explicit notion of which catalogs are loaded,
+   * so a check can ask what a biome maps to regardless of what is installed.
+   */
+  public static VillageStyle fromBiome(Holder<Biome> biome, long worldSeed, BlockPos site,
+      Predicate<VillageStyle> available) {
     long biomeSeed = biome.unwrapKey().map(key -> (long) key.location().toString().hashCode()).orElse(0L);
     Biome climate = biome.value();
     String biomePath = biome.unwrapKey().map(key -> key.location().getPath()).orElse("");
     return select(biome::is, biomePath, climate.getBaseTemperature(), climate.hasPrecipitation(),
-        climate.getModifiedClimateSettings().downfall(), worldSeed ^ site.asLong() ^ biomeSeed,
-        Buildings::hasFoundingSet);
+        climate.getModifiedClimateSettings().downfall(), worldSeed ^ site.asLong() ^ biomeSeed, available);
   }
 
-  /** Pure selector seam: tags carry architecture, climate only fills an unclassified family's gap. */
+  /**
+   * Pure selector seam: explicit style tags first, then the conventional
+   * families that have a finished catalog, then a climate cluster, then the
+   * first loaded founding set in enum order. Only styles whose founding set is
+   * loaded are ever chosen automatically.
+   */
   static VillageStyle select(Predicate<TagKey<Biome>> tagged, String biomePath, float temperature,
       boolean precipitation, float downfall, long siteSeed, Predicate<VillageStyle> available) {
     for (VillageStyle style : values()) {
@@ -95,20 +117,22 @@ public enum VillageStyle {
     if (!candidates.isEmpty()) {
       return candidates.get(RandomSource.create(RandomSupport.mixStafford13(siteSeed)).nextInt(candidates.size()));
     }
-    // A partial datapack can omit an entire climate group. Prefer the existing
-    // neutral fallback, then an actual founding set, never a random missing style.
-    if (available.test(PLAINS)) {
-      return PLAINS;
-    }
+    // A partial datapack can leave a climate with no loaded catalog. Prefer an
+    // actual founding set in the stable style order, never a missing style.
     for (VillageStyle style : values()) {
       if (available.test(style)) {
         return style;
       }
     }
     // With no founding content at all, initNew reports its existing missing-center error.
-    return PLAINS;
+    return DEFAULT;
   }
 
+  /**
+   * The conventional families that map to a finished catalog. Every other
+   * family (plains, forest, taiga, snowy, jungle, swamp and the rest) has no
+   * catalog of its own and falls through to the climate clusters.
+   */
   @Nullable
   private static VillageStyle conventionalStyle(Predicate<TagKey<Biome>> tagged, String biomePath) {
     String path = biomePath.toLowerCase(Locale.ROOT);
@@ -126,43 +150,35 @@ public enum VillageStyle {
     if (tagged.test(Tags.Biomes.IS_DESERT) || tagged.test(Tags.Biomes.IS_SANDY)) {
       return DESERT;
     }
-    if (tagged.test(Tags.Biomes.IS_SNOWY) || tagged.test(Tags.Biomes.IS_ICY)) {
-      return SNOWY;
-    }
-    if (tagged.test(Tags.Biomes.IS_JUNGLE)) {
-      return SAVANNA;
-    }
-    if (tagged.test(Tags.Biomes.IS_TAIGA) || tagged.test(Tags.Biomes.IS_CONIFEROUS_TREE)
-        || tagged.test(Tags.Biomes.IS_MOUNTAIN)) {
-      return TAIGA;
-    }
-    if (tagged.test(Tags.Biomes.IS_PLAINS) || tagged.test(Tags.Biomes.IS_FOREST)
-        || tagged.test(Tags.Biomes.IS_DECIDUOUS_TREE) || tagged.test(Tags.Biomes.IS_SWAMP)) {
-      return PLAINS;
+    // The floodplain catalog is the mangrove family: vanilla mangrove swamp
+    // carries the explicit style tag, and a modded mangrove biome is still
+    // recognizable by name. Plain swamp stays unmapped for a catalog of its
+    // own; being hot and wet under the conventional tags it builds floodplain
+    // through the climate cluster meanwhile.
+    if (path.contains("mangrove")) {
+      return FLOODPLAIN;
     }
     return null;
   }
 
   /**
-   * Architecture candidates, not survival rules. Precipitation and wet/dry tags
-   * keep an unclassified rainy tropical biome out of the desert cluster.
+   * Architecture candidates, not survival rules. A hot, dry climate has the two
+   * arid catalogs to choose between and a hot, wet one builds the floodplain
+   * catalog; every other climate builds the bundled Birch Forest catalog until
+   * its own family is finished. Precipitation and wet/dry tags keep an
+   * unclassified rainy tropical biome out of the arid pair.
    */
   static List<VillageStyle> climateStyles(Predicate<TagKey<Biome>> tagged, float temperature,
       boolean precipitation, float downfall) {
-    boolean cold = tagged.test(Tags.Biomes.IS_COLD) || tagged.test(Tags.Biomes.IS_COLD_OVERWORLD)
-        || temperature < 0.4F;
     boolean hot = tagged.test(Tags.Biomes.IS_HOT) || tagged.test(Tags.Biomes.IS_HOT_OVERWORLD)
         || temperature >= 1.0F;
     boolean wet = precipitation && (tagged.test(Tags.Biomes.IS_WET)
         || tagged.test(Tags.Biomes.IS_WET_OVERWORLD) || downfall >= 0.7F);
     boolean dry = !precipitation || (!wet && (tagged.test(Tags.Biomes.IS_DRY)
         || tagged.test(Tags.Biomes.IS_DRY_OVERWORLD) || downfall <= 0.3F));
-    if (cold) {
-      return temperature < 0.15F && precipitation ? List.of(SNOWY, TAIGA) : List.of(TAIGA, PLAINS);
+    if (hot && dry) {
+      return List.of(DESERT, BADLANDS);
     }
-    if (hot) {
-      return dry ? List.of(DESERT, SAVANNA) : List.of(SAVANNA, PLAINS);
-    }
-    return dry ? List.of(PLAINS, SAVANNA) : List.of(PLAINS, BIRCH_FOREST);
+    return hot && wet ? List.of(FLOODPLAIN) : List.of(BIRCH_FOREST);
   }
 }

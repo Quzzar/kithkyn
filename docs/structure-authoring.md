@@ -2,7 +2,8 @@
 
 How a building's `.nbt` gets made, now that no external source is derivable
 ([structure-sourcing.md](structure-sourcing.md)): we author our own, headlessly, with
-commands. This is the loop the current `village_center_plains_1` was built with.
+commands. This is the loop the first village centre, the since-retired `village_center_plains_1`,
+was built with.
 
 ## The loop
 
@@ -205,18 +206,11 @@ exception. A narrower upgrade may leave only dirt/grass landscaping and plants o
 target; structural remnants are refused. Mines retain the exact origin because their shafts
 are dug below the file. Where a
 level is the level-1 developed rather than a different building, author it as
-a script over the level-1 file instead of by hand. `tools/structure/mine-level-2.py` writes the
-level-2 mine in all five families from the five level-1 files: the layout is written once, in the plains file's own
-blockstates, and each family's blocks come from the block-for-block mapping between
-`mine_plains_1` and `mine_<family>_1` at the same position, so no family is authored twice and a
-change to a level-1 file is carried into its level 2 by re-running the script. It refuses a block
-the level-1 palette lacks. Run it from `tools/structure/`:
-
-```
-python3 mine-level-2.py ../../src/main/resources/data/kithkyn/structure
-```
-
-then `validate.py` over the output, as for anything else. What no script checks is the shaft:
+a script over the level-1 file instead of by hand. The old families' level-2 mine was made that
+way (`mine-level-2.py` wrote it once, in the plains file's own blockstates, and mapped each
+family's blocks block for block); the script went with those families on 2026-09-10, and the
+approach stands for the next family that needs a derived tier. Run `validate.py` over any
+derived output, as for anything else. What no script checks is the shaft:
 where the stations go is `MineStep`'s geometry (a five-wide ramp toward local +Z from each
 mouth in these original families; `mine_entrance` can override that frame), and a second mouth
 is placed so the two ramps never meet. The level-2 mine has been

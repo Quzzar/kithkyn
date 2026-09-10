@@ -40,7 +40,7 @@ class MineBranchTest {
 
   @Test
   void buildingCodecDefaultsOldSavesToNoBranchesAndRoundTripsNewOnes() {
-    Building building = new Building(new BlockPos(3, 70, 9), "mine_plains_1", Rotation.CLOCKWISE_90);
+    Building building = new Building(new BlockPos(3, 70, 9), "mine_birch_forest_1", Rotation.CLOCKWISE_90);
     MineBranch branch = new MineBranch(BlockPos.ZERO.asLong(), 4, 1, false);
     building.addMineBranch(branch);
 
@@ -55,12 +55,12 @@ class MineBranchTest {
 
   @Test
   void upgradesRetainTheMineNetwork() {
-    Building mine = new Building(new BlockPos(3, 70, 9), "mine_plains_1", Rotation.NONE);
+    Building mine = new Building(new BlockPos(3, 70, 9), "mine_birch_forest_1", Rotation.NONE);
     MineBranch branch = new MineBranch(BlockPos.ZERO.asLong(), 4, -1, true);
     mine.addMineBranch(branch);
 
     Building upgraded = Building.upgradeOf(
-        mine, "mine_plains_2", new BlockPos(3, 70, 9), Rotation.NONE);
+        mine, "mine_birch_forest_2", new BlockPos(3, 70, 9), Rotation.NONE);
 
     assertEquals(List.of(branch), upgraded.getMineBranches());
   }

@@ -17,13 +17,13 @@ public enum WallTier {
    */
   public static final int BLOCKS_PER_ITEM = 10;
 
-  /** Walls use local stone or logs through the shared material-substitution rules. */
+  /** Walls use local stone through the shared material-substitution rules. */
   public Item material(VillageStyle style) {
     return switch (style) {
       case DESERT -> Items.SANDSTONE;
       case BADLANDS -> Items.RED_SANDSTONE;
       case BIRCH_FOREST -> Items.COBBLESTONE;
-      default -> Items.OAK_LOG;
+      case FLOODPLAIN -> Items.MUD_BRICKS;
     };
   }
 

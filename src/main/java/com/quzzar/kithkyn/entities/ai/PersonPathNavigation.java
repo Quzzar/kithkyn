@@ -10,6 +10,7 @@ import com.quzzar.kithkyn.village.buildings.MineShaft;
 import com.quzzar.kithkyn.village.buildings.WorkerFooting;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.util.Mth;
 import net.minecraft.core.Direction;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.entity.Mob;
@@ -331,8 +332,12 @@ public final class PersonPathNavigation extends GroundPathNavigation {
       this.mob.setDeltaMovement(0.0D, motion.y, 0.0D);
     }
     if (onLadder && next.y > this.mob.getY() + 0.05D) {
-      Vec3 motion = this.mob.getDeltaMovement();
-      this.mob.setDeltaMovement(motion.x, CLIMB_SPEED, motion.z);
+      // Climbing straight up has no stride, so only the leftover velocity of the
+      // approach moved the body sideways, and on a free-standing ladder that
+      // carried climbers off the rung a few blocks up. Steer onto the rung's
+      // approach point instead; shaft walls used to hide this on arid towers.
+      this.mob.setDeltaMovement(Mth.clamp((next.x - this.mob.getX()) * 0.2D, -0.05D, 0.05D), CLIMB_SPEED,
+          Mth.clamp((next.z - this.mob.getZ()) * 0.2D, -0.05D, 0.05D));
     }
     // Downward needs nothing: a body on a ladder slides at the ladder's own rate.
   }

@@ -61,7 +61,7 @@ class CoupleHousingTest {
   void staffCouplesKeepOneHomeWhenTheirSpousesWorkAtDifferentLiveInWorkplaces() throws Exception {
     Building workplace = coupleWorkplace(Occupation.FARMER);
     BuildingInfo secondInfo = decode("""
-        {"structure":"butchery_plains_1","beds":[[0,1,0],[1,1,0]],
+        {"structure":"butchery_birch_forest_1","beds":[[0,1,0],[1,1,0]],
          "couple_beds":[[[0,1,0],[1,1,0]]],
          "work_stations":[{"pos":[3,1,1],"occupation":"BUTCHER"}]}
         """);
@@ -95,7 +95,7 @@ class CoupleHousingTest {
   @Test
   void claimingWorkNeverOverwritesTheOldCoupleHomeOrAnOccupiedSide() throws Exception {
     Building workplace = coupleWorkplace(Occupation.FARMER);
-    BuildingInfo homeInfo = new BuildingInfo("couple_cottage_plains_1")
+    BuildingInfo homeInfo = new BuildingInfo("couple_cottage_birch_forest_1")
         .addBedLocation(1, 1, 1).addBedLocation(2, 1, 1);
     Buildings.reload(Map.of(workplace.getName(), workplace.getInfo(), homeInfo.getName(), homeInfo));
     Building home = new Building(homeInfo.getName(), Rotation.NONE);
@@ -128,7 +128,7 @@ class CoupleHousingTest {
   @Test
   void theTavernCanReserveOneBedForItsKeeperAndOfferTheOtherAsGeneralHousing() throws Exception {
     BuildingInfo info = decode("""
-        {"structure":"tavern_plains_1","beds":[[4,1,0],[0,1,0]],
+        {"structure":"tavern_birch_forest_1","beds":[[4,1,0],[0,1,0]],
          "worker_beds":[[0,1,0]],"work_stations":[{"pos":[3,1,1],"occupation":"INNKEEPER"}]}
         """);
     assertEquals(null, info.validate());
@@ -152,7 +152,7 @@ class CoupleHousingTest {
   @Test
   void aKeeperAlreadySleepingInTheGeneralTavernRoomMovesToTheReservedRoom() {
     BuildingInfo info = decode("""
-        {"structure":"tavern_plains_1","beds":[[4,1,0],[0,1,0]],
+        {"structure":"tavern_birch_forest_1","beds":[[4,1,0],[0,1,0]],
          "worker_beds":[[0,1,0]],"work_stations":[{"pos":[3,1,1],"occupation":"INNKEEPER"}]}
         """);
     Buildings.reload(Map.of(info.getName(), info));
@@ -215,7 +215,7 @@ class CoupleHousingTest {
   @Test
   void anUnavailableSecondBedLeavesBothSpousesAndTheUnrelatedResidentUntouched() {
     Building home = onePairHome();
-    Building singles = new Building("singles_plains_1", Rotation.NONE);
+    Building singles = new Building("singles_birch_forest_1", Rotation.NONE);
     BuildingInfo singlesInfo = new BuildingInfo(singles.getName()).addBedLocation(0, 1, 0).addBedLocation(2, 1, 0);
     Buildings.reload(Map.of(home.getName(), home.getInfo(), singles.getName(), singlesInfo));
     Map<UUID, BedAssignment> original = Map.of(
@@ -250,7 +250,7 @@ class CoupleHousingTest {
   @Test
   void takingALiveInJobDoesNotSplitAnAlreadyHousedCouple() throws Exception {
     Building home = mixedHome();
-    BuildingInfo workshop = new BuildingInfo("lumberjack_plains_1").addBedLocation(1, 1, 1)
+    BuildingInfo workshop = new BuildingInfo("lumberjack_birch_forest_1").addBedLocation(1, 1, 1)
         .addWorkLocation(3, 1, 1, Occupation.LUMBERJACK);
     Buildings.reload(Map.of(home.getName(), home.getInfo(), workshop.getName(), workshop));
     Building workplace = new Building(workshop.getName(), Rotation.NONE);
@@ -285,7 +285,7 @@ class CoupleHousingTest {
     Village village = savedVillage(List.of(home), Map.of(), List.of(A, B));
     assertTrue(village.houseCouple(A, B, home.getUUID()));
     BuildingInfo reordered = decode("""
-        {"structure":"house_plains_1","beds":[[0,1,0],[8,1,0],[1,1,0],[9,1,0],[4,1,0],[6,1,0]],
+        {"structure":"house_birch_forest_1","beds":[[0,1,0],[8,1,0],[1,1,0],[9,1,0],[4,1,0],[6,1,0]],
          "couple_beds":[[[0,1,0],[1,1,0]],[[8,1,0],[9,1,0]]]}
         """);
     Buildings.reload(Map.of(reordered.getName(), reordered));
@@ -300,7 +300,7 @@ class CoupleHousingTest {
     Building home = mixedHome();
     Village village = new Village("Rooms");
     assertEquals(home.getInfo(), UrbanPlanner.coupleHomeGoal(village));
-    BuildingInfo cottage = new BuildingInfo("couple_cottage_plains_1")
+    BuildingInfo cottage = new BuildingInfo("couple_cottage_birch_forest_1")
         .addBedLocation(1, 1, 1).addBedLocation(2, 1, 1);
     Buildings.reload(Map.of(home.getName(), home.getInfo(), cottage.getName(), cottage));
     assertEquals(cottage, UrbanPlanner.coupleHomeGoal(village));
@@ -308,7 +308,7 @@ class CoupleHousingTest {
 
   private static Building mixedHome() {
     BuildingInfo info = decode("""
-        {"structure":"house_plains_1","beds":[[0,1,0],[1,1,0],[8,1,0],[9,1,0],[4,1,0],[6,1,0]],
+        {"structure":"house_birch_forest_1","beds":[[0,1,0],[1,1,0],[8,1,0],[9,1,0],[4,1,0],[6,1,0]],
          "couple_beds":[[[0,1,0],[1,1,0]],[[8,1,0],[9,1,0]]]}
         """);
     Buildings.reload(Map.of(info.getName(), info));
@@ -317,7 +317,7 @@ class CoupleHousingTest {
 
   private static Building coupleWorkplace(Occupation occupation) {
     BuildingInfo info = decode("""
-        {"structure":"farm_plains_1","beds":[[0,1,0],[1,1,0]],
+        {"structure":"farm_birch_forest_1","beds":[[0,1,0],[1,1,0]],
          "couple_beds":[[[0,1,0],[1,1,0]]],"worker_beds":[[0,1,0],[1,1,0]],
          "work_stations":[{"pos":[3,1,1],"occupation":"%s"},{"pos":[4,1,1],"occupation":"BUILDER"}]}
         """.formatted(occupation.name()));
@@ -327,7 +327,7 @@ class CoupleHousingTest {
   }
 
   private static Building onePairHome() {
-    BuildingInfo info = new BuildingInfo("couple_cottage_plains_1")
+    BuildingInfo info = new BuildingInfo("couple_cottage_birch_forest_1")
         .addBedLocation(1, 1, 1).addBedLocation(2, 1, 1);
     Buildings.reload(Map.of(info.getName(), info));
     return new Building(info.getName(), Rotation.NONE);

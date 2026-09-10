@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Random;
@@ -14,6 +15,7 @@ import com.google.gson.JsonParser;
 import com.mojang.serialization.JsonOps;
 
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Rotation;
 
@@ -45,14 +47,14 @@ class BuildingRecipeTest {
   @Test
   void oneRecipePricesEveryStyleAndLayoutAndUpdatesTogetherOnReload() {
     Map<ResourceLocation, JsonElement> definitions = Map.of(
-        id("house_plains_1"), definition("house_plains_1"),
+        id("house_birch_forest_1"), definition("house_birch_forest_1"),
         id("house_desert_1"), definition("house_desert_1"),
         id("house_badlands_1__small_house_5"), definition("house_badlands_1__small_house_5"));
     for (int amount : new int[] {19, 27}) {
       Map<String, BuildingInfo> loaded = BuildingDefinitionLoader.resolve(definitions, Map.of(id("house_1"), recipe(amount)));
       assertEquals(3, loaded.size());
       loaded.values().forEach(info -> assertEquals(amount, info.getMaterialCost().getFirst().getCount()));
-      loaded.get("house_plains_1").getMaterialCost().getFirst().shrink(1);
+      loaded.get("house_birch_forest_1").getMaterialCost().getFirst().shrink(1);
       assertEquals(amount, loaded.get("house_desert_1").getMaterialCost().getFirst().getCount());
     }
   }
@@ -72,14 +74,14 @@ class BuildingRecipeTest {
         {"structure":"house_desert_1","cost":[{"item":"minecraft:oak_log","count":7}]}
         """);
     var definitions = Map.of(id("house_desert_1"), override,
-        id("house_plains_1"), definition("house_plains_1"));
+        id("house_birch_forest_1"), definition("house_birch_forest_1"));
     for (int defaultPrice : new int[] {19, 27}) {
       var loaded = BuildingDefinitionLoader.resolve(definitions, Map.of(id("house_1"), recipe(defaultPrice)));
       var price = loaded.get("house_desert_1").getMaterialCost();
       assertEquals(1, price.size());
       assertTrue(price.getFirst().is(Items.OAK_LOG));
       assertEquals(7, price.getFirst().getCount());
-      assertEquals(defaultPrice, loaded.get("house_plains_1").getMaterialCost().getFirst().getCount());
+      assertEquals(defaultPrice, loaded.get("house_birch_forest_1").getMaterialCost().getFirst().getCount());
     }
     assertEquals(1, BuildingDefinitionLoader.resolve(definitions, Map.of()).size(),
         "An explicit full recipe also prices categories with no default");
@@ -136,19 +138,28 @@ class BuildingRecipeTest {
           || stack.is(Items.OAK_PLANKS) || stack.is(Items.COBBLESTONE)
           || stack.is(Items.WHITE_WOOL) || stack.is(Items.IRON_INGOT)), info.getName());
     }
-    assertEquals(380, loaded.get("church_desert_1").getMaterialCost().stream()
-        .filter(stack -> stack.is(Items.COBBLESTONE)).findFirst().orElseThrow().getCount());
+    // The bundled Birch church carries no cost override, so its price is the shared
+    // church_1 recipe: 380 cobblestone and 133 oak logs (docs/building-spec.md, church).
+    List<ItemStack> church = loaded.get("church_birch_forest_1").getMaterialCost();
+    assertEquals(380, church.stream().filter(stack -> stack.is(Items.COBBLESTONE)).findFirst().orElseThrow().getCount());
+    assertEquals(133, church.stream().filter(stack -> stack.is(Items.OAK_LOG)).findFirst().orElseThrow().getCount());
   }
 
+  /**
+   * The bundled recipes price watchtower_1 at 24 logs and 40 cobblestone and
+   * watchtower_2 at 20 logs and 60 cobblestone, so a fresh level 2 pays the
+   * level-1 recipe plus the positive delta (24 logs, 60 cobblestone) and an
+   * upgrade pays only the 20 extra cobblestone.
+   */
   @Test
   void towerQuotesPreservePositiveUpgradeDeltasWithoutRefundingFewerLogs() throws Exception {
     Map<ResourceLocation, JsonElement> definitions = Map.of(
-        id("watchtower_desert_1"), definition("watchtower_desert_1"),
-        id("watchtower_desert_2"), json("""
-            {"structure":"watchtower_desert_2","upgrades_from":"watchtower_desert_1"}
+        id("watchtower_birch_forest_1"), definition("watchtower_birch_forest_1"),
+        id("watchtower_birch_forest_2"), json("""
+            {"structure":"watchtower_birch_forest_2","upgrades_from":"watchtower_birch_forest_1"}
             """));
     Buildings.reload(BuildingDefinitionLoader.resolve(definitions, resources(BuildingRecipe.DIRECTORY)));
-    BuildingInfo tower = Objects.requireNonNull(Buildings.getByName("watchtower_desert_2"));
+    BuildingInfo tower = Objects.requireNonNull(Buildings.getByName("watchtower_birch_forest_2"));
     var fresh = ConstructionQuote.requiredFor(tower, ConstructionMode.FRESH);
     assertEquals(24, fresh.stream().filter(stack -> stack.is(Items.OAK_LOG)).findFirst().orElseThrow().getCount());
     assertEquals(60, fresh.stream().filter(stack -> stack.is(Items.COBBLESTONE)).findFirst().orElseThrow().getCount());
