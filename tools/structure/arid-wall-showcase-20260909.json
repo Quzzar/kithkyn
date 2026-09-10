@@ -1,0 +1,83 @@
+{
+  "purpose": "Review copies of actual runtime geometry. No distinct regional wall art has been selected.",
+  "dimension": "minecraft:overworld",
+  "entry": [
+    3680.5,
+    230,
+    965.5,
+    180,
+    0
+  ],
+  "bounds": [
+    3598,
+    229,
+    882,
+    3762,
+    248,
+    980
+  ],
+  "rings": [
+    {
+      "id": "acacia",
+      "tier": "wood",
+      "style": "badlands",
+      "label": "DESERT + PUEBLO\nCurrent acacia palisade",
+      "from": [
+        3608,
+        230,
+        892
+      ],
+      "to": [
+        3656,
+        230,
+        940
+      ],
+      "floor": [
+        3600,
+        229,
+        884,
+        3664,
+        229,
+        947
+      ],
+      "native_feedback": "[22:37:57] [Server thread/INFO] [minecraft/MinecraftServer]: Built badlands wood wall preview: 28 sections, 4 gates, 1298 blocks placed across 168 route columns.",
+      "status": "placed"
+    },
+    {
+      "id": "stone",
+      "tier": "stone",
+      "style": "desert",
+      "label": "DESERT + PUEBLO\nCurrent stone upgrade",
+      "from": [
+        3704,
+        230,
+        892
+      ],
+      "to": [
+        3752,
+        230,
+        940
+      ],
+      "floor": [
+        3696,
+        229,
+        884,
+        3760,
+        229,
+        947
+      ],
+      "native_feedback": "[22:37:57] [Server thread/INFO] [minecraft/MinecraftServer]: Built desert stone wall preview: 36 sections, 4 gates, 3280 blocks placed across 168 route columns.",
+      "status": "placed"
+    }
+  ],
+  "render_review": {
+    "passed": true,
+    "views": [
+      "screenshots/client/screenshots/acacia-palisade.png",
+      "screenshots/client/screenshots/stone-upgrade.png"
+    ],
+    "notes": "Both complete rings, four gates each, corner features and gallery connection reviewed in the live world. Distant overview has server render-distance fog; close views are clear."
+  },
+  "private_work": "run/arid-wall-showcase",
+  "source": "WallPreview uses the same WallProject and wall catalogs as village builders."
+}

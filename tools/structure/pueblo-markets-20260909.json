@@ -1,6 +1,6 @@
 {
   "status": "captured_configured_and_verified",
-  "description": "Current three-tier market ladder adapted to Pueblo/Mesa without changing authored geometry or capacity. Private review selection only.",
+  "description": "Current three-tier market ladder adapted to Pueblo/Mesa without changing authored geometry or capacity. Final production bindings and village color slots are installed in the private Badlands catalog.",
   "work": "run/pueblo-showcase/mesa-markets-preview-20260909-204400",
   "preview_colors": {
     "primary": "blue",

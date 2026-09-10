@@ -1,5 +1,12 @@
 # Walls
 
+The current Desert and Pueblo/Badlands catalogs share the acacia palisade and the
+procedural stone upgrade. Separate sandstone or clay wall art has not been selected.
+Editable runtime previews of both tiers are beside the dry building gallery at
+`3680.5, 230, 965.5`, facing north. Each complete ring has four gates and corner
+features, and both were inspected in the live client. Their positions and provenance
+are recorded in `tools/structure/arid-wall-showcase-20260909.json`.
+
 A wall is a route compiled into buildings-sized pieces. It is not one enormous
 `Building`, because it has no fixed footprint, and it is no longer a stream of
 single columns either. The village chooses and saves a perimeter once, compiles
