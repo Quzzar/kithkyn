@@ -1,6 +1,6 @@
 {
   "variant": "badlands",
-  "status": "verified_pending_local_deployment",
+  "status": "verified_and_locally_deployed",
   "source_policy": "Locally approved playable datapack, excluded from public distribution. Source provenance is retained; written redistribution permission is not asserted.",
   "manifests": [
     "tools/structure/pueblo-center-20260909.json",

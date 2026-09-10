@@ -97,3 +97,9 @@ all 240 buildings and 48 original entities without duplication. Twelve upgrade f
 Four complete founding rotations verified the eight starting jobs, ten center beds, room and
 storage ownership, separated meeting and cooking locations, and village persistence. Natural
 founding also passed biome selection, protected-anchor safety and delayed-plan checks.
+
+The verified runtime and private datapack were installed locally on September 9. The server
+loaded the pack automatically, registered 199 building definitions in total, and accepted the
+returning player after the matching Prism client update. The current world and gallery were
+fully backed up and preserved. Rendered views confirmed the colored market cloth, village
+flags and the complete center with its two roof fires.
