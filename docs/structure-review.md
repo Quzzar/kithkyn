@@ -1685,3 +1685,22 @@ builds Birch. A village saved in a removed family keeps its name, people and ide
 as Birch, and treats its old buildings as absent: they stay in the save, provide nothing, and
 one warning per load names them. The tools that derived the old families' level-2 mines and
 cottage variants went with them.
+
+### Floodplain catalog verified: September 10
+
+The floodplain selection became a private catalog the same day: `run/floodplain-integration/prepare.py`
+exported the twenty selected buildings from their captures as neutral templates with the earthen ground
+course as layer 0, wrote their definitions, and baked the butcher's three cows and three pigs and the
+storehouse's two allays into the templates through a new `entities` key on the native export tool. Three
+cells changed in the export for the runtime's sake: the centre gained one campfire on its north apron,
+and the storehouse doorway trapdoor and the watchtower's ladder hatch are open, because people open doors
+and gates but never trapdoors. The runtime gained the `floodplain` style with the mangrove mapping, the
+mud brick wall palette and a naming profile; the old Village Life catalogs were removed in the same branch.
+The access run exposed two runtime defects the arid catalogs had hidden: climbers kept their approach
+velocity while ascending a ladder and drifted off a free-standing rung, which `PersonPathNavigation` now
+steers back onto, and idle allays aimed at the cell above their note block even when a candle sat there,
+which the keeper behaviour now sidesteps. The access fixture also removes authored keepers for its walks,
+since two allays in a small storehouse push the probe off a container mid-check.
+Static checks, 470 unit tests and the five native modes (placement, restart, centre, access, founding with
+natural founding in a mangrove swamp world) all passed; the public record is
+`tools/structure/floodplain-catalog-20260910.json`.

@@ -92,3 +92,6 @@ placement, house-access and approved-centre fixtures, and natural founding in a 
 swamp world; `run/floodplain-integration/verify.py` runs each mode on a disposable server.
 Opt-in verification flags belong only on disposable worlds. Results are recorded with the
 release under `run/floodplain-integration/`.
+
+The September 10 release passed all 470 unit tests. 160 real-template placements, both paths, four rotations, colors, frames, entity/save receipts and upgrade preservation. A real server restart kept 160 saved buildings and 64 original entities. The approved-centre and house-access fixtures passed for every building. The shared reviewed-village
+fixture passed its catalogue, upgrade, founding and natural founding checks in a mangrove swamp world: 20 strict native templates, 2 housing alternatives, 12 upgrade fits, four founding rotations and codec reloads, natural biome selection, 5 beds, 4 positions, distinct meeting/fire locations and village identity.

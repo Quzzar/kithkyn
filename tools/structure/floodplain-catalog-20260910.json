@@ -1,6 +1,6 @@
 {
   "variant": "floodplain",
-  "status": "pending_verification",
+  "status": "verified_pending_local_deployment",
   "source_policy": "Locally approved playable datapack, excluded from public distribution. Source provenance is retained; written redistribution permission is not asserted.",
   "manifests": [
     "tools/structure/nilotic-selections-20260910.json"
@@ -319,7 +319,22 @@
   ],
   "exporter": "run/floodplain-integration/prepare.py",
   "native_writer": "tools/structure/VillageTemplateExport.java (with the entities plan key)",
-  "verification": "run/floodplain-integration/check.py (static); native placement, access and founding pending",
+  "verification": {
+    "static": "run/floodplain-integration/check.py: 20 definitions and templates",
+    "unit_tests": "470 tests, 0 failures, on the floodplain-village branch",
+    "placement": "run/floodplain-integration/placement/verification.json",
+    "restart": "run/floodplain-integration/placement/verification.json",
+    "center": "run/floodplain-integration/center/verification.json",
+    "access": "run/floodplain-integration/access/verification.json",
+    "founding": "run/floodplain-integration/founding/verification.json",
+    "results": {
+      "placement": "[building-placement-verify] RESULT PASS: 160 real-template placements, both paths, four rotations, colors, frames, entity/save receipts and upgrade preservation",
+      "restart": "[building-placement-verify] RESTART PASS: 160 saved buildings and 64 original entities survived real server shutdown/restart without replenishment",
+      "center": "[approved-house-verify] RESULT PASS: 4 rotated structures, 12 access routes, 0 physical room walks and assigned-bed sleeps, 0 physical personal-container deposits, 0 failed placements; probe size=18; station walks=12, shared deposits=0, mine walks=0, review walks=0",
+      "access": "[approved-house-verify] RESULT PASS: 72 rotated structures, 188 access routes, 40 physical room walks and assigned-bed sleeps, 16 physical personal-container deposits, 0 failed placements; probe size=18; station walks=68, shared deposits=72, mine walks=8, review walks=0",
+      "founding": "[floodplain-verify] RESULT PASS: 20 strict native templates, 2 housing alternatives, 12 upgrade fits, four founding rotations and codec reloads, natural biome selection, 5 beds, 4 positions, distinct meeting/fire locations and village identity"
+    }
+  },
   "datapack": "run/floodplain-integration/datapack",
   "recipe_catalog": "src/main/resources/data/kithkyn/kithkyn/construction_recipes",
   "market_color_policy": "Market tent fabrics and decorative banners retain their original authored colors, independent of village identity; regional timber, masonry and plants may change.",
