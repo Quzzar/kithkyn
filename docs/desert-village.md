@@ -44,6 +44,12 @@ tests walk workers to their beds, private and communal containers, service stati
 mine stairs, and elevated guard posts. Market counter entrances remain two blocks
 high and wide enough for adult workers to move between stalls.
 
+The September 10 placement repair raises the mine, compact storehouse, and both medium-house
+alternatives one block (`sink: -1`) so their lowest steps, fence bases, and trim remain exposed.
+The mine's worker stands at local `[4,0,3]`; the shaft mouth is `[4,1,5]`, facing south down the
+three-block covered lane between the fence and bedroom wall. The market entrance retains one
+orange carpet. These corrections are recorded in `tools/structure/desert-placement-repair-20260910.json`.
+
 The September 10 comparison decision keeps D04.12 as the well, adopts the Dungeons &
 Taverns T02.9 building as the official tavern, and retains the former D05.2 tavern as
 `couple_cottage_desert_1`. Its two adjacent beds form one general couple room, both in

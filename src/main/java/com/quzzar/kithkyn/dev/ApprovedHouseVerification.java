@@ -263,6 +263,9 @@ public final class ApprovedHouseVerification {
     for (MineShaft shaft : MineShaft.of(building)) {
       check(level.getBlockState(shaft.entranceClearance()).getCollisionShape(level, shaft.entranceClearance()).isEmpty(),
           "Mine mouth needs an authored opening at " + shaft.mouth().subtract(ORIGIN));
+      if (Boolean.getBoolean("kithkyn.approvedHouses.excavateAuthoredMine")) {
+        verifyAuthoredExcavation(level, probe, shaft);
+      }
       ApprovedStructureAccess.excavateMine(level, shaft, ORIGIN.getY());
       BlockPos depth = shaft.mouth().offset(new BlockPos(0, -7, 5).rotate(shaft.rotation()));
       visits.add(new Visit(VisitKind.MINE_DESCENT, depth, -1, Occupation.WANDERER));
@@ -419,6 +422,42 @@ public final class ApprovedHouseVerification {
     check(!bed.equals(BlockPos.ZERO), "Workplace return lost the resident's bed assignment");
     walker.callToBedCoolDown = 100_000;
     if (!beginStash()) beginSleep();
+  }
+
+  /** Exercise the real mining selector against the authored entrance before the navigation replay. */
+  private static void verifyAuthoredExcavation(ServerLevel level, RealPerson miner, MineShaft shaft) {
+    JobAssignment job = village.getUnassignedJobs().stream()
+        .filter(candidate -> candidate.getOccupation() == Occupation.MINER).findFirst().orElseThrow();
+    village.assignJob(miner.getUUID(), job);
+    miner.setOccupation(Occupation.MINER);
+    miner.setItemSlot(net.minecraft.world.entity.EquipmentSlot.MAINHAND, new ItemStack(Items.STONE_PICKAXE));
+    miner.personMainInv.setItem(0, new ItemStack(Items.COBBLESTONE, 64));
+    ApprovedStructureAccess.moveTo(miner, LocationManager.getJobLocation(miner));
+    Map<BlockPos, net.minecraft.world.level.block.state.BlockState> entranceEdges = new HashMap<>();
+    for (int side : new int[]{-1, 1}) {
+      for (int z = -1; z <= 2; z++) {
+        BlockPos pos = shaft.mouth().offset(new BlockPos(side * (shaft.radius() + 1), -1, z).rotate(shaft.rotation()));
+        entranceEdges.put(pos, level.getBlockState(pos));
+      }
+    }
+    var mine = new com.quzzar.kithkyn.entities.ai.goals.work.MineStep();
+    BlockPos firstStep = shaft.mouth().offset(new BlockPos(0, -2, 0).rotate(shaft.rotation()));
+    check(!level.getBlockState(firstStep).isAir(), "Excavation fixture must start with solid terrain");
+    for (int pick = 0; pick < 50 && !level.getBlockState(firstStep).isAir(); pick++) {
+      BlockPos stand = mine.select(miner);
+      check(stand != null, "Authored mine selected no excavation work " + label());
+      check(WorkerFooting.canStand(miner, stand), "Mine selected unsupported footing " + stand);
+      ApprovedStructureAccess.moveTo(miner, stand);
+      mine.acquired(miner, stand);
+      for (int act = 0; act < 2000 && mine.act(miner, stand); act++) { }
+      mine.released(miner, stand);
+    }
+    check(level.getBlockState(firstStep).isAir(), "Miner did not dig the intended first descending step");
+    entranceEdges.forEach((pos, state) -> check(level.getBlockState(pos).equals(state),
+        "Excavation crossed the authored entrance edge at " + pos));
+    village.removePerson(miner.getUUID());
+    Kithkyn.LOGGER.info("[approved-house-verify] EXCAVATION PASS {}: width {}, mouth {}",
+        label(), shaft.radius() * 2 + 1, shaft.mouth().subtract(ORIGIN));
   }
 
   /** Assign the real role and kit, then walk to its authored station or a visible storage approach. */

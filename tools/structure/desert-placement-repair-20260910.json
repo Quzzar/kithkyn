@@ -1,0 +1,45 @@
+{
+  "description": "Correct the exposed ground course of the Desert mine, compact storehouse, and both medium-house alternatives. Fit the mine to the south-running three-block covered lane and keep one market entrance carpet.",
+  "definition_manifests": [
+    "tools/structure/desert-houses-20260909.json",
+    "tools/structure/desert-storehouses-20260909.json",
+    "tools/structure/desert-services-20260909.json"
+  ],
+  "market": {
+    "structure": "market_desert_1",
+    "overrides": [
+      {
+        "pos": [
+          0,
+          1,
+          4
+        ],
+        "name": "minecraft:air",
+        "properties": {}
+      }
+    ],
+    "retained_entrance_carpet": [
+      1,
+      1,
+      4
+    ],
+    "sha256": "f379c03bb1008fed8d125f2a97f960c3cffb93ca05342eb36aab6f77e2a6fa4e"
+  },
+  "ground_contract": "sink -1 places visible layer-zero detail above the terrain; sink 0 replaces the terrain surface with a foundation course.",
+  "mine_lane": {
+    "center_x": 4,
+    "mouth": [
+      4,
+      1,
+      5
+    ],
+    "station": [
+      4,
+      0,
+      3
+    ],
+    "descent": "south",
+    "width": 3
+  },
+  "verification_directory": "run/regional-seating-20260910"
+}

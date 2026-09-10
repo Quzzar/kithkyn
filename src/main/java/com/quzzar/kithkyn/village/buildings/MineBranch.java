@@ -50,9 +50,13 @@ public record MineBranch(long rootStation, int sourceDepth, int side, boolean co
 
   /** Cheap rejection for consecutive same-side ribs of one root. */
   public boolean overlapsRootSibling(MineBranch other) {
+    return overlapsRootSibling(other, MineShaft.RADIUS);
+  }
+
+  public boolean overlapsRootSibling(MineBranch other, int radius) {
     return rootStation == other.rootStation
         && side == other.side
-        && Math.abs(sourceDepth - other.sourceDepth) <= MineShaft.RADIUS * 2;
+        && Math.abs(sourceDepth - other.sourceDepth) <= radius * 2;
   }
 
 }

@@ -69,7 +69,7 @@ public final class BuildingRepairs {
           case COUNTERCLOCKWISE_90 -> Rotation.CLOCKWISE_90;
           default -> shaft.rotation();
         };
-        if (MineShaft.withinExcavation(pos.subtract(shaft.mouth()).rotate(inverse))) return true;
+        if (MineShaft.withinExcavation(pos.subtract(shaft.mouth()).rotate(inverse), shaft.radius())) return true;
       }
     }
     return false;

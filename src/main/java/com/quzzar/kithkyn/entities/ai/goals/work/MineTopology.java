@@ -39,15 +39,14 @@ final class MineTopology {
    * one entrance marker, so a child gets a visible threshold without wasting a
    * torch on both walls.
    */
-  private static final List<BlockPos> ENTRANCE_TORCH_CELLS = List.of(
-      new BlockPos(-MineShaft.RADIUS, -1, 0),
-      new BlockPos(MineShaft.RADIUS, -1, 0));
+  private final int radius;
 
-  private MineTopology() {
+  MineTopology(int radius) {
+    this.radius = radius;
   }
 
-  static List<BlockPos> entranceTorchCells() {
-    return ENTRANCE_TORCH_CELLS;
+  List<BlockPos> entranceTorchCells() {
+    return List.of(new BlockPos(-radius, -1, 0), new BlockPos(radius, -1, 0));
   }
 
   /** The walk-cell Y shared by a ramp column and any rib cut from it. */
@@ -60,13 +59,13 @@ final class MineTopology {
    * frontier search is about the shaft's progress, never the worker's current
    * position: an idle miner is free to wander without making deep work disappear.
    */
-  static List<BlockPos> rampCellsThrough(int lastZ) {
+  List<BlockPos> rampCellsThrough(int lastZ) {
     List<BlockPos> cells = new ArrayList<>();
-    for (int z = -(MineShaft.RADIUS - 1); z <= lastZ; z++) {
+    for (int z = MineShaft.ENTRY_COLUMN; z <= lastZ; z++) {
       int floor = floorY(z);
-      int ceiling = Math.min(floor + 4, -1);
+      int ceiling = Math.min(floor + MineShaft.RAMP_HEIGHT - 1, -1);
       for (int y = floor; y <= ceiling; y++) {
-        for (int x = -MineShaft.RADIUS; x <= MineShaft.RADIUS; x++) {
+        for (int x = -radius; x <= radius; x++) {
           cells.add(new BlockPos(x, y, z));
         }
       }
@@ -81,7 +80,7 @@ final class MineTopology {
    * shaft. A cave floor beneath the bridge is therefore not mistaken for safe
    * footing.
    */
-  static List<BlockPos> floorStandCandidates(BlockPos floorCell) {
+  List<BlockPos> floorStandCandidates(BlockPos floorCell) {
     List<BlockPos> candidates = new ArrayList<>();
     candidates.add(floorCell.above());
     for (Direction direction : Direction.Plane.HORIZONTAL) {
@@ -89,7 +88,7 @@ final class MineTopology {
       candidates.add(floorCell.above().relative(direction));
     }
     return candidates.stream()
-        .filter(MineTopology::isRamp)
+        .filter(this::isRamp)
         .filter(candidate -> candidate.getZ() <= floorCell.getZ())
         .toList();
   }
@@ -101,10 +100,10 @@ final class MineTopology {
    * sturdy top face. The first ordinary supported ramp cell just beyond it is
    * an equally valid connectivity anchor.
    */
-  static List<BlockPos> entranceStandCandidates() {
+  List<BlockPos> entranceStandCandidates() {
     List<BlockPos> candidates = new ArrayList<>();
     int[] across = {0, -1, 1, -2, 2};
-    for (int z = -(MineShaft.RADIUS - 1); z <= 1; z++) {
+    for (int z = MineShaft.ENTRY_COLUMN; z <= 1; z++) {
       int y = floorY(z);
       for (int x : across) {
         BlockPos candidate = new BlockPos(x, y, z);
@@ -121,7 +120,7 @@ final class MineTopology {
    * leave its nearest dry footing both higher and behind the target, so this is
    * a reach sphere rather than only the target's cardinal neighbours.
    */
-  static List<BlockPos> workStandCandidates(BlockPos target, double reachSqr) {
+  List<BlockPos> workStandCandidates(BlockPos target, double reachSqr) {
     List<BlockPos> candidates = new ArrayList<>();
     int search = (int) Math.ceil(Math.sqrt(reachSqr));
     for (int dz = -search; dz <= search; dz++) {
@@ -149,7 +148,7 @@ final class MineTopology {
    * block. Restricting neighbours to that shape avoids cutting diagonally through
    * a solid corner while still joining every ordinary stair and horizontal rib.
    */
-  static boolean standPathExists(BlockPos start, BlockPos target,
+  boolean standPathExists(BlockPos start, BlockPos target,
       Predicate<BlockPos> isOpenStand, int maxCells) {
     return standPath(start, target, isOpenStand, maxCells).connected();
   }
@@ -160,7 +159,7 @@ final class MineTopology {
    * connected walkable volume actually ends, rather than merely saying that a
    * deep face is unreachable.
    */
-  static StandPath standPath(BlockPos start, BlockPos target,
+  StandPath standPath(BlockPos start, BlockPos target,
       Predicate<BlockPos> isOpenStand, int maxCells) {
     if (!isNavigableStand(start) || !isNavigableStand(target)
         || !isOpenStand.test(start) || !isOpenStand.test(target)) {
@@ -193,15 +192,15 @@ final class MineTopology {
   }
 
   /** The five-cell-high descending shaft, capped below the surface structure. */
-  static boolean isRamp(BlockPos local) {
-    return MineShaft.withinCorridor(local)
+  boolean isRamp(BlockPos local) {
+    return MineShaft.withinCorridor(local, radius)
         && local.getY() >= -(local.getZ() + 2)
         && local.getY() <= -(local.getZ() - 2);
   }
 
   /** A one-cell-wide horizontal prospecting rib on one of the fixed grid lines. */
-  static boolean isRib(BlockPos local) {
-    return MineShaft.withinRib(local);
+  boolean isRib(BlockPos local) {
+    return MineShaft.withinRib(local, radius);
   }
 
   /**
@@ -209,16 +208,16 @@ final class MineTopology {
    * flooded cell farther along that rib. This is the safe place for a temporary
    * bulkhead: it gives up the wet branch without filling or narrowing the ramp.
    */
-  static BlockPos ribDoorway(BlockPos local) {
+  BlockPos ribDoorway(BlockPos local) {
     if (!isRib(local)) {
       return null;
     }
     int side = Integer.signum(local.getX());
-    return new BlockPos(side * (MineShaft.RADIUS + 1), local.getY(), local.getZ());
+    return new BlockPos(side * (radius + 1), local.getY(), local.getZ());
   }
 
   /** Every cell the mine deliberately opens, whether it belongs to the ramp or a rib. */
-  static boolean isInterior(BlockPos local) {
+  boolean isInterior(BlockPos local) {
     return isRamp(local) || isRib(local) || MineShaft.withinEntranceClearance(local);
   }
 
@@ -228,7 +227,7 @@ final class MineTopology {
    * cell opened while following ore is not safe footing outside that geometry:
    * navigation would treat the work as an exit and send the miner up the ramp.
    */
-  static boolean isNavigableStand(BlockPos local) {
+  boolean isNavigableStand(BlockPos local) {
     return isInterior(local);
   }
 
@@ -237,7 +236,7 @@ final class MineTopology {
    * exterior lining. The caller decides whether the exterior block's current
    * state is solid, air, or fluid.
    */
-  static boolean crossesExteriorBoundary(BlockPos inside, BlockPos neighbour) {
+  boolean crossesExteriorBoundary(BlockPos inside, BlockPos neighbour) {
     int distance = Math.abs(inside.getX() - neighbour.getX())
         + Math.abs(inside.getY() - neighbour.getY())
         + Math.abs(inside.getZ() - neighbour.getZ());

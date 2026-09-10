@@ -70,12 +70,12 @@ final class ApprovedStructureAccess {
 
   /** Replays the first ramp, seeding only underground terrain and retaining everything above the mouth. */
   static void excavateMine(ServerLevel level, MineShaft shaft, int surfaceY) {
-    for (BlockPos local : BlockPos.betweenClosed(-2, -13, -2, 2, -1, 8)) {
+    for (BlockPos local : BlockPos.betweenClosed(-shaft.radius(), -13, -2, shaft.radius(), -1, 8)) {
       BlockPos position = shaft.mouth().offset(local.rotate(shaft.rotation()));
       if (position.getY() < surfaceY) level.setBlock(position, Blocks.STONE.defaultBlockState(), 2);
     }
-    for (BlockPos local : BlockPos.betweenClosed(-2, -12, -1, 2, -1, 8)) {
-      if (MineShaft.withinCorridor(local)) {
+    for (BlockPos local : BlockPos.betweenClosed(-shaft.radius(), -12, -1, shaft.radius(), -1, 8)) {
+      if (MineShaft.withinCorridor(local, shaft.radius())) {
         level.setBlock(shaft.mouth().offset(local.rotate(shaft.rotation())), Blocks.AIR.defaultBlockState(), 2);
       }
     }

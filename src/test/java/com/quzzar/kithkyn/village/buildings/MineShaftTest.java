@@ -15,6 +15,25 @@ import net.minecraft.world.level.block.Rotation;
 class MineShaftTest {
 
   @Test
+  void narrowRootAndChildrenKeepTheirWidthAndAdjacentEntryInEveryRotation() {
+    for (Rotation rotation : Rotation.values()) {
+      BlockPos mouth = new BlockPos(30, 100, 40);
+      MineShaft root = MineShaft.root(mouth, rotation, 42L, 3);
+      assertEquals(1, root.radius());
+      assertEquals(mouth.offset(new BlockPos(0, -1, -1).rotate(rotation)), root.entry());
+      for (int side : new int[]{-1, 1}) {
+        MineShaft child = MineShaft.child(root, new MineBranch(42L, 8, side, false));
+        assertEquals(1, child.radius());
+        assertEquals(mouth.offset(new BlockPos(side * 9, -10, 8).rotate(rotation)), child.entry());
+      }
+      BlockPos inside = mouth.offset(new BlockPos(0, -7, 5).rotate(rotation));
+      BlockPos outsideWall = mouth.offset(new BlockPos(2, -7, 5).rotate(rotation));
+      assertNull(MineShaft.waypoint(List.of(root), outsideWall, mouth.above(5)));
+      assertTrue(MineShaft.waypoint(List.of(root), inside, mouth.above(5)) != null);
+    }
+  }
+
+  @Test
   void approachingARootWorkStationUsesTheOrdinarySurfaceRoute() {
     BlockPos mouth = new BlockPos(0, 100, 0);
     BlockPos outside = new BlockPos(-12, 100, 0);

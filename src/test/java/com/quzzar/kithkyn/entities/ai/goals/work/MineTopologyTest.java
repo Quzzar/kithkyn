@@ -15,15 +15,31 @@ import net.minecraft.core.BlockPos;
 
 class MineTopologyTest {
 
+  private final MineTopology topology = new MineTopology(MineShaft.RADIUS);
+
+  @Test
+  void narrowShaftRetainsRampHeadroomAndEntryWhileMovingItsWallsAndRibs() {
+    MineTopology narrow = new MineTopology(1);
+    var cells = narrow.rampCellsThrough(12);
+    assertEquals(topology.rampCellsThrough(12).stream()
+        .filter(pos -> Math.abs(pos.getX()) <= 1).toList(), cells);
+    assertTrue(cells.contains(new BlockPos(0, -1, -1)));
+    assertTrue(cells.contains(new BlockPos(1, -6, 8)));
+    assertFalse(narrow.isRamp(new BlockPos(2, -7, 5)));
+    assertTrue(narrow.isRib(new BlockPos(2, -10, 8)));
+    assertFalse(narrow.crossesExteriorBoundary(new BlockPos(1, -10, 8), new BlockPos(2, -10, 8)));
+    assertEquals(new BlockPos(2, -10, 8), narrow.ribDoorway(new BlockPos(8, -10, 8)));
+  }
+
   @Test
   void plannedRibEntranceIsInteriorRatherThanRampLining() {
     BlockPos rampEdge = new BlockPos(2, -10, 8);
     BlockPos ribEntrance = new BlockPos(3, -10, 8);
 
-    assertTrue(MineTopology.isRamp(rampEdge));
-    assertTrue(MineTopology.isRib(ribEntrance));
-    assertTrue(MineTopology.isInterior(ribEntrance));
-    assertFalse(MineTopology.crossesExteriorBoundary(rampEdge, ribEntrance));
+    assertTrue(topology.isRamp(rampEdge));
+    assertTrue(topology.isRib(ribEntrance));
+    assertTrue(topology.isInterior(ribEntrance));
+    assertFalse(topology.crossesExteriorBoundary(rampEdge, ribEntrance));
   }
 
   @Test
@@ -32,8 +48,8 @@ class MineTopologyTest {
     BlockPos firstStairHead = new BlockPos(0, -1, 0);
 
     assertTrue(MineShaft.withinEntranceClearance(clearance));
-    assertTrue(MineTopology.isInterior(clearance));
-    assertFalse(MineTopology.crossesExteriorBoundary(firstStairHead, clearance));
+    assertTrue(topology.isInterior(clearance));
+    assertFalse(topology.crossesExteriorBoundary(firstStairHead, clearance));
   }
 
   @Test
@@ -41,10 +57,10 @@ class MineTopologyTest {
     assertEquals(java.util.List.of(
         new BlockPos(-MineShaft.RADIUS, -1, 0),
         new BlockPos(MineShaft.RADIUS, -1, 0)),
-        MineTopology.entranceTorchCells());
-    assertTrue(MineTopology.entranceTorchCells().stream()
+        topology.entranceTorchCells());
+    assertTrue(topology.entranceTorchCells().stream()
         .allMatch(MineShaft::withinCorridor));
-    assertTrue(MineTopology.entranceTorchCells().stream()
+    assertTrue(topology.entranceTorchCells().stream()
         .allMatch(cell -> MineShaft.withinCorridor(cell.below())));
   }
 
@@ -80,12 +96,12 @@ class MineTopologyTest {
   void frontierRecoveryScansTheWholeRampIndependentOfWorkerPosition() {
     BlockPos deepRejectedFace = new BlockPos(1, -23, 24);
 
-    var candidates = MineTopology.rampCellsThrough(deepRejectedFace.getZ());
+    var candidates = topology.rampCellsThrough(deepRejectedFace.getZ());
 
     BlockPos firstMissingFloorCell = new BlockPos(-2, -24, 22);
     assertEquals(new BlockPos(-2, -1, -1), candidates.getFirst());
     assertTrue(candidates.contains(deepRejectedFace));
-    assertTrue(candidates.stream().allMatch(MineTopology::isRamp));
+    assertTrue(candidates.stream().allMatch(topology::isRamp));
     assertTrue(candidates.stream().noneMatch(cell -> cell.getZ() > deepRejectedFace.getZ()));
     assertTrue(candidates.indexOf(firstMissingFloorCell) < candidates.indexOf(deepRejectedFace),
         "floor gaps must be considered before an unreachable upper face farther down the ramp");
@@ -95,11 +111,11 @@ class MineTopologyTest {
   void floorBridgeNeverUsesTheCaveBelowOrTheUnfinishedRampAhead() {
     BlockPos missingWalkCell = new BlockPos(0, -24, 22);
 
-    var candidates = MineTopology.floorStandCandidates(missingWalkCell);
+    var candidates = topology.floorStandCandidates(missingWalkCell);
 
     assertTrue(candidates.contains(new BlockPos(0, -23, 21)),
         "the preceding stair is valid bridge footing");
-    assertTrue(candidates.stream().allMatch(MineTopology::isRamp));
+    assertTrue(candidates.stream().allMatch(topology::isRamp));
     assertTrue(candidates.stream().allMatch(candidate -> candidate.getZ() <= missingWalkCell.getZ()));
     assertTrue(candidates.stream().noneMatch(
         candidate -> candidate.getY() < MineTopology.floorY(candidate.getZ())),
@@ -108,12 +124,12 @@ class MineTopologyTest {
 
   @Test
   void routeAuditCanAnchorPastADecorativeEntranceStep() {
-    var candidates = MineTopology.entranceStandCandidates();
+    var candidates = topology.entranceStandCandidates();
 
     assertEquals(new BlockPos(0, -1, -1), candidates.getFirst());
     assertTrue(candidates.contains(new BlockPos(0, -2, 0)),
         "the first ordinary ramp floor can anchor a route when the threshold is a stair");
-    assertTrue(candidates.stream().allMatch(MineTopology::isRamp));
+    assertTrue(candidates.stream().allMatch(topology::isRamp));
   }
 
   @Test
@@ -121,9 +137,9 @@ class MineTopologyTest {
     BlockPos belowRamp = new BlockPos(0, -25, 22);
     BlockPos sideLedge = new BlockPos(3, -24, 22);
 
-    assertFalse(MineTopology.isNavigableStand(belowRamp));
-    assertFalse(MineTopology.isNavigableStand(sideLedge));
-    assertFalse(MineTopology.isNavigableStand(new BlockPos(3, -25, 22)),
+    assertFalse(topology.isNavigableStand(belowRamp));
+    assertFalse(topology.isNavigableStand(sideLedge));
+    assertFalse(topology.isNavigableStand(new BlockPos(3, -25, 22)),
         "even an opened vein cell below the ramp is unsafe footing");
   }
 
@@ -132,11 +148,11 @@ class MineTopologyTest {
     BlockPos rejectedFace = new BlockPos(-2, -52, 50);
     BlockPos lastDryFooting = new BlockPos(0, -50, 48);
 
-    var candidates = MineTopology.workStandCandidates(rejectedFace, 12.0D);
+    var candidates = topology.workStandCandidates(rejectedFace, 12.0D);
 
     assertTrue(candidates.contains(lastDryFooting),
         "the last dry ramp step is exactly within the miner's configured reach");
-    assertTrue(candidates.stream().allMatch(MineTopology::isNavigableStand));
+    assertTrue(candidates.stream().allMatch(topology::isNavigableStand));
     assertTrue(candidates.stream().allMatch(candidate -> candidate.distSqr(rejectedFace) <= 12.0D));
     assertFalse(candidates.contains(rejectedFace),
         "an air work target cannot also be chosen as the place to stand");
@@ -151,10 +167,10 @@ class MineTopologyTest {
       openRamp.add(new BlockPos(0, MineTopology.floorY(z), z));
     }
 
-    assertTrue(MineTopology.standPathExists(start, target, openRamp::contains, 128));
+    assertTrue(topology.standPathExists(start, target, openRamp::contains, 128));
 
     openRamp.remove(new BlockPos(0, MineTopology.floorY(3), 3));
-    assertFalse(MineTopology.standPathExists(start, target, openRamp::contains, 128),
+    assertFalse(topology.standPathExists(start, target, openRamp::contains, 128),
         "a reachable first waypoint cannot make work beyond a sealed ramp selectable");
   }
 
@@ -164,10 +180,10 @@ class MineTopologyTest {
     BlockPos offRampVeinStand = new BlockPos(-5, -98, 97);
 
     assertFalse(MineShaft.withinExcavation(offRampVeinStand));
-    assertFalse(MineTopology.isNavigableStand(offRampVeinStand),
+    assertFalse(topology.isNavigableStand(offRampVeinStand),
         "a work stand outside navigation geometry sends the miner back up the ramp");
     BlockPos plannedRibStand = new BlockPos(-5, -98, 96);
-    assertTrue(MineTopology.isNavigableStand(plannedRibStand));
+    assertTrue(topology.isNavigableStand(plannedRibStand));
     assertTrue(MineShaft.withinExcavation(plannedRibStand));
   }
 
@@ -176,9 +192,9 @@ class MineTopologyTest {
     BlockPos floodedRampCell = new BlockPos(-2, -3, 5);
     BlockPos offsetLeak = new BlockPos(-2, -3, 6);
 
-    assertTrue(MineTopology.isRamp(floodedRampCell));
-    assertFalse(MineTopology.isInterior(offsetLeak));
-    assertTrue(MineTopology.crossesExteriorBoundary(floodedRampCell, offsetLeak));
+    assertTrue(topology.isRamp(floodedRampCell));
+    assertFalse(topology.isInterior(offsetLeak));
+    assertTrue(topology.crossesExteriorBoundary(floodedRampCell, offsetLeak));
   }
 
   @Test
@@ -186,17 +202,17 @@ class MineTopologyTest {
     BlockPos ribEnd = new BlockPos(10, -10, 8);
     BlockPos beyondRib = new BlockPos(11, -10, 8);
 
-    assertTrue(MineTopology.isRib(ribEnd));
-    assertTrue(MineTopology.crossesExteriorBoundary(ribEnd, beyondRib));
+    assertTrue(topology.isRib(ribEnd));
+    assertTrue(topology.crossesExteriorBoundary(ribEnd, beyondRib));
   }
 
   @Test
   void floodedRibCanBeSacrificedAtItsDoorwayWithoutBlockingTheRamp() {
     BlockPos floodedRibEnd = new BlockPos(-10, -10, 8);
 
-    assertEquals(new BlockPos(-3, -10, 8), MineTopology.ribDoorway(floodedRibEnd));
-    assertFalse(MineTopology.isRamp(MineTopology.ribDoorway(floodedRibEnd)));
-    assertNull(MineTopology.ribDoorway(new BlockPos(-2, -10, 8)));
+    assertEquals(new BlockPos(-3, -10, 8), topology.ribDoorway(floodedRibEnd));
+    assertFalse(topology.isRamp(topology.ribDoorway(floodedRibEnd)));
+    assertNull(topology.ribDoorway(new BlockPos(-2, -10, 8)));
   }
 
 }

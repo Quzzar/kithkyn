@@ -43,11 +43,23 @@ public class BuildingInfo {
   }
 
   /** A mine's excavation frame, independent of the building's front and job station. */
-  public record MineEntrance(Direction facing, BlockPos offset) {
-    public static final MineEntrance DEFAULT = new MineEntrance(Direction.SOUTH, BlockPos.ZERO);
+  public record MineEntrance(Direction facing, BlockPos offset, int width) {
+    public static final MineEntrance DEFAULT = new MineEntrance(Direction.SOUTH, BlockPos.ZERO, 5);
+    public MineEntrance(Direction facing, BlockPos offset) {
+      this(facing, offset, 5);
+    }
+
+    public MineEntrance {
+      if (width != 3 && width != 5) throw new IllegalArgumentException("Mine width must be 3 or 5");
+    }
+
     public static final Codec<MineEntrance> CODEC = RecordCodecBuilder.create(inst -> inst.group(
         Direction.CODEC.optionalFieldOf("facing", Direction.SOUTH).forGetter(MineEntrance::facing),
-        BlockPos.CODEC.optionalFieldOf("offset", BlockPos.ZERO).forGetter(MineEntrance::offset)
+        BlockPos.CODEC.optionalFieldOf("offset", BlockPos.ZERO).forGetter(MineEntrance::offset),
+        Codec.INT.validate(width -> width == 3 || width == 5
+            ? com.mojang.serialization.DataResult.success(width)
+            : com.mojang.serialization.DataResult.error(() -> "Mine width must be 3 or 5"))
+            .optionalFieldOf("width", 5).forGetter(MineEntrance::width)
     ).apply(inst, MineEntrance::new));
   }
 
@@ -322,7 +334,9 @@ public class BuildingInfo {
    * How many of the structure's bottom layers sit below the ground plane. A
    * building is seated with its layer 0 on the ground's top block; a well
    * declares one so its water and rim lie flush with the ground and its base
-   * course is buried, which is also what keeps the pool walled in by earth
+   * course is buried. A sink of -1 instead exposes layer zero above the
+   * ground for buildings whose lowest course contains steps or fence bases.
+   * A buried well base also keeps the pool walled in by earth
    * while the builder fills it.
    */
   public int getSink() {

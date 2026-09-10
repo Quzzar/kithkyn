@@ -898,8 +898,8 @@
           {
             "occupation": "MINER",
             "pos": [
-              3,
-              1,
+              4,
+              0,
               3
             ]
           }
@@ -939,15 +939,12 @@
           "secondary_blocks": [],
           "banners": []
         },
-        "sink": 0,
+        "sink": -1,
         "entrance_facing": "north",
         "mine_entrance": {
-          "facing": "north",
-          "offset": [
-            0,
-            0,
-            -2
-          ]
+          "facing": "south",
+          "offset": [0, 1, 2],
+          "width": 3
         },
         "grants": [
           "ORES",

@@ -27,12 +27,16 @@ outright, so such a building cannot load at all. MASON and TANNER were added whe
 their buildings shipped. Anything below that names a worker should be checked
 against the enum before it is authored.
 
-**A mine cannot ship its shaft network.** A structure's y=0 lands on the topmost solid block
-(`InstantBuildStructure.setOriginLocation` subtracts one from the WORLD_SURFACE
-heightmap), so nothing in a file can sit below ground: the footprint below is dug at
-runtime. `mine_*_1` is therefore a headframe over an open mouth, and its MINER station
-sits in the middle of that mouth so `WorkInMineGoal` deepens the hole rather than
-undermining the apron. The 7x7 footprint in the table is the headframe, not the mine.
+**A mine cannot ship its shaft network.** The template provides the headframe and entrance;
+the miner excavates the underground ramp and branches at runtime. `sink` specifies how the
+lowest authored layer seats against the terrain: zero replaces the surface block, while -1
+places that layer above it. `mine_entrance` specifies a cardinal descent direction, a mouth
+offset from each MINER station, and a width of three or five blocks (default five). The
+building's rotation applies to both direction and offset. Width changes the side walls and
+branch mouths; it does not change the one-down-per-forward-block slope, headroom, or entrance
+step. Children inherit their root's width. The top entrance remains open rather than being
+lined as though its outdoor air were a cave. Existing shafts retain their saved entrance
+geometry when a definition changes. The 7x7 footprint in the table is the headframe, not the mine.
 `mine_*_2` (2026-09-02) is that headframe grown toward local +X into a 13x7 pavilion over
 TWO mouths, stations at [3,0,3] and [9,0,3]. An upgrade keeps the origin corner, and the
 root shaft ramps toward local +Z from its mouth (`MineStep`), so a second mouth behind the first

@@ -79,7 +79,7 @@
           "secondary_blocks": [[10, 1, 6]],
           "banners": []
         },
-        "sink": 0
+        "sink": -1
       },
       "neutral_template": "run/pueblo-showcase/desert-houses-approved-20260909-213200/neutral/D05.4.nbt",
       "neutral_template_sha256": "a2f9da158ec27f59d5a5856fbcf5b65bb01721fc0d63888131f72f8b0cc93d41",
@@ -121,7 +121,7 @@
           "secondary_blocks": [],
           "banners": []
         },
-        "sink": 0
+        "sink": -1
       },
       "export_options_file": "tools/structure/desert-house-med2-export-20260909.json",
       "neutral_template": "run/pueblo-showcase/desert-houses-approved-20260909-213200/neutral/D05.5.nbt",
