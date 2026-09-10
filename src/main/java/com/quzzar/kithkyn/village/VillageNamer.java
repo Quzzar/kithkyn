@@ -151,6 +151,13 @@ public final class VillageNamer {
           List.of("Nilora", "Kemwari", "Sefuna", "Abaresh"),
           List.of("Nil", "Kem", "Sef", "Aba", "Mer", "Tam", "Wad", "Osa"),
           List.of("ora", "ari", "wari", "una", "esh", "ai", "oma", "eni"));
+      case JUNGLE -> new NamingProfile(
+          "A shaded settlement woven through dense jungle: raised timber rooms, bamboo roofs,"
+              + " rope bridges, broad leaves, open workshops and watch platforms above the canopy."
+              + " Bright, rhythmic invented names with a lively tropical sound.",
+          List.of("Taluma", "Olanui", "Mavira", "Kesalo"),
+          List.of("Talu", "Ola", "Mavi", "Kesa", "Nalu", "Ira", "Vela", "Suma"),
+          List.of("ma", "nui", "vira", "alo", "ara", "eli", "una", "ori"));
     };
   }
 

@@ -63,13 +63,26 @@ public class BuildingInfo {
     ).apply(inst, MineEntrance::new));
   }
 
-  /** A work station inside a building: a position (relative to the structure origin) plus the job worked there. */
-  public record WorkStation(BlockPos pos, Occupation occupation, java.util.Optional<GuardRole> guardDuty) {
+  /**
+   * A job post owned by this building. A post can route its worker to a separately
+   * placed physical worksite while the vacancy remains part of the civic building.
+   */
+  public record WorkStation(BlockPos pos, Occupation occupation, java.util.Optional<GuardRole> guardDuty,
+      java.util.Optional<String> worksiteCategory) {
     public static final Codec<WorkStation> CODEC = RecordCodecBuilder.create(inst -> inst.group(
         BlockPos.CODEC.fieldOf("pos").forGetter(WorkStation::pos),
         KithkynCodecs.forEnum(Occupation.class).fieldOf("occupation").forGetter(WorkStation::occupation),
-        KithkynCodecs.forEnum(GuardRole.class).optionalFieldOf("guard_duty").forGetter(WorkStation::guardDuty)
+        KithkynCodecs.forEnum(GuardRole.class).optionalFieldOf("guard_duty").forGetter(WorkStation::guardDuty),
+        Codec.STRING.optionalFieldOf("worksite_category").forGetter(WorkStation::worksiteCategory)
     ).apply(inst, WorkStation::new));
+  }
+
+  /** A physical working position that does not itself create a job vacancy. */
+  public record Worksite(BlockPos pos, Occupation occupation) {
+    public static final Codec<Worksite> CODEC = RecordCodecBuilder.create(inst -> inst.group(
+        BlockPos.CODEC.fieldOf("pos").forGetter(Worksite::pos),
+        KithkynCodecs.forEnum(Occupation.class).fieldOf("occupation").forGetter(Worksite::occupation)
+    ).apply(inst, Worksite::new));
   }
 
   /** Explicit room storage, bound to an authored bed rather than guessed across floors. */
@@ -125,15 +138,17 @@ public class BuildingInfo {
           .forGetter(info -> java.util.Optional.ofNullable(info.workerBeds)),
       Codec.BOOL.optionalFieldOf("standalone", false).forGetter(BuildingInfo::isStandalone),
       Codec.STRING.listOf().optionalFieldOf("starting_buildings", List.of()).forGetter(BuildingInfo::getStartingBuildings),
+      Worksite.CODEC.listOf().optionalFieldOf("worksites", List.of()).forGetter(BuildingInfo::worksites),
       RoomReservation.CODEC.listOf().optionalFieldOf("room_reservations", List.of()).forGetter(BuildingInfo::getRoomReservations),
       CastleLayout.CODEC.optionalFieldOf("castle").forGetter(info -> java.util.Optional.ofNullable(info.castleLayout))
-  ).apply(inst, (info, places, bedContainers, coupleBeds, workerBeds, standalone, startingBuildings, rooms, castle) -> {
+  ).apply(inst, (info, places, bedContainers, coupleBeds, workerBeds, standalone, startingBuildings, worksites, rooms, castle) -> {
     info.gatheringPlaces = places;
     info.bedContainers = bedContainers.orElse(null);
     info.coupleBeds = coupleBeds.orElse(null);
     info.workerBeds = workerBeds.orElse(null);
     info.standalone = standalone;
     info.startingBuildings = List.copyOf(startingBuildings);
+    worksites.forEach(worksite -> info.worksiteLocs.put(worksite.pos().asLong(), worksite.occupation()));
     info.roomReservations = List.copyOf(rooms);
     info.castleLayout = castle.orElse(null);
     return info;
@@ -150,6 +165,7 @@ public class BuildingInfo {
     workStations.forEach(station -> {
       info.addWorkLocation(station.pos().getX(), station.pos().getY(), station.pos().getZ(), station.occupation());
       station.guardDuty().ifPresent(duty -> info.guardRoles.put(station.pos().asLong(), duty));
+      station.worksiteCategory().ifPresent(worksite -> info.worksiteCategories.put(station.pos().asLong(), worksite));
     });
     containers.forEach(pos -> info.addContainerLocation(pos.getX(), pos.getY(), pos.getZ()));
     personalContainers.forEach(pos -> info.addPersonalContainerLocation(pos.getX(), pos.getY(), pos.getZ()));
@@ -171,6 +187,8 @@ public class BuildingInfo {
   // Insertion-ordered: JobAssignment station indexes rely on a stable iteration order.
   private LinkedHashMap<Long, Occupation> workLocs;
   private final Map<Long, GuardRole> guardRoles = new LinkedHashMap<>();
+  private final Map<Long, String> worksiteCategories = new LinkedHashMap<>();
+  private final LinkedHashMap<Long, Occupation> worksiteLocs = new LinkedHashMap<>();
   @javax.annotation.Nullable
   private List<BedContainers> bedContainers;
   @javax.annotation.Nullable
@@ -408,6 +426,12 @@ public class BuildingInfo {
     for (var entry : guardRoles.entrySet()) {
       if (workLocs.get(entry.getKey()) != Occupation.GUARD) return "guard_duty requires a GUARD station";
     }
+    if (worksiteCategories.values().stream().anyMatch(String::isBlank)) {
+      return "worksite_category cannot be blank";
+    }
+    if (worksiteLocs.keySet().stream().anyMatch(workLocs::containsKey)) {
+      return "a position cannot be both a job vacancy and a physical worksite";
+    }
     if (bedContainers != null) {
       java.util.Set<BlockPos> mappedBeds = new java.util.HashSet<>();
       java.util.Set<Long> mappedContainers = new java.util.HashSet<>();
@@ -575,6 +599,17 @@ public class BuildingInfo {
     return workLocs;
   }
 
+  /** Physical work positions that do not add jobs to the village labor pool. */
+  public Map<Long, Occupation> getWorksiteLocations() {
+    return worksiteLocs;
+  }
+
+  /** Optional target category for the job post at this exact local position. */
+  @javax.annotation.Nullable
+  public String getWorksiteCategory(long station) {
+    return worksiteCategories.get(station);
+  }
+
   /**
    * Village storage: every chest here that any worker may fetch from or fill.
    * A home's own chest is not among them ({@link #getPersonalContainerLocations}).
@@ -659,7 +694,13 @@ public class BuildingInfo {
   private List<WorkStation> workStations() {
     return workLocs.entrySet().stream()
         .map(entry -> new WorkStation(BlockPos.of(entry.getKey()), entry.getValue(),
-            java.util.Optional.ofNullable(guardRoles.get(entry.getKey())))).toList();
+            java.util.Optional.ofNullable(guardRoles.get(entry.getKey())),
+            java.util.Optional.ofNullable(worksiteCategories.get(entry.getKey())))).toList();
+  }
+
+  private List<Worksite> worksites() {
+    return worksiteLocs.entrySet().stream()
+        .map(entry -> new Worksite(BlockPos.of(entry.getKey()), entry.getValue())).toList();
   }
 
   private List<BlockPos> containerPositions() {

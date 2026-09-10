@@ -30,6 +30,45 @@ import net.minecraft.world.level.block.entity.HopperBlockEntity;
 import net.minecraft.world.level.block.entity.RandomizableContainerBlockEntity;
 
 public class LocationManager {
+
+    private record ResolvedWorkplace(Building building, BlockPos station) {}
+
+    @Nullable
+    private static ResolvedWorkplace resolveWorkplace(Village village, JobAssignment job) {
+        Building owner = village.getBuilding(job.getBuildingUUID());
+        if(owner == null || owner.getInfo() == null || village.isBeingRebuilt(owner.getUUID())){ return null; }
+
+        int entryIndex = 0;
+        for(Entry<Long, Occupation> entry : owner.getInfo().getWorkLocations().entrySet()) {
+            if(entry.getValue() == job.getOccupation() && entryIndex == job.getStationIndex()) {
+                Building physical = owner;
+                long physicalStation = entry.getKey();
+                String category = owner.getInfo().getWorksiteCategory(entry.getKey());
+                if(category != null) {
+                    physical = village.getBuildings().stream()
+                        .filter(candidate -> candidate.getInfo() != null)
+                        .filter(candidate -> category.equals(candidate.getInfo().getCategory()))
+                        .filter(candidate -> !village.isBeingRebuilt(candidate.getUUID()))
+                        .min(java.util.Comparator
+                            .comparingDouble((Building candidate) -> BlockPos.of(candidate.getCenterLocation())
+                                .distSqr(BlockPos.of(owner.getCenterLocation())))
+                            .thenComparing(candidate -> candidate.getUUID().toString()))
+                        .orElse(null);
+                    if(physical == null || physical.getInfo() == null) { return null; }
+                    physicalStation = physical.getInfo().getWorksiteLocations().entrySet().stream()
+                        .filter(worksite -> worksite.getValue() == job.getOccupation())
+                        .map(Entry::getKey)
+                        .findFirst().orElse(Long.MIN_VALUE);
+                    if(physicalStation == Long.MIN_VALUE) { return null; }
+                }
+                BlockPos station = BlockPos.of(physical.getOriginLocation())
+                    .offset(BlockPos.of(physicalStation).rotate(physical.getRotation()));
+                return new ResolvedWorkplace(physical, station);
+            }
+            entryIndex++;
+        }
+        return null;
+    }
     
     public static BlockPos getJobLocation(RealPerson person){
 
@@ -42,21 +81,8 @@ public class LocationManager {
         WallPost wallPost = village.getWallPost(job);
         if(wallPost != null){ return wallPost.position(); }
 
-        Building building = village.getBuilding(job.getBuildingUUID());
-        if(building == null){ return BlockPos.ZERO; }
-        // A workplace being rebuilt one level up has no usable station: the
-        // worker keeps the job and waits at the campfire until it is ready.
-        if(village.isBeingRebuilt(job.getBuildingUUID())){ return BlockPos.ZERO; }
-
-        int foundCount = 0;
-        for(Entry<Long, Occupation> entry : building.getInfo().getWorkLocations().entrySet()) {
-            if(entry.getValue() == job.getOccupation()){
-                if(foundCount == job.getStationIndex()){
-                    return BlockPos.of(building.getOriginLocation()).offset(BlockPos.of(entry.getKey()).rotate(building.getRotation()));
-                }
-            }
-            foundCount++;
-        }
+        ResolvedWorkplace workplace = resolveWorkplace(village, job);
+        if(workplace != null){ return workplace.station(); }
         Kithkyn.LOGGER.debug("Couldn't find job index");
         return BlockPos.ZERO;
 
@@ -137,7 +163,8 @@ public class LocationManager {
         JobAssignment job = village.getJobAssignment(person.getUUID());
         if(job == null){ return null; }
         
-        return village.getBuilding(job.getBuildingUUID());
+        ResolvedWorkplace workplace = resolveWorkplace(village, job);
+        return workplace == null ? null : workplace.building();
 
     }
 
@@ -153,10 +180,11 @@ public class LocationManager {
         if(village == null){ return null; }
 
         JobAssignment job = village.getJobAssignment(person.getUUID());
-        if(job == null || village.isBeingRebuilt(job.getBuildingUUID())){ return null; }
+        if(job == null){ return null; }
 
-        Building building = village.getBuilding(job.getBuildingUUID());
-        if(building == null){ return null; }
+        ResolvedWorkplace workplace = resolveWorkplace(village, job);
+        if(workplace == null){ return null; }
+        Building building = workplace.building();
 
         if(!(person.level() instanceof ServerLevel level)){ return null; }
         BoundingBox local = BuildingUpgrade.footprintOf(level, building);

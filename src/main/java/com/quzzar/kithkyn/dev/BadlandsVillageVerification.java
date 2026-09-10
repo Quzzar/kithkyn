@@ -19,6 +19,7 @@ import com.quzzar.kithkyn.village.buildings.Building;
 import com.quzzar.kithkyn.village.buildings.BuildingInfo;
 import com.quzzar.kithkyn.village.buildings.BuildingUpgrade;
 import com.quzzar.kithkyn.village.buildings.Buildings;
+import com.quzzar.kithkyn.village.buildings.MineShaft;
 import com.quzzar.kithkyn.village.buildings.VillageStyle;
 
 import net.minecraft.core.BlockPos;
@@ -45,7 +46,7 @@ import net.neoforged.neoforge.event.tick.ServerTickEvent;
 /**
  * Shared private-catalog checks for the reviewed regional villages. Opt in with
  * the legacy Badlands flag or {@code -Dkithkyn.reviewedVillage.style=<style>}
- * for desert or floodplain; each catalog's authored numbers live in its
+ * for desert, floodplain or Jungle; each catalog's authored numbers live in its
  * {@link Catalog} record so the checks read facts rather than guess them.
  */
 @EventBusSubscriber(modid = Kithkyn.MODID)
@@ -82,6 +83,9 @@ public final class BadlandsVillageVerification {
         new String[][] {{id("market", 1), id("market", 2)}, {id("market", 2), id("market", 3)},
             {id("farm", 1), id("farm", 2)}},
         6, 5, 4, 1, 3, 0, 0, new BlockPos(4, 1, 2), null, 1, Biomes.MANGROVE_SWAMP);
+    case JUNGLE -> new Catalog("[jungle-verify]", 22, 4, 6, new int[] {2, 2, 0}, Map.of(), List.of(), false,
+        new String[][] {{id("market", 1), id("market", 2)}, {id("market", 2), id("market", 3)}},
+        7, 4, 4, 1, 4, 0, 0, new BlockPos(3, 1, 5), new BlockPos(2, 2, 5), 1, Biomes.JUNGLE);
     case BIRCH_FOREST -> null;
   };
   private static final String PREFIX = CATALOG == null ? "[reviewed-village-verify]" : CATALOG.prefix();
@@ -156,7 +160,11 @@ public final class BadlandsVillageVerification {
         == VillageStyle.FLOODPLAIN, "Mangrove swamp must select Floodplain");
     check(VillageStyle.fromBiome(registry.getHolderOrThrow(Biomes.SWAMP), 0L, BlockPos.ZERO, everything)
         == VillageStyle.FLOODPLAIN, "Plain swamp is hot and wet and builds floodplain until it has a catalog of its own");
-    Kithkyn.LOGGER.info("{} BIOMES PASS: six Pueblo biomes, sandy Desert, both Birch biomes and mangrove Floodplain", PREFIX);
+    for (var biome : List.of(Biomes.JUNGLE, Biomes.BAMBOO_JUNGLE, Biomes.SPARSE_JUNGLE)) {
+      check(VillageStyle.fromBiome(registry.getHolderOrThrow(biome), 0L, BlockPos.ZERO, everything)
+          == VillageStyle.JUNGLE, "Jungle coverage missing " + biome.location());
+    }
+    Kithkyn.LOGGER.info("{} BIOMES PASS: Pueblo, Desert, Birch, Floodplain and all three Jungle biomes", PREFIX);
   }
 
   private static void verifyCatalogue(ServerLevel level) {
@@ -377,6 +385,13 @@ public final class BadlandsVillageVerification {
         && village.getBedAssignmentsView().size() == CATALOG.foundingJobs()
         && village.getUnassignedBeds().size() == CATALOG.foundingBeds() - CATALOG.foundingJobs(),
         "Founding workers did not receive distinct beds");
+    if (STYLE == VillageStyle.JUNGLE) {
+      verifyRoutedWorksite(village, residents, Occupation.MINER, "mine");
+      verifyRoutedWorksite(village, residents, Occupation.QUARTERMASTER, "storehouse");
+      Building mine = village.getBuildings().stream()
+          .filter(building -> building.getInfo().getCategory().equals("mine")).findFirst().orElseThrow();
+      check(MineShaft.of(mine).size() == 1, "Jungle physical mine lost its one shaft frame");
+    }
     Building store = village.getBuildings().stream().filter(building -> building.getName().equals(id("storehouse", 1)))
         .findFirst().orElseThrow();
     BlockPos storage = world(store, BlockPos.of(store.getInfo().getContainerLocations().getFirst()));
@@ -413,6 +428,19 @@ public final class BadlandsVillageVerification {
           && after.getInfo().getCoupleBeds().equals(before.getInfo().getCoupleBeds()), "Reload changed room metadata");
     }
     residents.forEach(net.minecraft.world.entity.Entity::discard);
+  }
+
+  private static void verifyRoutedWorksite(Village village, List<ApprovedStructureAccess.Person> residents,
+      Occupation occupation, String category) {
+    ApprovedStructureAccess.Person worker = residents.stream()
+        .filter(person -> person.getOccupation() == occupation).findFirst().orElseThrow();
+    Building owner = village.getBuilding(village.getJobAssignment(worker.getUUID()).getBuildingUUID());
+    Building physical = com.quzzar.kithkyn.village.LocationManager.getJobBuilding(worker);
+    check(owner != null && owner.equals(village.getTownCenter()), occupation + " vacancy left the Jungle center");
+    check(physical != null && physical.getInfo().getCategory().equals(category),
+        occupation + " did not route to its physical " + category);
+    check(!com.quzzar.kithkyn.village.LocationManager.getJobLocation(worker).equals(BlockPos.ZERO),
+        occupation + " physical station did not resolve");
   }
 
   private static void verifyBedIdentity(ServerLevel level, Village village, Building building, BlockPos local) {

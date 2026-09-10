@@ -1,0 +1,788 @@
+{
+  "status": "verified_private_catalog",
+  "variant": "jungle",
+  "production_datapack": "run/jungle-integration/datapack",
+  "selection_record": "tools/structure/jungle-selections-20260910.json",
+  "description": "Nineteen approved Jungle buildings plus three repaired market tiers.",
+  "wall": "Runtime Jungle timber and bamboo wall palette with standing torches.",
+  "founding": {
+    "center": "village_center_jungle_1",
+    "buildings": 7,
+    "beds": 4,
+    "jobs": [
+      "QUARTERMASTER",
+      "BUILDER",
+      "GUARD/CAPTAIN",
+      "MINER"
+    ],
+    "companions": [
+      "mine_jungle_1",
+      "storehouse_jungle_1",
+      "house_jungle_1",
+      "house_jungle_1__small_house_4",
+      "house_jungle_1",
+      "house_jungle_1__small_house_4"
+    ]
+  },
+  "buildings": [
+    {
+      "exhibit": "JA01.1",
+      "structure": "village_center_jungle_1",
+      "category": "village_center",
+      "level": 1,
+      "recipe": "village_center_1",
+      "source_mod_structure": "data/kaisyn/structure/village/jungle_tribal/town_centers/jungle_meeting_point_1.nbt",
+      "source_capture": "run/jungle-showcase/bamboo-adoption-20260910/after-placement/captures/JA01.1.nbt",
+      "source_capture_sha256": "d9df05aeba28d63319211f1490d78473d23161bbfe8a9e56761daeeb727043c7",
+      "gallery_origin": [
+        4896,
+        230,
+        1010
+      ],
+      "crop": [
+        2,
+        0,
+        2
+      ],
+      "size": [
+        11,
+        3,
+        11
+      ],
+      "beds": 0,
+      "stations": [
+        "QUARTERMASTER",
+        "BUILDER",
+        "GUARD",
+        "MINER"
+      ],
+      "worksites": [],
+      "asset": "run/jungle-integration/datapack/data/kithkyn/structure/village_center_jungle_1.nbt",
+      "asset_sha256": "065b11bca6a9e43ce6138c8b19a6a54f86da66897600502dca1d77db3967bf09",
+      "definition": "run/jungle-integration/datapack/data/kithkyn/kithkyn/buildings/village_center_jungle_1.json",
+      "definition_sha256": "8836341835707eafd69302a217ff72b5349c68b12e3e84bfab32045e92b22e55"
+    },
+    {
+      "exhibit": "JA01.4",
+      "structure": "lumberjack_jungle_1",
+      "category": "lumberjack",
+      "level": 1,
+      "recipe": "lumberjack_1",
+      "source_mod_structure": "data/kaisyn/structure/village/jungle_tribal/houses/jungle_animal_pen_1.nbt",
+      "source_capture": "run/jungle-showcase/bamboo-adoption-20260910/after-placement/captures/JA01.4.nbt",
+      "source_capture_sha256": "9f8dc0a86de6cb1f7ba36a543d34ee3648f7b0f59c186d62cc6e949a47961692",
+      "gallery_origin": [
+        4956,
+        230,
+        1010
+      ],
+      "crop": [
+        2,
+        0,
+        2
+      ],
+      "size": [
+        8,
+        4,
+        11
+      ],
+      "beds": 0,
+      "stations": [
+        "LUMBERJACK"
+      ],
+      "worksites": [],
+      "asset": "run/jungle-integration/datapack/data/kithkyn/structure/lumberjack_jungle_1.nbt",
+      "asset_sha256": "9ee39b0616c4f80e7a4df9641103d307fb6a987b25c1cc4d97004928b212cec5",
+      "definition": "run/jungle-integration/datapack/data/kithkyn/kithkyn/buildings/lumberjack_jungle_1.json",
+      "definition_sha256": "e782e47477a41318f9ad135a809433c9beddb8ed89b58b91a5b10381d69f78b7"
+    },
+    {
+      "exhibit": "JA01.5",
+      "structure": "mine_jungle_1",
+      "category": "mine",
+      "level": 1,
+      "recipe": "mine_1",
+      "source_mod_structure": "data/kaisyn/structure/village/jungle_tribal/houses/jungle_armorer_1.nbt",
+      "source_capture": "run/jungle-showcase/bamboo-adoption-20260910/after-placement/captures/JA01.5.nbt",
+      "source_capture_sha256": "1548682f0faae3f6dff805ea887829f9761fa755c83b143de4e2ea49b0e9f723",
+      "gallery_origin": [
+        4972,
+        230,
+        1010
+      ],
+      "crop": [
+        4,
+        0,
+        4
+      ],
+      "size": [
+        5,
+        5,
+        5
+      ],
+      "beds": 0,
+      "stations": [],
+      "worksites": [
+        "MINER"
+      ],
+      "asset": "run/jungle-integration/datapack/data/kithkyn/structure/mine_jungle_1.nbt",
+      "asset_sha256": "3c33aa6ab338540b6a98191d5f1559cb5daf0b5f4b08fa2a33374676f93c8786",
+      "definition": "run/jungle-integration/datapack/data/kithkyn/kithkyn/buildings/mine_jungle_1.json",
+      "definition_sha256": "6481a1a955766bb931b8e95a9eb95fee1ef8cd27f557a7b9acb7478572dd3c1d"
+    },
+    {
+      "exhibit": "JA01.6",
+      "structure": "tavern_jungle_1",
+      "category": "tavern",
+      "level": 1,
+      "recipe": "tavern_1",
+      "source_mod_structure": "data/kaisyn/structure/village/jungle_tribal/houses/jungle_butcher_1.nbt",
+      "source_capture": "run/jungle-showcase/bamboo-adoption-20260910/after-placement/captures/JA01.6.nbt",
+      "source_capture_sha256": "e26e0f26ddf0d04b3381b20601e2976fec36c4802e122ff526f0c2112e95fe9d",
+      "gallery_origin": [
+        4986,
+        230,
+        1010
+      ],
+      "crop": [
+        2,
+        0,
+        2
+      ],
+      "size": [
+        10,
+        9,
+        7
+      ],
+      "beds": 0,
+      "stations": [
+        "INNKEEPER"
+      ],
+      "worksites": [],
+      "asset": "run/jungle-integration/datapack/data/kithkyn/structure/tavern_jungle_1.nbt",
+      "asset_sha256": "80ed8fca18b88ca032491846c74ca6d6d4f39c04dde645f8440a6dd3f1ffefce",
+      "definition": "run/jungle-integration/datapack/data/kithkyn/kithkyn/buildings/tavern_jungle_1.json",
+      "definition_sha256": "4f23a6a7d1dbb662d937f76d8833e2fb0dbe85c02764285854c0bc86440a4089"
+    },
+    {
+      "exhibit": "JA01.7",
+      "structure": "house_jungle_2",
+      "category": "house",
+      "level": 2,
+      "recipe": "house_2",
+      "source_mod_structure": "data/kaisyn/structure/village/jungle_tribal/houses/jungle_cartographer_1.nbt",
+      "source_capture": "run/jungle-tower-review-20260910/adoption/captures/JA01.7-comparison.nbt",
+      "source_capture_sha256": "05c30865d6dea51d3d7b3074a75d53336866fc068833a76169c748061f7f4cb2",
+      "gallery_origin": [
+        5258,
+        230,
+        944
+      ],
+      "crop": [
+        2,
+        0,
+        2
+      ],
+      "size": [
+        14,
+        22,
+        12
+      ],
+      "beds": 2,
+      "stations": [],
+      "worksites": [],
+      "asset": "run/jungle-integration/datapack/data/kithkyn/structure/house_jungle_2.nbt",
+      "asset_sha256": "2870bdbf62f5e3be4fe81d133051fa8523cf22bd0ac3627a261f0f8863d3fefb",
+      "definition": "run/jungle-integration/datapack/data/kithkyn/kithkyn/buildings/house_jungle_2.json",
+      "definition_sha256": "db0e827d53a5e9e325a1712560459301355bad6670376e7bbf55dc0f1f3f774d"
+    },
+    {
+      "exhibit": "NH06.5",
+      "structure": "watchtower_jungle_1",
+      "category": "watchtower",
+      "level": 1,
+      "recipe": "watchtower_1",
+      "source_mod_structure": "data/nova_structures/structure/firewatch_tower/firewatch_jungle.nbt",
+      "source_capture": "run/jungle-tower-review-20260910/adoption/captures/NH06.5-comparison.nbt",
+      "source_capture_sha256": "6c1c76f367d032226942bef0db8161bc88e4d4090f9257c9821a88446bf9b391",
+      "gallery_origin": [
+        5292,
+        230,
+        944
+      ],
+      "crop": [
+        2,
+        0,
+        2
+      ],
+      "size": [
+        9,
+        18,
+        9
+      ],
+      "beds": 1,
+      "stations": [
+        "GUARD"
+      ],
+      "worksites": [],
+      "asset": "run/jungle-integration/datapack/data/kithkyn/structure/watchtower_jungle_1.nbt",
+      "asset_sha256": "8b7ed01e77550b3bb8b7fef025dea3a880c0e53eb8cc4900fe8e1ad1754b4149",
+      "definition": "run/jungle-integration/datapack/data/kithkyn/kithkyn/buildings/watchtower_jungle_1.json",
+      "definition_sha256": "586e319a407b209a35f2243eb5aa25de0f6db21a54c1c879b57ac0f2ec5d9fbb"
+    },
+    {
+      "exhibit": "JA01.8",
+      "structure": "fishery_jungle_1",
+      "category": "fishery",
+      "level": 1,
+      "recipe": "fishery_1",
+      "source_mod_structure": "data/kaisyn/structure/village/jungle_tribal/houses/jungle_fisher_1.nbt",
+      "source_capture": "run/jungle-showcase/bamboo-adoption-20260910/after-placement/captures/JA01.8.nbt",
+      "source_capture_sha256": "75709284e8d942de4916bc601a744ccf358c55f4c39448ad90259454479385a1",
+      "gallery_origin": [
+        5026,
+        230,
+        1010
+      ],
+      "crop": [
+        2,
+        0,
+        2
+      ],
+      "size": [
+        8,
+        8,
+        13
+      ],
+      "beds": 1,
+      "stations": [
+        "FISHER"
+      ],
+      "worksites": [],
+      "asset": "run/jungle-integration/datapack/data/kithkyn/structure/fishery_jungle_1.nbt",
+      "asset_sha256": "2b63a01dc7dde2c3df5ad7637b72951e00d520bbc623d9b6f7a1ec761434724c",
+      "definition": "run/jungle-integration/datapack/data/kithkyn/kithkyn/buildings/fishery_jungle_1.json",
+      "definition_sha256": "1537356c0e95ea9718e4f05cbb8c54e6092ca7d18d43f31af5be0b232b3a7208"
+    },
+    {
+      "exhibit": "JA02.1",
+      "structure": "hunting_lodge_jungle_1",
+      "category": "hunting_lodge",
+      "level": 1,
+      "recipe": "hunting_lodge_1",
+      "source_mod_structure": "data/kaisyn/structure/village/jungle_tribal/houses/jungle_fletcher_1.nbt",
+      "source_capture": "run/jungle-showcase/bamboo-adoption-20260910/after-placement/captures/JA02.1.nbt",
+      "source_capture_sha256": "430f6a04f5968cf6f8579a6de8c064f41c9262e788c4782b3c8bc3a0491f2d03",
+      "gallery_origin": [
+        4896,
+        230,
+        1043
+      ],
+      "crop": [
+        2,
+        0,
+        2
+      ],
+      "size": [
+        8,
+        8,
+        9
+      ],
+      "beds": 0,
+      "stations": [
+        "HUNTER"
+      ],
+      "worksites": [],
+      "asset": "run/jungle-integration/datapack/data/kithkyn/structure/hunting_lodge_jungle_1.nbt",
+      "asset_sha256": "7d2c316330f25f7162a402365cdc9b0449ed8a14d11ffad8fbfc1a0c232cfea3",
+      "definition": "run/jungle-integration/datapack/data/kithkyn/kithkyn/buildings/hunting_lodge_jungle_1.json",
+      "definition_sha256": "84dd78a9479a92baa2b2e87bc9580a7f87338d8c1a335703436c9afcc749f387"
+    },
+    {
+      "exhibit": "JA02.2",
+      "structure": "house_jungle_2__large_house_1",
+      "category": "house",
+      "level": 2,
+      "recipe": "house_2",
+      "source_mod_structure": "data/kaisyn/structure/village/jungle_tribal/houses/jungle_large_house_1.nbt",
+      "source_capture": "run/jungle-showcase/bamboo-adoption-20260910/after-placement/captures/JA02.2.nbt",
+      "source_capture_sha256": "eae1934cc3c0f7e1b91e8b61b3df2b1bedffcc468e78837133878f81b3dc85ad",
+      "gallery_origin": [
+        4912,
+        230,
+        1043
+      ],
+      "crop": [
+        2,
+        0,
+        2
+      ],
+      "size": [
+        8,
+        8,
+        7
+      ],
+      "beds": 2,
+      "stations": [],
+      "worksites": [],
+      "asset": "run/jungle-integration/datapack/data/kithkyn/structure/house_jungle_2__large_house_1.nbt",
+      "asset_sha256": "ac5207b0d271e7301d386e802fba05150af0ac505fc6c70ad5cc19baf8dcf491",
+      "definition": "run/jungle-integration/datapack/data/kithkyn/kithkyn/buildings/house_jungle_2__large_house_1.json",
+      "definition_sha256": "b6f9e0e7270ad01e27fd905cd7747efd5914835bee6f4d49e760eeb41cc5d19c"
+    },
+    {
+      "exhibit": "JA02.3",
+      "structure": "couple_cottage_jungle_1",
+      "category": "couple_cottage",
+      "level": 1,
+      "recipe": "couple_cottage_1",
+      "source_mod_structure": "data/kaisyn/structure/village/jungle_tribal/houses/jungle_leatherworker_1.nbt",
+      "source_capture": "run/jungle-showcase/bamboo-adoption-20260910/after-placement/captures/JA02.3.nbt",
+      "source_capture_sha256": "0cb3d721d30bf31294109ec0949162a39712d7d3a4b398120959be9612bff642",
+      "gallery_origin": [
+        4928,
+        230,
+        1043
+      ],
+      "crop": [
+        2,
+        0,
+        2
+      ],
+      "size": [
+        11,
+        17,
+        12
+      ],
+      "beds": 2,
+      "stations": [],
+      "worksites": [],
+      "asset": "run/jungle-integration/datapack/data/kithkyn/structure/couple_cottage_jungle_1.nbt",
+      "asset_sha256": "27acc3e4b04f3ca51a6418dfd8d0c37f67e0546700b2d37c16c3a4c7f566cc35",
+      "definition": "run/jungle-integration/datapack/data/kithkyn/kithkyn/buildings/couple_cottage_jungle_1.json",
+      "definition_sha256": "3ad0957820034cc0e4a753cf62db372c003df05ef03fc15bc9393dadadbeb032"
+    },
+    {
+      "exhibit": "JA02.5",
+      "structure": "stoneworks_jungle_1",
+      "category": "stoneworks",
+      "level": 1,
+      "recipe": "stoneworks_1",
+      "source_mod_structure": "data/kaisyn/structure/village/jungle_tribal/houses/jungle_mason_1.nbt",
+      "source_capture": "run/jungle-showcase/bamboo-adoption-20260910/after-placement/captures/JA02.5.nbt",
+      "source_capture_sha256": "48a5e7b05a6c197f84d09ade36da06ef06ff6e9503afe9d138e126e1d5f9a26d",
+      "gallery_origin": [
+        4969,
+        230,
+        1043
+      ],
+      "crop": [
+        2,
+        0,
+        2
+      ],
+      "size": [
+        9,
+        6,
+        9
+      ],
+      "beds": 0,
+      "stations": [
+        "MASON"
+      ],
+      "worksites": [],
+      "asset": "run/jungle-integration/datapack/data/kithkyn/structure/stoneworks_jungle_1.nbt",
+      "asset_sha256": "0b05a3f6e12523b4962bdd7aa0512e15b734ac06eac5a9b4da2662a24b628ccd",
+      "definition": "run/jungle-integration/datapack/data/kithkyn/kithkyn/buildings/stoneworks_jungle_1.json",
+      "definition_sha256": "e80b454c69bd355d011e9c5b068b65920e41f59401e2450842fe841343fadb70"
+    },
+    {
+      "exhibit": "JA02.6",
+      "structure": "butchery_jungle_1",
+      "category": "butchery",
+      "level": 1,
+      "recipe": "butchery_1",
+      "source_mod_structure": "data/kaisyn/structure/village/jungle_tribal/houses/jungle_shepherd_1.nbt",
+      "source_capture": "run/jungle-showcase/bamboo-adoption-20260910/after-placement/captures/JA02.6.nbt",
+      "source_capture_sha256": "f145f97f476593ca26ad16cf7129a1850cdeaf61833e4dfb6aac480ae7bab11b",
+      "gallery_origin": [
+        4986,
+        230,
+        1043
+      ],
+      "crop": [
+        2,
+        0,
+        2
+      ],
+      "size": [
+        8,
+        6,
+        11
+      ],
+      "beds": 1,
+      "stations": [
+        "BUTCHER"
+      ],
+      "worksites": [],
+      "asset": "run/jungle-integration/datapack/data/kithkyn/structure/butchery_jungle_1.nbt",
+      "asset_sha256": "2c840977eda33e879a72924277dcef6e66776effd14b91df46502dbcaf868171",
+      "definition": "run/jungle-integration/datapack/data/kithkyn/kithkyn/buildings/butchery_jungle_1.json",
+      "definition_sha256": "a66eac239434e21eb9f1aa647671abffdda64f2223dd98672dc78d771f0f9f1a"
+    },
+    {
+      "exhibit": "JA02.7",
+      "structure": "farm_jungle_1",
+      "category": "farm",
+      "level": 1,
+      "recipe": "farm_1",
+      "source_mod_structure": "data/kaisyn/structure/village/jungle_tribal/houses/jungle_small_farm_1.nbt",
+      "source_capture": "run/jungle-showcase/bamboo-adoption-20260910/after-placement/captures/JA02.7.nbt",
+      "source_capture_sha256": "8f39a275028a678e773801a9db61e1b123873e510e133d9ad765d173e4156ddd",
+      "gallery_origin": [
+        5002,
+        230,
+        1043
+      ],
+      "crop": [
+        2,
+        0,
+        2
+      ],
+      "size": [
+        12,
+        3,
+        11
+      ],
+      "beds": 0,
+      "stations": [
+        "FARMER"
+      ],
+      "worksites": [],
+      "asset": "run/jungle-integration/datapack/data/kithkyn/structure/farm_jungle_1.nbt",
+      "asset_sha256": "62a6b628bb56bc0834f3f815f3c6989057d59163e77732c7116d1a6698fa1e03",
+      "definition": "run/jungle-integration/datapack/data/kithkyn/kithkyn/buildings/farm_jungle_1.json",
+      "definition_sha256": "60689590bd8ad5e96fb21efd65b23cfa7cd5cc7488f78986556e5f25144a67de"
+    },
+    {
+      "exhibit": "JA02.8",
+      "structure": "bakery_jungle_1",
+      "category": "bakery",
+      "level": 1,
+      "recipe": "bakery_1",
+      "source_mod_structure": "data/kaisyn/structure/village/jungle_tribal/houses/jungle_small_house_1.nbt",
+      "source_capture": "run/jungle-showcase/bamboo-adoption-20260910/after-placement/captures/JA02.8.nbt",
+      "source_capture_sha256": "7b5f7e9e5c7fb9ab525b3a4498bb973c7fbb0e50e6e95988932cad030ec6bb4d",
+      "gallery_origin": [
+        5023,
+        230,
+        1043
+      ],
+      "crop": [
+        2,
+        0,
+        2
+      ],
+      "size": [
+        7,
+        7,
+        7
+      ],
+      "beds": 0,
+      "stations": [
+        "BAKER"
+      ],
+      "worksites": [],
+      "asset": "run/jungle-integration/datapack/data/kithkyn/structure/bakery_jungle_1.nbt",
+      "asset_sha256": "af3bd34e32e7bc32728defb064d4544015329e5074ad9ed82f2abd3208c3d409",
+      "definition": "run/jungle-integration/datapack/data/kithkyn/kithkyn/buildings/bakery_jungle_1.json",
+      "definition_sha256": "6ccfa8740b1ec38797116202759ab3b13b001f3d74cd4d4b7398e9f0fd357f75"
+    },
+    {
+      "exhibit": "JA02.9",
+      "structure": "house_jungle_1",
+      "category": "house",
+      "level": 1,
+      "recipe": "house_1",
+      "source_mod_structure": "data/kaisyn/structure/village/jungle_tribal/houses/jungle_small_house_2.nbt",
+      "source_capture": "run/jungle-showcase/bamboo-adoption-20260910/after-placement/captures/JA02.9.nbt",
+      "source_capture_sha256": "63451f7045ce6307e387eaab61a1a40eb470e3ecc78e03589a316e0642c2b400",
+      "gallery_origin": [
+        5038,
+        230,
+        1043
+      ],
+      "crop": [
+        2,
+        0,
+        2
+      ],
+      "size": [
+        7,
+        7,
+        7
+      ],
+      "beds": 1,
+      "stations": [],
+      "worksites": [],
+      "asset": "run/jungle-integration/datapack/data/kithkyn/structure/house_jungle_1.nbt",
+      "asset_sha256": "afa87cd3d00a9a72fc0eaa8f0a8247364629482c90b969cdb3443439f550c612",
+      "definition": "run/jungle-integration/datapack/data/kithkyn/kithkyn/buildings/house_jungle_1.json",
+      "definition_sha256": "0e6da9f85cfb6282e697de00c687c29b11f797b2743138de60edbf8b51d99022"
+    },
+    {
+      "exhibit": "JA03.1",
+      "structure": "storehouse_jungle_1",
+      "category": "storehouse",
+      "level": 1,
+      "recipe": "storehouse_1",
+      "source_mod_structure": "data/kaisyn/structure/village/jungle_tribal/houses/jungle_small_house_3.nbt",
+      "source_capture": "run/jungle-showcase/bamboo-adoption-20260910/after-placement/captures/JA03.1.nbt",
+      "source_capture_sha256": "67a86e0cd2847f5007cf8ebef94ee1b64cd450cf082a7b09f9e098b4097d34d7",
+      "gallery_origin": [
+        4896,
+        230,
+        1078
+      ],
+      "crop": [
+        2,
+        0,
+        2
+      ],
+      "size": [
+        8,
+        5,
+        7
+      ],
+      "beds": 0,
+      "stations": [],
+      "worksites": [
+        "QUARTERMASTER"
+      ],
+      "asset": "run/jungle-integration/datapack/data/kithkyn/structure/storehouse_jungle_1.nbt",
+      "asset_sha256": "ac3ca85398f48fcc490f79155466585066e49e6db49bbc1d358d5d3a099276d2",
+      "definition": "run/jungle-integration/datapack/data/kithkyn/kithkyn/buildings/storehouse_jungle_1.json",
+      "definition_sha256": "135ebe3f4a3dbe30134b943054f1b7ce799f300a516162c845fb0457e3fd0be3"
+    },
+    {
+      "exhibit": "JA03.2",
+      "structure": "house_jungle_1__small_house_4",
+      "category": "house",
+      "level": 1,
+      "recipe": "house_1",
+      "source_mod_structure": "data/kaisyn/structure/village/jungle_tribal/houses/jungle_small_house_4.nbt",
+      "source_capture": "run/jungle-showcase/bamboo-adoption-20260910/after-placement/captures/JA03.2.nbt",
+      "source_capture_sha256": "00be3aec61fe7b9964c3bb8ead237609bcece24d7aad4e83a8f2f1158a31979b",
+      "gallery_origin": [
+        4912,
+        230,
+        1078
+      ],
+      "crop": [
+        2,
+        0,
+        2
+      ],
+      "size": [
+        7,
+        6,
+        7
+      ],
+      "beds": 1,
+      "stations": [],
+      "worksites": [],
+      "asset": "run/jungle-integration/datapack/data/kithkyn/structure/house_jungle_1__small_house_4.nbt",
+      "asset_sha256": "42b8c76e4f4478824b8460d73058323eb47b143c322f6c3e6e32fa8913c646f7",
+      "definition": "run/jungle-integration/datapack/data/kithkyn/kithkyn/buildings/house_jungle_1__small_house_4.json",
+      "definition_sha256": "b1caa52513f0a4f484c34c1a57ccc4e0d7ac65f39a5887f1a2c0441c95baa6e7"
+    },
+    {
+      "exhibit": "JA03.3",
+      "structure": "church_jungle_1",
+      "category": "church",
+      "level": 1,
+      "recipe": "church_1",
+      "source_mod_structure": "data/kaisyn/structure/village/jungle_tribal/houses/jungle_temple_1.nbt",
+      "source_capture": "run/jungle-showcase/bamboo-adoption-20260910/after-placement/captures/JA03.3.nbt",
+      "source_capture_sha256": "f3a7cfc8b23aa14fb174bf531b3d51cd263dbca20a029b322893128fb01f0186",
+      "gallery_origin": [
+        4927,
+        230,
+        1078
+      ],
+      "crop": [
+        2,
+        0,
+        2
+      ],
+      "size": [
+        7,
+        12,
+        12
+      ],
+      "beds": 0,
+      "stations": [
+        "CLERIC"
+      ],
+      "worksites": [],
+      "asset": "run/jungle-integration/datapack/data/kithkyn/structure/church_jungle_1.nbt",
+      "asset_sha256": "dbce3b21580c554e543a6f1ae57af07b8061b6f76540b842661933b0ab6d6091",
+      "definition": "run/jungle-integration/datapack/data/kithkyn/kithkyn/buildings/church_jungle_1.json",
+      "definition_sha256": "c6103a4c0ce8a36eaa0b636cdbc5ec464ee1503571e350a93650eb1aebf4dd8e"
+    },
+    {
+      "exhibit": "JA03.5",
+      "structure": "blacksmith_jungle_1",
+      "category": "blacksmith",
+      "level": 1,
+      "recipe": "blacksmith_1",
+      "source_mod_structure": "data/kaisyn/structure/village/jungle_tribal/houses/jungle_weaponsmith_1.nbt",
+      "source_capture": "run/jungle-showcase/bamboo-adoption-20260910/after-placement/captures/JA03.5.nbt",
+      "source_capture_sha256": "cdc2c6211a88a1d4cea502ca166e0eb5525234b9ac45551748a02d3f57079fb3",
+      "gallery_origin": [
+        4960,
+        230,
+        1078
+      ],
+      "crop": [
+        2,
+        0,
+        2
+      ],
+      "size": [
+        12,
+        6,
+        8
+      ],
+      "beds": 0,
+      "stations": [
+        "BLACKSMITH"
+      ],
+      "worksites": [],
+      "asset": "run/jungle-integration/datapack/data/kithkyn/structure/blacksmith_jungle_1.nbt",
+      "asset_sha256": "053d903b5b97e72f1978b75e27ea6d1f392feec00f097ccc736a1774ea8ed9e0",
+      "definition": "run/jungle-integration/datapack/data/kithkyn/kithkyn/buildings/blacksmith_jungle_1.json",
+      "definition_sha256": "6fa6853abbcca2bcb2315a0be9532ff57bc4f46a25370281fc504e502a5bd858"
+    },
+    {
+      "exhibit": "MARKET.1",
+      "structure": "market_jungle_1",
+      "category": "market",
+      "level": 1,
+      "recipe": "market_1",
+      "source_capture": "run/market-repair-20260910/pack/data/kithkyn/structure/market_jungle_1.nbt",
+      "source_capture_sha256": "68876b38420002f335f56c1193b4d05fe4aed7605b82b6ed21ec701b3c481d34",
+      "crop": [
+        0,
+        0,
+        0
+      ],
+      "size": [
+        16,
+        6,
+        17
+      ],
+      "beds": 0,
+      "stations": [
+        "MERCHANT"
+      ],
+      "worksites": [],
+      "asset": "run/jungle-integration/datapack/data/kithkyn/structure/market_jungle_1.nbt",
+      "asset_sha256": "68876b38420002f335f56c1193b4d05fe4aed7605b82b6ed21ec701b3c481d34",
+      "definition": "run/jungle-integration/datapack/data/kithkyn/kithkyn/buildings/market_jungle_1.json",
+      "definition_sha256": "82153b50f91a7e12f083a8f581f325910128afe146a4c24f218c8c09a61cfdde"
+    },
+    {
+      "exhibit": "MARKET.2",
+      "structure": "market_jungle_2",
+      "category": "market",
+      "level": 2,
+      "recipe": "market_2",
+      "source_capture": "run/market-repair-20260910/pack/data/kithkyn/structure/market_jungle_2.nbt",
+      "source_capture_sha256": "e50fe2ae7576b9fd5794953ddd66c1b04bf7f6539077eabb0af4a2f3a17b1235",
+      "crop": [
+        0,
+        0,
+        0
+      ],
+      "size": [
+        23,
+        6,
+        17
+      ],
+      "beds": 0,
+      "stations": [
+        "MERCHANT",
+        "MERCHANT"
+      ],
+      "worksites": [],
+      "asset": "run/jungle-integration/datapack/data/kithkyn/structure/market_jungle_2.nbt",
+      "asset_sha256": "e50fe2ae7576b9fd5794953ddd66c1b04bf7f6539077eabb0af4a2f3a17b1235",
+      "definition": "run/jungle-integration/datapack/data/kithkyn/kithkyn/buildings/market_jungle_2.json",
+      "definition_sha256": "6218f3a07efa70523b9c4b83623740feb6b63a283285ebfeab80c3191b537b22"
+    },
+    {
+      "exhibit": "MARKET.3",
+      "structure": "market_jungle_3",
+      "category": "market",
+      "level": 3,
+      "recipe": "market_3",
+      "source_capture": "run/market-repair-20260910/pack/data/kithkyn/structure/market_jungle_3.nbt",
+      "source_capture_sha256": "9d1d3a097f64b7e16b835e7f08c92c7a34b14de8a11c74b6036dd78cf57f79fe",
+      "crop": [
+        0,
+        0,
+        0
+      ],
+      "size": [
+        23,
+        6,
+        25
+      ],
+      "beds": 0,
+      "stations": [
+        "MERCHANT",
+        "MERCHANT",
+        "MERCHANT"
+      ],
+      "worksites": [],
+      "asset": "run/jungle-integration/datapack/data/kithkyn/structure/market_jungle_3.nbt",
+      "asset_sha256": "9d1d3a097f64b7e16b835e7f08c92c7a34b14de8a11c74b6036dd78cf57f79fe",
+      "definition": "run/jungle-integration/datapack/data/kithkyn/kithkyn/buildings/market_jungle_3.json",
+      "definition_sha256": "9a959caa54711fed140dac02b0caef24d25452c3ec77c32f1dc986a14d7e0d89"
+    }
+  ],
+  "source_policy": "Locally approved playable datapack, excluded from public distribution. Source provenance is retained; written redistribution permission is not asserted.",
+  "verification": {
+    "access": {
+      "rotated_structures": 84,
+      "routes": 224,
+      "room_walks_and_sleeps": 44,
+      "personal_deposits": 36,
+      "station_walks": 68,
+      "shared_deposits": 80,
+      "mine_walks": 8,
+      "failed_placements": 0
+    },
+    "placement": {
+      "real_template_placements": 176,
+      "paths": [
+        "instant",
+        "incremental"
+      ],
+      "rotations": 4
+    },
+    "restart": {
+      "saved_buildings": 176
+    },
+    "founding": {
+      "strict_templates": 22,
+      "housing_alternatives": 4,
+      "upgrade_fits": 8,
+      "rotations": 4,
+      "beds": 4,
+      "jobs": 4
+    }
+  },
+  "runtime_sha256": "027bb63bf53c3b250801c1e1e44fc8a75410f5fa32b19ed4a8773621f2f69942"
+}
