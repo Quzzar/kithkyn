@@ -1,10 +1,13 @@
 # Walls
 
-Desert walls use smooth sandstone and Pueblo/Badlands walls use smooth red sandstone,
+Desert walls use smooth sandstone, Pueblo/Badlands walls use smooth red sandstone and
+Floodplain walls use mud bricks,
 including their stairs and slabs. Gatehouse legs and roof framing use chiseled sandstone
 or chiseled red sandstone. Standing lamps are lit clusters of two to four regular candles
 for Desert or orange candles for Mesa; only four hanging lanterns per gate remain. The
-cluster count is stable for each world position. Narrow railings use the matching sandstone wall blocks,
+cluster count is stable for each world position. Floodplain walls take the same arid treatment
+in wet-country materials: muddy mangrove roots as the gate frame, brown candle clusters, mud
+brick wall railings and jungle trapdoors. Narrow railings use the matching wall blocks,
 which have no smooth variant. Both use
 normal oak trapdoors and ladders for access. Every village has one wall stage;
 there is no second-tier upgrade. The editable Mesa and Desert copies are in the

@@ -23,6 +23,7 @@ public enum WallTier {
       case DESERT -> Items.SANDSTONE;
       case BADLANDS -> Items.RED_SANDSTONE;
       case BIRCH_FOREST -> Items.COBBLESTONE;
+      case FLOODPLAIN -> Items.MUD_BRICKS;
     };
   }
 

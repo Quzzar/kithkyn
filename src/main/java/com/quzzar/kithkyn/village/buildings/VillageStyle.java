@@ -24,17 +24,17 @@ import net.neoforged.neoforge.common.Tags;
  *
  * Every style is a strict catalog: a village raises only what its own family
  * authored and never borrows another family's building to fill a gap. Birch
- * Forest is the one bundled catalog and so the default; Desert and Badlands
- * arrive through private datapacks (docs/desert-village.md,
- * docs/badlands-village.md), so they are only automatic candidates while their
- * founding sets are loaded.
+ * Forest is the one bundled catalog and so the default; Desert, Badlands and
+ * Floodplain arrive through private datapacks (docs/desert-village.md,
+ * docs/badlands-village.md, docs/floodplain-village.md), so they are only
+ * automatic candidates while their founding sets are loaded.
  *
  * Explicit datapack style tags take precedence over conventional biome families.
  * An unfamiliar family chooses among climate-compatible loaded catalogs using
  * the world seed and founding site, not the world's mutable random stream.
  */
 public enum VillageStyle {
-  BIRCH_FOREST, DESERT, BADLANDS;
+  BIRCH_FOREST, DESERT, BADLANDS, FLOODPLAIN;
 
   /** The bundled catalog: what a blank or unknown saved style reads as, and the last resort. */
   public static final VillageStyle DEFAULT = BIRCH_FOREST;
@@ -78,12 +78,20 @@ public enum VillageStyle {
 
   /** The one selector used by both manual and naturally generated village founding. */
   public static VillageStyle fromBiome(Holder<Biome> biome, long worldSeed, BlockPos site) {
+    return fromBiome(biome, worldSeed, site, Buildings::hasFoundingSet);
+  }
+
+  /**
+   * The same selection with an explicit notion of which catalogs are loaded,
+   * so a check can ask what a biome maps to regardless of what is installed.
+   */
+  public static VillageStyle fromBiome(Holder<Biome> biome, long worldSeed, BlockPos site,
+      Predicate<VillageStyle> available) {
     long biomeSeed = biome.unwrapKey().map(key -> (long) key.location().toString().hashCode()).orElse(0L);
     Biome climate = biome.value();
     String biomePath = biome.unwrapKey().map(key -> key.location().getPath()).orElse("");
     return select(biome::is, biomePath, climate.getBaseTemperature(), climate.hasPrecipitation(),
-        climate.getModifiedClimateSettings().downfall(), worldSeed ^ site.asLong() ^ biomeSeed,
-        Buildings::hasFoundingSet);
+        climate.getModifiedClimateSettings().downfall(), worldSeed ^ site.asLong() ^ biomeSeed, available);
   }
 
   /**
@@ -142,14 +150,23 @@ public enum VillageStyle {
     if (tagged.test(Tags.Biomes.IS_DESERT) || tagged.test(Tags.Biomes.IS_SANDY)) {
       return DESERT;
     }
+    // The floodplain catalog is the mangrove family: vanilla mangrove swamp
+    // carries the explicit style tag, and a modded mangrove biome is still
+    // recognizable by name. Plain swamp stays unmapped for a catalog of its
+    // own; being hot and wet under the conventional tags it builds floodplain
+    // through the climate cluster meanwhile.
+    if (path.contains("mangrove")) {
+      return FLOODPLAIN;
+    }
     return null;
   }
 
   /**
    * Architecture candidates, not survival rules. A hot, dry climate has the two
-   * arid catalogs to choose between; every other climate builds the bundled
-   * Birch Forest catalog until its own family is finished. Precipitation and
-   * wet/dry tags keep an unclassified rainy tropical biome out of the arid pair.
+   * arid catalogs to choose between and a hot, wet one builds the floodplain
+   * catalog; every other climate builds the bundled Birch Forest catalog until
+   * its own family is finished. Precipitation and wet/dry tags keep an
+   * unclassified rainy tropical biome out of the arid pair.
    */
   static List<VillageStyle> climateStyles(Predicate<TagKey<Biome>> tagged, float temperature,
       boolean precipitation, float downfall) {
@@ -159,6 +176,9 @@ public enum VillageStyle {
         || tagged.test(Tags.Biomes.IS_WET_OVERWORLD) || downfall >= 0.7F);
     boolean dry = !precipitation || (!wet && (tagged.test(Tags.Biomes.IS_DRY)
         || tagged.test(Tags.Biomes.IS_DRY_OVERWORLD) || downfall <= 0.3F));
-    return hot && dry ? List.of(DESERT, BADLANDS) : List.of(BIRCH_FOREST);
+    if (hot && dry) {
+      return List.of(DESERT, BADLANDS);
+    }
+    return hot && wet ? List.of(FLOODPLAIN) : List.of(BIRCH_FOREST);
   }
 }

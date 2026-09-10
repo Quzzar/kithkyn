@@ -21,20 +21,28 @@ record WallPalette(Block post, Block deck, Block stairs, Block slab,
       case BADLANDS -> new WallPalette(
           Blocks.SMOOTH_RED_SANDSTONE, Blocks.SMOOTH_RED_SANDSTONE, Blocks.SMOOTH_RED_SANDSTONE_STAIRS,
           Blocks.SMOOTH_RED_SANDSTONE_SLAB, Blocks.RED_SANDSTONE_WALL, Blocks.OAK_TRAPDOOR);
+      case FLOODPLAIN -> new WallPalette(
+          Blocks.MUD_BRICKS, Blocks.MUD_BRICKS, Blocks.MUD_BRICK_STAIRS,
+          Blocks.MUD_BRICK_SLAB, Blocks.MUD_BRICK_WALL, Blocks.JUNGLE_TRAPDOOR);
     };
   }
 
-  /** Chiseled trim belongs to the gate frame; wall bodies keep their smooth masonry. */
+  /**
+   * Trim belongs to the gate frame and wall bodies keep their plain masonry:
+   * chiseled stone on the arid walls, muddy mangrove roots on the floodplain.
+   */
   Block frame() {
     if (this.post == Blocks.SMOOTH_SANDSTONE) return Blocks.CHISELED_SANDSTONE;
     if (this.post == Blocks.SMOOTH_RED_SANDSTONE) return Blocks.CHISELED_RED_SANDSTONE;
+    if (this.post == Blocks.MUD_BRICKS) return Blocks.MUDDY_MANGROVE_ROOTS;
     return this.post;
   }
 
   /** Stable position variation survives reloads and repeated construction checks. */
   BlockState standingLight(BlockPos position) {
     Block candle = this.post == Blocks.SMOOTH_SANDSTONE ? Blocks.CANDLE
-        : this.post == Blocks.SMOOTH_RED_SANDSTONE ? Blocks.ORANGE_CANDLE : null;
+        : this.post == Blocks.SMOOTH_RED_SANDSTONE ? Blocks.ORANGE_CANDLE
+        : this.post == Blocks.MUD_BRICKS ? Blocks.BROWN_CANDLE : null;
     if (candle == null) return Blocks.LANTERN.defaultBlockState();
     int count = 2 + Math.floorMod(31 * position.getX() + 17 * position.getZ()
         + position.getY(), 3);

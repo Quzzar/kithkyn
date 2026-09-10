@@ -144,6 +144,13 @@ public final class VillageNamer {
               + " Warm, flowing, memorable invented place-names.",
           List.of("Darava", "Serevan", "Amarin"),
           List.of("Dara", "Sere", "Amar", "Tala", "Aven", "Sola", "Nara", "Kes"));
+      case FLOODPLAIN -> new NamingProfile(
+          "A riverside community on a mangrove floodplain: mud-brick homes on packed earth,"
+              + " roots and reeds, fish traps, drying racks and boats drawn up on the bank."
+              + " Soft, flowing invented names with a river sound, unhurried and warm.",
+          List.of("Nilora", "Kemwari", "Sefuna", "Abaresh"),
+          List.of("Nil", "Kem", "Sef", "Aba", "Mer", "Tam", "Wad", "Osa"),
+          List.of("ora", "ari", "wari", "una", "esh", "ai", "oma", "eni"));
     };
   }
 

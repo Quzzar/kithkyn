@@ -365,12 +365,13 @@ becoming one overloaded axis.
 
 ### Current runtime selection: 2026-09-10
 
-Three styles exist today, in this stable order: `birch_forest`, `desert`, `badlands`. Birch
-Forest is the only catalog bundled in the jar and so the default: a blank or unknown saved
-style reads as Birch. Desert ([desert-village.md](desert-village.md)) and Badlands
-([badlands-village.md](badlands-village.md)) are installed as private datapacks that supply
-their own definitions and templates under the same ids the code resolves; without its pack a
-style has no founding set and is never selected automatically. The old Village Life families
+Four styles exist today, in this stable order: `birch_forest`, `desert`, `badlands`,
+`floodplain`. Birch Forest is the only catalog bundled in the jar and so the default: a blank
+or unknown saved style reads as Birch. Desert ([desert-village.md](desert-village.md)),
+Badlands ([badlands-village.md](badlands-village.md)) and Floodplain
+([floodplain-village.md](floodplain-village.md)) are installed as private datapacks that
+supply their own definitions and templates under the ids the code resolves; without its pack
+a style has no founding set and is never selected automatically. The old Village Life families
 (plains, taiga, snowy, savanna and the bundled desert set) were removed on 2026-09-10; see
 "Villages saved in a removed family" below for what that means for an existing world. The
 reference roster above reserves future work, not phantom runtime catalogs. The approved
@@ -385,8 +386,8 @@ reroll an existing village. An explicit style argument on the command still over
 
 Selection first honors `kithkyn:village_style/<style>` biome tags, so a datapack can map a
 vanilla or modded biome precisely without a second mapping format. If a biome has several
-explicit tags, the stable order is Birch Forest, Desert, Badlands. Only styles whose own
-center, mine, and storehouse definitions are loaded are automatic candidates.
+explicit tags, the stable order is Birch Forest, Desert, Badlands, Floodplain. Only styles
+whose own center, mine, and storehouse definitions are loaded are automatic candidates.
 
 Conventional families then retain deterministic assignments, but only where a finished
 catalog exists:
@@ -396,7 +397,8 @@ catalog exists:
 | Birch, including `c:is_birch_forest` and untagged registry paths containing `birch` | Birch Forest |
 | Mesa/badlands or savanna, including their tagged modded families and recognizable registry paths | Pueblo / Badlands |
 | Desert or sandy, excluding the mesa/badlands and savanna families above | Desert |
-| Every other conventional family (plains, forest, taiga, snowy, jungle, swamp and the rest) | No conventional mapping; the climate cluster below decides |
+| Mangrove: vanilla mangrove swamp through the `kithkyn:village_style/floodplain` tag, and untagged registry paths containing `mangrove` | Floodplain |
+| Every other conventional family (plains, forest, taiga, snowy, jungle, plain swamp and the rest) | No conventional mapping; the climate cluster below decides |
 
 Birch wins before broader family tags; an explicit style tag can override even a birch-named
 biome. This name heuristic is a compatibility fallback for mods that omit conventional tags,
@@ -409,11 +411,13 @@ existing villages. The Jungle showcase is a building-selection pass, not an acti
 A family with no conventional mapping uses its precipitation, base temperature, downfall, and
 conventional hot/dry/wet tags to choose a cluster. Only a hot, dry climate has a choice to
 make, and that choice is randomly varied between founding sites but deterministic for the same
-world seed, biome, and site:
+world seed, biome, and site. Plain vanilla swamp carries the conventional hot and wet tags and
+so builds Floodplain until a swamp catalog of its own exists:
 
 | Climate | Candidate architecture cluster |
 | --- | --- |
 | Hot and dry | Desert, Badlands |
+| Hot and wet | Floodplain |
 | Everything else | Birch Forest |
 
 Hot means a hot tag or base temperature at least `1.0`. No precipitation is dry. Otherwise wet

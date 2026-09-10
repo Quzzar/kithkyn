@@ -68,6 +68,9 @@ in it, and update it in the same change that moves what it describes.
   alternatives, staffing, identity, biome selection and private datapack installation.
 - [desert-village.md](desert-village.md): the selected Desert Oasis catalog, founding jobs,
   housing, identity colors, service access, and sandstone walls.
+- [floodplain-village.md](floodplain-village.md): the approved Floodplain (mangrove swamp) local
+  catalog from the Nilotic selection: roles, founding set, identity rules, the mud brick wall
+  palette, authoring pipeline and verification.
 - [appearance.md](appearance.md): why villagers use the player model and not the vanilla
   villager model, the wide/slim model split by gender, and the client-side runtime skin
   compositor that bakes a villager's look from inherited skin, hair, and eye structures,

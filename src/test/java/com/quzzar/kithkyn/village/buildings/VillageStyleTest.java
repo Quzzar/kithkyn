@@ -37,8 +37,8 @@ class VillageStyleTest {
 
   @Test
   void bundledBirchLeadsTheEnumAndIsWhatUnknownSavedStylesReadAs() {
-    assertEquals(List.of(VillageStyle.BIRCH_FOREST, VillageStyle.DESERT, VillageStyle.BADLANDS),
-        List.of(VillageStyle.values()));
+    assertEquals(List.of(VillageStyle.BIRCH_FOREST, VillageStyle.DESERT, VillageStyle.BADLANDS,
+        VillageStyle.FLOODPLAIN), List.of(VillageStyle.values()));
     assertEquals(VillageStyle.BIRCH_FOREST, VillageStyle.DEFAULT);
     assertEquals(VillageStyle.BIRCH_FOREST, VillageStyle.fromId(""));
     assertEquals(VillageStyle.BIRCH_FOREST, VillageStyle.fromId("plains"));
@@ -127,17 +127,45 @@ class VillageStyleTest {
     List<VillageStyle> birch = List.of(VillageStyle.BIRCH_FOREST);
     assertEquals(arid, VillageStyle.climateStyles(NO_TAGS, 1.3F, false, 0.9F), "no precipitation is dry");
     assertEquals(arid, VillageStyle.climateStyles(NO_TAGS, 1.0F, true, 0.2F), "hot with little downfall");
-    assertEquals(birch, VillageStyle.climateStyles(NO_TAGS, 1.3F, true, 0.9F), "hot but wet");
+    assertEquals(List.of(VillageStyle.FLOODPLAIN), VillageStyle.climateStyles(NO_TAGS, 1.3F, true, 0.9F),
+        "hot and wet is floodplain country");
     assertEquals(birch, VillageStyle.climateStyles(NO_TAGS, 0.7F, true, 0.5F), "temperate");
     assertEquals(birch, VillageStyle.climateStyles(NO_TAGS, 0.7F, false, 0.5F), "temperate and dry");
     assertEquals(birch, VillageStyle.climateStyles(NO_TAGS, 0.0F, true, 0.5F), "freezing");
     assertEquals(birch, VillageStyle.climateStyles(NO_TAGS, 0.0F, false, 0.5F), "cold and dry");
     Set<TagKey<Biome>> hotWet = Set.of(Tags.Biomes.IS_HOT_OVERWORLD, Tags.Biomes.IS_WET_OVERWORLD);
-    assertEquals(birch, VillageStyle.climateStyles(hotWet::contains, 0.7F, true, 0.1F),
-        "an explicit wet tag protects a low-downfall biome from the arid pair");
+    assertEquals(List.of(VillageStyle.FLOODPLAIN), VillageStyle.climateStyles(hotWet::contains, 0.7F, true, 0.1F),
+        "explicit hot and wet tags protect a low-downfall biome from the arid pair");
     Set<TagKey<Biome>> hotDry = Set.of(Tags.Biomes.IS_HOT, Tags.Biomes.IS_DRY);
     assertEquals(arid, VillageStyle.climateStyles(hotDry::contains, 0.7F, true, 0.5F),
         "explicit hot and dry tags need no temperature threshold");
+  }
+
+  @Test
+  void mangroveFamiliesAreFloodplainWhilePlainSwampWaitsForItsOwnCatalog() {
+    assertEquals(VillageStyle.FLOODPLAIN,
+        VillageStyle.select(VillageStyle.FLOODPLAIN.biomeTag()::equals, "mangrove_swamp", 0.8F, true, 0.9F, 3L, ALL_STYLES));
+    assertEquals(VillageStyle.FLOODPLAIN,
+        VillageStyle.select(Tags.Biomes.IS_SWAMP::equals, "mangrove_swamp", 0.8F, true, 0.9F, 3L, ALL_STYLES),
+        "vanilla mangrove swamp is recognizable by name even without the style tag");
+    assertEquals(VillageStyle.FLOODPLAIN,
+        VillageStyle.select(NO_TAGS, "mangrove_bayou", 0.8F, true, 0.9F, 3L, ALL_STYLES));
+    Set<TagKey<Biome>> swamp = Set.of(Tags.Biomes.IS_SWAMP, Tags.Biomes.IS_HOT_OVERWORLD, Tags.Biomes.IS_WET_OVERWORLD);
+    assertEquals(VillageStyle.FLOODPLAIN,
+        VillageStyle.select(swamp::contains, "swamp", 0.8F, true, 0.9F, 3L, ALL_STYLES),
+        "plain swamp has no mapping of its own; hot and wet under the conventional tags, it builds floodplain meanwhile");
+    assertEquals(VillageStyle.BIRCH_FOREST,
+        VillageStyle.select(Tags.Biomes.IS_SWAMP::equals, "swamp", 0.8F, true, 0.9F, 3L, ALL_STYLES),
+        "a modded swamp without the hot tag is temperate and builds the bundled set");
+    for (long seed = 0; seed < 20; seed++) {
+      assertEquals(VillageStyle.FLOODPLAIN,
+          VillageStyle.select(NO_TAGS, "steaming_marsh", 1.2F, true, 0.9F, seed, ALL_STYLES),
+          "an unclassified hot, wet biome builds the floodplain catalog");
+      assertEquals(VillageStyle.BIRCH_FOREST,
+          VillageStyle.select(NO_TAGS, "steaming_marsh", 1.2F, true, 0.9F, seed,
+              style -> style != VillageStyle.FLOODPLAIN),
+          "without the floodplain pack the first loaded founding set stands in");
+    }
   }
 
   @Test

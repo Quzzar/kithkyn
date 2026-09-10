@@ -198,6 +198,20 @@ public final class ApprovedHouseVerification {
     Set<UUID> beforeEntities = ApprovedStructureAccess.entityIds(level);
     building = ApprovedStructureAccess.place(level, ORIGIN, info, Rotation.values()[placementIndex % 4]);
     initialEntities = ApprovedStructureAccess.entityIds(level).stream().filter(id -> !beforeEntities.contains(id)).toList();
+    // Livestock stays for the pen checks. Authored keepers such as a storehouse's
+    // allays are removed for the walks: they fly through the probe's cells and
+    // push it off a container mid-check, and the placement and restart fixtures
+    // are what prove they are authored and survive.
+    List<UUID> kept = new ArrayList<>();
+    for (UUID id : initialEntities) {
+      var entity = level.getEntity(id);
+      if (entity instanceof net.minecraft.world.entity.Mob && !(entity instanceof Animal)) {
+        entity.discard();
+      } else {
+        kept.add(id);
+      }
+    }
+    initialEntities = List.copyOf(kept);
     checkedEntities = false;
     village = new ApprovedStructureAccess.VillageFixture(level, building, false);
     for (String id : ids) {
