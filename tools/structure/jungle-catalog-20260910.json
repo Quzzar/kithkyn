@@ -1,5 +1,5 @@
 {
-  "status": "verified_private_catalog",
+  "status": "verified_and_locally_deployed",
   "variant": "jungle",
   "production_datapack": "run/jungle-integration/datapack",
   "selection_record": "tools/structure/jungle-selections-20260910.json",
@@ -784,5 +784,13 @@
       "jobs": 4
     }
   },
-  "runtime_sha256": "027bb63bf53c3b250801c1e1e44fc8a75410f5fa32b19ed4a8773621f2f69942"
+  "runtime_sha256": "027bb63bf53c3b250801c1e1e44fc8a75410f5fa32b19ed4a8773621f2f69942",
+  "deployment": {
+    "date": "2026-09-10",
+    "commit": "a594958ea1870c0ce8f31a5a1d79bf3ce7d3b02f",
+    "release": "20260910-193529-jungle-village",
+    "datapack": "run/world/datapacks/kithkyn-jungle",
+    "building_definitions_loaded": 126,
+    "world_backup": "before-jungle-village-20260910-193529"
+  }
 }
