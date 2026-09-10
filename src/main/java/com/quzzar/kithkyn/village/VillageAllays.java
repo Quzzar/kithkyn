@@ -139,6 +139,24 @@ public final class VillageAllays {
     }
     attach(allay);
     remember(level, village, allay);
+    if (recruiter != null) {
+      // The keeper wears a fallback name from here on; the quartermaster then names
+      // it themselves, the way an owner names a pet, and the fallback stays only
+      // when the talk lands nothing.
+      KeeperNaming.decide(recruiter, allay, NAMES).whenComplete((decision, error) -> {
+        if (error != null || decision == null || decision.isEmpty()) {
+          return;
+        }
+        level.getServer().execute(() -> {
+          if (allay.isRemoved()) {
+            return;
+          }
+          allay.setCustomName(Component.literal(decision.get()));
+          allay.setCustomNameVisible(false);
+          recruiter.logMemory("I named our storehouse keeper " + decision.get() + ".", Optional.of(allay.getUUID()));
+        });
+      });
+    }
   }
 
   /**

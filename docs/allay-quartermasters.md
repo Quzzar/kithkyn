@@ -93,3 +93,13 @@ round. Wooden doors are different: a keeper's route may pass through one, and th
 opens the door it is brushing past itself, since allays have no door behaviour of their own.
 Buildings should therefore leave keepers an open panel or a door into every room they
 serve; the floodplain storehouse exports its doorway trapdoor open for exactly this reason.
+
+## Naming
+
+An adopted keeper wears one of ten fallback names at once (Wisp, Fen, Reed, Sedge, Mote, Lumen,
+Dewdrop, Rush, Tallow, Pip), the way a guard's golem does. The quartermaster who took it on
+then names it themselves through the same single-voice talk an owner has when naming a pet
+(`village/KeeperNaming`, on the shared `SingleVoiceNaming` plumbing with `PetNaming`): they
+speak as themselves about the spirit at their counter, are shown the ten as the kind of name a
+keeper carries, and settle a name of their own, which the keeper takes and the quartermaster
+remembers. When the LLM is down or the talk lands no valid name, the fallback stays.
