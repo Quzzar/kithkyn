@@ -69,6 +69,13 @@ It preserves all unrelated native NBT and verifies its output by reading it back
 Keep separate installed catalogs in separate directories and preserve their pack
 selections during later updates. Restart after changing structure binaries.
 
+The shared native integration fixture accepts `-Dkithkyn.reviewedVillage.style=desert`
+or `badlands` in a disposable flat world with the matching biome. Load both approved
+catalogs for its biome-coverage checks. It checks the effective catalog, physical beds
+and village color slots, upgrade fits, four founding rotations, worker housing, village
+flags, save/reload and natural founding. Run the separate authored-building access
+fixture as well: catalog checks alone do not prove that a villager can walk to a room.
+
 ## What to check before shipping one
 
 - **Rotation.** The gallery places structures as loaded, but villages place them rotated.

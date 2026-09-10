@@ -355,14 +355,6 @@ class WallSegmentCatalogIntegrationTest {
   }
 
   @Test
-  void regionalWallWoodRemainsEligibleForAStoneUpgrade() {
-    assertTrue(WoodWallPalette.isWallWood(Blocks.STRIPPED_OAK_LOG));
-    assertTrue(WoodWallPalette.isWallWood(Blocks.STRIPPED_SPRUCE_LOG));
-    assertTrue(WoodWallPalette.isWallWood(Blocks.ACACIA_FENCE));
-    assertTrue(!WoodWallPalette.isWallWood(Blocks.STONE_BRICKS));
-  }
-
-  @Test
   void authoredPostsGrowFoundationsDownToSlopedTerrain() {
     List<Long> ring = WallRoute.aroundBox(0, 30, 0, 30);
     long gate = BlockPos.asLong(15, 0, 0);

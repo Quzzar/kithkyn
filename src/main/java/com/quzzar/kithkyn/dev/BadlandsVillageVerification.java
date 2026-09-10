@@ -29,6 +29,8 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.Container;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.level.block.AbstractBannerBlock;
+import net.minecraft.world.level.block.entity.BannerBlockEntity;
 import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.biome.Biomes;
 import net.minecraft.world.level.block.BedBlock;
@@ -39,14 +41,22 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.tick.ServerTickEvent;
 
-/** Playable private-catalog integration, only in a disposable -Dkithkyn.badlands.verify=true world. */
+/** Shared private-catalog checks. Opt in with the legacy Badlands flag or reviewedVillage.style=desert. */
 @EventBusSubscriber(modid = Kithkyn.MODID)
 public final class BadlandsVillageVerification {
   private static final BlockPos UPGRADE_SITE = new BlockPos(2400, 159, 2400);
+  private static final VillageStyle STYLE = VillageStyle.parse(
+      System.getProperty("kithkyn.reviewedVillage.style", "badlands"));
+  private static final boolean DESERT = STYLE == VillageStyle.DESERT;
+  private static final String PREFIX = DESERT ? "[desert-verify]" : "[badlands-verify]";
+  private static final int TEMPLATES = DESERT ? 28 : 30;
+  private static final int HOMES = DESERT ? 9 : 12;
+  private static final int FOUNDING_BEDS = DESERT ? 5 : 10;
+  private static final int FOUNDING_JOBS = DESERT ? 4 : 8;
   private static final String[][] UPGRADES = {
-      {"storehouse_badlands_1", "storehouse_badlands_2"},
-      {"market_badlands_1", "market_badlands_2"},
-      {"market_badlands_2", "market_badlands_3"}
+      {id("storehouse", 1), id("storehouse", 2)},
+      {id("market", 1), id("market", 2)},
+      {id("market", 2), id("market", 3)}
   };
   private static int ticks;
   private static int upgrades;
@@ -58,11 +68,13 @@ public final class BadlandsVillageVerification {
 
   @SubscribeEvent
   public static void tick(ServerTickEvent.Post event) {
-    if (!Boolean.getBoolean("kithkyn.badlands.verify") || finished) return;
+    if ((!Boolean.getBoolean("kithkyn.badlands.verify")
+        && System.getProperty("kithkyn.reviewedVillage.style") == null) || finished) return;
     ServerLevel level = event.getServer().overworld();
     if (++ticks < 40) return;
     try {
       if (ticks == 40) {
+        check(STYLE == VillageStyle.BADLANDS || DESERT, "Only reviewed Badlands and Desert catalogs are supported");
         level.getGameRules().getRule(GameRules.RULE_DOMOBSPAWNING).set(false, event.getServer());
         level.getGameRules().getRule(GameRules.RULE_RANDOMTICKING).set(0, event.getServer());
         level.setDayTime(6000);
@@ -76,22 +88,23 @@ public final class BadlandsVillageVerification {
         verifyFounding(level, Rotation.values()[foundingRotations], foundingRotations);
         foundingRotations++;
       } else if (!naturalStarted) {
-        NaturalFoundingVerification.start(level, VillageStyle.BADLANDS, 3, 10);
+        NaturalFoundingVerification.start(level, STYLE, 3, FOUNDING_BEDS);
         naturalStarted = true;
       } else {
         NaturalFoundingVerification.tick(level);
         if (NaturalFoundingVerification.hasPassed()) {
           verifyVillage(level, NaturalFoundingVerification.foundedVillage());
           finished = true;
-          Kithkyn.LOGGER.info("[badlands-verify] RESULT PASS: 30 strict native templates, 12 housing alternatives, "
+          Kithkyn.LOGGER.info("{} RESULT PASS: {} strict native templates, {} housing alternatives, "
               + "12 upgrade fits, four founding rotations and codec reloads, natural biome selection, "
-              + "10 beds, eight positions, bell plaza and two fires");
+              + "{} beds, {} positions, distinct meeting/fire locations and village identity", PREFIX,
+              TEMPLATES, HOMES, FOUNDING_BEDS, FOUNDING_JOBS);
           event.getServer().halt(false);
         }
       }
     } catch (Exception | AssertionError failure) {
       finished = true;
-      Kithkyn.LOGGER.error("[badlands-verify] RESULT FAIL", failure);
+      Kithkyn.LOGGER.error(PREFIX + " RESULT FAIL", failure);
       event.getServer().halt(false);
     }
   }
@@ -109,16 +122,16 @@ public final class BadlandsVillageVerification {
       check(VillageStyle.fromBiome(registry.getHolderOrThrow(biome)) == VillageStyle.BIRCH_FOREST,
           "Birch coverage changed " + biome.location());
     }
-    Kithkyn.LOGGER.info("[badlands-verify] BIOMES PASS: six Pueblo biomes, sandy Desert and both Birch biomes");
+    Kithkyn.LOGGER.info("{} BIOMES PASS: six Pueblo biomes, sandy Desert and both Birch biomes", PREFIX);
   }
 
   private static void verifyCatalogue(ServerLevel level) {
-    check(!VillageStyle.BADLANDS.usesPlainsFallback(), "Badlands must use a strict catalogue");
-    check(Buildings.hasFoundingSet(VillageStyle.BADLANDS), "Missing full Badlands founding set");
-    List<BuildingInfo> catalogue = Buildings.catalogue(VillageStyle.BADLANDS);
-    check(catalogue.size() == 30, "Expected 30 catalogue entries, got " + catalogue.size());
+    check(!STYLE.usesPlainsFallback(), STYLE + " must use a strict catalogue");
+    check(Buildings.hasFoundingSet(STYLE), "Missing full " + STYLE + " founding set");
+    List<BuildingInfo> catalogue = Buildings.catalogue(STYLE);
+    check(catalogue.size() == TEMPLATES, "Expected " + TEMPLATES + " catalogue entries, got " + catalogue.size());
     for (BuildingInfo info : catalogue) {
-      check(info.hasWellFormedId() && info.getVariant().equals("badlands"), "Foreign catalogue entry " + info.getName());
+      check(info.hasWellFormedId() && info.getVariant().equals(STYLE.id()), "Foreign catalogue entry " + info.getName());
       check(info.validate() == null, info.getName() + ": " + info.validate());
       var template = level.getStructureManager().get(ResourceLocation.fromNamespaceAndPath(Kithkyn.MODID, info.getPath()))
           .orElseThrow(() -> new AssertionError("Missing native template " + info.getName()));
@@ -126,9 +139,33 @@ public final class BadlandsVillageVerification {
       check(template.getSize().getX() > 0 && template.getSize().getY() > 0 && template.getSize().getZ() > 0,
           "Invalid template dimensions " + info.getName());
       var blocks = template.palettes.getFirst().blocks();
+      var states = blocks.stream().collect(java.util.stream.Collectors.toMap(
+          block -> block.pos(), block -> block.state()));
+      var physicalBeds = blocks.stream().filter(block -> block.state().getBlock() instanceof BedBlock
+          && block.state().getValue(BedBlock.PART) == net.minecraft.world.level.block.state.properties.BedPart.HEAD)
+          .map(block -> block.pos().asLong()).collect(java.util.stream.Collectors.toSet());
+      check(physicalBeds.equals(new java.util.HashSet<>(info.getBedLocations())),
+          "Physical and assigned beds differ in " + info.getName());
+      var slots = info.getVillageIdentitySlots();
       for (long bed : info.getBedLocations()) {
-        check(blocks.stream().anyMatch(block -> block.pos().asLong() == bed && block.state().getBlock() instanceof BedBlock),
-            "Declared bed missing from " + info.getName() + " at " + BlockPos.of(bed));
+        BlockPos position = BlockPos.of(bed);
+        var state = states.get(position);
+        check(state.is(Blocks.WHITE_BED), "Authored bed must be neutral in " + info.getName());
+        check(slots.primaryBlocks().contains(position) ^ slots.secondaryBlocks().contains(position),
+            "Every bed must have one village color in " + info.getName());
+        var foot = states.get(position.relative(state.getValue(BedBlock.FACING).getOpposite()));
+        check(foot != null && foot.is(Blocks.WHITE_BED)
+            && foot.getValue(BedBlock.PART) == net.minecraft.world.level.block.state.properties.BedPart.FOOT,
+            "Incomplete bed in " + info.getName() + " at " + position);
+      }
+      for (var pair : info.getCoupleBeds()) {
+        check(slots.primaryBlocks().contains(pair.first()) == slots.primaryBlocks().contains(pair.second()),
+            "Couple beds must share a village color in " + info.getName());
+      }
+      for (BlockPos flag : slots.banners()) {
+        var state = states.get(flag);
+        check(state != null && (state.is(Blocks.WHITE_BANNER) || state.is(Blocks.WHITE_WALL_BANNER)),
+            "Missing neutral village flag in " + info.getName() + " at " + flag);
       }
       for (long container : java.util.stream.Stream.concat(info.getContainerLocations().stream(),
           info.getPersonalContainerLocations().stream()).toList()) {
@@ -137,28 +174,39 @@ public final class BadlandsVillageVerification {
       }
     }
     var homes = catalogue.stream().filter(info -> info.getCategory().equals("house")).toList();
-    check(homes.size() == 12, "Expected 12 distinct houses");
-    check(homes.stream().mapToInt(info -> info.getBedLocations().size()).sum() == 25, "Wrong combined house bed count");
+    check(homes.size() == HOMES, "Expected " + HOMES + " distinct houses");
+    check(homes.stream().mapToInt(info -> info.getBedLocations().size()).sum() == (DESERT ? 15 : 25), "Wrong combined house bed count");
     for (int tier = 1; tier <= 3; tier++) {
       int selectedTier = tier;
-      int expected = new int[] {6, 4, 2}[tier - 1];
-      check(Buildings.alternatives("house", tier, VillageStyle.BADLANDS).size() == expected
+      int expected = (DESERT ? new int[] {6, 2, 1} : new int[] {6, 4, 2})[tier - 1];
+      check(Buildings.alternatives("house", tier, STYLE).size() == expected
           && homes.stream().filter(info -> info.getLevel() == selectedTier).count() == expected,
           "Unavailable housing alternatives at tier " + tier);
     }
-    Map<String, Integer> paired = Map.of("house_badlands_1__small_house_3", 1,
-        "house_badlands_3", 1, "house_badlands_3__large_house_3", 2);
+    if (DESERT) {
+      check(homes.stream().mapToInt(home -> home.getCoupleBeds().size()).sum() == 1,
+          "Desert must retain its one approved couple room");
+      for (BuildingInfo home : homes) {
+        check(home.getUpgradesFrom() == null && (home.getLevel() == 1 || home.isStandalone()),
+            "Unrelated Desert homes must remain independent construction choices: " + home.getName());
+      }
+    } else {
+      Map<String, Integer> paired = Map.of("house_badlands_1__small_house_3", 1,
+          "house_badlands_3", 1, "house_badlands_3__large_house_3", 2);
+      for (BuildingInfo home : homes) {
+        check(home.getCoupleBeds().size() == paired.getOrDefault(home.getName(), 0), "Wrong couple rooms " + home.getName());
+      }
+      for (String workplace : List.of("farm_badlands_1", "butchery_badlands_1")) {
+        check(info(workplace).getWorkerCoupleRoomCount() == 1, "Lost married worker room " + workplace);
+      }
+    }
     for (BuildingInfo home : homes) {
-      check(home.getCoupleBeds().size() == paired.getOrDefault(home.getName(), 0), "Wrong couple rooms " + home.getName());
       check(home.getBedContainers() != null, "Lost explicit room storage " + home.getName());
     }
-    for (String workplace : List.of("farm_badlands_1", "butchery_badlands_1")) {
-      check(info(workplace).getWorkerCoupleRoomCount() == 1, "Lost married worker room " + workplace);
-    }
-    BuildingInfo tavern = info("tavern_badlands_1");
+    BuildingInfo tavern = info(id("tavern", 1));
     check(tavern.getBedLocations().size() == 2 && tavern.getWorkerSingleBedCount() == 1,
         "Tavern must keep one staff bed and one general bed");
-    Kithkyn.LOGGER.info("[badlands-verify] CATALOGUE PASS: 30 actual templates and all 12 authored housing choices");
+    Kithkyn.LOGGER.info("{} CATALOGUE PASS: {} actual templates and all {} authored housing choices", PREFIX, TEMPLATES, HOMES);
   }
 
   private static void verifyUpgrade(ServerLevel level, String[] edge, Rotation rotation) {
@@ -166,12 +214,12 @@ public final class BadlandsVillageVerification {
     check(edge[0].equals(target.getUpgradesFrom()), "Wrong predecessor for " + edge[1]);
     Building standing = ApprovedStructureAccess.place(level, UPGRADE_SITE, info(edge[0]), rotation);
     Village village = new ApprovedStructureAccess.VillageFixture(level, standing, false);
-    village.setStyle(VillageStyle.BADLANDS);
+    village.setStyle(STYLE);
     var placement = BuildingUpgrade.findPlacement(village, target);
     check(placement != null, "Upgrade cannot fit " + edge[0] + " -> " + edge[1] + " " + rotation);
     check(placement.standing().getUUID().equals(standing.getUUID()) && placement.rotation() == rotation,
         "Upgrade changed the standing building identity/orientation");
-    Kithkyn.LOGGER.info("[badlands-verify] UPGRADE PASS {} -> {} {}: {}", edge[0], edge[1], rotation, placement.bounds());
+    Kithkyn.LOGGER.info("{} UPGRADE PASS {} -> {} {}: {}", PREFIX, edge[0], edge[1], rotation, placement.bounds());
   }
 
   private static void verifyFounding(ServerLevel level, Rotation rotation, int index) throws ReflectiveOperationException {
@@ -183,11 +231,11 @@ public final class BadlandsVillageVerification {
       level.setBlock(position, position.getY() < site.getY() ? Blocks.STONE.defaultBlockState()
           : Blocks.AIR.defaultBlockState(), 2);
     }
-    check(level.getBiome(site).is(Biomes.BADLANDS), "Disposable world must use minecraft:badlands");
-    Village village = new Village("Badlands integration " + rotation);
+    check(level.getBiome(site).is(DESERT ? Biomes.DESERT : Biomes.BADLANDS), "Disposable world biome must match " + STYLE);
+    Village village = new Village(STYLE + " integration " + rotation);
     village.attach(level);
     village.setStyle(VillageStyle.fromBiome(level.getBiome(site), level.getSeed(), site));
-    check(village.getStyle() == VillageStyle.BADLANDS, "Actual biome selected " + village.getStyle());
+    check(village.getStyle() == STYLE, "Actual biome selected " + village.getStyle());
     var plan = village.planFounding(site, rotation, true).orElseThrow(() -> new AssertionError("Founding preflight failed " + rotation));
     check(village.getBuildings().isEmpty() && !village.hasClaimed(site), "Preflight published buildings or claims");
     BoundingBox planned = ApprovedStructureAccess.footprint(level, plan.center().getBuilding());
@@ -204,40 +252,43 @@ public final class BadlandsVillageVerification {
     verifyVillage(level, village);
     verifyCompanions(level, village);
     verifyReload(level, village);
-    Kithkyn.LOGGER.info("[badlands-verify] FOUNDING PASS {}: filled foundation, inward companions and durable village state", rotation);
+    Kithkyn.LOGGER.info("{} FOUNDING PASS {}: filled foundation, inward companions and durable village state", PREFIX, rotation);
   }
 
   private static void verifyVillage(ServerLevel level, Village village) {
-    check(village.getStyle() == VillageStyle.BADLANDS, "Founded style changed");
-    check(village.getBuildings().size() == 3 && village.getTotalBeds() == 10, "Founding must have three buildings and 10 beds");
+    check(village.getStyle() == STYLE, "Founded style changed");
+    check(village.getBuildings().size() == 3 && village.getTotalBeds() == FOUNDING_BEDS, "Wrong founding building/bed count");
     Building center = village.getTownCenter();
-    check(center != null && center.getName().equals("village_center_badlands_1"), "Wrong town center");
-    check(center.getInfo().getWorkLocations().size() == 7, "Center must supply seven starting jobs");
+    check(center != null && center.getName().equals(id("village_center", 1)), "Wrong town center");
+    check(center.getInfo().getWorkLocations().size() == (DESERT ? 3 : 7), "Wrong center starting jobs");
     List<Occupation> jobs = new ArrayList<>();
     village.getUnassignedJobs().forEach(job -> jobs.add(job.getOccupation()));
     village.getJobAssignmentsView().values().forEach(job -> jobs.add(job.getOccupation()));
     Map<Occupation, Long> counts = jobs.stream().collect(java.util.stream.Collectors.groupingBy(
         occupation -> occupation, () -> new EnumMap<>(Occupation.class), java.util.stream.Collectors.counting()));
-    check(jobs.size() == 8 && counts.equals(Map.of(Occupation.GUARD, 5L, Occupation.BUILDER, 1L,
+    check(jobs.size() == FOUNDING_JOBS && counts.equals(Map.of(Occupation.GUARD, DESERT ? 1L : 5L, Occupation.BUILDER, 1L,
         Occupation.QUARTERMASTER, 1L, Occupation.MINER, 1L)), "Wrong starting job positions " + counts);
-    check(center.getInfo().getGuardRole(2) == GuardRole.CAPTAIN
-        && center.getInfo().getGuardRole(3) == GuardRole.CROSSBOW_POST
-        && center.getInfo().getGuardRole(4) == GuardRole.CROSSBOW_POST
-        && center.getInfo().getGuardRole(5) == GuardRole.PATROL
-        && center.getInfo().getGuardRole(6) == GuardRole.PATROL, "Lost mixed center guard duties");
-    check(center.getInfo().getBedContainers() != null && center.getInfo().getBedContainers().size() == 10
-        && center.getInfo().getBedContainers().stream().filter(room -> room.containers().isEmpty()).count() == 3,
-        "Center room ownership must retain three beds without a personal container");
+    check(center.getInfo().getGuardRole(2) == GuardRole.CAPTAIN, "Lost center captain duty");
+    if (!DESERT) {
+      check(center.getInfo().getGuardRole(3) == GuardRole.CROSSBOW_POST
+          && center.getInfo().getGuardRole(4) == GuardRole.CROSSBOW_POST
+          && center.getInfo().getGuardRole(5) == GuardRole.PATROL
+          && center.getInfo().getGuardRole(6) == GuardRole.PATROL, "Lost mixed center guard duties");
+    }
+    check(center.getInfo().getBedContainers() != null && center.getInfo().getBedContainers().size() == (DESERT ? 4 : 10)
+        && center.getInfo().getBedContainers().stream().filter(room -> room.containers().isEmpty()).count() == (DESERT ? 0 : 3),
+        "Center room ownership changed");
     BlockPos plaza = village.getCenterPosition();
-    check(plaza.equals(world(center, new BlockPos(12, 1, 17))), "Wrong civic anchor");
-    check(level.getBlockState(world(center, new BlockPos(13, 2, 17))).is(Blocks.BELL), "Civic bell missing");
-    check(village.getCampfirePositions().size() == 2, "Must keep both authored fires");
+    check(plaza.equals(world(center, DESERT ? new BlockPos(8, 1, 5) : new BlockPos(12, 1, 17))), "Wrong civic anchor");
+    check(level.getBlockState(world(center, DESERT ? new BlockPos(8, 4, 7) : new BlockPos(13, 2, 17))).is(Blocks.BELL), "Civic bell missing");
+    check(village.getCampfirePositions().size() == (DESERT ? 1 : 2), "Lost authored center fires");
     for (BlockPos fire : village.getCampfirePositions()) {
       check(!fire.equals(plaza) && level.getBlockState(fire).is(Blocks.CAMPFIRE), "Missing or conflated campfire " + fire);
     }
     for (Building building : village.getBuildings()) {
+      verifyBanners(level, village, building);
       for (long bed : building.getInfo().getBedLocations()) {
-        check(level.getBlockState(world(building, BlockPos.of(bed))).getBlock() instanceof BedBlock, "Actual founding bed missing");
+        verifyBedIdentity(level, village, building, BlockPos.of(bed));
       }
       for (long container : java.util.stream.Stream.concat(building.getInfo().getContainerLocations().stream(),
           building.getInfo().getPersonalContainerLocations().stream()).toList()) {
@@ -290,9 +341,9 @@ public final class BadlandsVillageVerification {
       residents.add(person);
     }
     ApprovedStructureAccess.reconcileBeds(village);
-    check(village.getJobAssignmentsView().size() == 8 && village.getBedAssignmentsView().size() == 8
-        && village.getUnassignedBeds().size() == 2, "Starting eight workers did not receive eight distinct beds");
-    Building store = village.getBuildings().stream().filter(building -> building.getName().equals("storehouse_badlands_1"))
+    check(village.getJobAssignmentsView().size() == FOUNDING_JOBS && village.getBedAssignmentsView().size() == FOUNDING_JOBS
+        && village.getUnassignedBeds().size() == FOUNDING_BEDS - FOUNDING_JOBS, "Founding workers did not receive distinct beds");
+    Building store = village.getBuildings().stream().filter(building -> building.getName().equals(id("storehouse", 1)))
         .findFirst().orElseThrow();
     BlockPos storage = world(store, BlockPos.of(store.getInfo().getContainerLocations().getFirst()));
     Container chest = (Container) level.getBlockEntity(storage);
@@ -328,6 +379,41 @@ public final class BadlandsVillageVerification {
           && after.getInfo().getCoupleBeds().equals(before.getInfo().getCoupleBeds()), "Reload changed room metadata");
     }
     residents.forEach(net.minecraft.world.entity.Entity::discard);
+  }
+
+  private static void verifyBedIdentity(ServerLevel level, Village village, Building building, BlockPos local) {
+    BlockPos position = world(building, local);
+    var state = level.getBlockState(position);
+    check(state.getBlock() instanceof BedBlock, "Actual founding bed missing");
+    var slots = building.getInfo().getVillageIdentitySlots();
+    boolean primary = slots.primaryBlocks().contains(local);
+    check(primary ^ slots.secondaryBlocks().contains(local), "Founding bed must declare one village color");
+    var expected = primary ? village.getIdentity().primaryColor() : village.getIdentity().secondaryColor();
+    check(((BedBlock) state.getBlock()).getColor() == expected, "Founding bed has the wrong village color");
+    var foot = level.getBlockState(position.relative(state.getValue(BedBlock.FACING).getOpposite()));
+    check(foot.is(state.getBlock()), "Founding bed halves have different village colors");
+  }
+
+  private static void verifyBanners(ServerLevel level, Village village, Building building) {
+    var identity = village.getIdentity();
+    for (BlockPos local : building.getInfo().getVillageIdentitySlots().banners()) {
+      BlockPos position = world(building, local);
+      var block = level.getBlockState(position).getBlock();
+      check(block instanceof AbstractBannerBlock && ((AbstractBannerBlock) block).getColor() == identity.primaryColor(),
+          "Founding flag lost the village base color");
+      check(level.getBlockEntity(position) instanceof BannerBlockEntity, "Founding flag block entity missing");
+      var layers = ((BannerBlockEntity) level.getBlockEntity(position)).getPatterns().layers();
+      check(layers.size() == identity.bannerLayers().size(), "Founding flag lost its saved pattern layers");
+      for (int i = 0; i < layers.size(); i++) {
+        var expected = identity.bannerLayers().get(i);
+        check(layers.get(i).pattern().unwrapKey().orElseThrow().location().equals(expected.pattern())
+            && layers.get(i).color() == expected.color().resolve(identity), "Founding flag differs from village identity");
+      }
+    }
+  }
+
+  private static String id(String category, int tier) {
+    return category + "_" + (DESERT ? "desert" : "badlands") + "_" + tier;
   }
 
   private static BuildingInfo info(String name) {

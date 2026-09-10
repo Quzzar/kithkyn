@@ -8,7 +8,6 @@ import java.util.Map;
 import java.util.Set;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 
 /** The procedural starter catalog behind the authored wall-segment seam. */
 final class BuiltInWallSegmentCatalog implements WallSegmentCatalog {
@@ -20,7 +19,6 @@ final class BuiltInWallSegmentCatalog implements WallSegmentCatalog {
   /** Long enough to read as a structure, short enough for several builders to share the ring. */
   private static final int MAX_SECTION_LENGTH = 7;
   private static final int WOOD_GATEHOUSE_RADIUS = 8;
-  private static final int STONE_GATEHOUSE_RADIUS = 2;
 
   private BuiltInWallSegmentCatalog(AuthoredWoodWallSegments authored) {
     this.authored = authored;
@@ -53,9 +51,7 @@ final class BuiltInWallSegmentCatalog implements WallSegmentCatalog {
     }
     List<WallSection> normalized = withoutUnsupportedAttachments(
         solidifyCoveredLinearToppers(withoutOverlaps(sections)));
-    return tier == WallTier.WOOD
-        ? thinLinearLanterns(normalized)
-        : normalized;
+    return thinLinearLanterns(normalized);
   }
 
   /** A lower run joins the underside of a rigid feature as masonry, not buried battlements. */
@@ -215,9 +211,7 @@ final class BuiltInWallSegmentCatalog implements WallSegmentCatalog {
   private static List<WallSectionKind> classify(List<Long> ring, Set<Long> gates,
       List<Integer> deck, WallTier tier, Set<Long> towerExclusions) {
     List<WallSectionKind> kinds = new ArrayList<>(ring.size());
-    int gatehouseRadius = tier == WallTier.WOOD
-        ? WOOD_GATEHOUSE_RADIUS
-        : STONE_GATEHOUSE_RADIUS;
+    int gatehouseRadius = WOOD_GATEHOUSE_RADIUS;
     for (int i = 0; i < ring.size(); i++) {
       Delta incoming = delta(ring, previous(i, ring.size()), i);
       Delta outgoing = delta(ring, i, next(i, ring.size()));
@@ -246,34 +240,14 @@ final class BuiltInWallSegmentCatalog implements WallSegmentCatalog {
       long column = ring.get(i);
       int x = BlockPos.getX(column);
       int z = BlockPos.getZ(column);
-      Delta tangent = tangentAt(ring, i);
-      Delta inward = new Delta(-tangent.z(), tangent.x());
       int floor = WallRaiser.seamFloor(ground, i);
       int top = deck.get(i);
-      boolean gateCenter = gates.contains(column);
-      boolean gateOpening = tier == WallTier.WOOD
-          ? distanceToGate(ring, gates, i) <= 1
-          : gateCenter;
-      boolean tower = sectionKind == WallSectionKind.CORNER_TOWER
-          || tier == WallTier.STONE
-              && distanceToGate(ring, gates, i) == STONE_GATEHOUSE_RADIUS;
-
-      if (tier == WallTier.WOOD) {
-        addPalisadeColumn(blocks, x, z, floor, top, gateOpening);
-      } else {
-        addStoneColumn(blocks, ring, ground, deck, i, x, z, floor, top, gateCenter,
-            tangent, inward);
-      }
-      if (tower && tier == WallTier.STONE) {
-        addTower(blocks, x, z, floor, top, tier);
-      }
+      addPalisadeColumn(blocks, x, z, floor, top, distanceToGate(ring, gates, i) <= 1);
     }
-    if (tier == WallTier.WOOD) {
-      for (WallBlockPlan block : this.authored.cellsFor(
-          ring, gates, ground, deck, from, to, sectionKind)) {
-        put(blocks, block.pos().getX(), block.pos().getY(), block.pos().getZ(),
-            block.piece(), block.role());
-      }
+    for (WallBlockPlan block : this.authored.cellsFor(
+        ring, gates, ground, deck, from, to, sectionKind)) {
+      put(blocks, block.pos().getX(), block.pos().getY(), block.pos().getZ(),
+          block.piece(), block.role());
     }
     return List.copyOf(blocks.values());
   }
@@ -283,85 +257,6 @@ final class BuiltInWallSegmentCatalog implements WallSegmentCatalog {
     for (int y = floor; y <= top; y++) {
       if (!gateOpening) {
         put(blocks, x, y, z, WallBlockPlan.Piece.BODY, WallCellRole.BARRIER);
-      }
-    }
-  }
-
-  private static void addStoneColumn(Map<Long, WallBlockPlan> blocks, List<Long> ring,
-      List<Integer> ground, List<Integer> deck, int index, int x, int z, int floor,
-      int top, boolean gate, Delta tangent, Delta inward) {
-    int openingTop = ground.get(index) + 2;
-    if (tangent.x() != 0 && tangent.z() != 0) {
-      // A diagonal chain of single blocks touches only at corners. Its 3x3
-      // rasterized slices overlap into a real deck; the two extreme normal
-      // corners become parapets and the middle band remains walkable.
-      for (int ox = -1; ox <= 1; ox++) {
-        for (int oz = -1; oz <= 1; oz++) {
-          int cross = ox * inward.x() + oz * inward.z();
-          boolean edge = Math.abs(cross) == 2;
-          addStoneStack(blocks, x + ox, z + oz, floor, top, openingTop,
-              false, !edge, edge, walkwayPiece(ring, deck, index, tangent));
-        }
-      }
-    } else {
-      for (int across = -1; across <= 1; across++) {
-        int px = x + inward.x() * across;
-        int pz = z + inward.z() * across;
-        addStoneStack(blocks, px, pz, floor, top, openingTop, gate,
-            across == 0, across != 0, walkwayPiece(ring, deck, index, tangent));
-      }
-    }
-  }
-
-  private static void addStoneStack(Map<Long, WallBlockPlan> blocks, int x, int z,
-      int floor, int top, int openingTop, boolean gate, boolean walkway,
-      boolean parapet, WallBlockPlan.Piece walkwayPiece) {
-    for (int y = floor; y <= top; y++) {
-      if (gate && y <= openingTop) {
-        continue;
-      }
-      WallBlockPlan.Piece piece = walkway && y == top
-          ? walkwayPiece
-          : WallBlockPlan.Piece.BODY;
-      put(blocks, x, y, z, piece,
-          piece == WallBlockPlan.Piece.BODY ? WallCellRole.BARRIER : WallCellRole.EXACT);
-    }
-    if (!gate && parapet) {
-      put(blocks, x, top + 1, z, WallBlockPlan.Piece.PARAPET, WallCellRole.EXACT);
-    }
-  }
-
-  private static WallBlockPlan.Piece walkwayPiece(List<Long> ring, List<Integer> deck,
-      int index, Delta tangent) {
-    int here = deck.get(index);
-    int before = deck.get(previous(index, deck.size()));
-    int after = deck.get(next(index, deck.size()));
-    if (after > here) {
-      return WallBlockPlan.step(horizontal(tangent));
-    }
-    if (before > here) {
-      return WallBlockPlan.step(horizontal(new Delta(-tangent.x(), -tangent.z())));
-    }
-    return WallBlockPlan.Piece.WALKWAY;
-  }
-
-  /** A compact 3x3 tower at every corner and on both sides of a gatehouse. */
-  private static void addTower(Map<Long, WallBlockPlan> blocks, int x, int z, int floor,
-      int wallTop, WallTier tier) {
-    int towerTop = wallTop + (tier == WallTier.STONE ? 2 : 1);
-    for (int ox = -1; ox <= 1; ox++) {
-      for (int oz = -1; oz <= 1; oz++) {
-        for (int y = floor; y <= towerTop; y++) {
-          WallBlockPlan.Piece piece = y == towerTop
-              ? WallBlockPlan.Piece.WALKWAY
-              : WallBlockPlan.Piece.BODY;
-          put(blocks, x + ox, y, z + oz, piece,
-              piece == WallBlockPlan.Piece.BODY ? WallCellRole.BARRIER : WallCellRole.EXACT);
-        }
-        if (Math.abs(ox) == 1 || Math.abs(oz) == 1) {
-          put(blocks, x + ox, towerTop + 1, z + oz,
-              WallBlockPlan.Piece.PARAPET, WallCellRole.EXACT);
-        }
       }
     }
   }
@@ -385,28 +280,13 @@ final class BuiltInWallSegmentCatalog implements WallSegmentCatalog {
     };
   }
 
-  private static Delta tangentAt(List<Long> ring, int index) {
-    Delta outgoing = delta(ring, index, next(index, ring.size()));
-    if (outgoing.x() != 0 || outgoing.z() != 0) {
-      return outgoing;
-    }
-    return delta(ring, previous(index, ring.size()), index);
-  }
-
   private static Delta delta(List<Long> ring, int from, int to) {
     return new Delta(
         Integer.signum(BlockPos.getX(ring.get(to)) - BlockPos.getX(ring.get(from))),
         Integer.signum(BlockPos.getZ(ring.get(to)) - BlockPos.getZ(ring.get(from))));
   }
 
-  private static Direction horizontal(Delta delta) {
-    if (Math.abs(delta.x()) >= Math.abs(delta.z())) {
-      return delta.x() >= 0 ? Direction.EAST : Direction.WEST;
-    }
-    return delta.z() >= 0 ? Direction.SOUTH : Direction.NORTH;
-  }
 
-  /** One tower per chamfer, not one at both ends of the same six-block corner. */
   private static boolean isTowerAnchor(Delta incoming, Delta outgoing) {
     return !incoming.equals(outgoing)
         && !isDiagonal(incoming)

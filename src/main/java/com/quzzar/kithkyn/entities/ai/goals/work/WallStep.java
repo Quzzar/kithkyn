@@ -74,10 +74,10 @@ public final class WallStep implements BlockWorkStep {
       return null;
     }
     int itemsNeeded = this.credit > 0 ? 0 : 1;
-    int carried = PackLogistics.carried(person, wall.getTier().material());
+    int carried = PackLogistics.carried(person, wall.getTier().material(wall.getStyle()));
     if (itemsNeeded > 0 && carried < LOW_WATER) {
       BlockPos source = PackLogistics.chestHolding(person, village,
-          List.of(new ItemStack(wall.getTier().material(), LOAD_PER_TRIP)));
+          List.of(new ItemStack(wall.getTier().material(wall.getStyle()), LOAD_PER_TRIP)));
       if (source != null) {
         this.targetedWork = null;
         return source;
@@ -111,7 +111,7 @@ public final class WallStep implements BlockWorkStep {
     Container chest = PackLogistics.containerAt(person, target);
     if (chest != null) {
       PackLogistics.pullWanted(person, chest,
-          List.of(new ItemStack(wall.getTier().material(), LOAD_PER_TRIP)), "BUILDER");
+          List.of(new ItemStack(wall.getTier().material(wall.getStyle()), LOAD_PER_TRIP)), "BUILDER");
       return false;
     }
     WallRaiser.WallWork work = this.targetedWork;
@@ -160,15 +160,15 @@ public final class WallStep implements BlockWorkStep {
       this.credit--;
       return true;
     }
-    if (PackLogistics.carried(person, tier.material()) < 1) {
-      if (Materials.counted(village.stockTally(), tier.material()) == 0) {
-        village.logEvent(new NoResourceBookkeepingEvent(tier.material(), 1));
+    if (PackLogistics.carried(person, tier.material(village.getStyle())) < 1) {
+      if (Materials.counted(village.stockTally(), tier.material(village.getStyle())) == 0) {
+        village.logEvent(new NoResourceBookkeepingEvent(tier.material(village.getStyle()), 1));
         person.logBlocker("we are short of materials to raise the village wall");
       }
       return false;
     }
     person.clearBlocker("we are short of materials to raise the village wall");
-    Materials.take(person.personMainInv, tier.material(), 1);
+    Materials.take(person.personMainInv, tier.material(village.getStyle()), 1);
     this.credit = WallTier.BLOCKS_PER_ITEM - 1;
     return true;
   }

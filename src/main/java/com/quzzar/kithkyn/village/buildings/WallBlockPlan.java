@@ -61,34 +61,24 @@ public record WallBlockPlan(long position, Piece piece, WallCellRole role) {
 
   /** Resolves the catalog's semantic piece through the village's regional palette. */
   public BlockState desiredState(WallTier tier, VillageStyle style) {
-    WoodWallPalette wood = WoodWallPalette.forStyle(style);
-    if (style == VillageStyle.BIRCH_FOREST) {
-      BlockState regional = birchState();
-      if (regional != null) return regional;
-    }
+    WallPalette palette = WallPalette.forStyle(style);
     return switch (this.piece) {
-      case BODY -> tier == WallTier.STONE
-          ? tier.block().defaultBlockState()
-          : strippedLog(wood, Direction.Axis.Y);
-      case WALKWAY -> tier == WallTier.STONE
-          ? Blocks.STONE_BRICKS.defaultBlockState()
-          : wood.planks().defaultBlockState();
-      case PARAPET -> tier == WallTier.STONE
-          ? Blocks.STONE_BRICK_WALL.defaultBlockState()
-          : wood.fence().defaultBlockState();
-      case STEP_NORTH -> stair(tier, wood, Direction.NORTH);
-      case STEP_EAST -> stair(tier, wood, Direction.EAST);
-      case STEP_SOUTH -> stair(tier, wood, Direction.SOUTH);
-      case STEP_WEST -> stair(tier, wood, Direction.WEST);
-      case POST -> strippedLog(wood, Direction.Axis.Y);
-      case BEAM_NORTH_SOUTH -> strippedLog(wood, Direction.Axis.Z);
-      case BEAM_EAST_WEST -> strippedLog(wood, Direction.Axis.X);
-      case SLAB -> wood.slab().defaultBlockState()
+      case BODY -> post(palette, Direction.Axis.Y);
+      case WALKWAY -> palette.deck().defaultBlockState();
+      case PARAPET -> palette.railing().defaultBlockState();
+      case STEP_NORTH -> stair(palette, Direction.NORTH);
+      case STEP_EAST -> stair(palette, Direction.EAST);
+      case STEP_SOUTH -> stair(palette, Direction.SOUTH);
+      case STEP_WEST -> stair(palette, Direction.WEST);
+      case POST -> post(palette, Direction.Axis.Y);
+      case BEAM_NORTH_SOUTH -> post(palette, Direction.Axis.Z);
+      case BEAM_EAST_WEST -> post(palette, Direction.Axis.X);
+      case SLAB -> palette.slab().defaultBlockState()
           .setValue(SlabBlock.TYPE, SlabType.TOP);
-      case TRAPDOOR_NORTH -> trapdoor(wood, Direction.NORTH);
-      case TRAPDOOR_EAST -> trapdoor(wood, Direction.EAST);
-      case TRAPDOOR_SOUTH -> trapdoor(wood, Direction.SOUTH);
-      case TRAPDOOR_WEST -> trapdoor(wood, Direction.WEST);
+      case TRAPDOOR_NORTH -> trapdoor(palette, Direction.NORTH);
+      case TRAPDOOR_EAST -> trapdoor(palette, Direction.EAST);
+      case TRAPDOOR_SOUTH -> trapdoor(palette, Direction.SOUTH);
+      case TRAPDOOR_WEST -> trapdoor(palette, Direction.WEST);
       case LADDER_NORTH -> ladder(Direction.NORTH);
       case LADDER_EAST -> ladder(Direction.EAST);
       case LADDER_SOUTH -> ladder(Direction.SOUTH);
@@ -116,29 +106,6 @@ public record WallBlockPlan(long position, Piece piece, WallCellRole role) {
       case BANNER_SOUTH -> wallBanner(Direction.SOUTH);
       case BANNER_WEST -> wallBanner(Direction.WEST);
     };
-  }
-
-  /** Procedural joins and foundations use the approved stone vocabulary too. */
-  @javax.annotation.Nullable
-  private BlockState birchState() {
-    return switch (this.piece) {
-      case BODY, POST, BEAM_NORTH_SOUTH, BEAM_EAST_WEST, WALKWAY -> Blocks.COBBLESTONE.defaultBlockState();
-      case PARAPET -> Blocks.COBBLESTONE_WALL.defaultBlockState();
-      case SLAB -> Blocks.COBBLESTONE_SLAB.defaultBlockState().setValue(SlabBlock.TYPE, SlabType.TOP);
-      case STEP_NORTH -> cobbleStair(Direction.NORTH);
-      case STEP_EAST -> cobbleStair(Direction.EAST);
-      case STEP_SOUTH -> cobbleStair(Direction.SOUTH);
-      case STEP_WEST -> cobbleStair(Direction.WEST);
-      case TRAPDOOR_NORTH -> trapdoor(WoodWallPalette.forStyle(VillageStyle.PLAINS), Direction.NORTH);
-      case TRAPDOOR_EAST -> trapdoor(WoodWallPalette.forStyle(VillageStyle.PLAINS), Direction.EAST);
-      case TRAPDOOR_SOUTH -> trapdoor(WoodWallPalette.forStyle(VillageStyle.PLAINS), Direction.SOUTH);
-      case TRAPDOOR_WEST -> trapdoor(WoodWallPalette.forStyle(VillageStyle.PLAINS), Direction.WEST);
-      default -> null;
-    };
-  }
-
-  private static BlockState cobbleStair(Direction direction) {
-    return Blocks.COBBLESTONE_STAIRS.defaultBlockState().setValue(StairBlock.FACING, direction);
   }
 
   private static BlockState wallTorch(Direction direction) {
@@ -178,18 +145,18 @@ public record WallBlockPlan(long position, Piece piece, WallCellRole role) {
     };
   }
 
-  private static BlockState strippedLog(WoodWallPalette palette, Direction.Axis axis) {
-    return palette.strippedLog().defaultBlockState()
-        .setValue(RotatedPillarBlock.AXIS, axis);
+  private static BlockState post(WallPalette palette, Direction.Axis axis) {
+    BlockState state = palette.post().defaultBlockState();
+    return state.hasProperty(RotatedPillarBlock.AXIS) ? state.setValue(RotatedPillarBlock.AXIS, axis) : state;
   }
 
-  private static BlockState stair(WallTier tier, WoodWallPalette palette, Direction facing) {
-    BlockState state = (tier == WallTier.STONE ? Blocks.STONE_BRICK_STAIRS : palette.stairs())
+  private static BlockState stair(WallPalette palette, Direction facing) {
+    BlockState state = palette.stairs()
         .defaultBlockState();
     return state.setValue(StairBlock.FACING, facing);
   }
 
-  private static BlockState trapdoor(WoodWallPalette palette, Direction facing) {
+  private static BlockState trapdoor(WallPalette palette, Direction facing) {
     return palette.trapdoor().defaultBlockState()
         .setValue(TrapDoorBlock.FACING, facing)
         .setValue(TrapDoorBlock.HALF, Half.TOP)

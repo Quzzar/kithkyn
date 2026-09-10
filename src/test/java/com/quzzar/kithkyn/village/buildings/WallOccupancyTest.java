@@ -19,11 +19,6 @@ class WallOccupancyTest {
 
   @Test
   void clearableVegetationNeverSatisfiesAPlannedWallCell() {
-    assertFalse(WallOccupancy.isSatisfied(true, false, true));
-  }
-
-  @Test
-  void anExplicitTierUpgradeReopensItsPreviousWallCells() {
     assertFalse(WallOccupancy.isSatisfied(true, true));
   }
 

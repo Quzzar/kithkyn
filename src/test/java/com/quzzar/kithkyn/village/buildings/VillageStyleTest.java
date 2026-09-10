@@ -63,6 +63,7 @@ class VillageStyleTest {
     }
     assertEquals(VillageStyle.BIRCH_FOREST,
         VillageStyle.select(Tags.Biomes.IS_SAVANNA::equals, "birch_savanna", 1F, false, 0F, 12L, ALL_STYLES));
+    assertFalse(VillageStyle.DESERT.usesPlainsFallback());
   }
 
   @Test

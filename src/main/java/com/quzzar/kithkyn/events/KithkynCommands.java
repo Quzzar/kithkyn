@@ -135,36 +135,24 @@ public class KithkynCommands {
                                                         StringArgumentType.getString(ctx, "building"))))))
                         .then(Commands.literal("wall")
                                 .executes(ctx -> raiseWall(ctx.getSource(),
-                                        BlockPos.containing(ctx.getSource().getPosition()), "wood"))
-                                .then(Commands.argument("tier", StringArgumentType.word())
-                                        .executes(ctx -> raiseWall(ctx.getSource(),
-                                                BlockPos.containing(ctx.getSource().getPosition()),
-                                                StringArgumentType.getString(ctx, "tier")))))
+                                        BlockPos.containing(ctx.getSource().getPosition()))))
                         .then(Commands.literal("wall-posts")
                                 .executes(ctx -> reportWallPosts(ctx.getSource(),
                                         BlockPos.containing(ctx.getSource().getPosition()))))
                         .then(Commands.literal("wall-area")
-                                .then(Commands.argument("tier", StringArgumentType.word())
-                                        .suggests((ctx, builder) -> net.minecraft.commands.SharedSuggestionProvider.suggest(
-                                                java.util.Arrays.stream(WallTier.values())
-                                                        .map(tier -> tier.name().toLowerCase()), builder))
-                                        .then(Commands.argument("from", BlockPosArgument.blockPos())
-                                                .then(Commands.argument("to", BlockPosArgument.blockPos())
-                                                        .executes(ctx -> buildWallArea(
-                                                                ctx.getSource(),
+                                .then(Commands.argument("from", BlockPosArgument.blockPos())
+                                        .then(Commands.argument("to", BlockPosArgument.blockPos())
+                                                .executes(ctx -> buildWallArea(ctx.getSource(),
+                                                        BlockPosArgument.getBlockPos(ctx, "from"),
+                                                        BlockPosArgument.getBlockPos(ctx, "to"), null))
+                                                .then(Commands.argument("style", StringArgumentType.word())
+                                                        .suggests((ctx, builder) -> net.minecraft.commands.SharedSuggestionProvider.suggest(
+                                                                java.util.Arrays.stream(VillageStyle.values())
+                                                                        .map(VillageStyle::id), builder))
+                                                        .executes(ctx -> buildWallArea(ctx.getSource(),
                                                                 BlockPosArgument.getBlockPos(ctx, "from"),
                                                                 BlockPosArgument.getBlockPos(ctx, "to"),
-                                                                StringArgumentType.getString(ctx, "tier"), null))
-                                                        .then(Commands.argument("style", StringArgumentType.word())
-                                                                .suggests((ctx, builder) -> net.minecraft.commands.SharedSuggestionProvider.suggest(
-                                                                        java.util.Arrays.stream(VillageStyle.values())
-                                                                                .map(VillageStyle::id), builder))
-                                                                .executes(ctx -> buildWallArea(
-                                                                        ctx.getSource(),
-                                                                        BlockPosArgument.getBlockPos(ctx, "from"),
-                                                                        BlockPosArgument.getBlockPos(ctx, "to"),
-                                                                        StringArgumentType.getString(ctx, "tier"),
-                                                                        StringArgumentType.getString(ctx, "style"))))))))
+                                                                StringArgumentType.getString(ctx, "style")))))))
                         .then(Commands.literal("emigrate")
                                 .executes(ctx -> forceEmigration(ctx.getSource(),
                                         BlockPos.containing(ctx.getSource().getPosition()))))
@@ -498,31 +486,23 @@ public class KithkynCommands {
 
     /**
      * Rings the nearest village with a finished wall on the spot, so its shape,
-     * terrain-following, gateways, and tier can be seen without waiting for the
+     * terrain-following, gateways, and regional materials can be seen without waiting for the
      * builder to raise it over time.
      */
-    private static int raiseWall(CommandSourceStack source, BlockPos pos, String tierName) {
+    private static int raiseWall(CommandSourceStack source, BlockPos pos) {
         Village village = VillageManager.get(source.getLevel()).getNearestVillage(pos);
         if (village == null) {
             source.sendFailure(Component.literal("No villages exist yet."));
             return 0;
         }
-        com.quzzar.kithkyn.village.buildings.WallTier tier;
-        try {
-            tier = com.quzzar.kithkyn.village.buildings.WallTier.valueOf(tierName.toUpperCase());
-        } catch (IllegalArgumentException e) {
-            source.sendFailure(Component.literal(
-                    "Wall tier must be 'wood' or 'stone', not '" + tierName + "'."));
-            return 0;
-        }
-        int segments = village.devBuildWall(tier);
+        int segments = village.devBuildWall(WallTier.WOOD);
         if (segments <= 0) {
             source.sendFailure(Component.literal("'" + village.getName()
                     + "' could not be walled: it has no claimed ground yet."));
             return 0;
         }
         source.sendSuccess(() -> Component.literal(
-                "Ringed '" + village.getName() + "' with a " + tierName + " wall: "
+                "Ringed '" + village.getName() + "' with its regional wall: "
                         + segments + " segments."), true);
         return segments;
     }
@@ -567,15 +547,7 @@ public class KithkynCommands {
 
     /** Places a test wall around two opposite corners without changing village state. */
     private static int buildWallArea(CommandSourceStack source, BlockPos from, BlockPos to,
-            String tierName, @javax.annotation.Nullable String styleName) {
-        WallTier tier;
-        try {
-            tier = WallTier.valueOf(tierName.toUpperCase());
-        } catch (IllegalArgumentException exception) {
-            source.sendFailure(Component.literal(
-                    "Wall tier must be 'wood' or 'stone', not '" + tierName + "'."));
-            return 0;
-        }
+            @javax.annotation.Nullable String styleName) {
         int centerX = (from.getX() + to.getX()) / 2;
         int centerZ = (from.getZ() + to.getZ()) / 2;
         VillageStyle style = styleName == null
@@ -587,10 +559,9 @@ public class KithkynCommands {
         }
         try {
             WallPreview.Result result = WallPreview.build(
-                    source.getLevel(), from, to, tier, style);
+                    source.getLevel(), from, to, WallTier.WOOD, style);
             source.sendSuccess(() -> Component.literal(
-                    "Built " + result.style().id() + " " + tier.name().toLowerCase()
-                            + " wall preview: " + result.sections() + " sections, "
+                    "Built " + result.style().id() + " wall preview: " + result.sections() + " sections, "
                             + result.gates() + " gates, " + result.placedBlocks()
                             + " blocks placed across " + result.routeColumns() + " route columns."), true);
             return result.sections();

@@ -1,11 +1,11 @@
 # Walls
 
-The current Desert and Pueblo/Badlands catalogs share the acacia palisade and the
-procedural stone upgrade. Separate sandstone or clay wall art has not been selected.
-Editable runtime previews of both tiers are beside the dry building gallery at
-`3680.5, 230, 965.5`, facing north. Each complete ring has four gates and corner
-features, and both were inspected in the live client. Their positions and provenance
-are recorded in `tools/structure/arid-wall-showcase-20260909.json`.
+Desert walls use sandstone and Pueblo/Badlands walls use red sandstone. Both use
+normal oak trapdoors and ladders for access. Every village has one wall stage;
+there is no second-tier upgrade. The editable Mesa and Desert copies are in the
+wall workshop at `3680.5, 230, 873.5`, facing north. Mesa is the first row and
+Desert is the next row. Their positions are recorded in
+`tools/structure/arid-wall-workshop-20260909.json`.
 
 A wall is a route compiled into buildings-sized pieces. It is not one enormous
 `Building`, because it has no fixed footprint, and it is no longer a stream of
@@ -13,25 +13,19 @@ single columns either. The village chooses and saves a perimeter once, compiles
 that route into short sections, and lets builders claim those sections as
 independent construction work.
 
-Wooden walls combine authored and procedural geometry at the
+Regional walls combine authored and procedural geometry at the
 `WallSegmentCatalog` boundary. Small NBT captures define the local silhouette
 of straight runs, diagonal runs, terraces, watchtowers, and gatehouses. The
 catalog rotates and joins those pieces along a procedural route, then emits the
 same persistent `WallSection` and `WallBlockPlan` values used by builder AI and
-saves. Stone currently keeps its fully procedural, walkable structure.
+saves.
 
 ## What the village builds
 
-There are two tiers on one permanent route:
-
-- **Wood palisade:** a narrow three-course defensive shell decorated with
-  authored uneven posts, beams, fences, lanterns, watchtowers, and gatehouses.
-- **Stone wall:** a three-block-wide body with a walkable top course, parapets,
-  stair transitions, corner towers, and gatehouse sections.
-
-Stone is an in-place upgrade of wood. It reuses the saved ring and natural
-ground profile. Village-owned palisade blocks may be replaced, while unrelated
-solid construction is preserved.
+There is one stage on a permanent route: a narrow three-course defensive shell
+with authored posts, beams, railings, lanterns, watchtowers and gatehouses. The
+village style supplies its masonry or wood palette. Completed walls are maintained
+without being scheduled for replacement by another wall tier.
 
 ## The route
 
@@ -174,24 +168,21 @@ Construction cells have semantic roles:
   geometry from an authored tower or gatehouse's empty volume. It is discarded
   before construction, so builders never place an "air block."
 
-The deliberate stone upgrade is the exception. Village-owned oak, spruce, or
-acacia wall blocks do not satisfy a stone plan and can be replaced.
-
 Walls remain priced at one material item per ten placed construction cells.
+Desert, Pueblo and Birch use the shared stone-material group; wooden styles use logs.
 The affordability check uses the same compiled plan and occupancy policy as the
 builder, so existing solid cells cost nothing and the estimate matches the work.
 Credit left from an item carries across cells in that builder's pack.
 
 ## Gatehouses and defense
 
-The catalog reserves seventeen route blocks for each gatehouse. A wooden
+The catalog reserves seventeen route blocks for each gatehouse. Each
 gatehouse is an open passage with no door; its authored deck, ladder, correctly
 supported standing and hanging lanterns, beams, and flanking posts rotate onto
 any cardinal run. Authored feature volumes replace the ordinary palisade rather
 than being layered through it. One watchtower owns each clipped corner, rather
-than placing overlapping towers at both ends of the same chamfer. Stone keeps a
-three-high open center passage and compact procedural towers until it receives
-its own art pass.
+than placing overlapping towers at both ends of the same chamfer. All regional
+palettes use this authored geometry.
 
 The normal barrier invariant remains simple: after a wall cell is decided,
 that cell must be solid and collidable. Open gate passage cells and the authored
@@ -201,8 +192,8 @@ A completed wall also derives guard workstations from that exact compiled
 geometry. These are not separate buildings and do not add wall beds. Each gate
 has two ground-level sword posts and one elevated crossbow post; each non-gate
 watchtower has one elevated crossbow post. Elevated stations are selected from
-real walkway or roof support cells with two blocks of headroom, so wood, stone,
-and terrain-following walls share the same job model.
+real walkway or roof support cells with two blocks of headroom, so every regional
+wall shares the same job model.
 
 Birch masonry and top slabs count as platform support, using the Birch feature's
 own footprint. Ground sentries stand on the gate centerline, with the second
@@ -228,8 +219,8 @@ equipment upgrades in one system. Sword guards may leave the base to fight and
 return afterward. Crossbow guards hold their elevated station instead of
 pathing off the wall for a blocked shot. Better swords, crossbows, armor,
 shields, and special arrows come from the same physical village inventory rules
-as the existing guard and hunter equipment. A wall under construction or being
-upgraded publishes no posts; the completed geometry registers the new set.
+as the existing guard and hunter equipment. A wall under construction publishes
+no posts; the completed geometry registers the new set.
 
 Guard duty always includes defending against hostiles, even for gentle residents.
 Ranged guards search vertically as well as horizontally, with a nominal 48-block
@@ -256,8 +247,8 @@ Wall placement computes connection arms against existing neighbors. Maintenance
 also reconnects old village-owned masonry/fences, preserving player-owned edits
 and the existing block material instead of repainting the gate.
 
-Ground mobs are stopped by the continuous shell outside its open gates. The wooden
-silhouette includes authored overhangs, while spider-proof behavior remains a
+Ground mobs are stopped by the continuous shell outside its open gates. The authored
+silhouette includes overhangs, while spider-proof behavior remains a
 separate gameplay test.
 
 ## Authoring contract
@@ -266,8 +257,8 @@ The five canonical wooden templates live under
 `data/kithkyn/structure/wall/wood/`. They were captured from the in-world
 wall lab and are loaded as semantic cells instead of stamped directly into the
 world. One oak-authored geometry therefore resolves through the village style
-as oak for plains, spruce for taiga and snowy villages, or acacia for desert and
-savanna villages.
+as oak for plains, spruce for taiga and snowy villages, acacia for savanna,
+sandstone for desert, or red sandstone for Pueblo/Badlands.
 
 Each authored template needs:
 
@@ -313,26 +304,23 @@ attachment survival, and player-edit protection.
 
 ## Planning and developer preview
 
-Walls are safety projects. An established village starts wood after sufficient
-growth or danger, then later upgrades that same route to stone. While incomplete,
+Walls are safety projects. An established village starts its regional wall after
+sufficient growth or danger. While incomplete,
 the wall holds normal village project selection just as a building project does.
 
-`/kkdev village wall <wood|stone>` compiles the same project and places all of
+`/kkdev village wall` compiles the same project and places all of
 its cells immediately. It is the fast geometry check for the route, terraces,
 walkway, towers, and gatehouses. Ordinary builders use that identical plan one
 cell at a time.
 
-`/kkdev village wall-area <wood|stone> <from> <to> [style]` runs the planner
+`/kkdev village wall-area <from> <to> [style]` runs the planner
 around any two opposite x/z corners without changing a village's saved wall.
-Both spans must be 16 to 128 blocks. Omitting `style` derives the wood family
+Both spans must be 16 to 128 blocks. Omitting `style` derives the regional palette
 from the biome at the rectangle center. This is the live integration check for
 flat ground, rolling terrain, slopes, and cliffs.
 
 ## Current limits
 
-- Wooden wall art is authored. Stone wall art remains procedural.
-- The stone walkway is structurally continuous but has no internal stairway
-  from the village ground up to each tower yet.
 - Spider-proof behavior still needs a focused gameplay test.
 - Existing worlds with an in-progress legacy column wall should be reset. A
   completed legacy wall remains complete, but partially completed legacy

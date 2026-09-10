@@ -196,8 +196,8 @@ public final class WallRaiser {
   /**
    * Every occupied wall cell cares first that collision closes it. Exact cells
    * get their authored state when the cell is open, but any existing solid is
-   * preserved. Village-owned palisade is the one replaceable case during the
-   * deliberate stone upgrade.
+   * preserved. Natural vegetation is cleared so it cannot count as a permanent
+   * barrier.
    */
   public static boolean isSatisfied(Level level, WallBlockPlan block, WallTier tier) {
     return isSatisfied(level, block, tier, VillageStyle.PLAINS);
@@ -239,10 +239,9 @@ public final class WallRaiser {
             || state.getBlock() instanceof net.minecraft.world.level.block.FenceBlock
             || state.getBlock() instanceof net.minecraft.world.level.block.SlabBlock)) return false;
     boolean hasCollision = !state.getCollisionShape(level, pos).isEmpty();
-    boolean replacesPreviousTier = isVillageWoodBeingUpgraded(placed, pos, state, tier);
     boolean isClearableVegetation = isNaturalClearable(level, pos, state);
     return WallOccupancy.isSatisfied(
-        hasCollision, replacesPreviousTier, isClearableVegetation);
+        hasCollision, isClearableVegetation);
   }
 
   /** Places one planned cell. */
@@ -530,15 +529,6 @@ public final class WallRaiser {
   /** Whether a tree or plant is world vegetation rather than owned construction. */
   private static boolean isNaturalClearable(Level level, BlockPos pos, BlockState state) {
     return SiteClearance.isNaturalClearable(level, pos, state);
-  }
-
-  /** Whether a stone project should replace this block from the prior wooden tier. */
-  private static boolean isVillageWoodBeingUpgraded(PlacedBlockStore placed, BlockPos pos,
-      BlockState state, WallTier tier) {
-    return tier == WallTier.STONE
-        && WoodWallPalette.isWallWood(state.getBlock())
-        && placed != null
-        && placed.isVillagePlaced(pos);
   }
 
 }

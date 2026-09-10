@@ -965,15 +965,14 @@ The only phase 1 military building. A camp with no watchpost is a camp the wolve
 
 #### `wall`
 
-Worker: **none**  ·  Phase 4  ·  Variants: `plains`, `taiga`, `desert`
+Built by **BUILDERS** as a perimeter project, with one wall stage for every village style.
+There are no wall upgrades. Desert uses sandstone; Mesa/Pueblo uses red sandstone;
+Birch uses cobblestone; the other styles use their regional wood. Desert and Mesa
+keep oak trapdoors and normal ladders for access to guard posts.
 
-| Level | Name | Footprint | Recipe (plains) | Grants |
-| --- | --- | --- | --- | --- |
-| 1 | palisade | per segment | free | perimeter, per segment |
-| 2 (upgrade) | stone wall | per segment | 2 oak log, 4 oak planks, 4 cobblestone | perimeter, per segment |
-| 3 (upgrade) | fortified wall | per segment | 6 oak log, 8 oak planks, 8 cobblestone | perimeter with walkway, per segment |
-
-Linear rather than a footprint, so it is priced per segment and is probably not a `Building` at all. Blocked on the site-selection pass.
+Construction consumes one regional wall material per ten placed cells. The perimeter
+includes gates, corners, and accessible guard posts. See [walls.md](walls.md) for
+planning, construction, and placement rules.
 
 #### `gatehouse`
 

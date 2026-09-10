@@ -20,6 +20,8 @@ import net.neoforged.neoforge.event.tick.ServerTickEvent;
 /** Opt-in physical ascent/descent regression. Enable only in a disposable test world. */
 @EventBusSubscriber(modid = Kithkyn.MODID)
 public final class GateAccessVerification {
+  private static final VillageStyle STYLE = VillageStyle.valueOf(
+      System.getProperty("kithkyn.gateAccess.style", "birch_forest").toUpperCase(Locale.ROOT));
   private static int ticks;
   private static boolean descending;
   private static int phaseStarted;
@@ -53,7 +55,7 @@ public final class GateAccessVerification {
           phaseStarted = ticks;
           for (Walker walker : walkers) walker.person().getNavigation().stop();
         } else {
-          Kithkyn.LOGGER.info("[gate-access-verify] RESULT PASS: all {} guards/workers ascended and descended", walkers.size());
+          Kithkyn.LOGGER.info("[gate-access-verify] RESULT PASS: {} all {} guards/workers ascended and descended", STYLE, walkers.size());
           event.getServer().halt(false);
         }
       }
@@ -74,7 +76,7 @@ public final class GateAccessVerification {
     Set<Long> gates = Set.of(BlockPos.asLong(160, 0, 128), BlockPos.asLong(192, 0, 160),
         BlockPos.asLong(160, 0, 192), BlockPos.asLong(128, 0, 160));
     WallProject wall = WallProject.completed(ring, gates, ground,
-        WallRaiser.deckProfile(level, ring, ground, WallTier.WOOD.height()), WallTier.WOOD, VillageStyle.BIRCH_FOREST, Set.of());
+        WallRaiser.deckProfile(level, ring, ground, WallTier.WOOD.height()), WallTier.WOOD, STYLE, Set.of());
     for (WallBlockPlan cell : wall.plannedBlocks()) {
       level.setBlock(cell.pos(), cell.desiredState(wall.getTier(), wall.getStyle()), 2);
       PlacedBlockStore.get(level).markVillagePlaced(cell.pos());
@@ -141,6 +143,7 @@ public final class GateAccessVerification {
       check(path != null && path.canReach() && path.getEndNode().asBlockPos().equals(top), "No ascent path " + bottom + " -> " + top);
       walkers.add(new Walker(person, bottom, top, post.duty() + "-" + index++));
     }
+    check(walkers.size() == 8, "Expected four gate and four corner sentries");
   }
 
   private static void check(boolean condition, String message) {

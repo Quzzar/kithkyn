@@ -1,0 +1,80 @@
+{
+  "status": "verified-for-deployment",
+  "release_sha256": "f9e833b4ce97b0043ce4c0efd754300a23020fff731a6bf749704e2575efb1cb",
+  "private_catalogs": {
+    "badlands": {
+      "files": 61,
+      "manifest_sha256": "b3e69e48a98e85099464c0392e010aad2743119dbf63c81507d99ace9642c3f6"
+    },
+    "desert": {
+      "files": 57,
+      "manifest_sha256": "778d65d8921d62460c3c47554ec3a2c54c439044484a256b91ec9af289e694b6"
+    }
+  },
+  "catalog_definitions": {
+    "desert": 28,
+    "badlands": 30
+  },
+  "biome_coverage": {
+    "desert": "Sandy desert biome family",
+    "badlands": "Mesa/badlands and savanna families",
+    "birch_forest": "Birch forest and old-growth birch forest"
+  },
+  "walls": {
+    "stages": 1,
+    "upgrades": false,
+    "desert": "sandstone",
+    "badlands": "red_sandstone",
+    "access": [
+      "minecraft:oak_trapdoor",
+      "minecraft:ladder"
+    ],
+    "editable_workshop": "tools/structure/arid-wall-workshop-20260909.json"
+  },
+  "validation": {
+    "full_build": "PASS",
+    "unit_checks": {
+      "tests": 425,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "report": "run/arid-village-closeout/releases/27d4a5b10e8a/unit-results"
+    },
+    "native_checks": [
+      {
+        "report": "run/arid-village-closeout/badlands-final-f9e833b4ce97/verification.json",
+        "passed": true,
+        "result": "[00:14:09] [Server thread/INFO] [co.qu.ki.Kithkyn/]: [badlands-verify] RESULT PASS: 30 strict native templates, 12 housing alternatives, 12 upgrade fits, four founding rotations and codec reloads, natural biome selection, 10 beds, 8 positions, distinct meeting/fire locations and village identity"
+      },
+      {
+        "report": "run/arid-village-closeout/desert-final-f9e833b4ce97/verification.json",
+        "passed": true,
+        "result": "[00:18:11] [Server thread/INFO] [co.qu.ki.Kithkyn/]: [desert-verify] RESULT PASS: 28 strict native templates, 9 housing alternatives, 12 upgrade fits, four founding rotations and codec reloads, natural biome selection, 5 beds, 4 positions, distinct meeting/fire locations and village identity"
+      },
+      {
+        "report": "run/arid-village-closeout/wall-access-badlands/verification.json",
+        "passed": true,
+        "result": "[23:58:05] [Server thread/INFO] [co.qu.ki.Kithkyn/]: [gate-access-verify] RESULT PASS: BADLANDS all 8 guards/workers ascended and descended"
+      },
+      {
+        "report": "run/arid-village-closeout/wall-access-desert/verification.json",
+        "passed": true,
+        "result": "[23:57:23] [Server thread/INFO] [co.qu.ki.Kithkyn/]: [gate-access-verify] RESULT PASS: DESERT all 8 guards/workers ascended and descended"
+      },
+      {
+        "report": "run/arid-village-closeout/desert-market-access/native/verification.json",
+        "passed": true,
+        "result": "[23:59:03] [Server thread/INFO] [co.qu.ki.Kithkyn/]: [approved-house-verify] RESULT PASS: 12 rotated structures, 48 access routes, 0 physical room walks and assigned-bed sleeps, 0 physical personal-container deposits, 0 failed placements; probe size=18; station walks=24, shared deposits=24, mine walks=0, review walks=0"
+      }
+    ]
+  },
+  "desert_selections": [
+    "tools/structure/desert-center-20260909.json",
+    "tools/structure/desert-houses-20260909.json",
+    "tools/structure/desert-storehouses-20260909.json",
+    "tools/structure/desert-services-20260909.json",
+    "tools/structure/desert-markets-access-20260909.json"
+  ],
+  "installation": "Private catalogs are installed after mod_data; no old-building aliases or save migrations.",
+  "sealed_desert_well_sha256": "501c9901d4f867a17325ac3fb0b9bdfa6ac0705be6a32abd23e99c7960aaef9a"
+}

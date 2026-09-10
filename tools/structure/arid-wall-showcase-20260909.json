@@ -1,5 +1,5 @@
 {
-  "purpose": "Review copies of actual runtime geometry. No distinct regional wall art has been selected.",
+  "purpose": "Superseded initial wall study. The current sandstone and red sandstone edit copies are in arid-wall-workshop-20260909.json.",
   "dimension": "minecraft:overworld",
   "entry": [
     3680.5,
@@ -41,7 +41,7 @@
         947
       ],
       "native_feedback": "[22:37:57] [Server thread/INFO] [minecraft/MinecraftServer]: Built badlands wood wall preview: 28 sections, 4 gates, 1298 blocks placed across 168 route columns.",
-      "status": "placed"
+      "status": "retained-old-reference"
     },
     {
       "id": "stone",
@@ -67,7 +67,7 @@
         947
       ],
       "native_feedback": "[22:37:57] [Server thread/INFO] [minecraft/MinecraftServer]: Built desert stone wall preview: 36 sections, 4 gates, 3280 blocks placed across 168 route columns.",
-      "status": "placed"
+      "status": "removed-unused-upgrade"
     }
   ],
   "render_review": {
@@ -79,5 +79,7 @@
     "notes": "Both complete rings, four gates each, corner features and gallery connection reviewed in the live world. Distant overview has server render-distance fog; close views are clear."
   },
   "private_work": "run/arid-wall-showcase",
-  "source": "WallPreview uses the same WallProject and wall catalogs as village builders."
+  "source": "WallPreview uses the same WallProject and wall catalogs as village builders.",
+  "status": "superseded",
+  "current_workshop": "tools/structure/arid-wall-workshop-20260909.json"
 }

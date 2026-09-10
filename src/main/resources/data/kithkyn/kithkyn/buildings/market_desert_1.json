@@ -13,7 +13,7 @@
   "containers": [
     [
       4,
-      0,
+      1,
       2
     ]
   ],
@@ -29,5 +29,6 @@
   ],
   "grants": [
     "TRADE"
-  ]
+  ],
+  "entrance_facing": "west"
 }

@@ -2,7 +2,6 @@ package com.quzzar.kithkyn.village.buildings;
 
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -14,7 +13,6 @@ import net.minecraft.world.level.Level;
 /** Derives defensive workstations from the exact geometry of a completed wall. */
 public final class WallPosts {
 
-  private static final int FEATURE_SEARCH_RADIUS = 9;
 
   private WallPosts() {
   }
@@ -134,19 +132,9 @@ public final class WallPosts {
     WallSectionKind kind = duty == WallPost.Duty.WATCHTOWER_CROSSBOW
         ? WallSectionKind.CORNER_TOWER
         : WallSectionKind.GATEHOUSE;
-    if (wall.getTier() == WallTier.WOOD) {
-      AuthoredWoodWallSegments segments = wall.getStyle() == VillageStyle.BIRCH_FOREST
-          ? AuthoredWoodWallSegments.BIRCH_FOREST : AuthoredWoodWallSegments.INSTANCE;
-      return segments.footprintAt(ring, index, kind);
-    }
-    BlockPos center = BlockPos.of(anchor);
-    Set<Long> footprint = new HashSet<>();
-    for (int x = -FEATURE_SEARCH_RADIUS; x <= FEATURE_SEARCH_RADIUS; x++) {
-      for (int z = -FEATURE_SEARCH_RADIUS; z <= FEATURE_SEARCH_RADIUS; z++) {
-        footprint.add(BlockPos.asLong(center.getX() + x, 0, center.getZ() + z));
-      }
-    }
-    return Set.copyOf(footprint);
+    AuthoredWoodWallSegments segments = wall.getStyle() == VillageStyle.BIRCH_FOREST
+        ? AuthoredWoodWallSegments.BIRCH_FOREST : AuthoredWoodWallSegments.INSTANCE;
+    return segments.footprintAt(ring, index, kind);
   }
 
   private static BlockPos fallbackTop(WallProject wall, long anchorLong) {

@@ -10,15 +10,9 @@ final class WallOccupancy {
   private WallOccupancy() {
   }
 
-  /** Whether the current block closes this cell without an explicit tier replacement. */
-  static boolean isSatisfied(boolean hasCollision, boolean replacesPreviousTier) {
-    return isSatisfied(hasCollision, replacesPreviousTier, false);
-  }
-
   /** Natural vegetation is an obstruction to cut through, never part of the wall. */
-  static boolean isSatisfied(boolean hasCollision, boolean replacesPreviousTier,
-      boolean isClearableVegetation) {
-    return hasCollision && !replacesPreviousTier && !isClearableVegetation;
+  static boolean isSatisfied(boolean hasCollision, boolean isClearableVegetation) {
+    return hasCollision && !isClearableVegetation;
   }
 
   /** Returns only the planned heights that are not already satisfied by a barrier. */

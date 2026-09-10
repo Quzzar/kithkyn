@@ -36,7 +36,7 @@ public enum VillageStyle {
 
   /** Approved catalogs deliberately omit roles and levels that have no selected design. */
   public boolean usesPlainsFallback() {
-    return this != BIRCH_FOREST && this != BADLANDS;
+    return this != BIRCH_FOREST && this != BADLANDS && this != DESERT;
   }
 
   /** Modpacks can assign a biome without introducing a separate mapping loader. */

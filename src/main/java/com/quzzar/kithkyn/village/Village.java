@@ -1221,7 +1221,7 @@ public class Village {
   private static final float WALL_SAFETY_THRESHOLD = 0.25F;
 
   /**
-   * Considers raising or upgrading the village wall, and starts it if the moment
+   * Considers raising the village wall, and starts it if the moment
    * is right (docs/walls.md). A wall is a large safety project, so it waits until
    * the village is established, then goes up when there has been a threat or the
    * town is simply large enough to want one. Returns true when a wall was
@@ -1236,46 +1236,23 @@ public class Village {
     if (!threatened && buildings.size() < WALL_LARGE_BUILDINGS) {
       return false;
     }
-    // Wood first; once a wooden wall stands, the same safety pull upgrades it to
-    // stone on the very same ring.
-    WallTier desired = wallProject == null ? WallTier.WOOD : wallProject.getTier().next();
-    if (desired == null) {
-      return false; // already walled in stone; there is nothing more to raise
-    }
-    return startWall(desired);
+    return wallProject == null && startWall(WallTier.WOOD);
   }
 
   /**
-   * Rings the village with a wall of the given tier: traces the ring from the
-   * claim (a fresh line for a new wall, the standing one for an upgrade), checks
+   * Rings the village with its regional wall: traces the ring from the claim, checks
    * the village can afford it, and opens the project the builder then raises.
    * Public so a command can raise a wall on demand to watch it happen.
    */
   public boolean startWall(WallTier tier) {
-    if (level == null || getTownCenter() == null) {
+    if (level == null || getTownCenter() == null || wallProject != null) {
       return false;
     }
-    List<Long> ring;
-    java.util.Set<Long> gates;
-    java.util.Set<Long> towerExclusions;
-    List<Integer> ground;
-    if (wallProject != null && tier == wallProject.getTier().next()) {
-      ring = wallProject.getRing(); // an upgrade re-walks the standing ring
-      gates = wallProject.getGates();
-      towerExclusions = wallProject.getTowerExclusions();
-      // Prefer its captured ground, not the standing wall. Very old saves have
-      // no profile, so reconstruct one through the placed palisade instead.
-      ground = wallProject.hasGround()
-          ? wallProject.getGround()
-          : WallRaiser.groundProfile(level, ring);
-    } else {
-      ring = traceWallRing(WALL_PADDING);
-      WallFeaturePlacement.Plan features = WallFeaturePlacement.resolve(
-          level, ring, wallGates(WALL_PADDING));
-      gates = features.gates();
-      towerExclusions = features.towerExclusions();
-      ground = WallRaiser.groundProfile(level, ring);
-    }
+    List<Long> ring = traceWallRing(WALL_PADDING);
+    WallFeaturePlacement.Plan features = WallFeaturePlacement.resolve(level, ring, wallGates(WALL_PADDING));
+    java.util.Set<Long> gates = features.gates();
+    java.util.Set<Long> towerExclusions = features.towerExclusions();
+    List<Integer> ground = WallRaiser.groundProfile(level, ring);
     if (ring.isEmpty()) {
       return false;
     }
@@ -1287,8 +1264,8 @@ public class Village {
     // is based on the exact open cells that the builder will actually fill.
     int requiredBlocks = WallRaiser.requiredBlocks(level, candidate);
     int estimate = Math.ceilDiv(requiredBlocks, WallTier.BLOCKS_PER_ITEM);
-    if (com.quzzar.kithkyn.village.buildings.Materials.counted(stockTally(), tier.material()) < estimate) {
-      maybeLogShortage(new ItemStack(tier.material(), estimate));
+    if (com.quzzar.kithkyn.village.buildings.Materials.counted(stockTally(), tier.material(getStyle())) < estimate) {
+      maybeLogShortage(new ItemStack(tier.material(getStyle()), estimate));
       return false;
     }
     wallProject = candidate;

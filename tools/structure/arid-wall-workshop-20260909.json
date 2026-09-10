@@ -1,0 +1,126 @@
+{
+  "purpose": "Editable sandstone Desert and red sandstone Mesa walls, with oak trapdoors and ladders; one wall stage for every village.",
+  "entry": [
+    3680.5,
+    230,
+    873.5,
+    180,
+    0
+  ],
+  "bounds": [
+    3598,
+    229,
+    690,
+    3762,
+    248,
+    881
+  ],
+  "connector": [
+    3677,
+    229,
+    882,
+    3683,
+    248,
+    947
+  ],
+  "rings": [
+    {
+      "id": "badlands",
+      "style": "badlands",
+      "label": "MESA / PUEBLO\nRed Sandstone wall - EDIT THIS COPY",
+      "from": [
+        3608,
+        230,
+        800
+      ],
+      "to": [
+        3656,
+        230,
+        848
+      ],
+      "floor": [
+        3600,
+        229,
+        792,
+        3664,
+        229,
+        855
+      ],
+      "status": "placed-and-visually-reviewed",
+      "material": "red_sandstone"
+    },
+    {
+      "id": "desert",
+      "style": "desert",
+      "label": "DESERT\nSandstone wall - EDIT THIS COPY",
+      "from": [
+        3608,
+        230,
+        700
+      ],
+      "to": [
+        3656,
+        230,
+        748
+      ],
+      "floor": [
+        3600,
+        229,
+        692,
+        3664,
+        229,
+        755
+      ],
+      "status": "placed-and-visually-reviewed",
+      "material": "sandstone"
+    }
+  ],
+  "status": "placed-and-visually-reviewed",
+  "render_review": {
+    "passed": true,
+    "views": [
+      "run/arid-wall-workshop/sandstone-review/client/screenshots/mesa-red-sandstone.png",
+      "run/arid-wall-workshop/sandstone-review/client/screenshots/desert-sandstone.png"
+    ],
+    "notes": "Both live wall rings visually inspected: regional masonry, complete gates and corners, unchanged oak trapdoors and ladders. Upgrade previews removed."
+  },
+  "restyled": true,
+  "removed_upgrade_previews": [
+    {
+      "from": [
+        3704,
+        230,
+        800
+      ],
+      "to": [
+        3752,
+        230,
+        848
+      ],
+      "status": "removed"
+    },
+    {
+      "from": [
+        3704,
+        230,
+        700
+      ],
+      "to": [
+        3752,
+        230,
+        748
+      ],
+      "status": "removed"
+    }
+  ],
+  "native_access": {
+    "passed": true,
+    "reports": [
+      "run/arid-village-closeout/wall-access-desert/verification.json",
+      "run/arid-village-closeout/wall-access-badlands/verification.json"
+    ],
+    "notes": "Eight guard ascent/descent probes passed per style: all four gates and four corners."
+  },
+  "private_work": "run/arid-wall-workshop",
+  "editing": "User changes belong to these separate copies; do not regenerate over edits."
+}

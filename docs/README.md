@@ -64,6 +64,8 @@ in it, and update it in the same change that moves what it describes.
   amenities and intentionally omitted tiers, biome selection, identity slots and preservation.
 - [badlands-village.md](badlands-village.md): the approved Pueblo/Mesa local catalog, house
   alternatives, staffing, identity, biome selection and private datapack installation.
+- [desert-village.md](desert-village.md): the selected Desert Oasis catalog, founding jobs,
+  housing, identity colors, service access, and sandstone walls.
 - [appearance.md](appearance.md): why villagers use the player model and not the vanilla
   villager model, the wide/slim model split by gender, and the client-side runtime skin
   compositor that bakes a villager's look from inherited skin, hair, and eye structures,
@@ -83,8 +85,8 @@ in it, and update it in the same change that moves what it describes.
   sourcing.
 - [walls.md](walls.md): the perimeter defense system. Why a wall is not a `Building` (linear,
   not a footprint), how its ring is derived from `claimGrid` and built by a terrain-following
-  builder step, the two tiers (wood palisade upgrading in place to stone brick), and the
-  safety-need trigger. The site-selection pass the parked `wall`/`gatehouse` spec was waiting on.
+  builder step, one regional wall stage, sandstone and red sandstone palettes, and the
+  safety-need trigger. Includes guard posts, ladder access, and editable previews.
 - [block-ownership.md](block-ownership.md): who owns the block at a position, village, player,
   or nobody. Two compact per-level sets recorded at placement and pruned on break, why planted
   saplings are deliberately nobody's, the `mayFell` verdict tree-clearing uses, and the known

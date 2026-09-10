@@ -151,7 +151,7 @@ public final class RedevelopmentBenchmark {
     var reconcile = Village.class.getDeclaredMethod("reconcileBeds");
     reconcile.setAccessible(true);
     reconcile.invoke(village);
-    village.devBuildWall(com.quzzar.kithkyn.village.buildings.WallTier.STONE);
+    village.devBuildWall(com.quzzar.kithkyn.village.buildings.WallTier.WOOD);
     level.getServer().getWorldData().overworldData().setGameTime(144_000L);
     Building source = village.getBuildings().stream().filter(building -> building.getName().equals("house_plains_1"))
         .findFirst().orElseThrow();
@@ -218,7 +218,7 @@ public final class RedevelopmentBenchmark {
         throw new IllegalStateException("Opportunity storage cannot hold the initial food");
       }
       // This is an established camp; its completed defense and age are initial conditions.
-      village.devBuildWall(com.quzzar.kithkyn.village.buildings.WallTier.STONE);
+      village.devBuildWall(com.quzzar.kithkyn.village.buildings.WallTier.WOOD);
       level.getServer().getWorldData().overworldData().setGameTime(144_000L);
       Kithkyn.LOGGER.info("[redevelopment-benchmark] opportunity preflight food={} freshFood={} target={} vacancies={} netPlots={} stock={}",
           village.getAttractiveness().foodPerCapita(), village.computeAttractiveness().foodPerCapita(),
