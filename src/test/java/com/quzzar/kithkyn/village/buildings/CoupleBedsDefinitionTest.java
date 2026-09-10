@@ -14,7 +14,7 @@ class CoupleBedsDefinitionTest {
   @Test
   void workplacesCanMixGeneralBedsStaffBedsAndCoupleRooms() {
     BuildingInfo info = parse("""
-        {"structure":"farm_plains_1","beds":[[0,1,0],[1,1,0],[4,1,0],[6,1,0]],
+        {"structure":"farm_birch_forest_1","beds":[[0,1,0],[1,1,0],[4,1,0],[6,1,0]],
          "couple_beds":[[[0,1,0],[1,1,0]]],"worker_beds":[[0,1,0],[1,1,0],[4,1,0]],
          "work_stations":[{"pos":[3,1,1],"occupation":"FARMER"}]}
         """);
@@ -38,23 +38,23 @@ class CoupleBedsDefinitionTest {
   @Test
   void workerRoomDeclarationsRejectMissingBedsAndHalfReservedCoupleRooms() {
     assertEquals("worker_beds names an undeclared bed", parse("""
-        {"structure":"farm_plains_1","beds":[[0,1,0]],"worker_beds":[[1,1,0]],
+        {"structure":"farm_birch_forest_1","beds":[[0,1,0]],"worker_beds":[[1,1,0]],
          "work_stations":[{"pos":[3,1,1],"occupation":"FARMER"}]}
         """).validate());
     assertEquals("worker_beds must reserve both beds of a couple room or neither", parse("""
-        {"structure":"farm_plains_1","beds":[[0,1,0],[1,1,0]],
+        {"structure":"farm_birch_forest_1","beds":[[0,1,0],[1,1,0]],
          "couple_beds":[[[0,1,0],[1,1,0]]],"worker_beds":[[0,1,0]],
          "work_stations":[{"pos":[3,1,1],"occupation":"FARMER"}]}
         """).validate());
     assertEquals("worker_beds requires a workplace", parse("""
-        {"structure":"house_plains_1","beds":[[0,1,0]],"worker_beds":[[0,1,0]]}
+        {"structure":"house_birch_forest_1","beds":[[0,1,0]],"worker_beds":[[0,1,0]]}
         """).validate());
   }
 
   @Test
   void mixedHousingDeclaresOnlyItsPairedRoomsAndRoundTripsThem() {
     BuildingInfo info = parse("""
-        {"structure":"house_plains_1", "beds":[[1,1,1],[4,1,1],[2,1,1]],
+        {"structure":"house_birch_forest_1", "beds":[[1,1,1],[4,1,1],[2,1,1]],
          "couple_beds":[[[1,1,1],[2,1,1]]]}
         """);
     assertNull(info.validate());
@@ -78,17 +78,17 @@ class CoupleBedsDefinitionTest {
   @Test
   void invalidPairsAreRejectedAtTheDefinitionBoundary() {
     assertTrue(BuildingInfo.CODEC.parse(JsonOps.INSTANCE, JsonParser.parseString("""
-        {"structure":"house_plains_1","couple_beds":[[[1,1,1]]]}
+        {"structure":"house_birch_forest_1","couple_beds":[[[1,1,1]]]}
         """)).error().isPresent());
     assertEquals("couple_beds names an undeclared bed", parse("""
-        {"structure":"house_plains_1","beds":[[1,1,1]],"couple_beds":[[[1,1,1],[2,1,1]]]}
+        {"structure":"house_birch_forest_1","beds":[[1,1,1]],"couple_beds":[[[1,1,1],[2,1,1]]]}
         """).validate());
     assertEquals("couple_beds repeats a bed", parse("""
-        {"structure":"house_plains_1","beds":[[1,1,1],[2,1,1],[3,1,1]],
+        {"structure":"house_birch_forest_1","beds":[[1,1,1],[2,1,1],[3,1,1]],
          "couple_beds":[[[1,1,1],[2,1,1]],[[2,1,1],[3,1,1]]]}
         """).validate());
     assertEquals("couple_beds must name neighboring beds on the same floor", parse("""
-        {"structure":"house_plains_1","beds":[[1,1,1],[8,1,1]],
+        {"structure":"house_birch_forest_1","beds":[[1,1,1],[8,1,1]],
          "couple_beds":[[[1,1,1],[8,1,1]]]}
         """).validate());
   }
@@ -96,15 +96,15 @@ class CoupleBedsDefinitionTest {
   @Test
   void onlyLegacyCottagesInferAPairAndExplicitEmptyMetadataOverridesIt() {
     BuildingInfo cottage = parse("""
-        {"structure":"couple_cottage_plains_1","beds":[[1,1,1],[2,1,1]]}
+        {"structure":"couple_cottage_birch_forest_1","beds":[[1,1,1],[2,1,1]]}
         """);
     assertEquals(new BuildingInfo.CoupleBeds(new BlockPos(1, 1, 1), new BlockPos(2, 1, 1)),
         cottage.getCoupleBeds().getFirst());
     assertTrue(parse("""
-        {"structure":"house_plains_1","beds":[[1,1,1],[2,1,1]]}
+        {"structure":"house_birch_forest_1","beds":[[1,1,1],[2,1,1]]}
         """).getCoupleBeds().isEmpty());
     assertTrue(parse("""
-        {"structure":"couple_cottage_plains_1","beds":[[1,1,1],[2,1,1]],"couple_beds":[]}
+        {"structure":"couple_cottage_birch_forest_1","beds":[[1,1,1],[2,1,1]],"couple_beds":[]}
         """).getCoupleBeds().isEmpty());
   }
 

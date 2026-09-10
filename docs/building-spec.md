@@ -10,16 +10,15 @@ and tavern are separate buildings, each with one worker bed and private storage.
 this document count the full map of the possible, not the shipping set — see
 [The cut](#the-cut) for which categories stand and why the rest went.
 
-**Proposed, not yet decided. 74 of 224 structures exist.** Reality check before reading:
-of the eleven "minimum playable" files, eight exist. `house` ships in all five variants at
-levels 1 to 3 (1, 2 and 4 beds), so a village is no longer capped at the center's own beds,
-and `farm` ships in all five variants at all three levels. `mine` ships at levels 1 and 2 in all five variants (level 2
-derived from level 1 by script, see below), so the founding set above is buildable and the
-mine is the first founding building that upgrades. `stoneworks` ships at level 1 in all five variants,
-with a real MASON occupation behind it, and `tannery` likewise with TANNER. `hunting_lodge` ships likewise with HUNTER, and
-`fishery` with FISHER. **All eleven minimum-playable buildings now exist.** Still
-missing: level 3 of `mine`, and levels 2 and 3 of `stoneworks`, `tannery`,
-`hunting_lodge` and `fishery`.
+**Proposed, not yet decided.** Reality check before reading: the jar bundles one family, the
+23-template Birch Forest catalog of [birch-village.md](birch-village.md), and that is the whole
+shipped set. It covers every founding and phase 1 category at level 1 (`house` and `farm` also
+at level 2, `watchtower` at level 2, `market` at levels 1 to 3), with real MASON, HUNTER,
+FISHER, BAKER, BUTCHER and INNKEEPER occupations behind the workplaces. The old Village Life
+families (plains, taiga, snowy, savanna and the bundled desert set), which carried the
+level-3 houses, level-2 mines and level-3 farms this document once counted, were removed on
+2026-09-10. Desert and Badlands ship as private datapacks with their own enumerations
+([desert-village.md](desert-village.md), [badlands-village.md](badlands-village.md)).
 
 **One occupation exists only as a name in these tables**: HERDER is not in the
 Occupation enum, and a definition naming one fails the codec
@@ -128,7 +127,7 @@ phases 3 and 4 in particular as a record of what would fit, to be cut freely.
 ```
 house_desert_1        cottage, desert variant
 house_desert_2        upgraded on site to a house
-blacksmith_plains_3   foundry
+market_birch_forest_3   trade hall
 mill_watermill_1      variant is a name, not a family, where the shape differs
 house_badlands_2__large_house_2   a second layout in the same regional tier
 ```
@@ -139,8 +138,8 @@ and its structure are never out of step.
 The optional `__<design>` suffix distinguishes layouts without inventing categories or upgrade
 levels. A design is a lowercase word or words joined by single underscores. The unsuffixed id
 remains the canonical choice for callers asking for one building. The construction planner sees
-every regional alternative; when an older style borrows plains, it borrows that whole tier's
-family only if none of its own layouts exists. A saved goal keeps its exact design id.
+every regional alternative in the village's own family and nothing from another family. A saved
+goal keeps its exact design id.
 
 **This supersedes the `house_wood_s` sketch in [village-tiers.md](village-tiers.md).** That form
 encoded material and size; this one encodes variant and level, which is what the two axes actually
@@ -219,8 +218,8 @@ construction reachable:
 - **Never price a building in what it alone produces.** The lumberjack is the only
   source of planks, so it costs cobblestone and nothing else: a village that has
   only founded, and so has only a miner, must be able to build it. The stoneworks
-  costs 9 logs and 12 cobblestone in every variant, including the snowy and desert
-  ones built from the very blocks it exists to make. It needs no cut stone of its own.
+  costs 9 logs and 12 cobblestone in every variant, including a sandstone one built from
+  the very blocks it exists to make. It needs no cut stone of its own.
 - **Share the default recipe across families.** Variants of a category and level normally
   resolve one recipe in generic wood and stone. A deliberate authored exception may replace
   that price for an individual building; regional exports must preserve that explicit choice.
@@ -250,8 +249,8 @@ recipes). Variants of a category and level use the shared construction recipe by
 in generic wood and stone, with deliberate per-building price exceptions allowed. Which variant a village raises is settled once, at founding, by the
 biome it stands in ([buildings.md](buildings.md), "Regional variants and biomes"), and kept
 for its life, so a village reads as one place. The planner never chooses between variants: it
-sees one building per category, the village's own family or plains where that family has no
-such building, with the shared default price unless an explicit exception is authored.
+sees one building per category, the village's own family only, with the shared default price
+unless an explicit exception is authored.
 
 Two things follow:
 
@@ -263,10 +262,10 @@ Two things follow:
   business, not the variant system's.
 
 What does still change with the family is what the building is made of, because the
-structure file does: spruce in a taiga house, sandstone in a desert one. That is the template's
-business, not the recipe's. Making the built blocks follow the wood actually paid, so a plains
-village given spruce raises spruce houses, is a separate piece of work that this rule leaves
-room for.
+structure file does: sandstone in a Desert house, birch and cobblestone in a Birch Forest one.
+That is the template's business, not the recipe's. Making the built blocks follow the wood
+actually paid, so a Birch village given spruce raises spruce houses, is a separate piece of
+work that this rule leaves room for.
 
 The upgrade to level 2 is priced at 1.5x the level-1 recipe, and level 3 at 3x. That means
 upgrading always costs more than putting up a second level-1 building of the same category, which
@@ -603,13 +602,19 @@ removed.
 
 ## The catalog
 
+The "Variants" line under each category names what the jar bundles today, which is the Birch
+Forest catalog alone ([birch-village.md](birch-village.md)); the private Desert and Badlands
+packs enumerate their own buildings in [desert-village.md](desert-village.md) and
+[badlands-village.md](badlands-village.md). Recipes are per category and level, never per
+variant, so each table's recipe column applies to every family.
+
 ### Core and civic
 
 #### `village_center`  (founding building)
 
-Worker: **BUILDER**  ·  Phase 1  ·  Variants: `plains`, `taiga`, `snowy`, `desert`, `savanna`
+Worker: **BUILDER**  ·  Phase 1  ·  Variants: `birch_forest`
 
-| Level | Name | Footprint | Recipe (plains) | Grants |
+| Level | Name | Footprint | Recipe | Grants |
 | --- | --- | --- | --- | --- |
 | 1 | camp circle | 7x7 | placed free at founding | 4 beds, a chest of the campers' own, campfire, bell, BUILDER station |
 | 2 (upgrade) | village hall | 11x11 | 48 oak log, 76 oak planks, 80 cobblestone, 12 glass, 8 wool, 8 iron ingot | +2 beds, +2 containers, LEADER station: the brain's voice, shown in the UI |
@@ -629,9 +634,9 @@ and the paths are laid again to its new world position.
 
 #### `house`
 
-Worker: **none**  ·  Phase 1  ·  Variants: `plains`, `taiga`, `snowy`, `desert`, `savanna`, `igloo`, `stilt`
+Worker: **none**  ·  Phase 1  ·  Variants: `birch_forest` (levels 1 and 2); `igloo` and `stilt` are proposals
 
-| Level | Name | Footprint | Recipe (plains) | Grants |
+| Level | Name | Footprint | Recipe | Grants |
 | --- | --- | --- | --- | --- |
 | 1 | cottage | 7x7 | 12 oak log, 20 oak planks, 20 cobblestone, 4 glass, 2 wool | BEDS 2 |
 | 2 (upgrade) | house | 11x11 | 20 oak log, 28 oak planks, 32 cobblestone, 6 glass, 4 wool | BEDS 4 |
@@ -647,19 +652,20 @@ what it gives the people who live in it.
 
 #### `well`
 
-Worker: **none**  ·  Phase 1  ·  Variants: `plains`, `desert`
+Worker: **none**  ·  Phase 1  ·  Variants: `birch_forest`
 
-| Level | Name | Footprint | Recipe (plains) | Grants |
+| Level | Name | Footprint | Recipe | Grants |
 | --- | --- | --- | --- | --- |
 | 1 | well | 5x5 | 6 oak log, 8 oak planks, 8 cobblestone | WATER |
 | 2 (upgrade) | fountain | 7x7 | 8 oak log, 12 oak planks, 12 cobblestone, 2 glass | WATER, raises ATTRACTIVENESS slightly |
 
 The desert variant is a covered cistern, because open water evaporates and a desert village that digs an open well is a village that has not lived in a desert.
 
-All five wells stand ON the ground with the pool at rim level, as authored (2026-09-01). The
-definitions declare `"sink": -1`, so the base course, a solid ring of the variant's stone,
-sits on top of the ground's top block, with the water and its trapdoor-and-fence rim one above
-that. (`sink` seats a structure that many layers below the ground plane; a negative value
+The old families' wells stood ON the ground with the pool at rim level, as authored
+(2026-09-01): their definitions declared `"sink": -1`, so the base course, a solid ring of the
+variant's stone, sat on top of the ground's top block, with the water and its trapdoor-and-fence
+rim one above that. The bundled Birch well seats at `"sink": 0`, the way its own capture was
+authored. (`sink` seats a structure that many layers below the ground plane; a negative value
 raises it. The well was tried at 1 and 0 first and Aaron judged both a block too low in the
 world. The ground is still prepared and claimed at the surface whatever the sink.) The well
 used to leak from its rim for two reasons, both fixed for every building: the builder's
@@ -674,9 +680,9 @@ on a wrong reading of the flow rules; Aaron restored the authored layout.
 
 #### `storehouse`  (founding building)
 
-Worker: **none**  ·  Phase 1  ·  Variants: `plains`
+Worker: **none**  ·  Phase 1  ·  Variants: `birch_forest`
 
-| Level | Name | Footprint | Recipe (plains) | Grants |
+| Level | Name | Footprint | Recipe | Grants |
 | --- | --- | --- | --- | --- |
 | 1 | storehouse | 7x7 | 8 oak log, 16 oak planks, 16 cobblestone, 2 glass | 2 barrels into the village inventory |
 | 2 (upgrade) | great storehouse | 11x11 | 16 oak log, 24 oak planks, 24 cobblestone, 4 glass, 2 wool | 8 containers |
@@ -684,20 +690,18 @@ Worker: **none**  ·  Phase 1  ·  Variants: `plains`
 
 Founding building, placed free. Two barrels: the whole of a new village's inventory, since the camp circle's chest belongs to the campers. Absorbed the granary: both were always the same chests read by the same code, so one category covers both.
 
-**What ships is not the table above.** The founding storehouse is a 5x7 tent with three
-barrels, its level 2 a 19x15 warehouse with six, its level 3 19x17 with eleven. The tent is
-seated two blocks off the centre wall at founding, and the level-2 footprint has never fit
-around it in any village on the shared server (46 refusals logged for Wildflower Downs alone),
-so no storehouse has ever upgraded: a smaller level 2, or a founding plat that leaves the tent
-room, is the open fix. Until 2026-09-02 every family's level 2 also named `storehouse_plains_1`
-as what it upgrades from, written when every village founded with the plains tent; a village
-now founds in its own family's tent, so each level 2 upgrades from its own.
+**What ships is not the table above.** The bundled storehouse is the Birch 16x19 store with
+six shared containers and a QUARTERMASTER station ([birch-village.md](birch-village.md)); no
+level 2 or 3 is bundled, so no bundled storehouse upgrades. The old plains tent, and the 19x15
+warehouse that never once fit around it on the shared server (46 refusals logged for Wildflower
+Downs alone), went with the Village Life families on 2026-09-10; a smaller level 2 remains the
+open design for any family that wants one.
 
 #### `market`
 
-Worker: **MERCHANT**  ·  Phase 2  ·  Variants: `plains`, `desert`
+Worker: **MERCHANT**  ·  Phase 2  ·  Variants: `birch_forest` (levels 1 to 3)
 
-| Level | Name | Footprint | Recipe (plains) | Grants |
+| Level | Name | Footprint | Recipe | Grants |
 | --- | --- | --- | --- | --- |
 | 1 | market stall | 7x7 | 16 oak log, 14 cobblestone | a trading screen: the player buys and sells with the village, in emeralds |
 | 2 (upgrade) | market | 11x11 | 32 oak log, 28 cobblestone, 12 wool | the village spends its own emeralds on what the biome cannot make |
@@ -712,9 +716,9 @@ The village's trade organ, and the *legitimate* alternative to taking from its c
 
 #### `inn`
 
-Worker: **INNKEEPER**  ·  Phase 3  ·  Variants: `plains`, `taiga`
+Worker: **INNKEEPER**  ·  Phase 3  ·  Variants: `birch_forest`, shipped as `tavern_birch_forest_1`
 
-| Level | Name | Footprint | Recipe (plains) | Grants |
+| Level | Name | Footprint | Recipe | Grants |
 | --- | --- | --- | --- | --- |
 | 1 | alehouse | 11x11 | 32 oak log, 48 oak planks, 48 cobblestone, 8 glass, 6 wool | raises ATTRACTIVENESS while ale sits in the village inventory |
 | 2 (upgrade) | inn | 11x11 | 48 oak log, 68 oak planks, 72 cobblestone, 12 glass, 8 wool | raises ATTRACTIVENESS more, draws wanderers |
@@ -726,9 +730,9 @@ Consumes ale from the brewery. An inn with no ale is an empty room and grants no
 
 #### `church`
 
-Worker: **CLERIC**  ·  Phase 2  ·  Variants: `plains`, `taiga`, `desert`
+Worker: **CLERIC**  ·  Phase 2  ·  Variants: `birch_forest`
 
-| Level | Name | Footprint | Recipe (plains) | Grants |
+| Level | Name | Footprint | Recipe | Grants |
 | --- | --- | --- | --- | --- |
 | 1 | shrine | 7x7 | 16 oak log, 28 oak planks, 28 cobblestone, 4 wool | HEALING basic |
 | 2 (upgrade) | church | 15x15 | 28 oak log, 40 oak planks, 40 cobblestone, 4 wool | HEALING, ENCHANTING (requires library_1), raises ATTRACTIVENESS |
@@ -742,9 +746,9 @@ The clearest two-building capability in the catalog: ENCHANTING needs church L2 
 
 #### `library`
 
-Worker: **LIBRARIAN**  ·  Phase 3  ·  Variants: `plains`
+Worker: **LIBRARIAN**  ·  Phase 3  ·  Variants: none shipped
 
-| Level | Name | Footprint | Recipe (plains) | Grants |
+| Level | Name | Footprint | Recipe | Grants |
 | --- | --- | --- | --- | --- |
 | 1 | scriptorium | 7x7 | 20 oak log, 28 oak planks, 32 cobblestone, 6 glass, 4 wool, 12 book | LEARNING, book production |
 | 2 (upgrade) | library | 11x11 | 28 oak log, 44 oak planks, 48 cobblestone, 8 glass, 6 wool, 24 bookshelf | LEARNING, ENCHANTING support |
@@ -753,9 +757,9 @@ Worker: **LIBRARIAN**  ·  Phase 3  ·  Variants: `plains`
 
 #### `farm`
 
-Worker: **FARMER**  ·  Phase 1  ·  Variants: `plains`, `taiga`, `snowy`, `desert`, `savanna`
+Worker: **FARMER**  ·  Phase 1  ·  Variants: `birch_forest` (levels 1 and 2)
 
-| Level | Name | Footprint | Recipe (plains) | Grants |
+| Level | Name | Footprint | Recipe | Grants |
 | --- | --- | --- | --- | --- |
 | 1 | croft | 11x11 | 16 oak log, 28 oak planks, 28 cobblestone, 4 glass, 4 wool | GRAIN |
 | 2 (upgrade) | farm | 15x15 | 28 oak log, 40 oak planks, 40 cobblestone, 8 glass, 4 wool | GRAIN more, vegetables |
@@ -765,7 +769,7 @@ The desert variant is terraced and irrigated: it costs more for the same yield, 
 
 #### `tannery`
 
-Worker: **TANNER**  ·  Phase 1  ·  Variants: `plains`, `taiga`, `snowy`, `desert`, `savanna`
+Worker: **TANNER**  ·  Phase 1  ·  Variants: `birch_forest`, shipped as `butchery_birch_forest_1`
 
 *Absorbs the old `pasture`.* Keeping cattle and taking beef and leather off them is
 one job, not two buildings. **There is no separate "turn hides into worked leather"
@@ -780,7 +784,7 @@ This is the settled half of the animal split. The other half is `hunting_lodge`,
 which is deliberately the opposite shape: a hunter roams out after wild animals,
 where the tanner cultivates a herd that stays put.
 
-| Level | Name | Footprint | Recipe (plains) | Grants |
+| Level | Name | Footprint | Recipe | Grants |
 | --- | --- | --- | --- | --- |
 | 1 | tannery | 15x7 | 16 oak log, 24 oak planks, 24 cobblestone, 4 glass, 2 wool | MEAT, LEATHER |
 | 2 (upgrade) | stockyard | 15x15 | 24 oak log, 36 oak planks, 36 cobblestone, 6 glass, 4 wool | MEAT more, LEATHER more |
@@ -796,9 +800,9 @@ above six is meat and hide.
 
 #### `hunting_lodge`
 
-Worker: **HUNTER**  ·  Phase 1  ·  Variants: `plains`, `taiga`, `snowy`, `desert`, `savanna`
+Worker: **HUNTER**  ·  Phase 1  ·  Variants: `birch_forest`
 
-| Level | Name | Footprint | Recipe (plains) | Grants |
+| Level | Name | Footprint | Recipe | Grants |
 | --- | --- | --- | --- | --- |
 | 1 | hunter's camp | 7x7 | 12 oak log, 20 oak planks, 20 cobblestone, 4 glass, 2 wool | MEAT, LEATHER |
 | 2 (upgrade) | hunting lodge | 11x11 | 20 oak log, 28 oak planks, 28 cobblestone, 4 glass, 4 wool | MEAT more, feathers, hides |
@@ -817,9 +821,9 @@ Feathers at L2 are what make the fletcher possible at all.
 
 #### `fishery`
 
-Worker: **FISHER**  ·  Phase 1  ·  Variants: `plains`, `taiga`, `snowy`, `desert`, `savanna`
+Worker: **FISHER**  ·  Phase 1  ·  Variants: `birch_forest`
 
-| Level | Name | Footprint | Recipe (plains) | Grants |
+| Level | Name | Footprint | Recipe | Grants |
 | --- | --- | --- | --- | --- |
 | 1 | fishing hut | 9x7 | 12 oak log, 16 oak planks, 16 cobblestone, 4 glass, 2 wool | MEAT (fish), WATER |
 | 2 (upgrade) | fishery | 11x11 | 16 oak log, 24 oak planks, 28 cobblestone, 4 glass, 4 wool | MEAT more, docks |
@@ -838,9 +842,9 @@ Keys off adjacent water, not off a biome, so it serves coast, river, lake, and s
 
 #### `bakery`
 
-Worker: **BAKER**  ·  Phase 2  ·  Variants: `plains`
+Worker: **BAKER**  ·  Phase 2  ·  Variants: `birch_forest`
 
-| Level | Name | Footprint | Recipe (plains) | Grants |
+| Level | Name | Footprint | Recipe | Grants |
 | --- | --- | --- | --- | --- |
 | 1 | bake house | 7x7 | 16 oak log, 24 oak planks, 28 cobblestone, 4 glass, 4 wool | FOOD_BAKED: bread |
 | 2 (upgrade) | bakery | 11x11 | 24 oak log, 36 oak planks, 40 cobblestone, 6 glass, 4 wool | FOOD_BAKED: pies and cake |
@@ -848,9 +852,9 @@ Worker: **BAKER**  ·  Phase 2  ·  Variants: `plains`
 
 #### `butchery`
 
-Worker: **BUTCHER**  ·  Phase 2  ·  Variants: `plains`
+Worker: **BUTCHER**  ·  Phase 2  ·  Variants: `birch_forest`
 
-| Level | Name | Footprint | Recipe (plains) | Grants |
+| Level | Name | Footprint | Recipe | Grants |
 | --- | --- | --- | --- | --- |
 | 1 | smokehouse | 7x7 | 12 oak log, 20 oak planks, 20 cobblestone, 4 glass, 2 wool | FOOD_COOKED |
 | 2 (upgrade) | butchery | 11x11 | 20 oak log, 28 oak planks, 32 cobblestone, 6 glass, 4 wool | FOOD_PRESERVED: keeps through winter |
@@ -859,9 +863,9 @@ Consumes FUEL, which is what ties the food chain to the mine or the charcoal bur
 
 #### `brewery`
 
-Worker: **BREWER**  ·  Phase 3  ·  Variants: `plains`
+Worker: **BREWER**  ·  Phase 3  ·  Variants: none shipped
 
-| Level | Name | Footprint | Recipe (plains) | Grants |
+| Level | Name | Footprint | Recipe | Grants |
 | --- | --- | --- | --- | --- |
 | 1 | brewhouse | 11x11 | 24 oak log, 32 oak planks, 36 cobblestone, 6 glass, 4 wool, 4 iron ingot | ALE |
 | 2 (upgrade) | brewery | 15x15 | 32 oak log, 48 oak planks, 52 cobblestone, 8 glass, 6 wool, 8 iron ingot | ALE enough to keep an inn supplied |
@@ -870,9 +874,9 @@ Worker: **BREWER**  ·  Phase 3  ·  Variants: `plains`
 
 #### `lumberjack`
 
-Worker: **LUMBERJACK**  ·  Phase 1  ·  Variants: `plains`, `taiga`
+Worker: **LUMBERJACK**  ·  Phase 1  ·  Variants: `birch_forest`
 
-| Level | Name | Footprint | Recipe (plains) | Grants |
+| Level | Name | Footprint | Recipe | Grants |
 | --- | --- | --- | --- | --- |
 | 1 | woodcutter's hut | 7x7 | 8 oak log, 16 oak planks, 16 cobblestone, 2 glass | LOGS |
 | 2 (upgrade) | sawmill | 11x11 | 16 oak log, 24 oak planks, 24 cobblestone, 4 glass, 2 wool, 4 iron ingot | PLANKS |
@@ -882,7 +886,7 @@ PLANKS at L2 is a real gate, not throughput: without it a village builds in logs
 
 #### `stoneworks`
 
-Worker: **MASON**  ·  Phase 1  ·  Variants: `plains`, `taiga`, `snowy`, `desert`, `savanna`
+Worker: **MASON**  ·  Phase 1  ·  Variants: `birch_forest`
 
 *Replaces the old `quarry`.* A quarry was a second hole competing with the mine for
 the same cobblestone, which is not a building, it is a duplicate. **The mason does not
@@ -897,7 +901,7 @@ stripped logs into planks, the farmer turns pumpkins into seeds. The mason is
 registered the same way, which is also why this needs no separate "sawmill"-style
 building of its own.
 
-| Level | Name | Footprint | Recipe (plains) | Grants |
+| Level | Name | Footprint | Recipe | Grants |
 | --- | --- | --- | --- | --- |
 | 1 | stone yard | 7x7 | 12 oak log, 16 oak planks, 16 cobblestone, 4 glass, 2 wool | STONE, CUT_STONE |
 | 2 (upgrade) | stoneworks | 11x11 | 16 oak log, 24 oak planks, 28 cobblestone, 4 glass, 4 wool, 4 iron ingot | CUT_STONE more, sandstone |
@@ -905,17 +909,18 @@ building of its own.
 
 #### `mine`  (founding building)
 
-Worker: **MINER**  ·  Phase 1  ·  Variants: `plains`, `taiga`, `snowy`, `desert`, `savanna`
+Worker: **MINER**  ·  Phase 1  ·  Variants: `birch_forest`
 
-| Level | Name | Footprint | Recipe (plains) | Grants |
+| Level | Name | Footprint | Recipe | Grants |
 | --- | --- | --- | --- | --- |
 | 1 | mine shaft | 7x7 | 16 oak log, 20 oak planks, 24 cobblestone, 4 glass, 2 wool | ORES: coal and iron. FUEL |
-| 2 (upgrade) | twin headframe (ships) | 13x7 | 16 oak log, 20 cobblestone | a second MINER station and shaft, a second chest; ORES and FUEL as level 1 |
+| 2 (upgrade) | twin headframe | 13x7 | 16 oak log, 20 cobblestone | a second MINER station and shaft, a second chest; ORES and FUEL as level 1 |
 | 3 (upgrade) | deep mine | 15x15 | 44 oak log, 64 oak planks, 68 cobblestone, 12 glass, 8 wool, 12 iron ingot | ORES: diamond |
 
 Founding building, placed free, and the only job a new camp has besides its builder. Two upgrades for one capability: DIAMOND at L3 is what makes blacksmith L3 mean anything, and the pairing is deliberate. The deepest mine and the greatest forge are a village's endgame together.
 
-Level 2 shipped as scale, not capability. Nothing in the code gates which ore a pick brings
+Level 2 shipped as scale, not capability, in the old families; no bundled family has one
+today, and the derivation script went with those families. Nothing in the code gates which ore a pick brings
 up (a miner pulls whatever `c:ores` block her tool can harvest), so an ORES grant naming gold
 or lapis would have been a label with no reader. Because an upgrade is paid as the difference
 between the two recipes (`BuildingUpgrade.effectiveCost`), it costs exactly what a second
@@ -926,9 +931,9 @@ on a second site. The level-3 row stays a sketch.
 
 #### `blacksmith`
 
-Worker: **BLACKSMITH**  ·  Phase 2  ·  Variants: `plains`, `desert`
+Worker: **BLACKSMITH**  ·  Phase 2  ·  Variants: `birch_forest`
 
-| Level | Name | Footprint | Recipe (plains) | Grants |
+| Level | Name | Footprint | Recipe | Grants |
 | --- | --- | --- | --- | --- |
 | 1 | forge | 11x11 | 28 oak log, 44 oak planks, 44 cobblestone, 8 glass, 6 wool | TOOLS_IRON, REPAIR, SMELTING |
 | 2 (upgrade) | smithy | 11x11 | 44 oak log, 64 oak planks, 68 cobblestone, 12 glass, 8 wool, 16 iron ingot | ARMOR_IRON |
@@ -943,7 +948,7 @@ theirs, since a standing forge smelts it.
 
 #### `workshop`
 
-Worker: **TANNER**  ·  Phase 3  ·  Variants: `plains`
+Worker: **TANNER**  ·  Phase 3  ·  Variants: none shipped
 
 *Merged category: absorbs the old `weaver`: turns hides and wool into goods.*
 
@@ -951,7 +956,7 @@ Worker: **TANNER**  ·  Phase 3  ·  Variants: `plains`
 yields leather directly, because cows drop it. What is left worth having here is the
 wool half, which is the real bottleneck on beds.
 
-| Level | Name | Footprint | Recipe (plains) | Grants |
+| Level | Name | Footprint | Recipe | Grants |
 | --- | --- | --- | --- | --- |
 | 1 | tanning racks | 7x7 | 12 oak log, 20 oak planks, 20 cobblestone, 4 glass, 2 wool | worked LEATHER |
 | 2 (upgrade) | tannery | 11x11 | 20 oak log, 28 oak planks, 32 cobblestone, 6 glass, 4 wool | ARMOR_LEATHER |
@@ -960,9 +965,9 @@ wool half, which is the real bottleneck on beds.
 
 #### `watchtower`
 
-Worker: **GUARD**  ·  Phase 1  ·  Variants: `plains`, `taiga`, `desert`
+Worker: **GUARD**  ·  Phase 1  ·  Variants: `birch_forest` (levels 1 and 2)
 
-| Level | Name | Footprint | Recipe (plains) | Grants |
+| Level | Name | Footprint | Recipe | Grants |
 | --- | --- | --- | --- | --- |
 | 1 | watchpost | 5x5 | 8 oak log, 12 oak planks, 16 cobblestone, 2 glass | PROTECTION, GUARD station x1 |
 | 2 (upgrade) | guard tower | 7x7 | 12 oak log, 20 oak planks, 20 cobblestone, 4 glass, 2 wool | GUARD station x2, longer sight range |
@@ -973,9 +978,8 @@ The only phase 1 military building. A camp with no watchpost is a camp the wolve
 #### `wall`
 
 Built by **BUILDERS** as a perimeter project, with one wall stage for every village style.
-There are no wall upgrades. Desert uses sandstone; Mesa/Pueblo uses red sandstone;
-Birch uses cobblestone; the other styles use their regional wood. Desert and Mesa
-keep oak trapdoors and normal ladders for access to guard posts.
+There are no wall upgrades. Desert uses sandstone, Mesa/Pueblo red sandstone and Birch
+cobblestone. Desert and Mesa keep oak trapdoors and normal ladders for access to guard posts.
 
 Construction consumes one regional wall material per ten placed cells. The perimeter
 includes gates, corners, and accessible guard posts. See [walls.md](walls.md) for
@@ -983,9 +987,9 @@ planning, construction, and placement rules.
 
 #### `gatehouse`
 
-Worker: **none**  ·  Phase 4  ·  Variants: `plains`, `desert`
+Worker: **none**  ·  Phase 4  ·  Variants: none shipped
 
-| Level | Name | Footprint | Recipe (plains) | Grants |
+| Level | Name | Footprint | Recipe | Grants |
 | --- | --- | --- | --- | --- |
 | 1 | gate | 7x7 | 8 oak log, 12 oak planks, 16 cobblestone, 2 glass | controlled entry |
 | 2 (upgrade) | gatehouse | 11x11 | 20 oak log, 28 oak planks, 32 cobblestone, 6 glass, 4 wool, 4 iron ingot | controlled entry, GUARD station x1 |
@@ -999,14 +1003,15 @@ Pairs with `wall`. Same phase, same blocker.
 
 > **Superseded.** This manifest predates the 36→21 category cut and still enumerates cut
 > categories (`kiln`/`pottery`/`glassworks`, `graveyard`, `apiary`, `charcoal_burner`,
-> `weaver`, and all of Phase 4). It needs regenerating against the 21 survivors; until then
-> the per-category tables above are authoritative, not this list.
+> `weaver`, and all of Phase 4), and it enumerates the old Village Life families removed on
+> 2026-09-10. It needs regenerating against the 21 survivors and the bundled Birch catalog;
+> until then the per-category tables above are authoritative, not this list.
 
 Every `.nbt` this catalog needs, at `data/kithkyn/structure/<id>.nbt`.
 
 | Set | What it buys | Structures |
 | --- | --- | --- |
-| **Minimum playable** | One level-1 building per phase 1 category, plains variant only. A village that founds, feeds, houses, and defends itself. | **11** |
+| **Minimum playable** | One level-1 building per phase 1 category, in a single family. A village that founds, feeds, houses, and defends itself. | **11** |
 | Phase 1 | A village survives in any biome, at every level | 138 |
 | Phase 2 | It thrives: processed food, iron, faith, trade | 32 |
 | Phase 3 | It deepens: brewing, cloth, brick, glass, learning | 25 |
@@ -1016,7 +1021,7 @@ Every `.nbt` this catalog needs, at `data/kithkyn/structure/<id>.nbt`.
 36 categories, 86 category-variant pairs, 224 structures. That total is the honest number and it
 is large. Two things make it tractable:
 
-- **The minimum playable set is 11 structures.** One level-1 plains building per phase 1 category.
+- **The minimum playable set is 11 structures.** One level-1 building per phase 1 category, in one family.
   That alone gives a village that founds itself, feeds itself, houses its people, gathers wood and
   stone and ore, and posts a watch. Everything past it is variety and depth, not viability.
 - **Vanilla cannot be copied, only referenced.** [Research on conversion](https://github.com/Quzzar/kithkyn/issues/53)

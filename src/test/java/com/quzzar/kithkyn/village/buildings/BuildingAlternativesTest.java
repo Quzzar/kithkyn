@@ -67,23 +67,6 @@ class BuildingAlternativesTest {
   }
 
   @Test
-  void regionalAlternativesReplaceTheFallbackFamilyAsAGroup() {
-    BuildingInfo plains = house("house_plains_1", 1, 0);
-    BuildingInfo plainsAlternative = house("house_plains_1__courtyard", 2, 0);
-    load(List.of(plainsAlternative, plains));
-    assertEquals(List.of(plains, plainsAlternative), Buildings.alternatives("house", 1, VillageStyle.TAIGA));
-    assertSame(plains, Buildings.resolve("house", 1, VillageStyle.TAIGA));
-    assertNull(Buildings.resolve("house", 1, VillageStyle.BIRCH_FOREST));
-
-    BuildingInfo own = house("house_taiga_1__timber", 1, 0);
-    load(List.of(plains, plainsAlternative, own));
-    assertEquals(List.of(own), Buildings.alternatives("house", 1, VillageStyle.TAIGA));
-    assertEquals(List.of(own), Buildings.catalogue(VillageStyle.TAIGA));
-    assertSame(own, Buildings.resolve("house", 1, VillageStyle.TAIGA));
-    assertFalse(Buildings.isRegionalChoice(plainsAlternative, VillageStyle.TAIGA));
-  }
-
-  @Test
   void singleGoalsSkipCoupleOnlyOrStalledLayoutsAndMarriageRetainsLegacyCottages() {
     BuildingInfo couple = house("house_birch_forest_1", 0, 1);
     BuildingInfo single = house("house_birch_forest_1__single", 1, 0);

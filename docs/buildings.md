@@ -363,16 +363,20 @@ CTOV fortified plains is a defense or development state of `plains`, while Chris
 Halloween are possible seasonal treatments. This keeps biome, progression, and event state from
 becoming one overloaded axis.
 
-### Current runtime selection: 2026-09-09
+### Current runtime selection: 2026-09-10
 
-The bundled architecture families are `plains`, `taiga`, `snowy`, `desert`, `savanna`, and
-the approved `birch_forest` selection. The approved local Pueblo/Mesa datapack adds `badlands`
-for mesa/badlands and savanna families; its thirty templates and house alternatives are documented in
-[badlands-village.md](badlands-village.md). Without that private pack, the style has no founding
-set and is not selected automatically. The reference roster above reserves future work, not
-phantom runtime catalogs. In particular, the approved custom Birch selection supersedes the
-earlier Romanian/Dungeons and Taverns allocation for this implementation; ordinary and old-growth
-Birch biomes use this one approved catalog rather than two identical architecture sets.
+Three styles exist today, in this stable order: `birch_forest`, `desert`, `badlands`. Birch
+Forest is the only catalog bundled in the jar and so the default: a blank or unknown saved
+style reads as Birch. Desert ([desert-village.md](desert-village.md)) and Badlands
+([badlands-village.md](badlands-village.md)) are installed as private datapacks that supply
+their own definitions and templates under the same ids the code resolves; without its pack a
+style has no founding set and is never selected automatically. The old Village Life families
+(plains, taiga, snowy, savanna and the bundled desert set) were removed on 2026-09-10; see
+"Villages saved in a removed family" below for what that means for an existing world. The
+reference roster above reserves future work, not phantom runtime catalogs. The approved
+custom Birch selection supersedes the earlier Romanian/Dungeons and Taverns allocation for
+this implementation; ordinary and old-growth Birch biomes use this one approved catalog rather
+than two identical architecture sets.
 
 Manual `/kithkyn create-village` and naturally founded villages use the same selection path.
 A village chooses its style once, before placing the founding set, and persists it for life.
@@ -381,20 +385,18 @@ reroll an existing village. An explicit style argument on the command still over
 
 Selection first honors `kithkyn:village_style/<style>` biome tags, so a datapack can map a
 vanilla or modded biome precisely without a second mapping format. If a biome has several
-explicit tags, the stable order is Plains, Taiga, Snowy, Desert, Savanna, Birch Forest, Badlands. Only
-styles whose own center, mine, and storehouse definitions are loaded are automatic candidates.
+explicit tags, the stable order is Birch Forest, Desert, Badlands. Only styles whose own
+center, mine, and storehouse definitions are loaded are automatic candidates.
 
-Conventional families then retain deterministic assignments:
+Conventional families then retain deterministic assignments, but only where a finished
+catalog exists:
 
 | Family | Village style |
 | --- | --- |
 | Birch, including `c:is_birch_forest` and untagged registry paths containing `birch` | Birch Forest |
 | Mesa/badlands or savanna, including their tagged modded families and recognizable registry paths | Pueblo / Badlands |
 | Desert or sandy, excluding the mesa/badlands and savanna families above | Desert |
-| Snowy or icy | Snowy |
-| Jungle, pending its own approved catalog | Savanna |
-| Taiga, coniferous, mountain | Taiga |
-| Plains, other forest/deciduous, swamp | Plains |
+| Every other conventional family (plains, forest, taiga, snowy, jungle, swamp and the rest) | No conventional mapping; the climate cluster below decides |
 
 Birch wins before broader family tags; an explicit style tag can override even a birch-named
 biome. This name heuristic is a compatibility fallback for mods that omit conventional tags,
@@ -404,35 +406,43 @@ The broad Pueblo assignment includes wooded badlands and savanna plateau for now
 catalogs become playable, explicit style tags can separate those biomes without rerolling
 existing villages. The Jungle showcase is a building-selection pass, not an activated catalog.
 
-An unfamiliar family uses its precipitation, base temperature, downfall, and conventional
-hot/cold/wet/dry tags to choose a compatible cluster. The choice is randomly varied between
-founding sites but deterministic for the same world seed, biome, and site:
+A family with no conventional mapping uses its precipitation, base temperature, downfall, and
+conventional hot/dry/wet tags to choose a cluster. Only a hot, dry climate has a choice to
+make, and that choice is randomly varied between founding sites but deterministic for the same
+world seed, biome, and site:
 
-| Unclassified climate | Candidate architecture cluster |
+| Climate | Candidate architecture cluster |
 | --- | --- |
-| Freezing with precipitation | Snowy, Taiga |
-| Other cold/cool | Taiga, Plains |
-| Hot and dry | Desert, Savanna |
-| Hot with rain/moisture | Savanna, Plains |
-| Temperate and dry | Plains, Savanna |
-| Other temperate | Plains, Birch Forest |
+| Hot and dry | Desert, Badlands |
+| Everything else | Birch Forest |
 
-Cold means a cold tag or base temperature below `0.4`; freezing is below `0.15`. Hot means
-a hot tag or temperature at least `1.0`. No precipitation is dry. Otherwise wet tags or
-downfall at least `0.7` take precedence over dry tags or downfall at most `0.3`. An absent
-cluster member is never selected. If a datapack removes a whole climate cluster, selection
-uses the loaded Plains founding set, then another loaded founding set in the stable style
-order. With no founding content loaded, the existing missing-center failure remains visible.
-These are architecture choices, not new restrictions on survival or work.
+Hot means a hot tag or base temperature at least `1.0`. No precipitation is dry. Otherwise wet
+tags or downfall at least `0.7` take precedence over dry tags or downfall at most `0.3`. An
+absent cluster member is never selected. If no member of the cluster is loaded, selection
+uses the first loaded founding set in the stable style order. With no founding content
+loaded, the existing missing-center failure remains visible. These are architecture choices,
+not new restrictions on survival or work.
 
-Birch is a strict, deliberately sparse catalog. It never borrows an omitted Plains building
-or higher tier: no four-bed House L3, Mine L2, Storehouse upgrade, Farm L3, Center upgrade,
-or Church L2 appears implicitly. Its approved bakery and separate tavern each declare their
-own occupation, bed and personal storage. The five older catalogs retain their existing Plains fallback
-and upgrade compatibility. Multiword variant IDs such as `house_birch_forest_1` now use the
-longest known style suffix; custom single-token variants retain the existing naming format.
-Recipes remain identical across village biomes, and an upgrade follows the explicitly named
-predecessor of the building already standing.
+Every catalog is strict and deliberately sparse. A style never borrows another family's
+building or higher tier: no four-bed house, mine upgrade, storehouse upgrade, farm level 3,
+center upgrade or church level 2 appears in a Birch village, because none is authored for it.
+The approved bakery and separate tavern each declare their own occupation, bed and personal
+storage. Multiword variant IDs such as `house_birch_forest_1` use the longest known style
+suffix; custom single-token variants retain the existing naming format. Recipes remain
+identical across village biomes, and an upgrade follows the explicitly named predecessor of
+the building already standing.
+
+#### Villages saved in a removed family
+
+A village founded in plains, taiga, snowy or savanna keeps its name, people, identity and
+save data, and its style reads as Birch Forest from now on. Its buildings have no loaded
+definition, so on load the village logs one warning naming them and treats them as absent:
+the records stay in the save untouched, but they provide no beds, jobs or footprint, the bed
+and job assignments that pointed at them are released, and a project raising one is dropped.
+With its centre absent the village plans nothing, recruits nobody and raises no wall; its
+residents still gather at the old centre's saved position. The same rule protects a Desert or
+Badlands village whose private datapack is missing: reinstall the pack and its buildings are
+back on the next load.
 
 ### Village identity is separate from village biome
 
@@ -473,7 +483,7 @@ the player, with a caravan, or abstract is an open question below.
 | | Count |
 | --- | --- |
 | Categories | 37 |
-| Implemented village biomes | 6 |
+| Implemented village biomes | 3 (Birch Forest bundled; Desert and Badlands as private datapacks) |
 | Towns and Towers Overworld village-biome floor | 26 |
 | Additional village biomes already justified by reviewed families | 6 |
 | Existing structure-plan estimate, based on five village biomes | ~130 |

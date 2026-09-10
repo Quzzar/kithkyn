@@ -20,33 +20,33 @@ class BuildingVariantAmenitiesTest {
 
   @Test
   void sameLevelVariantsKeepTheirOwnDeclaredAmenities() {
-    BuildingInfo plains = new BuildingInfo("house_plains_3")
+    BuildingInfo birch = new BuildingInfo("house_birch_forest_3")
         .addBedLocation(1, 1, 1)
         .addBedLocation(2, 1, 1)
         .addBedLocation(3, 1, 1)
         .addBedLocation(4, 1, 1)
         .addContainerLocation(2, 1, 2);
-    BuildingInfo taiga = new BuildingInfo("house_taiga_3")
+    BuildingInfo desert = new BuildingInfo("house_desert_3")
         .addBedLocation(1, 1, 1)
         .addBedLocation(2, 1, 1)
         .addBedLocation(3, 1, 1)
         .addWorkLocation(2, 1, 2, Occupation.BUILDER);
-    Buildings.reload(Map.of(plains.getName(), plains, taiga.getName(), taiga));
+    Buildings.reload(Map.of(birch.getName(), birch, desert.getName(), desert));
 
-    BuildingInfo resolvedPlains = Buildings.resolve("house", 3, VillageStyle.PLAINS);
-    BuildingInfo resolvedTaiga = Buildings.resolve("house", 3, VillageStyle.TAIGA);
+    BuildingInfo resolvedBirch = Buildings.resolve("house", 3, VillageStyle.BIRCH_FOREST);
+    BuildingInfo resolvedDesert = Buildings.resolve("house", 3, VillageStyle.DESERT);
 
-    assertEquals(4, resolvedPlains.getBedLocations().size());
-    assertEquals(1, resolvedPlains.getContainerLocations().size());
-    assertEquals(3, resolvedTaiga.getBedLocations().size());
-    assertEquals(1, resolvedTaiga.getWorkLocations().size());
+    assertEquals(4, resolvedBirch.getBedLocations().size());
+    assertEquals(1, resolvedBirch.getContainerLocations().size());
+    assertEquals(3, resolvedDesert.getBedLocations().size());
+    assertEquals(1, resolvedDesert.getWorkLocations().size());
   }
 
   @Test
   void buildingDefinitionReadsSemanticVillageIdentitySlots() {
     BuildingInfo info = BuildingInfo.CODEC.parse(JsonOps.INSTANCE, JsonParser.parseString("""
         {
-          "structure": "watchtower_plains_1",
+          "structure": "watchtower_birch_forest_1",
           "village_identity": {
             "primary_blocks": [[2, 4, 0]],
             "secondary_blocks": [[3, 4, 0]],

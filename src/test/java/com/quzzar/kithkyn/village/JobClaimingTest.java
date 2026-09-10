@@ -40,9 +40,9 @@ class JobClaimingTest {
 
   @Test
   void aReloadedSmallerDefinitionRehousesItsResidentWithoutReassigningRemovedBeds() throws Exception {
-    BuildingInfo original = new BuildingInfo("house_plains_2")
+    BuildingInfo original = new BuildingInfo("house_birch_forest_2")
         .addBedLocation(2, 1, 2).addBedLocation(4, 1, 2);
-    BuildingInfo spare = new BuildingInfo("house_plains_1").addBedLocation(2, 1, 2);
+    BuildingInfo spare = new BuildingInfo("house_birch_forest_1").addBedLocation(2, 1, 2);
     Buildings.reload(Map.of(original.getName(), original, spare.getName(), spare));
     Building house = new Building(original.getName(), Rotation.NONE);
     Building replacement = new Building(spare.getName(), Rotation.NONE);

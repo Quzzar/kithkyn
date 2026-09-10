@@ -1669,3 +1669,19 @@ side with the same facing are one couple unit in a single colour. The storehouse
 note block as the delivery point for two allays that the village will adopt as auxiliary
 quartermasters; that logic is being built on the `allay-quartermasters` branch. Apron sea
 lanterns inside the padded captures are gallery furniture and must not be exported.
+
+### Old Village Life catalogs removed: September 10
+
+Aaron decided to delete the whole old family: the bundled plains, taiga, snowy and savanna
+catalogs and the old bundled desert set, 29 definitions and 29 templates each, plus the
+developer placeholder market. The styles are now Birch Forest, Desert and Badlands, in that
+order, with Birch the only bundled catalog and the default for any blank or unknown saved
+style. Desert comes from the private `kithkyn-desert` datapack and Badlands from
+`kithkyn-badlands`, both overriding the same ids the code resolves. Every style is strict: no
+catalog borrows another family's building, the plains fallback is gone from the code, and
+conventional biome mapping covers only the birch, desert/sandy and mesa/badlands/savanna
+families; a hot, dry climate chooses between Desert and Badlands and every other climate
+builds Birch. A village saved in a removed family keeps its name, people and identity, reads
+as Birch, and treats its old buildings as absent: they stay in the save, provide nothing, and
+one warning per load names them. The tools that derived the old families' level-2 mines and
+cottage variants went with them.

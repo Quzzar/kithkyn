@@ -55,11 +55,6 @@ public record WallBlockPlan(long position, Piece piece, WallCellRole role) {
     return BlockPos.of(this.position);
   }
 
-  /** Resolves the catalog's semantic piece through the project's current palette. */
-  public BlockState desiredState(WallTier tier) {
-    return desiredState(tier, VillageStyle.PLAINS);
-  }
-
   /** Resolves the catalog's semantic piece through the village's regional palette. */
   public BlockState desiredState(WallTier tier, VillageStyle style) {
     WallPalette palette = WallPalette.forStyle(style);

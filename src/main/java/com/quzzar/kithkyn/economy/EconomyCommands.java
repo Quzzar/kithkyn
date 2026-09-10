@@ -3,7 +3,6 @@ package com.quzzar.kithkyn.economy;
 import java.util.List;
 import java.util.Optional;
 
-import com.quzzar.kithkyn.Kithkyn;
 import com.quzzar.kithkyn.village.Village;
 import com.quzzar.kithkyn.village.VillageManager;
 
@@ -47,8 +46,6 @@ public final class EconomyCommands {
                     .executes(context -> bank(context.getSource(),
                         ResourceLocationArgument.getId(context, "give").toString(),
                         ResourceLocationArgument.getId(context, "want").toString())))))
-        .then(Commands.literal("devmarket")
-            .executes(context -> devMarket(context.getSource())))
         .then(Commands.literal("treasury")
             .executes(context -> treasury(context.getSource())))
         .then(Commands.literal("sell")
@@ -172,21 +169,6 @@ public final class EconomyCommands {
         Bank.buyPrice(item.get(), server).orElse(0.0),
         Bank.sellPrice(item.get(), server).orElse(0.0))), false);
     return 1;
-  }
-
-  /** Dev only: drops the placeholder market into the nearest village so the
-   * treasury and trade paths can be exercised before a real market exists. */
-  private static int devMarket(CommandSourceStack source) {
-    Village village = nearestVillage(source);
-    if (village == null) {
-      source.sendFailure(Component.literal("No village near here."));
-      return 0;
-    }
-    boolean placed = village.devPlaceBuilding("market_placeholder_1");
-    source.sendSuccess(() -> Component.literal(placed
-        ? "Placed a placeholder market in '" + village.getName() + "'."
-        : "Could not place it (no site, or no such building definition)."), false);
-    return placed ? 1 : 0;
   }
 
   private static int treasury(CommandSourceStack source) {

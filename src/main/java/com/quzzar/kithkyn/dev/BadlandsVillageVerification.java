@@ -124,7 +124,6 @@ public final class BadlandsVillageVerification {
   }
 
   private static void verifyCatalogue(ServerLevel level) {
-    check(!STYLE.usesPlainsFallback(), STYLE + " must use a strict catalogue");
     check(Buildings.hasFoundingSet(STYLE), "Missing full " + STYLE + " founding set");
     List<BuildingInfo> catalogue = Buildings.catalogue(STYLE);
     check(catalogue.size() == TEMPLATES, "Expected " + TEMPLATES + " catalogue entries, got " + catalogue.size());

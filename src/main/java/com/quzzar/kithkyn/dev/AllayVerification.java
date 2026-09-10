@@ -206,7 +206,7 @@ public final class AllayVerification {
 
   /** A fixed settlement with one storehouse and one workplace chest, so no construction or model calls run. */
   private static final class FixtureVillage extends Village {
-    private final Building storehouse = new Building(ORIGIN, "storehouse_plains_1", Rotation.NONE);
+    private final Building storehouse = new Building(ORIGIN, "storehouse_birch_forest_1", Rotation.NONE);
     private final BlockPos source = ORIGIN.offset(-8, 1, 6);
 
     private FixtureVillage() {

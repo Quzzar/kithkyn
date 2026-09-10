@@ -112,8 +112,8 @@ public final class RedevelopmentBenchmark {
     var fixture = RedevelopmentVerification.fixture(level);
     Village village = fixture.village();
     BlockPos ground = fixture.ground();
-    RedevelopmentVerification.place(village, "mine_plains_1", ground.offset(-30, 0, 30));
-    RedevelopmentVerification.place(village, "lumberjack_plains_1", ground.offset(25, 0, 25));
+    RedevelopmentVerification.place(village, "mine_birch_forest_1", ground.offset(-30, 0, 30));
+    RedevelopmentVerification.place(village, "lumberjack_birch_forest_1", ground.offset(25, 0, 25));
     VillageManager.get(level).getVillages().put(village.getID(), village);
     VillageManager.get(level).setDirty();
     level.getGameRules().getRule(GameRules.RULE_DOMOBSPAWNING).set(false, level.getServer());
@@ -153,10 +153,11 @@ public final class RedevelopmentBenchmark {
     reconcile.invoke(village);
     village.devBuildWall(com.quzzar.kithkyn.village.buildings.WallTier.WOOD);
     level.getServer().getWorldData().overworldData().setGameTime(144_000L);
-    Building source = village.getBuildings().stream().filter(building -> building.getName().equals("house_plains_1"))
+    Building source = village.getBuildings().stream().filter(building -> building.getName().equals("house_birch_forest_1"))
         .findFirst().orElseThrow();
-    BlockPos ground = BlockPos.of(source.getOriginLocation()).above(source.getPlacedSink()).offset(0, 0, -2);
-    var assessment = RedevelopmentPlanner.assess(village, Buildings.getByName("house_plains_2"), source, ground, source.getRotation());
+    BlockPos ground = BlockPos.of(source.getOriginLocation()).above(source.getPlacedSink())
+        .offset(RedevelopmentVerification.UPGRADE_SHIFT);
+    var assessment = RedevelopmentPlanner.assess(village, Buildings.getByName("house_birch_forest_2"), source, ground, source.getRotation());
     if (village.getFreeGeneralBedCount() != 0 || village.getUnhousedAdultResidentCount() < 1
         || village.getBedAssignmentsView().values().stream().noneMatch(bed -> bed.getBuildingUUID().equals(source.getUUID()))
         || assessment.plan().isEmpty()) {
@@ -179,7 +180,7 @@ public final class RedevelopmentBenchmark {
     }
     Village village = new Village(opportunity ? "Willowfield opportunity" : "New growth");
     village.attach(level);
-    village.setStyle(VillageStyle.PLAINS);
+    village.setStyle(VillageStyle.BIRCH_FOREST);
     village.initNew(ground);
     if (village.getTownCenter() == null) {
       throw new IllegalStateException("Normal founding did not create a center");
@@ -189,13 +190,18 @@ public final class RedevelopmentBenchmark {
     level.getGameRules().getRule(GameRules.RULE_DOMOBSPAWNING).set(false, level.getServer());
     level.getGameRules().getRule(GameRules.RULE_WEATHER_CYCLE).set(false, level.getServer());
     if (opportunity) {
-      RedevelopmentVerification.place(village, "house_plains_3", ground.offset(-30, 0, 25));
-      RedevelopmentVerification.place(village, "lumberjack_plains_1", ground.offset(-30, 0, -25));
+      // Two two-bed Birch houses house the eight fixture residents with the centre's
+      // four beds, the role the old four-bed level-3 house played.
+      RedevelopmentVerification.place(village, "house_birch_forest_2", ground.offset(-30, 0, 25));
+      RedevelopmentVerification.place(village, "house_birch_forest_2", ground.offset(-30, 0, 45));
+      RedevelopmentVerification.place(village, "lumberjack_birch_forest_1", ground.offset(-30, 0, -25));
       BlockPos field = ground.offset(30, 0, 0);
-      Building source = RedevelopmentVerification.place(village, "farm_plains_1", field);
-      RedevelopmentVerification.place(village, "farm_plains_2", ground.offset(30, 0, 25));
-      RedevelopmentVerification.place(village, "well_plains_1", field.offset(-5, 0, 0));
-      RedevelopmentVerification.place(village, "well_plains_1", field.offset(8, 0, 0));
+      Building source = RedevelopmentVerification.place(village, "farm_birch_forest_1", field);
+      RedevelopmentVerification.place(village, "farm_birch_forest_2", ground.offset(30, 0, 25));
+      // The 9x9 wells stand one cell off the 15-wide farm on each side, so the
+      // 19-wide level-2 farm can only be raised by removing them.
+      RedevelopmentVerification.place(village, "well_birch_forest_1", field.offset(-10, 0, 0));
+      RedevelopmentVerification.place(village, "well_birch_forest_1", field.offset(16, 0, 0));
       Occupation[] jobs = {Occupation.BUILDER, Occupation.FARMER, Occupation.FARMER,
           Occupation.QUARTERMASTER, Occupation.MINER, Occupation.LUMBERJACK,
           Occupation.WANDERER, Occupation.WANDERER};
@@ -224,8 +230,8 @@ public final class RedevelopmentBenchmark {
           village.getAttractiveness().foodPerCapita(), village.computeAttractiveness().foodPerCapita(),
           KithkynConfig.AttractivenessFoodTargetPerCapita, village.claimableJobs().stream().map(job -> job.getOccupation()).toList(),
           com.quzzar.kithkyn.village.buildings.RedevelopmentDemand.netFoodPlots(village,
-              Buildings.getByName("farm_plains_2"), List.of(source)), village.stockTally());
-      var assessment = RedevelopmentPlanner.assess(village, Buildings.getByName("farm_plains_2"),
+              Buildings.getByName("farm_birch_forest_2"), List.of(source)), village.stockTally());
+      var assessment = RedevelopmentPlanner.assess(village, Buildings.getByName("farm_birch_forest_2"),
           source, field, Rotation.NONE);
       var plan = assessment.plan().orElseThrow(() -> new IllegalStateException(
           "Opportunity is not feasible: " + assessment.reason()));

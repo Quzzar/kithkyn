@@ -262,8 +262,9 @@ The five canonical wooden templates live under
 `data/kithkyn/structure/wall/wood/`. They were captured from the in-world
 wall lab and are loaded as semantic cells instead of stamped directly into the
 world. One oak-authored geometry therefore resolves through the village style
-as oak for plains, spruce for taiga and snowy villages, acacia for savanna,
-smooth sandstone for desert, or smooth red sandstone for Pueblo/Badlands.
+as cobblestone for Birch Forest, smooth sandstone for Desert, or smooth red
+sandstone for Pueblo/Badlands; the oak-wood palette itself no longer belongs to
+any style since the old families were removed on 2026-09-10.
 
 Each authored template needs:
 

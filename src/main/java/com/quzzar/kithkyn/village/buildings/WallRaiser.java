@@ -126,28 +126,7 @@ public final class WallRaiser {
     return Math.min(ground.get(index), Math.min(prev, next));
   }
 
-  /** Exact number of wall-material blocks the current world still needs. */
-  public static int requiredBlocks(Level level, List<Long> ring, Set<Long> gates,
-      List<Integer> ground, WallTier tier) {
-    return requiredBlocks(level, ring, gates, ground, tier, VillageStyle.PLAINS);
-  }
-
-  /** Exact material count using the village's saved regional wall palette. */
-  public static int requiredBlocks(Level level, List<Long> ring, Set<Long> gates,
-      List<Integer> ground, WallTier tier, VillageStyle style) {
-    return requiredBlocks(level, ring, gates, ground, tier, style, Set.of());
-  }
-
-  public static int requiredBlocks(Level level, List<Long> ring, Set<Long> gates,
-      List<Integer> ground, WallTier tier, VillageStyle style,
-      Set<Long> towerExclusions) {
-    List<Integer> deck = deckProfile(level, ring, ground, tier.height());
-    WallProject plan = new WallProject(
-        ring, gates, ground, deck, tier, style, towerExclusions);
-    return requiredBlocks(level, plan);
-  }
-
-  /** Exact material count for one already compiled candidate project. */
+  /** Exact number of wall-material blocks the current world still needs for one compiled project. */
   public static int requiredBlocks(Level level, WallProject plan) {
     int required = 0;
     for (int i = 0; i < plan.sectionCount(); i++) {
@@ -193,27 +172,17 @@ public final class WallRaiser {
     return wall.owns(builder, work.section(), work.block());
   }
 
+  /** Matching includes flag layers, not just the banner's colored block state. */
+  public static boolean isSatisfied(Level level, WallBlockPlan block, WallProject wall) {
+    return isSatisfied(level, block, wall.getTier(), wall.getStyle(), wall.getIdentity());
+  }
+
   /**
    * Every occupied wall cell cares first that collision closes it. Exact cells
    * get their authored state when the cell is open, but any existing solid is
    * preserved. Natural vegetation is cleared so it cannot count as a permanent
    * barrier.
    */
-  public static boolean isSatisfied(Level level, WallBlockPlan block, WallTier tier) {
-    return isSatisfied(level, block, tier, VillageStyle.PLAINS);
-  }
-
-  /** Whether a cell is satisfied under the village's regional wall palette. */
-  public static boolean isSatisfied(Level level, WallBlockPlan block, WallTier tier,
-      VillageStyle style) {
-    return isSatisfied(level, block, tier, style, null);
-  }
-
-  /** Matching includes flag layers, not just the banner's colored block state. */
-  public static boolean isSatisfied(Level level, WallBlockPlan block, WallProject wall) {
-    return isSatisfied(level, block, wall.getTier(), wall.getStyle(), wall.getIdentity());
-  }
-
   private static boolean isSatisfied(Level level, WallBlockPlan block, WallTier tier,
       VillageStyle style, @Nullable VillageIdentity identity) {
     BlockPos pos = block.pos();
@@ -242,11 +211,6 @@ public final class WallRaiser {
     boolean isClearableVegetation = isNaturalClearable(level, pos, state);
     return WallOccupancy.isSatisfied(
         hasCollision, isClearableVegetation);
-  }
-
-  /** Places one planned cell. */
-  public static void place(Level level, WallBlockPlan block, WallTier tier) {
-    place(level, block, tier, VillageStyle.PLAINS);
   }
 
   /** Places one planned cell using the village's regional wall palette. */

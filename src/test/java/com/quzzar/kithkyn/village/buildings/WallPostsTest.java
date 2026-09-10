@@ -27,7 +27,7 @@ class WallPostsTest {
     List<Integer> ground = Collections.nCopies(ring.size(), 64);
     List<Integer> deck = WallTerraces.deckProfile(ground, WallTier.WOOD.height());
     WallProject wall = WallProject.completed(
-        ring, gates, ground, deck, WallTier.WOOD, VillageStyle.PLAINS, Set.of());
+        ring, gates, ground, deck, WallTier.WOOD, VillageStyle.DESERT, Set.of());
 
     List<WallPost> posts = WallPosts.plan(wall);
     int towerCount = WallFeaturePlacement.towerAnchors(ring, Set.of()).size();
@@ -49,7 +49,7 @@ class WallPostsTest {
   @Test
   void everyElevatedPostHasSupportAndHeadroomInWoodAndStone() {
     for (WallTier tier : WallTier.values()) {
-      for (VillageStyle style : List.of(VillageStyle.PLAINS, VillageStyle.BIRCH_FOREST)) {
+      for (VillageStyle style : List.of(VillageStyle.DESERT, VillageStyle.BIRCH_FOREST)) {
       List<Long> ring = WallRoute.aroundBox(0, 64, 0, 64);
       Set<Long> gates = Set.of(BlockPos.asLong(32, 0, 0));
       List<Integer> ground = Collections.nCopies(ring.size(), 64);
@@ -80,7 +80,7 @@ class WallPostsTest {
     Set<Long> gates = Set.of(BlockPos.asLong(32, 0, 0), BlockPos.asLong(64, 0, 32),
         BlockPos.asLong(32, 0, 64), BlockPos.asLong(0, 0, 32));
     List<Integer> ground = Collections.nCopies(ring.size(), 64);
-    for (VillageStyle style : List.of(VillageStyle.PLAINS, VillageStyle.BIRCH_FOREST)) {
+    for (VillageStyle style : List.of(VillageStyle.DESERT, VillageStyle.BIRCH_FOREST)) {
       WallProject wall = WallProject.completed(ring, gates, ground,
           WallTerraces.deckProfile(ground, WallTier.WOOD.height()), WallTier.WOOD, style, Set.of());
       for (WallPost post : WallPosts.plan(wall)) {
@@ -99,7 +99,7 @@ class WallPostsTest {
     List<Integer> ground = Collections.nCopies(ring.size(), 64);
     List<Integer> deck = WallTerraces.deckProfile(ground, WallTier.WOOD.height());
     WallProject wall = WallProject.completed(
-        ring, Set.of(gate), ground, deck, WallTier.WOOD, VillageStyle.PLAINS, Set.of());
+        ring, Set.of(gate), ground, deck, WallTier.WOOD, VillageStyle.DESERT, Set.of());
     List<WallPost> gateGuards = WallPosts.plan(wall).stream()
         .filter(post -> post.anchor() == gate && !post.duty().usesCrossbow())
         .toList();
@@ -115,7 +115,7 @@ class WallPostsTest {
     List<Integer> ground = Collections.nCopies(ring.size(), 64);
     List<Integer> deck = WallTerraces.deckProfile(ground, WallTier.WOOD.height());
     WallProject wall = WallProject.completed(
-        ring, Set.of(), ground, deck, WallTier.WOOD, VillageStyle.PLAINS, Set.of(excluded));
+        ring, Set.of(), ground, deck, WallTier.WOOD, VillageStyle.DESERT, Set.of(excluded));
 
     assertTrue(WallPosts.plan(wall).stream().noneMatch(post -> post.anchor() == excluded));
   }

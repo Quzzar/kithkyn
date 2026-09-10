@@ -22,8 +22,8 @@ class RedevelopmentAlternativesTest {
 
   @Test
   void affordableWaterPreservingPlacementIsPreferredButCheaperDestructiveTradeoffRemains() {
-    var both = option("farm_plains_2", Optional.empty(), true, 2, 2, 120, Set.of("WATER"));
-    var one = option("farm_plains_2", Optional.empty(), true, 1, 4, 52, Set.of());
+    var both = option("farm_birch_forest_2", Optional.empty(), true, 2, 2, 120, Set.of("WATER"));
+    var one = option("farm_birch_forest_2", Optional.empty(), true, 1, 4, 52, Set.of());
     var result = RedevelopmentAlternatives.select(List.of(both, one));
     assertEquals(2, result.size());
     assertEquals(one, result.getFirst().evaluated());
@@ -35,8 +35,8 @@ class RedevelopmentAlternativesTest {
 
   @Test
   void unavailableServicePreservingAlternativeDoesNotHideAffordableDemolition() {
-    var saveForOne = option("farm_plains_2", Optional.empty(), false, 1, 4, 52, Set.of());
-    var affordableBoth = option("farm_plains_2", Optional.empty(), true, 2, 2, 120, Set.of("WATER"));
+    var saveForOne = option("farm_birch_forest_2", Optional.empty(), false, 1, 4, 52, Set.of());
+    var affordableBoth = option("farm_birch_forest_2", Optional.empty(), true, 2, 2, 120, Set.of("WATER"));
     var result = RedevelopmentAlternatives.select(List.of(saveForOne, affordableBoth));
     assertEquals(2, result.size());
     assertEquals(affordableBoth, result.getFirst().evaluated());
@@ -44,8 +44,8 @@ class RedevelopmentAlternativesTest {
 
   @Test
   void sameImpactAndMaterialsNeedsOnlyTheLowerWorkPlacement() {
-    var costly = option("farm_plains_2", Optional.empty(), true, 1, 4, 75, Set.of());
-    var simple = option("farm_plains_2", Optional.empty(), true, 1, 4, 52, Set.of());
+    var costly = option("farm_birch_forest_2", Optional.empty(), true, 1, 4, 75, Set.of());
+    var simple = option("farm_birch_forest_2", Optional.empty(), true, 1, 4, 52, Set.of());
     var result = RedevelopmentAlternatives.select(List.of(costly, simple));
     assertEquals(1, result.size());
     assertEquals(simple, result.getFirst().evaluated());
@@ -54,21 +54,21 @@ class RedevelopmentAlternativesTest {
 
   @Test
   void lowerMaterialCostVersusLessWorkRemainsARealTradeoff() {
-    var lessWork = option("farm_plains_2", Optional.empty(), true, 1, 4, 52, Set.of());
-    var lessMaterial = option("farm_plains_2", Optional.empty(), true, 1, 2, 75, Set.of());
+    var lessWork = option("farm_birch_forest_2", Optional.empty(), true, 1, 4, 52, Set.of());
+    var lessMaterial = option("farm_birch_forest_2", Optional.empty(), true, 1, 2, 75, Set.of());
     assertEquals(2, RedevelopmentAlternatives.select(List.of(lessWork, lessMaterial)).size());
   }
 
   @Test
   void materialCountsAreComparedByItemRatherThanAddingUnlikeResources() {
-    var logs = option("farm_plains_2", Optional.empty(), true, 1, 4, 52, Set.of());
+    var logs = option("farm_birch_forest_2", Optional.empty(), true, 1, 4, 52, Set.of());
     var stone = withEconomics(logs, List.of(new MaterialAmount(Items.COBBLESTONE, 1)), List.of());
     assertEquals(2, RedevelopmentAlternatives.select(List.of(logs, stone)).size());
   }
 
   @Test
   void differentSurplusSalvageIsNotDiscardedJustBecauseBothNetRecipesAreFree() {
-    var original = option("farm_plains_2", Optional.empty(), true, 1, 4, 52, Set.of());
+    var original = option("farm_birch_forest_2", Optional.empty(), true, 1, 4, 52, Set.of());
     var noSurplus = withEconomics(original, List.of(new MaterialAmount(Items.OAK_LOG, 4)),
         List.of(new MaterialAmount(Items.OAK_LOG, 4)));
     var surplus = withEconomics(original, List.of(new MaterialAmount(Items.OAK_LOG, 4)),
@@ -78,15 +78,15 @@ class RedevelopmentAlternativesTest {
 
   @Test
   void differentTargetsAndUpgradeSourcesCannotBeGroupedAway() {
-    var first = option("farm_plains_2", Optional.of(UUID.randomUUID()), true, 1, 4, 52, Set.of());
-    var second = option("farm_plains_2", Optional.of(UUID.randomUUID()), true, 1, 4, 52, Set.of());
-    var house = option("house_plains_2", Optional.empty(), true, 1, 4, 52, Set.of());
+    var first = option("farm_birch_forest_2", Optional.of(UUID.randomUUID()), true, 1, 4, 52, Set.of());
+    var second = option("farm_birch_forest_2", Optional.of(UUID.randomUUID()), true, 1, 4, 52, Set.of());
+    var house = option("house_birch_forest_2", Optional.empty(), true, 1, 4, 52, Set.of());
     assertEquals(3, RedevelopmentAlternatives.select(List.of(first, second, house)).size());
   }
 
   @Test
   void displacementAndBedCapacityTradeoffsRemainVisible() {
-    var original = option("farm_plains_2", Optional.empty(), true, 1, 4, 52, Set.of());
+    var original = option("farm_birch_forest_2", Optional.empty(), true, 1, 4, 52, Set.of());
     var displaced = new RedevelopmentAlternatives.Evaluated(original.choice(),
         new BuildingImpact.Redevelopment(FARM_GAIN, original.impact().services(), 3, 0, 1), true);
     var moreHousing = new RedevelopmentAlternatives.Evaluated(original.choice(),
@@ -98,7 +98,7 @@ class RedevelopmentAlternativesTest {
   private static RedevelopmentAlternatives.Evaluated option(String target, Optional<UUID> source,
       boolean affordable, int removed, int logs, int work, Set<String> lost) {
     List<Building> victims = java.util.stream.IntStream.range(0, removed)
-        .mapToObj(index -> new Building("well_plains_1", Rotation.NONE)).toList();
+        .mapToObj(index -> new Building("well_birch_forest_1", Rotation.NONE)).toList();
     RedevelopmentPlan plan = new RedevelopmentPlan(UUID.randomUUID(), target,
         source.isPresent() ? ConstructionMode.UPGRADE : ConstructionMode.FRESH, source, 0, Rotation.NONE, 0,
         victims, List.of(), List.of(new MaterialAmount(Items.OAK_LOG, logs)), List.of(),

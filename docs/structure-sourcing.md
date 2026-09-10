@@ -136,7 +136,8 @@ current lithostitched), and it turned out not to matter.
 
 ### Known defect: a definition can promise what its structure does not contain
 
-`village_center_plains_1.nbt`, as first captured, held eight block types and **no bed,
+`village_center_plains_1.nbt` (the original centre, retired with the old families on
+2026-09-10), as first captured, held eight block types and **no bed,
 chest, campfire, bell, door or torch**, while its definition promised four beds and a
 container. Nothing detects this: the simulation reads bed and container COORDINATES from
 the JSON, so the village cheerfully reported four free beds and villagers walked to bare

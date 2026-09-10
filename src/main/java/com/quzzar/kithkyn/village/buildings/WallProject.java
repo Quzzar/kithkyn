@@ -33,7 +33,7 @@ public final class WallProject {
       Codec.LONG.listOf().optionalFieldOf("tower_exclusions", List.of())
           .forGetter(wall -> List.copyOf(wall.towerExclusions)),
       Codec.INT.listOf().optionalFieldOf("ground", List.of()).forGetter(wall -> wall.ground),
-      Codec.STRING.optionalFieldOf("style", VillageStyle.PLAINS.id())
+      Codec.STRING.optionalFieldOf("style", VillageStyle.DEFAULT.id())
           .forGetter(wall -> wall.style.id()),
       Codec.STRING.fieldOf("tier").forGetter(wall -> wall.tier.name()),
       Codec.INT.optionalFieldOf("cursor", 0).forGetter(WallProject::legacyCursor),
@@ -68,10 +68,6 @@ public final class WallProject {
   private final transient Map<UUID, Claim> claimsByBuilder = new HashMap<>();
   private final transient Map<Integer, UUID> buildersBySection = new HashMap<>();
   private final transient Map<Integer, Long> retryAfter = new HashMap<>();
-
-  public WallProject(List<Long> ring, Set<Long> gates, List<Integer> ground, WallTier tier) {
-    this(ring, gates, ground, tier, VillageStyle.PLAINS);
-  }
 
   public WallProject(List<Long> ring, Set<Long> gates, List<Integer> ground, WallTier tier,
       VillageStyle style) {
@@ -113,11 +109,6 @@ public final class WallProject {
   }
 
   /** A wall recorded as fully built, used by the instant dev preview. */
-  public static WallProject completed(List<Long> ring, Set<Long> gates, List<Integer> ground,
-      WallTier tier) {
-    return completed(ring, gates, ground, tier, VillageStyle.PLAINS);
-  }
-
   public static WallProject completed(List<Long> ring, Set<Long> gates, List<Integer> ground,
       WallTier tier, VillageStyle style) {
     return new WallProject(ring, gates, ground, style, tier,

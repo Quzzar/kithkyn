@@ -52,6 +52,6 @@ class GatheringPlacesTest {
 
   private static BuildingInfo definition(String fields) {
     return BuildingInfo.CODEC.parse(JsonOps.INSTANCE, JsonParser.parseString(
-        "{\"structure\":\"village_center_plains_1\"," + fields + "}")).getOrThrow();
+        "{\"structure\":\"village_center_birch_forest_1\"," + fields + "}")).getOrThrow();
   }
 }

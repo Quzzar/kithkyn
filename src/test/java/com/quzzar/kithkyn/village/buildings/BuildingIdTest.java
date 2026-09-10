@@ -60,8 +60,8 @@ class BuildingIdTest {
 
   @Test
   void incompleteOrNonnumericIdsStayMalformed() {
-    for (String id : new String[] {"house", "house_1", "house_birch_forest_", "house_plains_large",
-        "house_plains_1__", "house_plains_1__large__house", "house_plains_1__large_"}) {
+    for (String id : new String[] {"house", "house_1", "house_birch_forest_", "house_birch_forest_large",
+        "house_birch_forest_1__", "house_birch_forest_1__large__house", "house_birch_forest_1__large_"}) {
       assertFalse(new BuildingInfo(id).hasWellFormedId(), id);
       assertNotNull(new BuildingInfo(id).validate(), id);
     }
@@ -91,13 +91,13 @@ class BuildingIdTest {
   @Test
   void standaloneIsExplicitAndCannotContradictAnUpgradePath() {
     assertNotNull(decode("""
-        {"structure":"house_plains_2__courtyard"}
+        {"structure":"house_birch_forest_2__courtyard"}
         """).validate());
     assertNotNull(decode("""
-        {"structure":"house_plains_2", "standalone":true, "upgrades_from":"house_plains_1"}
+        {"structure":"house_birch_forest_2", "standalone":true, "upgrades_from":"house_birch_forest_1"}
         """).validate());
     BuildingInfo canonical = decode("""
-        {"structure":"house_plains_2", "standalone":true}
+        {"structure":"house_birch_forest_2", "standalone":true}
         """);
     assertNull(canonical.validate());
     assertNull(canonical.getDesign());

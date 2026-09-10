@@ -30,12 +30,6 @@ class BuildingEntranceTest {
   }
 
   @Test
-  void unmodifiedCatalogsKeepTheirOriginalDoorDirections() throws Exception {
-    assertEquals(Direction.NORTH, definition("mine_plains_1").getEntranceFacing());
-    assertEquals(Direction.SOUTH, definition("storehouse_plains_1").getEntranceFacing());
-  }
-
-  @Test
   void buildingFrontsUseThePublicApproachInsteadOfTheOldNorthDefaultOrInwardDoorState() throws Exception {
     for (String category : new String[]{"house", "couple_cottage", "bakery", "blacksmith", "butchery",
         "church", "fishery", "hunting_lodge", "stoneworks", "watchtower", "market"}) {
@@ -46,11 +40,6 @@ class BuildingEntranceTest {
     assertEquals(Direction.NORTH, definition("market_birch_forest_2").getEntranceFacing());
     assertEquals(Direction.SOUTH, definition("market_birch_forest_3").getEntranceFacing());
     assertEquals(Direction.SOUTH, definition("watchtower_birch_forest_2").getEntranceFacing());
-    for (String style : new String[]{"plains", "taiga", "snowy", "desert", "savanna"}) {
-      for (int level = 1; level <= 3; level++) {
-        assertEquals(Direction.WEST, definition("house_" + style + "_" + level).getEntranceFacing());
-      }
-    }
   }
 
   @Test

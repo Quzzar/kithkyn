@@ -73,7 +73,7 @@ class TownLayoutTest {
     var center = new TownLayout.Origin(-100, -200);
     var local = new TownLayout.Footprint(-8, 3, -2, 7);
     var anchor = new TownLayout.Footprint(-110, -210, -90, -190);
-    var info = new BuildingInfo("storehouse_plains_1");
+    var info = new BuildingInfo("storehouse_birch_forest_1");
     for (Direction side : Direction.Plane.HORIZONTAL) {
       var placed = local.moved(TownLayout.frontageOrigins(anchor, local, 2, side).getFirst());
       Rotation inward = info.rotationFacing(side.getOpposite());

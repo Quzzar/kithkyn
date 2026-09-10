@@ -83,7 +83,7 @@ public class Village {
           .forGetter(v -> new ActiveProjects(Optional.ofNullable(v.currentProject), Optional.ofNullable(v.wallProject),
               v.lastBuildCompletedTime, List.copyOf(v.recentBuilds))),
       UUIDUtil.CODEC.listOf().fieldOf("people").forGetter(v -> List.copyOf(v.people)),
-      Building.CODEC.listOf().fieldOf("buildings").forGetter(v -> List.copyOf(v.buildings.values())),
+      Building.CODEC.listOf().fieldOf("buildings").forGetter(Village::savedBuildings),
       Codec.unboundedMap(UUIDUtil.STRING_CODEC, JobAssignment.CODEC).fieldOf("job_assignments").forGetter(v -> Map.copyOf(v.jobAssignments)),
       Codec.unboundedMap(UUIDUtil.STRING_CODEC, BedAssignment.CODEC).fieldOf("bed_assignments").forGetter(v -> Map.copyOf(v.bedAssignments)),
       JobAssignment.CODEC.listOf().fieldOf("unassigned_jobs").forGetter(v -> List.copyOf(v.unassignedJobs)),
@@ -199,11 +199,11 @@ public class Village {
     village.lastBuildCompletedTime = project.lastBuildCompletedTime();
     village.recentBuilds.addAll(project.recentBuilds());
     village.people = new ArrayList<>(people);
-    buildings.forEach(b -> village.buildings.put(b.getUUID(), b));
     village.jobAssignments = new HashMap<>(jobAssignments);
     village.bedAssignments = new HashMap<>(bedAssignments);
     village.unassignedJobs = new ArrayList<>(unassignedJobs);
     village.unassignedBeds = new ArrayList<>(unassignedBeds);
+    village.adoptSavedBuildings(buildings);
     village.tierId = tierId;
     village.pendingArrivals = new ArrayList<>(travelers.arrivals());
     village.pendingDepartures = new ArrayList<>(travelers.departures());
@@ -353,6 +353,13 @@ public class Village {
 
   private ArrayList<UUID> people;
   private HashMap<UUID, Building> buildings;
+  /**
+   * Saved buildings no loaded definition describes: their family was removed
+   * from the jar, or the datapack that supplies it is not installed. They stay
+   * in the save exactly as written, so a restored datapack brings them back,
+   * while the running village treats them as absent ({@link #adoptSavedBuildings}).
+   */
+  private final HashMap<UUID, Building> unresolvedBuildings = new HashMap<>();
   private HashMap<UUID, JobAssignment> jobAssignments;
   private HashMap<UUID, BedAssignment> bedAssignments;
 
@@ -408,8 +415,9 @@ public class Village {
 
   /**
    * The regional family this village builds in, fixed at founding from the
-   * biome (docs/buildings.md). Villages saved before styles existed read as
-   * plains, which is what they were built in.
+   * biome (docs/buildings.md). A saved style that no longer exists, like the
+   * removed Village Life families, reads as the bundled default; the buildings
+   * it raised are kept aside as absent ({@link #adoptSavedBuildings}).
    */
   public VillageStyle getStyle() {
     return VillageStyle.fromId(brain.getStrategy().getString(STYLE_KEY));
@@ -456,7 +464,7 @@ public class Village {
 
     BuildingInfo centerInfo = Buildings.resolve(Buildings.VILLAGE_CENTER_CATEGORY, 1, getStyle());
     if (centerInfo == null) {
-      Kithkyn.LOGGER.error("No village center is loaded for the {} style or for plains; cannot found a village", getStyle().id());
+      Kithkyn.LOGGER.error("No village center is loaded for the {} style; cannot found a village", getStyle().id());
       return java.util.Optional.empty();
     }
 
@@ -604,7 +612,12 @@ public class Village {
   /** The town's civic anchor, independent of how many campfires its center contains. */
   public BlockPos getCenterPosition() {
     Building center = getTownCenter();
-    if (center == null || center.getInfo() == null) return BlockPos.ZERO;
+    if (center == null || center.getInfo() == null) {
+      // A centre whose definition is gone still marks where the village stands,
+      // so its residents keep gathering at the old campfire rather than at 0,0.
+      Building lost = townCenterUUID == null ? null : unresolvedBuildings.get(townCenterUUID);
+      return lost == null ? BlockPos.ZERO : BlockPos.of(lost.getCenterLocation());
+    }
     BlockPos offset = center.getInfo().getMeetingPoint();
     return offset == null ? BlockPos.of(center.getCenterLocation()) : buildingWorldPos(center, offset);
   }
@@ -1360,8 +1373,10 @@ public class Village {
       // Nothing can be sited on ground that is not loaded, and asking the brain
       // to choose would spend a model call on an answer no one can act on. A
       // village out of everyone's sight waits instead of planning.
+      // A village whose centre is absent, because its definition is gone, has
+      // nowhere to anchor a site search and plans nothing at all.
       Building centre = getTownCenter();
-      if (level != null && centre != null
+      if (centre == null || level != null
           && !level.hasChunkAt(BlockPos.of(centre.getCenterLocation()))) {
         return;
       }
@@ -2151,6 +2166,10 @@ public class Village {
 
   @Nullable
   private RealPerson tryEmigration() {
+    // A village whose centre is absent has no edge to walk out to; nobody leaves it.
+    if (getTownCenter() == null) {
+      return null;
+    }
     // Idle adults give up first, then employed adults. A spouse and every
     // dependent child form one departure group, so emigration never strands a
     // child or splits a married household.
@@ -3282,6 +3301,46 @@ public class Village {
 
   public Building getBuilding(UUID buildingUUID) {
     return buildings.get(buildingUUID);
+  }
+
+  /** Every building the save carries: the ones in play and the ones kept aside for a missing definition. */
+  private List<Building> savedBuildings() {
+    List<Building> all = new ArrayList<>(buildings.values());
+    all.addAll(unresolvedBuildings.values());
+    return all;
+  }
+
+  /**
+   * Sorts a save's buildings into the ones a loaded definition describes and
+   * the ones none does. A definition can be gone for good (the old Village Life
+   * families were removed from the jar) or merely absent tonight (a private
+   * datapack not installed). Either way the village runs without those
+   * buildings: no beds, jobs or footprint come from them, the assignments that
+   * pointed at them are released, and a project raising one is dropped because
+   * its recipe and template are unknowable. The records themselves stay in the
+   * save so a restored datapack brings the buildings back. Logged once per load.
+   */
+  private void adoptSavedBuildings(List<Building> saved) {
+    for (Building building : saved) {
+      if (building.getInfo() == null) {
+        unresolvedBuildings.put(building.getUUID(), building);
+      } else {
+        buildings.put(building.getUUID(), building);
+      }
+    }
+    if (!unresolvedBuildings.isEmpty()) {
+      Kithkyn.LOGGER.warn("Village '{}' has {} saved building(s) with no loaded definition and treats them as absent: {}",
+          name, unresolvedBuildings.size(),
+          String.join(", ", unresolvedBuildings.values().stream().map(Building::getName).sorted().toList()));
+      for (UUID missing : unresolvedBuildings.keySet()) {
+        brain.removeBuilding(missing, buildings, bedAssignments, jobAssignments, unassignedBeds, unassignedJobs);
+      }
+    }
+    if (currentProject != null && currentProject.getBuilding().getInfo() == null) {
+      Kithkyn.LOGGER.warn("Village '{}' dropped its project for '{}': no loaded definition describes it",
+          name, currentProject.getBuilding().getName());
+      currentProject = null;
+    }
   }
 
   public Building getTownCenter() {

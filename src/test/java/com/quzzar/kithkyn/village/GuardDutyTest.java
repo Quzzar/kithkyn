@@ -152,7 +152,7 @@ class GuardDutyTest {
   void stationDutyOverridesTheBuildingWideRangedDefault() {
     BuildingInfo info = BuildingInfo.CODEC.parse(JsonOps.INSTANCE, JsonParser.parseString("""
         {
-          "structure":"watchtower_plains_1",
+          "structure":"watchtower_birch_forest_1",
           "grants":["RANGED_GUARD_POSTS"],
           "work_stations":[
             {"pos":[1,1,1],"occupation":"GUARD","guard_duty":"PATROL"},
@@ -170,8 +170,8 @@ class GuardDutyTest {
   private static BuildingInfo definition(boolean ranged) {
     return BuildingInfo.CODEC.parse(JsonOps.INSTANCE, JsonParser.parseString("""
         {
-          "structure": "watchtower_plains_2",
-          "upgrades_from": "watchtower_plains_1",
+          "structure": "watchtower_birch_forest_2",
+          "upgrades_from": "watchtower_birch_forest_1",
           "work_stations": [
             {"pos": [1,1,1], "occupation": "BAKER"},
             {"pos": [3,8,4], "occupation": "GUARD"},

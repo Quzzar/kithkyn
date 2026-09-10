@@ -21,27 +21,6 @@ record WallPalette(Block post, Block deck, Block stairs, Block slab,
       case BADLANDS -> new WallPalette(
           Blocks.SMOOTH_RED_SANDSTONE, Blocks.SMOOTH_RED_SANDSTONE, Blocks.SMOOTH_RED_SANDSTONE_STAIRS,
           Blocks.SMOOTH_RED_SANDSTONE_SLAB, Blocks.RED_SANDSTONE_WALL, Blocks.OAK_TRAPDOOR);
-      case TAIGA, SNOWY -> new WallPalette(
-          Blocks.STRIPPED_SPRUCE_LOG,
-          Blocks.SPRUCE_PLANKS,
-          Blocks.SPRUCE_STAIRS,
-          Blocks.SPRUCE_SLAB,
-          Blocks.SPRUCE_FENCE,
-          Blocks.SPRUCE_TRAPDOOR);
-      case SAVANNA -> new WallPalette(
-          Blocks.STRIPPED_ACACIA_LOG,
-          Blocks.ACACIA_PLANKS,
-          Blocks.ACACIA_STAIRS,
-          Blocks.ACACIA_SLAB,
-          Blocks.ACACIA_FENCE,
-          Blocks.ACACIA_TRAPDOOR);
-      case PLAINS -> new WallPalette(
-          Blocks.STRIPPED_OAK_LOG,
-          Blocks.OAK_PLANKS,
-          Blocks.OAK_STAIRS,
-          Blocks.OAK_SLAB,
-          Blocks.OAK_FENCE,
-          Blocks.OAK_TRAPDOOR);
     };
   }
 
