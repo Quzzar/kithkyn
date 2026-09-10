@@ -65,7 +65,7 @@ public final class ForageChopStep implements BlockWorkStep {
       for (int y = -VERTICAL_RANGE; y <= VERTICAL_RANGE; y++) {
         for (int z = -RANGE; z <= RANGE; z++) {
           cursor.setWithOffset(here, x, y, z);
-          if (!TreeFelling.isFellableLog(level, cursor)) {
+          if (!TreeFelling.isFellableWood(level, cursor)) {
             continue;
           }
           double distance = cursor.distSqr(here);
