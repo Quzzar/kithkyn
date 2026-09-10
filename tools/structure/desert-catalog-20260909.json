@@ -33,7 +33,7 @@
       "manifest": "tools/structure/desert-houses-20260909.json",
       "recipe": "house_3",
       "asset_sha256": "ca1b3bee7c5f77e1c10f2db416135fe638506816bf114928408af50d525e51ee",
-      "definition_sha256": "393844ec2082a23110607a09ffbd8e0906e9bbd3cca978c1dad84fcf9656d68d",
+      "definition_sha256": "34206d6e0182a928ea97d28c532ab827b1866f3fdaf567852e4e901b9e4425f3",
       "source_mod": "[Neoforge]ctov-3.6.3.jar",
       "source_mod_structure": "data/ctov/structure/village/desert_oasis/house/big_2.nbt",
       "reviewed_neutral": "run/pueblo-showcase/desert-houses-approved-20260909-213200/neutral/D05.3.nbt",
@@ -69,7 +69,7 @@
       "manifest": "tools/structure/desert-houses-20260909.json",
       "recipe": "house_1",
       "asset_sha256": "2c4768383f08af13a46ed602561143d369dd7529c79681c133f8ad795e51ef07",
-      "definition_sha256": "bd12d30baa465f1dbbc742b261f72412aceabf2a0274d813f443ca46b019842f",
+      "definition_sha256": "6b0987ec78fbc24ac12cf1dfb5c7f82446c1d0900db054222426a8bd3ad4c265",
       "source_mod": "[Neoforge]ctov-3.6.3.jar",
       "source_mod_structure": "data/ctov/structure/village/desert_oasis/house/small_1.nbt",
       "reviewed_neutral": "run/pueblo-showcase/desert-houses-approved-20260909-213200/neutral/D05.6.nbt",
@@ -81,7 +81,7 @@
       "manifest": "tools/structure/desert-houses-20260909.json",
       "recipe": "house_1",
       "asset_sha256": "20b6be8658ce1c91f21eda4cbda0eb824ccfe329ac592de2afc66f15b7619d30",
-      "definition_sha256": "b9ab975d89b2af5f4250a86c7153298daf5229485170bd2802ce1186345f8a8a",
+      "definition_sha256": "058226e0a4810d8a6d4d77d215aeab1e9c38f7c1725c9a81da0baf888a3db327",
       "source_mod": "[Neoforge]ctov-3.6.3.jar",
       "source_mod_structure": "data/ctov/structure/village/desert_oasis/house/small_2.nbt",
       "reviewed_neutral": "run/pueblo-showcase/desert-houses-approved-20260909-213200/neutral/D05.7.nbt",
@@ -93,7 +93,7 @@
       "manifest": "tools/structure/desert-houses-20260909.json",
       "recipe": "house_1",
       "asset_sha256": "058846d69f754b3d8ef395fca6947f75c440f9391ba60b77074a11e727301983",
-      "definition_sha256": "401a5330f1c4effdf39b88a99ac112576d2d8a69d2a3d0d92b0d988b8f3a0db1",
+      "definition_sha256": "cc1168318a5ef61b90de8dff92ab99fd6ace589fa0517036d2da95bfd3f5744b",
       "source_mod": "[Neoforge]ctov-3.6.3.jar",
       "source_mod_structure": "data/ctov/structure/village/desert_oasis/house/small_3.nbt",
       "reviewed_neutral": "run/pueblo-showcase/desert-houses-approved-20260909-213200/neutral/D05.8.nbt",
@@ -105,7 +105,7 @@
       "manifest": "tools/structure/desert-houses-20260909.json",
       "recipe": "house_1",
       "asset_sha256": "86c1578049d828afd6a4c5820be44469fe0684d022541ef0d13a777928832260",
-      "definition_sha256": "68016692f2ccad7ab0bb0ffa18902c3e9569bf27ead1ea12220a3c9df89d915d",
+      "definition_sha256": "fa1aa3f9eef60cd6bb50cbd932a99e22742a74d0870173c162910a5fbcfb02fd",
       "source_mod": "[Neoforge]ctov-3.6.3.jar",
       "source_mod_structure": "data/ctov/structure/village/desert_oasis/house/small_4.nbt",
       "reviewed_neutral": "run/pueblo-showcase/desert-houses-approved-20260909-213200/neutral/D06.1.nbt",
@@ -117,7 +117,7 @@
       "manifest": "tools/structure/desert-houses-20260909.json",
       "recipe": "house_1",
       "asset_sha256": "4788c299ffb0e3ca973945bd0fa0636df440859ba365e648fe97f086b1b5f04b",
-      "definition_sha256": "730ffdf7396ce3f75dd1068ad7520b5d6c931a3c9cf8737c4ec221ce864d9577",
+      "definition_sha256": "56694afecf6b816dbbf5573c15fe71f490bf7c5b0bd97268611901e38b0f218e",
       "source_mod": "[Neoforge]ctov-3.6.3.jar",
       "source_mod_structure": "data/ctov/structure/village/desert_oasis/house/small_5.nbt",
       "reviewed_neutral": "run/pueblo-showcase/desert-houses-approved-20260909-213200/neutral/D06.2.nbt",
@@ -129,7 +129,7 @@
       "manifest": "tools/structure/desert-houses-20260909.json",
       "recipe": "house_1",
       "asset_sha256": "55f13c127f8f1e3630c16699f9b9fdcd8c20eeecae5e094b479f5fa049ef39ca",
-      "definition_sha256": "c4137bd4edd1558e0f74a829892b0b9caa784343a8aa8748b7ebd2d1c9c41a44",
+      "definition_sha256": "1b1ec0ec0e45d5d05420ad75a2763a43309de894cf41a77e8f2a99766160b130",
       "source_mod": "[Neoforge]ctov-3.6.3.jar",
       "source_mod_structure": "data/ctov/structure/village/desert_oasis/house/small_6.nbt",
       "reviewed_neutral": "run/pueblo-showcase/desert-houses-approved-20260909-213200/neutral/D06.3.nbt",
@@ -318,7 +318,7 @@
       "manifest": "tools/structure/desert-tavern-adoption-20260910.json",
       "recipe": "couple_cottage_1",
       "asset_sha256": "6bf1519d79a6460b15385e14bf96934aca04e7e00f9631ceb83c6cd8da695483",
-      "definition_sha256": "0fb1f8624dbacee8a0dd7c8a0577bd1d30e33908535bbdcd85ac95d82f361af3",
+      "definition_sha256": "38268c9aab8348c348136cda95b46432b20e47eb8c3c12baeb492edb83332d56",
       "source_mod": "[Neoforge]ctov-3.6.3.jar",
       "source_mod_structure": "data/ctov/structure/village/desert_oasis/house/big_1.nbt",
       "reviewed_neutral": "run/desert-integration/tavern-adoption-20260910/neutral/D05.2.nbt",
@@ -437,5 +437,22 @@
     "latest_castle_update": "run/castle-merchant-20260910/deployment.json"
   },
   "recipe_catalog": "src/main/resources/data/kithkyn/kithkyn/construction_recipes",
-  "market_color_policy": "Market tent fabrics and decorative banners retain their original authored colors, independent of village identity; regional timber, masonry and plants may change."
+  "market_color_policy": "Market tent fabrics and decorative banners retain their original authored colors, independent of village identity; regional timber, masonry and plants may change.",
+  "revisions": [
+    {
+      "date": "2026-09-10",
+      "structures": [
+        "couple_cottage_desert_1",
+        "house_desert_1",
+        "house_desert_1__small_house_2",
+        "house_desert_1__small_house_3",
+        "house_desert_1__small_house_4",
+        "house_desert_1__small_house_5",
+        "house_desert_1__small_house_6",
+        "house_desert_3"
+      ],
+      "change": "sink -1",
+      "note": "Seated one block low: a doorstep stair sat level with the ground (tools/structure/seating-check.py). Raised onto the ground; existing buildings keep their seat."
+    }
+  ]
 }

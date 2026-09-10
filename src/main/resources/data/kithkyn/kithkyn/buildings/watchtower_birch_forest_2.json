@@ -44,7 +44,7 @@
     "PROTECTION",
     "RANGED_GUARD_POSTS"
   ],
-  "sink": 0,
+  "sink": -1,
   "village_identity": {
     "primary_blocks": [
       [

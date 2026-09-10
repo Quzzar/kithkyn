@@ -263,7 +263,7 @@
       "asset": "run/badlands-integration/datapack/data/kithkyn/structure/storehouse_badlands_1.nbt",
       "asset_sha256": "5db23d691b64ac6b5fff93844d0e92fdd69a838e1db8785fe5a30055b726e403",
       "definition": "run/badlands-integration/datapack/data/kithkyn/kithkyn/buildings/storehouse_badlands_1.json",
-      "definition_sha256": "bd16c5352da04a6b745e5c8b38dffe0cae1d5a382353c1b6386f0c120b7cd60d",
+      "definition_sha256": "ed8c546fb189bf452c3796f521afb9e2c562001951f3f07ead201fbf682f5314",
       "reviewed_neutral": "run/pueblo-showcase/services-approved-20260909-183601/neutral/P08.7.nbt",
       "reviewed_neutral_sha256": "2b4f5fd74f7510004cb910a181ae3ee36bb85b43ff05b6c0381100314c7f85e1"
     },
@@ -375,7 +375,7 @@
       "asset": "run/badlands-integration/datapack/data/kithkyn/structure/bakery_badlands_1.nbt",
       "asset_sha256": "a6f0baab3495b81ad79bb297dcc31418108be8445c1b4449af81280c735b1b54",
       "definition": "run/badlands-integration/datapack/data/kithkyn/kithkyn/buildings/bakery_badlands_1.json",
-      "definition_sha256": "e3bd44bc63d37b048fbd157317111ebe3b714d504a32ef549ed62fc8154a428a",
+      "definition_sha256": "0bdc0a318f986b12faf3515c9643555fc11cf8180056dc3f7a039779b56a6c60",
       "reviewed_neutral": "run/pueblo-showcase/services-approved-20260909-183601/neutral/P09.5.nbt",
       "reviewed_neutral_sha256": "844a3ffd29b32ada9fe909fa61690269819facb3b3ab9add9abf4fcb175ef17c"
     },
@@ -389,7 +389,7 @@
       "asset": "run/badlands-integration/datapack/data/kithkyn/structure/tavern_badlands_1.nbt",
       "asset_sha256": "78822ed4342a3da19ad0cb62394eb7aa6f585479101efe97d06d86f81b87de03",
       "definition": "run/badlands-integration/datapack/data/kithkyn/kithkyn/buildings/tavern_badlands_1.json",
-      "definition_sha256": "c82b4efa5262b561f81ac73c13bd6b0b1b940c191761f3cdd81cf2384ead11ae",
+      "definition_sha256": "07d3d53797b71f27c7834f4443d53775daa835ff5f0eabf4c0fdc86e298ba9af",
       "reviewed_neutral": "run/pueblo-showcase/services-approved-20260909-183601/neutral/P08.2.nbt",
       "reviewed_neutral_sha256": "7e00da1934bb049f07ef7a2fe95bfce6b2ac2967275f965f023028e4954247f0"
     },
@@ -431,7 +431,7 @@
       "asset": "run/badlands-integration/datapack/data/kithkyn/structure/mine_badlands_1.nbt",
       "asset_sha256": "f9c4d3ab15bda3776dea206cf02b90518b1a768f7a18e4c0b8dd689110224513",
       "definition": "run/badlands-integration/datapack/data/kithkyn/kithkyn/buildings/mine_badlands_1.json",
-      "definition_sha256": "14c3f856bfab631ab482e15903256773e37571c3783d55bc7200f4f8c0e0c540",
+      "definition_sha256": "45574cd0cc739c699cc900f7f38a0f0ca83f3afcdd9c45eae9c9f6f14a350442",
       "reviewed_neutral": "run/pueblo-showcase/workplaces-approved-20260909-181024/neutral/P11.5.nbt",
       "reviewed_neutral_sha256": "074f64976c569c3d9ab09664ac2658965913fc8d2b90c8151c154c72019baed1"
     }
@@ -454,5 +454,18 @@
     "catalog_update": "tools/structure/desert-temple-tower-adoption-20260910.json",
     "installed_files": 61
   },
-  "market_color_policy": "Market tent fabrics and decorative banners retain their original authored colors, independent of village identity; regional timber, masonry and plants may change."
+  "market_color_policy": "Market tent fabrics and decorative banners retain their original authored colors, independent of village identity; regional timber, masonry and plants may change.",
+  "revisions": [
+    {
+      "date": "2026-09-10",
+      "structures": [
+        "storehouse_badlands_1",
+        "mine_badlands_1",
+        "bakery_badlands_1",
+        "tavern_badlands_1"
+      ],
+      "change": "sink -1",
+      "note": "Seated one block low: a doorstep stair sat level with the ground (tools/structure/seating-check.py). Raised onto the ground; existing buildings keep their seat."
+    }
+  ]
 }

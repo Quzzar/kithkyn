@@ -216,3 +216,14 @@ mouth in these original families; `mine_entrance` can override that frame), and 
 is placed so the two ramps never meet. The level-2 mine has been
 validated and rendered offline only; the gallery and a real upgrade in a live village are the
 checks still owed.
+
+## Seating check
+
+A template's layer 0 replaces the terrain's top block; `sink` buries that many more layers and
+`-1` lifts layer 0 onto the ground. The tell for a building seated one block low is a doorstep
+stair swallowed by the ground: a bottom-half stair in the layer that meets the surface. Run
+`tools/structure/seating-check.py <data-root>...` over a pack before activating it; a floor
+layer with such a stair wants `sink: -1`, while a farm's or plaza's edging stairs in a ground
+course are a judgement call. The Badlands storehouse, mine, bakery and tavern, the Desert
+small houses and couple cottage, and the Birch mine and second watchtower were raised this way
+on 2026-09-10; buildings already standing keep their seat.
