@@ -33,10 +33,10 @@
   },
   "preservation": "The style, dry-biome and jungle galleries retain their current geometry and edits.",
   "counts": {
-    "exhibits": 203,
-    "rows": 27,
+    "exhibits": 213,
+    "rows": 29,
     "wings": 6,
-    "nativeCheckedBlocks": 47214,
+    "nativeCheckedBlocks": 49625,
     "families": {
       "tt_nilotic": 12,
       "tt_nilotic_tower": 1,
@@ -71,6 +71,10 @@
     {
       "datapack": "run/world/datapacks/kithkyn-desert",
       "note": "private approved datapack; per-file hashes are on the entries"
+    },
+    {
+      "datapack": "src/main/resources/data/kithkyn",
+      "note": "private approved datapack; per-file hashes are on the entries"
     }
   ],
   "selection": {
@@ -100,12 +104,14 @@
       "letter": "NA",
       "title": "NILOTIC VILLAGE",
       "x": 6569,
-      "endZ": 1139,
+      "endZ": 1193,
       "rows": [
         "NA01",
         "NA02",
         "NA03",
-        "NA04"
+        "NA04",
+        "NA05",
+        "NA06"
       ]
     },
     {
@@ -4187,6 +4193,218 @@
             15,
             6,
             17
+          ]
+        }
+      ]
+    },
+    {
+      "id": "NA05",
+      "title": "Wall Drafts, mud brick masonry",
+      "family": "wall_drafts_mud",
+      "mod": "Kithkyn",
+      "origin": [
+        6576,
+        230,
+        1151
+      ],
+      "bounds": [
+        6567,
+        228,
+        1143,
+        6661,
+        241,
+        1160
+      ],
+      "entries": [
+        {
+          "id": "NA05.1",
+          "label": "Straight",
+          "source": "src/main/resources/data/kithkyn/structure/wall/wood/straight.nbt",
+          "sourceJar": "kithkyn",
+          "sourceSha256": "157899d57a90d12c69d7b5db302919d494e0e94efd9c52dc4d81b691a070d8e5",
+          "origin": [
+            6576,
+            230,
+            1151
+          ],
+          "size": [
+            7,
+            8,
+            1
+          ]
+        },
+        {
+          "id": "NA05.2",
+          "label": "Diagonal",
+          "source": "src/main/resources/data/kithkyn/structure/wall/wood/diagonal.nbt",
+          "sourceJar": "kithkyn",
+          "sourceSha256": "b4cb27e0e8b817fe88e9a882638186adc1f5e2678ad17a060f5c9e81e9e8e1f3",
+          "origin": [
+            6591,
+            230,
+            1151
+          ],
+          "size": [
+            7,
+            8,
+            7
+          ]
+        },
+        {
+          "id": "NA05.3",
+          "label": "Terrace",
+          "source": "src/main/resources/data/kithkyn/structure/wall/wood/terrace.nbt",
+          "sourceJar": "kithkyn",
+          "sourceSha256": "aca98a586336c5145470b0b422a7d15ce576150187173c9a3dbdf2a518b83d8e",
+          "origin": [
+            6606,
+            230,
+            1151
+          ],
+          "size": [
+            8,
+            9,
+            1
+          ]
+        },
+        {
+          "id": "NA05.4",
+          "label": "Corner Tower",
+          "source": "src/main/resources/data/kithkyn/structure/wall/wood/corner_tower.nbt",
+          "sourceJar": "kithkyn",
+          "sourceSha256": "73c76b6c1162778a06895121cdd0b93c3e980809cf900a0420603b0e40702779",
+          "origin": [
+            6622,
+            230,
+            1151
+          ],
+          "size": [
+            12,
+            8,
+            6
+          ]
+        },
+        {
+          "id": "NA05.5",
+          "label": "Gatehouse",
+          "source": "src/main/resources/data/kithkyn/structure/wall/wood/gatehouse.nbt",
+          "sourceJar": "kithkyn",
+          "sourceSha256": "f291a1e5b56dce5d22d95842ea21b31f465ec9b5423472065e681a56af5ba89f",
+          "origin": [
+            6642,
+            230,
+            1151
+          ],
+          "size": [
+            17,
+            8,
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "id": "NA06",
+      "title": "Wall Drafts, mangrove wood",
+      "family": "wall_drafts_wood",
+      "mod": "Kithkyn",
+      "origin": [
+        6576,
+        230,
+        1178
+      ],
+      "bounds": [
+        6567,
+        228,
+        1170,
+        6661,
+        241,
+        1187
+      ],
+      "entries": [
+        {
+          "id": "NA06.1",
+          "label": "Straight",
+          "source": "src/main/resources/data/kithkyn/structure/wall/wood/straight.nbt",
+          "sourceJar": "kithkyn",
+          "sourceSha256": "157899d57a90d12c69d7b5db302919d494e0e94efd9c52dc4d81b691a070d8e5",
+          "origin": [
+            6576,
+            230,
+            1178
+          ],
+          "size": [
+            7,
+            8,
+            1
+          ]
+        },
+        {
+          "id": "NA06.2",
+          "label": "Diagonal",
+          "source": "src/main/resources/data/kithkyn/structure/wall/wood/diagonal.nbt",
+          "sourceJar": "kithkyn",
+          "sourceSha256": "b4cb27e0e8b817fe88e9a882638186adc1f5e2678ad17a060f5c9e81e9e8e1f3",
+          "origin": [
+            6591,
+            230,
+            1178
+          ],
+          "size": [
+            7,
+            8,
+            7
+          ]
+        },
+        {
+          "id": "NA06.3",
+          "label": "Terrace",
+          "source": "src/main/resources/data/kithkyn/structure/wall/wood/terrace.nbt",
+          "sourceJar": "kithkyn",
+          "sourceSha256": "aca98a586336c5145470b0b422a7d15ce576150187173c9a3dbdf2a518b83d8e",
+          "origin": [
+            6606,
+            230,
+            1178
+          ],
+          "size": [
+            8,
+            9,
+            1
+          ]
+        },
+        {
+          "id": "NA06.4",
+          "label": "Corner Tower",
+          "source": "src/main/resources/data/kithkyn/structure/wall/wood/corner_tower.nbt",
+          "sourceJar": "kithkyn",
+          "sourceSha256": "73c76b6c1162778a06895121cdd0b93c3e980809cf900a0420603b0e40702779",
+          "origin": [
+            6622,
+            230,
+            1178
+          ],
+          "size": [
+            12,
+            8,
+            6
+          ]
+        },
+        {
+          "id": "NA06.5",
+          "label": "Gatehouse",
+          "source": "src/main/resources/data/kithkyn/structure/wall/wood/gatehouse.nbt",
+          "sourceJar": "kithkyn",
+          "sourceSha256": "f291a1e5b56dce5d22d95842ea21b31f465ec9b5423472065e681a56af5ba89f",
+          "origin": [
+            6642,
+            230,
+            1178
+          ],
+          "size": [
+            17,
+            8,
+            5
           ]
         }
       ]
