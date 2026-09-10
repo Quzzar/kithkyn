@@ -205,34 +205,34 @@
       "source_mod_structure": "data/kaisyn/structure/village/exclusives/nilotic/houses/nilotic_armorer_1.nbt",
       "source_mod_structure_sha256": "90cea19d28a163acc3b1bae2020a979fa2727738269d0c23ae42ef51420abf9d",
       "source_capture": "run/nilotic-showcase/selection-20260910-floodplain/captures/NA01.2.nbt",
-      "source_capture_sha256": "e0e431c2d95541390431579ad67c5f17c306ceedfc2c64022e251e0c6c2d2371",
+      "source_capture_sha256": "753aeb973aa7eaabecfcdba580b30449e78231b155a3f5ad0670fcc45adb6ed1",
       "gallery_origin": [
-        6591,
-        230,
-        1010
+        6576,
+        231,
+        1232
       ],
       "capture_from": [
-        6589,
-        229,
-        1008
+        6574,
+        230,
+        1230
       ],
       "capture_to": [
-        6601,
-        275,
-        1020
+        6586,
+        245,
+        1242
       ],
       "solid_bounds_relative_to_gallery_origin": [
         [
-          -1,
-          9
+          0,
+          8
         ],
         [
           -1,
           6
         ],
         [
-          -1,
-          9
+          0,
+          8
         ]
       ],
       "role": "mine",
@@ -273,33 +273,8 @@
         "coloured_blocks": {}
       },
       "notes": [
-        "Aaron rebuilt this live as the mine; the former armorer role moves to NA02.3"
-      ],
-      "gallery_furniture": {
-        "sea_lanterns": [
-          [
-            -1,
-            -1,
-            -1
-          ],
-          [
-            9,
-            -1,
-            -1
-          ],
-          [
-            -1,
-            -1,
-            9
-          ],
-          [
-            9,
-            -1,
-            9
-          ]
-        ],
-        "note": "Apron corner lighting from the gallery; exclude at export."
-      }
+        "Re-captured 2026-09-10 evening from the NA08.1 production copy: Aaron widened the pit one column west, removed the door and set a step down into the pit."
+      ]
     },
     {
       "exhibit": "NA01.4",

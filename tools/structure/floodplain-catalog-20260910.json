@@ -28,11 +28,11 @@
       "source_mod": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar",
       "source_mod_structure": "data/kaisyn/structure/village/exclusives/nilotic/houses/nilotic_armorer_1.nbt",
       "asset": "run/floodplain-integration/datapack/data/kithkyn/structure/mine_floodplain_1.nbt",
-      "asset_sha256": "0ccb8540bf93b76078dbab52543fbe468b530b6479410b1165c7ffde28bd3813",
+      "asset_sha256": "6b3c69fb1fcc5268ef2c62b3b1093260227f0c6ac86f4052ac9a7333fd8f9103",
       "definition": "run/floodplain-integration/datapack/data/kithkyn/kithkyn/buildings/mine_floodplain_1.json",
-      "definition_sha256": "7c21e894fbe10f5a290362685b2ac3c3b37c2b4078f48839d06bc9880cd9e6dd",
+      "definition_sha256": "8a169912c066d9e340e0efdf4b813fb014cdcd5688809a2829af7c71c2b33f8d",
       "reviewed_capture": "run/nilotic-showcase/selection-20260910-floodplain/captures/NA01.2.nbt",
-      "reviewed_capture_sha256": "e0e431c2d95541390431579ad67c5f17c306ceedfc2c64022e251e0c6c2d2371"
+      "reviewed_capture_sha256": "753aeb973aa7eaabecfcdba580b30449e78231b155a3f5ad0670fcc45adb6ed1"
     },
     {
       "exhibit": "NA01.4",
@@ -392,6 +392,13 @@
         "storehouse_floodplain_1"
       ],
       "note": "Aaron re-edited the storehouse on a production copy in the gallery (NA07.1): the doorway trapdoor removed so the doorway is open, the course corners trimmed. Re-captured and re-exported; the open-trapdoor override is gone."
+    },
+    {
+      "date": "2026-09-10",
+      "structures": [
+        "mine_floodplain_1"
+      ],
+      "note": "Aaron re-edited the mine on a production copy in the gallery (NA08.1): the pit is four columns long, the door is gone and a step leads down into the pit. The miner stands at the pit's west column and the ramp mouth is one column in, so three columns of descent stay inside the pit."
     }
   ]
 }
