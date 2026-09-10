@@ -442,7 +442,8 @@ public final class ApprovedHouseVerification {
             "Crossbow station lacks its fixed ranged duty");
         check(JobTool.of(walker) == JobTool.CROSSBOW && walker.getMainHandItem().is(Items.CROSSBOW),
             "Crossbow post did not receive its crossbow");
-        check(walker.personMainInv.countItem(Items.STONE_SWORD) == 1, "Crossbow post lacks its backup sword");
+        // This probe reuses one resident across stations; a previous sword post can leave another sword.
+        check(walker.personMainInv.countItem(Items.STONE_SWORD) >= 1, "Crossbow post lacks its backup sword");
       }
     } else if (visit.kind() == VisitKind.SHARED_CONTAINER) {
       approach = ContainerAccess.approachTo(walker, visit.target(), 6.0D);

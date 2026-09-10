@@ -87,8 +87,9 @@ larger tower fresh costs 24 timber and 60 stone. See [building-spec.md](building
 
 The edited R07.2 fort is available as one optional `castle_desert_1` per village. Its
 eight beds include a royal couple suite, accommodation for the existing center captain,
-and five general beds. It adds the ruler, rooftop blacksmith, four castle guard posts
-and a jailer. Two evidence barrels beside the rooftop cell are excluded from village
-storage and theft rules. See [castles.md](castles.md) for custody, inventory handling
+and five general beds. It adds the ruler, rooftop blacksmith, a merchant at the planted
+wooden stall, two sword posts, two crossbow posts and a jailer. The merchant uses the
+village's existing staffed market and treasury. Two stacked evidence barrels beside the
+rooftop cell are excluded from village storage and theft rules. See [castles.md](castles.md) for custody, inventory handling
 and ruler decisions. All four rotations passed physical access and role-allocation
 checks; the live private catalog now loads 201 total building definitions.

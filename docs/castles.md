@@ -28,7 +28,12 @@ before releasing an old bed. A married captain stays with their spouse rather th
 moved alone into the castle's single room. Vacancies, role loss and households continue through
 ordinary job and bed reconciliation.
 
-The castle adds one LEADER, one blacksmith, four posted crossbow guards, and one jailer.
+The castle adds one LEADER, one blacksmith, one merchant, two posted crossbow guards,
+two posted sword guards, and one jailer. One sword guard watches the royal-suite approach;
+the former eastern rooftop guard position belongs to the merchant's planted wooden stall.
+The merchant shares the village's existing market and treasury, so trade still requires
+a staffed market. The stall barrel is communal storage, separate from jail evidence.
+Guards acquire or craft shields through the ordinary equipment system when supplies allow.
 The jailer is a GUARD with the JAILER duty and a fixed sword post beside the cell. Castle
 sentries use their authored posts and follow castle waypoints when their night routine chooses
 a patrol. The town captain continues patrolling the village. Sleep and shift choices reuse
@@ -42,11 +47,11 @@ rooftop tent keeps white and uses primary for light blue. The gray/light-gray te
 secondary for gray and primary for light gray. These rules apply to wool and carpet. Interior
 carpets outside the declared tent areas retain their authored colors.
 
-The eastern rooftop sentry moves one block onto clear floor. A small carpet patch
+The merchant stands on clear floor inside the eastern rooftop stall. A small carpet patch
 beside the smithy chest is cleared for hand access. Two evidence barrels are placed beside
 the barred rooftop cell. These are functional corrections to the edited fort, not a replacement
-design. Native checks passed 84 access routes, 32 assigned-bed sleeps, 28 personal-container
-deposits and eight shared-container deposits across all four rotations. Rendered inspection
+design. Native checks passed 92 access routes, 32 assigned-bed sleeps, 28 personal-container
+deposits and twelve shared-container deposits across all four rotations. Rendered inspection
 confirmed the two barrels and preserved castle appearance before deployment.
 
 ## Ruler decisions
@@ -90,7 +95,7 @@ An unavailable or damaged castle cannot silently strand an active prisoner.
 
 ## Confiscated belongings
 
-The two evidence barrels are at castle-local `[8,11,16]` and `[8,11,18]`. The release position
+The two evidence barrels are stacked at castle-local `[9,11,19]` and `[9,12,19]`. The release position
 is `[8,11,17]`; the cell is `[6,11,18]`. All coordinates rotate and translate with the castle.
 
 Confiscation transfers eligible death-drop items into available barrel space, including normal

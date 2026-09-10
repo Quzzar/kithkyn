@@ -912,6 +912,11 @@
       21,
       11,
       16
+    ],
+    [
+      23,
+      11,
+      9
     ]
   ],
   "work_areas": [
@@ -958,6 +963,20 @@
         17
       ],
       "status": "implemented_GUARD_JAILER"
+    },
+    {
+      "role": "merchant",
+      "pos": [
+        24,
+        11,
+        11
+      ],
+      "container": [
+        23,
+        11,
+        9
+      ],
+      "status": "verified_merchant_station_using_existing_village_market"
     }
   ],
   "guard_posts": [
@@ -968,16 +987,18 @@
         13
       ],
       "role": "guard",
-      "status": "authored_post_with_castle_patrol_waypoints"
+      "guard_duty": "CROSSBOW_POST",
+      "status": "verified_castle_post"
     },
     {
       "pos": [
-        24,
-        11,
-        11
+        26,
+        6,
+        13
       ],
       "role": "guard",
-      "status": "authored_post_with_castle_patrol_waypoints"
+      "guard_duty": "SWORD_POST",
+      "status": "verified_castle_post"
     },
     {
       "pos": [
@@ -986,7 +1007,8 @@
         9
       ],
       "role": "guard",
-      "status": "authored_post_with_castle_patrol_waypoints"
+      "guard_duty": "CROSSBOW_POST",
+      "status": "verified_castle_post"
     },
     {
       "pos": [
@@ -995,7 +1017,8 @@
         21
       ],
       "role": "guard",
-      "status": "authored_post_with_castle_patrol_waypoints"
+      "guard_duty": "SWORD_POST",
+      "status": "verified_castle_post"
     }
   ],
   "jail": {
@@ -1019,14 +1042,14 @@
     "status": "native_gameplay_verified",
     "evidence_containers": [
       [
-        8,
+        9,
         11,
-        16
+        19
       ],
       [
-        8,
-        11,
-        18
+        9,
+        12,
+        19
       ]
     ],
     "release_point": [
@@ -1064,20 +1087,20 @@
     "runtime_navigation_tested": true,
     "room_reservations_enforced": true,
     "screenshots": [
-      "run/castle-completion-20260910/render/client/screenshots/castle-completed-overview.png",
-      "run/castle-completion-20260910/render/client/screenshots/castle-evidence-barrels.png"
+      "run/castle-merchant-20260910/render/client/screenshots/castle-edited-jail.png",
+      "run/castle-merchant-20260910/render/client/screenshots/castle-merchant-stall.png"
     ],
     "visual_review": "passed",
     "bed_drop_cleanup": "run/pueblo-showcase/desert-comparison-castle-20260910/bed-drop-cleanup.json",
     "role_housing_report": "run/castle-roles-20260910/native/verification.json",
     "custody_report": "run/custody-verification-20260910/native/verification.json",
     "curios_evidence_report": "run/accessory-evidence-verification-20260910/verification.json",
-    "physical_access_report": "run/castle-completion-20260910/access/verification.json",
-    "access_routes": 84,
+    "physical_access_report": "run/castle-merchant-20260910/access/verification.json",
+    "access_routes": 92,
     "assigned_bed_sleeps": 32,
     "personal_container_deposits": 28,
-    "station_walks": 28,
-    "shared_container_deposits": 8,
+    "station_walks": 32,
+    "shared_container_deposits": 12,
     "live_patch_report": "run/castle-completion-20260910/live-patch.json",
     "build_report": "run/castle-completion-20260910/build-verification.json"
   },
@@ -1085,14 +1108,14 @@
   "design_document": "docs/castles.md",
   "live_after_identity_capture": "run/pueblo-showcase/desert-comparison-castle-20260910/after-bed-repair/captures/castle.nbt",
   "live_after_identity_capture_sha256": "3a164647c03e8b40bdb3a3cae86ab36aeff129705129185e7b99d838c60f38ce",
-  "approved_capture": "run/castle-completion-20260910/live-20260910-120410/after/captures/castle.nbt",
-  "approved_capture_sha256": "a2cdf5d4376a6e82c08de319c7832290d121c1f622783a166f2332e482670cc2",
+  "approved_capture": "run/castle-merchant-20260910/live-20260910-125047/edited/captures/castle.nbt",
+  "approved_capture_sha256": "0c4d2960830b18431f8a6fb77e385577c2830a97e1b0fec49c77834049960675",
   "production": {
     "status": "deployed",
-    "definition": "run/castle-completion-20260910/production/data/kithkyn/kithkyn/buildings/castle_desert_1.json",
-    "definition_sha256": "b83ee90da5110220a88be37b4c1b17e3ec50c5bdbf44f18e5409aff486e3535d",
-    "template": "run/castle-completion-20260910/production/data/kithkyn/structure/castle_desert_1.nbt",
-    "template_sha256": "18c978c97871ad35961de396c081e44ccc56784d7002f0c936e1df029fbf1c9f",
+    "definition": "run/castle-merchant-20260910/production/data/kithkyn/kithkyn/buildings/castle_desert_1.json",
+    "definition_sha256": "243d75bb264ad5ba4cf37ab84a4a632896ddf8c1b32a42b5e56675a306a988e6",
+    "template": "run/castle-merchant-20260910/production/data/kithkyn/structure/castle_desert_1.nbt",
+    "template_sha256": "83b37d1c7997fb3d9a2942dd61318a2769efc856595e8c172ec6221a1c59c079",
     "recipe": "castle_1",
     "expected_building_count": 201
   },
@@ -1102,5 +1125,19 @@
     "installed_datapack": "run/world/datapacks/kithkyn-desert",
     "building_definitions": 201,
     "world_backup": "/Users/quzzar/Projects/kithkyn/run/backups/before-castle-custody-founding-20260910-120838-castle-custody-founding"
+  },
+  "latest_authoring_update": {
+    "capture": {
+      "source": "run/castle-merchant-20260910/live-20260910-125047/edited/captures/castle.nbt",
+      "sha256": "0c4d2960830b18431f8a6fb77e385577c2830a97e1b0fec49c77834049960675"
+    },
+    "deployment": "run/castle-merchant-20260910/deployment.json",
+    "changes": [
+      "Stacked evidence barrels and cleared jail approach",
+      "Preserved edited plants and sandstone clearances",
+      "Merchant station and communal stall barrel",
+      "Two crossbow posts and two sword posts, plus jailer"
+    ],
+    "gameplay_runtime_unchanged": true
   }
 }

@@ -377,12 +377,12 @@
       "structure": "castle_desert_1",
       "manifest": "tools/structure/desert-castle-20260910.json",
       "recipe": "castle_1",
-      "asset_sha256": "18c978c97871ad35961de396c081e44ccc56784d7002f0c936e1df029fbf1c9f",
-      "definition_sha256": "b83ee90da5110220a88be37b4c1b17e3ec50c5bdbf44f18e5409aff486e3535d",
+      "asset_sha256": "83b37d1c7997fb3d9a2942dd61318a2769efc856595e8c172ec6221a1c59c079",
+      "definition_sha256": "243d75bb264ad5ba4cf37ab84a4a632896ddf8c1b32a42b5e56675a306a988e6",
       "source_mod": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar",
       "source_mod_structure": "data/kaisyn/structure/outpost/forts/desert/base_plate.nbt",
-      "reviewed_neutral": "run/castle-completion-20260910/production/data/kithkyn/structure/castle_desert_1.nbt",
-      "reviewed_neutral_sha256": "18c978c97871ad35961de396c081e44ccc56784d7002f0c936e1df029fbf1c9f"
+      "reviewed_neutral": "run/castle-merchant-20260910/production/data/kithkyn/structure/castle_desert_1.nbt",
+      "reviewed_neutral_sha256": "83b37d1c7997fb3d9a2942dd61318a2769efc856595e8c172ec6221a1c59c079"
     }
   ],
   "verification": {
@@ -417,13 +417,13 @@
       }
     },
     "castle": {
-      "physical_access": "run/castle-completion-20260910/access/verification.json",
+      "physical_access": "run/castle-merchant-20260910/access/verification.json",
       "housing": "run/castle-roles-20260910/native/verification.json",
       "custody": "run/custody-verification-20260910/native/verification.json",
       "accessories": "run/accessory-evidence-verification-20260910/verification.json",
       "render_review": [
-        "run/castle-completion-20260910/render/client/screenshots/castle-completed-overview.png",
-        "run/castle-completion-20260910/render/client/screenshots/castle-evidence-barrels.png"
+        "run/castle-merchant-20260910/render/client/screenshots/castle-edited-jail.png",
+        "run/castle-merchant-20260910/render/client/screenshots/castle-merchant-stall.png"
       ]
     }
   },
@@ -433,7 +433,8 @@
     "installed_datapack": "run/world/datapacks/kithkyn-desert",
     "installed_files": 63,
     "catalog_update": "tools/structure/desert-castle-20260910.json",
-    "working_tree_build": true
+    "working_tree_build": true,
+    "latest_castle_update": "run/castle-merchant-20260910/deployment.json"
   },
   "recipe_catalog": "src/main/resources/data/kithkyn/kithkyn/construction_recipes",
   "market_color_policy": "Market tent fabrics and decorative banners retain their original authored colors, independent of village identity; regional timber, masonry and plants may change."
