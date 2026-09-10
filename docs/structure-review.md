@@ -1751,3 +1751,6 @@ since two allays in a small storehouse push the probe off a container mid-check.
 Static checks, 470 unit tests and the five native modes (placement, restart, centre, access, founding with
 natural founding in a mangrove swamp world) all passed; the public record is
 `tools/structure/floodplain-catalog-20260910.json`.
+The release went live the same afternoon: 104 building definitions, the seven old-family villages removed
+after a flushed snapshot, and Ruwaleni founded at the nearest mangrove swamp (centre -3982 67 5344).
+
