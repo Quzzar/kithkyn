@@ -23,8 +23,6 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.Container;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.block.entity.HopperBlockEntity;
 import net.minecraft.world.phys.Vec3;
 
 /**
@@ -240,44 +238,14 @@ public final class ConsolidateStep implements BlockWorkStep {
 
   /** Applies the shared layout algorithm to just the shelf in arm's reach. */
   private static void tidyVisitedShelf(RealPerson person, BlockPos target, Container shelf) {
-    ShelvingPlan plan = ShelvingPlan.load(person.getVillage());
-    if (plan != null) {
-      int offset = shelfOffset(person, target);
-      List<ShelvingPlan.Category> categories = new ArrayList<>();
-      for (ShelvingPlan.Category category : plan.categories()) {
-        int first = Math.max(0, category.firstSlot() - offset);
-        int end = Math.min(shelf.getContainerSize(), category.firstSlot() + category.slotCount() - offset);
-        if (end > first) categories.add(new ShelvingPlan.Category(category.name(), category.itemIds(), first, end - first));
-      }
-      plan = new ShelvingPlan(categories, shelf.getContainerSize());
-    }
-    Storehouse.arrange(List.of(shelf), plan);
-    shelf.setChanged();
+    Shelving.tidyVisitedShelf(ShelvingPlan.load(person.getVillage()), shelfOffset(person, target), shelf);
   }
 
   /** Carry a misplaced stack only when its intended shelf can accept it or exchange another misplaced stack. */
   private boolean collectMisfiled(RealPerson person, BlockPos target, Container source) {
-    ShelvingPlan plan = ShelvingPlan.load(person.getVillage());
-    if (plan == null || !person.personMainInv.isEmpty()) return false;
-    int sourceOffset = shelfOffset(person, target);
-    for (int slot = 0; slot < source.getContainerSize(); slot++) {
-      ItemStack stack = source.getItem(slot);
-      if (stack.isEmpty() || plan.categoryFor(stack.getItem()) == null
-          || ShelfTransfers.owns(plan, stack, sourceOffset + slot)) continue;
-      Container carried = ShelfTransfers.copy(person.personMainInv);
-      if (!HopperBlockEntity.addItem(null, carried, stack.copy(), null).isEmpty()) continue;
-      int offset = 0;
-      for (BlockPos other : Storehouse.chests(person)) {
-        Container shelf = containerAt(person, other);
-        if (shelf == null) continue;
-        if (!other.equals(target) && ShelfTransfers.canDeposit(carried, shelf, offset, plan, true)
-            && approachTo(person, other) != null) {
-          return ShelfTransfers.collectSlot(source, slot, person.personMainInv) > 0;
-        }
-        offset += shelf.getContainerSize();
-      }
-    }
-    return false;
+    return Shelving.collectMisfiled(ShelvingPlan.load(person.getVillage()), Storehouse.chests(person),
+        pos -> containerAt(person, pos), other -> approachTo(person, other) != null,
+        person.personMainInv, target, source);
   }
 
   @Nullable
@@ -286,13 +254,7 @@ public final class ConsolidateStep implements BlockWorkStep {
   }
 
   private static int shelfOffset(RealPerson person, BlockPos target) {
-    int offset = 0;
-    for (BlockPos pos : Storehouse.chests(person)) {
-      if (pos.equals(target)) break;
-      Container shelf = containerAt(person, pos);
-      if (shelf != null) offset += shelf.getContainerSize();
-    }
-    return offset;
+    return Shelving.shelfOffset(Storehouse.chests(person), pos -> containerAt(person, pos), target);
   }
 
   private static int usedSlots(RealPerson person) {

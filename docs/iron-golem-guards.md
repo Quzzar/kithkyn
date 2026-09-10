@@ -53,7 +53,8 @@ These villages currently belong to the overworld. A golem taken to another dimen
 membership but does not patrol a same-coordinate imitation of its home there.
 
 Recruitment explicitly supports `IronGolem` and `SnowGolem`, including subclasses, not arbitrary
-`AbstractGolem` types or mobs whose names contain "golem". Both use the same roster and lifecycle;
+`AbstractGolem` types or mobs whose names contain "golem". Allays follow the same roster and lifecycle
+as keepers of the stores rather than defenders; see [allay-quartermasters.md](allay-quartermasters.md). Both use the same roster and lifecycle;
 no save migration is needed to add snow members to an existing village.
 
 Snow golems remain environmentally fragile: water and rain hurt them, hot biomes marked for snow

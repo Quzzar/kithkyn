@@ -98,9 +98,11 @@ public class Village {
   /** Compose flat save sections without changing existing fields or the sixteen-field builder limit. */
   public static final Codec<Village> CODEC = RecordCodecBuilder.create(inst -> inst.group(
       BASE_CODEC.forGetter((Village village) -> village),
-      GolemRoster.CODEC.optionalFieldOf("golems").forGetter(village -> Optional.of(village.golems))
-  ).apply(inst, (village, roster) -> {
-    village.golems = roster.orElseGet(GolemRoster::new);
+      AuxiliaryRoster.CODEC.optionalFieldOf("golems").forGetter(village -> Optional.of(village.golems)),
+      AuxiliaryRoster.CODEC.optionalFieldOf("allays").forGetter(village -> Optional.of(village.allays))
+  ).apply(inst, (village, golems, allays) -> {
+    village.golems = golems.orElseGet(AuxiliaryRoster::new);
+    village.allays = allays.orElseGet(AuxiliaryRoster::new);
     return village;
   }));
 
@@ -250,11 +252,17 @@ public class Village {
   private final String name;
   private final VillageIdentity identity;
 
-  private GolemRoster golems = new GolemRoster();
+  private AuxiliaryRoster golems = new AuxiliaryRoster();
+  private AuxiliaryRoster allays = new AuxiliaryRoster();
 
   /** Village-owned defenders do not consume human guard posts, beds or rations. */
-  public GolemRoster getGolems() {
+  public AuxiliaryRoster getGolems() {
     return golems;
+  }
+
+  /** Adopted allays run the storehouse counter; they take no quartermaster post, bed or ration. */
+  public AuxiliaryRoster getAllays() {
+    return allays;
   }
 
   private VillageBrain brain;
@@ -1788,8 +1796,12 @@ public class Village {
         addRing(chunks, ChunkPos.getX(chunk), ChunkPos.getZ(chunk), VillageChunkLoader.MEMBER_BUBBLE_CHUNKS);
       }
     }
-    for (GolemRoster.Member golem : golems.members().values()) {
+    for (AuxiliaryRoster.Member golem : golems.members().values()) {
       addRing(chunks, ChunkPos.getX(golem.chunk()), ChunkPos.getZ(golem.chunk()),
+          VillageChunkLoader.MEMBER_BUBBLE_CHUNKS);
+    }
+    for (AuxiliaryRoster.Member allay : allays.members().values()) {
+      addRing(chunks, ChunkPos.getX(allay.chunk()), ChunkPos.getZ(allay.chunk()),
           VillageChunkLoader.MEMBER_BUBBLE_CHUNKS);
     }
     return chunks;

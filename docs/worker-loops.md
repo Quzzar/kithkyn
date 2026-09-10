@@ -1153,6 +1153,9 @@ storehouse's numbered slots into named categories, each owning a contiguous run 
 the items that live there. The worker lays the shelves out to match during physical container visits, with no model in the
 transfer loop.
 
+An adopted allay runs this same loop with a one-stack pack, following the plan but never
+drawing one up; see [allay-quartermasters.md](allay-quartermasters.md).
+
 **Physical rounds (2026-09-09).** Collection, delivery and quiet shelf checks all target an
 individual container. The quartermaster walks to supported ground beside it, opens its native
 chest lid or barrel, and moves one stack every 1.5 seconds. A visit handles at most six moves

@@ -9,8 +9,8 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 
 import net.minecraft.core.UUIDUtil;
 
-/** Auxiliary defenders, deliberately outside human population, employment and housing. */
-public final class GolemRoster {
+/** Village auxiliaries (recruited golems, adopted allays), deliberately outside human population, employment and housing. */
+public final class AuxiliaryRoster {
   public record Member(String name, long chunk) {
     public static final Codec<Member> CODEC = RecordCodecBuilder.create(instance -> instance.group(
         Codec.STRING.fieldOf("name").forGetter(Member::name),
@@ -18,16 +18,16 @@ public final class GolemRoster {
     ).apply(instance, Member::new));
   }
 
-  public static final Codec<GolemRoster> CODEC = Codec.unboundedMap(UUIDUtil.STRING_CODEC, Member.CODEC)
-      .xmap(GolemRoster::new, GolemRoster::members);
+  public static final Codec<AuxiliaryRoster> CODEC = Codec.unboundedMap(UUIDUtil.STRING_CODEC, Member.CODEC)
+      .xmap(AuxiliaryRoster::new, AuxiliaryRoster::members);
 
   private final Map<UUID, Member> members;
 
-  public GolemRoster() {
+  public AuxiliaryRoster() {
     this(Map.of());
   }
 
-  private GolemRoster(Map<UUID, Member> members) {
+  private AuxiliaryRoster(Map<UUID, Member> members) {
     this.members = new HashMap<>(members);
   }
 

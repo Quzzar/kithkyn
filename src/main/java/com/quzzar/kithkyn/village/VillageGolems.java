@@ -47,12 +47,17 @@ public final class VillageGolems {
   }
 
   private static boolean eligibleGuard(RealPerson guard) {
-    Village village = guard.getVillage();
-    return guard.isAlive() && !guard.isRemoved() && !guard.isNoAi() && !guard.isSleeping()
-        && guard.getOccupation() == Occupation.GUARD && guard.getTarget() == null
-        && village != null && village.getLevel() == guard.level()
-        && village.getPopulation().contains(guard.getUUID())
-        && village.hasClaimedWithin(guard.blockPosition(), 32);
+    return eligibleRecruiter(guard, Occupation.GUARD);
+  }
+
+  /** Only an active, settled worker of the recruiting trade, with no target, takes in an auxiliary. */
+  static boolean eligibleRecruiter(RealPerson person, Occupation trade) {
+    Village village = person.getVillage();
+    return person.isAlive() && !person.isRemoved() && !person.isNoAi() && !person.isSleeping()
+        && person.getOccupation() == trade && person.getTarget() == null
+        && village != null && village.getLevel() == person.level()
+        && village.getPopulation().contains(person.getUUID())
+        && village.hasClaimedWithin(person.blockPosition(), 32);
   }
 
   /** Leashed, travelling, hostile, already recruited and unreachable golems are left alone. */
@@ -164,11 +169,12 @@ public final class VillageGolems {
     });
   }
 
-  /** Friends are the village's people, other recruited golems and its companion pets. */
+  /** Friends are the village's people, other recruited golems, its adopted allays and its companion pets. */
   public static boolean isMember(Village village, Entity entity) {
     return village != null && entity != null
         && (entity instanceof RealPerson person && person.getVillage() == village
             || supports(entity) && villageId(entity).filter(village.getID()::equals).isPresent()
+            || VillageAllays.supports(entity) && VillageAllays.villageId(entity).filter(village.getID()::equals).isPresent()
             || CompanionPets.isCompanionPet(entity)
                 && CompanionPets.villageUuid(entity).filter(village.getID()::equals).isPresent());
   }

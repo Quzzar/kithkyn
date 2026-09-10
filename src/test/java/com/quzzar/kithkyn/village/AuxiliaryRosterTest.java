@@ -11,7 +11,7 @@ import net.minecraft.world.level.ChunkPos;
 
 import org.junit.jupiter.api.Test;
 
-class GolemRosterTest {
+class AuxiliaryRosterTest {
   @Test
   void auxiliaryGuardSurvivesVillageSaveWithoutTakingPopulationHousingOrJobs() {
     Village village = new Village("Birchhaven");
@@ -42,7 +42,7 @@ class GolemRosterTest {
 
   @Test
   void repeatedObservationDoesNotDuplicateAndDeathRemovesOnlyThatGolem() {
-    GolemRoster roster = new GolemRoster();
+    AuxiliaryRoster roster = new AuxiliaryRoster();
     UUID first = UUID.randomUUID();
     UUID second = UUID.randomUUID();
     roster.remember(first, "Flint", 0L);
@@ -53,5 +53,38 @@ class GolemRosterTest {
     roster.remove(first);
     assertEquals(1, roster.members().size());
     assertTrue(roster.members().containsKey(second));
+  }
+
+  @Test
+  void adoptedAllaysRideTheirOwnRosterBesideTheGolems() {
+    Village village = new Village("Floodplain");
+    UUID golem = UUID.randomUUID();
+    UUID allay = UUID.randomUUID();
+    village.getGolems().remember(golem, "Flint", 7L);
+    village.getAllays().remember(allay, "Reed", 9L);
+
+    Village loaded = Village.CODEC.parse(NbtOps.INSTANCE,
+        Village.CODEC.encodeStart(NbtOps.INSTANCE, village).getOrThrow()).getOrThrow();
+
+    assertEquals(village.getAllays().members(), loaded.getAllays().members());
+    assertEquals(village.getGolems().members(), loaded.getGolems().members());
+    assertTrue(loaded.getAllays().members().containsKey(allay));
+    assertTrue(loaded.getPopulation().isEmpty());
+    assertTrue(loaded.getJobAssignmentsView().isEmpty());
+  }
+
+  @Test
+  void savesWithoutAllaysLoadWithAnEmptyIndependentAllayRoster() {
+    Village village = new Village("Older");
+    village.getGolems().remember(UUID.randomUUID(), "Anvil", 3L);
+    CompoundTag tag = (CompoundTag) Village.CODEC.encodeStart(NbtOps.INSTANCE, village).getOrThrow();
+    tag.remove("allays");
+
+    Village first = Village.CODEC.parse(NbtOps.INSTANCE, tag).getOrThrow();
+    Village second = Village.CODEC.parse(NbtOps.INSTANCE, tag).getOrThrow();
+    first.getAllays().remember(UUID.randomUUID(), "Wisp", 1L);
+
+    assertTrue(second.getAllays().members().isEmpty(), "a legacy save must not share one roster instance");
+    assertEquals(1, first.getGolems().members().size(), "golems are untouched by the allay field");
   }
 }
