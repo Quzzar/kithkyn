@@ -55,8 +55,8 @@ in it, and update it in the same change that moves what it describes.
   resources and space instead.
 - [village-identity.md](village-identity.md): the primary and secondary dye colors and generated
   banner chosen with the village name, plus the semantic structure slots that apply them.
-- [allay-quartermasters.md](allay-quartermasters.md): adopted allays as free keepers of the stores, running
-  the quartermaster's collect, deliver and inspect loop with a one-stack pack; roster and limits.
+- [allay-quartermasters.md](allay-quartermasters.md): allays the quartermaster takes on as free helpers, running
+  the same collect, deliver and inspect loop with a one-stack pack; roster and limits.
 - [iron-golem-guards.md](iron-golem-guards.md): natural guard recruitment of nearby iron and snow golems,
   names, auxiliary membership, shared day-and-night patrols, defense and persistence without beds.
 - [buildings.md](buildings.md): the building catalog. The categories a village can

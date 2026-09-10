@@ -23,7 +23,9 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.ai.navigation.FlyingPathNavigation;
+import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.animal.allay.Allay;
+import net.minecraft.world.entity.animal.allay.AllayAi;
 import net.minecraft.world.entity.schedule.Activity;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Level;
@@ -31,15 +33,15 @@ import net.minecraft.world.level.block.Blocks;
 
 /**
  * Adopted allays as free keepers of the stores (docs/allay-quartermasters.md): the
- * recruitment, the persistent tie between a vanilla allay and its village, and the
- * minding loop it runs. An allay has no goal selector, so the loop is a brain
+ * recruitment by the village's quartermaster, the persistent tie between a vanilla allay
+ * and its village, and the minding loop it runs. An allay has no goal selector, so the loop is a brain
  * behaviour added beside vanilla's, re-added whenever the entity loads. Nothing
  * here touches human quartermaster posts, beds or rations.
  */
 public final class VillageAllays {
   public static final String VILLAGE_KEY = "kithkyn:storeVillage";
   public static final String RECRUITER_KEY = "kithkyn:storeRecruiter";
-  /** Written on an allay a storehouse spawned, so it joins that building's village without a guard. */
+  /** Written on an allay a storehouse spawned, so it waits at that storehouse for the quartermaster. */
   public static final String SPAWNED_BY_BUILDING_KEY = "kithkyn:storehouseBuilding";
   public static final double ADOPTION_RADIUS = VillageGolems.ADOPTION_RADIUS;
   /** A storehouse's counter is authored next to its containers; look no further than this. */
@@ -52,23 +54,30 @@ public final class VillageAllays {
   private VillageAllays() {
   }
 
-  /** A bounded encounter check, called every five seconds per active guard, staggered from the golem scan. */
-  public static void considerAdoption(RealPerson guard) {
-    if (!(guard.level() instanceof ServerLevel level) || !VillageGolems.eligibleGuard(guard)) {
+  /**
+   * A bounded encounter check, called every five seconds per active quartermaster.
+   * The keeper of the stores takes on the helpers; guards recruit only defenders.
+   */
+  public static void considerAdoption(RealPerson quartermaster) {
+    if (!(quartermaster.level() instanceof ServerLevel level) || !eligibleQuartermaster(quartermaster)) {
       return;
     }
-    level.getEntitiesOfClass(Allay.class, guard.getBoundingBox().inflate(ADOPTION_RADIUS),
-        allay -> canAdopt(guard, allay)).stream()
-        .min(Comparator.comparingDouble(guard::distanceToSqr))
-        .ifPresent(allay -> adopt(guard, allay));
+    level.getEntitiesOfClass(Allay.class, quartermaster.getBoundingBox().inflate(ADOPTION_RADIUS),
+        allay -> canAdopt(quartermaster, allay)).stream()
+        .min(Comparator.comparingDouble(quartermaster::distanceToSqr))
+        .ifPresent(allay -> adopt(quartermaster, allay));
+  }
+
+  private static boolean eligibleQuartermaster(RealPerson person) {
+    return VillageGolems.eligibleRecruiter(person, Occupation.QUARTERMASTER);
   }
 
   /** Leashed, travelling, already claimed and unreachable allays are left alone. */
-  public static boolean canAdopt(RealPerson guard, Allay allay) {
-    return VillageGolems.eligibleGuard(guard) && allay.level() == guard.level()
+  public static boolean canAdopt(RealPerson quartermaster, Allay allay) {
+    return eligibleQuartermaster(quartermaster) && allay.level() == quartermaster.level()
         && eligibleAllay(allay) && villageId(allay).isEmpty()
-        && guard.distanceToSqr(allay) <= ADOPTION_RADIUS * ADOPTION_RADIUS
-        && guard.hasLineOfSight(allay);
+        && quartermaster.distanceToSqr(allay) <= ADOPTION_RADIUS * ADOPTION_RADIUS
+        && quartermaster.hasLineOfSight(allay);
   }
 
   private static boolean eligibleAllay(Allay allay) {
@@ -76,45 +85,51 @@ public final class VillageAllays {
         && !allay.isLeashed() && !allay.isPassenger() && !allay.isVehicle();
   }
 
-  /** Commit the claim synchronously, so two guards cannot adopt the same allay. */
-  public static boolean adopt(RealPerson guard, Allay allay) {
-    if (!(guard.level() instanceof ServerLevel level) || !canAdopt(guard, allay)) {
+  /** Commit the claim synchronously, so two quartermasters cannot adopt the same allay. */
+  public static boolean adopt(RealPerson quartermaster, Allay allay) {
+    if (!(quartermaster.level() instanceof ServerLevel level) || !canAdopt(quartermaster, allay)) {
       return false;
     }
-    Village village = guard.getVillage();
-    join(level, village, allay, guard);
-    guard.logMemory("I welcomed " + allay.getName().getString() + " the allay to keep our stores.",
+    Village village = quartermaster.getVillage();
+    join(level, village, allay, quartermaster);
+    quartermaster.logMemory("I took on " + allay.getName().getString() + " the allay to help me keep the stores.",
         Optional.of(allay.getUUID()));
-    VillagerConversation.speak(guard, "Welcome to the stores, " + allay.getName().getString() + ".");
-    Kithkyn.LOGGER.info("[village allay] {} welcomes {} into {}", guard.getFullName(),
+    VillagerConversation.speak(quartermaster, "Welcome to the stores, " + allay.getName().getString() + ".");
+    Kithkyn.LOGGER.info("[village allay] {} takes on {} in {}", quartermaster.getFullName(),
         allay.getName().getString(), village.getName());
     return true;
   }
 
-  /** An authored storehouse allay joins its building's village on its first tick, before any guard passes. */
-  public static boolean adoptSpawned(ServerLevel level, Allay allay) {
-    if (!allay.getPersistentData().hasUUID(SPAWNED_BY_BUILDING_KEY)) {
-      return false;
+  /**
+   * An allay a storehouse was authored with waits by that storehouse's note block
+   * until the village's quartermaster takes it on. Vanilla's own liking for a note
+   * block keeps it within reach; with nothing in hand it throws nothing there.
+   */
+  public static void tetherSpawned(ServerLevel level, Allay allay) {
+    if (villageId(allay).isPresent() || !allay.getPersistentData().hasUUID(SPAWNED_BY_BUILDING_KEY)) {
+      return;
     }
     UUID buildingId = allay.getPersistentData().getUUID(SPAWNED_BY_BUILDING_KEY);
-    allay.getPersistentData().remove(SPAWNED_BY_BUILDING_KEY);
-    if (villageId(allay).isPresent() || !eligibleAllay(allay)) {
-      return false;
-    }
     for (Village village : VillageManager.get(level).getVillages().values()) {
       Building building = village.getBuilding(buildingId);
-      if (building != null) {
-        join(level, village, allay, null);
-        Kithkyn.LOGGER.info("[village allay] {} keeps the stores of {} from {}", allay.getName().getString(),
-            village.getName(), building.getName());
-        return true;
+      if (building == null) {
+        continue;
       }
+      BlockPos perch = home(level, village);
+      if (perch != null && level.getBlockState(perch).is(Blocks.NOTE_BLOCK)
+          && (allay.getBrain().getMemory(MemoryModuleType.LIKED_NOTEBLOCK_POSITION).map(known -> !known.pos().equals(perch)).orElse(true)
+              || allay.getBrain().getMemory(MemoryModuleType.LIKED_NOTEBLOCK_COOLDOWN_TICKS).orElse(0) < 100)) {
+        AllayAi.hearNoteblock(allay, perch);
+      }
+      return;
     }
-    return false;
+    allay.getPersistentData().remove(SPAWNED_BY_BUILDING_KEY); // the building is gone; nothing to wait for
   }
 
   private static void join(ServerLevel level, Village village, Allay allay, @Nullable RealPerson recruiter) {
     allay.getPersistentData().putString(VILLAGE_KEY, village.getID());
+    allay.getPersistentData().remove(SPAWNED_BY_BUILDING_KEY);
+    allay.getBrain().eraseMemory(MemoryModuleType.LIKED_NOTEBLOCK_POSITION);
     if (recruiter != null) {
       allay.getPersistentData().putUUID(RECRUITER_KEY, recruiter.getUUID());
     }

@@ -46,14 +46,18 @@ public final class VillageGolems {
         .ifPresent(golem -> adopt(guard, golem));
   }
 
-  /** Shared by allay adoption: only an active, settled guard with no target recruits. */
-  static boolean eligibleGuard(RealPerson guard) {
-    Village village = guard.getVillage();
-    return guard.isAlive() && !guard.isRemoved() && !guard.isNoAi() && !guard.isSleeping()
-        && guard.getOccupation() == Occupation.GUARD && guard.getTarget() == null
-        && village != null && village.getLevel() == guard.level()
-        && village.getPopulation().contains(guard.getUUID())
-        && village.hasClaimedWithin(guard.blockPosition(), 32);
+  private static boolean eligibleGuard(RealPerson guard) {
+    return eligibleRecruiter(guard, Occupation.GUARD);
+  }
+
+  /** Only an active, settled worker of the recruiting trade, with no target, takes in an auxiliary. */
+  static boolean eligibleRecruiter(RealPerson person, Occupation trade) {
+    Village village = person.getVillage();
+    return person.isAlive() && !person.isRemoved() && !person.isNoAi() && !person.isSleeping()
+        && person.getOccupation() == trade && person.getTarget() == null
+        && village != null && village.getLevel() == person.level()
+        && village.getPopulation().contains(person.getUUID())
+        && village.hasClaimedWithin(person.blockPosition(), 32);
   }
 
   /** Leashed, travelling, hostile, already recruited and unreachable golems are left alone. */

@@ -8,17 +8,21 @@ changing jobs or dying.
 
 ## Recruitment
 
-Every active human guard checks a small encounter area once every five seconds, half a period
-apart from its golem scan. A visible allay within eight blocks that is not leashed, riding or
-already claimed joins the guard's own settlement. The claim is committed synchronously, so two
-guards cannot adopt the same allay, and another village cannot take an adopted one.
+The village's quartermaster takes on the helpers, not its guards: every active human
+quartermaster checks a small encounter area once every five seconds, half a period apart
+from the guards' golem scan. A visible allay within eight blocks that is not leashed, riding or
+already claimed joins the quartermaster's own settlement. The claim is committed
+synchronously, so two quartermasters cannot adopt the same allay, and another village cannot
+take an adopted one. The quartermaster keeps their post and work station in the storehouse and
+remains the one who plans the shelves; the allays assist.
 
-A storehouse can also be authored with its own allays: any allay embedded in a building's
-structure file is tagged with that building when it is spawned, and on its first tick it joins
-whichever village owns the building, guard or no guard. The floodplain storehouse starts with two.
+A storehouse can be authored with its own allays: any allay embedded in a building's structure
+file is tagged with that building when it is spawned, and until the quartermaster takes it on it
+waits by that storehouse's note block, held there by vanilla's own liking for a note block. With
+nothing in hand it throws nothing there. The floodplain storehouse starts with two.
 
-An unnamed allay receives a locally selected name, which the guard announces and remembers.
-Names appear only when the player aims at the allay.
+An unnamed allay receives a locally selected name, which the quartermaster announces and
+remembers. Names appear only when the player aims at the allay.
 
 ## The keeper's loop
 
@@ -60,6 +64,9 @@ no human quartermaster shelves everything to overflow until a person plans the s
   removes the roster entry, and nothing is respawned. A stack being carried at death drops like
   any allay's inventory.
 - Adoption works in any village. Only the note block and any authored allays are per catalog.
+- There is no second storehouse tier for the floodplain village. A village wanting more room
+  builds more storehouses, and every keeper, human or allay, serves all of them: the shelves are
+  the containers of every standing storage building, in building order.
 
 ## Authoring
 
@@ -72,6 +79,6 @@ they are placed once, on completion, like farm livestock.
 `AuxiliaryRosterTest` covers the allay roster's save, load and legacy defaults beside the golem
 roster. `ShelvingTest` covers the shelf arithmetic both keepers share, with a one-slot pack.
 `AllayVerification`, enabled only with `-Dkithkyn.allays.verify=true` on a disposable local
-server, exercises real adoption, eligibility, duplicate claims, a full collect-and-deliver haul
-from a workplace chest to the shelves, reload persistence and death removal. Never enable that
+server, exercises the storehouse tether, quartermaster-only adoption, duplicate claims, a full
+collect-and-deliver haul from a workplace chest to the shelves, reload persistence and death removal. Never enable that
 flag on a review or play world: it creates its own fixture and stops the server when finished.

@@ -64,6 +64,10 @@ public final class AllayVerification {
     try {
       if (ticks == 40) {
         setup(level);
+      } else if (ticks == 90) {
+        check(VillageAllays.villageId(allay).isEmpty(), "storehouse allay joined before its quartermaster took it on");
+        check(allay.getBrain().getMemory(MemoryModuleType.LIKED_NOTEBLOCK_POSITION)
+            .map(pos -> pos.pos().equals(counter)).orElse(false), "waiting allay is not tethered to the storehouse note block");
       } else if (ticks == 100) {
         recruit();
       } else if (ticks > 100 && ticks % 20 == 0 && saved == null) {
@@ -78,7 +82,7 @@ public final class AllayVerification {
         }
       } else if (reloadTick > 0 && ticks == reloadTick + 60) {
         afterReload(level);
-        Kithkyn.LOGGER.info("[allay-verify] RESULT PASS: adoption, collection, delivery to the shelves, reload and death");
+        Kithkyn.LOGGER.info("[allay-verify] RESULT PASS: storehouse tether, quartermaster adoption, collection, delivery to the shelves, reload and death");
         event.getServer().halt(false);
       }
     } catch (Exception | AssertionError failure) {
@@ -114,6 +118,7 @@ public final class AllayVerification {
     secondGuard = resident(level, 80.5, 81.5);
     allay = EntityType.ALLAY.create(level);
     allay.moveTo(82.5, 6, 80.5, 0, 0);
+    allay.getPersistentData().putUUID(VillageAllays.SPAWNED_BY_BUILDING_KEY, village.storehouse.getUUID());
     check(level.addFreshEntity(allay), "allay spawn failed");
     allay.setLeashedTo(guard, false);
     check(!VillageAllays.canAdopt(guard, allay), "leashed allay was eligible");
@@ -125,17 +130,19 @@ public final class AllayVerification {
   private static void recruit() {
     guard.setNoAi(false);
     secondGuard.setNoAi(false);
-    guard.setOccupation(Occupation.WANDERER);
-    check(!VillageAllays.canAdopt(guard, allay), "civilian could adopt");
     guard.setOccupation(Occupation.GUARD);
+    check(!VillageAllays.canAdopt(guard, allay), "a guard could adopt; only the quartermaster takes on helpers");
+    guard.setOccupation(Occupation.QUARTERMASTER);
     check(VillageAllays.canAdopt(guard, allay), "eligible encounter lost before scan: distance="
         + guard.distanceToSqr(allay) + " sight=" + guard.hasLineOfSight(allay) + " village=" + (guard.getVillage() == village));
     guard.tickCount = Math.floorMod(50 - guard.getId(), 100);
     AllayEvents.tick(new EntityTickEvent.Post(guard));
     check(VillageAllays.village(allay) == village && allay.hasCustomName(), "natural hook failed to name or adopt");
+    check(!allay.getPersistentData().hasUUID(VillageAllays.SPAWNED_BY_BUILDING_KEY), "waiting tag survived adoption");
     check(!allay.isCustomNameVisible(), "nameplate should stay crosshair-only");
     check(village.getAllays().members().containsKey(allay.getUUID()), "roster missing the adopted allay");
-    check(!VillageAllays.adopt(secondGuard, allay), "second guard claimed the same allay");
+    secondGuard.setOccupation(Occupation.QUARTERMASTER);
+    check(!VillageAllays.adopt(secondGuard, allay), "second quartermaster claimed the same allay");
     name = allay.getCustomName().getString();
     guard.setNoAi(true);
     secondGuard.setNoAi(true);
@@ -184,7 +191,7 @@ public final class AllayVerification {
     RealPerson person = PersonEntityType.PERSON.get().create(level);
     person.setVillage(village.getID());
     person.setVillageName(village.getName());
-    person.setOccupation(Occupation.GUARD);
+    person.setOccupation(Occupation.QUARTERMASTER);
     person.moveTo(x, 5, z, 0, 0);
     village.getPopulation().add(person.getUUID());
     check(level.addFreshEntity(person), "guard spawn failed");

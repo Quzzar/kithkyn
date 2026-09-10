@@ -27,19 +27,19 @@ public final class AllayEvents {
     }
   }
 
-  /** Guards scan on the golem cadence, half a period apart; members run their counter duty once a second. */
+  /** Quartermasters scan on the golem cadence, half a period apart; allays refresh their roster entry or their perch once a second. */
   @SubscribeEvent
   public static void tick(EntityTickEvent.Post event) {
     if (!(event.getEntity().level() instanceof ServerLevel level)) {
       return;
     }
-    if (event.getEntity() instanceof RealPerson guard && (guard.tickCount + guard.getId()) % 100 == 50) {
-      VillageAllays.considerAdoption(guard);
+    if (event.getEntity() instanceof RealPerson person && (person.tickCount + person.getId()) % 100 == 50) {
+      VillageAllays.considerAdoption(person);
     } else if (event.getEntity() instanceof Allay allay && (allay.tickCount + allay.getId()) % 20 == 10) {
       if (VillageAllays.villageId(allay).isPresent()) {
         VillageAllays.tickMember(allay);
       } else {
-        VillageAllays.adoptSpawned(level, allay);
+        VillageAllays.tetherSpawned(level, allay);
       }
     }
   }
