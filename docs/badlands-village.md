@@ -110,3 +110,8 @@ loaded the pack automatically, registered 199 building definitions in total, and
 returning player after the matching Prism client update. The current world and gallery were
 fully backed up and preserved. Rendered views confirmed the colored market cloth, village
 flags and the complete center with its two roof fires.
+
+The subsequent broad biome coverage pass passed 425 tests and native registry checks for all
+six vanilla Pueblo biomes, sandy Desert, and both Birch biomes. The expanded mapping is live
+locally; the twelve upgrade fits, all four founding rotations, and natural founding passed
+again with that mapping.

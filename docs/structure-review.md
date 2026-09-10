@@ -1166,3 +1166,28 @@ also needs its durable capture and excavation orientation. Finally, the selected
 Oasis reference structures cannot move from the private review library into shipped resources
 without the author's written permission; the approved Kithkyn market restyle does not have that
 dependency.
+
+### Jungle building showcase: September 9
+
+Aaron broadened the current Pueblo coverage to mesa/badlands and savanna families while
+keeping sandy deserts with Desert and birch families with Birch. These recognizable biome
+families use deterministic assignments; explicit style tags can narrow coverage as future
+catalogs become playable. Existing villages retain their saved styles.
+
+The new jungle review collection extends the dry gallery eastward, with an entrance at
+`4881.5, 230, 986.5` and a walkable connection beginning at x=4718. It contains 189 exhibits
+in 24 rows and eight wings: T&T Tribal and Polynesian; CTOV ground and tree villages;
+Dungeons & Taverns jungle villages, taverns and ruins; and jungle forts and lookouts.
+Each exhibit has a stable JA–JH identifier, a label and a separate editing footprint.
+The large ruined temple combines its original foundation and upper temple pieces.
+
+All source captures and display NBT remain private. The public provenance and exact positions
+are recorded in `tools/structure/jungle-showcase-20260909.json`. Optional integration buildings
+whose blocks are unavailable were omitted, rather than displayed with holes. Source markers,
+loot and executable commands were removed through the existing native display exporter.
+Selection of a playable Jungle catalog remains a later authoring step; the showcase itself
+does not activate Jungle as a village style.
+
+All 189 placed exhibits passed the final block comparison, including restored hanging vines.
+The only block-name differences are Minecraft’s grass-to-short-grass data migration. All
+25 floating headings passed native codecs, and eight rendered views were inspected.

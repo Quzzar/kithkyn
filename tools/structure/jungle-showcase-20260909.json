@@ -1,0 +1,3908 @@
+{
+  "schemaVersion": 1,
+  "recorded": "2026-09-09",
+  "purpose": "Walkable jungle building references for the next village variant. Selection and editing remain in progress.",
+  "status": "placed_and_visually_verified",
+  "privateCatalog": "run/jungle-showcase/catalog.json",
+  "privatePreparedTemplates": "run/jungle-showcase/prepared",
+  "entry": [
+    4881.5,
+    230,
+    986.5
+  ],
+  "exhibitBounds": [
+    4887,
+    228,
+    1002,
+    6384,
+    271,
+    1129
+  ],
+  "concourse": {
+    "from": [
+      4718,
+      229,
+      982
+    ],
+    "to": [
+      6397,
+      229,
+      990
+    ],
+    "connectsTo": "Existing Pueblo/Desert concourse ending at x=4717"
+  },
+  "preservation": "Existing style and dry-biome galleries retain their current geometry and edits.",
+  "counts": {
+    "exhibits": 189,
+    "rows": 24,
+    "wings": 8,
+    "nativeCheckedBlocks": 225896,
+    "families": {
+      "tt_tribal": 25,
+      "tt_polynesian": 17,
+      "ctov_jungle": 31,
+      "ctov_tree": 17,
+      "dnt_jungle": 35,
+      "dnt_tavern": 22,
+      "dnt_ruins": 26,
+      "tt_fort": 4,
+      "ctov_outpost": 10,
+      "dnt_landmarks": 2
+    }
+  },
+  "sources": [
+    {
+      "jar": "[Neoforge]ctov-3.6.3.jar",
+      "sha256": "4815b19b83541f09cba556e222612bc5ddcc31f7c4ba2198f4b4d6376cca8b2e"
+    },
+    {
+      "jar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+      "sha256": "1db28e89e0cb76aebe9e40955d1866e8ac1779575d15c2a1e250ac804a762d05"
+    },
+    {
+      "jar": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar",
+      "sha256": "04e3a5f6e9aa83b2f305e836ed6bceb656c7a6cae8d945415fd8d55bc2450696"
+    }
+  ],
+  "selection": {
+    "included": "All compatible standalone jungle and sparse-jungle village buildings, centers, useful decorations, tavern grounds, ruins and jungle outposts from the installed source jars.",
+    "duplicates": "Exact source duplicates are retained once. Structurally different buildings remain available.",
+    "modularAssembly": "The large Dungeons & Taverns ruined temple combines its original 47x2x47 foundation with its 47x32x47 temple at offset [0,2,0]. Other selected structures contain their own shells.",
+    "bamboo": "No separately named bamboo village family exists in these installed jars; bamboo architecture and details within the jungle families are included.",
+    "omitted": "Generation paths, empty or entity-only anchors, and optional integration buildings requiring unavailable mod blocks.",
+    "exclusionCounts": {
+      "Empty generation anchor or entity marker": 5,
+      "Requires blocks from an unavailable compatibility mod": 95
+    }
+  },
+  "displayPreparation": [
+    "Native Minecraft NBT read/write and round-trip verification",
+    "Resolve jigsaws to final block states",
+    "Clear loot, entity-spawn and executable command data",
+    "Retain hanging decoration through explicit placement commands",
+    "Persistent leaves and contained fluid basins",
+    "Separate labeled footprints with walkable concourse and click-through navigation"
+  ],
+  "verification": {
+    "offline": "run/jungle-showcase/preparation-verification.json",
+    "live": "run/jungle-showcase/verification-summary.json",
+    "screenshots": "run/jungle-showcase/screenshots-plan.json",
+    "headers": "run/jungle-showcase/header-codec-verification.json",
+    "renderedViews": "run/jungle-showcase/screenshots/client/screenshots",
+    "restoredVines": 1270,
+    "omittedDecorations": "run/jungle-showcase/omitted-decoration-review.json"
+  },
+  "wings": [
+    {
+      "letter": "JA",
+      "title": "TRIBAL VILLAGE",
+      "x": 4889,
+      "endZ": 1098,
+      "rows": [
+        "JA01",
+        "JA02",
+        "JA03"
+      ]
+    },
+    {
+      "letter": "JB",
+      "title": "POLYNESIAN VILLAGE",
+      "x": 5081,
+      "endZ": 1071,
+      "rows": [
+        "JB01",
+        "JB02"
+      ]
+    },
+    {
+      "letter": "JC",
+      "title": "JUNGLE SETTLEMENT",
+      "x": 5273,
+      "endZ": 1135,
+      "rows": [
+        "JC01",
+        "JC02",
+        "JC03",
+        "JC04"
+      ]
+    },
+    {
+      "letter": "JD",
+      "title": "TREE VILLAGE",
+      "x": 5465,
+      "endZ": 1109,
+      "rows": [
+        "JD01",
+        "JD02",
+        "JD03"
+      ]
+    },
+    {
+      "letter": "JE",
+      "title": "JUNGLE VILLAGE",
+      "x": 5657,
+      "endZ": 1124,
+      "rows": [
+        "JE01",
+        "JE02",
+        "JE03",
+        "JE04"
+      ]
+    },
+    {
+      "letter": "JF",
+      "title": "TAVERN & GROUNDS",
+      "x": 5849,
+      "endZ": 1065,
+      "rows": [
+        "JF01",
+        "JF02"
+      ]
+    },
+    {
+      "letter": "JG",
+      "title": "RUINS & TEMPLES",
+      "x": 6041,
+      "endZ": 1131,
+      "rows": [
+        "JG01",
+        "JG02",
+        "JG03"
+      ]
+    },
+    {
+      "letter": "JH",
+      "title": "FORTS & LOOKOUTS",
+      "x": 6233,
+      "endZ": 1111,
+      "rows": [
+        "JH01",
+        "JH02",
+        "JH03"
+      ]
+    }
+  ],
+  "rows": [
+    {
+      "id": "JA01",
+      "title": "Towns & Towers / Tribal (1/3)",
+      "family": "tt_tribal",
+      "mod": "Towns & Towers",
+      "origin": [
+        4896,
+        230,
+        1010
+      ],
+      "bounds": [
+        4887,
+        228,
+        1002,
+        5036,
+        254,
+        1025
+      ],
+      "entries": [
+        {
+          "id": "JA01.1",
+          "label": "Meeting Point 1",
+          "source": "data/kaisyn/structure/village/jungle_tribal/town_centers/jungle_meeting_point_1.nbt",
+          "sourceJar": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar",
+          "sourceSha256": "e6c715d0896df0122dee705e24f3c5751e84436d29f8620f61683348d044456a",
+          "origin": [
+            4896,
+            230,
+            1010
+          ],
+          "size": [
+            11,
+            6,
+            11
+          ]
+        },
+        {
+          "id": "JA01.2",
+          "label": "Meeting Point 2",
+          "source": "data/kaisyn/structure/village/jungle_tribal/town_centers/jungle_meeting_point_2.nbt",
+          "sourceJar": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar",
+          "sourceSha256": "932caf3bb06706c889e3deaf80dffd74ed293701a92f3d7bc5aedc0dc6b86237",
+          "origin": [
+            4915,
+            230,
+            1010
+          ],
+          "size": [
+            14,
+            5,
+            12
+          ]
+        },
+        {
+          "id": "JA01.3",
+          "label": "Meeting Point 3",
+          "source": "data/kaisyn/structure/village/jungle_tribal/town_centers/jungle_meeting_point_3.nbt",
+          "sourceJar": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar",
+          "sourceSha256": "fff7fe347914cdba4bb2565827e25a4f17cb61b34a0ef637dff20d7750c554ee",
+          "origin": [
+            4937,
+            230,
+            1010
+          ],
+          "size": [
+            11,
+            6,
+            11
+          ]
+        },
+        {
+          "id": "JA01.4",
+          "label": "Animal Pen 1",
+          "source": "data/kaisyn/structure/village/jungle_tribal/houses/jungle_animal_pen_1.nbt",
+          "sourceJar": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar",
+          "sourceSha256": "5ee1cc4e45ef7293f7e9d3c9af210d59fdb8ac1d7784afa6de7a4b6159ab03cb",
+          "origin": [
+            4956,
+            230,
+            1010
+          ],
+          "size": [
+            8,
+            4,
+            11
+          ]
+        },
+        {
+          "id": "JA01.5",
+          "label": "Armorer 1",
+          "source": "data/kaisyn/structure/village/jungle_tribal/houses/jungle_armorer_1.nbt",
+          "sourceJar": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar",
+          "sourceSha256": "1737f44fc2322cd3a7a32e207d915e63bbde4c62e576a99be63b0d98d78f723e",
+          "origin": [
+            4972,
+            230,
+            1010
+          ],
+          "size": [
+            6,
+            6,
+            7
+          ]
+        },
+        {
+          "id": "JA01.6",
+          "label": "Butcher 1",
+          "source": "data/kaisyn/structure/village/jungle_tribal/houses/jungle_butcher_1.nbt",
+          "sourceJar": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar",
+          "sourceSha256": "1411ac3b499bfceb9d50ae0108da08b747c4d0a6b0642465958026f2c57b8d9d",
+          "origin": [
+            4986,
+            230,
+            1010
+          ],
+          "size": [
+            10,
+            9,
+            7
+          ]
+        },
+        {
+          "id": "JA01.7",
+          "label": "Cartographer 1",
+          "source": "data/kaisyn/structure/village/jungle_tribal/houses/jungle_cartographer_1.nbt",
+          "sourceJar": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar",
+          "sourceSha256": "7c8a81badd7958ebd9b0d88362f1dfbfaa446df2957a1e14de847274416047b8",
+          "origin": [
+            5004,
+            230,
+            1010
+          ],
+          "size": [
+            14,
+            22,
+            12
+          ]
+        },
+        {
+          "id": "JA01.8",
+          "label": "Fisher 1",
+          "source": "data/kaisyn/structure/village/jungle_tribal/houses/jungle_fisher_1.nbt",
+          "sourceJar": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar",
+          "sourceSha256": "a9e36ffa090731fa7bb0bd4dd9f1d2c4ba98ded917ad23562598cd337827ea1a",
+          "origin": [
+            5026,
+            230,
+            1010
+          ],
+          "size": [
+            8,
+            8,
+            13
+          ]
+        }
+      ]
+    },
+    {
+      "id": "JA02",
+      "title": "Towns & Towers / Tribal (2/3)",
+      "family": "tt_tribal",
+      "mod": "Towns & Towers",
+      "origin": [
+        4896,
+        230,
+        1043
+      ],
+      "bounds": [
+        4887,
+        228,
+        1035,
+        5047,
+        249,
+        1060
+      ],
+      "entries": [
+        {
+          "id": "JA02.1",
+          "label": "Fletcher 1",
+          "source": "data/kaisyn/structure/village/jungle_tribal/houses/jungle_fletcher_1.nbt",
+          "sourceJar": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar",
+          "sourceSha256": "66c16bcc897647458c6411e659d560a60e616b680e56589afb37a43fee0225b0",
+          "origin": [
+            4896,
+            230,
+            1043
+          ],
+          "size": [
+            8,
+            8,
+            9
+          ]
+        },
+        {
+          "id": "JA02.2",
+          "label": "Large House 1",
+          "source": "data/kaisyn/structure/village/jungle_tribal/houses/jungle_large_house_1.nbt",
+          "sourceJar": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar",
+          "sourceSha256": "ca82b29cd8747dbc69b153a196a08509e12fdf206358b5df1fd66b1c186f386b",
+          "origin": [
+            4912,
+            230,
+            1043
+          ],
+          "size": [
+            8,
+            8,
+            7
+          ]
+        },
+        {
+          "id": "JA02.3",
+          "label": "Leatherworker 1",
+          "source": "data/kaisyn/structure/village/jungle_tribal/houses/jungle_leatherworker_1.nbt",
+          "sourceJar": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar",
+          "sourceSha256": "af0ea33ba7db2509abac8939ef70864152ace4110743a7e18d3dd75b5ed67c41",
+          "origin": [
+            4928,
+            230,
+            1043
+          ],
+          "size": [
+            11,
+            17,
+            12
+          ]
+        },
+        {
+          "id": "JA02.4",
+          "label": "Library 1",
+          "source": "data/kaisyn/structure/village/jungle_tribal/houses/jungle_library_1.nbt",
+          "sourceJar": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar",
+          "sourceSha256": "3dc39b4aa50a0dd2d27e001051fb25c02ae30f1f0811d27bc4cc362dffb44987",
+          "origin": [
+            4947,
+            230,
+            1043
+          ],
+          "size": [
+            14,
+            8,
+            15
+          ]
+        },
+        {
+          "id": "JA02.5",
+          "label": "Mason 1",
+          "source": "data/kaisyn/structure/village/jungle_tribal/houses/jungle_mason_1.nbt",
+          "sourceJar": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar",
+          "sourceSha256": "d548adf1950a0c70c7ba6b126b036ad207dc989037616a7a86771224b5aa2018",
+          "origin": [
+            4969,
+            230,
+            1043
+          ],
+          "size": [
+            9,
+            6,
+            9
+          ]
+        },
+        {
+          "id": "JA02.6",
+          "label": "Shepherd 1",
+          "source": "data/kaisyn/structure/village/jungle_tribal/houses/jungle_shepherd_1.nbt",
+          "sourceJar": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar",
+          "sourceSha256": "5b529fb2750b29aa99bab933ea0d3fdcf54a026652ff48af421fcb9e84f20412",
+          "origin": [
+            4986,
+            230,
+            1043
+          ],
+          "size": [
+            8,
+            6,
+            12
+          ]
+        },
+        {
+          "id": "JA02.7",
+          "label": "Small Farm 1",
+          "source": "data/kaisyn/structure/village/jungle_tribal/houses/jungle_small_farm_1.nbt",
+          "sourceJar": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar",
+          "sourceSha256": "89df158521d946fe35c92a1f9683db9a10e1ebb1a2e14ad1b807ee2f05492dcf",
+          "origin": [
+            5002,
+            230,
+            1043
+          ],
+          "size": [
+            13,
+            5,
+            11
+          ]
+        },
+        {
+          "id": "JA02.8",
+          "label": "Small House 1",
+          "source": "data/kaisyn/structure/village/jungle_tribal/houses/jungle_small_house_1.nbt",
+          "sourceJar": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar",
+          "sourceSha256": "a999cfc376e14b368e0db54140780f80734178ef0ec1147e31ede7facec21c06",
+          "origin": [
+            5023,
+            230,
+            1043
+          ],
+          "size": [
+            7,
+            7,
+            7
+          ]
+        },
+        {
+          "id": "JA02.9",
+          "label": "Small House 2",
+          "source": "data/kaisyn/structure/village/jungle_tribal/houses/jungle_small_house_2.nbt",
+          "sourceJar": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar",
+          "sourceSha256": "33c5b881992258b4b3f7610e209538d1947364ec7b824df83c3ef446f2d51e88",
+          "origin": [
+            5038,
+            230,
+            1043
+          ],
+          "size": [
+            7,
+            7,
+            7
+          ]
+        }
+      ]
+    },
+    {
+      "id": "JA03",
+      "title": "Towns & Towers / Tribal (3/3)",
+      "family": "tt_tribal",
+      "mod": "Towns & Towers",
+      "origin": [
+        4896,
+        230,
+        1078
+      ],
+      "bounds": [
+        4887,
+        228,
+        1070,
+        5007,
+        244,
+        1092
+      ],
+      "entries": [
+        {
+          "id": "JA03.1",
+          "label": "Small House 3",
+          "source": "data/kaisyn/structure/village/jungle_tribal/houses/jungle_small_house_3.nbt",
+          "sourceJar": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar",
+          "sourceSha256": "568ab59a86b3efc0ca48c7537e3e2d497452464c16630712fdd70f0e1261a8a1",
+          "origin": [
+            4896,
+            230,
+            1078
+          ],
+          "size": [
+            8,
+            5,
+            7
+          ]
+        },
+        {
+          "id": "JA03.2",
+          "label": "Small House 4",
+          "source": "data/kaisyn/structure/village/jungle_tribal/houses/jungle_small_house_4.nbt",
+          "sourceJar": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar",
+          "sourceSha256": "af54f3b684bbd956e3e55cf780a0e2e64937c536dd5d7c2ac699d9bfdc4d7863",
+          "origin": [
+            4912,
+            230,
+            1078
+          ],
+          "size": [
+            7,
+            6,
+            7
+          ]
+        },
+        {
+          "id": "JA03.3",
+          "label": "Temple 1",
+          "source": "data/kaisyn/structure/village/jungle_tribal/houses/jungle_temple_1.nbt",
+          "sourceJar": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar",
+          "sourceSha256": "369ac674137bf0304c95c7645ac46902c9d006bf732562a065a1c72ef3908a05",
+          "origin": [
+            4927,
+            230,
+            1078
+          ],
+          "size": [
+            7,
+            12,
+            12
+          ]
+        },
+        {
+          "id": "JA03.4",
+          "label": "Toolsmith 1",
+          "source": "data/kaisyn/structure/village/jungle_tribal/houses/jungle_toolsmith_1.nbt",
+          "sourceJar": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar",
+          "sourceSha256": "b40c5cf930f4684da6d4624079bb79179d14acac2437cdc665b7194499428076",
+          "origin": [
+            4942,
+            230,
+            1078
+          ],
+          "size": [
+            10,
+            7,
+            10
+          ]
+        },
+        {
+          "id": "JA03.5",
+          "label": "Weaponsmith 1",
+          "source": "data/kaisyn/structure/village/jungle_tribal/houses/jungle_weaponsmith_1.nbt",
+          "sourceJar": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar",
+          "sourceSha256": "e4554dba965e957bd2719c6012ec5961fb70eb190aa90f9883ff963648b5295c",
+          "origin": [
+            4960,
+            230,
+            1078
+          ],
+          "size": [
+            12,
+            6,
+            8
+          ]
+        },
+        {
+          "id": "JA03.6",
+          "label": "Decor 1",
+          "source": "data/kaisyn/structure/village/jungle_tribal/jungle_decor_1.nbt",
+          "sourceJar": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar",
+          "sourceSha256": "0d91461674a4266166319474eaafcf08c4cf7388966c53ae019eb0dee5a57d88",
+          "origin": [
+            4980,
+            230,
+            1078
+          ],
+          "size": [
+            3,
+            4,
+            4
+          ]
+        },
+        {
+          "id": "JA03.7",
+          "label": "Lamp 1",
+          "source": "data/kaisyn/structure/village/jungle_tribal/jungle_lamp_1.nbt",
+          "sourceJar": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar",
+          "sourceSha256": "37250dc221f9ba0c5ec4d84a3de396d47a2bbca7a143a62b56becb9e26c7a17a",
+          "origin": [
+            4991,
+            230,
+            1078
+          ],
+          "size": [
+            3,
+            4,
+            3
+          ]
+        },
+        {
+          "id": "JA03.8",
+          "label": "Lamp 3",
+          "source": "data/kaisyn/structure/village/jungle_tribal/jungle_lamp_3.nbt",
+          "sourceJar": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar",
+          "sourceSha256": "6e84a4faf54834a0f4bb61c55028eb31c5488308087ee55414ff3bf570f1c210",
+          "origin": [
+            5002,
+            230,
+            1078
+          ],
+          "size": [
+            3,
+            6,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "id": "JB01",
+      "title": "Towns & Towers / Polynesian (1/2)",
+      "family": "tt_polynesian",
+      "mod": "Towns & Towers",
+      "origin": [
+        5088,
+        230,
+        1010
+      ],
+      "bounds": [
+        5079,
+        228,
+        1002,
+        5226,
+        242,
+        1032
+      ],
+      "entries": [
+        {
+          "id": "JB01.1",
+          "label": "Meeting Point 1",
+          "source": "data/kaisyn/structure/village/sparse_jungle_polynesian/town_centers/sparse_jungle_meeting_point_1.nbt",
+          "sourceJar": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar",
+          "sourceSha256": "54e84818ecd0cfcdff20ae07c06a3e7f8a2dacd2f660a13bac1a59a74ea8d6be",
+          "origin": [
+            5088,
+            230,
+            1010
+          ],
+          "size": [
+            15,
+            10,
+            20
+          ]
+        },
+        {
+          "id": "JB01.2",
+          "label": "Armorer And Mason 1",
+          "source": "data/kaisyn/structure/village/sparse_jungle_polynesian/houses/sparse_jungle_armorer_and_mason_1.nbt",
+          "sourceJar": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar",
+          "sourceSha256": "91cb427e973f4c54aa6c35d85ef3a1d6913284b0bc93e59600595809d971b57c",
+          "origin": [
+            5111,
+            230,
+            1010
+          ],
+          "size": [
+            8,
+            6,
+            8
+          ]
+        },
+        {
+          "id": "JB01.3",
+          "label": "Butcher And Shepherd 1",
+          "source": "data/kaisyn/structure/village/sparse_jungle_polynesian/houses/sparse_jungle_butcher_and_shepherd_1.nbt",
+          "sourceJar": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar",
+          "sourceSha256": "cea44a5fa821878e42d5f5900dc8c41081bfb44cea221e3ecb215e89e3fcc5db",
+          "origin": [
+            5127,
+            230,
+            1010
+          ],
+          "size": [
+            8,
+            8,
+            8
+          ]
+        },
+        {
+          "id": "JB01.4",
+          "label": "Cartographer And Library 1",
+          "source": "data/kaisyn/structure/village/sparse_jungle_polynesian/houses/sparse_jungle_cartographer_and_library_1.nbt",
+          "sourceJar": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar",
+          "sourceSha256": "1b45937b71377968b1870c51081fc6b7abd4ec816eb7934b3513ad875c25505a",
+          "origin": [
+            5143,
+            230,
+            1010
+          ],
+          "size": [
+            11,
+            6,
+            7
+          ]
+        },
+        {
+          "id": "JB01.5",
+          "label": "Fisher And Fletcher 1",
+          "source": "data/kaisyn/structure/village/sparse_jungle_polynesian/houses/sparse_jungle_fisher_and_fletcher_1.nbt",
+          "sourceJar": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar",
+          "sourceSha256": "ef7f2214384eaecc3a53d1f1783cfdf6f8473b1049abc7b7e509018bd6e5ddd9",
+          "origin": [
+            5162,
+            230,
+            1010
+          ],
+          "size": [
+            7,
+            7,
+            7
+          ]
+        },
+        {
+          "id": "JB01.6",
+          "label": "Large Farm 1",
+          "source": "data/kaisyn/structure/village/sparse_jungle_polynesian/houses/sparse_jungle_large_farm_1.nbt",
+          "sourceJar": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar",
+          "sourceSha256": "f9a706859ab60737f7e07d095d8b702cba2ca8e5742d9e93984f88df59e35946",
+          "origin": [
+            5177,
+            230,
+            1010
+          ],
+          "size": [
+            13,
+            5,
+            11
+          ]
+        },
+        {
+          "id": "JB01.7",
+          "label": "Large House 1",
+          "source": "data/kaisyn/structure/village/sparse_jungle_polynesian/houses/sparse_jungle_large_house_1.nbt",
+          "sourceJar": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar",
+          "sourceSha256": "39a7030a949ed44d6a94fec847343cdaf9fc814e3a62bd8f2c099e6573a68140",
+          "origin": [
+            5198,
+            230,
+            1010
+          ],
+          "size": [
+            13,
+            10,
+            13
+          ]
+        },
+        {
+          "id": "JB01.8",
+          "label": "Leatherworker 1",
+          "source": "data/kaisyn/structure/village/sparse_jungle_polynesian/houses/sparse_jungle_leatherworker_1.nbt",
+          "sourceJar": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar",
+          "sourceSha256": "540994973e4067cb27349951181741de85a317ecf2efdcd78843e6bb9e38337f",
+          "origin": [
+            5219,
+            230,
+            1010
+          ],
+          "size": [
+            5,
+            5,
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "id": "JB02",
+      "title": "Towns & Towers / Polynesian (2/2)",
+      "family": "tt_polynesian",
+      "mod": "Towns & Towers",
+      "origin": [
+        5088,
+        230,
+        1050
+      ],
+      "bounds": [
+        5079,
+        228,
+        1042,
+        5230,
+        242,
+        1065
+      ],
+      "entries": [
+        {
+          "id": "JB02.1",
+          "label": "Medium House 1",
+          "source": "data/kaisyn/structure/village/sparse_jungle_polynesian/houses/sparse_jungle_medium_house_1.nbt",
+          "sourceJar": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar",
+          "sourceSha256": "44b13907f7f3ef370184a56e53e39b5b2cb842fef48a70656f40f6f555140e01",
+          "origin": [
+            5088,
+            230,
+            1050
+          ],
+          "size": [
+            7,
+            10,
+            13
+          ]
+        },
+        {
+          "id": "JB02.2",
+          "label": "Medium House 2",
+          "source": "data/kaisyn/structure/village/sparse_jungle_polynesian/houses/sparse_jungle_medium_house_2.nbt",
+          "sourceJar": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar",
+          "sourceSha256": "917feb647b15615c1285ee8490745a50adead6daf0b8158787d540191dd0b6df",
+          "origin": [
+            5103,
+            230,
+            1050
+          ],
+          "size": [
+            13,
+            9,
+            9
+          ]
+        },
+        {
+          "id": "JB02.3",
+          "label": "Medium House 3",
+          "source": "data/kaisyn/structure/village/sparse_jungle_polynesian/houses/sparse_jungle_medium_house_3.nbt",
+          "sourceJar": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar",
+          "sourceSha256": "f8cd7b0fa74d474dd41a61bbba80072e513f09a0a84f1d9a0c8b2f85a94d0cf2",
+          "origin": [
+            5124,
+            230,
+            1050
+          ],
+          "size": [
+            13,
+            9,
+            10
+          ]
+        },
+        {
+          "id": "JB02.4",
+          "label": "Small Farm 1",
+          "source": "data/kaisyn/structure/village/sparse_jungle_polynesian/houses/sparse_jungle_small_farm_1.nbt",
+          "sourceJar": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar",
+          "sourceSha256": "084e1024b62cb2bf96f5283e96c5b271919b5fd4bcd141e371661aa7d1dc1337",
+          "origin": [
+            5145,
+            230,
+            1050
+          ],
+          "size": [
+            6,
+            7,
+            7
+          ]
+        },
+        {
+          "id": "JB02.5",
+          "label": "Small House 1",
+          "source": "data/kaisyn/structure/village/sparse_jungle_polynesian/houses/sparse_jungle_small_house_1.nbt",
+          "sourceJar": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar",
+          "sourceSha256": "d05d8abd20d996a07aa8a7569c847cb13d74a33f15e5cd1a97cab11efb4794ae",
+          "origin": [
+            5159,
+            230,
+            1050
+          ],
+          "size": [
+            7,
+            6,
+            7
+          ]
+        },
+        {
+          "id": "JB02.6",
+          "label": "Small House 2",
+          "source": "data/kaisyn/structure/village/sparse_jungle_polynesian/houses/sparse_jungle_small_house_2.nbt",
+          "sourceJar": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar",
+          "sourceSha256": "4022d36b4e97ccd1641ca532e419b6c8ab0c18a4fc7234fc11aebaf3cfdf0dfb",
+          "origin": [
+            5174,
+            230,
+            1050
+          ],
+          "size": [
+            8,
+            6,
+            8
+          ]
+        },
+        {
+          "id": "JB02.7",
+          "label": "Small House 3",
+          "source": "data/kaisyn/structure/village/sparse_jungle_polynesian/houses/sparse_jungle_small_house_3.nbt",
+          "sourceJar": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar",
+          "sourceSha256": "b54fbc418f31e7373bc9909d25b075673dc4461a69c6c9aa5c08e2438986277a",
+          "origin": [
+            5190,
+            230,
+            1050
+          ],
+          "size": [
+            7,
+            7,
+            7
+          ]
+        },
+        {
+          "id": "JB02.8",
+          "label": "Small House 4",
+          "source": "data/kaisyn/structure/village/sparse_jungle_polynesian/houses/sparse_jungle_small_house_4.nbt",
+          "sourceJar": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar",
+          "sourceSha256": "f8bf7cf8ca5418260be087789471a52cb5f247e0ed5f263f002df98f0eee1880",
+          "origin": [
+            5205,
+            230,
+            1050
+          ],
+          "size": [
+            7,
+            7,
+            7
+          ]
+        },
+        {
+          "id": "JB02.9",
+          "label": "Toolsmith And Weaponsmith 1",
+          "source": "data/kaisyn/structure/village/sparse_jungle_polynesian/houses/sparse_jungle_toolsmith_and_weaponsmith_1.nbt",
+          "sourceJar": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar",
+          "sourceSha256": "4cbddd7addc4f96d1cfb9095afbc727d80c0554d871e1924b1a53a20c92ece6d",
+          "origin": [
+            5220,
+            230,
+            1050
+          ],
+          "size": [
+            8,
+            8,
+            8
+          ]
+        }
+      ]
+    },
+    {
+      "id": "JC01",
+      "title": "CTOV / Jungle Settlement (1/4)",
+      "family": "ctov_jungle",
+      "mod": "CTOV",
+      "origin": [
+        5280,
+        230,
+        1010
+      ],
+      "bounds": [
+        5271,
+        228,
+        1002,
+        5424,
+        246,
+        1029
+      ],
+      "entries": [
+        {
+          "id": "JC01.1",
+          "label": "Town Center",
+          "source": "data/ctov/structure/village/jungle/town_center.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "8b470a03f3fb7427c29ba3ce2b5bfa2db7c168408d1023429a1788bf6f6933fa",
+          "origin": [
+            5280,
+            230,
+            1010
+          ],
+          "size": [
+            17,
+            14,
+            17
+          ]
+        },
+        {
+          "id": "JC01.2",
+          "label": "Big 1",
+          "source": "data/ctov/structure/village/jungle/house/big_1.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "bc6fb2772f261e0990e60e1c041ee97b388d78e8cab59435e42813a8b03b6aef",
+          "origin": [
+            5305,
+            230,
+            1010
+          ],
+          "size": [
+            11,
+            13,
+            15
+          ]
+        },
+        {
+          "id": "JC01.3",
+          "label": "Med 1",
+          "source": "data/ctov/structure/village/jungle/house/med_1.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "e8fb019f2f4dfe634bc11c5ab803b3437317fd8e5dbe171c1f7a09ba84e70e6a",
+          "origin": [
+            5324,
+            230,
+            1010
+          ],
+          "size": [
+            11,
+            8,
+            11
+          ]
+        },
+        {
+          "id": "JC01.4",
+          "label": "Med 2",
+          "source": "data/ctov/structure/village/jungle/house/med_2.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "1a57efe0dfc367f0459351a60018bb6209e2adf0b512daa6fe4d38aa790ae5a9",
+          "origin": [
+            5343,
+            230,
+            1010
+          ],
+          "size": [
+            11,
+            13,
+            10
+          ]
+        },
+        {
+          "id": "JC01.5",
+          "label": "Med 3",
+          "source": "data/ctov/structure/village/jungle/house/med_3.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "f5f9b00dabbd084298b1a574f24e19e305c836a089a99fc39a7bf0940e43f989",
+          "origin": [
+            5362,
+            230,
+            1010
+          ],
+          "size": [
+            11,
+            13,
+            10
+          ]
+        },
+        {
+          "id": "JC01.6",
+          "label": "Small 1",
+          "source": "data/ctov/structure/village/jungle/house/small_1.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "2f18d58a3eb08b9e900039ce970b3bf577bfd7119ca720ff3b16ff915c7bae65",
+          "origin": [
+            5381,
+            230,
+            1010
+          ],
+          "size": [
+            7,
+            8,
+            7
+          ]
+        },
+        {
+          "id": "JC01.7",
+          "label": "Small 2",
+          "source": "data/ctov/structure/village/jungle/house/small_2.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "de251961b43edba6b857297c8cbce26c44f0118a0ca52c9118676ebeb4354da7",
+          "origin": [
+            5396,
+            230,
+            1010
+          ],
+          "size": [
+            9,
+            9,
+            8
+          ]
+        },
+        {
+          "id": "JC01.8",
+          "label": "Small 3",
+          "source": "data/ctov/structure/village/jungle/house/small_3.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "8151633872d131525d5a207cad787c07419e9976e31524bfac7404f263a6700f",
+          "origin": [
+            5413,
+            230,
+            1010
+          ],
+          "size": [
+            9,
+            9,
+            9
+          ]
+        }
+      ]
+    },
+    {
+      "id": "JC02",
+      "title": "CTOV / Jungle Settlement (2/4)",
+      "family": "ctov_jungle",
+      "mod": "CTOV",
+      "origin": [
+        5280,
+        230,
+        1047
+      ],
+      "bounds": [
+        5271,
+        228,
+        1039,
+        5424,
+        258,
+        1067
+      ],
+      "entries": [
+        {
+          "id": "JC02.1",
+          "label": "Small 4",
+          "source": "data/ctov/structure/village/jungle/house/small_4.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "3cf369645128e9be2ffe345ec176281b9311c2e8e6ced0fb904132fb610fbb79",
+          "origin": [
+            5280,
+            230,
+            1047
+          ],
+          "size": [
+            8,
+            8,
+            8
+          ]
+        },
+        {
+          "id": "JC02.2",
+          "label": "Small 5",
+          "source": "data/ctov/structure/village/jungle/house/small_5.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "e576ffc7f1896b108b8af5d5616e2e59564b6b8ed7bc94afee0dc17d0f03389e",
+          "origin": [
+            5296,
+            230,
+            1047
+          ],
+          "size": [
+            7,
+            7,
+            8
+          ]
+        },
+        {
+          "id": "JC02.3",
+          "label": "Butcher",
+          "source": "data/ctov/structure/village/jungle/jobsite/butcher.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "e4533560e086dd87cedd1db485c163fea82822110d477ee9bc1e24b162aa7ea4",
+          "origin": [
+            5311,
+            230,
+            1047
+          ],
+          "size": [
+            12,
+            7,
+            12
+          ]
+        },
+        {
+          "id": "JC02.4",
+          "label": "Cartography",
+          "source": "data/ctov/structure/village/jungle/jobsite/cartography.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "67c31d2552fde2367f52f025856d04b373abed04a359acc324bb1e3690e3f174",
+          "origin": [
+            5331,
+            230,
+            1047
+          ],
+          "size": [
+            11,
+            26,
+            18
+          ]
+        },
+        {
+          "id": "JC02.5",
+          "label": "Chemist",
+          "source": "data/ctov/structure/village/jungle/jobsite/chemist.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "f2e44e2cc2194e2d1bc1f6c3f7ac7ac605add6a306edc2163d4bdef814f11052",
+          "origin": [
+            5350,
+            230,
+            1047
+          ],
+          "size": [
+            7,
+            5,
+            9
+          ]
+        },
+        {
+          "id": "JC02.6",
+          "label": "Farm",
+          "source": "data/ctov/structure/village/jungle/jobsite/farm.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "1a45b6b77d0249ea2ac297f941cd3e305a12458e2c2115fd7bf4b5c5f4fd9ef3",
+          "origin": [
+            5365,
+            230,
+            1047
+          ],
+          "size": [
+            18,
+            6,
+            16
+          ]
+        },
+        {
+          "id": "JC02.7",
+          "label": "Fishing Hut",
+          "source": "data/ctov/structure/village/jungle/jobsite/fishing_hut.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "8e68705b0114ce7f38f01af41142727ed72b047b6b072f83910f8c5712984fb7",
+          "origin": [
+            5391,
+            230,
+            1047
+          ],
+          "size": [
+            11,
+            9,
+            11
+          ]
+        },
+        {
+          "id": "JC02.8",
+          "label": "Leather",
+          "source": "data/ctov/structure/village/jungle/jobsite/leather.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "23789fc2fef1edc759a6424ebac0839c967b11a2186a4731166f80ba171d6d6e",
+          "origin": [
+            5410,
+            230,
+            1047
+          ],
+          "size": [
+            12,
+            6,
+            12
+          ]
+        }
+      ]
+    },
+    {
+      "id": "JC03",
+      "title": "CTOV / Jungle Settlement (3/4)",
+      "family": "ctov_jungle",
+      "mod": "CTOV",
+      "origin": [
+        5280,
+        230,
+        1085
+      ],
+      "bounds": [
+        5271,
+        228,
+        1077,
+        5428,
+        244,
+        1103
+      ],
+      "entries": [
+        {
+          "id": "JC03.1",
+          "label": "Library",
+          "source": "data/ctov/structure/village/jungle/jobsite/library.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "20e04e1f715e6babfb61396a5ea38ecf29628309364849b6dedf126b5988293d",
+          "origin": [
+            5280,
+            230,
+            1085
+          ],
+          "size": [
+            9,
+            6,
+            9
+          ]
+        },
+        {
+          "id": "JC03.2",
+          "label": "Mason",
+          "source": "data/ctov/structure/village/jungle/jobsite/mason.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "f2944783a5ae7242084a56a186ffcea0f2eb11dc538a640b6a8953581a22545c",
+          "origin": [
+            5297,
+            230,
+            1085
+          ],
+          "size": [
+            16,
+            11,
+            9
+          ]
+        },
+        {
+          "id": "JC03.3",
+          "label": "Orchard",
+          "source": "data/ctov/structure/village/jungle/jobsite/orchard.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "1a09b053bdd860a469ddb9aec8f2cf90d079efc6f64fad664b9f36bfa65687ca",
+          "origin": [
+            5321,
+            230,
+            1085
+          ],
+          "size": [
+            18,
+            6,
+            16
+          ]
+        },
+        {
+          "id": "JC03.4",
+          "label": "Shepherd",
+          "source": "data/ctov/structure/village/jungle/jobsite/shepherd.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "1abfac02890507454fd3f1a0c964f259bd4e4165ab5e6644dee1c777215aff32",
+          "origin": [
+            5347,
+            230,
+            1085
+          ],
+          "size": [
+            12,
+            6,
+            12
+          ]
+        },
+        {
+          "id": "JC03.5",
+          "label": "Smith",
+          "source": "data/ctov/structure/village/jungle/jobsite/smith.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "87022e41d48822c2d4501254453a5a4062e5afc506e80973599b7f2b24d92565",
+          "origin": [
+            5367,
+            230,
+            1085
+          ],
+          "size": [
+            10,
+            8,
+            11
+          ]
+        },
+        {
+          "id": "JC03.6",
+          "label": "Vault",
+          "source": "data/ctov/structure/village/jungle/jobsite/vault.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "0b3cc3c4a454b17f58f6214967bb3cef25147338a4386a18a73e0e4dcd2baf20",
+          "origin": [
+            5385,
+            230,
+            1085
+          ],
+          "size": [
+            9,
+            12,
+            9
+          ]
+        },
+        {
+          "id": "JC03.7",
+          "label": "Lamp 1",
+          "source": "data/ctov/structure/village/jungle/deco/lamp_1.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "062c13fe7d15d43071a76cf4dfb3839f1a89371c9bc6cebcf056295a90ea6917",
+          "origin": [
+            5402,
+            230,
+            1085
+          ],
+          "size": [
+            3,
+            3,
+            3
+          ]
+        },
+        {
+          "id": "JC03.8",
+          "label": "Lamp 2",
+          "source": "data/ctov/structure/village/jungle/deco/lamp_2.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "353fd6d35866b1d39652efa1b7649a20b385f7a77de767c09ed030d5d5ca28db",
+          "origin": [
+            5413,
+            230,
+            1085
+          ],
+          "size": [
+            3,
+            3,
+            3
+          ]
+        },
+        {
+          "id": "JC03.9",
+          "label": "Melon 2",
+          "source": "data/ctov/structure/village/jungle/deco/melon_2.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "1ea1d52ee5e5d19ff3fe49027e3b1d656344fed83c71a717d25ed7c9358b9c9d",
+          "origin": [
+            5424,
+            230,
+            1085
+          ],
+          "size": [
+            2,
+            2,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "id": "JC04",
+      "title": "CTOV / Jungle Settlement (4/4)",
+      "family": "ctov_jungle",
+      "mod": "CTOV",
+      "origin": [
+        5280,
+        230,
+        1121
+      ],
+      "bounds": [
+        5271,
+        228,
+        1113,
+        5348,
+        241,
+        1129
+      ],
+      "entries": [
+        {
+          "id": "JC04.1",
+          "label": "Shed",
+          "source": "data/ctov/structure/village/jungle/deco/shed.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "7ba6e93a777735d95c6edd8db70361960027d45c1a62d65c315b2fa76f85b7bd",
+          "origin": [
+            5280,
+            230,
+            1121
+          ],
+          "size": [
+            7,
+            4,
+            6
+          ]
+        },
+        {
+          "id": "JC04.2",
+          "label": "Stall 1",
+          "source": "data/ctov/structure/village/jungle/deco/stall_1.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "bfb15aa9be9ffe33c4ab99a1a42fd4e8343f1e46ffbaf3710ac760b3f76bab6c",
+          "origin": [
+            5295,
+            230,
+            1121
+          ],
+          "size": [
+            3,
+            4,
+            3
+          ]
+        },
+        {
+          "id": "JC04.3",
+          "label": "Stall 2",
+          "source": "data/ctov/structure/village/jungle/deco/stall_2.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "5d8453afc4cc8e9f7076044f23a231352d5402175aaf1369130d4e6cd1432341",
+          "origin": [
+            5306,
+            230,
+            1121
+          ],
+          "size": [
+            3,
+            4,
+            1
+          ]
+        },
+        {
+          "id": "JC04.4",
+          "label": "Statue 1",
+          "source": "data/ctov/structure/village/jungle/deco/statue_1.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "92e24a06b37dbbd6863f8e4202b54f2a472e642fcd96c17b2e04f95060733891",
+          "origin": [
+            5317,
+            230,
+            1121
+          ],
+          "size": [
+            5,
+            9,
+            3
+          ]
+        },
+        {
+          "id": "JC04.5",
+          "label": "Statue 2",
+          "source": "data/ctov/structure/village/jungle/deco/statue_2.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "3562b28acc0572cf841c5bcf27a3ccdbab445285e38a1b878561758e3296482b",
+          "origin": [
+            5330,
+            230,
+            1121
+          ],
+          "size": [
+            3,
+            5,
+            3
+          ]
+        },
+        {
+          "id": "JC04.6",
+          "label": "Well",
+          "source": "data/ctov/structure/village/jungle/deco/well.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "27225df0b0b888eba3c351afcb2bef69382128a2bd407db9fed71b6f1c2b9e35",
+          "origin": [
+            5341,
+            230,
+            1121
+          ],
+          "size": [
+            5,
+            9,
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "id": "JD01",
+      "title": "CTOV / Jungle Tree Village (1/3)",
+      "family": "ctov_tree",
+      "mod": "CTOV",
+      "origin": [
+        5472,
+        230,
+        1010
+      ],
+      "bounds": [
+        5463,
+        228,
+        1002,
+        5612,
+        271,
+        1036
+      ],
+      "entries": [
+        {
+          "id": "JD01.1",
+          "label": "Town Center",
+          "source": "data/ctov/structure/village/jungle_tree/town_center.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "e4753bb0b6cde52413eca18c8dcbe801bbe20b25df4a1aca47f5af4cddea66dd",
+          "origin": [
+            5472,
+            230,
+            1010
+          ],
+          "size": [
+            24,
+            30,
+            24
+          ]
+        },
+        {
+          "id": "JD01.2",
+          "label": "House 1",
+          "source": "data/ctov/structure/village/jungle_tree/house/house_1.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "56a84731e5e7dc9cfe6fc9255f127cfdffa30422979047c32707fbb94d49a59b",
+          "origin": [
+            5504,
+            230,
+            1010
+          ],
+          "size": [
+            16,
+            23,
+            13
+          ]
+        },
+        {
+          "id": "JD01.3",
+          "label": "House 2",
+          "source": "data/ctov/structure/village/jungle_tree/house/house_2.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "3e05013fc57ea0eb6f00fab785921f8bf250c4099cae564fed53ff997020e36a",
+          "origin": [
+            5528,
+            230,
+            1010
+          ],
+          "size": [
+            12,
+            30,
+            16
+          ]
+        },
+        {
+          "id": "JD01.4",
+          "label": "House 3",
+          "source": "data/ctov/structure/village/jungle_tree/house/house_3.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "5ab94c61655f25d9c29480b4a3d6c490b354dce48526498be942b3ae2c93cba9",
+          "origin": [
+            5548,
+            230,
+            1010
+          ],
+          "size": [
+            18,
+            34,
+            14
+          ]
+        },
+        {
+          "id": "JD01.5",
+          "label": "Butcher",
+          "source": "data/ctov/structure/village/jungle_tree/jobsite/butcher.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "be91ea3cc3f169fc02889c6a00de78b4da8285981da2169ae7b8f727ba9c6474",
+          "origin": [
+            5574,
+            230,
+            1010
+          ],
+          "size": [
+            13,
+            27,
+            13
+          ]
+        },
+        {
+          "id": "JD01.6",
+          "label": "Cartographer",
+          "source": "data/ctov/structure/village/jungle_tree/jobsite/cartographer.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "413be214db67b7661a39e53b53661464173632c4eeab92466dfcbfb50ca9e182",
+          "origin": [
+            5595,
+            230,
+            1010
+          ],
+          "size": [
+            15,
+            39,
+            10
+          ]
+        }
+      ]
+    },
+    {
+      "id": "JD02",
+      "title": "CTOV / Jungle Tree Village (2/3)",
+      "family": "ctov_tree",
+      "mod": "CTOV",
+      "origin": [
+        5472,
+        230,
+        1054
+      ],
+      "bounds": [
+        5463,
+        228,
+        1046,
+        5610,
+        261,
+        1070
+      ],
+      "entries": [
+        {
+          "id": "JD02.1",
+          "label": "Farm",
+          "source": "data/ctov/structure/village/jungle_tree/jobsite/farm.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "0c2b67858baa0f20404320ce347d13f4a35571ef01a92f1a87c5dbdc70d2c850",
+          "origin": [
+            5472,
+            230,
+            1054
+          ],
+          "size": [
+            13,
+            28,
+            13
+          ]
+        },
+        {
+          "id": "JD02.2",
+          "label": "Fishmonger",
+          "source": "data/ctov/structure/village/jungle_tree/jobsite/fishmonger.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "21ed84fd95e960713e7484728ec4155db3ee98522ea3d7a06751d9241ec9136e",
+          "origin": [
+            5493,
+            230,
+            1054
+          ],
+          "size": [
+            13,
+            20,
+            13
+          ]
+        },
+        {
+          "id": "JD02.3",
+          "label": "Jewelry Shop",
+          "source": "data/ctov/structure/village/jungle_tree/jobsite/jewelry_shop.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "201a45c19da50354c87e2ba162ff50d94935902f4529f4d6b5817cf560ea6326",
+          "origin": [
+            5514,
+            230,
+            1054
+          ],
+          "size": [
+            12,
+            20,
+            12
+          ]
+        },
+        {
+          "id": "JD02.4",
+          "label": "Leatherhouse",
+          "source": "data/ctov/structure/village/jungle_tree/jobsite/leatherhouse.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "8d2f60a2ba06cdb13959b3843768ed8f8a96059d81c57e5083695f098747dd33",
+          "origin": [
+            5534,
+            230,
+            1054
+          ],
+          "size": [
+            13,
+            28,
+            13
+          ]
+        },
+        {
+          "id": "JD02.5",
+          "label": "Library",
+          "source": "data/ctov/structure/village/jungle_tree/jobsite/library.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "93c31b02c162bbb9769b229e46d78ded6352e6d0f7dbd60def7016526a7b4f81",
+          "origin": [
+            5555,
+            230,
+            1054
+          ],
+          "size": [
+            12,
+            23,
+            14
+          ]
+        },
+        {
+          "id": "JD02.6",
+          "label": "Mason",
+          "source": "data/ctov/structure/village/jungle_tree/jobsite/mason.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "5c1642ede31af9f7952de0fec183558e6b8b7893060439641c398c1c427e2f69",
+          "origin": [
+            5575,
+            230,
+            1054
+          ],
+          "size": [
+            12,
+            29,
+            13
+          ]
+        },
+        {
+          "id": "JD02.7",
+          "label": "Orchard",
+          "source": "data/ctov/structure/village/jungle_tree/jobsite/orchard.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "e0351731a39e934a589ccb025ba1516eaf35eb433186c6e910a4951a03e28290",
+          "origin": [
+            5595,
+            230,
+            1054
+          ],
+          "size": [
+            13,
+            28,
+            13
+          ]
+        }
+      ]
+    },
+    {
+      "id": "JD03",
+      "title": "CTOV / Jungle Tree Village (3/3)",
+      "family": "ctov_tree",
+      "mod": "CTOV",
+      "origin": [
+        5472,
+        230,
+        1088
+      ],
+      "bounds": [
+        5463,
+        228,
+        1080,
+        5553,
+        259,
+        1103
+      ],
+      "entries": [
+        {
+          "id": "JD03.1",
+          "label": "Shepherd",
+          "source": "data/ctov/structure/village/jungle_tree/jobsite/shepherd.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "fa511fc44d2660b3f039733f7ef90c35b0de4ec01a4ec39abc66f3a722567133",
+          "origin": [
+            5472,
+            230,
+            1088
+          ],
+          "size": [
+            13,
+            27,
+            13
+          ]
+        },
+        {
+          "id": "JD03.2",
+          "label": "Smith",
+          "source": "data/ctov/structure/village/jungle_tree/jobsite/smith.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "b7572d470ce14344a08091379119bc28c104e6ffa089b2b448676b657a748650",
+          "origin": [
+            5493,
+            230,
+            1088
+          ],
+          "size": [
+            13,
+            23,
+            13
+          ]
+        },
+        {
+          "id": "JD03.3",
+          "label": "Vault",
+          "source": "data/ctov/structure/village/jungle_tree/jobsite/vault.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "325725bfe7072599d68712d7990c4d5586a297811ea769435747ee6ad385c5e3",
+          "origin": [
+            5514,
+            230,
+            1088
+          ],
+          "size": [
+            12,
+            27,
+            11
+          ]
+        },
+        {
+          "id": "JD03.4",
+          "label": "Airship",
+          "source": "data/ctov/structure/village/jungle_tree/roads/airship.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "cb3549c17017d7a2f077e26044c63a37d093d880f8e004597d05327b26c30fdf",
+          "origin": [
+            5534,
+            230,
+            1088
+          ],
+          "size": [
+            17,
+            10,
+            7
+          ]
+        }
+      ]
+    },
+    {
+      "id": "JE01",
+      "title": "Dungeons & Taverns / Jungle Village (1/4)",
+      "family": "dnt_jungle",
+      "mod": "Dungeons & Tav.",
+      "origin": [
+        5664,
+        230,
+        1010
+      ],
+      "bounds": [
+        5655,
+        228,
+        1002,
+        5806,
+        242,
+        1024
+      ],
+      "entries": [
+        {
+          "id": "JE01.1",
+          "label": "Center 1",
+          "source": "data/minecraft/structure/village_jungle/jungle_village_center1.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "afc333fa476ea8904bdb895dac8d2d2103944401323fd2c9cdee523309acc7e7",
+          "origin": [
+            5664,
+            230,
+            1010
+          ],
+          "size": [
+            11,
+            7,
+            11
+          ]
+        },
+        {
+          "id": "JE01.2",
+          "label": "Center 2",
+          "source": "data/minecraft/structure/village_jungle/jungle_village_center2.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "72b8e2336516c2d8ecf50dee350529a3a726076f23e6180ceec094c3112e764e",
+          "origin": [
+            5683,
+            230,
+            1010
+          ],
+          "size": [
+            11,
+            7,
+            11
+          ]
+        },
+        {
+          "id": "JE01.3",
+          "label": "Center 3",
+          "source": "data/minecraft/structure/village_jungle/jungle_village_center3.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "7d14dcf37bf5d3c7a5160ff9e6449547ebec74e175e79f5f6eca8aa7b93f49d0",
+          "origin": [
+            5702,
+            230,
+            1010
+          ],
+          "size": [
+            7,
+            7,
+            7
+          ]
+        },
+        {
+          "id": "JE01.4",
+          "label": "Animal Pen 1",
+          "source": "data/minecraft/structure/village_jungle/jungle_village_animal_pen1.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "defb55396dbddd07e1c1041d25ee78152f21ea2f88356228d1be192b79516141",
+          "origin": [
+            5717,
+            230,
+            1010
+          ],
+          "size": [
+            7,
+            4,
+            9
+          ]
+        },
+        {
+          "id": "JE01.5",
+          "label": "Animal Pen 2",
+          "source": "data/minecraft/structure/village_jungle/jungle_village_animal_pen2.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "cb9cfb4cc74b847b2dbed2175be3c489df19d327df74eaab607bce6024532f48",
+          "origin": [
+            5732,
+            230,
+            1010
+          ],
+          "size": [
+            5,
+            4,
+            7
+          ]
+        },
+        {
+          "id": "JE01.6",
+          "label": "Animal Pen 3",
+          "source": "data/minecraft/structure/village_jungle/jungle_village_animal_pen3.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "34aeda396ce4913c63d212c133f4664202521a749e2a727c1f7bde3d369f4424",
+          "origin": [
+            5745,
+            230,
+            1010
+          ],
+          "size": [
+            7,
+            8,
+            7
+          ]
+        },
+        {
+          "id": "JE01.7",
+          "label": "Big House 1",
+          "source": "data/minecraft/structure/village_jungle/jungle_village_big_house1.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "f341ca168647c59eaca94ebfe51da65d46111e8f1e6b2adcfed21ededd0abf6e",
+          "origin": [
+            5760,
+            230,
+            1010
+          ],
+          "size": [
+            11,
+            10,
+            11
+          ]
+        },
+        {
+          "id": "JE01.8",
+          "label": "Big House 2",
+          "source": "data/minecraft/structure/village_jungle/jungle_village_big_house2.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "534b5afb433b902e02d70161651ce2cd2f565e888d200d1d02fb3801b3d73b84",
+          "origin": [
+            5779,
+            230,
+            1010
+          ],
+          "size": [
+            11,
+            10,
+            12
+          ]
+        },
+        {
+          "id": "JE01.9",
+          "label": "Blast Furnace",
+          "source": "data/minecraft/structure/village_jungle/jungle_village_blast_furnace.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "cc47924c6e51c208f9457c8ee69800aaf20e8a5685362da48eb7b6ffa90a8743",
+          "origin": [
+            5798,
+            230,
+            1010
+          ],
+          "size": [
+            6,
+            8,
+            7
+          ]
+        }
+      ]
+    },
+    {
+      "id": "JE02",
+      "title": "Dungeons & Taverns / Jungle Village (2/4)",
+      "family": "dnt_jungle",
+      "mod": "Dungeons & Tav.",
+      "origin": [
+        5664,
+        230,
+        1042
+      ],
+      "bounds": [
+        5655,
+        228,
+        1034,
+        5809,
+        244,
+        1055
+      ],
+      "entries": [
+        {
+          "id": "JE02.1",
+          "label": "Cartography",
+          "source": "data/minecraft/structure/village_jungle/jungle_village_cartography.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "ab43b25cc8ade1af45dca865b37f2eec3bce4e024bc67e8369a72c65194c4cf3",
+          "origin": [
+            5664,
+            230,
+            1042
+          ],
+          "size": [
+            9,
+            7,
+            9
+          ]
+        },
+        {
+          "id": "JE02.2",
+          "label": "Cauldron",
+          "source": "data/minecraft/structure/village_jungle/jungle_village_cauldron.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "9fa433c15100b6c38f80e13fa2192fcb379183affbb472af6dcc42eacb8adb03",
+          "origin": [
+            5681,
+            230,
+            1042
+          ],
+          "size": [
+            12,
+            8,
+            10
+          ]
+        },
+        {
+          "id": "JE02.3",
+          "label": "Cleric",
+          "source": "data/minecraft/structure/village_jungle/jungle_village_cleric.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "17214e44d9647bd5b5941af6231007e8998c11493196afae7e7e3dcfd9f886cf",
+          "origin": [
+            5701,
+            230,
+            1042
+          ],
+          "size": [
+            14,
+            12,
+            11
+          ]
+        },
+        {
+          "id": "JE02.4",
+          "label": "Cleric 2",
+          "source": "data/minecraft/structure/village_jungle/jungle_village_cleric2.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "8fb5d3abe668cfd57a86d69f3c1eb7abcfe4603e66bf9eed7bdb1133587bd832",
+          "origin": [
+            5723,
+            230,
+            1042
+          ],
+          "size": [
+            9,
+            12,
+            7
+          ]
+        },
+        {
+          "id": "JE02.5",
+          "label": "Decoration 1",
+          "source": "data/minecraft/structure/village_jungle/jungle_village_decoration1.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "8a2ac6dc52c0565a5c3be024e7fc9eb6d879efc8e7944efbd748322827cd4638",
+          "origin": [
+            5740,
+            230,
+            1042
+          ],
+          "size": [
+            2,
+            5,
+            1
+          ]
+        },
+        {
+          "id": "JE02.6",
+          "label": "Decoration 2",
+          "source": "data/minecraft/structure/village_jungle/jungle_village_decoration2.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "bc76ca9f80a637bec86f9ffdc9f12defc2245d00c31c0140e7346620c6d45464",
+          "origin": [
+            5750,
+            230,
+            1042
+          ],
+          "size": [
+            2,
+            5,
+            1
+          ]
+        },
+        {
+          "id": "JE02.7",
+          "label": "Decoration 3",
+          "source": "data/minecraft/structure/village_jungle/jungle_village_decoration3.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "eee273cda6d78538a896c97a102d90ce968f2b9d374737b9267c69cf7036af86",
+          "origin": [
+            5760,
+            230,
+            1042
+          ],
+          "size": [
+            5,
+            5,
+            4
+          ]
+        },
+        {
+          "id": "JE02.8",
+          "label": "Decoration 4",
+          "source": "data/minecraft/structure/village_jungle/jungle_village_decoration4.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "03e9dd9e730809d5c7aeb56622c4a4fccce1a51749c2f7a29c2178ea14b0859b",
+          "origin": [
+            5773,
+            230,
+            1042
+          ],
+          "size": [
+            5,
+            5,
+            5
+          ]
+        },
+        {
+          "id": "JE02.9",
+          "label": "Farm 1",
+          "source": "data/minecraft/structure/village_jungle/jungle_village_farm1.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "f8cc269434c6d44b32f3a6f362af1d190cfc6d9b3422320a5b2680539b531d40",
+          "origin": [
+            5786,
+            230,
+            1042
+          ],
+          "size": [
+            6,
+            5,
+            9
+          ]
+        },
+        {
+          "id": "JE02.10",
+          "label": "Farm 2",
+          "source": "data/minecraft/structure/village_jungle/jungle_village_farm2.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "d886fdc202d69cb2c495b5c6e93c8106e13c85daaecc65a1a5789079c5466e78",
+          "origin": [
+            5800,
+            230,
+            1042
+          ],
+          "size": [
+            7,
+            5,
+            7
+          ]
+        }
+      ]
+    },
+    {
+      "id": "JE03",
+      "title": "Dungeons & Taverns / Jungle Village (3/4)",
+      "family": "dnt_jungle",
+      "mod": "Dungeons & Tav.",
+      "origin": [
+        5664,
+        230,
+        1073
+      ],
+      "bounds": [
+        5655,
+        228,
+        1065,
+        5802,
+        242,
+        1087
+      ],
+      "entries": [
+        {
+          "id": "JE03.1",
+          "label": "Farm 3",
+          "source": "data/minecraft/structure/village_jungle/jungle_village_farm3.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "300fb8e0ed957312f771af854d074b3683d104fd5586eec6699fe1ddb0b38cca",
+          "origin": [
+            5664,
+            230,
+            1073
+          ],
+          "size": [
+            9,
+            5,
+            9
+          ]
+        },
+        {
+          "id": "JE03.2",
+          "label": "Fisher",
+          "source": "data/minecraft/structure/village_jungle/jungle_village_fisher.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "388738ca41e506f029fad651b9315e0fced96ee3a71bffd480a857dda4436297",
+          "origin": [
+            5681,
+            230,
+            1073
+          ],
+          "size": [
+            7,
+            10,
+            12
+          ]
+        },
+        {
+          "id": "JE03.3",
+          "label": "Fletching",
+          "source": "data/minecraft/structure/village_jungle/jungle_village_fletching.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "55e215fa1537038de029626772e20798bcf62d5a5ef96636493d5614d4acaa44",
+          "origin": [
+            5696,
+            230,
+            1073
+          ],
+          "size": [
+            6,
+            10,
+            6
+          ]
+        },
+        {
+          "id": "JE03.4",
+          "label": "Grindstone",
+          "source": "data/minecraft/structure/village_jungle/jungle_village_grindstone.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "112816deb1f4698773e041b743350e9a8efd79978c7c335a69499b3bccbe6b7f",
+          "origin": [
+            5710,
+            230,
+            1073
+          ],
+          "size": [
+            7,
+            5,
+            5
+          ]
+        },
+        {
+          "id": "JE03.5",
+          "label": "House 1",
+          "source": "data/minecraft/structure/village_jungle/jungle_village_house1.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "04678a78fc1e26695f1ea047f3a3559e8e3eb663f60158b6ee90c405cbc0e362",
+          "origin": [
+            5725,
+            230,
+            1073
+          ],
+          "size": [
+            12,
+            10,
+            9
+          ]
+        },
+        {
+          "id": "JE03.6",
+          "label": "House 2",
+          "source": "data/minecraft/structure/village_jungle/jungle_village_house2.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "8d9bdeed6f8cb1597bbbadf63a613a733f8ebc10909db6d24710e6f3cc700a7c",
+          "origin": [
+            5745,
+            230,
+            1073
+          ],
+          "size": [
+            9,
+            10,
+            9
+          ]
+        },
+        {
+          "id": "JE03.7",
+          "label": "House 3",
+          "source": "data/minecraft/structure/village_jungle/jungle_village_house3.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "5e4b786cc06280f40d8343fdf7248eb2149b52c7197a574d1fdfa37ff7c719eb",
+          "origin": [
+            5762,
+            230,
+            1073
+          ],
+          "size": [
+            9,
+            10,
+            11
+          ]
+        },
+        {
+          "id": "JE03.8",
+          "label": "House 4",
+          "source": "data/minecraft/structure/village_jungle/jungle_village_house4.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "488922cdb7a34673049ed390272321e752c0a031c256c7d63a6a63ab5adaa4c9",
+          "origin": [
+            5779,
+            230,
+            1073
+          ],
+          "size": [
+            7,
+            10,
+            7
+          ]
+        },
+        {
+          "id": "JE03.9",
+          "label": "House 5",
+          "source": "data/minecraft/structure/village_jungle/jungle_village_house5.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "ac60931be54391c03a0b3813490ecaaf1228f1e2cdfab4a28f95a5e0adc385b2",
+          "origin": [
+            5794,
+            230,
+            1073
+          ],
+          "size": [
+            6,
+            6,
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "id": "JE04",
+      "title": "Dungeons & Taverns / Jungle Village (4/4)",
+      "family": "dnt_jungle",
+      "mod": "Dungeons & Tav.",
+      "origin": [
+        5664,
+        230,
+        1105
+      ],
+      "bounds": [
+        5655,
+        228,
+        1097,
+        5777,
+        243,
+        1118
+      ],
+      "entries": [
+        {
+          "id": "JE04.1",
+          "label": "House 6",
+          "source": "data/minecraft/structure/village_jungle/jungle_village_house6.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "e18749f0b30b576c1cd1006b7d89d6f63b3d7394982a01258f14906f4b605877",
+          "origin": [
+            5664,
+            230,
+            1105
+          ],
+          "size": [
+            8,
+            6,
+            11
+          ]
+        },
+        {
+          "id": "JE04.2",
+          "label": "House 7",
+          "source": "data/minecraft/structure/village_jungle/jungle_village_house7.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "ee4b94c6c5ab5a9ce232e966aaf1e514c4a3ed1fc48997911be3da4d6c055d53",
+          "origin": [
+            5680,
+            230,
+            1105
+          ],
+          "size": [
+            12,
+            8,
+            7
+          ]
+        },
+        {
+          "id": "JE04.3",
+          "label": "Library",
+          "source": "data/minecraft/structure/village_jungle/jungle_village_library.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "823e4f906f9c866167ae09247cb2ee36c3c123d3a2e2e152ef7b1832aa2725d8",
+          "origin": [
+            5700,
+            230,
+            1105
+          ],
+          "size": [
+            11,
+            11,
+            11
+          ]
+        },
+        {
+          "id": "JE04.4",
+          "label": "Loom",
+          "source": "data/minecraft/structure/village_jungle/jungle_village_loom.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "26028d170ea9c0d3cbafc801a063c63a38357cc9d6977e207ca5bdf199b55eeb",
+          "origin": [
+            5719,
+            230,
+            1105
+          ],
+          "size": [
+            9,
+            8,
+            10
+          ]
+        },
+        {
+          "id": "JE04.5",
+          "label": "Smithing",
+          "source": "data/minecraft/structure/village_jungle/jungle_village_smithing.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "e34549626c4e79de8c29ca8703aafadcf9f3e7f350239c9a4d3d3f38d1f03db1",
+          "origin": [
+            5736,
+            230,
+            1105
+          ],
+          "size": [
+            10,
+            10,
+            10
+          ]
+        },
+        {
+          "id": "JE04.6",
+          "label": "Smoker",
+          "source": "data/minecraft/structure/village_jungle/jungle_village_smoker.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "3c3ca820df04f29b3f63043b966f4392d2ebf68fdf8e61b78c4e0a0bbe809751",
+          "origin": [
+            5754,
+            230,
+            1105
+          ],
+          "size": [
+            7,
+            8,
+            5
+          ]
+        },
+        {
+          "id": "JE04.7",
+          "label": "Stonecutter",
+          "source": "data/minecraft/structure/village_jungle/jungle_village_stonecutter.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "8a5c19bf4e8c0cfde8da8b6467c11e5268aecb3ed07d40fa7e22304637e42b7d",
+          "origin": [
+            5769,
+            230,
+            1105
+          ],
+          "size": [
+            6,
+            11,
+            10
+          ]
+        }
+      ]
+    },
+    {
+      "id": "JF01",
+      "title": "Jungle Tavern & Grounds (1/2)",
+      "family": "dnt_tavern",
+      "mod": "Dungeons & Tav.",
+      "origin": [
+        5856,
+        230,
+        1010
+      ],
+      "bounds": [
+        5847,
+        228,
+        1002,
+        6004,
+        239,
+        1019
+      ],
+      "entries": [
+        {
+          "id": "JF01.1",
+          "label": "Entrance",
+          "source": "data/nova_structures/structure/tavern/tavern_enterance_jungle.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "67374ff016109fc183c33c18e1f5e3d8c15d5f975a498021b309cd703a74a94a",
+          "origin": [
+            5856,
+            230,
+            1010
+          ],
+          "size": [
+            3,
+            7,
+            7
+          ]
+        },
+        {
+          "id": "JF01.2",
+          "label": "Animal Fence",
+          "source": "data/nova_structures/structure/tavern/tavern_event_animal_fence_jungle.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "61e9dbe02c35adbeb7183fe233ee0ffecf38669a5bac1ed37e4f14519ea4e3ef",
+          "origin": [
+            5867,
+            230,
+            1010
+          ],
+          "size": [
+            5,
+            5,
+            5
+          ]
+        },
+        {
+          "id": "JF01.3",
+          "label": "Animal Food",
+          "source": "data/nova_structures/structure/tavern/tavern_event_animal_food_jungle.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "8f824323bdd5e918d3294b4d47e6ac3a9702df41556d1a1e1fc6deaba3a7c8e6",
+          "origin": [
+            5880,
+            230,
+            1010
+          ],
+          "size": [
+            5,
+            5,
+            5
+          ]
+        },
+        {
+          "id": "JF01.4",
+          "label": "Bench Table",
+          "source": "data/nova_structures/structure/tavern/tavern_event_bench_table_jungle.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "81c82be8175934f7d5999784193e1cda9360907ea4c4a6ed49d193e5e4342c11",
+          "origin": [
+            5893,
+            230,
+            1010
+          ],
+          "size": [
+            5,
+            5,
+            5
+          ]
+        },
+        {
+          "id": "JF01.5",
+          "label": "Food Supply",
+          "source": "data/nova_structures/structure/tavern/tavern_event_food_supply_jungle.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "c9551bc42bb99c119b64bf2787661dca77d0cd62179e526694d8b26633f24927",
+          "origin": [
+            5906,
+            230,
+            1010
+          ],
+          "size": [
+            5,
+            5,
+            5
+          ]
+        },
+        {
+          "id": "JF01.6",
+          "label": "Hay Storage",
+          "source": "data/nova_structures/structure/tavern/tavern_event_hay_storage_jungle.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "2052a16449188190153d36cddacdacbf34683046bb951f8ea0c98ba1e6dfe980",
+          "origin": [
+            5919,
+            230,
+            1010
+          ],
+          "size": [
+            5,
+            5,
+            5
+          ]
+        },
+        {
+          "id": "JF01.7",
+          "label": "Log",
+          "source": "data/nova_structures/structure/tavern/tavern_event_log_jungle.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "914e067f41ada9397f4aa5c0b258743cb1873a6d9374d0f8688e5880879cbd69",
+          "origin": [
+            5932,
+            230,
+            1010
+          ],
+          "size": [
+            5,
+            5,
+            5
+          ]
+        },
+        {
+          "id": "JF01.8",
+          "label": "Trader Car Armorer",
+          "source": "data/nova_structures/structure/tavern/tavern_event_trader_car_armorer_jungle.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "d9d3e045eacf5998e472e18741890abd60b73c3790c367c116d51a53393b06e6",
+          "origin": [
+            5945,
+            230,
+            1010
+          ],
+          "size": [
+            5,
+            4,
+            5
+          ]
+        },
+        {
+          "id": "JF01.9",
+          "label": "Trader Car Butcher",
+          "source": "data/nova_structures/structure/tavern/tavern_event_trader_car_butcher_jungle.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "47cdbcee987444314146979153af0c68ba31d1afcc921e52831a118a37cd3df9",
+          "origin": [
+            5958,
+            230,
+            1010
+          ],
+          "size": [
+            5,
+            4,
+            5
+          ]
+        },
+        {
+          "id": "JF01.10",
+          "label": "Trader Car Farmer",
+          "source": "data/nova_structures/structure/tavern/tavern_event_trader_car_farmer_jungle.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "38bb954e47bb97758c7b0d0818ed909e0b69e43d95528a156d79961a697a7ec2",
+          "origin": [
+            5971,
+            230,
+            1010
+          ],
+          "size": [
+            5,
+            4,
+            5
+          ]
+        },
+        {
+          "id": "JF01.11",
+          "label": "Trader Car Fisher",
+          "source": "data/nova_structures/structure/tavern/tavern_event_trader_car_fisher_jungle.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "e3b24cbcf9c753af439f10f31e3a12c5e139a286970acf52cb9a35fffa9084a0",
+          "origin": [
+            5984,
+            230,
+            1010
+          ],
+          "size": [
+            5,
+            4,
+            5
+          ]
+        },
+        {
+          "id": "JF01.12",
+          "label": "Trader Car Fletcher",
+          "source": "data/nova_structures/structure/tavern/tavern_event_trader_car_fletcher_jungle.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "a70b01eddc9db0912841a61746828700367332d2c53e553a75b7c62cce33a5e7",
+          "origin": [
+            5997,
+            230,
+            1010
+          ],
+          "size": [
+            5,
+            4,
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "id": "JF02",
+      "title": "Jungle Tavern & Grounds (2/2)",
+      "family": "dnt_tavern",
+      "mod": "Dungeons & Tav.",
+      "origin": [
+        5856,
+        230,
+        1037
+      ],
+      "bounds": [
+        5847,
+        228,
+        1029,
+        5998,
+        245,
+        1059
+      ],
+      "entries": [
+        {
+          "id": "JF02.1",
+          "label": "Trader Car Grindstone",
+          "source": "data/nova_structures/structure/tavern/tavern_event_trader_car_grindstone_jungle.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "5cb2ab9a33ea0deda39104890a9b08b7bbfddafcdc449c3c0c99e041dd3101fa",
+          "origin": [
+            5856,
+            230,
+            1037
+          ],
+          "size": [
+            5,
+            4,
+            5
+          ]
+        },
+        {
+          "id": "JF02.2",
+          "label": "Trader Car Leather Worker",
+          "source": "data/nova_structures/structure/tavern/tavern_event_trader_car_leather_worker_jungle.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "19242ec330024d2b14459a2d6a1f4501cbdc2b8dc77e57c55c0fd1bf362703db",
+          "origin": [
+            5869,
+            230,
+            1037
+          ],
+          "size": [
+            5,
+            4,
+            5
+          ]
+        },
+        {
+          "id": "JF02.3",
+          "label": "Trader Car Librarian",
+          "source": "data/nova_structures/structure/tavern/tavern_event_trader_car_librarian_jungle.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "2e3bcb0842a8e73421c814da8b63e632346d4357a225343217eec022bc166620",
+          "origin": [
+            5882,
+            230,
+            1037
+          ],
+          "size": [
+            5,
+            4,
+            5
+          ]
+        },
+        {
+          "id": "JF02.4",
+          "label": "Trader Car Loom",
+          "source": "data/nova_structures/structure/tavern/tavern_event_trader_car_loom_jungle.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "cfa1867dcf0c58397799875506660e0ef2f423e4e4dda8c2d50419bca12d067e",
+          "origin": [
+            5895,
+            230,
+            1037
+          ],
+          "size": [
+            5,
+            4,
+            5
+          ]
+        },
+        {
+          "id": "JF02.5",
+          "label": "Trader Car Smithing Table",
+          "source": "data/nova_structures/structure/tavern/tavern_event_trader_car_smithing_table_jungle.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "a438d03ed36c49c6e9a2cfa288fc55bd58e3101ad9b5da5eb9e7df21594b1002",
+          "origin": [
+            5908,
+            230,
+            1037
+          ],
+          "size": [
+            5,
+            4,
+            5
+          ]
+        },
+        {
+          "id": "JF02.6",
+          "label": "Trader Car Stonecutter",
+          "source": "data/nova_structures/structure/tavern/tavern_event_trader_car_stonecutter_jungle.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "12129fe5ee89daa8c9c2907f68771b0fca90aff48783bec7979be4557359900e",
+          "origin": [
+            5921,
+            230,
+            1037
+          ],
+          "size": [
+            5,
+            4,
+            5
+          ]
+        },
+        {
+          "id": "JF02.7",
+          "label": "Trash Trader",
+          "source": "data/nova_structures/structure/tavern/tavern_event_trash_trader_jungle.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "91f89b1cf89af95837ceeb769e377f3ab5b2c2f8810fa90c8f2e28f958893cd8",
+          "origin": [
+            5934,
+            230,
+            1037
+          ],
+          "size": [
+            5,
+            5,
+            5
+          ]
+        },
+        {
+          "id": "JF02.8",
+          "label": "Well",
+          "source": "data/nova_structures/structure/tavern/tavern_event_well_jungle.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "0a33a40294ae33ba63ca7a2fd91388aaec706301cbcd989a31b57992c42cbf3e",
+          "origin": [
+            5947,
+            230,
+            1037
+          ],
+          "size": [
+            5,
+            5,
+            5
+          ]
+        },
+        {
+          "id": "JF02.9",
+          "label": "House",
+          "source": "data/nova_structures/structure/tavern/tavern_house_jungle.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "882d7f35fc50c21c47f1e76c761dc50d7e77591ba05bfedd30654f8425dbb3bf",
+          "origin": [
+            5960,
+            230,
+            1037
+          ],
+          "size": [
+            17,
+            13,
+            19
+          ]
+        },
+        {
+          "id": "JF02.10",
+          "label": "Middle",
+          "source": "data/nova_structures/structure/tavern/tavern_middle_jungle.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "a6487c10145dc78c32e85bfaaacad4c3bc1879eab50a18f5e55aff06472f6fa1",
+          "origin": [
+            5985,
+            230,
+            1037
+          ],
+          "size": [
+            11,
+            7,
+            20
+          ]
+        }
+      ]
+    },
+    {
+      "id": "JG01",
+      "title": "Jungle Ruins & Temples (1/3)",
+      "family": "dnt_ruins",
+      "mod": "Dungeons & Tav.",
+      "origin": [
+        6048,
+        230,
+        1010
+      ],
+      "bounds": [
+        6039,
+        228,
+        1002,
+        6198,
+        266,
+        1059
+      ],
+      "entries": [
+        {
+          "id": "JG01.1",
+          "label": "Complete Ruined Temple",
+          "source": "data/nova_structures/structure/jungle_ruin/jungle_ruins_temple_main_temple.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "0a60b5e980d6ee9ef92d3105476c267df1482bb5f2e85772344a1720fa7d62a2",
+          "origin": [
+            6048,
+            230,
+            1010
+          ],
+          "size": [
+            47,
+            34,
+            47
+          ],
+          "assemblySources": [
+            "data/nova_structures/structure/jungle_ruin/jungle_ruins_temple_main_bottom.nbt",
+            "data/nova_structures/structure/jungle_ruin/jungle_ruins_temple_main_temple.nbt"
+          ]
+        },
+        {
+          "id": "JG01.2",
+          "label": "Farm",
+          "source": "data/nova_structures/structure/jungle_ruin/jungle_ruins_farm.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "4b2c733906e4d421c2cdd018a4cefa1febc8f6cc4eca5db59937785cfce1fe00",
+          "origin": [
+            6103,
+            230,
+            1010
+          ],
+          "size": [
+            9,
+            14,
+            7
+          ]
+        },
+        {
+          "id": "JG01.3",
+          "label": "House 1",
+          "source": "data/nova_structures/structure/jungle_ruin/jungle_ruins_house1.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "c06586ada75123683ee8a7d679da76cb31f39723cf49e3888869e8a676e12396",
+          "origin": [
+            6120,
+            230,
+            1010
+          ],
+          "size": [
+            7,
+            14,
+            5
+          ]
+        },
+        {
+          "id": "JG01.4",
+          "label": "House 2",
+          "source": "data/nova_structures/structure/jungle_ruin/jungle_ruins_house2.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "99e6cc2eaef535ece47cf03650aab0f3f4fe6e93b06038d02a96f380a9a07df7",
+          "origin": [
+            6135,
+            230,
+            1010
+          ],
+          "size": [
+            7,
+            14,
+            7
+          ]
+        },
+        {
+          "id": "JG01.5",
+          "label": "House 3",
+          "source": "data/nova_structures/structure/jungle_ruin/jungle_ruins_house3.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "f863cbde722303d2111e8dbf26580cf0cfdacc9d7521fb0d6e1ee2fe63c1ba5a",
+          "origin": [
+            6150,
+            230,
+            1010
+          ],
+          "size": [
+            5,
+            14,
+            5
+          ]
+        },
+        {
+          "id": "JG01.6",
+          "label": "House 4",
+          "source": "data/nova_structures/structure/jungle_ruin/jungle_ruins_house4.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "23f470d5d2999214205c874857bb3ac78632ba4919a9c6213cc17ffc05170cbc",
+          "origin": [
+            6163,
+            230,
+            1010
+          ],
+          "size": [
+            5,
+            14,
+            5
+          ]
+        },
+        {
+          "id": "JG01.7",
+          "label": "House 5",
+          "source": "data/nova_structures/structure/jungle_ruin/jungle_ruins_house5.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "94349e5e2aa68fd80ec140bbc5aa471b48265e6d8f341d2d5812324b2d09aa72",
+          "origin": [
+            6176,
+            230,
+            1010
+          ],
+          "size": [
+            7,
+            14,
+            7
+          ]
+        },
+        {
+          "id": "JG01.8",
+          "label": "House 6",
+          "source": "data/nova_structures/structure/jungle_ruin/jungle_ruins_house6.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "569fcc4350320a9bdb743f4a69787d86ffba05c48edd786d6c84dec452493fc1",
+          "origin": [
+            6191,
+            230,
+            1010
+          ],
+          "size": [
+            5,
+            14,
+            7
+          ]
+        }
+      ]
+    },
+    {
+      "id": "JG02",
+      "title": "Jungle Ruins & Temples (2/3)",
+      "family": "dnt_ruins",
+      "mod": "Dungeons & Tav.",
+      "origin": [
+        6048,
+        230,
+        1077
+      ],
+      "bounds": [
+        6039,
+        228,
+        1069,
+        6183,
+        246,
+        1090
+      ],
+      "entries": [
+        {
+          "id": "JG02.1",
+          "label": "House 7",
+          "source": "data/nova_structures/structure/jungle_ruin/jungle_ruins_house7.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "101b8775eef86867c5d7615709aea12d7fa52e25c04bed4a2bb6568b3487d64a",
+          "origin": [
+            6048,
+            230,
+            1077
+          ],
+          "size": [
+            5,
+            14,
+            6
+          ]
+        },
+        {
+          "id": "JG02.2",
+          "label": "House 8",
+          "source": "data/nova_structures/structure/jungle_ruin/jungle_ruins_house8.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "a1f60244d24d760d0256566ebb20f78dbd6526e6236a4eb3f2c19a5cab0057dc",
+          "origin": [
+            6061,
+            230,
+            1077
+          ],
+          "size": [
+            9,
+            14,
+            7
+          ]
+        },
+        {
+          "id": "JG02.3",
+          "label": "House Butcher",
+          "source": "data/nova_structures/structure/jungle_ruin/jungle_ruins_house_butcher.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "fa3223b9efab0b8bfb61989d2fb11ae5aa1769fc149409e20a2904f614b83472",
+          "origin": [
+            6078,
+            230,
+            1077
+          ],
+          "size": [
+            5,
+            14,
+            5
+          ]
+        },
+        {
+          "id": "JG02.4",
+          "label": "House Fletcher",
+          "source": "data/nova_structures/structure/jungle_ruin/jungle_ruins_house_fletcher.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "05b79f1642c50567b8b8c3701476bcde7c7639f19108600abbcd33370a3ab8a1",
+          "origin": [
+            6091,
+            230,
+            1077
+          ],
+          "size": [
+            5,
+            14,
+            5
+          ]
+        },
+        {
+          "id": "JG02.5",
+          "label": "House Library",
+          "source": "data/nova_structures/structure/jungle_ruin/jungle_ruins_house_library.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "ea17b2bf917d7cec2399e25301819f7badda9e077e6ac10e4c7b0bd116369612",
+          "origin": [
+            6104,
+            230,
+            1077
+          ],
+          "size": [
+            7,
+            14,
+            7
+          ]
+        },
+        {
+          "id": "JG02.6",
+          "label": "House Mason",
+          "source": "data/nova_structures/structure/jungle_ruin/jungle_ruins_house_mason.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "71431bc13a199fa4c77fbceb3160ae949e6219a54aabdd487f818b4b1c335240",
+          "origin": [
+            6119,
+            230,
+            1077
+          ],
+          "size": [
+            7,
+            14,
+            11
+          ]
+        },
+        {
+          "id": "JG02.7",
+          "label": "House Shepherd",
+          "source": "data/nova_structures/structure/jungle_ruin/jungle_ruins_house_shepherd.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "83e8b9c1073bdb52cf5eb85bd939ec025a99b50b4e0c777ef427d698ddf3d578",
+          "origin": [
+            6134,
+            230,
+            1077
+          ],
+          "size": [
+            6,
+            14,
+            8
+          ]
+        },
+        {
+          "id": "JG02.8",
+          "label": "House Smith",
+          "source": "data/nova_structures/structure/jungle_ruin/jungle_ruins_house_smith.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "7ff5da9c3facdce362ed2c4feed0e0bf89bd1016d4fb4e9867d884e47a664e1f",
+          "origin": [
+            6148,
+            230,
+            1077
+          ],
+          "size": [
+            7,
+            14,
+            9
+          ]
+        },
+        {
+          "id": "JG02.9",
+          "label": "House Smith 2",
+          "source": "data/nova_structures/structure/jungle_ruin/jungle_ruins_house_smith2.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "38a7687687dbea98e902973cdd5f0c91b9b438573f6a434a53dbfef77a2cba50",
+          "origin": [
+            6163,
+            230,
+            1077
+          ],
+          "size": [
+            6,
+            14,
+            6
+          ]
+        },
+        {
+          "id": "JG02.10",
+          "label": "Spring",
+          "source": "data/nova_structures/structure/jungle_ruin/jungle_ruins_spring.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "e36ce66db63e5a79d1333049c65ddbf4ea690ca688d3cb70ff534c30abff177e",
+          "origin": [
+            6177,
+            230,
+            1077
+          ],
+          "size": [
+            4,
+            14,
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "id": "JG03",
+      "title": "Jungle Ruins & Temples (3/3)",
+      "family": "dnt_ruins",
+      "mod": "Dungeons & Tav.",
+      "origin": [
+        6048,
+        230,
+        1108
+      ],
+      "bounds": [
+        6039,
+        228,
+        1100,
+        6180,
+        250,
+        1125
+      ],
+      "entries": [
+        {
+          "id": "JG03.1",
+          "label": "Temple 1",
+          "source": "data/nova_structures/structure/jungle_ruin/jungle_ruins_temple1.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "ad30c64de5646a89ff7abeca501d306cd9a4e59b10b4f8f40bf45a2d0e106362",
+          "origin": [
+            6048,
+            230,
+            1108
+          ],
+          "size": [
+            17,
+            12,
+            11
+          ]
+        },
+        {
+          "id": "JG03.2",
+          "label": "Temple 2",
+          "source": "data/nova_structures/structure/jungle_ruin/jungle_ruins_temple2.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "e7cddfecc36ad572c73ba1641d7142e2a1fcb3408f822c8ca0d663351c3b4989",
+          "origin": [
+            6073,
+            230,
+            1108
+          ],
+          "size": [
+            15,
+            14,
+            15
+          ]
+        },
+        {
+          "id": "JG03.3",
+          "label": "Temple 3",
+          "source": "data/nova_structures/structure/jungle_ruin/jungle_ruins_temple3.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "c8aa2569af35635fc86c763644e0a24f0129c41d78a099ff1511bba4d77920eb",
+          "origin": [
+            6096,
+            230,
+            1108
+          ],
+          "size": [
+            19,
+            14,
+            13
+          ]
+        },
+        {
+          "id": "JG03.4",
+          "label": "Villayan",
+          "source": "data/nova_structures/structure/jungle_ruin/jungle_ruins_villayan.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "6a31e1bedbc8f9919dd6ddafa984798966aeda96a2456316c9bc19e45a2a2e7f",
+          "origin": [
+            6123,
+            230,
+            1108
+          ],
+          "size": [
+            5,
+            13,
+            5
+          ]
+        },
+        {
+          "id": "JG03.5",
+          "label": "Villayan Big",
+          "source": "data/nova_structures/structure/jungle_ruin/jungle_ruins_villayan_big.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "2104d8931548b147193d6781c5f9577e1724c17a183c8df98f81c8213bdc760c",
+          "origin": [
+            6136,
+            230,
+            1108
+          ],
+          "size": [
+            9,
+            18,
+            9
+          ]
+        },
+        {
+          "id": "JG03.6",
+          "label": "Lamp 1",
+          "source": "data/nova_structures/structure/jungle_ruin/jungle_ruins_lamp1.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "e6a61a9e6d4619f7b20d44a9e430cf2f4416c2b7a3a0d2956248c653c34a73a9",
+          "origin": [
+            6153,
+            230,
+            1108
+          ],
+          "size": [
+            3,
+            6,
+            1
+          ]
+        },
+        {
+          "id": "JG03.7",
+          "label": "Lamp 2",
+          "source": "data/nova_structures/structure/jungle_ruin/jungle_ruins_lamp2.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "76af51548213fc03be56fdf200f6a2a3ed13296bed24a7178cfb04f0d0e8c092",
+          "origin": [
+            6164,
+            230,
+            1108
+          ],
+          "size": [
+            3,
+            6,
+            1
+          ]
+        },
+        {
+          "id": "JG03.8",
+          "label": "Lamp 3",
+          "source": "data/nova_structures/structure/jungle_ruin/jungle_ruins_lamp3.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "da90351dd3c37ed3cc756728b6ff105fe32c56f11f57d8a3850d8e1d378926a4",
+          "origin": [
+            6175,
+            230,
+            1108
+          ],
+          "size": [
+            3,
+            6,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "JH01",
+      "title": "Jungle Fort & Camp Buildings",
+      "family": "tt_fort",
+      "mod": "Towns & Towers",
+      "origin": [
+        6240,
+        230,
+        1010
+      ],
+      "bounds": [
+        6231,
+        228,
+        1002,
+        6320,
+        262,
+        1043
+      ],
+      "entries": [
+        {
+          "id": "JH01.1",
+          "label": "Kitchen",
+          "source": "data/kaisyn/structure/outpost/camps/sparse_jungle/side/kitchen.nbt",
+          "sourceJar": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar",
+          "sourceSha256": "87da80363402266e5779d0bd3de6f68aa60f8a186e6f6d717fce726425608c2e",
+          "origin": [
+            6240,
+            230,
+            1010
+          ],
+          "size": [
+            9,
+            9,
+            15
+          ]
+        },
+        {
+          "id": "JH01.2",
+          "label": "Tent Sparse",
+          "source": "data/kaisyn/structure/outpost/camps/sparse_jungle/side/tent_sparse_jungle.nbt",
+          "sourceJar": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar",
+          "sourceSha256": "6f2e89cb760cfbcac5f3cb17e939416bd233bdb4c570e5098b5a7e3666eec5e0",
+          "origin": [
+            6257,
+            230,
+            1010
+          ],
+          "size": [
+            5,
+            5,
+            7
+          ]
+        },
+        {
+          "id": "JH01.3",
+          "label": "Workshop",
+          "source": "data/kaisyn/structure/outpost/camps/sparse_jungle/side/workshop.nbt",
+          "sourceJar": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar",
+          "sourceSha256": "d1e60cdbbc7902f0a152226f8b12d30a184b9a8635bff180bca1b70cb40fb074",
+          "origin": [
+            6270,
+            230,
+            1010
+          ],
+          "size": [
+            9,
+            8,
+            15
+          ]
+        },
+        {
+          "id": "JH01.4",
+          "label": "Jungle Fort",
+          "source": "data/kaisyn/structure/outpost/forts/jungle/base_plate.nbt",
+          "sourceJar": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar",
+          "sourceSha256": "fbac5e09371f93ff7be44b193be4436c585081ed6fc5a569ac6e62571cece708",
+          "origin": [
+            6287,
+            230,
+            1010
+          ],
+          "size": [
+            31,
+            30,
+            31
+          ]
+        }
+      ]
+    },
+    {
+      "id": "JH02",
+      "title": "CTOV / Jungle Outpost",
+      "family": "ctov_outpost",
+      "mod": "CTOV",
+      "origin": [
+        6240,
+        230,
+        1061
+      ],
+      "bounds": [
+        6231,
+        228,
+        1053,
+        6384,
+        258,
+        1076
+      ],
+      "entries": [
+        {
+          "id": "JH02.1",
+          "label": "Allay Cage",
+          "source": "data/ctov/structure/pillager_outpost/jungle/allay_cage.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "09d00f03af380d8b30c3155bda3058370fa8cde620f8fece66ca590ec78873d9",
+          "origin": [
+            6240,
+            230,
+            1061
+          ],
+          "size": [
+            6,
+            4,
+            6
+          ]
+        },
+        {
+          "id": "JH02.2",
+          "label": "Cage",
+          "source": "data/ctov/structure/pillager_outpost/jungle/cage.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "d9e179696473df03dea62a1f6340d0f96034c12d68ea51e33cd31b5a393cc283",
+          "origin": [
+            6254,
+            230,
+            1061
+          ],
+          "size": [
+            6,
+            4,
+            6
+          ]
+        },
+        {
+          "id": "JH02.3",
+          "label": "Cook Tent",
+          "source": "data/ctov/structure/pillager_outpost/jungle/cook_tent.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "79918da3ffd4e74530f35e58f3f9f8efe277fdf3a1cb22d94675446ee687b856",
+          "origin": [
+            6268,
+            230,
+            1061
+          ],
+          "size": [
+            7,
+            5,
+            5
+          ]
+        },
+        {
+          "id": "JH02.4",
+          "label": "Feature Kennel",
+          "source": "data/ctov/structure/pillager_outpost/jungle/feature_kennel.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "17cd33268ebf1684af0c6237ea5ffc56004cdab699ac67f2044fb7a8e2225f31",
+          "origin": [
+            6283,
+            230,
+            1061
+          ],
+          "size": [
+            11,
+            5,
+            11
+          ]
+        },
+        {
+          "id": "JH02.5",
+          "label": "Golem Cage",
+          "source": "data/ctov/structure/pillager_outpost/jungle/golem_cage.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "81f93af5103565b4bdf3d9a5e01ff4f84585f39fee8903518454fedc1774b866",
+          "origin": [
+            6302,
+            230,
+            1061
+          ],
+          "size": [
+            6,
+            4,
+            6
+          ]
+        },
+        {
+          "id": "JH02.6",
+          "label": "Log",
+          "source": "data/ctov/structure/pillager_outpost/jungle/log.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "89b8b6a3710d1df9661075466c20bfe9f1c4bf2b503dedc05304f381b3aaf80f",
+          "origin": [
+            6316,
+            230,
+            1061
+          ],
+          "size": [
+            5,
+            2,
+            7
+          ]
+        },
+        {
+          "id": "JH02.7",
+          "label": "Ravager Cage",
+          "source": "data/ctov/structure/pillager_outpost/jungle/ravager_cage.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "319682a2b439aebddbcd0de70bff0a4f3c1df1045f695cf9ba86a2e5fead9c11",
+          "origin": [
+            6329,
+            230,
+            1061
+          ],
+          "size": [
+            6,
+            4,
+            7
+          ]
+        },
+        {
+          "id": "JH02.8",
+          "label": "Smith Tent",
+          "source": "data/ctov/structure/pillager_outpost/jungle/smith_tent.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "e0b2bfb39b3fea470f55ba3b33b1155ad1bd586be351a23281404e22c73f0393",
+          "origin": [
+            6343,
+            230,
+            1061
+          ],
+          "size": [
+            7,
+            5,
+            5
+          ]
+        },
+        {
+          "id": "JH02.9",
+          "label": "Targets",
+          "source": "data/ctov/structure/pillager_outpost/jungle/targets.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "542ca1263ceb3674f97fc10bda03c553e2b14fc9fbbf25a738ed6c667c904ed4",
+          "origin": [
+            6358,
+            230,
+            1061
+          ],
+          "size": [
+            3,
+            3,
+            7
+          ]
+        },
+        {
+          "id": "JH02.10",
+          "label": "Tower",
+          "source": "data/ctov/structure/pillager_outpost/jungle/tower.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "1db19fbf2ba2301a15c3287dcd13b1afe7e86aac10663ae7e670872e71ec09df",
+          "origin": [
+            6369,
+            230,
+            1061
+          ],
+          "size": [
+            13,
+            26,
+            13
+          ]
+        }
+      ]
+    },
+    {
+      "id": "JH03",
+      "title": "Jungle Lookout & Well",
+      "family": "dnt_landmarks",
+      "mod": "Dungeons & Tav.",
+      "origin": [
+        6240,
+        230,
+        1094
+      ],
+      "bounds": [
+        6231,
+        228,
+        1086,
+        6262,
+        251,
+        1105
+      ],
+      "entries": [
+        {
+          "id": "JH03.1",
+          "label": "Firewatch",
+          "source": "data/nova_structures/structure/firewatch_tower/firewatch_jungle.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "89aac916a14640b4bf84459075582f84509d015cc4badb2523740eeb76e19a6c",
+          "origin": [
+            6240,
+            230,
+            1094
+          ],
+          "size": [
+            9,
+            19,
+            9
+          ]
+        },
+        {
+          "id": "JH03.2",
+          "label": "Well",
+          "source": "data/nova_structures/structure/well/well_jungle.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "26ef4a9633796bb26720ac00fcb369a67a77bcbfd5a174bf26c6a93caa48ed50",
+          "origin": [
+            6257,
+            230,
+            1094
+          ],
+          "size": [
+            3,
+            12,
+            3
+          ]
+        }
+      ]
+    }
+  ]
+}
