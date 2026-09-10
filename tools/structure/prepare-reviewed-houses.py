@@ -14,15 +14,25 @@ ROOT = Path(__file__).resolve().parents[2]
 def export_production(manifest, manifest_path, java):
     """Bind already reviewed neutral geometry to the shared production catalog."""
     entries = manifest.get('facilities', manifest.get('houses', [manifest] if 'info' in manifest else []))
-    work = ROOT / 'run/badlands-integration' / manifest_path.stem
+    variants = {entry['production']['variant'] for entry in entries if entry.get('production')}
+    assert len(variants) == 1, 'One production export may only target one regional catalog'
+    variant = variants.pop()
+    work = ROOT / ('run/desert-integration' if variant == 'desert' else 'run/badlands-integration') / manifest_path.stem
     work.mkdir(parents=True, exist_ok=True)
     recipes = ROOT / 'src/main/resources/data/kithkyn/kithkyn/buildings'
-    datapack = ROOT / 'run/badlands-integration/datapack'
+    datapack = ROOT / manifest.get('production_datapack',
+        'run/desert-integration/datapack' if variant == 'desert' else 'run/badlands-integration/datapack')
     definitions = datapack / 'data/kithkyn/kithkyn/buildings'
     structures = datapack / 'data/kithkyn/structure'
     datapack.mkdir(parents=True, exist_ok=True)
-    (datapack / 'pack.mcmeta').write_text(json.dumps({'pack': {'pack_format': 48,
-        'description': 'Locally approved Badlands village catalog'}}, indent=2) + '\n')
+    metadata = {'pack': {'pack_format': 48,
+        'description': manifest.get('pack_description', f'Locally approved {variant.title()} village catalog')}}
+    if variant == 'desert':
+        metadata['filter'] = {'block': [{
+            'namespace': 'kithkyn',
+            'path': r'kithkyn/buildings/.*_desert_[^/]*\.json',
+        }]}
+    (datapack / 'pack.mcmeta').write_text(json.dumps(metadata, indent=2) + '\n')
     plan, report, patch = [], [], ['*** Begin Patch']
     for entry in entries:
         binding = entry.get('production')
@@ -138,11 +148,19 @@ for house in entries:
     export_options = house.get('export_options', {})
     if house.get('export_options_file'):
         export_options = json.loads((ROOT / house['export_options_file']).read_text())
+    else:
+        export_options = copy.deepcopy(export_options)
+    stabilize_ground_sand = export_options.pop('stabilize_ground_sand', False)
+    stable_ground = [
+        {'pos': list(position), 'name': 'minecraft:sandstone', 'properties': {}}
+        for position, state in states.items()
+        if stabilize_ground_sand and position[1] == 0 and state['Name'] == 'minecraft:sand'
+    ]
     export = {'source': str(ROOT / house.get('prepared_source', house['source_capture'])),
               'output': str(ROOT / house['neutral_template']),
               'white': [list(pos) for pos in halves] + identity['banners'], 'air': [], 'size': house['size'],
               **export_options}
-    export['overrides'] = export.get('overrides', []) + [
+    export['overrides'] = export.get('overrides', []) + stable_ground + [
         {'pos': list(pos), 'name': 'minecraft:white_wool', 'properties': {}} for pos in accents]
     exports.append(export)
 for name, value in [('patch-plan', {'output': str(work / 'patches'), 'templates': patches}),

@@ -1,0 +1,9 @@
+{
+  "stabilize_ground_sand": true,
+  "overrides": [
+    {"pos": [3, 0, 2], "name": "minecraft:air", "properties": {}},
+    {"pos": [2, 1, 2], "name": "minecraft:air", "properties": {}},
+    {"pos": [4, 1, 2], "name": "minecraft:air", "properties": {}},
+    {"pos": [3, 2, 2], "name": "minecraft:air", "properties": {}}
+  ]
+}

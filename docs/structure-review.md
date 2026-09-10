@@ -1084,8 +1084,13 @@ with deliberately different primary and secondary colors.
 Aaron selected the CTOV Desert Oasis town center and nine homes spanning D05.3 through
 D06.3. D05.2 was initially selected as a home, then reassigned as the tavern. The remaining
 homes are alternative designs at three source scales, not a nine-step upgrade ladder.
-Their bed counts, couple rooms, personal storage, color slots and final catalog levels still need
-an interior review.
+Their private interior-authoring pass is complete: the set contains fifteen beds, thirteen as
+singles and two as the one couple room in D05.5. Eight bed entitlements use the village primary
+color and seven use the secondary color. All fifteen personal containers are registered with
+their beds, including intentional shared-room storage. White beds remain the neutral-template
+placeholders; the live gallery previews primary as blue and secondary as yellow. D05.3 preserves
+Aaron's removal of the source building's middle bed and the other live interior edits are also
+preserved. Their final level and cost bindings are recorded in the Desert catalog manifest.
 
 | Exhibit | Source design | Selected use |
 | --- | --- | --- |
@@ -1101,12 +1106,13 @@ an interior review.
 | D06.2 | Small 5 | Home |
 | D06.3 | Small 6 | Home |
 
-The same pass selected the following service and workplace shells. D03.8 is storehouse level 2;
-the level 1 storehouse shell is not selected yet.
-D06.5 is the selected butchery. The larger fenced D07.1 loomhouse remains a reference only.
+The same pass selected the following service and workplace shells. D01.7 is storehouse level 1
+and D03.8 is its level-2 vault upgrade. D06.5 is the selected butchery. The larger fenced D07.1
+loomhouse remains a reference only.
 
 | Exhibit | Source design | Selected use |
 | --- | --- | --- |
+| D01.7 | Small 1, converted in the gallery | Storehouse level 1 |
 | D03.8 | Vault | Storehouse level 2 |
 | D03.3 | Observatory | Watchtower |
 | D03.4 | Orchard | Lumberjack lodge |
@@ -1133,39 +1139,61 @@ the production `market_desert_1`, `market_desert_2` and `market_desert_3` struct
 superseded production files retained in the private review archive. The live world region was
 backed up before placement.
 
-All seventeen core categories now have a selected shell or, for the markets, an explicit reuse
-direction. D07.5's live mine edit still needs a durable capture and its miner station, container,
-shaft mouth and ramp orientation recorded before native excavation testing.
+The home and storehouse review captures, neutral exports and exact amenity mappings are recorded
+in `tools/structure/desert-houses-20260909.json` and
+`tools/structure/desert-storehouses-20260909.json`. D01.7 keeps Aaron's conversion into a compact
+three-container storehouse and intentionally has no resident bed. D03.8 has eight communal
+barrels, one private staff barrel and one primary-color quartermaster bed. Its neutral export
+replaces twenty-eight ground-layer sand blocks with stable sandstone and adds a nine-block
+foundation strip so the level-2 solid footprint contains D01.7 in every rotation. D05.5's neutral
+export lowers two staircase cells just enough for the maximum-size villager while retaining the
+upper landing. These functional export repairs do not replace the preserved live source captures.
 
-The unedited D03.3 capture passed a disposable native watchtower access check with a maximum-size
-adult, 0.648 blocks wide and 2 blocks high. In all four rotations, the villager physically climbed
-the spiral stair from the ground entrance to the selected top-deck guard post at local `[3,13,8]`,
-then reached the authored chest at `[5,13,4]`. The climbs took 152 to 168 verifier ticks. The full
-fixture still reported failure because its first warm-up placement hit an unrelated shared closet
-planning assertion; every D03.3 route and physical walk passed.
+All nine home interiors and both storehouses passed rendered review. The complete native home
+fixture passed thirty-six rotated structures, 120 planned access routes, sixty physical room
+walks and assigned-bed sleeps, sixty personal-container deposits and zero failed placements with
+the maximum-size probe. The storehouse fixture passed eight rotated structures, all four upgrade
+fits, sixty access routes, eight quartermaster-station walks, forty-four communal-container
+deposits and transfers, four staff-bed sleeps, four private-container deposits and zero failed
+placements. The audit reports are under `run/desert-house-verification-20260909-221500/` and
+`run/desert-storehouse-verification-20260909-221300/`.
 
-A complete production-parity pass also needs to assign one of the selected homes as the couple's
-cottage or choose another shell, select the level 1 storehouse, decide which existing Desert
-upgrade ladders remain, and review a matching perimeter family. In particular, the current Desert
-catalog has two watchtowers, three farms, two blacksmiths and three storehouses; this review has
-selected only one shell for each of those roles so far.
+The completed private catalog contains exactly 28 buildings: one center, nine house alternatives,
+two storehouses, three market tiers, and thirteen service buildings. The home set is grouped as
+six level-1 choices, two standalone level-2 choices, and one standalone level-3 choice; those are
+alternatives rather than a nine-step ladder. The only Desert upgrade chains are D01.7 to the D03.8
+storehouse vault and the three existing market tiers. Desert no longer borrows missing Plains
+buildings.
 
-The runtime naming path is already Desert-aware. The Desert profile describes sheltered
-courtyards, pale masonry, shade and hospitable traders; `Darava`, `Serevan` and `Amarin` are tone
-examples that generated names are forbidden to copy. The deterministic fallback uses Desert
-starts such as `Dara`, `Sere`, `Amar`, `Tala`, `Sola` and `Nara`. Desert, badlands and sandy biome
-families already select the persisted `desert` style, and `/kithkyn create-village <pos> desert`
-can force it for a sample settlement.
+All thirteen services now have durable neutral captures, exact amenities, costs, grants and
+identity slots. D07.5's miner station is local `[3,1,3]`; its authored north-facing shaft begins
+two cells toward the front. A narrow fence-and-trapdoor throat was cleared in the exported copy,
+and maximum-size villagers completed descent and return in every rotation. D03.3 retains its
+spiral stair for the climb to the guard post at `[3,13,8]` and adds a visually inspected internal
+ladder for a reliable return to the lower bed and personal chest. D04.12 remains a sealed
+decorative basin: it has no villager endpoint, and construction grants WATER directly.
 
-The remaining authoring work is larger than naming. None of the existing Desert definitions has
-village-identity sockets yet, so the permanent orange, cactus green and ochre market palette must
-be kept distinct from any future primary and secondary village-color accents. Every selected
-shell still needs a neutral, licensed production capture, exact beds, work positions, communal
-and personal storage, identity slots, costs and an access check in all rotations. The D07.5 mine
-also needs its durable capture and excavation orientation. Finally, the selected CTOV Desert
-Oasis reference structures cannot move from the private review library into shipped resources
-without the author's written permission; the approved Kithkyn market restyle does not have that
-dependency.
+The final service fixture passed 48 rotations, 168 planned access routes, 44 physical bed walks,
+44 personal-container deposits, 48 work-station walks, 32 communal-container transfers and eight
+mine descent/return walks with zero failures. The strict regional fixture passed all 28 native
+templates, all nine housing choices, twelve rotated upgrade fits, four founding rotations and
+save reloads, natural biome selection, five founding beds, four founding jobs, room colors and
+actual banner patterns. The watchtower, mine and sealed well were rendered from the final generated
+assets after their navigation checks.
+
+The runtime naming path needs no Desert-specific follow-up. Its profile describes sheltered
+courtyards, pale masonry, shade and hospitable traders; generated names may use that tone without
+copying the examples. The deterministic fallback uses starts such as `Dara`, `Sere`, `Amar`,
+`Tala`, `Sola` and `Nara`. Sandy Desert biomes select the persisted `desert` style, and
+`/kithkyn create-village <pos> desert` can force a sample settlement. Mesa and badlands select the
+separate Pueblo catalog.
+
+Desert walls use one sandstone stage with oak trapdoors and ordinary ladders; there is no second
+wall upgrade. Exact selected-asset hashes and verification evidence are recorded in
+`tools/structure/desert-catalog-20260909.json` and [desert-village.md](desert-village.md). CTOV
+derived NBT remains in the private local datapack and is not copied into shipped resources without
+written redistribution permission. The three Kithkyn-authored Desert market assets do not have
+that dependency.
 
 ### Jungle building showcase: September 9
 

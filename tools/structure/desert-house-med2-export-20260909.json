@@ -1,0 +1,17 @@
+{
+  "overrides": [
+    {
+      "pos": [4, 2, 9],
+      "name": "minecraft:air",
+      "properties": {}
+    },
+    {
+      "pos": [4, 2, 8],
+      "name": "minecraft:smooth_sandstone_slab",
+      "properties": {
+        "type": "bottom",
+        "waterlogged": "false"
+      }
+    }
+  ]
+}

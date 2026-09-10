@@ -1,0 +1,6 @@
+{
+  "stabilize_ground_sand": true,
+  "overrides": [
+    {"pos": [11, 1, 5], "name": "minecraft:acacia_sapling", "properties": {"stage": "0"}}
+  ]
+}

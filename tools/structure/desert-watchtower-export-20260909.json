@@ -1,0 +1,16 @@
+{
+  "stabilize_ground_sand": true,
+  "overrides": [
+    {"pos": [6, 2, 7], "name": "minecraft:ladder", "properties": {"facing": "west", "waterlogged": "false"}},
+    {"pos": [6, 3, 7], "name": "minecraft:ladder", "properties": {"facing": "west", "waterlogged": "false"}},
+    {"pos": [6, 4, 7], "name": "minecraft:ladder", "properties": {"facing": "west", "waterlogged": "false"}},
+    {"pos": [6, 5, 7], "name": "minecraft:ladder", "properties": {"facing": "west", "waterlogged": "false"}},
+    {"pos": [6, 6, 7], "name": "minecraft:ladder", "properties": {"facing": "west", "waterlogged": "false"}},
+    {"pos": [6, 7, 7], "name": "minecraft:ladder", "properties": {"facing": "west", "waterlogged": "false"}},
+    {"pos": [6, 8, 7], "name": "minecraft:ladder", "properties": {"facing": "west", "waterlogged": "false"}},
+    {"pos": [6, 9, 7], "name": "minecraft:ladder", "properties": {"facing": "west", "waterlogged": "false"}},
+    {"pos": [6, 10, 7], "name": "minecraft:ladder", "properties": {"facing": "west", "waterlogged": "false"}},
+    {"pos": [6, 11, 7], "name": "minecraft:ladder", "properties": {"facing": "west", "waterlogged": "false"}},
+    {"pos": [6, 12, 7], "name": "minecraft:ladder", "properties": {"facing": "west", "waterlogged": "false"}}
+  ]
+}

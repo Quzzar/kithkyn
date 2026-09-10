@@ -1,5 +1,5 @@
 {
-  "status": "verified-for-deployment",
+  "status": "deployed-and-verified",
   "release_sha256": "f9e833b4ce97b0043ce4c0efd754300a23020fff731a6bf749704e2575efb1cb",
   "private_catalogs": {
     "badlands": {
@@ -76,5 +76,13 @@
     "tools/structure/desert-markets-access-20260909.json"
   ],
   "installation": "Private catalogs are installed after mod_data; no old-building aliases or save migrations.",
-  "sealed_desert_well_sha256": "501c9901d4f867a17325ac3fb0b9bdfa6ac0705be6a32abd23e99c7960aaef9a"
+  "sealed_desert_well_sha256": "501c9901d4f867a17325ac3fb0b9bdfa6ac0705be6a32abd23e99c7960aaef9a",
+  "live_install": {
+    "source_commit": "633d5ceaec6f1b75425ec75a8021196fd2554fef",
+    "sha256": "f9e833b4ce97b0043ce4c0efd754300a23020fff731a6bf749704e2575efb1cb",
+    "matching_client_and_server": true,
+    "matching_private_catalogs": true,
+    "player_rejoined": true,
+    "receipt": "run/arid-village-closeout/live-install-verification.json"
+  }
 }

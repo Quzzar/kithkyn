@@ -1,0 +1,410 @@
+{
+  "status": "captured_configured_and_verified",
+  "description": "Nine approved Desert Oasis home alternatives. The first design is large, the next two are medium, and the remaining six are small. D05.3 preserves Aaron's live removal of the source building's middle bed.",
+  "work": "run/pueblo-showcase/desert-houses-approved-20260909-213200",
+  "distribution": "private_review_only_pending_written_source_permission",
+  "preview_colors": {
+    "primary": "blue",
+    "secondary": "yellow"
+  },
+  "houses": [
+    {
+      "exhibit": "D05.3",
+      "label": "Big 2",
+      "source_capture": "run/pueblo-showcase/desert-houses-approved-20260909-213200/captures/D05.3.nbt",
+      "source_mod": "[Neoforge]ctov-3.6.3.jar",
+      "source_mod_structure": "data/ctov/structure/village/desert_oasis/house/big_2.nbt",
+      "source_sha256": "f945783ea6fd8e0d9c15fa9dcb65d72255bb1edd933716a073d093678e68ede5",
+      "template_origin": [3834, 230, 1138],
+      "size": [15, 11, 21],
+      "capacity": {
+        "beds": 2,
+        "single_beds": 2,
+        "couple_rooms": 0
+      },
+      "amenities": {
+        "beds": [[9, 6, 8], [9, 6, 10]],
+        "couple_beds": [],
+        "work_stations": [],
+        "personal_containers": [[8, 4, 4], [9, 4, 4], [10, 6, 4]],
+        "containers": [],
+        "bed_containers": [
+          {"bed": [9, 6, 8], "containers": [[10, 6, 4]]},
+          {"bed": [9, 6, 10], "containers": [[9, 4, 4], [8, 4, 4]]}
+        ],
+        "village_identity": {
+          "primary_blocks": [[9, 6, 8]],
+          "secondary_blocks": [[9, 6, 10]],
+          "banners": []
+        },
+        "sink": 0
+      },
+      "neutral_template": "run/pueblo-showcase/desert-houses-approved-20260909-213200/neutral/D05.3.nbt",
+      "neutral_template_sha256": "a85617dfdca0ff07329d19553254ad91c0e843a43041b7ab5c5052620480f1ae",
+      "production": {
+        "structure": "house_desert_3",
+        "category": "house",
+        "variant": "desert",
+        "level": 3,
+        "recipe": "house_plains_3",
+        "definition_overrides": {"standalone": true}
+      }
+    },
+    {
+      "exhibit": "D05.4",
+      "label": "Med 1",
+      "source_capture": "run/pueblo-showcase/desert-houses-approved-20260909-213200/captures/D05.4.nbt",
+      "source_mod": "[Neoforge]ctov-3.6.3.jar",
+      "source_mod_structure": "data/ctov/structure/village/desert_oasis/house/med_1.nbt",
+      "source_sha256": "8575075b86340da978384506d293cfab6427ff58dfdaf50739cc386ac565d71d",
+      "template_origin": [3853, 230, 1138],
+      "size": [15, 10, 15],
+      "capacity": {
+        "beds": 2,
+        "single_beds": 2,
+        "couple_rooms": 0
+      },
+      "amenities": {
+        "beds": [[10, 1, 4], [10, 1, 6]],
+        "couple_beds": [],
+        "work_stations": [],
+        "personal_containers": [[6, 1, 4], [7, 1, 4]],
+        "containers": [],
+        "bed_containers": [
+          {"bed": [10, 1, 4], "containers": [[7, 1, 4]]},
+          {"bed": [10, 1, 6], "containers": [[6, 1, 4]]}
+        ],
+        "village_identity": {
+          "primary_blocks": [[10, 1, 4]],
+          "secondary_blocks": [[10, 1, 6]],
+          "banners": []
+        },
+        "sink": 0
+      },
+      "neutral_template": "run/pueblo-showcase/desert-houses-approved-20260909-213200/neutral/D05.4.nbt",
+      "neutral_template_sha256": "a2f9da158ec27f59d5a5856fbcf5b65bb01721fc0d63888131f72f8b0cc93d41",
+      "production": {
+        "structure": "house_desert_2",
+        "category": "house",
+        "variant": "desert",
+        "level": 2,
+        "recipe": "house_plains_2",
+        "definition_overrides": {"standalone": true}
+      }
+    },
+    {
+      "exhibit": "D05.5",
+      "label": "Med 2",
+      "source_capture": "run/pueblo-showcase/desert-houses-approved-20260909-213200/captures/D05.5.nbt",
+      "source_mod": "[Neoforge]ctov-3.6.3.jar",
+      "source_mod_structure": "data/ctov/structure/village/desert_oasis/house/med_2.nbt",
+      "source_sha256": "918ca69e97932273cf3a98e0679970cc981aae14e2b2f803afda816c0c8f89e4",
+      "template_origin": [3872, 230, 1138],
+      "size": [15, 10, 16],
+      "capacity": {
+        "beds": 2,
+        "single_beds": 0,
+        "couple_rooms": 1
+      },
+      "amenities": {
+        "beds": [[10, 5, 9], [10, 5, 10]],
+        "couple_beds": [[[10, 5, 9], [10, 5, 10]]],
+        "work_stations": [],
+        "personal_containers": [[10, 1, 6]],
+        "containers": [],
+        "bed_containers": [
+          {"bed": [10, 5, 9], "containers": [[10, 1, 6]]},
+          {"bed": [10, 5, 10], "containers": [[10, 1, 6]]}
+        ],
+        "village_identity": {
+          "primary_blocks": [[10, 5, 9], [10, 5, 10]],
+          "secondary_blocks": [],
+          "banners": []
+        },
+        "sink": 0
+      },
+      "export_options_file": "tools/structure/desert-house-med2-export-20260909.json",
+      "neutral_template": "run/pueblo-showcase/desert-houses-approved-20260909-213200/neutral/D05.5.nbt",
+      "neutral_template_sha256": "9eafd06c132eab8302bd5d0cee33e5931b5f53298bb30b85eca6e319b5b66477",
+      "production": {
+        "structure": "house_desert_2__medium_house_2",
+        "category": "house",
+        "variant": "desert",
+        "level": 2,
+        "recipe": "house_plains_2",
+        "definition_overrides": {"standalone": true}
+      }
+    },
+    {
+      "exhibit": "D05.6",
+      "label": "Small 1",
+      "source_capture": "run/pueblo-showcase/desert-houses-approved-20260909-213200/captures/D05.6.nbt",
+      "source_mod": "[Neoforge]ctov-3.6.3.jar",
+      "source_mod_structure": "data/ctov/structure/village/desert_oasis/house/small_1.nbt",
+      "source_sha256": "92b978a8ffddb17cf78000f670e634c581e63b509b5567031273839937aeb95b",
+      "template_origin": [3891, 230, 1138],
+      "size": [11, 9, 11],
+      "capacity": {
+        "beds": 1,
+        "single_beds": 1,
+        "couple_rooms": 0
+      },
+      "amenities": {
+        "beds": [[6, 1, 4]],
+        "couple_beds": [],
+        "work_stations": [],
+        "personal_containers": [[4, 1, 6]],
+        "containers": [],
+        "bed_containers": [
+          {"bed": [6, 1, 4], "containers": [[4, 1, 6]]}
+        ],
+        "village_identity": {
+          "primary_blocks": [],
+          "secondary_blocks": [[6, 1, 4]],
+          "banners": []
+        },
+        "sink": 0
+      },
+      "neutral_template": "run/pueblo-showcase/desert-houses-approved-20260909-213200/neutral/D05.6.nbt",
+      "neutral_template_sha256": "a954bd3147808e46a40f33e50396ecc18b3c9c03dffaad95425f934dbd94ee03",
+      "production": {
+        "structure": "house_desert_1",
+        "category": "house",
+        "variant": "desert",
+        "level": 1,
+        "recipe": "house_plains_1"
+      }
+    },
+    {
+      "exhibit": "D05.7",
+      "label": "Small 2",
+      "source_capture": "run/pueblo-showcase/desert-houses-approved-20260909-213200/captures/D05.7.nbt",
+      "source_mod": "[Neoforge]ctov-3.6.3.jar",
+      "source_mod_structure": "data/ctov/structure/village/desert_oasis/house/small_2.nbt",
+      "source_sha256": "3dd6b1b9ffd35395f7b82b6c4f082d6dd7f279699e5fa3265269db3fb8580d9a",
+      "template_origin": [3906, 230, 1138],
+      "size": [13, 9, 13],
+      "capacity": {
+        "beds": 2,
+        "single_beds": 2,
+        "couple_rooms": 0
+      },
+      "amenities": {
+        "beds": [[4, 1, 5], [4, 1, 7]],
+        "couple_beds": [],
+        "work_stations": [],
+        "personal_containers": [[8, 1, 6], [8, 1, 7]],
+        "containers": [],
+        "bed_containers": [
+          {"bed": [4, 1, 5], "containers": [[8, 1, 6]]},
+          {"bed": [4, 1, 7], "containers": [[8, 1, 7]]}
+        ],
+        "village_identity": {
+          "primary_blocks": [[4, 1, 5]],
+          "secondary_blocks": [[4, 1, 7]],
+          "banners": []
+        },
+        "sink": 0
+      },
+      "neutral_template": "run/pueblo-showcase/desert-houses-approved-20260909-213200/neutral/D05.7.nbt",
+      "neutral_template_sha256": "e6e3b376e17c822776faebce4b5dd1bc29d1e54272630f30c069c9118f4c3740",
+      "production": {
+        "structure": "house_desert_1__small_house_2",
+        "category": "house",
+        "variant": "desert",
+        "level": 1,
+        "recipe": "house_plains_1"
+      }
+    },
+    {
+      "exhibit": "D05.8",
+      "label": "Small 3",
+      "source_capture": "run/pueblo-showcase/desert-houses-approved-20260909-213200/captures/D05.8.nbt",
+      "source_mod": "[Neoforge]ctov-3.6.3.jar",
+      "source_mod_structure": "data/ctov/structure/village/desert_oasis/house/small_3.nbt",
+      "source_sha256": "b7dceba434807861537495e1fcd64ca19ea5481ee84c072e687433965d3573df",
+      "template_origin": [3923, 230, 1138],
+      "size": [15, 10, 11],
+      "capacity": {
+        "beds": 2,
+        "single_beds": 2,
+        "couple_rooms": 0
+      },
+      "amenities": {
+        "beds": [[4, 1, 4], [4, 1, 6]],
+        "couple_beds": [],
+        "work_stations": [],
+        "personal_containers": [[10, 1, 5]],
+        "containers": [],
+        "bed_containers": [
+          {"bed": [4, 1, 4], "containers": [[10, 1, 5]]},
+          {"bed": [4, 1, 6], "containers": [[10, 1, 5]]}
+        ],
+        "village_identity": {
+          "primary_blocks": [[4, 1, 6]],
+          "secondary_blocks": [[4, 1, 4]],
+          "banners": []
+        },
+        "sink": 0
+      },
+      "neutral_template": "run/pueblo-showcase/desert-houses-approved-20260909-213200/neutral/D05.8.nbt",
+      "neutral_template_sha256": "5debfa5e9553ee579a2c61181dcfe36f476d9ba52490260f1d37f5d3d2dfe4b1",
+      "production": {
+        "structure": "house_desert_1__small_house_3",
+        "category": "house",
+        "variant": "desert",
+        "level": 1,
+        "recipe": "house_plains_1"
+      }
+    },
+    {
+      "exhibit": "D06.1",
+      "label": "Small 4",
+      "source_capture": "run/pueblo-showcase/desert-houses-approved-20260909-213200/captures/D06.1.nbt",
+      "source_mod": "[Neoforge]ctov-3.6.3.jar",
+      "source_mod_structure": "data/ctov/structure/village/desert_oasis/house/small_4.nbt",
+      "source_sha256": "be0f7bc5294274ccd2e4cb928a4ddfea4fb55086ef8974ab92a075b1fcc5ce63",
+      "template_origin": [3790, 230, 1175],
+      "size": [14, 9, 11],
+      "capacity": {
+        "beds": 1,
+        "single_beds": 1,
+        "couple_rooms": 0
+      },
+      "amenities": {
+        "beds": [[9, 1, 4]],
+        "couple_beds": [],
+        "work_stations": [],
+        "personal_containers": [[7, 1, 6]],
+        "containers": [],
+        "bed_containers": [
+          {"bed": [9, 1, 4], "containers": [[7, 1, 6]]}
+        ],
+        "village_identity": {
+          "primary_blocks": [[9, 1, 4]],
+          "secondary_blocks": [],
+          "banners": []
+        },
+        "sink": 0
+      },
+      "neutral_template": "run/pueblo-showcase/desert-houses-approved-20260909-213200/neutral/D06.1.nbt",
+      "neutral_template_sha256": "625e8e396cf0eb27f0eca377abb82267ee96628894a22867f4804ecb33bce516",
+      "production": {
+        "structure": "house_desert_1__small_house_4",
+        "category": "house",
+        "variant": "desert",
+        "level": 1,
+        "recipe": "house_plains_1"
+      }
+    },
+    {
+      "exhibit": "D06.2",
+      "label": "Small 5",
+      "source_capture": "run/pueblo-showcase/desert-houses-approved-20260909-213200/captures/D06.2.nbt",
+      "source_mod": "[Neoforge]ctov-3.6.3.jar",
+      "source_mod_structure": "data/ctov/structure/village/desert_oasis/house/small_5.nbt",
+      "source_sha256": "03f716e4805a3a3ff7a0f6997f1177505f0d07aca60f2e0f4244d3d8848d21bf",
+      "template_origin": [3808, 230, 1175],
+      "size": [15, 9, 11],
+      "capacity": {
+        "beds": 1,
+        "single_beds": 1,
+        "couple_rooms": 0
+      },
+      "amenities": {
+        "beds": [[5, 1, 4]],
+        "couple_beds": [],
+        "work_stations": [],
+        "personal_containers": [[5, 1, 6]],
+        "containers": [],
+        "bed_containers": [
+          {"bed": [5, 1, 4], "containers": [[5, 1, 6]]}
+        ],
+        "village_identity": {
+          "primary_blocks": [],
+          "secondary_blocks": [[5, 1, 4]],
+          "banners": []
+        },
+        "sink": 0
+      },
+      "neutral_template": "run/pueblo-showcase/desert-houses-approved-20260909-213200/neutral/D06.2.nbt",
+      "neutral_template_sha256": "c65941ea110f5daa669d1b36762bdb52fa775945dd2a1500fb213a99e428936c",
+      "production": {
+        "structure": "house_desert_1__small_house_5",
+        "category": "house",
+        "variant": "desert",
+        "level": 1,
+        "recipe": "house_plains_1"
+      }
+    },
+    {
+      "exhibit": "D06.3",
+      "label": "Small 6",
+      "source_capture": "run/pueblo-showcase/desert-houses-approved-20260909-213200/captures/D06.3.nbt",
+      "source_mod": "[Neoforge]ctov-3.6.3.jar",
+      "source_mod_structure": "data/ctov/structure/village/desert_oasis/house/small_6.nbt",
+      "source_sha256": "467d923c1454a1ce93e61520ead1fc4c9736c8a12b787185e073e84e8c1a3992",
+      "template_origin": [3827, 230, 1175],
+      "size": [15, 11, 15],
+      "capacity": {
+        "beds": 2,
+        "single_beds": 2,
+        "couple_rooms": 0
+      },
+      "amenities": {
+        "beds": [[4, 1, 4], [6, 1, 4]],
+        "couple_beds": [],
+        "work_stations": [],
+        "personal_containers": [[9, 1, 10], [4, 3, 9], [4, 3, 10]],
+        "containers": [],
+        "bed_containers": [
+          {"bed": [4, 1, 4], "containers": [[4, 3, 9], [4, 3, 10]]},
+          {"bed": [6, 1, 4], "containers": [[9, 1, 10]]}
+        ],
+        "village_identity": {
+          "primary_blocks": [[4, 1, 4]],
+          "secondary_blocks": [[6, 1, 4]],
+          "banners": []
+        },
+        "sink": 0
+      },
+      "neutral_template": "run/pueblo-showcase/desert-houses-approved-20260909-213200/neutral/D06.3.nbt",
+      "neutral_template_sha256": "92b8e50e48fe40d0fd8f5dea7c34d026e4575eeeef998437ca565edcb97d2735",
+      "production": {
+        "structure": "house_desert_1__small_house_6",
+        "category": "house",
+        "variant": "desert",
+        "level": 1,
+        "recipe": "house_plains_1"
+      }
+    }
+  ],
+  "verification": {
+    "native_asset_readback": "run/pueblo-showcase/desert-houses-approved-20260909-213200/asset-verification.json",
+    "live_bed_preview": "run/pueblo-showcase/desert-houses-approved-20260909-213200/live-apply.json",
+    "rendered_review": true,
+    "screenshots": [
+      "run/pueblo-showcase/desert-houses-approved-20260909-213200/visual-review/client/screenshots/desert-d05-3-two-single-beds.png",
+      "run/pueblo-showcase/desert-houses-approved-20260909-213200/visual-review/client/screenshots/desert-d05-4-two-single-beds.png",
+      "run/pueblo-showcase/desert-houses-approved-20260909-213200/visual-review/client/screenshots/desert-d05-5-couple-room.png",
+      "run/pueblo-showcase/desert-houses-approved-20260909-213200/visual-review/client/screenshots/desert-d05-6-single-room.png",
+      "run/pueblo-showcase/desert-houses-approved-20260909-213200/visual-review/client/screenshots/desert-d05-7-two-single-beds.png",
+      "run/pueblo-showcase/desert-houses-approved-20260909-213200/visual-review/client/screenshots/desert-d05-8-shared-room.png",
+      "run/pueblo-showcase/desert-houses-approved-20260909-213200/visual-review/client/screenshots/desert-d06-1-single-room.png",
+      "run/pueblo-showcase/desert-houses-approved-20260909-213200/visual-review/client/screenshots/desert-d06-2-single-room.png",
+      "run/pueblo-showcase/desert-houses-approved-20260909-213200/visual-review/client/screenshots/desert-d06-3-two-single-beds.png"
+    ],
+    "live_ai_deployed": false,
+    "native_access": "run/desert-house-verification-20260909-221500/verification.json",
+    "native_summary": {
+      "rotated_structures": 36,
+      "access_routes": 120,
+      "physical_room_walks_and_assigned_bed_sleeps": 60,
+      "personal_container_deposits": 60,
+      "failed_placements": 0,
+      "probe_size": 18,
+      "collision_height": 2.0,
+      "collision_width": 0.64800006
+    }
+  }
+}
