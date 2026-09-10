@@ -1669,3 +1669,50 @@ side with the same facing are one couple unit in a single colour. The storehouse
 note block as the delivery point for two allays that the village will adopt as auxiliary
 quartermasters; that logic is being built on the `allay-quartermasters` branch. Apron sea
 lanterns inside the padded captures are gallery furniture and must not be exported.
+
+### Floodplain wall palette: September 10
+
+The five wall drafts in the Nilotic showcase (straight, diagonal, terrace, corner tower,
+gatehouse; teleport `/tp @s 6569.5 230 1146.5 -90 0`) now carry the decided floodplain
+palette, applied by `run/nilotic-showcase/restyle-wall.py` and captured in the current
+`tools/structure/nilotic-showcase-20260910.json` hashes. It mirrors the arid treatment
+of the Desert and Mesa walls with wet-country materials:
+
+| Arid element | Floodplain choice |
+| --- | --- |
+| Stone brick body, posts and deck | Mud bricks |
+| Stone brick stairs and slabs | Mud brick stairs and slabs, same facing and half |
+| Fence railings | Mud brick walls |
+| Trapdoors | Jungle trapdoors, same facing and open state |
+| Chiseled stone gate frame | Muddy mangrove roots on the gatehouse uprights and the beam over the arch |
+| Candle clusters on the standing lantern cells | Brown candles, two to four per cell keyed to position the way `WallPalette.standingLight` keys them |
+| Inward roof lanterns | Removed, as the arid palette removes them |
+| Four lanterns hanging under the gate arch | Kept as lanterns |
+
+The row overview and gatehouse close-up (`review-walls-final-na05`, `review-gate-final-na05`)
+show the result: tan mud brick curtain with thin wall-block parapets, a dark roots frame around
+the gate, candle clusters on every post top, and the two lantern pairs still lit under the arch.
+This is the palette the runtime `FLOODPLAIN` case of `WallPalette.forStyle` takes once the
+floodplain `VillageStyle` lands; the arid `isGateFrame` cell rule already describes the roots
+cells, so only the material mapping is new.
+
+### Floodplain wall approval: September 10
+
+Aaron reviewed the restyled row and corrected one gatehouse cell by hand: the top of the
+east end post (x 16, y 5, z 2) had come out as muddy mangrove roots and he set it back to
+mud bricks. The cause was in the restyle pass, which guessed beam cells from the current
+block instead of the authored piece; it now reads the wood template's log axes, so a log
+standing on end at y 5 is a post top and stays mud bricks while the lying logs of the roof
+rim remain roots. That is the classification `AuthoredWoodWallSegments.isGateFrame` uses,
+so the west post top (x 5, y 5, z 2) took the same correction. A second defect surfaced on
+the re-place: the server caches every placed template by id, so the third pass reused the
+stale copy and put the roots back; `restyle.py` now places each pass under a fresh versioned
+template id, as `replace-copy.py` already did. The row was diffed against its templates from
+a flushed snapshot afterwards with no differing cells (`run/nilotic-showcase/diff-live.py NA05`),
+and the corrected gatehouse was photographed (`review-gate-fixed-na05`).
+
+The five sections are approved and captured into the floodplain selection record as `wall`
+entries (`straight`, `diagonal`, `terrace`, `corner_tower`, `gatehouse`):
+`tools/structure/nilotic-selections-20260910.json` now holds 27 native captures, 20 buildings,
+five wall sections and two candidates, each hashed from the same flushed snapshot. The audit
+lists the gatehouse campfire among its work stations; it is decoration.
