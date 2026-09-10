@@ -11,6 +11,7 @@
   "source_mods": [
     "ctov",
     "kaisyn",
+    "main",
     "nova_structures",
     "world"
   ],
@@ -47,13 +48,26 @@
     "allay_quartermasters": {
       "status": "approved_for_implementation",
       "count_at_storehouse": 2,
-      "rule": "Any village: a guard adopts nearby allays as auxiliary quartermasters the way it recruits golems as guards; the storehouse note block is the allay delivery point.",
+      "rule": "Any village: the quartermaster takes on nearby allays as auxiliary helpers the way guards recruit golems; storehouse-born allays wait at the storehouse note block until adopted. No second storehouse tier: more storehouses instead, all served by every keeper.",
       "note_block": "Aaron placed a note block in the storehouse draft."
     }
   },
   "restyle_policy": {
     "method": "block-type substitution through VillageTemplateExport overrides; every block keeps its orientation and properties",
     "wool_and_banners": "kept as identity slots"
+  },
+  "walls": {
+    "status": "captured_and_approved",
+    "gallery_row": "NA05",
+    "sections": [
+      "straight",
+      "diagonal",
+      "terrace",
+      "corner_tower",
+      "gatehouse"
+    ],
+    "palette": "decisions.wall_palette; mirrors the arid gate-frame and candle rules of the wood wall generator",
+    "approval": "Aaron reviewed the restyled row on 2026-09-10 and corrected one gatehouse roof cell; the captures hold that state."
   },
   "decisions": {
     "tavern": "none for the floodplain village",
@@ -66,7 +80,18 @@
       "NA03.2 fishery pool": "sand to mud, acacia leaves to mangrove leaves"
     },
     "market_restyle": "cut sandstone to mud bricks, sandstone stairs to mud brick stairs, acacia fences to spruce, acacia logs to mangrove, potted cactus and dead bush to fern; wool, carpets and banners kept as identity slots",
-    "market_edit": "Aaron removed one extra orange carpet from the market drafts; captures refreshed afterwards"
+    "market_edit": "Aaron removed one extra orange carpet from the market drafts; captures refreshed afterwards",
+    "wall_palette": {
+      "status": "decided 2026-09-10, applied to the NA05 drafts",
+      "body": "minecraft:mud_bricks for posts, deck, wall body and tower shell (every stripped oak log / oak plank cell)",
+      "steps_and_slabs": "minecraft:mud_brick_stairs / minecraft:mud_brick_slab keep the authored facing and half",
+      "railing": "minecraft:mud_brick_wall in place of every fence (mud brick walls, not mangrove fences)",
+      "trapdoor": "minecraft:jungle_trapdoor keeps the authored facing, half and open state",
+      "frame": "minecraft:muddy_mangrove_roots on the gatehouse uprights (x 6 and 10, z 1 and 3, y < 5) and the y 5 beams, mirroring the chiseled stone trim of the arid WallPalette",
+      "light": "minecraft:brown_candle clusters (candles = 2 + floorMod(31x + 17z + y, 3), lit) wherever a standing lantern stood; inward roof lanterns removed like the arid palette",
+      "hanging_lanterns": "the four lanterns hanging under the gatehouse arch stay lanterns",
+      "runtime": "becomes the FLOODPLAIN case of WallPalette.forStyle once the floodplain VillageStyle lands"
+    }
   },
   "buildings": [
     {
@@ -3189,6 +3214,397 @@
         ],
         "note": "Apron corner lighting from the gallery; exclude at export."
       }
+    },
+    {
+      "exhibit": "NA05.1",
+      "label": "Straight",
+      "gallery": "nilotic-showcase",
+      "source_mod_structure": "src/main/resources/data/kithkyn/structure/wall/wood/straight.nbt",
+      "source_mod_structure_sha256": "157899d57a90d12c69d7b5db302919d494e0e94efd9c52dc4d81b691a070d8e5",
+      "source_capture": "run/nilotic-showcase/selection-20260910-floodplain/captures/NA05.1.nbt",
+      "source_capture_sha256": "05eec5f807af8cca2ebf957654d244524672365c833751faed84e0af7960025a",
+      "gallery_origin": [
+        6576,
+        230,
+        1151
+      ],
+      "capture_from": [
+        6574,
+        230,
+        1149
+      ],
+      "capture_to": [
+        6584,
+        275,
+        1153
+      ],
+      "solid_bounds_relative_to_gallery_origin": [
+        [
+          0,
+          6
+        ],
+        [
+          0,
+          7
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "restyle": [
+        {
+          "minecraft:stripped_oak_log": "minecraft:mud_bricks",
+          "minecraft:oak_fence": "minecraft:mangrove_fence",
+          "minecraft:oak_slab": "minecraft:mud_brick_slab",
+          "minecraft:oak_trapdoor": "minecraft:jungle_trapdoor"
+        },
+        {
+          "palette": "floodplain: mud brick body and deck, mud brick walls, mud brick slabs, jungle trapdoors, brown candle clusters, hanging gate lanterns, muddy mangrove roots gate frame"
+        },
+        {
+          "palette": "floodplain: mud brick body and deck, mud brick walls, mud brick slabs, jungle trapdoors, brown candle clusters, hanging gate lanterns, muddy mangrove roots gate frame"
+        }
+      ],
+      "role": "wall",
+      "use": "wall straight",
+      "status": "captured_pending_production_authoring",
+      "capacity": {
+        "beds": 0,
+        "single_beds": 0,
+        "couple_rooms": 0
+      },
+      "amenities": {
+        "beds": [],
+        "couple_beds": [],
+        "containers": [],
+        "work_stations": [],
+        "banners": [],
+        "decorative_banners": [],
+        "village_identity": {
+          "primary_blocks": [],
+          "secondary_blocks": [],
+          "banners": []
+        },
+        "coloured_blocks": {}
+      },
+      "notes": [],
+      "section": "straight"
+    },
+    {
+      "exhibit": "NA05.2",
+      "label": "Diagonal",
+      "gallery": "nilotic-showcase",
+      "source_mod_structure": "src/main/resources/data/kithkyn/structure/wall/wood/diagonal.nbt",
+      "source_mod_structure_sha256": "b4cb27e0e8b817fe88e9a882638186adc1f5e2678ad17a060f5c9e81e9e8e1f3",
+      "source_capture": "run/nilotic-showcase/selection-20260910-floodplain/captures/NA05.2.nbt",
+      "source_capture_sha256": "a14d8fa9d2d2dd66c4fe58aef08996575dc1a945d6e8c57e5fdd7cc89e973c1b",
+      "gallery_origin": [
+        6591,
+        230,
+        1151
+      ],
+      "capture_from": [
+        6589,
+        230,
+        1149
+      ],
+      "capture_to": [
+        6599,
+        275,
+        1159
+      ],
+      "solid_bounds_relative_to_gallery_origin": [
+        [
+          0,
+          6
+        ],
+        [
+          0,
+          7
+        ],
+        [
+          0,
+          6
+        ]
+      ],
+      "restyle": [
+        {
+          "minecraft:stripped_oak_log": "minecraft:mud_bricks",
+          "minecraft:oak_fence": "minecraft:mangrove_fence",
+          "minecraft:oak_slab": "minecraft:mud_brick_slab",
+          "minecraft:oak_trapdoor": "minecraft:jungle_trapdoor"
+        },
+        {
+          "palette": "floodplain: mud brick body and deck, mud brick walls, mud brick slabs, jungle trapdoors, brown candle clusters, hanging gate lanterns, muddy mangrove roots gate frame"
+        },
+        {
+          "palette": "floodplain: mud brick body and deck, mud brick walls, mud brick slabs, jungle trapdoors, brown candle clusters, hanging gate lanterns, muddy mangrove roots gate frame"
+        }
+      ],
+      "role": "wall",
+      "use": "wall diagonal",
+      "status": "captured_pending_production_authoring",
+      "capacity": {
+        "beds": 0,
+        "single_beds": 0,
+        "couple_rooms": 0
+      },
+      "amenities": {
+        "beds": [],
+        "couple_beds": [],
+        "containers": [],
+        "work_stations": [],
+        "banners": [],
+        "decorative_banners": [],
+        "village_identity": {
+          "primary_blocks": [],
+          "secondary_blocks": [],
+          "banners": []
+        },
+        "coloured_blocks": {}
+      },
+      "notes": [],
+      "section": "diagonal"
+    },
+    {
+      "exhibit": "NA05.3",
+      "label": "Terrace",
+      "gallery": "nilotic-showcase",
+      "source_mod_structure": "src/main/resources/data/kithkyn/structure/wall/wood/terrace.nbt",
+      "source_mod_structure_sha256": "aca98a586336c5145470b0b422a7d15ce576150187173c9a3dbdf2a518b83d8e",
+      "source_capture": "run/nilotic-showcase/selection-20260910-floodplain/captures/NA05.3.nbt",
+      "source_capture_sha256": "a5d1df90e62ffb1bb78d31bdfdb8969f5afdf8d7a5e077326c93f07a7fd07fcd",
+      "gallery_origin": [
+        6606,
+        230,
+        1151
+      ],
+      "capture_from": [
+        6604,
+        230,
+        1149
+      ],
+      "capture_to": [
+        6615,
+        275,
+        1153
+      ],
+      "solid_bounds_relative_to_gallery_origin": [
+        [
+          0,
+          7
+        ],
+        [
+          0,
+          8
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "restyle": [
+        {
+          "minecraft:stripped_oak_log": "minecraft:mud_bricks",
+          "minecraft:oak_fence": "minecraft:mangrove_fence",
+          "minecraft:oak_slab": "minecraft:mud_brick_slab",
+          "minecraft:oak_trapdoor": "minecraft:jungle_trapdoor"
+        },
+        {
+          "palette": "floodplain: mud brick body and deck, mud brick walls, mud brick slabs, jungle trapdoors, brown candle clusters, hanging gate lanterns, muddy mangrove roots gate frame"
+        },
+        {
+          "palette": "floodplain: mud brick body and deck, mud brick walls, mud brick slabs, jungle trapdoors, brown candle clusters, hanging gate lanterns, muddy mangrove roots gate frame"
+        }
+      ],
+      "role": "wall",
+      "use": "wall terrace",
+      "status": "captured_pending_production_authoring",
+      "capacity": {
+        "beds": 0,
+        "single_beds": 0,
+        "couple_rooms": 0
+      },
+      "amenities": {
+        "beds": [],
+        "couple_beds": [],
+        "containers": [],
+        "work_stations": [],
+        "banners": [],
+        "decorative_banners": [],
+        "village_identity": {
+          "primary_blocks": [],
+          "secondary_blocks": [],
+          "banners": []
+        },
+        "coloured_blocks": {}
+      },
+      "notes": [],
+      "section": "terrace"
+    },
+    {
+      "exhibit": "NA05.4",
+      "label": "Corner Tower",
+      "gallery": "nilotic-showcase",
+      "source_mod_structure": "src/main/resources/data/kithkyn/structure/wall/wood/corner_tower.nbt",
+      "source_mod_structure_sha256": "73c76b6c1162778a06895121cdd0b93c3e980809cf900a0420603b0e40702779",
+      "source_capture": "run/nilotic-showcase/selection-20260910-floodplain/captures/NA05.4.nbt",
+      "source_capture_sha256": "eb90922aabc35aacb9d6f4046f6bf0087851d6ce9dec370ed55f8d857c7da023",
+      "gallery_origin": [
+        6622,
+        230,
+        1151
+      ],
+      "capture_from": [
+        6620,
+        230,
+        1149
+      ],
+      "capture_to": [
+        6635,
+        275,
+        1158
+      ],
+      "solid_bounds_relative_to_gallery_origin": [
+        [
+          0,
+          11
+        ],
+        [
+          0,
+          7
+        ],
+        [
+          0,
+          5
+        ]
+      ],
+      "restyle": [
+        {
+          "minecraft:stripped_oak_log": "minecraft:mud_bricks",
+          "minecraft:oak_fence": "minecraft:mangrove_fence",
+          "minecraft:oak_slab": "minecraft:mud_brick_slab",
+          "minecraft:oak_trapdoor": "minecraft:jungle_trapdoor"
+        },
+        {
+          "palette": "floodplain: mud brick body and deck, mud brick walls, mud brick slabs, jungle trapdoors, brown candle clusters, hanging gate lanterns, muddy mangrove roots gate frame"
+        },
+        {
+          "palette": "floodplain: mud brick body and deck, mud brick walls, mud brick slabs, jungle trapdoors, brown candle clusters, hanging gate lanterns, muddy mangrove roots gate frame"
+        }
+      ],
+      "role": "wall",
+      "use": "wall corner tower",
+      "status": "captured_pending_production_authoring",
+      "capacity": {
+        "beds": 0,
+        "single_beds": 0,
+        "couple_rooms": 0
+      },
+      "amenities": {
+        "beds": [],
+        "couple_beds": [],
+        "containers": [],
+        "work_stations": [],
+        "banners": [],
+        "decorative_banners": [],
+        "village_identity": {
+          "primary_blocks": [],
+          "secondary_blocks": [],
+          "banners": []
+        },
+        "coloured_blocks": {}
+      },
+      "notes": [],
+      "section": "corner_tower"
+    },
+    {
+      "exhibit": "NA05.5",
+      "label": "Gatehouse",
+      "gallery": "nilotic-showcase",
+      "source_mod_structure": "src/main/resources/data/kithkyn/structure/wall/wood/gatehouse.nbt",
+      "source_mod_structure_sha256": "f291a1e5b56dce5d22d95842ea21b31f465ec9b5423472065e681a56af5ba89f",
+      "source_capture": "run/nilotic-showcase/selection-20260910-floodplain/captures/NA05.5.nbt",
+      "source_capture_sha256": "82e4b7202e8fc4708a8eac7ee11da351dc12e3835e59bf07f3ab2cc482cf672a",
+      "gallery_origin": [
+        6642,
+        230,
+        1151
+      ],
+      "capture_from": [
+        6640,
+        230,
+        1149
+      ],
+      "capture_to": [
+        6660,
+        275,
+        1157
+      ],
+      "solid_bounds_relative_to_gallery_origin": [
+        [
+          0,
+          16
+        ],
+        [
+          0,
+          7
+        ],
+        [
+          0,
+          4
+        ]
+      ],
+      "restyle": [
+        {
+          "minecraft:stripped_oak_log": "minecraft:mud_bricks",
+          "minecraft:oak_fence": "minecraft:mangrove_fence",
+          "minecraft:oak_slab": "minecraft:mud_brick_slab",
+          "minecraft:oak_trapdoor": "minecraft:jungle_trapdoor"
+        },
+        {
+          "palette": "floodplain: mud brick body and deck, mud brick walls, mud brick slabs, jungle trapdoors, brown candle clusters, hanging gate lanterns, muddy mangrove roots gate frame"
+        },
+        {
+          "palette": "floodplain: mud brick body and deck, mud brick walls, mud brick slabs, jungle trapdoors, brown candle clusters, hanging gate lanterns, muddy mangrove roots gate frame"
+        }
+      ],
+      "role": "wall",
+      "use": "wall gatehouse",
+      "status": "captured_pending_production_authoring",
+      "capacity": {
+        "beds": 0,
+        "single_beds": 0,
+        "couple_rooms": 0
+      },
+      "amenities": {
+        "beds": [],
+        "couple_beds": [],
+        "containers": [],
+        "work_stations": [
+          {
+            "pos": [
+              8,
+              6,
+              2
+            ],
+            "block": "minecraft:campfire"
+          }
+        ],
+        "banners": [],
+        "decorative_banners": [],
+        "village_identity": {
+          "primary_blocks": [],
+          "secondary_blocks": [],
+          "banners": []
+        },
+        "coloured_blocks": {}
+      },
+      "notes": [
+        "Aaron corrected one roof cell (x 16, y 5, z 2) from muddy mangrove roots to mud bricks; the restyle rule now reads the authored log axes so it produces the same cell."
+      ],
+      "section": "gatehouse"
     }
   ],
   "candidates": [
@@ -3241,7 +3657,7 @@
       "source_mod_structure": "data/kaisyn/structure/outpost/towers/exclusives/nilotic/base_plate.nbt",
       "source_mod_structure_sha256": "01eb064283319a3d27fe5d65ff464b24b8858bde122d3f1705cbf406b815a7cc",
       "source_capture": "run/nilotic-showcase/selection-20260910-floodplain/captures/NA03.1.nbt",
-      "source_capture_sha256": "c19bf3a858f9e385e76b1f7253d43d6569e0918b6a45abf6c6a1c7f41ba608c1",
+      "source_capture_sha256": "69d80c69e07f5082eb8fec0d257d39db61d070b7f8346e56e9a3b1c8737813c3",
       "gallery_origin": [
         6576,
         230,
@@ -3278,8 +3694,9 @@
     }
   ],
   "verification": {
-    "native_captures": 22,
+    "native_captures": 27,
     "selected_buildings": 20,
+    "wall_sections": 5,
     "unassigned_candidates": 2,
     "selected_beds": 10,
     "screenshots_inspected": true,

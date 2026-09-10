@@ -3,8 +3,8 @@
 A village can adopt a vanilla allay as an auxiliary keeper of its stores, the way it recruits
 an iron or snow golem as an auxiliary defender ([iron-golem-guards.md](iron-golem-guards.md)).
 It does not create the allay, spend resources, fill a quartermaster post, or take a person's
-job away. The bond is to the village, not the adopting guard, so it survives that guard
-changing jobs or dying.
+job away. The bond is to the village, not the adopting quartermaster, so it survives that
+quartermaster changing jobs or dying.
 
 ## Recruitment
 
@@ -54,7 +54,7 @@ no human quartermaster shelves everything to overflow until a person plans the s
 ## Membership and limits
 
 - They remain vanilla allays: flying, one carried stack, the amethyst duplication and the player
-  interaction are untouched. A duplicate is an ordinary unclaimed allay until a guard adopts it.
+  interaction are untouched. A duplicate is an ordinary unclaimed allay until a quartermaster adopts it.
 - They never join the human population, take a bed, consume food, fill a quartermaster post, or
   count toward tiers. The labour planner's storage rules are unchanged; an allay does not stand
   in for a quartermaster when goods back up.
