@@ -67,6 +67,10 @@ climbs through the open hatch to the bunk. The storehouse has no doorway panel a
 removed it on a production copy placed in the gallery (row NA07) and trimmed the course corners,
 and that copy is the storehouse's source capture now.
 
+Mangrove stilt roots count as vegetation everywhere: felled with their trunk, cleared by the
+lumberjack's sweep when left standing, and removed by builders, walls and grading through
+the `kithkyn:clearable` tag. Muddy mangrove roots are ground, graded like dirt.
+
 Walls are not exported. The runtime paints the shared arid wall geometry
 ([walls.md](walls.md)) in the floodplain palette: mud bricks for posts, deck, body, stairs
 and slabs, mud brick walls as railings, jungle trapdoors, muddy mangrove roots on the

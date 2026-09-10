@@ -21,6 +21,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.LeavesBlock;
 import net.minecraft.world.level.block.entity.BeehiveBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -87,12 +88,17 @@ public final class TreeFelling {
    * with a natural canopy near it, that nobody placed. Unloaded chunks are
    * never paged in to answer; a position in one is simply not fellable.
    */
-  public static boolean isFellableLog(ServerLevel level, BlockPos pos) {
+  public static boolean isFellableWood(ServerLevel level, BlockPos pos) {
     return level.hasChunkAt(pos)
-        && level.getBlockState(pos).is(BlockTags.LOGS_THAT_BURN)
+        && isWood(level.getBlockState(pos))
         && !level.getBlockState(pos).hasBlockEntity()
         && BlockOwnership.mayFell(level, pos)
         && hasNaturalCanopy(level, pos);
+  }
+
+  /** A log, or the stilt roots a mangrove stands on: the wood of a tree, felled together. */
+  public static boolean isWood(BlockState state) {
+    return state.is(BlockTags.LOGS_THAT_BURN) || state.is(Blocks.MANGROVE_ROOTS);
   }
 
   /**
@@ -137,9 +143,9 @@ public final class TreeFelling {
     LongOpenHashSet attachedHives = new LongOpenHashSet();
     PlacedBlockStore placed = PlacedBlockStore.get(level);
     List<BlockPos> logs = new ArrayList<>();
-    for (BlockPos pos : treeLogs(level, struck)) {
+    for (BlockPos pos : treeWood(level, struck)) {
       BlockState state = level.getBlockState(pos);
-      if (!state.is(BlockTags.LOGS_THAT_BURN) || state.hasBlockEntity()
+      if (!isWood(state) || state.hasBlockEntity()
           || (!stand && !BlockOwnership.mayFell(level, pos))) {
         continue;
       }
@@ -321,11 +327,74 @@ public final class TreeFelling {
     // The heightmap's value is the first air above the tallest block in the column.
     int top = level.getHeight(Heightmap.Types.WORLD_SURFACE, x, z) - 1;
     for (int y = top; y >= minimumY; y--) {
-      if (isFellableLog(level, cursor.set(x, y, z))) {
+      if (isFellableWood(level, cursor.set(x, y, z))) {
         BlockPos struck = cursor.immutable();
         felled.add(new FelledTree(struck, fell(level, struck, null, ItemStack.EMPTY)));
       }
     }
+  }
+
+  /** How far from a tree's own trunk columns its roots are taken; mangrove root systems touch. */
+  private static final int ROOT_REACH = 3;
+
+  /**
+   * The wood of one tree: its connected logs, then the mangrove roots those
+   * logs stand on within {@link #ROOT_REACH} of a trunk column. Started on a
+   * root with no log above it (a cluster left when the trunk came down), the
+   * roots within reach of that root are the tree.
+   */
+  public static List<BlockPos> treeWood(ServerLevel level, BlockPos start) {
+    List<BlockPos> logs = treeLogs(level, start);
+    List<BlockPos> seeds = logs.isEmpty() ? List.of(start) : logs;
+    List<BlockPos> wood = new ArrayList<>(logs);
+    wood.addAll(treeRoots(level, seeds));
+    return wood;
+  }
+
+  /** Mangrove roots reachable through roots from the seeds, each within reach of a seed column. */
+  private static List<BlockPos> treeRoots(ServerLevel level, List<BlockPos> seeds) {
+    List<BlockPos> roots = new ArrayList<>();
+    ArrayDeque<BlockPos> frontier = new ArrayDeque<>();
+    LongOpenHashSet visited = new LongOpenHashSet();
+    for (BlockPos seed : seeds) {
+      visited.add(seed.asLong());
+      frontier.add(seed);
+    }
+    while (!frontier.isEmpty() && roots.size() < TREE_LOG_CAP) {
+      BlockPos pos = frontier.poll();
+      if (!level.hasChunkAt(pos)) {
+        continue;
+      }
+      boolean root = level.getBlockState(pos).is(Blocks.MANGROVE_ROOTS);
+      if (root) {
+        roots.add(pos);
+      } else if (!seeds.contains(pos)) {
+        continue; // only roots, and the seeds themselves, lead on
+      }
+      for (int dx = -1; dx <= 1; dx++) {
+        for (int dy = -1; dy <= 1; dy++) {
+          for (int dz = -1; dz <= 1; dz++) {
+            if (dx == 0 && dy == 0 && dz == 0) {
+              continue;
+            }
+            BlockPos next = pos.offset(dx, dy, dz);
+            if (withinReach(next, seeds) && visited.add(next.asLong())) {
+              frontier.add(next);
+            }
+          }
+        }
+      }
+    }
+    return roots;
+  }
+
+  private static boolean withinReach(BlockPos pos, List<BlockPos> seeds) {
+    for (BlockPos seed : seeds) {
+      if (Math.abs(pos.getX() - seed.getX()) <= ROOT_REACH && Math.abs(pos.getZ() - seed.getZ()) <= ROOT_REACH) {
+        return true;
+      }
+    }
+    return false;
   }
 
   /**

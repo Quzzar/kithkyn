@@ -41,7 +41,7 @@ import net.minecraft.world.phys.Vec3;
  * tree supports decays with the fell, dropping its loot on the ground; an
  * owned building log cannot hold that severed canopy in place.
  *
- * <b>It only ever cuts real trees.</b> {@link TreeFelling#isFellableLog} holds
+ * <b>It only ever cuts real trees.</b> {@link TreeFelling#isFellableWood} holds
  * the two guards, a natural canopy nearby and nobody's ownership, that keep the
  * axe off the village's own timber and off anything a player built; the flood
  * fill re-checks every log, so a wild tree overhanging a roof drops its own
@@ -225,7 +225,7 @@ public final class ChopStep implements WorkStep<ChopStep.Cut> {
 
     BlockState state = person.level().getBlockState(target);
     boolean trimming = state.is(BlockTags.LEAVES);
-    if (!state.is(BlockTags.LOGS_THAT_BURN) && !trimming) {
+    if (!TreeFelling.isWood(state) && !trimming) {
       return false; // somebody else got the log, or a leaf already fell away
     }
 
@@ -399,12 +399,12 @@ public final class ChopStep implements WorkStep<ChopStep.Cut> {
       for (int y = -WOODLAND_VERTICAL_RADIUS; y <= WOODLAND_VERTICAL_RADIUS; ++y) {
         for (int z = -radius; z <= radius; ++z) {
           cursor.setWithOffset(around, x, y, z);
-          if (!TreeFelling.isFellableLog(level, cursor)) {
+          if (!TreeFelling.isFellableWood(level, cursor)) {
             continue;
           }
           long key = cursor.asLong();
           if (!baseOf.containsKey(key)) {
-            List<BlockPos> logs = TreeFelling.treeLogs(level, cursor.immutable());
+            List<BlockPos> logs = TreeFelling.treeWood(level, cursor.immutable());
             long base = lowestOf(logs).asLong();
             for (BlockPos log : logs) {
               baseOf.put(log.asLong(), base);

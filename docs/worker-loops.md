@@ -555,6 +555,11 @@ bedtime restock leaves the pack short and the village stores hold bones, the far
 brain is offered a grind through the shared `CraftOffer` press
 ([llm-brain.md](llm-brain.md)), so skeleton drops end up as crops too.
 
+A mangrove's stilt roots are part of the tree to the village: the felling helper takes them down
+with the trunk, the lumberjack's sweep clears a root cluster left standing, and the
+`kithkyn:clearable` tag lists them so builders, walls and grading treat them as vegetation
+rather than the rock ledge the survey once mistook them for.
+
 The lumberjack runs the same step on the lodge's own composter with a `TIMBER` diet: every
 felled canopy drops more saplings than one stand needs, and the pack's saplings past the four
 kept for replanting go into the composter, whose bone meal `BonemealStep` then spends on the
