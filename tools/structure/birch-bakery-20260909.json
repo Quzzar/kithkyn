@@ -1,0 +1,40 @@
+{
+  "description": "User-approved September9 separation: bakery retains one baker bed and its personal chest; the innkeeper moves to the separately approved tavern.",
+  "size": [
+    17,
+    11,
+    21
+  ],
+  "approved_source_sha256": "96a69d163333069950a78df65d5eea774ea5aa75c8fa59ba46b96509d3306b1c",
+  "village_identity": {
+    "primary_blocks": [
+      [
+        7,
+        5,
+        11
+      ]
+    ],
+    "secondary_blocks": [],
+    "banners": []
+  },
+  "overrides": [
+    {
+      "pos": [
+        9,
+        5,
+        11
+      ],
+      "name": "minecraft:air",
+      "properties": {}
+    },
+    {
+      "pos": [
+        9,
+        5,
+        12
+      ],
+      "name": "minecraft:air",
+      "properties": {}
+    }
+  ]
+}

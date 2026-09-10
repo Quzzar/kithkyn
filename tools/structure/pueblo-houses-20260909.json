@@ -1,0 +1,688 @@
+{
+  "status": "captured_configured_and_verified",
+  "description": "Four edited Pueblo housing designs, including mixed single rooms and reserved couple pairs. Tier, price and upgrade mapping remain part of the later complete catalog pass.. Production bindings preserve these distinct designs and use existing house recipes by capacity tier, with independent higher-tier construction rather than forced upgrades.",
+  "preview_colors": {
+    "primary": "blue",
+    "secondary": "yellow"
+  },
+  "preview_banner": {
+    "base": "blue",
+    "patterns": [
+      {
+        "pattern": "minecraft:stripe_center",
+        "color": "yellow"
+      },
+      {
+        "pattern": "minecraft:border",
+        "color": "yellow"
+      }
+    ]
+  },
+  "houses": [
+    {
+      "exhibit": "P01.4",
+      "label": "Large House 1",
+      "source_capture": "run/pueblo-showcase/houses-approved-20260909-165758/captures/P01.4.nbt",
+      "source_sha256": "07bb2cad395ec071415f0cfa31b77fe77ebba10980adacfefd070de63af8c897",
+      "template_origin": [
+        3658,
+        230,
+        1008
+      ],
+      "size": [
+        10,
+        10,
+        15
+      ],
+      "capacity": {
+        "beds": 4,
+        "single_beds": 2,
+        "couple_rooms": 1
+      },
+      "amenities": {
+        "beds": [
+          [
+            4,
+            1,
+            11
+          ],
+          [
+            6,
+            1,
+            11
+          ],
+          [
+            4,
+            4,
+            10
+          ],
+          [
+            4,
+            4,
+            11
+          ]
+        ],
+        "couple_beds": [
+          [
+            [
+              4,
+              4,
+              10
+            ],
+            [
+              4,
+              4,
+              11
+            ]
+          ]
+        ],
+        "work_stations": [],
+        "personal_containers": [
+          [
+            6,
+            2,
+            3
+          ],
+          [
+            4,
+            5,
+            5
+          ]
+        ],
+        "containers": [],
+        "bed_containers": [
+          {
+            "bed": [
+              4,
+              1,
+              11
+            ],
+            "containers": [
+              [
+                6,
+                2,
+                3
+              ]
+            ]
+          },
+          {
+            "bed": [
+              6,
+              1,
+              11
+            ],
+            "containers": [
+              [
+                6,
+                2,
+                3
+              ]
+            ]
+          },
+          {
+            "bed": [
+              4,
+              4,
+              10
+            ],
+            "containers": [
+              [
+                4,
+                5,
+                5
+              ]
+            ]
+          },
+          {
+            "bed": [
+              4,
+              4,
+              11
+            ],
+            "containers": [
+              [
+                4,
+                5,
+                5
+              ]
+            ]
+          }
+        ],
+        "village_identity": {
+          "primary_blocks": [
+            [
+              4,
+              1,
+              11
+            ],
+            [
+              4,
+              4,
+              10
+            ],
+            [
+              4,
+              4,
+              11
+            ]
+          ],
+          "secondary_blocks": [
+            [
+              6,
+              1,
+              11
+            ]
+          ],
+          "banners": [
+            [
+              2,
+              5,
+              8
+            ],
+            [
+              2,
+              5,
+              12
+            ]
+          ]
+        },
+        "sink": 0
+      },
+      "neutral_template": "run/pueblo-showcase/houses-approved-20260909-165758/neutral/P01.4.nbt",
+      "neutral_template_sha256": "0c3d6226849c10c8006a82b1b80e21fcf63ac85f2d3c90d3ac7c5ba06e7e9c23",
+      "production": {
+        "structure": "house_badlands_3",
+        "category": "house",
+        "variant": "badlands",
+        "level": 3,
+        "recipe": "house_plains_3",
+        "definition_overrides": {
+          "entrance_facing": "west",
+          "standalone": true
+        }
+      },
+      "source_mod_structure": "data/kaisyn/structure/village/badlands_pueblo/houses/badlands_large_house_1.nbt",
+      "source_mod": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar"
+    },
+    {
+      "exhibit": "P01.5",
+      "label": "Large House 2",
+      "source_capture": "run/pueblo-showcase/houses-approved-20260909-165758/captures/P01.5.nbt",
+      "source_sha256": "5b56ffe24404e3e7ed5950ac48c914cf4d2e09154494b62b793cbd8d9f740064",
+      "template_origin": [
+        3672,
+        230,
+        1008
+      ],
+      "size": [
+        11,
+        10,
+        14
+      ],
+      "capacity": {
+        "beds": 2,
+        "single_beds": 2,
+        "couple_rooms": 0
+      },
+      "amenities": {
+        "beds": [
+          [
+            6,
+            1,
+            10
+          ],
+          [
+            7,
+            5,
+            10
+          ]
+        ],
+        "couple_beds": [],
+        "work_stations": [],
+        "personal_containers": [
+          [
+            3,
+            1,
+            9
+          ]
+        ],
+        "containers": [],
+        "bed_containers": [
+          {
+            "bed": [
+              6,
+              1,
+              10
+            ],
+            "containers": [
+              [
+                3,
+                1,
+                9
+              ]
+            ]
+          },
+          {
+            "bed": [
+              7,
+              5,
+              10
+            ],
+            "containers": []
+          }
+        ],
+        "village_identity": {
+          "primary_blocks": [
+            [
+              6,
+              1,
+              10
+            ]
+          ],
+          "secondary_blocks": [
+            [
+              7,
+              5,
+              10
+            ]
+          ],
+          "banners": []
+        },
+        "sink": 0
+      },
+      "neutral_template": "run/pueblo-showcase/houses-approved-20260909-165758/neutral/P01.5.nbt",
+      "neutral_template_sha256": "2ae6a83701ca6c11474e888df94f8502f9598d1c870bcf4b75926d479a17476f",
+      "production": {
+        "structure": "house_badlands_2__large_house_2",
+        "category": "house",
+        "variant": "badlands",
+        "level": 2,
+        "recipe": "house_plains_2",
+        "definition_overrides": {
+          "entrance_facing": "west",
+          "standalone": true
+        }
+      },
+      "source_mod_structure": "data/kaisyn/structure/village/badlands_pueblo/houses/badlands_large_house_2.nbt",
+      "source_mod": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar"
+    },
+    {
+      "exhibit": "P01.6",
+      "label": "Large House 3",
+      "source_capture": "run/pueblo-showcase/houses-approved-20260909-165758/captures/P01.6.nbt",
+      "source_sha256": "8fac16b04371c1c19ec234d0e9e3407abce89ed3ac94d5532e23905cd9f5cb82",
+      "template_origin": [
+        3687,
+        230,
+        1008
+      ],
+      "size": [
+        12,
+        12,
+        16
+      ],
+      "capacity": {
+        "beds": 6,
+        "single_beds": 2,
+        "couple_rooms": 2
+      },
+      "amenities": {
+        "beds": [
+          [
+            6,
+            1,
+            4
+          ],
+          [
+            6,
+            1,
+            8
+          ],
+          [
+            7,
+            1,
+            8
+          ],
+          [
+            6,
+            5,
+            4
+          ],
+          [
+            6,
+            5,
+            12
+          ],
+          [
+            7,
+            5,
+            12
+          ]
+        ],
+        "couple_beds": [
+          [
+            [
+              6,
+              1,
+              8
+            ],
+            [
+              7,
+              1,
+              8
+            ]
+          ],
+          [
+            [
+              6,
+              5,
+              12
+            ],
+            [
+              7,
+              5,
+              12
+            ]
+          ]
+        ],
+        "work_stations": [],
+        "personal_containers": [
+          [
+            4,
+            1,
+            10
+          ],
+          [
+            4,
+            5,
+            12
+          ]
+        ],
+        "containers": [],
+        "bed_containers": [
+          {
+            "bed": [
+              6,
+              1,
+              4
+            ],
+            "containers": []
+          },
+          {
+            "bed": [
+              6,
+              1,
+              8
+            ],
+            "containers": [
+              [
+                4,
+                1,
+                10
+              ]
+            ]
+          },
+          {
+            "bed": [
+              7,
+              1,
+              8
+            ],
+            "containers": [
+              [
+                4,
+                1,
+                10
+              ]
+            ]
+          },
+          {
+            "bed": [
+              6,
+              5,
+              4
+            ],
+            "containers": []
+          },
+          {
+            "bed": [
+              6,
+              5,
+              12
+            ],
+            "containers": [
+              [
+                4,
+                5,
+                12
+              ]
+            ]
+          },
+          {
+            "bed": [
+              7,
+              5,
+              12
+            ],
+            "containers": [
+              [
+                4,
+                5,
+                12
+              ]
+            ]
+          }
+        ],
+        "village_identity": {
+          "primary_blocks": [
+            [
+              6,
+              1,
+              8
+            ],
+            [
+              7,
+              1,
+              8
+            ],
+            [
+              6,
+              5,
+              4
+            ]
+          ],
+          "secondary_blocks": [
+            [
+              6,
+              1,
+              4
+            ],
+            [
+              6,
+              5,
+              12
+            ],
+            [
+              7,
+              5,
+              12
+            ]
+          ],
+          "banners": []
+        },
+        "sink": 0
+      },
+      "neutral_template": "run/pueblo-showcase/houses-approved-20260909-165758/neutral/P01.6.nbt",
+      "neutral_template_sha256": "1cf20b9a34689b7a2dcee22a1e894127b9dccff8910ed368fb472b92a3cfacc4",
+      "production": {
+        "structure": "house_badlands_3__large_house_3",
+        "category": "house",
+        "variant": "badlands",
+        "level": 3,
+        "recipe": "house_plains_3",
+        "definition_overrides": {
+          "entrance_facing": "west",
+          "standalone": true
+        }
+      },
+      "source_mod_structure": "data/kaisyn/structure/village/badlands_pueblo/houses/badlands_large_house_3.nbt",
+      "source_mod": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar"
+    },
+    {
+      "exhibit": "P01.7",
+      "label": "Large House 4",
+      "source_capture": "run/pueblo-showcase/houses-approved-20260909-165758/captures/P01.7.nbt",
+      "source_sha256": "d185ff0e59b527a9cefaf541a3ca07798be7d94aad0f2a744cfb72e85b78d1e9",
+      "template_origin": [
+        3703,
+        230,
+        1008
+      ],
+      "size": [
+        10,
+        10,
+        14
+      ],
+      "capacity": {
+        "beds": 2,
+        "single_beds": 2,
+        "couple_rooms": 0
+      },
+      "amenities": {
+        "beds": [
+          [
+            6,
+            1,
+            4
+          ],
+          [
+            4,
+            4,
+            7
+          ]
+        ],
+        "couple_beds": [],
+        "work_stations": [],
+        "personal_containers": [
+          [
+            4,
+            1,
+            5
+          ],
+          [
+            5,
+            4,
+            5
+          ]
+        ],
+        "containers": [],
+        "bed_containers": [
+          {
+            "bed": [
+              6,
+              1,
+              4
+            ],
+            "containers": [
+              [
+                4,
+                1,
+                5
+              ]
+            ]
+          },
+          {
+            "bed": [
+              4,
+              4,
+              7
+            ],
+            "containers": [
+              [
+                5,
+                4,
+                5
+              ]
+            ]
+          }
+        ],
+        "village_identity": {
+          "primary_blocks": [
+            [
+              6,
+              1,
+              4
+            ]
+          ],
+          "secondary_blocks": [
+            [
+              4,
+              4,
+              7
+            ]
+          ],
+          "banners": [
+            [
+              5,
+              7,
+              9
+            ]
+          ]
+        },
+        "sink": 0
+      },
+      "neutral_template": "run/pueblo-showcase/houses-approved-20260909-165758/neutral/P01.7.nbt",
+      "neutral_template_sha256": "820903a0fbf84f52874b353d74b522c14144e1ffc65b7f5301a76fa60f3aeab0",
+      "production": {
+        "structure": "house_badlands_2__large_house_4",
+        "category": "house",
+        "variant": "badlands",
+        "level": 2,
+        "recipe": "house_plains_2",
+        "definition_overrides": {
+          "entrance_facing": "south",
+          "standalone": true
+        }
+      },
+      "source_mod_structure": "data/kaisyn/structure/village/badlands_pueblo/houses/badlands_large_house_4.nbt",
+      "source_mod": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar"
+    }
+  ],
+  "verification": {
+    "capture": "run/pueblo-showcase/houses-approved-20260909-165758/visual-verification.json",
+    "screenshots": [
+      "run/pueblo-showcase/houses-approved-20260909-165758/screenshots/pueblo-house-1-couple.png",
+      "run/pueblo-showcase/houses-approved-20260909-165758/screenshots/pueblo-house-1-singles.png",
+      "run/pueblo-showcase/houses-approved-20260909-165758/screenshots/pueblo-house-2.png",
+      "run/pueblo-showcase/houses-approved-20260909-165758/screenshots/pueblo-house-3-lower-couple-clean.png",
+      "run/pueblo-showcase/houses-approved-20260909-165758/screenshots/pueblo-house-3-upper-couple.png",
+      "run/pueblo-showcase/houses-approved-20260909-165758/screenshots/pueblo-house-4-upper.png"
+    ],
+    "live_bed_and_banner_preview": true,
+    "live_ai_deployed": false,
+    "gradle_check": {
+      "tests": 399,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "native_house_access": "run/pueblo-house-verification/verification.json",
+    "rotated_houses": 16,
+    "access_routes": 84,
+    "physical_walks_and_sleeps": 56,
+    "maximum_height_couple_access": {
+      "result": "run/pueblo-house-verification/couples-size-18/verification.json",
+      "collision_height": 2.0,
+      "physical_walks_and_sleeps": 24,
+      "couple_rooms": 3,
+      "rotations": 4
+    },
+    "room_access_regression": {
+      "result": "run/pueblo-showcase/houses-extra-approved-20260909-173019/verification/large-house-regression/verification.json",
+      "probe_size": 18,
+      "rotations": 4,
+      "physical_walks_and_sleeps": 56,
+      "personal_container_deposits": 44
+    }
+  }
+}

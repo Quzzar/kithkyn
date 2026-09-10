@@ -61,7 +61,7 @@ public final class RedevelopmentPlanner {
     search:
     for (int step = 0; step < catalogue.size(); step++) {
       BuildingInfo target = catalogue.get((step + offset) % catalogue.size());
-      if (Buildings.COUPLE_COTTAGE_CATEGORY.equals(target.getCategory())) {
+      if (UrbanPlanner.isMarriageOnly(target)) {
         continue;
       }
       boolean upgradeFits = target.getUpgradesFrom() != null
@@ -169,7 +169,7 @@ public final class RedevelopmentPlanner {
         return Assessment.refused("incompatible upgrade source or placement");
       }
     } else if (Buildings.VILLAGE_CENTER_CATEGORY.equals(target.getCategory())
-        || Buildings.COUPLE_COTTAGE_CATEGORY.equals(target.getCategory())) {
+        || UrbanPlanner.isMarriageOnly(target)) {
       return Assessment.refused("target requires its existing construction workflow");
     }
     StructureInProgress active = village.getCurrentProject();

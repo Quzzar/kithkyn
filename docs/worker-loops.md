@@ -98,7 +98,7 @@ nothing to make one from`.
 
 Built 2026-09-01. A house's chest is not village storage: a building definition lists it under
 `personal_containers`, it never joins the village's container list, and it belongs to whoever
-sleeps in that building, shared between them (`village/PersonalChest`; the rule, and which
+sleeps in the corresponding room (`village/PersonalChest`; the rule, and which
 workplaces get one, are in [building-spec.md](building-spec.md)). What goes in is decided at
 bedtime, in character: a villager with a chest of their own is asked once a night which kinds
 of what they are carrying home to keep, any number or none, rather than hand it all back to the
@@ -125,7 +125,10 @@ they share it with, so they can speak to it. Watch for `keeps the ... for their 
 and `put N ... away in their chest at home` in the log.
 
 The walk home goes to the doorstep first when it starts outside (`LocationManager.getEntrance`,
-the cell outside the building's lowest door, read from the standing blocks), then to the chest.
+the cell outside the lowest door nearest the building's authored front, read from the standing blocks), then to supported
+footing with eye-level reach and a clear line to the chest. `ContainerAccess` shares that
+footing, path and reach check with quartermaster visits. This includes a ceiling barrel reached
+from the room below; the goal does not try to stand on the barrel or transfer through a wall.
 Aimed straight at a chest indoors it stalled against the back wall of a house whose door faced
 away from the village, night after night, because the search ran out of budget on the open
 ground before it found the way round, while a walk that began inside reached the same chest.
@@ -220,6 +223,14 @@ timber forever; the miner's cursor could loop unbounded over a cave and hang the
 path-layer finished a route by calling `stop()` from inside `tick()`, which ends nothing, leaving
 the builder holding the movement flag until nightfall.
 
+Multi-room buildings may declare `bed_containers`, a list of bed positions with their allowed
+personal container positions. The nearest container is selected only within that bed's list;
+an empty list or an omitted bed has no personal storage and never borrows another room's chest.
+Two beds may explicitly share a container. A dependent child inherits the resident parent's
+room, and the chat briefing lists only people using the same chest. Definitions without
+`bed_containers` keep the existing nearest-personal-container behavior. Common containers stay
+under `containers` and never appear in a bed's personal mapping.
+
 **Prior art agrees, twice.** All four surveyed mods converge on acquire, travel, act, deposit
 ([research](https://github.com/Quzzar/kithkyn/issues/52)). More usefully, Millenaire's own
 9.0 rewrite collapsed 53 goal classes into 25 plus **one data-driven goal covering 405 work types
@@ -255,11 +266,20 @@ restocking, bell recall and conversation. Guards staying awake run bedtime's usu
 and ration restock where they stand (`NightWatchRestockGoal`, sharing `goToBed`'s cadence).
 A bell restocks a guard on watch; on a sleeping night it sends them home. The ordinary
 housing gate in `JobClaiming` still applies to every guard.
-The village center's guard slot is the **Guard Captain**
+One village center guard slot is the **Guard Captain**
 (2026-09-08). This is a station-derived display role, still `Occupation.GUARD`, with
 ordinary guard behavior. It is synchronized to clients, re-derived after loading, and
 removed when the person changes jobs. It does not consume or replace a personal honorific.
 Any distinct barracks-captain mechanics remain future work.
+
+Each `GUARD` station may now declare `guard_duty`: `CAPTAIN`, `PATROL`, `CROSSBOW_POST`, or
+`SWORD_POST`. This lets one center house a captain, roaming sword guards, and rooftop crossbow
+sentries. The captain keeps the established axe and sword loadout; explicit patrol guards
+start with stone swords and do not take the woodcutting side job. Crossbow sentries keep their
+backup sword, while sword posts keep one sword. The existing whole-night sleep/patrol choices
+apply to all of them. A definition with no explicit captain keeps its first unspecified center
+guard as captain, so old centers retain their existing role. Building-wide
+`RANGED_GUARD_POSTS` remains the default only for stations without an explicit duty.
 
 **Bell gathering (2026-09-08).** Right-clicking a bell keeps the existing 48-block
 recall: housed civilians head home, and guards on watch stow and restock. Truly unhoused
@@ -303,7 +323,7 @@ hostile mob nearby is taking aim at a villager.
 
 ### Recovering at the village fire
 
-Built 2026-09-04. The center campfire is a small fallback recovery point for every resident,
+Built 2026-09-04. The center's authored campfires are small fallback recovery points for every resident,
 independent of age or occupation. A person below one-third health, carrying no meal, and already
 within thirty blocks may walk to arm's reach, look at and interact with the lit fire, and receive
 ten seconds of Regeneration I (`CampfireRecoveryGoal`). Eating stays at priority 0. With no meal
@@ -315,6 +335,15 @@ starting. Each person's one-minute cooldown is persisted on the entity, so chang
 reloading cannot reset it.
 
 ## The builder builds, and between builds it makes the village walkable
+
+**Damage maintenance, 2026-09-09.** Between construction projects the builder repairs
+missing ordinary structural blocks and recorded explosion damage near buildings and paths.
+This is low-priority maintenance, behind construction and wall work and ahead of broad
+landscaping. Each replacement consumes its actual item from the builder's pack, fetched
+physically from storage. Unavailable materials and unreachable cells are postponed while
+other repairs remain eligible; they do not hold up work or emit resource-shortage penalties.
+Repairs preserve player changes and mine excavation. See [building-repairs.md](building-repairs.md)
+for damage evidence, supported blocks, terrain and persistence rules.
 
 **Access first, 2026-09-08.** A short priority-3 `GradeStep(true)` pass uses the ordinary grading
 executor only on one-to-three-block shared gaps and small entrance approaches. It applies the
@@ -530,7 +559,7 @@ brain is offered a grind through the shared `CraftOffer` press
 
 Idle residents get the same treatment as the farmer's idle hands, on the campfire model rather
 than a workplace. An idle person who finds raw food in the village stores cooks it at the town's
-own gathering-point campfire and returns it (`CookStep`, a `BlockWorkStep`): the raw item really
+nearest reachable lit campfire with a free slot and returns it (`CookStep`, a `BlockWorkStep`): the raw item really
 roasts on the fire via `CampfireBlockEntity.placeFood`, and the step owns the timing so the
 cooked food is lifted straight into storage rather than dropped on the ground when the block's
 own cook tick would finish it. What counts as cookable is read from the vanilla
@@ -540,6 +569,14 @@ modded food comes along for free. The roasting itself is one helper, `CampfireRo
 [population-and-labor.md](population-and-labor.md)) and the fisher cooking their own catch
 (`FishCookStep`): where the raw food comes from before the pack and where the cooked food goes
 after it is each step's business; how a campfire roasts it is written once.
+
+The civic meeting point and usable fire blocks are separate authored amenities. `CampfireAccess`
+provides the same reachable-fire and free-slot selection for the camper and fisher, and reachable
+lit-fire selection for recovery. A cook keeps the selected fire through the active roast and
+continues the batch there while it remains usable. A full fire is reselected; a missing or doused
+fire returns the in-progress raw item to the pack before trying another. Both fires and storage
+trips use supported approach positions with clear hand access, not a path into the solid target
+block or an interaction through a floor.
 
 This is deliberately scoped to idle campers as an early-camp bridge. A young camp has no
 butchery, so raw meat a hunter brings home would sit uncooked; once a butchery exists its
@@ -637,6 +674,22 @@ The Mallowen replay closed five reachable lining cells, then opened a three-bloc
 entrance without a bucket. `WorkerRecoveryVerification` exercises this flooded-frontier
 case in every rotation and the fisher's catch/interruption lifecycle in a disposable world
 with `-Dkithkyn.workers.verify=true`.
+
+**A mine with no selectable work still reports trouble, 2026-09-09.** A failed selection
+previously wrote only a server diagnostic: no target meant no journey, so the approach watch
+never had a chance to tell the village why its miner was idle. Selection now reports a current
+personal blocker for inaccessible excavation, missing supports, an obstruction with no reachable
+side work, exhausted shafts, or a survey with no usable work. It reports the final outcome after
+trying the existing frontier and side-shaft recovery. These reports survive saving and clear
+after physical digging, support placement or draining succeeds, not merely when a destination
+is selected. They carry through the shared village snapshot to planning and conversation.
+
+A fresh mine remains an ordinary construction option even when another staffed mine stands.
+Its description explicitly says it opens a separate shaft. A miner's current report prompts
+the village to weigh another site against restoring access; upgrading the old building retains
+its shaft location. Materials, room, staffing and the ordinary planner decision still apply.
+The native worker fixture checks the no-work report, the second-mine option, save/reload and
+clearing the report after excavation resumes.
 
 **The ramp fans out when it can go no deeper** (2026-09-03). The descent is always tried first,
 and only when the ramp is genuinely stopped, at bedrock, at lava or water the miner has no bucket
@@ -762,6 +815,16 @@ cost, orthogonally only, and `OpenFenceGateGoal` is the door goal written for ga
 vanilla one tests for the door class and looks a block up for a top half a gate does not have.
 The gate swings away from the opener and closes twenty ticks later whether or not they are
 through, the door's rule, because a pen gate left open is an empty pen by evening.
+
+**Authored-home access, 2026-09-09.** An open door still occupies three pixels along the
+side of its block. The widest adults clip that leaf when vanilla aims at the block center,
+even though they fit through the remaining opening. Navigation now steers those bodies
+through the clear opening and keeps that alignment until their trailing edge clears it.
+Door opening and closing retain the ordinary goal; authored doors and body dimensions stay
+unchanged. Nighttime bed routes choose supported floor within the existing two-block sleep
+reach and require an unobstructed line to the bed. This lets a resident descend from a roof
+chest into a tight bedroom instead of repeatedly targeting the roof above the mattress or
+lying down through an exterior wall. Distant travel retains the existing mine waypoints.
 
 **Built, 2026-09-02: villagers climb ladders.** Vanilla mobs can climb, a zombie pressed against
 a ladder goes up, but they never plan to: the path search looks sideways, one step up and down a
@@ -1168,8 +1231,9 @@ it at once; watch the `[quartermaster]` log lines for the round-by-round converg
 ## Still open
 
 - **After the bounded mine is depleted** ([#54](https://github.com/Quzzar/kithkyn/issues/54)):
-  trees replant, ore does not. The physical root and child network now ends honestly; what economic
-  pressure or new building follows that exhaustion is still open.
+  trees replant, ore does not. The physical root and child network ends honestly. The worker
+  reports exhaustion, and the village can choose a fresh mine on a separate site, subject to
+  the ordinary material, space and staffing constraints.
 - **Where output goes** ([#49](https://github.com/Quzzar/kithkyn/issues/49)): per-building
   chests or one pool. Note the research found a third answer neither option covered: MineColonies
   uses a **priority ladder** where the worker's own building resolves above the warehouse, and the
@@ -1204,6 +1268,10 @@ forests persist and wood is genuinely renewable. Everything else stays exactly a
 village left it: the stump field, the old quarry face, the mouth of the shaft. The
 landscape becomes a record of what this village did and for how long, which is legible in a
 way that self-repairing terrain is not.
+
+Explosion maintenance is a separate exception: a builder may spend real materials restoring
+recorded damage around inhabited buildings and access routes. It does not regenerate deposits,
+fill mined shafts, or erase the village's harvesting history.
 
 
 ## Redevelopment access

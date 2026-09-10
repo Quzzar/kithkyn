@@ -65,7 +65,6 @@ import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.Rotation;
-import net.minecraft.world.level.block.CampfireBlock;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
@@ -479,23 +478,18 @@ public class Village {
     int planeY = level.getHeightmapPos(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, centerLoc).getY();
     BlockPos platCenter = new BlockPos(centerLoc.getX(), planeY, centerLoc.getZ());
 
-    // Anchor the whole camp on the CAMPFIRE, not the centre building's midpoint, so a
-    // village generates FROM the fire: whoever founds one stands at the gathering point
-    // with the buildings arrayed around them, rather than inside the centre building. The
-    // gathering point sits off-centre in the centre, so a throwaway first placement measures
-    // where the fire would land, then platCenter shifts by that offset so the fire lands
-    // exactly on the requested point. Rotation is fixed up front so probe and real agree;
-    // if the centre defines no gathering point, the probe returns platCenter and nothing shifts.
+    // Found from the authored civic anchor. Old centers keep their campfire anchor;
+    // centers with a separate plaza are positioned from the plaza instead of either fire.
     Building centerBuilding = new Building(centerInfo.getName(), rotation);
     Rotation centreRot = centerBuilding.getRotation();
-    BlockPos probeFire = campfireWorldPos(
+    BlockPos probeAnchor = meetingWorldPos(
         new InstantBuildStructure(centerBuilding, random, level).withIdentity(identity)
             .setOriginLocation(platCenter.below(centerInfo.getSink()), new java.util.HashSet<>()),
         centerInfo, centreRot, platCenter);
-    platCenter = platCenter.offset(centerLoc.getX() - probeFire.getX(), 0, centerLoc.getZ() - probeFire.getZ());
+    platCenter = platCenter.offset(centerLoc.getX() - probeAnchor.getX(), 0, centerLoc.getZ() - probeAnchor.getZ());
 
     // Plan the centre at the anchored platCenter so we know its ACTUAL placed footprint
-    // and where its campfire lands, before deciding how much ground to level and where
+    // and where its meeting point lands, before deciding how much ground to level and where
     // the companions sit.
     InstantBuildStructure centerStruct =
         new InstantBuildStructure(centerBuilding, random, level).withIdentity(identity)
@@ -594,18 +588,18 @@ public class Village {
   }
 
   /**
-   * The campfire's world position for a freshly planned centre, mirroring
-   * {@link #getCampfirePosition()} but reading the struct we hold rather than the
+   * The civic anchor's world position for a freshly planned centre, mirroring
+   * {@link #getCenterPosition()} but reading the struct we hold rather than the
    * registered town centre (which is not added until after levelling).
    */
-  private BlockPos campfireWorldPos(InstantBuildStructure centerStruct, BuildingInfo centerInfo,
+  private BlockPos meetingWorldPos(InstantBuildStructure centerStruct, BuildingInfo centerInfo,
       Rotation rotation, BlockPos fallback) {
-    Long offset = centerInfo.getGatheringPoint();
+    BlockPos offset = centerInfo.getMeetingPoint();
     if (offset == null) {
       return fallback;
     }
     return BlockPos.of(centerStruct.getBuilding().getOriginLocation())
-        .offset(BlockPos.of(offset).rotate(rotation));
+        .offset(offset.rotate(rotation));
   }
 
   /**
@@ -683,76 +677,49 @@ public class Village {
     }
   }
 
-  /** Places the gathering-point campfire if the datapack defines one and the block isn't there yet. */
+  /** Preserve the original founding fire fallback without ever replacing a new plaza or bell. */
   private void placeCampfireIfMissing() {
-    BlockPos fire = getCampfirePosition();
-    if (fire != null && level != null && !level.getBlockState(fire).is(Blocks.CAMPFIRE)) {
+    Building center = getTownCenter();
+    if (center == null || center.getInfo() == null || level == null) return;
+    Long legacyFire = center.getInfo().getGatheringPoint();
+    if (legacyFire == null || center.getInfo().hasExplicitMeetingPoint()
+        || !center.getInfo().getCampfireLocations().contains(BlockPos.of(legacyFire))) return;
+    BlockPos fire = buildingWorldPos(center, BlockPos.of(legacyFire));
+    if (!level.getBlockState(fire).is(Blocks.CAMPFIRE)) {
       level.setBlock(fire, Blocks.CAMPFIRE.defaultBlockState(), 3);
       com.quzzar.kithkyn.savedata.PlacedBlockStore.get(level).markVillagePlaced(fire);
     }
   }
 
-  /** The datapack-defined campfire position of the town center in world coordinates, or null. */
-  @javax.annotation.Nullable
-  public BlockPos getCampfirePosition() {
-    Building townCenter = getTownCenter();
-    if (townCenter == null || townCenter.getInfo() == null) {
-      return null;
-    }
-    Long offset = townCenter.getInfo().getGatheringPoint();
-    if (offset == null) {
-      return null;
-    }
-    return BlockPos.of(townCenter.getOriginLocation())
-        .offset(BlockPos.of(offset).rotate(townCenter.getRotation()));
+  /** The town's civic anchor, independent of how many campfires its center contains. */
+  public BlockPos getCenterPosition() {
+    Building center = getTownCenter();
+    if (center == null || center.getInfo() == null) return BlockPos.ZERO;
+    BlockPos offset = center.getInfo().getMeetingPoint();
+    return offset == null ? BlockPos.of(center.getCenterLocation()) : buildingWorldPos(center, offset);
   }
 
-  /**
-   * Where idle people gather: a standing spot BESIDE the campfire's place. The
-   * place is the point, not the block (decided 2026-09-02): a fire that is
-   * doused or broken is still where the village meets, and the village re-lays
-   * it there anyway (placeCampfireIfMissing). Only a town center whose template
-   * names no gathering point falls back to the building's own centre block.
-   *
-   * Never the fire block itself. Everyone who gathers walks here, idles here,
-   * and is snapped here when their travel times out, so returning the fire
-   * would burn them alive: it did, once.
-   */
+  /** Authored fire blocks, including temporarily unlit or missing fires; never force-load chunks. */
+  public List<BlockPos> getCampfirePositions() {
+    Building center = getTownCenter();
+    if (center == null || center.getInfo() == null) return List.of();
+    return center.getInfo().getCampfireLocations().stream()
+        .map(offset -> buildingWorldPos(center, offset)).distinct().toList();
+  }
+
+  private static BlockPos buildingWorldPos(Building building, BlockPos offset) {
+    return BlockPos.of(building.getOriginLocation()).offset(offset.rotate(building.getRotation()));
+  }
+
+  /** Civic meeting and arrival ground. A legacy campfire anchor still resolves to safe ground beside it. */
   public BlockPos getGatheringPoint() {
-    BlockPos fire = getCampfirePosition();
-    if (fire != null && level != null) {
-      return standingSpotBeside(fire);
-    }
-    Building townCenter = getTownCenter();
-    return townCenter != null ? BlockPos.of(townCenter.getCenterLocation()) : BlockPos.ZERO;
-  }
-
-  /**
-   * The lit gathering-point campfire block itself, or null when it is missing or
-   * doused. Unlike {@link #getGatheringPoint} this is the fire, not the standing
-   * spot beside it: the idle cook roasts food on it (CookStep).
-   */
-  @javax.annotation.Nullable
-  public BlockPos getCampfire() {
-    BlockPos fire = getCampfirePosition();
-    if (fire == null || level == null) {
-      return null;
-    }
-    var state = level.getBlockState(fire);
-    return state.is(Blocks.CAMPFIRE) && state.getValue(CampfireBlock.LIT) ? fire : null;
-  }
-
-  /** The first free neighbour of the fire a person can stand in, else the nearest air above it. */
-  private BlockPos standingSpotBeside(BlockPos fire) {
-    for (net.minecraft.core.Direction direction : net.minecraft.core.Direction.Plane.HORIZONTAL) {
-      BlockPos side = fire.relative(direction);
-      if (level.getBlockState(side).isPathfindable(net.minecraft.world.level.pathfinder.PathComputationType.LAND)
-          && level.getBlockState(side.above()).isPathfindable(net.minecraft.world.level.pathfinder.PathComputationType.LAND)
-          && level.getBlockState(side.below()).isSolid()) {
-        return side;
-      }
-    }
-    return fire.above();
+    BlockPos center = getCenterPosition();
+    if (level == null || !level.hasChunkAt(center)) return center;
+    if (com.quzzar.kithkyn.village.buildings.WorkerFooting.canStand(level, center)) return center;
+    return BlockPos.betweenClosedStream(center.offset(-3, -3, -3), center.offset(3, 3, 3))
+        .map(BlockPos::immutable)
+        .filter(pos -> com.quzzar.kithkyn.village.buildings.WorkerFooting.canStand(level, pos))
+        .min(java.util.Comparator.comparingDouble(center::distSqr)).orElse(center);
   }
 
   /**
@@ -849,8 +816,7 @@ public class Village {
       com.quzzar.kithkyn.village.buildings.VillageIdentityApplier.apply(level, building, identity);
     }
     this.brain.processNewBuilding(building, unassignedBeds, unassignedJobs);
-    // A couple's cottage moves the newlyweds it was raised for into its beds
-    // (docs/marriage.md); a no-op for every other building.
+    // Any completed home with authored couple rooms can house waiting spouses.
     if (level != null) {
       com.quzzar.kithkyn.relationships.MarriageService.onHomeBuilt(
           this, level, building.getUUID(), building.getInfo());
@@ -1014,7 +980,7 @@ public class Village {
     List<UUID> displaced = bedAssignments.entrySet().stream()
         .filter(entry -> affected.contains(entry.getValue().getBuildingUUID())).map(Map.Entry::getKey).toList();
     List<BedAssignment> available = unassignedBeds.stream()
-        .filter(bed -> !affected.contains(bed.getBuildingUUID()) && !isReservedWorkplaceBed(bed)
+        .filter(bed -> !affected.contains(bed.getBuildingUUID()) && isGeneralBed(bed)
             && !isBeingRebuilt(bed.getBuildingUUID())).toList();
     unassignedBeds.removeIf(bed -> affected.contains(bed.getBuildingUUID()));
     for (int index = 0; index < displaced.size(); index++) {
@@ -2619,40 +2585,93 @@ public class Village {
     return this.brain.marriedPairs();
   }
 
-  /**
-   * Moves a married couple into a building's beds, freeing whatever beds they
-   * held (docs/marriage.md). Each spouse takes a distinct free bed in the
-   * building; a bed they already sit in there is left alone. The village's
-   * personal-chest rules do the rest, since a home's chest is shared by whoever
-   * sleeps in it. Called as the couple's cottage is added.
-   */
-  public void houseCouple(UUID a, UUID b, UUID buildingUUID) {
-    assignToBuilding(a, buildingUUID);
-    assignToBuilding(b, buildingUUID);
+  /** Moves both spouses into one authored pair atomically, leaving unrelated room occupants alone. */
+  public boolean houseCouple(UUID a, UUID b, UUID buildingUUID) {
+    if (!hasResident(a) || !hasResident(b)) return false;
+    Building building = getBuilding(buildingUUID);
+    RelationshipPair marriage = getRelationship(a, b);
+    if (building == null || isBeingRebuilt(buildingUUID) || marriage == null || !marriage.married()) return false;
+    if (sharesCoupleHome(a, b) && bedAssignments.get(a).getBuildingUUID().equals(buildingUUID)) return true;
+    return CoupleHousing.assign(a, b, building, bedAssignments, unassignedBeds,
+        pair -> coupleRoomAllows(building, pair, a, b));
   }
 
-  /** Gives one villager a free bed in the given building, releasing the bed they held elsewhere. */
-  private void assignToBuilding(UUID personUUID, UUID buildingUUID) {
-    BedAssignment held = bedAssignments.get(personUUID);
-    if (held != null && held.getBuildingUUID().equals(buildingUUID)) {
-      return;
+  /** A completed couple room requires the two specific paired beds, not merely the same building. */
+  public boolean sharesCoupleHome(UUID first, UUID second) {
+    BedAssignment a = bedAssignments.get(first);
+    BedAssignment b = bedAssignments.get(second);
+    if (a == null || b == null || !a.getBuildingUUID().equals(b.getBuildingUUID())
+        || isBeingRebuilt(a.getBuildingUUID())) return false;
+    Building building = getBuilding(a.getBuildingUUID());
+    return building != null && building.getInfo() != null
+        && building.getInfo().sharesCoupleBeds(a.getBedIndex(), b.getBedIndex())
+        && canKeepWorkplaceBed(first, a) && canKeepWorkplaceBed(second, b);
+  }
+
+  /** Number of completed, entirely unoccupied couple rooms available right now. */
+  public int getFreeCoupleHomeCount() {
+    return getBuildings().stream().filter(building -> !isBeingRebuilt(building.getUUID()))
+        .mapToInt(building -> CoupleHousing.freePairs(building, bedAssignments, unassignedBeds, pair -> true)).sum();
+  }
+
+  /** Free double rooms reserved specifically for a worker and their spouse. */
+  public int getFreeWorkerCoupleHomeCount() {
+    return getBuildings().stream().filter(building -> !isBeingRebuilt(building.getUUID()))
+        .mapToInt(building -> CoupleHousing.freePairs(building, bedAssignments, unassignedBeds,
+            pair -> building.getInfo().isWorkerBed(building.getInfo().getBedLocations().indexOf(pair.first().asLong()))))
+        .sum();
+  }
+
+  private boolean coupleRoomAllows(Building building, BuildingInfo.CoupleBeds pair, UUID first, UUID second) {
+    return !building.getInfo().isWorkerBed(building.getInfo().getBedLocations().indexOf(pair.first().asLong()))
+        || worksAt(first, building.getUUID()) || worksAt(second, building.getUUID());
+  }
+
+  private boolean worksAt(UUID resident, UUID building) {
+    JobAssignment job = jobAssignments.get(resident);
+    return job != null && job.getBuildingUUID().equals(building);
+  }
+
+  @Nullable
+  private UUID residentSpouse(UUID resident) {
+    if (!hasResident(resident)) return null;
+    return relationshipsOf(resident).stream().filter(RelationshipPair::married)
+        .map(pair -> pair.other(resident)).filter(this::hasResident).findFirst().orElse(null);
+  }
+
+  /** A worker's spouse may use the same double room without inheriting the worker's occupation. */
+  private boolean canKeepWorkplaceBed(UUID resident, BedAssignment bed) {
+    JobAssignment job = jobAssignments.get(resident);
+    if (HousingPolicy.bedCanHouseJob(bed.getBuildingUUID(), isReservedWorkplaceBed(bed),
+        job == null ? null : job.getBuildingUUID())) return true;
+    UUID spouse = isReservedCoupleBed(bed) ? residentSpouse(resident) : null;
+    return spouse != null && worksAt(spouse, bed.getBuildingUUID());
+  }
+
+  /** Releases a staff room when neither spouse works there, through the ordinary bed ledger. */
+  private void releaseInvalidWorkplaceBeds() {
+    for (var iterator = bedAssignments.entrySet().iterator(); iterator.hasNext();) {
+      Map.Entry<UUID, BedAssignment> entry = iterator.next();
+      if (canKeepWorkplaceBed(entry.getKey(), entry.getValue())) continue;
+      iterator.remove();
+      unassignedBeds.add(entry.getValue().setPersonUUID(null));
     }
-    BedAssignment target = null;
-    for (BedAssignment free : unassignedBeds) {
-      if (free.getBuildingUUID().equals(buildingUUID)) {
-        target = free;
-        break;
-      }
-    }
-    if (target == null) {
-      return;
-    }
-    if (held != null) {
-      unassignedBeds.add(held.setPersonUUID(null));
-      bedAssignments.remove(personUUID);
-    }
-    unassignedBeds.remove(target);
-    bedAssignments.put(personUUID, target.setPersonUUID(personUUID));
+  }
+
+  /** Authored room capacity, including occupied pairs and excluding active rebuilds. */
+  public int getCoupleHomeCount() {
+    return getBuildings().stream().filter(building -> !isBeingRebuilt(building.getUUID()))
+        .filter(building -> building.getInfo() != null)
+        .mapToInt(building -> building.getInfo().getCoupleBeds().size()).sum();
+  }
+
+  private boolean isReservedCoupleBed(BedAssignment bed) {
+    Building building = getBuilding(bed.getBuildingUUID());
+    return building != null && building.getInfo() != null && building.getInfo().isCoupleBed(bed.getBedIndex());
+  }
+
+  private boolean isGeneralBed(BedAssignment bed) {
+    return !isReservedWorkplaceBed(bed) && !isReservedCoupleBed(bed);
   }
 
   // --- #38 (stat-based placement and swaps) interface ---
@@ -2665,14 +2684,7 @@ public class Village {
   /** Unbooks a worker's job and returns it, ready to hand to someone else. */
   public JobAssignment releaseJob(UUID personId) {
     JobAssignment job = jobAssignments.remove(personId);
-    BedAssignment bed = bedAssignments.get(personId);
-    if (job != null && bed != null && isReservedWorkplaceBed(bed)) {
-      // A live-in bed belongs to the post, not to its former worker. General
-      // housing follows a person between jobs, but leaving a workplace releases
-      // its reserved bed for whoever staffs that building next.
-      bedAssignments.remove(personId);
-      unassignedBeds.add(bed.setPersonUUID(null));
-    }
+    if (job != null) releaseInvalidWorkplaceBeds();
     return job == null ? null : job.setPersonUUID(null);
   }
 
@@ -2842,6 +2854,7 @@ public class Village {
   public void assignJob(UUID personId, JobAssignment job) {
     unassignedJobs.remove(job);
     jobAssignments.put(personId, job.setPersonUUID(personId));
+    releaseInvalidWorkplaceBeds();
     RealPerson person = level == null ? null : getPerson(level, personId);
     if (person != null && hasDependentHome(person)) {
       return; // a working teenager remains in the parents' home and consumes no bed
@@ -2871,20 +2884,23 @@ public class Village {
    * with three merchants and one bed houses one of them and no more.
    */
   private void preferWorkplaceBed(UUID personId, UUID buildingUUID) {
+    BedAssignment current = bedAssignments.get(personId);
+    // One spouse's workplace room remains stable even when the other spouse also has a live-in job.
+    if (current != null && isReservedCoupleBed(current) && isReservedWorkplaceBed(current)
+        && canKeepWorkplaceBed(personId, current)) return;
+    UUID spouse = residentSpouse(personId);
+    if (spouse != null && houseCouple(personId, spouse, buildingUUID)) return;
+    if (current != null && isReservedCoupleBed(current)) return;
     int free = -1;
     for (int i = 0; i < unassignedBeds.size(); i++) {
-      if (unassignedBeds.get(i).getBuildingUUID().equals(buildingUUID)) {
-        free = i;
-        break;
-      }
+      BedAssignment candidate = unassignedBeds.get(i);
+      if (!candidate.getBuildingUUID().equals(buildingUUID) || isReservedCoupleBed(candidate)) continue;
+      if (free < 0 || isReservedWorkplaceBed(candidate)) free = i;
+      if (isReservedWorkplaceBed(candidate)) break;
     }
-    if (free < 0) {
-      return; // the workplace has no spare bed; keep the one they have
-    }
-    BedAssignment current = bedAssignments.get(personId);
-    if (current != null && current.getBuildingUUID().equals(buildingUUID)) {
-      return; // already sleeping at work
-    }
+    if (free < 0) return;
+    if (current != null && current.getBuildingUUID().equals(buildingUUID)
+        && (isReservedWorkplaceBed(current) || !isReservedWorkplaceBed(unassignedBeds.get(free)))) return;
     BedAssignment workplaceBed = unassignedBeds.remove(free);
     bedAssignments.put(personId, workplaceBed.setPersonUUID(personId));
     if (current != null) {
@@ -2900,6 +2916,7 @@ public class Village {
    * general bed, which is exactly what makes housing a construction need.
    */
   private void reconcileBeds() {
+    JobClaiming.releaseInvalidBeds(this, bedAssignments, unassignedBeds);
     // Children live in a parent's household without consuming one of its bed
     // slots. Repair legacy/dev assignments that gave a dependent a bed.
     for (var iterator = bedAssignments.entrySet().iterator(); iterator.hasNext();) {
@@ -2912,19 +2929,12 @@ public class Village {
       unassignedBeds.add(entry.getValue().setPersonUUID(null));
     }
 
-    // Repair old saves and any assignment transition that left a worker in a
-    // live-in bed belonging to a different workplace.
-    for (var iterator = bedAssignments.entrySet().iterator(); iterator.hasNext();) {
-      Map.Entry<UUID, BedAssignment> entry = iterator.next();
-      BedAssignment bed = entry.getValue();
-      JobAssignment job = jobAssignments.get(entry.getKey());
-      UUID jobBuilding = job == null ? null : job.getBuildingUUID();
-      if (HousingPolicy.bedCanHouseJob(
-          bed.getBuildingUUID(), isReservedWorkplaceBed(bed), jobBuilding)) {
-        continue;
-      }
-      iterator.remove();
-      unassignedBeds.add(bed.setPersonUUID(null));
+    // Worker room ownership follows either spouse's current job, without making both spouses workers.
+    releaseInvalidWorkplaceBeds();
+
+    // Marriage housing uses existing rooms before an ordinary job or single-bed claim can move a spouse.
+    if (level != null) {
+      com.quzzar.kithkyn.relationships.MarriageService.houseWaitingCouples(this, level);
     }
 
     // A worker already assigned in an older save gets the same live-in
@@ -2990,34 +3000,23 @@ public class Village {
   }
 
   /**
-   * A live-in workplace bed is held for whoever staffs that workplace, never
-   * given out as ordinary housing. A bed counts as one when its building carries
-   * at least one work station and is not the town centre: the lumberjack hut,
-   * the watchtower, the upper blacksmith and the church house their own worker
-   * (docs/population-and-labor.md), while the centre's base beds and every house
-   * are general housing. Without this a newcomer takes the empty lumberjack
-   * hut's only bed for a plain night's sleep, and the post that bed exists to
-   * staff can never be filled: no bed for a lumberjack, no lumberjack, no logs,
-   * no houses.
+   * Staff accommodation follows explicit worker_beds when present. Older definitions reserve every
+   * workplace bed except the center; a staff couple room needs only one spouse employed there.
    */
   private boolean isReservedWorkplaceBed(BedAssignment bed) {
-    if (bed.getBuildingUUID().equals(townCenterUUID)) {
-      return false; // the centre's beds are the founding general housing
-    }
     Building building = getBuilding(bed.getBuildingUUID());
-    return building != null && building.getInfo() != null
-        && !building.getInfo().getWorkLocations().isEmpty();
+    return building != null && building.getInfo() != null && building.getInfo().isWorkerBed(bed.getBedIndex());
   }
 
   /**
    * Removes and returns the first free general (non-workplace) bed, or null when
-   * every free bed is a reserved live-in workplace bed. All general housing
+   * every free bed is reserved for a workplace or couple. All general housing
    * draws from here; workplace beds are seated only by {@link #preferWorkplaceBed}.
    */
   @Nullable
   private BedAssignment takeGeneralBed() {
     for (int i = 0; i < unassignedBeds.size(); i++) {
-      if (!isReservedWorkplaceBed(unassignedBeds.get(i))) {
+      if (isGeneralBed(unassignedBeds.get(i))) {
         return unassignedBeds.remove(i);
       }
     }
@@ -3033,7 +3032,7 @@ public class Village {
   public int getFreeGeneralBedCount() {
     int count = 0;
     for (BedAssignment bed : unassignedBeds) {
-      if (!isReservedWorkplaceBed(bed)) {
+      if (isGeneralBed(bed)) {
         count++;
       }
     }
@@ -3049,18 +3048,19 @@ public class Village {
   public int getFreeBedCountIn(UUID buildingUUID) {
     int count = 0;
     for (BedAssignment bed : unassignedBeds) {
-      if (bed.getBuildingUUID().equals(buildingUUID)) {
+      if (bed.getBuildingUUID().equals(buildingUUID) && !isReservedCoupleBed(bed)) {
         count++;
       }
     }
     return count;
   }
 
-  /** Free live-in slots reserved specifically to workers in this building. */
+  /** Free unpaired staff beds; a teenager cannot count a couple room as two independent beds. */
   public int getFreeReservedBedCountIn(UUID buildingUUID) {
     int count = 0;
     for (BedAssignment bed : unassignedBeds) {
-      if (bed.getBuildingUUID().equals(buildingUUID) && isReservedWorkplaceBed(bed)) {
+      if (bed.getBuildingUUID().equals(buildingUUID) && isReservedWorkplaceBed(bed)
+          && !isReservedCoupleBed(bed)) {
         count++;
       }
     }
@@ -3074,9 +3074,15 @@ public class Village {
    */
   public boolean canHouseForJob(UUID personId, UUID targetBuildingUUID) {
     BedAssignment current = bedAssignments.get(personId);
+    UUID spouse = residentSpouse(personId);
+    Building target = getBuilding(targetBuildingUUID);
+    if (spouse != null && target != null && !isBeingRebuilt(targetBuildingUUID)
+        && CoupleHousing.availablePair(personId, spouse, target, bedAssignments, unassignedBeds, pair -> true) != null) {
+      return true;
+    }
     boolean reserved = current != null && isReservedWorkplaceBed(current);
-    boolean matchesTarget = current != null
-        && current.getBuildingUUID().equals(targetBuildingUUID);
+    boolean matchesTarget = current != null && (current.getBuildingUUID().equals(targetBuildingUUID)
+        || isReservedCoupleBed(current) && spouse != null && worksAt(spouse, current.getBuildingUUID()));
     return HousingPolicy.canHouseAtTarget(current != null, reserved, matchesTarget,
         hasFreeGeneralBed(), hasFreeBedIn(targetBuildingUUID), false);
   }
@@ -3100,6 +3106,13 @@ public class Village {
    */
   @Nullable
   public Building dependentHome(RealPerson person) {
+    BedAssignment bed = dependentBedAssignment(person);
+    return bed == null ? null : getBuilding(bed.getBuildingUUID());
+  }
+
+  /** The resident parent's bed that anchors a dependent's home and room storage. */
+  @Nullable
+  public BedAssignment dependentBedAssignment(RealPerson person) {
     if (!person.getLifeStage().isDependentlyHoused()) {
       return null;
     }
@@ -3111,7 +3124,7 @@ public class Village {
       if (bed != null && !isBeingRebuilt(bed.getBuildingUUID())) {
         Building home = getBuilding(bed.getBuildingUUID());
         if (home != null) {
-          return home;
+          return bed;
         }
       }
     }
@@ -3123,6 +3136,11 @@ public class Village {
     BedAssignment bed = bedAssignments.get(personId);
     return bed != null && bed.getBuildingUUID().equals(buildingUUID)
         && isReservedWorkplaceBed(bed);
+  }
+
+  /** Only an unpaired staff bed becomes a single opening when its current worker is replaced. */
+  boolean sleepsInReservedSingleBedAt(UUID personId, UUID buildingUUID) {
+    return sleepsInReservedBedAt(personId, buildingUUID) && !isReservedCoupleBed(bedAssignments.get(personId));
   }
 
   /** The quartermaster raises this when the storehouse overflows; the planner reads it. */

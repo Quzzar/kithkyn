@@ -576,3 +576,593 @@ export and validate the concrete templates, empty copied inventories/loot as alr
 recheck every bed/container/station/identity slot, verify the shared bakery/tavern and intended
 tower staffing/loadouts, and test actual rotated placement, navigation, occupancy, construction,
 and upgrade behavior. The user's visual approval is recorded separately from those checks.
+
+### Birch tavern approval: 2026-09-09
+
+Aaron selected the edited Birch tavern F05.1 from the complete style showcase. Its immutable
+capture and flushed world backup are in
+`run/valecraft-gallery/birch-tavern-approved-20260909-135429/`. A second capture after the
+room clarification exactly matches the first, including the added grass, wall torches and
+ceiling barrel. This is the selected source, not the unedited mod template.
+
+The new tavern takes the INNKEEPER role from the bakery. Its back-room bed and ceiling
+barrel are personal; its front chest is communal. The bakery retains one BAKER bed and its
+existing storage. The other three authored tavern beds remain furnishings. The previously
+approved center remains; F01.1 is a separate future reference Aaron liked.
+
+## Full-showcase biome discussion: September 9
+
+During the 300-exhibit showcase tour, Aaron identified Swamp as a strong possible next village,
+with Viking and Desert also of particular interest. Pueblo is an especially exciting direction.
+Romanian and Japanese should each receive a suitable environmental home; the renewed interest
+in Japanese reopens the earlier general-family deferral. Swiss, Swedish, Tudor, Mediterranean,
+Rustic, jungle, Polynesian and mushroom families remain strong candidates. These comments are
+preferences and exploration, not approval of a new production catalog.
+
+Dungeons & Taverns Birch Center 1, F01.1, is a definite future reference to retain. It does not
+replace the current approved Birch center. Possible later concepts include village ships,
+a distinct design adapted from Piglin architecture, and ruined settlements with skeleton
+residents. Skeleton residents are an exploratory population/settlement idea, not an implemented
+feature or a decided replacement for ordinary villagers.
+
+### Proposed environmental homes
+
+The following are assistant recommendations for the next selection pass, not final user-approved
+biome mappings. The earlier minimum roster still reserves distinct architecture families. These
+are priority coverage targets, not a reduction of the roster or permission to blend whole families.
+Existing Birch gameplay selects the approved Birch catalog for both ordinary and old-growth Birch;
+Romanian's historical Birch assignment should not overwrite that catalog.
+
+| Environmental target | Reference direction | Showcase |
+| --- | --- | --- |
+| Swamp and orchid wetland | Compare the boat settlement, D&T swamp and CTOV wetland families independently | C07, F03, E07 |
+| Mangrove swamp | Packed-mud/mangrove direction; compare CTOV with D&T mangrove details | E07, E08, G06 |
+| Jungle | Tribal settlement; evaluate canopy settlements as another distinct direction | B06, D06, D07, F02 |
+| Sparse jungle and tropical coast | Polynesian settlement | C05 |
+| Snowy taiga | Viking settlement | C04 |
+| Taiga and Shield | Swedish settlement | A06 |
+| Old-growth taiga | Polish settlement | C01 |
+| Meadow and alpine valleys | Swiss settlement; retain CTOV Alpine as its own comparison family | B07, D11 |
+| Flower forest and cherry/Sakura landscapes | Japanese garden-settlement direction; compare CTOV Mountain separately for upland architecture | B03, D10 |
+| Forested highlands and wooded valleys | Romanian settlement | B02 |
+| Desert and oasis | Compare full desert and oasis towns, retaining the tent camp as a separate family | D03, D04, A08, G01 |
+| Badlands | Pueblo; frontier Mesa remains a distinct alternative for another badlands setting | A09, D08 |
+| Warm coasts and dry shrubland | Mediterranean; retain Iberian as a separate grassland direction | A03, A02 |
+| Mushroom fields | Compare the fantasy and CTOV mushroom families independently | B08, E01 |
+| Rolling highlands | Tudor | A07 |
+| Beaches and coast | Nautical settlements and lighthouse landmarks | B01, D01 |
+
+Suggested near-term build order: Swamp, Viking, Desert, then Pueblo, bringing each to the same
+functional and authoring standard as Birch. Swamp selection should first compare C07, F03 and
+E07, then choose a coherent base family for the next working village. Other Swamp families
+remain available for later distinct catalogs.
+
+Terralith 2.6.2 in the local Valecraft source pack contains 95 custom biome definitions, verified
+from its jar during this discussion. Useful named future targets include Forested Highlands,
+Temperate Highlands, Shield, Sakura Grove, Sakura Valley, Desert Oasis and Orchid Swamp.
+This source-pack inventory does not assert that Terralith is installed on the current live server.
+Seasonal Christmas/Halloween collections and fortified editions retain their existing treatment
+as event/defense variants, separate from the biome roster. Ruined and inhabited-skeleton
+settlements need their own later design decision.
+
+### Pueblo selection showcase: September 9
+
+Aaron chose Pueblo as the next architecture selection pass, superseding the assistant's earlier
+Swamp-first recommendation. Beach is explicitly deferred. He requested a separate comparison
+showcase collecting Pueblo-like, Badlands, Mesa, Desert, Oasis and Savanna architecture while
+preserving the complete seven-wing gallery. Combining suitable buildings from these sources is
+part of this exploratory pass; no new production catalog has been selected yet. Romanian in a
+dark-oak forest is another tentative environmental idea from this tour.
+
+The separate collection is cataloged under `run/pueblo-showcase/`, with an entrance at
+`3585.5 230 986.5`. Its six wings contain 454 native-compatible buildings, centers and details:
+Pueblo/Mesa, Desert/Oasis, Savanna/Tents, Taverns/Mines, Forts/Ruins, and vanilla references.
+The original gallery ends near X3373 and the new structures start near X3591. Source IDs, exact
+origins, exclusions, and a browsable exhibit list are in its catalog and guide. Private copies
+use the `kithkyn_pueblo_showcase` namespace.
+
+Pueblo includes 33 complete buildings plus three lamps. Its six profession inserts are assembled
+inside their authored shared shell with native block-state rotations. The Ramshackle example
+reuses the previously verified complete tower assembly. The shared typed-NBT display exporter
+and placement helpers are reused; the original gallery's catalog and templates are preserved.
+Empty anchors, exact duplicates and compatibility templates that require absent mod blocks are
+excluded explicitly. Ruins, tavern grounds and mine parts remain labeled reference components.
+These are editable review copies, separate from gameplay integration and production approval.
+
+All 57 rows and their connecting navigation are placed and saved. Native saved-world captures
+verify all 454 exhibits. Visual review caught three fluid spills, now contained; the final check
+of all 53 water-bearing exhibits found no remaining spills around their platforms. Unsupported
+ground-level grass and saplings were restored over soil in the review platforms. The source
+farm P09.7 has one wheat plant suspended over air that cannot survive native block updates;
+other block-name differences are Minecraft's grass rename and covered-path conversion to dirt.
+Private backups, captures, provenance and verification results remain under the showcase folder.
+
+### Pueblo center bed colors: September 9
+
+Aaron edited center P01.1 and requested a mix of village primary and secondary colors for its
+11 beds. Six bed slots use primary and five use secondary, alternating across the floors:
+three primary/two secondary downstairs, three primary/three secondary upstairs. The live gallery
+shows blue/yellow preview colors, following the earlier review convention. The role assignments
+are independent of those colors and use the existing `village_identity` definition format.
+
+`tools/structure/pueblo-center-20260909.json` records the exact captured origin, all bed head
+and foot positions, and the semantic slots. The referenced private capture preserves Aaron's
+edits; a derived neutral template has white beds for eventual integration. This remains an
+in-review center, without a new production catalog entry. The live recolor changed only bed
+colors, preserved all 11 pairs and their facing, and left the surrounding building intact.
+
+### Pueblo center rooms and staffing: September 9
+
+The next P01.1 capture supersedes the eleven-bed review above. Aaron removed the upper
+southeast room's primary bed and placed a chest in its position. The center now has ten beds:
+five primary and five secondary. Its bell plaza is the central meeting and arrival place;
+the two rooftop campfires are independent cooking, recovery and fireside gathering amenities.
+The meeting point is an authored safe standing position near the bell, not a rule that every
+village must gather on its bell block.
+
+The room inventory is explicit, relative to captured origin `(3598,230,1008)`:
+
+| Room | Bed head | Personal chest |
+| --- | --- | --- |
+| Northwest ground | `(7,1,11)` | `(9,1,8)` |
+| Northeast ground | `(18,1,12)` | `(15,1,11)` |
+| Southwest ground | `(6,1,18)` | `(8,1,18)` |
+| Southeast ground | `(17,1,21)` | `(21,2,25)` |
+| South central ground | `(13,1,23)` | None |
+| Northwest upper | `(9,4,10)` | None |
+| Southwest upper | `(8,4,18)` | `(8,4,20)` |
+| Northeast upper | `(19,5,12)` | None |
+| Southeast upper | `(21,5,21)` | `(19,5,21)` |
+| South central upper | `(13,5,23)` | `(15,5,25)` |
+
+The courtyard barrel `(15,1,14)`, the southwest room without a bed's chest `(6,2,26)`,
+and the northeast rooftop chest `(16,8,10)` are communal storage. A resident in a room
+without a chest must not claim another room's chest merely because it is nearby.
+The six authored red banners are village-banner sockets. The live gallery uses a blue
+banner with yellow center stripe and border as a preview; the saved template is neutral
+and receives the actual village's generated colors and pattern when placed.
+
+The starting staffing target is eight: quartermaster, builder, guard captain, two rooftop
+crossbow posts (one near each fire), two additional stone-sword patrol guards, and miner.
+The default is to house the miner here and give them a separate mine entrance, as in Birch;
+the Pueblo mine itself remains to be selected. Consequently the center defines seven
+workstations and the founding mine contributes the eighth. These are job openings filled
+through normal arrivals and claiming, not eight villagers spawned instantly. Two beds remain
+beyond the eight intended workers. The captain patrols whenever awake; the existing nightly
+sleep and occasional sentry-patrol rules apply to the appropriate guards.
+
+`tools/structure/pueblo-center-20260909.json` records the capture hash, full runtime definition,
+room ownership, identity slots, meeting point and both fires. The immutable edited structure
+and prepared review datapack remain under `run/pueblo-showcase/center-approved-20260909-161322/`.
+This is one configured center in the ongoing Pueblo selection pass, not a complete Pueblo
+building catalog or a live simulation deployment.
+
+Verification passed on the prepared private center: 88 bed, container and post access routes
+across all four rotations, eight actual villager climbs from the plaza to the rooftop posts,
+and eight fire-approach routes. The worker-loop fixture fetched four raw cod from a chest,
+cooked them and physically returned all four cooked cod to storage. All 386 Gradle tests pass.
+The crossbow stations use clear, supported diagonal floor beside each fire at `(8,8,18)`
+and `(13,10,23)`, rather than the upright trapdoor rims. No structure edits were needed.
+The live gallery's six banners are updated; these AI changes are verified locally and await
+a subsequent server deployment.
+
+### Pueblo shared houses: September 9
+
+Aaron edited P01.4 through P01.7 as four housing alternatives. The source exhibit names
+are design labels, not an upgrade ladder:
+
+| Exhibit | Design | Single beds | Couple rooms | Total people |
+| --- | --- | --- | --- | --- |
+| P01.4 | Large House 1 | 2 | 1 | 4 |
+| P01.5 | Large House 2 | 2 | 0 | 2 |
+| P01.6 | Large House 3 | 2 | 2 | 6 |
+| P01.7 | Large House 4 | 2 | 0 | 2 |
+
+The fourteen beds provide eight single spaces and three reserved couple rooms. House 1's
+two ground-floor singles share their floor's chest, and its upstairs couple shares another.
+House 2's ground-floor single owns the sole chest; its upper single has no personal storage.
+House 3 assigns one chest to each couple room, leaving both singles without a personal chest.
+House 4 has a separate chest for each single. None of these seven containers is communal.
+
+The live gallery uses eight primary blue beds and six secondary yellow beds. Both halves
+of each couple's double bed share a color. House 1's two banners and House 4's banner use
+the same village-banner preview as the center. The neutral exports use white bed and banner
+sockets for the actual village identity. Capture verification confirms all other blocks,
+orientations and block-entity contents remain as Aaron authored them.
+
+`tools/structure/pueblo-houses-20260909.json` records the immutable source hashes, exact
+coordinates, room ownership, couple pairs and identity slots. The captures, neutral templates,
+and inspected screenshots are private review files under
+`run/pueblo-showcase/houses-approved-20260909-165758/`. Production categories, tiers, prices
+and upgrade relationships remain part of the complete Pueblo catalog selection. The gallery
+colors are live; the supporting shared-house AI changes await a later server deployment.
+
+The native private review test placed all four designs in all four rotations, verified
+84 bed/container routes, assigned every single and couple to the intended room, and completed
+56 actual walks and sleeps through the ordinary nighttime goal. All 399 Gradle tests pass,
+including save/reload of mixed households, single-bed reservations, occupied-room refusal,
+job changes retaining a couple's room, and returning spouses waiting until both arrive.
+The three couple rooms also passed another 24 ordinary sleep-goal trips across all rotations
+with maximum-size adults measured at exactly two blocks of collision height. Their existing
+geometry and the production sleeping behavior needed no changes.
+
+### Pueblo medium and small houses: September 9
+
+Aaron selected Medium Houses 1–2 and Small Houses 1–6 as eight additional home designs.
+Use the first, left-hand gallery copy of each design. The alternate right-hand copies stay
+in the gallery as references and are excluded from the selected set. He edited only the
+selected Small House 3 into a compact couple home, replacing its single bed with two adjacent
+beds and moving its personal chest up to the ceiling/upper-floor level.
+
+| Exhibit | Design | Single beds | Couple rooms | Personal containers |
+| --- | --- | --- | --- | --- |
+| P02.1 | Medium House 1 | 2 | 0 | One chest per floor |
+| P02.3 | Medium House 2 | 2 | 0 | One chest per floor |
+| P02.5 | Small House 1 | 1 | 0 | Chest |
+| P02.7 | Small House 2 | 1 | 0 | Chest |
+| P02.9 | Small House 3 | 0 | 1 | Shared raised chest |
+| P02.11 | Small House 4 | 1 | 0 | Barrel |
+| P03.1 | Small House 5 | 1 | 0 | Barrel |
+| P03.3 | Small House 6 | 1 | 0 | Chest |
+
+These eleven beds add nine single spaces and one couple room. Together with the four large
+houses, Pueblo now has twelve selected housing designs. These are alternative home designs,
+not twelve sequential upgrade tiers. Their final gameplay catalog mapping remains part of
+the ongoing Pueblo selection pass.
+
+`tools/structure/pueblo-houses-extra-20260909.json` holds the immutable capture hashes and
+exact amenities. The source, neutral templates, and before/after saved-world captures are
+under `run/pueblo-showcase/houses-extra-approved-20260909-173019/`. Live preview beds use six
+primary blue slots and five secondary yellow slots. Both medium homes have one of each;
+Small House 3's couple beds share primary. The other small homes alternate colors.
+All ten containers are personal, and every bed is explicitly bound to its room's storage.
+The selected copies contain no banners. The recolor preserves all other blocks and native
+block-entity data, and all eight excluded alternate copies remain unchanged.
+
+All eight designs pass the native check in all four rotations at maximum adult size:
+84 planned access routes, 44 physical personal-container deposits and 44 assigned-bed sleeps.
+The raised chest in Small House 3 is accessed from the roof; both spouses then walk down
+into the bedroom. This review exposed two shared movement defects: wide bodies caught the
+edge of an open door, and a mattress target could strand a resident on the roof above a
+tight bedroom. Doorway clearance and supported bedroom approaches now address those cases
+without editing the authored geometry or allowing sleep through walls. All 399 Gradle tests
+pass. Nine inspected screenshots and the native evidence are archived with the captures.
+The four previously selected large houses also pass the updated movement checks in all
+orientations: 56 assigned-bed sleeps and 44 personal-container deposits at maximum adult size.
+The gallery colors are live; these runtime fixes await deployment with the ongoing catalog work.
+
+### Pueblo workplaces: September 9
+
+Aaron repurposed P03.5 Temple 1 as the watchtower and P11.5 Well as the mine entrance.
+P03.6 Toolsmith And Weaponsmith 1 is the selected blacksmith. P03.7 Butcher Workshop
+and P09.6 Coop were combined in a separate draft preview, P12.1, beyond the Pueblo rows
+at `3600 230 1385`. Aaron subsequently selected P10.4 Sheep Farm for the butcher instead.
+The superseded draft and both source exhibits remain available for comparison.
+
+| Exhibit | Selected use | Staffing and storage |
+| --- | --- | --- |
+| P03.5 | Watchtower | One fixed crossbow guard, one primary-color bed, one bed-bound personal chest |
+| P03.6 | Blacksmith | One blacksmith at the upper workbench area, two communal chests, no bed |
+| P11.5 | Mine entrance | One miner on the supported rim, one communal chest, no bed |
+| P12.1 | Superseded butcher and coop draft | Reference only; P10.4 is the selected butcher |
+
+The tower retains the edited shooting windows, ladders, bedroom and personal chest.
+Its live bed is blue for the primary-color preview; the neutral export uses a white bed
+socket. The smith's station is an open floor tile beside the smithing table, and the
+butcher's is beside the smoker. Containers are storage destinations rather than crafting
+station targets. These bedless workplaces use residents housed in the village's homes.
+
+The mine retains the authored dry three-by-three opening and canopy. Its shaft mouth is
+one block above the template ground, allowing the first ramp step to return to the rim.
+During ordinary five-wide mine excavation, sixteen ground-layer blocks around and beyond
+the opening fall inside the planned shaft; all authored blocks above that layer remain.
+This excavation is future miner work, not an alteration to the gallery capture.
+
+The butcher and coop use their original orientations, with a one-block path between them.
+The workshop faces west and the pen gate faces north. The pen interior remains within the
+butcher's livestock search radius. Starter livestock and the final production catalog are
+still part of the selection pass; this draft does not promise leather or wool production.
+
+`tools/structure/pueblo-workplaces-20260909.json` records source hashes, component placement,
+job stations, storage ownership, mine orientation and village identity. Immutable captures,
+neutral exports, native readback evidence, before/after snapshots and inspected screenshots
+are under `run/pueblo-showcase/workplaces-approved-20260909-181024/`. The directory label is
+an archive identifier; the source snapshot was taken at 18:05:37 local time. Native block
+comparison confirms that the tower's two bed halves are the only changes to the five source
+exhibits. The separate composite matches all 312 expected non-air block states.
+
+The access walkthrough exposed the same wide-body clearance issue on an open trapdoor
+that had affected open doors: a centered route brushed the vertical wooden panel. The
+shared movement correction now covers both door types while retaining their collisions.
+This runtime change awaits deployment with the ongoing Pueblo work.
+
+All four workplaces pass the native review in all four rotations with maximum-size adults:
+40 planned access routes, 16 station walks, 16 shared-container deposits, four personal
+storage visits and guard sleeps, eight mine descent/return trips, and eight coop gate/interior
+visits. The guard keeps its real post assignment while returning to its assigned bed on a
+sleeping night. Both fixture reports are archived as `verification-posts-and-forge` and
+`verification-mine-and-coop`. All 399 project tests pass.
+
+Small House 3 and Large House 1 also pass the final shared-movement regression in all
+four rotations: 24 personal-container deposits and 24 assigned-bed sleeps across the
+existing raised-storage, ladder, doorway and couple-room layouts.
+
+### Pueblo services and worker households: September 9
+
+The next selection comprises ten edited buildings. `tools/structure/pueblo-services-20260909.json`
+records their immutable capture hashes, local stations, room ownership and village-color slots.
+Source captures, neutral exports and verification evidence are archived under
+`run/pueblo-showcase/services-approved-20260909-183601/`.
+
+| Exhibit | Selected use | Beds and storage |
+| --- | --- | --- |
+| P08.7 Small 1 | Storehouse tier 1 | No beds; two chests and three barrels, all communal |
+| P10.6 Vault | Storehouse tier 2 | Quartermaster bed, personal floor barrel upstairs; nine communal basement barrels |
+| P10.3 Orchard | Acacia lumberjack lodge | One bed and personal chest; dead bush marks the acacia stand |
+| P01.9 Mason 1 | Stoneworks | No beds; one communal chest |
+| P09.7 Farm | Grain farm | Farmer household couple room with shared personal chest |
+| P10.4 Sheep Farm | Butchery | Butcher household couple room with shared personal chest; three sheep |
+| P03.10 Fletcher Workshop | Hunting lodge | No beds; one communal chest |
+| P09.8 Fishing Oasis | Fishery | One fisher bed and personal barrel |
+| P09.5 Bakery | Bakery | No beds; one communal chest |
+| P08.2 Big | Tavern | One innkeeper bed and one general resident bed; five communal containers |
+
+P10.4 replaces the P12.1 butcher-and-coop draft. Three sheep are retained; the three nearby
+unnamed, untamed llamas spawned during editing were removed by their exact entity IDs.
+The neutral sheep-farm template preserves three adult sheep and the authored painting.
+Existing green wool stripes on the sheep farm and tavern are primary-color sockets, while
+white wool remains white. Every bed is a primary or secondary socket; both sides of each
+couple room share a color. The live review uses blue and yellow, not fixed production colors.
+
+The vault is sunk five blocks and the oasis four blocks. Enclosed basement air is retained
+without excavating surrounding terrain. Native sheep navigation exposed an escape route via
+the raised trough onto the pen perimeter. Its eleven blocks were lowered one block into the
+ground in both the live exhibit and a fresh native capture. Other authored blocks retain
+their world positions, and the original capture remains archived. Four gallery floor lights
+included by the expanded capture are excluded from the neutral export. The vault export
+adds eight matching foundation blocks five blocks
+below ground, making its footprint eight by eight so it can contain the first storehouse's
+eight-by-six footprint during upgrading. Its visible authored geometry remains unchanged.
+Gallery-only water containment barriers and escaped farm water are excluded from the neutral
+farm asset. The edited gallery itself retains its water containment and dead-bush marker.
+
+A worker couple room is reserved for a household where at least one spouse works in that
+building. Claiming the job can allocate both beds atomically, even when no single bed is free.
+The other spouse can hold a different job or remain idle. An unmarried worker may take the
+job while housed elsewhere, but cannot occupy half the couple room. The pair keeps its room
+while either spouse works there, and both beds reopen when neither does. The tavern declares
+only its innkeeper bed as `worker_beds`, leaving the second bed available to a general resident.
+
+The sheep farm's public entrance is on its north face; its raised west wall is not an entry.
+The tavern keeps its authored spiral stair and half-slab loft. Standing positions now resolve
+the actual supporting surface and test the full body at that height. Pathfinding can accept
+a two-block gap between a lower slab floor and upper slab ceiling. A half-step beneath the
+spiral stair's slab bridge uses its actual rise rather than requiring a full-block jump;
+the existing collision sweep still rejects a bridge that is too low. Solid obstructions,
+unsupported surfaces and special gate or hazard rules retain their normal restrictions.
+
+The tavern's one-cell storage closet is approached through its wooden doorway. Planning
+keeps that lower doorway as the destination instead of lifting the target onto the roof;
+the normal door goal opens it during the walk. Storage tasks then choose a fresh hand
+stance around the open door panel. Container transfers still require an unobstructed ray
+from the villager's actual eyes. Iron doors and obstructed closet interiors do not qualify
+for this approach. An active visit to the adjacent container holds its door open through
+the quartermaster's delayed transfers; closing the visit restores normal door closing.
+Route edges also respect the open panel's physical shape, so a transverse approach goes
+around the leaf. Final path nodes center the villager on the accepted standing position;
+vanilla's earlier stopping tolerance could leave a vault shelf outside actual hand reach.
+
+All ten services pass native review in four rotations: 40 placements, 184 access routes,
+40 station walks, 88 communal visits with two real timed transfers each, 28 personal-container
+deposits and 36 assigned-bed sleeps. The storehouse upgrade fits in all four rotations.
+All 48 closed-gate sheep route probes remain inside the repaired pen; three sheep and the
+painting survive each placement and its resident activity. Previously approved Small House 3,
+Large House 1, mine and coop also pass their access regressions. `./gradlew check` passes all
+408 tests, and seventeen live screenshots have been inspected. `final-verification.json`
+records the accepted evidence: the repaired pen report supersedes the original food report's
+failed pen result, while the other four unchanged food-service buildings retain their passing checks.
+
+These assets remain a reviewed selection, pending the complete Pueblo production catalog.
+The gallery colors and trough repair are live. The household and access runtime changes are
+local and await deployment.
+
+### Pueblo cleric and remaining catalog choices: September 9
+
+The edited P09.4 Alchemist is the selected church/temple for a cleric. Its immutable capture
+and amenity definition are recorded in `tools/structure/pueblo-cleric-20260909.json`, with
+private assets under `run/pueblo-showcase/cleric-approved-20260909-204200/`. The one bed is
+reserved for the cleric and uses the village primary color. The back chest sits in the
+work area, away from the bed, and remains communal under the workplace storage convention.
+The authored bookshelves, nether-wart planter, roof and decorative chimney fire are preserved.
+The selected capability is `HEALING`; this does not add an enchanting or brewing capability.
+
+Native review passes all four rotations with maximum-height adults: twelve access routes,
+four station walks, four assigned-bed sleeps, and four communal chest visits with two timed
+quartermaster transfers each. The live preview changes only the two bed halves; every other
+captured block and every block-entity tag is unchanged.
+Three live screenshots verify the exterior, workroom and primary-colored bed.
+
+The three existing Birch market tiers are adapted with acacia framing, orange terracotta,
+red-sandstone counters, arid potted plants and primary/secondary village-colored canvas.
+Existing white canvas remains white. `tools/structure/pueblo-markets-20260909.json` records
+the native source hashes, palette conversion, local access repairs and review metadata.
+The P13 row sits south of P12 and is separate from the Desert Oasis market previews in D12.
+
+| Exhibit | Template origin | Capacity |
+| --- | --- | --- |
+| P13.1 | `3597 230 1432` | One merchant station and one communal barrel |
+| P13.2 | `3625 230 1432` | Two merchant stations and two communal barrels |
+| P13.3 | `3660 230 1432` | Three merchant stations and three communal barrels |
+
+Native access checks found that the original floor barrels were obscured by trim and that
+countertops made approaching merchants climb into the canopy. Each adapted stall raises
+its existing barrel one block, fills the old floor cell with matching terracotta and opens
+a two-cell-wide passage through the adjacent counter and trim. Station positions, storage capacity, authored
+block-entity contents and the overall stall layout remain. Original Birch assets and Desert
+Oasis previews are preserved.
+
+Five entry corners also lose their obstructing vertical trim and low shelf. The final repair
+touches 46 cells across the three adapted templates. Native review passes twelve rotated
+placements, 48 access routes, 24 station walks, 24 communal visits with 48 real timed
+transfers, and eight upgrade-containment checks. A fresh saved-world capture matches all
+final declared preview blocks after the guarded live repair. The canopy and eaves remain intact.
+Four final live screenshots cover all three tiers and the accessible barrel closeup.
+
+A separate well is intentionally omitted because the selected town center already contains one.
+The center manifest now grants `WATER`, backed by its six existing waterlogged stone-stair
+basin blocks; no geometry changes or extra well structure are required. No large
+watchtower was selected; the previously approved small watchtower remains in the selection.
+These choices complete this selection pass, without activating the unfinished Pueblo catalog.
+
+### Pueblo readiness and identity audit: September 9
+
+The selected set now contains thirty reviewed templates: one center, twelve alternative homes,
+ten service buildings, three workplaces, one cleric building and three market tiers. P10.4 Sheep
+Farm is the selected butchery with three sheep; the P12.1 butcher-and-coop draft is superseded and
+must be excluded from production export.
+
+A read-only comparison of every selected neutral NBT against its manifest found all 46 bed
+heads represented in both housing metadata and village-color slots: 26 primary and 20 secondary.
+Every declared couple pair uses the same color. These are counts across the available designs,
+not the starting population of one village. All nine actual village flags are marked for the
+generated village banner: six at the center, two at Large House 1 and one at Large House 4.
+The per-template evidence is in
+`run/pueblo-showcase/catalog-audit-20260909/identity-audit.json`.
+
+There is one remaining identity gap. The three markets use another 78 plain wall-banner blocks
+as hanging awning fabric, with 13, 26 and 39 strips respectively. These are decorative cloth,
+not village flags, and their current colored strips retain the blue/yellow preview palette.
+`VillageIdentityApplier` does not yet support banner blocks as plain primary/secondary accents.
+During integration, preserve the approved plain cloth appearance and white strips, and make the
+colored strips follow the corresponding village color without applying the village flag pattern.
+
+The remaining production work is:
+
+- Register the environmental `badlands` catalog, export the reviewed assets and definitions,
+  and require its own founding center, mine and storehouse without borrowing Plains designs.
+- Expose all twelve house designs as alternatives through the shared catalog and planner.
+  The current canonical category/level lookup does not make every alternative selectable;
+  these homes must not become a twelve-step upgrade ladder.
+- Assign final categories, levels and recipes, and connect the storehouse 1-to-2 and market
+  1-to-2-to-3 upgrades using production identifiers.
+- Add a naming profile through the existing village naming system. A proposed description is
+  "A close community of orange-clay and red-sandstone courtyards, stepped roof terraces, shared
+  households, acacia workshops and carefully protected water." Proposed fantasy tone examples
+  are `Kestara`, `Oravel`, `Tavren` and `Sorela`; they are not fixed village names or implemented
+  naming data. NPC awareness of an architectural description would require shared chat context;
+  a naming prompt alone does not supply that awareness.
+- Select the perimeter palette. Acacia is a compatible starting proposal; a newly authored
+  wall and gatehouse family is optional rather than a prerequisite for playability.
+- Verify a complete founded village through construction, housing and couple allocation, food,
+  storage, recoloring, upgrades and save/reload. Individual building access checks do not replace
+  this integration pass.
+
+The initial biome recommendation is ordinary and eroded badlands, with deliberate mappings for
+compatible modded biomes. Wooded badlands, savanna plateau and desert/oasis remain separate
+reserved looks in the architecture roster. This is a proposal, not an activated biome mapping.
+The center's existing well supplies water; no standalone well or large watchtower is needed for
+this selected first version. This audit changes neither the live game nor the production catalog.
+
+Aaron subsequently approved finishing this integration. The final catalog is documented in
+[badlands-village.md](badlands-village.md), with reproducible production bindings in
+`tools/structure/badlands-catalog-20260909.json`. All thirty structures remain in the approved
+local datapack, outside public distribution. The shared runtime now supports house alternatives
+and explicit standalone tiers, the Badlands naming profile and biome mapping, and plain banner
+accents. P08.7 adds communal storage without a duplicate quartermaster job, keeping the center
+and founding mine at the requested eight starting positions. Native verification and the
+subsequent local release are recorded under `run/badlands-integration/`.
+
+The completed integration passed 424 unit tests, 240 actual placements across both construction
+paths and all rotations, a real restart preserving 240 buildings and 48 original entities,
+twelve upgrade fits, and four complete founding rotations. The founding checks include the
+eight starting positions, room ownership and storage, separate bell and campfire locations,
+village persistence and natural biome selection. Rendered market awnings were also checked
+with deliberately different primary and secondary colors.
+
+### Desert and oasis selection pass: September 9
+
+Aaron selected the CTOV Desert Oasis town center and nine homes spanning D05.3 through
+D06.3. D05.2 was initially selected as a home, then reassigned as the tavern. The remaining
+homes are alternative designs at three source scales, not a nine-step upgrade ladder.
+Their bed counts, couple rooms, personal storage, color slots and final catalog levels still need
+an interior review.
+
+| Exhibit | Source design | Selected use |
+| --- | --- | --- |
+| D05.1 | Town Center | Village center |
+| D05.2 | Big 1 | Tavern |
+| D05.3 | Big 2 | Home |
+| D05.4 | Med 1 | Home |
+| D05.5 | Med 2 | Home |
+| D05.6 | Small 1 | Home |
+| D05.7 | Small 2 | Home |
+| D05.8 | Small 3 | Home |
+| D06.1 | Small 4 | Home |
+| D06.2 | Small 5 | Home |
+| D06.3 | Small 6 | Home |
+
+The same pass selected the following service and workplace shells. D03.8 is storehouse level 2;
+the level 1 storehouse shell is not selected yet.
+D06.5 is the selected butchery. The larger fenced D07.1 loomhouse remains a reference only.
+
+| Exhibit | Source design | Selected use |
+| --- | --- | --- |
+| D03.8 | Vault | Storehouse level 2 |
+| D03.3 | Observatory | Watchtower |
+| D03.4 | Orchard | Lumberjack lodge |
+| D02.8 | Fishing Oasis | Fishery |
+| D02.9 | Fletcher | Hunting lodge |
+| D04.12 | Well | Well |
+| D06.4 | Bakery | Bakery |
+| D06.5 | Butcher | Butchery |
+| D06.6 | Farm | Farm |
+| D07.5 | Pen, edited in the gallery | Mine |
+| D07.2 | Mason | Stoneworks |
+| D07.6 | Smith | Blacksmith |
+| D07.7 | Temple | Church |
+| Existing Desert market levels 1 through 3 | Existing Kithkyn structures | Approved Desert Oasis restyle; production market progression |
+
+A reversible Desert Oasis restyle of the three existing markets is live in gallery row
+D12 at `(3793,230,1365)`, `(3815,230,1365)` and `(3844,230,1365)`. It preserves the one-,
+two- and three-stall geometry, work blocks and storage while unifying the set around sandstone
+counters, acacia and spruce framing, white canvas, orange, cactus green and ochre awnings, and
+arid potted plants. Five rendered views passed the visual review: the upgrade progression is
+clear, the tier-three ochre stall makes a useful focal point, and the repeated white canvas keeps
+the three colors coherent. Aaron approved all three on September 9. The reviewed binaries are now
+the production `market_desert_1`, `market_desert_2` and `market_desert_3` structures, with the
+superseded production files retained in the private review archive. The live world region was
+backed up before placement.
+
+All seventeen core categories now have a selected shell or, for the markets, an explicit reuse
+direction. D07.5's live mine edit still needs a durable capture and its miner station, container,
+shaft mouth and ramp orientation recorded before native excavation testing.
+
+The unedited D03.3 capture passed a disposable native watchtower access check with a maximum-size
+adult, 0.648 blocks wide and 2 blocks high. In all four rotations, the villager physically climbed
+the spiral stair from the ground entrance to the selected top-deck guard post at local `[3,13,8]`,
+then reached the authored chest at `[5,13,4]`. The climbs took 152 to 168 verifier ticks. The full
+fixture still reported failure because its first warm-up placement hit an unrelated shared closet
+planning assertion; every D03.3 route and physical walk passed.
+
+A complete production-parity pass also needs to assign one of the selected homes as the couple's
+cottage or choose another shell, select the level 1 storehouse, decide which existing Desert
+upgrade ladders remain, and review a matching perimeter family. In particular, the current Desert
+catalog has two watchtowers, three farms, two blacksmiths and three storehouses; this review has
+selected only one shell for each of those roles so far.
+
+The runtime naming path is already Desert-aware. The Desert profile describes sheltered
+courtyards, pale masonry, shade and hospitable traders; `Darava`, `Serevan` and `Amarin` are tone
+examples that generated names are forbidden to copy. The deterministic fallback uses Desert
+starts such as `Dara`, `Sere`, `Amar`, `Tala`, `Sola` and `Nara`. Desert, badlands and sandy biome
+families already select the persisted `desert` style, and `/kithkyn create-village <pos> desert`
+can force it for a sample settlement.
+
+The remaining authoring work is larger than naming. None of the existing Desert definitions has
+village-identity sockets yet, so the permanent orange, cactus green and ochre market palette must
+be kept distinct from any future primary and secondary village-color accents. Every selected
+shell still needs a neutral, licensed production capture, exact beds, work positions, communal
+and personal storage, identity slots, costs and an access check in all rotations. The D07.5 mine
+also needs its durable capture and excavation orientation. Finally, the selected CTOV Desert
+Oasis reference structures cannot move from the private review library into shipped resources
+without the author's written permission; the approved Kithkyn market restyle does not have that
+dependency.

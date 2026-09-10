@@ -1,0 +1,62 @@
+{
+  "structure": "tavern_birch_forest_1",
+  "category": "tavern",
+  "variant": "birch_forest",
+  "beds": [
+    [
+      14,
+      1,
+      16
+    ]
+  ],
+  "work_stations": [
+    {
+      "occupation": "INNKEEPER",
+      "pos": [
+        10,
+        1,
+        14
+      ]
+    }
+  ],
+  "personal_containers": [
+    [
+      13,
+      4,
+      16
+    ]
+  ],
+  "containers": [
+    [
+      10,
+      2,
+      15
+    ]
+  ],
+  "cost": [
+    {
+      "item": "minecraft:oak_log",
+      "count": 150
+    },
+    {
+      "item": "minecraft:stone_bricks",
+      "count": 169
+    }
+  ],
+  "grants": [
+    "WANDERERS"
+  ],
+  "sink": 0,
+  "entrance_facing": "west",
+  "village_identity": {
+    "primary_blocks": [
+      [
+        14,
+        1,
+        16
+      ]
+    ],
+    "secondary_blocks": [],
+    "banners": []
+  }
+}

@@ -41,6 +41,7 @@ It refuses to overwrite existing JSON definitions; deliberate metadata revisions
 reviewed as normal patches, not regenerated over user changes. The generated export plan can
 be passed to the native writer separately to reproduce binary assets. Append `--assets-only`
 to regenerate only the derived NBT files and export report, without replacing definitions.
+Add `--only=bakery_birch_forest_1,tavern_birch_forest_1` to limit that export to named assets.
 Exterior air is limited to the envelope of actual authored blocks, not the original capture
 rectangle. Capture coordinates remain stable; runtime `BuildingFootprint` supplies tight planning
 and claim bounds without moving saved amenity offsets. Mine entrance direction/offset and the
@@ -84,3 +85,92 @@ assets. It verifies that all preexisting NBT data remains exactly equal. Stop/sa
 and back up the world first; never replace a live saved-data file. Arguments are input `.dat`,
 new output `.dat`, and the old `data/kithkyn/structure` directory. The runtime then resumes each
 cursor against its frozen template. This does not move old buildings or regenerate terrain.
+
+The September 9 bakery/tavern separation uses `birch-bakery-20260909.json` to remove the
+second bakery bed and update identity slots. `birch-tavern-20260909.json` references its own
+immutable approved capture, source hash and explicit amenity metadata. The same native
+writer preserves the edited grass and lighting, empties storage, and neutralizes only the
+keeper's assigned bed. Dense captures can declare `ground_layer` so exterior ground-level
+air does not excavate the supporting terrain. The source captures are never rewritten.
+
+## Pueblo center review
+
+`pueblo-center-20260909.json` is the current P01.1 room and staffing manifest. Its `info`
+object is a runtime building definition, including `meeting_point`, `campfires`, per-bed
+`bed_containers`, per-station `guard_duty`, and village identity slots. Its source capture,
+neutral template and prepared datapack paths point into the private `run/` review workspace.
+The capture remains immutable; the shared `VillageTemplateExport.java` produces the neutral
+review template using the adjacent `export-plan.json`. The completed local Badlands catalog
+now binds this center together with its founding mine and storehouse; never activate an isolated
+center without that complete set. See [the Badlands record](../../docs/badlands-village.md).
+Native room and rooftop access checks run only with
+`-Dkithkyn.approvedCenter.verify=true` on the disposable world containing that review datapack.
+
+## Pueblo housing review
+
+`pueblo-houses-20260909.json` records the four edited large houses.
+`pueblo-houses-extra-20260909.json` adds the first copies of Medium Houses 1–2 and Small
+Houses 1–6. Each entry retains its source hash, captured origin, capacity, explicit couple
+pairs, room storage and village-color slots. Alternate copies remain separate gallery
+references and are not additional selected designs. These named alternatives do not imply
+an upgrade order or assign production categories and prices.
+
+`prepare-reviewed-houses.py MANIFEST --java /path/to/java21` prepares a manifest with a
+`work` directory by checking its immutable capture hashes, resolving both halves of each
+declared bed, and producing neutral templates through `VillageTemplateExport.java`.
+Its identity-only gallery preview patches reuse the private `run/valecraft-gallery/GallerySnapshot.java`
+helper; the script itself never writes to the live world. It requires the existing Gradle
+server classpath and review workspace. The native house fixture accepts a comma-separated
+list of temporary definition IDs in `kithkyn.approvedHouses.ids`, so one fixture can verify
+different review manifests without creating fake upgrade tiers.
+
+The fixture walks each resident from the entrance to their own container using
+`StashAtHomeGoal`, checks the physical deposit and item conservation, then continues into
+their assigned bed using `SleepAtNightGoal`. Maximum-size adults exercise the two-block
+collision cap and door clearance. `kithkyn.approvedHouses.rotation` can restrict a diagnostic
+to one rotation; the default checks all four. The private launcher
+`run/pueblo-house-verification/launch.py` selects a manifest and can narrow it with
+`--exhibit` and `--rotation` while diagnosing an individual room.
+
+## Pueblo workplace review
+
+`pueblo-workplaces-20260909.json` records the edited watchtower and mine, selected
+blacksmith, and separate butcher-and-coop draft. Its `sources` retain the five immutable
+captures and original mod paths; `facilities` hold compact coordinates and neutral-template
+paths. A private native composition plan reuses `RamshackleComposite.java`, followed by
+`VillageTemplateExport.java`, preserving typed block entities. Explicit ground air retains
+the mine opening. Existing source exhibits are not replaced by composite drafts.
+
+The same `ApprovedHouseVerification` fixture accepts workplace definitions through the
+private launcher's `facilities` and `review_id` fields. It physically walks to stations,
+checks guard equipment, deposits in communal containers, and continues to the resident's
+personal chest and bed when present. Bedless buildings use a temporary unassigned walker.
+Optional local `review_targets` exercise an enclosure's gate and interior without adding
+production metadata. The mine check replays the planned underground ramp and requires
+both descent and a return outside; terrain seeding must preserve authored surface blocks
+except those explicitly removed by the shaft's real corridor. No review manifest activates
+a partial biome catalog or assigns final production tiers and prices.
+
+`pueblo-services-20260909.json` adds ten service selections, including the two authored
+storehouse tiers, acacia stand, married-worker farm and sheep farm, and a tavern with one
+staff bed and one general bed. The preparation script also accepts `facilities`, optional
+`prepared_source` native captures and `export_options_file` conversion plans. Wool identity
+slots become neutral white wool while the independent live preview uses the village color.
+Existing white awning stripes are outside the identity slots and remain white.
+
+The same native fixture now claims staff couple rooms through production job assignment
+before placing general residents. It checks both spouses' physical storage and sleep access,
+exact spawned livestock counts and farmed marks, containment after gate visits, and upgrade
+placement for selected `upgrades_from` links. The disposable terrain follows each template's
+`sink`, including the underground vault and oasis. These checks do not restart the live world.
+
+`pueblo-cleric-20260909.json` records the edited P09.4 Alchemist as the cleric temple,
+including its single staff bed, shared workshop chest and healing capability. It uses the
+same preparation and access fixtures. It also records the selected town center's built-in
+well and the decision to omit a separate well and leave the large watchtower unselected.
+
+`pueblo-markets-20260909.json` reuses the three approved market tiers for the separate
+P13 Mesa review row. Native `GallerySnapshot.java` plans make material substitutions,
+preserve typed block entities and apply the recorded barrel/passage access repairs.
+The source market assets and the Desert Oasis previews remain unchanged. The same native
+access fixture checks merchant stations, communal storage and upgrade containment.

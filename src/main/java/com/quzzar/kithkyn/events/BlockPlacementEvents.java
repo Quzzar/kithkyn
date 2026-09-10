@@ -2,6 +2,7 @@ package com.quzzar.kithkyn.events;
 
 import com.quzzar.kithkyn.Kithkyn;
 import com.quzzar.kithkyn.savedata.PlacedBlockStore;
+import com.quzzar.kithkyn.savedata.RepairStore;
 import com.quzzar.kithkyn.village.BlockOwnership;
 
 import net.minecraft.server.level.ServerLevel;
@@ -35,21 +36,25 @@ public final class BlockPlacementEvents {
 
   @SubscribeEvent
   public static void onPlace(BlockEvent.EntityPlaceEvent event) {
-    if (event.getEntity() instanceof Player && event.getLevel() instanceof ServerLevel level
-        && !BlockOwnership.isPlanted(event.getPlacedBlock())) {
-      PlacedBlockStore.get(level).markPlayerPlaced(event.getPos());
+    if (event.getEntity() instanceof Player && event.getLevel() instanceof ServerLevel level) {
+      RepairStore.get(level).forget(event.getPos());
+      PlacedBlockStore.get(level).clearPlaced(event.getPos());
+      if (!BlockOwnership.isPlanted(event.getPlacedBlock())) {
+        PlacedBlockStore.get(level).markPlayerPlaced(event.getPos());
+      }
     }
   }
 
   @SubscribeEvent
   public static void onMultiPlace(BlockEvent.EntityMultiPlaceEvent event) {
-    if (!(event.getEntity() instanceof Player) || !(event.getLevel() instanceof ServerLevel level)
-        || BlockOwnership.isPlanted(event.getPlacedBlock())) {
+    if (!(event.getEntity() instanceof Player) || !(event.getLevel() instanceof ServerLevel level)) {
       return;
     }
     PlacedBlockStore store = PlacedBlockStore.get(level);
     for (BlockSnapshot snapshot : event.getReplacedBlockSnapshots()) {
-      store.markPlayerPlaced(snapshot.getPos());
+      RepairStore.get(level).forget(snapshot.getPos());
+      store.clearPlaced(snapshot.getPos());
+      if (!BlockOwnership.isPlanted(event.getPlacedBlock())) store.markPlayerPlaced(snapshot.getPos());
     }
   }
 
@@ -57,6 +62,7 @@ public final class BlockPlacementEvents {
   public static void onBreak(BlockEvent.BreakEvent event) {
     if (event.getLevel() instanceof ServerLevel level) {
       PlacedBlockStore.get(level).clearPlaced(event.getPos());
+      RepairStore.get(level).forget(event.getPos());
     }
   }
 

@@ -10,7 +10,6 @@ import com.quzzar.kithkyn.entities.RealPerson;
 import com.quzzar.kithkyn.village.JobAssignment;
 import com.quzzar.kithkyn.village.Village;
 import com.quzzar.kithkyn.village.buildings.BuildingInfo;
-import com.quzzar.kithkyn.village.buildings.Buildings;
 import com.quzzar.kithkyn.village.buildings.UrbanPlanner;
 import com.quzzar.kithkyn.village.buildings.VillageGoal;
 
@@ -23,7 +22,6 @@ import net.minecraft.server.level.ServerLevel;
  */
 public final class FamilyHousingService {
 
-  private static final String HOUSE_CATEGORY = "house";
 
   private FamilyHousingService() {
   }
@@ -37,8 +35,8 @@ public final class FamilyHousingService {
     if (teenager == null) {
       return;
     }
-    BuildingInfo house = Buildings.resolve(HOUSE_CATEGORY, 1, village.getStyle());
-    if (house == null || house.getName().equals(VillageGoal.stalled(village, village.getVillageTime()))) {
+    BuildingInfo house = UrbanPlanner.singleHomeGoal(village);
+    if (house == null) {
       return;
     }
     String occupation = teenager.getOccupation().name().toLowerCase(Locale.ROOT);

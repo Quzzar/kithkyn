@@ -40,10 +40,11 @@ public final class WorkerRecoveryVerification {
       ServerLevel level = event.getServer().overworld();
       level.setDayTime(6000);
       level.updateSkyBrightness();
+      verifyUnavailableMine(level);
       for (Rotation rotation : Rotation.values()) verifyMine(level, rotation);
       verifyMine(level, Rotation.NONE, true);
       verifyFishing(level);
-      Kithkyn.LOGGER.info("[workers-verify] RESULT PASS: flooded frontier seals then cuts ribs in all rotations; occupied offhand and full-pack bucket exchange; fishing catch and interruption lifecycle");
+      Kithkyn.LOGGER.info("[workers-verify] RESULT PASS: unavailable mine reports survive reload and clear after work; fresh second mine offered; flooded frontier seals then cuts ribs in all rotations; occupied offhand and full-pack bucket exchange; fishing catch and interruption lifecycle");
     } catch (Exception | AssertionError failure) {
       Kithkyn.LOGGER.error("[workers-verify] RESULT FAIL", failure);
     } finally {
@@ -53,6 +54,56 @@ public final class WorkerRecoveryVerification {
 
   private static void verifyMine(ServerLevel level, Rotation rotation) {
     verifyMine(level, rotation, false);
+  }
+
+  /** A mine that cannot select any work must tell the village, even before travel starts. */
+  private static void verifyUnavailableMine(ServerLevel level) {
+    FixtureVillage village = new FixtureVillage(new BlockPos(-6300, 150, -6000),
+        "mine_birch_forest_1", Rotation.NONE, Occupation.MINER);
+    RealPerson miner = worker(level, village);
+    MineShaft shaft = MineShaft.root(village.building, LocationManager.getJobLocation(miner));
+    for (BlockPos local : BlockPos.betweenClosed(-12, -12, -3, 12, 3, 12)) {
+      level.setBlock(world(shaft, local), Blocks.BEDROCK.defaultBlockState(), 2);
+    }
+    standAt(miner, shaft.entry());
+    MineStep mine = new MineStep();
+    check(mine.select(miner) == null, "sealed mine unexpectedly offered work");
+    check(blockers(miner).stream().anyMatch(text -> text.contains("mine")
+        && (text.contains("exhausted") || text.contains("cannot reach"))),
+        "mine selected no work without reporting a current blocker to the village");
+    check(com.quzzar.kithkyn.village.buildings.UrbanPlanner.optionsFor(village).buildable().stream()
+        .anyMatch(candidate -> candidate.info().getName().equals("mine_birch_forest_1")
+            && candidate.mode() == com.quzzar.kithkyn.village.buildings.ConstructionMode.FRESH
+            && candidate.description().contains("new shaft on a separate site")),
+        "a staffed exhausted mine prevented the planner from offering another mine");
+    net.minecraft.nbt.CompoundTag saved = new net.minecraft.nbt.CompoundTag();
+    miner.saveWithoutId(saved);
+    RealPerson restored = worker(level, village);
+    restored.load(saved);
+    check(blockers(restored).stream().anyMatch(text -> text.contains("exhausted")),
+        "mine exhaustion report did not survive saving");
+    for (BlockPos local : BlockPos.betweenClosed(-12, -12, -3, 12, 3, 12)) {
+      level.setBlock(world(shaft, local), Blocks.STONE.defaultBlockState(), 2);
+    }
+    for (int z = -1; z <= 3; z++) {
+      for (BlockPos local : BlockPos.betweenClosed(-2, -z - 2, z, 2, Math.min(-1, -z + 2), z)) {
+        level.setBlock(world(shaft, local), Blocks.AIR.defaultBlockState(), 2);
+      }
+    }
+    standAt(restored, world(shaft, new BlockPos(0, -2, 0)));
+    restored.setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(Items.STONE_PICKAXE));
+    restored.personMainInv.setItem(0, new ItemStack(Items.DIRT, 64));
+    MineStep resumed = new MineStep();
+    BlockPos stand = resumed.select(restored);
+    check(stand != null, "reopened mine offered no work");
+    check(blockers(restored).stream().anyMatch(text -> text.contains("exhausted")),
+        "merely selecting a destination cleared a mine failure before physical work");
+    standAt(restored, stand);
+    for (int act = 0; act < 2000 && resumed.act(restored, stand); act++) { }
+    check(blockers(restored).stream().noneMatch(text -> text.contains("exhausted")),
+        "successful work retained the exhausted-mine report after reload");
+    restored.discard();
+    miner.discard();
   }
 
   private static void verifyMine(ServerLevel level, Rotation rotation, boolean bucket) {
@@ -205,6 +256,7 @@ public final class WorkerRecoveryVerification {
   }
 
   private static RealPerson worker(ServerLevel level, FixtureVillage village) {
+    village.attach(level);
     RealPerson person = new RealPerson(PersonEntityType.PERSON.get(), level) {
       @Override public Village getVillage() { return village; }
     };
@@ -233,9 +285,13 @@ public final class WorkerRecoveryVerification {
       super("Worker recovery fixture");
       this.building = new Building(origin, name, rotation);
       this.occupation = occupation;
+      setStyle(com.quzzar.kithkyn.village.buildings.VillageStyle.BIRCH_FOREST);
     }
 
     @Override public Building getBuilding(UUID id) { return building; }
+    @Override public java.util.Map<net.minecraft.world.item.Item, Integer> stockTally() {
+      return java.util.Map.of(Items.OAK_LOG, 64, Items.COBBLESTONE, 64);
+    }
     @Override public java.util.Collection<Building> getBuildings() { return java.util.List.of(building); }
     @Override public JobAssignment getJobAssignment(UUID id) {
       return new JobAssignment(id, occupation, building.getUUID(), 0);

@@ -27,16 +27,16 @@ import net.neoforged.neoforge.common.Tags;
  * the world seed and founding site, not the world's mutable random stream.
  */
 public enum VillageStyle {
-  PLAINS, TAIGA, SNOWY, DESERT, SAVANNA, BIRCH_FOREST;
+  PLAINS, TAIGA, SNOWY, DESERT, SAVANNA, BIRCH_FOREST, BADLANDS;
 
   /** The token this style takes in a building id, {@code house_<style>_1}. */
   public String id() {
     return name().toLowerCase(Locale.ROOT);
   }
 
-  /** The approved Birch catalog is complete and deliberately omits some roles and levels. */
+  /** Approved catalogs deliberately omit roles and levels that have no selected design. */
   public boolean usesPlainsFallback() {
-    return this != BIRCH_FOREST;
+    return this != BIRCH_FOREST && this != BADLANDS;
   }
 
   /** Modpacks can assign a biome without introducing a separate mapping loader. */

@@ -167,8 +167,38 @@ class BirchAssetsTest {
         count++;
       }
     }
-    assertEquals(22, count);
-    assertEquals(32, tallGrass, "All 16 approved tall-grass plants, including the revised center, must survive the export");
+    assertEquals(23, count);
+    assertEquals(38, tallGrass, "Preserve the original 16 tall-grass plants and three added on the tavern");
+  }
+
+  @Test
+  void separateBakeryAndTavernKeepTheirOwnWorkerHousingAndPrivateStorage() throws Exception {
+    Path buildings = data().resolve("kithkyn/buildings");
+    BuildingInfo bakery = BuildingInfo.CODEC.parse(JsonOps.INSTANCE, JsonParser.parseString(
+        Files.readString(buildings.resolve("bakery_birch_forest_1.json")))).getOrThrow();
+    BuildingInfo tavern = BuildingInfo.CODEC.parse(JsonOps.INSTANCE, JsonParser.parseString(
+        Files.readString(buildings.resolve("tavern_birch_forest_1.json")))).getOrThrow();
+    assertEquals(List.of(new BlockPos(7,5,11).asLong()), bakery.getBedLocations());
+    assertEquals(Set.of(com.quzzar.kithkyn.village.Occupation.BAKER), Set.copyOf(bakery.getWorkLocations().values()));
+    assertEquals(List.of(new BlockPos(14,1,16).asLong()), tavern.getBedLocations());
+    assertEquals(Set.of(com.quzzar.kithkyn.village.Occupation.INNKEEPER), Set.copyOf(tavern.getWorkLocations().values()));
+    long ceilingBarrel = new BlockPos(13,4,16).asLong();
+    assertEquals(List.of(ceilingBarrel), tavern.getPersonalContainerLocations());
+    assertFalse(tavern.getContainerLocations().contains(ceilingBarrel));
+    CompoundTag template = NbtIo.readCompressed(data().resolve("structure/tavern_birch_forest_1.nbt"), NbtAccounter.unlimitedHeap());
+    boolean foundBarrel = false;
+    for (Tag item : template.getList("blocks", Tag.TAG_COMPOUND)) {
+      CompoundTag block = (CompoundTag)item;
+      ListTag pos = block.getList("pos", Tag.TAG_INT);
+      CompoundTag state = template.getList("palette", Tag.TAG_COMPOUND).getCompound(block.getInt("state"));
+      if (pos.getInt(1) == 0) assertNotEquals("minecraft:air", state.getString("Name"), "A tavern must not dig a pit around its ground floor");
+      if (pos.getInt(0) == 13 && pos.getInt(1) == 4 && pos.getInt(2) == 16) {
+        foundBarrel = true;
+        assertEquals("minecraft:barrel", state.getString("Name"));
+        assertEquals("down", state.getCompound("Properties").getString("facing"));
+      }
+    }
+    assertTrue(foundBarrel, "Preserve the keeper's ceiling barrel");
   }
 
   @Test

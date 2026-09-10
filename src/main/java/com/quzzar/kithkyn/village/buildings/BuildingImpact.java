@@ -39,7 +39,7 @@ public final class BuildingImpact {
   }
 
   public record Capacity(int generalBeds, int workerBeds, int containers, Map<Occupation, Integer> jobs,
-      int cropPlots) {
+      int cropPlots, int coupleRooms, int workerCoupleRooms) {
     public Capacity {
       jobs = Map.copyOf(jobs);
     }
@@ -51,7 +51,9 @@ public final class BuildingImpact {
     /** Zero general beds is stated too, so storage and worker accommodation cannot look like housing. */
     public String describe(boolean net) {
       return number(generalBeds, net) + " general beds, " + number(workerBeds, net)
-          + " beds reserved for workers, " + number(workplaces(), net) + " workplaces, "
+          + " beds reserved for workers, " + number(coupleRooms, net) + " couple rooms (two reserved beds each; "
+          + number(workerCoupleRooms, net) + " rooms for staff households), "
+          + number(workplaces(), net) + " workplaces, "
           + number(containers, net) + " shared containers, " + number(cropPlots, net) + " crop plots";
     }
   }
@@ -79,16 +81,15 @@ public final class BuildingImpact {
 
   /** Matches the housing rule: only the village center's workplace beds are general housing. */
   public static int generalBeds(BuildingInfo info) {
-    return info.getWorkLocations().isEmpty() || Buildings.VILLAGE_CENTER_CATEGORY.equals(info.getCategory())
-        ? info.getBedLocations().size() : 0;
+    return info.getSingleBedCount() - info.getWorkerSingleBedCount();
   }
 
   public static Capacity capacity(BuildingInfo info, int cropPlots) {
     Map<Occupation, Integer> jobs = new HashMap<>();
     info.getWorkLocations().values().forEach(job -> jobs.merge(job, 1, Integer::sum));
     int general = generalBeds(info);
-    return new Capacity(general, info.getBedLocations().size() - general,
-        info.getContainerLocations().size(), jobs, cropPlots);
+    return new Capacity(general, info.getSingleBedCount() - general,
+        info.getContainerLocations().size(), jobs, cropPlots, info.getCoupleBeds().size(), info.getWorkerCoupleRoomCount());
   }
 
   public static Capacity net(Capacity target, Collection<Capacity> affected) {
@@ -96,16 +97,20 @@ public final class BuildingImpact {
     int workers = target.workerBeds();
     int stores = target.containers();
     int plots = target.cropPlots();
+    int couples = target.coupleRooms();
+    int workerCouples = target.workerCoupleRooms();
     Map<Occupation, Integer> jobs = new HashMap<>(target.jobs());
     for (Capacity loss : affected) {
       general -= loss.generalBeds();
       workers -= loss.workerBeds();
       stores -= loss.containers();
       plots -= loss.cropPlots();
+      couples -= loss.coupleRooms();
+      workerCouples -= loss.workerCoupleRooms();
       loss.jobs().forEach((job, count) -> jobs.merge(job, -count, Integer::sum));
     }
     jobs.values().removeIf(count -> count == 0);
-    return new Capacity(general, workers, stores, jobs, plots);
+    return new Capacity(general, workers, stores, jobs, plots, couples, workerCouples);
   }
 
   public static Capacity capacity(Village village, BuildingInfo info) {

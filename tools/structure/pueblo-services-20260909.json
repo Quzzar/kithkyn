@@ -1,0 +1,1291 @@
+{
+  "status": "captured_configured_and_verified",
+  "description": "Ten edited Pueblo services, including two storehouse tiers and married worker accommodation. Private review assets; production catalog activation and costs await the complete selection.",
+  "work": "run/pueblo-showcase/services-approved-20260909-183601",
+  "preview_colors": {
+    "primary": "blue",
+    "secondary": "yellow"
+  },
+  "facilities": [
+    {
+      "exhibit": "P08.7",
+      "label": "Storehouse Tier 1",
+      "review_id": "storehouse_puebloservices_1",
+      "source_capture": "run/pueblo-showcase/services-approved-20260909-183601/captures/P08.7.nbt",
+      "source_sha256": "c6502f103da80045a5ed82d50082499acd130b0f3c9a489d061dc505add8674c",
+      "source_mod_structure": "data/ctov/structure/village/mesa_fortified/house/small_1.nbt",
+      "template_origin": [
+        3724,
+        230,
+        1230
+      ],
+      "size": [
+        12,
+        5,
+        10
+      ],
+      "prepared_source": "run/pueblo-showcase/services-approved-20260909-183601/prepared/P08.7.nbt",
+      "neutral_template": "run/pueblo-showcase/services-approved-20260909-183601/neutral/P08.7.nbt",
+      "amenities": {
+        "category": "storehouse",
+        "beds": [],
+        "couple_beds": [],
+        "work_stations": [
+          {
+            "occupation": "QUARTERMASTER",
+            "pos": [
+              4,
+              1,
+              5
+            ]
+          }
+        ],
+        "personal_containers": [],
+        "containers": [
+          [
+            5,
+            1,
+            4
+          ],
+          [
+            3,
+            1,
+            6
+          ],
+          [
+            7,
+            1,
+            6
+          ],
+          [
+            8,
+            1,
+            7
+          ],
+          [
+            7,
+            2,
+            7
+          ]
+        ],
+        "bed_containers": [],
+        "village_identity": {
+          "primary_blocks": [],
+          "secondary_blocks": [],
+          "banners": []
+        },
+        "sink": 0,
+        "entrance_facing": "north",
+        "grants": [
+          "STORAGE"
+        ]
+      },
+      "notes": [],
+      "capture_cleanup": {
+        "removed_block_counts": {}
+      },
+      "neutral_template_sha256": "2b4f5fd74f7510004cb910a181ae3ee36bb85b43ff05b6c0381100314c7f85e1",
+      "export_options_file": "run/pueblo-showcase/services-approved-20260909-183601/P08.7-export-options.json",
+      "source_mod": "[Neoforge]ctov-3.6.3.jar",
+      "production": {
+        "structure": "storehouse_badlands_1",
+        "category": "storehouse",
+        "variant": "badlands",
+        "level": 1,
+        "recipe": "storehouse_plains_1",
+        "definition_overrides": {
+          "work_stations": []
+        },
+        "staffing_note": "The center quartermaster manages this founding storehouse. No extra founding job is added; the later vault retains its reviewed quartermaster station and staff room."
+      }
+    },
+    {
+      "exhibit": "P10.6",
+      "label": "Vault Storehouse Tier 2",
+      "review_id": "storehouse_puebloservices_2",
+      "source_capture": "run/pueblo-showcase/services-approved-20260909-183601/captures/P10.6.nbt",
+      "source_sha256": "b00e02196b3b84e5b55377bdaada3f3b471ba8e1028a89182bc4cdd32a394398",
+      "source_mod_structure": "data/ctov/structure/village/mesa_fortified/jobsite/vault.nbt",
+      "template_origin": [
+        3706,
+        230,
+        1300
+      ],
+      "size": [
+        11,
+        10,
+        12
+      ],
+      "prepared_source": "run/pueblo-showcase/services-approved-20260909-183601/prepared/P10.6.nbt",
+      "neutral_template": "run/pueblo-showcase/services-approved-20260909-183601/neutral/P10.6.nbt",
+      "amenities": {
+        "category": "storehouse",
+        "beds": [
+          [
+            7,
+            6,
+            8
+          ]
+        ],
+        "couple_beds": [],
+        "work_stations": [
+          {
+            "occupation": "QUARTERMASTER",
+            "pos": [
+              5,
+              1,
+              6
+            ]
+          }
+        ],
+        "personal_containers": [
+          [
+            6,
+            5,
+            8
+          ]
+        ],
+        "containers": [
+          [
+            3,
+            1,
+            5
+          ],
+          [
+            7,
+            1,
+            5
+          ],
+          [
+            3,
+            1,
+            7
+          ],
+          [
+            7,
+            1,
+            7
+          ],
+          [
+            6,
+            1,
+            8
+          ],
+          [
+            7,
+            2,
+            5
+          ],
+          [
+            3,
+            2,
+            7
+          ],
+          [
+            7,
+            2,
+            7
+          ],
+          [
+            3,
+            3,
+            7
+          ]
+        ],
+        "bed_containers": [
+          {
+            "bed": [
+              7,
+              6,
+              8
+            ],
+            "containers": [
+              [
+                6,
+                5,
+                8
+              ]
+            ]
+          }
+        ],
+        "village_identity": {
+          "primary_blocks": [
+            [
+              7,
+              6,
+              8
+            ]
+          ],
+          "secondary_blocks": [],
+          "banners": []
+        },
+        "sink": 5,
+        "entrance_facing": "north",
+        "grants": [
+          "STORAGE"
+        ],
+        "upgrades_from": "storehouse_puebloservices_1"
+      },
+      "notes": [
+        "The floor barrel beside the upper bed is the quartermaster personal container. All nine lower barrels are communal.",
+        "Eight matching foundation blocks, five blocks below ground, extend the upgrade footprint to 8 by 8. Above-ground authored geometry is unchanged."
+      ],
+      "capture_cleanup": {
+        "removed_block_counts": {}
+      },
+      "neutral_template_sha256": "b6d85ea6ed301d9a1155e01433d523f21070097fe601964505827b2fcbe4b063",
+      "export_options_file": "run/pueblo-showcase/services-approved-20260909-183601/P10.6-export-options.json",
+      "source_mod": "[Neoforge]ctov-3.6.3.jar",
+      "production": {
+        "structure": "storehouse_badlands_2",
+        "category": "storehouse",
+        "variant": "badlands",
+        "level": 2,
+        "recipe": "storehouse_plains_2",
+        "upgrades_from": "storehouse_badlands_1"
+      }
+    },
+    {
+      "exhibit": "P10.3",
+      "label": "Acacia Lumberjack Lodge",
+      "review_id": "lumberjack_puebloservices_1",
+      "source_capture": "run/pueblo-showcase/services-approved-20260909-183601/captures/P10.3.nbt",
+      "source_sha256": "605d5fd0ed5faa8c40a1e4d5216da71a379e1f5c2d6fd8bccaf82223e5d11abb",
+      "source_mod_structure": "data/ctov/structure/village/mesa_fortified/jobsite/orchard.nbt",
+      "template_origin": [
+        3643,
+        230,
+        1300
+      ],
+      "size": [
+        21,
+        6,
+        11
+      ],
+      "prepared_source": "run/pueblo-showcase/services-approved-20260909-183601/prepared/P10.3.nbt",
+      "neutral_template": "run/pueblo-showcase/services-approved-20260909-183601/neutral/P10.3.nbt",
+      "amenities": {
+        "category": "lumberjack",
+        "beds": [
+          [
+            17,
+            2,
+            7
+          ]
+        ],
+        "couple_beds": [],
+        "work_stations": [
+          {
+            "occupation": "LUMBERJACK",
+            "pos": [
+              9,
+              1,
+              6
+            ]
+          }
+        ],
+        "personal_containers": [
+          [
+            15,
+            2,
+            3
+          ]
+        ],
+        "containers": [],
+        "bed_containers": [
+          {
+            "bed": [
+              17,
+              2,
+              7
+            ],
+            "containers": [
+              [
+                15,
+                2,
+                3
+              ]
+            ]
+          }
+        ],
+        "village_identity": {
+          "primary_blocks": [
+            [
+              17,
+              2,
+              7
+            ]
+          ],
+          "secondary_blocks": [],
+          "banners": []
+        },
+        "sink": 0,
+        "entrance_facing": "west",
+        "grants": [
+          "LOGS",
+          "PLANKS"
+        ]
+      },
+      "notes": [
+        "The authored dead bush is an acacia sapling marker. The live editing marker remains unchanged."
+      ],
+      "capture_cleanup": {
+        "removed_block_counts": {}
+      },
+      "neutral_template_sha256": "1a699148af6beef4f565eba522b2b8a9a0f2a550faec3db3726b1960602b9a38",
+      "export_options_file": "run/pueblo-showcase/services-approved-20260909-183601/P10.3-export-options.json",
+      "source_mod": "[Neoforge]ctov-3.6.3.jar",
+      "production": {
+        "structure": "lumberjack_badlands_1",
+        "category": "lumberjack",
+        "variant": "badlands",
+        "level": 1,
+        "recipe": "lumberjack_plains_1"
+      }
+    },
+    {
+      "exhibit": "P01.9",
+      "label": "Mason 1 Stoneworks",
+      "review_id": "stoneworks_puebloservices_1",
+      "source_capture": "run/pueblo-showcase/services-approved-20260909-183601/captures/P01.9.nbt",
+      "source_sha256": "68b0303fbbdf575786e9abc9534cfe3d133815b0976e81369636a4f73a4c747a",
+      "source_mod_structure": "data/kaisyn/structure/village/badlands_pueblo/houses/badlands_mason_1.nbt",
+      "template_origin": [
+        3732,
+        230,
+        1008
+      ],
+      "size": [
+        11,
+        6,
+        13
+      ],
+      "prepared_source": "run/pueblo-showcase/services-approved-20260909-183601/prepared/P01.9.nbt",
+      "neutral_template": "run/pueblo-showcase/services-approved-20260909-183601/neutral/P01.9.nbt",
+      "amenities": {
+        "category": "stoneworks",
+        "beds": [],
+        "couple_beds": [],
+        "work_stations": [
+          {
+            "occupation": "MASON",
+            "pos": [
+              5,
+              1,
+              4
+            ]
+          }
+        ],
+        "personal_containers": [],
+        "containers": [
+          [
+            4,
+            1,
+            3
+          ]
+        ],
+        "bed_containers": [],
+        "village_identity": {
+          "primary_blocks": [],
+          "secondary_blocks": [],
+          "banners": []
+        },
+        "sink": 0,
+        "entrance_facing": "west",
+        "grants": [
+          "STONE"
+        ]
+      },
+      "notes": [],
+      "capture_cleanup": {
+        "removed_block_counts": {
+          "minecraft:structure_void": 1
+        }
+      },
+      "neutral_template_sha256": "662c58f1da9d9e97ef9b09a220a5c4343a03a74532589857942473f0120644e6",
+      "export_options_file": "run/pueblo-showcase/services-approved-20260909-183601/P01.9-export-options.json",
+      "source_mod": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar",
+      "production": {
+        "structure": "stoneworks_badlands_1",
+        "category": "stoneworks",
+        "variant": "badlands",
+        "level": 1,
+        "recipe": "stoneworks_plains_1"
+      }
+    },
+    {
+      "exhibit": "P09.7",
+      "label": "Farm",
+      "review_id": "farm_puebloservices_1",
+      "source_capture": "run/pueblo-showcase/services-approved-20260909-183601/captures/P09.7.nbt",
+      "source_sha256": "21545474cb016559bc0c8311b0e82c9c7035930d098642610f6847afdbf6ef0a",
+      "source_mod_structure": "data/ctov/structure/village/mesa_fortified/jobsite/farm.nbt",
+      "template_origin": [
+        3693,
+        230,
+        1267
+      ],
+      "size": [
+        21,
+        6,
+        11
+      ],
+      "prepared_source": "run/pueblo-showcase/services-approved-20260909-183601/prepared/P09.7.nbt",
+      "neutral_template": "run/pueblo-showcase/services-approved-20260909-183601/neutral/P09.7.nbt",
+      "amenities": {
+        "category": "farm",
+        "beds": [
+          [
+            17,
+            2,
+            5
+          ],
+          [
+            17,
+            2,
+            6
+          ]
+        ],
+        "couple_beds": [
+          [
+            [
+              17,
+              2,
+              5
+            ],
+            [
+              17,
+              2,
+              6
+            ]
+          ]
+        ],
+        "work_stations": [
+          {
+            "occupation": "FARMER",
+            "pos": [
+              12,
+              1,
+              5
+            ]
+          }
+        ],
+        "personal_containers": [
+          [
+            15,
+            2,
+            3
+          ]
+        ],
+        "containers": [],
+        "bed_containers": [
+          {
+            "bed": [
+              17,
+              2,
+              5
+            ],
+            "containers": [
+              [
+                15,
+                2,
+                3
+              ]
+            ]
+          },
+          {
+            "bed": [
+              17,
+              2,
+              6
+            ],
+            "containers": [
+              [
+                15,
+                2,
+                3
+              ]
+            ]
+          }
+        ],
+        "village_identity": {
+          "primary_blocks": [
+            [
+              17,
+              2,
+              5
+            ],
+            [
+              17,
+              2,
+              6
+            ]
+          ],
+          "secondary_blocks": [],
+          "banners": []
+        },
+        "sink": 0,
+        "entrance_facing": "west",
+        "grants": [
+          "GRAIN"
+        ],
+        "worker_beds": [
+          [
+            17,
+            2,
+            5
+          ],
+          [
+            17,
+            2,
+            6
+          ]
+        ]
+      },
+      "notes": [
+        "One spouse works at this farm; both spouses share its couple room and chest.",
+        "Gallery water containment barriers and escaped water are excluded from the building asset."
+      ],
+      "capture_cleanup": {
+        "removed_block_counts": {
+          "minecraft:barrier": 120,
+          "minecraft:water": 13
+        }
+      },
+      "neutral_template_sha256": "2734e169ed8d43f6cd49cd7c453908525dab77da1a53d0ef9899fcde5c435b82",
+      "export_options_file": "run/pueblo-showcase/services-approved-20260909-183601/P09.7-export-options.json",
+      "source_mod": "[Neoforge]ctov-3.6.3.jar",
+      "production": {
+        "structure": "farm_badlands_1",
+        "category": "farm",
+        "variant": "badlands",
+        "level": 1,
+        "recipe": "farm_plains_1"
+      }
+    },
+    {
+      "exhibit": "P10.4",
+      "label": "Sheep Farm Butchery",
+      "review_id": "butchery_puebloservices_1",
+      "source_capture": "run/pueblo-showcase/services-approved-20260909-183601/pen-repair/captured/captures/P10.4.nbt",
+      "source_sha256": "c61905fc5f94414a57d2ff64dda5838d0e5a9cb5badc62f3bf257fabfe5184ab",
+      "source_mod_structure": "data/ctov/structure/village/mesa_fortified/jobsite/sheep_farm.nbt",
+      "template_origin": [
+        3668,
+        229,
+        1300
+      ],
+      "size": [
+        17,
+        8,
+        13
+      ],
+      "prepared_source": "run/pueblo-showcase/services-approved-20260909-183601/prepared/P10.4.nbt",
+      "neutral_template": "run/pueblo-showcase/services-approved-20260909-183601/neutral/P10.4.nbt",
+      "amenities": {
+        "category": "butchery",
+        "beds": [
+          [
+            3,
+            2,
+            8
+          ],
+          [
+            3,
+            2,
+            9
+          ]
+        ],
+        "couple_beds": [
+          [
+            [
+              3,
+              2,
+              8
+            ],
+            [
+              3,
+              2,
+              9
+            ]
+          ]
+        ],
+        "work_stations": [
+          {
+            "occupation": "BUTCHER",
+            "pos": [
+              6,
+              2,
+              7
+            ]
+          }
+        ],
+        "personal_containers": [
+          [
+            7,
+            2,
+            8
+          ]
+        ],
+        "containers": [],
+        "bed_containers": [
+          {
+            "bed": [
+              3,
+              2,
+              8
+            ],
+            "containers": [
+              [
+                7,
+                2,
+                8
+              ]
+            ]
+          },
+          {
+            "bed": [
+              3,
+              2,
+              9
+            ],
+            "containers": [
+              [
+                7,
+                2,
+                8
+              ]
+            ]
+          }
+        ],
+        "village_identity": {
+          "primary_blocks": [
+            [
+              5,
+              5,
+              2
+            ],
+            [
+              7,
+              5,
+              2
+            ],
+            [
+              5,
+              5,
+              3
+            ],
+            [
+              7,
+              5,
+              3
+            ],
+            [
+              5,
+              5,
+              4
+            ],
+            [
+              7,
+              5,
+              4
+            ],
+            [
+              5,
+              5,
+              5
+            ],
+            [
+              7,
+              5,
+              5
+            ]
+          ],
+          "secondary_blocks": [
+            [
+              3,
+              2,
+              8
+            ],
+            [
+              3,
+              2,
+              9
+            ]
+          ],
+          "banners": []
+        },
+        "sink": 0,
+        "entrance_facing": "north",
+        "grants": [
+          "MEAT"
+        ],
+        "worker_beds": [
+          [
+            3,
+            2,
+            8
+          ],
+          [
+            3,
+            2,
+            9
+          ]
+        ]
+      },
+      "notes": [
+        "Replaces the earlier butcher-plus-coop draft. Three sheep only; llamas are excluded.",
+        "A butcher tends and breeds the sheep when the village has no herder. White awning wool stays white; green stripes follow the village primary color.",
+        "The public approach is on the north face. The west face is a raised continuous wall.",
+        "The native sheep escape probe found the raised trough provided a step onto the perimeter. Its eleven blocks are lowered one block into the ground; the source frame expands downward, while all other authored blocks retain their world positions.",
+        "Four sea lanterns exposed from the gallery platform by the lower capture are excluded from the neutral building."
+      ],
+      "capture_cleanup": {
+        "removed_block_counts": {
+          "minecraft:sea_lantern": 4
+        }
+      },
+      "review_entities": {
+        "minecraft:sheep": 3,
+        "minecraft:painting": 1
+      },
+      "review_animal_bounds": [
+        8,
+        0,
+        2,
+        15,
+        5,
+        11
+      ],
+      "review_targets": [
+        [
+          7,
+          1,
+          4
+        ],
+        [
+          10,
+          1,
+          4
+        ]
+      ],
+      "neutral_template_sha256": "0e87452cd903b8a0c315a31aae9db4189459a268d2da234bc021769c7c8c6f3e",
+      "export_options_file": "run/pueblo-showcase/services-approved-20260909-183601/P10.4-export-options.json",
+      "source_mod": "[Neoforge]ctov-3.6.3.jar",
+      "previous_captures": [
+        {
+          "source_capture": "run/pueblo-showcase/services-approved-20260909-183601/captures/P10.4.nbt",
+          "source_sha256": "38608d8fdfb69dbecc90e9933e7236c92a7ef80c3a358d5129f6718500788272",
+          "template_origin": [
+            3668,
+            230,
+            1300
+          ],
+          "reason": "Original user edits before lowering the trough to prevent sheep escape."
+        }
+      ],
+      "production": {
+        "structure": "butchery_badlands_1",
+        "category": "butchery",
+        "variant": "badlands",
+        "level": 1,
+        "recipe": "butchery_plains_1"
+      }
+    },
+    {
+      "exhibit": "P03.10",
+      "label": "Fletcher Hunting Lodge",
+      "review_id": "hunting_lodge_puebloservices_1",
+      "source_capture": "run/pueblo-showcase/services-approved-20260909-183601/captures/P03.10.nbt",
+      "source_sha256": "90adfcd00ae3eb68a62e06370cf7a580e9153bc17d5b82b392d6be9c7c0fcc92",
+      "source_mod_structure": "data/kaisyn/structure/village/badlands_pueblo/professions_misc/badlands_fletcher_1.nbt",
+      "template_origin": [
+        3720,
+        230,
+        1083
+      ],
+      "size": [
+        9,
+        5,
+        9
+      ],
+      "prepared_source": "run/pueblo-showcase/services-approved-20260909-183601/prepared/P03.10.nbt",
+      "neutral_template": "run/pueblo-showcase/services-approved-20260909-183601/neutral/P03.10.nbt",
+      "amenities": {
+        "category": "hunting_lodge",
+        "beds": [],
+        "couple_beds": [],
+        "work_stations": [
+          {
+            "occupation": "HUNTER",
+            "pos": [
+              4,
+              1,
+              4
+            ]
+          }
+        ],
+        "personal_containers": [],
+        "containers": [
+          [
+            5,
+            2,
+            3
+          ]
+        ],
+        "bed_containers": [],
+        "village_identity": {
+          "primary_blocks": [],
+          "secondary_blocks": [],
+          "banners": []
+        },
+        "sink": 0,
+        "entrance_facing": "west",
+        "grants": [
+          "MEAT",
+          "LEATHER"
+        ]
+      },
+      "notes": [],
+      "capture_cleanup": {
+        "removed_block_counts": {}
+      },
+      "neutral_template_sha256": "108b9f6d6f0536401312b91ea78185f7756416a92a08667a6884947f25449238",
+      "export_options_file": "run/pueblo-showcase/services-approved-20260909-183601/P03.10-export-options.json",
+      "source_mod": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar",
+      "production": {
+        "structure": "hunting_lodge_badlands_1",
+        "category": "hunting_lodge",
+        "variant": "badlands",
+        "level": 1,
+        "recipe": "hunting_lodge_plains_1"
+      }
+    },
+    {
+      "exhibit": "P09.8",
+      "label": "Fishing Oasis",
+      "review_id": "fishery_puebloservices_1",
+      "source_capture": "run/pueblo-showcase/services-approved-20260909-183601/captures/P09.8.nbt",
+      "source_sha256": "1ca88c3be504e1606d5bf592fd50fd34c068151367ce23bb1a811d2381e1f63c",
+      "source_mod_structure": "data/ctov/structure/village/mesa_fortified/jobsite/fishing_oasis.nbt",
+      "template_origin": [
+        3718,
+        230,
+        1267
+      ],
+      "size": [
+        13,
+        11,
+        17
+      ],
+      "prepared_source": "run/pueblo-showcase/services-approved-20260909-183601/prepared/P09.8.nbt",
+      "neutral_template": "run/pueblo-showcase/services-approved-20260909-183601/neutral/P09.8.nbt",
+      "amenities": {
+        "category": "fishery",
+        "beds": [
+          [
+            5,
+            6,
+            6
+          ]
+        ],
+        "couple_beds": [],
+        "work_stations": [
+          {
+            "occupation": "FISHER",
+            "pos": [
+              6,
+              6,
+              4
+            ]
+          }
+        ],
+        "personal_containers": [
+          [
+            7,
+            6,
+            6
+          ]
+        ],
+        "containers": [],
+        "bed_containers": [
+          {
+            "bed": [
+              5,
+              6,
+              6
+            ],
+            "containers": [
+              [
+                7,
+                6,
+                6
+              ]
+            ]
+          }
+        ],
+        "village_identity": {
+          "primary_blocks": [],
+          "secondary_blocks": [
+            [
+              5,
+              6,
+              6
+            ]
+          ],
+          "banners": []
+        },
+        "sink": 4,
+        "entrance_facing": "north",
+        "grants": [
+          "MEAT",
+          "WATER"
+        ]
+      },
+      "notes": [],
+      "capture_cleanup": {
+        "removed_block_counts": {}
+      },
+      "neutral_template_sha256": "934a6b2aaff242e976a1ad98aa568da73f762224c5f33aa0470fd3d651c49a2b",
+      "export_options_file": "run/pueblo-showcase/services-approved-20260909-183601/P09.8-export-options.json",
+      "source_mod": "[Neoforge]ctov-3.6.3.jar",
+      "production": {
+        "structure": "fishery_badlands_1",
+        "category": "fishery",
+        "variant": "badlands",
+        "level": 1,
+        "recipe": "fishery_plains_1"
+      }
+    },
+    {
+      "exhibit": "P09.5",
+      "label": "Bakery",
+      "review_id": "bakery_puebloservices_1",
+      "source_capture": "run/pueblo-showcase/services-approved-20260909-183601/captures/P09.5.nbt",
+      "source_sha256": "dc173caf36c91dde7fe7a1a45bfc31c00ba0926682b3c66897571aad53634eba",
+      "source_mod_structure": "data/ctov/structure/village/mesa_fortified/jobsite/bakery.nbt",
+      "template_origin": [
+        3661,
+        230,
+        1267
+      ],
+      "size": [
+        11,
+        7,
+        12
+      ],
+      "prepared_source": "run/pueblo-showcase/services-approved-20260909-183601/prepared/P09.5.nbt",
+      "neutral_template": "run/pueblo-showcase/services-approved-20260909-183601/neutral/P09.5.nbt",
+      "amenities": {
+        "category": "bakery",
+        "beds": [],
+        "couple_beds": [],
+        "work_stations": [
+          {
+            "occupation": "BAKER",
+            "pos": [
+              4,
+              1,
+              6
+            ]
+          }
+        ],
+        "personal_containers": [],
+        "containers": [
+          [
+            5,
+            3,
+            8
+          ]
+        ],
+        "bed_containers": [],
+        "village_identity": {
+          "primary_blocks": [],
+          "secondary_blocks": [],
+          "banners": []
+        },
+        "sink": 0,
+        "entrance_facing": "north",
+        "grants": [
+          "BREAD"
+        ]
+      },
+      "notes": [],
+      "capture_cleanup": {
+        "removed_block_counts": {}
+      },
+      "neutral_template_sha256": "844a3ffd29b32ada9fe909fa61690269819facb3b3ab9add9abf4fcb175ef17c",
+      "export_options_file": "run/pueblo-showcase/services-approved-20260909-183601/P09.5-export-options.json",
+      "source_mod": "[Neoforge]ctov-3.6.3.jar",
+      "production": {
+        "structure": "bakery_badlands_1",
+        "category": "bakery",
+        "variant": "badlands",
+        "level": 1,
+        "recipe": "bakery_plains_1"
+      }
+    },
+    {
+      "exhibit": "P08.2",
+      "label": "Big Tavern",
+      "review_id": "tavern_puebloservices_1",
+      "source_capture": "run/pueblo-showcase/services-approved-20260909-183601/captures/P08.2.nbt",
+      "source_sha256": "02f8b2b55cc6d471ffded7a1e24a51e47b17aee52a614d7b80f8ac0ec4025381",
+      "source_mod_structure": "data/ctov/structure/village/mesa_fortified/house/big.nbt",
+      "template_origin": [
+        3623,
+        230,
+        1230
+      ],
+      "size": [
+        17,
+        9,
+        13
+      ],
+      "prepared_source": "run/pueblo-showcase/services-approved-20260909-183601/prepared/P08.2.nbt",
+      "neutral_template": "run/pueblo-showcase/services-approved-20260909-183601/neutral/P08.2.nbt",
+      "amenities": {
+        "category": "tavern",
+        "beds": [
+          [
+            7,
+            5,
+            6
+          ],
+          [
+            7,
+            5,
+            8
+          ]
+        ],
+        "couple_beds": [],
+        "work_stations": [
+          {
+            "occupation": "INNKEEPER",
+            "pos": [
+              10,
+              1,
+              6
+            ]
+          }
+        ],
+        "personal_containers": [],
+        "containers": [
+          [
+            7,
+            3,
+            9
+          ],
+          [
+            8,
+            3,
+            9
+          ],
+          [
+            9,
+            3,
+            9
+          ],
+          [
+            13,
+            5,
+            5
+          ],
+          [
+            13,
+            7,
+            3
+          ]
+        ],
+        "bed_containers": [
+          {
+            "bed": [
+              7,
+              5,
+              6
+            ],
+            "containers": []
+          },
+          {
+            "bed": [
+              7,
+              5,
+              8
+            ],
+            "containers": []
+          }
+        ],
+        "village_identity": {
+          "primary_blocks": [
+            [
+              7,
+              5,
+              6
+            ],
+            [
+              2,
+              5,
+              2
+            ],
+            [
+              4,
+              5,
+              2
+            ],
+            [
+              2,
+              5,
+              3
+            ],
+            [
+              4,
+              5,
+              3
+            ],
+            [
+              2,
+              5,
+              4
+            ],
+            [
+              4,
+              5,
+              4
+            ],
+            [
+              2,
+              5,
+              5
+            ],
+            [
+              4,
+              5,
+              5
+            ],
+            [
+              2,
+              5,
+              6
+            ],
+            [
+              4,
+              5,
+              6
+            ],
+            [
+              2,
+              5,
+              7
+            ],
+            [
+              4,
+              5,
+              7
+            ],
+            [
+              2,
+              5,
+              8
+            ],
+            [
+              4,
+              5,
+              8
+            ],
+            [
+              2,
+              5,
+              9
+            ],
+            [
+              4,
+              5,
+              9
+            ],
+            [
+              2,
+              5,
+              10
+            ],
+            [
+              4,
+              5,
+              10
+            ]
+          ],
+          "secondary_blocks": [
+            [
+              7,
+              5,
+              8
+            ]
+          ],
+          "banners": []
+        },
+        "sink": 0,
+        "entrance_facing": "west",
+        "grants": [
+          "WANDERERS"
+        ],
+        "worker_beds": [
+          [
+            7,
+            5,
+            6
+          ]
+        ]
+      },
+      "notes": [
+        "One primary-color innkeeper bed and one secondary-color general resident bed. Separate beds, not a couple room.",
+        "White awning wool stays white; green stripes follow the village primary color. Storage outside the sleeping alcoves is communal."
+      ],
+      "capture_cleanup": {
+        "removed_block_counts": {}
+      },
+      "neutral_template_sha256": "7e00da1934bb049f07ef7a2fe95bfce6b2ac2967275f965f023028e4954247f0",
+      "export_options_file": "run/pueblo-showcase/services-approved-20260909-183601/P08.2-export-options.json",
+      "source_mod": "[Neoforge]ctov-3.6.3.jar",
+      "production": {
+        "structure": "tavern_badlands_1",
+        "category": "tavern",
+        "variant": "badlands",
+        "level": 1,
+        "recipe": "tavern_plains_1"
+      }
+    }
+  ],
+  "verification": {
+    "live_ai_deployed": false,
+    "native_asset_readback": "run/pueblo-showcase/services-approved-20260909-183601/asset-verification.json",
+    "rendered_review": true,
+    "screenshots": [
+      "run/pueblo-showcase/services-approved-20260909-183601/screenshots/pueblo-farm-double-room-183601.png",
+      "run/pueblo-showcase/services-approved-20260909-183601/screenshots/pueblo-p01-9-exterior-183601.png",
+      "run/pueblo-showcase/services-approved-20260909-183601/screenshots/pueblo-p03-10-exterior-183601.png",
+      "run/pueblo-showcase/services-approved-20260909-183601/screenshots/pueblo-p08-2-exterior-183601.png",
+      "run/pueblo-showcase/services-approved-20260909-183601/screenshots/pueblo-p08-7-exterior-183601.png",
+      "run/pueblo-showcase/services-approved-20260909-183601/screenshots/pueblo-p09-5-exterior-183601.png",
+      "run/pueblo-showcase/services-approved-20260909-183601/screenshots/pueblo-p09-7-exterior-183601.png",
+      "run/pueblo-showcase/services-approved-20260909-183601/screenshots/pueblo-p09-8-exterior-183601.png",
+      "run/pueblo-showcase/services-approved-20260909-183601/screenshots/pueblo-p10-3-exterior-183601.png",
+      "run/pueblo-showcase/services-approved-20260909-183601/screenshots/pueblo-p10-4-exterior-183601.png",
+      "run/pueblo-showcase/services-approved-20260909-183601/screenshots/pueblo-p10-6-exterior-183601.png",
+      "run/pueblo-showcase/services-approved-20260909-183601/screenshots/pueblo-sheep-double-room-183601.png",
+      "run/pueblo-showcase/services-approved-20260909-183601/screenshots/pueblo-sheep-pen-lowered-trough-20260909.png",
+      "run/pueblo-showcase/services-approved-20260909-183601/screenshots/pueblo-sheep-trough-close-20260909.png",
+      "run/pueblo-showcase/services-approved-20260909-183601/screenshots/pueblo-tavern-upstairs-183601.png",
+      "run/pueblo-showcase/services-approved-20260909-183601/screenshots/pueblo-vault-basement-183601.png",
+      "run/pueblo-showcase/services-approved-20260909-183601/screenshots/pueblo-vault-bedroom-183601.png"
+    ],
+    "live_bed_and_wool_preview": "run/pueblo-showcase/services-approved-20260909-183601/live-apply.json",
+    "block_entity_integrity": "run/pueblo-showcase/services-approved-20260909-183601/block-entity-integrity.json",
+    "livestock": "run/pueblo-showcase/services-approved-20260909-183601/livestock-cleanup.json",
+    "project_checks": "run/pueblo-showcase/services-approved-20260909-183601/gradle-check.json",
+    "native_access": [
+      "run/pueblo-showcase/services-approved-20260909-183601/final-verification.json"
+    ],
+    "render_review": "run/pueblo-showcase/services-approved-20260909-183601/render-review.json",
+    "final_integrity": "run/pueblo-showcase/services-approved-20260909-183601/final-integrity.json",
+    "pen_repair": "run/pueblo-showcase/services-approved-20260909-183601/pen-repair/live-patch.json"
+  }
+}

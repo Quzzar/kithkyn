@@ -114,6 +114,13 @@ import net.minecraft.world.entity.ai.goal.AvoidEntityGoal;
 import net.minecraft.world.entity.ai.goal.FloatGoal;
 import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
 import net.minecraft.world.entity.ai.goal.OpenDoorGoal;
+import net.minecraft.world.entity.ai.navigation.GroundPathNavigation;
+import net.minecraft.world.level.block.DoorBlock;
+import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
+import net.minecraft.world.level.pathfinder.Path;
+import net.minecraft.world.phys.Vec3;
+import com.quzzar.kithkyn.entities.ai.goals.work.ContainerAccess;
+import com.quzzar.kithkyn.entities.ai.goals.work.ContainerVisit;
 import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.ResetUniversalAngerTargetGoal;
@@ -2633,7 +2640,7 @@ public class RealPerson extends Person {
         // The night's routine gates return to this exact station. A temporary
         // patrol retains the same assigned post and loadout, and combat wins.
         this.goalSelector.addGoal(5, new GuardPostGoal(this));
-      } else {
+      } else if (!com.quzzar.kithkyn.village.GuardDuty.isSwordPatrol(this)) {
       // Guarding always wins on priority. In a quiet spell, a guard very
       // occasionally clears one natural tree around their post using the exact
       // same chopping step as the lumberjack. The reach matches the lumberjack's
@@ -2696,6 +2703,8 @@ public class RealPerson extends Person {
       this.goalSelector.addGoal(3, new WorkLoopGoal<>(this, new PathStep(true)));
       this.goalSelector.addGoal(order[1], new WorkLoopGoal<>(this, new BuildStep()));
       this.goalSelector.addGoal(order[2], new WorkLoopGoal<>(this, new WallStep()));
+      this.goalSelector.addGoal(6, new WorkLoopGoal<>(this,
+          new com.quzzar.kithkyn.entities.ai.goals.work.RepairStep()));
       this.goalSelector.addGoal(order[3], new WorkLoopGoal<>(this, new GradeStep()));
       this.goalSelector.addGoal(order[4], new WorkLoopGoal<>(this, new PathStep()));
     }
@@ -2904,10 +2913,41 @@ public class RealPerson extends Person {
     // this.goalSelector.addGoal(3, new FollowHeroGoal(this)); Doesn't work?
     // this.goalSelector.addGoal(4, new WalkBackToCheckPointGoal(this, 0.5D));
     this.goalSelector.addGoal(3, new OpenDoorGoal(this, true) {
+      private Path endpointPath;
+      private Path openedEndpointPath;
+
+      @Override
+      public boolean canUse() {
+        this.endpointPath = null;
+        if (super.canUse()) return true;
+        GroundPathNavigation navigation = (GroundPathNavigation)this.mob.getNavigation();
+        Path path = navigation.getPath();
+        if (!navigation.canOpenDoors() || path == null || path == this.openedEndpointPath
+            || !path.canReach() || path.getEndNode() == null) return false;
+        BlockPos endpoint = path.getEndNode().asBlockPos();
+        var state = this.mob.level().getBlockState(endpoint);
+        if (!(state.getBlock() instanceof DoorBlock door) || !door.type().canOpenByHand()
+            || state.getValue(DoorBlock.OPEN) || state.getValue(DoorBlock.HALF) != DoubleBlockHalf.LOWER
+            || this.mob.position().distanceToSqr(Vec3.atBottomCenterOf(endpoint)) > 2.25D
+            || !ContainerAccess.canReach(RealPerson.this, this.mob.getEyePosition(), endpoint.above(), 4.0D)) return false;
+        // A closet walk ends at its door before collision can trigger vanilla.
+        // Open that endpoint once; an idle, completed path must not keep cycling it.
+        this.doorPos = endpoint;
+        this.hasDoor = true;
+        this.endpointPath = path;
+        return true;
+      }
+
       @Override
       public void start() {
+        if (this.endpointPath != null) this.openedEndpointPath = this.endpointPath;
         this.mob.swing(InteractionHand.MAIN_HAND);
         super.start();
+      }
+
+      @Override
+      public boolean canContinueToUse() {
+        return super.canContinueToUse() || ContainerVisit.needsDoorOpen(this.mob.level(), this.doorPos);
       }
     });
     // Fence gates too, since the route now runs through them

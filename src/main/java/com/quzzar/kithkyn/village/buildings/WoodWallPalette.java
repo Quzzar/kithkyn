@@ -23,7 +23,7 @@ record WoodWallPalette(Block strippedLog, Block planks, Block stairs, Block slab
           Blocks.SPRUCE_SLAB,
           Blocks.SPRUCE_FENCE,
           Blocks.SPRUCE_TRAPDOOR);
-      case DESERT, SAVANNA -> new WoodWallPalette(
+      case DESERT, SAVANNA, BADLANDS -> new WoodWallPalette(
           Blocks.STRIPPED_ACACIA_LOG,
           Blocks.ACACIA_PLANKS,
           Blocks.ACACIA_STAIRS,

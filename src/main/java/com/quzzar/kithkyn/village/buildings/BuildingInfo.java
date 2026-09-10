@@ -6,9 +6,11 @@ import java.util.List;
 import java.util.Map;
 
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.quzzar.kithkyn.utils.KithkynCodecs;
 import com.quzzar.kithkyn.village.Occupation;
+import com.quzzar.kithkyn.village.GuardRole;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -18,6 +20,15 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 
 public class BuildingInfo {
+
+  /** Two authored bed coordinates that belong to one couple, independent of array ordering. */
+  public record CoupleBeds(BlockPos first, BlockPos second) {
+    public static final Codec<CoupleBeds> CODEC = BlockPos.CODEC.listOf().comapFlatMap(
+        positions -> positions.size() == 2
+            ? com.mojang.serialization.DataResult.success(new CoupleBeds(positions.get(0), positions.get(1)))
+            : com.mojang.serialization.DataResult.error(() -> "couple_beds entries require exactly two beds"),
+        pair -> List.of(pair.first(), pair.second()));
+  }
 
   /** A mine's excavation frame, independent of the building's front and job station. */
   public record MineEntrance(Direction facing, BlockPos offset) {
@@ -29,11 +40,20 @@ public class BuildingInfo {
   }
 
   /** A work station inside a building: a position (relative to the structure origin) plus the job worked there. */
-  public record WorkStation(BlockPos pos, Occupation occupation) {
+  public record WorkStation(BlockPos pos, Occupation occupation, java.util.Optional<GuardRole> guardDuty) {
     public static final Codec<WorkStation> CODEC = RecordCodecBuilder.create(inst -> inst.group(
         BlockPos.CODEC.fieldOf("pos").forGetter(WorkStation::pos),
-        KithkynCodecs.forEnum(Occupation.class).fieldOf("occupation").forGetter(WorkStation::occupation)
+        KithkynCodecs.forEnum(Occupation.class).fieldOf("occupation").forGetter(WorkStation::occupation),
+        KithkynCodecs.forEnum(GuardRole.class).optionalFieldOf("guard_duty").forGetter(WorkStation::guardDuty)
     ).apply(inst, WorkStation::new));
+  }
+
+  /** Explicit room storage, bound to an authored bed rather than guessed across floors. */
+  public record BedContainers(BlockPos bed, List<BlockPos> containers) {
+    public static final Codec<BedContainers> CODEC = RecordCodecBuilder.create(inst -> inst.group(
+        BlockPos.CODEC.fieldOf("bed").forGetter(BedContainers::bed),
+        BlockPos.CODEC.listOf().fieldOf("containers").forGetter(BedContainers::containers)
+    ).apply(inst, BedContainers::new));
   }
 
   /** A material cost entry, kept simple on purpose (item id + count). */
@@ -44,7 +64,7 @@ public class BuildingInfo {
     ).apply(inst, ItemCost::new));
   }
 
-  public static final Codec<BuildingInfo> CODEC = RecordCodecBuilder.create(inst -> inst.group(
+  private static final MapCodec<BuildingInfo> BASE_CODEC = RecordCodecBuilder.mapCodec(inst -> inst.group(
       Codec.STRING.fieldOf("structure").forGetter(BuildingInfo::getName),
       BlockPos.CODEC.listOf().optionalFieldOf("beds", List.of()).forGetter(BuildingInfo::bedPositions),
       WorkStation.CODEC.listOf().optionalFieldOf("work_stations", List.of()).forGetter(BuildingInfo::workStations),
@@ -68,6 +88,36 @@ public class BuildingInfo {
           .forGetter(BuildingInfo::getMineEntrance)
   ).apply(inst, BuildingInfo::fromCodec));
 
+  /** Meeting ground and fire blocks are independent, authored in structure coordinates. */
+  private record GatheringPlaces(java.util.Optional<BlockPos> meetingPoint,
+      java.util.Optional<List<BlockPos>> campfires) {
+    private static final GatheringPlaces EMPTY = new GatheringPlaces(
+        java.util.Optional.empty(), java.util.Optional.empty());
+    private static final MapCodec<GatheringPlaces> CODEC = RecordCodecBuilder.mapCodec(inst -> inst.group(
+        BlockPos.CODEC.optionalFieldOf("meeting_point").forGetter(GatheringPlaces::meetingPoint),
+        BlockPos.CODEC.listOf().optionalFieldOf("campfires").forGetter(GatheringPlaces::campfires)
+    ).apply(inst, GatheringPlaces::new));
+  }
+
+  public static final Codec<BuildingInfo> CODEC = RecordCodecBuilder.create(inst -> inst.group(
+      BASE_CODEC.forGetter(info -> info),
+      GatheringPlaces.CODEC.forGetter(info -> info.gatheringPlaces),
+      BedContainers.CODEC.listOf().optionalFieldOf("bed_containers")
+          .forGetter(info -> java.util.Optional.ofNullable(info.bedContainers)),
+      CoupleBeds.CODEC.listOf().optionalFieldOf("couple_beds")
+          .forGetter(info -> java.util.Optional.ofNullable(info.coupleBeds)),
+      BlockPos.CODEC.listOf().optionalFieldOf("worker_beds")
+          .forGetter(info -> java.util.Optional.ofNullable(info.workerBeds)),
+      Codec.BOOL.optionalFieldOf("standalone", false).forGetter(BuildingInfo::isStandalone)
+  ).apply(inst, (info, places, bedContainers, coupleBeds, workerBeds, standalone) -> {
+    info.gatheringPlaces = places;
+    info.bedContainers = bedContainers.orElse(null);
+    info.coupleBeds = coupleBeds.orElse(null);
+    info.workerBeds = workerBeds.orElse(null);
+    info.standalone = standalone;
+    return info;
+  }));
+
   private static BuildingInfo fromCodec(String structure, List<BlockPos> beds, List<WorkStation> workStations,
       List<BlockPos> containers, List<BlockPos> personalContainers, List<ItemCost> costs, List<String> grants,
       List<Grant> conditionalGrants, java.util.Optional<BlockPos> gatheringPoint,
@@ -76,8 +126,10 @@ public class BuildingInfo {
       java.util.Optional<Direction> entranceFacing, MineEntrance mineEntrance) {
     BuildingInfo info = new BuildingInfo(structure);
     beds.forEach(pos -> info.addBedLocation(pos.getX(), pos.getY(), pos.getZ()));
-    workStations.forEach(station -> info.addWorkLocation(
-        station.pos().getX(), station.pos().getY(), station.pos().getZ(), station.occupation()));
+    workStations.forEach(station -> {
+      info.addWorkLocation(station.pos().getX(), station.pos().getY(), station.pos().getZ(), station.occupation());
+      station.guardDuty().ifPresent(duty -> info.guardRoles.put(station.pos().asLong(), duty));
+    });
     containers.forEach(pos -> info.addContainerLocation(pos.getX(), pos.getY(), pos.getZ()));
     personalContainers.forEach(pos -> info.addPersonalContainerLocation(pos.getX(), pos.getY(), pos.getZ()));
     info.setMaterialCost(costs.stream().map(cost -> new ItemStack(cost.item(), cost.count())).toList());
@@ -98,6 +150,13 @@ public class BuildingInfo {
   private ArrayList<Long> bedLocs;
   // Insertion-ordered: JobAssignment station indexes rely on a stable iteration order.
   private LinkedHashMap<Long, Occupation> workLocs;
+  private final Map<Long, GuardRole> guardRoles = new LinkedHashMap<>();
+  @javax.annotation.Nullable
+  private List<BedContainers> bedContainers;
+  @javax.annotation.Nullable
+  private List<CoupleBeds> coupleBeds;
+  @javax.annotation.Nullable
+  private List<BlockPos> workerBeds;
   private ArrayList<Long> containerLocs;
   // Chests that belong to the people who sleep here, never to the village (PersonalChest).
   private ArrayList<Long> personalContainerLocs;
@@ -107,13 +166,15 @@ public class BuildingInfo {
   private List<String> grants = List.of();
   /** Capabilities it grants only while a condition holds. */
   private List<Grant> conditionalGrants = List.of();
-  // Packed BlockPos of the building's gathering point (the campfire), or null.
+  // Old datapacks use one campfire as both the civic anchor and cooking amenity.
   private Long gatheringPoint;
+  private GatheringPlaces gatheringPlaces = GatheringPlaces.EMPTY;
   // Explicit JSON category/variant, validated against the id-derived values; null = derive.
   private String explicitCategory;
   private String explicitVariant;
   // The id this building can replace in place; it also defines the fresh-build cost chain.
   private String upgradesFrom;
+  private boolean standalone;
   private VillageIdentitySlots villageIdentitySlots = VillageIdentitySlots.EMPTY;
   private int sink;
   private Direction entranceFacing;
@@ -157,24 +218,30 @@ public class BuildingInfo {
   }
 
   /**
-   * The id scheme is {@code <category>_<variant>_<level>} (docs/building-spec.md):
-   * the last token is the level, then the longest registered style suffix
+   * The id scheme is {@code <category>_<variant>_<level>[__<design>]}:
+   * after separating the optional design, the last token is the level, then the longest registered style suffix
    * separates variant from category. Unknown custom variants retain the old
    * single-token convention, including the developer placeholder catalog.
    */
   @javax.annotation.Nullable
   private ParsedId parsedId() {
-    int levelSeparator = path.lastIndexOf('_');
-    if (levelSeparator <= 0 || levelSeparator == path.length() - 1) {
+    int designSeparator = path.indexOf("__");
+    String base = designSeparator < 0 ? path : path.substring(0, designSeparator);
+    String design = designSeparator < 0 ? null : path.substring(designSeparator + 2);
+    if (design != null && !design.matches("[a-z0-9]+(?:_[a-z0-9]+)*")) {
+      return null;
+    }
+    int levelSeparator = base.lastIndexOf('_');
+    if (levelSeparator <= 0 || levelSeparator == base.length() - 1) {
       return null;
     }
     int level;
     try {
-      level = Integer.parseInt(path.substring(levelSeparator + 1));
+      level = Integer.parseInt(base.substring(levelSeparator + 1));
     } catch (NumberFormatException e) {
       return null;
     }
-    String stem = path.substring(0, levelSeparator);
+    String stem = base.substring(0, levelSeparator);
     String variant = null;
     for (VillageStyle style : VillageStyle.values()) {
       String candidate = style.id();
@@ -190,12 +257,12 @@ public class BuildingInfo {
       }
       variant = stem.substring(variantSeparator + 1);
     }
-    return new ParsedId(stem.substring(0, stem.length() - variant.length() - 1), variant, level);
+    return new ParsedId(stem.substring(0, stem.length() - variant.length() - 1), variant, level, design);
   }
 
-  private record ParsedId(String category, String variant, int level) {}
+  private record ParsedId(String category, String variant, int level, String design) {}
 
-  /** True when the id parses as {@code <category>_<variant>_<level>}. */
+  /** True when the id parses, including an optional {@code __<design>} alternative. */
   public boolean hasWellFormedId() {
     return parsedId() != null;
   }
@@ -218,6 +285,12 @@ public class BuildingInfo {
     return java.util.Objects.requireNonNull(parsedId(), "Malformed building id: " + path).level();
   }
 
+  /** An optional layout within the same category, style and level; null identifies the canonical design. */
+  @javax.annotation.Nullable
+  public String getDesign() {
+    return java.util.Objects.requireNonNull(parsedId(), "Malformed building id: " + path).design();
+  }
+
   /**
    * The short human label for this building: the datapack category with its
    * underscores spaced ("couple cottage"), or the raw name when the id is not
@@ -225,11 +298,11 @@ public class BuildingInfo {
    * the recent-build trail had each been spelling out inline.
    */
   public String displayLabel() {
-    return hasWellFormedId() ? getCategory().replace('_', ' ') : getName();
+    if (!hasWellFormedId()) return getName();
+    String category = getCategory().replace('_', ' ');
+    return getDesign() == null ? category : category + " (" + getDesign().replace('_', ' ') + ")";
   }
 
-  /** The id this building upgrades from in place, or null for a level-1 building. */
-  @javax.annotation.Nullable
   /**
    * How many of the structure's bottom layers sit below the ground plane. A
    * building is seated with its layer 0 on the ground's top block; a well
@@ -241,8 +314,15 @@ public class BuildingInfo {
     return sink;
   }
 
+  /** The exact predecessor this building can replace, or null for an independent design. */
+  @javax.annotation.Nullable
   public String getUpgradesFrom() {
     return upgradesFrom;
+  }
+
+  /** Explicitly authorizes a higher tier without a compatible predecessor. */
+  public boolean isStandalone() {
+    return standalone;
   }
 
   public VillageIdentitySlots getVillageIdentitySlots() {
@@ -252,13 +332,13 @@ public class BuildingInfo {
   /**
    * Definition-consistency check, run by the loader: a malformed id, an explicit
    * category/variant contradicting the id, or a level above 1 with no
-   * {@code upgrades_from} to define its cheaper reuse path is an error.
+   * {@code upgrades_from} or an explicit {@code standalone} declaration is an error.
    * Returns the problem, or null when the definition is consistent.
    */
   @javax.annotation.Nullable
   public String validate() {
     if (!hasWellFormedId()) {
-      return "id '" + path + "' does not match <category>_<variant>_<level>";
+      return "id '" + path + "' does not match <category>_<variant>_<level>[__<design>]";
     }
     if (getEntranceFacing().getAxis().isVertical() || mineEntrance.facing().getAxis().isVertical()) {
       return "building and mine entrances must face horizontally";
@@ -272,8 +352,11 @@ public class BuildingInfo {
     if (explicitVariant != null && !explicitVariant.equals(derivedVariant)) {
       return "variant '" + explicitVariant + "' contradicts id-derived '" + derivedVariant + "'";
     }
-    if (getLevel() >= 2 && upgradesFrom == null) {
-      return "level " + getLevel() + " building has no upgrades_from to define its reuse path";
+    if (standalone && upgradesFrom != null) {
+      return "standalone building cannot also declare upgrades_from";
+    }
+    if (getLevel() >= 2 && upgradesFrom == null && !standalone) {
+      return "level " + getLevel() + " building requires upgrades_from or standalone: true";
     }
     for (Long personal : personalContainerLocs) {
       if (containerLocs.contains(personal)) {
@@ -284,7 +367,119 @@ public class BuildingInfo {
     if (!personalContainerLocs.isEmpty() && bedLocs.isEmpty()) {
       return "a personal chest is declared but nobody sleeps here (no beds)";
     }
+    if (guardRoles.values().stream().filter(role -> role == GuardRole.CAPTAIN).count() > 1) {
+      return "a building may declare only one guard captain";
+    }
+    if (guardRoles.containsValue(GuardRole.CAPTAIN) && !"village_center".equals(getCategory())) {
+      return "guard captain must belong to the village center";
+    }
+    for (var entry : guardRoles.entrySet()) {
+      if (workLocs.get(entry.getKey()) != Occupation.GUARD) return "guard_duty requires a GUARD station";
+    }
+    if (bedContainers != null) {
+      java.util.Set<BlockPos> mappedBeds = new java.util.HashSet<>();
+      java.util.Set<Long> mappedContainers = new java.util.HashSet<>();
+      for (BedContainers room : bedContainers) {
+        if (!bedLocs.contains(room.bed().asLong())) return "bed_containers names an undeclared bed";
+        if (!mappedBeds.add(room.bed())) return "bed_containers repeats a bed";
+        java.util.Set<BlockPos> roomContainers = new java.util.HashSet<>();
+        for (BlockPos container : room.containers()) {
+          if (!personalContainerLocs.contains(container.asLong())) return "bed_containers names a non-personal container";
+          if (!roomContainers.add(container)) return "bed_containers repeats a container within one bed mapping";
+          mappedContainers.add(container.asLong());
+        }
+      }
+      if (!mappedContainers.containsAll(personalContainerLocs)) return "personal container has no bed_containers mapping";
+    }
+    java.util.Set<BlockPos> pairedBeds = new java.util.HashSet<>();
+    if (workerBeds != null) {
+      if (!workerBeds.isEmpty() && workLocs.isEmpty()) return "worker_beds requires a workplace";
+      if (new java.util.HashSet<>(workerBeds).size() != workerBeds.size()) return "worker_beds repeats a bed";
+      if (workerBeds.stream().anyMatch(bed -> !bedLocs.contains(bed.asLong()))) {
+        return "worker_beds names an undeclared bed";
+      }
+    }
+    for (CoupleBeds pair : getCoupleBeds()) {
+      for (BlockPos bed : List.of(pair.first(), pair.second())) {
+        if (!bedLocs.contains(bed.asLong())) return "couple_beds names an undeclared bed";
+        if (!pairedBeds.add(bed)) return "couple_beds repeats a bed";
+      }
+      if (pair.first().getY() != pair.second().getY()
+          || pair.first().distManhattan(pair.second()) != 1) {
+        return "couple_beds must name neighboring beds on the same floor";
+      }
+      if (isWorkerBed(bedLocs.indexOf(pair.first().asLong()))
+          != isWorkerBed(bedLocs.indexOf(pair.second().asLong()))) {
+        return "worker_beds must reserve both beds of a couple room or neither";
+      }
+    }
     return null;
+  }
+
+  /** Omitted metadata preserves the original two-bed cottage; ordinary homes infer no pairs. */
+  public List<CoupleBeds> getCoupleBeds() {
+    if (coupleBeds != null) return coupleBeds;
+    if (hasWellFormedId() && Buildings.COUPLE_COTTAGE_CATEGORY.equals(getCategory()) && bedLocs.size() >= 2) {
+      return List.of(new CoupleBeds(BlockPos.of(bedLocs.get(0)), BlockPos.of(bedLocs.get(1))));
+    }
+    return List.of();
+  }
+
+  /** Single capacity excludes both beds in every declared couple room. */
+  public int getSingleBedCount() {
+    return bedLocs.size() - getCoupleBeds().size() * 2;
+  }
+
+  /** Explicit coordinates allow a workplace to mix staff rooms with general accommodation. */
+  public boolean isWorkerBed(int index) {
+    if (index < 0 || index >= bedLocs.size()) return false;
+    if (workerBeds != null) return workerBeds.contains(BlockPos.of(bedLocs.get(index)));
+    return !workLocs.isEmpty() && hasWellFormedId()
+        && !Buildings.VILLAGE_CENTER_CATEGORY.equals(getCategory());
+  }
+
+  public int getWorkerSingleBedCount() {
+    int count = 0;
+    for (int index = 0; index < bedLocs.size(); index++) {
+      if (isWorkerBed(index) && !isCoupleBed(index)) count++;
+    }
+    return count;
+  }
+
+  /** One household qualifies through either spouse's job, never two separate worker claims. */
+  public int getWorkerCoupleRoomCount() {
+    return (int) getCoupleBeds().stream()
+        .filter(pair -> isWorkerBed(bedLocs.indexOf(pair.first().asLong()))).count();
+  }
+
+  public boolean isCoupleBed(int index) {
+    if (index < 0 || index >= bedLocs.size()) return false;
+    BlockPos bed = BlockPos.of(bedLocs.get(index));
+    return getCoupleBeds().stream().anyMatch(pair -> pair.first().equals(bed) || pair.second().equals(bed));
+  }
+
+  /** Sharing a building is insufficient: spouses must occupy the two beds of one room. */
+  public boolean sharesCoupleBeds(int firstIndex, int secondIndex) {
+    if (firstIndex == secondIndex || !isCoupleBed(firstIndex) || !isCoupleBed(secondIndex)) return false;
+    BlockPos first = BlockPos.of(bedLocs.get(firstIndex));
+    BlockPos second = BlockPos.of(bedLocs.get(secondIndex));
+    return getCoupleBeds().stream().anyMatch(pair ->
+        pair.first().equals(first) && pair.second().equals(second)
+            || pair.first().equals(second) && pair.second().equals(first));
+  }
+
+  /** Null preserves old nearest-container selection; an explicit list maps only the named beds. */
+  @javax.annotation.Nullable
+  public List<BedContainers> getBedContainers() {
+    return bedContainers;
+  }
+
+  /** Station indexes include every occupation, exactly as JobAssignment does. */
+  @javax.annotation.Nullable
+  public GuardRole getGuardRole(int stationIndex) {
+    if (stationIndex < 0 || stationIndex >= workLocs.size()) return null;
+    Long position = new ArrayList<>(workLocs.keySet()).get(stationIndex);
+    return guardRoles.get(position);
   }
 
   public ArrayList<Long> getBedLocations() {
@@ -346,6 +541,24 @@ public class BuildingInfo {
     return gatheringPoint;
   }
 
+  /** Authored civic anchor; legacy definitions keep their original fire anchor. */
+  @javax.annotation.Nullable
+  public BlockPos getMeetingPoint() {
+    return gatheringPlaces.meetingPoint().orElseGet(() ->
+        gatheringPoint == null ? null : BlockPos.of(gatheringPoint));
+  }
+
+  /** Explicit meeting coordinates name standing ground rather than a campfire block. */
+  public boolean hasExplicitMeetingPoint() {
+    return gatheringPlaces.meetingPoint().isPresent();
+  }
+
+  /** An explicit empty list intentionally disables fire use, even with a legacy anchor. */
+  public List<BlockPos> getCampfireLocations() {
+    return gatheringPlaces.campfires().orElseGet(() ->
+        gatheringPoint == null ? List.of() : List.of(BlockPos.of(gatheringPoint)));
+  }
+
   public List<String> getGrants() {
     return grants;
   }
@@ -360,7 +573,8 @@ public class BuildingInfo {
 
   private List<WorkStation> workStations() {
     return workLocs.entrySet().stream()
-        .map(entry -> new WorkStation(BlockPos.of(entry.getKey()), entry.getValue())).toList();
+        .map(entry -> new WorkStation(BlockPos.of(entry.getKey()), entry.getValue(),
+            java.util.Optional.ofNullable(guardRoles.get(entry.getKey())))).toList();
   }
 
   private List<BlockPos> containerPositions() {

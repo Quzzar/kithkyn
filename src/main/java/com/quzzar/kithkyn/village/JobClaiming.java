@@ -205,6 +205,31 @@ public final class JobClaiming {
     }
   }
 
+  /** Drops removed definition slots before housing can hand them to another resident. */
+  static void releaseInvalidBeds(Village village, Map<UUID, BedAssignment> assigned,
+      List<BedAssignment> open) {
+    int heldBefore = assigned.size();
+    int openBefore = open.size();
+    assigned.entrySet().removeIf(entry -> !isBedValid(village, entry.getValue()));
+    open.removeIf(bed -> !isBedValid(village, bed));
+    int heldRemoved = heldBefore - assigned.size();
+    int openRemoved = openBefore - open.size();
+    if (heldRemoved > 0 || openRemoved > 0) {
+      Kithkyn.LOGGER.info("Removed {} assigned and {} open bed slots in '{}': their building definitions no longer contain them",
+          heldRemoved, openRemoved, village.getName());
+    }
+  }
+
+  /** Rebuilding retains its existing reservations until the completed definition replaces it. */
+  private static boolean isBedValid(Village village, BedAssignment bed) {
+    if (village.isBeingRebuilt(bed.getBuildingUUID())) {
+      return true;
+    }
+    Building building = village.getBuilding(bed.getBuildingUUID());
+    return building != null && building.getInfo() != null && bed.getBedIndex() >= 0
+        && bed.getBedIndex() < building.getInfo().getBedLocations().size();
+  }
+
   /** True when this bed is already someone's or already on the open list. */
   private static boolean isBedRepresented(Village village, List<BedAssignment> open, UUID buildingId,
       int bedIndex) {
@@ -615,7 +640,7 @@ public final class JobClaiming {
       // Releasing the current worker also releases this workplace's live-in bed.
       // Count that imminent opening when deciding whether a challenger can be
       // housed after the takeover.
-      boolean postBedWillOpen = village.sleepsInReservedBedAt(workerId, job.getBuildingUUID());
+      boolean postBedWillOpen = village.sleepsInReservedSingleBedAt(workerId, job.getBuildingUUID());
 
       RealPerson challenger = null;
       double challengerScore = workerScore;
@@ -692,6 +717,9 @@ public final class JobClaiming {
         if (exchanged - current < threshold) {
           continue;
         }
+        // A staff couple room is never two interchangeable single beds for a job exchange.
+        if (!canHouseAfterReplacement(village, first, secondId, secondJob)
+            || !canHouseAfterReplacement(village, second, firstId, firstJob)) continue;
         JobAssignment releasedFirst = village.releaseJob(firstId);
         JobAssignment releasedSecond = village.releaseJob(secondId);
         if (releasedFirst == null || releasedSecond == null) {
@@ -711,6 +739,13 @@ public final class JobClaiming {
         return; // one exchange per pass
       }
     }
+  }
+
+  private static boolean canHouseAfterReplacement(Village village, RealPerson candidate,
+      UUID previousWorker, JobAssignment job) {
+    if (candidate.getLifeStage().isDependentlyHoused()) return village.hasDependentHome(candidate);
+    return village.canHouseForJob(candidate, job.getBuildingUUID())
+        || village.sleepsInReservedSingleBedAt(previousWorker, job.getBuildingUUID());
   }
 
   /** Pure clock rule kept visible to the regression test and LaborPlanner. */

@@ -42,7 +42,9 @@ public final class VillageIdentityApplier {
       "stained_glass",
       "stained_glass_pane",
       "candle",
-      "bed");
+      "bed",
+      "banner",
+      "wall_banner");
 
   private VillageIdentityApplier() {
   }

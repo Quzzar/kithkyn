@@ -1,10 +1,10 @@
 # Building spec: every building, variant, level, recipe, and unlock
 
-**Birch Forest integration, 2026-09-07:** [birch-village.md](birch-village.md) is the current
-approved catalog for `birch_forest`. Its 22 templates and exact amenities supersede this
+**Birch Forest integration, revised 2026-09-09:** [birch-village.md](birch-village.md) is the current
+approved catalog for `birch_forest`. Its 23 templates and exact amenities supersede this
 document's older generic tier counts, founding contents and candidate choices for that family.
-In particular it has no tier-3 house/farm, higher center/storehouse/mine/church, or separate
-tavern; workplace beds and the shared bakery/tavern are intentional.
+In particular it has no tier-3 house/farm or higher center/storehouse/mine/church. The bakery
+and tavern are separate buildings, each with one worker bed and private storage.
 
 **The catalogue below enumerates 36 categories; 22 of them survived the cut.** The totals in
 this document count the full map of the possible, not the shipping set — see
@@ -128,17 +128,24 @@ phases 3 and 4 in particular as a record of what would fit, to be cut freely.
 
 ## Id scheme
 
-`<category>_<variant>_<level>`, all lowercase, level always explicit:
+`<category>_<variant>_<level>[__<design>]`, all lowercase, level always explicit:
 
 ```
 house_desert_1        cottage, desert variant
 house_desert_2        upgraded on site to a house
 blacksmith_plains_3   foundry
 mill_watermill_1      variant is a name, not a family, where the shape differs
+house_badlands_2__large_house_2   a second layout in the same regional tier
 ```
 
 The structure file at `data/kithkyn/structure/<id>.nbt` shares the id exactly, so a definition
 and its structure are never out of step.
+
+The optional `__<design>` suffix distinguishes layouts without inventing categories or upgrade
+levels. A design is a lowercase word or words joined by single underscores. The unsuffixed id
+remains the canonical choice for callers asking for one building. The construction planner sees
+every regional alternative; when an older style borrows plains, it borrows that whole tier's
+family only if none of its own layouts exists. A saved goal keeps its exact design id.
 
 **This supersedes the `house_wood_s` sketch in [village-tiers.md](village-tiers.md).** That form
 encoded material and size; this one encodes variant and level, which is what the two axes actually
@@ -147,6 +154,18 @@ are.
 Levels describe the completed building, not the route used to reach it. A village may either
 upgrade a compatible lower-level building on site or construct the higher level on a separate
 site. The village prefers reuse when it fits because that route is cheaper.
+
+An independent higher-level design with no compatible predecessor declares `"standalone": true`
+and omits `upgrades_from`. It is built on a fresh site and pays its own complete recipe. The flag
+cannot accompany `upgrades_from`; existing higher-level definitions still require an explicit
+predecessor unless they opt into standalone construction. A level indicates the finished building,
+so several standalone layouts can occupy the same tier despite different footprints.
+
+Housing goals inspect the actual rooms across those alternatives. A single resident's home must
+provide a general bed; a married couple's goal can use a declared pair in an ordinary or mixed
+house, including at a higher tier. A dedicated couple cottage remains preferred where available.
+Homes containing only couple rooms are offered through marriage goals, while mixed homes also
+remain ordinary construction choices.
 
 ## Cost, and space
 
@@ -164,6 +183,8 @@ upgrade cost: fresh level 2 pays level 1 plus its upgrade, and fresh level 3 pay
 upgrades. A decrease between recipes never becomes a rebate; shipped blacksmith and watchtower
 definitions contain such decreases, so fresh cost must be derived from the chain rather than copied
 blindly from the target.
+
+Standalone definitions have no predecessor chain, so their fresh cost is exactly their own recipe.
 
 **Every building is now priced.** The recipes in the tables below are the original
 sketch; what actually ships is derived from each structure's own block count, and

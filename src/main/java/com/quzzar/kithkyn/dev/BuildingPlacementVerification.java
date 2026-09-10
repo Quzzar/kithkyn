@@ -60,9 +60,8 @@ import net.neoforged.neoforge.event.tick.ServerTickEvent;
 /** Real approved assets on a disposable server only: -Dkithkyn.buildingPlacement.verify=true. */
 @EventBusSubscriber(modid = Kithkyn.MODID)
 public final class BuildingPlacementVerification {
-  private static final String[] ASSETS = {
-      "village_center_birch_forest_1", "butchery_birch_forest_1", "bakery_birch_forest_1"
-  };
+  private static final String[] ASSETS = System.getProperty("kithkyn.buildingPlacement.assets",
+      "village_center_birch_forest_1,butchery_birch_forest_1,bakery_birch_forest_1").split(",");
   private static final List<Fixture> fixtures = new ArrayList<>();
   private static final List<CompoundTag> savedEntities = new ArrayList<>();
   private static final VillageIdentity FIRST = new VillageIdentity("Purple", DyeColor.PURPLE, DyeColor.LIME,
@@ -129,14 +128,15 @@ public final class BuildingPlacementVerification {
       if (restarting) {
         if (ticks == 200) {
           verify(level);
-          Set<UUID> before = entityIds(level);
+          Set<UUID> before = ApprovedStructureAccess.entityIds(level);
           for (Fixture fixture : fixtures) {
             Building building = fixture.building();
             check(BuildingEntities.placeOnce(level, building, template(level, building),
                 BlockPos.of(building.getOriginLocation()), settings(building)), "restart receipt rejected");
           }
-          check(entityIds(level).equals(before), "restart repeated initial entities");
-          Kithkyn.LOGGER.info("[building-placement-verify] RESTART PASS: 24 saved buildings and 72 original entities survived real server shutdown/restart without replenishment");
+          check(ApprovedStructureAccess.entityIds(level).equals(before), "restart repeated initial entities");
+          Kithkyn.LOGGER.info("[building-placement-verify] RESTART PASS: {} saved buildings and {} original entities survived real server shutdown/restart without replenishment",
+              fixtures.size(), fixtures.stream().mapToInt(fixture -> fixture.entities().size()).sum());
           event.getServer().halt(false);
         }
         return;
@@ -169,7 +169,7 @@ public final class BuildingPlacementVerification {
         Manifest manifest = Manifest.get(level);
         manifest.stored.addAll(fixtures);
         manifest.setDirty();
-        Kithkyn.LOGGER.info("[building-placement-verify] RESULT PASS: 24 real-template placements, both paths, four rotations, colors, frames, entity/save receipts and upgrade preservation");
+        Kithkyn.LOGGER.info("[building-placement-verify] RESULT PASS: {} real-template placements, both paths, four rotations, colors, frames, entity/save receipts and upgrade preservation", fixtures.size());
         event.getServer().halt(false);
       }
     } catch (Exception | AssertionError failure) {
@@ -186,7 +186,7 @@ public final class BuildingPlacementVerification {
     check(Buildings.getByName(name) != null, "missing definition " + name);
     Building building = buildingFor(index);
     StructureTemplate template = template(level, building);
-    Set<UUID> before = entityIds(level);
+    Set<UUID> before = ApprovedStructureAccess.entityIds(level);
     if (incremental) {
       StructureInProgress project = new StructureInProgress(building, new java.util.Random(index), ConstructionMode.FRESH);
       project.setOriginLocation(BlockPos.of(building.getOriginLocation()));
@@ -202,7 +202,9 @@ public final class BuildingPlacementVerification {
         if (next != null && preview != null && preview.getBlock() instanceof BedBlock) {
           check(level.getBlockState(next).equals(preview), "bed preview differs from placed color " + next);
         }
-        if (!reloaded && step == 100) {
+        // Small templates finish before a fixed step count. Save after an actual
+        // construction step while work remains, regardless of building size.
+        if (!reloaded && next != null && project.getProgress() != BuildProgress.COMPLETE) {
           DynamicOps<Tag> ops = RegistryOps.create(NbtOps.INSTANCE, level.registryAccess());
           project = StructureInProgress.CODEC.parse(ops,
               StructureInProgress.CODEC.encodeStart(ops, project).getOrThrow()).getOrThrow();
@@ -217,7 +219,7 @@ public final class BuildingPlacementVerification {
       check(new InstantBuildStructure(building, new java.util.Random(index), level).withIdentity(identity)
           .seatAtOrigin(BlockPos.of(building.getOriginLocation()), new HashSet<>()).buildInstantly(), "instant build failed " + name);
     }
-    List<UUID> added = entityIds(level).stream().filter(id -> !before.contains(id)).toList();
+    List<UUID> added = ApprovedStructureAccess.entityIds(level).stream().filter(id -> !before.contains(id)).toList();
     check(added.size() == template.entityInfoList.size(), "initial entity count differs for " + name + ": " + added.size());
     for (UUID id : added) {
       if (level.getEntity(id) instanceof Mob mob) {
@@ -229,7 +231,7 @@ public final class BuildingPlacementVerification {
     check(BuildingEntities.placeOnce(level, restored, template, BlockPos.of(restored.getOriginLocation()), settings(restored)), "receipt retry failed");
     Building upgraded = Building.upgradeOf(restored, restored.getName(), BlockPos.of(restored.getOriginLocation()), restored.getRotation());
     check(BuildingEntities.placeOnce(level, upgraded, template, BlockPos.of(upgraded.getOriginLocation()), settings(upgraded)), "upgrade retry failed");
-    check(entityIds(level).size() == before.size() + added.size(), "save/retry/upgrade duplicated entities");
+    check(ApprovedStructureAccess.entityIds(level).size() == before.size() + added.size(), "save/retry/upgrade duplicated entities");
     Fixture fixture = new Fixture(restored, added, identity);
     verifyIdentity(level, fixture);
     fixtures.add(fixture);
@@ -328,6 +330,14 @@ public final class BuildingPlacementVerification {
     for (BlockPos pos : slots.secondaryBlocks()) {
       check(colorAt(level, origin.offset(pos.rotate(building.getRotation())), fixture.identity().secondaryColor()), "secondary slot color mismatch");
     }
+    for (BlockPos pos : java.util.stream.Stream.concat(slots.primaryBlocks().stream(), slots.secondaryBlocks().stream()).toList()) {
+      BlockPos world = origin.offset(pos.rotate(building.getRotation()));
+      if (!slots.banners().contains(pos) && level.getBlockEntity(world) instanceof BannerBlockEntity banner) {
+        check(banner.getPatterns().layers().isEmpty(), "Plain awning cloth became a patterned village flag");
+        check(banner.getCustomName() == null, "Plain awning cloth acquired the village flag name");
+        check(colorAt(level, world, banner.getBaseColor()), "Awning block entity kept the previous base color");
+      }
+    }
     for (BlockPos pos : slots.banners()) {
       BlockPos world = origin.offset(pos.rotate(building.getRotation()));
       check(level.getBlockState(world).getBlock() instanceof AbstractBannerBlock, "banner missing");
@@ -341,12 +351,6 @@ public final class BuildingPlacementVerification {
 
   private static boolean colorAt(ServerLevel level, BlockPos pos, DyeColor color) {
     return BuiltInRegistries.BLOCK.getKey(level.getBlockState(pos).getBlock()).getPath().startsWith(color.getName() + "_");
-  }
-
-  private static Set<UUID> entityIds(ServerLevel level) {
-    Set<UUID> ids = new HashSet<>();
-    level.getAllEntities().forEach(entity -> ids.add(entity.getUUID()));
-    return ids;
   }
 
   private static StructureTemplate template(ServerLevel level, Building building) {

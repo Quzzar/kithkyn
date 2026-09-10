@@ -41,6 +41,7 @@ Plants are nobody's, and what grows from them is fellable.
 | `StructureInProgress.progressMiddlePhase` | every non-air block the builder lays, one per swing, plants excepted |
 | `WallRaiser.place` / `placeGateDoor` | wall segments and gate doors (the wood tier is logs) |
 | `Village.placeCampfireIfMissing` | the gathering-point campfire |
+| `RepairStep` | restored structural blocks, paid from the builder's carried pack |
 
 Not recorded on purpose: saplings a lumberjack stand replants (a planted tree is meant to be
 cut), the sapling a lumberjack lodge is authored with (the stamps ask the same
@@ -71,6 +72,12 @@ places structural village blocks, it records them; that is the contract.
 - `isPlayerPlaced` / `isVillagePlaced`: the stored facts individually.
 
 ## No backfill
+
+[Building repairs](building-repairs.md) use existing village ownership left behind by explosions
+as conservative evidence of old shell damage. Player placement cancels repairs and clears prior
+village ownership, including when a player plants in an empty position. Player breaks cancel
+repairs too. Confirmed new explosion damage has its own bounded state queue; earth repairs do
+not acquire village ownership.
 
 Worlds whose buildings predate the store are not migrated: the store starts recording from
 the placement events forward, and that is the whole story (decided 2026-09-01; the one dev

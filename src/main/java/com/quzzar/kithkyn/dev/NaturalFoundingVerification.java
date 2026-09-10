@@ -13,16 +13,30 @@ import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.Rotation;
 
-/** Real natural-search and delayed-plan checks, called only by the disposable Birch verifier. */
+/** Real natural-search and delayed-plan checks shared by disposable village-style verifiers. */
 final class NaturalFoundingVerification {
     private static VillageGeneration generation;
     private static BlockPos anchor;
     private static int attempts;
     private static boolean passed;
+    private static VillageStyle expectedStyle;
+    private static int expectedBuildings;
+    private static int expectedBeds;
+    private static Village foundedVillage;
 
     private NaturalFoundingVerification() { }
 
     static void start(ServerLevel level) {
+        start(level, VillageStyle.BIRCH_FOREST, 3, 4);
+    }
+
+    static void start(ServerLevel level, VillageStyle style, int buildings, int beds) {
+        expectedStyle = style;
+        expectedBuildings = buildings;
+        expectedBeds = beds;
+        attempts = 0;
+        passed = false;
+        foundedVillage = null;
         anchor = VillageGeneration.candidateSites(level.getSeed(), 20, 20).getFirst().atY(160);
         // A headless fixture has no real player keeping its explored neighborhood resident.
         for (int x = (anchor.getX() - 112) >> 4; x <= (anchor.getX() + 112) >> 4; x++) {
@@ -37,7 +51,7 @@ final class NaturalFoundingVerification {
         }
         Village probe = new Village("Unplaced probe");
         probe.attach(level);
-        probe.setStyle(VillageStyle.BIRCH_FOREST);
+        probe.setStyle(expectedStyle);
         var plan = probe.planFounding(anchor, Rotation.CLOCKWISE_90, false).orElseThrow();
         check(probe.getBuildings().isEmpty() && !probe.hasClaimed(anchor), "Preflight published claims/buildings");
 
@@ -68,17 +82,19 @@ final class NaturalFoundingVerification {
         var manager = VillageManager.get(level);
         var found = manager.getVillages().values().stream()
             .filter(village -> village.getTownCenter() != null
-                && VillageGeneration.tooClose(anchor, village.getCampfirePosition())).toList();
+                && VillageGeneration.tooClose(anchor, village.getCenterPosition())).toList();
         check(found.size() <= 1, "Nearby observers created duplicate natural villages");
         if (!found.isEmpty()) {
             Village village = found.getFirst();
-            check(village.getStyle() == VillageStyle.BIRCH_FOREST, "Natural fallback lost biome selection");
-            check(village.getBuildings().size() == 3 && village.getTotalBeds() == 4, "Incomplete natural founding");
-            check(village.getCampfirePosition().getX() != anchor.getX()
-                || village.getCampfirePosition().getZ() != anchor.getZ(), "Rejected anchor was reused");
+            check(village.getStyle() == expectedStyle, "Natural fallback lost biome selection");
+            check(village.getBuildings().size() == expectedBuildings && village.getTotalBeds() == expectedBeds,
+                "Incomplete natural founding");
+            check(village.getCenterPosition().getX() != anchor.getX()
+                || village.getCenterPosition().getZ() != anchor.getZ(), "Rejected anchor was reused");
             check(level.getBlockState(anchor).is(Blocks.CHEST), "Fallback removed the protected anchor chest");
-            check(!manager.naturalSiteAvailable(village.getCampfirePosition().above(300)), "Separation depends on Y");
+            check(!manager.naturalSiteAvailable(village.getCenterPosition().above(300)), "Separation depends on Y");
             passed = true;
+            foundedVillage = village;
             Kithkyn.LOGGER.info("[natural-founding-verify] RESULT PASS: protected anchor fallback, delayed-plan safety, loaded-only search and biome-selected founding");
         }
         check(attempts < 250, "Natural fallback never completed");
@@ -86,6 +102,15 @@ final class NaturalFoundingVerification {
 
     static void requirePassed() {
         check(passed, "Natural founding verification did not finish");
+    }
+
+    static boolean hasPassed() {
+        return passed;
+    }
+
+    static Village foundedVillage() {
+        requirePassed();
+        return foundedVillage;
     }
 
     private static void check(boolean condition, String message) {

@@ -30,6 +30,32 @@ import org.junit.jupiter.api.Test;
 class VillageStyleTest {
   private static final Predicate<VillageStyle> ALL_STYLES = ignored -> true;
 
+  @Test
+  void badlandsMappingIsExplicitAndDoesNotConsumeOtherAridFamilies() {
+    Set<TagKey<Biome>> mapped = Set.of(VillageStyle.BADLANDS.biomeTag(), Tags.Biomes.IS_BADLANDS);
+    assertEquals(VillageStyle.BADLANDS,
+        VillageStyle.select(mapped::contains, "badlands", 2F, false, 0F, 7L, ALL_STYLES));
+    assertEquals(VillageStyle.DESERT,
+        VillageStyle.select(Tags.Biomes.IS_BADLANDS::equals, "wooded_badlands", 2F, false, 0F, 7L, ALL_STYLES));
+    assertEquals(VillageStyle.DESERT,
+        VillageStyle.select(Tags.Biomes.IS_DESERT::equals, "desert", 2F, false, 0F, 7L, ALL_STYLES));
+    assertEquals(VillageStyle.DESERT,
+        VillageStyle.select(mapped::contains, "badlands", 2F, false, 0F, 7L,
+            style -> style == VillageStyle.DESERT));
+    assertFalse(VillageStyle.BADLANDS.usesPlainsFallback());
+  }
+
+  @Test
+  void badlandsStyleSurvivesSavingWithoutRestylingExistingDesertVillages() {
+    for (VillageStyle style : List.of(VillageStyle.BADLANDS, VillageStyle.DESERT)) {
+      Village village = new Village("Oravel");
+      village.setStyle(style);
+      Village restored = Village.CODEC.parse(NbtOps.INSTANCE,
+          Village.CODEC.encodeStart(NbtOps.INSTANCE, village).getOrThrow()).getOrThrow();
+      assertEquals(style, restored.getStyle());
+    }
+  }
+
   @AfterEach
   void clearRegistry() {
     Buildings.reload(Map.of());

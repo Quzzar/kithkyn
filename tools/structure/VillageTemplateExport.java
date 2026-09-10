@@ -89,6 +89,15 @@ public final class VillageTemplateExport {
               || pos.getInt(0) > bounds[2] || pos.getInt(2) > bounds[3];
         });
       }
+      if (spec.has("ground_layer")) {
+        int ground = spec.get("ground_layer").getAsInt();
+        // Dense world captures include exterior ground air, which must not excavate terrain.
+        blocks.removeIf(tag -> {
+          CompoundTag block = (CompoundTag)tag;
+          return block.getList("pos", Tag.TAG_INT).getInt(1) <= ground
+              && palette.getCompound(block.getInt("state")).getString("Name").equals("minecraft:air");
+        });
+      }
       root.put("size", ints(vector(spec.get("size"))));
       for (Tag value : root.getList("entities", Tag.TAG_COMPOUND)) {
         CompoundTag entity = ((CompoundTag)value).getCompound("nbt");

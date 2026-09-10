@@ -1,6 +1,6 @@
 # Approved Birch Forest village
 
-The 2026-09-07 approved set is the playable `birch_forest` catalog. It uses the existing
+The 2026-09-07 approved set, with the revisions below, is the playable `birch_forest` catalog. It uses the existing
 village, building, labor, construction, and identity systems. It is not a separate simulation.
 These decisions supersede the older candidate-gallery choices and generic counts in
 `building-spec.md` for this family.
@@ -21,18 +21,21 @@ These decisions supersede the older candidate-gallery choices and generic counts
 | Mine | 1 | Edited weaponsmith shell, mine mouth, communal chest and village banner |
 | Hunting lodge | 1 | Hunter station, secondary-color bed and personal chest |
 | Fishery | 1 | Fisher station and communal storage |
-| Bakery/tavern | 1 | One shared building, BAKER and INNKEEPER stations, two beds, shared personal chest and separate communal storage |
+| Bakery | 1 | BAKER station, one primary-color bed, personal chest and separate communal storage |
+| Tavern | 1 | Edited Dungeons & Taverns Birch tavern, INNKEEPER station, back-room bed and private ceiling barrel, separate communal chest |
 | Blacksmith | 1 | Crafting station, furnaces and communal chest |
 | Butchery | 1 | Butcher/herder stations, secondary-color bed, personal chest, communal barrel, three cows and three chickens |
 | Market | 1, 2, 3 | Approved stalls and merchant stations |
 | Church | 1 | Approved cleric building |
 
-This is 22 concrete building templates plus five authored wall pieces. Missing tiers and
+This is 23 concrete building templates plus five authored wall pieces. Missing tiers and
 categories are intentional: the Birch catalog never silently borrows a Plains building.
 Costs retain the existing per-category/per-tier recipes. Higher tiers elsewhere are unaffected.
 Amenities come from the actual selected definition, not a global bed or chest count for its tier.
 
-The shared bakery supports both existing occupations and the existing bread/wanderer grants.
+The bakery grants BREAD and employs the baker. The separate tavern grants WANDERERS and
+employs the innkeeper. Its back-room bed is the only assigned housing slot; the other three
+authored beds remain furnishings.
 This integration does not add a new physical innkeeper food-service loop or new hospitality bonuses.
 
 ## Biome selection
@@ -67,7 +70,8 @@ An explicit dev override remains available:
 ## Identity, entities and preservation
 
 The center's four beds alternate primary/secondary on opposing sides. One-bed homes and
-the couple's joined beds use primary; two-bed homes and the bakery/tavern use one of each.
+the couple's joined beds use primary; two-bed homes use one of each. The bakery's remaining
+bed and the tavern keeper's back-room bed use primary.
 Tower beds follow the same one/two rule. The hunter and butcher use secondary. Selected
 center, storehouse and mine banners become the village's saved flag. Decorative market
 banners are not identity slots. Neutral white in the exported source marks dynamic slots;
@@ -98,7 +102,7 @@ entrance toward the center. The Birch mine's shaft runs east from local `[9,0,8]
 stairs before the first dug step; the former `[8,0,8]` mouth produced an unclimbable
 one-and-a-half-block exit. Worker excavation and navigation use the same frame. Existing
 mines retain their saved mouths so their already-dug tunnels and branches do not move.
-The catalog also declares the other authored fronts: the homes, cottage, bakery, blacksmith,
+The catalog also declares the other authored fronts: the homes, cottage, bakery, tavern, blacksmith,
 butcher compound, church, fishery, hunter, stoneworks and first tower approach from the west;
 the lumberjack and two-stall market approach from the north; the second tower and three-stall
 market approach from the south. The single stall opens west. Fields, the well and center
@@ -264,3 +268,35 @@ and 32 actual walks, including tall-resident exit and re-entry in all center rot
 Native placement verified 24 fixtures through both construction paths; a complete server restart
 retained all 72 original entities without replenishment. Exterior and basement previews were
 rendered in a separate Minecraft client before deployment.
+
+## Separate tavern approval: September 9
+
+Aaron selected and edited sky-showcase F05.1, the Dungeons & Taverns 4.4.4 Birch tavern
+(`nova_structures:tavern/tavern_house_birch`). The immutable approval is
+`run/valecraft-gallery/birch-tavern-approved-20260909-135429/`: a flushed world backup,
+exact and margin captures, and a fresh final recapture after the keeper-room clarification.
+The two captures agree and retain the added grass, wall lighting and downward-facing ceiling
+barrel at local `[13,4,16]`. The private bed is `[14,1,16]`; the innkeeper station is
+`[10,1,14]`, beside the communal chest at `[10,2,15]`.
+
+The same approval reduces the bakery to its baker bed at `[7,5,11]`, removing both halves
+of the former innkeeper bed and its work station. The existing personal chest remains.
+Household storage uses the shared supported-footing and eye-to-container reach checks, so the
+keeper can use the ceiling barrel from a reachable spot without moving the authored block.
+Entrance selection prefers the authored front among equally low doors, keeping the public
+entrance distinct from the interior bedroom doors in every rotation.
+The shared housing reconciliation releases bed indexes removed by a definition update before
+assigning real available beds. Existing completed buildings are not automatically regenerated;
+the new templates govern future construction.
+
+The separately admired Birch center F01.1 is reserved as a future design reference. It does
+not replace the currently approved village center.
+
+Validation for the September 9 separation: the full build and all 377 JUnit tests pass.
+The native Birch fixture passes 92 rotated placements, 404 planned access routes, 32
+physical walks, and four real keeper stash-and-sleep trips. Each keeper carries seven
+emeralds from outdoors into the private ceiling barrel and then uses the assigned back-room
+bed, with no duplicated items. The quartermaster's existing visit, pacing and cleanup fixture
+also passes. Live screenshots of the edited tavern and the repaired Rustic barns were inspected;
+artifacts and logs are in `run/birch-tavern-verification/`. This records local validation, not
+a deployment of the new gameplay code to the live server.

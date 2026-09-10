@@ -24,6 +24,32 @@ import org.junit.jupiter.api.Test;
 class VillageIdentityApplierTest {
 
   @Test
+  void plainAwningBannersFollowAccentColorsInEveryRotationWhileWhiteClothStaysWhite() {
+    BuildingInfo info = BuildingInfo.CODEC.parse(JsonOps.INSTANCE, JsonParser.parseString("""
+        {"structure":"awning_fixture_1","village_identity":{
+          "primary_blocks":[[1,4,1]],"secondary_blocks":[[2,4,1]],"banners":[]}}
+        """)).getOrThrow();
+    Buildings.reload(Map.of(info.getName(), info));
+    try {
+      VillageIdentity identity = new VillageIdentity("Awning", DyeColor.PURPLE, DyeColor.LIME, List.of());
+      for (Rotation rotation : Rotation.values()) {
+        Building building = new Building(BlockPos.ZERO, info.getName(), rotation);
+        var placement = VillageIdentityApplier.placement(building, identity);
+        var source = Blocks.WHITE_WALL_BANNER.defaultBlockState()
+            .setValue(HorizontalDirectionalBlock.FACING, Direction.EAST).rotate(rotation);
+        var primary = placement.state(new BlockPos(1,4,1).rotate(rotation), source);
+        var secondary = placement.state(new BlockPos(2,4,1).rotate(rotation), source);
+        assertEquals(Blocks.PURPLE_WALL_BANNER, primary.getBlock());
+        assertEquals(Blocks.LIME_WALL_BANNER, secondary.getBlock());
+        assertEquals(source.getValue(HorizontalDirectionalBlock.FACING), primary.getValue(HorizontalDirectionalBlock.FACING));
+        assertSame(source, placement.state(new BlockPos(3,4,1).rotate(rotation), source));
+      }
+    } finally {
+      Buildings.reload(Map.of());
+    }
+  }
+
+  @Test
   void placementRotatesSlotsAndColorsEitherBedHalfBeforeTheSecondHalfExists() {
     BuildingInfo info = BuildingInfo.CODEC.parse(JsonOps.INSTANCE, JsonParser.parseString("""
         {"structure":"identity_fixture_1","village_identity":{

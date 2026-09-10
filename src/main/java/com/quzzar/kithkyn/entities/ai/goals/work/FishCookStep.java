@@ -31,6 +31,8 @@ public final class FishCookStep implements BlockWorkStep {
   private static final int BATCH = 5;
 
   private final CampfireRoast roast = new CampfireRoast();
+  @Nullable
+  private CampfireAccess.Target fireTarget;
 
   /**
    * Once the catch is worth cooking, cook it all down before fishing again.
@@ -46,13 +48,7 @@ public final class FishCookStep implements BlockWorkStep {
     if (village == null) {
       return null;
     }
-    BlockPos fire = village.getCampfire();
-    if (fire == null) {
-      return null;
-    }
-    if (this.roast.tending()) {
-      return fire; // mid-roast: see this one off the fire before anything else
-    }
+    if (this.roast.tending() && this.fireTarget != null) return this.fireTarget.fire();
     int raw = this.roast.countRawInPack(person);
     if (raw == 0) {
       this.cooking = false;
@@ -61,7 +57,9 @@ public final class FishCookStep implements BlockWorkStep {
     if (raw >= BATCH) {
       this.cooking = true;
     }
-    return this.cooking ? fire : null;
+    if (!this.cooking) return null;
+    this.fireTarget = CampfireAccess.select(person, village, true, Double.MAX_VALUE);
+    return this.fireTarget == null ? null : this.fireTarget.fire();
   }
 
   @Override
@@ -69,12 +67,12 @@ public final class FishCookStep implements BlockWorkStep {
     CampfireBlockEntity campfire = CampfireRoast.litFireAt(person.level(), target);
     if (campfire == null) {
       // The fire went out or was taken: the raw mid-roast goes back in the pack.
-      this.roast.abandon(person, null);
+      this.roast.abandon(person, target);
       return false;
     }
     if (!this.roast.tending()) {
       if (!CampfireRoast.hasFreeSlot(campfire)) {
-        return true; // the fire is full of other cooks; wait rather than shove in
+        return false; // reselect another fire with room
       }
       if (this.roast.rawInPack(person) == null) {
         return false; // the batch is cooked: back to select, and to the water
@@ -92,6 +90,25 @@ public final class FishCookStep implements BlockWorkStep {
   @Override
   public void released(RealPerson person, BlockPos fire) {
     this.roast.abandon(person, fire);
+    this.fireTarget = null;
+  }
+
+  /** The shared loop walks beside the fire and still acts on the actual cooking block. */
+  @Override
+  public BlockPos positionOf(BlockPos target) {
+    return this.fireTarget != null && target.equals(this.fireTarget.fire())
+        ? this.fireTarget.approach() : target;
+  }
+
+  @Override
+  public boolean inReach(RealPerson person, BlockPos target) {
+    return this.fireTarget != null && target.equals(this.fireTarget.fire())
+        ? CampfireAccess.inReach(person, target) : BlockWorkStep.super.inReach(person, target);
+  }
+
+  @Override
+  public boolean requiresExactArrival() {
+    return true;
   }
 
   @Override

@@ -1,0 +1,490 @@
+{
+  "status": "captured_configured_and_verified",
+  "description": "Edited Pueblo watchtower and mine, selected blacksmith, and a separate draft combining the selected butcher workshop and coop. Production catalog activation, prices and tiers await the complete selection.",
+  "work": "run/pueblo-showcase/workplaces-approved-20260909-181024",
+  "preview_colors": {
+    "primary": "blue",
+    "secondary": "yellow"
+  },
+  "capture_time_local": "2026-09-09T18:05:37-04:00",
+  "sources": [
+    {
+      "exhibit": "P03.5",
+      "label": "Temple 1",
+      "source_capture": "run/pueblo-showcase/workplaces-approved-20260909-181024/source-captures/P03.5.nbt",
+      "source_sha256": "49efafa7578b1d75e31c777f1748d1b8449f7d8755fb51cf5425610688cd014d",
+      "capture_origin": [
+        3650,
+        230,
+        1083
+      ],
+      "source_mod_structure": "data/kaisyn/structure/village/badlands_pueblo/houses/badlands_temple_1.nbt",
+      "compact_template": "run/pueblo-showcase/workplaces-approved-20260909-181024/compact/P03.5.nbt",
+      "compact_shift": [
+        -2,
+        0,
+        -2
+      ]
+    },
+    {
+      "exhibit": "P03.6",
+      "label": "Toolsmith And Weaponsmith 1",
+      "source_capture": "run/pueblo-showcase/workplaces-approved-20260909-181024/source-captures/P03.6.nbt",
+      "source_sha256": "fe37e964b294ff9be12e9d2d7d7a6a8a80fa9617eb4ea9d4f4301ac8f2d0d16c",
+      "capture_origin": [
+        3667,
+        230,
+        1083
+      ],
+      "source_mod_structure": "data/kaisyn/structure/village/badlands_pueblo/houses/badlands_toolsmith_and_weaponsmith_1.nbt",
+      "compact_template": "run/pueblo-showcase/workplaces-approved-20260909-181024/compact/P03.6.nbt",
+      "compact_shift": [
+        -2,
+        0,
+        -2
+      ]
+    },
+    {
+      "exhibit": "P03.7",
+      "label": "Butcher Workshop",
+      "source_capture": "run/pueblo-showcase/workplaces-approved-20260909-181024/source-captures/P03.7.nbt",
+      "source_sha256": "70903d8b3ade69929bfe2f8847e571cc6d487521558b973118c00cb797e4772e",
+      "capture_origin": [
+        3681,
+        230,
+        1083
+      ],
+      "source_mod_structure": "data/kaisyn/structure/village/badlands_pueblo/professions_misc/badlands_butcher_1.nbt",
+      "compact_template": "run/pueblo-showcase/workplaces-approved-20260909-181024/compact/P03.7.nbt",
+      "compact_shift": [
+        -2,
+        0,
+        -2
+      ]
+    },
+    {
+      "exhibit": "P09.6",
+      "label": "Coop",
+      "source_capture": "run/pueblo-showcase/workplaces-approved-20260909-181024/source-captures/P09.6.nbt",
+      "source_sha256": "07302b175d75f720a483238daee366f099436d76836796f7e1ccc7a899885bf5",
+      "capture_origin": [
+        3676,
+        230,
+        1267
+      ],
+      "source_mod_structure": "data/ctov/structure/village/mesa_fortified/jobsite/coop.nbt",
+      "compact_template": "run/pueblo-showcase/workplaces-approved-20260909-181024/compact/P09.6.nbt",
+      "compact_shift": [
+        -2,
+        0,
+        -2
+      ]
+    },
+    {
+      "exhibit": "P11.5",
+      "label": "Well",
+      "source_capture": "run/pueblo-showcase/workplaces-approved-20260909-181024/source-captures/P11.5.nbt",
+      "source_sha256": "fff6db487ba9eeabb57b2d976ab874775efd2ba3c01da17ad42d068f9f6e7f45",
+      "capture_origin": [
+        3644,
+        230,
+        1336
+      ],
+      "source_mod_structure": "data/ctov/structure/village/mesa_fortified/deco/well.nbt",
+      "compact_template": "run/pueblo-showcase/workplaces-approved-20260909-181024/compact/P11.5.nbt",
+      "compact_shift": [
+        -2,
+        0,
+        -2
+      ]
+    }
+  ],
+  "facilities": [
+    {
+      "exhibit": "P03.5",
+      "label": "Watchtower",
+      "review_id": "watchtower_puebloreview_1",
+      "template_origin": [
+        3652,
+        230,
+        1085
+      ],
+      "size": [
+        9,
+        16,
+        9
+      ],
+      "compact_template": "run/pueblo-showcase/workplaces-approved-20260909-181024/compact/P03.5.nbt",
+      "neutral_template": "run/pueblo-showcase/workplaces-approved-20260909-181024/neutral/P03.5.nbt",
+      "amenities": {
+        "category": "watchtower",
+        "beds": [
+          [
+            5,
+            1,
+            3
+          ]
+        ],
+        "couple_beds": [],
+        "work_stations": [
+          {
+            "occupation": "GUARD",
+            "pos": [
+              5,
+              11,
+              3
+            ],
+            "guard_duty": "CROSSBOW_POST"
+          }
+        ],
+        "personal_containers": [
+          [
+            5,
+            1,
+            5
+          ]
+        ],
+        "containers": [],
+        "bed_containers": [
+          {
+            "bed": [
+              5,
+              1,
+              3
+            ],
+            "containers": [
+              [
+                5,
+                1,
+                5
+              ]
+            ]
+          }
+        ],
+        "village_identity": {
+          "primary_blocks": [
+            [
+              5,
+              1,
+              3
+            ]
+          ],
+          "secondary_blocks": [],
+          "banners": []
+        },
+        "sink": 0,
+        "entrance_facing": "west",
+        "grants": [
+          "PROTECTION",
+          "RANGED_GUARD_POSTS"
+        ]
+      },
+      "notes": [
+        "User-added guard bed and chest retained; cleared shooting deck retained.",
+        "The guard personal chest is bound to this bed."
+      ],
+      "neutral_template_sha256": "10190bb0d5dc5e832011e535af1a0ebb9537ec44205e74e9e67e864c7ce1d97e",
+      "production": {
+        "structure": "watchtower_badlands_1",
+        "category": "watchtower",
+        "variant": "badlands",
+        "level": 1,
+        "recipe": "watchtower_plains_1"
+      },
+      "source_mod_structure": "data/kaisyn/structure/village/badlands_pueblo/houses/badlands_temple_1.nbt",
+      "source_mod": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar"
+    },
+    {
+      "exhibit": "P03.6",
+      "label": "Blacksmith",
+      "review_id": "blacksmith_puebloreview_1",
+      "template_origin": [
+        3669,
+        230,
+        1085
+      ],
+      "size": [
+        6,
+        6,
+        10
+      ],
+      "compact_template": "run/pueblo-showcase/workplaces-approved-20260909-181024/compact/P03.6.nbt",
+      "neutral_template": "run/pueblo-showcase/workplaces-approved-20260909-181024/neutral/P03.6.nbt",
+      "amenities": {
+        "category": "blacksmith",
+        "beds": [],
+        "couple_beds": [],
+        "work_stations": [
+          {
+            "occupation": "BLACKSMITH",
+            "pos": [
+              3,
+              4,
+              2
+            ]
+          }
+        ],
+        "personal_containers": [],
+        "containers": [
+          [
+            3,
+            2,
+            1
+          ],
+          [
+            2,
+            4,
+            1
+          ]
+        ],
+        "bed_containers": [],
+        "village_identity": {
+          "primary_blocks": [],
+          "secondary_blocks": [],
+          "banners": []
+        },
+        "sink": 0,
+        "entrance_facing": "west",
+        "grants": [
+          "REPAIR",
+          "SMELTING",
+          "TOOLS_IRON",
+          "ARMOR_IRON",
+          "SHIELDS"
+        ]
+      },
+      "notes": [
+        "The station is the open work tile beside the upper smithing table, not either communal chest.",
+        "Bedless workplace; blacksmith is housed elsewhere."
+      ],
+      "neutral_template_sha256": "48a6727f3c4c68bceaa5add9c3991ccde7bf2c95c5a638db103abc25166ad922",
+      "production": {
+        "structure": "blacksmith_badlands_1",
+        "category": "blacksmith",
+        "variant": "badlands",
+        "level": 1,
+        "recipe": "blacksmith_plains_1"
+      },
+      "source_mod_structure": "data/kaisyn/structure/village/badlands_pueblo/houses/badlands_toolsmith_and_weaponsmith_1.nbt",
+      "source_mod": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar"
+    },
+    {
+      "exhibit": "P11.5",
+      "label": "Mine Entrance",
+      "review_id": "mine_puebloreview_1",
+      "template_origin": [
+        3646,
+        230,
+        1338
+      ],
+      "size": [
+        9,
+        8,
+        9
+      ],
+      "compact_template": "run/pueblo-showcase/workplaces-approved-20260909-181024/compact/P11.5.nbt",
+      "neutral_template": "run/pueblo-showcase/workplaces-approved-20260909-181024/neutral/P11.5.nbt",
+      "amenities": {
+        "category": "mine",
+        "beds": [],
+        "couple_beds": [],
+        "work_stations": [
+          {
+            "occupation": "MINER",
+            "pos": [
+              3,
+              1,
+              1
+            ]
+          }
+        ],
+        "personal_containers": [],
+        "containers": [
+          [
+            4,
+            1,
+            1
+          ]
+        ],
+        "bed_containers": [],
+        "village_identity": {
+          "primary_blocks": [],
+          "secondary_blocks": [],
+          "banners": []
+        },
+        "sink": 0,
+        "entrance_facing": "north",
+        "mine_entrance": {
+          "facing": "south",
+          "offset": [
+            1,
+            0,
+            3
+          ]
+        },
+        "grants": [
+          "ORES",
+          "FUEL"
+        ]
+      },
+      "notes": [
+        "User removed water and opened the central 3 by 3 shaft.",
+        "The mine mouth is one block above the template ground so the first ramp footing returns to the rim in one step.",
+        "The neutral template and live gallery retain the canopy and rim unchanged. During natural five-wide shaft excavation, the miner will remove 16 ground-layer blocks around and beyond the current opening; every authored block above the ground layer remains intact.",
+        "Nine explicit ground-level air blocks retain the authored opening."
+      ],
+      "neutral_template_sha256": "074f64976c569c3d9ab09664ac2658965913fc8d2b90c8151c154c72019baed1",
+      "excavation_ground_clearance": {
+        "mouth": [
+          4,
+          1,
+          4
+        ],
+        "removed_authored_blocks": 16,
+        "minimum_y": 0,
+        "maximum_y": 0,
+        "above_ground_changes": 0
+      },
+      "production": {
+        "structure": "mine_badlands_1",
+        "category": "mine",
+        "variant": "badlands",
+        "level": 1,
+        "recipe": "mine_plains_1"
+      },
+      "source_mod_structure": "data/ctov/structure/village/mesa_fortified/deco/well.nbt",
+      "source_mod": "[Neoforge]ctov-3.6.3.jar"
+    },
+    {
+      "exhibit": "P12.1",
+      "label": "Butcher and Coop",
+      "review_id": "butchery_puebloreview_1",
+      "template_origin": [
+        3600,
+        230,
+        1385
+      ],
+      "size": [
+        15,
+        6,
+        11
+      ],
+      "compact_template": "run/pueblo-showcase/workplaces-approved-20260909-181024/compact/P12.1.nbt",
+      "neutral_template": "run/pueblo-showcase/workplaces-approved-20260909-181024/neutral/P12.1.nbt",
+      "amenities": {
+        "category": "butchery",
+        "beds": [],
+        "couple_beds": [],
+        "work_stations": [
+          {
+            "occupation": "BUTCHER",
+            "pos": [
+              2,
+              1,
+              5
+            ]
+          }
+        ],
+        "personal_containers": [],
+        "containers": [
+          [
+            1,
+            2,
+            6
+          ]
+        ],
+        "bed_containers": [],
+        "village_identity": {
+          "primary_blocks": [],
+          "secondary_blocks": [],
+          "banners": []
+        },
+        "sink": 0,
+        "entrance_facing": "west",
+        "grants": [
+          "MEAT"
+        ]
+      },
+      "status": "superseded_by_P10.4_sheep_farm",
+      "components": [
+        {
+          "exhibit": "P03.7",
+          "offset": [
+            0,
+            0,
+            3
+          ]
+        },
+        {
+          "exhibit": "P09.6",
+          "offset": [
+            6,
+            0,
+            0
+          ]
+        }
+      ],
+      "notes": [
+        "Copies preserve both source exhibits. A one-block ground path separates the workshop and coop.",
+        "The coop interior is within the butcher livestock scan range. Starter livestock will be selected with the final catalog.",
+        "On the next selection pass, the user chose P10.4 Sheep Farm instead. This separate draft remains in the gallery for comparison."
+      ],
+      "neutral_template_sha256": "324818a4f19534172536172b75b888ae6b77f7b296588a013f5d9d780b5a6808",
+      "review_targets": [
+        [
+          11,
+          1,
+          -1
+        ],
+        [
+          11,
+          1,
+          2
+        ]
+      ]
+    }
+  ],
+  "verification": {
+    "capture": "run/pueblo-showcase/workplaces-approved-20260909-181024/capture-verification.json",
+    "native_asset_readback": "run/pueblo-showcase/workplaces-approved-20260909-181024/asset-verification.json",
+    "live_bed_preview": "run/pueblo-showcase/workplaces-approved-20260909-181024/live-apply.json",
+    "live_composite": "run/pueblo-showcase/workplaces-approved-20260909-181024/composite-live-verification.json",
+    "rendered_review": true,
+    "screenshots": [
+      "run/pueblo-showcase/workplaces-approved-20260909-181024/screenshots/pueblo-watchtower-exterior-181024.png",
+      "run/pueblo-showcase/workplaces-approved-20260909-181024/screenshots/pueblo-watchtower-guard-room-181024.png",
+      "run/pueblo-showcase/workplaces-approved-20260909-181024/screenshots/pueblo-watchtower-shooting-deck-181024.png",
+      "run/pueblo-showcase/workplaces-approved-20260909-181024/screenshots/pueblo-blacksmith-exterior-181024.png",
+      "run/pueblo-showcase/workplaces-approved-20260909-181024/screenshots/pueblo-blacksmith-upper-workshop-181024.png",
+      "run/pueblo-showcase/workplaces-approved-20260909-181024/screenshots/pueblo-mine-entrance-181024.png",
+      "run/pueblo-showcase/workplaces-approved-20260909-181024/screenshots/pueblo-mine-open-shaft-181024.png",
+      "run/pueblo-showcase/workplaces-approved-20260909-181024/screenshots/pueblo-butcher-coop-draft-181024.png",
+      "run/pueblo-showcase/workplaces-approved-20260909-181024/screenshots/pueblo-coop-interior-181024.png"
+    ],
+    "project_checks": "run/pueblo-showcase/workplaces-approved-20260909-181024/gradle-check.json",
+    "live_ai_deployed": false,
+    "native_access": [
+      "run/pueblo-showcase/workplaces-approved-20260909-181024/verification-posts-and-forge/verification.json",
+      "run/pueblo-showcase/workplaces-approved-20260909-181024/verification-mine-and-coop/verification.json"
+    ],
+    "native_summary": {
+      "rotated_placements": 16,
+      "planned_access_routes": 40,
+      "station_walks": 16,
+      "shared_container_deposits": 16,
+      "personal_container_deposits": 4,
+      "assigned_guard_bed_sleeps": 4,
+      "mine_descent_and_return_walks": 8,
+      "coop_gate_and_interior_walks": 8,
+      "failed_placements": 0,
+      "probe_size": 18,
+      "collision_height": 2.0,
+      "collision_width": 0.64800006
+    },
+    "home_regressions": [
+      "run/pueblo-showcase/workplaces-approved-20260909-181024/verification-home-regression-small3/verification.json",
+      "run/pueblo-showcase/workplaces-approved-20260909-181024/verification-home-regression-large1/verification.json"
+    ],
+    "final_integrity": "run/pueblo-showcase/workplaces-approved-20260909-181024/final-integrity.json"
+  }
+}

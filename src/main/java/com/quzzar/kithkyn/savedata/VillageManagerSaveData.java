@@ -67,7 +67,7 @@ public class VillageManagerSaveData extends SavedData {
         }
         for (Village village : villages.values()) {
             if (village.getTownCenter() != null && com.quzzar.kithkyn.village.VillageGeneration.tooClose(location,
-                    village.getCampfirePosition())) return false;
+                    village.getCenterPosition())) return false;
         }
         return true;
     }

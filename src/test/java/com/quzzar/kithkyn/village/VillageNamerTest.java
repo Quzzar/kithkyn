@@ -15,6 +15,20 @@ import org.junit.jupiter.api.Test;
 class VillageNamerTest {
 
   @Test
+  void badlandsNamesUseTheApprovedCommunityAndDoNotCopyItsExamples() {
+    String prompt = VillageNamer.foundingPrompt(VillageStyle.BADLANDS);
+    assertTrue(prompt.contains("roof terraces"));
+    assertTrue(prompt.contains("protected water"));
+    assertNotEquals(prompt, VillageNamer.foundingPrompt(VillageStyle.DESERT));
+    for (String example : Set.of("Kestara", "Oravel", "Tavren", "Sorela")) {
+      assertTrue(VillageNamer.acceptedName(example, VillageStyle.BADLANDS, Set.of()).isEmpty());
+    }
+    String fallback = VillageNamer.fallback(VillageStyle.BADLANDS, Set.of(), RandomSource.create(7));
+    assertTrue(VillageNamer.acceptedName(fallback, VillageStyle.BADLANDS, Set.of()).isPresent());
+    assertFalse(fallback.endsWith("field") || fallback.endsWith("bury") || fallback.endsWith("wick"));
+  }
+
+  @Test
   void foundingPromptUsesSelectedArchitecturalIdentityAndExamplesAsInspiration() {
     String prompt = VillageNamer.foundingPrompt(VillageStyle.BIRCH_FOREST);
     assertTrue(prompt.contains("grass roofs"));

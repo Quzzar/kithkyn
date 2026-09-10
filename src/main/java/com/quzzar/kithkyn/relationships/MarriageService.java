@@ -11,7 +11,6 @@ import com.quzzar.kithkyn.llm.LlmService;
 import com.quzzar.kithkyn.village.MarriageProposals;
 import com.quzzar.kithkyn.village.Village;
 import com.quzzar.kithkyn.village.buildings.BuildingInfo;
-import com.quzzar.kithkyn.village.buildings.Buildings;
 import com.quzzar.kithkyn.village.buildings.UrbanPlanner;
 import com.quzzar.kithkyn.village.buildings.VillageGoal;
 
@@ -34,11 +33,9 @@ import net.minecraft.server.level.ServerLevel;
  *   the other's partner, hyphenates their family name, and flags the
  *   {@link RelationshipPair} married so it is never proposed again.</li>
  *   <li><b>Housing</b> is derived, not stored. A married pair who do not yet
- *   share a home is a couple awaiting one; the village names a couple's cottage
- *   as its saved-for goal ({@link VillageGoal}) once it is not already saving
- *   for something else, and on the cottage's completion both are moved into its
- *   two beds. Their shared chest then follows for free from the personal-chest
- *   rules, since a home's chest belongs to whoever sleeps there.</li>
+ *   share a couple room is a couple awaiting one. Existing paired rooms are filled
+ *   first; otherwise a home containing a pair becomes the next saved-for goal
+ *   ({@link VillageGoal}). Room chest ownership follows the existing bed mappings.</li>
  * </ul>
  */
 public final class MarriageService {
@@ -72,6 +69,7 @@ public final class MarriageService {
    */
   public static void tick(Village village, ServerLevel level) {
     fileEmergentProposals(village, level);
+    houseWaitingCouples(village, level);
     ensureCoupleHomeGoal(village, level);
     considerDecision(village, level);
   }
@@ -260,8 +258,11 @@ public final class MarriageService {
       }
       situation.append(". ");
     }
-    situation.append("A married couple is given a home of their own to raise, which the village will save "
-        + "toward once it is not already saving for something else. ");
+    situation.append("A married couple shares a reserved double-bed room, which may be inside a larger shared house. ");
+    situation.append(village.getFreeCoupleHomeCount()).append(" completed couple rooms are free. ");
+    situation.append(village.getFreeWorkerCoupleHomeCount())
+        .append(" of those rooms require one spouse to work in their building. ");
+    situation.append("If none is available, the village saves toward a home containing one once its current goal clears. ");
     situation.append("The settlement has ").append(village.getPopulation().size()).append(" people. ");
     situation.append("Bless this marriage, or decide the time is not right.");
     return situation.toString();
@@ -312,8 +313,8 @@ public final class MarriageService {
   // --- Housing -------------------------------------------------------------
 
   /**
-   * Names a couple's cottage as the village's saved-for goal when a married pair
-   * has no shared home and the village is not already saving for something else
+   * Names a home with a couple room as the saved-for goal when a married pair
+   * has no shared room and the village is not already saving for something else
    * (the "queues next" rule). A home the economy cannot reach stalls through the
    * ordinary goal machinery, and while it sits out the village is left to build
    * other things rather than hammering an unaffordable cottage forever.
@@ -326,7 +327,7 @@ public final class MarriageService {
     if (couple == null) {
       return;
     }
-    BuildingInfo cottage = Buildings.resolve(Buildings.COUPLE_COTTAGE_CATEGORY, 1, village.getStyle());
+    BuildingInfo cottage = UrbanPlanner.coupleHomeGoal(village);
     if (cottage == null) {
       return;
     }
@@ -334,28 +335,46 @@ public final class MarriageService {
       return;
     }
     String reason = "the newlyweds " + nameOf(village, level, couple[0]) + " and "
-        + nameOf(village, level, couple[1]) + " need a home of their own";
+        + nameOf(village, level, couple[1]) + " need a shared couple room";
     VillageGoal.set(village, cottage.getName(), reason,
         UrbanPlanner.shortfallFor(village, cottage), village.getVillageTime());
   }
 
-  /**
-   * Called as a building is added: when it is a couple's cottage, the couple it
-   * was raised for move into its two beds, freeing whatever single beds they
-   * held. Their shared chest then follows from the personal-chest rules with no
-   * further wiring. A no-op for every other building.
-   */
+  /** Newly completed mixed houses and dedicated cottages use the same pair assignment path. */
   public static void onHomeBuilt(Village village, ServerLevel level, UUID buildingUUID, BuildingInfo info) {
-    if (info == null || !Buildings.COUPLE_COTTAGE_CATEGORY.equals(info.getCategory())) {
-      return;
+    if (info == null || info.getCoupleBeds().isEmpty()) return;
+    houseWaitingCouples(village, level);
+  }
+
+  /** Fills existing rooms before naming construction, without changing an unrelated saved project. */
+  public static void houseWaitingCouples(Village village, ServerLevel level) {
+    List<RelationshipPair> couples = village.marriedPairs().stream()
+        .sorted(java.util.Comparator.comparing(RelationshipPair::key)).toList();
+    List<com.quzzar.kithkyn.village.buildings.Building> homes = village.getBuildings().stream()
+        .filter(building -> building.getInfo() != null && !building.getInfo().getCoupleBeds().isEmpty())
+        .filter(building -> !village.isBeingRebuilt(building.getUUID()))
+        .sorted(java.util.Comparator.comparing(com.quzzar.kithkyn.village.buildings.Building::getUUID)).toList();
+    for (RelationshipPair pair : couples) {
+      UUID a = pair.personA();
+      UUID b = pair.personB();
+      if (!village.hasResident(a) || !village.hasResident(b)
+          || village.sharesCoupleHome(a, b) || village.getPerson(level, a) == null
+          || village.getPerson(level, b) == null) continue;
+      for (var home : homes) {
+        if (!village.houseCouple(a, b, home.getUUID())) continue;
+        Kithkyn.LOGGER.info("[marriage] '{}' and '{}' move into a couple room in '{}'",
+            nameOf(village, level, a), nameOf(village, level, b), village.getName());
+        break;
+      }
     }
-    UUID[] couple = firstCoupleAwaitingHome(village, level);
-    if (couple == null) {
-      return;
-    }
-    village.houseCouple(couple[0], couple[1], buildingUUID);
-    Kithkyn.LOGGER.info("[marriage] '{}' and '{}' move into their new home in '{}'",
-        nameOf(village, level, couple[0]), nameOf(village, level, couple[1]), village.getName());
+  }
+
+  /** Derived directly from married residents and exact paired-bed assignments. */
+  public static int awaitingHomeCount(Village village) {
+    return (int) village.marriedPairs().stream()
+        .filter(pair -> village.getPopulation().contains(pair.personA())
+            && village.getPopulation().contains(pair.personB()))
+        .filter(pair -> !village.sharesCoupleHome(pair.personA(), pair.personB())).count();
   }
 
   /**
@@ -368,10 +387,11 @@ public final class MarriageService {
     for (RelationshipPair pair : village.marriedPairs()) {
       UUID a = pair.personA();
       UUID b = pair.personB();
-      if (village.getPerson(level, a) == null || village.getPerson(level, b) == null) {
+      if (!village.hasResident(a) || !village.hasResident(b)
+          || village.getPerson(level, a) == null || village.getPerson(level, b) == null) {
         continue;
       }
-      if (sharesHome(village, a, b)) {
+      if (village.sharesCoupleHome(a, b)) {
         continue;
       }
       if (best == null || pair.key().compareTo(RelationshipPair.keyOf(best[0], best[1])) < 0) {
@@ -379,13 +399,6 @@ public final class MarriageService {
       }
     }
     return best;
-  }
-
-  /** Whether two villagers are assigned beds in the same building. */
-  private static boolean sharesHome(Village village, UUID a, UUID b) {
-    var bedA = village.getBedAssignment(a);
-    var bedB = village.getBedAssignment(b);
-    return bedA != null && bedB != null && bedA.getBuildingUUID().equals(bedB.getBuildingUUID());
   }
 
   private static String nameOf(Village village, ServerLevel level, UUID id) {

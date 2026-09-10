@@ -7,6 +7,7 @@ import javax.annotation.Nullable;
 import com.quzzar.kithkyn.Kithkyn;
 import com.quzzar.kithkyn.entities.RealPerson;
 import com.quzzar.kithkyn.entities.ai.HealthRecoveryPolicy;
+import com.quzzar.kithkyn.entities.ai.goals.work.CampfireAccess;
 import com.quzzar.kithkyn.village.Village;
 
 import net.minecraft.core.BlockPos;
@@ -29,7 +30,6 @@ import net.minecraft.world.entity.ai.goal.Goal;
  */
 public final class CampfireRecoveryGoal extends Goal {
 
-  private static final double REACH_SQR = 3.0D * 3.0D;
   private static final double SPEED = 0.6D;
   private static final int SELECT_INTERVAL_TICKS = 20;
   private static final int NAVIGATION_REFRESH_TICKS = 10;
@@ -39,6 +39,8 @@ public final class CampfireRecoveryGoal extends Goal {
 
   @Nullable
   private BlockPos campfire;
+  @Nullable
+  private BlockPos standing;
   private int nextSelectTick;
   private int nextNavigationTick;
   private boolean complete;
@@ -61,18 +63,11 @@ public final class CampfireRecoveryGoal extends Goal {
     if (village == null || !village.hasResident(this.person.getUUID())) {
       return false;
     }
-    BlockPos fire = village.getCampfirePosition();
-    if (fire == null
-        || !fire.closerToCenterThan(
-            this.person.position(), HealthRecoveryPolicy.CAMPFIRE_SEARCH_RANGE)
-        || !this.person.level().hasChunkAt(fire)) {
-      return false;
-    }
-    BlockPos litFire = village.getCampfire();
-    if (litFire == null || !litFire.equals(fire)) {
-      return false;
-    }
-    this.campfire = litFire;
+    CampfireAccess.Target target = CampfireAccess.select(this.person, village, false,
+        HealthRecoveryPolicy.CAMPFIRE_SEARCH_RANGE);
+    if (target == null) return false;
+    this.campfire = target.fire();
+    this.standing = target.approach();
     return true;
   }
 
@@ -83,7 +78,8 @@ public final class CampfireRecoveryGoal extends Goal {
     }
     Village village = this.person.getVillage();
     return village != null && this.person.level().hasChunkAt(this.campfire)
-        && this.campfire.equals(village.getCampfire());
+        && village.getCampfirePositions().contains(this.campfire)
+        && CampfireAccess.usable(this.person, this.campfire, false);
   }
 
   @Override
@@ -102,30 +98,28 @@ public final class CampfireRecoveryGoal extends Goal {
   public void stop() {
     this.person.getNavigation().stop();
     this.campfire = null;
+    this.standing = null;
     this.complete = false;
   }
 
   @Override
   public void tick() {
-    if (this.campfire == null) {
+    if (this.campfire == null || this.standing == null) {
       this.complete = true;
       return;
     }
-    if (this.person.blockPosition().distSqr(this.campfire) <= REACH_SQR) {
+    if (CampfireAccess.inReach(this.person, this.campfire)) {
       recover();
       return;
     }
-    if (this.approach.giveUp(this.campfire)) {
+    if (this.approach.giveUp(this.standing)) {
       this.complete = true;
       return;
     }
     if (this.person.tickCount >= this.nextNavigationTick) {
       this.nextNavigationTick = this.person.tickCount + NAVIGATION_REFRESH_TICKS;
       this.person.getNavigation().moveTo(
-          this.campfire.getX() + 0.5D,
-          this.campfire.getY(),
-          this.campfire.getZ() + 0.5D,
-          SPEED);
+          this.person.getNavigation().createPath(this.standing, 0), SPEED);
     }
   }
 

@@ -39,6 +39,12 @@ public final class CookStep implements BlockWorkStep {
   private static final int RAWS_PER_TRIP = 4;
 
   private final CampfireRoast roast = new CampfireRoast();
+  @Nullable
+  private CampfireAccess.Target fireTarget;
+  @Nullable
+  private BlockPos chestTarget;
+  @Nullable
+  private BlockPos chestApproach;
 
   @Override
   @Nullable
@@ -47,27 +53,18 @@ public final class CookStep implements BlockWorkStep {
     if (village == null) {
       return null;
     }
-    BlockPos fire = village.getCampfire();
-    if (fire == null) {
-      return null;
+    if (this.roast.tending() && this.fireTarget != null) return this.fireTarget.fire();
+    // A fire route is worth searching only when there is actual raw food to cook.
+    boolean rawCarried = this.roast.rawInPack(person) != null;
+    BlockPos source = rawCarried ? null : chestWithRaw(person, village);
+    if (rawCarried || source != null) {
+      this.fireTarget = CampfireAccess.select(person, village, true, Double.MAX_VALUE);
+      if (this.fireTarget != null) return rawCarried ? this.fireTarget.fire() : selectChest(person, source);
     }
-    // Mid-batch: keep the fire as the target until the roast is collected.
-    if (this.roast.tending()) {
-      return fire;
-    }
-    // Raw in the pack: to the fire.
-    if (this.roast.rawInPack(person) != null) {
-      return fire;
-    }
-    // Otherwise a chest: one holding raw food, or failing that, one with room
-    // for the cooked food still in the pack.
-    BlockPos source = chestWithRaw(person, village);
-    if (source != null) {
-      return source;
-    }
+    // Finished meals can still be put away when every fire is out or full.
     Item cooked = this.roast.cookedInPack(person);
     if (cooked != null) {
-      return PackLogistics.chestWithRoomFor(person, village, new ItemStack(cooked));
+      return selectChest(person, PackLogistics.chestWithRoomFor(person, village, new ItemStack(cooked)));
     }
     return null;
   }
@@ -86,12 +83,12 @@ public final class CookStep implements BlockWorkStep {
     if (campfire == null) {
       // The fire went out or was taken. The raw mid-roast goes back into the
       // pack so nothing is lost, then go and select afresh.
-      this.roast.abandon(person, null);
+      this.roast.abandon(person, target);
       return false;
     }
     if (!this.roast.tending()) {
       if (!CampfireRoast.hasFreeSlot(campfire)) {
-        return true; // fire is full of other cooks; wait rather than pull food out
+        return false; // reselect another fire with room
       }
       if (this.roast.rawInPack(person) == null) {
         return false; // pack is empty of raw food; back to select for a chest
@@ -126,6 +123,32 @@ public final class CookStep implements BlockWorkStep {
   @Override
   public void released(RealPerson person, BlockPos fire) {
     this.roast.abandon(person, fire);
+    this.fireTarget = null;
+    this.chestTarget = null;
+    this.chestApproach = null;
+  }
+
+  /** The shared loop walks beside the fire and still acts on the actual cooking block. */
+  @Override
+  public BlockPos positionOf(BlockPos target) {
+    return this.fireTarget != null && target.equals(this.fireTarget.fire())
+        ? this.fireTarget.approach()
+        : target.equals(this.chestTarget) && this.chestApproach != null ? this.chestApproach : target;
+  }
+
+  @Override
+  public boolean inReach(RealPerson person, BlockPos target) {
+    if (this.fireTarget != null && target.equals(this.fireTarget.fire())) return CampfireAccess.inReach(person, target);
+    boolean handReach = ContainerAccess.canReach(person, person.getEyePosition(), target, reachSqr(person));
+    if (!handReach && this.chestApproach != null) {
+      this.chestApproach = ContainerAccess.resolveOpenedDoor(person, target, this.chestApproach, reachSqr(person));
+    }
+    return handReach;
+  }
+
+  @Override
+  public boolean requiresExactArrival() {
+    return true;
   }
 
   @Override
@@ -148,6 +171,14 @@ public final class CookStep implements BlockWorkStep {
   @Override
   public boolean worksAtNight() {
     return true;
+  }
+
+  /** A storage trip uses the same supported footholds as a fire, never the solid chest block. */
+  @Nullable
+  private BlockPos selectChest(RealPerson person, @Nullable BlockPos chest) {
+    this.chestTarget = chest;
+    this.chestApproach = chest == null ? null : ContainerAccess.approachTo(person, chest, reachSqr(person));
+    return this.chestApproach == null ? null : chest;
   }
 
   /** The nearest chest holding any raw the fire can cook, or null. */

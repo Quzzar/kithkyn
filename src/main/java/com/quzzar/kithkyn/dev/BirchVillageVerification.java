@@ -50,13 +50,15 @@ public final class BirchVillageVerification {
   private static Village walkVillage;
   private static boolean mineReturning;
   private static boolean centerReturning;
+  private static com.quzzar.kithkyn.entities.ai.goals.StashAtHomeGoal tavernStash;
+  private static com.quzzar.kithkyn.entities.ai.goals.SleepAtNightGoal tavernSleep;
   private static final String[] WALK_BUILDINGS = {
       "watchtower_birch_forest_1", "watchtower_birch_forest_2", "bakery_birch_forest_1", "stoneworks_birch_forest_1",
-      "village_center_birch_forest_1", "mine_birch_forest_1"
+      "village_center_birch_forest_1", "tavern_birch_forest_1", "mine_birch_forest_1"
   };
   private static final BlockPos[] WALK_TARGETS = {
       new BlockPos(9, 10, 7), new BlockPos(7, 10, 8), new BlockPos(7, 5, 11), new BlockPos(6, 4, 8),
-      new BlockPos(23, 5, 14), new BlockPos(8, 0, 7)
+      new BlockPos(23, 5, 14), new BlockPos(14, 1, 16), new BlockPos(8, 0, 7)
   };
 
   private BirchVillageVerification() { }
@@ -86,7 +88,7 @@ public final class BirchVillageVerification {
         catalog = Buildings.allBuildings().values().stream()
             .filter(info -> info.getVariant().equals("birch_forest"))
             .sorted(java.util.Comparator.comparing(BuildingInfo::getName)).toList();
-        check(catalog.size() == 22, "Expected 22 approved buildings");
+        check(catalog.size() == 23, "Expected 23 approved buildings");
         walker = PersonEntityType.PERSON.get().create(level);
         setProbeStats(walker);
         walker.setNoAi(true);
@@ -158,6 +160,13 @@ public final class BirchVillageVerification {
 
   private static void inspect(ServerLevel level) {
     BuildingInfo info = building.getInfo();
+    if (building.getName().equals("tavern_birch_forest_1")) {
+      var entrance = com.quzzar.kithkyn.village.LocationManager.getEntrance(level, building);
+      BlockPos expected = BlockPos.of(building.getOriginLocation())
+          .offset(new BlockPos(2, 1, 9).rotate(building.getRotation()));
+      check(entrance != null && entrance.doorstep().equals(expected),
+          "Tavern navigation selected an interior door instead of its public entrance in "+building.getRotation());
+    }
     if (building.getName().equals("fishery_birch_forest_1")) {
       BlockPos barrel = BlockPos.of(building.getOriginLocation())
           .offset(new BlockPos(10, 2, 10).rotate(building.getRotation()));
@@ -216,6 +225,17 @@ public final class BirchVillageVerification {
     walker.moveTo(bounds.minX() - 1.5, SITE.getY(), bounds.minZ() - 1.5, 0, 0);
     walker.setOnGround(true);
     BlockPos target = BlockPos.of(building.getOriginLocation()).offset(BlockPos.of(local).rotate(building.getRotation()));
+    if (role.equals("personal chest")) {
+      var entrance = com.quzzar.kithkyn.village.LocationManager.getEntrance(level, building);
+      if (entrance != null) {
+        BlockPos step = entrance.doorstep();
+        walker.moveTo(step.getX()+0.5D, step.getY(), step.getZ()+0.5D, 0, 0);
+      }
+      var approach = com.quzzar.kithkyn.entities.ai.goals.work.ContainerAccess.approachTo(walker, target, 9.0D);
+      check(approach != null, building.getName()+" "+building.getRotation()+" has no accessible personal storage at "+BlockPos.of(local));
+      routes++;
+      return;
+    }
     Path path = walker.getNavigation().createPath(target, accuracy);
     routes++;
     // Ground navigation raises solid targets to the air above them. A path
@@ -254,13 +274,47 @@ public final class BirchVillageVerification {
 
   /** Real physics, move control and door opening, without unrelated work/social goals. */
   private static void walk(ServerLevel level) {
+    if (tavernSleep != null) {
+      tavernSleep.tick();
+      if (liveWalker.isSleeping()) {
+        check(liveWalker.getSleepingPos().orElseThrow().equals(walkTarget), "Keeper slept in the wrong bed");
+        Kithkyn.LOGGER.info("[birch-verify] SLEEP PASS {}: keeper uses their assigned back-room bed after stashing", building.getRotation());
+        tavernSleep.stop();
+        tavernSleep = null;
+        level.setDayTime(6000);
+        level.updateSkyBrightness();
+        finishWalk(level);
+      } else {
+        check(tick - walkStarted < 1400, "Keeper cannot sleep after putting their items away in "+building.getRotation());
+      }
+      return;
+    }
+    if (tavernStash != null) {
+      tavernStash.tick();
+      BlockPos chest = com.quzzar.kithkyn.village.PersonalChest.of(liveWalker);
+      check(chest != null, "Keeper lost their assigned home during the stash trip");
+      net.minecraft.world.Container contents = com.quzzar.kithkyn.village.PersonalChest.container(liveWalker, chest);
+      if (contents != null && contents.countItem(net.minecraft.world.item.Items.EMERALD) == 7) {
+        check(liveWalker.personMainInv.countItem(net.minecraft.world.item.Items.EMERALD) == 0, "Personal storage duplicated carried items");
+        check(com.quzzar.kithkyn.entities.ai.goals.work.ContainerAccess.canReach(liveWalker, liveWalker.getEyePosition(), chest, 9.0D), "Stash transferred through an inaccessible wall");
+        Kithkyn.LOGGER.info("[birch-verify] STASH PASS {}: carried seven emeralds from outside into the private ceiling barrel", building.getRotation());
+        tavernStash = null;
+        tavernSleep = new com.quzzar.kithkyn.entities.ai.goals.SleepAtNightGoal(liveWalker);
+        check(tavernSleep.canUse(), "Keeper cannot start sleeping after stashing");
+        walkStarted = tick;
+        tavernSleep.start();
+      } else {
+        check(tavernStash.canContinueToUse() && tick - walkStarted < 1800, "Tavern ceiling stash failed in "+building.getRotation()+" at "+liveWalker.blockPosition());
+      }
+      return;
+    }
     if (walkIndex == WALK_BUILDINGS.length * 4) {
       if (Boolean.getBoolean("kithkyn.birch.mineEntryVerify")) {
         Kithkyn.LOGGER.info("[birch-verify] RESULT PASS: excavated mine exit and re-entry in all four rotations (8 actual walks), legacy repair={}",
             Boolean.getBoolean("kithkyn.birch.mineEntryLegacy"));
       } else {
         NaturalFoundingVerification.requirePassed();
-        Kithkyn.LOGGER.info("[birch-verify] RESULT PASS: 88 rotated templates, {} planned access routes, 32 actual entity walks including tall center exit/re-entry, and complete biome-selected founding", routes);
+        Kithkyn.LOGGER.info("[birch-verify] RESULT PASS: 92 rotated templates, {} planned access routes, 32 actual entity walks including tall center exit/re-entry, four real home-stash and sleep trips, and complete biome-selected founding", routes);
       }
       level.getServer().halt(false);
       walking = false;
@@ -293,19 +347,12 @@ public final class BirchVillageVerification {
         walkVillage = new NavigationVillage(level, building);
         com.quzzar.kithkyn.village.VillageManager.get(level).getVillages().put(walkVillage.getID(), walkVillage);
         liveWalker.setVillage(walkVillage.getID());
+        walkVillage.getPopulation().add(liveWalker.getUUID());
         // Replay an excavated entrance, not merely access to the surface station.
         // Real path wear lowers its dirt support by 1/16 of a block as well.
         var shaft = com.quzzar.kithkyn.village.buildings.MineShaft.of(building).getFirst();
-        for (BlockPos local : BlockPos.betweenClosed(-2, -13, -2, 2, -1, 8)) {
-          level.setBlock(shaft.mouth().offset(local.rotate(shaft.rotation())), Blocks.STONE.defaultBlockState(), 2);
-        }
-        for (BlockPos local : BlockPos.betweenClosed(-2, -12, -1, 2, -1, 8)) {
-          if (com.quzzar.kithkyn.village.buildings.MineShaft.withinCorridor(local)) {
-            level.setBlock(shaft.mouth().offset(local.rotate(shaft.rotation())), Blocks.AIR.defaultBlockState(), 2);
-          }
-        }
+        ApprovedStructureAccess.excavateMine(level, shaft, BlockPos.of(building.getOriginLocation()).getY());
         level.setBlock(shaft.entranceClearance(), Blocks.AIR.defaultBlockState(), 2);
-        level.setBlock(shaft.entry().below(), Blocks.DIRT_PATH.defaultBlockState(), 2);
       }
       liveWalker.setPersistenceRequired();
       liveWalker.goalSelector.removeAllGoals(goal -> !(goal instanceof net.minecraft.world.entity.ai.goal.OpenDoorGoal)
@@ -329,6 +376,10 @@ public final class BirchVillageVerification {
         walkTarget = BlockPos.of(building.getOriginLocation()).offset(new BlockPos(4, 1, 8).rotate(rotation));
       }
       walkStarted = tick;
+      if (name.equals("tavern_birch_forest_1")) {
+        startTavernStash(level);
+        return;
+      }
     }
     if (liveWalker.distanceToSqr(walkTarget.getX() + 0.5D, walkTarget.getY(), walkTarget.getZ() + 0.5D) <= 2.25D) {
       Kithkyn.LOGGER.info("[birch-verify] WALK PASS {} {} in {} ticks", building.getName(), building.getRotation(), tick - walkStarted);
@@ -348,13 +399,7 @@ public final class BirchVillageVerification {
         return;
       }
       centerReturning = false;
-      liveWalker.discard();
-      liveWalker = null;
-      if (walkVillage != null) {
-        com.quzzar.kithkyn.village.VillageManager.get(level).getVillages().remove(walkVillage.getID());
-        walkVillage = null;
-      }
-      walkIndex++;
+      finishWalk(level);
       return;
     }
     check(tick - walkStarted < 1400, "Actual walking stuck: " + building.getName() + " " + building.getRotation()
@@ -363,6 +408,43 @@ public final class BirchVillageVerification {
     if (tick - walkStarted > 5 && (liveWalker.getNavigation().isDone() || tick % 10 == 0)) {
       liveWalker.getNavigation().moveTo(walkTarget.getX() + 0.5D, walkTarget.getY(), walkTarget.getZ() + 0.5D, 0.6D);
     }
+  }
+
+  /** Exercise the real home-stash goal from outdoors; the barrel must stay where it was authored. */
+  private static void startTavernStash(ServerLevel level) {
+    walkVillage = new NavigationVillage(level, building);
+    com.quzzar.kithkyn.village.VillageManager.get(level).getVillages().put(walkVillage.getID(), walkVillage);
+    liveWalker.setVillage(walkVillage.getID());
+    walkVillage.getPopulation().add(liveWalker.getUUID());
+    level.setDayTime(13000);
+    level.updateSkyBrightness();
+    liveWalker.personMainInv.addItem(new net.minecraft.world.item.ItemStack(net.minecraft.world.item.Items.EMERALD, 7));
+    try {
+      ApprovedStructureAccess.assignSingle(walkVillage, liveWalker.getUUID(), building.getUUID());
+      var keep = RealPerson.class.getDeclaredMethod("settleStash", java.util.Set.class);
+      keep.setAccessible(true);
+      keep.invoke(liveWalker, java.util.Set.of(net.minecraft.world.item.Items.EMERALD));
+    } catch (ReflectiveOperationException failure) {
+      throw new AssertionError("Could not prepare the real stash fixture", failure);
+    }
+    check(com.quzzar.kithkyn.village.PersonalChest.of(liveWalker) != null, "Keeper did not receive their real home storage");
+    liveWalker.getNavigation().stop();
+    liveWalker.moveTo(bounds.minX()-1.5D, SITE.getY(), bounds.minZ()-1.5D, 0, 0);
+    liveWalker.setOnGround(true);
+    tavernStash = new com.quzzar.kithkyn.entities.ai.goals.StashAtHomeGoal(liveWalker);
+    check(tavernStash.canUse(), "Keeper cannot start carrying their goods home");
+    walkStarted = tick;
+    tavernStash.start();
+  }
+
+  private static void finishWalk(ServerLevel level) {
+    liveWalker.discard();
+    liveWalker = null;
+    if (walkVillage != null) {
+      com.quzzar.kithkyn.village.VillageManager.get(level).getVillages().remove(walkVillage.getID());
+      walkVillage = null;
+    }
+    walkIndex++;
   }
 
   private static void verifyFounding(ServerLevel level) {

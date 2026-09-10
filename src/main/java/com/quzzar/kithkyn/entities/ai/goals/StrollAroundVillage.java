@@ -3,6 +3,7 @@ package com.quzzar.kithkyn.entities.ai.goals;
 import javax.annotation.Nullable;
 
 import com.quzzar.kithkyn.entities.RealPerson;
+import com.quzzar.kithkyn.entities.ai.goals.work.CampfireAccess;
 import com.quzzar.kithkyn.village.LocationManager;
 import com.quzzar.kithkyn.village.Occupation;
 import com.quzzar.kithkyn.village.Village;
@@ -33,6 +34,9 @@ public class StrollAroundVillage extends RandomStrollGoal {
     private static final double NIGHT_CAMPFIRE_TETHER = 6.0D;
 
     private final RealPerson person;
+    @Nullable
+    private CampfireAccess.Target gatheringFire;
+    private int refreshFireAt;
 
     public StrollAroundVillage(RealPerson person, double speedModifier) {
         // RandomStrollGoal already declares the movement flag for us.
@@ -93,7 +97,14 @@ public class StrollAroundVillage extends RandomStrollGoal {
         if (village == null) {
             return null;
         }
-        BlockPos campfire = village.getGatheringPoint();
+        // Keep one fireside for several strolls, then let the resident choose again.
+        if (this.gatheringFire == null || person.tickCount >= this.refreshFireAt
+                || !CampfireAccess.usable(person, this.gatheringFire.fire(), false)) {
+            this.gatheringFire = CampfireAccess.gathering(person, village);
+            this.refreshFireAt = person.tickCount + 1200;
+        }
+        BlockPos campfire = this.gatheringFire == null
+                ? village.getGatheringPoint() : this.gatheringFire.approach();
         if (campfire == null || campfire.equals(BlockPos.ZERO)) {
             return null;
         }

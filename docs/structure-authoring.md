@@ -35,6 +35,10 @@ commands. This is the loop the current `village_center_plains_1` was built with.
 5. **Write the definition** JSON beside it, with positions RELATIVE to the structure
    origin (the corner you passed as `from`). Beds, work stations, containers, personal containers (a home's own chest, the rule in
    [building-spec.md](building-spec.md)), and the gathering point are all origin offsets.
+   Alternative layouts use `<category>_<variant>_<level>__<design>` ids, with the same suffix
+   on the definition and structure file. Keep the unsuffixed canonical layout at each tier.
+   If a higher-tier layout has no compatible in-place predecessor, set `"standalone": true`
+   and omit `upgrades_from`; its cost is the complete fresh building recipe.
 6. **Look at it**: `/kkdev village gallery <pos>` places every loaded definition on labelled
    plinths. `/reload` picks up JSON edits without a restart; a new `.nbt` needs a restart.
 7. **Verify the palette**, always, before shipping. The decompressed NBT contains every
@@ -57,8 +61,19 @@ commands. This is the loop the current `village_center_plains_1` was built with.
   Anything position-sensitive (a gathering point, a work station) must be verified in a
   real village, not only in the gallery. The campfire POI landing correctly after rotation
   is the check that catches this.
-- **Nothing that damages a villager where they stand.** The gathering point is beside the
-  campfire, never on it, because everything that gathers walks there and idles there.
+- **Independent meeting and fire coordinates.** `meeting_point` names safe standing ground
+  near the authored bell or plaza, while `campfires` lists actual cooking fire blocks. Verify
+  both after every rotation, including routes to rooftop or basement fires. Legacy
+  `gathering_point` still names a single fire and resolves meeting ground beside it.
+- **Nothing that damages a villager where they stand.** The meeting point is never on a
+  campfire or bell block: arrivals and returning workers physically stand there.
+- **Rooms inside shared houses.** `couple_beds` names pairs of adjacent bed coordinates,
+  such as `[[[1,1,1],[2,1,1]]]`. Declare every physical bed in `beds`, including both sides
+  of each pair. Other beds remain single housing; the building need not be a dedicated
+  couple cottage. Assign both sides to the same primary or secondary identity color.
+  Bind both to their room's chest through `bed_containers`, and use an empty container
+  list for beds with no private storage. Verify actual sleeping and chest access on each
+  floor in all four rotations, especially where ladders or adjoining beds restrict approach.
 - **No block entities in the footprint of anything the site scorer must accept**: a chest
   or sign in the way makes a site impossible rather than clearable
   ([site-selection.md](site-selection.md)).

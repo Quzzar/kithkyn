@@ -1,0 +1,840 @@
+{
+  "status": "captured_configured_and_verified",
+  "description": "First copies of Medium Houses 1\u20132 and Small Houses 1\u20136 selected as additional Pueblo home designs. Production bindings preserve these distinct designs and use existing house recipes by capacity tier, with independent higher-tier construction rather than forced upgrades.",
+  "work": "run/pueblo-showcase/houses-extra-approved-20260909-173019",
+  "preview_colors": {
+    "primary": "blue",
+    "secondary": "yellow"
+  },
+  "houses": [
+    {
+      "exhibit": "P02.1",
+      "label": "Medium House 1",
+      "source_capture": "run/pueblo-showcase/houses-extra-approved-20260909-173019/captures/P02.1.nbt",
+      "source_sha256": "c113e2ae3d8afb58e22c1cdec79885058b1e9cf6529dc3ffb4cba86e8f0e50e4",
+      "template_origin": [
+        3598,
+        230,
+        1057
+      ],
+      "size": [
+        9,
+        8,
+        10
+      ],
+      "capacity": {
+        "beds": 2,
+        "single_beds": 2,
+        "couple_rooms": 0
+      },
+      "amenities": {
+        "beds": [
+          [
+            5,
+            1,
+            3
+          ],
+          [
+            3,
+            4,
+            6
+          ]
+        ],
+        "couple_beds": [],
+        "work_stations": [],
+        "personal_containers": [
+          [
+            3,
+            1,
+            4
+          ],
+          [
+            3,
+            5,
+            4
+          ]
+        ],
+        "containers": [],
+        "bed_containers": [
+          {
+            "bed": [
+              5,
+              1,
+              3
+            ],
+            "containers": [
+              [
+                3,
+                1,
+                4
+              ]
+            ]
+          },
+          {
+            "bed": [
+              3,
+              4,
+              6
+            ],
+            "containers": [
+              [
+                3,
+                5,
+                4
+              ]
+            ]
+          }
+        ],
+        "village_identity": {
+          "primary_blocks": [
+            [
+              5,
+              1,
+              3
+            ]
+          ],
+          "secondary_blocks": [
+            [
+              3,
+              4,
+              6
+            ]
+          ],
+          "banners": []
+        },
+        "sink": 0
+      },
+      "neutral_template": "run/pueblo-showcase/houses-extra-approved-20260909-173019/neutral/P02.1.nbt",
+      "neutral_template_sha256": "99229b53c926a456a988652cf66ca48b7a4b9841e3cef4ce7a3565cd2d36a8e2",
+      "production": {
+        "structure": "house_badlands_2",
+        "category": "house",
+        "variant": "badlands",
+        "level": 2,
+        "recipe": "house_plains_2",
+        "definition_overrides": {
+          "entrance_facing": "west",
+          "standalone": true
+        }
+      },
+      "source_mod_structure": "data/kaisyn/structure/village/badlands_pueblo/houses/badlands_medium_house_1_l.nbt",
+      "source_mod": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar"
+    },
+    {
+      "exhibit": "P02.3",
+      "label": "Medium House 2",
+      "source_capture": "run/pueblo-showcase/houses-extra-approved-20260909-173019/captures/P02.3.nbt",
+      "source_sha256": "5f3786b1bcab390bd05014a9f0701b116e2fb492c100d854a97869b4e9f22aa8",
+      "template_origin": [
+        3624,
+        230,
+        1057
+      ],
+      "size": [
+        9,
+        8,
+        10
+      ],
+      "capacity": {
+        "beds": 2,
+        "single_beds": 2,
+        "couple_rooms": 0
+      },
+      "amenities": {
+        "beds": [
+          [
+            5,
+            1,
+            3
+          ],
+          [
+            3,
+            4,
+            4
+          ]
+        ],
+        "couple_beds": [],
+        "work_stations": [],
+        "personal_containers": [
+          [
+            3,
+            1,
+            6
+          ],
+          [
+            3,
+            4,
+            6
+          ]
+        ],
+        "containers": [],
+        "bed_containers": [
+          {
+            "bed": [
+              5,
+              1,
+              3
+            ],
+            "containers": [
+              [
+                3,
+                1,
+                6
+              ]
+            ]
+          },
+          {
+            "bed": [
+              3,
+              4,
+              4
+            ],
+            "containers": [
+              [
+                3,
+                4,
+                6
+              ]
+            ]
+          }
+        ],
+        "village_identity": {
+          "primary_blocks": [
+            [
+              5,
+              1,
+              3
+            ]
+          ],
+          "secondary_blocks": [
+            [
+              3,
+              4,
+              4
+            ]
+          ],
+          "banners": []
+        },
+        "sink": 0
+      },
+      "neutral_template": "run/pueblo-showcase/houses-extra-approved-20260909-173019/neutral/P02.3.nbt",
+      "neutral_template_sha256": "9e1447673ad95b27341b26c7e641aca976939767ce0ce5a30a7694e82edb4b57",
+      "production": {
+        "structure": "house_badlands_2__medium_house_2",
+        "category": "house",
+        "variant": "badlands",
+        "level": 2,
+        "recipe": "house_plains_2",
+        "definition_overrides": {
+          "entrance_facing": "west",
+          "standalone": true
+        }
+      },
+      "source_mod_structure": "data/kaisyn/structure/village/badlands_pueblo/houses/badlands_medium_house_2_l.nbt",
+      "source_mod": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar"
+    },
+    {
+      "exhibit": "P02.5",
+      "label": "Small House 1",
+      "source_capture": "run/pueblo-showcase/houses-extra-approved-20260909-173019/captures/P02.5.nbt",
+      "source_sha256": "47dcc609e8e178e4707e00f88b9a7623609e778f990cdac9fe25adb8dc57829f",
+      "template_origin": [
+        3650,
+        230,
+        1057
+      ],
+      "size": [
+        9,
+        6,
+        10
+      ],
+      "capacity": {
+        "beds": 1,
+        "single_beds": 1,
+        "couple_rooms": 0
+      },
+      "amenities": {
+        "beds": [
+          [
+            5,
+            1,
+            6
+          ]
+        ],
+        "couple_beds": [],
+        "work_stations": [],
+        "personal_containers": [
+          [
+            3,
+            1,
+            4
+          ]
+        ],
+        "containers": [],
+        "bed_containers": [
+          {
+            "bed": [
+              5,
+              1,
+              6
+            ],
+            "containers": [
+              [
+                3,
+                1,
+                4
+              ]
+            ]
+          }
+        ],
+        "village_identity": {
+          "primary_blocks": [
+            [
+              5,
+              1,
+              6
+            ]
+          ],
+          "secondary_blocks": [],
+          "banners": []
+        },
+        "sink": 0
+      },
+      "neutral_template": "run/pueblo-showcase/houses-extra-approved-20260909-173019/neutral/P02.5.nbt",
+      "neutral_template_sha256": "f967ac927aaf80e73ea51ca8d1c2f0c0f9942aa68d11a1d2a55493b771e80750",
+      "production": {
+        "structure": "house_badlands_1",
+        "category": "house",
+        "variant": "badlands",
+        "level": 1,
+        "recipe": "house_plains_1",
+        "definition_overrides": {
+          "entrance_facing": "west"
+        }
+      },
+      "source_mod_structure": "data/kaisyn/structure/village/badlands_pueblo/houses/badlands_small_house_1_l.nbt",
+      "source_mod": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar"
+    },
+    {
+      "exhibit": "P02.7",
+      "label": "Small House 2",
+      "source_capture": "run/pueblo-showcase/houses-extra-approved-20260909-173019/captures/P02.7.nbt",
+      "source_sha256": "ee909822eaa0d6d12447e71ba4f43cc3301bd380528631136fb0ee29947e5196",
+      "template_origin": [
+        3676,
+        230,
+        1057
+      ],
+      "size": [
+        9,
+        6,
+        10
+      ],
+      "capacity": {
+        "beds": 1,
+        "single_beds": 1,
+        "couple_rooms": 0
+      },
+      "amenities": {
+        "beds": [
+          [
+            3,
+            1,
+            4
+          ]
+        ],
+        "couple_beds": [],
+        "work_stations": [],
+        "personal_containers": [
+          [
+            5,
+            1,
+            3
+          ]
+        ],
+        "containers": [],
+        "bed_containers": [
+          {
+            "bed": [
+              3,
+              1,
+              4
+            ],
+            "containers": [
+              [
+                5,
+                1,
+                3
+              ]
+            ]
+          }
+        ],
+        "village_identity": {
+          "primary_blocks": [],
+          "secondary_blocks": [
+            [
+              3,
+              1,
+              4
+            ]
+          ],
+          "banners": []
+        },
+        "sink": 0
+      },
+      "neutral_template": "run/pueblo-showcase/houses-extra-approved-20260909-173019/neutral/P02.7.nbt",
+      "neutral_template_sha256": "e7d43adf2181e7bca9b63dc4c245b3558119f3b47a559306fb1d16586fc4aa65",
+      "production": {
+        "structure": "house_badlands_1__small_house_2",
+        "category": "house",
+        "variant": "badlands",
+        "level": 1,
+        "recipe": "house_plains_1",
+        "definition_overrides": {
+          "entrance_facing": "west"
+        }
+      },
+      "source_mod_structure": "data/kaisyn/structure/village/badlands_pueblo/houses/badlands_small_house_2_l.nbt",
+      "source_mod": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar"
+    },
+    {
+      "exhibit": "P02.9",
+      "label": "Small House 3",
+      "source_capture": "run/pueblo-showcase/houses-extra-approved-20260909-173019/captures/P02.9.nbt",
+      "source_sha256": "19fcb6b73791a1d495fd6af260b65c4b6d7f1872fb84b13b940cae51ffdd4135",
+      "template_origin": [
+        3702,
+        230,
+        1057
+      ],
+      "size": [
+        9,
+        9,
+        10
+      ],
+      "capacity": {
+        "beds": 2,
+        "single_beds": 0,
+        "couple_rooms": 1
+      },
+      "amenities": {
+        "beds": [
+          [
+            5,
+            1,
+            5
+          ],
+          [
+            5,
+            1,
+            6
+          ]
+        ],
+        "couple_beds": [
+          [
+            [
+              5,
+              1,
+              5
+            ],
+            [
+              5,
+              1,
+              6
+            ]
+          ]
+        ],
+        "work_stations": [],
+        "personal_containers": [
+          [
+            5,
+            4,
+            6
+          ]
+        ],
+        "containers": [],
+        "bed_containers": [
+          {
+            "bed": [
+              5,
+              1,
+              5
+            ],
+            "containers": [
+              [
+                5,
+                4,
+                6
+              ]
+            ]
+          },
+          {
+            "bed": [
+              5,
+              1,
+              6
+            ],
+            "containers": [
+              [
+                5,
+                4,
+                6
+              ]
+            ]
+          }
+        ],
+        "village_identity": {
+          "primary_blocks": [
+            [
+              5,
+              1,
+              5
+            ],
+            [
+              5,
+              1,
+              6
+            ]
+          ],
+          "secondary_blocks": [],
+          "banners": []
+        },
+        "sink": 0
+      },
+      "neutral_template": "run/pueblo-showcase/houses-extra-approved-20260909-173019/neutral/P02.9.nbt",
+      "neutral_template_sha256": "b9bd7c61ba70532c2ac0ffb9120f49cb2e7f750515f5f1832e185ebacf2cc041",
+      "production": {
+        "structure": "house_badlands_1__small_house_3",
+        "category": "house",
+        "variant": "badlands",
+        "level": 1,
+        "recipe": "house_plains_1",
+        "definition_overrides": {
+          "entrance_facing": "west"
+        }
+      },
+      "source_mod_structure": "data/kaisyn/structure/village/badlands_pueblo/houses/badlands_small_house_3_l.nbt",
+      "source_mod": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar"
+    },
+    {
+      "exhibit": "P02.11",
+      "label": "Small House 4",
+      "source_capture": "run/pueblo-showcase/houses-extra-approved-20260909-173019/captures/P02.11.nbt",
+      "source_sha256": "57420abbc28f898d7367d4d74c618b41f842acf134e0772e55100e2bfac96864",
+      "template_origin": [
+        3728,
+        230,
+        1057
+      ],
+      "size": [
+        9,
+        6,
+        10
+      ],
+      "capacity": {
+        "beds": 1,
+        "single_beds": 1,
+        "couple_rooms": 0
+      },
+      "amenities": {
+        "beds": [
+          [
+            5,
+            1,
+            6
+          ]
+        ],
+        "couple_beds": [],
+        "work_stations": [],
+        "personal_containers": [
+          [
+            3,
+            1,
+            6
+          ]
+        ],
+        "containers": [],
+        "bed_containers": [
+          {
+            "bed": [
+              5,
+              1,
+              6
+            ],
+            "containers": [
+              [
+                3,
+                1,
+                6
+              ]
+            ]
+          }
+        ],
+        "village_identity": {
+          "primary_blocks": [],
+          "secondary_blocks": [
+            [
+              5,
+              1,
+              6
+            ]
+          ],
+          "banners": []
+        },
+        "sink": 0
+      },
+      "neutral_template": "run/pueblo-showcase/houses-extra-approved-20260909-173019/neutral/P02.11.nbt",
+      "neutral_template_sha256": "e2aec5ab6d065e0163df8e5733f9a3ba823fa44d3bd8641a153b47e4b31ae9a1",
+      "production": {
+        "structure": "house_badlands_1__small_house_4",
+        "category": "house",
+        "variant": "badlands",
+        "level": 1,
+        "recipe": "house_plains_1",
+        "definition_overrides": {
+          "entrance_facing": "west"
+        }
+      },
+      "source_mod_structure": "data/kaisyn/structure/village/badlands_pueblo/houses/badlands_small_house_4_l.nbt",
+      "source_mod": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar"
+    },
+    {
+      "exhibit": "P03.1",
+      "label": "Small House 5",
+      "source_capture": "run/pueblo-showcase/houses-extra-approved-20260909-173019/captures/P03.1.nbt",
+      "source_sha256": "47c515abf2ce300941a632b691529e41d7b16b803fc778dec62e8313bda303ff",
+      "template_origin": [
+        3598,
+        230,
+        1083
+      ],
+      "size": [
+        9,
+        6,
+        10
+      ],
+      "capacity": {
+        "beds": 1,
+        "single_beds": 1,
+        "couple_rooms": 0
+      },
+      "amenities": {
+        "beds": [
+          [
+            5,
+            1,
+            6
+          ]
+        ],
+        "couple_beds": [],
+        "work_stations": [],
+        "personal_containers": [
+          [
+            4,
+            1,
+            3
+          ]
+        ],
+        "containers": [],
+        "bed_containers": [
+          {
+            "bed": [
+              5,
+              1,
+              6
+            ],
+            "containers": [
+              [
+                4,
+                1,
+                3
+              ]
+            ]
+          }
+        ],
+        "village_identity": {
+          "primary_blocks": [
+            [
+              5,
+              1,
+              6
+            ]
+          ],
+          "secondary_blocks": [],
+          "banners": []
+        },
+        "sink": 0
+      },
+      "neutral_template": "run/pueblo-showcase/houses-extra-approved-20260909-173019/neutral/P03.1.nbt",
+      "neutral_template_sha256": "3de5a5d8819143a65149c60a1b78b0c56a2b09a01e6dcd9fe67e0289fd95d7ff",
+      "production": {
+        "structure": "house_badlands_1__small_house_5",
+        "category": "house",
+        "variant": "badlands",
+        "level": 1,
+        "recipe": "house_plains_1",
+        "definition_overrides": {
+          "entrance_facing": "west"
+        }
+      },
+      "source_mod_structure": "data/kaisyn/structure/village/badlands_pueblo/houses/badlands_small_house_5_l.nbt",
+      "source_mod": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar"
+    },
+    {
+      "exhibit": "P03.3",
+      "label": "Small House 6",
+      "source_capture": "run/pueblo-showcase/houses-extra-approved-20260909-173019/captures/P03.3.nbt",
+      "source_sha256": "f73c13325c14aa2514a07991b9282a02b5c185afeac5b43cbcb4449ecc536eb0",
+      "template_origin": [
+        3624,
+        230,
+        1083
+      ],
+      "size": [
+        9,
+        6,
+        10
+      ],
+      "capacity": {
+        "beds": 1,
+        "single_beds": 1,
+        "couple_rooms": 0
+      },
+      "amenities": {
+        "beds": [
+          [
+            5,
+            1,
+            3
+          ]
+        ],
+        "couple_beds": [],
+        "work_stations": [],
+        "personal_containers": [
+          [
+            3,
+            1,
+            4
+          ]
+        ],
+        "containers": [],
+        "bed_containers": [
+          {
+            "bed": [
+              5,
+              1,
+              3
+            ],
+            "containers": [
+              [
+                3,
+                1,
+                4
+              ]
+            ]
+          }
+        ],
+        "village_identity": {
+          "primary_blocks": [],
+          "secondary_blocks": [
+            [
+              5,
+              1,
+              3
+            ]
+          ],
+          "banners": []
+        },
+        "sink": 0
+      },
+      "neutral_template": "run/pueblo-showcase/houses-extra-approved-20260909-173019/neutral/P03.3.nbt",
+      "neutral_template_sha256": "da186e0a3d6bb8c61db86cf2c4400bbe153005ab75d0165a21608f89f6c9404d",
+      "production": {
+        "structure": "house_badlands_1__small_house_6",
+        "category": "house",
+        "variant": "badlands",
+        "level": 1,
+        "recipe": "house_plains_1",
+        "definition_overrides": {
+          "entrance_facing": "west"
+        }
+      },
+      "source_mod_structure": "data/kaisyn/structure/village/badlands_pueblo/houses/badlands_small_house_6_l.nbt",
+      "source_mod": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar"
+    }
+  ],
+  "excluded_alternates": [
+    {
+      "exhibit": "P02.2",
+      "label": "Medium House 1 Right",
+      "reason": "Alternate copy excluded by user; first copy selected."
+    },
+    {
+      "exhibit": "P02.4",
+      "label": "Medium House 2 Right",
+      "reason": "Alternate copy excluded by user; first copy selected."
+    },
+    {
+      "exhibit": "P02.6",
+      "label": "Small House 1 Right",
+      "reason": "Alternate copy excluded by user; first copy selected."
+    },
+    {
+      "exhibit": "P02.8",
+      "label": "Small House 2 Right",
+      "reason": "Alternate copy excluded by user; first copy selected."
+    },
+    {
+      "exhibit": "P02.10",
+      "label": "Small House 3 Right",
+      "reason": "Alternate copy excluded by user; first copy selected."
+    },
+    {
+      "exhibit": "P02.12",
+      "label": "Small House 4 Right",
+      "reason": "Alternate copy excluded by user; first copy selected."
+    },
+    {
+      "exhibit": "P03.2",
+      "label": "Small House 5 Right",
+      "reason": "Alternate copy excluded by user; first copy selected."
+    },
+    {
+      "exhibit": "P03.4",
+      "label": "Small House 6 Right",
+      "reason": "Alternate copy excluded by user; first copy selected."
+    }
+  ],
+  "verification": {
+    "capture": "run/pueblo-showcase/houses-extra-approved-20260909-173019/capture-verification.json",
+    "live_bed_preview": true,
+    "live_ai_deployed": false,
+    "screenshots": [
+      "run/pueblo-showcase/houses-extra-approved-20260909-173019/screenshots/pueblo-medium-house-1-approved.png",
+      "run/pueblo-showcase/houses-extra-approved-20260909-173019/screenshots/pueblo-medium-house-2-approved.png",
+      "run/pueblo-showcase/houses-extra-approved-20260909-173019/screenshots/pueblo-small-house-1-approved.png",
+      "run/pueblo-showcase/houses-extra-approved-20260909-173019/screenshots/pueblo-small-house-2-approved.png",
+      "run/pueblo-showcase/houses-extra-approved-20260909-173019/screenshots/pueblo-small-house-3-approved.png",
+      "run/pueblo-showcase/houses-extra-approved-20260909-173019/screenshots/pueblo-small-house-4-approved.png",
+      "run/pueblo-showcase/houses-extra-approved-20260909-173019/screenshots/pueblo-small-house-5-approved.png",
+      "run/pueblo-showcase/houses-extra-approved-20260909-173019/screenshots/pueblo-small-house-6-approved.png",
+      "run/pueblo-showcase/houses-extra-approved-20260909-173019/screenshots/pueblo-small-house-3-raised-chest.png"
+    ],
+    "rendered_review": true,
+    "native_access": "run/pueblo-showcase/houses-extra-approved-20260909-173019/verification/verification.json",
+    "native_log": "run/pueblo-showcase/houses-extra-approved-20260909-173019/verification/latest-verification.log",
+    "native_summary": {
+      "rotated_placements": 32,
+      "planned_routes": 84,
+      "physical_deposits": 44,
+      "assigned_bed_sleeps": 44,
+      "failed_placements": 0,
+      "probe_size": 18,
+      "collision_height": 2.0,
+      "collision_width": 0.64800006
+    },
+    "project_checks": "run/pueblo-showcase/houses-extra-approved-20260909-173019/verification/gradle-check.json",
+    "large_house_regression": "run/pueblo-showcase/houses-extra-approved-20260909-173019/verification/large-house-regression/verification.json",
+    "final_compile": true
+  }
+}

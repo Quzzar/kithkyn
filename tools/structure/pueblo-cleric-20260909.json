@@ -1,0 +1,122 @@
+{
+  "status": "captured_configured_and_verified",
+  "description": "Edited Pueblo Alchemist selected as the cleric temple. Private reviewed asset pending completed Pueblo catalog.",
+  "work": "run/pueblo-showcase/cleric-approved-20260909-204200",
+  "preview_colors": {
+    "primary": "blue",
+    "secondary": "yellow"
+  },
+  "selection_decisions": {
+    "standalone_well": false,
+    "well_reason": "The selected village center already contains a well.",
+    "large_watchtower": null,
+    "large_watchtower_reason": "No large watchtower selected; retain the previously approved small watchtower.",
+    "markets": "Reuse all three existing market tiers with a Mesa/Pueblo palette; tracked separately.",
+    "center_water_supply_manifest": "tools/structure/pueblo-center-20260909.json"
+  },
+  "facilities": [
+    {
+      "exhibit": "P09.4",
+      "label": "Alchemist / cleric temple",
+      "review_id": "church_puebloreview_1",
+      "source_capture": "run/pueblo-showcase/cleric-approved-20260909-204200/captures/P09.4.nbt",
+      "source_sha256": "1a598e9050af3450d6864c4afed1ea3d9563e9a2a67513c3edf635404a2f7a97",
+      "source_mod": "CTOV",
+      "source_mod_structure": "data/ctov/structure/village/mesa_fortified/jobsite/alchemist.nbt",
+      "template_origin": [
+        3646,
+        230,
+        1267
+      ],
+      "size": [
+        11,
+        6,
+        13
+      ],
+      "neutral_template": "run/pueblo-showcase/cleric-approved-20260909-204200/neutral/P09.4.nbt",
+      "export_options_file": "run/pueblo-showcase/cleric-approved-20260909-204200/P09.4-export-options.json",
+      "amenities": {
+        "category": "church",
+        "beds": [
+          [
+            3,
+            2,
+            5
+          ]
+        ],
+        "worker_beds": [
+          [
+            3,
+            2,
+            5
+          ]
+        ],
+        "couple_beds": [],
+        "work_stations": [
+          {
+            "occupation": "CLERIC",
+            "pos": [
+              5,
+              2,
+              6
+            ]
+          }
+        ],
+        "personal_containers": [],
+        "containers": [
+          [
+            6,
+            3,
+            8
+          ]
+        ],
+        "bed_containers": [],
+        "village_identity": {
+          "primary_blocks": [
+            [
+              3,
+              2,
+              5
+            ]
+          ],
+          "secondary_blocks": [],
+          "banners": []
+        },
+        "sink": 0,
+        "entrance_facing": "north",
+        "grants": [
+          "HEALING"
+        ]
+      },
+      "notes": [
+        "User-edited bed, bookshelves, nether-wart planter, walls and roof retained.",
+        "Rear chest is workshop storage, away from the bed; communal under the existing workplace-container convention.",
+        "The authored hearth and chimney fire are preserved; the village meeting point remains at the selected town center.",
+        "Only the bed color changes in the live exhibit; primary/secondary identity remains dynamic in future villages.",
+        "Cleric station is an accessible interior work position; this selection does not introduce a brewing or enchanting capability."
+      ],
+      "neutral_template_sha256": "ecfad2544a79c6efa7e0b9bf5b27d9c4a92dbdb5914b29e639010432ed33a78f",
+      "production": {
+        "structure": "church_badlands_1",
+        "category": "church",
+        "variant": "badlands",
+        "level": 1,
+        "recipe": "church_plains_1"
+      }
+    }
+  ],
+  "verification": {
+    "live_ai_deployed": false,
+    "native_asset_readback": "run/pueblo-showcase/cleric-approved-20260909-204200/asset-verification.json",
+    "native_access": "run/pueblo-showcase/cleric-approved-20260909-204200/native-verification/verification.json",
+    "live_preview": "run/pueblo-showcase/cleric-approved-20260909-204200/live-apply.json",
+    "original_edits_preserved": true,
+    "rendered_review": true,
+    "render_review": "run/pueblo-showcase/cleric-approved-20260909-204200/render-review.json",
+    "screenshots": [
+      "run/pueblo-showcase/cleric-approved-20260909-204200/screenshots/pueblo-cleric-bed-and-workroom-203215.png",
+      "run/pueblo-showcase/cleric-approved-20260909-204200/screenshots/pueblo-cleric-exterior-203215.png",
+      "run/pueblo-showcase/cleric-approved-20260909-204200/screenshots/pueblo-cleric-primary-bed-final-203215.png"
+    ]
+  }
+}

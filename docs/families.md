@@ -1,6 +1,6 @@
 # Families and growing up
 
-**Implemented.** Married couples who share a completed home periodically decide together whether
+**Implemented.** Married couples who share a completed couple room periodically decide together whether
 they want a child. A successful decision schedules a birth, the child inherits both parents'
 genetics and household surname, and the household then moves, sleeps, grows, and returns from the
 road as a family. The ordinary child-creation service and the development commands exercise the
@@ -56,7 +56,10 @@ wedding time. The same check rejects invalid legacy pairs from family planning.
 
 Family planning is a persisted schedule per married pair in the village brain's `strategy` tag.
 A pair is eligible when both people are Adults, married to each other, resident in the same
-village, and sharing one completed home. The default cadence is:
+village, and assigned to both beds of the same declared couple room in a completed home.
+A mixed house may contain several households; two spouses in different rooms of that building
+are still awaiting a couple room. A staff couple room qualifies when either spouse works in that
+building; their partner does not need the same occupation. The default cadence is:
 
 1. One Minecraft day after first becoming an eligible household, the village convenes them.
 2. They hold a visible, alternating conversation as themselves. The prompt includes the village

@@ -59,15 +59,17 @@ public class UrbanPlanner {
   }
 
   /**
-   * A couple's cottage is never deliberated over: it is raised only as the
+   * A dedicated couple home is never deliberated over: it is raised only as the
    * saved-for goal a marriage sets (docs/marriage.md), so it is filtered out of
    * both the affordable options and the reachable goals the brain is shown. A
    * village should not decide to build one for no one; it builds one because two
    * of its people wed. The goal short-circuit in {@link #chooseNextProject}
    * still builds it once named, which is the only way it is ever built.
    */
-  private static boolean isMarriageOnly(BuildingInfo info) {
-    return info.hasWellFormedId() && Buildings.COUPLE_COTTAGE_CATEGORY.equals(info.getCategory());
+  static boolean isMarriageOnly(BuildingInfo info) {
+    return info.hasWellFormedId() && (Buildings.COUPLE_COTTAGE_CATEGORY.equals(info.getCategory())
+        || (!info.getCoupleBeds().isEmpty() && info.getWorkLocations().isEmpty()
+            && BuildingImpact.generalBeds(info) == 0));
   }
 
   /**
@@ -140,8 +142,31 @@ public class UrbanPlanner {
    * economy can never reach (docs/marriage.md).
    */
   public static String shortfallFor(Village village, BuildingInfo info) {
-    ConstructionChoice choice = preferredChoice(village, info);
-    return choice == null ? "" : shortfall(village, choice, village.stockTally());
+    return shortfall(village, new ConstructionChoice(info, ConstructionMode.FRESH), village.stockTally());
+  }
+
+  /** An ordinary home with a general bed, preserving the canonical layout when it is suitable. */
+  @Nullable
+  public static BuildingInfo singleHomeGoal(Village village) {
+    String stalled = VillageGoal.stalled(village, village.getVillageTime());
+    return Buildings.alternatives("house", 1, village.getStyle()).stream()
+        .filter(info -> BuildingImpact.generalBeds(info) > 0 && !info.getName().equals(stalled))
+        .findFirst().orElse(null);
+  }
+
+  /** Keeps a style's dedicated cottage when available, otherwise saves for an authored home with a pair. */
+  @Nullable
+  public static BuildingInfo coupleHomeGoal(Village village) {
+    String stalled = VillageGoal.stalled(village, village.getVillageTime());
+    BuildingInfo cottage = Buildings.resolve(Buildings.COUPLE_COTTAGE_CATEGORY, 1, village.getStyle());
+    return Buildings.catalogue(village.getStyle()).stream()
+        .filter(info -> !info.getCoupleBeds().isEmpty() && !info.getName().equals(stalled))
+        .filter(info -> info.getWorkLocations().isEmpty())
+        .filter(info -> Buildings.isRegionalChoice(info, village.getStyle()))
+        .filter(info -> !isFoundingOnly(new ConstructionChoice(info, ConstructionMode.FRESH)))
+        .sorted(java.util.Comparator.<BuildingInfo>comparingInt(info -> info == cottage ? 0 : 1)
+            .thenComparingInt(info -> info.getBedLocations().size()).thenComparing(BuildingInfo::getName))
+        .findFirst().orElse(null);
   }
 
   /**
@@ -274,7 +299,7 @@ public class UrbanPlanner {
       return new ConstructionChoice(info, ConstructionMode.UPGRADE);
     }
     if (!info.hasWellFormedId()
-        || info == Buildings.resolve(info.getCategory(), info.getLevel(), village.getStyle())) {
+        || Buildings.isRegionalChoice(info, village.getStyle())) {
       return new ConstructionChoice(info, ConstructionMode.FRESH);
     }
     return null;
@@ -296,7 +321,7 @@ public class UrbanPlanner {
     if (saved == ConstructionMode.FRESH) {
       ConstructionChoice fresh = new ConstructionChoice(info, saved);
       if (!isFoundingOnly(fresh) && (!info.hasWellFormedId()
-          || info == Buildings.resolve(info.getCategory(), info.getLevel(), village.getStyle()))) {
+          || Buildings.isRegionalChoice(info, village.getStyle()))) {
         return fresh;
       }
     }
@@ -572,7 +597,10 @@ public class UrbanPlanner {
         .map(occupation -> occupation.name().toLowerCase()).collect(java.util.stream.Collectors.joining(", "));
     return subject + " (adds " + BuildingImpact.capacity(village, info).describe(false)
         + (jobs.isEmpty() ? "" : "; jobs: " + jobs)
-        + "; provides " + BuildingImpact.describeServices(info.getGrants()) + ")" + unlockNote(info);
+        + "; provides " + BuildingImpact.describeServices(info.getGrants()) + ")"
+        + ("mine".equals(info.getCategory())
+            ? ", opens a new shaft on a separate site instead of reusing an existing blocked or exhausted shaft" : "")
+        + unlockNote(info);
   }
 
   /**

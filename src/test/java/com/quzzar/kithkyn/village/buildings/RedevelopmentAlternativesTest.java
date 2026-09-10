@@ -18,7 +18,7 @@ import net.minecraft.world.level.block.Rotation;
 
 class RedevelopmentAlternativesTest {
   private static final BuildingImpact.Capacity FARM_GAIN =
-      new BuildingImpact.Capacity(0, 0, 2, Map.of(), 26);
+      new BuildingImpact.Capacity(0, 0, 2, Map.of(), 26, 0, 0);
 
   @Test
   void affordableWaterPreservingPlacementIsPreferredButCheaperDestructiveTradeoffRemains() {
@@ -90,7 +90,7 @@ class RedevelopmentAlternativesTest {
     var displaced = new RedevelopmentAlternatives.Evaluated(original.choice(),
         new BuildingImpact.Redevelopment(FARM_GAIN, original.impact().services(), 3, 0, 1), true);
     var moreHousing = new RedevelopmentAlternatives.Evaluated(original.choice(),
-        new BuildingImpact.Redevelopment(new BuildingImpact.Capacity(2, 0, 2, Map.of(), 26),
+        new BuildingImpact.Redevelopment(new BuildingImpact.Capacity(2, 0, 2, Map.of(), 26, 0, 0),
             original.impact().services(), 0, 0, 1), true);
     assertEquals(3, RedevelopmentAlternatives.select(List.of(original, displaced, moreHousing)).size());
   }

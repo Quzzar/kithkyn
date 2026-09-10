@@ -124,7 +124,7 @@ public class LocationManager {
 
         Village village = person.getVillage();
         if(village == null){ return BlockPos.ZERO; }
-        return BlockPos.of(village.getTownCenter().getCenterLocation());
+        return village.getGatheringPoint();
 
     }
 
@@ -220,7 +220,7 @@ public class LocationManager {
 
     }
 
-    /** A building's way in: the cell just outside its lowest door, and the box the building stands in. */
+    /** A building's way in: the cell outside its lowest door nearest the authored front, and the box the building stands in. */
     public record Entrance(BlockPos doorstep, BoundingBox bounds) {
         public boolean contains(BlockPos pos) {
             return bounds.isInside(pos);
@@ -229,7 +229,7 @@ public class LocationManager {
 
     /**
      * Where to walk to get into a building: the cell just outside its lowest
-     * door. A path aimed straight at something indoors stalls against the
+     * door nearest the authored front. A path aimed straight at something indoors stalls against the
      * nearest outside wall when the door is on the far side, because the
      * pathfinder's budget runs out on the open ground before it finds the way
      * round (the level-3 house at Wildflower Downs, whose door faced away from
@@ -254,12 +254,16 @@ public class LocationManager {
             if(!level.hasChunkAt(corner)){ return null; }
         }
 
+        Direction approachFront = building.getInfo() == null ? Direction.NORTH
+                : building.getRotation().rotate(building.getInfo().getEntranceFacing());
         BlockPos door = null;
         for(BlockPos pos : BlockPos.betweenClosed(bounds.minX(), bounds.minY(), bounds.minZ(),
                 bounds.maxX(), bounds.maxY(), bounds.maxZ())) {
             BlockState state = level.getBlockState(pos);
             if(state.getBlock() instanceof DoorBlock && state.getValue(DoorBlock.HALF) == DoubleBlockHalf.LOWER
-                    && (door == null || pos.getY() < door.getY())){
+                    && (door == null || pos.getY() < door.getY()
+                    || (pos.getY() == door.getY()
+                        && frontCoordinate(pos, approachFront) > frontCoordinate(door, approachFront)))){
                 door = pos.immutable();
             }
         }
@@ -302,6 +306,11 @@ public class LocationManager {
         BlockPos back = door.relative(facing.getOpposite());
         return new Entrance(front.distSqr(centre) >= back.distSqr(centre) ? front : back, bounds);
 
+    }
+
+    /** Equal-height interior doors must not replace the public entrance after a rotation. */
+    private static int frontCoordinate(BlockPos pos, Direction front) {
+        return pos.getX() * front.getStepX() + pos.getZ() * front.getStepZ();
     }
 
     /** World-space front of a rotated, doorless footprint. */

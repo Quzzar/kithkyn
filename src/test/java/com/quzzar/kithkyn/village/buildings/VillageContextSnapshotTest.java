@@ -14,6 +14,41 @@ import com.quzzar.kithkyn.village.PopulationOutlook;
 class VillageContextSnapshotTest {
 
   @Test
+  void bothBrainsDistinguishFreeCoupleRoomsFromSingleAndWorkplaceBeds() {
+    VillageContextSnapshot snapshot = new VillageContextSnapshot(
+        "Mesa", "hamlet", 8, 6, 2, 0, 0, 0, 0,
+        14, 2, 0, 0, Map.of("house", 4), Map.of(), PopulationOutlook.CAN_GROW,
+        new VillageContextSnapshot.RecruitmentStatus(60, 50, 8, 8, 0, 0, 0, 0),
+        false, false, false, false, List.of(), Optional.empty(), Optional.empty(), List.of(),
+        List.of(), Optional.empty(), 3, 1, 2, 1);
+    for (String briefing : List.of(snapshot.plannerBriefing(), snapshot.chatBriefing())) {
+      assertTrue(briefing.contains("2 general beds free"));
+      assertTrue(briefing.contains("3 couple rooms contain two reserved beds each, with 1 complete pairs free"));
+      assertTrue(briefing.contains("2 married couples await a shared room"));
+      assertTrue(briefing.contains("1 of those free rooms require one spouse to work in that building"));
+    }
+  }
+
+  @Test
+  void aReportedMineFailureExplainsTheSeparateSiteOptionToBothBrains() {
+    VillageContextSnapshot snapshot = new VillageContextSnapshot(
+        "Meadowmere", "hamlet", 4, 4, 0,
+        0, 0, 0, 0, 4, 0, 0, 0,
+        Map.of("mine", 1), Map.of(), PopulationOutlook.HOLDING,
+        new VillageContextSnapshot.RecruitmentStatus(50, 50, 8, 8, 0, 0, 0, 0),
+        false, false, false, false, List.of(), Optional.empty(), Optional.empty(), List.of(),
+        List.of(new VillageContextSnapshot.WorkerBlocker("miner", "Aaron",
+            "I cannot get through the mine entrance to reach the work below.", 48000)), Optional.empty(), 0, 0, 0, 0);
+
+    for (String briefing : List.of(snapshot.plannerBriefing(), snapshot.chatBriefing())) {
+      assertTrue(briefing.contains("cannot get through the mine entrance"));
+      assertTrue(briefing.contains("new mine on a separate site"));
+      assertTrue(briefing.contains("Upgrading the existing mine retains its shaft location"));
+      assertTrue(briefing.contains("still needs materials, space and a worker"));
+    }
+  }
+
+  @Test
   void separatesAdultHomelessnessFromPreAdultsWithoutFamilyHomes() {
     VillageContextSnapshot snapshot = new VillageContextSnapshot(
         "Emberhollow", "hamlet", 11, 6, 2,
@@ -24,7 +59,7 @@ class VillageContextSnapshotTest {
         new VillageContextSnapshot.RecruitmentStatus(61.0D, 50.0D, 5.5D, 8.0D,
             0.0D, 0.0D, 0.0D, 0.0D),
         false, false, false, false, List.of(),
-        Optional.empty(), Optional.empty(), List.of(), List.of(), Optional.empty());
+        Optional.empty(), Optional.empty(), List.of(), List.of(), Optional.empty(), 0, 0, 0, 0);
 
     String chat = snapshot.chatBriefing();
     assertTrue(chat.contains("4 are pre-adults; working teenagers also appear in the job counts"));
@@ -49,7 +84,7 @@ class VillageContextSnapshotTest {
         new VillageContextSnapshot.RecruitmentStatus(45.0D, 50.0D, 4.0D, 8.0D,
             0.0D, 0.0D, 0.0D, 0.0D),
         false, false, false, false, List.of(),
-        Optional.empty(), Optional.empty(), List.of(), List.of(), Optional.empty());
+        Optional.empty(), Optional.empty(), List.of(), List.of(), Optional.empty(), 0, 0, 0, 0);
 
     String chat = snapshot.chatBriefing();
     assertTrue(chat.contains("no adult residents need independent housing"));
@@ -67,7 +102,7 @@ class VillageContextSnapshotTest {
         new VillageContextSnapshot.RecruitmentStatus(20.0D, 50.0D, 0.0D, 8.0D,
             0.0D, 0.0D, -4.0D, 0.0D),
         true, false, false, false, List.of(),
-        Optional.empty(), Optional.empty(), List.of(), List.of(), Optional.empty());
+        Optional.empty(), Optional.empty(), List.of(), List.of(), Optional.empty(), 0, 0, 0, 0);
 
     assertTrue(snapshot.plannerBriefing().contains("Shared storage is full"));
     assertTrue(snapshot.plannerBriefing().contains("More shared storage is urgent"));
@@ -87,7 +122,7 @@ class VillageContextSnapshotTest {
         false, false, true, false,
         List.of(new VillageContextSnapshot.WorkplaceStatus(
             "lumberjack", 0L, Map.of(), Map.of("lumberjack", 1), 1)),
-        Optional.empty(), Optional.empty(), List.of(), List.of(), Optional.empty());
+        Optional.empty(), Optional.empty(), List.of(), List.of(), Optional.empty(), 0, 0, 0, 0);
 
     String planner = snapshot.plannerBriefing();
     assertTrue(planner.contains("No newcomers are currently arriving"));

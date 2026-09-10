@@ -57,7 +57,11 @@ public record VillageContextSnapshot(
     Optional<ConstructionPlan> savedGoal,
     List<String> recentBuilds,
     List<WorkerBlocker> workerBlockers,
-    Optional<String> roomReport) {
+    Optional<String> roomReport,
+    int coupleRooms,
+    int freeCoupleRooms,
+    int couplesAwaitingRoom,
+    int freeWorkerCoupleRooms) {
 
   public enum ConstructionStage {
     GATHERING,
@@ -164,7 +168,8 @@ public record VillageContextSnapshot(
 
     List<WorkerBlocker> blockers = activeWorkerBlockers(village);
     List<WorkplaceStatus> workplaces = captureWorkplaces(village);
-    int freeReserved = Math.max(0, village.getFreeBedCount() - village.getFreeGeneralBedCount());
+    int freeReserved = village.getBuildings().stream()
+        .mapToInt(building -> village.getFreeReservedBedCountIn(building.getUUID())).sum();
     return new VillageContextSnapshot(
         village.getName(), tierName(village), village.getPopulation().size(),
         village.getJobAssignmentsView().size(), village.idlePeople().size(),
@@ -177,7 +182,8 @@ public record VillageContextSnapshot(
         attractiveness.deathImpact() > 0.5F,
         village.isJobDecisionPending(), village.isLaborDecisionPending(), workplaces,
         project, goalPlan, completed, blockers,
-        Optional.ofNullable(village.describeRoom()));
+        Optional.ofNullable(village.describeRoom()), village.getCoupleHomeCount(), village.getFreeCoupleHomeCount(),
+        com.quzzar.kithkyn.relationships.MarriageService.awaitingHomeCount(village), village.getFreeWorkerCoupleHomeCount());
   }
 
   /** Compact shared facts for the collective build decision. */
@@ -272,6 +278,10 @@ public record VillageContextSnapshot(
         .append(freeGeneralBeds).append(" general ").append(freeGeneralBeds == 1 ? "bed" : "beds")
         .append(" free; ").append(freeReservedBeds).append(" free live-in ")
         .append(freeReservedBeds == 1 ? "bed is" : "beds are").append(" reserved to their workplaces; ")
+        .append(coupleRooms).append(" couple rooms contain two reserved beds each, with ")
+        .append(freeCoupleRooms).append(" complete pairs free; ")
+        .append(freeWorkerCoupleRooms).append(" of those free rooms require one spouse to work in that building; ")
+        .append(couplesAwaitingRoom).append(" married couples await a shared room. ")
         .append(unhousedAdults == 0 ? "no adult residents need" : unhousedAdults + " adult "
             + (unhousedAdults == 1 ? "resident needs" : "residents need"))
         .append(" independent housing. ")
@@ -424,6 +434,12 @@ public record VillageContextSnapshot(
           + ": \"" + blocker.text() + "\"");
     }
     text.append(String.join("; ", lines)).append(". ");
+    if (workerBlockers.stream().anyMatch(blocker -> blocker.occupation().equals("miner"))) {
+      text.append("A standing mine does not guarantee usable excavation. If its approach or shaft remains blocked, "
+          + "or its reachable seams are exhausted, a new mine on a separate site can open different ground. "
+          + "Upgrading the existing mine retains its shaft location and does not bypass that obstruction. "
+          + "A new mine still needs materials, space and a worker; weigh it against restoring the existing mine. ");
+    }
   }
 
   private static List<WorkerBlocker> activeWorkerBlockers(Village village) {

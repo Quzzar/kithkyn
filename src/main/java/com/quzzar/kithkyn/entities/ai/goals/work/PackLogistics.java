@@ -54,6 +54,38 @@ public final class PackLogistics {
     return Materials.held(person.personMainInv, item);
   }
 
+  /** Physical replacement blocks use exact plain stacks, never construction's abstract material substitutions. */
+  static int carriedExact(RealPerson person, ItemStack wanted) {
+    int count = 0;
+    for (int slot = 0; slot < person.personMainInv.getContainerSize(); slot++) {
+      ItemStack stack = person.personMainInv.getItem(slot);
+      if (ItemStack.isSameItemSameComponents(stack, wanted)) count += stack.getCount();
+    }
+    return count;
+  }
+
+  /** A real chest visit for an exact block item. Full packs leave stock in the chest. */
+  static int pullExact(RealPerson person, Container chest, ItemStack wanted) {
+    int needed = wanted.getCount() - carriedExact(person, wanted);
+    int moved = 0;
+    for (int slot = 0; slot < chest.getContainerSize() && moved < needed; slot++) {
+      ItemStack stock = chest.getItem(slot);
+      if (!ItemStack.isSameItemSameComponents(stock, wanted)) continue;
+      int offered = Math.min(needed - moved, stock.getCount());
+      ItemStack remainder = net.minecraft.world.level.block.entity.HopperBlockEntity.addItem(
+          chest, person.personMainInv, stock.copyWithCount(offered), null);
+      int accepted = offered - remainder.getCount();
+      stock.shrink(accepted);
+      moved += accepted;
+    }
+    if (moved > 0) {
+      chest.setChanged();
+      person.personMainInv.setChanged();
+      Kithkyn.LOGGER.debug("[resource-flow] {} fetched {} exact repair item(s)", person.getFullName(), moved);
+    }
+    return moved;
+  }
+
   /** Whether the pack is still short of any of these, the recipe settled as a whole. */
   static boolean packShort(RealPerson person, List<ItemStack> wanted) {
     return !Materials.shortfall(person.personMainInv, wanted).isEmpty();

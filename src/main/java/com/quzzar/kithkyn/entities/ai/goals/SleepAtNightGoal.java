@@ -4,6 +4,7 @@ import java.util.EnumSet;
 
 import com.quzzar.kithkyn.entities.RealPerson;
 import com.quzzar.kithkyn.entities.ai.FamilySleepPolicy;
+import com.quzzar.kithkyn.entities.ai.goals.work.ContainerAccess;
 import com.quzzar.kithkyn.village.LocationManager;
 import com.quzzar.kithkyn.village.Occupation;
 
@@ -30,7 +31,11 @@ import net.minecraft.world.level.block.state.properties.BedPart;
  */
 public class SleepAtNightGoal extends Goal {
 
+  private static final double REST_REACH_SQR = 4.0D;
+  private static final double HAND_REACH_SQR = 9.0D;
+  private static final int ROUTE_RETRY_TICKS = 20;
   private final RealPerson person;
+  private int nextRouteTick;
 
   public SleepAtNightGoal(RealPerson person) {
     // This goal walks the villager to their bed, so it competes for movement
@@ -59,6 +64,7 @@ public class SleepAtNightGoal extends Goal {
 
   @Override
   public void start() {
+    this.nextRouteTick = this.person.tickCount;
     // goToBed also gets the villager to stow their pack on the way there.
     person.goToBed(0.5D);
   }
@@ -81,15 +87,26 @@ public class SleepAtNightGoal extends Goal {
     BlockPos target = hasOwnBed ? bedHead(bed) : rest;
 
     if (!person.isSleeping()) {
-      if (target.distSqr(person.blockPosition()) <= 4.0D) {
+      if (target.distSqr(person.blockPosition()) <= REST_REACH_SQR
+          && ContainerAccess.canReach(person, person.getEyePosition(), target, HAND_REACH_SQR)) {
         // Stop navigating before lying down: a sleeping villager is immobile
         // (Person.isImmobile), so a leftover path would grind in place against
         // the bed all night.
         person.getNavigation().stop();
         person.noteSlept();
         person.startSleeping(target);
-      } else if (!person.getNavigation().isInProgress()) {
-        person.getNavigation().moveTo(target.getX(), target.getY(), target.getZ(), 0.5D);
+      } else if (!person.getNavigation().isInProgress() && person.tickCount >= this.nextRouteTick) {
+        this.nextRouteTick = person.tickCount + ROUTE_RETRY_TICKS;
+        // The mattress is not standing ground in a low room. Walk to an actual floor position
+        // within sleep reach, with a clear line to the pillow, rather than its roof or outer wall.
+        BlockPos approach = ContainerAccess.approachTo(person, target, HAND_REACH_SQR,
+            position -> position.distSqr(target) <= REST_REACH_SQR);
+        if (approach != null) {
+          person.getNavigation().moveTo(person.getNavigation().createPath(approach, 0), 0.5D);
+        } else {
+          // From farther away, retain the ordinary partial route and mine-ramp waypoints.
+          person.getNavigation().moveTo(target.getX(), target.getY(), target.getZ(), 0.5D);
+        }
       }
     }
 

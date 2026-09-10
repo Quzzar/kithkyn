@@ -62,6 +62,8 @@ in it, and update it in the same change that moves what it describes.
   that connect them, and which biomes can support which. Proposed, not yet decided.
 - [birch-village.md](birch-village.md): the approved playable Birch Forest catalog, exact
   amenities and intentionally omitted tiers, biome selection, identity slots and preservation.
+- [badlands-village.md](badlands-village.md): the approved Pueblo/Mesa local catalog, house
+  alternatives, staffing, identity, biome selection and private datapack installation.
 - [appearance.md](appearance.md): why villagers use the player model and not the vanilla
   villager model, the wide/slim model split by gender, and the client-side runtime skin
   compositor that bakes a villager's look from inherited skin, hair, and eye structures,
@@ -87,12 +89,15 @@ in it, and update it in the same change that moves what it describes.
   or nobody. Two compact per-level sets recorded at placement and pruned on break, why planted
   saplings are deliberately nobody's, the `mayFell` verdict tree-clearing uses, and the known
   over-protecting imprecisions.
+- [building-repairs.md](building-repairs.md): low-priority paid repairs, explosion damage and
+  conservative old building damage, unavailable materials, and player and mine preservation.
 - [structure-sourcing.md](structure-sourcing.md): where building structures can legally come
   from. License survey of vanilla, CTOV, Towns and Towers, YUNG's, and community schematic
   sites, each read from its own LICENSE file, plus the realistic paths forward.
 - [structure-review.md](structure-review.md): decisions from the walkable reference gallery,
   including the retained watchtower, church, fishery, and desert-tavern directions, the village-biome
-  roster, villager navigation questions, and the village identity system that precedes adaptation.
+  roster, captured Pueblo homes and service buildings, worker households, navigation checks,
+  and the village identity system that precedes adaptation.
 - [worker-loops.md](worker-loops.md): what a villager actually does. The three verbs a job is
   built from, roaming versus fixed, what happens when there is nothing to work on, and the
   performance budget that decides how targets get found.

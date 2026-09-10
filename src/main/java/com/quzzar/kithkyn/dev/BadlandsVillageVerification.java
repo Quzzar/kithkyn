@@ -1,0 +1,334 @@
+package com.quzzar.kithkyn.dev;
+
+import java.util.ArrayList;
+import java.util.EnumMap;
+import java.util.EnumSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+
+import com.quzzar.kithkyn.Kithkyn;
+import com.quzzar.kithkyn.entities.AgeStage;
+import com.quzzar.kithkyn.savedata.PlacedBlockStore;
+import com.quzzar.kithkyn.village.GuardRole;
+import com.quzzar.kithkyn.village.Occupation;
+import com.quzzar.kithkyn.village.Village;
+import com.quzzar.kithkyn.village.buildings.Building;
+import com.quzzar.kithkyn.village.buildings.BuildingInfo;
+import com.quzzar.kithkyn.village.buildings.BuildingUpgrade;
+import com.quzzar.kithkyn.village.buildings.Buildings;
+import com.quzzar.kithkyn.village.buildings.VillageStyle;
+
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtOps;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.Container;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.GameRules;
+import net.minecraft.world.level.biome.Biomes;
+import net.minecraft.world.level.block.BedBlock;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.Rotation;
+import net.minecraft.world.level.levelgen.structure.BoundingBox;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.event.tick.ServerTickEvent;
+
+/** Playable private-catalog integration, only in a disposable -Dkithkyn.badlands.verify=true world. */
+@EventBusSubscriber(modid = Kithkyn.MODID)
+public final class BadlandsVillageVerification {
+  private static final BlockPos UPGRADE_SITE = new BlockPos(2400, 159, 2400);
+  private static final String[][] UPGRADES = {
+      {"storehouse_badlands_1", "storehouse_badlands_2"},
+      {"market_badlands_1", "market_badlands_2"},
+      {"market_badlands_2", "market_badlands_3"}
+  };
+  private static int ticks;
+  private static int upgrades;
+  private static int foundingRotations;
+  private static boolean naturalStarted;
+  private static boolean finished;
+
+  private BadlandsVillageVerification() { }
+
+  @SubscribeEvent
+  public static void tick(ServerTickEvent.Post event) {
+    if (!Boolean.getBoolean("kithkyn.badlands.verify") || finished) return;
+    ServerLevel level = event.getServer().overworld();
+    if (++ticks < 40) return;
+    try {
+      if (ticks == 40) {
+        level.getGameRules().getRule(GameRules.RULE_DOMOBSPAWNING).set(false, event.getServer());
+        level.getGameRules().getRule(GameRules.RULE_RANDOMTICKING).set(0, event.getServer());
+        level.setDayTime(6000);
+        verifyCatalogue(level);
+        forceChunks(level, UPGRADE_SITE, 48);
+      } else if (upgrades < UPGRADES.length * 4) {
+        verifyUpgrade(level, UPGRADES[upgrades / 4], Rotation.values()[upgrades % 4]);
+        upgrades++;
+      } else if (foundingRotations < 4) {
+        verifyFounding(level, Rotation.values()[foundingRotations], foundingRotations);
+        foundingRotations++;
+      } else if (!naturalStarted) {
+        NaturalFoundingVerification.start(level, VillageStyle.BADLANDS, 3, 10);
+        naturalStarted = true;
+      } else {
+        NaturalFoundingVerification.tick(level);
+        if (NaturalFoundingVerification.hasPassed()) {
+          verifyVillage(level, NaturalFoundingVerification.foundedVillage());
+          finished = true;
+          Kithkyn.LOGGER.info("[badlands-verify] RESULT PASS: 30 strict native templates, 12 housing alternatives, "
+              + "12 upgrade fits, four founding rotations and codec reloads, natural biome selection, "
+              + "10 beds, eight positions, bell plaza and two fires");
+          event.getServer().halt(false);
+        }
+      }
+    } catch (Exception | AssertionError failure) {
+      finished = true;
+      Kithkyn.LOGGER.error("[badlands-verify] RESULT FAIL", failure);
+      event.getServer().halt(false);
+    }
+  }
+
+  private static void verifyCatalogue(ServerLevel level) {
+    check(!VillageStyle.BADLANDS.usesPlainsFallback(), "Badlands must use a strict catalogue");
+    check(Buildings.hasFoundingSet(VillageStyle.BADLANDS), "Missing full Badlands founding set");
+    List<BuildingInfo> catalogue = Buildings.catalogue(VillageStyle.BADLANDS);
+    check(catalogue.size() == 30, "Expected 30 catalogue entries, got " + catalogue.size());
+    for (BuildingInfo info : catalogue) {
+      check(info.hasWellFormedId() && info.getVariant().equals("badlands"), "Foreign catalogue entry " + info.getName());
+      check(info.validate() == null, info.getName() + ": " + info.validate());
+      var template = level.getStructureManager().get(ResourceLocation.fromNamespaceAndPath(Kithkyn.MODID, info.getPath()))
+          .orElseThrow(() -> new AssertionError("Missing native template " + info.getName()));
+      check(!template.palettes.isEmpty() && !template.palettes.getFirst().blocks().isEmpty(), "Empty " + info.getName());
+      check(template.getSize().getX() > 0 && template.getSize().getY() > 0 && template.getSize().getZ() > 0,
+          "Invalid template dimensions " + info.getName());
+      var blocks = template.palettes.getFirst().blocks();
+      for (long bed : info.getBedLocations()) {
+        check(blocks.stream().anyMatch(block -> block.pos().asLong() == bed && block.state().getBlock() instanceof BedBlock),
+            "Declared bed missing from " + info.getName() + " at " + BlockPos.of(bed));
+      }
+      for (long container : java.util.stream.Stream.concat(info.getContainerLocations().stream(),
+          info.getPersonalContainerLocations().stream()).toList()) {
+        check(blocks.stream().anyMatch(block -> block.pos().asLong() == container && block.nbt() != null),
+            "Declared container has no block entity in " + info.getName() + " at " + BlockPos.of(container));
+      }
+    }
+    var homes = catalogue.stream().filter(info -> info.getCategory().equals("house")).toList();
+    check(homes.size() == 12, "Expected 12 distinct houses");
+    check(homes.stream().mapToInt(info -> info.getBedLocations().size()).sum() == 25, "Wrong combined house bed count");
+    for (int tier = 1; tier <= 3; tier++) {
+      int selectedTier = tier;
+      int expected = new int[] {6, 4, 2}[tier - 1];
+      check(Buildings.alternatives("house", tier, VillageStyle.BADLANDS).size() == expected
+          && homes.stream().filter(info -> info.getLevel() == selectedTier).count() == expected,
+          "Unavailable housing alternatives at tier " + tier);
+    }
+    Map<String, Integer> paired = Map.of("house_badlands_1__small_house_3", 1,
+        "house_badlands_3", 1, "house_badlands_3__large_house_3", 2);
+    for (BuildingInfo home : homes) {
+      check(home.getCoupleBeds().size() == paired.getOrDefault(home.getName(), 0), "Wrong couple rooms " + home.getName());
+      check(home.getBedContainers() != null, "Lost explicit room storage " + home.getName());
+    }
+    for (String workplace : List.of("farm_badlands_1", "butchery_badlands_1")) {
+      check(info(workplace).getWorkerCoupleRoomCount() == 1, "Lost married worker room " + workplace);
+    }
+    BuildingInfo tavern = info("tavern_badlands_1");
+    check(tavern.getBedLocations().size() == 2 && tavern.getWorkerSingleBedCount() == 1,
+        "Tavern must keep one staff bed and one general bed");
+    Kithkyn.LOGGER.info("[badlands-verify] CATALOGUE PASS: 30 actual templates and all 12 authored housing choices");
+  }
+
+  private static void verifyUpgrade(ServerLevel level, String[] edge, Rotation rotation) {
+    BuildingInfo target = info(edge[1]);
+    check(edge[0].equals(target.getUpgradesFrom()), "Wrong predecessor for " + edge[1]);
+    Building standing = ApprovedStructureAccess.place(level, UPGRADE_SITE, info(edge[0]), rotation);
+    Village village = new ApprovedStructureAccess.VillageFixture(level, standing, false);
+    village.setStyle(VillageStyle.BADLANDS);
+    var placement = BuildingUpgrade.findPlacement(village, target);
+    check(placement != null, "Upgrade cannot fit " + edge[0] + " -> " + edge[1] + " " + rotation);
+    check(placement.standing().getUUID().equals(standing.getUUID()) && placement.rotation() == rotation,
+        "Upgrade changed the standing building identity/orientation");
+    Kithkyn.LOGGER.info("[badlands-verify] UPGRADE PASS {} -> {} {}: {}", edge[0], edge[1], rotation, placement.bounds());
+  }
+
+  private static void verifyFounding(ServerLevel level, Rotation rotation, int index) throws ReflectiveOperationException {
+    BlockPos site = new BlockPos(3000 + index * 256, 160, 3000);
+    forceChunks(level, site, 72);
+    var ownership = PlacedBlockStore.get(level);
+    for (BlockPos position : BlockPos.betweenClosed(site.offset(-72, -7, -72), site.offset(72, 32, 72))) {
+      ownership.clearPlaced(position);
+      level.setBlock(position, position.getY() < site.getY() ? Blocks.STONE.defaultBlockState()
+          : Blocks.AIR.defaultBlockState(), 2);
+    }
+    check(level.getBiome(site).is(Biomes.BADLANDS), "Disposable world must use minecraft:badlands");
+    Village village = new Village("Badlands integration " + rotation);
+    village.attach(level);
+    village.setStyle(VillageStyle.fromBiome(level.getBiome(site), level.getSeed(), site));
+    check(village.getStyle() == VillageStyle.BADLANDS, "Actual biome selected " + village.getStyle());
+    var plan = village.planFounding(site, rotation, true).orElseThrow(() -> new AssertionError("Founding preflight failed " + rotation));
+    check(village.getBuildings().isEmpty() && !village.hasClaimed(site), "Preflight published buildings or claims");
+    BoundingBox planned = ApprovedStructureAccess.footprint(level, plan.center().getBuilding());
+    BlockPos inside = new BlockPos(planned.minX(), plan.planeY() - 2, planned.minZ());
+    BlockPos outside = site.offset(65, -2, 65);
+    // A small erosion pocket is fillable; an equivalent pocket beyond all three envelopes must remain untouched.
+    level.setBlock(inside, Blocks.AIR.defaultBlockState(), 2);
+    level.setBlock(inside.above(), Blocks.AIR.defaultBlockState(), 2);
+    level.setBlock(outside, Blocks.AIR.defaultBlockState(), 2);
+    level.setBlock(outside.above(), Blocks.AIR.defaultBlockState(), 2);
+    check(village.found(plan), "Final founding rejected a supported shallow foundation " + rotation);
+    check(!level.getBlockState(inside).isAir() && !level.getBlockState(inside.above()).isAir(), "Missing founding foundation");
+    check(level.getBlockState(outside).isAir() && level.getBlockState(outside.above()).isAir(), "Foundation spread outside footprints");
+    verifyVillage(level, village);
+    verifyCompanions(level, village);
+    verifyReload(level, village);
+    Kithkyn.LOGGER.info("[badlands-verify] FOUNDING PASS {}: filled foundation, inward companions and durable village state", rotation);
+  }
+
+  private static void verifyVillage(ServerLevel level, Village village) {
+    check(village.getStyle() == VillageStyle.BADLANDS, "Founded style changed");
+    check(village.getBuildings().size() == 3 && village.getTotalBeds() == 10, "Founding must have three buildings and 10 beds");
+    Building center = village.getTownCenter();
+    check(center != null && center.getName().equals("village_center_badlands_1"), "Wrong town center");
+    check(center.getInfo().getWorkLocations().size() == 7, "Center must supply seven starting jobs");
+    List<Occupation> jobs = new ArrayList<>();
+    village.getUnassignedJobs().forEach(job -> jobs.add(job.getOccupation()));
+    village.getJobAssignmentsView().values().forEach(job -> jobs.add(job.getOccupation()));
+    Map<Occupation, Long> counts = jobs.stream().collect(java.util.stream.Collectors.groupingBy(
+        occupation -> occupation, () -> new EnumMap<>(Occupation.class), java.util.stream.Collectors.counting()));
+    check(jobs.size() == 8 && counts.equals(Map.of(Occupation.GUARD, 5L, Occupation.BUILDER, 1L,
+        Occupation.QUARTERMASTER, 1L, Occupation.MINER, 1L)), "Wrong starting job positions " + counts);
+    check(center.getInfo().getGuardRole(2) == GuardRole.CAPTAIN
+        && center.getInfo().getGuardRole(3) == GuardRole.CROSSBOW_POST
+        && center.getInfo().getGuardRole(4) == GuardRole.CROSSBOW_POST
+        && center.getInfo().getGuardRole(5) == GuardRole.PATROL
+        && center.getInfo().getGuardRole(6) == GuardRole.PATROL, "Lost mixed center guard duties");
+    check(center.getInfo().getBedContainers() != null && center.getInfo().getBedContainers().size() == 10
+        && center.getInfo().getBedContainers().stream().filter(room -> room.containers().isEmpty()).count() == 3,
+        "Center room ownership must retain three beds without a personal container");
+    BlockPos plaza = village.getCenterPosition();
+    check(plaza.equals(world(center, new BlockPos(12, 1, 17))), "Wrong civic anchor");
+    check(level.getBlockState(world(center, new BlockPos(13, 2, 17))).is(Blocks.BELL), "Civic bell missing");
+    check(village.getCampfirePositions().size() == 2, "Must keep both authored fires");
+    for (BlockPos fire : village.getCampfirePositions()) {
+      check(!fire.equals(plaza) && level.getBlockState(fire).is(Blocks.CAMPFIRE), "Missing or conflated campfire " + fire);
+    }
+    for (Building building : village.getBuildings()) {
+      for (long bed : building.getInfo().getBedLocations()) {
+        check(level.getBlockState(world(building, BlockPos.of(bed))).getBlock() instanceof BedBlock, "Actual founding bed missing");
+      }
+      for (long container : java.util.stream.Stream.concat(building.getInfo().getContainerLocations().stream(),
+          building.getInfo().getPersonalContainerLocations().stream()).toList()) {
+        check(level.getBlockEntity(world(building, BlockPos.of(container))) instanceof Container, "Actual founding container missing");
+      }
+    }
+  }
+
+  private static void verifyCompanions(ServerLevel level, Village village) {
+    Building center = village.getTownCenter();
+    BoundingBox centerBounds = ApprovedStructureAccess.footprint(level, center);
+    var sides = EnumSet.noneOf(Direction.class);
+    List<BoundingBox> footprints = village.getBuildings().stream()
+        .map(building -> ApprovedStructureAccess.footprint(level, building)).toList();
+    for (Building building : village.getBuildings()) {
+      if (building == center) continue;
+      Direction facing = building.getRotation().rotate(building.getInfo().getEntranceFacing());
+      BoundingBox bounds = ApprovedStructureAccess.footprint(level, building);
+      int alignment = facing.getAxis() == Direction.Axis.X
+          ? bounds.minZ() + bounds.maxZ() - centerBounds.minZ() - centerBounds.maxZ()
+          : bounds.minX() + bounds.maxX() - centerBounds.minX() - centerBounds.maxX();
+      check(Math.abs(alignment) <= 1, building.getName() + " is not centered alongside the center");
+      BlockPos at = bounds.getCenter();
+      BlockPos plaza = village.getCenterPosition();
+      check(facing.getStepX() * (plaza.getX() - at.getX()) + facing.getStepZ() * (plaza.getZ() - at.getZ()) > 0,
+          building.getName() + " faces away from town");
+      sides.add(facing.getOpposite());
+    }
+    check(sides.size() == 2, "Companions occupy the same side");
+    BlockPos site = village.getCenterPosition();
+    for (BlockPos position : BlockPos.betweenClosed(site.offset(-72, 0, -72), site.offset(72, 0, 72))) {
+      boolean expected = footprints.stream().anyMatch(box -> position.getX() >= box.minX() && position.getX() <= box.maxX()
+          && position.getZ() >= box.minZ() && position.getZ() <= box.maxZ());
+      check(village.hasClaimed(position) == expected, "Claim escaped the three authored footprints at " + position);
+    }
+  }
+
+  private static void verifyReload(ServerLevel level, Village village) throws ReflectiveOperationException {
+    List<ApprovedStructureAccess.Person> residents = new ArrayList<>();
+    for (var job : List.copyOf(village.getUnassignedJobs())) {
+      var person = new ApprovedStructureAccess.Person(level, village);
+      person.setLifeStage(AgeStage.ADULT);
+      person.setNoAi(true);
+      ApprovedStructureAccess.moveTo(person, village.getGatheringPoint());
+      village.getPopulation().add(person.getUUID());
+      check(level.addFreshEntity(person), "Could not create allocation probe");
+      check(village.canHouseForJob(person.getUUID(), job.getBuildingUUID()), "Starting job cannot be housed");
+      village.assignJob(person.getUUID(), job);
+      person.setOccupation(job.getOccupation());
+      residents.add(person);
+    }
+    ApprovedStructureAccess.reconcileBeds(village);
+    check(village.getJobAssignmentsView().size() == 8 && village.getBedAssignmentsView().size() == 8
+        && village.getUnassignedBeds().size() == 2, "Starting eight workers did not receive eight distinct beds");
+    Building store = village.getBuildings().stream().filter(building -> building.getName().equals("storehouse_badlands_1"))
+        .findFirst().orElseThrow();
+    BlockPos storage = world(store, BlockPos.of(store.getInfo().getContainerLocations().getFirst()));
+    Container chest = (Container) level.getBlockEntity(storage);
+    chest.setItem(0, new ItemStack(Items.COPPER_INGOT, 13));
+    chest.setChanged();
+    village.queuePendingVillageItems(List.of(new ItemStack(Items.AMETHYST_SHARD, 7)));
+    Map<?, ?> stock = village.stockTally();
+    var containers = village.getVillageContainerPositions();
+    var ops = level.registryAccess().createSerializationContext(NbtOps.INSTANCE);
+    CompoundTag saved = (CompoundTag) Village.CODEC.encodeStart(ops, village).getOrThrow();
+    Village restored = Village.CODEC.parse(ops, saved).getOrThrow();
+    restored.attach(level);
+    CompoundTag again = (CompoundTag) Village.CODEC.encodeStart(ops, restored).getOrThrow();
+    for (String field : List.of("id", "name", "town_center", "buildings", "people", "job_assignments",
+        "bed_assignments", "unassigned_jobs", "unassigned_beds", "brain")) {
+      check(Objects.equals(saved.get(field), again.get(field)), "Save/reload changed " + field);
+    }
+    // Claims are a set; decoding may change its iteration order without changing any owned column.
+    check(new java.util.HashSet<>(saved.getList("claim_grid", net.minecraft.nbt.Tag.TAG_LONG))
+        .equals(new java.util.HashSet<>(again.getList("claim_grid", net.minecraft.nbt.Tag.TAG_LONG))),
+        "Save/reload changed claimed columns");
+    verifyVillage(level, restored);
+    check(restored.getVillageContainerPositions().equals(containers), "Reload lost container ownership");
+    check(restored.stockTally().equals(stock) && chest.getItem(0).is(Items.COPPER_INGOT)
+        && chest.getItem(0).getCount() == 13, "Reload changed actual world storage");
+    check(restored.pendingVillageItems().size() == 1 && restored.pendingVillageItems().getFirst().is(Items.AMETHYST_SHARD)
+        && restored.pendingVillageItems().getFirst().getCount() == 7, "Reload lost pending inventory");
+    for (Building before : village.getBuildings()) {
+      Building after = restored.getBuilding(before.getUUID());
+      check(after != null && after.getRotation() == before.getRotation() && after.getPlacedSink() == before.getPlacedSink()
+          && Objects.equals(after.getMineEntrance(), before.getMineEntrance()), "Reload changed authored placement frame");
+      check(Objects.equals(after.getInfo().getBedContainers(), before.getInfo().getBedContainers())
+          && after.getInfo().getCoupleBeds().equals(before.getInfo().getCoupleBeds()), "Reload changed room metadata");
+    }
+    residents.forEach(net.minecraft.world.entity.Entity::discard);
+  }
+
+  private static BuildingInfo info(String name) {
+    BuildingInfo value = Buildings.getByName(name);
+    check(value != null, "Missing definition " + name);
+    return value;
+  }
+
+  private static BlockPos world(Building building, BlockPos local) {
+    return BlockPos.of(building.getOriginLocation()).offset(local.rotate(building.getRotation()));
+  }
+
+  private static void forceChunks(ServerLevel level, BlockPos center, int radius) {
+    for (int x = (center.getX() - radius) >> 4; x <= (center.getX() + radius) >> 4; x++) {
+      for (int z = (center.getZ() - radius) >> 4; z <= (center.getZ() + radius) >> 4; z++) level.setChunkForced(x, z, true);
+    }
+  }
+
+  private static void check(boolean condition, String message) {
+    if (!condition) throw new AssertionError(message);
+  }
+}

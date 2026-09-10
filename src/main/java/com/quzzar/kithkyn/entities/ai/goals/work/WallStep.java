@@ -257,7 +257,7 @@ public final class WallStep implements BlockWorkStep {
     if (!wallCell.equals(searchCell)) {
       searchCell = wallCell;
       candidateCursor = 0;
-      BlockPos centre = village.getCampfirePosition();
+      BlockPos centre = village.getCenterPosition();
       int inwardX = Integer.signum(centre.getX() - wallCell.getX());
       int inwardZ = Integer.signum(centre.getZ() - wallCell.getZ());
       List<BlockPos> found = new ArrayList<>();

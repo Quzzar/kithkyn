@@ -22,16 +22,49 @@ public record GuardDuty(BlockPos position, BlockPos lookAt, boolean ranged, bool
 
   public static final String RANGED_GUARD_POSTS = "RANGED_GUARD_POSTS";
 
-  /** The founding center's guard station is the captain; it remains an ordinary GUARD job. */
+  /** The captain is one authored station, or the first center guard in an older definition. */
   public static boolean isCaptain(RealPerson person) {
     Village village = person.getVillage();
     return person.getOccupation() == Occupation.GUARD && village != null && village.getTownCenter() != null
-        && isCaptain(village.getJobAssignment(person.getUUID()), village.getTownCenter().getUUID());
+        && isCaptain(village.getJobAssignment(person.getUUID()), village.getTownCenter().getUUID(),
+            village.getTownCenter().getInfo());
   }
 
-  static boolean isCaptain(@Nullable JobAssignment assignment, @Nullable UUID townCenter) {
-    return assignment != null && townCenter != null && assignment.getOccupation() == Occupation.GUARD
-        && !assignment.isWallPost() && townCenter.equals(assignment.getBuildingUUID());
+  static boolean isCaptain(@Nullable JobAssignment assignment, @Nullable UUID townCenter,
+      @Nullable BuildingInfo info) {
+    if (assignment == null || townCenter == null || info == null
+        || assignment.getOccupation() != Occupation.GUARD || assignment.isWallPost()
+        || !townCenter.equals(assignment.getBuildingUUID())) {
+      return false;
+    }
+    int index = 0;
+    int firstUnspecifiedGuard = -1;
+    int explicitCaptain = -1;
+    for (Occupation occupation : info.getWorkLocations().values()) {
+      if (occupation == Occupation.GUARD) {
+        if (firstUnspecifiedGuard < 0 && info.getGuardRole(index) == null) firstUnspecifiedGuard = index;
+        if (info.getGuardRole(index) == GuardRole.CAPTAIN) explicitCaptain = index;
+      }
+      index++;
+    }
+    if (explicitCaptain >= 0) return assignment.getStationIndex() == explicitCaptain;
+    return firstUnspecifiedGuard >= 0 && assignment.getStationIndex() == firstUnspecifiedGuard;
+  }
+
+  /** Explicit sword patrols use the ordinary patrol route without woodcutting or an axe loadout. */
+  public static boolean isSwordPatrol(RealPerson person) {
+    return authoredRole(person) == GuardRole.PATROL;
+  }
+
+  @Nullable
+  private static GuardRole authoredRole(RealPerson person) {
+    Village village = person.getVillage();
+    if (person.getOccupation() != Occupation.GUARD || village == null) return null;
+    JobAssignment job = village.getJobAssignment(person.getUUID());
+    if (job == null || job.isWallPost()) return null;
+    Building building = village.getBuilding(job.getBuildingUUID());
+    return building == null || building.getInfo() == null
+        ? null : building.getInfo().getGuardRole(job.getStationIndex());
   }
 
   /** No fixed duty means the ordinary guard keeps its patrol and sword/axe loadout. */
@@ -84,7 +117,7 @@ public record GuardDuty(BlockPos position, BlockPos lookAt, boolean ranged, bool
   @Nullable
   public static GuardDuty fromBuilding(@Nullable BuildingInfo info, BlockPos origin,
       Rotation rotation, int stationIndex) {
-    if (info == null || !info.getGrants().contains(RANGED_GUARD_POSTS) || stationIndex < 0) {
+    if (info == null || stationIndex < 0) {
       return null;
     }
     int index = 0;
@@ -93,8 +126,12 @@ public record GuardDuty(BlockPos position, BlockPos lookAt, boolean ranged, bool
         if (station.getValue() != Occupation.GUARD) {
           return null;
         }
+        GuardRole role = info.getGuardRole(stationIndex);
+        if (role != null && !role.hasPost()) return null;
+        if (role == null && !info.getGrants().contains(RANGED_GUARD_POSTS)) return null;
         BlockPos position = origin.offset(BlockPos.of(station.getKey()).rotate(rotation));
-        return new GuardDuty(position, position.offset(new BlockPos(0, 0, -8).rotate(rotation)), true, true);
+        boolean ranged = role != GuardRole.SWORD_POST;
+        return new GuardDuty(position, position.offset(new BlockPos(0, 0, -8).rotate(rotation)), ranged, ranged);
       }
     }
     return null;

@@ -15,7 +15,10 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.CompoundContainer;
 import net.minecraft.world.Container;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BarrelBlock;
+import net.minecraft.world.level.block.DoorBlock;
+import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
 import net.minecraft.world.level.block.entity.BarrelBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.ChestBlockEntity;
@@ -59,6 +62,18 @@ public final class ContainerVisit {
     return visit;
   }
 
+  /** A closet door stays open for its active storage visit, including delayed shelf transfers. */
+  public static boolean needsDoorOpen(Level level, BlockPos door) {
+    var state = level.getBlockState(door);
+    if (state.getBlock() instanceof DoorBlock && state.getValue(DoorBlock.HALF) == DoubleBlockHalf.UPPER) door = door.below();
+    for (ContainerVisit visit : ACTIVE.values()) {
+      if (visit.level == level && visit.position.getY() == door.getY()
+          && visit.position.distManhattan(door) == 1 && visit.present()
+          && ContainerAccess.canReach(visit.person, visit.person.getEyePosition(), visit.position, 9.0D)) return true;
+    }
+    return false;
+  }
+
   /** Finishing, conversation, danger, night and removal all release the same visible visit. */
   public void close() {
     if (this.closed) return;
@@ -76,7 +91,8 @@ public final class ContainerVisit {
       if (visit.level.getServer() != event.getServer()) continue;
       if (!visit.person.isAlive() || visit.person.isRemoved() || visit.person.isSleeping()
           || visit.person.isInterrupted() || visit.level.isNight()
-          || visit.person.blockPosition().distSqr(visit.position) > 9.0D || !visit.present()) {
+          || !ContainerAccess.canReach(visit.person, visit.person.getEyePosition(), visit.position, 9.0D)
+          || !visit.present()) {
         visit.close();
       } else if (visit.level.getGameTime() % 5 == 0) {
         // Vanilla periodically recounts player menus, which intentionally know nothing about NPCs.

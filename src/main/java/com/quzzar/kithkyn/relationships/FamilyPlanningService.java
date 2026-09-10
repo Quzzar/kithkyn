@@ -87,7 +87,7 @@ public final class FamilyPlanningService {
         || !second.getUUID().equals(first.getSpouseId())) {
       return "the parents must be married to each other";
     }
-    if (!sharesHome(village, first.getUUID(), second.getUUID())) {
+    if (!village.sharesCoupleHome(first.getUUID(), second.getUUID())) {
       return "the married couple must share a completed home";
     }
     return null;
@@ -185,13 +185,6 @@ public final class FamilyPlanningService {
               first.getFullName(), second.getFullName(), born,
               born == 1 ? "child" : "identical siblings", village.getName());
         }));
-  }
-
-  private static boolean sharesHome(Village village, UUID first, UUID second) {
-    var firstBed = village.getBedAssignment(first);
-    var secondBed = village.getBedAssignment(second);
-    return firstBed != null && secondBed != null
-        && firstBed.getBuildingUUID().equals(secondBed.getBuildingUUID());
   }
 
   private static long day(ServerLevel level) {

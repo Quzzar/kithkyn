@@ -19,12 +19,14 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.Container;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.Rotation;
 
 /**
  * A home's own chest: the container a building definition lists under
  * {@code personal_containers} instead of {@code containers}. It belongs to
- * the people who live in that building, shared between them, and to nobody
- * else. It is never registered as village storage, so no worker fetches from
+ * the people whose beds share access to it, and to nobody else. Definitions
+ * may bind beds to their room's containers; older homes use the nearest
+ * personal container. It is never registered as village storage, so no worker fetches from
  * it, no deposit lands in it, the planner does not count it, and the
  * quartermaster's sweep never sees it. What a villager puts there is theirs;
  * a player taking from it is theft like any other village chest
@@ -86,8 +88,8 @@ public final class PersonalChest {
   }
 
   /**
-   * This person's household chest: the one in their home nearest their bed, or null
-   * when they have no home or their home has no chest of its own.
+   * This person's room chest, or the nearest home chest for a definition without
+   * explicit room bindings. A dependent inherits the same room as their resident parent.
    */
   @Nullable
   public static BlockPos of(RealPerson person) {
@@ -95,21 +97,40 @@ public final class PersonalChest {
     if (home == null) {
       return null;
     }
-    List<BlockPos> chests = chests(home);
-    if (chests.isEmpty()) {
+    Village village = person.getVillage();
+    BedAssignment bed = village.getBedAssignment(person.getUUID());
+    if (bed == null) {
+      bed = village.dependentBedAssignment(person);
+    }
+    return bed == null ? null : forBed(home.getInfo(), BlockPos.of(home.getOriginLocation()),
+        home.getRotation(), bed.getBedIndex());
+  }
+
+  /** Resolves only a bed's allowed containers, preserving the structure's rotation. */
+  @Nullable
+  static BlockPos forBed(@Nullable BuildingInfo info, BlockPos origin, Rotation rotation, int bedIndex) {
+    if (info == null || bedIndex < 0 || bedIndex >= info.getBedLocations().size()) {
       return null;
     }
-    BlockPos bed = LocationManager.getBedLocation(person);
+    BlockPos localBed = BlockPos.of(info.getBedLocations().get(bedIndex));
+    List<BlockPos> candidates;
+    if (info.getBedContainers() != null) {
+      candidates = info.getBedContainers().stream()
+          .filter(binding -> binding.bed().equals(localBed))
+          .findFirst().map(BuildingInfo.BedContainers::containers).orElse(List.of());
+    } else {
+      candidates = info.getPersonalContainerLocations().stream().map(BlockPos::of).toList();
+    }
     BlockPos nearest = null;
     double best = Double.MAX_VALUE;
-    for (BlockPos chest : chests) {
-      double distance = bed.equals(BlockPos.ZERO) ? 0 : chest.distSqr(bed);
+    for (BlockPos chest : candidates) {
+      double distance = chest.distSqr(localBed);
       if (nearest == null || distance < best) {
         nearest = chest;
         best = distance;
       }
     }
-    return nearest;
+    return nearest == null ? null : origin.offset(nearest.rotate(rotation));
   }
 
   /**
@@ -126,11 +147,11 @@ public final class PersonalChest {
     return level.getBlockEntity(chest) instanceof Container container ? container : null;
   }
 
-  /** The names of everyone else who lives in this person's home: who the chest is shared with. */
+  /** Names only the residents who use this exact personal container. */
   public static List<String> housemateNames(RealPerson person) {
     Village village = person.getVillage();
-    Building home = home(person);
-    if (village == null || home == null || !(person.level() instanceof ServerLevel level)) {
+    BlockPos chest = of(person);
+    if (village == null || chest == null || !(person.level() instanceof ServerLevel level)) {
       return List.of();
     }
     List<String> names = new ArrayList<>();
@@ -139,8 +160,7 @@ public final class PersonalChest {
         continue;
       }
       RealPerson housemate = village.getPerson(level, otherId);
-      Building housemateHome = housemate == null ? null : home(housemate);
-      if (housemateHome != null && home.getUUID().equals(housemateHome.getUUID())) {
+      if (housemate != null && chest.equals(of(housemate))) {
         names.add(housemate.getFullName());
       }
     }

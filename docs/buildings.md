@@ -363,10 +363,13 @@ CTOV fortified plains is a defense or development state of `plains`, while Chris
 Halloween are possible seasonal treatments. This keeps biome, progression, and event state from
 becoming one overloaded axis.
 
-### Current runtime selection: 2026-09-07
+### Current runtime selection: 2026-09-09
 
-The available architecture families are `plains`, `taiga`, `snowy`, `desert`, `savanna`, and
-the approved `birch_forest` selection. The reference roster above reserves future work, not
+The bundled architecture families are `plains`, `taiga`, `snowy`, `desert`, `savanna`, and
+the approved `birch_forest` selection. The approved local Pueblo/Mesa datapack adds `badlands`
+for ordinary and eroded badlands; its thirty templates and house alternatives are documented in
+[badlands-village.md](badlands-village.md). Without that private pack, the style has no founding
+set and is not selected automatically. The reference roster above reserves future work, not
 phantom runtime catalogs. In particular, the approved custom Birch selection supersedes the
 earlier Romanian/Dungeons and Taverns allocation for this implementation; ordinary and old-growth
 Birch biomes use this one approved catalog rather than two identical architecture sets.
@@ -419,8 +422,8 @@ These are architecture choices, not new restrictions on survival or work.
 
 Birch is a strict, deliberately sparse catalog. It never borrows an omitted Plains building
 or higher tier: no four-bed House L3, Mine L2, Storehouse upgrade, Farm L3, Center upgrade,
-Church L2, or separate Tavern appears implicitly. Its shared bakery/tavern declares both
-workplaces in one building. The five older catalogs retain their existing Plains fallback
+or Church L2 appears implicitly. Its approved bakery and separate tavern each declare their
+own occupation, bed and personal storage. The five older catalogs retain their existing Plains fallback
 and upgrade compatibility. Multiword variant IDs such as `house_birch_forest_1` now use the
 longest known style suffix; custom single-token variants retain the existing naming format.
 Recipes remain identical across village biomes, and an upgrade follows the explicitly named

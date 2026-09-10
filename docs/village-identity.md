@@ -56,7 +56,9 @@ A building may also declare semantic identity slots:
 All positions are relative to the structure origin and rotate with the building. Primary and
 secondary block slots recolor only an existing supported colored block at that position: wool,
 carpet, concrete, concrete powder, terracotta, glazed terracotta, stained glass, stained glass
-panes, candles, or beds. A bed slot may name either half: both halves are recolored together,
+panes, candles, beds, or plain standing/wall banners used as decorative cloth. Decorative
+banner accents change their base color without receiving the village flag's pattern or name;
+white cloth without a slot stays white. A bed slot may name either half: both halves are recolored together,
 preserving their facing and part. Do not assign opposite halves of one bed to different color
 roles. This makes the author's intent explicit and avoids recoloring an entire regional
 palette.

@@ -43,8 +43,8 @@ class BuildingImpactTest {
 
   @Test
   void storageAndCropExpansionDoesNotClaimToHouseAnybody() {
-    BuildingImpact.Capacity first = new BuildingImpact.Capacity(0, 0, 1, Map.of(Occupation.FARMER, 1), 26);
-    BuildingImpact.Capacity larger = new BuildingImpact.Capacity(0, 0, 3, Map.of(Occupation.FARMER, 1), 52);
+    BuildingImpact.Capacity first = new BuildingImpact.Capacity(0, 0, 1, Map.of(Occupation.FARMER, 1), 26, 0, 0);
+    BuildingImpact.Capacity larger = new BuildingImpact.Capacity(0, 0, 3, Map.of(Occupation.FARMER, 1), 52, 0, 0);
     BuildingImpact.Capacity net = BuildingImpact.net(larger, List.of(first));
     assertEquals(0, net.generalBeds());
     assertEquals(0, net.workplaces());
@@ -56,9 +56,9 @@ class BuildingImpactTest {
 
   @Test
   void removedHousingAndWorkerBedsAreSubtractedSeparately() {
-    var net = BuildingImpact.net(new BuildingImpact.Capacity(5, 0, 1, Map.of(), 0), List.of(
-        new BuildingImpact.Capacity(3, 0, 1, Map.of(), 0),
-        new BuildingImpact.Capacity(0, 1, 1, Map.of(Occupation.BUILDER, 1), 0)));
+    var net = BuildingImpact.net(new BuildingImpact.Capacity(5, 0, 1, Map.of(), 0, 0, 0), List.of(
+        new BuildingImpact.Capacity(3, 0, 1, Map.of(), 0, 0, 0),
+        new BuildingImpact.Capacity(0, 1, 1, Map.of(Occupation.BUILDER, 1), 0, 0, 0)));
     assertEquals(2, net.generalBeds());
     assertEquals(-1, net.workerBeds());
     assertEquals(Map.of(Occupation.BUILDER, -1), net.jobs());

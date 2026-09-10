@@ -16,7 +16,6 @@ import com.quzzar.kithkyn.village.QuartermasterPlanner;
 import com.quzzar.kithkyn.village.ShelvingPlan;
 import com.quzzar.kithkyn.village.Storehouse;
 import com.quzzar.kithkyn.village.Village;
-import com.quzzar.kithkyn.village.buildings.WorkerFooting;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.MinecraftServer;
@@ -25,9 +24,7 @@ import net.minecraft.world.Container;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.block.entity.HopperBlockEntity;
-import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 
 /**
@@ -148,10 +145,13 @@ public final class ConsolidateStep implements BlockWorkStep {
 
   @Override
   public boolean inReach(RealPerson person, BlockPos target) {
+    boolean handReach = ContainerAccess.canReach(person, person.getEyePosition(), target, reachSqr(person));
+    if (!handReach && this.approach != null) {
+      this.approach = ContainerAccess.resolveOpenedDoor(person, target, this.approach, reachSqr(person));
+    }
     boolean arrived = this.approach != null
         && person.position().distanceToSqr(Vec3.atBottomCenterOf(this.approach)) <= 0.36D
-        && person.blockPosition().distSqr(target) <= reachSqr(person)
-        && canReachContainer(person, person.getEyePosition(), target);
+        && handReach;
     if (!arrived && this.visit != null) closeVisit();
     return arrived;
   }
@@ -176,29 +176,9 @@ public final class ConsolidateStep implements BlockWorkStep {
   @Nullable
   private BlockPos approachTo(RealPerson person, BlockPos target) {
     if (this.failedUntil.containsKey(target)) return null;
-    List<BlockPos> candidates = new ArrayList<>();
-    for (BlockPos pos : BlockPos.betweenClosed(target.offset(-2, -2, -2), target.offset(2, 2, 2))) {
-      if (pos.distSqr(target) <= reachSqr(person) && WorkerFooting.canStand(person, pos)
-          && canReachContainer(person, Vec3.atBottomCenterOf(pos).add(0.0D, person.getEyeHeight(), 0.0D), target)) {
-        candidates.add(pos.immutable());
-      }
-    }
-    candidates.sort(Comparator.<BlockPos>comparingDouble(pos -> pos.distSqr(target))
-        .thenComparingDouble(pos -> pos.distSqr(person.blockPosition())));
-    for (BlockPos candidate : candidates.stream().limit(12).toList()) {
-      var path = person.getNavigation().createPath(candidate, 0);
-      if (path != null && path.canReach() && path.getEndNode() != null
-          && path.getEndNode().asBlockPos().equals(candidate)) return candidate;
-    }
-    this.failedUntil.put(target, person.level().getGameTime() + 200);
-    return null;
-  }
-
-  /** A nearby wall does not turn an outdoor foothold into access to an indoor shelf. */
-  private static boolean canReachContainer(RealPerson person, Vec3 eye, BlockPos target) {
-    var hit = person.level().clip(new ClipContext(eye, Vec3.atCenterOf(target),
-        ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, person));
-    return hit.getType() == HitResult.Type.MISS || hit.getBlockPos().equals(target);
+    BlockPos found = ContainerAccess.approachTo(person, target, reachSqr(person));
+    if (found == null) this.failedUntil.put(target, person.level().getGameTime() + 200);
+    return found;
   }
 
   /** Sources remain the village's shared workplace containers, excluding the market and storehouse. */

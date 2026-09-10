@@ -22,13 +22,15 @@ class GuardDutyTest {
   void captainIsOnlyTheCurrentTownCenterGuardAssignment() {
     var center = java.util.UUID.randomUUID();
     var person = java.util.UUID.randomUUID();
-    assertTrue(GuardDuty.isCaptain(new JobAssignment(person, Occupation.GUARD, center, 3), center));
-    assertFalse(GuardDuty.isCaptain(new JobAssignment(person, Occupation.MINER, center, 3), center));
+    BuildingInfo info = definition(false);
+    assertTrue(GuardDuty.isCaptain(new JobAssignment(person, Occupation.GUARD, center, 1), center, info));
+    assertFalse(GuardDuty.isCaptain(new JobAssignment(person, Occupation.GUARD, center, 2), center, info));
+    assertFalse(GuardDuty.isCaptain(new JobAssignment(person, Occupation.MINER, center, 1), center, info));
     assertFalse(GuardDuty.isCaptain(new JobAssignment(person, Occupation.GUARD,
-        java.util.UUID.randomUUID(), 0), center));
-    assertFalse(GuardDuty.isCaptain(JobAssignment.wallPost(0), center));
-    assertFalse(GuardDuty.isCaptain(null, center));
-    assertFalse(GuardDuty.isCaptain(new JobAssignment(person, Occupation.GUARD, center, 3), null));
+        java.util.UUID.randomUUID(), 0), center, info));
+    assertFalse(GuardDuty.isCaptain(JobAssignment.wallPost(0), center, info));
+    assertFalse(GuardDuty.isCaptain(null, center, info));
+    assertFalse(GuardDuty.isCaptain(new JobAssignment(person, Occupation.GUARD, center, 1), null, info));
   }
 
   @Test
@@ -65,6 +67,67 @@ class GuardDutyTest {
       assertEquals(kind.usesCrossbow(), duty.ranged());
       assertFalse(duty.backupSword());
     }
+  }
+
+  @Test
+  void oneCenterCanMixOneCaptainPatrolsAndCrossbowPostsWithoutChangingTheirJobs() {
+    BuildingInfo info = BuildingInfo.CODEC.parse(JsonOps.INSTANCE, JsonParser.parseString("""
+        {
+          "structure":"village_center_badlands_1",
+          "work_stations":[
+            {"pos":[1,1,1],"occupation":"BUILDER"},
+            {"pos":[2,1,1],"occupation":"GUARD","guard_duty":"PATROL"},
+            {"pos":[3,1,1],"occupation":"GUARD","guard_duty":"CAPTAIN"},
+            {"pos":[4,1,1],"occupation":"GUARD","guard_duty":"PATROL"},
+            {"pos":[5,8,1],"occupation":"GUARD","guard_duty":"CROSSBOW_POST"},
+            {"pos":[6,8,1],"occupation":"GUARD","guard_duty":"CROSSBOW_POST"}
+          ]
+        }
+        """)).getOrThrow();
+    var center = java.util.UUID.randomUUID();
+    var person = java.util.UUID.randomUUID();
+    for (int index = 1; index <= 5; index++) {
+      assertEquals(index == 2, GuardDuty.isCaptain(
+          new JobAssignment(person, Occupation.GUARD, center, index), center, info));
+    }
+    for (Rotation rotation : Rotation.values()) {
+      BlockPos origin = new BlockPos(10, 70, -20);
+      for (int index = 0; index < 4; index++) {
+        assertNull(GuardDuty.fromBuilding(info, origin, rotation, index));
+      }
+      for (int index = 4; index <= 5; index++) {
+        GuardDuty duty = GuardDuty.fromBuilding(info, origin, rotation, index);
+        assertNotNull(duty);
+        assertTrue(duty.ranged());
+        assertTrue(duty.backupSword());
+        assertEquals(origin.offset(new BlockPos(index + 1, 8, 1).rotate(rotation)), duty.position());
+      }
+    }
+    BuildingInfo restored = BuildingInfo.CODEC.parse(JsonOps.INSTANCE,
+        BuildingInfo.CODEC.encodeStart(JsonOps.INSTANCE, info).getOrThrow()).getOrThrow();
+    assertEquals(GuardRole.PATROL, restored.getGuardRole(1));
+    assertEquals(GuardRole.CAPTAIN, restored.getGuardRole(2));
+    assertEquals(GuardRole.CROSSBOW_POST, restored.getGuardRole(4));
+    assertNull(restored.validate());
+  }
+
+  @Test
+  void stationDutyOverridesTheBuildingWideRangedDefault() {
+    BuildingInfo info = BuildingInfo.CODEC.parse(JsonOps.INSTANCE, JsonParser.parseString("""
+        {
+          "structure":"watchtower_plains_1",
+          "grants":["RANGED_GUARD_POSTS"],
+          "work_stations":[
+            {"pos":[1,1,1],"occupation":"GUARD","guard_duty":"PATROL"},
+            {"pos":[2,1,1],"occupation":"GUARD","guard_duty":"SWORD_POST"}
+          ]
+        }
+        """)).getOrThrow();
+    assertNull(GuardDuty.fromBuilding(info, BlockPos.ZERO, Rotation.NONE, 0));
+    GuardDuty duty = GuardDuty.fromBuilding(info, BlockPos.ZERO, Rotation.NONE, 1);
+    assertNotNull(duty);
+    assertFalse(duty.ranged());
+    assertFalse(duty.backupSword());
   }
 
   private static BuildingInfo definition(boolean ranged) {

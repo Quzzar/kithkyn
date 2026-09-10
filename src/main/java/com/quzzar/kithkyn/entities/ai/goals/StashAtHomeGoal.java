@@ -6,6 +6,7 @@ import java.util.Set;
 import com.quzzar.kithkyn.Kithkyn;
 import com.quzzar.kithkyn.entities.RealPerson;
 import com.quzzar.kithkyn.entities.StashOffer;
+import com.quzzar.kithkyn.entities.ai.goals.work.ContainerAccess;
 import com.quzzar.kithkyn.entities.ai.goals.work.PackLogistics;
 import com.quzzar.kithkyn.village.LocationManager;
 import com.quzzar.kithkyn.village.PersonalChest;
@@ -25,7 +26,7 @@ import net.minecraft.world.phys.Vec3;
  * {@link SleepAtNightGoal}, which takes over the moment the pack is put away.
  *
  * <p>Two legs when the walk starts outside: to the doorstep first, then to
- * the chest ({@link LocationManager#getEntrance}). A path aimed straight at a
+ * a standing position with hand access to the chest ({@link LocationManager#getEntrance}). A path aimed straight at a
  * chest indoors stalls against the nearest outside wall when the door is on
  * the far side; the level-3 house at Wildflower Downs had its door away from
  * the village and everyone stopped under the upstairs chest, outside, night
@@ -53,17 +54,17 @@ public class StashAtHomeGoal extends Goal {
   private static final int STALL_TICKS = 400;
   /** Closer by this much (blocks) counts as headway. */
   private static final double HEADWAY = 0.5D;
-  /**
-   * Close enough to reach into the chest, or to count as standing on the
-   * doorstep, squared: three blocks. A chest on a loft is reached from the
-   * floor a block below it, and the nearest standing spot to one such chest
-   * measured 2.7 blocks from its middle, a hand short of the old 2.5.
-   */
+  /** Three blocks to the doorstep, or from the eyes to an unobstructed household container. */
   private static final double REACH_SQR = 9.0D;
+  /** Retry a blocked indoor approach at most once per twenty goal ticks. */
+  private static final int APPROACH_RETRY_TICKS = 20;
 
   private final RealPerson person;
   private BlockPos chest;
   private BlockPos leg;
+  private BlockPos approach;
+  private boolean indoors;
+  private int nextApproachTick;
   private int ticks;
   private int stalledTicks;
   private double bestDistance;
@@ -106,7 +107,10 @@ public class StashAtHomeGoal extends Goal {
   @Override
   public void start() {
     this.ticks = 0;
+    this.approach = null;
+    this.nextApproachTick = 0;
     this.leg = firstLeg();
+    this.indoors = this.leg.equals(this.chest);
     aimAt(this.leg);
   }
 
@@ -133,14 +137,23 @@ public class StashAtHomeGoal extends Goal {
   @Override
   public void tick() {
     this.ticks++;
-    double distance = person.position().distanceTo(Vec3.atCenterOf(this.leg));
-    if (distance * distance <= REACH_SQR) {
-      if (this.leg.equals(this.chest)) {
-        person.getNavigation().stop();
-        putAway();
-      } else {
-        aimAt(this.chest); // on the doorstep: the rest is indoors and short
+    if (this.indoors && ContainerAccess.canReach(person, person.getEyePosition(), this.chest, REACH_SQR)) {
+      person.getNavigation().stop();
+      putAway();
+      return;
+    }
+    if (this.indoors && this.approach != null) {
+      BlockPos resolved = ContainerAccess.resolveOpenedDoor(person, this.chest, this.approach, REACH_SQR);
+      if (!resolved.equals(this.approach)) {
+        this.approach = resolved;
+        aimAt(resolved);
       }
+    }
+    double distance = person.position().distanceTo(this.indoors
+        ? Vec3.atBottomCenterOf(this.leg) : Vec3.atCenterOf(this.leg));
+    if (!this.indoors && distance * distance <= REACH_SQR) {
+      this.indoors = true;
+      aimAt(this.chest); // choose a supported indoor approach from the doorstep
       return;
     }
     if (distance < this.bestDistance - HEADWAY) {
@@ -151,7 +164,7 @@ public class StashAtHomeGoal extends Goal {
     }
     if (this.stalledTicks >= STALL_TICKS) {
       Kithkyn.LOGGER.info("'{}' made no headway toward their chest at home ({} blocks off, {}); the {} stays in the pack",
-          person.getFullName(), Math.round(distance), this.leg.equals(this.chest) ? "indoors" : "on the way to the door",
+          person.getFullName(), Math.round(distance), this.indoors ? "indoors" : "on the way to the door",
           StashOffer.names(person.keepingForHome()));
       person.doneKeeping();
       return;
@@ -168,7 +181,22 @@ public class StashAtHomeGoal extends Goal {
   }
 
   private void walk() {
-    person.getNavigation().moveTo(this.leg.getX(), this.leg.getY(), this.leg.getZ(), 0.5D);
+    if (this.indoors && this.approach == null) {
+      person.getNavigation().stop();
+      if (this.ticks < this.nextApproachTick) return;
+      this.nextApproachTick = this.ticks + APPROACH_RETRY_TICKS;
+      this.approach = ContainerAccess.approachTo(person, this.chest, REACH_SQR);
+      if (this.approach == null) return;
+      this.leg = this.approach;
+      this.bestDistance = Double.MAX_VALUE;
+      this.stalledTicks = 0;
+    }
+    if (this.indoors) {
+      // The selected foothold is exact; coordinate movement accepts stopping one cell short.
+      person.getNavigation().moveTo(person.getNavigation().createPath(this.leg, 0), 0.5D);
+    } else {
+      person.getNavigation().moveTo(this.leg.getX() + 0.5D, this.leg.getY(), this.leg.getZ() + 0.5D, 0.5D);
+    }
   }
 
   private void putAway() {

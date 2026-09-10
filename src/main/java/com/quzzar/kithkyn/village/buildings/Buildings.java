@@ -1,6 +1,7 @@
 package com.quzzar.kithkyn.village.buildings;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,7 +16,7 @@ import net.minecraft.world.item.ItemStack;
  * Registry of building definitions, populated from datapack JSON under
  * {@code data/<namespace>/kithkyn/buildings/*.json} by {@link BuildingDefinitionLoader}.
  *
- * Definitions come in regional variants, {@code <category>_<style>_<level>}, and
+ * Definitions come in regional variants, {@code <category>_<style>_<level>[__<design>]}, and
  * a village builds in one style for life ({@link VillageStyle}). Everything that
  * asks "what can this village build" goes through {@link #resolve} or
  * {@link #catalogue}, which hand back that style's variant and fall back to
@@ -42,57 +43,88 @@ public class Buildings {
    */
   public static final String COUPLE_COTTAGE_CATEGORY = "couple_cottage";
 
-  private static volatile Map<String, BuildingInfo> registry = Map.of();
+  private record Family(String category, String variant, int level) {}
+
+  /** Publish definitions and their lookup index together on reload. */
+  private record Registry(Map<String, BuildingInfo> byName, Map<Family, List<BuildingInfo>> families) {}
+
+  private static volatile Registry registry = new Registry(Map.of(), Map.of());
 
   /** Replaces the whole registry; called on datapack (re)load. */
   public static void reload(Map<String, BuildingInfo> newRegistry) {
     BuildingFootprint.clearCache();
-    registry = Map.copyOf(newRegistry);
+    Map<Family, List<BuildingInfo>> families = new HashMap<>();
+    for (BuildingInfo info : newRegistry.values()) {
+      if (info.hasWellFormedId()) {
+        Family family = new Family(info.getCategory(), info.getVariant(), info.getLevel());
+        families.computeIfAbsent(family, ignored -> new ArrayList<>()).add(info);
+      }
+    }
+    Comparator<BuildingInfo> canonicalFirst = Comparator
+        .comparingInt((BuildingInfo info) -> info.getDesign() == null ? 0 : 1)
+        .thenComparing(BuildingInfo::getName);
+    families.replaceAll((family, choices) -> choices.stream().sorted(canonicalFirst).toList());
+    registry = new Registry(Map.copyOf(newRegistry), Map.copyOf(families));
     warnOnDivergentRecipes();
   }
 
   public static Map<String, BuildingInfo> allBuildings() {
-    return registry;
+    return registry.byName();
   }
 
   @Nullable
   public static BuildingInfo getByName(String name) {
-    return registry.get(name);
+    return registry.byName().get(name);
   }
 
   /**
-   * The variant of a category and level a village of this style builds: the
-   * style's own when the datapack has one. Older regional catalogs may borrow
-   * plains; the approved Birch catalog intentionally has no implicit fallback.
+   * The canonical design, or the first named alternative when no canonical is
+   * authored. All regional and fallback rules are shared with {@link #alternatives}.
    */
   @Nullable
   public static BuildingInfo resolve(String category, int level, VillageStyle style) {
-    BuildingInfo own = registry.get(category + "_" + style.id() + "_" + level);
-    if (own != null) {
-      return own;
-    }
+    List<BuildingInfo> choices = alternatives(category, level, style);
+    return choices.isEmpty() ? null : choices.getFirst();
+  }
+
+  /** Every layout in a regional family, canonical first, then stable by id. */
+  public static List<BuildingInfo> alternatives(String category, int level, VillageStyle style) {
+    return alternatives(registry, category, level, style);
+  }
+
+  private static List<BuildingInfo> alternatives(Registry snapshot, String category, int level, VillageStyle style) {
+    List<BuildingInfo> own = snapshot.families().get(new Family(category, style.id(), level));
+    if (own != null) return own;
     return style.usesPlainsFallback()
-        ? registry.get(category + "_" + VillageStyle.PLAINS.id() + "_" + level) : null;
+        ? snapshot.families().getOrDefault(new Family(category, VillageStyle.PLAINS.id(), level), List.of())
+        : List.of();
+  }
+
+  /** Whether this exact loaded design is legal on a fresh site for the village. */
+  public static boolean isRegionalChoice(BuildingInfo info, VillageStyle style) {
+    return info.hasWellFormedId() && alternatives(info.getCategory(), info.getLevel(), style).contains(info);
   }
 
   /** Only offer automatic founding in a style whose own complete starting set is loaded. */
   public static boolean hasFoundingSet(VillageStyle style) {
-    return registry.containsKey(VILLAGE_CENTER_CATEGORY + "_" + style.id() + "_1")
-        && registry.containsKey(FOUNDING_MINE_CATEGORY + "_" + style.id() + "_1")
-        && registry.containsKey(FOUNDING_STOREHOUSE_CATEGORY + "_" + style.id() + "_1");
+    Map<String, BuildingInfo> definitions = registry.byName();
+    return definitions.containsKey(VILLAGE_CENTER_CATEGORY + "_" + style.id() + "_1")
+        && definitions.containsKey(FOUNDING_MINE_CATEGORY + "_" + style.id() + "_1")
+        && definitions.containsKey(FOUNDING_STOREHOUSE_CATEGORY + "_" + style.id() + "_1");
   }
 
   /**
-   * The catalogue as one style sees it: a single level-1 building per category
-   * (that style's variant, or plains), plus every higher level for fallback-enabled
+   * The catalogue as one style sees it: every level-1 design per category
+   * (that style's family, or plains), plus every higher level for fallback-enabled
    * families. Those higher levels can upgrade a borrowed variant already standing;
    * the planner separately limits fresh builds to the village's regional variant.
    * A strict catalog exposes only its own authored definitions at every level.
    * Definitions whose id does not parse pass through untouched.
    */
   public static List<BuildingInfo> catalogue(VillageStyle style) {
+    Registry snapshot = registry;
     List<BuildingInfo> out = new ArrayList<>();
-    for (BuildingInfo info : registry.values()) {
+    for (BuildingInfo info : snapshot.byName().values()) {
       if (!style.usesPlainsFallback() && info.hasWellFormedId()) {
         if (info.getVariant().equals(style.id())) {
           out.add(info);
@@ -100,11 +132,11 @@ public class Buildings {
         continue;
       }
       if (!info.hasWellFormedId() || info.getLevel() > 1
-          || info == resolve(info.getCategory(), 1, style)) {
+          || alternatives(snapshot, info.getCategory(), 1, style).contains(info)) {
         out.add(info);
       }
     }
-    return out;
+    return out.stream().sorted(Comparator.comparing(BuildingInfo::getName)).toList();
   }
 
   /**
@@ -115,7 +147,7 @@ public class Buildings {
    */
   private static void warnOnDivergentRecipes() {
     Map<String, BuildingInfo> firstSeen = new HashMap<>();
-    for (BuildingInfo info : registry.values()) {
+    for (BuildingInfo info : registry.byName().values()) {
       // Only real families are held to the rule: a dev-only stand-in such as the
       // placeholder market is its own thing, not a mispriced variant.
       if (!info.hasWellFormedId() || VillageStyle.parse(info.getVariant()) == null) {

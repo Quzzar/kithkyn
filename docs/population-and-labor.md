@@ -10,15 +10,30 @@ Nobody, not the player and not the village AI, ever assigns a specific person to
 job. The village creates *demand* (a workplace with an open station), and an idle-labor pool
 satisfies it automatically. The simulation stays legible with zero micromanagement:
 
-1. **Inflow**: new people arrive at the village and idle at the campfire.
+1. **Inflow**: new people arrive at the village meeting point and join its idle pool.
 2. **Reservoir**: they hang out there, uncommitted, until something claims them.
 3. **Outflow**: an open job pulls a person from the pool; they walk to the workplace and
    become that worker.
 
 ## The campfire
 
-The town center has a campfire gathering point. Every person who is not currently employed
-belongs at the campfire: newcomers who just arrived, and workers whose job disappeared.
+The town center has an authored civic meeting point, usually standing ground near its bell,
+and zero or more usable campfires. The meeting point anchors founding, arrivals, and returning
+workers. It is independent of the fires, which may be upstairs or in another room. The idle
+labor pool is still village-wide: another fire adds neither a village nor population capacity.
+
+Building definitions name `meeting_point` as a standing coordinate and `campfires` as the actual
+fire-block coordinates. Old definitions with only `gathering_point` retain their original single
+fire and nearby safe meeting ground. An explicitly empty `campfires` list means there are no
+usable fires. New definitions never cause a fire to be placed at the civic meeting point.
+
+Idle residents choose a reachable lit fire for their fireside visits, retain that choice for
+several strolls, and choose again later. Personal preferences spread visits across the fires.
+When none is usable they gather at the civic meeting point instead. Cooks choose the nearest
+reachable lit fire with a free cooking slot, keep using it while tending their batch, and try
+another when it becomes full, blocked, missing, or doused. Cooking and recovery both require
+supported standing ground and clear hand access, so an upstairs fire cannot be used through its
+floor. Recovery keeps its existing thirty-block range and personal cooldown.
 
 Idle people are not `NITWIT`s in the old sense (a permanent do-nothing occupation). Idle is a
 *state*, not an occupation; the title a player sees on such a person is **Wanderer**
@@ -64,14 +79,21 @@ Two independent caps, checked at arrival time:
 | **Idle cap** | At most N people may be idle at the campfire at once (Stronghold uses 24; ours is per-tier, owned by [village-tiers.md](village-tiers.md)'s `idle_cap`, with a config fallback of 2 when no ladder is loaded). No new arrivals while the pool is full, no matter how much housing is free. |
 | **Housing cap** | Total population may exceed total beds by up to the idle cap, and no further: the campfire reservoir is exactly where bedless newcomers wait. The village center provides the starting beds; each house adds more. |
 
+Declared `couple_beds` reserve two adjacent beds as one room for a married pair. A mixed house
+can contain several such rooms alongside independent single beds. Single arrivals, job claims,
+and newly adult children use only the unpaired general beds; spouses claim a complete pair through
+the marriage housing pass. A couple room remains their home across job changes. The pair still
+contributes two physical beds to population capacity, but is never advertised as two free single
+beds. See [marriage.md](marriage.md).
+
 Beds are assigned on arrival, ahead of any employment. Houses and the
 village centre are the main sources of beds, and some workplaces carry a live-in bed as well
 (the lumberjack hut, the watchtower, the upper blacksmith, the church), superseding the
 older no-workplace-beds reading of [#61](https://github.com/Quzzar/kithkyn/issues/61).
 
 A workplace's live-in bed is **reserved for whoever staffs that workplace**, not thrown into
-general housing: a bed whose building carries a work station and is not the village centre is
-held back, so a newcomer or an idle camper is never handed the empty lumberjack hut's only
+general housing. By default, a bed whose building carries a work station and is not the village
+centre is held back, so a newcomer or an idle camper is never handed the empty lumberjack hut's only
 bed for a plain night's sleep (`Village.isReservedWorkplaceBed`, `takeGeneralBed`). Without
 this the one bed that breaks the founding wood deadlock (a house costs logs, logs need a
 lumberjack, a lumberjack needs a bed) gets slept in by someone who is not the lumberjack, and
@@ -82,6 +104,27 @@ person always has a bed. A general bed follows its resident when their job chang
 across a village are normal. A reserved workplace bed does not: leaving that workplace releases
 its bed for the next person who staffs it. The per-tick reconciliation repairs older saves where
 a former worker still occupies another trade's live-in bed.
+
+A building may override that default with `worker_beds`, a list of authored bed coordinates.
+Only listed beds are staff accommodation; unlisted single beds are general housing. Thus a tavern
+can have one innkeeper bed and one general bed. An explicit empty list makes all of its unpaired
+beds general housing. Coordinates must name actual declared beds. If a couple room is reserved
+for staff, both of its coordinates must be listed, never just one side.
+
+A married farmer or butcher can claim a job using its free staff couple room even when no single
+bed is available. The job housing check verifies a resident spouse and two available sides; final
+assignment moves both spouses through the same atomic couple-room allocator. Only one spouse must
+work at that building. The other keeps their own occupation, may work elsewhere, or may be idle.
+An unrelated couple cannot use an unstaffed workplace's reserved room, and a single worker needs
+ordinary accommodation rather than claiming half a pair. Worker-specific single-bed preference
+also moves an innkeeper from the tavern's general bed into its reserved staff bed when available.
+
+A staff household keeps its chosen room while either spouse works there, so spouses with different
+live-in workplaces do not switch homes every reconciliation pass. When neither works there, both
+beds return to the reserved pool; existing marriage housing seeks another complete room. General
+couple rooms follow their household across jobs. Job takeovers and exchanges do not treat a
+released couple room as an ordinary single bed, and a free paired room is never counted as two
+independent future beds for working teenagers.
 
 The claiming and swap gates read this correctly: a bedless camper is claimable for a post when
 the village can house them *for that post*, meaning a free general bed or a free bed in that
@@ -231,9 +274,9 @@ Arrival itself (**implemented**): on a periodic, per-village phase-staggered che
 attractiveness clears the grow threshold and both caps have room (counting people still
 mid-walk), the persona pipeline runs first — generate-before-spawn, a failed generation
 skips the arrival — then the newcomer spawns at the village edge on the surface and walks
-to the campfire (`VillageTravelGoal`). They only count as population, and only take a bed,
+to the civic meeting point (`VillageTravelGoal`). They only count as population, and only take a bed,
 once they arrive; walkers persist across restarts as pending travelers, with a timeout
-that snaps stragglers to the fire. Unloaded edge chunks quietly skip the cycle. Founding
+that snaps stragglers to safe meeting ground. Unloaded edge chunks quietly skip the cycle. Founding
 works the same way: a new village spawns nobody — its first residents walk in.
 
 Emigration (**implemented**): while the score sits below the decline threshold, one person
@@ -327,7 +370,7 @@ A workplace building finishing construction registers its work stations as open
   the 3-18 scale): a markedly better housed idle candidate takes over a job (the displaced
   worker returns to the pool and remembers it in their personal log), or one beneficial
   two-worker exchange per pass. Everyone involved is awakened, has their old route cancelled,
-  and is moved directly to the safe standing spot beside the campfire before the new occupation
+  and is moved directly to safe civic meeting ground before the new occupation
   and workplace route are installed. A per-person cooldown (default 2 game days) prevents churn.
   The swap pass stays **purely rule-based**: reorganization is a mechanical aptitude
   optimization, and only the initial claim of a contested post is handed to the model.
@@ -350,7 +393,7 @@ A workplace building finishing construction registers its work stations as open
   the ordinary labor cadence so the village can recover before a saved goal expires. A valid
   answer may be applied later because the vacancy and worker are checked again against live state.
   Only loaded workers can be moved;
-  a reassignment awakens the worker, cancels the old route, moves them to the campfire, and
+  a reassignment awakens the worker, cancels the old route, moves them to the meeting point, and
   rebuilds their goals in the world. One decision is in flight per village
   (`Village.laborDecisionPending`), and a brain that leaves the crew as it is sits the question
   out a while before it is asked again. If every otherwise-valid worker is inside the normal
@@ -361,7 +404,7 @@ A workplace building finishing construction registers its work stations as open
   strained village with an open quartermaster post, the urgent labor pass may fill it. A second
   builder, miner, or quartermaster may still move when its corresponding protection applies; food
   workers remain on food until the shortage clears.
-- The person walks from the campfire to the workplace, takes on the `Occupation` of the
+- The person walks from the meeting point to the workplace, takes on the `Occupation` of the
   station, and holds it until the job stops existing. Taking the job is the one moment a
   bare starting kit appears from nothing: the mark of the trade, a stone axe, sword, pickaxe or
   hoe, a plain bow, or a crossbow for the trades that work with a tool, or a token for the rest, a builder's crafting
@@ -373,11 +416,13 @@ A workplace building finishing construction registers its work stations as open
 - **Vacancy refills**: a worker dying or the building being removed puts the
   `JobAssignment` back in `unassignedJobs`, and the next idle person claims it. A building
   with no available worker just sits unstaffed until someone new arrives.
-- **Guard Captain** is the center's existing guard assignment, not another occupation or
-  a permanent promotion attached to the founding person. Its holder patrols normally,
-  retains an axe for woodcutting, and prefers a sword from village stock when available.
-  Reassignment removes the display role; the next holder inherits it. Fixed wall and
-  watchtower stations keep their own equipment behavior.
+- **Guard Captain** belongs to the center's explicit `CAPTAIN` guard duty; old centers
+  without duty metadata retain their first guard assignment as captain. It is not another
+  occupation or a permanent promotion attached to the founding person. Its holder patrols
+  whenever awake, retains an axe for woodcutting, and prefers a sword from village stock.
+  Reassignment removes the display role; the next holder inherits it. Ordinary `PATROL`
+  guards carry swords and do not chop wood. `CROSSBOW_POST` and `SWORD_POST` stations use
+  the existing post and nightly patrol/sleep behavior, so one center may mix all these duties.
 - **Job removal returns the person**: if the building is removed but the person survives,
   they return to the campfire pool and are immediately claimable by other open jobs.
 
@@ -420,7 +465,7 @@ The campfire model is the current code. Key locations:
 - Attractiveness: `VillageAttractiveness`.
 - Idle pool: derived, never stored (`Village.idlePeople()`: work-eligible population minus employed
   minus mid-walk travelers). Toddler and Kid are not labor; an idle Teenager is. Idle behavior
-  anchors to the `kithkyn:campfire` POI.
+  chooses authored reachable campfires independently of the civic meeting point.
 - Job claiming and swaps: `JobClaiming.tick`, called every second from `Village.update`:
   aptitude-based claiming (`JobAptitudes` + `JobAptitudeLoader` datapack profiles), a
   visible commute, reconciliation passes that return orphaned workers to the pool and

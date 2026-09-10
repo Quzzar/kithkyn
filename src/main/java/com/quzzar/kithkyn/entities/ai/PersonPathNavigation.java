@@ -7,28 +7,33 @@ import javax.annotation.Nullable;
 import com.quzzar.kithkyn.Kithkyn;
 import com.quzzar.kithkyn.entities.RealPerson;
 import com.quzzar.kithkyn.village.buildings.MineShaft;
+import com.quzzar.kithkyn.village.buildings.WorkerFooting;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.navigation.GroundPathNavigation;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.PathNavigationRegion;
+import net.minecraft.world.level.block.DoorBlock;
 import net.minecraft.world.level.block.FenceGateBlock;
 import net.minecraft.world.level.block.LadderBlock;
 import net.minecraft.world.level.block.TrapDoorBlock;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
 import net.minecraft.world.level.pathfinder.Node;
 import net.minecraft.world.level.pathfinder.Path;
 import net.minecraft.world.level.pathfinder.PathFinder;
 import net.minecraft.world.level.pathfinder.PathType;
 import net.minecraft.world.level.pathfinder.PathfindingContext;
 import net.minecraft.world.level.pathfinder.WalkNodeEvaluator;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 
 /**
- * Ground navigation for a person: vanilla walking with two answers corrected.
+ * Ground navigation for a person, including village doors, ladders and mine ramps.
  *
  * <b>Closed fence gates are closed wooden doors.</b> Vanilla reads a closed
  * gate as a fence, so no mob ever plans a route through one: a butchery pen
@@ -87,6 +92,9 @@ public final class PersonPathNavigation extends GroundPathNavigation {
 
   /** A one-step ramp waypoint must not accept the current cell as close enough. */
   private static final int MINE_WAYPOINT_ACCURACY = 0;
+
+  /** Hand-access stances need a closer finish than vanilla's broad waypoint tolerance. */
+  private static final double FINAL_POSITION_TOLERANCE = 0.04D;
 
   /** Squared distance of one diagonal stair step in the mine. */
   private static final double ADJACENT_MINE_STEP_SQR = 3.0D;
@@ -176,6 +184,13 @@ public final class PersonPathNavigation extends GroundPathNavigation {
         return path != null && path.canReach() ? path : null;
       }
     }
+    BlockState target = this.level.getBlockState(pos);
+    if (canOpenDoors() && target.getBlock() instanceof DoorBlock door
+        && door.type().canOpenByHand() && target.getValue(DoorBlock.HALF) == DoubleBlockHalf.LOWER) {
+      // A doorway can be the final approach to a closet container. Ground
+      // navigation otherwise lifts this solid target above the door and roof.
+      return super.createPath(Set.of(pos), accuracy);
+    }
     return super.createPath(pos, accuracy);
   }
 
@@ -240,6 +255,16 @@ public final class PersonPathNavigation extends GroundPathNavigation {
       this.doStuckDetection(this.getTempMobPos());
       return;
     }
+    if (this.path != null && !this.path.isDone() && this.path.canReach()
+        && this.path.getNextNodeIndex() == this.path.getNodeCount() - 1
+        && this.path.getNextNodePos().equals(this.path.getTarget())) {
+      Vec3 destination = openPanelApproach(this.path.getNextEntityPos(this.mob));
+      if (Math.abs(this.mob.getX() - destination.x) < FINAL_POSITION_TOLERANCE
+          && Math.abs(this.mob.getZ() - destination.z) < FINAL_POSITION_TOLERANCE
+          && Math.abs(this.mob.getY() - getGroundY(destination)) < 0.51D) this.path.advance();
+      this.doStuckDetection(this.getTempMobPos());
+      return;
+    }
     super.followThePath();
   }
 
@@ -256,6 +281,12 @@ public final class PersonPathNavigation extends GroundPathNavigation {
       return;
     }
     Vec3 next = this.path.getNextEntityPos(this.mob);
+    Vec3 doorway = openPanelApproach(next);
+    if (!doorway.equals(next)) {
+      this.mob.getMoveControl().setWantedPosition(
+          doorway.x, getGroundY(doorway), doorway.z, this.speedModifier);
+      return;
+    }
     boolean onLadder = this.mob.onClimbable();
     boolean descending = descendingTowards(next);
     BlockPos rungPos = this.path.getNextNodePos();
@@ -308,6 +339,48 @@ public final class PersonPathNavigation extends GroundPathNavigation {
 
   private static boolean isClimbable(BlockState state) {
     return state.is(BlockTags.CLIMBABLE);
+  }
+
+  /** Keep a wide body inside the opening until its trailing edge clears an open door or trapdoor. */
+  private Vec3 openPanelApproach(Vec3 target) {
+    int nextIndex = this.path.getNextNodeIndex();
+    // The path advances before the whole body leaves a doorway. Retain its clearance
+    // for recent nodes too, or the next centered step steers back into the leaf.
+    for (int i = Math.max(0, nextIndex - 2); i <= nextIndex; i++) {
+      BlockPos pos = this.path.getNodePos(i);
+      BlockState state = this.level.getBlockState(pos);
+      boolean door = state.getBlock() instanceof DoorBlock && state.getValue(DoorBlock.OPEN);
+      boolean trapdoor = state.getBlock() instanceof TrapDoorBlock && state.getValue(TrapDoorBlock.OPEN);
+      if (!door && !trapdoor) continue;
+      if (door && state.getValue(DoorBlock.HALF) == DoubleBlockHalf.UPPER) pos = pos.below();
+      if (i != nextIndex && !this.mob.getBoundingBox().inflate(0.05D, 0.0D, 0.05D)
+          .intersects(new AABB(pos).expandTowards(0.0D, door ? 1.0D : 0.0D, 0.0D))) continue;
+      var shape = state.getCollisionShape(this.level, pos);
+      if (shape.isEmpty()) continue;
+      Vec3 offset = openPanelOffset(shape.bounds(), this.mob.getBbWidth());
+      if (offset.equals(Vec3.ZERO)) continue;
+      return offset.x != 0.0D ? new Vec3(pos.getX() + 0.5D + offset.x, target.y, target.z)
+          : new Vec3(target.x, target.y, pos.getZ() + 0.5D + offset.z);
+    }
+    return target;
+  }
+
+  /** Planning and movement use the same body center inside an open panel's remaining aperture. */
+  private static Vec3 openPanelOffset(AABB leaf, double width) {
+    boolean thinX = leaf.getXsize() < leaf.getZsize();
+    double leafMin = thinX ? leaf.minX : leaf.minZ;
+    double leafMax = thinX ? leaf.maxX : leaf.maxZ;
+    double openingMin = leafMin < 0.5D ? leafMax : 0.0D;
+    double openingMax = leafMin < 0.5D ? 1.0D : leafMin;
+    double radius = width / 2.0D;
+    if (0.5D - radius >= openingMin + 0.01D && 0.5D + radius <= openingMax - 0.01D) return Vec3.ZERO;
+    double offset = (openingMin + openingMax) / 2.0D - 0.5D;
+    return thinX ? new Vec3(offset, 0, 0) : new Vec3(0, 0, offset);
+  }
+
+  private static boolean isOpenPanel(BlockState state) {
+    return state.getBlock() instanceof DoorBlock && state.getValue(DoorBlock.OPEN)
+        || state.getBlock() instanceof TrapDoorBlock && state.getValue(TrapDoorBlock.OPEN);
   }
 
   private Vec3 ladderApproach(Vec3 target, BlockState state) {
@@ -422,6 +495,39 @@ public final class PersonPathNavigation extends GroundPathNavigation {
       return type;
     }
 
+    /** Whole-cell ceiling checks overestimate a body standing below its integer path node. */
+    @Override
+    public PathType getPathTypeOfMob(PathfindingContext context, int x, int y, int z, Mob mob) {
+      PathType type = super.getPathTypeOfMob(context, x, y, z, mob);
+      if (type != PathType.BLOCKED || getPathType(context, x, y, z) != PathType.WALKABLE) return type;
+      Vec3 standing = WorkerFooting.standingPosition(mob, new BlockPos(x, y, z));
+      if (standing == null || standing.y >= y) return type;
+      // Only replace ordinary solid-cell rejection. Gates, rails and hazards keep
+      // their existing rules even when their collision shape leaves physical room.
+      for (PathType part : getPathTypeWithinMobBB(context, x, y, z)) {
+        if (part != PathType.OPEN && part != PathType.WALKABLE && part != PathType.BLOCKED) return type;
+      }
+      return PathType.WALKABLE;
+    }
+
+    /** A half-step needs its actual rise, not the full extra block vanilla reserves for jumping. */
+    @Override
+    @Nullable
+    protected Node findAcceptedNode(int x, int y, int z, int verticalDeltaLimit,
+        double nodeFloorLevel, Direction direction, PathType previousType) {
+      Node result = super.findAcceptedNode(x, y, z, verticalDeltaLimit, nodeFloorLevel, direction, previousType);
+      if ((result != null && result.costMalus >= 0.0F) || verticalDeltaLimit != 0
+          || getCachedPathType(x, y, z) != PathType.BLOCKED) return result;
+      BlockPos step = new BlockPos(x, y + 1, z);
+      Vec3 standing = WorkerFooting.standingPosition(this.mob, step);
+      if (standing == null || standing.y <= nodeFloorLevel
+          || standing.y - nodeFloorLevel > this.mob.maxUpStep()
+          || getCachedPathType(x, y + 1, z) != PathType.WALKABLE) return result;
+      // Retain vanilla's collision sweep above the starting column and its
+      // destination checks. Only its whole-block jump admission is retried.
+      return super.findAcceptedNode(x, y, z, 1, nodeFloorLevel, direction, previousType);
+    }
+
     /** A rung's floor is the rung, not whatever is under the ladder. */
     @Override
     protected double getFloorLevel(BlockPos pos) {
@@ -432,6 +538,12 @@ public final class PersonPathNavigation extends GroundPathNavigation {
     public int getNeighbors(Node[] outputArray, Node node) {
       this.expandedNodeCount++;
       int count = super.getNeighbors(outputArray, node);
+      int clearCount = 0;
+      for (int i = 0; i < count; i++) {
+        Node neighbor = outputArray[i];
+        if (!crossesOpenPanel(node, neighbor)) outputArray[clearCount++] = neighbor;
+      }
+      count = clearCount;
       if (!isClimbable(this.currentContext.getBlockState(new BlockPos(node.x, node.y, node.z)))) {
         return count;
       }
@@ -451,6 +563,43 @@ public final class PersonPathNavigation extends GroundPathNavigation {
         }
       }
       return count;
+    }
+
+    /** An open leaf is passable along its aperture, but still blocks transverse approaches. */
+    private boolean crossesOpenPanel(Node from, Node to) {
+      BlockPos start = from.asBlockPos();
+      BlockPos end = to.asBlockPos();
+      BlockState startState = this.currentContext.getBlockState(start);
+      BlockState endState = this.currentContext.getBlockState(end);
+      if (!isOpenPanel(startState) && !isOpenPanel(endState)) return false;
+      Vec3 startCenter = panelNodeCenter(start, startState);
+      Vec3 endCenter = panelNodeCenter(end, endState);
+      return intersectsPanel(startCenter, endCenter, start, startState)
+          || intersectsPanel(startCenter, endCenter, end, endState);
+    }
+
+    private Vec3 panelNodeCenter(BlockPos position, BlockState state) {
+      Vec3 center = new Vec3(position.getX() + 0.5D, getFloorLevel(position), position.getZ() + 0.5D);
+      if (!isOpenPanel(state)) return center;
+      var shape = state.getCollisionShape(this.currentContext.level(), position);
+      return shape.isEmpty() ? center : center.add(openPanelOffset(shape.bounds(), this.mob.getBbWidth()));
+    }
+
+    private boolean intersectsPanel(Vec3 start, Vec3 end, BlockPos position, BlockState state) {
+      if (!isOpenPanel(state)) return false;
+      var shape = state.getCollisionShape(this.currentContext.level(), position);
+      if (shape.isEmpty()) return false;
+      AABB leaf = shape.bounds().move(position);
+      if (state.getBlock() instanceof DoorBlock) {
+        leaf = state.getValue(DoorBlock.HALF) == DoubleBlockHalf.LOWER
+            ? leaf.expandTowards(0, 1, 0) : leaf.expandTowards(0, -1, 0);
+      }
+      // Sweep the body's center against a body-expanded leaf, so turning into
+      // the opening is permitted when every point along that movement clears it.
+      double radius = this.mob.getBbWidth() / 2.0D;
+      AABB obstruction = new AABB(leaf.minX - radius, leaf.minY - this.mob.getBbHeight(), leaf.minZ - radius,
+          leaf.maxX + radius, leaf.maxY, leaf.maxZ + radius).deflate(0.000001D);
+      return obstruction.contains(start) || obstruction.contains(end) || obstruction.clip(start, end).isPresent();
     }
 
     /** The rung at this cell as a node, or null where there is none or no room above it. */

@@ -25,8 +25,8 @@ import net.minecraft.util.RandomSource;
  */
 public final class VillageNamer {
 
-  private static final String[] SECOND = {
-      "field", "bury", "haven", "stead", "wick", "gate", "hollow", "march", "ford", "crest"};
+  private static final List<String> COMMON_ENDINGS = List.of(
+      "field", "bury", "haven", "stead", "wick", "gate", "hollow", "march", "ford", "crest");
 
   private static final int MAX_NAME_LENGTH = 32;
 
@@ -87,12 +87,13 @@ public final class VillageNamer {
   static String fallback(VillageStyle style, Set<String> existing, RandomSource random) {
     NamingProfile profile = profile(style);
     Set<String> blocked = blockedNames(style, existing);
-    int count = profile.starts().size() * SECOND.length;
+    int endings = profile.endings().size();
+    int count = profile.starts().size() * endings;
     int start = random.nextInt(count);
-    String base = profile.starts().get(start / SECOND.length) + SECOND[start % SECOND.length];
+    String base = profile.starts().get(start / endings) + profile.endings().get(start % endings);
     for (int index = 0; index < count; index++) {
       int pick = (start + index) % count;
-      String name = profile.starts().get(pick / SECOND.length) + SECOND[pick % SECOND.length];
+      String name = profile.starts().get(pick / endings) + profile.endings().get(pick % endings);
       if (!blocked.contains(nameKey(name))) return name;
     }
     for (int index = 0; ; index++) {
@@ -116,10 +117,22 @@ public final class VillageNamer {
   }
 
   /** Small authored naming cues, not a runtime nationality or a new village identity axis. */
-  private record NamingProfile(String description, List<String> examples, List<String> starts) { }
+  private record NamingProfile(String description, List<String> examples, List<String> starts,
+      List<String> endings) {
+    private NamingProfile(String description, List<String> examples, List<String> starts) {
+      this(description, examples, starts, COMMON_ENDINGS);
+    }
+  }
 
   private static NamingProfile profile(VillageStyle style) {
     return switch (style) {
+      case BADLANDS -> new NamingProfile(
+          "A close community of orange-clay and red-sandstone courtyards, stepped roof terraces,"
+              + " shared households, shaded markets, acacia workshops and carefully protected water."
+              + " Compact, warm invented fantasy names with a distinct sound.",
+          List.of("Kestara", "Oravel", "Tavren", "Sorela"),
+          List.of("Kes", "Ora", "Tav", "Sor", "Vel", "An", "Cas", "Mer"),
+          List.of("ara", "avel", "ren", "ela", "ora", "aven", "erin", "ali"));
       case BIRCH_FOREST -> new NamingProfile(
           "Grounded, welcoming woodland folk; pale birch timber, rough and mossy cobblestone,"
               + " grass roofs, sheltered rooms, torches, candles and shared hearths."

@@ -293,13 +293,42 @@ public final class MineStep implements BlockWorkStep {
   private record ShaftPick(@Nullable BlockPos stand, boolean exhausted) {
   }
 
+  /** Selection failures are current work facts, even when no journey can start. */
+  private enum NoWork {
+    ACCESS("I cannot reach a safe working face in my mine, even after trying the ramp and side tunnels."),
+    SUPPORT("My mine needs dirt or stone supports, and I have no reachable side rock left to quarry for them."),
+    BLOCKED("My mine is blocked and I cannot reach any remaining excavation around the obstruction."),
+    EXHAUSTED("My mine is exhausted: the root shaft and all eligible side shafts have no excavation left."),
+    EMPTY("I found no usable excavation in my mine on this survey.");
+
+    private final String text;
+
+    NoWork(String text) { this.text = text; }
+  }
+
+  @Nullable
+  private NoWork noWork;
+
   @Override
   @Nullable
   public BlockPos select(RealPerson person) {
+    this.noWork = null;
+    BlockPos stand = selectWork(person);
+    if (stand == null && this.noWork != null) {
+      for (NoWork reason : NoWork.values()) {
+        if (reason != this.noWork) person.clearBlocker(reason.text);
+      }
+      person.logBlocker(this.noWork.text);
+    }
+    return stand;
+  }
+
+  @Nullable
+  private BlockPos selectWork(RealPerson person) {
     BlockPos rootMouth = LocationManager.getJobLocation(person);
     Building building = LocationManager.getJobBuilding(person);
     if (rootMouth == BlockPos.ZERO || building == null) {
-      logIdleState(person, "missing workplace: mouth=" + rootMouth.toShortString()
+      logIdleState(person, NoWork.ACCESS, "missing workplace: mouth=" + rootMouth.toShortString()
           + ", building=" + (building == null ? "none" : building.getName()));
       return null;
     }
@@ -330,7 +359,7 @@ public final class MineStep implements BlockWorkStep {
     branch = nextBranch(person, building, root,
         deepestDugColumn(person, rootMouth, root.rotation()));
     if (branch == null) {
-      logIdleState(person, "root exhausted with no eligible child shaft");
+      logIdleState(person, NoWork.EXHAUSTED, "root exhausted with no eligible child shaft");
       return null;
     }
     MineShaft child = MineShaft.child(root, branch);
@@ -380,7 +409,7 @@ public final class MineStep implements BlockWorkStep {
         // No rib left to cut either: fall through to standing down, so a mine with
         // nothing to quarry still waits on a restock the way it always did.
         resetShaft();
-        logIdleState(person, "support-gated shaft has no rib work: mouth="
+        logIdleState(person, NoWork.SUPPORT, "support-gated shaft has no rib work: mouth="
             + mouth.toShortString());
         return new ShaftPick(null, false);
       }
@@ -400,7 +429,7 @@ public final class MineStep implements BlockWorkStep {
       BlockPos footingAt = this.placeSeal ? this.sealFooting : face;
       if (footingAt == null) {
         resetShaft();
-        logIdleState(person, "selected work has no footing target: mouth="
+        logIdleState(person, NoWork.ACCESS, "selected work has no footing target: mouth="
             + mouth.toShortString());
         return new ShaftPick(null, false);
       }
@@ -428,7 +457,7 @@ public final class MineStep implements BlockWorkStep {
             + ", deepest=" + deepestDugColumn(person, mouth, rotation)
             + ", route=" + this.lastRouteDeadEnd;
         resetShaft();
-        logIdleState(person, deadEnd);
+        logIdleState(person, NoWork.ACCESS, deadEnd);
         return new ShaftPick(null, false);
       }
       return new ShaftPick(stand, false);
@@ -452,7 +481,8 @@ public final class MineStep implements BlockWorkStep {
         return new ShaftPick(fanStand, false);
       }
       boolean exhausted = this.block == Blocks.BEDROCK;
-      logIdleState(person, "blocked shaft has no rib work: mouth=" + mouth.toShortString()
+      logIdleState(person, exhausted ? NoWork.EXHAUSTED : NoWork.BLOCKED,
+          "blocked shaft has no rib work: mouth=" + mouth.toShortString()
           + ", block=" + this.block.getName().getString()
           + ", exhausted=" + exhausted);
       resetShaft();
@@ -460,7 +490,7 @@ public final class MineStep implements BlockWorkStep {
     }
     // DRY_HOLE.
     resetShaft();
-    logIdleState(person, "shaft scan reached a dry hole: mouth=" + mouth.toShortString());
+    logIdleState(person, NoWork.EMPTY, "shaft scan reached a dry hole: mouth=" + mouth.toShortString());
     return new ShaftPick(null, false);
   }
 
@@ -486,7 +516,7 @@ public final class MineStep implements BlockWorkStep {
     this.offset = BlockPos.ZERO;
     this.block = state.getBlock();
     if (impassable(person)) {
-      logIdleState(person, "child entrance clearance is blocked: cell="
+      logIdleState(person, NoWork.BLOCKED, "child entrance clearance is blocked: cell="
           + clearance.toShortString() + ", block=" + this.block.getName().getString());
       resetShaft();
       return new ShaftPick(null, false);
@@ -500,12 +530,18 @@ public final class MineStep implements BlockWorkStep {
     }
   }
 
-  private void logIdleState(RealPerson person, String state) {
+  private void logIdleState(RealPerson person, NoWork reason, String state) {
+    this.noWork = reason;
     if (!state.equals(this.lastIdleState)) {
       this.lastIdleState = state;
       Kithkyn.LOGGER.info("[mine-state] {} selected no work: {}",
           person.getName().getString(), state);
     }
+  }
+
+  /** Choosing a target is not proof it is reachable; only physical work clears the report. */
+  private void worked(RealPerson person) {
+    for (NoWork reason : NoWork.values()) person.clearBlocker(reason.text);
   }
 
   @Nullable
@@ -991,7 +1027,7 @@ public final class MineStep implements BlockWorkStep {
       List<ItemStack> drops = Block.getDrops(this.block.defaultBlockState(),
           (ServerLevel) person.level(), pos, person.level().getBlockEntity(pos), person,
           person.getMainHandItem());
-      person.level().removeBlock(pos, false);
+      if (person.level().removeBlock(pos, false)) worked(person);
       PlacedBlockStore.get((ServerLevel) person.level()).clearPlaced(pos);
       person.addItems(drops);
       person.level().playSound((Player) null, pos.getX(), pos.getY(), pos.getZ(),
@@ -1168,7 +1204,8 @@ public final class MineStep implements BlockWorkStep {
       return false;
     }
     Level level = person.level();
-    level.setBlock(cell, placed, 3);
+    if (level.setBlock(cell, placed, 3)) worked(person);
+    person.clearBlocker(shortage);
     if (level instanceof ServerLevel serverLevel) {
       PlacedBlockStore.get(serverLevel).markVillagePlaced(cell);
     }
@@ -1740,6 +1777,7 @@ public final class MineStep implements BlockWorkStep {
     for (BlockPos waterCell : water) {
       level.setBlock(waterCell, Blocks.AIR.defaultBlockState(), Block.UPDATE_CLIENTS);
     }
+    if (!water.isEmpty()) worked(person);
     if (level instanceof ServerLevel serverLevel) {
       BoundingBox.encapsulatingPositions(water).ifPresent(bounds ->
           serverLevel.getFluidTicks().clearArea(bounds.inflatedBy(1)));

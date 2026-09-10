@@ -16,8 +16,8 @@ a strong, mutual bond
    → the brain is asked to bless the pair that named each other   (LlmService.decide)
    → the blessed couple settle their married name themselves      (MarriageNaming, on Dialogue)
    → both become MARRIED and take the name they chose (or a hyphenation), the pair edge is flagged married
-   → the village names a couple's cottage as its saved-for goal   (VillageGoal)
-   → on the cottage's completion both are moved into its two beds  (Village.houseCouple)
+   → spouses claim a free couple room in an existing home        (Village.houseCouple)
+   → if none is free, the village saves for a home with a pair     (VillageGoal)
    → their shared chest follows for free                          (PersonalChest)
 ```
 
@@ -101,25 +101,58 @@ is the same graceful-deferral contract every LLM path in the mod keeps.
 
 ## Housing queues, it does not preempt
 
-A married pair who do not yet share a home is a **couple awaiting one**, derived
-each pass from the married pairs and the bed assignments, never stored as its own
-list. When the village is **not already saving for something else**, it names a
-`couple_cottage` as its `VillageGoal` (`MarriageService.ensureCoupleHomeGoal`).
-That is the "queues next" rule: a marriage does not shove aside a lumberjack the
-village was already saving for; it takes the goal slot once that clears.
+A married pair who do not yet occupy the two beds of one declared couple room is a
+**couple awaiting one**, derived each pass from married pairs and bed assignments, never
+stored as its own list. Sharing a building while sleeping in different rooms does not satisfy
+this need and does not enable family planning.
 
-The goal short-circuit then builds the cottage the moment it can afford it. A home
-the economy cannot reach stalls through the ordinary goal machinery, and while it
-sits out the village is free to build other things rather than hammering an
-unaffordable cottage forever.
+Completed homes are considered first, even while the village is saving for another project.
+A house can contain single rooms alongside one or several couple rooms. Each couple moves into
+one complete pair atomically; neither spouse moves if the other side is unavailable, and other
+room occupants stay in place. Their former beds return to the existing bed pool. Taking a job
+or changing workplaces does not pull a housed spouse into a separate single live-in bed. A free
+staff couple room can instead move both spouses together when one claims its workplace job.
 
-On the cottage's completion (`Village.addBuilding` → `MarriageService.onHomeBuilt`)
-both spouses are moved into its two beds (`Village.houseCouple`), freeing whatever
-single beds they held back to the pool. Their **shared chest needs no code**: a
-home's `personal_containers` belong to whoever sleeps there
-([PersonalChest](../src/main/java/com/quzzar/kithkyn/village/PersonalChest.java)),
-so co-assigning both beds makes the cottage chest theirs together, and each already
-reads the other as a housemate.
+When no existing room can house a waiting couple and the village is **not already saving for
+something else**, it names a suitable home as its `VillageGoal`. Styles with a dedicated
+`couple_cottage` retain that choice; styles with mixed housing can save for a house containing a
+pair instead. The smallest suitable mixed home is considered first. The same construction,
+affordability and stalled-goal machinery applies. A marriage never replaces an unrelated goal.
+
+Building definitions declare pairs by their authored bed coordinates:
+
+```json
+"beds": [[1,1,1], [2,1,1], [5,1,1]],
+"couple_beds": [[[1,1,1], [2,1,1]]]
+```
+
+This is one couple room and one single bed. A pair has exactly two distinct adjacent beds on the
+same floor; each coordinate must also occur in `beds`, and no bed belongs to two pairs. Pair
+membership is resolved from coordinates against the current bed list, including after a reload
+or rebuild. There is no separate saved household allocation. Existing cottages without
+`couple_beds` retain their first two beds as a pair; ordinary houses infer no pair, even when two
+beds happen to touch. An explicit empty list disables pair inference.
+
+Both beds in a pair are reserved against unrelated single arrivals, job claims, and adulthood
+claims. Singles in the same building remain available as ordinary housing. Death and travel
+release beds through the existing ledger: a surviving occupant keeps their side, while a new
+couple can claim that room only after both sides are free. The planning and chat briefings show
+single-bed availability, worker beds, complete free couple rooms, and couples still awaiting one.
+
+A workplace can reserve a couple room with `worker_beds` containing both bed coordinates.
+At least one spouse must work in that building; the other can have any job or none. The same
+housing gate lets a bedless married applicant claim that job and move both spouses into the free
+pair. Unrelated couples cannot claim the reserved room, and neither occupant's current bed is
+released merely because one side of a desired destination is available. A staff couple room
+remains their home while either spouse works there; it releases both sides when neither does.
+A spouse already in a valid staff room stays there even if their own job also offers a couple room.
+
+Returning spouses claim a pair only after both travelers have joined the resident roster.
+Their restored marriage edge alone does not reserve beds while they are still walking in.
+
+A couple shares a room chest by mapping both beds to that chest in `bed_containers`.
+`PersonalChest` derives ownership from those existing mappings; other rooms in a mixed home keep
+their own containers. Bedrooms without a personal container are also valid.
 
 ## The household travels together
 
@@ -153,15 +186,15 @@ its floor without carving a pit where the footprint has no floor. It is checked 
 `validate.py` (nothing drops on placement) and `navcheck.py` (both beds reachable
 and on the ground floor, the door reachable).
 
-**Not yet done:** the other four biome variants
-(`couple_cottage_{taiga,snowy,desert,savanna}_1`), mapped off the plains cottage the
-way `mine-level-2.py` maps its variants, or hand-built per biome.
+The taiga, snowy, desert and savanna variants, plus the approved Birch cottage, are
+also present. These existing dedicated cottages retain their housing behavior; new regional
+catalogs may instead supply mixed houses with explicit couple rooms.
 
 ## Code map
 
 - `relationships/MarriageService`: the pass, run on the village tick. Files
   proposals, asks the brain, weds, names the home goal, houses the couple on
-  completion.
+  completion or when a completed room becomes available.
 - `village/MarriageProposals`: the proposal store on the brain's `strategy` tag,
   with mutual-match and clear-on-wed.
 - `relationships/RelationshipPair`: gained a `married` flag (additive codec field),
@@ -169,8 +202,10 @@ way `mine-level-2.py` maps its variants, or hand-built per biome.
 - `entities/RealPerson#marry`: the person-level projection, `MARRIED` plus the
   hyphenated surname, on both spouses at once.
 - `village/Village`: the tick pass, `marriageDecisionPending`, `marriedPairs`, and
-  `houseCouple`; the `addBuilding` hook that houses a couple as their cottage lands.
-- `village/buildings/UrbanPlanner#isMarriageOnly`: keeps the cottage out of the
+  `houseCouple` and `sharesCoupleHome`; completed mixed homes and cottages use the same hook.
+- `village/CoupleHousing`: atomic room assignment over the existing bed ledger.
+- `village/buildings/BuildingInfo#CoupleBeds`: authored bed pairs, without saved duplicate household state.
+- `village/buildings/UrbanPlanner#isMarriageOnly`: keeps the dedicated cottage out of the
   brain's spontaneous options, and `shortfallFor` names the housing goal with a
   real shortfall so it stalls honestly.
 - `chat/PersonChatContext#spouseLine`: a married villager's own knowledge of who

@@ -42,7 +42,7 @@ public final class GuardWeapons {
   }
 
   public static boolean usesLoadout(RealPerson person) {
-    return isPatrol(person) || hasSidearmDuty(person);
+    return (isPatrol(person) && !GuardDuty.isSwordPatrol(person)) || hasSidearmDuty(person);
   }
 
   private static List<JobTool> loadout(RealPerson person) {

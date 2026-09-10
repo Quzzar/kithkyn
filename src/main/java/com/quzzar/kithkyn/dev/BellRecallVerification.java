@@ -89,7 +89,12 @@ public final class BellRecallVerification {
     village.register();
     VillageManager.get(level).getVillages().put(village.getID(), village);
     for (int i = 0; i < 7; i++) resident(level, 80 + i, 110);
-    village.houseCouple(people.get(1).getUUID(), people.get(2).getUUID(), village.center.getUUID());
+    try {
+      ApprovedStructureAccess.assignSingle(village, people.get(1).getUUID(), village.center.getUUID());
+      ApprovedStructureAccess.assignSingle(village, people.get(2).getUUID(), village.center.getUUID());
+    } catch (ReflectiveOperationException failure) {
+      throw new AssertionError("Could not assign the recall fixture's two single beds", failure);
+    }
     people.get(3).setBaby(true);
     people.get(3).setParents(people.get(1), people.get(2));
     people.get(4).setOccupation(Occupation.GUARD);

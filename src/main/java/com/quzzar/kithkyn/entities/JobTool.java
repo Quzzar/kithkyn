@@ -104,6 +104,7 @@ public enum JobTool {
   /** The person's exact tool, including a wall or authored fixed-defense post. */
   @Nullable
   public static JobTool of(RealPerson person) {
+    if (GuardDuty.isSwordPatrol(person)) return SWORD;
     GuardDuty duty = GuardDuty.of(person);
     if (duty != null) {
       return duty.ranged() ? CROSSBOW : SWORD;

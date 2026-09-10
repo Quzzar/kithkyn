@@ -1,0 +1,660 @@
+{
+  "status": "configured_and_verified",
+  "exhibit": "P01.1",
+  "description": "Edited Pueblo/Mesa center: ten beds, seven private room chests, three communal containers, two campfires and six village banners. Eight founding jobs include the miner housed here and working at a separate entrance.",
+  "source_capture": "run/pueblo-showcase/center-approved-20260909-161322/captures/edited-pueblo-center.nbt",
+  "source_sha256": "1cd6dcf50970498918f48c75bf6a4c3aac0c81596e734d0dc8d0161928bf88bb",
+  "template_origin": [
+    3598,
+    230,
+    1008
+  ],
+  "size": [
+    28,
+    12,
+    33
+  ],
+  "info": {
+    "structure": "village_center_pueblo_1",
+    "category": "village_center",
+    "variant": "pueblo",
+    "beds": [
+      [
+        7,
+        1,
+        11
+      ],
+      [
+        18,
+        1,
+        12
+      ],
+      [
+        6,
+        1,
+        18
+      ],
+      [
+        17,
+        1,
+        21
+      ],
+      [
+        13,
+        1,
+        23
+      ],
+      [
+        9,
+        4,
+        10
+      ],
+      [
+        8,
+        4,
+        18
+      ],
+      [
+        19,
+        5,
+        12
+      ],
+      [
+        21,
+        5,
+        21
+      ],
+      [
+        13,
+        5,
+        23
+      ]
+    ],
+    "work_stations": [
+      {
+        "occupation": "QUARTERMASTER",
+        "pos": [
+          14,
+          1,
+          14
+        ]
+      },
+      {
+        "occupation": "BUILDER",
+        "pos": [
+          12,
+          1,
+          16
+        ]
+      },
+      {
+        "occupation": "GUARD",
+        "pos": [
+          12,
+          1,
+          18
+        ],
+        "guard_duty": "CAPTAIN"
+      },
+      {
+        "occupation": "GUARD",
+        "pos": [
+          8,
+          8,
+          18
+        ],
+        "guard_duty": "CROSSBOW_POST"
+      },
+      {
+        "occupation": "GUARD",
+        "pos": [
+          13,
+          10,
+          23
+        ],
+        "guard_duty": "CROSSBOW_POST"
+      },
+      {
+        "occupation": "GUARD",
+        "pos": [
+          11,
+          1,
+          15
+        ],
+        "guard_duty": "PATROL"
+      },
+      {
+        "occupation": "GUARD",
+        "pos": [
+          14,
+          1,
+          18
+        ],
+        "guard_duty": "PATROL"
+      }
+    ],
+    "personal_containers": [
+      [
+        9,
+        1,
+        8
+      ],
+      [
+        15,
+        1,
+        11
+      ],
+      [
+        8,
+        1,
+        18
+      ],
+      [
+        21,
+        2,
+        25
+      ],
+      [
+        8,
+        4,
+        20
+      ],
+      [
+        19,
+        5,
+        21
+      ],
+      [
+        15,
+        5,
+        25
+      ]
+    ],
+    "containers": [
+      [
+        15,
+        1,
+        14
+      ],
+      [
+        6,
+        2,
+        26
+      ],
+      [
+        16,
+        8,
+        10
+      ]
+    ],
+    "bed_containers": [
+      {
+        "bed": [
+          7,
+          1,
+          11
+        ],
+        "containers": [
+          [
+            9,
+            1,
+            8
+          ]
+        ]
+      },
+      {
+        "bed": [
+          18,
+          1,
+          12
+        ],
+        "containers": [
+          [
+            15,
+            1,
+            11
+          ]
+        ]
+      },
+      {
+        "bed": [
+          6,
+          1,
+          18
+        ],
+        "containers": [
+          [
+            8,
+            1,
+            18
+          ]
+        ]
+      },
+      {
+        "bed": [
+          17,
+          1,
+          21
+        ],
+        "containers": [
+          [
+            21,
+            2,
+            25
+          ]
+        ]
+      },
+      {
+        "bed": [
+          13,
+          1,
+          23
+        ],
+        "containers": []
+      },
+      {
+        "bed": [
+          9,
+          4,
+          10
+        ],
+        "containers": []
+      },
+      {
+        "bed": [
+          8,
+          4,
+          18
+        ],
+        "containers": [
+          [
+            8,
+            4,
+            20
+          ]
+        ]
+      },
+      {
+        "bed": [
+          19,
+          5,
+          12
+        ],
+        "containers": []
+      },
+      {
+        "bed": [
+          21,
+          5,
+          21
+        ],
+        "containers": [
+          [
+            19,
+            5,
+            21
+          ]
+        ]
+      },
+      {
+        "bed": [
+          13,
+          5,
+          23
+        ],
+        "containers": [
+          [
+            15,
+            5,
+            25
+          ]
+        ]
+      }
+    ],
+    "meeting_point": [
+      12,
+      1,
+      17
+    ],
+    "campfires": [
+      [
+        7,
+        9,
+        19
+      ],
+      [
+        14,
+        11,
+        24
+      ]
+    ],
+    "cost": [
+      {
+        "item": "minecraft:oak_log",
+        "count": 32
+      },
+      {
+        "item": "minecraft:cobblestone",
+        "count": 44
+      }
+    ],
+    "grants": [
+      "STORAGE",
+      "PROTECTION",
+      "WATER"
+    ],
+    "sink": 0,
+    "village_identity": {
+      "primary_blocks": [
+        [
+          7,
+          1,
+          11
+        ],
+        [
+          6,
+          1,
+          18
+        ],
+        [
+          13,
+          1,
+          23
+        ],
+        [
+          8,
+          4,
+          18
+        ],
+        [
+          13,
+          5,
+          23
+        ]
+      ],
+      "secondary_blocks": [
+        [
+          18,
+          1,
+          12
+        ],
+        [
+          17,
+          1,
+          21
+        ],
+        [
+          9,
+          4,
+          10
+        ],
+        [
+          19,
+          5,
+          12
+        ],
+        [
+          21,
+          5,
+          21
+        ]
+      ],
+      "banners": [
+        [
+          10,
+          4,
+          17
+        ],
+        [
+          10,
+          4,
+          21
+        ],
+        [
+          23,
+          5,
+          20
+        ],
+        [
+          23,
+          5,
+          26
+        ],
+        [
+          5,
+          6,
+          9
+        ],
+        [
+          8,
+          7,
+          6
+        ]
+      ]
+    }
+  },
+  "rooms": [
+    {
+      "name": "Northwest ground room",
+      "bed": [
+        7,
+        1,
+        11
+      ],
+      "personal_containers": [
+        [
+          9,
+          1,
+          8
+        ]
+      ]
+    },
+    {
+      "name": "Northeast ground room",
+      "bed": [
+        18,
+        1,
+        12
+      ],
+      "personal_containers": [
+        [
+          15,
+          1,
+          11
+        ]
+      ]
+    },
+    {
+      "name": "Southwest ground room",
+      "bed": [
+        6,
+        1,
+        18
+      ],
+      "personal_containers": [
+        [
+          8,
+          1,
+          18
+        ]
+      ]
+    },
+    {
+      "name": "Southeast ground room",
+      "bed": [
+        17,
+        1,
+        21
+      ],
+      "personal_containers": [
+        [
+          21,
+          2,
+          25
+        ]
+      ]
+    },
+    {
+      "name": "South central ground room",
+      "bed": [
+        13,
+        1,
+        23
+      ],
+      "personal_containers": []
+    },
+    {
+      "name": "Northwest upper room",
+      "bed": [
+        9,
+        4,
+        10
+      ],
+      "personal_containers": []
+    },
+    {
+      "name": "Southwest upper room",
+      "bed": [
+        8,
+        4,
+        18
+      ],
+      "personal_containers": [
+        [
+          8,
+          4,
+          20
+        ]
+      ]
+    },
+    {
+      "name": "Northeast upper room",
+      "bed": [
+        19,
+        5,
+        12
+      ],
+      "personal_containers": []
+    },
+    {
+      "name": "Southeast upper room",
+      "bed": [
+        21,
+        5,
+        21
+      ],
+      "personal_containers": [
+        [
+          19,
+          5,
+          21
+        ]
+      ]
+    },
+    {
+      "name": "South central upper room",
+      "bed": [
+        13,
+        5,
+        23
+      ],
+      "personal_containers": [
+        [
+          15,
+          5,
+          25
+        ]
+      ]
+    }
+  ],
+  "starting_staffing": {
+    "quartermaster": 1,
+    "builder": 1,
+    "guard_captain": 1,
+    "crossbow_posts": 2,
+    "sword_patrols": 2,
+    "miner": 1,
+    "total": 8,
+    "unassigned_beds": 2,
+    "miner_workplace": "separate mine entrance, to be selected with the Pueblo founding mine"
+  },
+  "preview_colors": {
+    "primary": "blue",
+    "secondary": "yellow"
+  },
+  "note": "Private review asset; the Pueblo mine and remaining catalog have not yet been selected.",
+  "preview_banner": {
+    "base": "blue",
+    "patterns": [
+      {
+        "pattern": "minecraft:stripe_center",
+        "color": "yellow"
+      },
+      {
+        "pattern": "minecraft:border",
+        "color": "yellow"
+      }
+    ]
+  },
+  "neutral_template": "run/pueblo-showcase/center-approved-20260909-161322/review-pack/data/kithkyn/structure/village_center_pueblo_1.nbt",
+  "definition": "run/pueblo-showcase/center-approved-20260909-161322/review-pack/data/kithkyn/kithkyn/buildings/village_center_pueblo_1.json",
+  "verification": {
+    "capture": "run/pueblo-showcase/center-approved-20260909-161322/capture-verification.json",
+    "native_rooms_and_guard_walks": "run/pueblo-center-verification/verification.json",
+    "native_campfire_work": "run/campfire-access-verification/verification.json",
+    "gradle_check": {
+      "tests": 386,
+      "failures": 0,
+      "errors": 0
+    },
+    "live_banner_preview": true,
+    "live_ai_deployed": false
+  },
+  "neutral_template_sha256": "251f9371a692f4c6b2a3465bf3fccfdfd701056c73dbc39f4e19e53d3b800ea0",
+  "integrated_water_supply": {
+    "source_blocks": [
+      [
+        16,
+        1,
+        14
+      ],
+      [
+        17,
+        1,
+        14
+      ],
+      [
+        18,
+        1,
+        14
+      ],
+      [
+        16,
+        1,
+        15
+      ],
+      [
+        17,
+        1,
+        15
+      ],
+      [
+        18,
+        1,
+        15
+      ]
+    ],
+    "source_type": "six authored waterlogged stone stairs in the center basin",
+    "capability": "WATER",
+    "decision": "Use the center well instead of a separate well building, September 9 selection pass."
+  },
+  "production": {
+    "structure": "village_center_badlands_1",
+    "category": "village_center",
+    "variant": "badlands",
+    "level": 1,
+    "recipe": "village_center_plains_1"
+  },
+  "source_mod_structure": "data/kaisyn/structure/village/badlands_pueblo/town_centers/badlands_meeting_point_1.nbt",
+  "source_mod": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar"
+}

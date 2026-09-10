@@ -19,7 +19,6 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.CampfireBlock;
 import net.minecraft.world.level.block.entity.CampfireBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -70,7 +69,7 @@ public final class CampfireRoast {
   @Nullable
   public static CampfireBlockEntity litFireAt(Level level, BlockPos pos) {
     BlockState state = level.getBlockState(pos);
-    if (!state.is(Blocks.CAMPFIRE) || !state.getValue(CampfireBlock.LIT)) {
+    if (!(state.getBlock() instanceof CampfireBlock) || !state.getValue(CampfireBlock.LIT)) {
       return null;
     }
     return level.getBlockEntity(pos) instanceof CampfireBlockEntity campfire ? campfire : null;

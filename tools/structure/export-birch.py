@@ -15,6 +15,8 @@ ROOT = Path(__file__).resolve().parents[2]
 SOURCE = Path(sys.argv[1]).resolve()
 OUTPUT = Path(sys.argv[2]).resolve()
 assets_only = '--assets-only' in sys.argv[3:]
+only = next((set(arg.removeprefix('--only=').split(',')) for arg in sys.argv[3:] if arg.startswith('--only=')), None)
+assert only is None or assets_only, '--only requires --assets-only'
 inventory = json.loads((SOURCE / 'captures/inventory.json').read_text())
 old = {e['name']: e for e in json.loads((SOURCE / 'gallery-selection.json').read_text())['exhibits']}
 amenities = json.loads((SOURCE / 'previous-amenities-reference.json').read_text())
@@ -34,7 +36,7 @@ STATIONS = {
  'mine_1': [('MINER',[8,0,7])],
  'hunting_lodge_1': [('HUNTER',[7,1,8])],
  'fishery_1': [('FISHER',[10,2,10])],
- 'bakery_1': [('BAKER',[7,1,6]),('INNKEEPER',[9,1,8])],
+ 'bakery_1': [('BAKER',[7,1,6])],
  'butchery_1': [('BUTCHER',[8,1,9]),('HERDER',[11,1,9])],
  'blacksmith_1': [('BLACKSMITH',[9,1,11])],
  'market_1': [('MERCHANT',[8,1,7])],
@@ -47,7 +49,8 @@ WALL_REVISIONS=json.loads(Path(__file__).with_name('birch-walls-20260908.json').
 REVISIONS={'village_center_1':'birch-center-20260908.json',
            'storehouse_1':'birch-storehouse-20260908.json',
            'fishery_1':'birch-fishery-20260908.json',
-           'mine_1':'birch-mine-20260908.json'}
+           'mine_1':'birch-mine-20260908.json',
+           'bakery_1':'birch-bakery-20260909.json'}
 
 # The outward approach in the approved capture, not the door block's facing,
 # which often points into the room. Open compounds use their public entry edge.
@@ -111,6 +114,8 @@ for item in inventory:
     slots={key:[rebase(p) for p in values] for key,values in previous['village_identity'].items()}
     if revision is not None and 'banners' in revision:
         slots['banners']=revision['banners']
+    if revision is not None and 'village_identity' in revision:
+        slots=revision['village_identity']
     heads=sorted([list(p) for p,v in grid.items() if v['Name'].endswith('_bed') and v.get('Properties',{}).get('part')=='head'])
     declared=sorted(slots['primary_blocks']+slots['secondary_blocks'])
     assert heads==declared,(name,'bed roles drifted',heads,declared)
@@ -136,7 +141,7 @@ for item in inventory:
     # Leave one ground-level landing after the authored stair before excavation descends.
     if name=='mine_1':info.update(mine_entrance={'facing':'east','offset':[1,0,1]})
     if category=='watchtower':info['grants']=list(dict.fromkeys(info['grants']+['RANGED_GUARD_POSTS']))
-    if name=='bakery_1':info['grants']=['BREAD','WANDERERS']
+    if name=='bakery_1':info['grants']=['BREAD']
     if name=='butchery_1':info['grants']=[g for g in info['grants'] if g not in ('WOOL','CLOTH')]
     # Keep the saved local coordinate frame, but do not write the capture's empty
     # border. Gameplay bounds are derived from the same authored solid envelope.
@@ -163,9 +168,40 @@ for item in inventory:
         assert not path.exists(),f'Refusing to replace existing definition {path}'
         patch += ['*** Add File: '+str(path)]+['+'+line for line in json.dumps(info,indent=2).splitlines()]
     report.append({'id':identifier,'source_sha256':hashlib.sha256(source.read_bytes()).hexdigest(),'source':str(source),'size':spec['size'],'sink':info['sink'],'beds':len(heads),'stations':info['work_stations'],'identity':slots,'carved_air':len(air)})
+# Later approvals use their own immutable captures and explicit amenity metadata.
+addition=json.loads(Path(__file__).with_name('birch-tavern-20260909.json').read_text())
+source=ROOT/addition['source']
+assert hashlib.sha256(source.read_bytes()).hexdigest()==addition['approved_source_sha256'], 'Tavern approval capture changed'
+info=addition['definition'];data=read(source)
+grid={tuple(b['pos']):data['palette'][b['state']] for b in data['blocks']}
+occupied=[p for p,state in grid.items() if state['Name'] not in ('minecraft:air','minecraft:structure_void')]
+white=[]
+for position in info['village_identity']['primary_blocks']+info['village_identity']['secondary_blocks']:
+    state=grid[tuple(position)]
+    assert state['Name'].endswith('_bed') and state['Properties']['part']=='head'
+    dx,dz={'north':(0,-1),'south':(0,1),'east':(1,0),'west':(-1,0)}[state['Properties']['facing']]
+    white += [position,[position[0]-dx,position[1],position[2]-dz]]
+for position in info['containers']+info['personal_containers']:
+    assert grid[tuple(position)]['Name'] in ('minecraft:chest','minecraft:barrel','minecraft:trapped_chest')
+spec={'source':str(source),'output':str(OUTPUT/(info['structure']+'.nbt')),'white':white,'air':[],
+      'size':data['size'],'ground_layer':info['sink'],
+      'horizontal_bounds':[min(p[0] for p in occupied),min(p[2] for p in occupied),max(p[0] for p in occupied),max(p[2] for p in occupied)]}
+plan.append(spec)
+report.append({'id':info['structure'],'source':str(source),'source_sha256':addition['approved_source_sha256'],
+               'size':data['size'],'sink':info['sink'],'beds':len(info['beds']),
+               'stations':info['work_stations'],'identity':info['village_identity']})
+if not assets_only:
+    path=definitions/(info['structure']+'.json')
+    assert not path.exists(),f'Refusing to replace existing definition {path}'
+    patch += ['*** Add File: '+str(path)]+['+'+line for line in json.dumps(info,indent=2).splitlines()]
 patch.append('*** End Patch')
+if only is not None:
+    available={Path(item['output']).stem for item in plan}
+    assert only <= available, f'Unknown export names: {only-available}'
+    plan=[item for item in plan if Path(item['output']).stem in only]
+    report=[item for item in report if item['id'] in only]
 planfile=work/'export-plan.json';planfile.write_text(json.dumps(plan))
-classpath=(ROOT/'build/moddev/serverLegacyClasspath.txt').read_text().splitlines()+[str(ROOT/'build/moddev/artifacts/neoforge-21.1.72-minecraft-merged.jar')]
+classpath=(ROOT/'build/moddev/serverLegacyClasspath.txt').read_text().splitlines()+[str(ROOT/'build/moddev/artifacts/neoforge-21.1.72-minecraft.jar')]
 subprocess.run(['java','-cp',':'.join(classpath),str(Path(__file__).with_name('VillageTemplateExport.java')),str(planfile)],check=True,stdout=sys.stderr)
 (work/'export-report.json').write_text(json.dumps(report,indent=2))
 if not assets_only:print('\n'.join(patch))
