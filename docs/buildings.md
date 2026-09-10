@@ -436,6 +436,37 @@ suffix; custom single-token variants retain the existing naming format. Recipes 
 identical across village biomes, and an upgrade follows the explicitly named predecessor of
 the building already standing.
 
+#### The default is a placeholder
+
+Birch Forest answers for every biome that has no catalog of its own only because it is the one
+catalog bundled in the jar. That is a placeholder, decided 2026-09-10. The intended default is
+the Plains village, which does not exist yet and is expected to be a Mediterranean set: an open,
+temperate farming village is the right answer for a plains, forest, taiga or snowy biome that a
+modpack never described, and for a modded biome that was made badly, while Birch should stay
+the answer for birch biomes only.
+
+When the Plains catalog lands, the switch is three edits in `VillageStyle`, nothing elsewhere:
+
+1. Add `PLAINS` first in the enum, so it leads the stable order and is the first loaded founding
+   set tried when a climate cluster is empty.
+2. Point `DEFAULT` at it, so blank and unknown saved styles read as Plains.
+3. Return it from the temperate branch of `climateStyles`, and map the conventional plains,
+   forest and deciduous families to it in `conventionalStyle`.
+
+Existing villages keep the style they were founded with; nothing rerolls.
+
+#### Modded biomes
+
+The mechanism needs nothing from a biome mod. A biome tagged with the conventional NeoForge
+families or a registry name containing `birch`, `badlands`, `mesa`, `savanna` or `mangrove` gets
+that catalog; anything else is placed by its own temperature, downfall and precipitation, which
+every registered biome declares. A badly made biome therefore founds an odd style rather than
+none: a rainless biome declared at temperature two founds Desert or Badlands whatever it looks
+like. A modpack corrects that with the `kithkyn:village_style/<style>` tag, which wins over
+every heuristic. A planned check, not yet run: install one or two biome mods on a disposable
+world, found a village in each of their biomes, and record which style each one chose, adding
+tags where the answer is wrong.
+
 #### Villages saved in a removed family
 
 A village founded in plains, taiga, snowy or savanna keeps its name, people, identity and
