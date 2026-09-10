@@ -878,7 +878,8 @@ over the yard once it finally did). The loop now runs as `ChopStep` at the stati
 fell the tree at the station whole, whoever planted it (`TreeFelling.fellStand` fells every log
 connected to the station without asking ownership, whatever its height or how far the branches
 reach, and drops each record as it goes); the grown tree's natural canopy decays and drops its
-saplings; set a sapling from the pack
+saplings as part of the fell, even when a nearby building log would make vanilla preserve it;
+set a sapling from the pack
 on the stump, any kind (a Birch lodge whose birch is down grows a spruce if spruce is what the
 pack holds), and it is nobody's, so the next fell is an ordinary one; feed it while there is
 bone meal in the pack; fell it again when it is a tree. Saplings reach the pack three ways:
@@ -914,7 +915,11 @@ Both roles run the same `ChopStep`. A worker strikes one log for a chop's worth 
 when it gives the whole connected tree comes down at once through `TreeFelling` (shared with
 building placement and a finished wall's tree-line cleanup, [site-selection.md](site-selection.md)):
 a bounded flood fill over its logs,
-all of it into the pack, with the leaves left to decay on their own. Two guards keep the axe off
+all of it into the pack. Natural leaves supported by those logs are captured before the trunk
+comes down, then any that have no other natural tree supporting them decay immediately with
+ordinary ground drops. Player- and village-owned logs do not preserve a severed canopy, so a
+building beam beside a lumberjack stand cannot jam its next sapling. Persistent or ownership-marked
+leaves stay, as do shared leaves still supported by another natural tree. Two guards keep the axe off
 anything but a wild tree. A candidate must have a natural canopy nearby, leaves whose
 `persistent` flag is false, which a building's timber and a player's placed leaves never carry.
 And every log is checked against [block-ownership.md](block-ownership.md), which vetoes anything
