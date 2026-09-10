@@ -66,7 +66,7 @@ import net.minecraft.world.phys.Vec3;
  * made ordinary routes end after about twenty blocks even though the search
  * still had nodes left. People search at least forty-eight blocks instead,
  * while their genetically varied follow range remains their perception range.
- * The vanilla node ceiling still bounds the work, and its navigation region
+ * A fixed node ceiling still bounds the work, and its navigation region
  * still substitutes empty chunks rather than loading missing ones.
  *
  * <b>A mine shaft is walked by its ramp.</b> A long vertical target also makes
@@ -88,7 +88,7 @@ public final class PersonPathNavigation extends GroundPathNavigation {
   private static final float MINIMUM_SEARCH_RANGE = 48.0F;
 
   /** Exact work posts can require a detour to a ladder before climbing back toward the target. */
-  private static final float EXACT_SEARCH_RANGE = 96.0F;
+  private static final float EXACT_SEARCH_RANGE = 128.0F;
 
   /** A one-step ramp waypoint must not accept the current cell as close enough. */
   private static final int MINE_WAYPOINT_ACCURACY = 0;
@@ -127,7 +127,7 @@ public final class PersonPathNavigation extends GroundPathNavigation {
     Path route = super.createPath(targets, regionOffset, offsetUpward, accuracy, range);
     // Reaching a watch platform can take more than 48 blocks of walking even
     // when it is nearby in a straight line. Retry exact work destinations with
-    // a longer horizon, retaining the same hard node budget and loaded chunks.
+    // a longer horizon and bounded extra search work, retaining loaded chunks.
     if (accuracy == 0 && range < EXACT_SEARCH_RANGE && (route == null || !route.canReach())) {
       Path longer = super.createPath(targets, regionOffset, offsetUpward, accuracy, EXACT_SEARCH_RANGE);
       if (longer != null && (route == null || longer.canReach()
@@ -415,16 +415,20 @@ public final class PersonPathNavigation extends GroundPathNavigation {
     @Nullable
     public Path findPath(PathNavigationRegion region, Mob mob, Set<BlockPos> targets, float maxRange,
         int accuracy, float searchDepthMultiplier) {
+      // A nearby upper floor can require searching through several rooms before reaching
+      // its staircase. Only the longer exact-target retry gets this bounded extra budget.
+      float boundedMultiplier = accuracy == 0 && maxRange >= EXACT_SEARCH_RANGE
+          ? searchDepthMultiplier * 2.0F : searchDepthMultiplier;
       if (!Kithkyn.LOGGER.isDebugEnabled()) {
-        return super.findPath(region, mob, targets, maxRange, accuracy, searchDepthMultiplier);
+        return super.findPath(region, mob, targets, maxRange, accuracy, boundedMultiplier);
       }
 
       this.evaluator.resetSearchMetrics();
       long started = System.nanoTime();
-      Path result = super.findPath(region, mob, targets, maxRange, accuracy, searchDepthMultiplier);
+      Path result = super.findPath(region, mob, targets, maxRange, accuracy, boundedMultiplier);
       long elapsedMicros = (System.nanoTime() - started) / 1_000L;
       int expandedNodes = this.evaluator.expandedNodeCount();
-      int nodeLimit = (int)(this.baseMaxVisitedNodes * searchDepthMultiplier);
+      int nodeLimit = (int)(this.baseMaxVisitedNodes * boundedMultiplier);
       boolean nodeLimitHit = expandedNodes >= nodeLimit - 1;
       Node end = result == null ? null : result.getEndNode();
       String outcome = result == null ? "none" : result.canReach() ? "reached" : "partial";
@@ -486,6 +490,13 @@ public final class PersonPathNavigation extends GroundPathNavigation {
     public PathType getPathType(PathfindingContext context, int x, int y, int z) {
       PathType type = super.getPathType(context, x, y, z);
       BlockState state = context.getBlockState(new BlockPos(x, y, z));
+      // A closed horizontal panel is a floor or counter, not an aperture.
+      // Vanilla admits TRAPDOOR nodes inside it, which routes workers through
+      // market counters even when the roof prevents stepping onto them.
+      if (type == PathType.TRAPDOOR && state.getBlock() instanceof TrapDoorBlock
+          && !state.getValue(TrapDoorBlock.OPEN)) {
+        return PathType.BLOCKED;
+      }
       if (type == PathType.FENCE && state.getBlock() instanceof FenceGateBlock) {
         return PathType.DOOR_WOOD_CLOSED;
       }

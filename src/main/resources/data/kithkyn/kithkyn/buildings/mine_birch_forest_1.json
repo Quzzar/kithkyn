@@ -21,23 +21,20 @@
       6
     ]
   ],
-  "cost": [
-    {
-      "item": "minecraft:oak_log",
-      "count": 8
-    },
-    {
-      "item": "minecraft:cobblestone",
-      "count": 10
-    }
-  ],
   "grants": [
     "ORES",
     "FUEL"
   ],
   "sink": 0,
   "entrance_facing": "west",
-  "mine_entrance": {"facing": "east", "offset": [1, 0, 1]},
+  "mine_entrance": {
+    "facing": "east",
+    "offset": [
+      1,
+      0,
+      1
+    ]
+  },
   "village_identity": {
     "primary_blocks": [],
     "secondary_blocks": [],

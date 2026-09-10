@@ -33,16 +33,6 @@
       15
     ]
   ],
-  "cost": [
-    {
-      "item": "minecraft:oak_log",
-      "count": 150
-    },
-    {
-      "item": "minecraft:stone_bricks",
-      "count": 169
-    }
-  ],
   "grants": [
     "WANDERERS"
   ],

@@ -95,14 +95,6 @@ final class TownLayout {
     return List.copyOf(origins);
   }
 
-  /** The centered slot on one side, rounded by at most half a block for mixed odd/even spans. */
-  static Origin centeredFrontageOrigin(Footprint anchor, Footprint candidate, int laneWidth,
-      net.minecraft.core.Direction side) {
-    return frontageOrigins(anchor, candidate, laneWidth, side).stream()
-        .min(Comparator.comparingInt(origin -> centreShiftSqr(anchor, candidate.moved(origin))))
-        .orElseThrow();
-  }
-
   /**
    * Every origin at which {@code candidate} fully contains {@code standing}.
    * Closest-centred placements come first, so an upgrade expands evenly unless

@@ -1,0 +1,3289 @@
+{
+  "schema_version": 1,
+  "recorded": "2026-09-10",
+  "status": "selected_buildings_captured_pending_production_integration",
+  "description": "Floodplain (Nilotic) selection: the Towns & Towers Nilotic houses with roles assigned by Aaron, editable restyled drafts for the storehouse, fishery pool, well, watchtower and three market tiers, and two Polynesian farms from the donor gallery.",
+  "work": "run/nilotic-showcase/selection-20260910-floodplain",
+  "gallery_manifests": [
+    "tools/structure/nilotic-showcase-20260910.json",
+    "tools/structure/nilotic-donors-20260910.json"
+  ],
+  "source_mods": [
+    "ctov",
+    "kaisyn",
+    "nova_structures",
+    "world"
+  ],
+  "source_policy": "Source captures, display templates and edited captures remain private under run/. Only authoring metadata and provenance are tracked publicly.",
+  "village_biome": {
+    "id": "floodplain",
+    "home_biomes": [
+      "minecraft:mangrove_swamp"
+    ],
+    "note": "Vanilla swamp is reserved for a separate Swamp village. Hot riverbank sites may join later once site selection can see rivers."
+  },
+  "coordinate_system": {
+    "amenities": "relative to the gallery origin of each exhibit; y -1 is the captured ground course",
+    "capture_from": "world position of the capture box corner (two blocks of padding, ground course included)",
+    "capture_bounds": "padded review bounds, not final building envelopes"
+  },
+  "ground_policy": {
+    "status": "captured",
+    "description": "A patchy earthen ground course (packed mud, mud, coarse dirt, rooted dirt) lies under every house footprint at capture y -1; Aaron rounded several corners by hand. Author it as the template ground layer with sink 1.",
+    "plan": "run/nilotic-showcase/floors-20260910.json"
+  },
+  "identity_policy": {
+    "beds": "Every bed is a village-colour slot: couple units take the primary colour, single beds alternate primary then secondary within a building.",
+    "couple_beds": "Two bed heads side by side with the same facing are one couple unit and share one colour.",
+    "banners": "White banners are village banners (centre and watchtower). Banners of any other colour are decoration and stay as authored.",
+    "carpet": "The centre green carpets become the primary colour."
+  },
+  "container_policy": "Barrels and chests are shared work storage unless a bedroom pairing is authored later.",
+  "planting": {
+    "lumberjack_sapling": "minecraft:jungle_sapling",
+    "reason": "The wood loop refuses mangrove propagules because grown mangroves leave roots on the stand."
+  },
+  "auxiliaries": {
+    "allay_quartermasters": {
+      "status": "approved_for_implementation",
+      "count_at_storehouse": 2,
+      "rule": "Any village: a guard adopts nearby allays as auxiliary quartermasters the way it recruits golems as guards; the storehouse note block is the allay delivery point.",
+      "note_block": "Aaron placed a note block in the storehouse draft."
+    }
+  },
+  "restyle_policy": {
+    "method": "block-type substitution through VillageTemplateExport overrides; every block keeps its orientation and properties",
+    "wool_and_banners": "kept as identity slots"
+  },
+  "decisions": {
+    "tavern": "none for the floodplain village",
+    "bakery": "none for the floodplain village",
+    "lumberjack_tree": "jungle sapling on dirt at the dead-bush spot",
+    "floors": "patchy earthen ground course laid under every house footprint in the gallery (packed mud, mud, coarse dirt, rooted dirt); recorded in floors-20260910.json for the sink-1 capture; Aaron rounded the corners of several house floors; mine NA01.2 and the watchtower plate NA03.4 converted afterwards",
+    "draft_restyles": {
+      "NA03.3 well": "cobblestone to andesite, mossy cobblestone to mud bricks",
+      "NA03.4 watchtower": "acacia to mangrove logs and planks, spruce slabs, stairs and fences, jungle trapdoors, green beds",
+      "NA03.2 fishery pool": "sand to mud, acacia leaves to mangrove leaves"
+    },
+    "market_restyle": "cut sandstone to mud bricks, sandstone stairs to mud brick stairs, acacia fences to spruce, acacia logs to mangrove, potted cactus and dead bush to fern; wool, carpets and banners kept as identity slots",
+    "market_edit": "Aaron removed one extra orange carpet from the market drafts; captures refreshed afterwards"
+  },
+  "buildings": [
+    {
+      "exhibit": "NA01.1",
+      "label": "Temple 1",
+      "gallery": "nilotic-showcase",
+      "source_mod_structure": "data/kaisyn/structure/village/exclusives/nilotic/houses/nilotic_temple_1.nbt",
+      "source_mod_structure_sha256": "8adba962307430e988cead90a285ab6032cc7ea2b8725587fa78347728fbd167",
+      "source_capture": "run/nilotic-showcase/selection-20260910-floodplain/captures/NA01.1.nbt",
+      "source_capture_sha256": "e5109d99eddc84f4b9d9ddf671da7974489bffbcd58c1c1990cedf18b08e10eb",
+      "gallery_origin": [
+        6576,
+        230,
+        1010
+      ],
+      "capture_from": [
+        6574,
+        229,
+        1008
+      ],
+      "capture_to": [
+        6584,
+        275,
+        1018
+      ],
+      "solid_bounds_relative_to_gallery_origin": [
+        [
+          -1,
+          7
+        ],
+        [
+          -1,
+          1
+        ],
+        [
+          -1,
+          7
+        ]
+      ],
+      "role": "church",
+      "use": "temple",
+      "status": "captured_pending_production_authoring",
+      "capacity": {
+        "beds": 0,
+        "single_beds": 0,
+        "couple_rooms": 0
+      },
+      "amenities": {
+        "beds": [],
+        "couple_beds": [],
+        "containers": [],
+        "work_stations": [
+          {
+            "pos": [
+              3,
+              0,
+              4
+            ],
+            "block": "minecraft:campfire"
+          },
+          {
+            "pos": [
+              5,
+              1,
+              3
+            ],
+            "block": "minecraft:brewing_stand"
+          }
+        ],
+        "banners": [],
+        "decorative_banners": [],
+        "village_identity": {
+          "primary_blocks": [],
+          "secondary_blocks": [],
+          "banners": []
+        },
+        "coloured_blocks": {}
+      },
+      "notes": [],
+      "gallery_furniture": {
+        "sea_lanterns": [
+          [
+            -1,
+            -1,
+            -1
+          ],
+          [
+            7,
+            -1,
+            -1
+          ],
+          [
+            -1,
+            -1,
+            7
+          ],
+          [
+            7,
+            -1,
+            7
+          ]
+        ],
+        "note": "Apron corner lighting from the gallery; exclude at export."
+      }
+    },
+    {
+      "exhibit": "NA01.2",
+      "label": "Armorer 1",
+      "gallery": "nilotic-showcase",
+      "source_mod_structure": "data/kaisyn/structure/village/exclusives/nilotic/houses/nilotic_armorer_1.nbt",
+      "source_mod_structure_sha256": "90cea19d28a163acc3b1bae2020a979fa2727738269d0c23ae42ef51420abf9d",
+      "source_capture": "run/nilotic-showcase/selection-20260910-floodplain/captures/NA01.2.nbt",
+      "source_capture_sha256": "e0e431c2d95541390431579ad67c5f17c306ceedfc2c64022e251e0c6c2d2371",
+      "gallery_origin": [
+        6591,
+        230,
+        1010
+      ],
+      "capture_from": [
+        6589,
+        229,
+        1008
+      ],
+      "capture_to": [
+        6601,
+        275,
+        1020
+      ],
+      "solid_bounds_relative_to_gallery_origin": [
+        [
+          -1,
+          9
+        ],
+        [
+          -1,
+          6
+        ],
+        [
+          -1,
+          9
+        ]
+      ],
+      "role": "mine",
+      "use": "mine",
+      "status": "captured_pending_production_authoring",
+      "capacity": {
+        "beds": 0,
+        "single_beds": 0,
+        "couple_rooms": 0
+      },
+      "amenities": {
+        "beds": [],
+        "couple_beds": [],
+        "containers": [
+          [
+            4,
+            0,
+            3
+          ]
+        ],
+        "work_stations": [
+          {
+            "pos": [
+              1,
+              0,
+              1
+            ],
+            "block": "minecraft:campfire"
+          }
+        ],
+        "banners": [],
+        "decorative_banners": [],
+        "village_identity": {
+          "primary_blocks": [],
+          "secondary_blocks": [],
+          "banners": []
+        },
+        "coloured_blocks": {}
+      },
+      "notes": [
+        "Aaron rebuilt this live as the mine; the former armorer role moves to NA02.3"
+      ],
+      "gallery_furniture": {
+        "sea_lanterns": [
+          [
+            -1,
+            -1,
+            -1
+          ],
+          [
+            9,
+            -1,
+            -1
+          ],
+          [
+            -1,
+            -1,
+            9
+          ],
+          [
+            9,
+            -1,
+            9
+          ]
+        ],
+        "note": "Apron corner lighting from the gallery; exclude at export."
+      }
+    },
+    {
+      "exhibit": "NA01.4",
+      "label": "Cartographer 1",
+      "gallery": "nilotic-showcase",
+      "source_mod_structure": "data/kaisyn/structure/village/exclusives/nilotic/houses/nilotic_cartographer_1.nbt",
+      "source_mod_structure_sha256": "3567cd7a684d6945d58187da1fe95f634fac107de0439c11c7dd8bfd0bacda99",
+      "source_capture": "run/nilotic-showcase/selection-20260910-floodplain/captures/NA01.4.nbt",
+      "source_capture_sha256": "0a2ee1771d5e52e70fcc2569afa308d4dfd9bfe39703178c3f7b7e61317b095c",
+      "gallery_origin": [
+        6625,
+        230,
+        1010
+      ],
+      "capture_from": [
+        6623,
+        229,
+        1008
+      ],
+      "capture_to": [
+        6633,
+        275,
+        1018
+      ],
+      "solid_bounds_relative_to_gallery_origin": [
+        [
+          -1,
+          7
+        ],
+        [
+          -1,
+          4
+        ],
+        [
+          -1,
+          7
+        ]
+      ],
+      "role": "village_center",
+      "use": "village center",
+      "status": "captured_pending_production_authoring",
+      "capacity": {
+        "beds": 0,
+        "single_beds": 0,
+        "couple_rooms": 0
+      },
+      "amenities": {
+        "beds": [],
+        "couple_beds": [],
+        "containers": [],
+        "work_stations": [
+          {
+            "pos": [
+              3,
+              2,
+              3
+            ],
+            "block": "minecraft:bell"
+          }
+        ],
+        "banners": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            6,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            6
+          ],
+          [
+            6,
+            0,
+            6
+          ]
+        ],
+        "decorative_banners": [],
+        "village_identity": {
+          "primary_blocks": [],
+          "secondary_blocks": [],
+          "banners": [
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              6,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              6
+            ],
+            [
+              6,
+              0,
+              6
+            ]
+          ]
+        },
+        "coloured_blocks": {
+          "minecraft:white_banner": 4,
+          "minecraft:green_carpet": 6
+        }
+      },
+      "notes": [
+        "swap banners to the village banner; green carpet becomes the village primary color"
+      ],
+      "gallery_furniture": {
+        "sea_lanterns": [
+          [
+            -1,
+            -1,
+            -1
+          ],
+          [
+            7,
+            -1,
+            -1
+          ],
+          [
+            -1,
+            -1,
+            7
+          ],
+          [
+            7,
+            -1,
+            7
+          ]
+        ],
+        "note": "Apron corner lighting from the gallery; exclude at export."
+      },
+      "identity": {
+        "white_banners_become_village_banner": true,
+        "green_carpets_become_primary_color": true,
+        "green_carpets": 6
+      }
+    },
+    {
+      "exhibit": "NA01.5",
+      "label": "Farmer 1",
+      "gallery": "nilotic-showcase",
+      "source_mod_structure": "data/kaisyn/structure/village/exclusives/nilotic/houses/nilotic_farmer_1.nbt",
+      "source_mod_structure_sha256": "4be24364257465f229b148533c2d6284c6df06bf78d005c28d710bca908a83e0",
+      "source_capture": "run/nilotic-showcase/selection-20260910-floodplain/captures/NA01.5.nbt",
+      "source_capture_sha256": "83cb171ffc237e5a54bfc12933307c2e285c6cc3391ca0d20eb7c8ad5727e536",
+      "gallery_origin": [
+        6640,
+        230,
+        1010
+      ],
+      "capture_from": [
+        6638,
+        229,
+        1008
+      ],
+      "capture_to": [
+        6650,
+        275,
+        1020
+      ],
+      "solid_bounds_relative_to_gallery_origin": [
+        [
+          -1,
+          9
+        ],
+        [
+          -1,
+          5
+        ],
+        [
+          -1,
+          9
+        ]
+      ],
+      "role": "lumberjack_lodge",
+      "use": "lumberjack lodge",
+      "status": "captured_pending_production_authoring",
+      "capacity": {
+        "beds": 1,
+        "single_beds": 1,
+        "couple_rooms": 0
+      },
+      "amenities": {
+        "beds": [
+          [
+            6,
+            0,
+            5
+          ]
+        ],
+        "couple_beds": [],
+        "containers": [],
+        "work_stations": [
+          {
+            "pos": [
+              0,
+              0,
+              2
+            ],
+            "block": "minecraft:dead_bush"
+          },
+          {
+            "pos": [
+              1,
+              0,
+              5
+            ],
+            "block": "minecraft:composter"
+          }
+        ],
+        "banners": [],
+        "decorative_banners": [],
+        "village_identity": {
+          "primary_blocks": [
+            [
+              6,
+              0,
+              5
+            ]
+          ],
+          "secondary_blocks": [],
+          "banners": []
+        },
+        "coloured_blocks": {
+          "minecraft:green_bed": 2
+        }
+      },
+      "notes": [
+        "dead bush marks the work tree; sapling species to decide"
+      ],
+      "gallery_furniture": {
+        "sea_lanterns": [
+          [
+            -1,
+            -1,
+            -1
+          ],
+          [
+            9,
+            -1,
+            -1
+          ],
+          [
+            -1,
+            -1,
+            9
+          ],
+          [
+            9,
+            -1,
+            9
+          ]
+        ],
+        "note": "Apron corner lighting from the gallery; exclude at export."
+      },
+      "planting": {
+        "markers": [
+          [
+            0,
+            0,
+            2
+          ]
+        ],
+        "source_block": "minecraft:dead_bush",
+        "sapling": "minecraft:jungle_sapling",
+        "status": "recorded_for_export"
+      }
+    },
+    {
+      "exhibit": "NA01.6",
+      "label": "Fletcher 1",
+      "gallery": "nilotic-showcase",
+      "source_mod_structure": "data/kaisyn/structure/village/exclusives/nilotic/houses/nilotic_fletcher_1.nbt",
+      "source_mod_structure_sha256": "eff8c0392c63ee23d566c3e7b2abbcddce103e0e80c81a72bd9c76789a797e40",
+      "source_capture": "run/nilotic-showcase/selection-20260910-floodplain/captures/NA01.6.nbt",
+      "source_capture_sha256": "5f84a5253a9e779d3ba19f0481c7c5d81aee770dfbce5fb93db524d900590a0a",
+      "gallery_origin": [
+        6657,
+        230,
+        1010
+      ],
+      "capture_from": [
+        6655,
+        229,
+        1008
+      ],
+      "capture_to": [
+        6667,
+        275,
+        1020
+      ],
+      "solid_bounds_relative_to_gallery_origin": [
+        [
+          -1,
+          9
+        ],
+        [
+          -1,
+          5
+        ],
+        [
+          -1,
+          9
+        ]
+      ],
+      "role": "hunting_lodge",
+      "use": "hunting lodge",
+      "status": "captured_pending_production_authoring",
+      "capacity": {
+        "beds": 1,
+        "single_beds": 1,
+        "couple_rooms": 0
+      },
+      "amenities": {
+        "beds": [
+          [
+            4,
+            0,
+            2
+          ]
+        ],
+        "couple_beds": [],
+        "containers": [
+          [
+            2,
+            0,
+            4
+          ]
+        ],
+        "work_stations": [
+          {
+            "pos": [
+              4,
+              0,
+              4
+            ],
+            "block": "minecraft:fletching_table"
+          },
+          {
+            "pos": [
+              3,
+              0,
+              8
+            ],
+            "block": "minecraft:campfire"
+          }
+        ],
+        "banners": [],
+        "decorative_banners": [],
+        "village_identity": {
+          "primary_blocks": [
+            [
+              4,
+              0,
+              2
+            ]
+          ],
+          "secondary_blocks": [],
+          "banners": []
+        },
+        "coloured_blocks": {
+          "minecraft:white_bed": 2
+        }
+      },
+      "notes": [],
+      "gallery_furniture": {
+        "sea_lanterns": [
+          [
+            -1,
+            -1,
+            -1
+          ],
+          [
+            9,
+            -1,
+            -1
+          ],
+          [
+            -1,
+            -1,
+            9
+          ],
+          [
+            9,
+            -1,
+            9
+          ]
+        ],
+        "note": "Apron corner lighting from the gallery; exclude at export."
+      }
+    },
+    {
+      "exhibit": "NA01.7",
+      "label": "Large House 1",
+      "gallery": "nilotic-showcase",
+      "source_mod_structure": "data/kaisyn/structure/village/exclusives/nilotic/houses/nilotic_large_house_1.nbt",
+      "source_mod_structure_sha256": "83ef8fca2a05cba1680ae1855595bb215b820f298cb6190198eaebc05329d588",
+      "source_capture": "run/nilotic-showcase/selection-20260910-floodplain/captures/NA01.7.nbt",
+      "source_capture_sha256": "c26d52278fed94094ae93eb675cb9524e7954dc75fcac9fa91c1e5dac9574b84",
+      "gallery_origin": [
+        6674,
+        230,
+        1010
+      ],
+      "capture_from": [
+        6672,
+        229,
+        1008
+      ],
+      "capture_to": [
+        6684,
+        275,
+        1020
+      ],
+      "solid_bounds_relative_to_gallery_origin": [
+        [
+          -1,
+          9
+        ],
+        [
+          -1,
+          4
+        ],
+        [
+          -1,
+          9
+        ]
+      ],
+      "role": "house",
+      "use": "large home, two beds",
+      "status": "captured_pending_production_authoring",
+      "capacity": {
+        "beds": 2,
+        "single_beds": 2,
+        "couple_rooms": 0
+      },
+      "amenities": {
+        "beds": [
+          [
+            6,
+            0,
+            3
+          ],
+          [
+            5,
+            0,
+            6
+          ]
+        ],
+        "couple_beds": [],
+        "containers": [
+          [
+            3,
+            0,
+            6
+          ]
+        ],
+        "work_stations": [],
+        "banners": [],
+        "decorative_banners": [],
+        "village_identity": {
+          "primary_blocks": [
+            [
+              6,
+              0,
+              3
+            ]
+          ],
+          "secondary_blocks": [
+            [
+              5,
+              0,
+              6
+            ]
+          ],
+          "banners": []
+        },
+        "coloured_blocks": {
+          "minecraft:green_bed": 4
+        }
+      },
+      "notes": [],
+      "gallery_furniture": {
+        "sea_lanterns": [
+          [
+            -1,
+            -1,
+            -1
+          ],
+          [
+            9,
+            -1,
+            -1
+          ],
+          [
+            -1,
+            -1,
+            9
+          ],
+          [
+            9,
+            -1,
+            9
+          ]
+        ],
+        "note": "Apron corner lighting from the gallery; exclude at export."
+      }
+    },
+    {
+      "exhibit": "NA01.8",
+      "label": "Leatherworker And Shepherd 1",
+      "gallery": "nilotic-showcase",
+      "source_mod_structure": "data/kaisyn/structure/village/exclusives/nilotic/houses/nilotic_leatherworker_and_shepherd_1.nbt",
+      "source_mod_structure_sha256": "ed5b7cc8b29daec8604187842a670c26dc2ecc218e10cb4cbf0523aca72ed516",
+      "source_capture": "run/nilotic-showcase/selection-20260910-floodplain/captures/NA01.8.nbt",
+      "source_capture_sha256": "128c36c00ada8e29b4f7ed36179b0de2518e1aa4d30d1d58c6b4cae454ebac4a",
+      "gallery_origin": [
+        6691,
+        230,
+        1010
+      ],
+      "capture_from": [
+        6689,
+        229,
+        1008
+      ],
+      "capture_to": [
+        6701,
+        275,
+        1020
+      ],
+      "solid_bounds_relative_to_gallery_origin": [
+        [
+          -1,
+          9
+        ],
+        [
+          -1,
+          5
+        ],
+        [
+          -1,
+          9
+        ]
+      ],
+      "role": "butcher",
+      "use": "butcher with livestock",
+      "status": "captured_pending_production_authoring",
+      "capacity": {
+        "beds": 1,
+        "single_beds": 1,
+        "couple_rooms": 0
+      },
+      "amenities": {
+        "beds": [
+          [
+            4,
+            0,
+            6
+          ]
+        ],
+        "couple_beds": [],
+        "containers": [
+          [
+            6,
+            0,
+            4
+          ]
+        ],
+        "work_stations": [
+          {
+            "pos": [
+              8,
+              0,
+              1
+            ],
+            "block": "minecraft:campfire"
+          },
+          {
+            "pos": [
+              2,
+              0,
+              5
+            ],
+            "block": "minecraft:water_cauldron"
+          }
+        ],
+        "banners": [],
+        "decorative_banners": [],
+        "village_identity": {
+          "primary_blocks": [
+            [
+              4,
+              0,
+              6
+            ]
+          ],
+          "secondary_blocks": [],
+          "banners": []
+        },
+        "coloured_blocks": {
+          "minecraft:white_bed": 2
+        }
+      },
+      "notes": [],
+      "gallery_furniture": {
+        "sea_lanterns": [
+          [
+            -1,
+            -1,
+            -1
+          ],
+          [
+            9,
+            -1,
+            -1
+          ],
+          [
+            -1,
+            -1,
+            9
+          ],
+          [
+            9,
+            -1,
+            9
+          ]
+        ],
+        "note": "Apron corner lighting from the gallery; exclude at export."
+      },
+      "livestock": {
+        "cow": 3,
+        "pig": 3
+      }
+    },
+    {
+      "exhibit": "NA01.9",
+      "label": "Mason 1",
+      "gallery": "nilotic-showcase",
+      "source_mod_structure": "data/kaisyn/structure/village/exclusives/nilotic/houses/nilotic_mason_1.nbt",
+      "source_mod_structure_sha256": "c0b3ce981152200cff0a9dceb5faa85afa52af417276de6f0f813dc62e78cfd1",
+      "source_capture": "run/nilotic-showcase/selection-20260910-floodplain/captures/NA01.9.nbt",
+      "source_capture_sha256": "9c00217902535c77a185e250397129018b1e9262bc7aac0961ac71426d32aff6",
+      "gallery_origin": [
+        6708,
+        230,
+        1010
+      ],
+      "capture_from": [
+        6706,
+        229,
+        1008
+      ],
+      "capture_to": [
+        6718,
+        275,
+        1020
+      ],
+      "solid_bounds_relative_to_gallery_origin": [
+        [
+          -1,
+          9
+        ],
+        [
+          -1,
+          5
+        ],
+        [
+          -1,
+          9
+        ]
+      ],
+      "role": "stoneworks",
+      "use": "mason",
+      "status": "captured_pending_production_authoring",
+      "capacity": {
+        "beds": 1,
+        "single_beds": 1,
+        "couple_rooms": 0
+      },
+      "amenities": {
+        "beds": [
+          [
+            6,
+            0,
+            6
+          ]
+        ],
+        "couple_beds": [],
+        "containers": [
+          [
+            6,
+            0,
+            4
+          ]
+        ],
+        "work_stations": [
+          {
+            "pos": [
+              3,
+              0,
+              1
+            ],
+            "block": "minecraft:stonecutter"
+          }
+        ],
+        "banners": [],
+        "decorative_banners": [],
+        "village_identity": {
+          "primary_blocks": [
+            [
+              6,
+              0,
+              6
+            ]
+          ],
+          "secondary_blocks": [],
+          "banners": []
+        },
+        "coloured_blocks": {
+          "minecraft:green_bed": 2
+        }
+      },
+      "notes": [],
+      "gallery_furniture": {
+        "sea_lanterns": [
+          [
+            -1,
+            -1,
+            -1
+          ],
+          [
+            9,
+            -1,
+            -1
+          ],
+          [
+            -1,
+            -1,
+            9
+          ],
+          [
+            9,
+            -1,
+            9
+          ]
+        ],
+        "note": "Apron corner lighting from the gallery; exclude at export."
+      }
+    },
+    {
+      "exhibit": "NA02.1",
+      "label": "Small House 1",
+      "gallery": "nilotic-showcase",
+      "source_mod_structure": "data/kaisyn/structure/village/exclusives/nilotic/houses/nilotic_small_house_1.nbt",
+      "source_mod_structure_sha256": "c3c852df1031b0bde7dd7d790f3812bbfbaad443ed6e86b534a63e51145d2005",
+      "source_capture": "run/nilotic-showcase/selection-20260910-floodplain/captures/NA02.1.nbt",
+      "source_capture_sha256": "257b9b749b3e68d4b0aaf21c2e519b6e4736e400330ce4a99b86880398629cd6",
+      "gallery_origin": [
+        6576,
+        230,
+        1039
+      ],
+      "capture_from": [
+        6574,
+        229,
+        1037
+      ],
+      "capture_to": [
+        6584,
+        275,
+        1047
+      ],
+      "solid_bounds_relative_to_gallery_origin": [
+        [
+          -1,
+          7
+        ],
+        [
+          -1,
+          4
+        ],
+        [
+          -1,
+          7
+        ]
+      ],
+      "role": "house",
+      "use": "couple home",
+      "status": "captured_pending_production_authoring",
+      "capacity": {
+        "beds": 2,
+        "single_beds": 0,
+        "couple_rooms": 1
+      },
+      "amenities": {
+        "beds": [
+          [
+            4,
+            0,
+            2
+          ],
+          [
+            4,
+            0,
+            3
+          ]
+        ],
+        "couple_beds": [
+          [
+            [
+              4,
+              0,
+              2
+            ],
+            [
+              4,
+              0,
+              3
+            ]
+          ]
+        ],
+        "containers": [
+          [
+            4,
+            -1,
+            4
+          ]
+        ],
+        "work_stations": [],
+        "banners": [],
+        "decorative_banners": [],
+        "village_identity": {
+          "primary_blocks": [
+            [
+              4,
+              0,
+              2
+            ],
+            [
+              4,
+              0,
+              3
+            ]
+          ],
+          "secondary_blocks": [],
+          "banners": []
+        },
+        "coloured_blocks": {
+          "minecraft:white_bed": 4
+        }
+      },
+      "notes": [],
+      "gallery_furniture": {
+        "sea_lanterns": [
+          [
+            -1,
+            -1,
+            -1
+          ],
+          [
+            7,
+            -1,
+            -1
+          ],
+          [
+            -1,
+            -1,
+            7
+          ],
+          [
+            7,
+            -1,
+            7
+          ]
+        ],
+        "note": "Apron corner lighting from the gallery; exclude at export."
+      }
+    },
+    {
+      "exhibit": "NA02.2",
+      "label": "Small House 2",
+      "gallery": "nilotic-showcase",
+      "source_mod_structure": "data/kaisyn/structure/village/exclusives/nilotic/houses/nilotic_small_house_2.nbt",
+      "source_mod_structure_sha256": "7b5986e6b7aa06d99089769b4ba3df887ff8f8e00e3b393ef7eb2404ec752111",
+      "source_capture": "run/nilotic-showcase/selection-20260910-floodplain/captures/NA02.2.nbt",
+      "source_capture_sha256": "3f103a34f7636f8feeeb6823b046c416bb4c37d2f9aa81b699ce4d5e09253193",
+      "gallery_origin": [
+        6591,
+        230,
+        1039
+      ],
+      "capture_from": [
+        6589,
+        229,
+        1037
+      ],
+      "capture_to": [
+        6599,
+        275,
+        1047
+      ],
+      "solid_bounds_relative_to_gallery_origin": [
+        [
+          -1,
+          7
+        ],
+        [
+          -1,
+          5
+        ],
+        [
+          -1,
+          7
+        ]
+      ],
+      "role": "house",
+      "use": "small home",
+      "status": "captured_pending_production_authoring",
+      "capacity": {
+        "beds": 1,
+        "single_beds": 1,
+        "couple_rooms": 0
+      },
+      "amenities": {
+        "beds": [
+          [
+            4,
+            0,
+            4
+          ]
+        ],
+        "couple_beds": [],
+        "containers": [],
+        "work_stations": [],
+        "banners": [],
+        "decorative_banners": [],
+        "village_identity": {
+          "primary_blocks": [
+            [
+              4,
+              0,
+              4
+            ]
+          ],
+          "secondary_blocks": [],
+          "banners": []
+        },
+        "coloured_blocks": {
+          "minecraft:green_bed": 2
+        }
+      },
+      "notes": [],
+      "gallery_furniture": {
+        "sea_lanterns": [
+          [
+            -1,
+            -1,
+            -1
+          ],
+          [
+            7,
+            -1,
+            -1
+          ],
+          [
+            -1,
+            -1,
+            7
+          ],
+          [
+            7,
+            -1,
+            7
+          ]
+        ],
+        "note": "Apron corner lighting from the gallery; exclude at export."
+      }
+    },
+    {
+      "exhibit": "NA02.3",
+      "label": "Toolsmith And Weaponsmith 1",
+      "gallery": "nilotic-showcase",
+      "source_mod_structure": "data/kaisyn/structure/village/exclusives/nilotic/houses/nilotic_toolsmith_and_weaponsmith_1.nbt",
+      "source_mod_structure_sha256": "e56e698b54e201772e488942f40f838a64f8e79b15fc9c1df52b6ac0f552c4cc",
+      "source_capture": "run/nilotic-showcase/selection-20260910-floodplain/captures/NA02.3.nbt",
+      "source_capture_sha256": "9baff46416f3c97ea32d59fef88695696e148551228bee139d04b4761ed2f8fa",
+      "gallery_origin": [
+        6606,
+        230,
+        1039
+      ],
+      "capture_from": [
+        6604,
+        229,
+        1037
+      ],
+      "capture_to": [
+        6616,
+        275,
+        1049
+      ],
+      "solid_bounds_relative_to_gallery_origin": [
+        [
+          -1,
+          9
+        ],
+        [
+          -1,
+          5
+        ],
+        [
+          -1,
+          9
+        ]
+      ],
+      "role": "blacksmith",
+      "use": "blacksmith",
+      "status": "captured_pending_production_authoring",
+      "capacity": {
+        "beds": 0,
+        "single_beds": 0,
+        "couple_rooms": 0
+      },
+      "amenities": {
+        "beds": [],
+        "couple_beds": [],
+        "containers": [
+          [
+            6,
+            1,
+            4
+          ]
+        ],
+        "work_stations": [
+          {
+            "pos": [
+              3,
+              0,
+              3
+            ],
+            "block": "minecraft:smithing_table"
+          },
+          {
+            "pos": [
+              5,
+              0,
+              5
+            ],
+            "block": "minecraft:grindstone"
+          },
+          {
+            "pos": [
+              4,
+              4,
+              4
+            ],
+            "block": "minecraft:campfire"
+          }
+        ],
+        "banners": [],
+        "decorative_banners": [],
+        "village_identity": {
+          "primary_blocks": [],
+          "secondary_blocks": [],
+          "banners": []
+        },
+        "coloured_blocks": {}
+      },
+      "notes": [],
+      "gallery_furniture": {
+        "sea_lanterns": [
+          [
+            -1,
+            -1,
+            -1
+          ],
+          [
+            9,
+            -1,
+            -1
+          ],
+          [
+            -1,
+            -1,
+            9
+          ],
+          [
+            9,
+            -1,
+            9
+          ]
+        ],
+        "note": "Apron corner lighting from the gallery; exclude at export."
+      }
+    },
+    {
+      "exhibit": "NA02.4",
+      "label": "Storehouse Draft",
+      "gallery": "nilotic-showcase",
+      "source_mod_structure": "data/kaisyn/structure/village/exclusives/nilotic/houses/nilotic_small_house_1.nbt",
+      "source_mod_structure_sha256": "c3c852df1031b0bde7dd7d790f3812bbfbaad443ed6e86b534a63e51145d2005",
+      "source_capture": "run/nilotic-showcase/selection-20260910-floodplain/captures/NA02.4.nbt",
+      "source_capture_sha256": "74a857c1c4e572bcd40a688180aa07cffa09bbc5b6d91db34db8628fab9eb305",
+      "gallery_origin": [
+        6623,
+        230,
+        1039
+      ],
+      "capture_from": [
+        6621,
+        229,
+        1037
+      ],
+      "capture_to": [
+        6631,
+        275,
+        1047
+      ],
+      "solid_bounds_relative_to_gallery_origin": [
+        [
+          -1,
+          7
+        ],
+        [
+          -1,
+          4
+        ],
+        [
+          -1,
+          7
+        ]
+      ],
+      "copy_of_exhibit": "NA02.1",
+      "role": "storehouse",
+      "use": "storehouse",
+      "status": "captured_pending_production_authoring",
+      "capacity": {
+        "beds": 0,
+        "single_beds": 0,
+        "couple_rooms": 0
+      },
+      "amenities": {
+        "beds": [],
+        "couple_beds": [],
+        "containers": [
+          [
+            3,
+            0,
+            2
+          ],
+          [
+            4,
+            0,
+            3
+          ],
+          [
+            4,
+            1,
+            2
+          ]
+        ],
+        "work_stations": [
+          {
+            "pos": [
+              2,
+              0,
+              4
+            ],
+            "block": "minecraft:note_block"
+          }
+        ],
+        "banners": [],
+        "decorative_banners": [],
+        "village_identity": {
+          "primary_blocks": [],
+          "secondary_blocks": [],
+          "banners": []
+        },
+        "coloured_blocks": {}
+      },
+      "notes": [
+        "replaced again on Aaron's request for a smaller base; ground course re-laid"
+      ],
+      "gallery_furniture": {
+        "sea_lanterns": [
+          [
+            -1,
+            -1,
+            -1
+          ],
+          [
+            7,
+            -1,
+            -1
+          ],
+          [
+            -1,
+            -1,
+            7
+          ],
+          [
+            7,
+            -1,
+            7
+          ]
+        ],
+        "note": "Apron corner lighting from the gallery; exclude at export."
+      },
+      "allay_delivery_points": [
+        [
+          2,
+          0,
+          4
+        ]
+      ],
+      "auxiliaries": {
+        "allays": 2,
+        "role": "quartermaster"
+      }
+    },
+    {
+      "exhibit": "NA03.2",
+      "label": "Fishery Draft",
+      "gallery": "nilotic-showcase",
+      "source_mod_structure": "data/ctov/structure/village/desert/deco/oasis.nbt",
+      "source_mod_structure_sha256": "ca3537d7e1630041e2c1f920c73287a78cd44093f0089f0c21c92ff1fafe9950",
+      "source_capture": "run/nilotic-showcase/selection-20260910-floodplain/captures/NA03.2.nbt",
+      "source_capture_sha256": "49c102697d552f9d693c0a31ed77db2f107edccecc5e21fb28a97327fd13ba1d",
+      "gallery_origin": [
+        6608,
+        230,
+        1068
+      ],
+      "capture_from": [
+        6606,
+        229,
+        1066
+      ],
+      "capture_to": [
+        6615,
+        275,
+        1075
+      ],
+      "solid_bounds_relative_to_gallery_origin": [
+        [
+          -1,
+          6
+        ],
+        [
+          -1,
+          2
+        ],
+        [
+          -1,
+          6
+        ]
+      ],
+      "copy_of_exhibit": "NI09.3",
+      "restyle": [
+        {
+          "minecraft:sand": "minecraft:mud",
+          "minecraft:acacia_leaves": "minecraft:mangrove_leaves"
+        }
+      ],
+      "role": "fishery",
+      "use": "fishery",
+      "status": "captured_pending_production_authoring",
+      "capacity": {
+        "beds": 0,
+        "single_beds": 0,
+        "couple_rooms": 0
+      },
+      "amenities": {
+        "beds": [],
+        "couple_beds": [],
+        "containers": [
+          [
+            4,
+            1,
+            2
+          ]
+        ],
+        "work_stations": [],
+        "banners": [],
+        "decorative_banners": [],
+        "village_identity": {
+          "primary_blocks": [],
+          "secondary_blocks": [],
+          "banners": []
+        },
+        "coloured_blocks": {}
+      },
+      "notes": [
+        "Aaron added a barrel (fisher storage) and a lantern; pool water inside its own mud rim"
+      ],
+      "gallery_furniture": {
+        "sea_lanterns": [
+          [
+            -1,
+            -1,
+            -1
+          ],
+          [
+            6,
+            -1,
+            -1
+          ],
+          [
+            -1,
+            -1,
+            6
+          ],
+          [
+            6,
+            -1,
+            6
+          ]
+        ],
+        "note": "Apron corner lighting from the gallery; exclude at export."
+      }
+    },
+    {
+      "exhibit": "NA03.3",
+      "label": "Well Draft",
+      "gallery": "nilotic-showcase",
+      "source_mod_structure": "data/nova_structures/structure/tavern/tavern_event_well_mangrove.nbt",
+      "source_mod_structure_sha256": "2b2683707a17974e0eb925ff0b163a6f048cbd5f4cda80cc692bb280002f4af8",
+      "source_capture": "run/nilotic-showcase/selection-20260910-floodplain/captures/NA03.3.nbt",
+      "source_capture_sha256": "6f4c58e15620f197febdfc2a366cd37c6dfc8c2235f2b9fa1481b7aa272b8349",
+      "gallery_origin": [
+        6622,
+        230,
+        1068
+      ],
+      "capture_from": [
+        6620,
+        229,
+        1066
+      ],
+      "capture_to": [
+        6628,
+        275,
+        1074
+      ],
+      "solid_bounds_relative_to_gallery_origin": [
+        [
+          -1,
+          5
+        ],
+        [
+          -1,
+          1
+        ],
+        [
+          -1,
+          5
+        ]
+      ],
+      "copy_of_exhibit": "NI03.9",
+      "restyle": [
+        {
+          "minecraft:cobblestone": "minecraft:andesite",
+          "minecraft:mossy_cobblestone": "minecraft:mud_bricks"
+        }
+      ],
+      "role": "well",
+      "use": "well",
+      "status": "captured_pending_production_authoring",
+      "capacity": {
+        "beds": 0,
+        "single_beds": 0,
+        "couple_rooms": 0
+      },
+      "amenities": {
+        "beds": [],
+        "couple_beds": [],
+        "containers": [],
+        "work_stations": [],
+        "banners": [],
+        "decorative_banners": [],
+        "village_identity": {
+          "primary_blocks": [],
+          "secondary_blocks": [],
+          "banners": []
+        },
+        "coloured_blocks": {}
+      },
+      "notes": [
+        "andesite ring, mud-brick accents, mangrove roof"
+      ],
+      "gallery_furniture": {
+        "sea_lanterns": [
+          [
+            -1,
+            -1,
+            -1
+          ],
+          [
+            5,
+            -1,
+            -1
+          ],
+          [
+            -1,
+            -1,
+            5
+          ],
+          [
+            5,
+            -1,
+            5
+          ]
+        ],
+        "note": "Apron corner lighting from the gallery; exclude at export."
+      }
+    },
+    {
+      "exhibit": "NA03.4",
+      "label": "Watchtower Draft",
+      "gallery": "nilotic-showcase",
+      "source_mod_structure": "data/nova_structures/structure/firewatch_tower/firewatch_savanna.nbt",
+      "source_mod_structure_sha256": "64415fd7e56170d3439bbf3a3914441cbb56546dae7d76aea8a875ed85afd139",
+      "source_capture": "run/nilotic-showcase/selection-20260910-floodplain/captures/NA03.4.nbt",
+      "source_capture_sha256": "bc6947e4659c03ec9dfc6cff389c33239804c172b4653cb40e4308c599213165",
+      "gallery_origin": [
+        6635,
+        230,
+        1068
+      ],
+      "capture_from": [
+        6633,
+        229,
+        1066
+      ],
+      "capture_to": [
+        6645,
+        275,
+        1078
+      ],
+      "solid_bounds_relative_to_gallery_origin": [
+        [
+          -1,
+          9
+        ],
+        [
+          -1,
+          16
+        ],
+        [
+          -1,
+          9
+        ]
+      ],
+      "copy_of_exhibit": "NH06.7",
+      "restyle": [
+        {
+          "minecraft:acacia_log": "minecraft:mangrove_log",
+          "minecraft:acacia_planks": "minecraft:mangrove_planks",
+          "minecraft:acacia_slab": "minecraft:spruce_slab",
+          "minecraft:acacia_stairs": "minecraft:spruce_stairs",
+          "minecraft:acacia_fence": "minecraft:spruce_fence",
+          "minecraft:acacia_trapdoor": "minecraft:jungle_trapdoor",
+          "minecraft:orange_bed": "minecraft:green_bed"
+        }
+      ],
+      "role": "watchtower",
+      "use": "watchtower",
+      "status": "captured_pending_production_authoring",
+      "capacity": {
+        "beds": 1,
+        "single_beds": 1,
+        "couple_rooms": 0
+      },
+      "amenities": {
+        "beds": [
+          [
+            5,
+            13,
+            3
+          ]
+        ],
+        "couple_beds": [],
+        "containers": [
+          [
+            5,
+            13,
+            6
+          ]
+        ],
+        "work_stations": [],
+        "banners": [
+          [
+            4,
+            12,
+            0
+          ],
+          [
+            0,
+            12,
+            4
+          ],
+          [
+            8,
+            12,
+            4
+          ],
+          [
+            4,
+            12,
+            8
+          ]
+        ],
+        "decorative_banners": [
+          [
+            3,
+            7,
+            1
+          ],
+          [
+            5,
+            7,
+            1
+          ],
+          [
+            1,
+            7,
+            3
+          ],
+          [
+            7,
+            7,
+            3
+          ],
+          [
+            1,
+            7,
+            4
+          ],
+          [
+            7,
+            7,
+            4
+          ],
+          [
+            1,
+            7,
+            5
+          ],
+          [
+            7,
+            7,
+            5
+          ],
+          [
+            3,
+            7,
+            7
+          ],
+          [
+            4,
+            7,
+            7
+          ],
+          [
+            5,
+            7,
+            7
+          ],
+          [
+            3,
+            15,
+            1
+          ],
+          [
+            4,
+            15,
+            1
+          ],
+          [
+            5,
+            15,
+            1
+          ],
+          [
+            1,
+            15,
+            3
+          ],
+          [
+            7,
+            15,
+            3
+          ],
+          [
+            1,
+            15,
+            4
+          ],
+          [
+            7,
+            15,
+            4
+          ],
+          [
+            1,
+            15,
+            5
+          ],
+          [
+            7,
+            15,
+            5
+          ],
+          [
+            3,
+            15,
+            7
+          ],
+          [
+            4,
+            15,
+            7
+          ],
+          [
+            5,
+            15,
+            7
+          ]
+        ],
+        "village_identity": {
+          "primary_blocks": [
+            [
+              5,
+              13,
+              3
+            ]
+          ],
+          "secondary_blocks": [],
+          "banners": [
+            [
+              4,
+              12,
+              0
+            ],
+            [
+              0,
+              12,
+              4
+            ],
+            [
+              8,
+              12,
+              4
+            ],
+            [
+              4,
+              12,
+              8
+            ]
+          ]
+        },
+        "coloured_blocks": {
+          "minecraft:brown_wall_banner": 23,
+          "minecraft:white_wall_banner": 4,
+          "minecraft:green_bed": 2
+        }
+      },
+      "notes": [
+        "mangrove, spruce and jungle substitution; earthen plate replaces the grass"
+      ],
+      "gallery_furniture": {
+        "sea_lanterns": [
+          [
+            -1,
+            -1,
+            -1
+          ],
+          [
+            9,
+            -1,
+            -1
+          ],
+          [
+            -1,
+            -1,
+            9
+          ],
+          [
+            9,
+            -1,
+            9
+          ]
+        ],
+        "note": "Apron corner lighting from the gallery; exclude at export."
+      }
+    },
+    {
+      "exhibit": "NA04.1",
+      "label": "Market Tier 1",
+      "gallery": "nilotic-showcase",
+      "source_mod_structure": "run/world/datapacks/kithkyn-desert/data/kithkyn/structure/market_desert_1.nbt",
+      "source_mod_structure_sha256": "4684673b5009fbfdebc2789252b61efe77e722229e0efcaa8b4175cfb2842849",
+      "source_capture": "run/nilotic-showcase/selection-20260910-floodplain/captures/NA04.1.nbt",
+      "source_capture_sha256": "23f0709c6e0c90bb50377beae0d4d23b8dfdca4e3bd36edf1bae4fa298976e7b",
+      "gallery_origin": [
+        6576,
+        230,
+        1114
+      ],
+      "capture_from": [
+        6574,
+        229,
+        1112
+      ],
+      "capture_to": [
+        6585,
+        275,
+        1124
+      ],
+      "solid_bounds_relative_to_gallery_origin": [
+        [
+          -1,
+          8
+        ],
+        [
+          -1,
+          5
+        ],
+        [
+          -1,
+          9
+        ]
+      ],
+      "restyle": [
+        {
+          "minecraft:cut_sandstone": "minecraft:mud_bricks",
+          "minecraft:smooth_sandstone_stairs": "minecraft:mud_brick_stairs",
+          "minecraft:acacia_fence": "minecraft:spruce_fence",
+          "minecraft:acacia_log": "minecraft:mangrove_log",
+          "minecraft:potted_cactus": "minecraft:potted_fern",
+          "minecraft:potted_dead_bush": "minecraft:potted_fern"
+        }
+      ],
+      "role": "market",
+      "use": "market tier 1 draft",
+      "status": "captured_pending_production_authoring",
+      "capacity": {
+        "beds": 0,
+        "single_beds": 0,
+        "couple_rooms": 0
+      },
+      "amenities": {
+        "beds": [],
+        "couple_beds": [],
+        "containers": [
+          [
+            4,
+            1,
+            2
+          ]
+        ],
+        "work_stations": [
+          {
+            "pos": [
+              3,
+              1,
+              2
+            ],
+            "block": "minecraft:smoker"
+          },
+          {
+            "pos": [
+              5,
+              1,
+              2
+            ],
+            "block": "minecraft:smoker"
+          }
+        ],
+        "banners": [
+          [
+            5,
+            4,
+            0
+          ],
+          [
+            7,
+            4,
+            2
+          ],
+          [
+            7,
+            4,
+            4
+          ],
+          [
+            7,
+            4,
+            6
+          ],
+          [
+            5,
+            4,
+            8
+          ]
+        ],
+        "decorative_banners": [
+          [
+            4,
+            4,
+            0
+          ],
+          [
+            6,
+            4,
+            0
+          ],
+          [
+            7,
+            4,
+            1
+          ],
+          [
+            7,
+            4,
+            3
+          ],
+          [
+            7,
+            4,
+            5
+          ],
+          [
+            7,
+            4,
+            7
+          ],
+          [
+            4,
+            4,
+            8
+          ],
+          [
+            6,
+            4,
+            8
+          ]
+        ],
+        "village_identity": {
+          "primary_blocks": [],
+          "secondary_blocks": [],
+          "banners": [
+            [
+              5,
+              4,
+              0
+            ],
+            [
+              7,
+              4,
+              2
+            ],
+            [
+              7,
+              4,
+              4
+            ],
+            [
+              7,
+              4,
+              6
+            ],
+            [
+              5,
+              4,
+              8
+            ]
+          ]
+        },
+        "coloured_blocks": {
+          "minecraft:orange_carpet": 13,
+          "minecraft:orange_wall_banner": 8,
+          "minecraft:white_wall_banner": 5,
+          "minecraft:orange_wool": 12,
+          "minecraft:white_carpet": 6,
+          "minecraft:white_wool": 9
+        }
+      },
+      "notes": [],
+      "tier": 1,
+      "gallery_furniture": {
+        "sea_lanterns": [
+          [
+            -1,
+            -1,
+            -1
+          ],
+          [
+            8,
+            -1,
+            -1
+          ],
+          [
+            -1,
+            -1,
+            9
+          ],
+          [
+            8,
+            -1,
+            9
+          ]
+        ],
+        "note": "Apron corner lighting from the gallery; exclude at export."
+      }
+    },
+    {
+      "exhibit": "NA04.2",
+      "label": "Market Tier 2",
+      "gallery": "nilotic-showcase",
+      "source_mod_structure": "run/world/datapacks/kithkyn-desert/data/kithkyn/structure/market_desert_2.nbt",
+      "source_mod_structure_sha256": "924f7c24d0d1f2731c7237071f7fea856c09405fdc4088814020fc577359f4b1",
+      "source_capture": "run/nilotic-showcase/selection-20260910-floodplain/captures/NA04.2.nbt",
+      "source_capture_sha256": "b6336ae9cff0345b7771dd37613faabdd6e3adb3002fd57e3b0fd6cd455d8b7f",
+      "gallery_origin": [
+        6592,
+        230,
+        1114
+      ],
+      "capture_from": [
+        6590,
+        229,
+        1112
+      ],
+      "capture_to": [
+        6608,
+        275,
+        1124
+      ],
+      "solid_bounds_relative_to_gallery_origin": [
+        [
+          -1,
+          15
+        ],
+        [
+          -1,
+          5
+        ],
+        [
+          -1,
+          9
+        ]
+      ],
+      "restyle": [
+        {
+          "minecraft:cut_sandstone": "minecraft:mud_bricks",
+          "minecraft:smooth_sandstone_stairs": "minecraft:mud_brick_stairs",
+          "minecraft:acacia_fence": "minecraft:spruce_fence",
+          "minecraft:acacia_log": "minecraft:mangrove_log",
+          "minecraft:potted_cactus": "minecraft:potted_fern",
+          "minecraft:potted_dead_bush": "minecraft:potted_fern"
+        }
+      ],
+      "role": "market",
+      "use": "market tier 2 draft",
+      "status": "captured_pending_production_authoring",
+      "capacity": {
+        "beds": 0,
+        "single_beds": 0,
+        "couple_rooms": 0
+      },
+      "amenities": {
+        "beds": [],
+        "couple_beds": [],
+        "containers": [
+          [
+            3,
+            1,
+            2
+          ],
+          [
+            11,
+            1,
+            2
+          ]
+        ],
+        "work_stations": [
+          {
+            "pos": [
+              2,
+              1,
+              2
+            ],
+            "block": "minecraft:smoker"
+          },
+          {
+            "pos": [
+              4,
+              1,
+              2
+            ],
+            "block": "minecraft:smoker"
+          },
+          {
+            "pos": [
+              10,
+              1,
+              2
+            ],
+            "block": "minecraft:smoker"
+          },
+          {
+            "pos": [
+              12,
+              1,
+              2
+            ],
+            "block": "minecraft:smoker"
+          }
+        ],
+        "banners": [
+          [
+            2,
+            4,
+            0
+          ],
+          [
+            12,
+            4,
+            0
+          ],
+          [
+            0,
+            4,
+            2
+          ],
+          [
+            14,
+            4,
+            2
+          ],
+          [
+            0,
+            4,
+            4
+          ],
+          [
+            14,
+            4,
+            4
+          ],
+          [
+            0,
+            4,
+            6
+          ],
+          [
+            14,
+            4,
+            6
+          ],
+          [
+            2,
+            4,
+            8
+          ],
+          [
+            12,
+            4,
+            8
+          ]
+        ],
+        "decorative_banners": [
+          [
+            1,
+            4,
+            0
+          ],
+          [
+            3,
+            4,
+            0
+          ],
+          [
+            11,
+            4,
+            0
+          ],
+          [
+            13,
+            4,
+            0
+          ],
+          [
+            0,
+            4,
+            1
+          ],
+          [
+            14,
+            4,
+            1
+          ],
+          [
+            0,
+            4,
+            3
+          ],
+          [
+            14,
+            4,
+            3
+          ],
+          [
+            0,
+            4,
+            5
+          ],
+          [
+            14,
+            4,
+            5
+          ],
+          [
+            0,
+            4,
+            7
+          ],
+          [
+            14,
+            4,
+            7
+          ],
+          [
+            1,
+            4,
+            8
+          ],
+          [
+            3,
+            4,
+            8
+          ],
+          [
+            11,
+            4,
+            8
+          ],
+          [
+            13,
+            4,
+            8
+          ]
+        ],
+        "village_identity": {
+          "primary_blocks": [],
+          "secondary_blocks": [],
+          "banners": [
+            [
+              2,
+              4,
+              0
+            ],
+            [
+              12,
+              4,
+              0
+            ],
+            [
+              0,
+              4,
+              2
+            ],
+            [
+              14,
+              4,
+              2
+            ],
+            [
+              0,
+              4,
+              4
+            ],
+            [
+              14,
+              4,
+              4
+            ],
+            [
+              0,
+              4,
+              6
+            ],
+            [
+              14,
+              4,
+              6
+            ],
+            [
+              2,
+              4,
+              8
+            ],
+            [
+              12,
+              4,
+              8
+            ]
+          ]
+        },
+        "coloured_blocks": {
+          "minecraft:green_carpet": 13,
+          "minecraft:orange_carpet": 13,
+          "minecraft:green_wall_banner": 8,
+          "minecraft:white_wall_banner": 10,
+          "minecraft:orange_wall_banner": 8,
+          "minecraft:green_wool": 12,
+          "minecraft:orange_wool": 12,
+          "minecraft:white_wool": 18,
+          "minecraft:white_carpet": 12
+        }
+      },
+      "notes": [],
+      "tier": 2,
+      "gallery_furniture": {
+        "sea_lanterns": [
+          [
+            -1,
+            -1,
+            -1
+          ],
+          [
+            15,
+            -1,
+            -1
+          ],
+          [
+            -1,
+            -1,
+            9
+          ],
+          [
+            15,
+            -1,
+            9
+          ]
+        ],
+        "note": "Apron corner lighting from the gallery; exclude at export."
+      }
+    },
+    {
+      "exhibit": "NA04.3",
+      "label": "Market Tier 3",
+      "gallery": "nilotic-showcase",
+      "source_mod_structure": "run/world/datapacks/kithkyn-desert/data/kithkyn/structure/market_desert_3.nbt",
+      "source_mod_structure_sha256": "bf970861e7d8347155431d513c286f3a6e044bd6bc0c06dd9845ff7e3eb07e38",
+      "source_capture": "run/nilotic-showcase/selection-20260910-floodplain/captures/NA04.3.nbt",
+      "source_capture_sha256": "bcaf156d1b04e697c22fd05ed37a1af041c6a856334e0607bd6fb77c06d7c7d0",
+      "gallery_origin": [
+        6615,
+        230,
+        1114
+      ],
+      "capture_from": [
+        6613,
+        229,
+        1112
+      ],
+      "capture_to": [
+        6631,
+        275,
+        1132
+      ],
+      "solid_bounds_relative_to_gallery_origin": [
+        [
+          -1,
+          15
+        ],
+        [
+          -1,
+          5
+        ],
+        [
+          -1,
+          17
+        ]
+      ],
+      "restyle": [
+        {
+          "minecraft:cut_sandstone": "minecraft:mud_bricks",
+          "minecraft:smooth_sandstone_stairs": "minecraft:mud_brick_stairs",
+          "minecraft:acacia_fence": "minecraft:spruce_fence",
+          "minecraft:acacia_log": "minecraft:mangrove_log",
+          "minecraft:potted_cactus": "minecraft:potted_fern",
+          "minecraft:potted_dead_bush": "minecraft:potted_fern"
+        }
+      ],
+      "role": "market",
+      "use": "market tier 3 draft",
+      "status": "captured_pending_production_authoring",
+      "capacity": {
+        "beds": 0,
+        "single_beds": 0,
+        "couple_rooms": 0
+      },
+      "amenities": {
+        "beds": [],
+        "couple_beds": [],
+        "containers": [
+          [
+            5,
+            1,
+            4
+          ],
+          [
+            3,
+            1,
+            10
+          ],
+          [
+            11,
+            1,
+            10
+          ]
+        ],
+        "work_stations": [
+          {
+            "pos": [
+              5,
+              1,
+              3
+            ],
+            "block": "minecraft:smoker"
+          },
+          {
+            "pos": [
+              5,
+              1,
+              5
+            ],
+            "block": "minecraft:smoker"
+          },
+          {
+            "pos": [
+              2,
+              1,
+              10
+            ],
+            "block": "minecraft:smoker"
+          },
+          {
+            "pos": [
+              4,
+              1,
+              10
+            ],
+            "block": "minecraft:smoker"
+          },
+          {
+            "pos": [
+              10,
+              1,
+              10
+            ],
+            "block": "minecraft:smoker"
+          },
+          {
+            "pos": [
+              12,
+              1,
+              10
+            ],
+            "block": "minecraft:smoker"
+          }
+        ],
+        "banners": [
+          [
+            5,
+            4,
+            1
+          ],
+          [
+            7,
+            4,
+            1
+          ],
+          [
+            9,
+            4,
+            1
+          ],
+          [
+            3,
+            4,
+            3
+          ],
+          [
+            11,
+            4,
+            3
+          ],
+          [
+            2,
+            4,
+            8
+          ],
+          [
+            12,
+            4,
+            8
+          ],
+          [
+            0,
+            4,
+            10
+          ],
+          [
+            14,
+            4,
+            10
+          ],
+          [
+            0,
+            4,
+            12
+          ],
+          [
+            14,
+            4,
+            12
+          ],
+          [
+            0,
+            4,
+            14
+          ],
+          [
+            14,
+            4,
+            14
+          ],
+          [
+            2,
+            4,
+            16
+          ],
+          [
+            12,
+            4,
+            16
+          ]
+        ],
+        "decorative_banners": [
+          [
+            4,
+            4,
+            1
+          ],
+          [
+            6,
+            4,
+            1
+          ],
+          [
+            8,
+            4,
+            1
+          ],
+          [
+            10,
+            4,
+            1
+          ],
+          [
+            3,
+            4,
+            2
+          ],
+          [
+            11,
+            4,
+            2
+          ],
+          [
+            3,
+            4,
+            4
+          ],
+          [
+            11,
+            4,
+            4
+          ],
+          [
+            1,
+            4,
+            8
+          ],
+          [
+            3,
+            4,
+            8
+          ],
+          [
+            11,
+            4,
+            8
+          ],
+          [
+            13,
+            4,
+            8
+          ],
+          [
+            0,
+            4,
+            9
+          ],
+          [
+            14,
+            4,
+            9
+          ],
+          [
+            0,
+            4,
+            11
+          ],
+          [
+            14,
+            4,
+            11
+          ],
+          [
+            0,
+            4,
+            13
+          ],
+          [
+            14,
+            4,
+            13
+          ],
+          [
+            0,
+            4,
+            15
+          ],
+          [
+            14,
+            4,
+            15
+          ],
+          [
+            1,
+            4,
+            16
+          ],
+          [
+            3,
+            4,
+            16
+          ],
+          [
+            11,
+            4,
+            16
+          ],
+          [
+            13,
+            4,
+            16
+          ]
+        ],
+        "village_identity": {
+          "primary_blocks": [],
+          "secondary_blocks": [],
+          "banners": [
+            [
+              5,
+              4,
+              1
+            ],
+            [
+              7,
+              4,
+              1
+            ],
+            [
+              9,
+              4,
+              1
+            ],
+            [
+              3,
+              4,
+              3
+            ],
+            [
+              11,
+              4,
+              3
+            ],
+            [
+              2,
+              4,
+              8
+            ],
+            [
+              12,
+              4,
+              8
+            ],
+            [
+              0,
+              4,
+              10
+            ],
+            [
+              14,
+              4,
+              10
+            ],
+            [
+              0,
+              4,
+              12
+            ],
+            [
+              14,
+              4,
+              12
+            ],
+            [
+              0,
+              4,
+              14
+            ],
+            [
+              14,
+              4,
+              14
+            ],
+            [
+              2,
+              4,
+              16
+            ],
+            [
+              12,
+              4,
+              16
+            ]
+          ]
+        },
+        "coloured_blocks": {
+          "minecraft:yellow_carpet": 13,
+          "minecraft:green_carpet": 13,
+          "minecraft:orange_carpet": 13,
+          "minecraft:yellow_wall_banner": 8,
+          "minecraft:white_wall_banner": 15,
+          "minecraft:yellow_wool": 12,
+          "minecraft:white_wool": 27,
+          "minecraft:white_carpet": 18,
+          "minecraft:green_wall_banner": 8,
+          "minecraft:orange_wall_banner": 8,
+          "minecraft:green_wool": 12,
+          "minecraft:orange_wool": 12
+        }
+      },
+      "notes": [],
+      "tier": 3,
+      "gallery_furniture": {
+        "sea_lanterns": [
+          [
+            -1,
+            -1,
+            -1
+          ],
+          [
+            15,
+            -1,
+            -1
+          ],
+          [
+            -1,
+            -1,
+            17
+          ],
+          [
+            15,
+            -1,
+            17
+          ]
+        ],
+        "note": "Apron corner lighting from the gallery; exclude at export."
+      }
+    },
+    {
+      "exhibit": "NG04.1",
+      "label": "Polynesian Large Farm 1",
+      "gallery": "nilotic-donors",
+      "source_mod_structure": "data/kaisyn/structure/village/sparse_jungle_polynesian/houses/sparse_jungle_large_farm_1.nbt",
+      "source_mod_structure_sha256": "f9a706859ab60737f7e07d095d8b702cba2ca8e5742d9e93984f88df59e35946",
+      "source_capture": "run/nilotic-showcase/selection-20260910-floodplain/captures/NG04.1.nbt",
+      "source_capture_sha256": "9bf52e9a72cb1b3e75c194d6d6d19b4431b7d82d43b72defcb203caeedc00e74",
+      "gallery_origin": [
+        9168,
+        230,
+        1117
+      ],
+      "capture_from": [
+        9166,
+        229,
+        1115
+      ],
+      "capture_to": [
+        9182,
+        275,
+        1129
+      ],
+      "solid_bounds_relative_to_gallery_origin": [
+        [
+          -1,
+          13
+        ],
+        [
+          -1,
+          3
+        ],
+        [
+          -1,
+          11
+        ]
+      ],
+      "role": "farm",
+      "use": "large farm",
+      "status": "captured_pending_production_authoring",
+      "capacity": {
+        "beds": 0,
+        "single_beds": 0,
+        "couple_rooms": 0
+      },
+      "amenities": {
+        "beds": [],
+        "couple_beds": [],
+        "containers": [
+          [
+            11,
+            0,
+            3
+          ]
+        ],
+        "work_stations": [
+          {
+            "pos": [
+              0,
+              1,
+              5
+            ],
+            "block": "minecraft:composter"
+          }
+        ],
+        "banners": [],
+        "decorative_banners": [],
+        "village_identity": {
+          "primary_blocks": [],
+          "secondary_blocks": [],
+          "banners": []
+        },
+        "coloured_blocks": {}
+      },
+      "notes": [
+        "T&T sparse-jungle Polynesian; Aaron adds a barrel as the crop workstation"
+      ],
+      "gallery_furniture": {
+        "sea_lanterns": [
+          [
+            -1,
+            -1,
+            -1
+          ],
+          [
+            13,
+            -1,
+            -1
+          ],
+          [
+            -1,
+            -1,
+            11
+          ],
+          [
+            13,
+            -1,
+            11
+          ]
+        ],
+        "note": "Apron corner lighting from the gallery; exclude at export."
+      }
+    },
+    {
+      "exhibit": "NG04.2",
+      "label": "Polynesian Small Farm 1",
+      "gallery": "nilotic-donors",
+      "source_mod_structure": "data/kaisyn/structure/village/sparse_jungle_polynesian/houses/sparse_jungle_small_farm_1.nbt",
+      "source_mod_structure_sha256": "084e1024b62cb2bf96f5283e96c5b271919b5fd4bcd141e371661aa7d1dc1337",
+      "source_capture": "run/nilotic-showcase/selection-20260910-floodplain/captures/NG04.2.nbt",
+      "source_capture_sha256": "8cd26ad998ffe6f798e906b2c585493c3e777d43f1b77aaed7024d2b0062e9dd",
+      "gallery_origin": [
+        9189,
+        230,
+        1117
+      ],
+      "capture_from": [
+        9187,
+        229,
+        1115
+      ],
+      "capture_to": [
+        9196,
+        275,
+        1125
+      ],
+      "solid_bounds_relative_to_gallery_origin": [
+        [
+          -2,
+          7
+        ],
+        [
+          -1,
+          1
+        ],
+        [
+          -2,
+          8
+        ]
+      ],
+      "role": "farm",
+      "use": "small farm",
+      "status": "captured_pending_production_authoring",
+      "capacity": {
+        "beds": 0,
+        "single_beds": 0,
+        "couple_rooms": 0
+      },
+      "amenities": {
+        "beds": [],
+        "couple_beds": [],
+        "containers": [
+          [
+            2,
+            0,
+            5
+          ]
+        ],
+        "work_stations": [
+          {
+            "pos": [
+              3,
+              1,
+              4
+            ],
+            "block": "minecraft:composter"
+          }
+        ],
+        "banners": [],
+        "decorative_banners": [],
+        "village_identity": {
+          "primary_blocks": [],
+          "secondary_blocks": [],
+          "banners": []
+        },
+        "coloured_blocks": {}
+      },
+      "notes": [
+        "same barrel workstation convention"
+      ],
+      "gallery_furniture": {
+        "sea_lanterns": [
+          [
+            -1,
+            -1,
+            -1
+          ],
+          [
+            6,
+            -1,
+            -1
+          ],
+          [
+            -1,
+            -1,
+            7
+          ],
+          [
+            6,
+            -1,
+            7
+          ]
+        ],
+        "note": "Apron corner lighting from the gallery; exclude at export."
+      }
+    }
+  ],
+  "candidates": [
+    {
+      "exhibit": "NA01.3",
+      "label": "Butcher And Fisher 1",
+      "gallery": "nilotic-showcase",
+      "source_mod_structure": "data/kaisyn/structure/village/exclusives/nilotic/houses/nilotic_butcher_and_fisher_1.nbt",
+      "source_mod_structure_sha256": "deac6462f2a1eb9b6eafb06ee11403aee3c971ac54b7f87206ec2340d4243f4f",
+      "source_capture": "run/nilotic-showcase/selection-20260910-floodplain/captures/NA01.3.nbt",
+      "source_capture_sha256": "2ff67e2c9011218c86794cf7a778bbdf381713aa945f7ca69313d95be819ca45",
+      "gallery_origin": [
+        6608,
+        230,
+        1010
+      ],
+      "capture_from": [
+        6606,
+        229,
+        1008
+      ],
+      "capture_to": [
+        6618,
+        275,
+        1020
+      ],
+      "solid_bounds_relative_to_gallery_origin": [
+        [
+          -1,
+          9
+        ],
+        [
+          -1,
+          6
+        ],
+        [
+          -1,
+          9
+        ]
+      ],
+      "status": "unassigned_candidate",
+      "notes": [
+        "candidate fishery for a floodplain village"
+      ]
+    },
+    {
+      "exhibit": "NA03.1",
+      "label": "Nilotic Tower",
+      "gallery": "nilotic-showcase",
+      "source_mod_structure": "data/kaisyn/structure/outpost/towers/exclusives/nilotic/base_plate.nbt",
+      "source_mod_structure_sha256": "01eb064283319a3d27fe5d65ff464b24b8858bde122d3f1705cbf406b815a7cc",
+      "source_capture": "run/nilotic-showcase/selection-20260910-floodplain/captures/NA03.1.nbt",
+      "source_capture_sha256": "c19bf3a858f9e385e76b1f7253d43d6569e0918b6a45abf6c6a1c7f41ba608c1",
+      "gallery_origin": [
+        6576,
+        230,
+        1068
+      ],
+      "capture_from": [
+        6574,
+        229,
+        1066
+      ],
+      "capture_to": [
+        6601,
+        275,
+        1095
+      ],
+      "solid_bounds_relative_to_gallery_origin": [
+        [
+          -1,
+          24
+        ],
+        [
+          -1,
+          30
+        ],
+        [
+          -1,
+          26
+        ]
+      ],
+      "status": "unassigned_candidate",
+      "notes": [
+        "not chosen as the watchtower; NH06.7 firewatch tower chosen instead"
+      ]
+    }
+  ],
+  "verification": {
+    "native_captures": 22,
+    "selected_buildings": 20,
+    "unassigned_candidates": 2,
+    "selected_beds": 10,
+    "screenshots_inspected": true,
+    "production_assets_exported": false,
+    "floodplain_catalog_activated": false
+  }
+}

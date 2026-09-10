@@ -1,0 +1,258 @@
+{
+  "status": "selected_captured_configured_and_visually_verified",
+  "selection_changed": true,
+  "request": "Retain JA01.7 as a two-person home and select NH06.5 Firewatch as the Jungle watchtower.",
+  "candidate_differences": "run/jungle-tower-review-20260910/firewatch-edits.json",
+  "items": [
+    {
+      "id": "JA01.7",
+      "role": "selected_house",
+      "capture": "run/jungle-tower-review-20260910/adoption/captures/JA01.7-comparison.nbt",
+      "sha256": "05c30865d6dea51d3d7b3074a75d53336866fc068833a76169c748061f7f4cb2",
+      "capture_origin": [
+        5256,
+        230,
+        942
+      ],
+      "gallery_origin": [
+        5258,
+        230,
+        944
+      ],
+      "occupied_size": [
+        14,
+        22,
+        12
+      ],
+      "beds": [
+        {
+          "local_to_gallery_origin": [
+            7,
+            4,
+            2
+          ],
+          "world": [
+            5265,
+            234,
+            946
+          ]
+        },
+        {
+          "local_to_gallery_origin": [
+            5,
+            8,
+            2
+          ],
+          "world": [
+            5263,
+            238,
+            946
+          ]
+        }
+      ],
+      "personal_containers": [
+        {
+          "local_to_gallery_origin": [
+            5,
+            4,
+            2
+          ],
+          "world": [
+            5263,
+            234,
+            946
+          ]
+        },
+        {
+          "local_to_gallery_origin": [
+            5,
+            8,
+            3
+          ],
+          "world": [
+            5263,
+            238,
+            947
+          ]
+        }
+      ],
+      "bed_containers": [
+        {
+          "bed": [
+            7,
+            4,
+            2
+          ],
+          "containers": [
+            [
+              5,
+              4,
+              2
+            ]
+          ]
+        },
+        {
+          "bed": [
+            5,
+            8,
+            2
+          ],
+          "containers": [
+            [
+              5,
+              8,
+              3
+            ]
+          ]
+        }
+      ],
+      "village_identity": {
+        "primary_blocks": [
+          [
+            7,
+            4,
+            2
+          ]
+        ],
+        "secondary_blocks": [
+          [
+            5,
+            8,
+            2
+          ]
+        ],
+        "banners": []
+      }
+    },
+    {
+      "id": "NH06.5",
+      "role": "selected_watchtower",
+      "capture": "run/jungle-tower-review-20260910/adoption/captures/NH06.5-comparison.nbt",
+      "sha256": "6c1c76f367d032226942bef0db8161bc88e4d4090f9257c9821a88446bf9b391",
+      "capture_origin": [
+        5290,
+        230,
+        942
+      ],
+      "gallery_origin": [
+        5292,
+        230,
+        944
+      ],
+      "occupied_size": [
+        9,
+        18,
+        9
+      ],
+      "beds": [
+        {
+          "local_to_gallery_origin": [
+            3,
+            13,
+            5
+          ],
+          "world": [
+            5295,
+            243,
+            949
+          ]
+        }
+      ],
+      "personal_containers": [
+        {
+          "local_to_gallery_origin": [
+            3,
+            13,
+            3
+          ],
+          "world": [
+            5295,
+            243,
+            947
+          ]
+        }
+      ],
+      "bed_containers": [
+        {
+          "bed": [
+            3,
+            13,
+            5
+          ],
+          "containers": [
+            [
+              3,
+              13,
+              3
+            ]
+          ]
+        }
+      ],
+      "village_identity": {
+        "primary_blocks": [
+          [
+            3,
+            13,
+            5
+          ]
+        ],
+        "secondary_blocks": [],
+        "banners": []
+      }
+    }
+  ],
+  "native_access_verified": false,
+  "observed_candidate_edits": [
+    "Four lanterns on the corners of the lookout balcony",
+    "Upper ladder trapdoor removed"
+  ],
+  "remaining_before_adoption": [
+    "Export production Jungle building definitions and village identity",
+    "Verify treehouse resident routes, both beds and personal chests",
+    "Verify guard ladder climb, landing, bed/chest access and firing position"
+  ],
+  "screenshots_viewed": [
+    "run/jungle-tower-review-20260910/render/client/screenshots/current-jungle-watchtower.png",
+    "run/jungle-tower-review-20260910/render/client/screenshots/edited-jungle-firewatch.png",
+    "run/jungle-tower-review-20260910/detail-render/client/screenshots/firewatch-front.png",
+    "run/jungle-tower-review-20260910/room-render/client/screenshots/firewatch-room.png",
+    "run/jungle-tower-review-20260910/comparison/render/client/screenshots/jungle-towers-side-by-side.png",
+    "run/jungle-tower-review-20260910/adoption/render/client/screenshots/selected-jungle-house-and-tower.png",
+    "run/jungle-tower-review-20260910/adoption/render/client/screenshots/treehouse-new-upstairs-bedroom.png"
+  ],
+  "visual_comparison": {
+    "current": "Tall treehouse silhouette with leafy canopy and rooms around a large trunk.",
+    "candidate": "Compact raised lookout, open balcony, jungle timber, vines and bamboo roof; one upstairs bed and chest.",
+    "decision": "Both retained: Firewatch is the tower; Cartographer treehouse is a two-bedroom home."
+  },
+  "side_by_side": {
+    "manifest": "run/jungle-tower-review-20260910/comparison/manifest.json",
+    "entry": [
+      5280.5,
+      230,
+      971.5
+    ],
+    "left": "JA01.7 Two-bedroom treehouse",
+    "right": "NH06.5 Jungle watchtower",
+    "originals_preserved": true,
+    "status": "selected_house_and_watchtower",
+    "donor_shortcut": [
+      9432,
+      230,
+      1210
+    ],
+    "market_shortcut": [
+      5237,
+      230,
+      976
+    ],
+    "screenshot": "run/jungle-tower-review-20260910/comparison/render/client/screenshots/jungle-towers-side-by-side.png",
+    "readback_before_selection": "run/jungle-tower-review-20260910/comparison/verification.json",
+    "compared_blocks_before_selection": 1442,
+    "selected_capture_record": "run/jungle-tower-review-20260910/adoption/selection.json"
+  },
+  "previous_watchtower": "JA01.7 Cartographer 1 (Towns and Towers)",
+  "selected_watchtower": "NH06.5 Firewatch Jungle (Dungeons and Taverns)",
+  "selected_house": "JA01.7 Cartographer 1, two separate single bedrooms",
+  "selection_record": "run/jungle-tower-review-20260910/adoption/selection.json"
+}

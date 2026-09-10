@@ -23,16 +23,6 @@
     ]
   ],
   "containers": [],
-  "cost": [
-    {
-      "item": "minecraft:oak_log",
-      "count": 36
-    },
-    {
-      "item": "minecraft:cobblestone",
-      "count": 48
-    }
-  ],
   "grants": [],
   "sink": 0,
   "village_identity": {

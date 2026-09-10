@@ -1,0 +1,169 @@
+{
+  "status": "placed-and-visually-reviewed",
+  "entry": [
+    4240.5,
+    230,
+    980.5,
+    180,
+    0
+  ],
+  "bounds": [
+    4204,
+    228,
+    922,
+    4282,
+    256,
+    980
+  ],
+  "items": [
+    {
+      "id": "current_tavern",
+      "label": "CURRENT TAVERN - D05.2",
+      "detail": "Oasis Big House | 2 beds",
+      "source": "run/desert-integration/datapack/data/kithkyn/structure/tavern_desert_1.nbt",
+      "origin": [
+        4210,
+        230,
+        932
+      ],
+      "size": [
+        15,
+        11,
+        18
+      ],
+      "source_sha256": "8b9265115b0b3ae561ffe8bc28329ee758baff821598fb0943c5566582f2e810",
+      "template": "run/pueblo-showcase/desert-comparison-castle-20260910/comparison-templates/current_tavern.nbt",
+      "template_sha256": "5c90390328de846b0dbc5441e160d3339c304b2ee21d986dc6b4a48d1d092628",
+      "status": "placed-and-visually-reviewed",
+      "template_id": "kithkyn_pueblo_showcase:desert_compare_20260910_current_tavern",
+      "exhibit": "D05.2"
+    },
+    {
+      "id": "proposed_tavern",
+      "label": "PROPOSED TAVERN - T02.9",
+      "detail": "Desert Tavern | 5 beds",
+      "source": "run/pueblo-showcase/desert-comparison-castle-20260910/captures/T02.9.nbt",
+      "origin": [
+        4250,
+        230,
+        930
+      ],
+      "size": [
+        21,
+        14,
+        23
+      ],
+      "source_sha256": "ac896c301cd98c9c3123e60ac841961afc7237c1e4c1d7614167bc921f92880e",
+      "template": "run/pueblo-showcase/desert-comparison-castle-20260910/comparison-templates/proposed_tavern.nbt",
+      "template_sha256": "6104f9baed41ad98519faa9bd26ac8004a034dbd889e4d6a32890609dcbf2894",
+      "status": "placed-and-visually-reviewed",
+      "template_id": "kithkyn_pueblo_showcase:desert_compare_20260910_proposed_tavern",
+      "exhibit": "T02.9"
+    },
+    {
+      "id": "current_well",
+      "label": "CURRENT WELL - D04.12",
+      "detail": "Desert Well | 8 x 7",
+      "source": "run/desert-integration/datapack/data/kithkyn/structure/well_desert_1.nbt",
+      "origin": [
+        4214,
+        230,
+        970
+      ],
+      "size": [
+        8,
+        5,
+        7
+      ],
+      "source_sha256": "501c9901d4f867a17325ac3fb0b9bdfa6ac0705be6a32abd23e99c7960aaef9a",
+      "template": "run/pueblo-showcase/desert-comparison-castle-20260910/comparison-templates/current_well.nbt",
+      "template_sha256": "501c9901d4f867a17325ac3fb0b9bdfa6ac0705be6a32abd23e99c7960aaef9a",
+      "status": "placed-and-visually-reviewed",
+      "template_id": "kithkyn_pueblo_showcase:desert_compare_20260910_current_well",
+      "exhibit": "D04.12"
+    },
+    {
+      "id": "proposed_well",
+      "label": "PROPOSED WELL - T02.8",
+      "detail": "Desert Well | 5 x 5",
+      "source": "run/pueblo-showcase/desert-comparison-castle-20260910/captures/T02.8.nbt",
+      "origin": [
+        4256,
+        230,
+        968
+      ],
+      "size": [
+        9,
+        5,
+        9
+      ],
+      "source_sha256": "986399e575bc764b3f81f33bf2ba845fff6b50db88a6cbc9da78d00a79b609aa",
+      "template": "run/pueblo-showcase/desert-comparison-castle-20260910/comparison-templates/proposed_well.nbt",
+      "template_sha256": "1f41e9d8c037250536f84e918816a8c375469f9c421ed733434094c17eb8ccab",
+      "status": "placed-and-visually-reviewed",
+      "template_id": "kithkyn_pueblo_showcase:desert_compare_20260910_proposed_well",
+      "exhibit": "T02.8"
+    }
+  ],
+  "preview_colors": {
+    "primary": "blue",
+    "secondary": "yellow"
+  },
+  "castle_identity_blocks": 155,
+  "castle_visit": [
+    4361.5,
+    230,
+    1203.5,
+    -90,
+    0
+  ],
+  "castle_return_sign": [
+    4400,
+    230,
+    1241
+  ],
+  "purpose": "Compare the current Desert tavern and well against the user-preferred T02.9 tavern and T02.8 well before changing the production catalog.",
+  "source_policy": "Private local comparison only; source and derived NBT remain under ignored run/.",
+  "original_galleries_preserved": true,
+  "production_choices_changed": true,
+  "verification": {
+    "status": "passed",
+    "report": "run/pueblo-showcase/desert-comparison-castle-20260910/verification.json",
+    "compared_blocks": 2044,
+    "screenshots": [
+      "run/pueblo-showcase/desert-comparison-castle-20260910/render-final/client/screenshots/desert-comparison-overview.png",
+      "run/pueblo-showcase/desert-comparison-castle-20260910/render-final/client/screenshots/desert-current-tavern.png",
+      "run/pueblo-showcase/desert-comparison-castle-20260910/render-final/client/screenshots/desert-proposed-tavern.png",
+      "run/pueblo-showcase/desert-comparison-castle-20260910/render-final/client/screenshots/desert-wells-comparison.png"
+    ]
+  },
+  "comparison": {
+    "tavern": {
+      "current_exhibit": "D05.2",
+      "current_beds": 2,
+      "proposed_exhibit": "T02.9",
+      "proposed_beds": 5
+    },
+    "well": {
+      "current_exhibit": "D04.12",
+      "current_size": [
+        8,
+        5,
+        7
+      ],
+      "proposed_exhibit": "T02.8",
+      "proposed_authored_size": [
+        5,
+        5,
+        5
+      ],
+      "proposed_waterlogged_blocks": 5
+    }
+  },
+  "decision": {
+    "well": "Keep D04.12 well_desert_1",
+    "old_tavern": "D05.2 becomes couple_cottage_desert_1, one shared-color couple room",
+    "new_tavern": "T02.9 becomes tavern_desert_1, one innkeeper bed and four general beds",
+    "manifest": "tools/structure/desert-tavern-adoption-20260910.json"
+  }
+}

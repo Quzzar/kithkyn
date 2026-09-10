@@ -47,7 +47,8 @@ public record WallBlockPlan(long position, Piece piece, WallCellRole role) {
     COBBLE_SLAB_BOTTOM, COBBLE_SLAB_TOP,
     TORCH, TORCH_NORTH, TORCH_EAST, TORCH_SOUTH, TORCH_WEST,
     // Append only: saved section signatures include these ordinals.
-    BANNER_NORTH, BANNER_EAST, BANNER_SOUTH, BANNER_WEST;
+    BANNER_NORTH, BANNER_EAST, BANNER_SOUTH, BANNER_WEST,
+    GATE_FRAME_POST, GATE_FRAME_BEAM;
   }
 
   public BlockPos pos() {
@@ -71,6 +72,7 @@ public record WallBlockPlan(long position, Piece piece, WallCellRole role) {
       case STEP_SOUTH -> stair(palette, Direction.SOUTH);
       case STEP_WEST -> stair(palette, Direction.WEST);
       case POST -> post(palette, Direction.Axis.Y);
+      case GATE_FRAME_POST, GATE_FRAME_BEAM -> palette.frame().defaultBlockState();
       case BEAM_NORTH_SOUTH -> post(palette, Direction.Axis.Z);
       case BEAM_EAST_WEST -> post(palette, Direction.Axis.X);
       case SLAB -> palette.slab().defaultBlockState()
@@ -83,7 +85,7 @@ public record WallBlockPlan(long position, Piece piece, WallCellRole role) {
       case LADDER_EAST -> ladder(Direction.EAST);
       case LADDER_SOUTH -> ladder(Direction.SOUTH);
       case LADDER_WEST -> ladder(Direction.WEST);
-      case LANTERN -> Blocks.LANTERN.defaultBlockState();
+      case LANTERN -> palette.standingLight(pos());
       case LANTERN_HANGING -> Blocks.LANTERN.defaultBlockState()
           .setValue(LanternBlock.HANGING, Boolean.TRUE);
       case CAMPFIRE_NORTH -> campfire(Direction.NORTH);

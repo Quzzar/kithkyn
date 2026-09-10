@@ -33,6 +33,8 @@ final class AuthoredWoodWallSegments {
   static final AuthoredWoodWallSegments INSTANCE = loadBundled("wood");
   static final AuthoredWoodWallSegments BIRCH_FOREST = loadBundled("birch_forest");
 
+  static final AuthoredWoodWallSegments ARID = loadBundled("wood", true);
+
   private static final String RESOURCE_ROOT =
       "data/kithkyn/structure/wall/";
   private static final int CORNER_ANCHOR_X = 6;
@@ -42,9 +44,11 @@ final class AuthoredWoodWallSegments {
   private static final int LINEAR_DETAIL_HEADROOM = 2;
 
   private final Map<WallSectionKind, Template> templates;
+  private final boolean arid;
 
-  private AuthoredWoodWallSegments(Map<WallSectionKind, Template> templates) {
+  private AuthoredWoodWallSegments(Map<WallSectionKind, Template> templates, boolean arid) {
     this.templates = Map.copyOf(templates);
+    this.arid = arid;
   }
 
   /** Adds the authored cells belonging to one classified route section. */
@@ -131,7 +135,7 @@ final class AuthoredWoodWallSegments {
     }
   }
 
-  private static void addCorners(Map<Long, WallBlockPlan> blocks, Template template,
+  private void addCorners(Map<Long, WallBlockPlan> blocks, Template template,
       List<Long> ring, List<Integer> ground, List<Integer> deck, int from, int to) {
     for (int index = from; index < to; index++) {
       Vec incoming = delta(ring, previous(index, ring.size()), index);
@@ -150,7 +154,7 @@ final class AuthoredWoodWallSegments {
     }
   }
 
-  private static void addGatehouses(Map<Long, WallBlockPlan> blocks, Template template,
+  private void addGatehouses(Map<Long, WallBlockPlan> blocks, Template template,
       List<Long> ring, java.util.Set<Long> gates, List<Integer> ground,
       List<Integer> deck, int from, int to) {
     for (int index = from; index < to; index++) {
@@ -165,7 +169,7 @@ final class AuthoredWoodWallSegments {
     }
   }
 
-  private static void addRigid(Map<Long, WallBlockPlan> blocks, Template template,
+  private void addRigid(Map<Long, WallBlockPlan> blocks, Template template,
       List<Long> ring, List<Integer> ground, BlockPos anchor, int baseY,
       Transform transform, int anchorX, int anchorZ, WallSectionKind kind) {
     for (int x = 0; x < template.sizeX(); x++) {
@@ -179,7 +183,7 @@ final class AuthoredWoodWallSegments {
       }
     }
     List<PlacedCell> placedCells = new ArrayList<>(template.cells().size());
-    Map<Long, Integer> postBottoms = new LinkedHashMap<>();
+    Map<Long, PlacedCell> postBottoms = new LinkedHashMap<>();
     for (Cell cell : template.cells()) {
       if (isInwardRoofLantern(kind, cell, template.structuralMinZ())) {
         continue;
@@ -187,35 +191,48 @@ final class AuthoredWoodWallSegments {
       Vec offset = transform.apply(cell.x() - anchorX, cell.z() - anchorZ);
       BlockPos position = new BlockPos(
           anchor.getX() + offset.x(), baseY + cell.y(), anchor.getZ() + offset.z());
-      WallBlockPlan.Piece piece = transform.piece(cell.piece());
+      WallBlockPlan.Piece piece = this.arid && isGateFrame(kind, cell)
+          ? (cell.piece() == WallBlockPlan.Piece.POST
+              ? WallBlockPlan.Piece.GATE_FRAME_POST : WallBlockPlan.Piece.GATE_FRAME_BEAM)
+          : transform.piece(cell.piece());
       placedCells.add(new PlacedCell(position, piece));
       put(blocks, position, piece);
       // Only authored ground-contact legs need foundations. Masonry roof beams
       // use the same block as legs but must retain the open space below them.
       if (isPost(piece) && cell.y() == 0) {
         long column = BlockPos.asLong(position.getX(), 0, position.getZ());
-        postBottoms.merge(column, position.getY(), Math::min);
+        postBottoms.put(column, new PlacedCell(position, piece));
       }
     }
-    for (Map.Entry<Long, Integer> entry : postBottoms.entrySet()) {
+    for (Map.Entry<Long, PlacedCell> entry : postBottoms.entrySet()) {
       int x = BlockPos.getX(entry.getKey());
       int z = BlockPos.getZ(entry.getKey());
       int terrainY = nearestGround(ring, ground, x, z);
-      for (int y = terrainY; y < entry.getValue(); y++) {
-        put(blocks, new BlockPos(x, y, z), WallBlockPlan.Piece.POST,
+      for (int y = terrainY; y < entry.getValue().position().getY(); y++) {
+        put(blocks, new BlockPos(x, y, z), entry.getValue().piece(),
             WallCellRole.BARRIER);
       }
     }
     extendClimbShaft(blocks, placedCells, ring, ground, baseY);
   }
 
-  /** The live review keeps the outward lamps and removes the visually busy inward pair. */
-  private static boolean isInwardRoofLantern(WallSectionKind kind, Cell cell, int minZ) {
+  /** The forty trim cells captured from the edited Mesa gate, before rotation. */
+  private static boolean isGateFrame(WallSectionKind kind, Cell cell) {
+    if (kind != WallSectionKind.GATEHOUSE) return false;
+    boolean upright = cell.piece() == WallBlockPlan.Piece.POST && cell.y() < 5
+        && (cell.x() == 6 || cell.x() == 10) && (cell.z() == 1 || cell.z() == 3);
+    boolean beam = cell.y() == 5 && (cell.piece() == WallBlockPlan.Piece.BEAM_EAST_WEST
+        || cell.piece() == WallBlockPlan.Piece.BEAM_NORTH_SOUTH);
+    return upright || beam;
+  }
+
+  /** Arid gates keep only hanging lamps above the passage; other styles keep the outward roof pair. */
+  private boolean isInwardRoofLantern(WallSectionKind kind, Cell cell, int minZ) {
     if (cell.piece() != WallBlockPlan.Piece.LANTERN) {
       return false;
     }
     return switch (kind) {
-      case GATEHOUSE -> cell.y() == 7 && cell.z() == minZ
+      case GATEHOUSE -> cell.y() == 7 && (this.arid || cell.z() == minZ)
           && (cell.x() == 6 || cell.x() == 10);
       case CORNER_TOWER -> cell.y() == 6 && cell.z() == 2
           && (cell.x() == 6 || cell.x() == 8);
@@ -316,18 +333,23 @@ final class AuthoredWoodWallSegments {
   }
 
   private static boolean isPost(WallBlockPlan.Piece piece) {
-    return piece == WallBlockPlan.Piece.POST || piece == WallBlockPlan.Piece.COBBLE_POST
+    return piece == WallBlockPlan.Piece.POST || piece == WallBlockPlan.Piece.GATE_FRAME_POST
+        || piece == WallBlockPlan.Piece.COBBLE_POST
         || piece == WallBlockPlan.Piece.MOSSY_POST;
   }
 
   private static AuthoredWoodWallSegments loadBundled(String family) {
+    return loadBundled(family, false);
+  }
+
+  private static AuthoredWoodWallSegments loadBundled(String family, boolean arid) {
     Map<WallSectionKind, Template> templates = new EnumMap<>(WallSectionKind.class);
     load(templates, WallSectionKind.STRAIGHT, family + "/straight.nbt");
     load(templates, WallSectionKind.DIAGONAL, family + "/diagonal.nbt");
     load(templates, WallSectionKind.TERRACE, family + "/terrace.nbt");
     load(templates, WallSectionKind.CORNER_TOWER, family + "/corner_tower.nbt");
     load(templates, WallSectionKind.GATEHOUSE, family + "/gatehouse.nbt");
-    return new AuthoredWoodWallSegments(templates);
+    return new AuthoredWoodWallSegments(templates, arid);
   }
 
   private static void load(Map<WallSectionKind, Template> templates,
@@ -393,7 +415,7 @@ final class AuthoredWoodWallSegments {
 
   private static int supportPriority(WallBlockPlan.Piece piece) {
     return switch (piece) {
-      case POST, COBBLE_POST, MOSSY_POST, BEAM_NORTH_SOUTH, BEAM_EAST_WEST, BODY, WALKWAY -> 0;
+      case POST, GATE_FRAME_POST, GATE_FRAME_BEAM, COBBLE_POST, MOSSY_POST, BEAM_NORTH_SOUTH, BEAM_EAST_WEST, BODY, WALKWAY -> 0;
       case SLAB, PARAPET, STEP_NORTH, STEP_EAST, STEP_SOUTH, STEP_WEST -> 1;
       default -> 2;
     };

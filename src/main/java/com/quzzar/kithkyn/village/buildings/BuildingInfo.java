@@ -15,8 +15,6 @@ import com.quzzar.kithkyn.village.GuardRole;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.block.Rotation;
-import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 
 public class BuildingInfo {
@@ -28,6 +26,20 @@ public class BuildingInfo {
             ? com.mojang.serialization.DataResult.success(new CoupleBeds(positions.get(0), positions.get(1)))
             : com.mojang.serialization.DataResult.error(() -> "couple_beds entries require exactly two beds"),
         pair -> List.of(pair.first(), pair.second()));
+  }
+
+  /** A private room tied to one workplace occupation or to the village's guard captain. */
+  public record RoomReservation(List<BlockPos> beds, java.util.Optional<Occupation> occupation,
+      java.util.Optional<GuardRole> guardRole) {
+    public RoomReservation {
+      beds = List.copyOf(beds);
+    }
+
+    public static final Codec<RoomReservation> CODEC = RecordCodecBuilder.create(inst -> inst.group(
+        BlockPos.CODEC.listOf().fieldOf("beds").forGetter(RoomReservation::beds),
+        KithkynCodecs.forEnum(Occupation.class).optionalFieldOf("occupation").forGetter(RoomReservation::occupation),
+        KithkynCodecs.forEnum(GuardRole.class).optionalFieldOf("guard_role").forGetter(RoomReservation::guardRole)
+    ).apply(inst, RoomReservation::new));
   }
 
   /** A mine's excavation frame, independent of the building's front and job station. */
@@ -56,14 +68,6 @@ public class BuildingInfo {
     ).apply(inst, BedContainers::new));
   }
 
-  /** A material cost entry, kept simple on purpose (item id + count). */
-  public record ItemCost(Item item, int count) {
-    public static final Codec<ItemCost> CODEC = RecordCodecBuilder.create(inst -> inst.group(
-        BuiltInRegistries.ITEM.byNameCodec().fieldOf("item").forGetter(ItemCost::item),
-        Codec.INT.optionalFieldOf("count", 1).forGetter(ItemCost::count)
-    ).apply(inst, ItemCost::new));
-  }
-
   private static final MapCodec<BuildingInfo> BASE_CODEC = RecordCodecBuilder.mapCodec(inst -> inst.group(
       Codec.STRING.fieldOf("structure").forGetter(BuildingInfo::getName),
       BlockPos.CODEC.listOf().optionalFieldOf("beds", List.of()).forGetter(BuildingInfo::bedPositions),
@@ -71,7 +75,6 @@ public class BuildingInfo {
       BlockPos.CODEC.listOf().optionalFieldOf("containers", List.of()).forGetter(BuildingInfo::containerPositions),
       BlockPos.CODEC.listOf().optionalFieldOf("personal_containers", List.of())
           .forGetter(BuildingInfo::personalContainerPositions),
-      ItemCost.CODEC.listOf().optionalFieldOf("cost", List.of()).forGetter(BuildingInfo::itemCosts),
       Codec.STRING.listOf().optionalFieldOf("grants", List.of()).forGetter(BuildingInfo::getGrants),
       Grant.CODEC.listOf().optionalFieldOf("grants_if", List.of()).forGetter(BuildingInfo::getConditionalGrants),
       BlockPos.CODEC.optionalFieldOf("gathering_point").forGetter(info ->
@@ -108,18 +111,24 @@ public class BuildingInfo {
           .forGetter(info -> java.util.Optional.ofNullable(info.coupleBeds)),
       BlockPos.CODEC.listOf().optionalFieldOf("worker_beds")
           .forGetter(info -> java.util.Optional.ofNullable(info.workerBeds)),
-      Codec.BOOL.optionalFieldOf("standalone", false).forGetter(BuildingInfo::isStandalone)
-  ).apply(inst, (info, places, bedContainers, coupleBeds, workerBeds, standalone) -> {
+      Codec.BOOL.optionalFieldOf("standalone", false).forGetter(BuildingInfo::isStandalone),
+      Codec.STRING.listOf().optionalFieldOf("starting_buildings", List.of()).forGetter(BuildingInfo::getStartingBuildings),
+      RoomReservation.CODEC.listOf().optionalFieldOf("room_reservations", List.of()).forGetter(BuildingInfo::getRoomReservations),
+      CastleLayout.CODEC.optionalFieldOf("castle").forGetter(info -> java.util.Optional.ofNullable(info.castleLayout))
+  ).apply(inst, (info, places, bedContainers, coupleBeds, workerBeds, standalone, startingBuildings, rooms, castle) -> {
     info.gatheringPlaces = places;
     info.bedContainers = bedContainers.orElse(null);
     info.coupleBeds = coupleBeds.orElse(null);
     info.workerBeds = workerBeds.orElse(null);
     info.standalone = standalone;
+    info.startingBuildings = List.copyOf(startingBuildings);
+    info.roomReservations = List.copyOf(rooms);
+    info.castleLayout = castle.orElse(null);
     return info;
   }));
 
   private static BuildingInfo fromCodec(String structure, List<BlockPos> beds, List<WorkStation> workStations,
-      List<BlockPos> containers, List<BlockPos> personalContainers, List<ItemCost> costs, List<String> grants,
+      List<BlockPos> containers, List<BlockPos> personalContainers, List<String> grants,
       List<Grant> conditionalGrants, java.util.Optional<BlockPos> gatheringPoint,
       java.util.Optional<String> category, java.util.Optional<String> variant,
       java.util.Optional<String> upgradesFrom, VillageIdentitySlots villageIdentitySlots, int sink,
@@ -132,7 +141,6 @@ public class BuildingInfo {
     });
     containers.forEach(pos -> info.addContainerLocation(pos.getX(), pos.getY(), pos.getZ()));
     personalContainers.forEach(pos -> info.addPersonalContainerLocation(pos.getX(), pos.getY(), pos.getZ()));
-    info.setMaterialCost(costs.stream().map(cost -> new ItemStack(cost.item(), cost.count())).toList());
     info.grants = List.copyOf(grants);
     info.conditionalGrants = List.copyOf(conditionalGrants);
     gatheringPoint.ifPresent(pos -> info.gatheringPoint = pos.asLong());
@@ -157,6 +165,9 @@ public class BuildingInfo {
   private List<CoupleBeds> coupleBeds;
   @javax.annotation.Nullable
   private List<BlockPos> workerBeds;
+  private List<RoomReservation> roomReservations = List.of();
+  @javax.annotation.Nullable
+  private CastleLayout castleLayout;
   private ArrayList<Long> containerLocs;
   // Chests that belong to the people who sleep here, never to the village (PersonalChest).
   private ArrayList<Long> personalContainerLocs;
@@ -175,6 +186,10 @@ public class BuildingInfo {
   // The id this building can replace in place; it also defines the fresh-build cost chain.
   private String upgradesFrom;
   private boolean standalone;
+  private List<String> startingBuildings = List.of();
+
+  /** Ordered founding companions; repeated ids intentionally request multiple homes. */
+  public List<String> getStartingBuildings() { return startingBuildings; }
   private VillageIdentitySlots villageIdentitySlots = VillageIdentitySlots.EMPTY;
   private int sink;
   private Direction entranceFacing;
@@ -373,6 +388,9 @@ public class BuildingInfo {
     if (guardRoles.containsValue(GuardRole.CAPTAIN) && !"village_center".equals(getCategory())) {
       return "guard captain must belong to the village center";
     }
+    if (!startingBuildings.isEmpty() && !Buildings.VILLAGE_CENTER_CATEGORY.equals(getCategory())) {
+      return "starting_buildings is only valid on a village center";
+    }
     for (var entry : guardRoles.entrySet()) {
       if (workLocs.get(entry.getKey()) != Occupation.GUARD) return "guard_duty requires a GUARD station";
     }
@@ -390,6 +408,41 @@ public class BuildingInfo {
         }
       }
       if (!mappedContainers.containsAll(personalContainerLocs)) return "personal container has no bed_containers mapping";
+    }
+    if (castleLayout != null) {
+      if (!"castle".equals(getCategory())) return "castle amenities require the castle category";
+      if (castleLayout.evidenceContainers().size() != 2
+          || new java.util.HashSet<>(castleLayout.evidenceContainers()).size() != 2) {
+        return "castle requires two distinct evidence_containers";
+      }
+      if (castleLayout.evidenceContainers().stream().anyMatch(position ->
+          containerLocs.contains(position.asLong()) || personalContainerLocs.contains(position.asLong()))) {
+        return "castle evidence_containers cannot be shared or personal storage";
+      }
+    }
+    java.util.Set<BlockPos> reservedBeds = new java.util.HashSet<>();
+    for (RoomReservation room : roomReservations) {
+      if (room.occupation().isPresent() == room.guardRole().isPresent()) {
+        return "room_reservations requires exactly one occupation or guard_role";
+      }
+      if (room.guardRole().isPresent() && room.guardRole().get() != GuardRole.CAPTAIN) {
+        return "room_reservations guard_role must identify the village CAPTAIN";
+      }
+      if (room.occupation().isPresent() && !workLocs.containsValue(room.occupation().get())) {
+        return "room_reservations occupation requires a matching workplace";
+      }
+      if (room.beds().isEmpty() || room.beds().size() > 2) return "room_reservations requires one bed or one couple room";
+      for (BlockPos bed : room.beds()) {
+        if (!bedLocs.contains(bed.asLong())) return "room_reservations names an undeclared bed";
+        if (!reservedBeds.add(bed)) return "room_reservations repeats a bed";
+      }
+      if (room.beds().size() == 2 && getCoupleBeds().stream().noneMatch(pair ->
+          room.beds().contains(pair.first()) && room.beds().contains(pair.second()))) {
+        return "room_reservations must reserve a declared couple room";
+      }
+      if (room.beds().size() == 1 && isCoupleBed(bedLocs.indexOf(room.beds().getFirst().asLong()))) {
+        return "room_reservations must reserve both beds of a couple room";
+      }
     }
     java.util.Set<BlockPos> pairedBeds = new java.util.HashSet<>();
     if (workerBeds != null) {
@@ -433,9 +486,27 @@ public class BuildingInfo {
   /** Explicit coordinates allow a workplace to mix staff rooms with general accommodation. */
   public boolean isWorkerBed(int index) {
     if (index < 0 || index >= bedLocs.size()) return false;
+    if (getRoomReservation(index) != null) return true;
     if (workerBeds != null) return workerBeds.contains(BlockPos.of(bedLocs.get(index)));
     return !workLocs.isEmpty() && hasWellFormedId()
         && !Buildings.VILLAGE_CENTER_CATEGORY.equals(getCategory());
+  }
+
+  public List<RoomReservation> getRoomReservations() {
+    return roomReservations;
+  }
+
+  /** Resolves authored coordinates after definition reloads rather than persisting room indexes. */
+  @javax.annotation.Nullable
+  public RoomReservation getRoomReservation(int bedIndex) {
+    if (bedIndex < 0 || bedIndex >= bedLocs.size()) return null;
+    BlockPos bed = BlockPos.of(bedLocs.get(bedIndex));
+    return roomReservations.stream().filter(room -> room.beds().contains(bed)).findFirst().orElse(null);
+  }
+
+  @javax.annotation.Nullable
+  public CastleLayout getCastleLayout() {
+    return castleLayout;
   }
 
   public int getWorkerSingleBedCount() {
@@ -583,10 +654,6 @@ public class BuildingInfo {
 
   private List<BlockPos> personalContainerPositions() {
     return personalContainerLocs.stream().map(BlockPos::of).toList();
-  }
-
-  private List<ItemCost> itemCosts() {
-    return materialCost.stream().map(stack -> new ItemCost(stack.getItem(), stack.getCount())).toList();
   }
 
 }

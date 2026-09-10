@@ -306,7 +306,9 @@ public final class PersonChatContext {
       List<Turn> history, String playerLine) {
     StringBuilder system = new StringBuilder();
 
-    String occupation = Utils.capitalize(person.getOccupation().name().toLowerCase());
+    String occupation = person.getOccupation() == Occupation.LEADER
+        ? com.quzzar.kithkyn.village.VillageRuler.title(person.getGender())
+        : Utils.capitalize(person.getOccupation().name().toLowerCase());
     Village village = person.getVillage();
     String villageName = village != null ? village.getName() : "no village";
     system.append("You are ").append(person.getFullName())
@@ -329,6 +331,16 @@ public final class PersonChatContext {
 
     if (village != null) {
       system.append(VillageContextSnapshot.capture(village).chatBriefing());
+      com.quzzar.kithkyn.village.VillageRuler.incumbent(village).ifPresent(ruler -> {
+        if (ruler.getUUID().equals(person.getUUID())) {
+          system.append("You are this village's ruling voice. You deliberate on its construction, labor, trade and"
+              + " marriage requests through the village's ordinary decisions. In conversation, discuss those"
+              + " responsibilities using the actual village facts; requests still need their normal validation.\n");
+        } else {
+          system.append("The village is ruled by ").append(com.quzzar.kithkyn.village.VillageRuler.title(ruler.getGender()))
+              .append(' ').append(ruler.getFullName()).append(".\n");
+        }
+      });
     }
 
     // The villager's own work in hand. Their job is a title; this is what a

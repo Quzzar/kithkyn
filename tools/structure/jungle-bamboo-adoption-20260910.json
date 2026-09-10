@@ -1,0 +1,319 @@
+{
+  "recorded": "2026-09-10",
+  "status": "applied_saved_and_visually_reviewed",
+  "material": "minecraft:stripped_bamboo_block",
+  "scope": "All 18 selected Jungle exhibits; comparison controls and unused candidates remain reference exhibits",
+  "replaced_blocks": 831,
+  "affected_buildings": 16,
+  "preserved_axes": {
+    "y": 714,
+    "z": 70,
+    "x": 47
+  },
+  "captures": [
+    {
+      "exhibit": "JA01.1",
+      "replaced_blocks": 1,
+      "before_capture": "run/jungle-showcase/bamboo-adoption-20260910/before/JA01.1.nbt",
+      "before_sha256": "a23ee77e0e55604c5e0d00e3e6179079e563ff9d15e25dabf7712f633a877c66",
+      "capture": "run/jungle-showcase/bamboo-adoption-20260910/after-placement/captures/JA01.1.nbt",
+      "sha256": "d9df05aeba28d63319211f1490d78473d23161bbfe8a9e56761daeeb727043c7"
+    },
+    {
+      "exhibit": "JA01.4",
+      "replaced_blocks": 0,
+      "before_capture": "run/jungle-showcase/bamboo-adoption-20260910/before/JA01.4.nbt",
+      "before_sha256": "9f8dc0a86de6cb1f7ba36a543d34ee3648f7b0f59c186d62cc6e949a47961692",
+      "capture": "run/jungle-showcase/bamboo-adoption-20260910/after-placement/captures/JA01.4.nbt",
+      "sha256": "9f8dc0a86de6cb1f7ba36a543d34ee3648f7b0f59c186d62cc6e949a47961692"
+    },
+    {
+      "exhibit": "JA01.5",
+      "replaced_blocks": 20,
+      "before_capture": "run/jungle-showcase/bamboo-adoption-20260910/before/JA01.5.nbt",
+      "before_sha256": "ba473ece4305b9a82350f8e2d134fa789f9ff655980934b6025ea0044644e171",
+      "capture": "run/jungle-showcase/bamboo-adoption-20260910/after-placement/captures/JA01.5.nbt",
+      "sha256": "1548682f0faae3f6dff805ea887829f9761fa755c83b143de4e2ea49b0e9f723"
+    },
+    {
+      "exhibit": "JA01.6",
+      "replaced_blocks": 39,
+      "before_capture": "run/jungle-showcase/bamboo-adoption-20260910/before/JA01.6.nbt",
+      "before_sha256": "bb793e3731606f81020a1f8d3c8aa41f8a21f0265623f37536a1700a79a7f7e1",
+      "capture": "run/jungle-showcase/bamboo-adoption-20260910/after-placement/captures/JA01.6.nbt",
+      "sha256": "e26e0f26ddf0d04b3381b20601e2976fec36c4802e122ff526f0c2112e95fe9d"
+    },
+    {
+      "exhibit": "JA01.7",
+      "replaced_blocks": 44,
+      "before_capture": "run/jungle-showcase/bamboo-adoption-20260910/before/JA01.7.nbt",
+      "before_sha256": "cd0ef3106a0a9d296256d71f8e0c3ea817017e3c74b59bb04021d7a27cecca9e",
+      "capture": "run/jungle-showcase/bamboo-adoption-20260910/after-placement/captures/JA01.7.nbt",
+      "sha256": "55e496edb5ca90f46cd33417da717c4a692492c9706f1f247979268566d9475f"
+    },
+    {
+      "exhibit": "JA01.8",
+      "replaced_blocks": 60,
+      "before_capture": "run/jungle-showcase/bamboo-adoption-20260910/before/JA01.8.nbt",
+      "before_sha256": "f14016c1b29097456670f4f205aca86ea9e255d786c424049b240950a8347f17",
+      "capture": "run/jungle-showcase/bamboo-adoption-20260910/after-placement/captures/JA01.8.nbt",
+      "sha256": "75709284e8d942de4916bc601a744ccf358c55f4c39448ad90259454479385a1"
+    },
+    {
+      "exhibit": "JA02.1",
+      "replaced_blocks": 69,
+      "before_capture": "run/jungle-showcase/bamboo-adoption-20260910/before/JA02.1.nbt",
+      "before_sha256": "f7c3f6b82a994dd8f457f99eee34786ede63c25c3f7c678e21daa941f62a4bcb",
+      "capture": "run/jungle-showcase/bamboo-adoption-20260910/after-placement/captures/JA02.1.nbt",
+      "sha256": "430f6a04f5968cf6f8579a6de8c064f41c9262e788c4782b3c8bc3a0491f2d03"
+    },
+    {
+      "exhibit": "JA02.2",
+      "replaced_blocks": 78,
+      "before_capture": "run/jungle-showcase/bamboo-adoption-20260910/before/JA02.2.nbt",
+      "before_sha256": "90fe80eb4ce86d5f79a1b08eecf33a0857563304e4af9a59fd426ac738a5be93",
+      "capture": "run/jungle-showcase/bamboo-adoption-20260910/after-placement/captures/JA02.2.nbt",
+      "sha256": "eae1934cc3c0f7e1b91e8b61b3df2b1bedffcc468e78837133878f81b3dc85ad"
+    },
+    {
+      "exhibit": "JA02.3",
+      "replaced_blocks": 59,
+      "before_capture": "run/jungle-showcase/bamboo-adoption-20260910/before/JA02.3.nbt",
+      "before_sha256": "965d06a444beb6ce7f02dcc469fd301ecc0c95e4c71d6a29e93871af61f942f9",
+      "capture": "run/jungle-showcase/bamboo-adoption-20260910/after-placement/captures/JA02.3.nbt",
+      "sha256": "0cb3d721d30bf31294109ec0949162a39712d7d3a4b398120959be9612bff642"
+    },
+    {
+      "exhibit": "JA02.5",
+      "replaced_blocks": 63,
+      "before_capture": "run/jungle-showcase/bamboo-adoption-20260910/before/JA02.5.nbt",
+      "before_sha256": "cba5154f1defd4c29f3349c954571898bcffadedf00348cdd96698922bc154a5",
+      "capture": "run/jungle-showcase/bamboo-adoption-20260910/after-placement/captures/JA02.5.nbt",
+      "sha256": "48a5e7b05a6c197f84d09ade36da06ef06ff6e9503afe9d138e126e1d5f9a26d"
+    },
+    {
+      "exhibit": "JA02.6",
+      "replaced_blocks": 72,
+      "before_capture": "run/jungle-showcase/bamboo-adoption-20260910/before/JA02.6.nbt",
+      "before_sha256": "e1902705358567e3efb57a78f0d0666f33e3e962e9f2fc545b259689e2a18f61",
+      "capture": "run/jungle-showcase/bamboo-adoption-20260910/after-placement/captures/JA02.6.nbt",
+      "sha256": "f145f97f476593ca26ad16cf7129a1850cdeaf61833e4dfb6aac480ae7bab11b"
+    },
+    {
+      "exhibit": "JA02.7",
+      "replaced_blocks": 0,
+      "before_capture": "run/jungle-showcase/bamboo-adoption-20260910/before/JA02.7.nbt",
+      "before_sha256": "8f39a275028a678e773801a9db61e1b123873e510e133d9ad765d173e4156ddd",
+      "capture": "run/jungle-showcase/bamboo-adoption-20260910/after-placement/captures/JA02.7.nbt",
+      "sha256": "8f39a275028a678e773801a9db61e1b123873e510e133d9ad765d173e4156ddd"
+    },
+    {
+      "exhibit": "JA02.8",
+      "replaced_blocks": 33,
+      "before_capture": "run/jungle-showcase/bamboo-adoption-20260910/before/JA02.8.nbt",
+      "before_sha256": "c27d44cd6e8140ce81bfbc941293980bb9b02113593b2ef2d6ff98695f4d434c",
+      "capture": "run/jungle-showcase/bamboo-adoption-20260910/after-placement/captures/JA02.8.nbt",
+      "sha256": "7b5f7e9e5c7fb9ab525b3a4498bb973c7fbb0e50e6e95988932cad030ec6bb4d"
+    },
+    {
+      "exhibit": "JA02.9",
+      "replaced_blocks": 58,
+      "before_capture": "run/jungle-showcase/bamboo-adoption-20260910/before/JA02.9.nbt",
+      "before_sha256": "2ffd484d1805a356e31a4af6859966e768560ec9fb744139c972e33b497c01ea",
+      "capture": "run/jungle-showcase/bamboo-adoption-20260910/after-placement/captures/JA02.9.nbt",
+      "sha256": "63451f7045ce6307e387eaab61a1a40eb470e3ecc78e03589a316e0642c2b400"
+    },
+    {
+      "exhibit": "JA03.1",
+      "replaced_blocks": 35,
+      "before_capture": "run/jungle-showcase/bamboo-adoption-20260910/before/JA03.1.nbt",
+      "before_sha256": "e2102b5a7e9cf0984085cd39fbb9358daae6d52f5b9d489011c68000248e4908",
+      "capture": "run/jungle-showcase/bamboo-adoption-20260910/after-placement/captures/JA03.1.nbt",
+      "sha256": "67a86e0cd2847f5007cf8ebef94ee1b64cd450cf082a7b09f9e098b4097d34d7"
+    },
+    {
+      "exhibit": "JA03.2",
+      "replaced_blocks": 37,
+      "before_capture": "run/jungle-showcase/bamboo-adoption-20260910/before/JA03.2.nbt",
+      "before_sha256": "51d34fc1cc967dd4477c77d0a302fd03a3132ef0945bc7899635bcaedc871ca1",
+      "capture": "run/jungle-showcase/bamboo-adoption-20260910/after-placement/captures/JA03.2.nbt",
+      "sha256": "00be3aec61fe7b9964c3bb8ead237609bcece24d7aad4e83a8f2f1158a31979b"
+    },
+    {
+      "exhibit": "JA03.3",
+      "replaced_blocks": 97,
+      "before_capture": "run/jungle-showcase/bamboo-adoption-20260910/before/JA03.3.nbt",
+      "before_sha256": "175551a621eb99ad23c973c20f8b36e134a56126d7ecc49e813f06adb7c010f5",
+      "capture": "run/jungle-showcase/bamboo-adoption-20260910/after-placement/captures/JA03.3.nbt",
+      "sha256": "f3a7cfc8b23aa14fb174bf531b3d51cd263dbca20a029b322893128fb01f0186"
+    },
+    {
+      "exhibit": "JA03.5",
+      "replaced_blocks": 66,
+      "before_capture": "run/jungle-showcase/bamboo-adoption-20260910/before/JA03.5.nbt",
+      "before_sha256": "ef25ca26efe33c649481b9272a13cae4bbf01d529ada149fc8c4c0b70506d583",
+      "capture": "run/jungle-showcase/bamboo-adoption-20260910/after-placement/captures/JA03.5.nbt",
+      "sha256": "cdc2c6211a88a1d4cea502ca166e0eb5525234b9ac45551748a02d3f57079fb3"
+    }
+  ],
+  "verification": "run/jungle-showcase/bamboo-adoption-20260910/verification.json",
+  "compared_blocks": 4569,
+  "unexpected_mismatches": 0,
+  "accepted_dynamic_changes": [
+    {
+      "name": "JA01.1",
+      "pos": [
+        7,
+        2,
+        7
+      ],
+      "expected": {
+        "Name": "minecraft:campfire",
+        "Properties": {
+          "waterlogged": "false",
+          "signal_fire": "true",
+          "lit": "true",
+          "facing": "north"
+        }
+      },
+      "actual": {
+        "Name": "minecraft:campfire",
+        "Properties": {
+          "facing": "north",
+          "waterlogged": "false",
+          "signal_fire": "false",
+          "lit": "true"
+        }
+      },
+      "reason": "Replacing the hay beneath the campfire correctly disables its signal-fire state"
+    },
+    {
+      "name": "JA01.7",
+      "pos": [
+        5,
+        12,
+        5
+      ],
+      "expected": null,
+      "actual": {
+        "Name": "minecraft:vine",
+        "Properties": {
+          "west": "false",
+          "east": "false",
+          "up": "false",
+          "south": "true",
+          "north": "false"
+        }
+      },
+      "reason": "Natural vine growth between snapshots"
+    },
+    {
+      "name": "JA01.7",
+      "pos": [
+        9,
+        1,
+        9
+      ],
+      "expected": null,
+      "actual": {
+        "Name": "minecraft:vine",
+        "Properties": {
+          "west": "false",
+          "east": "false",
+          "up": "false",
+          "south": "false",
+          "north": "true"
+        }
+      },
+      "reason": "Natural vine growth between snapshots"
+    },
+    {
+      "name": "JA01.7",
+      "pos": [
+        5,
+        9,
+        13
+      ],
+      "expected": null,
+      "actual": {
+        "Name": "minecraft:vine",
+        "Properties": {
+          "west": "false",
+          "east": "false",
+          "up": "false",
+          "south": "false",
+          "north": "true"
+        }
+      },
+      "reason": "Natural vine growth between snapshots"
+    },
+    {
+      "name": "JA01.7",
+      "pos": [
+        2,
+        8,
+        9
+      ],
+      "expected": null,
+      "actual": {
+        "Name": "minecraft:vine",
+        "Properties": {
+          "west": "false",
+          "east": "false",
+          "up": "false",
+          "south": "false",
+          "north": "true"
+        }
+      },
+      "reason": "Natural vine growth between snapshots"
+    },
+    {
+      "name": "JA01.7",
+      "pos": [
+        2,
+        9,
+        9
+      ],
+      "expected": null,
+      "actual": {
+        "Name": "minecraft:vine",
+        "Properties": {
+          "west": "false",
+          "east": "false",
+          "up": "false",
+          "south": "false",
+          "north": "true"
+        }
+      },
+      "reason": "Natural vine growth between snapshots"
+    },
+    {
+      "name": "JA01.7",
+      "pos": [
+        15,
+        3,
+        6
+      ],
+      "expected": null,
+      "actual": {
+        "Name": "minecraft:vine",
+        "Properties": {
+          "west": "false",
+          "east": "false",
+          "up": "false",
+          "south": "true",
+          "north": "false"
+        }
+      },
+      "reason": "Natural vine growth between snapshots"
+    }
+  ],
+  "jungle_catalog_activated": false,
+  "screenshots_viewed": true,
+  "source_policy": "All native captures remain private under ignored run/. Public metadata records provenance only.",
+  "screenshots": [
+    "run/jungle-showcase/bamboo-adoption-20260910/render/client/screenshots/jungle-bamboo-bakery.png",
+    "run/jungle-showcase/bamboo-adoption-20260910/render/client/screenshots/jungle-bamboo-homes.png",
+    "run/jungle-showcase/bamboo-adoption-20260910/render/client/screenshots/jungle-bamboo-services.png"
+  ]
+}

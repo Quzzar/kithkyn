@@ -420,7 +420,7 @@ public class Village {
       for (var player : level.players()) {
         if (player.blockPosition().distSqr(centerLoc) < 128 * 128) {
           player.sendSystemMessage(net.minecraft.network.chat.Component.literal(
-              "Village needs a clear center and two gently sloping sides. Try a more open spot nearby."));
+              "Village needs room for its center and all starting buildings. Try a more open spot nearby."));
         }
       }
     }
@@ -428,9 +428,11 @@ public class Village {
 
   /** Exact geometry shared by immediate manual founding and delayed natural founding. */
   public record FoundingPlan(InstantBuildStructure center,
-      com.quzzar.kithkyn.village.buildings.FoundingLayout.Plan companions, int planeY) {
+      java.util.List<InstantBuildStructure> companions, int planeY) {
+    public FoundingPlan { companions = java.util.List.copyOf(companions); }
+
     public java.util.List<InstantBuildStructure> structures() {
-      return java.util.List.of(center, companions.mine(), companions.storehouse());
+      return java.util.stream.Stream.concat(java.util.stream.Stream.of(center), companions.stream()).toList();
     }
   }
 
@@ -450,31 +452,18 @@ public class Village {
       return java.util.Optional.empty();
     }
 
-    // The whole camp sits on ONE plane, so it reads as a level camp rather than
-    // three buildings snapped to three different surface heights - which is what
-    // founding did before, and why a camp on any slope came out as scattered
-    // buildings at scattered elevations (docs/building-spec.md, "The camp is
-    // placed as one plat"). The plane is the ground at the founding point; the
-    // companions use the two best available sides, facing back toward the center.
-    int centerSpan = templateSpan(centerInfo);
-    int clearance = centerSpan + 4;
-    int half = (maxFoundingSpan(centerSpan) + 1) / 2 + 1;
-
-    // A village cannot reshape ground it has not loaded. Load every chunk the
-    // camp will touch first, so the heightmap, the site check and the levelling
-    // read real terrain rather than an unloaded default - which otherwise reads
-    // as the world floor and founds the whole camp far underground.
-    if (loadChunks) forceLoadCamp(centerLoc, clearance + half);
+    // Manual founding may load its bounded search area. Natural generation only surveys
+    // already loaded terrain; each companion chooses its own normal construction site.
+    int span = templateSpan(centerInfo);
+    var starters = Buildings.foundingCompanions(centerInfo, getStyle());
+    if (starters.isEmpty()) return java.util.Optional.empty();
+    for (BuildingInfo info : starters.get()) span = Math.max(span, templateSpan(info));
+    if (loadChunks) forceLoadCamp(centerLoc, LocationValidator.MAX_SEARCH_RADIUS + span);
     else if (!level.isLoaded(centerLoc)) return java.util.Optional.empty();
 
-    // MOTION_BLOCKING_NO_LEAVES gives the top block that stops movement but ISN'T a leaf,
-    // i.e. the real ground UNDER a tree canopy -- WORLD_SURFACE counts leaves/branches as
-    // surface, so founding under a tree seated the whole camp at canopy height and then
-    // dirt-filled a pillar down to the ground (Aaron's "sky village"). Seat the camp AT the
-    // heightmap -- the first course above the top ground block -- so the whole camp is raised
-    // one block: the founder, who runs create-village standing on the ground, lands at their
-    // own level instead of a block into it. Seating a course lower dropped them a block on
-    // create-village; raising the entire camp one block is what Aaron asked for.
+    // Preserve the center's authored seating convention: first-air height is passed
+    // to its centered placement helper, which seats the foundation one course below.
+    // Excluding leaves avoids founding above the canopy.
     int planeY = level.getHeightmapPos(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, centerLoc).getY();
     BlockPos platCenter = new BlockPos(centerLoc.getX(), planeY, centerLoc.getZ());
 
@@ -494,54 +483,48 @@ public class Village {
     InstantBuildStructure centerStruct =
         new InstantBuildStructure(centerBuilding, random, level).withIdentity(identity)
             .setOriginLocation(platCenter.below(centerInfo.getSink()), new java.util.HashSet<>());
-    var layout = com.quzzar.kithkyn.village.buildings.FoundingLayout.plan(this, centerStruct, planeY, random, loadChunks);
+    var layout = com.quzzar.kithkyn.village.buildings.FoundingLayout.plan(this, centerStruct, random, loadChunks);
     return layout.map(companions -> new FoundingPlan(centerStruct, companions, planeY));
   }
 
   /** Revalidates a prepared layout immediately before any terrain or claim mutation. */
   public boolean found(FoundingPlan plan) {
     if (level == null || townCenterUUID != null || !buildings.isEmpty()) return false;
+    java.util.List<SitePreparation.PrepWork> preparation = new java.util.ArrayList<>();
     for (var structure : plan.structures()) {
-      if (!com.quzzar.kithkyn.village.buildings.FoundingLayout.suitable(this, structure, plan.planeY(), false)) {
-        return false;
+      if (!com.quzzar.kithkyn.village.buildings.FoundingLayout.suitable(this, structure, false)) return false;
+      BlockPos ground = BlockPos.of(structure.getBuilding().getOriginLocation())
+          .above(structure.getBuilding().getInfo().getSink());
+      var work = SitePreparation.planWork(level, this, ground, structure.getBounds());
+      if (!work.possible()) return false;
+      preparation.add(work);
+    }
+    // All surveys finish before the first write. Use the builder's exact preparation
+    // queues, applying founding work immediately without charging a construction recipe.
+    for (var work : preparation) {
+      for (long pos : work.toBreak()) level.setBlock(BlockPos.of(pos), Blocks.AIR.defaultBlockState(), 3);
+      for (long pos : work.toFill()) level.setBlock(BlockPos.of(pos), Blocks.DIRT.defaultBlockState(), 3);
+    }
+    for (var structure : plan.structures()) {
+      structure.withIdentity(identity).seatAtOrigin(BlockPos.of(structure.getBuilding().getOriginLocation()), claimGrid);
+    }
+    // Storage is available before completion hooks collect cleared natural trees.
+    for (var structure : plan.companions()) {
+      if (structure.getBuilding().getInfo().getCategory().equals(Buildings.FOUNDING_STOREHOUSE_CATEGORY)) {
+        buildFoundingCompanion(structure);
       }
     }
-    InstantBuildStructure centerStruct = plan.center();
-    Building centerBuilding = centerStruct.getBuilding();
-    InstantBuildStructure mineStruct = plan.companions().mine();
-    InstantBuildStructure storeStruct = plan.companions().storehouse();
-    int planeY = plan.planeY();
-    // Publish only the winning claims, after every terrain probe has finished.
-    for (var structure : new InstantBuildStructure[] {centerStruct, mineStruct, storeStruct}) {
-      structure.withIdentity(identity);
-      structure.seatAtOrigin(BlockPos.of(structure.getBuilding().getOriginLocation()), claimGrid);
-    }
-    Kithkyn.LOGGER.info("Founding '{}' in the {} style at {}: inward-facing mine {} and storehouse {}; {} blocks of companion preparation",
-        name, getStyle().id(), BlockPos.of(centerBuilding.getOriginLocation()).toShortString(),
-        mineStruct.getRotation().rotate(mineStruct.getBuilding().getInfo().getEntranceFacing()).getOpposite(),
-        storeStruct.getRotation().rotate(storeStruct.getBuilding().getInfo().getEntranceFacing()).getOpposite(),
-        plan.companions().blocksMoved());
-
-    // Level ONLY the ground each building stands on -- not a shared plat -- so the camp
-    // reads as buildings plopped on the natural surface, with no grass/dirt platform
-    // around them (Aaron: "just plop the buildings... no grass platform"). Each footprint
-    // is levelled then hidden under its building; the ground BETWEEN buildings is left
-    // natural. Companions keep normal recipes; founding skips payment as buildInstantly.
-    for (InstantBuildStructure struct : new InstantBuildStructure[] { centerStruct, mineStruct, storeStruct }) {
-      if (struct != null) {
-        levelPlatTo(buildingFootprint(struct, planeY), planeY);
-      }
-    }
-
-    // The storehouse goes up first: the camp circle's chest is the campers' own,
-    // not village storage, so the logs of any tree felled over the circle or the
-    // mine need the barrels standing to have somewhere to go.
-    buildFoundingCompanion(storeStruct);
-    centerStruct.buildInstantly();
-    this.townCenterUUID = centerBuilding.getUUID();
-    addBuilding(centerBuilding);
+    plan.center().buildInstantly();
+    this.townCenterUUID = plan.center().getBuilding().getUUID();
+    addBuilding(plan.center().getBuilding());
     placeCampfireIfMissing();
-    buildFoundingCompanion(mineStruct);
+    for (var structure : plan.companions()) {
+      if (!structure.getBuilding().getInfo().getCategory().equals(Buildings.FOUNDING_STOREHOUSE_CATEGORY)) {
+        buildFoundingCompanion(structure);
+      }
+    }
+    Kithkyn.LOGGER.info("Founded '{}' in the {} style with {} buildings using normal placement; {} preparation blocks",
+        name, getStyle().id(), plan.structures().size(), preparation.stream().mapToInt(SitePreparation.PrepWork::size).sum());
 
     // No founding crew is spawned directly: personas are generated before any
     // spawn (persona map #4), so the first villagers arrive through the
@@ -567,19 +550,7 @@ public class Village {
     }
   }
 
-  /** The widest of the founding buildings, so the plat is deep enough for all three. */
-  private int maxFoundingSpan(int centerSpan) {
-    int span = centerSpan;
-    for (String category : new String[] { Buildings.FOUNDING_MINE_CATEGORY, Buildings.FOUNDING_STOREHOUSE_CATEGORY }) {
-      BuildingInfo info = Buildings.resolve(category, 1, getStyle());
-      if (info != null) {
-        span = Math.max(span, templateSpan(info));
-      }
-    }
-    return span;
-  }
-
-  /** The larger horizontal span of a building's template, for laying out the plat. */
+  /** The larger horizontal span of a building's template, for bounding the loaded founding survey. */
   private int templateSpan(BuildingInfo info) {
     var template = level.getStructureManager().getOrCreate(
         net.minecraft.resources.ResourceLocation.fromNamespaceAndPath(Kithkyn.MODID, info.getPath()));
@@ -602,79 +573,10 @@ public class Village {
         .offset(offset.rotate(rotation));
   }
 
-  /**
-   * A single building's own footprint at the plane, no margin -- the exact ground it
-   * stands on. Levelling each companion by its own footprint (rather than the union)
-   * keeps the terrain BETWEEN buildings natural, so no platform shows.
-   */
-  private BoundingBox buildingFootprint(InstantBuildStructure struct, int planeY) {
-    return buildingFootprint(BlockPos.of(struct.getBuilding().getOriginLocation()), struct.getBounds(), planeY);
-  }
-
-  static BoundingBox buildingFootprint(BlockPos origin, BoundingBox rotatedBounds, int planeY) {
-    return new BoundingBox(origin.getX() + rotatedBounds.minX(), planeY, origin.getZ() + rotatedBounds.minZ(),
-        origin.getX() + rotatedBounds.maxX(), planeY, origin.getZ() + rotatedBounds.maxZ());
-  }
-
-  /** Raises a planned companion on the prepared plat, or does nothing when it was skipped. */
-  private void buildFoundingCompanion(@javax.annotation.Nullable InstantBuildStructure struct) {
-    if (struct == null) {
-      return;
-    }
-    struct.buildInstantly();
-    addBuilding(struct.getBuilding());
-  }
-
-  /** How far below the plane founding will fill a dip before giving up on it. */
-  private static final int FOUNDING_MAX_FILL = 6;
-  /** How far above the plane founding will cut a mound before leaving the rest: a cliff, not a plat. */
-  private static final int FOUNDING_MAX_CUT = 24;
-
-  /**
-   * Flattens the camp footprint to a single plane: clears whatever stands above
-   * it and fills whatever falls below, so all three buildings sit flush on one
-   * surface. Founding pays this for free, which is how it can settle ground that
-   * ordinary placement would refuse. Columns holding a block entity are left
-   * alone rather than destroying someone's chest.
-   */
-  private void levelPlatTo(BoundingBox plat, int planeY) {
-    BlockPos.MutableBlockPos pos = new BlockPos.MutableBlockPos();
-    for (int x = plat.minX(); x <= plat.maxX(); x++) {
-      for (int z = plat.minZ(); z <= plat.maxZ(); z++) {
-        // Cut everything above the plane, following the real surface up rather
-        // than a fixed height: a mound taller than one building's headroom must
-        // still come off, or the buildings raise INTO it and end up buried. A
-        // sane ceiling stops a column under a mountain from running away.
-        int clearTo = planeY + SitePreparation.CLEARANCE_HEIGHT;
-        int surface = planeY;
-        while (surface < planeY + FOUNDING_MAX_CUT
-            && !level.getBlockState(pos.set(x, surface, z)).isAir()) {
-          surface++;
-        }
-        int top = Math.max(clearTo, surface);
-        // Cut everything above the plane down to it, clearing the footprint to a
-        // single course before the buildings drop on. (Raising the whole camp a
-        // block is done by planeY above, not by leaving this course uncleared.)
-        for (int y = planeY; y < top; y++) {
-          pos.set(x, y, z);
-          if (!level.getBlockState(pos).isAir() && level.getBlockEntity(pos) == null) {
-            level.setBlock(pos, Blocks.AIR.defaultBlockState(), 3);
-          }
-        }
-        // Fill everything below the plane down to solid, following the surface
-        // DOWN, so the low side of a slope does not leave a building floating over
-        // a gap. Bounded so a void does not fill forever.
-        for (int y = planeY - 1; y >= planeY - FOUNDING_MAX_FILL; y--) {
-          pos.set(x, y, z);
-          var state = level.getBlockState(pos);
-          if (state.isAir() || !state.getFluidState().isEmpty()) {
-            level.setBlock(pos, Blocks.DIRT.defaultBlockState(), 3);
-          } else {
-            break; // solid ground reached; the rest of the column is fine
-          }
-        }
-      }
-    }
+  /** Completes an already surveyed starting building through the normal completion hook. */
+  private void buildFoundingCompanion(InstantBuildStructure structure) {
+    structure.buildInstantly();
+    addBuilding(structure.getBuilding());
   }
 
   /** Preserve the original founding fire fallback without ever replacing a new plaza or bell. */
@@ -735,7 +637,8 @@ public class Village {
     if (level == null || getTownCenter() == null) {
       return false;
     }
-    if (Buildings.getByName(buildingName) == null) {
+    if (Buildings.getByName(buildingName) == null
+        || !com.quzzar.kithkyn.village.buildings.CastleLayout.canStart(this, Buildings.getByName(buildingName))) {
       return false;
     }
     StructureTemplate template = level.getStructureManager().getOrCreate(
@@ -801,6 +704,7 @@ public class Village {
    */
   private boolean seatDevBuilding(InstantBuildStructure struct, BlockPos ground) {
     BuildingInfo placedInfo = struct.getBuilding().getInfo();
+    if (placedInfo == null || !com.quzzar.kithkyn.village.buildings.CastleLayout.canStart(this, placedInfo)) return false;
     if (!struct.seatAtOrigin(ground.below(placedInfo == null ? 0 : placedInfo.getSink()), claimGrid)
         .buildInstantly()) {
       return false;
@@ -1495,6 +1399,7 @@ public class Village {
 
   /** Starts the chosen fresh build or on-site reuse path. */
   private boolean startProject(ConstructionChoice choice) {
+      if (!com.quzzar.kithkyn.village.buildings.CastleLayout.canStart(this, choice.info())) return false;
       if (choice.redevelopment() != null) {
         return startRedevelopment(choice);
       }
@@ -2588,19 +2493,29 @@ public class Village {
   /** Number of completed, entirely unoccupied couple rooms available right now. */
   public int getFreeCoupleHomeCount() {
     return getBuildings().stream().filter(building -> !isBeingRebuilt(building.getUUID()))
-        .mapToInt(building -> CoupleHousing.freePairs(building, bedAssignments, unassignedBeds, pair -> true)).sum();
+        .mapToInt(building -> CoupleHousing.freePairs(building, bedAssignments, unassignedBeds, pair -> building.getInfo().getRoomReservation(
+            building.getInfo().getBedLocations().indexOf(pair.first().asLong())) == null)).sum();
   }
 
   /** Free double rooms reserved specifically for a worker and their spouse. */
   public int getFreeWorkerCoupleHomeCount() {
     return getBuildings().stream().filter(building -> !isBeingRebuilt(building.getUUID()))
         .mapToInt(building -> CoupleHousing.freePairs(building, bedAssignments, unassignedBeds,
-            pair -> building.getInfo().isWorkerBed(building.getInfo().getBedLocations().indexOf(pair.first().asLong()))))
+            pair -> building.getInfo().isWorkerBed(building.getInfo().getBedLocations().indexOf(pair.first().asLong()))
+                && building.getInfo().getRoomReservation(
+                    building.getInfo().getBedLocations().indexOf(pair.first().asLong())) == null))
         .sum();
   }
 
   private boolean coupleRoomAllows(Building building, BuildingInfo.CoupleBeds pair, UUID first, UUID second) {
-    return !building.getInfo().isWorkerBed(building.getInfo().getBedLocations().indexOf(pair.first().asLong()))
+    int index = building.getInfo().getBedLocations().indexOf(pair.first().asLong());
+    BuildingInfo.RoomReservation room = building.getInfo().getRoomReservation(index);
+    if (room != null) {
+      return RoleHousing.usable(this, building, room)
+          && (RoleHousing.matches(this, building, room, jobAssignments.get(first))
+              || RoleHousing.matches(this, building, room, jobAssignments.get(second)));
+    }
+    return !building.getInfo().isWorkerBed(index)
         || worksAt(first, building.getUUID()) || worksAt(second, building.getUUID());
   }
 
@@ -2619,10 +2534,51 @@ public class Village {
   /** A worker's spouse may use the same double room without inheriting the worker's occupation. */
   private boolean canKeepWorkplaceBed(UUID resident, BedAssignment bed) {
     JobAssignment job = jobAssignments.get(resident);
+    Building building = getBuilding(bed.getBuildingUUID());
+    BuildingInfo.RoomReservation room = building == null || building.getInfo() == null
+        ? null : building.getInfo().getRoomReservation(bed.getBedIndex());
+    if (room != null) return roleRoomAllows(resident, building, room, job);
     if (HousingPolicy.bedCanHouseJob(bed.getBuildingUUID(), isReservedWorkplaceBed(bed),
         job == null ? null : job.getBuildingUUID())) return true;
     UUID spouse = isReservedCoupleBed(bed) ? residentSpouse(resident) : null;
     return spouse != null && worksAt(spouse, bed.getBuildingUUID());
+  }
+
+  /** The spouse shares a reserved pair, but neither a single room nor the ruling office. */
+  private boolean roleRoomAllows(UUID resident, Building home, BuildingInfo.RoomReservation room,
+      @Nullable JobAssignment prospectiveJob) {
+    if (RoleHousing.matches(this, home, room, prospectiveJob)) return true;
+    UUID spouse = room.beds().size() == 2 ? residentSpouse(resident) : null;
+    return spouse != null && RoleHousing.matches(this, home, room, jobAssignments.get(spouse));
+  }
+
+  /** Gives an incumbent their authored room without changing their station or splitting a household. */
+  private boolean preferRoleRoom(UUID resident) {
+    JobAssignment job = jobAssignments.get(resident);
+    if (job == null) return false;
+    UUID spouse = residentSpouse(resident);
+    BedAssignment current = bedAssignments.get(resident);
+    if (current != null) {
+      Building home = getBuilding(current.getBuildingUUID());
+      BuildingInfo.RoomReservation room = home == null || home.getInfo() == null
+          ? null : home.getInfo().getRoomReservation(current.getBedIndex());
+      if (room != null && roleRoomAllows(resident, home, room, job)
+          && (spouse == null || sharesCoupleHome(resident, spouse))) return true;
+    }
+    for (Building home : getBuildings()) {
+      if (home.getInfo() == null) continue;
+      for (BuildingInfo.RoomReservation room : home.getInfo().getRoomReservations()) {
+        if (!RoleHousing.matches(this, home, room, job) || !RoleHousing.usable(this, home, room)) continue;
+        if (spouse != null) {
+          if (room.beds().size() == 2 && CoupleHousing.assign(resident, spouse, home, bedAssignments, unassignedBeds,
+              pair -> room.beds().contains(pair.first()) && room.beds().contains(pair.second())
+                  && coupleRoomAllows(home, pair, resident, spouse))) return true;
+          continue;
+        }
+        if (CoupleHousing.assignIncumbent(resident, home, room, bedAssignments, unassignedBeds)) return true;
+      }
+    }
+    return false;
   }
 
   /** Releases a staff room when neither spouse works there, through the ordinary bed ledger. */
@@ -2861,7 +2817,11 @@ public class Village {
    * with three merchants and one bed houses one of them and no more.
    */
   private void preferWorkplaceBed(UUID personId, UUID buildingUUID) {
+    if (preferRoleRoom(personId)) return;
     BedAssignment current = bedAssignments.get(personId);
+    if (current != null && getBuildings().stream().filter(home -> home.getInfo() != null)
+        .anyMatch(home -> home.getInfo().getRoomReservations().stream()
+            .anyMatch(room -> RoleHousing.matches(this, home, room, jobAssignments.get(personId))))) return;
     // One spouse's workplace room remains stable even when the other spouse also has a live-in job.
     if (current != null && isReservedCoupleBed(current) && isReservedWorkplaceBed(current)
         && canKeepWorkplaceBed(personId, current)) return;
@@ -2872,6 +2832,9 @@ public class Village {
     for (int i = 0; i < unassignedBeds.size(); i++) {
       BedAssignment candidate = unassignedBeds.get(i);
       if (!candidate.getBuildingUUID().equals(buildingUUID) || isReservedCoupleBed(candidate)) continue;
+      Building candidateBuilding = getBuilding(candidate.getBuildingUUID());
+      if (candidateBuilding == null || candidateBuilding.getInfo() == null
+          || candidateBuilding.getInfo().getRoomReservation(candidate.getBedIndex()) != null) continue;
       if (free < 0 || isReservedWorkplaceBed(candidate)) free = i;
       if (isReservedWorkplaceBed(candidate)) break;
     }
@@ -2908,6 +2871,9 @@ public class Village {
 
     // Worker room ownership follows either spouse's current job, without making both spouses workers.
     releaseInvalidWorkplaceBeds();
+
+    // Role rooms have the first opportunity to house incumbents and their complete households.
+    for (UUID resident : jobAssignments.keySet()) preferRoleRoom(resident);
 
     // Marriage housing uses existing rooms before an ordinary job or single-bed claim can move a spouse.
     if (level != null) {
@@ -3025,7 +2991,9 @@ public class Village {
   public int getFreeBedCountIn(UUID buildingUUID) {
     int count = 0;
     for (BedAssignment bed : unassignedBeds) {
-      if (bed.getBuildingUUID().equals(buildingUUID) && !isReservedCoupleBed(bed)) {
+      Building home = getBuilding(bed.getBuildingUUID());
+      if (bed.getBuildingUUID().equals(buildingUUID) && !isReservedCoupleBed(bed)
+          && home != null && home.getInfo() != null && home.getInfo().getRoomReservation(bed.getBedIndex()) == null) {
         count++;
       }
     }
@@ -3036,8 +3004,10 @@ public class Village {
   public int getFreeReservedBedCountIn(UUID buildingUUID) {
     int count = 0;
     for (BedAssignment bed : unassignedBeds) {
+      Building home = getBuilding(bed.getBuildingUUID());
       if (bed.getBuildingUUID().equals(buildingUUID) && isReservedWorkplaceBed(bed)
-          && !isReservedCoupleBed(bed)) {
+          && !isReservedCoupleBed(bed) && home != null && home.getInfo() != null
+          && home.getInfo().getRoomReservation(bed.getBedIndex()) == null) {
         count++;
       }
     }
@@ -3050,26 +3020,63 @@ public class Village {
    * they are leaving does not.
    */
   public boolean canHouseForJob(UUID personId, UUID targetBuildingUUID) {
+    JobAssignment current = jobAssignments.get(personId);
+    if (current != null && current.getBuildingUUID().equals(targetBuildingUUID)) return canHouseForJob(personId, current);
+    Building building = getBuilding(targetBuildingUUID);
+    if (building != null && building.getInfo() != null) {
+      int station = 0;
+      for (Occupation occupation : building.getInfo().getWorkLocations().values()) {
+        if (canHouseForJob(personId, new JobAssignment(null, occupation, targetBuildingUUID, station++))) return true;
+      }
+    }
+    return canHouseForJob(personId, new JobAssignment(null, Occupation.WANDERER, targetBuildingUUID, -1));
+  }
+
+  /** Admission uses the exact post so a smith or sentry cannot claim the royal bedroom. */
+  public boolean canHouseForJob(UUID personId, JobAssignment targetJob) {
+    UUID targetBuildingUUID = targetJob.getBuildingUUID();
     BedAssignment current = bedAssignments.get(personId);
     UUID spouse = residentSpouse(personId);
-    Building target = getBuilding(targetBuildingUUID);
-    if (spouse != null && target != null && !isBeingRebuilt(targetBuildingUUID)
-        && CoupleHousing.availablePair(personId, spouse, target, bedAssignments, unassignedBeds, pair -> true) != null) {
-      return true;
+    boolean currentMatchesTarget = false;
+    if (current != null) {
+      Building home = getBuilding(current.getBuildingUUID());
+      BuildingInfo.RoomReservation room = home == null || home.getInfo() == null
+          ? null : home.getInfo().getRoomReservation(current.getBedIndex());
+      currentMatchesTarget = room != null ? roleRoomAllows(personId, home, room, targetJob)
+          : current.getBuildingUUID().equals(targetBuildingUUID)
+              || isReservedCoupleBed(current) && spouse != null && worksAt(spouse, current.getBuildingUUID());
     }
-    boolean reserved = current != null && isReservedWorkplaceBed(current);
-    boolean matchesTarget = current != null && (current.getBuildingUUID().equals(targetBuildingUUID)
-        || isReservedCoupleBed(current) && spouse != null && worksAt(spouse, current.getBuildingUUID()));
-    return HousingPolicy.canHouseAtTarget(current != null, reserved, matchesTarget,
-        hasFreeGeneralBed(), hasFreeBedIn(targetBuildingUUID), false);
+    if (HousingPolicy.canHouseAtTarget(current != null, current != null && isReservedWorkplaceBed(current),
+        currentMatchesTarget, hasFreeGeneralBed(), hasFreeBedIn(targetBuildingUUID), false)) return true;
+    for (Building home : getBuildings()) {
+      if (home.getInfo() == null || isBeingRebuilt(home.getUUID())) continue;
+      for (BuildingInfo.RoomReservation room : home.getInfo().getRoomReservations()) {
+        if (!RoleHousing.matches(this, home, room, targetJob) || !RoleHousing.usable(this, home, room)) continue;
+        if (spouse != null && room.beds().size() == 1) continue;
+        if (room.beds().stream().allMatch(bed -> CoupleHousing.available(home.getUUID(),
+            home.getInfo().getBedLocations().indexOf(bed.asLong()), personId, spouse, bedAssignments, unassignedBeds))) {
+          return true;
+        }
+      }
+    }
+    Building target = getBuilding(targetBuildingUUID);
+    return spouse != null && target != null && !isBeingRebuilt(targetBuildingUUID)
+        && CoupleHousing.availablePair(personId, spouse, target, bedAssignments, unassignedBeds, pair -> {
+          BuildingInfo.RoomReservation room = target.getInfo().getRoomReservation(
+              target.getInfo().getBedLocations().indexOf(pair.first().asLong()));
+          return room == null || roleRoomAllows(personId, target, room, targetJob) && RoleHousing.usable(this, target, room);
+        }) != null;
   }
 
   /** Housing gate that recognizes a teenager's valid place in a parent's home. */
   public boolean canHouseForJob(RealPerson person, UUID targetBuildingUUID) {
-    if (person.getLifeStage().isDependentlyHoused()) {
-      return hasDependentHome(person);
-    }
-    return canHouseForJob(person.getUUID(), targetBuildingUUID);
+    return person.getLifeStage().isDependentlyHoused()
+        ? hasDependentHome(person) : canHouseForJob(person.getUUID(), targetBuildingUUID);
+  }
+
+  public boolean canHouseForJob(RealPerson person, JobAssignment targetJob) {
+    return person.getLifeStage().isDependentlyHoused()
+        ? hasDependentHome(person) : canHouseForJob(person.getUUID(), targetJob);
   }
 
   /** Whether a dependent currently has a resident parent's usable home. */

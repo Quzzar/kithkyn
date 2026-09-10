@@ -54,16 +54,6 @@
       1
     ]
   ],
-  "cost": [
-    {
-      "item": "minecraft:oak_log",
-      "count": 42
-    },
-    {
-      "item": "minecraft:cobblestone",
-      "count": 56
-    }
-  ],
   "grants": [
     "GRAIN"
   ]

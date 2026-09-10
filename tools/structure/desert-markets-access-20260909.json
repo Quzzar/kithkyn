@@ -1,6 +1,6 @@
 {
-  "status": "native-and-visually-verified",
-  "description": "Raise Desert market barrels above ground, give each stall clear two-block-high side entrances, and replace thin counter-top trapdoors with top slabs for reliable worker navigation. Awning colors, roof frames and tier footprints are retained.",
+  "status": "superseded",
+  "description": "Historical access experiment. Counter deletion and slab replacement were reverted on September 10. Current markets retain their trapdoor pattern and use corrected closed-panel navigation.",
   "source": "Existing Kithkyn-authored Desert market assets; no CTOV binary assets.",
   "entries": [
     {
@@ -3056,5 +3056,6 @@
       ]
     ],
     "backup": "/Users/quzzar/Projects/kithkyn/run/arid-village-closeout/desert-market-access/gallery-backup-20260910-001053"
-  }
+  },
+  "superseded_by": "tools/structure/market-review-20260910.json"
 }

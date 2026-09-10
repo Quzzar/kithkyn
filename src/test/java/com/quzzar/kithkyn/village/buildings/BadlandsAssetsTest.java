@@ -112,8 +112,8 @@ class BadlandsAssetsTest {
   }
 
   @Test
-  void marketClothChangesVillageColorWithoutTurningEveryAwningIntoAFlag() throws Exception {
-    int primaryCloth = 0, secondaryCloth = 0, whiteCloth = 0;
+  void marketsRetainOriginalColorsAndCompleteCounterTrim() throws Exception {
+    int checkedCloth = 0;
     for (int tier = 1; tier <= 3; tier++) {
       String id = "market_badlands_" + tier;
       BuildingInfo info = BuildingInfo.CODEC.parse(JsonOps.INSTANCE, definition(id)).getOrThrow();
@@ -121,17 +121,34 @@ class BadlandsAssetsTest {
       assertEquals(tier, info.getContainerLocations().size());
       assertTrue(info.getBedLocations().isEmpty());
       assertTrue(info.getVillageIdentitySlots().banners().isEmpty());
-      for (var block : states(template(id)).entrySet()) {
-        if (!block.getValue().getString("Name").endsWith("_wall_banner")) continue;
-        assertEquals("minecraft:white_wall_banner", block.getValue().getString("Name"));
-        if (info.getVillageIdentitySlots().primaryBlocks().contains(block.getKey())) primaryCloth++;
-        else if (info.getVillageIdentitySlots().secondaryBlocks().contains(block.getKey())) secondaryCloth++;
-        else whiteCloth++;
+      assertTrue(info.getVillageIdentitySlots().primaryBlocks().isEmpty());
+      assertTrue(info.getVillageIdentitySlots().secondaryBlocks().isEmpty());
+      Path originalPath = Path.of(Objects.requireNonNull(BadlandsAssetsTest.class.getResource(
+          "/data/kithkyn/structure/market_birch_forest_" + tier + ".nbt")).toURI());
+      Map<BlockPos, CompoundTag> original = states(NbtIo.readCompressed(originalPath, NbtAccounter.unlimitedHeap()));
+      Map<BlockPos, CompoundTag> actual = states(template(id));
+      for (var block : original.entrySet()) {
+        if (!block.getValue().getString("Name").endsWith("_trapdoor")) continue;
+        CompoundTag retained = actual.get(block.getKey());
+        assertNotNull(retained, id + " missing counter trim at " + block.getKey());
+        String name = retained.getString("Name");
+        assertTrue(name.endsWith("_trapdoor") || name.equals("minecraft:barrel"),
+            id + " counter trim replaced with " + name + " at " + block.getKey());
+      }
+      for (var block : actual.entrySet()) {
+        String name = block.getValue().getString("Name");
+        if (!name.endsWith("_wall_banner") && !name.endsWith("_wool")
+            && !name.endsWith("_carpet") && !name.endsWith("_candle")) continue;
+        if (tier == 3 && block.getKey().equals(new BlockPos(11, 1, 11))) {
+          // Aaron added this matching rug while repairing the tier-three stall.
+          assertEquals("minecraft:orange_carpet", name);
+        } else {
+          assertEquals(original.get(block.getKey()), block.getValue(), id + " at " + block.getKey());
+        }
+        checkedCloth++;
       }
     }
-    assertEquals(32, primaryCloth);
-    assertEquals(16, secondaryCloth);
-    assertEquals(30, whiteCloth);
+    assertTrue(checkedCloth > 200, "Audit fabric, decorative banners and candles across all three tiers");
   }
 
   @Test
@@ -166,8 +183,9 @@ class BadlandsAssetsTest {
       for (Path file : files.filter(p -> p.getFileName().toString().contains("_badlands_")).toList()) {
         JsonObject json = JsonParser.parseString(Files.readString(file)).getAsJsonObject();
         BuildingInfo info = BuildingInfo.CODEC.parse(JsonOps.INSTANCE, json).getOrThrow();
-        JsonObject reference = definition(info.getCategory() + "_plains_" + info.getLevel());
-        assertEquals(reference.get("cost"), json.get("cost"), info.getName());
+        assertFalse(json.has("cost"), "Approved Badlands buildings use the shared default prices");
+        assertNotNull(BadlandsAssetsTest.class.getResource("/data/kithkyn/" + BuildingRecipe.DIRECTORY
+            + "/" + BuildingRecipe.idFor(info).getPath() + ".json"), info.getName());
         if (info.getCategory().equals("house")) {
           houseCounts.merge(info.getLevel(), 1, Integer::sum);
           assertFalse(json.has("upgrades_from"), "House alternatives have no authored replacement chain");

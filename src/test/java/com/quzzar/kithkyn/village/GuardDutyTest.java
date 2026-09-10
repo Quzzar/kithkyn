@@ -19,6 +19,19 @@ import net.minecraft.world.level.block.Rotation;
 class GuardDutyTest {
 
   @Test
+  void jailerKeepsAFixedSwordPostInsteadOfBecomingACrossbowSentry() {
+    BuildingInfo info = BuildingInfo.CODEC.parse(JsonOps.INSTANCE, JsonParser.parseString("""
+        {"structure":"castle_desert_1","work_stations":[
+          {"pos":[9,11,17],"occupation":"GUARD","guard_duty":"JAILER"}]}
+        """)).getOrThrow();
+    GuardDuty duty = GuardDuty.fromBuilding(info, BlockPos.ZERO, Rotation.NONE, 0);
+    assertNotNull(duty);
+    assertFalse(duty.ranged());
+    assertFalse(duty.backupSword());
+    assertEquals(new BlockPos(9,11,17), duty.position());
+  }
+
+  @Test
   void captainIsOnlyTheCurrentTownCenterGuardAssignment() {
     var center = java.util.UUID.randomUUID();
     var person = java.util.UUID.randomUUID();

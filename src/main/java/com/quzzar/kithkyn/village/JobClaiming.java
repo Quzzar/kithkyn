@@ -322,7 +322,7 @@ public final class JobClaiming {
     for (Map.Entry<UUID, JobAssignment> entry : village.getJobAssignmentsView().entrySet()) {
       UUID workerId = entry.getKey();
       if (village.keepsWorkDuringRedevelopment(workerId)
-          || village.canHouseForJob(workerId, entry.getValue().getBuildingUUID())) {
+          || village.canHouseForJob(workerId, entry.getValue())) {
         continue; // housable this tick; reconcile or assignment will seat them
       }
       RealPerson person = village.getPerson(level, workerId);
@@ -443,7 +443,7 @@ public final class JobClaiming {
       if (person == null || !person.getLifeStage().canWork()) {
         continue; // not loaded right now; the next pass will see them
       }
-      if (!village.canHouseForJob(person, job.getBuildingUUID())) {
+      if (!village.canHouseForJob(person, job)) {
         continue;
       }
       applicants.add(new Applicant(person, JobAptitudes.score(person.getStatBlock(), job.getOccupation())));
@@ -547,7 +547,7 @@ public final class JobClaiming {
         || !person.getLifeStage().canWork()) {
       return null;
     }
-    if (!village.canHouseForJob(person, job.getBuildingUUID())) {
+    if (!village.canHouseForJob(person, job)) {
       return null; // housing for them went away while the brain deliberated; not seatable now
     }
     return person;
@@ -556,8 +556,8 @@ public final class JobClaiming {
   /** The post to fill, in the model's own terms. The numbered options are the applicants. */
   private static String situationOf(Village village, JobAssignment job) {
     String occupation = job.getOccupation().name().toLowerCase(Locale.ROOT);
-    return "You are the collective judgement of " + village.getName()
-        + ", deciding who from the campfire takes up a trade. The " + occupation
+    return VillageRuler.context(village)
+        + "Decide who from the campfire takes up a trade. The " + occupation
         + "'s post stands open, and these idle folk are all well suited to it. Choose who should"
         + " take it, in keeping with who they are, and give your reason in a few words.";
   }
@@ -629,7 +629,7 @@ public final class JobClaiming {
     for (Map.Entry<UUID, JobAssignment> entry : assignments.entrySet()) {
       UUID workerId = entry.getKey();
       JobAssignment job = entry.getValue();
-      if (isOnCooldown(village, workerId, now)) {
+      if (VillageRuler.hasStableTenure(job.getOccupation()) || isOnCooldown(village, workerId, now)) {
         continue;
       }
       RealPerson worker = village.getPerson(level, workerId);
@@ -656,7 +656,7 @@ public final class JobClaiming {
           if (!village.hasDependentHome(candidate)) {
             continue; // a teenager works from family housing, never a workplace bed
           }
-        } else if (!postBedWillOpen && !village.canHouseForJob(candidate, job.getBuildingUUID())) {
+        } else if (!postBedWillOpen && !village.canHouseForJob(candidate, job)) {
           continue;
         }
         double score = JobAptitudes.score(candidate.getStatBlock(), job.getOccupation());
@@ -702,7 +702,9 @@ public final class JobClaiming {
         }
         JobAssignment firstJob = workers.get(i).getValue();
         JobAssignment secondJob = workers.get(j).getValue();
-        if (firstJob.getOccupation() == secondJob.getOccupation()) {
+        if (VillageRuler.hasStableTenure(firstJob.getOccupation())
+            || VillageRuler.hasStableTenure(secondJob.getOccupation())
+            || firstJob.getOccupation() == secondJob.getOccupation()) {
           continue;
         }
         RealPerson first = village.getPerson(level, firstId);
@@ -744,7 +746,7 @@ public final class JobClaiming {
   private static boolean canHouseAfterReplacement(Village village, RealPerson candidate,
       UUID previousWorker, JobAssignment job) {
     if (candidate.getLifeStage().isDependentlyHoused()) return village.hasDependentHome(candidate);
-    return village.canHouseForJob(candidate, job.getBuildingUUID())
+    return village.canHouseForJob(candidate, job)
         || village.sleepsInReservedSingleBedAt(previousWorker, job.getBuildingUUID());
   }
 

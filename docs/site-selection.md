@@ -268,7 +268,7 @@ preflight and delayed commit do not.
 The search deliberately reuses footprint scoring rather than adding a second slope policy.
 The [upstream comparison](research/forest-village-worldgen.md) informed the separation of
 biome eligibility, spacing and terrain checks; nearby retries are our own adaptation for a
-living village's three-building founding layout.
+living village's complete founding layout.
 
 ## What stands over the roof
 
@@ -279,20 +279,18 @@ borders. Placement, claims, site searches and upgrades use the same envelope wit
 padding; the one- or two-block walking lane is separate. Odd and even dimensions keep
 their exact extent, including negative offsets after rotation. Sunken templates still prepare
 the chosen surface plane; their underground blocks and explicit air are placed afterward.
-`FoundingLayout` first tries inward-facing companions two blocks away, centered on all four edges using the shared
-`TownLayout` frontage geometry. Unlike later growth, founding never offers off-center start/end
-alignments: each companion's footprint midpoint matches the center's midpoint along that edge,
-within the unavoidable half-block for mixed odd/even widths. It scores local bounds at the
-actual world ground origin before committing any claims.
-If those sites cannot form a pair, founding tries other rotations at two blocks, inward
-fronts at one block, then other rotations at one block. The actual gap between the companions
-counts too: two roomy center approaches do not disguise a one-block corner between them.
-Among pairs with the same spacing and inward-front preference, the lowest terrain cost wins,
-preferring adjacent sides on ties. Existing structures retain their placement; this changes
-new sites. In-place upgrades retain the source building's rotation and mine-shaft alignment.
-Impossible sites never rank as zero-cost sites. Only chosen footprints are cleared: no union
-rectangle or extra flank margin. If two safe sites are unavailable, founding leaves the world
-unchanged and asks for a more open spot.
+`FoundingLayout` sends every starting companion through `LocationValidator`, the same
+search used by normal construction. Its read-only placement context starts with the center
+and adds each accepted footprint as both a reserved claim and a frontage anchor. Two-block
+lanes and inward fronts remain preferred, with tight lanes and other rotations available.
+There is no separate centered-pair solver, fixed side assignment, or shared ground height.
+The center definition may request additional starting homes using `starting_buildings`.
+
+Every starting building must fit before any terrain or ownership is changed. The final
+commit surveys all sites again and applies the same `SitePreparation` queues as builders,
+at each site's own unsunk ground elevation. Protected edits to a companion or home invalidate
+the entire plan. Only the chosen footprints are prepared; no shared rectangle is flattened.
+In-place upgrades retain the source building's rotation and mine-shaft alignment.
 
 Ground preparation stops at its headroom, but completed buildings also use the wall's natural
 vegetation clearance. `SiteClearance` expands the actual footprint by three horizontal blocks

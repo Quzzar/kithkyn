@@ -64,6 +64,7 @@ public class GuardPatrolGoal extends Goal {
   private BlockPos lookAt;
   private int legIndex;
   private int legTicks;
+  private int legTimeout = LEG_TIMEOUT_TICKS;
   private long resumeAt;
 
   public GuardPatrolGoal(RealPerson guard) {
@@ -116,7 +117,7 @@ public class GuardPatrolGoal extends Goal {
     if (lookAt != null) {
       guard.getLookControl().setLookAt(lookAt.getX() + 0.5D, lookAt.getY() + 1.0D, lookAt.getZ() + 0.5D);
     }
-    if (target.distSqr(guard.blockPosition()) <= ARRIVED_SQR || legTicks >= LEG_TIMEOUT_TICKS) {
+    if (target.distSqr(guard.blockPosition()) <= ARRIVED_SQR || legTicks >= legTimeout) {
       nextLeg();
     } else if (guard.getNavigation().isDone()) {
       // A path that finished short of a ring point (a doorway, a fence) is
@@ -163,6 +164,24 @@ public class GuardPatrolGoal extends Goal {
     lap.clear();
     legIndex = 0;
     lookAt = null;
+    legTimeout = LEG_TIMEOUT_TICKS;
+
+    Building castle = guard instanceof RealPerson person
+        ? com.quzzar.kithkyn.village.GuardDuty.assignedCastle(person) : null;
+    if (castle != null) {
+      // Authored rounds include stairs between floors, so allow a complete traversal.
+      legTimeout = 600;
+      BlockPos origin = BlockPos.of(castle.getOriginLocation());
+      lookAt = BlockPos.of(castle.getCenterLocation());
+      List<BlockPos> route = castle.getInfo().getCastleLayout().patrolPoints();
+      if (!route.isEmpty()) {
+        int first = guard.getRandom().nextInt(route.size());
+        for (int index = 0; index < route.size(); index++) {
+          lap.add(origin.offset(route.get((first + index) % route.size()).rotate(castle.getRotation())));
+        }
+      }
+      return;
+    }
 
     List<Building> buildings = new ArrayList<>(village.get().getBuildings());
     if (buildings.isEmpty()) {

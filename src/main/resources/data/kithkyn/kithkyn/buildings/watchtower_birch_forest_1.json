@@ -27,16 +27,6 @@
     ]
   ],
   "containers": [],
-  "cost": [
-    {
-      "item": "minecraft:oak_log",
-      "count": 24
-    },
-    {
-      "item": "minecraft:cobblestone",
-      "count": 40
-    }
-  ],
   "grants": [
     "PROTECTION",
     "RANGED_GUARD_POSTS"

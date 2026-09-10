@@ -316,8 +316,8 @@ public final class VillageTrading {
   }
 
   private static String situationOf(Village village, ServerLevel level) {
-    return "You are the collective judgement of " + village.getName()
-        + ", a settlement of " + village.getPopulation().size() + " people with "
+    return com.quzzar.kithkyn.village.VillageRuler.context(village)
+        + "The settlement has " + village.getPopulation().size() + " people with "
         + Treasury.balance(village, level) + " emeralds in the market chest. "
         + "The bank pays badly and charges dearly, but it is always open and asks no favours. "
         + "Choose one trade to make today, or none.";

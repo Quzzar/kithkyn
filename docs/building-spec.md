@@ -73,45 +73,36 @@ apart: if you add a variant above, the totals below are what change.
 
 ## How a village starts
 
-A village founds with **three buildings**, placed free:
+Every village starts with its center, mine and storehouse, placed free. A center can also
+provide an ordered `starting_buildings` list of exact building ids, including its mine,
+storehouse and any starting homes. Repeat a home id to request several copies. Omission
+uses that style's mine and storehouse. Every named definition must be loaded and belong
+to the village's regional catalog; a missing home refuses the complete founding set.
 
-| Building | Contents |
-| --- | --- |
-| `village_center` | 4 beds, a chest of the campers' own, a campfire and a bell outside, one BUILDER station |
-| `mine` | the MINER station |
-| `storehouse` | two barrels |
+Starting beds and jobs come from those authored buildings. A bedless Jungle center uses
+four separate one-person huts for its four founding workers. Centers with accommodation
+can keep it inside the center. Normal bed registration, job assignment and campfire arrivals
+apply; founding does not spawn a separate crew or simulate paid construction projects.
 
-That is the whole camp. Four beds are the entire starting housing cap, so a camp supports four
-people until it builds a house. The storehouse's two barrels are the entire village inventory;
-the camp circle's chest belongs to the four who sleep there. Two
-jobs exist, builder and miner, so at most two of the four people are employed and the rest idle
-at the fire where the campfire model wants them
-([population-and-labor.md](population-and-labor.md)).
+### Founding uses ordinary construction placement
 
-**A new camp is defenceless.** No GUARD station exists anywhere in the founding set, which is
-deliberate: danger is the pressure that makes the first watchtower worth building, and deaths
-already feed attractiveness, so the cost of having no guard is priced in without a rule saying so.
+The requested location anchors the center's authored meeting point. After the center fits,
+each additional starting building runs the same location search as later construction.
+The survey reserves its footprint and offers it as an anchor for the next building, so
+homes and services can form streets and courtyards with natural sprawl. Buildings prefer
+two-block gaps and inward fronts, with one-block gaps and other rotations when needed.
+They can align with any previously planned building rather than fixed sides of the center.
 
-### Founding shares a ground plane, not a cleared rectangle
+Each building uses its own local ground elevation and applies its authored sink once.
+The same terrain-preparation queues as normal construction clear and fill only its footprint.
+Founding applies this work immediately, without charging the recipe. Ground between buildings
+stays natural. Normal completion hooks register amenities and clear natural overhead vegetation.
 
-The requested location anchors the center's actual campfire. All three founding buildings
-share that surface elevation, with each definition's basement sink applied separately.
-Their tight authored footprints contain no capture border. Only those three footprints are
-leveled and claimed; the space between them and around the cluster stays natural.
-
-Founding reuses growth's frontage geometry to try north, east, south and west, with three
-edge alignments per side. Both companion entrances face inward. Among safe pairs on distinct
-sides, the least combined clearing/cut/fill cost wins; adjacent sides win an equal-cost tie.
-Exactly one walking block separates footprints. Rotated even/odd dimensions and negative
-coordinates use their inclusive edges, not rounded half-widths.
-
-Trials use scratch claims and loaded terrain. Protected blocks, other village claims and
-sites beyond the ordinary companion earthwork budget are refused. If no complete layout
-fits, founding explains the refusal without creating an empty village or clearing anything.
-This is necessarily pickier than placing one later building: a nearby open spot may work
-where the chosen point does not. Natural generation attempts each site once per server session
-so refused ground does not trigger a naming/placement loop; the manual command can retry after
-terrain edits. Existing villages are not relocated by this change.
+The site qualifies only when the center and **every** starting building fit. Planning writes
+no terrain, buildings or claims. Immediately before committing, all footprints and preparation
+queues are checked again, including ownership and newly placed containers. Failure leaves the
+whole site unchanged. Manual founding may load the bounded search area; natural founding
+and delayed commits only inspect already loaded terrain. Existing villages are not relocated.
 
 ## What is actually needed
 
@@ -171,10 +162,22 @@ remain ordinary construction choices.
 
 These are two separate questions and the spec keeps them separate.
 
-**Cost is a recipe.** A flat list of items and counts, exactly the `cost` array the datapack
-already uses. Nothing abstract, no points, no derived unit. The recipes below are the plains
-variant of each building, and since 2026-09-01 every other variant's as well: a building costs
-the same whatever family it is built in.
+**Cost is a shared recipe.** One datapack file per category and level under
+`data/kithkyn/kithkyn/construction_recipes/<category>_<level>.json` contains a `cost` array
+of item IDs and positive counts. For example, `watchtower_1.json` contains
+`{"cost":[{"item":"minecraft:oak_log","count":24},{"item":"minecraft:cobblestone","count":40}]}`.
+A building definition normally omits `cost`; its category and level select the default recipe
+for all named designs and regional styles. Override this shared recipe once in a datapack to
+change every building that uses the default. Geometry, beds, workstations and identity remain regional.
+A deliberate per-building exception may include its own `cost` array in the building JSON. This
+replaces the complete recipe; it does not add to or merge with the default. It uses exactly the same
+validation and construction payment path. An explicit override can price a category with no default.
+All shipped definitions currently use the shared defaults.
+The loader resolves buildings and recipes together before publishing a reload. A missing default
+rejects a building that has no override. An invalid explicit override rejects the building instead
+of falling back to the default or becoming free. Recipe lists must be nonempty and cannot contain
+air, unknown items, repeated items, or nonpositive counts.
+There are no points or derived currency.
 
 **Each recipe describes its completed structure.** Reusing the exact building named by
 `upgrades_from` pays only the positive material increase from predecessor to target. Constructing
@@ -186,10 +189,12 @@ blindly from the target.
 
 Standalone definitions have no predecessor chain, so their fresh cost is exactly their own recipe.
 
-**Every building is now priced.** The recipes in the tables below are the original
-sketch; what actually ships is derived from each structure's own block count, and
-three rules hold it together. Each is a way a catalogue quietly becomes
-unbuildable:
+**Every building is priced.** The tables below are historical design sketches; the 29 shared
+recipe files provide the shipped defaults. The 2026-09-10 consolidation preserved all quantities and changed
+the church, bakery and tavern's stone-brick demands to generic cobblestone. Their decorative
+masonry no longer requires a stoneworks to build, and changing a regional template never changes
+its price. Stoneworks production and ordinary crafting recipes are unaffected. Three rules keep
+construction reachable:
 
 - **Only name what a worker puts into storage.** The miner (stone pickaxe) yields
   cobblestone, sand, sandstone and iron; the lumberjack yields logs and oak
@@ -210,20 +215,18 @@ unbuildable:
 - **Never price a building in what it alone produces.** The lumberjack is the only
   source of planks, so it costs cobblestone and nothing else: a village that has
   only founded, and so has only a miner, must be able to build it. The stoneworks
-  likewise costs cobblestone in *every* variant, including the snowy and desert
-  ones built from the very blocks it exists to make.
-- **One recipe per building, whatever its family.** Every variant of a category
-  and level costs exactly what its plains variant costs, in generic wood and
-  stone, so a desert or snowy village pays no differently and no recipe waits on a
-  material only its own family produces. The loader warns when a datapack breaks
-  this, because the planner and the builder both take the price of a building to
-  be the price of its category.
+  costs 9 logs and 12 cobblestone in every variant, including the snowy and desert
+  ones built from the very blocks it exists to make. It needs no cut stone of its own.
+- **Share the default recipe across families.** Variants of a category and level normally
+  resolve one recipe in generic wood and stone. A deliberate authored exception may replace
+  that price for an individual building; regional exports must preserve that explicit choice.
+  Do not copy default recipes into every building, because those copies would stop following tuning.
 
 Which gives the bootstrap order a village actually follows: found (centre, mine,
 storehouse, free) → miner digs cobblestone → **lumberjack**, in cobblestone alone
-→ logs and planks → everything timber → **stoneworks**, in cobblestone → stone
-brick for the few buildings priced in it. A desert mine cuts through sand and
-sandstone before it reaches stone, and sandstone pays a stone cost like any
+→ logs and planks → everything timber → **stoneworks**, in logs and cobblestone, for
+cut-stone production. Basic construction no longer depends on its decorative stone bricks.
+A desert mine cuts through sand and sandstone before it reaches stone, and sandstone pays a stone cost like any
 cobblestone, so a desert camp bootstraps on the same schedule.
 
 **Upgrading costs more than sprawling**, by construction. Two level-1 houses come
@@ -239,12 +242,12 @@ one that nearly can, is [site-selection.md](site-selection.md).
 
 **A variant is a family's shape of the same building** (decided 2026-09-01, superseding
 [#50](https://github.com/Quzzar/kithkyn/issues/50), which had made variants competing
-recipes). Every variant of a category and level costs the same recipe, the plains one, in
-generic wood and stone. Which variant a village raises is settled once, at founding, by the
+recipes). Variants of a category and level use the shared construction recipe by default
+in generic wood and stone, with deliberate per-building price exceptions allowed. Which variant a village raises is settled once, at founding, by the
 biome it stands in ([buildings.md](buildings.md), "Regional variants and biomes"), and kept
 for its life, so a village reads as one place. The planner never chooses between variants: it
 sees one building per category, the village's own family or plains where that family has no
-such building, and the same recipe whichever it is.
+such building, with the shared default price unless an explicit exception is authored.
 
 Two things follow:
 

@@ -37,3 +37,24 @@ We welcome contributions! If you're interested in improving the Kithkyn mod, ple
 With the recent developments in generative AI, I plan to revisit this mod.
 
 Kithkyn is not affiliated with Mojang or Microsoft.
+
+## Credits and inspiration
+
+Kithkyn's village design work draws inspiration from the Minecraft building community.
+Special thanks to the projects and creators whose structures, architectural styles, and
+layouts have helped shape our designs and reference galleries:
+
+- [Towns and Towers](https://www.curseforge.com/minecraft/mc-mods/towns-and-towers), by
+  Biban_Auriu, original author Kubek, and maintainer Cristelknight, along with its contributing
+  builders, including William Wythers.
+- [Dungeons and Taverns](https://www.curseforge.com/minecraft/mc-mods/dungeon-and-taverns),
+  by Nova_Wostra, with artist Konci and contributor WhityLee.
+- [ChoiceTheorem's Overhauled Village](https://www.curseforge.com/minecraft/mc-mods/choicetheorems-overhauled-village),
+  by ChoiceTheorem and contributors.
+- [Unstructured](https://www.curseforge.com/minecraft/mc-mods/unstructured), by
+  Cristelknight, Delta_Kaktus, and Biban_Auriu.
+
+Thank you for the creativity and care you bring to Minecraft. If you're one of these creators
+and would like us to alter our designs further or update how your work is credited, please
+[reach out through our issue tracker](https://github.com/Quzzar/kithkyn/issues).
+We're happy to listen and work with you on changes.

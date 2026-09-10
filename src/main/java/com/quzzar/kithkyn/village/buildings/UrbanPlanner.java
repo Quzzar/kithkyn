@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.UUID;
 
 import com.quzzar.kithkyn.Kithkyn;
 import com.quzzar.kithkyn.llm.LlmDecision;
@@ -88,6 +89,7 @@ public class UrbanPlanner {
    */
   private static boolean isRedundant(Village village, ConstructionChoice choice) {
     BuildingInfo info = choice.info();
+    if (!CastleLayout.canStart(village, info)) return true;
     if (info.getConditionalGrants().isEmpty()) {
       java.util.Set<Occupation> openings = village.claimableJobs().stream()
           .map(post -> post.getOccupation()).collect(java.util.stream.Collectors.toSet());
@@ -273,10 +275,11 @@ public class UrbanPlanner {
     }
     Kithkyn.LOGGER.debug("Village '{}' is choosing among {} it can build now, {} to work toward, plus waiting. Situation: {}",
         village.getName(), buildable.size(), goals.size(), situation);
+    Optional<UUID> ruler = com.quzzar.kithkyn.village.VillageRuler.speakerId(village);
     var decision = includesRedevelopment
         ? LlmService.get().decideStrict("what " + village.getName() + " builds next", situation, options)
         : LlmService.get().decide("what " + village.getName() + " builds next", situation, options);
-    return decision.thenApplyAsync(answer -> pick(village, buildable, goals, fallback, answer, stock),
+    return decision.thenApplyAsync(answer -> pick(village, buildable, goals, fallback, answer, stock, ruler),
         village.getLevel().getServer());
   }
 
@@ -295,6 +298,7 @@ public class UrbanPlanner {
    */
   @Nullable
   private static ConstructionChoice preferredChoice(Village village, BuildingInfo info) {
+    if (!CastleLayout.canStart(village, info)) return null;
     if (BuildingUpgrade.standingSource(village, info) != null) {
       return new ConstructionChoice(info, ConstructionMode.UPGRADE);
     }
@@ -308,6 +312,7 @@ public class UrbanPlanner {
   /** Keeps a saved choice stable, falling back to a legal fresh build if its source disappears. */
   @Nullable
   private static ConstructionChoice goalChoice(Village village, BuildingInfo info) {
+    if (!CastleLayout.canStart(village, info)) return null;
     RedevelopmentPlan redevelopment = VillageGoal.redevelopment(village);
     if (redevelopment != null) {
       return com.quzzar.kithkyn.configuration.KithkynConfig.RedevelopmentEnabled
@@ -395,6 +400,7 @@ public class UrbanPlanner {
     if (com.quzzar.kithkyn.configuration.KithkynConfig.RedevelopmentEnabled) {
       RedevelopmentPlanner.Search search = RedevelopmentPlanner.find(village);
       List<ConstructionChoice> materialViable = search.choices().stream()
+          .filter(choice -> CastleLayout.canStart(village, choice.info()))
           .filter(choice -> hasMaterialsToConstruct(stock, choice)
               || withinReach(village, stock, choice)
                   && !choice.info().getName().equals(VillageGoal.stalled(village, village.getVillageTime())))
@@ -421,7 +427,7 @@ public class UrbanPlanner {
   }
 
   private static ConstructionChoice pick(Village village, List<Candidate> buildable, List<Candidate> goals,
-      Candidate fallback, Optional<LlmDecision> decision, Map<Item, Integer> stock) {
+      Candidate fallback, Optional<LlmDecision> decision, Map<Item, Integer> stock, Optional<UUID> ruler) {
     if (decision.isEmpty()) {
       for (Candidate candidate : java.util.stream.Stream.concat(buildable.stream(), goals.stream()).toList()) {
         if (candidate.choice().redevelopment() != null) {
@@ -454,6 +460,8 @@ public class UrbanPlanner {
         Candidate goal = goals.get(goalIndex);
         VillageGoal.set(village, goal.choice(), chosen.reason(),
             shortfall(village, goal.choice(), stock), village.getVillageTime());
+        com.quzzar.kithkyn.village.VillageRuler.rememberDecision(village, ruler,
+            "I decided to save for " + goalInfo.displayLabel() + ": " + chosen.reason());
         if (goal.choice().redevelopment() != null) {
           village.recordRedevelopmentEvent("saving", goal.choice().redevelopment(), 1);
         }
@@ -464,6 +472,8 @@ public class UrbanPlanner {
     if (index == buildable.size()) {
       Kithkyn.LOGGER.info("Village '{}' decided to build nothing for now: {}",
           village.getName(), chosen.reason());
+      com.quzzar.kithkyn.village.VillageRuler.rememberDecision(village, ruler,
+          "I decided to wait before ordering more construction: " + chosen.reason());
       return null;
     }
     if (index < 0 || index >= buildable.size()) {
@@ -481,7 +491,8 @@ public class UrbanPlanner {
   /** What the village is short of right now, in the model's own terms, as facts. */
   private static String situationOf(Village village, Map<Item, Integer> stock) {
     StringBuilder situation = new StringBuilder(
-        VillageContextSnapshot.capture(village, stock).plannerBriefing());
+        com.quzzar.kithkyn.village.VillageRuler.context(village))
+        .append(VillageContextSnapshot.capture(village, stock).plannerBriefing());
     if (!producesFood(village)) {
       situation.append("No building grows or gathers food yet. ");
     }

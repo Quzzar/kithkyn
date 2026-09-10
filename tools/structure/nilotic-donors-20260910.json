@@ -1,0 +1,5170 @@
+{
+  "schemaVersion": 1,
+  "recorded": "2026-09-10",
+  "purpose": "Donor references for the floodplain village roles still open: farm fields and pens, watchtowers, wells, fountains and pools from every culture in the installed jars.",
+  "status": "placed_and_verified",
+  "privateCatalog": "run/nilotic-showcase/catalog.json",
+  "privatePreparedTemplates": "run/nilotic-showcase/prepared",
+  "entry": [
+    9153.5,
+    230,
+    986.5
+  ],
+  "exhibitBounds": [
+    9159,
+    228,
+    1002,
+    9702,
+    280,
+    1620
+  ],
+  "concourse": {
+    "from": [
+      8990,
+      229,
+      982
+    ],
+    "to": [
+      9709,
+      229,
+      990
+    ],
+    "connectsTo": "Existing Unstructured showcase concourse ending at x=8989"
+  },
+  "preservation": "The style, dry-biome and jungle galleries retain their current geometry and edits.",
+  "counts": {
+    "exhibits": 247,
+    "rows": 38,
+    "wings": 3,
+    "nativeCheckedBlocks": 93919,
+    "families": {
+      "tt_farms": 37,
+      "ctov_farms": 57,
+      "vanilla_farms": 24,
+      "dnt_farms": 17,
+      "terralith_farms": 2,
+      "tt_towers": 15,
+      "ctov_towers": 11,
+      "dnt_towers": 11,
+      "ctov_wells": 18,
+      "dnt_wells": 19,
+      "tt_wells": 2,
+      "yung_wells": 9,
+      "terralith_water": 2,
+      "vanilla_fountains": 2,
+      "ctov_pools": 20,
+      "dnt_pools": 1
+    }
+  },
+  "sources": [
+    {
+      "jar": "minecraft_1.21.1_client.jar",
+      "sha256": "499f6897d1837516680f3114072d8106e11c9adcd933fe5cf051b551089b0c99"
+    },
+    {
+      "jar": "Terralith_1.21.x_v2.6.2.jar",
+      "sha256": "d38bd304897731b42f6c013cdc07e082e74411e80c74aabcee385251beb3b546"
+    },
+    {
+      "jar": "YungsExtras-1.21.1-NeoForge-5.1.1.jar",
+      "sha256": "0cd26474e514f5dc3114aaf5ec7e049bcd285f0c5db191bb45223193f35df70d"
+    },
+    {
+      "jar": "[Neoforge]ctov-3.6.3.jar",
+      "sha256": "4815b19b83541f09cba556e222612bc5ddcc31f7c4ba2198f4b4d6376cca8b2e"
+    },
+    {
+      "jar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+      "sha256": "1db28e89e0cb76aebe9e40955d1866e8ac1779575d15c2a1e250ac804a762d05"
+    },
+    {
+      "jar": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar",
+      "sha256": "04e3a5f6e9aa83b2f305e836ed6bceb656c7a6cae8d945415fd8d55bc2450696"
+    }
+  ],
+  "selection": {
+    "included": "Every compatible standalone building, center, tower, hut, tavern ground and useful decoration from the floodplain, swamp and mangrove families of the installed source jars.",
+    "curation": "Farm fields and pens, watchtowers, wells, fountains and pools from every culture in the installed jars, as donors for the floodplain catalog roles still open.",
+    "leftOut": "",
+    "duplicates": "Exact source duplicates are retained once. Structurally different buildings remain available.",
+    "omitted": "Generation paths, empty anchors, villager and mob markers, brewing-stand inserts and hut support posts."
+  },
+  "displayPreparation": [
+    "Native Minecraft NBT read/write and round-trip verification",
+    "Resolve jigsaws to final block states",
+    "Clear loot, entity-spawn and executable command data",
+    "Retain hanging decoration through explicit placement commands",
+    "Persistent leaves and contained fluid basins",
+    "Separate labeled footprints with walkable concourse and click-through navigation"
+  ],
+  "verification": {
+    "offline": "run/nilotic-showcase/catalog.json",
+    "live": "run/nilotic-showcase/verification-summary.json",
+    "screenshots": "run/nilotic-showcase/screenshots-plan.json",
+    "renderedViews": "run/nilotic-showcase/screenshots/client/screenshots",
+    "worldBackup": "/Users/quzzar/Projects/kithkyn/run/backups/before-nilotic-showcase-20260910-082611"
+  },
+  "wings": [
+    {
+      "letter": "NG",
+      "title": "FARMS & FIELDS",
+      "x": 9161,
+      "endZ": 1626,
+      "rows": [
+        "NG01",
+        "NG02",
+        "NG03",
+        "NG04",
+        "NG05",
+        "NG06",
+        "NG07",
+        "NG08",
+        "NG09",
+        "NG10",
+        "NG11",
+        "NG12",
+        "NG13",
+        "NG14",
+        "NG15",
+        "NG16",
+        "NG17",
+        "NG18",
+        "NG19"
+      ]
+    },
+    {
+      "letter": "NH",
+      "title": "WATCHTOWERS",
+      "x": 9353,
+      "endZ": 1257,
+      "rows": [
+        "NH01",
+        "NH02",
+        "NH03",
+        "NH04",
+        "NH05",
+        "NH06",
+        "NH07"
+      ]
+    },
+    {
+      "letter": "NI",
+      "title": "WELLS & POOLS",
+      "x": 9545,
+      "endZ": 1332,
+      "rows": [
+        "NI01",
+        "NI02",
+        "NI03",
+        "NI04",
+        "NI05",
+        "NI06",
+        "NI07",
+        "NI08",
+        "NI09",
+        "NI10",
+        "NI11",
+        "NI12"
+      ]
+    }
+  ],
+  "rows": [
+    {
+      "id": "NG01",
+      "title": "Towns & Towers / Farms & Pens by Culture (1/5)",
+      "family": "tt_farms",
+      "mod": "Towns & Towers",
+      "origin": [
+        9168,
+        230,
+        1010
+      ],
+      "bounds": [
+        9159,
+        228,
+        1002,
+        9315,
+        238,
+        1036
+      ],
+      "entries": [
+        {
+          "id": "NG01.1",
+          "label": "Mediterranean Fort Field 1",
+          "source": "data/kaisyn/structure/outpost/forts/exclusives/mediterranean/fields/field_1.nbt",
+          "sourceJar": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar",
+          "sourceSha256": "c6be3519bf5eb3048037338b7dd21ae735133753bf496690fad5d3abb8e93092",
+          "origin": [
+            9168,
+            230,
+            1010
+          ],
+          "size": [
+            14,
+            3,
+            24
+          ]
+        },
+        {
+          "id": "NG01.2",
+          "label": "Mediterranean Fort Field 2",
+          "source": "data/kaisyn/structure/outpost/forts/exclusives/mediterranean/fields/field_2.nbt",
+          "sourceJar": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar",
+          "sourceSha256": "c271874989de1fbd42ecc34eb20d89bf76c9c02b81e6ec7086dac63e2a9e539e",
+          "origin": [
+            9190,
+            230,
+            1010
+          ],
+          "size": [
+            13,
+            5,
+            18
+          ]
+        },
+        {
+          "id": "NG01.3",
+          "label": "Romanian Small Farm 1",
+          "source": "data/kaisyn/structure/village/birch_forest_romanian/houses/birch_forest_small_farm_1.nbt",
+          "sourceJar": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar",
+          "sourceSha256": "59bba744f05510a052ebd2da47be059d9a5b4734534a7b76538339b63c39a0a2",
+          "origin": [
+            9211,
+            230,
+            1010
+          ],
+          "size": [
+            9,
+            4,
+            9
+          ]
+        },
+        {
+          "id": "NG01.4",
+          "label": "Classic Large Farm 1",
+          "source": "data/kaisyn/structure/village/exclusives/classic/houses/classic_large_farm_1.nbt",
+          "sourceJar": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar",
+          "sourceSha256": "b5f2b08fe46fd249feda4407533bc3ac2887d106ce5eaf5ba865da8ecf724eb6",
+          "origin": [
+            9228,
+            230,
+            1010
+          ],
+          "size": [
+            9,
+            5,
+            15
+          ]
+        },
+        {
+          "id": "NG01.5",
+          "label": "Classic Small Farm 1",
+          "source": "data/kaisyn/structure/village/exclusives/classic/houses/classic_small_farm_1.nbt",
+          "sourceJar": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar",
+          "sourceSha256": "a058c45934161ce311d6b3f77c7cada1e0a1302d869687623fe23301bccabb3d",
+          "origin": [
+            9245,
+            230,
+            1010
+          ],
+          "size": [
+            10,
+            5,
+            9
+          ]
+        },
+        {
+          "id": "NG01.6",
+          "label": "Iberian Garden 1",
+          "source": "data/kaisyn/structure/village/exclusives/iberian/houses/iberian_garden_1.nbt",
+          "sourceJar": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar",
+          "sourceSha256": "199a74a48a92bd76b8ffd3821d3477ce7aa805f7129286652f34cd1c2234b93c",
+          "origin": [
+            9263,
+            230,
+            1010
+          ],
+          "size": [
+            8,
+            5,
+            7
+          ]
+        },
+        {
+          "id": "NG01.7",
+          "label": "Mediterranean Small Garden 1",
+          "source": "data/kaisyn/structure/village/exclusives/mediterranean/houses/corner/med_small_garden_1.nbt",
+          "sourceJar": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar",
+          "sourceSha256": "8419002dabc00f47b87900287f99994bbb6f8d88c9dd59aae9d6e664520feeda",
+          "origin": [
+            9279,
+            230,
+            1010
+          ],
+          "size": [
+            5,
+            5,
+            5
+          ]
+        },
+        {
+          "id": "NG01.8",
+          "label": "Piglin Animal Pen 1",
+          "source": "data/kaisyn/structure/village/exclusives/piglin/houses/piglin_animal_pen_1.nbt",
+          "sourceJar": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar",
+          "sourceSha256": "4a4d58131d905b35b847cc12ca4f9aa0c27970d2d5d03a9cedf31ecf2afb0380",
+          "origin": [
+            9292,
+            230,
+            1010
+          ],
+          "size": [
+            9,
+            6,
+            8
+          ]
+        },
+        {
+          "id": "NG01.9",
+          "label": "Trader Camp Llama Pen 1",
+          "source": "data/kaisyn/structure/village/exclusives/wandering_trader_camp/side/trader_llama_pen_1.nbt",
+          "sourceJar": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar",
+          "sourceSha256": "c796604a668ee488fc6906a05914360ff077c721acd18b6d6d6f8e1130bafce6",
+          "origin": [
+            9309,
+            230,
+            1010
+          ],
+          "size": [
+            4,
+            6,
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "id": "NG02",
+      "title": "Towns & Towers / Farms & Pens by Culture (2/5)",
+      "family": "tt_farms",
+      "mod": "Towns & Towers",
+      "origin": [
+        9168,
+        230,
+        1054
+      ],
+      "bounds": [
+        9159,
+        228,
+        1046,
+        9307,
+        238,
+        1068
+      ],
+      "entries": [
+        {
+          "id": "NG02.1",
+          "label": "Trader Camp Llama Pen 2",
+          "source": "data/kaisyn/structure/village/exclusives/wandering_trader_camp/side/trader_llama_pen_2.nbt",
+          "sourceJar": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar",
+          "sourceSha256": "3be67be13f225f54d24712c4c648b6422a50a11c6b1f1ec32352513613a2c6c6",
+          "origin": [
+            9168,
+            230,
+            1054
+          ],
+          "size": [
+            4,
+            6,
+            5
+          ]
+        },
+        {
+          "id": "NG02.2",
+          "label": "Trader Camp Llama Pen 3",
+          "source": "data/kaisyn/structure/village/exclusives/wandering_trader_camp/side/trader_llama_pen_3.nbt",
+          "sourceJar": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar",
+          "sourceSha256": "fb612f3d6c76f2069e7b63b780d4cf9385ade52553b37f6d38730ff68bb9f865",
+          "origin": [
+            9180,
+            230,
+            1054
+          ],
+          "size": [
+            4,
+            6,
+            5
+          ]
+        },
+        {
+          "id": "NG02.3",
+          "label": "Japanese Animal Pen 1",
+          "source": "data/kaisyn/structure/village/flower_forest_japanese/houses/flower_forest_animal_pen_1.nbt",
+          "sourceJar": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar",
+          "sourceSha256": "d889a840e265dcbe2ef98c880805c8488737e04e300ff7fe160235e9abf8c3cc",
+          "origin": [
+            9192,
+            230,
+            1054
+          ],
+          "size": [
+            6,
+            3,
+            7
+          ]
+        },
+        {
+          "id": "NG02.4",
+          "label": "Japanese Animal Pen 2",
+          "source": "data/kaisyn/structure/village/flower_forest_japanese/houses/flower_forest_animal_pen_2.nbt",
+          "sourceJar": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar",
+          "sourceSha256": "a0b969d52ca65b0dfce4efd452e3d70b9dda28e35136fd7749577ab1b0d23525",
+          "origin": [
+            9206,
+            230,
+            1054
+          ],
+          "size": [
+            5,
+            3,
+            6
+          ]
+        },
+        {
+          "id": "NG02.5",
+          "label": "Japanese Animal Pen 3",
+          "source": "data/kaisyn/structure/village/flower_forest_japanese/houses/flower_forest_animal_pen_3.nbt",
+          "sourceJar": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar",
+          "sourceSha256": "338ff34f7159c66d1ac6eb0d6ff867f6b9740e49b91914f04dd65ba2c38499f9",
+          "origin": [
+            9219,
+            230,
+            1054
+          ],
+          "size": [
+            8,
+            5,
+            11
+          ]
+        },
+        {
+          "id": "NG02.6",
+          "label": "Japanese Large Farm 1",
+          "source": "data/kaisyn/structure/village/flower_forest_japanese/houses/flower_forest_large_farm_1.nbt",
+          "sourceJar": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar",
+          "sourceSha256": "ad1ee5426823d975eed82971da6d17d364017b02946636b86b7cc829abdd8a5a",
+          "origin": [
+            9235,
+            230,
+            1054
+          ],
+          "size": [
+            9,
+            5,
+            12
+          ]
+        },
+        {
+          "id": "NG02.7",
+          "label": "Japanese Small Farm 1",
+          "source": "data/kaisyn/structure/village/flower_forest_japanese/houses/flower_forest_small_farm_1.nbt",
+          "sourceJar": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar",
+          "sourceSha256": "f909488f9865202f015da10020c0f71de2a358c5f5e876691554b8a3f94b33c0",
+          "origin": [
+            9252,
+            230,
+            1054
+          ],
+          "size": [
+            9,
+            4,
+            7
+          ]
+        },
+        {
+          "id": "NG02.8",
+          "label": "Forest Ruins Animal Pen 1",
+          "source": "data/kaisyn/structure/village/forest_ruins/houses/forest_animal_pen_1.nbt",
+          "sourceJar": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar",
+          "sourceSha256": "32f803e79952361afeb080be0799d498546f8aae186b50d89528b38ef7515b28",
+          "origin": [
+            9269,
+            230,
+            1054
+          ],
+          "size": [
+            5,
+            2,
+            6
+          ]
+        },
+        {
+          "id": "NG02.9",
+          "label": "Forest Ruins Animal Pen 2",
+          "source": "data/kaisyn/structure/village/forest_ruins/houses/forest_animal_pen_2.nbt",
+          "sourceJar": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar",
+          "sourceSha256": "78ad7244774fb6adb15e0568a208356abfd7cc270b5c8069876a8abbb2677cf0",
+          "origin": [
+            9282,
+            230,
+            1054
+          ],
+          "size": [
+            7,
+            3,
+            11
+          ]
+        },
+        {
+          "id": "NG02.10",
+          "label": "Forest Ruins Animal Pen 3",
+          "source": "data/kaisyn/structure/village/forest_ruins/houses/forest_animal_pen_3.nbt",
+          "sourceJar": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar",
+          "sourceSha256": "f8894c308ff167f61b39f4fd41ccd59bdc833909845e748f16869c7db862ddf9",
+          "origin": [
+            9297,
+            230,
+            1054
+          ],
+          "size": [
+            8,
+            2,
+            11
+          ]
+        }
+      ]
+    },
+    {
+      "id": "NG03",
+      "title": "Towns & Towers / Farms & Pens by Culture (3/5)",
+      "family": "tt_farms",
+      "mod": "Towns & Towers",
+      "origin": [
+        9168,
+        230,
+        1086
+      ],
+      "bounds": [
+        9159,
+        228,
+        1078,
+        9301,
+        238,
+        1099
+      ],
+      "entries": [
+        {
+          "id": "NG03.1",
+          "label": "Forest Ruins Large Farm 1",
+          "source": "data/kaisyn/structure/village/forest_ruins/houses/forest_large_farm_1.nbt",
+          "sourceJar": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar",
+          "sourceSha256": "3f2585dcf0e35cfeea7d55c32ab995011dbc3f9869f149a4af19ef004512b802",
+          "origin": [
+            9168,
+            230,
+            1086
+          ],
+          "size": [
+            13,
+            6,
+            9
+          ]
+        },
+        {
+          "id": "NG03.2",
+          "label": "Forest Ruins Small Farm 1",
+          "source": "data/kaisyn/structure/village/forest_ruins/houses/forest_small_farm_1.nbt",
+          "sourceJar": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar",
+          "sourceSha256": "fc496ab6f105d75e3b42d584536506aaf7f1a3f41a0c21b966d5c86e065448b6",
+          "origin": [
+            9189,
+            230,
+            1086
+          ],
+          "size": [
+            7,
+            6,
+            9
+          ]
+        },
+        {
+          "id": "NG03.3",
+          "label": "Tribal Animal Pen 1",
+          "source": "data/kaisyn/structure/village/jungle_tribal/houses/jungle_animal_pen_1.nbt",
+          "sourceJar": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar",
+          "sourceSha256": "5ee1cc4e45ef7293f7e9d3c9af210d59fdb8ac1d7784afa6de7a4b6159ab03cb",
+          "origin": [
+            9204,
+            230,
+            1086
+          ],
+          "size": [
+            8,
+            4,
+            11
+          ]
+        },
+        {
+          "id": "NG03.4",
+          "label": "Tribal Small Farm 1",
+          "source": "data/kaisyn/structure/village/jungle_tribal/houses/jungle_small_farm_1.nbt",
+          "sourceJar": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar",
+          "sourceSha256": "89df158521d946fe35c92a1f9683db9a10e1ebb1a2e14ad1b807ee2f05492dcf",
+          "origin": [
+            9220,
+            230,
+            1086
+          ],
+          "size": [
+            13,
+            5,
+            11
+          ]
+        },
+        {
+          "id": "NG03.5",
+          "label": "Fantasy Small Farm 1",
+          "source": "data/kaisyn/structure/village/mushroom_fields_fantasy/houses/mushroom_small_farm_1.nbt",
+          "sourceJar": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar",
+          "sourceSha256": "266dfdc9f4246bb2c5fdd6ef02048d8fa69a195ab6af216a53a2a6d6bde6ba60",
+          "origin": [
+            9241,
+            230,
+            1086
+          ],
+          "size": [
+            9,
+            3,
+            9
+          ]
+        },
+        {
+          "id": "NG03.6",
+          "label": "Polish Small Farm 1",
+          "source": "data/kaisyn/structure/village/old_growth_taiga_polish/houses/old_growth_taiga_small_farm_1.nbt",
+          "sourceJar": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar",
+          "sourceSha256": "b0ee77c0fd4783766c54729cd3645884a02702650fe5535ab6cc97713ee5fdf9",
+          "origin": [
+            9258,
+            230,
+            1086
+          ],
+          "size": [
+            8,
+            4,
+            6
+          ]
+        },
+        {
+          "id": "NG03.7",
+          "label": "Viking Large Farm 1",
+          "source": "data/kaisyn/structure/village/snowy_taiga_viking/houses/snowy_taiga_large_farm_1.nbt",
+          "sourceJar": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar",
+          "sourceSha256": "6d45c7111146cf24b81ff1a90394b8c85f97f0f88da8690eda3cda2696f47c77",
+          "origin": [
+            9274,
+            230,
+            1086
+          ],
+          "size": [
+            10,
+            5,
+            8
+          ]
+        },
+        {
+          "id": "NG03.8",
+          "label": "Viking Small Farm 1",
+          "source": "data/kaisyn/structure/village/snowy_taiga_viking/houses/snowy_taiga_small_farm_1.nbt",
+          "sourceJar": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar",
+          "sourceSha256": "13d68717b1d575edc45d9b4ca662ab4a2467b4dd6e0acb5f0b0d65fabbc43c28",
+          "origin": [
+            9292,
+            230,
+            1086
+          ],
+          "size": [
+            7,
+            5,
+            7
+          ]
+        }
+      ]
+    },
+    {
+      "id": "NG04",
+      "title": "Towns & Towers / Farms & Pens by Culture (4/5)",
+      "family": "tt_farms",
+      "mod": "Towns & Towers",
+      "origin": [
+        9168,
+        230,
+        1117
+      ],
+      "bounds": [
+        9159,
+        228,
+        1109,
+        9315,
+        258,
+        1136
+      ],
+      "entries": [
+        {
+          "id": "NG04.1",
+          "label": "Polynesian Large Farm 1",
+          "source": "data/kaisyn/structure/village/sparse_jungle_polynesian/houses/sparse_jungle_large_farm_1.nbt",
+          "sourceJar": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar",
+          "sourceSha256": "f9a706859ab60737f7e07d095d8b702cba2ca8e5742d9e93984f88df59e35946",
+          "origin": [
+            9168,
+            230,
+            1117
+          ],
+          "size": [
+            13,
+            5,
+            11
+          ]
+        },
+        {
+          "id": "NG04.2",
+          "label": "Polynesian Small Farm 1",
+          "source": "data/kaisyn/structure/village/sparse_jungle_polynesian/houses/sparse_jungle_small_farm_1.nbt",
+          "sourceJar": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar",
+          "sourceSha256": "084e1024b62cb2bf96f5283e96c5b271919b5fd4bcd141e371661aa7d1dc1337",
+          "origin": [
+            9189,
+            230,
+            1117
+          ],
+          "size": [
+            6,
+            7,
+            7
+          ]
+        },
+        {
+          "id": "NG04.3",
+          "label": "Sunflower Farm Beetroot 1",
+          "source": "data/kaisyn/structure/village/sunflower_plains_farm/side/sunflower_plains_farm_beetroot_1.nbt",
+          "sourceJar": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar",
+          "sourceSha256": "614e128be5a1594efd59a0490c932e7e1e3b833d95c7b6931b79f8b5a346e779",
+          "origin": [
+            9203,
+            230,
+            1117
+          ],
+          "size": [
+            18,
+            5,
+            16
+          ]
+        },
+        {
+          "id": "NG04.4",
+          "label": "Sunflower Farm Pumpkin 1",
+          "source": "data/kaisyn/structure/village/sunflower_plains_farm/side/sunflower_plains_farm_pumpkin_1.nbt",
+          "sourceJar": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar",
+          "sourceSha256": "278c26ab06a78704edb7ab6bc54bb8f86085ed3609cb2edbb8744b565c6a649a",
+          "origin": [
+            9229,
+            230,
+            1117
+          ],
+          "size": [
+            21,
+            5,
+            16
+          ]
+        },
+        {
+          "id": "NG04.5",
+          "label": "Sunflower Farm Wheat 1",
+          "source": "data/kaisyn/structure/village/sunflower_plains_farm/side/sunflower_plains_farm_wheat_1.nbt",
+          "sourceJar": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar",
+          "sourceSha256": "1770f26cff5b0121acc4e2c860426f58fea0f9f182f0717bd64d645c1a2f07f6",
+          "origin": [
+            9258,
+            230,
+            1117
+          ],
+          "size": [
+            18,
+            5,
+            16
+          ]
+        },
+        {
+          "id": "NG04.6",
+          "label": "Sunflower Windmill 1",
+          "source": "data/kaisyn/structure/village/sunflower_plains_farm/side/sunflower_plains_windmill_1.nbt",
+          "sourceJar": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar",
+          "sourceSha256": "15505a7fc39d02935b28d42427a1796d13a7c536207f877484669c5faa699655",
+          "origin": [
+            9284,
+            230,
+            1117
+          ],
+          "size": [
+            18,
+            26,
+            17
+          ]
+        },
+        {
+          "id": "NG04.7",
+          "label": "Sunflower Scarecrow 1",
+          "source": "data/kaisyn/structure/village/sunflower_plains_farm/sunflower_plains_scarecrow_1.nbt",
+          "sourceJar": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar",
+          "sourceSha256": "d2dc019d389695e902bef78db3bb51c5b99bd6bc54ba61d053d56cc26138e408",
+          "origin": [
+            9310,
+            230,
+            1117
+          ],
+          "size": [
+            3,
+            5,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "id": "NG05",
+      "title": "Towns & Towers / Farms & Pens by Culture (5/5)",
+      "family": "tt_farms",
+      "mod": "Towns & Towers",
+      "origin": [
+        9168,
+        230,
+        1154
+      ],
+      "bounds": [
+        9159,
+        228,
+        1146,
+        9213,
+        236,
+        1165
+      ],
+      "entries": [
+        {
+          "id": "NG05.1",
+          "label": "Sunflower Scarecrow 2",
+          "source": "data/kaisyn/structure/village/sunflower_plains_farm/sunflower_plains_scarecrow_2.nbt",
+          "sourceJar": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar",
+          "sourceSha256": "3ac87f02d918f2a7cebadbcde7f59a53e2a0c1307facebd246c1fe9fbb1b1c45",
+          "origin": [
+            9168,
+            230,
+            1154
+          ],
+          "size": [
+            3,
+            4,
+            3
+          ]
+        },
+        {
+          "id": "NG05.2",
+          "label": "Boat Village Large Farm 1",
+          "source": "data/kaisyn/structure/village/swamp_boat/houses/swamp_large_farm_1.nbt",
+          "sourceJar": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar",
+          "sourceSha256": "1df60db6191d71a3cde86d6874f9f541bcaa8c2512293829dc6e412222a079a2",
+          "origin": [
+            9179,
+            230,
+            1154
+          ],
+          "size": [
+            15,
+            4,
+            9
+          ]
+        },
+        {
+          "id": "NG05.3",
+          "label": "Boat Village Small Farm 1",
+          "source": "data/kaisyn/structure/village/swamp_boat/houses/swamp_small_farm_1.nbt",
+          "sourceJar": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar",
+          "sourceSha256": "b3cbf2fda13a258b22b7534403b7575ac4cd0c10ac24e47186077bd37c0618e3",
+          "origin": [
+            9202,
+            230,
+            1154
+          ],
+          "size": [
+            9,
+            2,
+            7
+          ]
+        }
+      ]
+    },
+    {
+      "id": "NG06",
+      "title": "CTOV / Farms, Orchards & Pens by Village (1/8)",
+      "family": "ctov_farms",
+      "mod": "CTOV",
+      "origin": [
+        9168,
+        230,
+        1183
+      ],
+      "bounds": [
+        9159,
+        228,
+        1175,
+        9300,
+        242,
+        1201
+      ],
+      "entries": [
+        {
+          "id": "NG06.1",
+          "label": "Beach Farm",
+          "source": "data/ctov/structure/village/beach/jobsite/farm.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "5b027cd186e0b1c3a8944efdf47e705033efa25d8088376df7a5bef8f6a7fcd0",
+          "origin": [
+            9168,
+            230,
+            1183
+          ],
+          "size": [
+            11,
+            6,
+            11
+          ]
+        },
+        {
+          "id": "NG06.2",
+          "label": "Beach Orchard",
+          "source": "data/ctov/structure/village/beach/jobsite/orchard.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "38665f089e1775ee8dfade6a3f860485fdf4c4388e707d07f6f5a4a10cbd5ccb",
+          "origin": [
+            9187,
+            230,
+            1183
+          ],
+          "size": [
+            11,
+            6,
+            11
+          ]
+        },
+        {
+          "id": "NG06.3",
+          "label": "Beach Pen",
+          "source": "data/ctov/structure/village/beach/jobsite/pen.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "a9b13ca7021f666158a4d77ec0399ef54c0f5ac4110beb97a6bf93364e001d5a",
+          "origin": [
+            9206,
+            230,
+            1183
+          ],
+          "size": [
+            7,
+            4,
+            7
+          ]
+        },
+        {
+          "id": "NG06.4",
+          "label": "Christmas Farm",
+          "source": "data/ctov/structure/village/christmas/jobsite/farm.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "68b68e4d058c0208f0003f978d6baea495fdc46c50667e58b109e1232c3aa356",
+          "origin": [
+            9221,
+            230,
+            1183
+          ],
+          "size": [
+            11,
+            6,
+            12
+          ]
+        },
+        {
+          "id": "NG06.5",
+          "label": "Christmas Orchard",
+          "source": "data/ctov/structure/village/christmas/jobsite/orchard.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "6355602405fdc4804ccdd1e75f6ded1e04b6628c4f1f1a8e5c761068f519ae2c",
+          "origin": [
+            9240,
+            230,
+            1183
+          ],
+          "size": [
+            10,
+            6,
+            16
+          ]
+        },
+        {
+          "id": "NG06.6",
+          "label": "Christmas Pen",
+          "source": "data/ctov/structure/village/christmas/jobsite/pen.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "9b083150b72cb6c417d66fd944ea1b3f2e53be7a114a7b28a8f25b1e5e72a871",
+          "origin": [
+            9258,
+            230,
+            1183
+          ],
+          "size": [
+            7,
+            9,
+            7
+          ]
+        },
+        {
+          "id": "NG06.7",
+          "label": "Desert Animal Pen",
+          "source": "data/ctov/structure/village/desert/jobsite/animal_pen.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "2d9cf6dc4217362f3592b2ff30829a3680c9069f693cbff5222ca53420b159a5",
+          "origin": [
+            9273,
+            230,
+            1183
+          ],
+          "size": [
+            8,
+            10,
+            10
+          ]
+        },
+        {
+          "id": "NG06.8",
+          "label": "Desert Farm",
+          "source": "data/ctov/structure/village/desert/jobsite/farm.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "e497bd9518540f22091167de8c15b185312a7f4687d04231800cb158728f7958",
+          "origin": [
+            9289,
+            230,
+            1183
+          ],
+          "size": [
+            9,
+            7,
+            11
+          ]
+        }
+      ]
+    },
+    {
+      "id": "NG07",
+      "title": "CTOV / Farms, Orchards & Pens by Village (2/8)",
+      "family": "ctov_farms",
+      "mod": "CTOV",
+      "origin": [
+        9168,
+        230,
+        1219
+      ],
+      "bounds": [
+        9159,
+        228,
+        1211,
+        9306,
+        239,
+        1235
+      ],
+      "entries": [
+        {
+          "id": "NG07.1",
+          "label": "Desert Orchard",
+          "source": "data/ctov/structure/village/desert/jobsite/orchard.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "f48c980ba2eed307d1c95539ddb3e29adad95cd0118f81f3ee8d23dc932082a2",
+          "origin": [
+            9168,
+            230,
+            1219
+          ],
+          "size": [
+            13,
+            7,
+            13
+          ]
+        },
+        {
+          "id": "NG07.2",
+          "label": "Desert Oasis Farm",
+          "source": "data/ctov/structure/village/desert_oasis/jobsite/farm.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "94537f9112c883afae279f671e8f65703d38fe14e061fb497570d7f73cb6f321",
+          "origin": [
+            9189,
+            230,
+            1219
+          ],
+          "size": [
+            9,
+            7,
+            9
+          ]
+        },
+        {
+          "id": "NG07.3",
+          "label": "Desert Oasis Greenhouse",
+          "source": "data/ctov/structure/village/desert_oasis/jobsite/greenhouse.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "0b9a4e5906ffb06ea87503b879c2cfe6cc17c288e038a130b0c41c5381128991",
+          "origin": [
+            9206,
+            230,
+            1219
+          ],
+          "size": [
+            9,
+            6,
+            14
+          ]
+        },
+        {
+          "id": "NG07.4",
+          "label": "Desert Oasis Orchard",
+          "source": "data/ctov/structure/village/desert_oasis/jobsite/orchard.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "e20e9357beee7cc3db9bed8f4124d21eee988b843b0b5635f9b5fae79a74d604",
+          "origin": [
+            9223,
+            230,
+            1219
+          ],
+          "size": [
+            9,
+            6,
+            14
+          ]
+        },
+        {
+          "id": "NG07.5",
+          "label": "Desert Oasis Pen",
+          "source": "data/ctov/structure/village/desert_oasis/jobsite/pen.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "9c26668b4da32dd68d1bea58af1e38d27eefffc851373729ab117129ab138ccb",
+          "origin": [
+            9240,
+            230,
+            1219
+          ],
+          "size": [
+            9,
+            5,
+            9
+          ]
+        },
+        {
+          "id": "NG07.6",
+          "label": "Halloween Farm",
+          "source": "data/ctov/structure/village/halloween/jobsite/farm.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "82b030c67df6b807d65c9811023dd4ddf4c97bfd301211c886552acfd3f8c0bd",
+          "origin": [
+            9257,
+            230,
+            1219
+          ],
+          "size": [
+            11,
+            4,
+            11
+          ]
+        },
+        {
+          "id": "NG07.7",
+          "label": "Halloween Orchard",
+          "source": "data/ctov/structure/village/halloween/jobsite/orchard.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "7f5ce53c78b34b708c023d7a65da28e9ee0ab95e78e2345978e132f21d289835",
+          "origin": [
+            9276,
+            230,
+            1219
+          ],
+          "size": [
+            11,
+            4,
+            11
+          ]
+        },
+        {
+          "id": "NG07.8",
+          "label": "Halloween Pen",
+          "source": "data/ctov/structure/village/halloween/jobsite/pen.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "1374cee0c0669b4e4bf42568c41f3e86fb664773431f2b51540efdbdc817cd1b",
+          "origin": [
+            9295,
+            230,
+            1219
+          ],
+          "size": [
+            9,
+            2,
+            7
+          ]
+        }
+      ]
+    },
+    {
+      "id": "NG08",
+      "title": "CTOV / Farms, Orchards & Pens by Village (3/8)",
+      "family": "ctov_farms",
+      "mod": "CTOV",
+      "origin": [
+        9168,
+        230,
+        1253
+      ],
+      "bounds": [
+        9159,
+        228,
+        1245,
+        9305,
+        260,
+        1271
+      ],
+      "entries": [
+        {
+          "id": "NG08.1",
+          "label": "Jungle Farm",
+          "source": "data/ctov/structure/village/jungle/jobsite/farm.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "1a45b6b77d0249ea2ac297f941cd3e305a12458e2c2115fd7bf4b5c5f4fd9ef3",
+          "origin": [
+            9168,
+            230,
+            1253
+          ],
+          "size": [
+            18,
+            6,
+            16
+          ]
+        },
+        {
+          "id": "NG08.2",
+          "label": "Jungle Orchard",
+          "source": "data/ctov/structure/village/jungle/jobsite/orchard.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "1a09b053bdd860a469ddb9aec8f2cf90d079efc6f64fad664b9f36bfa65687ca",
+          "origin": [
+            9194,
+            230,
+            1253
+          ],
+          "size": [
+            18,
+            6,
+            16
+          ]
+        },
+        {
+          "id": "NG08.3",
+          "label": "Jungle Tree Farm",
+          "source": "data/ctov/structure/village/jungle_tree/jobsite/farm.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "0c2b67858baa0f20404320ce347d13f4a35571ef01a92f1a87c5dbdc70d2c850",
+          "origin": [
+            9220,
+            230,
+            1253
+          ],
+          "size": [
+            13,
+            28,
+            13
+          ]
+        },
+        {
+          "id": "NG08.4",
+          "label": "Jungle Tree Orchard",
+          "source": "data/ctov/structure/village/jungle_tree/jobsite/orchard.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "e0351731a39e934a589ccb025ba1516eaf35eb433186c6e910a4951a03e28290",
+          "origin": [
+            9241,
+            230,
+            1253
+          ],
+          "size": [
+            13,
+            28,
+            13
+          ]
+        },
+        {
+          "id": "NG08.5",
+          "label": "Mesa Farm",
+          "source": "data/ctov/structure/village/mesa/jobsite/farm.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "267c56f3e6a305fbf9e7fbd91054bc57013f69da6c3d89f112698d16480838ab",
+          "origin": [
+            9262,
+            230,
+            1253
+          ],
+          "size": [
+            9,
+            8,
+            13
+          ]
+        },
+        {
+          "id": "NG08.6",
+          "label": "Mesa Orchard",
+          "source": "data/ctov/structure/village/mesa/jobsite/orchard.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "7bab6fd1cfc287f8bc6056b45a5e32f823cef22d9dda26084a625f500115031a",
+          "origin": [
+            9279,
+            230,
+            1253
+          ],
+          "size": [
+            9,
+            8,
+            13
+          ]
+        },
+        {
+          "id": "NG08.7",
+          "label": "Mesa Pen",
+          "source": "data/ctov/structure/village/mesa/jobsite/pen.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "2d55f3618831d474d78f434671a1388d72c2bbfe4bafe5e6f5279ee6a9a1a07b",
+          "origin": [
+            9296,
+            230,
+            1253
+          ],
+          "size": [
+            7,
+            4,
+            8
+          ]
+        }
+      ]
+    },
+    {
+      "id": "NG09",
+      "title": "CTOV / Farms, Orchards & Pens by Village (4/8)",
+      "family": "ctov_farms",
+      "mod": "CTOV",
+      "origin": [
+        9168,
+        230,
+        1289
+      ],
+      "bounds": [
+        9159,
+        228,
+        1281,
+        9307,
+        240,
+        1305
+      ],
+      "entries": [
+        {
+          "id": "NG09.1",
+          "label": "Mesa Fortified Farm",
+          "source": "data/ctov/structure/village/mesa_fortified/jobsite/farm.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "94576e053a010c8bdfa55a3891e46bc34e9dac5da26643d92d2e25b5b2a66ee3",
+          "origin": [
+            9168,
+            230,
+            1289
+          ],
+          "size": [
+            17,
+            6,
+            7
+          ]
+        },
+        {
+          "id": "NG09.2",
+          "label": "Mesa Fortified Orchard",
+          "source": "data/ctov/structure/village/mesa_fortified/jobsite/orchard.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "0a5824b65e341e5323648d87f134be400f3e0e0533511d416a1214a7cdf74f48",
+          "origin": [
+            9193,
+            230,
+            1289
+          ],
+          "size": [
+            17,
+            6,
+            7
+          ]
+        },
+        {
+          "id": "NG09.3",
+          "label": "Mesa Fortified Sheep Farm",
+          "source": "data/ctov/structure/village/mesa_fortified/jobsite/sheep_farm.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "39f36e0c740197eaf7fb2f7becbea0c285e7267b939c2b4b9806e0df8c2177f7",
+          "origin": [
+            9218,
+            230,
+            1289
+          ],
+          "size": [
+            13,
+            7,
+            9
+          ]
+        },
+        {
+          "id": "NG09.4",
+          "label": "Mountain Farm",
+          "source": "data/ctov/structure/village/mountain/jobsite/farm.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "71fe4d9ea7862c28c2e6d324aafceff53a66473678e379709a76131fc460b51e",
+          "origin": [
+            9239,
+            230,
+            1289
+          ],
+          "size": [
+            14,
+            8,
+            14
+          ]
+        },
+        {
+          "id": "NG09.5",
+          "label": "Mountain Orchard",
+          "source": "data/ctov/structure/village/mountain/jobsite/orchard.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "6f17d7d209bc8ea8549d987effcb1d1f99d36a9623ee4713f66069d4c367d45f",
+          "origin": [
+            9261,
+            230,
+            1289
+          ],
+          "size": [
+            14,
+            8,
+            14
+          ]
+        },
+        {
+          "id": "NG09.6",
+          "label": "Mountain Pen",
+          "source": "data/ctov/structure/village/mountain/jobsite/pen.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "85548b194a336e8d2c6c9882f3f3a44c1a9a49cd58dcf7a5dbac353526a7efb4",
+          "origin": [
+            9283,
+            230,
+            1289
+          ],
+          "size": [
+            7,
+            3,
+            6
+          ]
+        },
+        {
+          "id": "NG09.7",
+          "label": "Mountain Alpine Farm",
+          "source": "data/ctov/structure/village/mountain_alpine/jobsite/farm.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "7e625b19e4ca04dcd3b3a1b1985d603810b656dbf9ca7bece105c18ea5a861f1",
+          "origin": [
+            9298,
+            230,
+            1289
+          ],
+          "size": [
+            7,
+            6,
+            11
+          ]
+        }
+      ]
+    },
+    {
+      "id": "NG10",
+      "title": "CTOV / Farms, Orchards & Pens by Village (5/8)",
+      "family": "ctov_farms",
+      "mod": "CTOV",
+      "origin": [
+        9168,
+        230,
+        1323
+      ],
+      "bounds": [
+        9159,
+        228,
+        1315,
+        9320,
+        239,
+        1336
+      ],
+      "entries": [
+        {
+          "id": "NG10.1",
+          "label": "Mountain Alpine Orchard",
+          "source": "data/ctov/structure/village/mountain_alpine/jobsite/orchard.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "6f3abf35622f501839fba035b3a5b87cbcae981a4f9c40a6ef3d69c3f2b0c367",
+          "origin": [
+            9168,
+            230,
+            1323
+          ],
+          "size": [
+            7,
+            6,
+            11
+          ]
+        },
+        {
+          "id": "NG10.2",
+          "label": "Mushroom Farm",
+          "source": "data/ctov/structure/village/mushroom/jobsite/farm.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "ee0e1b89ec4cf4aa49b98a0df4eedb5c339904b9ab947b7e52d6c45aec695fbd",
+          "origin": [
+            9183,
+            230,
+            1323
+          ],
+          "size": [
+            12,
+            7,
+            9
+          ]
+        },
+        {
+          "id": "NG10.3",
+          "label": "Mushroom Orchard",
+          "source": "data/ctov/structure/village/mushroom/jobsite/orchard.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "0bc71860948391584332e195c4412640d3610c2e5c22c2a07d272e0580afd337",
+          "origin": [
+            9203,
+            230,
+            1323
+          ],
+          "size": [
+            12,
+            7,
+            9
+          ]
+        },
+        {
+          "id": "NG10.4",
+          "label": "Plains Farm",
+          "source": "data/ctov/structure/village/plains/jobsite/farm.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "fe5c6c43f7e734051617c7b67fe76c6dfbc0c94b802a02338aafe97a6c898b60",
+          "origin": [
+            9223,
+            230,
+            1323
+          ],
+          "size": [
+            11,
+            4,
+            11
+          ]
+        },
+        {
+          "id": "NG10.5",
+          "label": "Plains Orchard",
+          "source": "data/ctov/structure/village/plains/jobsite/orchard.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "231ec432cefc858bc490aafd5783a29b7884543f52321895a6a3407731aaa159",
+          "origin": [
+            9242,
+            230,
+            1323
+          ],
+          "size": [
+            11,
+            4,
+            11
+          ]
+        },
+        {
+          "id": "NG10.6",
+          "label": "Plains Pen",
+          "source": "data/ctov/structure/village/plains/jobsite/pen.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "53011de75762d80c9230277750ea7a03e17bab0ccd75dd9866cffc0c91386b8d",
+          "origin": [
+            9261,
+            230,
+            1323
+          ],
+          "size": [
+            8,
+            3,
+            8
+          ]
+        },
+        {
+          "id": "NG10.7",
+          "label": "Plains Fortified Farm",
+          "source": "data/ctov/structure/village/plains_fortified/jobsite/farm.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "91eb312c6b116f2f16c51092f1ea6181f4a4f22920c5d0c48ead2510d5b1df50",
+          "origin": [
+            9277,
+            230,
+            1323
+          ],
+          "size": [
+            9,
+            6,
+            9
+          ]
+        },
+        {
+          "id": "NG10.8",
+          "label": "Plains Fortified Orchard",
+          "source": "data/ctov/structure/village/plains_fortified/jobsite/orchard.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "81c5a3240e78b30aac1e583223bb8f72757039c45e122fd2f782463526a577c8",
+          "origin": [
+            9294,
+            230,
+            1323
+          ],
+          "size": [
+            9,
+            6,
+            9
+          ]
+        },
+        {
+          "id": "NG10.9",
+          "label": "Plains Fortified Pen",
+          "source": "data/ctov/structure/village/plains_fortified/jobsite/pen.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "885dd319e781d60c964f4e106c947859e9b6d3b141914ea01b999b564fc05135",
+          "origin": [
+            9311,
+            230,
+            1323
+          ],
+          "size": [
+            7,
+            3,
+            8
+          ]
+        }
+      ]
+    },
+    {
+      "id": "NG11",
+      "title": "CTOV / Farms, Orchards & Pens by Village (6/8)",
+      "family": "ctov_farms",
+      "mod": "CTOV",
+      "origin": [
+        9168,
+        230,
+        1354
+      ],
+      "bounds": [
+        9159,
+        228,
+        1346,
+        9317,
+        239,
+        1367
+      ],
+      "entries": [
+        {
+          "id": "NG11.1",
+          "label": "Savanna Farm",
+          "source": "data/ctov/structure/village/savanna/jobsite/farm.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "ed55eb135b8a7257195a8f27665abce64aa1708e620e126606714c660b941b4c",
+          "origin": [
+            9168,
+            230,
+            1354
+          ],
+          "size": [
+            12,
+            7,
+            10
+          ]
+        },
+        {
+          "id": "NG11.2",
+          "label": "Savanna Orchard",
+          "source": "data/ctov/structure/village/savanna/jobsite/orchard.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "ccaa8d3072e8cb031816dd5a6b50dbe9efd22d237935d26ca4b42220f992a98b",
+          "origin": [
+            9188,
+            230,
+            1354
+          ],
+          "size": [
+            12,
+            7,
+            10
+          ]
+        },
+        {
+          "id": "NG11.3",
+          "label": "Savanna Na Farm",
+          "source": "data/ctov/structure/village/savanna_na/jobsite/farm.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "545d086d4e17e33e46598615940ca3e1145b10e106fc69afccc91e3bbb4034b4",
+          "origin": [
+            9208,
+            230,
+            1354
+          ],
+          "size": [
+            12,
+            7,
+            8
+          ]
+        },
+        {
+          "id": "NG11.4",
+          "label": "Savanna Na Orchard",
+          "source": "data/ctov/structure/village/savanna_na/jobsite/orchard.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "648b1c26e24d786e136e83bf643b16c305b79c4cff97f5167915e8298b61a85e",
+          "origin": [
+            9228,
+            230,
+            1354
+          ],
+          "size": [
+            12,
+            7,
+            8
+          ]
+        },
+        {
+          "id": "NG11.5",
+          "label": "Snowy Igloo Farm",
+          "source": "data/ctov/structure/village/snowy_igloo/jobsite/farm.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "130c4ff59edb0ffb16d26d85f6ca6ded64065474e05dca1200bcd4e755f6d86e",
+          "origin": [
+            9248,
+            230,
+            1354
+          ],
+          "size": [
+            7,
+            7,
+            11
+          ]
+        },
+        {
+          "id": "NG11.6",
+          "label": "Snowy Igloo Orchard",
+          "source": "data/ctov/structure/village/snowy_igloo/jobsite/orchard.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "1c0bf080ed49decb314084f9379eccf597aaf8a7ff4225a62b555e0549a73515",
+          "origin": [
+            9263,
+            230,
+            1354
+          ],
+          "size": [
+            7,
+            7,
+            11
+          ]
+        },
+        {
+          "id": "NG11.7",
+          "label": "Swamp Farm",
+          "source": "data/ctov/structure/village/swamp/jobsite/farm.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "f0551f4fe90d2fb535fd3eb0acecfa917e4f08348f243d7bbc367a018239169e",
+          "origin": [
+            9278,
+            230,
+            1354
+          ],
+          "size": [
+            7,
+            6,
+            11
+          ]
+        },
+        {
+          "id": "NG11.8",
+          "label": "Swamp Orchard",
+          "source": "data/ctov/structure/village/swamp/jobsite/orchard.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "fadf7fa8e63873225f84e1440623ac31f2ede75ce4cd3056f793747e75b1fc9e",
+          "origin": [
+            9293,
+            230,
+            1354
+          ],
+          "size": [
+            7,
+            6,
+            11
+          ]
+        },
+        {
+          "id": "NG11.9",
+          "label": "Swamp Pen",
+          "source": "data/ctov/structure/village/swamp/jobsite/pen.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "d1c2ca54947fb286d3bda2e396e2786fb6268583808d2280bba9dd4df4e1f9b0",
+          "origin": [
+            9308,
+            230,
+            1354
+          ],
+          "size": [
+            7,
+            3,
+            8
+          ]
+        }
+      ]
+    },
+    {
+      "id": "NG12",
+      "title": "CTOV / Farms, Orchards & Pens by Village (7/8)",
+      "family": "ctov_farms",
+      "mod": "CTOV",
+      "origin": [
+        9168,
+        230,
+        1385
+      ],
+      "bounds": [
+        9159,
+        228,
+        1377,
+        9320,
+        242,
+        1400
+      ],
+      "entries": [
+        {
+          "id": "NG12.1",
+          "label": "Swamp Fortified Farm",
+          "source": "data/ctov/structure/village/swamp_fortified/jobsite/farm.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "ace11db73c02d0547a3bc33188f0d0373bc8b7f594e6bfae4dc7d5bb3d0083e5",
+          "origin": [
+            9168,
+            230,
+            1385
+          ],
+          "size": [
+            13,
+            9,
+            13
+          ]
+        },
+        {
+          "id": "NG12.2",
+          "label": "Swamp Fortified Orchard",
+          "source": "data/ctov/structure/village/swamp_fortified/jobsite/orchard.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "6452fe8da22e6ce4f4321163a2420e0ad2a8a51a45b10ed12aeac5359f95569f",
+          "origin": [
+            9189,
+            230,
+            1385
+          ],
+          "size": [
+            13,
+            9,
+            13
+          ]
+        },
+        {
+          "id": "NG12.3",
+          "label": "Swamp Fortified Pen",
+          "source": "data/ctov/structure/village/swamp_fortified/jobsite/pen.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "3dc3b772672b1cb9cbd8ab2d5529b57ee8d572764c935238b6eb0988e9c6ff3a",
+          "origin": [
+            9210,
+            230,
+            1385
+          ],
+          "size": [
+            7,
+            4,
+            8
+          ]
+        },
+        {
+          "id": "NG12.4",
+          "label": "Taiga Farm",
+          "source": "data/ctov/structure/village/taiga/jobsite/farm.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "f6a4a5f881bcb9be5b40d6a688854b4f2875d1b200cba8585ca3bf6c4e40c1d7",
+          "origin": [
+            9225,
+            230,
+            1385
+          ],
+          "size": [
+            16,
+            10,
+            12
+          ]
+        },
+        {
+          "id": "NG12.5",
+          "label": "Taiga Orchard",
+          "source": "data/ctov/structure/village/taiga/jobsite/orchard.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "f232c0bc39edcba56acac6fc6a42dcc8383ae9394ca30a473c2153457818ee47",
+          "origin": [
+            9249,
+            230,
+            1385
+          ],
+          "size": [
+            16,
+            10,
+            12
+          ]
+        },
+        {
+          "id": "NG12.6",
+          "label": "Taiga Fortified Farm",
+          "source": "data/ctov/structure/village/taiga_fortified/jobsite/farm.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "8d8944cbdffac512a117b192c330734c34578bf5ce6fc7f6609e11db9b3bd5ff",
+          "origin": [
+            9273,
+            230,
+            1385
+          ],
+          "size": [
+            11,
+            9,
+            12
+          ]
+        },
+        {
+          "id": "NG12.7",
+          "label": "Taiga Fortified Orchard",
+          "source": "data/ctov/structure/village/taiga_fortified/jobsite/orchard.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "eef50a2cd333adacee89e7a848d5e8702c26043e387b10a8d407f56be6b3da58",
+          "origin": [
+            9292,
+            230,
+            1385
+          ],
+          "size": [
+            11,
+            9,
+            12
+          ]
+        },
+        {
+          "id": "NG12.8",
+          "label": "Taiga Fortified Pen",
+          "source": "data/ctov/structure/village/taiga_fortified/jobsite/pen.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "e2ac6541f653de300b4eb37e6a85bb1a8f3bcc76b2e0b3d258f395f0e51b58a6",
+          "origin": [
+            9311,
+            230,
+            1385
+          ],
+          "size": [
+            7,
+            3,
+            8
+          ]
+        }
+      ]
+    },
+    {
+      "id": "NG13",
+      "title": "CTOV / Farms, Orchards & Pens by Village (8/8)",
+      "family": "ctov_farms",
+      "mod": "CTOV",
+      "origin": [
+        9168,
+        230,
+        1418
+      ],
+      "bounds": [
+        9159,
+        228,
+        1410,
+        9179,
+        239,
+        1429
+      ],
+      "entries": [
+        {
+          "id": "NG13.1",
+          "label": "Underground Farm",
+          "source": "data/ctov/structure/village/underground/jobsite/farm.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "64bb4ed6dfcd452765e6d44adbe7dc67d6b27a91e43f6f0a4fae69aa4fdc9371",
+          "origin": [
+            9168,
+            230,
+            1418
+          ],
+          "size": [
+            9,
+            7,
+            9
+          ]
+        }
+      ]
+    },
+    {
+      "id": "NG14",
+      "title": "Vanilla / Farms & Pens (1/3)",
+      "family": "vanilla_farms",
+      "mod": "Vanilla",
+      "origin": [
+        9168,
+        230,
+        1447
+      ],
+      "bounds": [
+        9159,
+        228,
+        1439,
+        9310,
+        240,
+        1462
+      ],
+      "entries": [
+        {
+          "id": "NG14.1",
+          "label": "Vanilla Desert Animal Pen 1",
+          "source": "data/minecraft/structure/village/desert/houses/desert_animal_pen_1.nbt",
+          "sourceJar": "minecraft_1.21.1_client.jar",
+          "sourceSha256": "d209c5f02424b74bb835ab88682ebc1a107b0b9fb3f221d8965795e93a85bb14",
+          "origin": [
+            9168,
+            230,
+            1447
+          ],
+          "size": [
+            10,
+            6,
+            7
+          ]
+        },
+        {
+          "id": "NG14.2",
+          "label": "Vanilla Desert Animal Pen 2",
+          "source": "data/minecraft/structure/village/desert/houses/desert_animal_pen_2.nbt",
+          "sourceJar": "minecraft_1.21.1_client.jar",
+          "sourceSha256": "853b3fd9712d04ae04d22259c95873d682bb25c573f0792c8f5bca23de14c23f",
+          "origin": [
+            9186,
+            230,
+            1447
+          ],
+          "size": [
+            10,
+            6,
+            8
+          ]
+        },
+        {
+          "id": "NG14.3",
+          "label": "Vanilla Desert Farm 1",
+          "source": "data/minecraft/structure/village/desert/houses/desert_farm_1.nbt",
+          "sourceJar": "minecraft_1.21.1_client.jar",
+          "sourceSha256": "47d5e70524c19d0f7abb85ddd0bec31548589aad7e1127447ce4f2ca107e1ea4",
+          "origin": [
+            9204,
+            230,
+            1447
+          ],
+          "size": [
+            5,
+            6,
+            7
+          ]
+        },
+        {
+          "id": "NG14.4",
+          "label": "Vanilla Desert Farm 2",
+          "source": "data/minecraft/structure/village/desert/houses/desert_farm_2.nbt",
+          "sourceJar": "minecraft_1.21.1_client.jar",
+          "sourceSha256": "e4e7926cd68ec8f354eb05b1538b4664eadc1c307e6a3f122797c79de80b5e02",
+          "origin": [
+            9217,
+            230,
+            1447
+          ],
+          "size": [
+            7,
+            7,
+            10
+          ]
+        },
+        {
+          "id": "NG14.5",
+          "label": "Vanilla Desert Large Farm 1",
+          "source": "data/minecraft/structure/village/desert/houses/desert_large_farm_1.nbt",
+          "sourceJar": "minecraft_1.21.1_client.jar",
+          "sourceSha256": "95707e99946ded972d02d7dbbf7f84b2a134a7a9a2481b585cf99eb40cd4b783",
+          "origin": [
+            9232,
+            230,
+            1447
+          ],
+          "size": [
+            11,
+            7,
+            13
+          ]
+        },
+        {
+          "id": "NG14.6",
+          "label": "Vanilla Plains Animal Pen 1",
+          "source": "data/minecraft/structure/village/plains/houses/plains_animal_pen_1.nbt",
+          "sourceJar": "minecraft_1.21.1_client.jar",
+          "sourceSha256": "95b4eff030d98a77366f5d28687f97c2401de94d21490ac82ea1f2daced2caa6",
+          "origin": [
+            9251,
+            230,
+            1447
+          ],
+          "size": [
+            5,
+            8,
+            6
+          ]
+        },
+        {
+          "id": "NG14.7",
+          "label": "Vanilla Plains Animal Pen 2",
+          "source": "data/minecraft/structure/village/plains/houses/plains_animal_pen_2.nbt",
+          "sourceJar": "minecraft_1.21.1_client.jar",
+          "sourceSha256": "824da09301da85e115249a15ce0add6dab8753e9bd83fa24ef3b1e8c77c19dbc",
+          "origin": [
+            9264,
+            230,
+            1447
+          ],
+          "size": [
+            7,
+            7,
+            11
+          ]
+        },
+        {
+          "id": "NG14.8",
+          "label": "Vanilla Plains Animal Pen 3",
+          "source": "data/minecraft/structure/village/plains/houses/plains_animal_pen_3.nbt",
+          "sourceJar": "minecraft_1.21.1_client.jar",
+          "sourceSha256": "849e03318fbc19bbfe7508a54bc3f4c78f37941e16857139c5b2cb40018464d8",
+          "origin": [
+            9279,
+            230,
+            1447
+          ],
+          "size": [
+            8,
+            6,
+            11
+          ]
+        },
+        {
+          "id": "NG14.9",
+          "label": "Vanilla Plains Large Farm 1",
+          "source": "data/minecraft/structure/village/plains/houses/plains_large_farm_1.nbt",
+          "sourceJar": "minecraft_1.21.1_client.jar",
+          "sourceSha256": "c8a0808d8a2072dd9fdfa01cca9fa0d7c29705f5e7c039415371ce110ab8f8c4",
+          "origin": [
+            9295,
+            230,
+            1447
+          ],
+          "size": [
+            13,
+            6,
+            9
+          ]
+        }
+      ]
+    },
+    {
+      "id": "NG15",
+      "title": "Vanilla / Farms & Pens (2/3)",
+      "family": "vanilla_farms",
+      "mod": "Vanilla",
+      "origin": [
+        9168,
+        230,
+        1480
+      ],
+      "bounds": [
+        9159,
+        228,
+        1472,
+        9313,
+        239,
+        1494
+      ],
+      "entries": [
+        {
+          "id": "NG15.1",
+          "label": "Vanilla Plains Small Farm 1",
+          "source": "data/minecraft/structure/village/plains/houses/plains_small_farm_1.nbt",
+          "sourceJar": "minecraft_1.21.1_client.jar",
+          "sourceSha256": "7413ba52f6ee9a8e398450e12fe70fc6dfa351351a76c6c926e3d7d25700e3fe",
+          "origin": [
+            9168,
+            230,
+            1480
+          ],
+          "size": [
+            7,
+            6,
+            9
+          ]
+        },
+        {
+          "id": "NG15.2",
+          "label": "Vanilla Savanna Animal Pen 1",
+          "source": "data/minecraft/structure/village/savanna/houses/savanna_animal_pen_1.nbt",
+          "sourceJar": "minecraft_1.21.1_client.jar",
+          "sourceSha256": "3d2f0d010ae4983c17d90f2fb0aba22de212422b1a2c39f8e59bd682633fa0f7",
+          "origin": [
+            9183,
+            230,
+            1480
+          ],
+          "size": [
+            9,
+            5,
+            9
+          ]
+        },
+        {
+          "id": "NG15.3",
+          "label": "Vanilla Savanna Animal Pen 2",
+          "source": "data/minecraft/structure/village/savanna/houses/savanna_animal_pen_2.nbt",
+          "sourceJar": "minecraft_1.21.1_client.jar",
+          "sourceSha256": "8c2aa65e5ca18a02107a44af3cd17e41ffc20175c5fac2528fb89e9db1b8fa10",
+          "origin": [
+            9200,
+            230,
+            1480
+          ],
+          "size": [
+            13,
+            7,
+            12
+          ]
+        },
+        {
+          "id": "NG15.4",
+          "label": "Vanilla Savanna Animal Pen 3",
+          "source": "data/minecraft/structure/village/savanna/houses/savanna_animal_pen_3.nbt",
+          "sourceJar": "minecraft_1.21.1_client.jar",
+          "sourceSha256": "63093b21fd982493bedd3651e5bd8eba7fb903f9024abc107720b2cd131c3961",
+          "origin": [
+            9221,
+            230,
+            1480
+          ],
+          "size": [
+            8,
+            5,
+            9
+          ]
+        },
+        {
+          "id": "NG15.5",
+          "label": "Vanilla Savanna Large Farm 1",
+          "source": "data/minecraft/structure/village/savanna/houses/savanna_large_farm_1.nbt",
+          "sourceJar": "minecraft_1.21.1_client.jar",
+          "sourceSha256": "4760bbcf3acca433aaf8fc967a698f89f7289b31cccdd27e2881cb19950d4f3c",
+          "origin": [
+            9237,
+            230,
+            1480
+          ],
+          "size": [
+            9,
+            6,
+            9
+          ]
+        },
+        {
+          "id": "NG15.6",
+          "label": "Vanilla Savanna Large Farm 2",
+          "source": "data/minecraft/structure/village/savanna/houses/savanna_large_farm_2.nbt",
+          "sourceJar": "minecraft_1.21.1_client.jar",
+          "sourceSha256": "c763b3299052af62b7dba24617d7c603b834285362cbe3f0bf99344392eff3d1",
+          "origin": [
+            9254,
+            230,
+            1480
+          ],
+          "size": [
+            10,
+            7,
+            8
+          ]
+        },
+        {
+          "id": "NG15.7",
+          "label": "Vanilla Savanna Small Farm",
+          "source": "data/minecraft/structure/village/savanna/houses/savanna_small_farm.nbt",
+          "sourceJar": "minecraft_1.21.1_client.jar",
+          "sourceSha256": "da37095b70942f7db6a8829101e1410d5c8c6bdb27ef98ae863a346312a94a76",
+          "origin": [
+            9272,
+            230,
+            1480
+          ],
+          "size": [
+            6,
+            7,
+            9
+          ]
+        },
+        {
+          "id": "NG15.8",
+          "label": "Vanilla Snowy Animal Pen 1",
+          "source": "data/minecraft/structure/village/snowy/houses/snowy_animal_pen_1.nbt",
+          "sourceJar": "minecraft_1.21.1_client.jar",
+          "sourceSha256": "dc8162c238d796e8becf33d2eae808947a96d7621ece0d7f38c345e87c93dd7a",
+          "origin": [
+            9286,
+            230,
+            1480
+          ],
+          "size": [
+            8,
+            6,
+            9
+          ]
+        },
+        {
+          "id": "NG15.9",
+          "label": "Vanilla Snowy Animal Pen 2",
+          "source": "data/minecraft/structure/village/snowy/houses/snowy_animal_pen_2.nbt",
+          "sourceJar": "minecraft_1.21.1_client.jar",
+          "sourceSha256": "05de525dd2e7a0e1aa72e01ac705c0eff7deba7dfbe50b4388774aaa8c74326e",
+          "origin": [
+            9302,
+            230,
+            1480
+          ],
+          "size": [
+            9,
+            6,
+            8
+          ]
+        }
+      ]
+    },
+    {
+      "id": "NG16",
+      "title": "Vanilla / Farms & Pens (3/3)",
+      "family": "vanilla_farms",
+      "mod": "Vanilla",
+      "origin": [
+        9168,
+        230,
+        1512
+      ],
+      "bounds": [
+        9159,
+        228,
+        1504,
+        9261,
+        239,
+        1524
+      ],
+      "entries": [
+        {
+          "id": "NG16.1",
+          "label": "Vanilla Snowy Farm 1",
+          "source": "data/minecraft/structure/village/snowy/houses/snowy_farm_1.nbt",
+          "sourceJar": "minecraft_1.21.1_client.jar",
+          "sourceSha256": "6c4f8c4a3c534a09cdac0c2d5d4137ba0523be4503e31a5947a1266ee8c1a52c",
+          "origin": [
+            9168,
+            230,
+            1512
+          ],
+          "size": [
+            6,
+            6,
+            7
+          ]
+        },
+        {
+          "id": "NG16.2",
+          "label": "Vanilla Snowy Farm 2",
+          "source": "data/minecraft/structure/village/snowy/houses/snowy_farm_2.nbt",
+          "sourceJar": "minecraft_1.21.1_client.jar",
+          "sourceSha256": "fa3935fcd9069f406d1d7edcf3eda490b114aa792edd67092130d1b681f8d854",
+          "origin": [
+            9182,
+            230,
+            1512
+          ],
+          "size": [
+            7,
+            6,
+            9
+          ]
+        },
+        {
+          "id": "NG16.3",
+          "label": "Vanilla Taiga Animal Pen 1",
+          "source": "data/minecraft/structure/village/taiga/houses/taiga_animal_pen_1.nbt",
+          "sourceJar": "minecraft_1.21.1_client.jar",
+          "sourceSha256": "cb0fbc489e327523024a7227f3b10f6835509e78270ac701a2f27e676233f51b",
+          "origin": [
+            9197,
+            230,
+            1512
+          ],
+          "size": [
+            13,
+            5,
+            8
+          ]
+        },
+        {
+          "id": "NG16.4",
+          "label": "Vanilla Taiga Large Farm 1",
+          "source": "data/minecraft/structure/village/taiga/houses/taiga_large_farm_1.nbt",
+          "sourceJar": "minecraft_1.21.1_client.jar",
+          "sourceSha256": "bbdb49d30d339339eb8f9a9fb479304e5283fc00c638039c2ef208dcbacbb111",
+          "origin": [
+            9218,
+            230,
+            1512
+          ],
+          "size": [
+            10,
+            7,
+            10
+          ]
+        },
+        {
+          "id": "NG16.5",
+          "label": "Vanilla Taiga Large Farm 2",
+          "source": "data/minecraft/structure/village/taiga/houses/taiga_large_farm_2.nbt",
+          "sourceJar": "minecraft_1.21.1_client.jar",
+          "sourceSha256": "22c5a7b4961995b06f48ff71ebda30b8697821425ca6cf73d82496331481cbe3",
+          "origin": [
+            9236,
+            230,
+            1512
+          ],
+          "size": [
+            8,
+            7,
+            9
+          ]
+        },
+        {
+          "id": "NG16.6",
+          "label": "Vanilla Taiga Small Farm 1",
+          "source": "data/minecraft/structure/village/taiga/houses/taiga_small_farm_1.nbt",
+          "sourceJar": "minecraft_1.21.1_client.jar",
+          "sourceSha256": "cb138b660df5c8dcfdda545a05e8f75c170da10851c6fe35f21f6a9b8ef9ec5f",
+          "origin": [
+            9252,
+            230,
+            1512
+          ],
+          "size": [
+            7,
+            7,
+            8
+          ]
+        }
+      ]
+    },
+    {
+      "id": "NG17",
+      "title": "Dungeons & Taverns / Farms & Pens (1/2)",
+      "family": "dnt_farms",
+      "mod": "Dungeons & Tav.",
+      "origin": [
+        9168,
+        230,
+        1542
+      ],
+      "bounds": [
+        9159,
+        228,
+        1534,
+        9308,
+        240,
+        1553
+      ],
+      "entries": [
+        {
+          "id": "NG17.1",
+          "label": "D&T Jungle Animal Pen 1",
+          "source": "data/minecraft/structure/village_jungle/jungle_village_animal_pen1.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "defb55396dbddd07e1c1041d25ee78152f21ea2f88356228d1be192b79516141",
+          "origin": [
+            9168,
+            230,
+            1542
+          ],
+          "size": [
+            7,
+            4,
+            9
+          ]
+        },
+        {
+          "id": "NG17.2",
+          "label": "D&T Jungle Animal Pen 2",
+          "source": "data/minecraft/structure/village_jungle/jungle_village_animal_pen2.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "cb9cfb4cc74b847b2dbed2175be3c489df19d327df74eaab607bce6024532f48",
+          "origin": [
+            9183,
+            230,
+            1542
+          ],
+          "size": [
+            5,
+            4,
+            7
+          ]
+        },
+        {
+          "id": "NG17.3",
+          "label": "D&T Jungle Animal Pen 3",
+          "source": "data/minecraft/structure/village_jungle/jungle_village_animal_pen3.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "34aeda396ce4913c63d212c133f4664202521a749e2a727c1f7bde3d369f4424",
+          "origin": [
+            9196,
+            230,
+            1542
+          ],
+          "size": [
+            7,
+            8,
+            7
+          ]
+        },
+        {
+          "id": "NG17.4",
+          "label": "D&T Jungle Farm 1",
+          "source": "data/minecraft/structure/village_jungle/jungle_village_farm1.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "f8cc269434c6d44b32f3a6f362af1d190cfc6d9b3422320a5b2680539b531d40",
+          "origin": [
+            9211,
+            230,
+            1542
+          ],
+          "size": [
+            6,
+            5,
+            9
+          ]
+        },
+        {
+          "id": "NG17.5",
+          "label": "D&T Jungle Farm 2",
+          "source": "data/minecraft/structure/village_jungle/jungle_village_farm2.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "d886fdc202d69cb2c495b5c6e93c8106e13c85daaecc65a1a5789079c5466e78",
+          "origin": [
+            9225,
+            230,
+            1542
+          ],
+          "size": [
+            7,
+            5,
+            7
+          ]
+        },
+        {
+          "id": "NG17.6",
+          "label": "D&T Jungle Farm 3",
+          "source": "data/minecraft/structure/village_jungle/jungle_village_farm3.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "300fb8e0ed957312f771af854d074b3683d104fd5586eec6699fe1ddb0b38cca",
+          "origin": [
+            9240,
+            230,
+            1542
+          ],
+          "size": [
+            9,
+            5,
+            9
+          ]
+        },
+        {
+          "id": "NG17.7",
+          "label": "D&T Swamp Animal Pen 1",
+          "source": "data/minecraft/structure/village_swamp/swamp_village_animal_pen1.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "dc6d8484c8a740ab11f26fb4a3faaa7be7258747898d515f45e087cd361b8594",
+          "origin": [
+            9257,
+            230,
+            1542
+          ],
+          "size": [
+            5,
+            5,
+            5
+          ]
+        },
+        {
+          "id": "NG17.8",
+          "label": "D&T Swamp Animal Pen 2",
+          "source": "data/minecraft/structure/village_swamp/swamp_village_animal_pen2.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "be571335d00fca8133a410860ca5a821c1b429ae8b109ebe53ea6f3daa008ca8",
+          "origin": [
+            9270,
+            230,
+            1542
+          ],
+          "size": [
+            7,
+            5,
+            9
+          ]
+        },
+        {
+          "id": "NG17.9",
+          "label": "D&T Swamp Animal Pen 3",
+          "source": "data/minecraft/structure/village_swamp/swamp_village_animal_pen3.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "eb51bed90fd6ea36c7ad211fcd791207cdf2b394f53bc67146f4e36225bbce7c",
+          "origin": [
+            9285,
+            230,
+            1542
+          ],
+          "size": [
+            6,
+            5,
+            7
+          ]
+        },
+        {
+          "id": "NG17.10",
+          "label": "D&T Swamp Farm 1",
+          "source": "data/minecraft/structure/village_swamp/swamp_village_farm1.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "e50f1594cbf262c5f98d9c2dedb30405d48453f55ed70a1ecd2a18ba87ce7a27",
+          "origin": [
+            9299,
+            230,
+            1542
+          ],
+          "size": [
+            7,
+            5,
+            9
+          ]
+        }
+      ]
+    },
+    {
+      "id": "NG18",
+      "title": "Dungeons & Taverns / Farms & Pens (2/2)",
+      "family": "dnt_farms",
+      "mod": "Dungeons & Tav.",
+      "origin": [
+        9168,
+        230,
+        1571
+      ],
+      "bounds": [
+        9159,
+        228,
+        1563,
+        9267,
+        242,
+        1588
+      ],
+      "entries": [
+        {
+          "id": "NG18.1",
+          "label": "D&T Swamp Farm 2",
+          "source": "data/minecraft/structure/village_swamp/swamp_village_farm2.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "d3b436ed286049ade08009dd34f913e964c4449fcae69085064c1d7c71c74b31",
+          "origin": [
+            9168,
+            230,
+            1571
+          ],
+          "size": [
+            5,
+            10,
+            12
+          ]
+        },
+        {
+          "id": "NG18.2",
+          "label": "D&T Swamp Farm 3",
+          "source": "data/minecraft/structure/village_swamp/swamp_village_farm3.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "d65bb2ea66fc5ebfc1cd15114c437d2d47ae5b5008361ec35117cca4fbd1f835",
+          "origin": [
+            9181,
+            230,
+            1571
+          ],
+          "size": [
+            5,
+            5,
+            7
+          ]
+        },
+        {
+          "id": "NG18.3",
+          "label": "Remnant Big Farm",
+          "source": "data/nova_structures/structure/remnant/classic_village/big_farm.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "4268b26baacd03f0088ec92faad2e49bec4e6eec9dcf79f685bc90d7eea7d99c",
+          "origin": [
+            9194,
+            230,
+            1571
+          ],
+          "size": [
+            9,
+            9,
+            13
+          ]
+        },
+        {
+          "id": "NG18.4",
+          "label": "Remnant Small Farm",
+          "source": "data/nova_structures/structure/remnant/classic_village/small_farm.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "6b682a361328a5ccc06906ebd083952d918d7d73f2f974267a1c416d20ad1d88",
+          "origin": [
+            9211,
+            230,
+            1571
+          ],
+          "size": [
+            9,
+            9,
+            7
+          ]
+        },
+        {
+          "id": "NG18.5",
+          "label": "D&T Birch Farm 1",
+          "source": "data/nova_structures/structure/village/birch/birch_village_farm1.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "066f04fbc6ee2f3c2aa73573853d4dfe14422588aa58f6aa7c60a88287ebc9a2",
+          "origin": [
+            9228,
+            230,
+            1571
+          ],
+          "size": [
+            7,
+            8,
+            9
+          ]
+        },
+        {
+          "id": "NG18.6",
+          "label": "D&T Birch Farm 2",
+          "source": "data/nova_structures/structure/village/birch/birch_village_farm2.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "3168fb9003237d19980cf171bfa693025c050a541e5da521604c6f04a31c8fa3",
+          "origin": [
+            9243,
+            230,
+            1571
+          ],
+          "size": [
+            6,
+            8,
+            9
+          ]
+        },
+        {
+          "id": "NG18.7",
+          "label": "D&T Birch Farm 3",
+          "source": "data/nova_structures/structure/village/birch/birch_village_farm3.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "f3eb25558d2ffb355da3cc6d540158696bf27d8cee6a390fcf4fba0ce66765c1",
+          "origin": [
+            9257,
+            230,
+            1571
+          ],
+          "size": [
+            8,
+            8,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "NG19",
+      "title": "Terralith / Fortified Village Farm",
+      "family": "terralith_farms",
+      "mod": "Terralith",
+      "origin": [
+        9168,
+        230,
+        1606
+      ],
+      "bounds": [
+        9159,
+        228,
+        1598,
+        9202,
+        272,
+        1620
+      ],
+      "entries": [
+        {
+          "id": "NG19.1",
+          "label": "Terralith Barn",
+          "source": "data/terralith/structure/village/fortified/houses/barn.nbt",
+          "sourceJar": "Terralith_1.21.x_v2.6.2.jar",
+          "sourceSha256": "51f786e1affbb700a7297ce771a80513c6667a614a956be0507ab8c8972dfbb3",
+          "origin": [
+            9168,
+            230,
+            1606
+          ],
+          "size": [
+            11,
+            40,
+            12
+          ]
+        },
+        {
+          "id": "NG19.2",
+          "label": "Terralith Farmer",
+          "source": "data/terralith/structure/village/fortified/houses/farmer.nbt",
+          "sourceJar": "Terralith_1.21.x_v2.6.2.jar",
+          "sourceSha256": "0fee0421906290547a659f3074a36ed3a1ce5e126d6302dd179fd08298d2d467",
+          "origin": [
+            9187,
+            230,
+            1606
+          ],
+          "size": [
+            13,
+            40,
+            11
+          ]
+        }
+      ]
+    },
+    {
+      "id": "NH01",
+      "title": "Towns & Towers / Outpost Towers by Biome (1/3)",
+      "family": "tt_towers",
+      "mod": "Towns & Towers",
+      "origin": [
+        9360,
+        230,
+        1010
+      ],
+      "bounds": [
+        9351,
+        228,
+        1002,
+        9494,
+        276,
+        1039
+      ],
+      "entries": [
+        {
+          "id": "NH01.1",
+          "label": "Birch Tower ",
+          "source": "data/kaisyn/structure/outpost/towers/birch/base_plate.nbt",
+          "sourceJar": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar",
+          "sourceSha256": "d4db3af14a11a6829820669e593b719e4f8f51e55ffebdde983b333bf180c251",
+          "origin": [
+            9360,
+            230,
+            1010
+          ],
+          "size": [
+            21,
+            31,
+            21
+          ]
+        },
+        {
+          "id": "NH01.2",
+          "label": "Oriental Tower ",
+          "source": "data/kaisyn/structure/outpost/towers/exclusives/oriental/base_plate.nbt",
+          "sourceJar": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar",
+          "sourceSha256": "01da2cf73cfbb6c97307f4796fb7f712e8817e7896eea27eb815ebcff05cb44c",
+          "origin": [
+            9389,
+            230,
+            1010
+          ],
+          "size": [
+            27,
+            44,
+            27
+          ]
+        },
+        {
+          "id": "NH01.3",
+          "label": "Swedish Tower ",
+          "source": "data/kaisyn/structure/outpost/towers/exclusives/swedish/base_plate.nbt",
+          "sourceJar": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar",
+          "sourceSha256": "b9e7516576d5b6703a60b06aeccdc58ca157143630a090c331f34ce1ac0cf61d",
+          "origin": [
+            9424,
+            230,
+            1010
+          ],
+          "size": [
+            24,
+            37,
+            15
+          ]
+        },
+        {
+          "id": "NH01.4",
+          "label": "Tudor Tower ",
+          "source": "data/kaisyn/structure/outpost/towers/exclusives/tudor/base_plate.nbt",
+          "sourceJar": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar",
+          "sourceSha256": "fc697a3b85d6707a357a6fc382592d10014b07c0cea6fa372e562da149189641",
+          "origin": [
+            9456,
+            230,
+            1010
+          ],
+          "size": [
+            15,
+            39,
+            15
+          ]
+        },
+        {
+          "id": "NH01.5",
+          "label": "Flower Forest Tower ",
+          "source": "data/kaisyn/structure/outpost/towers/flower_forest/base_plate.nbt",
+          "sourceJar": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar",
+          "sourceSha256": "2e8fc33ccd64430d3a3858947fa08ba463795110430090a540e12139174357ea",
+          "origin": [
+            9479,
+            230,
+            1010
+          ],
+          "size": [
+            13,
+            34,
+            13
+          ]
+        }
+      ]
+    },
+    {
+      "id": "NH02",
+      "title": "Towns & Towers / Outpost Towers by Biome (2/3)",
+      "family": "tt_towers",
+      "mod": "Towns & Towers",
+      "origin": [
+        9360,
+        230,
+        1057
+      ],
+      "bounds": [
+        9351,
+        228,
+        1049,
+        9481,
+        280,
+        1084
+      ],
+      "entries": [
+        {
+          "id": "NH02.1",
+          "label": "Forest Tower ",
+          "source": "data/kaisyn/structure/outpost/towers/forest/base_plate.nbt",
+          "sourceJar": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar",
+          "sourceSha256": "c640e89cc35c7d30f01f96bdc212aa11427c2f10d23523e6d703756b1966d47e",
+          "origin": [
+            9360,
+            230,
+            1057
+          ],
+          "size": [
+            18,
+            38,
+            25
+          ]
+        },
+        {
+          "id": "NH02.2",
+          "label": "Meadow Tower ",
+          "source": "data/kaisyn/structure/outpost/towers/meadow/base_plate.nbt",
+          "sourceJar": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar",
+          "sourceSha256": "6287a618177bae184f964146a159b58bb0adbde4ddef14c90c215a79ff7c96e3",
+          "origin": [
+            9386,
+            230,
+            1057
+          ],
+          "size": [
+            13,
+            37,
+            13
+          ]
+        },
+        {
+          "id": "NH02.3",
+          "label": "Mushroom Fields Tower ",
+          "source": "data/kaisyn/structure/outpost/towers/mushroom_fields/base_plate.nbt",
+          "sourceJar": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar",
+          "sourceSha256": "7f4c18dd151624b6c811d9f5a8c730ff19b77d8d36778c1344cb2effabc11645",
+          "origin": [
+            9407,
+            230,
+            1057
+          ],
+          "size": [
+            20,
+            48,
+            19
+          ]
+        },
+        {
+          "id": "NH02.4",
+          "label": "Savanna Tower ",
+          "source": "data/kaisyn/structure/outpost/towers/savanna/base_plate.nbt",
+          "sourceJar": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar",
+          "sourceSha256": "5556ce320a1f39816b1c936b8e4aa2dae33cd8038dc8fb6bfcb85cc0877deaff",
+          "origin": [
+            9435,
+            230,
+            1057
+          ],
+          "size": [
+            13,
+            34,
+            13
+          ]
+        },
+        {
+          "id": "NH02.5",
+          "label": "Snowy Plains Tower ",
+          "source": "data/kaisyn/structure/outpost/towers/snowy_plains/base_plate.nbt",
+          "sourceJar": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar",
+          "sourceSha256": "2ca9b719268935f3b750325ff48f6e7b17f2a2d4e18e5bb7273bd498b42c7987",
+          "origin": [
+            9456,
+            230,
+            1057
+          ],
+          "size": [
+            23,
+            38,
+            23
+          ]
+        }
+      ]
+    },
+    {
+      "id": "NH03",
+      "title": "Towns & Towers / Outpost Towers by Biome (3/3)",
+      "family": "tt_towers",
+      "mod": "Towns & Towers",
+      "origin": [
+        9360,
+        230,
+        1102
+      ],
+      "bounds": [
+        9351,
+        228,
+        1094,
+        9501,
+        272,
+        1131
+      ],
+      "entries": [
+        {
+          "id": "NH03.1",
+          "label": "Snowy Slopes Tower ",
+          "source": "data/kaisyn/structure/outpost/towers/snowy_slopes/base_plate.nbt",
+          "sourceJar": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar",
+          "sourceSha256": "325e20bcaf8f1314de78747023ebd5a973d878307e6ea097ca4221270ce9883e",
+          "origin": [
+            9360,
+            230,
+            1102
+          ],
+          "size": [
+            29,
+            40,
+            17
+          ]
+        },
+        {
+          "id": "NH03.2",
+          "label": "Snowy Taiga Tower ",
+          "source": "data/kaisyn/structure/outpost/towers/snowy_taiga/base_plate.nbt",
+          "sourceJar": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar",
+          "sourceSha256": "7af54b30f92ffa67d6dd54487be9858a2f37afb38c789ed6ad43ed622c52fe71",
+          "origin": [
+            9397,
+            230,
+            1102
+          ],
+          "size": [
+            13,
+            35,
+            13
+          ]
+        },
+        {
+          "id": "NH03.3",
+          "label": "Sunflower Plains Tower ",
+          "source": "data/kaisyn/structure/outpost/towers/sunflower_plains/base_plate.nbt",
+          "sourceJar": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar",
+          "sourceSha256": "a64dcb9cd6ac62eba8e3d98896f90c708f18b6cf75460aa254783a5a192c1bf3",
+          "origin": [
+            9418,
+            230,
+            1102
+          ],
+          "size": [
+            27,
+            35,
+            27
+          ]
+        },
+        {
+          "id": "NH03.4",
+          "label": "Swamp Tower ",
+          "source": "data/kaisyn/structure/outpost/towers/swamp/base_plate.nbt",
+          "sourceJar": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar",
+          "sourceSha256": "be5cf492d425c379a0c9e095548bbad56f5b206eae781ff5999a41f0e26e556e",
+          "origin": [
+            9453,
+            230,
+            1102
+          ],
+          "size": [
+            19,
+            34,
+            19
+          ]
+        },
+        {
+          "id": "NH03.5",
+          "label": "Taiga Tower ",
+          "source": "data/kaisyn/structure/outpost/towers/taiga/base_plate.nbt",
+          "sourceJar": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar",
+          "sourceSha256": "8aaef0f34e6499466b5f235ae866600dfb6f7346355d6b07af2932c3b035e9f4",
+          "origin": [
+            9480,
+            230,
+            1102
+          ],
+          "size": [
+            19,
+            34,
+            19
+          ]
+        }
+      ]
+    },
+    {
+      "id": "NH04",
+      "title": "CTOV / Outpost Towers by Biome (1/2)",
+      "family": "ctov_towers",
+      "mod": "CTOV",
+      "origin": [
+        9360,
+        230,
+        1149
+      ],
+      "bounds": [
+        9351,
+        228,
+        1141,
+        9497,
+        261,
+        1164
+      ],
+      "entries": [
+        {
+          "id": "NH04.1",
+          "label": "Badlands Tower",
+          "source": "data/ctov/structure/pillager_outpost/badlands/tower.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "46d7186247b0198c69a61b6fc460e1910bd500672182a02cddaa797e97b8d5c2",
+          "origin": [
+            9360,
+            230,
+            1149
+          ],
+          "size": [
+            13,
+            8,
+            13
+          ]
+        },
+        {
+          "id": "NH04.2",
+          "label": "Beach Tower",
+          "source": "data/ctov/structure/pillager_outpost/beach/tower.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "7e9c45956edc5c7bbf3b8372eb1dfadd9465bacd7b58eb1ade0c024920db6582",
+          "origin": [
+            9381,
+            230,
+            1149
+          ],
+          "size": [
+            11,
+            27,
+            11
+          ]
+        },
+        {
+          "id": "NH04.3",
+          "label": "Dark Forest Tower",
+          "source": "data/ctov/structure/pillager_outpost/dark_forest/tower.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "bcadba21d998f8637e98b42b5cf1bb3f23c9b59f4427e0ac503513a422fa8198",
+          "origin": [
+            9400,
+            230,
+            1149
+          ],
+          "size": [
+            13,
+            26,
+            13
+          ]
+        },
+        {
+          "id": "NH04.4",
+          "label": "Desert Tower",
+          "source": "data/ctov/structure/pillager_outpost/desert/tower.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "4c1a698f4264a4a241c1c6bf5b312c0198ea8f34d37cb54f4b027bc1dcd66e96",
+          "origin": [
+            9421,
+            230,
+            1149
+          ],
+          "size": [
+            11,
+            26,
+            11
+          ]
+        },
+        {
+          "id": "NH04.5",
+          "label": "Jungle Tower",
+          "source": "data/ctov/structure/pillager_outpost/jungle/tower.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "1db19fbf2ba2301a15c3287dcd13b1afe7e86aac10663ae7e670872e71ec09df",
+          "origin": [
+            9440,
+            230,
+            1149
+          ],
+          "size": [
+            13,
+            26,
+            13
+          ]
+        },
+        {
+          "id": "NH04.6",
+          "label": "Mountain Tower",
+          "source": "data/ctov/structure/pillager_outpost/mountain/tower.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "4d619de10dcb983159be69499de8d3174c7fe51860068ca402a6f73a3e191367",
+          "origin": [
+            9461,
+            230,
+            1149
+          ],
+          "size": [
+            13,
+            29,
+            13
+          ]
+        },
+        {
+          "id": "NH04.7",
+          "label": "Plains Tower",
+          "source": "data/ctov/structure/pillager_outpost/plains/tower.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "5dcc86f0a92ab3e9ddf936e14e55472327eb361c7c4605024c67dcab90c7a041",
+          "origin": [
+            9482,
+            230,
+            1149
+          ],
+          "size": [
+            13,
+            26,
+            13
+          ]
+        }
+      ]
+    },
+    {
+      "id": "NH05",
+      "title": "CTOV / Outpost Towers by Biome (2/2)",
+      "family": "ctov_towers",
+      "mod": "CTOV",
+      "origin": [
+        9360,
+        230,
+        1182
+      ],
+      "bounds": [
+        9351,
+        228,
+        1174,
+        9438,
+        257,
+        1197
+      ],
+      "entries": [
+        {
+          "id": "NH05.1",
+          "label": "Savanna Tower",
+          "source": "data/ctov/structure/pillager_outpost/savanna/tower.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "73a6c629305fedd8335ce64c95eb5384d0831210b4a91b28490ecd775c3c18f5",
+          "origin": [
+            9360,
+            230,
+            1182
+          ],
+          "size": [
+            13,
+            25,
+            13
+          ]
+        },
+        {
+          "id": "NH05.2",
+          "label": "Snowy Tower",
+          "source": "data/ctov/structure/pillager_outpost/snowy/tower.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "808da4a6af45dc1611ac67666fc2827f27a525150c49a6f3633bccf622660c47",
+          "origin": [
+            9381,
+            230,
+            1182
+          ],
+          "size": [
+            13,
+            17,
+            13
+          ]
+        },
+        {
+          "id": "NH05.3",
+          "label": "Swamp Tower",
+          "source": "data/ctov/structure/pillager_outpost/swamp/tower.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "42328d8677ab921a378b74b56b6cd5fd7a37c142dbed0c874e5f1109832b8fb6",
+          "origin": [
+            9402,
+            230,
+            1182
+          ],
+          "size": [
+            13,
+            25,
+            13
+          ]
+        },
+        {
+          "id": "NH05.4",
+          "label": "Taiga Tower",
+          "source": "data/ctov/structure/pillager_outpost/taiga/tower.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "af65d344c43db101ccb505a4a19c961cfe273f1793f5861023f8ce7a3573a85d",
+          "origin": [
+            9423,
+            230,
+            1182
+          ],
+          "size": [
+            13,
+            15,
+            13
+          ]
+        }
+      ]
+    },
+    {
+      "id": "NH06",
+      "title": "Dungeons & Taverns / Firewatch & Village Towers (1/2)",
+      "family": "dnt_towers",
+      "mod": "Dungeons & Tav.",
+      "origin": [
+        9360,
+        230,
+        1215
+      ],
+      "bounds": [
+        9351,
+        228,
+        1207,
+        9507,
+        263,
+        1226
+      ],
+      "entries": [
+        {
+          "id": "NH06.1",
+          "label": "Firewatch Birch",
+          "source": "data/nova_structures/structure/firewatch_tower/firewatch_birch.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "7cbcc7073d93cb14f64db3a23135c9b96db907fd88e42d1cde97efc90f0bc787",
+          "origin": [
+            9360,
+            230,
+            1215
+          ],
+          "size": [
+            9,
+            19,
+            9
+          ]
+        },
+        {
+          "id": "NH06.2",
+          "label": "Firewatch Cherry",
+          "source": "data/nova_structures/structure/firewatch_tower/firewatch_cherry.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "14471a196a8a96c56c9876dde8f739382c9908eb99ea621b7d4bf98b5561a5df",
+          "origin": [
+            9377,
+            230,
+            1215
+          ],
+          "size": [
+            9,
+            21,
+            9
+          ]
+        },
+        {
+          "id": "NH06.3",
+          "label": "Firewatch Dark Oak",
+          "source": "data/nova_structures/structure/firewatch_tower/firewatch_dark_oak.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "75d8ab1191faaf7d7a9ba5fee78a93b2e7e32a2ce00e341a7905ffcc2b8a269d",
+          "origin": [
+            9394,
+            230,
+            1215
+          ],
+          "size": [
+            9,
+            19,
+            9
+          ]
+        },
+        {
+          "id": "NH06.4",
+          "label": "Firewatch Forest",
+          "source": "data/nova_structures/structure/firewatch_tower/firewatch_forest.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "9c8f38e65a7c2042a0c37ea2f2ddd41f16d6ebc77d21f4847725bee6cafd569f",
+          "origin": [
+            9411,
+            230,
+            1215
+          ],
+          "size": [
+            9,
+            19,
+            9
+          ]
+        },
+        {
+          "id": "NH06.5",
+          "label": "Firewatch Jungle",
+          "source": "data/nova_structures/structure/firewatch_tower/firewatch_jungle.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "89aac916a14640b4bf84459075582f84509d015cc4badb2523740eeb76e19a6c",
+          "origin": [
+            9428,
+            230,
+            1215
+          ],
+          "size": [
+            9,
+            19,
+            9
+          ]
+        },
+        {
+          "id": "NH06.6",
+          "label": "Firewatch Mangrove",
+          "source": "data/nova_structures/structure/firewatch_tower/firewatch_mangrove.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "ca7a968b8f18a7ef0e4fbcdff389336345b50882fcf7b33623047310bec29087",
+          "origin": [
+            9445,
+            230,
+            1215
+          ],
+          "size": [
+            9,
+            31,
+            9
+          ]
+        },
+        {
+          "id": "NH06.7",
+          "label": "Firewatch Savanna",
+          "source": "data/nova_structures/structure/firewatch_tower/firewatch_savanna.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "64415fd7e56170d3439bbf3a3914441cbb56546dae7d76aea8a875ed85afd139",
+          "origin": [
+            9462,
+            230,
+            1215
+          ],
+          "size": [
+            9,
+            19,
+            9
+          ]
+        },
+        {
+          "id": "NH06.8",
+          "label": "Firewatch Swamp",
+          "source": "data/nova_structures/structure/firewatch_tower/firewatch_swamp.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "62d5bc2401de409dc0bf08213d8b69fc70bff961d2e898ec04102ccbcdde979d",
+          "origin": [
+            9479,
+            230,
+            1215
+          ],
+          "size": [
+            9,
+            19,
+            9
+          ]
+        },
+        {
+          "id": "NH06.9",
+          "label": "Firewatch Taiga",
+          "source": "data/nova_structures/structure/firewatch_tower/firewatch_taiga.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "e7e0c04acc15dd39e6e5daf5b1f51237bbbb40807d6a9c3ec9018835a179f513",
+          "origin": [
+            9496,
+            230,
+            1215
+          ],
+          "size": [
+            9,
+            19,
+            9
+          ]
+        }
+      ]
+    },
+    {
+      "id": "NH07",
+      "title": "Dungeons & Taverns / Firewatch & Village Towers (2/2)",
+      "family": "dnt_towers",
+      "mod": "Dungeons & Tav.",
+      "origin": [
+        9360,
+        230,
+        1244
+      ],
+      "bounds": [
+        9351,
+        228,
+        1236,
+        9382,
+        240,
+        1251
+      ],
+      "entries": [
+        {
+          "id": "NH07.1",
+          "label": "Remnant Small Tower 1",
+          "source": "data/nova_structures/structure/remnant/classic_village/small_tower_1.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "9dfe212f55e12b36bff8f63d26ccfd8fa1b0467426d2e0aeec90c610c089bca2",
+          "origin": [
+            9360,
+            230,
+            1244
+          ],
+          "size": [
+            6,
+            8,
+            5
+          ]
+        },
+        {
+          "id": "NH07.2",
+          "label": "Remnant Small Tower 2",
+          "source": "data/nova_structures/structure/remnant/classic_village/small_tower_2.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "aeb11e7bcf213bd7cca4cdc2c6b2ecbd89d6ef1f3a228e0f8a920a83190f47b2",
+          "origin": [
+            9374,
+            230,
+            1244
+          ],
+          "size": [
+            6,
+            8,
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "id": "NI01",
+      "title": "CTOV / Wells & Fountains by Village (1/2)",
+      "family": "ctov_wells",
+      "mod": "CTOV",
+      "origin": [
+        9552,
+        230,
+        1010
+      ],
+      "bounds": [
+        9543,
+        228,
+        1002,
+        9692,
+        241,
+        1021
+      ],
+      "entries": [
+        {
+          "id": "NI01.1",
+          "label": "Beach Well",
+          "source": "data/ctov/structure/village/beach/deco/well.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "bc712966bd61a769af8dfaedd623542e8f324b35a35886b010c053806198a2e9",
+          "origin": [
+            9552,
+            230,
+            1010
+          ],
+          "size": [
+            5,
+            7,
+            5
+          ]
+        },
+        {
+          "id": "NI01.2",
+          "label": "Desert Well",
+          "source": "data/ctov/structure/village/desert/deco/well.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "bcade0782437f99bf3fc5065ef80f8c58981f25a2c1027e48666328dfec4cd56",
+          "origin": [
+            9565,
+            230,
+            1010
+          ],
+          "size": [
+            4,
+            5,
+            3
+          ]
+        },
+        {
+          "id": "NI01.3",
+          "label": "Desert Oasis Well",
+          "source": "data/ctov/structure/village/desert_oasis/deco/well.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "3b4aef25b6539e7332a9c3e540c48bd84956befb396943e5f9253a6eba1eb97b",
+          "origin": [
+            9577,
+            230,
+            1010
+          ],
+          "size": [
+            4,
+            7,
+            4
+          ]
+        },
+        {
+          "id": "NI01.4",
+          "label": "Halloween Well",
+          "source": "data/ctov/structure/village/halloween/decos/well.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "3f948be27740c85e81bada1eb8d0b19517681db3b0f790d9d9cf5bb3b4359b7d",
+          "origin": [
+            9589,
+            230,
+            1010
+          ],
+          "size": [
+            7,
+            9,
+            7
+          ]
+        },
+        {
+          "id": "NI01.5",
+          "label": "Jungle Well",
+          "source": "data/ctov/structure/village/jungle/deco/well.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "27225df0b0b888eba3c351afcb2bef69382128a2bd407db9fed71b6f1c2b9e35",
+          "origin": [
+            9604,
+            230,
+            1010
+          ],
+          "size": [
+            5,
+            9,
+            5
+          ]
+        },
+        {
+          "id": "NI01.6",
+          "label": "Mesa Well",
+          "source": "data/ctov/structure/village/mesa/deco/well.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "00fcd32a4480ecc56536cdc0eada2505c31864d56be7c48ddd0221d7376e15c5",
+          "origin": [
+            9617,
+            230,
+            1010
+          ],
+          "size": [
+            3,
+            8,
+            3
+          ]
+        },
+        {
+          "id": "NI01.7",
+          "label": "Mesa Fortified Well",
+          "source": "data/ctov/structure/village/mesa_fortified/deco/well.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "244b749ac91c8991c906519865e9335b8c8da8d439f84b8f1c16b76ea598bb6f",
+          "origin": [
+            9628,
+            230,
+            1010
+          ],
+          "size": [
+            9,
+            8,
+            9
+          ]
+        },
+        {
+          "id": "NI01.8",
+          "label": "Mountain Alpine Fountain",
+          "source": "data/ctov/structure/village/mountain_alpine/deco/fountain.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "e99571d545c66bd9d713c9cb2f1cf5d968e72828bf5926e4e77f296041cad5f0",
+          "origin": [
+            9645,
+            230,
+            1010
+          ],
+          "size": [
+            5,
+            4,
+            5
+          ]
+        },
+        {
+          "id": "NI01.9",
+          "label": "Mushroom Well",
+          "source": "data/ctov/structure/village/mushroom/decos/well.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "282a1bd44ba563f5754d37a0634e888b599939c8fa6b9cadb606d556a72463b1",
+          "origin": [
+            9658,
+            230,
+            1010
+          ],
+          "size": [
+            6,
+            9,
+            6
+          ]
+        },
+        {
+          "id": "NI01.10",
+          "label": "Plains Fortified Fountain",
+          "source": "data/ctov/structure/village/plains_fortified/deco/fountain.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "bbf6c2ff262072d3f25dcb65bab9c72923a5f2bd74b92014e1a4aeabafa35ccc",
+          "origin": [
+            9672,
+            230,
+            1010
+          ],
+          "size": [
+            5,
+            5,
+            5
+          ]
+        },
+        {
+          "id": "NI01.11",
+          "label": "Plains Fortified Well",
+          "source": "data/ctov/structure/village/plains_fortified/deco/well.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "4a07d835f2d7fcbdb494d0cc17b472b5fa17120c9bb037144f67d5036fcc177e",
+          "origin": [
+            9685,
+            230,
+            1010
+          ],
+          "size": [
+            5,
+            9,
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "id": "NI02",
+      "title": "CTOV / Wells & Fountains by Village (2/2)",
+      "family": "ctov_wells",
+      "mod": "CTOV",
+      "origin": [
+        9552,
+        230,
+        1039
+      ],
+      "bounds": [
+        9543,
+        228,
+        1031,
+        9634,
+        241,
+        1046
+      ],
+      "entries": [
+        {
+          "id": "NI02.1",
+          "label": "Savanna Fountain",
+          "source": "data/ctov/structure/village/savanna/deco/fountain.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "be6bcbddf34c5e8a4af0cabf1744f613b0ace1a913a964bd36a367fbf7d6a24b",
+          "origin": [
+            9552,
+            230,
+            1039
+          ],
+          "size": [
+            5,
+            3,
+            5
+          ]
+        },
+        {
+          "id": "NI02.2",
+          "label": "Savanna Well",
+          "source": "data/ctov/structure/village/savanna/deco/well.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "dc6ff771e8dfce6b0af6e271519563e2ab81ed3a18e19c12ad53d70cd6a0ba6d",
+          "origin": [
+            9565,
+            230,
+            1039
+          ],
+          "size": [
+            5,
+            5,
+            5
+          ]
+        },
+        {
+          "id": "NI02.3",
+          "label": "Savanna Na Well",
+          "source": "data/ctov/structure/village/savanna_na/deco/well.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "5a30a1abe1e343978566d2835821737e8d0378bd4f788434afbf54d3fb661c2f",
+          "origin": [
+            9578,
+            230,
+            1039
+          ],
+          "size": [
+            3,
+            7,
+            3
+          ]
+        },
+        {
+          "id": "NI02.4",
+          "label": "Taiga Fountain",
+          "source": "data/ctov/structure/village/taiga/deco/fountain.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "9c87ab7acd72c7972e29722f051178a3663b6ab032f223af4203fd0db5a403f8",
+          "origin": [
+            9589,
+            230,
+            1039
+          ],
+          "size": [
+            5,
+            4,
+            5
+          ]
+        },
+        {
+          "id": "NI02.5",
+          "label": "Taiga Well",
+          "source": "data/ctov/structure/village/taiga/deco/well.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "c6b27c65b5f2884d2c5bb9260544f26508ef921c3ded5f211aca2bd279510815",
+          "origin": [
+            9602,
+            230,
+            1039
+          ],
+          "size": [
+            4,
+            8,
+            4
+          ]
+        },
+        {
+          "id": "NI02.6",
+          "label": "Taiga Fortified Fountain",
+          "source": "data/ctov/structure/village/taiga_fortified/deco/fountain.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "6cef4de081e382531d5ac9645a8114d693ad849a100179093be36f3072d14296",
+          "origin": [
+            9614,
+            230,
+            1039
+          ],
+          "size": [
+            5,
+            5,
+            5
+          ]
+        },
+        {
+          "id": "NI02.7",
+          "label": "Taiga Fortified Well",
+          "source": "data/ctov/structure/village/taiga_fortified/deco/well.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "d7ad90007c7cbf27e4e74273dd6af8ef142f7fc830d31f6ca6bc69e121a3c056",
+          "origin": [
+            9627,
+            230,
+            1039
+          ],
+          "size": [
+            5,
+            9,
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "id": "NI03",
+      "title": "Dungeons & Taverns / Wells (1/2)",
+      "family": "dnt_wells",
+      "mod": "Dungeons & Tav.",
+      "origin": [
+        9552,
+        230,
+        1064
+      ],
+      "bounds": [
+        9543,
+        228,
+        1056,
+        9702,
+        241,
+        1072
+      ],
+      "entries": [
+        {
+          "id": "NI03.1",
+          "label": "Remnant Well",
+          "source": "data/nova_structures/structure/remnant/classic_village/well.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "8e41d1abcde5c6e9fb0144c0f2d1a08209b38059eb78fdd40952a4e0bee61fae",
+          "origin": [
+            9552,
+            230,
+            1064
+          ],
+          "size": [
+            6,
+            6,
+            6
+          ]
+        },
+        {
+          "id": "NI03.2",
+          "label": "Remnant Well Bottom",
+          "source": "data/nova_structures/structure/remnant/classic_village/well_bottom.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "d297ffccc9f0cde80289b57be303f5724b9ba3023f78c38a201736ce9966e9af",
+          "origin": [
+            9566,
+            230,
+            1064
+          ],
+          "size": [
+            4,
+            9,
+            4
+          ]
+        },
+        {
+          "id": "NI03.3",
+          "label": "Tavern Well Acacia",
+          "source": "data/nova_structures/structure/tavern/tavern_event_well_acacia.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "18a356efd6e4e344f13f7222bc3334713c1691a10e5c78141829b72b5fd36ed8",
+          "origin": [
+            9578,
+            230,
+            1064
+          ],
+          "size": [
+            5,
+            5,
+            5
+          ]
+        },
+        {
+          "id": "NI03.4",
+          "label": "Tavern Well Birch",
+          "source": "data/nova_structures/structure/tavern/tavern_event_well_birch.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "a55a371fc5b05ee678a8a42b08f5f69e49216a21761e4b0f7fc72ee1cbd2d8a6",
+          "origin": [
+            9591,
+            230,
+            1064
+          ],
+          "size": [
+            5,
+            5,
+            5
+          ]
+        },
+        {
+          "id": "NI03.5",
+          "label": "Tavern Well Cherry",
+          "source": "data/nova_structures/structure/tavern/tavern_event_well_cherry.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "282a4da33def03e0ce2da9c46cfe46a824699f97145493404d32a32427fedcae",
+          "origin": [
+            9604,
+            230,
+            1064
+          ],
+          "size": [
+            5,
+            5,
+            5
+          ]
+        },
+        {
+          "id": "NI03.6",
+          "label": "Tavern Well Dark Oak",
+          "source": "data/nova_structures/structure/tavern/tavern_event_well_dark_oak.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "dcc757167a5409d21d0e59e4ab3ff7381ac1ea647b3d97b9417c71661c2f284d",
+          "origin": [
+            9617,
+            230,
+            1064
+          ],
+          "size": [
+            5,
+            5,
+            5
+          ]
+        },
+        {
+          "id": "NI03.7",
+          "label": "Tavern Well Desert",
+          "source": "data/nova_structures/structure/tavern/tavern_event_well_desert.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "640ac7e6858940734e2bdda3676ed50560628f90323bf4b68459b38567595361",
+          "origin": [
+            9630,
+            230,
+            1064
+          ],
+          "size": [
+            5,
+            5,
+            5
+          ]
+        },
+        {
+          "id": "NI03.8",
+          "label": "Tavern Well Jungle",
+          "source": "data/nova_structures/structure/tavern/tavern_event_well_jungle.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "0a33a40294ae33ba63ca7a2fd91388aaec706301cbcd989a31b57992c42cbf3e",
+          "origin": [
+            9643,
+            230,
+            1064
+          ],
+          "size": [
+            5,
+            5,
+            5
+          ]
+        },
+        {
+          "id": "NI03.9",
+          "label": "Tavern Well Mangrove",
+          "source": "data/nova_structures/structure/tavern/tavern_event_well_mangrove.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "2b2683707a17974e0eb925ff0b163a6f048cbd5f4cda80cc692bb280002f4af8",
+          "origin": [
+            9656,
+            230,
+            1064
+          ],
+          "size": [
+            5,
+            5,
+            5
+          ]
+        },
+        {
+          "id": "NI03.10",
+          "label": "Tavern Well Oak",
+          "source": "data/nova_structures/structure/tavern/tavern_event_well_oak.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "caf24344ca0a8636eaaaabddb93ce85bb1278469a6e877be7fc7e57bdf8bbec3",
+          "origin": [
+            9669,
+            230,
+            1064
+          ],
+          "size": [
+            5,
+            5,
+            5
+          ]
+        },
+        {
+          "id": "NI03.11",
+          "label": "Tavern Well Snowy",
+          "source": "data/nova_structures/structure/tavern/tavern_event_well_snowy.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "62dc12c66bcefef4d5ffc28536a4d16a7ecc6eb7aa2ecb0b3a098b962877844e",
+          "origin": [
+            9682,
+            230,
+            1064
+          ],
+          "size": [
+            5,
+            5,
+            5
+          ]
+        },
+        {
+          "id": "NI03.12",
+          "label": "Tavern Well Spruce",
+          "source": "data/nova_structures/structure/tavern/tavern_event_well_spruce.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "0a95bd33acd6405f4b5fed88d102708b575468607c81e5f0591f37f93c658bdb",
+          "origin": [
+            9695,
+            230,
+            1064
+          ],
+          "size": [
+            5,
+            5,
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "id": "NI04",
+      "title": "Dungeons & Taverns / Wells (2/2)",
+      "family": "dnt_wells",
+      "mod": "Dungeons & Tav.",
+      "origin": [
+        9552,
+        230,
+        1090
+      ],
+      "bounds": [
+        9543,
+        228,
+        1082,
+        9625,
+        244,
+        1097
+      ],
+      "entries": [
+        {
+          "id": "NI04.1",
+          "label": "Tavern Well Swamp",
+          "source": "data/nova_structures/structure/tavern/tavern_event_well_swamp.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "d3849ff9141d0501f1229eea2e798e1f9c4385ab261d1688904b68a6dcc0f0ac",
+          "origin": [
+            9552,
+            230,
+            1090
+          ],
+          "size": [
+            5,
+            5,
+            5
+          ]
+        },
+        {
+          "id": "NI04.2",
+          "label": "D&T Well Birch",
+          "source": "data/nova_structures/structure/well/well_birch.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "7f58f29a22a1e2e83233aef8f2c8629b315746e84a901425268dd41ce72fb521",
+          "origin": [
+            9565,
+            230,
+            1090
+          ],
+          "size": [
+            3,
+            11,
+            3
+          ]
+        },
+        {
+          "id": "NI04.3",
+          "label": "D&T Well Dark Oak",
+          "source": "data/nova_structures/structure/well/well_dark_oak.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "130141f469be2d0e11507d763e791bc1efdcc5c1353a67dc5d7f488f47e2242c",
+          "origin": [
+            9576,
+            230,
+            1090
+          ],
+          "size": [
+            3,
+            12,
+            3
+          ]
+        },
+        {
+          "id": "NI04.4",
+          "label": "D&T Well Jungle",
+          "source": "data/nova_structures/structure/well/well_jungle.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "26ef4a9633796bb26720ac00fcb369a67a77bcbfd5a174bf26c6a93caa48ed50",
+          "origin": [
+            9587,
+            230,
+            1090
+          ],
+          "size": [
+            3,
+            12,
+            3
+          ]
+        },
+        {
+          "id": "NI04.5",
+          "label": "D&T Well Oak",
+          "source": "data/nova_structures/structure/well/well_oak.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "b79b25b6abebc59c2ac2e9b3fafc7e1b596723a08caaabac08b086b100c62f65",
+          "origin": [
+            9598,
+            230,
+            1090
+          ],
+          "size": [
+            3,
+            11,
+            3
+          ]
+        },
+        {
+          "id": "NI04.6",
+          "label": "D&T Well Savana",
+          "source": "data/nova_structures/structure/well/well_savana.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "e579c681024a5445c4a179433e9cc42dfb796f6dd633d0676549081f848c449f",
+          "origin": [
+            9609,
+            230,
+            1090
+          ],
+          "size": [
+            3,
+            12,
+            3
+          ]
+        },
+        {
+          "id": "NI04.7",
+          "label": "D&T Well Spruce",
+          "source": "data/nova_structures/structure/well/well_spruce.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "4a255b4ad9933b681324838c7d32010bd5478ad7f7fbb5da7213b413a1db8674",
+          "origin": [
+            9620,
+            230,
+            1090
+          ],
+          "size": [
+            3,
+            12,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "id": "NI05",
+      "title": "Towns & Towers / Classic Well",
+      "family": "tt_wells",
+      "mod": "Towns & Towers",
+      "origin": [
+        9552,
+        230,
+        1115
+      ],
+      "bounds": [
+        9543,
+        228,
+        1107,
+        9572,
+        242,
+        1123
+      ],
+      "entries": [
+        {
+          "id": "NI05.1",
+          "label": "Classic Well Bottom",
+          "source": "data/kaisyn/structure/village/exclusives/classic/town_centers/classic_meeting_point_1/well_bottom.nbt",
+          "sourceJar": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar",
+          "sourceSha256": "379df59ec8801edc274d9604c1b9a15bcffbde6a9df2110acde76b58f3466a07",
+          "origin": [
+            9552,
+            230,
+            1115
+          ],
+          "size": [
+            4,
+            10,
+            4
+          ]
+        },
+        {
+          "id": "NI05.2",
+          "label": "Classic Well Top",
+          "source": "data/kaisyn/structure/village/exclusives/classic/town_centers/classic_meeting_point_1/well_top.nbt",
+          "sourceJar": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar",
+          "sourceSha256": "eb4a330ead9fa8fa74fb143665df448a763473d672964c3b0ece0330455bd3f4",
+          "origin": [
+            9564,
+            230,
+            1115
+          ],
+          "size": [
+            6,
+            6,
+            6
+          ]
+        }
+      ]
+    },
+    {
+      "id": "NI06",
+      "title": "YUNG's Extras / Desert Wells",
+      "family": "yung_wells",
+      "mod": "YUNG's Extras",
+      "origin": [
+        9552,
+        230,
+        1141
+      ],
+      "bounds": [
+        9543,
+        228,
+        1133,
+        9663,
+        243,
+        1150
+      ],
+      "entries": [
+        {
+          "id": "NI06.1",
+          "label": "Desert Dry Well Lg",
+          "source": "data/yungsextras/structure/desert/wells/dry_well_lg.nbt",
+          "sourceJar": "YungsExtras-1.21.1-NeoForge-5.1.1.jar",
+          "sourceSha256": "7fcb1f5196a4234f60148a0b9ec8d61ac3d69d509ca674ce3bd87ce62e6b35fb",
+          "origin": [
+            9552,
+            230,
+            1141
+          ],
+          "size": [
+            7,
+            11,
+            7
+          ]
+        },
+        {
+          "id": "NI06.2",
+          "label": "Desert Dry Well Md",
+          "source": "data/yungsextras/structure/desert/wells/dry_well_md.nbt",
+          "sourceJar": "YungsExtras-1.21.1-NeoForge-5.1.1.jar",
+          "sourceSha256": "2d85536753d58eecc79038830a61e7e607151e868c995efbc89bbcfe1e5dfcdf",
+          "origin": [
+            9567,
+            230,
+            1141
+          ],
+          "size": [
+            5,
+            11,
+            5
+          ]
+        },
+        {
+          "id": "NI06.3",
+          "label": "Desert Dry Well Sm",
+          "source": "data/yungsextras/structure/desert/wells/dry_well_sm.nbt",
+          "sourceJar": "YungsExtras-1.21.1-NeoForge-5.1.1.jar",
+          "sourceSha256": "00cb76569da070d4db1297bff027ccfda90beece4a2912dda77a88b0c71a3e94",
+          "origin": [
+            9580,
+            230,
+            1141
+          ],
+          "size": [
+            3,
+            10,
+            3
+          ]
+        },
+        {
+          "id": "NI06.4",
+          "label": "Desert Well Lg",
+          "source": "data/yungsextras/structure/desert/wells/well_lg.nbt",
+          "sourceJar": "YungsExtras-1.21.1-NeoForge-5.1.1.jar",
+          "sourceSha256": "1b257af8ce0bda3fba7ffbb239672c9b5054a33eb99adab39a045a77f19fa77e",
+          "origin": [
+            9591,
+            230,
+            1141
+          ],
+          "size": [
+            7,
+            11,
+            7
+          ]
+        },
+        {
+          "id": "NI06.5",
+          "label": "Desert Well Md",
+          "source": "data/yungsextras/structure/desert/wells/well_md.nbt",
+          "sourceJar": "YungsExtras-1.21.1-NeoForge-5.1.1.jar",
+          "sourceSha256": "ee686c33fd2385969cdd06153d45edbb4c7e44c8ca961f52e465fd62a0e01d41",
+          "origin": [
+            9606,
+            230,
+            1141
+          ],
+          "size": [
+            5,
+            11,
+            5
+          ]
+        },
+        {
+          "id": "NI06.6",
+          "label": "Desert Well Sm",
+          "source": "data/yungsextras/structure/desert/wells/well_sm.nbt",
+          "sourceJar": "YungsExtras-1.21.1-NeoForge-5.1.1.jar",
+          "sourceSha256": "c8c0c1e0cc7a5e387a2560910dedc631e21d37ccdec72eb4f3ff686944c88189",
+          "origin": [
+            9619,
+            230,
+            1141
+          ],
+          "size": [
+            3,
+            10,
+            3
+          ]
+        },
+        {
+          "id": "NI06.7",
+          "label": "Desert Wishing Well Lg",
+          "source": "data/yungsextras/structure/desert/wells/wishing_well_lg.nbt",
+          "sourceJar": "YungsExtras-1.21.1-NeoForge-5.1.1.jar",
+          "sourceSha256": "dd4eeaa0dc0d29414a3f2cb741438091bf3c03bdc91057b17290c6351aa07aaa",
+          "origin": [
+            9630,
+            230,
+            1141
+          ],
+          "size": [
+            7,
+            11,
+            7
+          ]
+        },
+        {
+          "id": "NI06.8",
+          "label": "Desert Wishing Well Md",
+          "source": "data/yungsextras/structure/desert/wells/wishing_well_md.nbt",
+          "sourceJar": "YungsExtras-1.21.1-NeoForge-5.1.1.jar",
+          "sourceSha256": "d39e41595628a123b99538312aa9d514261643ea3b433d7f4e26b0df5e927843",
+          "origin": [
+            9645,
+            230,
+            1141
+          ],
+          "size": [
+            5,
+            11,
+            5
+          ]
+        },
+        {
+          "id": "NI06.9",
+          "label": "Desert Wishing Well Sm",
+          "source": "data/yungsextras/structure/desert/wells/wishing_well_sm.nbt",
+          "sourceJar": "YungsExtras-1.21.1-NeoForge-5.1.1.jar",
+          "sourceSha256": "6c811bc24400333c523e47a18aa7d616821ab4f57d815111e298aa8a0a1f5c87",
+          "origin": [
+            9658,
+            230,
+            1141
+          ],
+          "size": [
+            3,
+            10,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "id": "NI07",
+      "title": "Terralith / Old Well & Fountain",
+      "family": "terralith_water",
+      "mod": "Terralith",
+      "origin": [
+        9552,
+        230,
+        1168
+      ],
+      "bounds": [
+        9543,
+        228,
+        1160,
+        9572,
+        247,
+        1175
+      ],
+      "entries": [
+        {
+          "id": "NI07.1",
+          "label": "Terralith Frog Fountain",
+          "source": "data/terralith/structure/small_decoration/frog_fountain.nbt",
+          "sourceJar": "Terralith_1.21.x_v2.6.2.jar",
+          "sourceSha256": "11f088becdcb179bdf15d18256b758ba48a1f3b10040e60c9785d905a617d2f9",
+          "origin": [
+            9552,
+            230,
+            1168
+          ],
+          "size": [
+            5,
+            11,
+            5
+          ]
+        },
+        {
+          "id": "NI07.2",
+          "label": "Terralith Old Well",
+          "source": "data/terralith/structure/small_decoration/old_well.nbt",
+          "sourceJar": "Terralith_1.21.x_v2.6.2.jar",
+          "sourceSha256": "95322b937f9af2f4e2ca5db0d1a3efe6d2ace2a794257dc2f4589a09cb14671b",
+          "origin": [
+            9565,
+            230,
+            1168
+          ],
+          "size": [
+            5,
+            15,
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "id": "NI08",
+      "title": "Vanilla / Town Centre Wells & Fountains",
+      "family": "vanilla_fountains",
+      "mod": "Vanilla",
+      "origin": [
+        9552,
+        230,
+        1193
+      ],
+      "bounds": [
+        9543,
+        228,
+        1185,
+        9580,
+        238,
+        1204
+      ],
+      "entries": [
+        {
+          "id": "NI08.1",
+          "label": "Vanilla Plains Fountain 01",
+          "source": "data/minecraft/structure/village/plains/town_centers/plains_fountain_01.nbt",
+          "sourceJar": "minecraft_1.21.1_client.jar",
+          "sourceSha256": "b999c8517bd95cab9efe26c94f378af38693d5a0ef65edbfd346166f6b18b7bc",
+          "origin": [
+            9552,
+            230,
+            1193
+          ],
+          "size": [
+            9,
+            4,
+            9
+          ]
+        },
+        {
+          "id": "NI08.2",
+          "label": "Vanilla Plains Fountain 01",
+          "source": "data/minecraft/structure/village/plains/zombie/town_centers/plains_fountain_01.nbt",
+          "sourceJar": "minecraft_1.21.1_client.jar",
+          "sourceSha256": "0a31f3c3e7ef035a031d657c63e999a01ab53d768d8ca4d1cbb0deb547449ea2",
+          "origin": [
+            9569,
+            230,
+            1193
+          ],
+          "size": [
+            9,
+            6,
+            9
+          ]
+        }
+      ]
+    },
+    {
+      "id": "NI09",
+      "title": "CTOV / Oases, Pools & Fishing Huts (1/3)",
+      "family": "ctov_pools",
+      "mod": "CTOV",
+      "origin": [
+        9552,
+        230,
+        1222
+      ],
+      "bounds": [
+        9543,
+        228,
+        1214,
+        9700,
+        245,
+        1240
+      ],
+      "entries": [
+        {
+          "id": "NI09.1",
+          "label": "Beach Fishing Hut",
+          "source": "data/ctov/structure/village/beach/jobsite/fishing_hut.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "c5e470ea7cce8a906aa342e0b0e53b5447fc60f84cf21d47a582031bb218e386",
+          "origin": [
+            9552,
+            230,
+            1222
+          ],
+          "size": [
+            9,
+            9,
+            9
+          ]
+        },
+        {
+          "id": "NI09.2",
+          "label": "Christmas Fishing Hut",
+          "source": "data/ctov/structure/village/christmas/jobsite/fishing_hut.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "184c210dd29f3bbbaed38d819e9870617fd9bac95327c0af854ea440d4dc5cc4",
+          "origin": [
+            9569,
+            230,
+            1222
+          ],
+          "size": [
+            9,
+            12,
+            10
+          ]
+        },
+        {
+          "id": "NI09.3",
+          "label": "Desert Oasis",
+          "source": "data/ctov/structure/village/desert/deco/oasis.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "ca3537d7e1630041e2c1f920c73287a78cd44093f0089f0c21c92ff1fafe9950",
+          "origin": [
+            9586,
+            230,
+            1222
+          ],
+          "size": [
+            6,
+            3,
+            6
+          ]
+        },
+        {
+          "id": "NI09.4",
+          "label": "Desert Fishing Oasis",
+          "source": "data/ctov/structure/village/desert/jobsite/fishing_oasis.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "68cd2535659fe585cedfdfd7639d0dabef8bbd87d3f40a118d83d88766623151",
+          "origin": [
+            9600,
+            230,
+            1222
+          ],
+          "size": [
+            13,
+            13,
+            16
+          ]
+        },
+        {
+          "id": "NI09.5",
+          "label": "Halloween Fishing Hut",
+          "source": "data/ctov/structure/village/halloween/jobsite/fishing_hut.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "ead33f1a200772d9037f6e4854d79f92055a546a77dc8b93d3c9acd1a8c8a20b",
+          "origin": [
+            9621,
+            230,
+            1222
+          ],
+          "size": [
+            11,
+            11,
+            11
+          ]
+        },
+        {
+          "id": "NI09.6",
+          "label": "Jungle Fishing Hut",
+          "source": "data/ctov/structure/village/jungle/jobsite/fishing_hut.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "8e68705b0114ce7f38f01af41142727ed72b047b6b072f83910f8c5712984fb7",
+          "origin": [
+            9640,
+            230,
+            1222
+          ],
+          "size": [
+            11,
+            9,
+            11
+          ]
+        },
+        {
+          "id": "NI09.7",
+          "label": "Mesa Fishing Hut",
+          "source": "data/ctov/structure/village/mesa/jobsite/fishing_hut.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "14d56cf9b00d37f800c077d0bef5ca687a5d04b64bb23901a5bf23c3e4b7b66f",
+          "origin": [
+            9659,
+            230,
+            1222
+          ],
+          "size": [
+            5,
+            8,
+            7
+          ]
+        },
+        {
+          "id": "NI09.8",
+          "label": "Mesa Fortified Fishing Oasis",
+          "source": "data/ctov/structure/village/mesa_fortified/jobsite/fishing_oasis.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "68371c1d62370a9c6929250abcb55357314fb7991466348983aff0c60db55a24",
+          "origin": [
+            9672,
+            230,
+            1222
+          ],
+          "size": [
+            9,
+            13,
+            13
+          ]
+        },
+        {
+          "id": "NI09.9",
+          "label": "Mountain Alpine Fishing Hut",
+          "source": "data/ctov/structure/village/mountain_alpine/jobsite/fishing_hut.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "cd334dda88ee963e176a872d9ce32776a10c96175a2fc9579309a7389d7edfc7",
+          "origin": [
+            9689,
+            230,
+            1222
+          ],
+          "size": [
+            9,
+            9,
+            9
+          ]
+        }
+      ]
+    },
+    {
+      "id": "NI10",
+      "title": "CTOV / Oases, Pools & Fishing Huts (2/3)",
+      "family": "ctov_pools",
+      "mod": "CTOV",
+      "origin": [
+        9552,
+        230,
+        1258
+      ],
+      "bounds": [
+        9543,
+        228,
+        1250,
+        9697,
+        247,
+        1272
+      ],
+      "entries": [
+        {
+          "id": "NI10.1",
+          "label": "Plains Fishing Hut",
+          "source": "data/ctov/structure/village/plains/jobsite/fishing_hut.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "9e897ba81a1ab7ab98ad211644d2cfc8bcac10a7c00609c901b60209adb10add",
+          "origin": [
+            9552,
+            230,
+            1258
+          ],
+          "size": [
+            11,
+            10,
+            11
+          ]
+        },
+        {
+          "id": "NI10.2",
+          "label": "Plains Fortified Fishing Hut",
+          "source": "data/ctov/structure/village/plains_fortified/jobsite/fishing_hut.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "42835da515f60d8d9fe16f8d29460df0da435dfe5788052cfd03579c32433dc9",
+          "origin": [
+            9571,
+            230,
+            1258
+          ],
+          "size": [
+            11,
+            13,
+            9
+          ]
+        },
+        {
+          "id": "NI10.3",
+          "label": "Savanna Fishing Hut",
+          "source": "data/ctov/structure/village/savanna/jobsite/fishing_hut.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "7072321ef487f4310c58caddb9a9f4c5afec54acb23b5d1c7172ab8593e42d2b",
+          "origin": [
+            9590,
+            230,
+            1258
+          ],
+          "size": [
+            9,
+            10,
+            10
+          ]
+        },
+        {
+          "id": "NI10.4",
+          "label": "Savanna Na Fishing Hut",
+          "source": "data/ctov/structure/village/savanna_na/jobsite/fishing_hut.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "ba6df984006cbbcc70a4a153896d157184b0f75e83398b6aacbd1757b1fef0a4",
+          "origin": [
+            9607,
+            230,
+            1258
+          ],
+          "size": [
+            7,
+            10,
+            8
+          ]
+        },
+        {
+          "id": "NI10.5",
+          "label": "Snowy Igloo Fishing Hut",
+          "source": "data/ctov/structure/village/snowy_igloo/jobsite/fishing_hut.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "982a1192822b98d8ff96260c87635b5249423a8ce1685401a6839f8f1335e29c",
+          "origin": [
+            9622,
+            230,
+            1258
+          ],
+          "size": [
+            9,
+            9,
+            5
+          ]
+        },
+        {
+          "id": "NI10.6",
+          "label": "Swamp Pier",
+          "source": "data/ctov/structure/village/swamp/deco/pier.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "b519bddefb2782acd856776d04614cc4382c2c4bb1374bfe1a14cd37a7982a52",
+          "origin": [
+            9639,
+            230,
+            1258
+          ],
+          "size": [
+            5,
+            2,
+            5
+          ]
+        },
+        {
+          "id": "NI10.7",
+          "label": "Swamp Fishing Hut",
+          "source": "data/ctov/structure/village/swamp/jobsite/fishing_hut.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "f5cd45f45f52ef6cfe4a03ee194aa3503af1b7c5f4aaaef2f5c3dd5c14027bfd",
+          "origin": [
+            9652,
+            230,
+            1258
+          ],
+          "size": [
+            7,
+            15,
+            10
+          ]
+        },
+        {
+          "id": "NI10.8",
+          "label": "Swamp Fortified Fishing Hut",
+          "source": "data/ctov/structure/village/swamp_fortified/jobsite/fishing_hut.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "7a46777ef2b9ab4d99965a06e574564c44c8b88ef6e3f02623699fdd89222640",
+          "origin": [
+            9667,
+            230,
+            1258
+          ],
+          "size": [
+            9,
+            10,
+            9
+          ]
+        },
+        {
+          "id": "NI10.9",
+          "label": "Taiga Fishing Hut",
+          "source": "data/ctov/structure/village/taiga/jobsite/fishing_hut.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "9ff61f1f9763a06667c64bb3fbda6fa93efffc20cdaf24cda90d9b9b0af485f7",
+          "origin": [
+            9684,
+            230,
+            1258
+          ],
+          "size": [
+            11,
+            11,
+            12
+          ]
+        }
+      ]
+    },
+    {
+      "id": "NI11",
+      "title": "CTOV / Oases, Pools & Fishing Huts (3/3)",
+      "family": "ctov_pools",
+      "mod": "CTOV",
+      "origin": [
+        9552,
+        230,
+        1290
+      ],
+      "bounds": [
+        9543,
+        228,
+        1282,
+        9580,
+        245,
+        1301
+      ],
+      "entries": [
+        {
+          "id": "NI11.1",
+          "label": "Taiga Fortified Fishing Hut",
+          "source": "data/ctov/structure/village/taiga_fortified/jobsite/fishing_hut.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "afa0d4946168d34052b876e18c9c3a350141db8e9cfe0a7d07aaec2750f0bd0c",
+          "origin": [
+            9552,
+            230,
+            1290
+          ],
+          "size": [
+            9,
+            9,
+            9
+          ]
+        },
+        {
+          "id": "NI11.2",
+          "label": "Underground Fishing Hut",
+          "source": "data/ctov/structure/village/underground/jobsite/fishing_hut.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "d5a1de9ec0fd861589826eb115369d55e608399cdbc996eda0a883900b973900",
+          "origin": [
+            9569,
+            230,
+            1290
+          ],
+          "size": [
+            9,
+            13,
+            9
+          ]
+        }
+      ]
+    },
+    {
+      "id": "NI12",
+      "title": "Dungeons & Taverns / Spring",
+      "family": "dnt_pools",
+      "mod": "Dungeons & Tav.",
+      "origin": [
+        9552,
+        230,
+        1319
+      ],
+      "bounds": [
+        9543,
+        228,
+        1311,
+        9558,
+        246,
+        1326
+      ],
+      "entries": [
+        {
+          "id": "NI12.1",
+          "label": "Jungle Ruins Spring",
+          "source": "data/nova_structures/structure/jungle_ruin/jungle_ruins_spring.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "e36ce66db63e5a79d1333049c65ddbf4ea690ca688d3cb70ff534c30abff177e",
+          "origin": [
+            9552,
+            230,
+            1319
+          ],
+          "size": [
+            4,
+            14,
+            5
+          ]
+        }
+      ]
+    }
+  ]
+}

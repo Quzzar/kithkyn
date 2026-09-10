@@ -2,7 +2,6 @@ package com.quzzar.kithkyn.dev;
 
 import java.util.ArrayList;
 import java.util.EnumMap;
-import java.util.EnumSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -20,7 +19,6 @@ import com.quzzar.kithkyn.village.buildings.Buildings;
 import com.quzzar.kithkyn.village.buildings.VillageStyle;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtOps;
@@ -252,7 +250,7 @@ public final class BadlandsVillageVerification {
     verifyVillage(level, village);
     verifyCompanions(level, village);
     verifyReload(level, village);
-    Kithkyn.LOGGER.info("{} FOUNDING PASS {}: filled foundation, inward companions and durable village state", PREFIX, rotation);
+    Kithkyn.LOGGER.info("{} FOUNDING PASS {}: filled foundation, ordinary growth spacing and durable village state", PREFIX, rotation);
   }
 
   private static void verifyVillage(ServerLevel level, Village village) {
@@ -298,26 +296,15 @@ public final class BadlandsVillageVerification {
   }
 
   private static void verifyCompanions(ServerLevel level, Village village) {
-    Building center = village.getTownCenter();
-    BoundingBox centerBounds = ApprovedStructureAccess.footprint(level, center);
-    var sides = EnumSet.noneOf(Direction.class);
     List<BoundingBox> footprints = village.getBuildings().stream()
         .map(building -> ApprovedStructureAccess.footprint(level, building)).toList();
-    for (Building building : village.getBuildings()) {
-      if (building == center) continue;
-      Direction facing = building.getRotation().rotate(building.getInfo().getEntranceFacing());
-      BoundingBox bounds = ApprovedStructureAccess.footprint(level, building);
-      int alignment = facing.getAxis() == Direction.Axis.X
-          ? bounds.minZ() + bounds.maxZ() - centerBounds.minZ() - centerBounds.maxZ()
-          : bounds.minX() + bounds.maxX() - centerBounds.minX() - centerBounds.maxX();
-      check(Math.abs(alignment) <= 1, building.getName() + " is not centered alongside the center");
-      BlockPos at = bounds.getCenter();
-      BlockPos plaza = village.getCenterPosition();
-      check(facing.getStepX() * (plaza.getX() - at.getX()) + facing.getStepZ() * (plaza.getZ() - at.getZ()) > 0,
-          building.getName() + " faces away from town");
-      sides.add(facing.getOpposite());
+    for (int first = 0; first < footprints.size(); first++) {
+      for (int second = first + 1; second < footprints.size(); second++) {
+        BoundingBox other = footprints.get(second);
+        check(!footprints.get(first).intersects(other.minX() - 1, other.minZ() - 1,
+            other.maxX() + 1, other.maxZ() + 1), "Founding footprints lost their walking gap");
+      }
     }
-    check(sides.size() == 2, "Companions occupy the same side");
     BlockPos site = village.getCenterPosition();
     for (BlockPos position : BlockPos.betweenClosed(site.offset(-72, 0, -72), site.offset(72, 0, 72))) {
       boolean expected = footprints.stream().anyMatch(box -> position.getX() >= box.minX() && position.getX() <= box.maxX()

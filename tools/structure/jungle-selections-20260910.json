@@ -1,0 +1,1644 @@
+{
+  "schema_version": 1,
+  "recorded": "2026-09-10",
+  "status": "selected_buildings_captured_pending_production_integration",
+  "description": "Edited Jungle selection with four founding huts, separate bedless services, a two-bedroom treehouse and the Dungeons and Taverns Firewatch tower.",
+  "work": "run/jungle-showcase/selection-20260910-tribal",
+  "gallery_manifest": "tools/structure/jungle-showcase-20260909.json",
+  "source_policy": "Source captures and derived templates from Towns and Towers and Dungeons and Taverns remain private under run/. Only authoring metadata and provenance are tracked publicly.",
+  "coordinate_system": {
+    "amenities": "Local to gallery_origin; bed coordinates identify heads.",
+    "capture_position": "Add [2,0,2] to an amenity coordinate to find it inside source_capture.",
+    "world_position": "Add gallery_origin to an amenity coordinate.",
+    "capture_bounds": "Inclusive world-space bounds. Captures contain padding and are not final construction envelopes."
+  },
+  "identity_policy": {
+    "beds": "Every selected bed uses primary or secondary village color. Both halves recolor together; both beds of a couple pair share one color.",
+    "banners": "Every selected banner receives village heraldry.",
+    "state": "Color and banner assignments are recorded; these raw source captures and live gallery still retain their authored colors."
+  },
+  "container_policy": "Explicitly described household containers are private; nearby bedroom chests are paired by room as an authoring inference. Other work containers are shared. Access must be verified before production.",
+  "founding": {
+    "center": "JA01.1",
+    "center_beds": 0,
+    "center_jobs": [
+      "guard_captain",
+      "builder",
+      "quartermaster",
+      "miner"
+    ],
+    "physical_mine": "JA01.5",
+    "initial_homes": "Four separate one-bed huts at founding; no beds in the center.",
+    "proposed_starting_homes": [
+      "JA02.9",
+      "JA03.2",
+      "JA02.9",
+      "JA03.2"
+    ],
+    "proposed_single_bed_capacity": 4,
+    "proposal_reason": "Two copies of each selected single-person hut house four founding workers; the separate couple home stays reserved for couples.",
+    "required_runtime_work": [
+      "Generalize the existing founding layout beyond its fixed mine and storehouse companions, preserving shared clearance, facing and ownership checks.",
+      "Bind the center-owned miner job to the separate mine site. Current mining code derives shaft position from the job building and would otherwise dig under the center.",
+      "Use the existing arrival and job-assignment flow with beds in starting homes; do not add a second founding population mechanism."
+    ],
+    "starting_home_count": 4
+  },
+  "buildings": [
+    {
+      "exhibit": "JA01.1",
+      "label": "Meeting Point 1",
+      "source_mod_structure": "data/kaisyn/structure/village/jungle_tribal/town_centers/jungle_meeting_point_1.nbt",
+      "source_mod_structure_sha256": "e6c715d0896df0122dee705e24f3c5751e84436d29f8620f61683348d044456a",
+      "source_capture": "run/jungle-showcase/bamboo-adoption-20260910/after-placement/captures/JA01.1.nbt",
+      "source_capture_sha256": "d9df05aeba28d63319211f1490d78473d23161bbfe8a9e56761daeeb727043c7",
+      "gallery_origin": [
+        4896,
+        230,
+        1010
+      ],
+      "capture_from": [
+        4894,
+        230,
+        1008
+      ],
+      "capture_to": [
+        4908,
+        275,
+        1022
+      ],
+      "role": "village_center",
+      "status": "captured_pending_production_authoring",
+      "capacity": {
+        "beds": 0,
+        "single_beds": 0,
+        "couple_rooms": 0
+      },
+      "amenities": {
+        "beds": [],
+        "couple_beds": [],
+        "personal_containers": [],
+        "containers": [],
+        "bed_containers": [],
+        "village_identity": {
+          "primary_blocks": [],
+          "secondary_blocks": [],
+          "banners": [
+            [
+              2,
+              1,
+              0
+            ],
+            [
+              10,
+              1,
+              6
+            ],
+            [
+              1,
+              1,
+              9
+            ]
+          ]
+        },
+        "bells": [
+          [
+            2,
+            2,
+            5
+          ]
+        ],
+        "campfires": [
+          [
+            5,
+            2,
+            5
+          ]
+        ]
+      },
+      "notes": [
+        "No beds. Owns the four founding jobs: guard captain, builder, quartermaster, miner.",
+        "Bell identifies the meeting area; campfire remains a separate cooking and gathering amenity.",
+        "Exact accessible work positions have not yet been authored."
+      ],
+      "previous_source_capture": "run/jungle-showcase/selection-20260910-tribal/captures/JA01.1.nbt",
+      "previous_source_capture_sha256": "a23ee77e0e55604c5e0d00e3e6179079e563ff9d15e25dabf7712f633a877c66"
+    },
+    {
+      "exhibit": "JA01.4",
+      "label": "Animal Pen 1",
+      "source_mod_structure": "data/kaisyn/structure/village/jungle_tribal/houses/jungle_animal_pen_1.nbt",
+      "source_mod_structure_sha256": "5ee1cc4e45ef7293f7e9d3c9af210d59fdb8ac1d7784afa6de7a4b6159ab03cb",
+      "source_capture": "run/jungle-showcase/bamboo-adoption-20260910/after-placement/captures/JA01.4.nbt",
+      "source_capture_sha256": "9f8dc0a86de6cb1f7ba36a543d34ee3648f7b0f59c186d62cc6e949a47961692",
+      "gallery_origin": [
+        4956,
+        230,
+        1010
+      ],
+      "capture_from": [
+        4954,
+        230,
+        1008
+      ],
+      "capture_to": [
+        4965,
+        275,
+        1022
+      ],
+      "role": "lumberjack_lodge",
+      "status": "captured_pending_production_authoring",
+      "capacity": {
+        "beds": 0,
+        "single_beds": 0,
+        "couple_rooms": 0
+      },
+      "amenities": {
+        "beds": [],
+        "couple_beds": [],
+        "personal_containers": [],
+        "containers": [
+          [
+            2,
+            1,
+            1
+          ]
+        ],
+        "bed_containers": [],
+        "village_identity": {
+          "primary_blocks": [],
+          "secondary_blocks": [],
+          "banners": []
+        },
+        "bells": [],
+        "campfires": []
+      },
+      "notes": [
+        "No bed; lumberjack lives in general housing.",
+        "Dead bush at [4,1,7] marks a jungle sapling planting site. Keep it as a stable authoring marker in the gallery until final export.",
+        "Existing chest is shared work storage."
+      ],
+      "planting": {
+        "marker": [
+          4,
+          1,
+          7
+        ],
+        "source_block": "minecraft:dead_bush",
+        "sapling": "minecraft:jungle_sapling",
+        "status": "recorded_for_export"
+      },
+      "previous_source_capture": "run/jungle-showcase/selection-20260910-services/captures/JA01.4.nbt",
+      "previous_source_capture_sha256": "9f8dc0a86de6cb1f7ba36a543d34ee3648f7b0f59c186d62cc6e949a47961692"
+    },
+    {
+      "exhibit": "JA01.5",
+      "label": "Armorer 1",
+      "source_mod_structure": "data/kaisyn/structure/village/jungle_tribal/houses/jungle_armorer_1.nbt",
+      "source_mod_structure_sha256": "1737f44fc2322cd3a7a32e207d915e63bbde4c62e576a99be63b0d98d78f723e",
+      "source_capture": "run/jungle-showcase/bamboo-adoption-20260910/after-placement/captures/JA01.5.nbt",
+      "source_capture_sha256": "1548682f0faae3f6dff805ea887829f9761fa755c83b143de4e2ea49b0e9f723",
+      "gallery_origin": [
+        4972,
+        230,
+        1010
+      ],
+      "capture_from": [
+        4970,
+        230,
+        1008
+      ],
+      "capture_to": [
+        4979,
+        275,
+        1018
+      ],
+      "role": "mine",
+      "status": "captured_pending_production_authoring",
+      "capacity": {
+        "beds": 0,
+        "single_beds": 0,
+        "couple_rooms": 0
+      },
+      "amenities": {
+        "beds": [],
+        "couple_beds": [],
+        "personal_containers": [],
+        "containers": [
+          [
+            2,
+            0,
+            2
+          ],
+          [
+            2,
+            0,
+            6
+          ]
+        ],
+        "bed_containers": [],
+        "village_identity": {
+          "primary_blocks": [],
+          "secondary_blocks": [],
+          "banners": []
+        },
+        "bells": [],
+        "campfires": []
+      },
+      "notes": [
+        "Confirmed existing mine with two shared material barrels.",
+        "Center owns the single miner vacancy; this separate building is its physical worksite."
+      ],
+      "previous_source_capture": "run/jungle-showcase/selection-20260910-services/captures/JA01.5.nbt",
+      "previous_source_capture_sha256": "ba473ece4305b9a82350f8e2d134fa789f9ff655980934b6025ea0044644e171"
+    },
+    {
+      "exhibit": "JA01.6",
+      "label": "Butcher 1",
+      "source_mod_structure": "data/kaisyn/structure/village/jungle_tribal/houses/jungle_butcher_1.nbt",
+      "source_mod_structure_sha256": "1411ac3b499bfceb9d50ae0108da08b747c4d0a6b0642465958026f2c57b8d9d",
+      "source_capture": "run/jungle-showcase/bamboo-adoption-20260910/after-placement/captures/JA01.6.nbt",
+      "source_capture_sha256": "e26e0f26ddf0d04b3381b20601e2976fec36c4802e122ff526f0c2112e95fe9d",
+      "gallery_origin": [
+        4986,
+        230,
+        1010
+      ],
+      "capture_from": [
+        4984,
+        230,
+        1008
+      ],
+      "capture_to": [
+        4997,
+        275,
+        1018
+      ],
+      "role": "tavern",
+      "status": "captured_pending_production_authoring",
+      "capacity": {
+        "beds": 0,
+        "single_beds": 0,
+        "couple_rooms": 0
+      },
+      "amenities": {
+        "beds": [],
+        "couple_beds": [],
+        "personal_containers": [],
+        "containers": [
+          [
+            2,
+            1,
+            4
+          ]
+        ],
+        "bed_containers": [],
+        "village_identity": {
+          "primary_blocks": [],
+          "secondary_blocks": [],
+          "banners": []
+        },
+        "bells": [],
+        "campfires": []
+      },
+      "notes": [
+        "Current capture has no bed. Innkeeper can live in general housing."
+      ],
+      "previous_source_capture": "run/jungle-showcase/selection-20260910-tribal/captures/JA01.6.nbt",
+      "previous_source_capture_sha256": "bb793e3731606f81020a1f8d3c8aa41f8a21f0265623f37536a1700a79a7f7e1"
+    },
+    {
+      "exhibit": "JA01.7",
+      "label": "Cartographer 1",
+      "source_mod_structure": "data/kaisyn/structure/village/jungle_tribal/houses/jungle_cartographer_1.nbt",
+      "source_mod_structure_sha256": "7c8a81badd7958ebd9b0d88362f1dfbfaa446df2957a1e14de847274416047b8",
+      "source_capture": "run/jungle-tower-review-20260910/adoption/captures/JA01.7-comparison.nbt",
+      "source_capture_sha256": "05c30865d6dea51d3d7b3074a75d53336866fc068833a76169c748061f7f4cb2",
+      "gallery_origin": [
+        5258,
+        230,
+        944
+      ],
+      "capture_from": [
+        5256,
+        230,
+        942
+      ],
+      "capture_to": [
+        5273,
+        260,
+        957
+      ],
+      "role": "house",
+      "status": "captured_pending_production_authoring",
+      "capacity": {
+        "beds": 2,
+        "single_beds": 2,
+        "couple_rooms": 0
+      },
+      "amenities": {
+        "beds": [
+          [
+            7,
+            4,
+            2
+          ],
+          [
+            5,
+            8,
+            2
+          ]
+        ],
+        "couple_beds": [],
+        "personal_containers": [
+          [
+            5,
+            4,
+            2
+          ],
+          [
+            5,
+            8,
+            3
+          ]
+        ],
+        "containers": [],
+        "bed_containers": [
+          {
+            "bed": [
+              7,
+              4,
+              2
+            ],
+            "containers": [
+              [
+                5,
+                4,
+                2
+              ]
+            ]
+          },
+          {
+            "bed": [
+              5,
+              8,
+              2
+            ],
+            "containers": [
+              [
+                5,
+                8,
+                3
+              ]
+            ]
+          }
+        ],
+        "village_identity": {
+          "primary_blocks": [
+            [
+              7,
+              4,
+              2
+            ]
+          ],
+          "secondary_blocks": [
+            [
+              5,
+              8,
+              2
+            ]
+          ],
+          "banners": []
+        },
+        "bells": [],
+        "campfires": []
+      },
+      "notes": [
+        "Retained as a two-person home; Firewatch NH06.5 takes the watchtower role.",
+        "Two separate single bedrooms on different floors, each with its own personal chest.",
+        "Lower bed uses the primary village color; upper bed uses the secondary color.",
+        "No guard station or worker-reserved bed belongs to this house. Native resident access still needs verification."
+      ],
+      "previous_source_capture": "run/jungle-showcase/bamboo-adoption-20260910/after-placement/captures/JA01.7.nbt",
+      "previous_source_capture_sha256": "55e496edb5ca90f46cd33417da717c4a692492c9706f1f247979268566d9475f",
+      "original_gallery_origin": [
+        5004,
+        230,
+        1010
+      ],
+      "design_label": "Treehouse, two single bedrooms",
+      "selection_revision": "tools/structure/jungle-tower-comparison-20260910.json"
+    },
+    {
+      "exhibit": "NH06.5",
+      "label": "Firewatch Jungle",
+      "source_mod": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+      "source_mod_structure": "data/nova_structures/structure/firewatch_tower/firewatch_jungle.nbt",
+      "source_mod_structure_sha256": "89aac916a14640b4bf84459075582f84509d015cc4badb2523740eeb76e19a6c",
+      "source_gallery_manifest": "tools/structure/nilotic-donors-20260910.json",
+      "original_gallery_origin": [
+        9428,
+        230,
+        1215
+      ],
+      "role": "watchtower",
+      "status": "captured_pending_production_authoring",
+      "capacity": {
+        "beds": 1,
+        "single_beds": 1,
+        "couple_rooms": 0
+      },
+      "notes": [
+        "Selected as the Jungle watchtower, replacing JA01.7 in that role.",
+        "One guard bed with its personal chest upstairs; bed uses the primary village color.",
+        "Preserve the four balcony corner lanterns and removed upper trapdoor.",
+        "Guard station, ladder landing, bed/chest access and firing position require native authoring verification."
+      ],
+      "source_capture": "run/jungle-tower-review-20260910/adoption/captures/NH06.5-comparison.nbt",
+      "source_capture_sha256": "6c1c76f367d032226942bef0db8161bc88e4d4090f9257c9821a88446bf9b391",
+      "capture_from": [
+        5290,
+        230,
+        942
+      ],
+      "capture_to": [
+        5302,
+        257,
+        954
+      ],
+      "gallery_origin": [
+        5292,
+        230,
+        944
+      ],
+      "selection_revision": "tools/structure/jungle-tower-comparison-20260910.json",
+      "amenities": {
+        "beds": [
+          [
+            3,
+            13,
+            5
+          ]
+        ],
+        "couple_beds": [],
+        "personal_containers": [
+          [
+            3,
+            13,
+            3
+          ]
+        ],
+        "containers": [],
+        "bed_containers": [
+          {
+            "bed": [
+              3,
+              13,
+              5
+            ],
+            "containers": [
+              [
+                3,
+                13,
+                3
+              ]
+            ]
+          }
+        ],
+        "village_identity": {
+          "primary_blocks": [
+            [
+              3,
+              13,
+              5
+            ]
+          ],
+          "secondary_blocks": [],
+          "banners": []
+        },
+        "bells": [],
+        "campfires": []
+      }
+    },
+    {
+      "exhibit": "JA01.8",
+      "label": "Fisher 1",
+      "source_mod_structure": "data/kaisyn/structure/village/jungle_tribal/houses/jungle_fisher_1.nbt",
+      "source_mod_structure_sha256": "a9e36ffa090731fa7bb0bd4dd9f1d2c4ba98ded917ad23562598cd337827ea1a",
+      "source_capture": "run/jungle-showcase/bamboo-adoption-20260910/after-placement/captures/JA01.8.nbt",
+      "source_capture_sha256": "75709284e8d942de4916bc601a744ccf358c55f4c39448ad90259454479385a1",
+      "gallery_origin": [
+        5026,
+        230,
+        1010
+      ],
+      "capture_from": [
+        5024,
+        230,
+        1008
+      ],
+      "capture_to": [
+        5035,
+        275,
+        1024
+      ],
+      "role": "fishery",
+      "status": "captured_pending_production_authoring",
+      "capacity": {
+        "beds": 1,
+        "single_beds": 1,
+        "couple_rooms": 0
+      },
+      "amenities": {
+        "beds": [
+          [
+            5,
+            2,
+            8
+          ]
+        ],
+        "couple_beds": [],
+        "personal_containers": [],
+        "containers": [
+          [
+            5,
+            2,
+            10
+          ]
+        ],
+        "bed_containers": [
+          {
+            "bed": [
+              5,
+              2,
+              8
+            ],
+            "containers": []
+          }
+        ],
+        "village_identity": {
+          "primary_blocks": [],
+          "secondary_blocks": [
+            [
+              5,
+              2,
+              8
+            ]
+          ],
+          "banners": []
+        },
+        "bells": [],
+        "campfires": []
+      },
+      "notes": [
+        "Bed uses the secondary village color. Barrel is shared workplace storage.",
+        "No chest was found in this capture; the mentioned personal chest remains an unresolved authoring detail.",
+        "Remove gallery-only barrier and fluid supports before producing the building template."
+      ],
+      "previous_source_capture": "run/jungle-showcase/selection-20260910-tribal/captures/JA01.8.nbt",
+      "previous_source_capture_sha256": "f14016c1b29097456670f4f205aca86ea9e255d786c424049b240950a8347f17"
+    },
+    {
+      "exhibit": "JA02.1",
+      "label": "Fletcher 1",
+      "source_mod_structure": "data/kaisyn/structure/village/jungle_tribal/houses/jungle_fletcher_1.nbt",
+      "source_mod_structure_sha256": "66c16bcc897647458c6411e659d560a60e616b680e56589afb37a43fee0225b0",
+      "source_capture": "run/jungle-showcase/bamboo-adoption-20260910/after-placement/captures/JA02.1.nbt",
+      "source_capture_sha256": "430f6a04f5968cf6f8579a6de8c064f41c9262e788c4782b3c8bc3a0491f2d03",
+      "gallery_origin": [
+        4896,
+        230,
+        1043
+      ],
+      "capture_from": [
+        4894,
+        230,
+        1041
+      ],
+      "capture_to": [
+        4905,
+        275,
+        1053
+      ],
+      "role": "hunting_lodge",
+      "status": "captured_pending_production_authoring",
+      "capacity": {
+        "beds": 0,
+        "single_beds": 0,
+        "couple_rooms": 0
+      },
+      "amenities": {
+        "beds": [],
+        "couple_beds": [],
+        "personal_containers": [],
+        "containers": [
+          [
+            3,
+            3,
+            6
+          ]
+        ],
+        "bed_containers": [],
+        "village_identity": {
+          "primary_blocks": [],
+          "secondary_blocks": [],
+          "banners": [
+            [
+              1,
+              2,
+              2
+            ],
+            [
+              1,
+              2,
+              6
+            ]
+          ]
+        },
+        "bells": [],
+        "campfires": []
+      },
+      "notes": [
+        "Fletcher supplies the missing hunting lodge; Shepherd remains the butcher.",
+        "Both front banners become village banners."
+      ],
+      "previous_source_capture": "run/jungle-showcase/selection-20260910-tribal/captures/JA02.1.nbt",
+      "previous_source_capture_sha256": "f7c3f6b82a994dd8f457f99eee34786ede63c25c3f7c678e21daa941f62a4bcb"
+    },
+    {
+      "exhibit": "JA02.2",
+      "label": "Large House 1",
+      "source_mod_structure": "data/kaisyn/structure/village/jungle_tribal/houses/jungle_large_house_1.nbt",
+      "source_mod_structure_sha256": "ca82b29cd8747dbc69b153a196a08509e12fdf206358b5df1fd66b1c186f386b",
+      "source_capture": "run/jungle-showcase/bamboo-adoption-20260910/after-placement/captures/JA02.2.nbt",
+      "source_capture_sha256": "eae1934cc3c0f7e1b91e8b61b3df2b1bedffcc468e78837133878f81b3dc85ad",
+      "gallery_origin": [
+        4912,
+        230,
+        1043
+      ],
+      "capture_from": [
+        4910,
+        230,
+        1041
+      ],
+      "capture_to": [
+        4921,
+        275,
+        1051
+      ],
+      "role": "house",
+      "status": "captured_pending_production_authoring",
+      "capacity": {
+        "beds": 2,
+        "single_beds": 2,
+        "couple_rooms": 0
+      },
+      "amenities": {
+        "beds": [
+          [
+            5,
+            1,
+            1
+          ],
+          [
+            5,
+            1,
+            5
+          ]
+        ],
+        "couple_beds": [],
+        "personal_containers": [
+          [
+            3,
+            1,
+            1
+          ],
+          [
+            3,
+            1,
+            5
+          ]
+        ],
+        "containers": [],
+        "bed_containers": [
+          {
+            "bed": [
+              5,
+              1,
+              1
+            ],
+            "containers": [
+              [
+                3,
+                1,
+                1
+              ]
+            ]
+          },
+          {
+            "bed": [
+              5,
+              1,
+              5
+            ],
+            "containers": [
+              [
+                3,
+                1,
+                5
+              ]
+            ]
+          }
+        ],
+        "village_identity": {
+          "primary_blocks": [
+            [
+              5,
+              1,
+              1
+            ]
+          ],
+          "secondary_blocks": [
+            [
+              5,
+              1,
+              5
+            ]
+          ],
+          "banners": []
+        },
+        "bells": [],
+        "campfires": [
+          [
+            4,
+            1,
+            3
+          ]
+        ]
+      },
+      "notes": [
+        "Two separate single beds, each with a nearby private chest."
+      ],
+      "previous_source_capture": "run/jungle-showcase/selection-20260910-tribal/captures/JA02.2.nbt",
+      "previous_source_capture_sha256": "90fe80eb4ce86d5f79a1b08eecf33a0857563304e4af9a59fd426ac738a5be93"
+    },
+    {
+      "exhibit": "JA02.3",
+      "label": "Leatherworker 1",
+      "source_mod_structure": "data/kaisyn/structure/village/jungle_tribal/houses/jungle_leatherworker_1.nbt",
+      "source_mod_structure_sha256": "af0ea33ba7db2509abac8939ef70864152ace4110743a7e18d3dd75b5ed67c41",
+      "source_capture": "run/jungle-showcase/bamboo-adoption-20260910/after-placement/captures/JA02.3.nbt",
+      "source_capture_sha256": "0cb3d721d30bf31294109ec0949162a39712d7d3a4b398120959be9612bff642",
+      "gallery_origin": [
+        4928,
+        230,
+        1043
+      ],
+      "capture_from": [
+        4926,
+        230,
+        1041
+      ],
+      "capture_to": [
+        4940,
+        275,
+        1056
+      ],
+      "role": "house",
+      "status": "captured_pending_production_authoring",
+      "capacity": {
+        "beds": 2,
+        "single_beds": 0,
+        "couple_rooms": 1
+      },
+      "amenities": {
+        "beds": [
+          [
+            6,
+            4,
+            4
+          ],
+          [
+            6,
+            4,
+            5
+          ]
+        ],
+        "couple_beds": [
+          [
+            [
+              6,
+              4,
+              4
+            ],
+            [
+              6,
+              4,
+              5
+            ]
+          ]
+        ],
+        "personal_containers": [
+          [
+            6,
+            4,
+            7
+          ]
+        ],
+        "containers": [],
+        "bed_containers": [
+          {
+            "bed": [
+              6,
+              4,
+              4
+            ],
+            "containers": [
+              [
+                6,
+                4,
+                7
+              ]
+            ]
+          },
+          {
+            "bed": [
+              6,
+              4,
+              5
+            ],
+            "containers": [
+              [
+                6,
+                4,
+                7
+              ]
+            ]
+          }
+        ],
+        "village_identity": {
+          "primary_blocks": [
+            [
+              6,
+              4,
+              4
+            ],
+            [
+              6,
+              4,
+              5
+            ]
+          ],
+          "secondary_blocks": [],
+          "banners": [
+            [
+              3,
+              3,
+              5
+            ],
+            [
+              3,
+              3,
+              6
+            ],
+            [
+              3,
+              3,
+              7
+            ]
+          ]
+        },
+        "bells": [],
+        "campfires": []
+      },
+      "notes": [
+        "Leatherworker converted to a couple home, replacing the previous Small House 1 couple assignment.",
+        "Both adjacent beds use the same primary village color and share the upstairs personal chest.",
+        "All three banners receive village heraldry."
+      ],
+      "previous_source_capture": "run/jungle-showcase/selection-20260910-services/captures/JA02.3.nbt",
+      "previous_source_capture_sha256": "965d06a444beb6ce7f02dcc469fd301ecc0c95e4c71d6a29e93871af61f942f9"
+    },
+    {
+      "exhibit": "JA02.5",
+      "label": "Mason 1",
+      "source_mod_structure": "data/kaisyn/structure/village/jungle_tribal/houses/jungle_mason_1.nbt",
+      "source_mod_structure_sha256": "d548adf1950a0c70c7ba6b126b036ad207dc989037616a7a86771224b5aa2018",
+      "source_capture": "run/jungle-showcase/bamboo-adoption-20260910/after-placement/captures/JA02.5.nbt",
+      "source_capture_sha256": "48a5e7b05a6c197f84d09ade36da06ef06ff6e9503afe9d138e126e1d5f9a26d",
+      "gallery_origin": [
+        4969,
+        230,
+        1043
+      ],
+      "capture_from": [
+        4967,
+        230,
+        1041
+      ],
+      "capture_to": [
+        4979,
+        275,
+        1053
+      ],
+      "role": "stoneworks",
+      "status": "captured_pending_production_authoring",
+      "capacity": {
+        "beds": 0,
+        "single_beds": 0,
+        "couple_rooms": 0
+      },
+      "amenities": {
+        "beds": [],
+        "couple_beds": [],
+        "personal_containers": [],
+        "containers": [
+          [
+            5,
+            1,
+            7
+          ]
+        ],
+        "bed_containers": [],
+        "village_identity": {
+          "primary_blocks": [],
+          "secondary_blocks": [],
+          "banners": []
+        },
+        "bells": [],
+        "campfires": []
+      },
+      "notes": [],
+      "previous_source_capture": "run/jungle-showcase/selection-20260910-tribal/captures/JA02.5.nbt",
+      "previous_source_capture_sha256": "cba5154f1defd4c29f3349c954571898bcffadedf00348cdd96698922bc154a5"
+    },
+    {
+      "exhibit": "JA02.6",
+      "label": "Shepherd 1",
+      "source_mod_structure": "data/kaisyn/structure/village/jungle_tribal/houses/jungle_shepherd_1.nbt",
+      "source_mod_structure_sha256": "5b529fb2750b29aa99bab933ea0d3fdcf54a026652ff48af421fcb9e84f20412",
+      "source_capture": "run/jungle-showcase/bamboo-adoption-20260910/after-placement/captures/JA02.6.nbt",
+      "source_capture_sha256": "f145f97f476593ca26ad16cf7129a1850cdeaf61833e4dfb6aac480ae7bab11b",
+      "gallery_origin": [
+        4986,
+        230,
+        1043
+      ],
+      "capture_from": [
+        4984,
+        230,
+        1041
+      ],
+      "capture_to": [
+        4995,
+        275,
+        1056
+      ],
+      "role": "butcher",
+      "status": "captured_pending_production_authoring",
+      "capacity": {
+        "beds": 1,
+        "single_beds": 1,
+        "couple_rooms": 0
+      },
+      "amenities": {
+        "beds": [
+          [
+            5,
+            1,
+            2
+          ]
+        ],
+        "couple_beds": [],
+        "personal_containers": [
+          [
+            5,
+            2,
+            3
+          ]
+        ],
+        "containers": [],
+        "bed_containers": [
+          {
+            "bed": [
+              5,
+              1,
+              2
+            ],
+            "containers": [
+              [
+                5,
+                2,
+                3
+              ]
+            ]
+          }
+        ],
+        "village_identity": {
+          "primary_blocks": [
+            [
+              5,
+              1,
+              2
+            ]
+          ],
+          "secondary_blocks": [],
+          "banners": [
+            [
+              1,
+              3,
+              0
+            ],
+            [
+              6,
+              3,
+              0
+            ]
+          ]
+        },
+        "bells": [],
+        "campfires": []
+      },
+      "notes": [
+        "Primary-color staff bed. Both front banners become village banners."
+      ],
+      "previous_source_capture": "run/jungle-showcase/selection-20260910-tribal/captures/JA02.6.nbt",
+      "previous_source_capture_sha256": "e1902705358567e3efb57a78f0d0666f33e3e962e9f2fc545b259689e2a18f61"
+    },
+    {
+      "exhibit": "JA02.7",
+      "label": "Small Farm 1",
+      "source_mod_structure": "data/kaisyn/structure/village/jungle_tribal/houses/jungle_small_farm_1.nbt",
+      "source_mod_structure_sha256": "89df158521d946fe35c92a1f9683db9a10e1ebb1a2e14ad1b807ee2f05492dcf",
+      "source_capture": "run/jungle-showcase/bamboo-adoption-20260910/after-placement/captures/JA02.7.nbt",
+      "source_capture_sha256": "8f39a275028a678e773801a9db61e1b123873e510e133d9ad765d173e4156ddd",
+      "gallery_origin": [
+        5002,
+        230,
+        1043
+      ],
+      "capture_from": [
+        5000,
+        230,
+        1041
+      ],
+      "capture_to": [
+        5016,
+        275,
+        1055
+      ],
+      "role": "farm",
+      "status": "captured_pending_production_authoring",
+      "capacity": {
+        "beds": 0,
+        "single_beds": 0,
+        "couple_rooms": 0
+      },
+      "amenities": {
+        "beds": [],
+        "couple_beds": [],
+        "personal_containers": [],
+        "containers": [
+          [
+            11,
+            0,
+            3
+          ]
+        ],
+        "bed_containers": [],
+        "village_identity": {
+          "primary_blocks": [],
+          "secondary_blocks": [],
+          "banners": []
+        },
+        "bells": [],
+        "campfires": []
+      },
+      "notes": [],
+      "previous_source_capture": "run/jungle-showcase/selection-20260910-tribal/captures/JA02.7.nbt",
+      "previous_source_capture_sha256": "878812e247841fdc2ab00e916fa3d0d9b47ce21ea1d78efdeda524db1a697a23"
+    },
+    {
+      "exhibit": "JA02.8",
+      "label": "Small House 1",
+      "source_mod_structure": "data/kaisyn/structure/village/jungle_tribal/houses/jungle_small_house_1.nbt",
+      "source_mod_structure_sha256": "a999cfc376e14b368e0db54140780f80734178ef0ec1147e31ede7facec21c06",
+      "source_capture": "run/jungle-showcase/bamboo-adoption-20260910/after-placement/captures/JA02.8.nbt",
+      "source_capture_sha256": "7b5f7e9e5c7fb9ab525b3a4498bb973c7fbb0e50e6e95988932cad030ec6bb4d",
+      "gallery_origin": [
+        5023,
+        230,
+        1043
+      ],
+      "capture_from": [
+        5021,
+        230,
+        1041
+      ],
+      "capture_to": [
+        5031,
+        275,
+        1051
+      ],
+      "role": "bakery",
+      "status": "captured_pending_production_authoring",
+      "capacity": {
+        "beds": 0,
+        "single_beds": 0,
+        "couple_rooms": 0
+      },
+      "amenities": {
+        "beds": [],
+        "couple_beds": [],
+        "personal_containers": [],
+        "containers": [
+          [
+            4,
+            0,
+            4
+          ]
+        ],
+        "bed_containers": [],
+        "village_identity": {
+          "primary_blocks": [],
+          "secondary_blocks": [],
+          "banners": []
+        },
+        "bells": [],
+        "campfires": []
+      },
+      "notes": [
+        "Small House 1 converted to bakery; no bed or couple room remains.",
+        "Smoker and floor barrel belong to the bakery."
+      ],
+      "previous_source_capture": "run/jungle-showcase/selection-20260910-services/captures/JA02.8.nbt",
+      "previous_source_capture_sha256": "c27d44cd6e8140ce81bfbc941293980bb9b02113593b2ef2d6ff98695f4d434c"
+    },
+    {
+      "exhibit": "JA02.9",
+      "label": "Small House 2",
+      "source_mod_structure": "data/kaisyn/structure/village/jungle_tribal/houses/jungle_small_house_2.nbt",
+      "source_mod_structure_sha256": "33c5b881992258b4b3f7610e209538d1947364ec7b824df83c3ef446f2d51e88",
+      "source_capture": "run/jungle-showcase/bamboo-adoption-20260910/after-placement/captures/JA02.9.nbt",
+      "source_capture_sha256": "63451f7045ce6307e387eaab61a1a40eb470e3ecc78e03589a316e0642c2b400",
+      "gallery_origin": [
+        5038,
+        230,
+        1043
+      ],
+      "capture_from": [
+        5036,
+        230,
+        1041
+      ],
+      "capture_to": [
+        5046,
+        275,
+        1051
+      ],
+      "role": "house",
+      "status": "captured_pending_production_authoring",
+      "capacity": {
+        "beds": 1,
+        "single_beds": 1,
+        "couple_rooms": 0
+      },
+      "amenities": {
+        "beds": [
+          [
+            4,
+            1,
+            2
+          ]
+        ],
+        "couple_beds": [],
+        "personal_containers": [
+          [
+            2,
+            1,
+            2
+          ]
+        ],
+        "containers": [],
+        "bed_containers": [
+          {
+            "bed": [
+              4,
+              1,
+              2
+            ],
+            "containers": [
+              [
+                2,
+                1,
+                2
+              ]
+            ]
+          }
+        ],
+        "village_identity": {
+          "primary_blocks": [
+            [
+              4,
+              1,
+              2
+            ]
+          ],
+          "secondary_blocks": [],
+          "banners": []
+        },
+        "bells": [],
+        "campfires": []
+      },
+      "notes": [],
+      "previous_source_capture": "run/jungle-showcase/selection-20260910-tribal/captures/JA02.9.nbt",
+      "previous_source_capture_sha256": "2ffd484d1805a356e31a4af6859966e768560ec9fb744139c972e33b497c01ea"
+    },
+    {
+      "exhibit": "JA03.1",
+      "label": "Small House 3",
+      "source_mod_structure": "data/kaisyn/structure/village/jungle_tribal/houses/jungle_small_house_3.nbt",
+      "source_mod_structure_sha256": "568ab59a86b3efc0ca48c7537e3e2d497452464c16630712fdd70f0e1261a8a1",
+      "source_capture": "run/jungle-showcase/bamboo-adoption-20260910/after-placement/captures/JA03.1.nbt",
+      "source_capture_sha256": "67a86e0cd2847f5007cf8ebef94ee1b64cd450cf082a7b09f9e098b4097d34d7",
+      "gallery_origin": [
+        4896,
+        230,
+        1078
+      ],
+      "capture_from": [
+        4894,
+        230,
+        1076
+      ],
+      "capture_to": [
+        4905,
+        275,
+        1086
+      ],
+      "role": "storehouse",
+      "status": "captured_pending_production_authoring",
+      "capacity": {
+        "beds": 0,
+        "single_beds": 0,
+        "couple_rooms": 0
+      },
+      "amenities": {
+        "beds": [],
+        "couple_beds": [],
+        "personal_containers": [],
+        "containers": [
+          [
+            3,
+            1,
+            4
+          ],
+          [
+            4,
+            1,
+            4
+          ],
+          [
+            5,
+            1,
+            4
+          ]
+        ],
+        "bed_containers": [],
+        "village_identity": {
+          "primary_blocks": [],
+          "secondary_blocks": [],
+          "banners": [
+            [
+              7,
+              2,
+              2
+            ],
+            [
+              7,
+              2,
+              4
+            ]
+          ]
+        },
+        "bells": [],
+        "campfires": []
+      },
+      "notes": [
+        "Small House 3 converted to the only storehouse tier.",
+        "Two ordinary chests and one trapped chest are shared village storage. No beds.",
+        "Both banners receive village heraldry. No tier-two storehouse requested."
+      ],
+      "tiers": [
+        1
+      ],
+      "previous_source_capture": "run/jungle-showcase/selection-20260910-services/captures/JA03.1.nbt",
+      "previous_source_capture_sha256": "e2102b5a7e9cf0984085cd39fbb9358daae6d52f5b9d489011c68000248e4908"
+    },
+    {
+      "exhibit": "JA03.2",
+      "label": "Small House 4",
+      "source_mod_structure": "data/kaisyn/structure/village/jungle_tribal/houses/jungle_small_house_4.nbt",
+      "source_mod_structure_sha256": "af54f3b684bbd956e3e55cf780a0e2e64937c536dd5d7c2ac699d9bfdc4d7863",
+      "source_capture": "run/jungle-showcase/bamboo-adoption-20260910/after-placement/captures/JA03.2.nbt",
+      "source_capture_sha256": "00be3aec61fe7b9964c3bb8ead237609bcece24d7aad4e83a8f2f1158a31979b",
+      "gallery_origin": [
+        4912,
+        230,
+        1078
+      ],
+      "capture_from": [
+        4910,
+        230,
+        1076
+      ],
+      "capture_to": [
+        4920,
+        275,
+        1086
+      ],
+      "role": "house",
+      "status": "captured_pending_production_authoring",
+      "capacity": {
+        "beds": 1,
+        "single_beds": 1,
+        "couple_rooms": 0
+      },
+      "amenities": {
+        "beds": [
+          [
+            4,
+            1,
+            2
+          ]
+        ],
+        "couple_beds": [],
+        "personal_containers": [],
+        "containers": [],
+        "bed_containers": [
+          {
+            "bed": [
+              4,
+              1,
+              2
+            ],
+            "containers": []
+          }
+        ],
+        "village_identity": {
+          "primary_blocks": [
+            [
+              4,
+              1,
+              2
+            ]
+          ],
+          "secondary_blocks": [],
+          "banners": []
+        },
+        "bells": [],
+        "campfires": []
+      },
+      "notes": [],
+      "previous_source_capture": "run/jungle-showcase/selection-20260910-tribal/captures/JA03.2.nbt",
+      "previous_source_capture_sha256": "51d34fc1cc967dd4477c77d0a302fd03a3132ef0945bc7899635bcaedc871ca1"
+    },
+    {
+      "exhibit": "JA03.3",
+      "label": "Temple 1",
+      "source_mod_structure": "data/kaisyn/structure/village/jungle_tribal/houses/jungle_temple_1.nbt",
+      "source_mod_structure_sha256": "369ac674137bf0304c95c7645ac46902c9d006bf732562a065a1c72ef3908a05",
+      "source_capture": "run/jungle-showcase/bamboo-adoption-20260910/after-placement/captures/JA03.3.nbt",
+      "source_capture_sha256": "f3a7cfc8b23aa14fb174bf531b3d51cd263dbca20a029b322893128fb01f0186",
+      "gallery_origin": [
+        4927,
+        230,
+        1078
+      ],
+      "capture_from": [
+        4925,
+        230,
+        1076
+      ],
+      "capture_to": [
+        4935,
+        275,
+        1091
+      ],
+      "role": "church",
+      "status": "captured_pending_production_authoring",
+      "capacity": {
+        "beds": 0,
+        "single_beds": 0,
+        "couple_rooms": 0
+      },
+      "amenities": {
+        "beds": [],
+        "couple_beds": [],
+        "personal_containers": [],
+        "containers": [
+          [
+            3,
+            1,
+            2
+          ]
+        ],
+        "bed_containers": [],
+        "village_identity": {
+          "primary_blocks": [],
+          "secondary_blocks": [],
+          "banners": []
+        },
+        "bells": [],
+        "campfires": []
+      },
+      "notes": [],
+      "previous_source_capture": "run/jungle-showcase/selection-20260910-tribal/captures/JA03.3.nbt",
+      "previous_source_capture_sha256": "175551a621eb99ad23c973c20f8b36e134a56126d7ecc49e813f06adb7c010f5"
+    },
+    {
+      "exhibit": "JA03.5",
+      "label": "Weaponsmith 1",
+      "source_mod_structure": "data/kaisyn/structure/village/jungle_tribal/houses/jungle_weaponsmith_1.nbt",
+      "source_mod_structure_sha256": "e4554dba965e957bd2719c6012ec5961fb70eb190aa90f9883ff963648b5295c",
+      "source_capture": "run/jungle-showcase/bamboo-adoption-20260910/after-placement/captures/JA03.5.nbt",
+      "source_capture_sha256": "cdc2c6211a88a1d4cea502ca166e0eb5525234b9ac45551748a02d3f57079fb3",
+      "gallery_origin": [
+        4960,
+        230,
+        1078
+      ],
+      "capture_from": [
+        4958,
+        230,
+        1076
+      ],
+      "capture_to": [
+        4973,
+        275,
+        1087
+      ],
+      "role": "blacksmith",
+      "status": "captured_pending_production_authoring",
+      "capacity": {
+        "beds": 0,
+        "single_beds": 0,
+        "couple_rooms": 0
+      },
+      "amenities": {
+        "beds": [],
+        "couple_beds": [],
+        "personal_containers": [],
+        "containers": [
+          [
+            9,
+            1,
+            2
+          ]
+        ],
+        "bed_containers": [],
+        "village_identity": {
+          "primary_blocks": [],
+          "secondary_blocks": [],
+          "banners": []
+        },
+        "bells": [],
+        "campfires": []
+      },
+      "notes": [],
+      "previous_source_capture": "run/jungle-showcase/selection-20260910-tribal/captures/JA03.5.nbt",
+      "previous_source_capture_sha256": "ef25ca26efe33c649481b9272a13cae4bbf01d529ada149fc8c4c0b70506d583"
+    }
+  ],
+  "candidates": [
+    {
+      "exhibit": "JA02.4",
+      "label": "Library 1",
+      "source_mod_structure": "data/kaisyn/structure/village/jungle_tribal/houses/jungle_library_1.nbt",
+      "source_mod_structure_sha256": "3dc39b4aa50a0dd2d27e001051fb25c02ae30f1f0811d27bc4cc362dffb44987",
+      "source_capture": "run/jungle-showcase/selection-20260910-tribal/captures/JA02.4.nbt",
+      "source_capture_sha256": "b14cb32046c449df119a53f053eac061ece557ff0a732258aa3e391adc4dc58d",
+      "gallery_origin": [
+        4947,
+        230,
+        1043
+      ],
+      "capture_from": [
+        4945,
+        230,
+        1041
+      ],
+      "capture_to": [
+        4962,
+        275,
+        1059
+      ],
+      "status": "unassigned_candidate",
+      "notes": [
+        "Available for later selection; no role or interior conversion is approved."
+      ]
+    },
+    {
+      "exhibit": "JA03.4",
+      "label": "Toolsmith 1",
+      "source_mod_structure": "data/kaisyn/structure/village/jungle_tribal/houses/jungle_toolsmith_1.nbt",
+      "source_mod_structure_sha256": "b40c5cf930f4684da6d4624079bb79179d14acac2437cdc665b7194499428076",
+      "source_capture": "run/jungle-showcase/selection-20260910-tribal/captures/JA03.4.nbt",
+      "source_capture_sha256": "bfdf85678a633bb83332765bcaf6e9572dcdc2ea9753398c0d717168c5fc6215",
+      "gallery_origin": [
+        4942,
+        230,
+        1078
+      ],
+      "capture_from": [
+        4940,
+        230,
+        1076
+      ],
+      "capture_to": [
+        4953,
+        275,
+        1089
+      ],
+      "status": "unassigned_candidate",
+      "notes": [
+        "Available for later selection; no role or interior conversion is approved."
+      ]
+    }
+  ],
+  "remaining": [
+    {
+      "role": "market",
+      "tiers": [
+        1,
+        2,
+        3
+      ],
+      "status": "editable_previews_placed_pending_final_production_integration"
+    },
+    {
+      "role": "walls",
+      "tiers": [
+        1
+      ],
+      "status": "editable_previews_placed_pending_final_production_integration"
+    }
+  ],
+  "verification": {
+    "native_captures": 21,
+    "selected_buildings": 19,
+    "unassigned_candidates": 2,
+    "selected_beds": 11,
+    "selected_home_beds": 8,
+    "bed_and_container_audit": "run/jungle-showcase/selection-20260910-tribal/amenity-audit.json",
+    "screenshots_inspected": [
+      "run/jungle-showcase/selection-20260910-tribal/render/client/screenshots/jungle-bedless-center.png",
+      "run/jungle-showcase/selection-20260910-tribal/render/client/screenshots/jungle-couple-hut.png",
+      "run/jungle-showcase/selection-20260910-tribal/render/client/screenshots/jungle-fishery-bedroom.png",
+      "run/jungle-showcase/selection-20260910-tribal/render/client/screenshots/jungle-leatherworker-storage-candidate.png",
+      "run/jungle-showcase/selection-20260910-tribal/render/client/screenshots/jungle-library-candidate.png",
+      "run/jungle-showcase/selection-20260910-tribal/render/client/screenshots/jungle-toolsmith-candidate.png"
+    ],
+    "production_assets_exported": false,
+    "runtime_access_verified": false,
+    "jungle_catalog_activated": false,
+    "latest_bed_and_container_audit": "run/jungle-showcase/selection-20260910-services/amenity-audit.json",
+    "metadata_validation": {
+      "status": "passed",
+      "capture_hashes": 21,
+      "beds": 11,
+      "banners": 12,
+      "containers": 22,
+      "couple_rooms": 1
+    },
+    "latest_screenshots_inspected": [
+      "run/jungle-tower-review-20260910/adoption/render/client/screenshots/selected-jungle-house-and-tower.png",
+      "run/jungle-tower-review-20260910/adoption/render/client/screenshots/treehouse-new-upstairs-bedroom.png"
+    ],
+    "latest_selection_revision": "run/jungle-tower-review-20260910/adoption/selection.json"
+  },
+  "latest_capture_work": "run/jungle-showcase/bamboo-adoption-20260910",
+  "roof_policy": {
+    "status": "approved_and_applied",
+    "material": "minecraft:stripped_bamboo_block",
+    "orientation": "Preserve each original hay block axis",
+    "replaced_blocks": 831,
+    "preserved_axes": {
+      "y": 714,
+      "z": 70,
+      "x": 47
+    },
+    "provenance": "tools/structure/jungle-bamboo-adoption-20260910.json",
+    "custom_thatch_block": false
+  },
+  "future_styles": [
+    "Polynesian is a separate future village aesthetic."
+  ],
+  "workshop": "tools/structure/jungle-workshop-20260910.json",
+  "source_mods": [
+    "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar",
+    "dungeons-and-taverns-v4.4.4 [NeoForge].jar"
+  ],
+  "watchtower_selection_review": "tools/structure/jungle-tower-comparison-20260910.json"
+}

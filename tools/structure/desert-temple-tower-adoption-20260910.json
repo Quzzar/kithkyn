@@ -1,0 +1,1217 @@
+{
+  "status": "verified_and_locally_deployed",
+  "work": "run/desert-integration/temple-towers-20260910",
+  "production_datapack": "run/desert-integration/datapack",
+  "description": "Adopt edited R01.8 temple and V03.7 watchtower I; retain D03.3 as watchtower II.",
+  "preview_colors": {
+    "primary": "blue",
+    "secondary": "yellow"
+  },
+  "facilities": [
+    {
+      "exhibit": "R01.8",
+      "label": "Temple Plaza 16",
+      "source_capture": "run/desert-integration/temple-towers-20260910/initial-captures/alternative_temple.nbt",
+      "source_sha256": "e4816dc13ceb9019d11800b974a45ac3e7c76f63c840dfd16ad5c46502ed5921",
+      "template_origin": [
+        4252,
+        230,
+        891
+      ],
+      "size": [
+        17,
+        12,
+        17
+      ],
+      "amenities": {
+        "beds": [],
+        "worker_beds": [],
+        "couple_beds": [],
+        "personal_containers": [],
+        "containers": [
+          [
+            5,
+            2,
+            10
+          ]
+        ],
+        "bed_containers": [],
+        "village_identity": {
+          "primary_blocks": [],
+          "secondary_blocks": [],
+          "banners": []
+        },
+        "sink": 0,
+        "category": "church",
+        "structure": "church_desert_1",
+        "variant": "desert",
+        "work_stations": [
+          {
+            "occupation": "CLERIC",
+            "pos": [
+              8,
+              2,
+              10
+            ]
+          }
+        ],
+        "entrance_facing": "south",
+        "grants": [
+          "HEALING"
+        ]
+      },
+      "neutral_template": "run/desert-integration/temple-towers-20260910/neutral/alternative_temple.nbt",
+      "production": {
+        "structure": "church_desert_1",
+        "category": "church",
+        "variant": "desert",
+        "level": 1,
+        "recipe": "church_1"
+      },
+      "access_edits": [],
+      "neutral_template_sha256": "74295f0c0333d59eece36fd6f9cc296362f47afbf6b6358b124333f9c6ab6193",
+      "source_mod": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+      "source_mod_structure": "data/nova_structures/structure/desert_ruin/house/desert_ruins_house_16.nbt",
+      "asset_sha256": "74295f0c0333d59eece36fd6f9cc296362f47afbf6b6358b124333f9c6ab6193",
+      "definition_sha256": "c7b9297347a8ea029c8a53e32b66b91e31ccc472b71ef42ef94b708b41817bb5"
+    },
+    {
+      "exhibit": "V03.7",
+      "label": "Small Watchtower",
+      "source_capture": "run/desert-integration/temple-towers-20260910/initial-captures/alternative_tower.nbt",
+      "source_sha256": "4a9bdb6b7ec125cb9c6d38a0b3d91743856aafeedc55ec46622ca4ba9c995a55",
+      "template_origin": [
+        4255,
+        230,
+        850
+      ],
+      "size": [
+        10,
+        18,
+        9
+      ],
+      "amenities": {
+        "beds": [
+          [
+            5,
+            1,
+            5
+          ]
+        ],
+        "worker_beds": [
+          [
+            5,
+            1,
+            5
+          ]
+        ],
+        "couple_beds": [],
+        "personal_containers": [
+          [
+            5,
+            13,
+            4
+          ]
+        ],
+        "containers": [],
+        "bed_containers": [
+          {
+            "bed": [
+              5,
+              1,
+              5
+            ],
+            "containers": [
+              [
+                5,
+                13,
+                4
+              ]
+            ]
+          }
+        ],
+        "village_identity": {
+          "primary_blocks": [
+            [
+              5,
+              1,
+              5
+            ]
+          ],
+          "secondary_blocks": [],
+          "banners": []
+        },
+        "sink": 0,
+        "category": "watchtower",
+        "structure": "watchtower_desert_1",
+        "variant": "desert",
+        "work_stations": [
+          {
+            "occupation": "GUARD",
+            "pos": [
+              4,
+              16,
+              4
+            ],
+            "guard_duty": "CROSSBOW_POST"
+          }
+        ],
+        "entrance_facing": "west",
+        "grants": [
+          "PROTECTION",
+          "RANGED_GUARD_POSTS"
+        ]
+      },
+      "neutral_template": "run/desert-integration/temple-towers-20260910/neutral/alternative_tower.nbt",
+      "production": {
+        "structure": "watchtower_desert_1",
+        "category": "watchtower",
+        "variant": "desert",
+        "level": 1,
+        "recipe": "watchtower_1"
+      },
+      "access_edits": [
+        {
+          "pos": [
+            5,
+            1,
+            3
+          ],
+          "name": "minecraft:air",
+          "properties": {}
+        },
+        {
+          "pos": [
+            6,
+            1,
+            3
+          ],
+          "name": "minecraft:air",
+          "properties": {}
+        },
+        {
+          "pos": [
+            6,
+            1,
+            4
+          ],
+          "name": "minecraft:air",
+          "properties": {}
+        },
+        {
+          "pos": [
+            6,
+            1,
+            5
+          ],
+          "name": "minecraft:air",
+          "properties": {}
+        },
+        {
+          "pos": [
+            6,
+            2,
+            4
+          ],
+          "name": "minecraft:air",
+          "properties": {}
+        },
+        {
+          "pos": [
+            6,
+            2,
+            5
+          ],
+          "name": "minecraft:air",
+          "properties": {}
+        },
+        {
+          "pos": [
+            4,
+            3,
+            5
+          ],
+          "name": "minecraft:air",
+          "properties": {}
+        },
+        {
+          "pos": [
+            5,
+            3,
+            5
+          ],
+          "name": "minecraft:air",
+          "properties": {}
+        },
+        {
+          "pos": [
+            4,
+            4,
+            3
+          ],
+          "name": "minecraft:air",
+          "properties": {}
+        },
+        {
+          "pos": [
+            4,
+            4,
+            4
+          ],
+          "name": "minecraft:air",
+          "properties": {}
+        },
+        {
+          "pos": [
+            5,
+            5,
+            3
+          ],
+          "name": "minecraft:air",
+          "properties": {}
+        },
+        {
+          "pos": [
+            6,
+            5,
+            3
+          ],
+          "name": "minecraft:air",
+          "properties": {}
+        },
+        {
+          "pos": [
+            5,
+            5,
+            4
+          ],
+          "name": "minecraft:air",
+          "properties": {}
+        },
+        {
+          "pos": [
+            6,
+            6,
+            4
+          ],
+          "name": "minecraft:air",
+          "properties": {}
+        },
+        {
+          "pos": [
+            6,
+            6,
+            5
+          ],
+          "name": "minecraft:air",
+          "properties": {}
+        },
+        {
+          "pos": [
+            4,
+            7,
+            5
+          ],
+          "name": "minecraft:air",
+          "properties": {}
+        },
+        {
+          "pos": [
+            5,
+            7,
+            5
+          ],
+          "name": "minecraft:air",
+          "properties": {}
+        },
+        {
+          "pos": [
+            4,
+            8,
+            3
+          ],
+          "name": "minecraft:air",
+          "properties": {}
+        },
+        {
+          "pos": [
+            4,
+            8,
+            4
+          ],
+          "name": "minecraft:air",
+          "properties": {}
+        },
+        {
+          "pos": [
+            5,
+            9,
+            3
+          ],
+          "name": "minecraft:air",
+          "properties": {}
+        },
+        {
+          "pos": [
+            6,
+            9,
+            3
+          ],
+          "name": "minecraft:air",
+          "properties": {}
+        },
+        {
+          "pos": [
+            6,
+            10,
+            4
+          ],
+          "name": "minecraft:air",
+          "properties": {}
+        },
+        {
+          "pos": [
+            6,
+            10,
+            5
+          ],
+          "name": "minecraft:air",
+          "properties": {}
+        },
+        {
+          "pos": [
+            4,
+            11,
+            5
+          ],
+          "name": "minecraft:air",
+          "properties": {}
+        },
+        {
+          "pos": [
+            5,
+            11,
+            5
+          ],
+          "name": "minecraft:air",
+          "properties": {}
+        },
+        {
+          "pos": [
+            4,
+            12,
+            3
+          ],
+          "name": "minecraft:air",
+          "properties": {}
+        },
+        {
+          "pos": [
+            4,
+            12,
+            4
+          ],
+          "name": "minecraft:air",
+          "properties": {}
+        },
+        {
+          "pos": [
+            5,
+            12,
+            4
+          ],
+          "name": "minecraft:air",
+          "properties": {}
+        },
+        {
+          "pos": [
+            5,
+            13,
+            3
+          ],
+          "name": "minecraft:air",
+          "properties": {}
+        },
+        {
+          "pos": [
+            6,
+            13,
+            3
+          ],
+          "name": "minecraft:air",
+          "properties": {}
+        },
+        {
+          "pos": [
+            6,
+            14,
+            4
+          ],
+          "name": "minecraft:air",
+          "properties": {}
+        },
+        {
+          "pos": [
+            4,
+            15,
+            4
+          ],
+          "name": "minecraft:air",
+          "properties": {}
+        },
+        {
+          "pos": [
+            5,
+            15,
+            4
+          ],
+          "name": "minecraft:air",
+          "properties": {}
+        },
+        {
+          "pos": [
+            4,
+            15,
+            5
+          ],
+          "name": "minecraft:air",
+          "properties": {}
+        },
+        {
+          "pos": [
+            5,
+            15,
+            5
+          ],
+          "name": "minecraft:air",
+          "properties": {}
+        },
+        {
+          "pos": [
+            6,
+            15,
+            5
+          ],
+          "name": "minecraft:air",
+          "properties": {}
+        },
+        {
+          "pos": [
+            4,
+            12,
+            3
+          ],
+          "name": "minecraft:smooth_sandstone",
+          "properties": {}
+        },
+        {
+          "pos": [
+            4,
+            12,
+            4
+          ],
+          "name": "minecraft:smooth_sandstone",
+          "properties": {}
+        },
+        {
+          "pos": [
+            4,
+            12,
+            5
+          ],
+          "name": "minecraft:smooth_sandstone",
+          "properties": {}
+        },
+        {
+          "pos": [
+            5,
+            12,
+            4
+          ],
+          "name": "minecraft:smooth_sandstone",
+          "properties": {}
+        },
+        {
+          "pos": [
+            5,
+            12,
+            5
+          ],
+          "name": "minecraft:smooth_sandstone",
+          "properties": {}
+        },
+        {
+          "pos": [
+            6,
+            12,
+            4
+          ],
+          "name": "minecraft:smooth_sandstone",
+          "properties": {}
+        },
+        {
+          "pos": [
+            6,
+            12,
+            5
+          ],
+          "name": "minecraft:smooth_sandstone",
+          "properties": {}
+        },
+        {
+          "pos": [
+            4,
+            15,
+            3
+          ],
+          "name": "minecraft:smooth_sandstone",
+          "properties": {}
+        },
+        {
+          "pos": [
+            4,
+            15,
+            4
+          ],
+          "name": "minecraft:smooth_sandstone",
+          "properties": {}
+        },
+        {
+          "pos": [
+            4,
+            15,
+            5
+          ],
+          "name": "minecraft:smooth_sandstone",
+          "properties": {}
+        },
+        {
+          "pos": [
+            5,
+            15,
+            4
+          ],
+          "name": "minecraft:smooth_sandstone",
+          "properties": {}
+        },
+        {
+          "pos": [
+            5,
+            15,
+            5
+          ],
+          "name": "minecraft:smooth_sandstone",
+          "properties": {}
+        },
+        {
+          "pos": [
+            6,
+            15,
+            4
+          ],
+          "name": "minecraft:smooth_sandstone",
+          "properties": {}
+        },
+        {
+          "pos": [
+            6,
+            15,
+            5
+          ],
+          "name": "minecraft:smooth_sandstone",
+          "properties": {}
+        },
+        {
+          "pos": [
+            6,
+            1,
+            3
+          ],
+          "name": "minecraft:ladder",
+          "properties": {
+            "facing": "west",
+            "waterlogged": "false"
+          }
+        },
+        {
+          "pos": [
+            6,
+            2,
+            3
+          ],
+          "name": "minecraft:ladder",
+          "properties": {
+            "facing": "west",
+            "waterlogged": "false"
+          }
+        },
+        {
+          "pos": [
+            6,
+            3,
+            3
+          ],
+          "name": "minecraft:ladder",
+          "properties": {
+            "facing": "west",
+            "waterlogged": "false"
+          }
+        },
+        {
+          "pos": [
+            6,
+            4,
+            3
+          ],
+          "name": "minecraft:ladder",
+          "properties": {
+            "facing": "west",
+            "waterlogged": "false"
+          }
+        },
+        {
+          "pos": [
+            6,
+            5,
+            3
+          ],
+          "name": "minecraft:ladder",
+          "properties": {
+            "facing": "west",
+            "waterlogged": "false"
+          }
+        },
+        {
+          "pos": [
+            6,
+            6,
+            3
+          ],
+          "name": "minecraft:ladder",
+          "properties": {
+            "facing": "west",
+            "waterlogged": "false"
+          }
+        },
+        {
+          "pos": [
+            6,
+            7,
+            3
+          ],
+          "name": "minecraft:ladder",
+          "properties": {
+            "facing": "west",
+            "waterlogged": "false"
+          }
+        },
+        {
+          "pos": [
+            6,
+            8,
+            3
+          ],
+          "name": "minecraft:ladder",
+          "properties": {
+            "facing": "west",
+            "waterlogged": "false"
+          }
+        },
+        {
+          "pos": [
+            6,
+            9,
+            3
+          ],
+          "name": "minecraft:ladder",
+          "properties": {
+            "facing": "west",
+            "waterlogged": "false"
+          }
+        },
+        {
+          "pos": [
+            6,
+            10,
+            3
+          ],
+          "name": "minecraft:ladder",
+          "properties": {
+            "facing": "west",
+            "waterlogged": "false"
+          }
+        },
+        {
+          "pos": [
+            6,
+            11,
+            3
+          ],
+          "name": "minecraft:ladder",
+          "properties": {
+            "facing": "west",
+            "waterlogged": "false"
+          }
+        },
+        {
+          "pos": [
+            6,
+            12,
+            3
+          ],
+          "name": "minecraft:ladder",
+          "properties": {
+            "facing": "west",
+            "waterlogged": "false"
+          }
+        },
+        {
+          "pos": [
+            6,
+            13,
+            3
+          ],
+          "name": "minecraft:ladder",
+          "properties": {
+            "facing": "west",
+            "waterlogged": "false"
+          }
+        },
+        {
+          "pos": [
+            6,
+            14,
+            3
+          ],
+          "name": "minecraft:ladder",
+          "properties": {
+            "facing": "west",
+            "waterlogged": "false"
+          }
+        },
+        {
+          "pos": [
+            6,
+            15,
+            3
+          ],
+          "name": "minecraft:ladder",
+          "properties": {
+            "facing": "west",
+            "waterlogged": "false"
+          }
+        },
+        {
+          "pos": [
+            2,
+            0,
+            2
+          ],
+          "name": "minecraft:sandstone",
+          "properties": {}
+        },
+        {
+          "pos": [
+            3,
+            0,
+            2
+          ],
+          "name": "minecraft:sandstone",
+          "properties": {}
+        },
+        {
+          "pos": [
+            4,
+            0,
+            2
+          ],
+          "name": "minecraft:sandstone",
+          "properties": {}
+        },
+        {
+          "pos": [
+            5,
+            0,
+            2
+          ],
+          "name": "minecraft:sandstone",
+          "properties": {}
+        },
+        {
+          "pos": [
+            6,
+            0,
+            2
+          ],
+          "name": "minecraft:sandstone",
+          "properties": {}
+        },
+        {
+          "pos": [
+            7,
+            0,
+            2
+          ],
+          "name": "minecraft:sandstone",
+          "properties": {}
+        },
+        {
+          "pos": [
+            2,
+            0,
+            3
+          ],
+          "name": "minecraft:sandstone",
+          "properties": {}
+        },
+        {
+          "pos": [
+            3,
+            0,
+            3
+          ],
+          "name": "minecraft:sandstone",
+          "properties": {}
+        },
+        {
+          "pos": [
+            6,
+            0,
+            3
+          ],
+          "name": "minecraft:sandstone",
+          "properties": {}
+        },
+        {
+          "pos": [
+            7,
+            0,
+            3
+          ],
+          "name": "minecraft:sandstone",
+          "properties": {}
+        },
+        {
+          "pos": [
+            6,
+            0,
+            4
+          ],
+          "name": "minecraft:sandstone",
+          "properties": {}
+        },
+        {
+          "pos": [
+            7,
+            0,
+            4
+          ],
+          "name": "minecraft:sandstone",
+          "properties": {}
+        },
+        {
+          "pos": [
+            2,
+            0,
+            5
+          ],
+          "name": "minecraft:sandstone",
+          "properties": {}
+        },
+        {
+          "pos": [
+            3,
+            0,
+            5
+          ],
+          "name": "minecraft:sandstone",
+          "properties": {}
+        },
+        {
+          "pos": [
+            6,
+            0,
+            5
+          ],
+          "name": "minecraft:sandstone",
+          "properties": {}
+        },
+        {
+          "pos": [
+            7,
+            0,
+            5
+          ],
+          "name": "minecraft:sandstone",
+          "properties": {}
+        },
+        {
+          "pos": [
+            2,
+            0,
+            6
+          ],
+          "name": "minecraft:sandstone",
+          "properties": {}
+        },
+        {
+          "pos": [
+            3,
+            0,
+            6
+          ],
+          "name": "minecraft:sandstone",
+          "properties": {}
+        },
+        {
+          "pos": [
+            4,
+            0,
+            6
+          ],
+          "name": "minecraft:sandstone",
+          "properties": {}
+        },
+        {
+          "pos": [
+            5,
+            0,
+            6
+          ],
+          "name": "minecraft:sandstone",
+          "properties": {}
+        },
+        {
+          "pos": [
+            6,
+            0,
+            6
+          ],
+          "name": "minecraft:sandstone",
+          "properties": {}
+        },
+        {
+          "pos": [
+            7,
+            0,
+            6
+          ],
+          "name": "minecraft:sandstone",
+          "properties": {}
+        },
+        {
+          "pos": [
+            3,
+            1,
+            4
+          ],
+          "name": "minecraft:jungle_door",
+          "properties": {
+            "hinge": "right",
+            "facing": "west",
+            "half": "lower",
+            "powered": "false",
+            "open": "false"
+          }
+        },
+        {
+          "pos": [
+            3,
+            2,
+            4
+          ],
+          "name": "minecraft:jungle_door",
+          "properties": {
+            "hinge": "right",
+            "facing": "west",
+            "half": "upper",
+            "powered": "false",
+            "open": "false"
+          }
+        }
+      ],
+      "neutral_template_sha256": "f536b690fe9b02b1ad7326905cdb48a06360b7cfcfe7b0600d75ec0dd49ea052",
+      "source_mod": "minecraft_1.21.1_client.jar",
+      "source_mod_structure": "data/minecraft/structure/village/desert/houses/desert_small_house_6.nbt",
+      "asset_sha256": "f536b690fe9b02b1ad7326905cdb48a06360b7cfcfe7b0600d75ec0dd49ea052",
+      "definition_sha256": "69d290e3f83b47b500ba3da37a272eba1f417a2cc5d242e727524e7769bd220f"
+    },
+    {
+      "exhibit": "D03.3",
+      "label": "Desert Observatory Watchtower",
+      "source_capture": "run/desert-integration/temple-towers-20260910/initial-captures/current_tower.nbt",
+      "source_sha256": "ad804ec2b9151e0417385212aec479e3110f549adfcb861fe00a80e82eb7c49b",
+      "template_origin": [
+        4215,
+        230,
+        850
+      ],
+      "size": [
+        11,
+        19,
+        14
+      ],
+      "amenities": {
+        "category": "watchtower",
+        "beds": [
+          [
+            4,
+            2,
+            7
+          ]
+        ],
+        "worker_beds": [
+          [
+            4,
+            2,
+            7
+          ]
+        ],
+        "couple_beds": [],
+        "work_stations": [
+          {
+            "occupation": "GUARD",
+            "pos": [
+              3,
+              13,
+              8
+            ],
+            "guard_duty": "CROSSBOW_POST"
+          }
+        ],
+        "personal_containers": [
+          [
+            4,
+            2,
+            9
+          ]
+        ],
+        "containers": [
+          [
+            7,
+            13,
+            6
+          ]
+        ],
+        "bed_containers": [
+          {
+            "bed": [
+              4,
+              2,
+              7
+            ],
+            "containers": [
+              [
+                4,
+                2,
+                9
+              ]
+            ]
+          }
+        ],
+        "village_identity": {
+          "primary_blocks": [
+            [
+              4,
+              2,
+              7
+            ]
+          ],
+          "secondary_blocks": [],
+          "banners": []
+        },
+        "sink": 0,
+        "entrance_facing": "north",
+        "grants": [
+          "PROTECTION",
+          "RANGED_GUARD_POSTS"
+        ],
+        "structure": "watchtower_desert_2",
+        "variant": "desert",
+        "upgrades_from": "watchtower_desert_1"
+      },
+      "neutral_template": "run/desert-integration/temple-towers-20260910/neutral/current_tower.nbt",
+      "production": {
+        "structure": "watchtower_desert_2",
+        "category": "watchtower",
+        "variant": "desert",
+        "level": 2,
+        "recipe": "watchtower_2"
+      },
+      "access_edits": [
+        {
+          "pos": [
+            5,
+            2,
+            6
+          ],
+          "name": "minecraft:birch_door",
+          "properties": {
+            "hinge": "right",
+            "facing": "south",
+            "half": "lower",
+            "powered": "false",
+            "open": "false"
+          }
+        },
+        {
+          "pos": [
+            5,
+            3,
+            6
+          ],
+          "name": "minecraft:birch_door",
+          "properties": {
+            "hinge": "right",
+            "facing": "south",
+            "half": "upper",
+            "powered": "false",
+            "open": "false"
+          }
+        }
+      ],
+      "neutral_template_sha256": "761230aa0a90ccd34174aca6683e72760a5ad7aebdba61c0b18b923cca6104da",
+      "source_mod": "[Neoforge]ctov-3.6.3.jar",
+      "source_mod_structure": "data/ctov/structure/village/desert/jobsite/observatory.nbt",
+      "asset_sha256": "761230aa0a90ccd34174aca6683e72760a5ad7aebdba61c0b18b923cca6104da",
+      "definition_sha256": "c2a0da60217a17e935d939702437dbee0cd07b447a12dcff21c562b5762ba874"
+    }
+  ],
+  "distribution": "private_local_catalog",
+  "capture_note": "The three selected comparison copies were captured twice several minutes apart with identical block states. The smaller tower was then adapted to ladder access; the larger tower already contained its approved ladder.",
+  "verification": {
+    "access": "run/desert-integration/temple-towers-20260910/access2/verification.json",
+    "placement": "run/desert-integration/temple-towers-20260910/placement2/verification.json",
+    "court": "run/desert-integration/temple-towers-20260910/court-verification.json",
+    "render_review": {
+      "passed": true,
+      "screenshots": [
+        "run/desert-integration/temple-towers-20260910/render/client/screenshots/desert-selected-temple.png",
+        "run/desert-integration/temple-towers-20260910/render/client/screenshots/desert-small-tower-ladder.png",
+        "run/desert-integration/temple-towers-20260910/render/client/screenshots/desert-two-watchtower-tiers.png"
+      ]
+    }
+  },
+  "costs": "Shared category-and-level recipes. watchtower_1:24 logs+40 stone; watchtower_2 upgrade:20 stone; watchtower_2 fresh:24 logs+60 stone. Temple uses church_1. No per-variant cost override.",
+  "deployment": {
+    "release": "/Users/quzzar/Projects/kithkyn/run/deployed-runtime/20260910-080654-shared-recipes-desert",
+    "jar_sha256": "ef2f2dca152c934bc0889c0ae7c9b0f3377418bc8d1d25b10bcadb76291d7a0c",
+    "working_tree_build": true,
+    "loaded_buildings": 200,
+    "live_checks": [
+      "run/desert-integration/datapack/data/kithkyn/structure/church_desert_1.nbt",
+      "run/world/datapacks/kithkyn-desert/data/kithkyn/structure/church_desert_1.nbt",
+      "run/desert-integration/datapack/data/kithkyn/kithkyn/buildings/church_desert_1.json",
+      "run/world/datapacks/kithkyn-desert/data/kithkyn/kithkyn/buildings/church_desert_1.json",
+      "run/desert-integration/datapack/data/kithkyn/structure/watchtower_desert_1.nbt",
+      "run/world/datapacks/kithkyn-desert/data/kithkyn/structure/watchtower_desert_1.nbt",
+      "run/desert-integration/datapack/data/kithkyn/kithkyn/buildings/watchtower_desert_1.json",
+      "run/world/datapacks/kithkyn-desert/data/kithkyn/kithkyn/buildings/watchtower_desert_1.json",
+      "run/desert-integration/datapack/data/kithkyn/structure/watchtower_desert_2.nbt",
+      "run/world/datapacks/kithkyn-desert/data/kithkyn/structure/watchtower_desert_2.nbt",
+      "run/desert-integration/datapack/data/kithkyn/kithkyn/buildings/watchtower_desert_2.json",
+      "run/world/datapacks/kithkyn-desert/data/kithkyn/kithkyn/buildings/watchtower_desert_2.json"
+    ],
+    "world_backup": "/Users/quzzar/Projects/kithkyn/run/backups/before-shared-recipes-desert-20260910-080654-shared-recipes-desert"
+  }
+}

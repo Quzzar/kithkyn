@@ -34,15 +34,5 @@
       8
     ]
   ],
-  "cost": [
-    {
-      "item": "minecraft:oak_log",
-      "count": 76
-    },
-    {
-      "item": "minecraft:cobblestone",
-      "count": 101
-    }
-  ],
   "entrance_facing": "west"
 }

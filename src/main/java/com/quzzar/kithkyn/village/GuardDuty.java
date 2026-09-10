@@ -56,6 +56,22 @@ public record GuardDuty(BlockPos position, BlockPos lookAt, boolean ranged, bool
     return authoredRole(person) == GuardRole.PATROL;
   }
 
+  /** A keeper uses the existing guard job and fixed sword watch beside the cell. */
+  public static boolean isJailer(RealPerson person) {
+    return authoredRole(person) == GuardRole.JAILER;
+  }
+
+  /** A castle sentry's occasional patrol stays within their assigned castle. */
+  @Nullable
+  public static Building assignedCastle(RealPerson person) {
+    Village village = person.getVillage();
+    if (person.getOccupation() != Occupation.GUARD || village == null) return null;
+    JobAssignment job = village.getJobAssignment(person.getUUID());
+    if (job == null || job.isWallPost()) return null;
+    Building building = village.getBuilding(job.getBuildingUUID());
+    return building != null && building.getInfo() != null && building.getInfo().getCastleLayout() != null ? building : null;
+  }
+
   @Nullable
   private static GuardRole authoredRole(RealPerson person) {
     Village village = person.getVillage();
@@ -130,7 +146,7 @@ public record GuardDuty(BlockPos position, BlockPos lookAt, boolean ranged, bool
         if (role != null && !role.hasPost()) return null;
         if (role == null && !info.getGrants().contains(RANGED_GUARD_POSTS)) return null;
         BlockPos position = origin.offset(BlockPos.of(station.getKey()).rotate(rotation));
-        boolean ranged = role != GuardRole.SWORD_POST;
+        boolean ranged = role != GuardRole.SWORD_POST && role != GuardRole.JAILER;
         return new GuardDuty(position, position.offset(new BlockPos(0, 0, -8).rotate(rotation)), ranged, ranged);
       }
     }

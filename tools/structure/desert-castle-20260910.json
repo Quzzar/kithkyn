@@ -1,0 +1,1106 @@
+{
+  "exhibit": "R07.2",
+  "label": "Desert Fort",
+  "gallery_origin": [
+    4402,
+    230,
+    1208
+  ],
+  "original_size": [
+    35,
+    18,
+    30
+  ],
+  "capture_origin": [
+    4400,
+    230,
+    1206
+  ],
+  "capture_size": [
+    39,
+    18,
+    34
+  ],
+  "source_mod_structure": "data/kaisyn/structure/outpost/forts/desert/base_plate.nbt",
+  "source_mod": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar",
+  "source_capture": "run/pueblo-showcase/desert-comparison-castle-20260910/captures/R07.2.nbt",
+  "source_capture_sha256": "5fbce0c8389df651e899046c8a385f0749e8febe14d5ded60f73cd1a0d49968d",
+  "status": "verified_and_locally_deployed",
+  "coordinate_system": "All amenity coordinates are relative to gallery_origin; source capture coordinates add [2,0,2].",
+  "capacity": {
+    "beds": 8,
+    "general_single_beds": 5,
+    "captain_single_beds": 1,
+    "royal_couple_beds": 2
+  },
+  "rooms": [
+    {
+      "id": "royal_suite",
+      "beds": [
+        [
+          27,
+          6,
+          15
+        ],
+        [
+          28,
+          6,
+          15
+        ]
+      ],
+      "couple_beds": [
+        [
+          [
+            27,
+            6,
+            15
+          ],
+          [
+            28,
+            6,
+            15
+          ]
+        ]
+      ],
+      "intended_reservation": "leader_and_spouse",
+      "personal_containers": [
+        [
+          23,
+          6,
+          13
+        ]
+      ],
+      "notes": "The incumbent ruler can use the suite alone; its other bed remains reserved for their spouse.",
+      "access_note": "All eight beds physically reached and slept in by a two-block adult in all four rotations."
+    },
+    {
+      "id": "captain_room",
+      "beds": [
+        [
+          22,
+          1,
+          19
+        ]
+      ],
+      "couple_beds": [],
+      "intended_reservation": "existing_village_guard_captain",
+      "personal_containers": [],
+      "notes": "Separate ground-floor room beside bookshelves. Move accommodation without adding or replacing the existing captain job."
+    },
+    {
+      "id": "ground_dormitory_east",
+      "beds": [
+        [
+          13,
+          1,
+          14
+        ],
+        [
+          13,
+          1,
+          16
+        ],
+        [
+          13,
+          1,
+          18
+        ]
+      ],
+      "couple_beds": [],
+      "intended_reservation": "general",
+      "personal_containers": [
+        [
+          13,
+          1,
+          17
+        ]
+      ]
+    },
+    {
+      "id": "ground_dormitory_west",
+      "beds": [
+        [
+          6,
+          1,
+          18
+        ]
+      ],
+      "couple_beds": [],
+      "intended_reservation": "general",
+      "personal_containers": [
+        [
+          5,
+          2,
+          21
+        ]
+      ]
+    },
+    {
+      "id": "upper_single_room",
+      "beds": [
+        [
+          6,
+          6,
+          18
+        ]
+      ],
+      "couple_beds": [],
+      "intended_reservation": "general",
+      "personal_containers": [
+        [
+          6,
+          6,
+          17
+        ]
+      ]
+    }
+  ],
+  "village_identity": {
+    "primary_blocks": [
+      [
+        13,
+        1,
+        14
+      ],
+      [
+        13,
+        1,
+        18
+      ],
+      [
+        27,
+        6,
+        15
+      ],
+      [
+        28,
+        6,
+        15
+      ],
+      [
+        6,
+        6,
+        18
+      ],
+      [
+        24,
+        16,
+        9
+      ],
+      [
+        25,
+        16,
+        9
+      ],
+      [
+        26,
+        16,
+        9
+      ],
+      [
+        26,
+        16,
+        10
+      ],
+      [
+        25,
+        16,
+        11
+      ],
+      [
+        26,
+        16,
+        12
+      ],
+      [
+        25,
+        16,
+        13
+      ],
+      [
+        26,
+        16,
+        14
+      ],
+      [
+        25,
+        16,
+        15
+      ],
+      [
+        27,
+        16,
+        15
+      ],
+      [
+        26,
+        16,
+        16
+      ],
+      [
+        28,
+        17,
+        9
+      ],
+      [
+        29,
+        17,
+        9
+      ],
+      [
+        30,
+        17,
+        9
+      ],
+      [
+        29,
+        17,
+        10
+      ],
+      [
+        29,
+        17,
+        13
+      ],
+      [
+        29,
+        17,
+        15
+      ],
+      [
+        30,
+        17,
+        15
+      ],
+      [
+        29,
+        17,
+        16
+      ],
+      [
+        7,
+        15,
+        15
+      ],
+      [
+        13,
+        15,
+        15
+      ],
+      [
+        8,
+        15,
+        16
+      ],
+      [
+        12,
+        15,
+        16
+      ],
+      [
+        13,
+        15,
+        16
+      ],
+      [
+        12,
+        16,
+        12
+      ],
+      [
+        11,
+        16,
+        14
+      ],
+      [
+        23,
+        14,
+        8
+      ],
+      [
+        22,
+        14,
+        9
+      ],
+      [
+        23,
+        14,
+        9
+      ],
+      [
+        22,
+        14,
+        10
+      ],
+      [
+        23,
+        14,
+        10
+      ],
+      [
+        22,
+        14,
+        11
+      ],
+      [
+        23,
+        14,
+        11
+      ],
+      [
+        22,
+        14,
+        12
+      ],
+      [
+        23,
+        14,
+        12
+      ],
+      [
+        22,
+        14,
+        13
+      ],
+      [
+        23,
+        14,
+        13
+      ],
+      [
+        22,
+        14,
+        14
+      ],
+      [
+        23,
+        14,
+        14
+      ],
+      [
+        22,
+        14,
+        15
+      ],
+      [
+        23,
+        14,
+        15
+      ],
+      [
+        23,
+        14,
+        16
+      ],
+      [
+        26,
+        15,
+        8
+      ],
+      [
+        27,
+        15,
+        8
+      ],
+      [
+        26,
+        15,
+        9
+      ],
+      [
+        27,
+        15,
+        9
+      ],
+      [
+        26,
+        15,
+        10
+      ],
+      [
+        27,
+        15,
+        10
+      ],
+      [
+        26,
+        15,
+        11
+      ],
+      [
+        27,
+        15,
+        11
+      ],
+      [
+        26,
+        15,
+        12
+      ],
+      [
+        27,
+        15,
+        12
+      ],
+      [
+        26,
+        15,
+        13
+      ],
+      [
+        27,
+        15,
+        13
+      ],
+      [
+        26,
+        15,
+        14
+      ],
+      [
+        27,
+        15,
+        14
+      ],
+      [
+        26,
+        15,
+        15
+      ],
+      [
+        27,
+        15,
+        15
+      ],
+      [
+        26,
+        15,
+        16
+      ],
+      [
+        27,
+        15,
+        16
+      ],
+      [
+        28,
+        16,
+        8
+      ],
+      [
+        29,
+        16,
+        8
+      ],
+      [
+        28,
+        16,
+        9
+      ],
+      [
+        30,
+        16,
+        12
+      ],
+      [
+        28,
+        16,
+        13
+      ],
+      [
+        29,
+        16,
+        13
+      ],
+      [
+        30,
+        16,
+        13
+      ],
+      [
+        28,
+        16,
+        14
+      ],
+      [
+        29,
+        16,
+        14
+      ],
+      [
+        28,
+        16,
+        15
+      ],
+      [
+        29,
+        16,
+        15
+      ],
+      [
+        6,
+        14,
+        15
+      ],
+      [
+        7,
+        14,
+        15
+      ],
+      [
+        12,
+        14,
+        15
+      ],
+      [
+        11,
+        14,
+        16
+      ],
+      [
+        12,
+        14,
+        16
+      ],
+      [
+        7,
+        15,
+        12
+      ],
+      [
+        8,
+        15,
+        12
+      ],
+      [
+        9,
+        15,
+        12
+      ],
+      [
+        13,
+        15,
+        12
+      ],
+      [
+        6,
+        15,
+        13
+      ],
+      [
+        7,
+        15,
+        13
+      ],
+      [
+        9,
+        15,
+        13
+      ],
+      [
+        10,
+        15,
+        13
+      ],
+      [
+        11,
+        15,
+        13
+      ],
+      [
+        12,
+        15,
+        13
+      ],
+      [
+        13,
+        15,
+        13
+      ],
+      [
+        14,
+        15,
+        13
+      ],
+      [
+        6,
+        15,
+        14
+      ],
+      [
+        9,
+        15,
+        14
+      ],
+      [
+        12,
+        15,
+        14
+      ]
+    ],
+    "secondary_blocks": [
+      [
+        13,
+        1,
+        16
+      ],
+      [
+        6,
+        1,
+        18
+      ],
+      [
+        22,
+        1,
+        19
+      ],
+      [
+        23,
+        15,
+        8
+      ],
+      [
+        23,
+        15,
+        11
+      ],
+      [
+        22,
+        15,
+        12
+      ],
+      [
+        23,
+        15,
+        12
+      ],
+      [
+        23,
+        15,
+        13
+      ],
+      [
+        24,
+        16,
+        11
+      ],
+      [
+        24,
+        15,
+        8
+      ],
+      [
+        25,
+        15,
+        8
+      ],
+      [
+        24,
+        15,
+        9
+      ],
+      [
+        25,
+        15,
+        9
+      ],
+      [
+        24,
+        15,
+        10
+      ],
+      [
+        25,
+        15,
+        10
+      ],
+      [
+        24,
+        15,
+        11
+      ],
+      [
+        25,
+        15,
+        11
+      ],
+      [
+        24,
+        15,
+        12
+      ],
+      [
+        25,
+        15,
+        12
+      ],
+      [
+        24,
+        15,
+        13
+      ],
+      [
+        25,
+        15,
+        13
+      ],
+      [
+        24,
+        15,
+        14
+      ],
+      [
+        25,
+        15,
+        14
+      ],
+      [
+        24,
+        15,
+        15
+      ],
+      [
+        25,
+        15,
+        15
+      ],
+      [
+        24,
+        15,
+        16
+      ],
+      [
+        25,
+        15,
+        16
+      ],
+      [
+        29,
+        16,
+        9
+      ],
+      [
+        30,
+        16,
+        9
+      ],
+      [
+        28,
+        16,
+        10
+      ],
+      [
+        29,
+        16,
+        10
+      ],
+      [
+        30,
+        16,
+        10
+      ],
+      [
+        28,
+        16,
+        11
+      ],
+      [
+        29,
+        16,
+        11
+      ],
+      [
+        30,
+        16,
+        11
+      ],
+      [
+        28,
+        16,
+        12
+      ],
+      [
+        29,
+        16,
+        12
+      ],
+      [
+        30,
+        16,
+        14
+      ],
+      [
+        30,
+        16,
+        15
+      ],
+      [
+        28,
+        16,
+        16
+      ],
+      [
+        29,
+        16,
+        16
+      ]
+    ],
+    "banners": [
+      [
+        12,
+        5,
+        7
+      ],
+      [
+        5,
+        5,
+        10
+      ],
+      [
+        31,
+        5,
+        18
+      ],
+      [
+        28,
+        5,
+        21
+      ],
+      [
+        10,
+        5,
+        25
+      ],
+      [
+        26,
+        8,
+        13
+      ],
+      [
+        26,
+        10,
+        7
+      ],
+      [
+        17,
+        10,
+        13
+      ],
+      [
+        15,
+        10,
+        15
+      ],
+      [
+        3,
+        10,
+        18
+      ]
+    ]
+  },
+  "preview_colors": {
+    "primary": "blue",
+    "secondary": "yellow"
+  },
+  "shared_containers": [
+    [
+      29,
+      2,
+      7
+    ],
+    [
+      21,
+      11,
+      16
+    ]
+  ],
+  "work_areas": [
+    {
+      "role": "leader",
+      "pos": [
+        27,
+        6,
+        13
+      ],
+      "status": "implemented_LEADER_with_ruler_context"
+    },
+    {
+      "role": "blacksmith",
+      "pos": [
+        20,
+        11,
+        16
+      ],
+      "blocks": [
+        [
+          20,
+          11,
+          19
+        ],
+        [
+          21,
+          11,
+          17
+        ]
+      ],
+      "container": [
+        21,
+        11,
+        16
+      ],
+      "status": "clear_workstation_beside_smithy_chest"
+    },
+    {
+      "role": "jail_keeper",
+      "pos": [
+        9,
+        11,
+        17
+      ],
+      "status": "implemented_GUARD_JAILER"
+    }
+  ],
+  "guard_posts": [
+    {
+      "pos": [
+        8,
+        11,
+        13
+      ],
+      "role": "guard",
+      "status": "authored_post_with_castle_patrol_waypoints"
+    },
+    {
+      "pos": [
+        24,
+        11,
+        11
+      ],
+      "role": "guard",
+      "status": "authored_post_with_castle_patrol_waypoints"
+    },
+    {
+      "pos": [
+        26,
+        6,
+        9
+      ],
+      "role": "guard",
+      "status": "authored_post_with_castle_patrol_waypoints"
+    },
+    {
+      "pos": [
+        10,
+        6,
+        21
+      ],
+      "role": "guard",
+      "status": "authored_post_with_castle_patrol_waypoints"
+    }
+  ],
+  "jail": {
+    "cell": [
+      6,
+      11,
+      18
+    ],
+    "cell_bounds": [
+      [
+        5,
+        11,
+        17
+      ],
+      [
+        7,
+        13,
+        19
+      ]
+    ],
+    "status": "native_gameplay_verified",
+    "evidence_containers": [
+      [
+        8,
+        11,
+        16
+      ],
+      [
+        8,
+        11,
+        18
+      ]
+    ],
+    "release_point": [
+      8,
+      11,
+      17
+    ],
+    "sentence_seconds": 300,
+    "reminders_seconds_remaining": [
+      240,
+      180,
+      120,
+      60
+    ],
+    "mining_fatigue_amplifier": 2,
+    "guard_grace_seconds": 30,
+    "escape_allowed": true,
+    "evidence_is_village_storage": false
+  },
+  "fabric_rules": {
+    "white_and_blue_tent": "White remains white; light blue wool and carpet use primary.",
+    "gray_tent": "Light gray wool and carpet use primary; gray wool and carpet use secondary.",
+    "scope": "Only the rooftop tents at y >= 14; unrelated interior carpets stay as authored."
+  },
+  "runtime_activation": true,
+  "identity_preview": "run/pueblo-showcase/desert-comparison-castle-20260910/castle-preview/castle_identity.nbt",
+  "identity_preview_sha256": "4885ce5f67d3fe1759a7ce52e25d4d80d3eca1533dd9c7061f95f09dbc9e0aff",
+  "live_identity_applied": true,
+  "verification": {
+    "native_block_and_banner_comparison": "passed",
+    "compared_blocks": 3246,
+    "complete_beds": 8,
+    "banner_patterns": 10,
+    "report": "run/pueblo-showcase/desert-comparison-castle-20260910/verification.json",
+    "runtime_navigation_tested": true,
+    "room_reservations_enforced": true,
+    "screenshots": [
+      "run/castle-completion-20260910/render/client/screenshots/castle-completed-overview.png",
+      "run/castle-completion-20260910/render/client/screenshots/castle-evidence-barrels.png"
+    ],
+    "visual_review": "passed",
+    "bed_drop_cleanup": "run/pueblo-showcase/desert-comparison-castle-20260910/bed-drop-cleanup.json",
+    "role_housing_report": "run/castle-roles-20260910/native/verification.json",
+    "custody_report": "run/custody-verification-20260910/native/verification.json",
+    "curios_evidence_report": "run/accessory-evidence-verification-20260910/verification.json",
+    "physical_access_report": "run/castle-completion-20260910/access/verification.json",
+    "access_routes": 84,
+    "assigned_bed_sleeps": 32,
+    "personal_container_deposits": 28,
+    "station_walks": 28,
+    "shared_container_deposits": 8,
+    "live_patch_report": "run/castle-completion-20260910/live-patch.json",
+    "build_report": "run/castle-completion-20260910/build-verification.json"
+  },
+  "source_policy": "Towns and Towers source and derived NBT remain private under run/.",
+  "design_document": "docs/castles.md",
+  "live_after_identity_capture": "run/pueblo-showcase/desert-comparison-castle-20260910/after-bed-repair/captures/castle.nbt",
+  "live_after_identity_capture_sha256": "3a164647c03e8b40bdb3a3cae86ab36aeff129705129185e7b99d838c60f38ce",
+  "approved_capture": "run/castle-completion-20260910/live-20260910-120410/after/captures/castle.nbt",
+  "approved_capture_sha256": "a2cdf5d4376a6e82c08de319c7832290d121c1f622783a166f2332e482670cc2",
+  "production": {
+    "status": "deployed",
+    "definition": "run/castle-completion-20260910/production/data/kithkyn/kithkyn/buildings/castle_desert_1.json",
+    "definition_sha256": "b83ee90da5110220a88be37b4c1b17e3ec50c5bdbf44f18e5409aff486e3535d",
+    "template": "run/castle-completion-20260910/production/data/kithkyn/structure/castle_desert_1.nbt",
+    "template_sha256": "18c978c97871ad35961de396c081e44ccc56784d7002f0c936e1df029fbf1c9f",
+    "recipe": "castle_1",
+    "expected_building_count": 201
+  },
+  "deployment": {
+    "release": "/Users/quzzar/Projects/kithkyn/run/deployed-runtime/20260910-120838-castle-custody-founding",
+    "jar_sha256": "0f913ad9e1c19e70760c8f97b971cbb9e5555d451c7e0f88676a289d468944ed",
+    "installed_datapack": "run/world/datapacks/kithkyn-desert",
+    "building_definitions": 201,
+    "world_backup": "/Users/quzzar/Projects/kithkyn/run/backups/before-castle-custody-founding-20260910-120838-castle-custody-founding"
+  }
+}

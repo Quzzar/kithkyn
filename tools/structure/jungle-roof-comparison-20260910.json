@@ -1,0 +1,199 @@
+{
+  "status": "placed_block_verified_and_visually_reviewed",
+  "entry": [
+    5084.5,
+    230,
+    977.5,
+    180,
+    0
+  ],
+  "bounds": [
+    5062,
+    228,
+    900,
+    5130,
+    244,
+    980
+  ],
+  "items": [
+    {
+      "id": "hut_hay_y",
+      "exhibit": "JA02.9",
+      "label": "ORIGINAL HAY",
+      "building": "Small House 2",
+      "origin": [
+        5068,
+        230,
+        941
+      ],
+      "size": [
+        11,
+        7,
+        11
+      ],
+      "source_capture": "run/jungle-showcase/roof-comparison-20260910/captures/JA02.9.nbt",
+      "source_sha256": "2ffd484d1805a356e31a4af6859966e768560ec9fb744139c972e33b497c01ea",
+      "roof_blocks": 58,
+      "axis": "y",
+      "material": "hay",
+      "template": "run/jungle-showcase/roof-comparison-20260910/templates/hut_hay_y.nbt",
+      "template_sha256": "0b51a4511b05b3eb6c473079028ff08d6cbd65a66787ed44ea807aeb2633c031",
+      "template_id": "kithkyn_jungle_showcase:roof_review_20260910_hut_hay_y"
+    },
+    {
+      "id": "hut_bamboo_y",
+      "exhibit": "JA02.9",
+      "label": "BAMBOO - ENDS UP",
+      "building": "Small House 2",
+      "origin": [
+        5090,
+        230,
+        941
+      ],
+      "size": [
+        11,
+        7,
+        11
+      ],
+      "source_capture": "run/jungle-showcase/roof-comparison-20260910/captures/JA02.9.nbt",
+      "source_sha256": "2ffd484d1805a356e31a4af6859966e768560ec9fb744139c972e33b497c01ea",
+      "roof_blocks": 58,
+      "axis": "y",
+      "material": "bamboo",
+      "template": "run/jungle-showcase/roof-comparison-20260910/templates/hut_bamboo_y.nbt",
+      "template_sha256": "a427b43d1f512f267d855529fed7435a92808d40941611205ce58d140f0c2ab5",
+      "template_id": "kithkyn_jungle_showcase:roof_review_20260910_hut_bamboo_y"
+    },
+    {
+      "id": "hut_bamboo_x",
+      "exhibit": "JA02.9",
+      "label": "BAMBOO - LENGTHWISE",
+      "building": "Small House 2",
+      "origin": [
+        5112,
+        230,
+        941
+      ],
+      "size": [
+        11,
+        7,
+        11
+      ],
+      "source_capture": "run/jungle-showcase/roof-comparison-20260910/captures/JA02.9.nbt",
+      "source_sha256": "2ffd484d1805a356e31a4af6859966e768560ec9fb744139c972e33b497c01ea",
+      "roof_blocks": 58,
+      "axis": "x",
+      "material": "bamboo",
+      "template": "run/jungle-showcase/roof-comparison-20260910/templates/hut_bamboo_x.nbt",
+      "template_sha256": "06ea73e3dead6cd3f2cd0a3b289bb74dd765def005d5242790681f4471ce8427",
+      "template_id": "kithkyn_jungle_showcase:roof_review_20260910_hut_bamboo_x"
+    },
+    {
+      "id": "large_hay_y",
+      "exhibit": "JA02.2",
+      "label": "ORIGINAL HAY",
+      "building": "Large House 1",
+      "origin": [
+        5068,
+        230,
+        908
+      ],
+      "size": [
+        12,
+        8,
+        11
+      ],
+      "source_capture": "run/jungle-showcase/roof-comparison-20260910/captures/JA02.2.nbt",
+      "source_sha256": "90fe80eb4ce86d5f79a1b08eecf33a0857563304e4af9a59fd426ac738a5be93",
+      "roof_blocks": 78,
+      "axis": "y",
+      "material": "hay",
+      "template": "run/jungle-showcase/roof-comparison-20260910/templates/large_hay_y.nbt",
+      "template_sha256": "7cc3da4916570021a46452a40c63db853e66987fc3e271cc8269525e07b2e215",
+      "template_id": "kithkyn_jungle_showcase:roof_review_20260910_large_hay_y"
+    },
+    {
+      "id": "large_bamboo_y",
+      "exhibit": "JA02.2",
+      "label": "BAMBOO - ENDS UP",
+      "building": "Large House 1",
+      "origin": [
+        5090,
+        230,
+        908
+      ],
+      "size": [
+        12,
+        8,
+        11
+      ],
+      "source_capture": "run/jungle-showcase/roof-comparison-20260910/captures/JA02.2.nbt",
+      "source_sha256": "90fe80eb4ce86d5f79a1b08eecf33a0857563304e4af9a59fd426ac738a5be93",
+      "roof_blocks": 78,
+      "axis": "y",
+      "material": "bamboo",
+      "template": "run/jungle-showcase/roof-comparison-20260910/templates/large_bamboo_y.nbt",
+      "template_sha256": "b72c21754a076b380ef34c236ed76d2ba58b43c8402006fa87aecafa42579895",
+      "template_id": "kithkyn_jungle_showcase:roof_review_20260910_large_bamboo_y"
+    },
+    {
+      "id": "large_bamboo_x",
+      "exhibit": "JA02.2",
+      "label": "BAMBOO - LENGTHWISE",
+      "building": "Large House 1",
+      "origin": [
+        5112,
+        230,
+        908
+      ],
+      "size": [
+        12,
+        8,
+        11
+      ],
+      "source_capture": "run/jungle-showcase/roof-comparison-20260910/captures/JA02.2.nbt",
+      "source_sha256": "90fe80eb4ce86d5f79a1b08eecf33a0857563304e4af9a59fd426ac738a5be93",
+      "roof_blocks": 78,
+      "axis": "x",
+      "material": "bamboo",
+      "template": "run/jungle-showcase/roof-comparison-20260910/templates/large_bamboo_x.nbt",
+      "template_sha256": "e7c04e00134c1f02374a013d94fe6560eb2b091017192f69260ba7403611b2f7",
+      "template_id": "kithkyn_jungle_showcase:roof_review_20260910_large_bamboo_x"
+    }
+  ],
+  "purpose": "Compare current hay roofs with stripped bamboo in both block orientations. Preview copies only; no source replacement or new block.",
+  "production_activated": false,
+  "thatch_fallback": {
+    "status": "not_needed_bamboo_selected",
+    "reason": "Consider only if stripped bamboo does not suit the jungle roofs.",
+    "proposed_ingredients": {
+      "minecraft:wheat": 5,
+      "minecraft:stick": 4
+    },
+    "interpreted_pattern": [
+      "WSW",
+      "SWS",
+      "WSW"
+    ],
+    "pattern_note": "Interpreted spoken \"like an axe\" as wheat arranged in an X; tool ingredient and output count are not confirmed.",
+    "behavior_intent": "Hay-bale-like block behavior and placement; no reverse crafting into wheat or hay. A slightly distinct texture is under consideration."
+  },
+  "verification": {
+    "report": "run/jungle-showcase/roof-comparison-20260910/verification.json",
+    "checked_blocks": 1029,
+    "mismatches": 0
+  },
+  "screenshots": [
+    "run/jungle-showcase/roof-comparison-20260910/render/client/screenshots/jungle-hay-bamboo-detail.png",
+    "run/jungle-showcase/roof-comparison-20260910/render/client/screenshots/jungle-lengthwise-bamboo.png",
+    "run/jungle-showcase/roof-comparison-20260910/render/client/screenshots/jungle-roof-comparison.png"
+  ],
+  "source_policy": "Fresh copies of the user-edited Towns and Towers Jungle gallery templates. Original and derived NBT remain private under ignored run/. No source exhibits or production templates changed.",
+  "screenshots_viewed": true,
+  "decision": {
+    "status": "stripped_bamboo_approved",
+    "axis": "preserve_original_hay_axis",
+    "adoption": "tools/structure/jungle-bamboo-adoption-20260910.json",
+    "comparison_controls_preserved": true
+  }
+}

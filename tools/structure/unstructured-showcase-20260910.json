@@ -1,0 +1,1721 @@
+{
+  "schemaVersion": 1,
+  "recorded": "2026-09-10",
+  "purpose": "Walkable reference gallery of every Unstructured template, including clearly labeled modular sections. No production village selection or runtime mod installation.",
+  "status": "placed_and_verified",
+  "source": {
+    "mod": "Unstructured",
+    "authors": [
+      "Cristelknight999",
+      "Delta_Kaktus"
+    ],
+    "version": "0.5.8-FORGE",
+    "minecraftVersion": "1.19.4",
+    "officialProject": "https://www.curseforge.com/minecraft/mc-mods/unstructured",
+    "officialFile": "https://www.curseforge.com/minecraft/mc-mods/unstructured/files/4443672",
+    "sha256": "fe5aa5d8551238709bd3501c2167490df521a7c35ff91614845f719a0b4360f3",
+    "declaredLicense": "CC BY-NC-ND 4.0",
+    "distribution": "Source jar, original templates and edited display copies remain private under ignored run/. Public record contains provenance and placement metadata only. The bundled MIT license names TelepathicGrunt and is not treated as permission to redistribute the structure artwork."
+  },
+  "entry": [
+    7857.5,
+    230,
+    986.5
+  ],
+  "hubShortcut": {
+    "sign": [
+      2027,
+      230,
+      976
+    ],
+    "destination": [
+      7857.5,
+      230,
+      986.5
+    ],
+    "source_hub_unchanged_except_new_sign": true
+  },
+  "concourseStartX": 7694,
+  "wings": [
+    {
+      "letter": "UA",
+      "title": "OCEAN VILLAGE",
+      "x": 7865,
+      "endZ": 1093,
+      "rows": [
+        "UA01",
+        "UA02",
+        "UA03"
+      ]
+    },
+    {
+      "letter": "UB",
+      "title": "CAMPS & PIGLINS",
+      "x": 8057,
+      "endZ": 1062,
+      "rows": [
+        "UB01",
+        "UB02"
+      ]
+    },
+    {
+      "letter": "UC",
+      "title": "TOWERS & LANDMARKS",
+      "x": 8249,
+      "endZ": 1043,
+      "rows": [
+        "UC01"
+      ]
+    },
+    {
+      "letter": "UD",
+      "title": "DESERT GRAVES",
+      "x": 8441,
+      "endZ": 1039,
+      "rows": [
+        "UD01"
+      ]
+    },
+    {
+      "letter": "UE",
+      "title": "TEMPLE & DUNGEON",
+      "x": 8633,
+      "endZ": 1132,
+      "rows": [
+        "UE01",
+        "UE02",
+        "UE03"
+      ]
+    },
+    {
+      "letter": "UF",
+      "title": "PASSAGES & PIERS",
+      "x": 8825,
+      "endZ": 1190,
+      "rows": [
+        "UF01",
+        "UF02",
+        "UF03",
+        "UF04",
+        "UF05"
+      ]
+    }
+  ],
+  "counts": {
+    "templates": 74,
+    "rows": 15,
+    "wings": 6,
+    "families": {
+      "ocean_buildings": 15,
+      "ocean_decor": 3,
+      "trader_camp": 4,
+      "piglin_outpost": 3,
+      "landmarks": 5,
+      "desert_grave": 6,
+      "jungle_temple": 1,
+      "dungeon_rooms": 10,
+      "dungeon_passages": 11,
+      "ocean_streets": 12,
+      "endcaps": 4
+    },
+    "checkedBlocks": 46763,
+    "invisibleSupports": 109
+  },
+  "preparation": [
+    "Native Minecraft structure data migration to 1.21.1. All source block namespaces are vanilla.",
+    "Jigsaws resolved to their final block state; spawners, command blocks, structure blocks and TNT removed.",
+    "Containers emptied and loot metadata removed; source entities stripped, with four decorative item frames recreated separately.",
+    "Leaves made persistent and sign click actions removed.",
+    "Added 109 invisible supports to keep unsupported decorative details and the trap floor intact. Restored the original lava beneath the stabilized floor."
+  ],
+  "verification": {
+    "privateReport": "run/unstructured-showcase/final-verification.json",
+    "differentBlockTypes": 1,
+    "naturalStateUpdates": 345,
+    "acceptedLiveChanges": [
+      {
+        "id": "UE01.1",
+        "reason": "A working piston moved one stone brick east and water filled its former cell. The stone brick remains present at its destination.",
+        "fromLocal": [
+          21,
+          3,
+          11
+        ],
+        "toLocal": [
+          22,
+          3,
+          11
+        ]
+      }
+    ],
+    "screenshots": [
+      "run/unstructured-showcase/render/client/screenshots/unstructured-camps.png",
+      "run/unstructured-showcase/render/client/screenshots/unstructured-desert-grave.png",
+      "run/unstructured-showcase/render/client/screenshots/unstructured-dungeon-pieces.png",
+      "run/unstructured-showcase/render/client/screenshots/unstructured-jungle-temple.png",
+      "run/unstructured-showcase/render/client/screenshots/unstructured-landmarks.png",
+      "run/unstructured-showcase/render/client/screenshots/unstructured-ocean-centers.png",
+      "run/unstructured-showcase/repair-render/client/screenshots/unstructured-graveyard-details.png",
+      "run/unstructured-showcase/repair-render/client/screenshots/unstructured-stable-trap-floor.png",
+      "run/unstructured-showcase/floor-render/client/screenshots/unstructured-stable-trap-floor-interior.png"
+    ]
+  },
+  "privateCatalog": "run/unstructured-showcase/catalog.json",
+  "preservation": "Existing galleries and user-edited exhibits remain in place. Added one travel sign to an empty cell at the original gallery hub.",
+  "entries": [
+    {
+      "id": "UA01.1",
+      "label": "Meeting Point",
+      "source": "data/unstructured/structures/villages/ocean/houses/meeting_point.nbt",
+      "sourceSha256": "43c94186384f747935cb70a6fe8783eb79f2c12f53e098371307f3667ecc529a",
+      "size": [
+        15,
+        7,
+        21
+      ],
+      "origin": [
+        7872,
+        230,
+        1010
+      ],
+      "modular_piece": false,
+      "family": "ocean_buildings",
+      "privatePreparedTemplate": "run/unstructured-showcase/prepared/UA01.1.nbt",
+      "preparedSha256": "911b8b2633f96f742a34808b8825768b380d38513489cb8ebd506890984767cd",
+      "displaySupports": 0
+    },
+    {
+      "id": "UA01.2",
+      "label": "Town Center",
+      "source": "data/unstructured/structures/villages/ocean/start/town_center.nbt",
+      "sourceSha256": "b63defc461c444d6a2c73ffc4b73ced7a1d9ed4632a8f84849a52256a870ca1c",
+      "size": [
+        13,
+        8,
+        13
+      ],
+      "origin": [
+        7895,
+        230,
+        1010
+      ],
+      "modular_piece": false,
+      "family": "ocean_buildings",
+      "privatePreparedTemplate": "run/unstructured-showcase/prepared/UA01.2.nbt",
+      "preparedSha256": "e331b4cc6ee5050970a083e685922e26677ddf604384ffe9d2cf0b8d7d4af584",
+      "displaySupports": 0
+    },
+    {
+      "id": "UA01.3",
+      "label": "Armorer",
+      "source": "data/unstructured/structures/villages/ocean/houses/armorer.nbt",
+      "sourceSha256": "244e719d736afa1d7104b4d182c6b100001418a82220f4408f8cf4ca9a79340f",
+      "size": [
+        10,
+        9,
+        8
+      ],
+      "origin": [
+        7916,
+        230,
+        1010
+      ],
+      "modular_piece": false,
+      "family": "ocean_buildings",
+      "privatePreparedTemplate": "run/unstructured-showcase/prepared/UA01.3.nbt",
+      "preparedSha256": "7a28b9887ab4cc6b77f3e5e617bf287d90c20034378a83b51be3b22514578d3d",
+      "displaySupports": 0
+    },
+    {
+      "id": "UA01.4",
+      "label": "Cartographer",
+      "source": "data/unstructured/structures/villages/ocean/houses/cartographer.nbt",
+      "sourceSha256": "877903df38180712a9ea482739a2df6140295ce3f7b0aeada7d42528b0204dc5",
+      "size": [
+        7,
+        11,
+        9
+      ],
+      "origin": [
+        7934,
+        230,
+        1010
+      ],
+      "modular_piece": false,
+      "family": "ocean_buildings",
+      "privatePreparedTemplate": "run/unstructured-showcase/prepared/UA01.4.nbt",
+      "preparedSha256": "bb04e9b62fa27389b291be5327e20b9eb3e553eac47faa08f8f486201d6ab486",
+      "displaySupports": 0
+    },
+    {
+      "id": "UA01.5",
+      "label": "Fisher",
+      "source": "data/unstructured/structures/villages/ocean/houses/fisher.nbt",
+      "sourceSha256": "2bd9f79a8093ab7ce4c963c42dcfbf7b187c1698eecc380228999ec1191c18b9",
+      "size": [
+        7,
+        10,
+        13
+      ],
+      "origin": [
+        7949,
+        230,
+        1010
+      ],
+      "modular_piece": false,
+      "family": "ocean_buildings",
+      "privatePreparedTemplate": "run/unstructured-showcase/prepared/UA01.5.nbt",
+      "preparedSha256": "524ecc97451b5bb44445c8382b7537031798f22d78ce7e58323a0f0a854cc078",
+      "displaySupports": 0
+    },
+    {
+      "id": "UA01.6",
+      "label": "Jetty",
+      "source": "data/unstructured/structures/villages/ocean/houses/jetty.nbt",
+      "sourceSha256": "4428ec73c753c6e1756788a8ac00180b4151081a09647ea90a7bf7a9915fe8ba",
+      "size": [
+        5,
+        4,
+        16
+      ],
+      "origin": [
+        7964,
+        230,
+        1010
+      ],
+      "modular_piece": false,
+      "family": "ocean_buildings",
+      "privatePreparedTemplate": "run/unstructured-showcase/prepared/UA01.6.nbt",
+      "preparedSha256": "563e88654711cda44b64f56a416ee13ad1c04030d77896c57e71f60ec6d08a0b",
+      "displaySupports": 0
+    },
+    {
+      "id": "UA01.7",
+      "label": "Library 1",
+      "source": "data/unstructured/structures/villages/ocean/houses/library_1.nbt",
+      "sourceSha256": "a1eb398767073548f30c596c166a23ba38ca11d7cecfbe7bb48bb894630d2acf",
+      "size": [
+        11,
+        9,
+        9
+      ],
+      "origin": [
+        7977,
+        230,
+        1010
+      ],
+      "modular_piece": false,
+      "family": "ocean_buildings",
+      "privatePreparedTemplate": "run/unstructured-showcase/prepared/UA01.7.nbt",
+      "preparedSha256": "79fbe4bc66de1c9ee934e760ef5b2d544171dc1a72bdb4842f5976eddfe4620d",
+      "displaySupports": 0
+    },
+    {
+      "id": "UA01.8",
+      "label": "Medium House 1",
+      "source": "data/unstructured/structures/villages/ocean/houses/medium_house_1.nbt",
+      "sourceSha256": "0e830164ab0dd55df06c84fb07988901943b457f61e5057a1f573c5449c125ff",
+      "size": [
+        9,
+        9,
+        7
+      ],
+      "origin": [
+        7996,
+        230,
+        1010
+      ],
+      "modular_piece": false,
+      "family": "ocean_buildings",
+      "privatePreparedTemplate": "run/unstructured-showcase/prepared/UA01.8.nbt",
+      "preparedSha256": "104c923469c5265a1bc01f944f114dfbd7e8ceb971a95e9a27f86f7eb07379ca",
+      "displaySupports": 0
+    },
+    {
+      "id": "UA02.1",
+      "label": "Medium House 2",
+      "source": "data/unstructured/structures/villages/ocean/houses/medium_house_2.nbt",
+      "sourceSha256": "3a9fd6375561d523b4feb0805bf08508983071b1edc45d7dc8a72c1adfb977ed",
+      "size": [
+        11,
+        13,
+        11
+      ],
+      "origin": [
+        7872,
+        230,
+        1051
+      ],
+      "modular_piece": false,
+      "family": "ocean_buildings",
+      "privatePreparedTemplate": "run/unstructured-showcase/prepared/UA02.1.nbt",
+      "preparedSha256": "59e06ed432ff0cad74e3c106f9fd828037de11db55ab84e92bd9d5025deece65",
+      "displaySupports": 0
+    },
+    {
+      "id": "UA02.2",
+      "label": "Animal Pen 1",
+      "source": "data/unstructured/structures/villages/ocean/houses/ocean_animal_pen_1.nbt",
+      "sourceSha256": "f571c136ce71f320fdc3e9f50c9718f170f5158874b30a7be8e7073dd9200ad9",
+      "size": [
+        9,
+        7,
+        9
+      ],
+      "origin": [
+        7891,
+        230,
+        1051
+      ],
+      "modular_piece": false,
+      "family": "ocean_buildings",
+      "privatePreparedTemplate": "run/unstructured-showcase/prepared/UA02.2.nbt",
+      "preparedSha256": "da82378fe9af9fafb76f0039e522df5bfedd943d1d6739d6eca840576c4997b1",
+      "displaySupports": 0
+    },
+    {
+      "id": "UA02.3",
+      "label": "Large Farm 1",
+      "source": "data/unstructured/structures/villages/ocean/houses/ocean_large_farm_1.nbt",
+      "sourceSha256": "81e86068efa11dfb1ce1adaec921658ddee761264ca18d270077e5ca25f1eedc",
+      "size": [
+        9,
+        7,
+        9
+      ],
+      "origin": [
+        7908,
+        230,
+        1051
+      ],
+      "modular_piece": false,
+      "family": "ocean_buildings",
+      "privatePreparedTemplate": "run/unstructured-showcase/prepared/UA02.3.nbt",
+      "preparedSha256": "18c9af3e585de14e2e0f260d2435d0c7cd4b6227d2e398a1c6a1df6ead097dd1",
+      "displaySupports": 0
+    },
+    {
+      "id": "UA02.4",
+      "label": "Small House 1",
+      "source": "data/unstructured/structures/villages/ocean/houses/small_house_1.nbt",
+      "sourceSha256": "357d5f951e3da9f7acd0c845cf6e4c8607ba7ca548f3c328c409381f83e086c8",
+      "size": [
+        7,
+        8,
+        7
+      ],
+      "origin": [
+        7925,
+        230,
+        1051
+      ],
+      "modular_piece": false,
+      "family": "ocean_buildings",
+      "privatePreparedTemplate": "run/unstructured-showcase/prepared/UA02.4.nbt",
+      "preparedSha256": "974a0d039d4ab638f0b944b8201c4baede71312b6841317175ddef63fcd9cff8",
+      "displaySupports": 0
+    },
+    {
+      "id": "UA02.5",
+      "label": "Small House 2",
+      "source": "data/unstructured/structures/villages/ocean/houses/small_house_2.nbt",
+      "sourceSha256": "f73a6253ef5b13b0c7f2b8a01f869ad44670119bfd0bd2fc7c979c4334ab3af6",
+      "size": [
+        7,
+        10,
+        7
+      ],
+      "origin": [
+        7940,
+        230,
+        1051
+      ],
+      "modular_piece": false,
+      "family": "ocean_buildings",
+      "privatePreparedTemplate": "run/unstructured-showcase/prepared/UA02.5.nbt",
+      "preparedSha256": "0d306e3cad1444e62b97654b15f60eb215a6ff112a0e99ddb63736c2d7e8da15",
+      "displaySupports": 0
+    },
+    {
+      "id": "UA02.6",
+      "label": "Temple",
+      "source": "data/unstructured/structures/villages/ocean/houses/temple.nbt",
+      "sourceSha256": "f0149ac5372fc3d3b374fb85bffafa6abc2afdea54822e86e7300f188c921266",
+      "size": [
+        11,
+        10,
+        7
+      ],
+      "origin": [
+        7955,
+        230,
+        1051
+      ],
+      "modular_piece": false,
+      "family": "ocean_buildings",
+      "privatePreparedTemplate": "run/unstructured-showcase/prepared/UA02.6.nbt",
+      "preparedSha256": "75607e717152a0b0442be581fe9ffce32e13ef6b5eb58c18748e160e6f441c62",
+      "displaySupports": 0
+    },
+    {
+      "id": "UA02.7",
+      "label": "Weaponsmith",
+      "source": "data/unstructured/structures/villages/ocean/houses/weapon_smith.nbt",
+      "sourceSha256": "996f093bfe7297c6f2b93b525e177e1f8344938bfe465f2e86052c385e6f6f3f",
+      "size": [
+        11,
+        10,
+        7
+      ],
+      "origin": [
+        7974,
+        230,
+        1051
+      ],
+      "modular_piece": false,
+      "family": "ocean_buildings",
+      "privatePreparedTemplate": "run/unstructured-showcase/prepared/UA02.7.nbt",
+      "preparedSha256": "eff06850a3fdd41c4d39002ddd26821349d76fa762c736dd646a6fb880c2789b",
+      "displaySupports": 0
+    },
+    {
+      "id": "UA03.1",
+      "label": "Lamp 01",
+      "source": "data/unstructured/structures/villages/ocean/decor/lamp_01.nbt",
+      "sourceSha256": "1597f333d6f71b613795f78bc865d1ea566be521305de0dfa0c55839f4b1f912",
+      "size": [
+        1,
+        4,
+        1
+      ],
+      "origin": [
+        7872,
+        230,
+        1082
+      ],
+      "modular_piece": false,
+      "family": "ocean_decor",
+      "privatePreparedTemplate": "run/unstructured-showcase/prepared/UA03.1.nbt",
+      "preparedSha256": "334e3b5c163ea968804519bcf9c52386dde69f3e63c53d27219363d65c21cbee",
+      "displaySupports": 0
+    },
+    {
+      "id": "UA03.2",
+      "label": "Lamp 02",
+      "source": "data/unstructured/structures/villages/ocean/decor/lamp_02.nbt",
+      "sourceSha256": "9e5e3012514f98618415b49df038b4a355abe54b8a191da8ab51bccda2ac89fc",
+      "size": [
+        3,
+        4,
+        3
+      ],
+      "origin": [
+        7881,
+        230,
+        1082
+      ],
+      "modular_piece": false,
+      "family": "ocean_decor",
+      "privatePreparedTemplate": "run/unstructured-showcase/prepared/UA03.2.nbt",
+      "preparedSha256": "cac5e73015a853ec164239509516619b171b2663a0be9f7621d42bc840ce54d8",
+      "displaySupports": 0
+    },
+    {
+      "id": "UA03.3",
+      "label": "Lamp 03",
+      "source": "data/unstructured/structures/villages/ocean/decor/lamp_03.nbt",
+      "sourceSha256": "2b30da730be9166e09c652ee57cbb0a8bd10459449acc4863fc7ed7f29d0c76c",
+      "size": [
+        3,
+        4,
+        3
+      ],
+      "origin": [
+        7892,
+        230,
+        1082
+      ],
+      "modular_piece": false,
+      "family": "ocean_decor",
+      "privatePreparedTemplate": "run/unstructured-showcase/prepared/UA03.3.nbt",
+      "preparedSha256": "b4224fd2eb6907c7c9193f30c5845d828c3d5e8a74570d8b35c14a2a810ec464",
+      "displaySupports": 0
+    },
+    {
+      "id": "UB01.1",
+      "label": "Decoration 1 (Piece)",
+      "source": "data/unstructured/structures/trader_camp/decoration1.nbt",
+      "sourceSha256": "a26f65e0f42b298efeef30f194b3f960bbd25afc8d6bcea4b21de84a90ba28ca",
+      "size": [
+        9,
+        7,
+        8
+      ],
+      "origin": [
+        8064,
+        230,
+        1010
+      ],
+      "modular_piece": true,
+      "family": "trader_camp",
+      "privatePreparedTemplate": "run/unstructured-showcase/prepared/UB01.1.nbt",
+      "preparedSha256": "9885252fa52d7594b6bfdbde8c81b0f48c0aa0372de648a83262b7704e096a2d",
+      "displaySupports": 0
+    },
+    {
+      "id": "UB01.2",
+      "label": "Decoration 2 (Piece)",
+      "source": "data/unstructured/structures/trader_camp/decoration2.nbt",
+      "sourceSha256": "80bfc2677e234a4ef316b7a182a30800018de9ce8535f6ba4189aa29a6ccf455",
+      "size": [
+        7,
+        5,
+        10
+      ],
+      "origin": [
+        8081,
+        230,
+        1010
+      ],
+      "modular_piece": true,
+      "family": "trader_camp",
+      "privatePreparedTemplate": "run/unstructured-showcase/prepared/UB01.2.nbt",
+      "preparedSha256": "0de2d703128ca7aa3ee4cd732b17c5b4ab63924bcfbf2d372b6f9089ce86e1cb",
+      "displaySupports": 0
+    },
+    {
+      "id": "UB01.3",
+      "label": "Decoration 3 (Piece)",
+      "source": "data/unstructured/structures/trader_camp/decoration3.nbt",
+      "sourceSha256": "11195e37c2c1d6bb036659c429930d81894b2ccf27e4098b6c7eda62b65915d8",
+      "size": [
+        9,
+        7,
+        10
+      ],
+      "origin": [
+        8096,
+        230,
+        1010
+      ],
+      "modular_piece": true,
+      "family": "trader_camp",
+      "privatePreparedTemplate": "run/unstructured-showcase/prepared/UB01.3.nbt",
+      "preparedSha256": "c1d3347fb9933205db6e185ea4bd04d177ad9a11c94a8e7c49ececf92c4a6f05",
+      "displaySupports": 0
+    },
+    {
+      "id": "UB01.4",
+      "label": "Start (Piece)",
+      "source": "data/unstructured/structures/trader_camp/start.nbt",
+      "sourceSha256": "f2ace0f2dc82e6a5f76a9851c4137c2e85f43aa267ea849bdb505d8c2d89be72",
+      "size": [
+        11,
+        7,
+        11
+      ],
+      "origin": [
+        8113,
+        230,
+        1010
+      ],
+      "modular_piece": true,
+      "family": "trader_camp",
+      "privatePreparedTemplate": "run/unstructured-showcase/prepared/UB01.4.nbt",
+      "preparedSha256": "89f9e0c5bfc6262896c04f3108b26df2fad9d0c34adbd9956d3bbff65e4b9f53",
+      "displaySupports": 0
+    },
+    {
+      "id": "UB02.1",
+      "label": "Piglin Outpost Left Side (Piece)",
+      "source": "data/unstructured/structures/piglin_outpost/piglin_outpost_left_side.nbt",
+      "sourceSha256": "094e6f75a00e4518eafe29d01c5a7938adda7e64cf5d0f07702681c7091041d0",
+      "size": [
+        6,
+        11,
+        13
+      ],
+      "origin": [
+        8064,
+        230,
+        1041
+      ],
+      "modular_piece": true,
+      "family": "piglin_outpost",
+      "privatePreparedTemplate": "run/unstructured-showcase/prepared/UB02.1.nbt",
+      "preparedSha256": "de3418beccf7c446c004d2cae6f24a7c0be74b42658e47fbd2ce8872760a709d",
+      "displaySupports": 0
+    },
+    {
+      "id": "UB02.2",
+      "label": "Piglin Outpost Right Side (Piece)",
+      "source": "data/unstructured/structures/piglin_outpost/piglin_outpost_right_side.nbt",
+      "sourceSha256": "f3e92332477198116b0588ff950671a7e470a69cfe1f450b04d6e78e0fb39a87",
+      "size": [
+        7,
+        11,
+        13
+      ],
+      "origin": [
+        8078,
+        230,
+        1041
+      ],
+      "modular_piece": true,
+      "family": "piglin_outpost",
+      "privatePreparedTemplate": "run/unstructured-showcase/prepared/UB02.2.nbt",
+      "preparedSha256": "1cbfbf48d90c491c78b51e199f36a8b18aff7c9e77bfa64b281b5b79d23899c8",
+      "displaySupports": 0
+    },
+    {
+      "id": "UB02.3",
+      "label": "Piglin Outpost Right Side Golden (Piece)",
+      "source": "data/unstructured/structures/piglin_outpost/piglin_outpost_right_side_golden.nbt",
+      "sourceSha256": "69125a212aea577c15c2c5872426148179321920752820a8aa7a3349f560207d",
+      "size": [
+        8,
+        18,
+        13
+      ],
+      "origin": [
+        8093,
+        230,
+        1041
+      ],
+      "modular_piece": true,
+      "family": "piglin_outpost",
+      "privatePreparedTemplate": "run/unstructured-showcase/stable-prepared/UB02.3.nbt",
+      "preparedSha256": "f5d72d23e45ccc76799233ffb385c201201a3c1b08f413c591a557242c61754f",
+      "displaySupports": 1
+    },
+    {
+      "id": "UC01.1",
+      "label": "Evoker Tower",
+      "source": "data/unstructured/structures/evoker_tower/evoker_tower.nbt",
+      "sourceSha256": "4e99e63a0c720e36aea4235272e4bb2d26994506115819b78041a08c20f78ad3",
+      "size": [
+        15,
+        26,
+        16
+      ],
+      "origin": [
+        8256,
+        230,
+        1010
+      ],
+      "modular_piece": false,
+      "family": "landmarks",
+      "privatePreparedTemplate": "run/unstructured-showcase/prepared/UC01.1.nbt",
+      "preparedSha256": "2d28310f0d8881e844cf2efb5aa445eea0bf94a40b179b5525723548ee4c93ab",
+      "displaySupports": 0
+    },
+    {
+      "id": "UC01.2",
+      "label": "Grave Yard",
+      "source": "data/unstructured/structures/grave_yard/grave_yard.nbt",
+      "sourceSha256": "59b9e6aafbb2ab33a9323663cd0bc1a6ed1ebe5c507dc46f2557ca6691631707",
+      "size": [
+        19,
+        13,
+        21
+      ],
+      "origin": [
+        8279,
+        230,
+        1010
+      ],
+      "modular_piece": false,
+      "family": "landmarks",
+      "privatePreparedTemplate": "run/unstructured-showcase/stable-prepared/UC01.2.nbt",
+      "preparedSha256": "4ecb18da3b5abc635b75900581cc882c726a2405861aaaaf899e7bf9dfc4c520",
+      "displaySupports": 8
+    },
+    {
+      "id": "UC01.3",
+      "label": "Abandoned Pillager Base",
+      "source": "data/unstructured/structures/pillager_base/abandoned_pillager_base.nbt",
+      "sourceSha256": "723f5d6978dedabb8574e65c14799785312eb108f8a2005a6127312a29651782",
+      "size": [
+        15,
+        7,
+        16
+      ],
+      "origin": [
+        8306,
+        230,
+        1010
+      ],
+      "modular_piece": false,
+      "family": "landmarks",
+      "privatePreparedTemplate": "run/unstructured-showcase/prepared/UC01.3.nbt",
+      "preparedSha256": "52be8841a41c6c27e5dc35973071ae6fa1520475c90ca2317d931960b133c1cf",
+      "displaySupports": 0
+    },
+    {
+      "id": "UC01.4",
+      "label": "Pillager Base",
+      "source": "data/unstructured/structures/pillager_base/pillager_base.nbt",
+      "sourceSha256": "3d2b8a0b252b1f854b954d59d29dc0ff8a4b9fdb0ab688091c7a4d09ed42f815",
+      "size": [
+        25,
+        17,
+        25
+      ],
+      "origin": [
+        8329,
+        230,
+        1010
+      ],
+      "modular_piece": false,
+      "family": "landmarks",
+      "privatePreparedTemplate": "run/unstructured-showcase/prepared/UC01.4.nbt",
+      "preparedSha256": "41e85180a784372cdb094be07cfd1221e85a44a559bfa12b8a45fa097a2b3436",
+      "displaySupports": 0
+    },
+    {
+      "id": "UC01.5",
+      "label": "Skull",
+      "source": "data/unstructured/structures/skull/skull.nbt",
+      "sourceSha256": "86de2f336f6ac0154de83dea66adefdec4f9f1fe80fb6373bcd7e90fc3a43f22",
+      "size": [
+        10,
+        12,
+        5
+      ],
+      "origin": [
+        8362,
+        230,
+        1010
+      ],
+      "modular_piece": false,
+      "family": "landmarks",
+      "privatePreparedTemplate": "run/unstructured-showcase/prepared/UC01.5.nbt",
+      "preparedSha256": "a2510b38209f8f3dfedd451961adae4e2d051d040a59bb7e7bb2f47dd4e2a2f8",
+      "displaySupports": 0
+    },
+    {
+      "id": "UD01.1",
+      "label": "Desert Grave (Piece)",
+      "source": "data/unstructured/structures/desert_grave/desert_grave.nbt",
+      "sourceSha256": "57ab0f558f1c2f83ad348b36ab14c6a7c3e9f7c5b70c0fdd7b57074a7823660e",
+      "size": [
+        19,
+        10,
+        21
+      ],
+      "origin": [
+        8448,
+        230,
+        1010
+      ],
+      "modular_piece": true,
+      "family": "desert_grave",
+      "privatePreparedTemplate": "run/unstructured-showcase/prepared/UD01.1.nbt",
+      "preparedSha256": "d0b40e75ec40f2dcc9a6b0cded44a0ae5d1ef13d1f076280212888ddb01a4682",
+      "displaySupports": 0
+    },
+    {
+      "id": "UD01.2",
+      "label": "Desert Grave Dungeon 1 (Piece)",
+      "source": "data/unstructured/structures/desert_grave/desert_grave_dungeon_1.nbt",
+      "sourceSha256": "5f7d06b77f7033c433780bfba5a27b09ec29d9e885aeb9f222c8c965ba8b9189",
+      "size": [
+        17,
+        7,
+        17
+      ],
+      "origin": [
+        8475,
+        230,
+        1010
+      ],
+      "modular_piece": true,
+      "family": "desert_grave",
+      "privatePreparedTemplate": "run/unstructured-showcase/prepared/UD01.2.nbt",
+      "preparedSha256": "3947e195ae455f0f8e025ce4aa86039ab2186b43e1a61c6de90510624316bb2d",
+      "displaySupports": 0
+    },
+    {
+      "id": "UD01.3",
+      "label": "Desert Grave Dungeon 2 (Piece)",
+      "source": "data/unstructured/structures/desert_grave/desert_grave_dungeon_2.nbt",
+      "sourceSha256": "f397a671bd03136ab7b22f057be246c15b3ec47c3b1d805da854cd1dbf21c819",
+      "size": [
+        17,
+        12,
+        17
+      ],
+      "origin": [
+        8500,
+        230,
+        1010
+      ],
+      "modular_piece": true,
+      "family": "desert_grave",
+      "privatePreparedTemplate": "run/unstructured-showcase/prepared/UD01.3.nbt",
+      "preparedSha256": "69f0fea4199c14f730804a76ef78e84c5caf6493dea096127dc5ba3b7f0d739f",
+      "displaySupports": 0
+    },
+    {
+      "id": "UD01.4",
+      "label": "Desert Grave Dungeon 3 (Piece)",
+      "source": "data/unstructured/structures/desert_grave/desert_grave_dungeon_3.nbt",
+      "sourceSha256": "2786d212b3b243ee8d305498f35d9728f19d46e227a223be3d6eee0e4defc9ed",
+      "size": [
+        17,
+        8,
+        17
+      ],
+      "origin": [
+        8525,
+        230,
+        1010
+      ],
+      "modular_piece": true,
+      "family": "desert_grave",
+      "privatePreparedTemplate": "run/unstructured-showcase/prepared/UD01.4.nbt",
+      "preparedSha256": "03a81a15b2cb6051c37294021b416cdc97a6eb12646ad1c4bf1f46aa15602057",
+      "displaySupports": 0
+    },
+    {
+      "id": "UD01.5",
+      "label": "Desert Grave Room 1 (Piece)",
+      "source": "data/unstructured/structures/desert_grave/desert_grave_room1.nbt",
+      "sourceSha256": "7003f7ef4e88827c684ee86f10b3679e6ece4e39786988dc3f99f318647ef55c",
+      "size": [
+        17,
+        18,
+        17
+      ],
+      "origin": [
+        8550,
+        230,
+        1010
+      ],
+      "modular_piece": true,
+      "family": "desert_grave",
+      "privatePreparedTemplate": "run/unstructured-showcase/prepared/UD01.5.nbt",
+      "preparedSha256": "e800c8c8cad2218e1f56acc50b108582834856a13b72fba689f68180a92d80f9",
+      "displaySupports": 0
+    },
+    {
+      "id": "UD01.6",
+      "label": "Desert Grave Room 2 (Piece)",
+      "source": "data/unstructured/structures/desert_grave/desert_grave_room2.nbt",
+      "sourceSha256": "782f83b70d9b972df8b3111408a58d6a284d9f1e54b1d2daf4752de212bb5fa1",
+      "size": [
+        15,
+        38,
+        15
+      ],
+      "origin": [
+        8575,
+        230,
+        1010
+      ],
+      "modular_piece": true,
+      "family": "desert_grave",
+      "privatePreparedTemplate": "run/unstructured-showcase/prepared/UD01.6.nbt",
+      "preparedSha256": "56ac7089c8a3e2822a3d8e391a55e340ac268aeed662dc03dc15fca0299bb5e7",
+      "displaySupports": 0
+    },
+    {
+      "id": "UE01.1",
+      "label": "Temple Dungeon",
+      "source": "data/unstructured/structures/temple_dungeon.nbt",
+      "sourceSha256": "cf75a4ccf40c62d524086189df5b557f3dcb4f8c91a49891342cfd209c64939c",
+      "size": [
+        34,
+        22,
+        34
+      ],
+      "origin": [
+        8640,
+        230,
+        1010
+      ],
+      "modular_piece": false,
+      "family": "jungle_temple",
+      "privatePreparedTemplate": "run/unstructured-showcase/prepared/UE01.1.nbt",
+      "preparedSha256": "d7e76a71b8e6bbcc1d43b03db00152e72184ababbec99a0c4041654fdbb73d0c",
+      "displaySupports": 0
+    },
+    {
+      "id": "UE02.1",
+      "label": "Ancient Vault (Piece)",
+      "source": "data/unstructured/structures/ancient_vault.nbt",
+      "sourceSha256": "95b6c4f46072137425401438ae5669fd69080cff11ab4f7e02787b1899a48acd",
+      "size": [
+        28,
+        11,
+        14
+      ],
+      "origin": [
+        8640,
+        230,
+        1064
+      ],
+      "modular_piece": true,
+      "family": "dungeon_rooms",
+      "privatePreparedTemplate": "run/unstructured-showcase/prepared/UE02.1.nbt",
+      "preparedSha256": "3a87879ae30609b3edfffeee4228a80340bfd84acdbd128fd9e73b65ed20315a",
+      "displaySupports": 0
+    },
+    {
+      "id": "UE02.2",
+      "label": "Developer Room (Piece)",
+      "source": "data/unstructured/structures/developer_room.nbt",
+      "sourceSha256": "38412cbf66422f085d34bda47b986f41c376df5ea4e6e42453b2033cb658ccc3",
+      "size": [
+        8,
+        5,
+        8
+      ],
+      "origin": [
+        8676,
+        230,
+        1064
+      ],
+      "modular_piece": true,
+      "family": "dungeon_rooms",
+      "privatePreparedTemplate": "run/unstructured-showcase/prepared/UE02.2.nbt",
+      "preparedSha256": "55353243a463aa007e93e8c471e5c5a30db82f20ce4f8cc5a9f495e64d452839",
+      "displaySupports": 0
+    },
+    {
+      "id": "UE02.3",
+      "label": "Enchanting Room (Piece)",
+      "source": "data/unstructured/structures/enchanting_room.nbt",
+      "sourceSha256": "4f05125bc82b9ec850b4c1b975afbf7836015efb91cb15ac42e2ab16efea0907",
+      "size": [
+        9,
+        6,
+        9
+      ],
+      "origin": [
+        8692,
+        230,
+        1064
+      ],
+      "modular_piece": true,
+      "family": "dungeon_rooms",
+      "privatePreparedTemplate": "run/unstructured-showcase/prepared/UE02.3.nbt",
+      "preparedSha256": "d42a377e6e0d58c9c99e1f87c912027c739236a327d7d9117ca1c02fb00c3bf7",
+      "displaySupports": 0
+    },
+    {
+      "id": "UE02.4",
+      "label": "Middle Room (Piece)",
+      "source": "data/unstructured/structures/middle_room.nbt",
+      "sourceSha256": "9f738bfe943d9c3ab29e8edafc562c4b5ecbeab4de134cd6bcc64ee52b32667a",
+      "size": [
+        14,
+        30,
+        14
+      ],
+      "origin": [
+        8709,
+        230,
+        1064
+      ],
+      "modular_piece": true,
+      "family": "dungeon_rooms",
+      "privatePreparedTemplate": "run/unstructured-showcase/prepared/UE02.4.nbt",
+      "preparedSha256": "bcc24842a081706a6c092aa30976b3a83b81ef46e40a99d38aa8265fcb44b28e",
+      "displaySupports": 0
+    },
+    {
+      "id": "UE02.5",
+      "label": "Parkour Room (Piece)",
+      "source": "data/unstructured/structures/parkour_room.nbt",
+      "sourceSha256": "a1385530301ec7f1624dd94f30ab4da08d10430fceeff11755d611de14b9aae2",
+      "size": [
+        18,
+        9,
+        18
+      ],
+      "origin": [
+        8731,
+        230,
+        1064
+      ],
+      "modular_piece": true,
+      "family": "dungeon_rooms",
+      "privatePreparedTemplate": "run/unstructured-showcase/stable-prepared/UE02.5.nbt",
+      "preparedSha256": "b20246b06b5710a1efc42f2315a7ce2679414e0a4aaf543256a30bda49668171",
+      "displaySupports": 0
+    },
+    {
+      "id": "UE02.6",
+      "label": "Portal Room (Piece)",
+      "source": "data/unstructured/structures/portal_room.nbt",
+      "sourceSha256": "4146f13b62db0097c14b503f2e4a978a4d289c96c3d7856bfff4cf70d69b0321",
+      "size": [
+        14,
+        10,
+        14
+      ],
+      "origin": [
+        8757,
+        230,
+        1064
+      ],
+      "modular_piece": true,
+      "family": "dungeon_rooms",
+      "privatePreparedTemplate": "run/unstructured-showcase/prepared/UE02.6.nbt",
+      "preparedSha256": "89e354643e7f8af85d0a5ecebe02145d0d9e7150030516667739b75817e1fb5e",
+      "displaySupports": 0
+    },
+    {
+      "id": "UE03.1",
+      "label": "Silverfish Room (Piece)",
+      "source": "data/unstructured/structures/silverfish_room.nbt",
+      "sourceSha256": "c63ed205351f7916e2efa4c293aa8d713ded94063b4195361b3e84a39a58aa10",
+      "size": [
+        12,
+        9,
+        12
+      ],
+      "origin": [
+        8640,
+        230,
+        1102
+      ],
+      "modular_piece": true,
+      "family": "dungeon_rooms",
+      "privatePreparedTemplate": "run/unstructured-showcase/prepared/UE03.1.nbt",
+      "preparedSha256": "a5bacc4e3c8fbd5beec9ce88398934dbf42f339f3cac2eaec03ae68b6805edec",
+      "displaySupports": 0
+    },
+    {
+      "id": "UE03.2",
+      "label": "Temple Room (Piece)",
+      "source": "data/unstructured/structures/temple_room.nbt",
+      "sourceSha256": "7035ef9cea80d35c6f7eda0dd931b7fe0acf97fb01e16def4b69602e6187b392",
+      "size": [
+        15,
+        29,
+        20
+      ],
+      "origin": [
+        8660,
+        230,
+        1102
+      ],
+      "modular_piece": true,
+      "family": "dungeon_rooms",
+      "privatePreparedTemplate": "run/unstructured-showcase/prepared/UE03.2.nbt",
+      "preparedSha256": "743f38d13bab7dbee64f084ee69574a3564529951d12d257dc4f97b02a48a2c8",
+      "displaySupports": 0
+    },
+    {
+      "id": "UE03.3",
+      "label": "Tnt Room (Piece)",
+      "source": "data/unstructured/structures/tnt_room.nbt",
+      "sourceSha256": "d0b960ac9d1b4ae3a7545030c98beb721531ee3772bb3aa432d6662ba98a284a",
+      "size": [
+        12,
+        19,
+        22
+      ],
+      "origin": [
+        8683,
+        230,
+        1102
+      ],
+      "modular_piece": true,
+      "family": "dungeon_rooms",
+      "privatePreparedTemplate": "run/unstructured-showcase/stable-prepared/UE03.3.nbt",
+      "preparedSha256": "acd1b50b53460f36bd0c3bfd90cf523387da594920525711b4380138673df0df",
+      "displaySupports": 100
+    },
+    {
+      "id": "UE03.4",
+      "label": "Wither Room (Piece)",
+      "source": "data/unstructured/structures/wither_room.nbt",
+      "sourceSha256": "b9bc7536e1ee0d58c5fe52d8cac55a7213a4b2d34033227cb8e1d63f6cb466b2",
+      "size": [
+        15,
+        10,
+        15
+      ],
+      "origin": [
+        8703,
+        230,
+        1102
+      ],
+      "modular_piece": true,
+      "family": "dungeon_rooms",
+      "privatePreparedTemplate": "run/unstructured-showcase/prepared/UE03.4.nbt",
+      "preparedSha256": "ff2ef9976e0b19818f3a9a9db8aaa9234a04fb847dbdd8c3c062a5649efc8af7",
+      "displaySupports": 0
+    },
+    {
+      "id": "UF01.1",
+      "label": "Timber Three-Way Passage (Piece)",
+      "source": "data/unstructured/structures/3ways.nbt",
+      "sourceSha256": "256ec1ec4c0a8015e0cc771c7b6a7b8527af37e42c35879976dc9530ca147ae8",
+      "size": [
+        13,
+        5,
+        20
+      ],
+      "origin": [
+        8832,
+        230,
+        1010
+      ],
+      "modular_piece": true,
+      "family": "dungeon_passages",
+      "privatePreparedTemplate": "run/unstructured-showcase/prepared/UF01.1.nbt",
+      "preparedSha256": "6352bc5aedb9f2b4037ed5541b06d4c21e7c0b63f0ff8d4bf4103165c631d8c0",
+      "displaySupports": 0
+    },
+    {
+      "id": "UF01.2",
+      "label": "Deepslate Three-Way Passage (Piece)",
+      "source": "data/unstructured/structures/3waysd.nbt",
+      "sourceSha256": "0bee4d5219db2df8722a0090ca39b28b5533397fd912889f0c5b733251ebada3",
+      "size": [
+        18,
+        7,
+        30
+      ],
+      "origin": [
+        8853,
+        230,
+        1010
+      ],
+      "modular_piece": true,
+      "family": "dungeon_passages",
+      "privatePreparedTemplate": "run/unstructured-showcase/prepared/UF01.2.nbt",
+      "preparedSha256": "fd127500ddea37c2435043f23f0425f9901e14a584228bf1c87adb03699eef5c",
+      "displaySupports": 0
+    },
+    {
+      "id": "UF01.3",
+      "label": "Deepslate Four-Way Passage (Piece)",
+      "source": "data/unstructured/structures/4ways.nbt",
+      "sourceSha256": "44cf1fca3e85954aa5e3dbd2572759999e0cc4fd90c0f1cc62627721754f7d95",
+      "size": [
+        30,
+        7,
+        30
+      ],
+      "origin": [
+        8879,
+        230,
+        1010
+      ],
+      "modular_piece": true,
+      "family": "dungeon_passages",
+      "privatePreparedTemplate": "run/unstructured-showcase/prepared/UF01.3.nbt",
+      "preparedSha256": "01fe24a5369246aa6b5407be525c4ccb711451a5856e446cfc470e73ce6ca806",
+      "displaySupports": 0
+    },
+    {
+      "id": "UF01.4",
+      "label": "Hallway 1 (Piece)",
+      "source": "data/unstructured/structures/hallway1.nbt",
+      "sourceSha256": "fafdbfc94e71368f579cf510ce224857483d9c16f8368516c733c1084fa1fa87",
+      "size": [
+        20,
+        12,
+        16
+      ],
+      "origin": [
+        8917,
+        230,
+        1010
+      ],
+      "modular_piece": true,
+      "family": "dungeon_passages",
+      "privatePreparedTemplate": "run/unstructured-showcase/prepared/UF01.4.nbt",
+      "preparedSha256": "77cd2cce26b1139ab533b0503c70f3d58da92ba2aefce6666a8bda6142493cba",
+      "displaySupports": 0
+    },
+    {
+      "id": "UF01.5",
+      "label": "Hallway 2 (Piece)",
+      "source": "data/unstructured/structures/hallway2.nbt",
+      "sourceSha256": "85afe7eb7911bfe59f2224e62168b1d5171d5b6607571deb1cacc43ef3999d70",
+      "size": [
+        10,
+        7,
+        12
+      ],
+      "origin": [
+        8945,
+        230,
+        1010
+      ],
+      "modular_piece": true,
+      "family": "dungeon_passages",
+      "privatePreparedTemplate": "run/unstructured-showcase/prepared/UF01.5.nbt",
+      "preparedSha256": "64b905514b1ab07828a6a9af585f842d9c524b05342e52fb340dcf4534a531d4",
+      "displaySupports": 0
+    },
+    {
+      "id": "UF01.6",
+      "label": "Hallway 3 (Piece)",
+      "source": "data/unstructured/structures/hallway3.nbt",
+      "sourceSha256": "ab357f19a2540abe883e6aaf89c21c4041f538a586e76d1b3762fac28a96cd26",
+      "size": [
+        13,
+        5,
+        13
+      ],
+      "origin": [
+        8963,
+        230,
+        1010
+      ],
+      "modular_piece": true,
+      "family": "dungeon_passages",
+      "privatePreparedTemplate": "run/unstructured-showcase/prepared/UF01.6.nbt",
+      "preparedSha256": "78c7469bdcd2d0a4321b083715674635c5e6a1391d7e9923c18554923596dd03",
+      "displaySupports": 0
+    },
+    {
+      "id": "UF02.1",
+      "label": "Hallway 4 (Piece)",
+      "source": "data/unstructured/structures/hallway4.nbt",
+      "sourceSha256": "6d99ed8098e1b000d541a0295546c7723db698822d0376c4209c60d7bccbb9d0",
+      "size": [
+        6,
+        5,
+        16
+      ],
+      "origin": [
+        8832,
+        230,
+        1060
+      ],
+      "modular_piece": true,
+      "family": "dungeon_passages",
+      "privatePreparedTemplate": "run/unstructured-showcase/prepared/UF02.1.nbt",
+      "preparedSha256": "d09e5831909e772e7760f4790eac234208bc7fcaacf0870ac5ef3db31b9db2d0",
+      "displaySupports": 0
+    },
+    {
+      "id": "UF02.2",
+      "label": "Hallway 5 (Piece)",
+      "source": "data/unstructured/structures/hallway5.nbt",
+      "sourceSha256": "92f4da1ba61877b3a54596bd109477c187532da0e7b0915764caf9b3e13443d3",
+      "size": [
+        6,
+        7,
+        12
+      ],
+      "origin": [
+        8846,
+        230,
+        1060
+      ],
+      "modular_piece": true,
+      "family": "dungeon_passages",
+      "privatePreparedTemplate": "run/unstructured-showcase/prepared/UF02.2.nbt",
+      "preparedSha256": "4539b4847cc75a7ec423fc4fb6a00bbed059fe2ece128f0944aa48e97e4d976b",
+      "displaySupports": 0
+    },
+    {
+      "id": "UF02.3",
+      "label": "Hallway 6 (Piece)",
+      "source": "data/unstructured/structures/hallway6.nbt",
+      "sourceSha256": "9800fecb6ce8dbd2bae2ea5de1682fca4a1d322b4ef0a4b105024ba9de9699da",
+      "size": [
+        18,
+        7,
+        18
+      ],
+      "origin": [
+        8860,
+        230,
+        1060
+      ],
+      "modular_piece": true,
+      "family": "dungeon_passages",
+      "privatePreparedTemplate": "run/unstructured-showcase/prepared/UF02.3.nbt",
+      "preparedSha256": "09d0e1d4125150a4b9f21754f190dae1403cd864ac6992c369351719d11cb0c2",
+      "displaySupports": 0
+    },
+    {
+      "id": "UF02.4",
+      "label": "Staircase (Piece)",
+      "source": "data/unstructured/structures/staircase.nbt",
+      "sourceSha256": "e8a0db8a792f4d7c518bd08191a0120f2b882169b791020d392c872e6ddfcc74",
+      "size": [
+        6,
+        12,
+        9
+      ],
+      "origin": [
+        8886,
+        230,
+        1060
+      ],
+      "modular_piece": true,
+      "family": "dungeon_passages",
+      "privatePreparedTemplate": "run/unstructured-showcase/prepared/UF02.4.nbt",
+      "preparedSha256": "006db73e7325a75d41b4d68eb5148bd40626370669fab8dcb75e753504cffddf",
+      "displaySupports": 0
+    },
+    {
+      "id": "UF02.5",
+      "label": "Water Elevator (Piece)",
+      "source": "data/unstructured/structures/water_elevator.nbt",
+      "sourceSha256": "de47da5c7151feb0a5515761f6ec7f40108afcdc1dc723558f7c83c42bbec099",
+      "size": [
+        5,
+        13,
+        4
+      ],
+      "origin": [
+        8900,
+        230,
+        1060
+      ],
+      "modular_piece": true,
+      "family": "dungeon_passages",
+      "privatePreparedTemplate": "run/unstructured-showcase/prepared/UF02.5.nbt",
+      "preparedSha256": "907faeac54f268642a412819b6e6e5e2b517e0b7291751a01594b2a95dde6180",
+      "displaySupports": 0
+    },
+    {
+      "id": "UF03.1",
+      "label": "Corner 01 (Piece)",
+      "source": "data/unstructured/structures/villages/ocean/streets/corner_01.nbt",
+      "sourceSha256": "8f460ced6751f15a431bba1c03e9564f7ebf4930a1c43922a72b9cc6a230fe0a",
+      "size": [
+        7,
+        33,
+        15
+      ],
+      "origin": [
+        8832,
+        230,
+        1098
+      ],
+      "modular_piece": true,
+      "family": "ocean_streets",
+      "privatePreparedTemplate": "run/unstructured-showcase/prepared/UF03.1.nbt",
+      "preparedSha256": "430b0b3d004c6e7df701536efbe4b061014b95bf0f26e1aa79c58b0d7441ac1a",
+      "displaySupports": 0
+    },
+    {
+      "id": "UF03.2",
+      "label": "Corner 02 (Piece)",
+      "source": "data/unstructured/structures/villages/ocean/streets/corner_02.nbt",
+      "sourceSha256": "5f415a24142d09c261aa7f1611a8f427c183e305aca4417d3048f9f73d809330",
+      "size": [
+        6,
+        31,
+        6
+      ],
+      "origin": [
+        8847,
+        230,
+        1098
+      ],
+      "modular_piece": true,
+      "family": "ocean_streets",
+      "privatePreparedTemplate": "run/unstructured-showcase/prepared/UF03.2.nbt",
+      "preparedSha256": "cfdcf2cd2507d2dadc44a549c46c34fe4673039f0421663f16189bd006022df7",
+      "displaySupports": 0
+    },
+    {
+      "id": "UF03.3",
+      "label": "Corner 03 (Piece)",
+      "source": "data/unstructured/structures/villages/ocean/streets/corner_03.nbt",
+      "sourceSha256": "4ba6584f045b6c9bc65747c319d2ea981818b2e92d3dde50d32d2e842cf089f7",
+      "size": [
+        4,
+        32,
+        4
+      ],
+      "origin": [
+        8861,
+        230,
+        1098
+      ],
+      "modular_piece": true,
+      "family": "ocean_streets",
+      "privatePreparedTemplate": "run/unstructured-showcase/prepared/UF03.3.nbt",
+      "preparedSha256": "b59170aba5bf73918b2346b41f5757d4d44b77af6b6bae668b9993e18c4a187f",
+      "displaySupports": 0
+    },
+    {
+      "id": "UF03.4",
+      "label": "Crossroad 01 (Piece)",
+      "source": "data/unstructured/structures/villages/ocean/streets/crossroad_01.nbt",
+      "sourceSha256": "c53524c4a4ec19606bf7ea74850f8b33c20074b417bba4764ccd12fe5426d500",
+      "size": [
+        19,
+        33,
+        16
+      ],
+      "origin": [
+        8873,
+        230,
+        1098
+      ],
+      "modular_piece": true,
+      "family": "ocean_streets",
+      "privatePreparedTemplate": "run/unstructured-showcase/prepared/UF03.4.nbt",
+      "preparedSha256": "1fb19e22c0b86adfb7c13ae3e1346e86b1734fc531b6c94396ff3a5edb3b9136",
+      "displaySupports": 0
+    },
+    {
+      "id": "UF03.5",
+      "label": "Crossroad 02 (Piece)",
+      "source": "data/unstructured/structures/villages/ocean/streets/crossroad_02.nbt",
+      "sourceSha256": "4fe3df60027f693e81941da759ea27915693a72d201027310637628a8134a8d6",
+      "size": [
+        11,
+        34,
+        11
+      ],
+      "origin": [
+        8900,
+        230,
+        1098
+      ],
+      "modular_piece": true,
+      "family": "ocean_streets",
+      "privatePreparedTemplate": "run/unstructured-showcase/prepared/UF03.5.nbt",
+      "preparedSha256": "048d3bfb73082183acbd9bfcd13910c226a6c06e57c1449a4a7bddc76af3afd9",
+      "displaySupports": 0
+    },
+    {
+      "id": "UF03.6",
+      "label": "Crossroad 03 (Piece)",
+      "source": "data/unstructured/structures/villages/ocean/streets/crossroad_03.nbt",
+      "sourceSha256": "8656996b441b841e674f383c233944d9d943aaf91f652509c02b3930ae92381d",
+      "size": [
+        5,
+        33,
+        5
+      ],
+      "origin": [
+        8919,
+        230,
+        1098
+      ],
+      "modular_piece": true,
+      "family": "ocean_streets",
+      "privatePreparedTemplate": "run/unstructured-showcase/prepared/UF03.6.nbt",
+      "preparedSha256": "dc5c967e014879445c68f0ceee1eec3589dc62d04c54fe878052794d2eec426d",
+      "displaySupports": 0
+    },
+    {
+      "id": "UF03.7",
+      "label": "Square 01 (Piece)",
+      "source": "data/unstructured/structures/villages/ocean/streets/square_01.nbt",
+      "sourceSha256": "ccf3de78c1d4eab01d25952992fb79f562fc2f277a4f1b071ac34e7940779fa2",
+      "size": [
+        13,
+        32,
+        16
+      ],
+      "origin": [
+        8932,
+        230,
+        1098
+      ],
+      "modular_piece": true,
+      "family": "ocean_streets",
+      "privatePreparedTemplate": "run/unstructured-showcase/prepared/UF03.7.nbt",
+      "preparedSha256": "7f26d8b939d811263d96ece1df529e38eeaa8dd08e8b6e287de84110b5c687fe",
+      "displaySupports": 0
+    },
+    {
+      "id": "UF03.8",
+      "label": "Square 02 (Piece)",
+      "source": "data/unstructured/structures/villages/ocean/streets/square_02.nbt",
+      "sourceSha256": "e480b50226fa098ba6ad19de464b8412ce2fc11ce0e230be99c103e84ef5ac25",
+      "size": [
+        16,
+        33,
+        19
+      ],
+      "origin": [
+        8953,
+        230,
+        1098
+      ],
+      "modular_piece": true,
+      "family": "ocean_streets",
+      "privatePreparedTemplate": "run/unstructured-showcase/prepared/UF03.8.nbt",
+      "preparedSha256": "cfdfb88b8727effd736922958455e5516e69629a6ceda6bc1b6f02a528520910",
+      "displaySupports": 0
+    },
+    {
+      "id": "UF04.1",
+      "label": "Straight 01 (Piece)",
+      "source": "data/unstructured/structures/villages/ocean/streets/straight_01.nbt",
+      "sourceSha256": "6a694e637143476add60b6e0f21a4e672acef0343346e5af2aa27ea6a6dc70a6",
+      "size": [
+        15,
+        32,
+        3
+      ],
+      "origin": [
+        8832,
+        230,
+        1137
+      ],
+      "modular_piece": true,
+      "family": "ocean_streets",
+      "privatePreparedTemplate": "run/unstructured-showcase/prepared/UF04.1.nbt",
+      "preparedSha256": "5a5ec725fbbc2e45dc3caa9c464d72042ab934161b4cb28891b92da2e239e76a",
+      "displaySupports": 0
+    },
+    {
+      "id": "UF04.2",
+      "label": "Straight 02 (Piece)",
+      "source": "data/unstructured/structures/villages/ocean/streets/straight_02.nbt",
+      "sourceSha256": "85930b4e1bb2504ea94408cfa9debf915d223324e6310941df8bbe3027259be0",
+      "size": [
+        15,
+        33,
+        19
+      ],
+      "origin": [
+        8855,
+        230,
+        1137
+      ],
+      "modular_piece": true,
+      "family": "ocean_streets",
+      "privatePreparedTemplate": "run/unstructured-showcase/prepared/UF04.2.nbt",
+      "preparedSha256": "731352da111779218d0999b25a63fe143fd532a50910e06ec98eba6703ed497b",
+      "displaySupports": 0
+    },
+    {
+      "id": "UF04.3",
+      "label": "Straight 03 (Piece)",
+      "source": "data/unstructured/structures/villages/ocean/streets/straight_03.nbt",
+      "sourceSha256": "b27ba450d62e6b9aaa2d0c70e633c39e6ff22d52fba776290b2781fb1e7523d0",
+      "size": [
+        4,
+        32,
+        3
+      ],
+      "origin": [
+        8878,
+        230,
+        1137
+      ],
+      "modular_piece": true,
+      "family": "ocean_streets",
+      "privatePreparedTemplate": "run/unstructured-showcase/prepared/UF04.3.nbt",
+      "preparedSha256": "b49055081345bd510b184f640747d584de80b17c4d8cbb73f3c125b6990fc882",
+      "displaySupports": 0
+    },
+    {
+      "id": "UF04.4",
+      "label": "Straight 04 (Piece)",
+      "source": "data/unstructured/structures/villages/ocean/streets/straight_04.nbt",
+      "sourceSha256": "4314453b4374e2dffd78c97f87a9ea78dc14bade894d5566751e6d7fdb038105",
+      "size": [
+        36,
+        34,
+        21
+      ],
+      "origin": [
+        8890,
+        230,
+        1137
+      ],
+      "modular_piece": true,
+      "family": "ocean_streets",
+      "privatePreparedTemplate": "run/unstructured-showcase/prepared/UF04.4.nbt",
+      "preparedSha256": "f9c748053b3fbcc069f233e47bc5774abfc10919cb4480741e4dbbfc38868c23",
+      "displaySupports": 0
+    },
+    {
+      "id": "UF05.1",
+      "label": "Terminator 1 (Piece)",
+      "source": "data/unstructured/structures/temple_dungeon/terminators/terminator_1.nbt",
+      "sourceSha256": "5a766cd69b1c04c29fb35cbcea0f6fe999069563caada73da138a06c40eed36c",
+      "size": [
+        4,
+        5,
+        2
+      ],
+      "origin": [
+        8832,
+        230,
+        1178
+      ],
+      "modular_piece": true,
+      "family": "endcaps",
+      "privatePreparedTemplate": "run/unstructured-showcase/prepared/UF05.1.nbt",
+      "preparedSha256": "6b7093b4e3cd046e41e9b0efa96e720e1021d003b56c5f4ef5cbbc28ddeb26f9",
+      "displaySupports": 0
+    },
+    {
+      "id": "UF05.2",
+      "label": "Terminator 0 (Piece)",
+      "source": "data/unstructured/structures/villages/ocean/terminators/terminator_0.nbt",
+      "sourceSha256": "e6336c735d47d0f04a3ec818f133366395814e8ff97df2b7f8016d3ec8ccb167",
+      "size": [
+        3,
+        2,
+        3
+      ],
+      "origin": [
+        8844,
+        230,
+        1178
+      ],
+      "modular_piece": true,
+      "family": "endcaps",
+      "privatePreparedTemplate": "run/unstructured-showcase/prepared/UF05.2.nbt",
+      "preparedSha256": "b19ef6dee6e5560c5057e76e3d1d9277e8905e204d2144e50231aca9ea5da081",
+      "displaySupports": 0
+    },
+    {
+      "id": "UF05.3",
+      "label": "Terminator 1 (Piece)",
+      "source": "data/unstructured/structures/villages/ocean/terminators/terminator_1.nbt",
+      "sourceSha256": "f320395201d0a4ab0339ef3235afece0789ada56e39fdd92672e1574acf6acb2",
+      "size": [
+        3,
+        4,
+        4
+      ],
+      "origin": [
+        8855,
+        230,
+        1178
+      ],
+      "modular_piece": true,
+      "family": "endcaps",
+      "privatePreparedTemplate": "run/unstructured-showcase/prepared/UF05.3.nbt",
+      "preparedSha256": "689fdc54e706d09ac48dd86db4ce4df2de617984e7dbe9221fd16c6ff4684a83",
+      "displaySupports": 0
+    },
+    {
+      "id": "UF05.4",
+      "label": "Terminator 2 (Piece)",
+      "source": "data/unstructured/structures/villages/ocean/terminators/terminator_2.nbt",
+      "sourceSha256": "8d1d936853d7c7e97b29084afc69a0b0cd5dd510dfe3cac3ef02cc5a980aa11b",
+      "size": [
+        3,
+        2,
+        3
+      ],
+      "origin": [
+        8866,
+        230,
+        1178
+      ],
+      "modular_piece": true,
+      "family": "endcaps",
+      "privatePreparedTemplate": "run/unstructured-showcase/prepared/UF05.4.nbt",
+      "preparedSha256": "f16a08bb4cba9f34c10bde0e3cdd17fe5815a7b642514737abec4d82e24ef48a",
+      "displaySupports": 0
+    }
+  ]
+}
