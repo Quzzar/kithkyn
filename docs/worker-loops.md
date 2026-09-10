@@ -555,6 +555,13 @@ bedtime restock leaves the pack short and the village stores hold bones, the far
 brain is offered a grind through the shared `CraftOffer` press
 ([llm-brain.md](llm-brain.md)), so skeleton drops end up as crops too.
 
+The lumberjack runs the same step on the lodge's own composter with a `TIMBER` diet: every
+felled canopy drops more saplings than one stand needs, and the pack's saplings past the four
+kept for replanting go into the composter, whose bone meal `BonemealStep` then spends on the
+stand. A lodge feeds its own tree; the bedtime restock from the stores is the top-up, not the
+source.
+
+
 ## The idle camper tends the fire
 
 Idle residents get the same treatment as the farmer's idle hands, on the campfire model rather

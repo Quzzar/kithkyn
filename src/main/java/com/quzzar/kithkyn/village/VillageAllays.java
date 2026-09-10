@@ -15,6 +15,7 @@ import com.google.common.collect.ImmutableList;
 import com.quzzar.kithkyn.Kithkyn;
 import com.quzzar.kithkyn.chat.VillagerConversation;
 import com.quzzar.kithkyn.entities.RealPerson;
+import com.quzzar.kithkyn.entities.ai.AllayPathNavigation;
 import com.quzzar.kithkyn.entities.ai.behavior.AllayQuartermasterBehavior;
 import com.quzzar.kithkyn.village.buildings.Building;
 
@@ -22,7 +23,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.ai.navigation.FlyingPathNavigation;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.animal.allay.Allay;
 import net.minecraft.world.entity.animal.allay.AllayAi;
@@ -139,6 +139,24 @@ public final class VillageAllays {
     }
     attach(allay);
     remember(level, village, allay);
+    if (recruiter != null) {
+      // The keeper wears a fallback name from here on; the quartermaster then names
+      // it themselves, the way an owner names a pet, and the fallback stays only
+      // when the talk lands nothing.
+      KeeperNaming.decide(recruiter, allay, NAMES).whenComplete((decision, error) -> {
+        if (error != null || decision == null || decision.isEmpty()) {
+          return;
+        }
+        level.getServer().execute(() -> {
+          if (allay.isRemoved()) {
+            return;
+          }
+          allay.setCustomName(Component.literal(decision.get()));
+          allay.setCustomNameVisible(false);
+          recruiter.logMemory("I named our storehouse keeper " + decision.get() + ".", Optional.of(allay.getUUID()));
+        });
+      });
+    }
   }
 
   /**
@@ -151,8 +169,10 @@ public final class VillageAllays {
       return;
     }
     allay.setCustomNameVisible(false);
-    if (allay.getNavigation() instanceof FlyingPathNavigation flying) {
-      flying.setCanOpenDoors(true); // paths may route through doors; the keeper opens them itself
+    if (!(allay.getNavigation() instanceof AllayPathNavigation)) {
+      AllayPathNavigation flight = new AllayPathNavigation(allay, allay.level());
+      flight.setCanOpenDoors(true); // paths may route through doors; the keeper opens them itself
+      allay.navigation = flight;
     }
     if (KEEPING.add(allay)) {
       allay.getBrain().addActivity(Activity.IDLE, 0, ImmutableList.of(new AllayQuartermasterBehavior()));
