@@ -22,7 +22,7 @@ definitions, all new ids, so the pack needs no filter:
 | --- | --- | --- | --- |
 | `village_center_floodplain_1` | Nilotic cartographer house with four white banners and the green carpet cross | 0 | quartermaster, builder, guard captain |
 | `mine_floodplain_1` | Nilotic armorer house with the authored pit floor | 0 | miner in the 3x3 pit; the ramp starts at the pit's middle column and leaves east under the wall |
-| `storehouse_floodplain_1` | small house draft with barrels, a note block and two authored allays | 0 | none; the quartermaster keeps the centre post |
+| `storehouse_floodplain_1` | small house draft with barrels, a note block, an open doorway and two authored allays | 0 | none; the quartermaster keeps the centre post |
 | `church_floodplain_1` | Nilotic temple | 0 | cleric |
 | `lumberjack_floodplain_1` | Nilotic farmer house | 1 | lumberjack on the jungle sapling |
 | `hunting_lodge_floodplain_1` | Nilotic fletcher house | 1 | hunter |
@@ -61,9 +61,11 @@ storage.
 Every house ships with the patchy earthen ground course Aaron laid under it (packed mud,
 mud, coarse dirt, rooted dirt) as its bottom layer, the way Desert ships its seating. The
 lumberjack's dead bush marker is exported as a jungle sapling on dirt: the wood loop refuses
-mangrove propagules because a grown mangrove leaves roots on the stand. The storehouse
-doorway trapdoor and the watchtower's ladder hatch are exported open, since the runtime opens
-doors and gates but never trapdoors; the guard climbs through the open hatch to the bunk.
+mangrove propagules because a grown mangrove leaves roots on the stand. The watchtower's ladder
+hatch is exported open, since the runtime opens doors and gates but never trapdoors; the guard
+climbs through the open hatch to the bunk. The storehouse has no doorway panel at all: Aaron
+removed it on a production copy placed in the gallery (row NA07) and trimmed the course corners,
+and that copy is the storehouse's source capture now.
 
 Walls are not exported. The runtime paints the shared arid wall geometry
 ([walls.md](walls.md)) in the floodplain palette: mud bricks for posts, deck, body, stairs

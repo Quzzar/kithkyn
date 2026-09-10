@@ -82,7 +82,7 @@
     "market_restyle": "cut sandstone to mud bricks, sandstone stairs to mud brick stairs, acacia fences to spruce, acacia logs to mangrove, potted cactus and dead bush to fern; wool, carpets and banners kept as identity slots",
     "market_edit": "Aaron removed one extra orange carpet from the market drafts; captures refreshed afterwards",
     "wall_palette": {
-      "status": "decided 2026-09-10, applied to the NA05 drafts",
+      "status": "approved by Aaron 2026-09-10 after one hand correction; the five sections are captured in the selection record",
       "body": "minecraft:mud_bricks for posts, deck, wall body and tower shell (every stripped oak log / oak plank cell)",
       "steps_and_slabs": "minecraft:mud_brick_stairs / minecraft:mud_brick_slab keep the authored facing and half",
       "railing": "minecraft:mud_brick_wall in place of every fence (mud brick walls, not mangrove fences)",
@@ -90,7 +90,8 @@
       "frame": "minecraft:muddy_mangrove_roots on the gatehouse uprights (x 6 and 10, z 1 and 3, y < 5) and the y 5 beams, mirroring the chiseled stone trim of the arid WallPalette",
       "light": "minecraft:brown_candle clusters (candles = 2 + floorMod(31x + 17z + y, 3), lit) wherever a standing lantern stood; inward roof lanterns removed like the arid palette",
       "hanging_lanterns": "the four lanterns hanging under the gatehouse arch stay lanterns",
-      "runtime": "becomes the FLOODPLAIN case of WallPalette.forStyle once the floodplain VillageStyle lands"
+      "runtime": "becomes the FLOODPLAIN case of WallPalette.forStyle once the floodplain VillageStyle lands",
+      "post_tops": "a log standing on end at y 5 (the post tops at x 5 and x 16, z 2) is a post, not a beam, and stays mud bricks; only the lying logs of the roof rim and the four uprights are roots, as isGateFrame classifies them"
     }
   },
   "buildings": [
@@ -1413,34 +1414,34 @@
       "source_mod_structure": "data/kaisyn/structure/village/exclusives/nilotic/houses/nilotic_small_house_1.nbt",
       "source_mod_structure_sha256": "c3c852df1031b0bde7dd7d790f3812bbfbaad443ed6e86b534a63e51145d2005",
       "source_capture": "run/nilotic-showcase/selection-20260910-floodplain/captures/NA02.4.nbt",
-      "source_capture_sha256": "74a857c1c4e572bcd40a688180aa07cffa09bbc5b6d91db34db8628fab9eb305",
+      "source_capture_sha256": "07b720e63b5257071e75ff4b1d0730f6d4d91d0451ca7a98234b8b44ed0cd419",
       "gallery_origin": [
-        6623,
-        230,
-        1039
+        6576,
+        231,
+        1205
       ],
       "capture_from": [
-        6621,
-        229,
-        1037
+        6574,
+        230,
+        1203
       ],
       "capture_to": [
-        6631,
-        275,
-        1047
+        6584,
+        244,
+        1213
       ],
       "solid_bounds_relative_to_gallery_origin": [
         [
-          -1,
-          7
+          0,
+          6
         ],
         [
           -1,
           4
         ],
         [
-          -1,
-          7
+          0,
+          6
         ]
       ],
       "copy_of_exhibit": "NA02.1",
@@ -1492,33 +1493,8 @@
         "coloured_blocks": {}
       },
       "notes": [
-        "replaced again on Aaron's request for a smaller base; ground course re-laid"
+        "Re-captured 2026-09-10 evening from the NA07.1 production copy after Aaron trimmed the course corners and removed the doorway trapdoor; the doorway is open."
       ],
-      "gallery_furniture": {
-        "sea_lanterns": [
-          [
-            -1,
-            -1,
-            -1
-          ],
-          [
-            7,
-            -1,
-            -1
-          ],
-          [
-            -1,
-            -1,
-            7
-          ],
-          [
-            7,
-            -1,
-            7
-          ]
-        ],
-        "note": "Apron corner lighting from the gallery; exclude at export."
-      },
       "allay_delivery_points": [
         [
           2,
