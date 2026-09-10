@@ -1,0 +1,306 @@
+{
+  "status": "captured_configured_and_verified",
+  "exhibit": "D05.1",
+  "description": "Selected Desert Oasis center with four private sleeping pavilions, a bell meeting point, one cooking fire and six village flags. Three center jobs plus the separate mine supply the four core founding jobs.",
+  "work": "run/pueblo-showcase/desert-center-approved-20260909-224500",
+  "preview_colors": {
+    "primary": "blue",
+    "secondary": "yellow"
+  },
+  "source_capture": "run/pueblo-showcase/desert-center-approved-20260909-224500/captures/D05.1.nbt",
+  "source_sha256": "4a4d08603007c1ad2734d713e22039a136c6e29c541f18cb13c679e1a501e681",
+  "source_mod_structure": "data/ctov/structure/village/desert_oasis/town_center.nbt",
+  "source_mod": "[Neoforge]ctov-3.6.3.jar",
+  "capture_origin": [
+    3790,
+    230,
+    1138
+  ],
+  "template_origin": [
+    3792,
+    230,
+    1140
+  ],
+  "size": [
+    17,
+    12,
+    17
+  ],
+  "neutral_template": "run/pueblo-showcase/desert-center-approved-20260909-224500/neutral/D05.1.nbt",
+  "neutral_template_sha256": "72cf773f2734be1e7bc97dd937774deee7b2697ea0747871e8da9b05e1329da9",
+  "info": {
+    "structure": "village_center_desert_1",
+    "category": "village_center",
+    "variant": "desert",
+    "beds": [
+      [
+        3,
+        1,
+        3
+      ],
+      [
+        13,
+        1,
+        3
+      ],
+      [
+        3,
+        1,
+        13
+      ],
+      [
+        13,
+        1,
+        13
+      ]
+    ],
+    "couple_beds": [],
+    "containers": [],
+    "personal_containers": [
+      [
+        3,
+        1,
+        2
+      ],
+      [
+        13,
+        1,
+        2
+      ],
+      [
+        3,
+        1,
+        14
+      ],
+      [
+        13,
+        1,
+        14
+      ]
+    ],
+    "bed_containers": [
+      {
+        "bed": [
+          3,
+          1,
+          3
+        ],
+        "containers": [
+          [
+            3,
+            1,
+            2
+          ]
+        ]
+      },
+      {
+        "bed": [
+          13,
+          1,
+          3
+        ],
+        "containers": [
+          [
+            13,
+            1,
+            2
+          ]
+        ]
+      },
+      {
+        "bed": [
+          3,
+          1,
+          13
+        ],
+        "containers": [
+          [
+            3,
+            1,
+            14
+          ]
+        ]
+      },
+      {
+        "bed": [
+          13,
+          1,
+          13
+        ],
+        "containers": [
+          [
+            13,
+            1,
+            14
+          ]
+        ]
+      }
+    ],
+    "work_stations": [
+      {
+        "occupation": "QUARTERMASTER",
+        "pos": [
+          8,
+          1,
+          3
+        ]
+      },
+      {
+        "occupation": "BUILDER",
+        "pos": [
+          6,
+          1,
+          5
+        ]
+      },
+      {
+        "occupation": "GUARD",
+        "pos": [
+          10,
+          1,
+          5
+        ],
+        "guard_duty": "CAPTAIN"
+      }
+    ],
+    "meeting_point": [
+      8,
+      1,
+      5
+    ],
+    "campfires": [
+      [
+        8,
+        1,
+        13
+      ]
+    ],
+    "village_identity": {
+      "primary_blocks": [
+        [
+          3,
+          1,
+          3
+        ],
+        [
+          13,
+          1,
+          13
+        ]
+      ],
+      "secondary_blocks": [
+        [
+          13,
+          1,
+          3
+        ],
+        [
+          3,
+          1,
+          13
+        ]
+      ],
+      "banners": [
+        [
+          1,
+          2,
+          0
+        ],
+        [
+          15,
+          2,
+          0
+        ],
+        [
+          1,
+          2,
+          16
+        ],
+        [
+          15,
+          2,
+          16
+        ],
+        [
+          7,
+          4,
+          8
+        ],
+        [
+          9,
+          4,
+          8
+        ]
+      ]
+    },
+    "sink": 0,
+    "entrance_facing": "north",
+    "cost": [
+      {
+        "item": "minecraft:oak_log",
+        "count": 32
+      },
+      {
+        "item": "minecraft:cobblestone",
+        "count": 44
+      }
+    ]
+  },
+  "review_targets": [
+    [
+      8,
+      1,
+      5
+    ],
+    [
+      7,
+      1,
+      13
+    ],
+    [
+      9,
+      1,
+      13
+    ]
+  ],
+  "production": {
+    "structure": "village_center_desert_1",
+    "category": "village_center",
+    "variant": "desert",
+    "level": 1,
+    "recipe": "village_center_plains_1"
+  },
+  "notes": [
+    "Live source geometry is preserved. Only gallery padding is cropped; bed/banner state is neutralized and leaves remain persistent.",
+    "The bell meeting tile is separate from the fire. Each pavilion barrel belongs only to its assigned bed.",
+    "The founding storehouse must omit a duplicate quartermaster station. The mine supplies the fourth founding job."
+  ],
+  "verification": {
+    "native_report": "run/desert-center-verification-20260909-225300/verification.json",
+    "rotations": 4,
+    "access_routes": 44,
+    "bed_walks_and_sleeps": 16,
+    "personal_deposits": 16,
+    "station_walks": 12,
+    "meeting_and_fire_approach_walks": 12,
+    "failed_placements": 0,
+    "adult_body": [
+      0.648,
+      2.0
+    ],
+    "source_geometry_preserved": true,
+    "native_pack_order": [
+      "vanilla",
+      "mod_data",
+      "file/pueblo-review"
+    ],
+    "render_review": {
+      "passed": true,
+      "views": [
+        "run/pueblo-showcase/desert-center-approved-20260909-224500/screenshots/client/screenshots/desert-center-overview.png",
+        "run/pueblo-showcase/desert-center-approved-20260909-224500/screenshots/client/screenshots/desert-center-private-pavilion.png"
+      ],
+      "notes": "Actual live source gallery inspected: four intact sleeping pavilions, private barrel beside each bed, open bell plaza and separate rear fire. Village color slots are metadata for runtime placement; the preserved gallery keeps its original neutral beds."
+    }
+  }
+}

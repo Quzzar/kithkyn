@@ -55,6 +55,20 @@ commands. This is the loop the current `village_center_plains_1` was built with.
    from the JSON, so attractiveness cheerfully reports four free beds while a villager
    walks to bare floor.
 
+## Private catalog priority
+
+An approved local datapack that replaces existing building IDs must load after
+NeoForge's `mod_data` pack. Fresh native fixtures use
+`initial-enabled-packs=vanilla,mod_data,file/pueblo-review`. Putting the private pack
+before `mod_data` silently retains the old definitions, even when the new capture is
+present. Verify the effective bed and station positions, not only the file on disk.
+
+For a stopped, backed-up world, `tools/structure/SetVillageDatapackPriority.java`
+copies `level.dat` to a new file while enabling the requested `file/<pack-name>` last.
+It preserves all unrelated native NBT and verifies its output by reading it back.
+Keep separate installed catalogs in separate directories and preserve their pack
+selections during later updates. Restart after changing structure binaries.
+
 ## What to check before shipping one
 
 - **Rotation.** The gallery places structures as loaded, but villages place them rotated.
