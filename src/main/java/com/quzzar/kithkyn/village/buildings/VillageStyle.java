@@ -36,7 +36,14 @@ import net.neoforged.neoforge.common.Tags;
 public enum VillageStyle {
   BIRCH_FOREST, DESERT, BADLANDS, FLOODPLAIN;
 
-  /** The bundled catalog: what a blank or unknown saved style reads as, and the last resort. */
+  /**
+   * What a blank or unknown saved style reads as, the answer for every climate
+   * without a catalog of its own, and the last resort. Birch holds this seat
+   * only because it is the one bundled catalog; the intended default is the
+   * Plains village once its catalog exists (docs/buildings.md, "The default is
+   * a placeholder"). Moving the seat is a change here, in the temperate branch
+   * of {@link #climateStyles} and in the enum order, nowhere else.
+   */
   public static final VillageStyle DEFAULT = BIRCH_FOREST;
 
   /** The token this style takes in a building id, {@code house_<style>_1}. */
