@@ -103,3 +103,8 @@ definitions. The first floodplain village, Ruwaleni, was founded by command at t
 swamp, centre -3982 67 5344, with its six founding buildings. Force-loading that unvisited site in one
 console command stalled the server thread past the watchdog on the first start; the site is now
 loaded a few chunks at a time and the server was restarted from the same release.
+
+A second release the same evening (commit 1291788e79) carried the keeper routing and naming, the candle
+rule, lodge composting, the sunk well and the mine ramp that starts at the pit's middle column.
+Ruwaleni was deleted and the site founded again as Mavulena, centre -3984 66 5344, so its mine and any
+well it raises follow the new data.

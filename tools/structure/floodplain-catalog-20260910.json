@@ -30,7 +30,7 @@
       "asset": "run/floodplain-integration/datapack/data/kithkyn/structure/mine_floodplain_1.nbt",
       "asset_sha256": "0ccb8540bf93b76078dbab52543fbe468b530b6479410b1165c7ffde28bd3813",
       "definition": "run/floodplain-integration/datapack/data/kithkyn/kithkyn/buildings/mine_floodplain_1.json",
-      "definition_sha256": "49d526c21dc6a6c649649098f0533a92a16bf8a1836c7849032c8f5f1128c472",
+      "definition_sha256": "7c21e894fbe10f5a290362685b2ac3c3b37c2b4078f48839d06bc9880cd9e6dd",
       "reviewed_capture": "run/nilotic-showcase/selection-20260910-floodplain/captures/NA01.2.nbt",
       "reviewed_capture_sha256": "e0e431c2d95541390431579ad67c5f17c306ceedfc2c64022e251e0c6c2d2371"
     },
@@ -198,7 +198,7 @@
       "asset": "run/floodplain-integration/datapack/data/kithkyn/structure/well_floodplain_1.nbt",
       "asset_sha256": "78889aedcbbc479b26683e97fcf03c61fe6a34a5ecb81f26b65de97d71a8f9d3",
       "definition": "run/floodplain-integration/datapack/data/kithkyn/kithkyn/buildings/well_floodplain_1.json",
-      "definition_sha256": "94ef065ad2f677949855e2f4093d51cccef68c16c5824bf7707a64e94fd179e6",
+      "definition_sha256": "a8f1d6b951ae0422f26e9830d9202393b7d22b7a04560d3e1987e6e3ccea4c70",
       "reviewed_capture": "run/nilotic-showcase/selection-20260910-floodplain/captures/NA03.3.nbt",
       "reviewed_capture_sha256": "6f4c58e15620f197febdfc2a366cd37c6dfc8c2235f2b9fa1481b7aa272b8349"
     },
@@ -210,7 +210,7 @@
       "source_mod": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
       "source_mod_structure": "data/nova_structures/structure/firewatch_tower/firewatch_savanna.nbt",
       "asset": "run/floodplain-integration/datapack/data/kithkyn/structure/watchtower_floodplain_1.nbt",
-      "asset_sha256": "803294452c952107a216afb7015132904cdd09157e75ddae632e145112d63e7e",
+      "asset_sha256": "c432a16fde9b5b795c925c599a9f15fe17331d9123afa05561bd4032d96c22e4",
       "definition": "run/floodplain-integration/datapack/data/kithkyn/kithkyn/buildings/watchtower_floodplain_1.json",
       "definition_sha256": "6a09e0acf7eb49381076f1f468ae50d0f7be4d3cd8ef257f67cfca2328dc5209",
       "reviewed_capture": "run/nilotic-showcase/selection-20260910-floodplain/captures/NA03.4.nbt",
@@ -321,19 +321,12 @@
   "native_writer": "tools/structure/VillageTemplateExport.java (with the entities plan key)",
   "verification": {
     "static": "run/floodplain-integration/check.py: 20 definitions and templates",
-    "unit_tests": "470 tests, 0 failures, on the floodplain-village branch",
-    "placement": "run/floodplain-integration/placement/verification.json",
-    "restart": "run/floodplain-integration/placement/verification.json",
+    "unit_tests": "470 tests, 0 failures",
+    "allay_run": "run/allay-verification/run.py RESULT PASS",
+    "placement_and_restart": "run/floodplain-integration/placement/verification.json",
     "center": "run/floodplain-integration/center/verification.json",
     "access": "run/floodplain-integration/access/verification.json",
-    "founding": "run/floodplain-integration/founding/verification.json",
-    "results": {
-      "placement": "[building-placement-verify] RESULT PASS: 160 real-template placements, both paths, four rotations, colors, frames, entity/save receipts and upgrade preservation",
-      "restart": "[building-placement-verify] RESTART PASS: 160 saved buildings and 64 original entities survived real server shutdown/restart without replenishment",
-      "center": "[approved-house-verify] RESULT PASS: 4 rotated structures, 12 access routes, 0 physical room walks and assigned-bed sleeps, 0 physical personal-container deposits, 0 failed placements; probe size=18; station walks=12, shared deposits=0, mine walks=0, review walks=0",
-      "access": "[approved-house-verify] RESULT PASS: 72 rotated structures, 188 access routes, 40 physical room walks and assigned-bed sleeps, 16 physical personal-container deposits, 0 failed placements; probe size=18; station walks=68, shared deposits=72, mine walks=8, review walks=0",
-      "founding": "[floodplain-verify] RESULT PASS: 20 strict native templates, 2 housing alternatives, 12 upgrade fits, four founding rotations and codec reloads, natural biome selection, 5 beds, 4 positions, distinct meeting/fire locations and village identity"
-    }
+    "founding": "run/floodplain-integration/founding/verification.json"
   },
   "datapack": "run/floodplain-integration/datapack",
   "recipe_catalog": "src/main/resources/data/kithkyn/kithkyn/construction_recipes",
@@ -368,30 +361,28 @@
   },
   "deployment": {
     "date": "2026-09-10",
-    "commit": "6a949d63ba486e6f968adad702a2895fc078bc1b",
-    "jar_sha256": "1c33d852a5a7c05673501e9e6e868de7df7225c960701e74f32605cb0e1e9a95",
-    "release": "20260910-163427-floodplain-village",
+    "commit": "1291788e7916c8be3621db69694ad1ddf59f4be1",
+    "jar_sha256": "5c7c3977080074396254519f810cd39b7eb4f3d73aa566cc56bf4d3f49640660",
+    "release": "20260910-174048-floodplain-village",
     "datapack": "run/world/datapacks/kithkyn-floodplain",
     "building_definitions_loaded": 104,
-    "removed_old_family_villages": [
-      "Emscott",
-      "Tanswick",
-      "Marnock",
-      "Marnwick",
-      "Tallowen",
-      "Brenavai",
-      "Avercombe"
-    ],
-    "world_backup": "before-floodplain-village-20260910-163427-floodplain-village",
+    "world_backup": "before-floodplain-village-20260910-174048-floodplain-village",
     "first_village": {
-      "name": "Ruwaleni",
+      "name": "Mavulena",
       "centre": [
-        -3982,
-        67,
+        -3984,
+        66,
         5344
       ],
       "buildings": 6
     },
-    "note": "The first start was killed by the server watchdog while a console force-load generated 81 unvisited chunks for the test village; the server was restarted from the same release and the site is now loaded a few chunks at a time."
+    "changes_since_first_release": [
+      "well sunk one block",
+      "mine ramp starts at the pit's middle column",
+      "keepers route round closed trapdoors",
+      "people route round candles",
+      "lodge composting",
+      "quartermaster names the keeper"
+    ]
   }
 }
