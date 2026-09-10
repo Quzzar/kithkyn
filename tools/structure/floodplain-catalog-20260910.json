@@ -168,11 +168,11 @@
       "source_mod": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar",
       "source_mod_structure": "data/kaisyn/structure/village/exclusives/nilotic/houses/nilotic_small_house_1.nbt",
       "asset": "run/floodplain-integration/datapack/data/kithkyn/structure/storehouse_floodplain_1.nbt",
-      "asset_sha256": "5f23186d9542ff59d1e0d3fc35f39f75794246d331478f746862f15e6179b3a6",
+      "asset_sha256": "89b3fa1e45252e4d0e6d77889146343d519c5aa14907f460b7c27ccc0a1f05dc",
       "definition": "run/floodplain-integration/datapack/data/kithkyn/kithkyn/buildings/storehouse_floodplain_1.json",
       "definition_sha256": "6f7e7acdca735d22b7531b28a9fe4ae2ffb56c50fb9514eec01508ac2e5334ee",
       "reviewed_capture": "run/nilotic-showcase/selection-20260910-floodplain/captures/NA02.4.nbt",
-      "reviewed_capture_sha256": "74a857c1c4e572bcd40a688180aa07cffa09bbc5b6d91db34db8628fab9eb305"
+      "reviewed_capture_sha256": "07b720e63b5257071e75ff4b1d0730f6d4d91d0451ca7a98234b8b44ed0cd419"
     },
     {
       "exhibit": "NA03.2",
@@ -384,5 +384,14 @@
       "lodge composting",
       "quartermaster names the keeper"
     ]
-  }
+  },
+  "revisions": [
+    {
+      "date": "2026-09-10",
+      "structures": [
+        "storehouse_floodplain_1"
+      ],
+      "note": "Aaron re-edited the storehouse on a production copy in the gallery (NA07.1): the doorway trapdoor removed so the doorway is open, the course corners trimmed. Re-captured and re-exported; the open-trapdoor override is gone."
+    }
+  ]
 }

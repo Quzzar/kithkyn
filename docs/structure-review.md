@@ -1760,3 +1760,10 @@ well one block high (it sinks one), and the mine ramp starting at the pit's edge
 lumberjack also composts surplus saplings, and the quartermaster names the keeper. The site was founded again
 as Mavulena.
 
+### Storehouse re-edit: September 10
+
+A copy of the production floodplain storehouse was placed on its own pad in the Nilotic gallery (row NA07)
+for Aaron to edit. He removed the doorway trapdoor, so the doorway is open, and trimmed the earthen course
+corners. The copy was captured from a flushed snapshot and became the storehouse's source capture; the
+open-trapdoor export override is gone; the pack was rebuilt, checked and reinstalled live with a reload.
+
