@@ -1767,3 +1767,12 @@ for Aaron to edit. He removed the doorway trapdoor, so the doorway is open, and 
 corners. The copy was captured from a flushed snapshot and became the storehouse's source capture; the
 open-trapdoor export override is gone; the pack was rebuilt, checked and reinstalled live with a reload.
 
+### Mine re-edits: September 10
+
+Production copies of the floodplain and Desert mines were placed in the Nilotic gallery (rows NA08 and NA09)
+for Aaron to edit. The floodplain pit grew one column west so the ramp has three columns of descent inside
+the building, its door went, and a step leads down into the pit; the miner stands at the pit's west column
+with the ramp mouth one column in. The Desert mine gained a shared chest at the pit floor plus two wall
+posts, a fence, a trapdoor and a lantern, exported in its existing frame. Both were captured from a flushed
+snapshot, re-exported, checked and installed in their packs.
+

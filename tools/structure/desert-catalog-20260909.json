@@ -248,12 +248,13 @@
       "structure": "mine_desert_1",
       "manifest": "tools/structure/desert-services-20260909.json",
       "recipe": "mine_1",
-      "asset_sha256": "e11bfa04c42db054ff8718eb6cb8619f97fbd5b0e057d43f80f161263236b86f",
-      "definition_sha256": "7b31f00cfd3075ca568db848ca6061472ab9e68bfcb95ec1f7285ce46201cf59",
+      "asset_sha256": "e313bddea3bf9be266c1a47d38788480656ff71c5a077e8e1b8b7b0fac19ea7d",
+      "definition_sha256": "564cd6818c2c0450ce033229529f0e69624612e8f7b50432dea6ff1e041e05ad",
       "source_mod": "[Neoforge]ctov-3.6.3.jar",
       "source_mod_structure": "data/ctov/structure/village/desert_oasis/jobsite/pen.nbt",
       "reviewed_neutral": "run/pueblo-showcase/desert-services-approved-20260909-224600/neutral/D07.5.nbt",
-      "reviewed_neutral_sha256": "03f655e6ea03523213276482eb33a87c424759a7717d7b33d5bb32dd44ab8638"
+      "reviewed_neutral_sha256": "03f655e6ea03523213276482eb33a87c424759a7717d7b33d5bb32dd44ab8638",
+      "reviewed_edit": "run/nilotic-showcase gallery row NA09 (production copy edited by Aaron, 2026-09-10)"
     },
     {
       "exhibit": "D07.2",
@@ -453,6 +454,13 @@
       ],
       "change": "sink -1",
       "note": "Seated one block low: a doorstep stair sat level with the ground (tools/structure/seating-check.py). Raised onto the ground; existing buildings keep their seat."
+    },
+    {
+      "date": "2026-09-10",
+      "structures": [
+        "mine_desert_1"
+      ],
+      "note": "Aaron edited a production copy in the gallery: a shared chest at the pit, two wall posts, a fence, a trapdoor and a lantern added. Re-exported in the same frame; the chest joins the shared containers."
     }
   ]
 }
