@@ -21,6 +21,7 @@ import com.quzzar.kithkyn.village.buildings.VillageStyle;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtOps;
 import net.minecraft.resources.ResourceLocation;
@@ -65,6 +66,7 @@ public final class BadlandsVillageVerification {
         level.getGameRules().getRule(GameRules.RULE_DOMOBSPAWNING).set(false, event.getServer());
         level.getGameRules().getRule(GameRules.RULE_RANDOMTICKING).set(0, event.getServer());
         level.setDayTime(6000);
+        verifyBiomeCoverage(level);
         verifyCatalogue(level);
         forceChunks(level, UPGRADE_SITE, 48);
       } else if (upgrades < UPGRADES.length * 4) {
@@ -92,6 +94,22 @@ public final class BadlandsVillageVerification {
       Kithkyn.LOGGER.error("[badlands-verify] RESULT FAIL", failure);
       event.getServer().halt(false);
     }
+  }
+
+  private static void verifyBiomeCoverage(ServerLevel level) {
+    var registry = level.registryAccess().registryOrThrow(Registries.BIOME);
+    for (var biome : List.of(Biomes.BADLANDS, Biomes.ERODED_BADLANDS, Biomes.WOODED_BADLANDS,
+        Biomes.SAVANNA, Biomes.SAVANNA_PLATEAU, Biomes.WINDSWEPT_SAVANNA)) {
+      check(VillageStyle.fromBiome(registry.getHolderOrThrow(biome), level.getSeed(), UPGRADE_SITE)
+          == VillageStyle.BADLANDS, "Pueblo coverage missing " + biome.location());
+    }
+    check(VillageStyle.fromBiome(registry.getHolderOrThrow(Biomes.DESERT)) == VillageStyle.DESERT,
+        "Sandy desert must remain Desert");
+    for (var biome : List.of(Biomes.BIRCH_FOREST, Biomes.OLD_GROWTH_BIRCH_FOREST)) {
+      check(VillageStyle.fromBiome(registry.getHolderOrThrow(biome)) == VillageStyle.BIRCH_FOREST,
+          "Birch coverage changed " + biome.location());
+    }
+    Kithkyn.LOGGER.info("[badlands-verify] BIOMES PASS: six Pueblo biomes, sandy Desert and both Birch biomes");
   }
 
   private static void verifyCatalogue(ServerLevel level) {

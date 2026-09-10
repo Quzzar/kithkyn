@@ -31,11 +31,11 @@ class VillageStyleTest {
   private static final Predicate<VillageStyle> ALL_STYLES = ignored -> true;
 
   @Test
-  void badlandsMappingIsExplicitAndDoesNotConsumeOtherAridFamilies() {
+  void puebloCoversMesaAndSavannaWhileSandyDesertsStayDistinct() {
     Set<TagKey<Biome>> mapped = Set.of(VillageStyle.BADLANDS.biomeTag(), Tags.Biomes.IS_BADLANDS);
     assertEquals(VillageStyle.BADLANDS,
         VillageStyle.select(mapped::contains, "badlands", 2F, false, 0F, 7L, ALL_STYLES));
-    assertEquals(VillageStyle.DESERT,
+    assertEquals(VillageStyle.BADLANDS,
         VillageStyle.select(Tags.Biomes.IS_BADLANDS::equals, "wooded_badlands", 2F, false, 0F, 7L, ALL_STYLES));
     assertEquals(VillageStyle.DESERT,
         VillageStyle.select(Tags.Biomes.IS_DESERT::equals, "desert", 2F, false, 0F, 7L, ALL_STYLES));
@@ -43,6 +43,26 @@ class VillageStyleTest {
         VillageStyle.select(mapped::contains, "badlands", 2F, false, 0F, 7L,
             style -> style == VillageStyle.DESERT));
     assertFalse(VillageStyle.BADLANDS.usesPlainsFallback());
+    for (long seed = 0; seed < 20; seed++) {
+      assertFamily(Tags.Biomes.IS_BADLANDS, VillageStyle.BADLANDS, seed);
+      assertFamily(Tags.Biomes.IS_SAVANNA, VillageStyle.BADLANDS, seed);
+      assertFamily(Tags.Biomes.IS_SANDY, VillageStyle.DESERT, seed);
+      Set<TagKey<Biome>> sandyMesa = Set.of(Tags.Biomes.IS_BADLANDS, Tags.Biomes.IS_SANDY);
+      assertEquals(VillageStyle.BADLANDS,
+          VillageStyle.select(sandyMesa::contains, "red_cliffs", 2F, false, 0F, seed, ALL_STYLES));
+    }
+  }
+
+  @Test
+  void untaggedMesaAndSavannaNamesHaveStableCoverageThatExplicitTagsCanNarrow() {
+    for (String path : List.of("wooded_mesa", "red_badlands", "dry_savanna", "savannah_hills")) {
+      assertEquals(VillageStyle.BADLANDS,
+          VillageStyle.select(ignored -> false, path, 1.2F, false, 0F, 12L, ALL_STYLES));
+      assertEquals(VillageStyle.DESERT,
+          VillageStyle.select(VillageStyle.DESERT.biomeTag()::equals, path, 1.2F, false, 0F, 12L, ALL_STYLES));
+    }
+    assertEquals(VillageStyle.BIRCH_FOREST,
+        VillageStyle.select(Tags.Biomes.IS_SAVANNA::equals, "birch_savanna", 1F, false, 0F, 12L, ALL_STYLES));
   }
 
   @Test

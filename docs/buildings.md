@@ -367,7 +367,7 @@ becoming one overloaded axis.
 
 The bundled architecture families are `plains`, `taiga`, `snowy`, `desert`, `savanna`, and
 the approved `birch_forest` selection. The approved local Pueblo/Mesa datapack adds `badlands`
-for ordinary and eroded badlands; its thirty templates and house alternatives are documented in
+for mesa/badlands and savanna families; its thirty templates and house alternatives are documented in
 [badlands-village.md](badlands-village.md). Without that private pack, the style has no founding
 set and is not selected automatically. The reference roster above reserves future work, not
 phantom runtime catalogs. In particular, the approved custom Birch selection supersedes the
@@ -381,7 +381,7 @@ reroll an existing village. An explicit style argument on the command still over
 
 Selection first honors `kithkyn:village_style/<style>` biome tags, so a datapack can map a
 vanilla or modded biome precisely without a second mapping format. If a biome has several
-explicit tags, the stable order is Plains, Taiga, Snowy, Desert, Savanna, Birch Forest. Only
+explicit tags, the stable order is Plains, Taiga, Snowy, Desert, Savanna, Birch Forest, Badlands. Only
 styles whose own center, mine, and storehouse definitions are loaded are automatic candidates.
 
 Conventional families then retain deterministic assignments:
@@ -389,15 +389,20 @@ Conventional families then retain deterministic assignments:
 | Family | Village style |
 | --- | --- |
 | Birch, including `c:is_birch_forest` and untagged registry paths containing `birch` | Birch Forest |
-| Desert, badlands, sandy | Desert |
+| Mesa/badlands or savanna, including their tagged modded families and recognizable registry paths | Pueblo / Badlands |
+| Desert or sandy, excluding the mesa/badlands and savanna families above | Desert |
 | Snowy or icy | Snowy |
-| Savanna or jungle | Savanna |
+| Jungle, pending its own approved catalog | Savanna |
 | Taiga, coniferous, mountain | Taiga |
 | Plains, other forest/deciduous, swamp | Plains |
 
 Birch wins before broader family tags; an explicit style tag can override even a birch-named
 biome. This name heuristic is a compatibility fallback for mods that omit conventional tags,
 not a substitute for those tags.
+
+The broad Pueblo assignment includes wooded badlands and savanna plateau for now. As more
+catalogs become playable, explicit style tags can separate those biomes without rerolling
+existing villages. The Jungle showcase is a building-selection pass, not an activated catalog.
 
 An unfamiliar family uses its precipitation, base temperature, downfall, and conventional
 hot/cold/wet/dry tags to choose a compatible cluster. The choice is randomly varied between

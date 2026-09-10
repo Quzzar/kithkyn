@@ -1,7 +1,9 @@
 # Badlands village
 
 The approved Pueblo/Mesa selection uses the environmental runtime style `badlands`.
-It is a distinct catalog from Desert Oasis, wooded badlands and savanna plateau.
+It is a distinct catalog from sandy Desert/Oasis. For the current broad coverage pass,
+Pueblo also serves wooded badlands, savanna and savanna plateau; those biomes can acquire
+more specific looks when their own catalogs are ready.
 The selected edited structures are installed as a private local datapack. They are not
 included in the public source tree or default jar; the source boundary in
 [structure-sourcing.md](structure-sourcing.md) still applies to publication.
@@ -59,9 +61,14 @@ Tavren and Sorela are tone examples that generation may not copy. The bounded fa
 uses its own fantasy syllables and avoids duplicate names. This description is a naming
 cue, not invented history or an additional saved NPC personality.
 
-`kithkyn:village_style/badlands` maps ordinary and eroded badlands. Other compatible
-biomes can be added explicitly by a modpack. Generic arid climate does not select this
-catalog. Automatic selection requires its center, mine and storehouse to be loaded.
+`kithkyn:village_style/badlands` maps all three vanilla badlands biomes and all three
+vanilla savanna biomes. Conventional mesa/badlands and savanna families also use Pueblo,
+including modded family tags and untagged registry paths containing `mesa`, `badlands` or
+`savanna`. Birch keeps priority over broad conventional families. Sandy desert families
+stay Desert; these recognized families do not randomly alternate between architectures.
+An explicit style tag can narrow this temporary coverage when another catalog is ready.
+Generic arid climate does not select this catalog. Automatic selection requires its center,
+mine and storehouse to be loaded.
 Badlands never substitutes Plains designs for missing roles or levels. Existing villages
 retain their saved style and names; activation does not reconstruct their buildings.
 

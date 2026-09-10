@@ -111,19 +111,25 @@ public enum VillageStyle {
 
   @Nullable
   private static VillageStyle conventionalStyle(Predicate<TagKey<Biome>> tagged, String biomePath) {
+    String path = biomePath.toLowerCase(Locale.ROOT);
     // Some biome mods omit conventional tags. A birch-named family is still
     // recognizable, while an explicit style tag above can correct an exception.
-    if (tagged.test(Tags.Biomes.IS_BIRCH_FOREST) || biomePath.toLowerCase(Locale.ROOT).contains("birch")) {
+    if (tagged.test(Tags.Biomes.IS_BIRCH_FOREST) || path.contains("birch")) {
       return BIRCH_FOREST;
     }
-    if (tagged.test(Tags.Biomes.IS_DESERT) || tagged.test(Tags.Biomes.IS_BADLANDS)
-        || tagged.test(Tags.Biomes.IS_SANDY)) {
+    // Pueblo covers the mesa and savanna families until more specific catalogs
+    // are authored. Explicit style tags can narrow that coverage later.
+    if (tagged.test(Tags.Biomes.IS_BADLANDS) || tagged.test(Tags.Biomes.IS_SAVANNA)
+        || path.contains("badlands") || path.contains("mesa") || path.contains("savanna")) {
+      return BADLANDS;
+    }
+    if (tagged.test(Tags.Biomes.IS_DESERT) || tagged.test(Tags.Biomes.IS_SANDY)) {
       return DESERT;
     }
     if (tagged.test(Tags.Biomes.IS_SNOWY) || tagged.test(Tags.Biomes.IS_ICY)) {
       return SNOWY;
     }
-    if (tagged.test(Tags.Biomes.IS_SAVANNA) || tagged.test(Tags.Biomes.IS_JUNGLE)) {
+    if (tagged.test(Tags.Biomes.IS_JUNGLE)) {
       return SAVANNA;
     }
     if (tagged.test(Tags.Biomes.IS_TAIGA) || tagged.test(Tags.Biomes.IS_CONIFEROUS_TREE)
