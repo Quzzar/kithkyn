@@ -17,6 +17,7 @@ These catalogs are integrated, selectable, and verified as complete founding vil
 | Desert Oasis | Desert and sandy desert families | Smooth sandstone, shaded courts, wells, oasis planting, candles, and the optional castle |
 | Pueblo | Badlands, Eroded Badlands, Wooded Badlands, and compatible mesa families | Dense adobe and terracotta housing, roof terraces, courtyards, and red sandstone walls |
 | Floodplain | Mangrove Swamp and compatible tropical floodplain biomes | Mud brick, mangrove details, raised earth, and water-oriented sites |
+| Jungle Tribal | Jungle, Bamboo Jungle, and Sparse Jungle | Jungle timber, stripped bamboo roofs, compact huts, treehouses, three markets, the timber wall, and the Firewatch tower |
 
 ## Locked directions
 
@@ -26,7 +27,6 @@ its production catalog and founding behavior are verified.
 
 | Village biome | Founding environments | Direction |
 | --- | --- | --- |
-| Jungle Tribal | Jungle and compatible dense tropical forest biomes | Selected Jungle timber buildings, stripped bamboo roofs, compact huts, treehouses, three markets, the timber wall, and the Firewatch tower |
 | Mediterranean | Plains and Sunflower Plains | Rural Mediterranean farmsteads, stone and plaster homes, tile roofs, courts, and open agriculture |
 | Rustic Woodland | Forest and compatible ordinary oak woodland biomes | Familiar timber woodland settlement with a restrained rustic character |
 | Romanian | Dark Forest, forested highlands, and wooded valleys | Heavy timber roofs, enclosed yards, and substantial woodland buildings |
@@ -40,11 +40,9 @@ its production catalog and founding behavior are verified.
 | Savanna Tent | Savanna, Savanna Plateau, Windswept Savanna, and compatible dry grasslands | African-inspired tent and grassland settlement with portable-looking structures and a coherent warm-climate material palette |
 | Mushroom | Mushroom Fields and compatible fungal biomes | Fantasy mushroom settlement drawn from the complete mushroom reference families |
 
-Jungle has no remaining building-selection work. Its nineteen selected buildings, founding
-homes, market tiers, wall, stripped-bamboo roof treatment, and tower are recorded in
-`tools/structure/jungle-selections-20260910.json` and the related Jungle manifests. It moves to
-Playable when those assets are exported as a production catalog and pass founding, housing,
-worker-access, and guard-access verification.
+Jungle is a complete private production catalog with nineteen selected buildings and three
+market tiers. Its founding layout, housing, physical worksites, wall, and all access routes are
+verified and locally deployed.
 
 Swedish and Polish references do not reserve separate village biomes. Their strongest buildings
 may contribute to Viking, Rustic Woodland, or Alpine when their shape and materials fit the
