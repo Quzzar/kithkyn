@@ -141,6 +141,10 @@ public final class BuildingEntities {
       if (entity instanceof Mob mob) {
         mob.setPersistenceRequired();
       }
+      if (entity instanceof net.minecraft.world.entity.animal.allay.Allay) {
+        // An authored storehouse allay joins the village as soon as it ticks, guard or no guard.
+        entity.getPersistentData().putUUID(com.quzzar.kithkyn.village.VillageAllays.SPAWNED_BY_BUILDING_KEY, building.getUUID());
+      }
       if (entity instanceof BlockAttachedEntity attached && !attached.survives()) {
         Kithkyn.LOGGER.error("Initial decoration in {} has no valid support at {}",
             building.getName(), info.blockPos);

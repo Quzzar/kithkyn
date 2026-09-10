@@ -46,7 +46,8 @@ public final class VillageGolems {
         .ifPresent(golem -> adopt(guard, golem));
   }
 
-  private static boolean eligibleGuard(RealPerson guard) {
+  /** Shared by allay adoption: only an active, settled guard with no target recruits. */
+  static boolean eligibleGuard(RealPerson guard) {
     Village village = guard.getVillage();
     return guard.isAlive() && !guard.isRemoved() && !guard.isNoAi() && !guard.isSleeping()
         && guard.getOccupation() == Occupation.GUARD && guard.getTarget() == null
@@ -164,11 +165,12 @@ public final class VillageGolems {
     });
   }
 
-  /** Friends are the village's people, other recruited golems and its companion pets. */
+  /** Friends are the village's people, other recruited golems, its adopted allays and its companion pets. */
   public static boolean isMember(Village village, Entity entity) {
     return village != null && entity != null
         && (entity instanceof RealPerson person && person.getVillage() == village
             || supports(entity) && villageId(entity).filter(village.getID()::equals).isPresent()
+            || VillageAllays.supports(entity) && VillageAllays.villageId(entity).filter(village.getID()::equals).isPresent()
             || CompanionPets.isCompanionPet(entity)
                 && CompanionPets.villageUuid(entity).filter(village.getID()::equals).isPresent());
   }

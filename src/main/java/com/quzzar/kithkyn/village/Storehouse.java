@@ -48,10 +48,38 @@ public final class Storehouse {
 
   /** The loaded storehouse containers, in chest order; the plan's slot numbering runs across these. */
   public static List<Container> containers(RealPerson quartermaster) {
+    return containers(quartermaster.level(), chests(quartermaster));
+  }
+
+  /** World positions of a building's declared containers, in its own container order. */
+  public static List<BlockPos> chests(Building building) {
+    List<BlockPos> out = new ArrayList<>();
+    if (building != null && building.getInfo() != null) {
+      BlockPos origin = BlockPos.of(building.getOriginLocation());
+      for (Long local : building.getInfo().getContainerLocations()) {
+        out.add(origin.offset(BlockPos.of(local).rotate(building.getRotation())));
+      }
+    }
+    return out;
+  }
+
+  /** The loaded containers standing at the given positions; unloaded or missing ones are skipped. */
+  public static List<Container> containers(net.minecraft.world.level.Level level, List<BlockPos> positions) {
     List<Container> out = new ArrayList<>();
-    for (BlockPos pos : chests(quartermaster)) {
-      if (quartermaster.level().getBlockEntity(pos) instanceof Container container) {
+    for (BlockPos pos : positions) {
+      if (level.getBlockEntity(pos) instanceof Container container) {
         out.add(container);
+      }
+    }
+    return out;
+  }
+
+  /** Every standing building that grants STORAGE: the shelves an adopted allay may draw on. */
+  public static List<Building> buildings(Village village) {
+    List<Building> out = new ArrayList<>();
+    for (Building building : village.getBuildings()) {
+      if (building.getInfo() != null && building.getInfo().getGrants().contains("STORAGE")) {
+        out.add(building);
       }
     }
     return out;
