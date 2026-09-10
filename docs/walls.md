@@ -1,6 +1,11 @@
 # Walls
 
-Desert walls use sandstone and Pueblo/Badlands walls use red sandstone. Both use
+Desert walls use smooth sandstone and Pueblo/Badlands walls use smooth red sandstone,
+including their stairs and slabs. Gatehouse legs and roof framing use chiseled sandstone
+or chiseled red sandstone. Standing lamps are lit clusters of two to four regular candles
+for Desert or orange candles for Mesa; only four hanging lanterns per gate remain. The
+cluster count is stable for each world position. Narrow railings use the matching sandstone wall blocks,
+which have no smooth variant. Both use
 normal oak trapdoors and ladders for access. Every village has one wall stage;
 there is no second-tier upgrade. The editable Mesa and Desert copies are in the
 wall workshop at `3680.5, 230, 873.5`, facing north. Mesa is the first row and
@@ -23,7 +28,7 @@ saves.
 ## What the village builds
 
 There is one stage on a permanent route: a narrow three-course defensive shell
-with authored posts, beams, railings, lanterns, watchtowers and gatehouses. The
+with authored posts, beams, railings, regional lighting, watchtowers and gatehouses. The
 village style supplies its masonry or wood palette. Completed walls are maintained
 without being scheduled for replacement by another wall tier.
 
@@ -178,7 +183,7 @@ Credit left from an item carries across cells in that builder's pack.
 
 The catalog reserves seventeen route blocks for each gatehouse. Each
 gatehouse is an open passage with no door; its authored deck, ladder, correctly
-supported standing and hanging lanterns, beams, and flanking posts rotate onto
+supported lighting, beams, and flanking posts rotate onto
 any cardinal run. Authored feature volumes replace the ordinary palisade rather
 than being layered through it. One watchtower owns each clipped corner, rather
 than placing overlapping towers at both ends of the same chamfer. All regional
@@ -258,7 +263,7 @@ The five canonical wooden templates live under
 wall lab and are loaded as semantic cells instead of stamped directly into the
 world. One oak-authored geometry therefore resolves through the village style
 as oak for plains, spruce for taiga and snowy villages, acacia for savanna,
-sandstone for desert, or red sandstone for Pueblo/Badlands.
+smooth sandstone for desert, or smooth red sandstone for Pueblo/Badlands.
 
 Each authored template needs:
 
@@ -325,3 +330,12 @@ flat ground, rolling terrain, slopes, and cliffs.
 - Existing worlds with an in-progress legacy column wall should be reset. A
   completed legacy wall remains complete, but partially completed legacy
   cursor positions cannot map exactly onto the new multi-cell sections.
+
+The September 10 arid revision follows the edited eastern Mesa gate: forty chiseled
+frame cells per gate and removal of its remaining two standing roof lamps. The other
+standing lamps become lit candle clusters; all four hanging gate lamps stay. The common
+wood geometry still supplies the route, access shafts, and silhouette. Arid trim uses
+separate post and beam pieces so foundations extend under legs without filling the
+passage beneath roof beams. The live workshop copies have been updated and photographed;
+the matching generator was deployed on September 10 with the shared-recipe update. Captures and exact block comparisons
+are recorded in `tools/structure/arid-wall-workshop-20260909.json`.

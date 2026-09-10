@@ -132,7 +132,9 @@ for item in inventory:
     info={'structure':identifier,'category':category,'variant':'birch_forest','beds':heads,
           'work_stations':[{'occupation':o,'pos':p} for o,p in STATIONS.get(name,[])],
           'personal_containers':personal,'containers':[p for p in containers if p not in personal],
-          'cost':base['cost'],'grants':base.get('grants',[]),'sink':sink,'village_identity':slots}
+          'grants':base.get('grants',[]),'sink':sink,'village_identity':slots}
+    if 'cost' in previous:info['cost']=previous['cost']
+    if revision is not None and 'cost' in revision:info['cost']=revision['cost']
     if 'grants_if' in base:info['grants_if']=base['grants_if']
     if int(level)>1:info['upgrades_from']=f'{category}_birch_forest_{int(level)-1}'
     if name=='village_center_1':info['gathering_point']=[14,1,14]

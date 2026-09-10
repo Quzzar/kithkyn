@@ -14,6 +14,22 @@ class GuardNightRoutineTest {
   private static final UUID GUARD = UUID.fromString("3d362f8e-96a3-4a43-9f34-0ffbd9f3b3b7");
 
   @Test
+  void castleRoundsAndJailWatchKeepTheSameSleepingNights() {
+    for (long day = 0; day < 1_000; day++) {
+      long night = day * 24_000L + 18_000L;
+      GuardNightRoutine ordinary = GuardNightRoutine.choose(GUARD, night, true, false, true);
+      GuardNightRoutine sentry = GuardNightRoutine.choose(GUARD, night, true, false, true, true, false);
+      GuardNightRoutine jailer = GuardNightRoutine.choose(GUARD, night, true, false, true, false, true);
+      assertEquals(ordinary == GuardNightRoutine.SLEEP ? GuardNightRoutine.SLEEP : GuardNightRoutine.PATROL, sentry);
+      assertEquals(ordinary == GuardNightRoutine.SLEEP ? GuardNightRoutine.SLEEP : GuardNightRoutine.POST, jailer);
+      assertEquals(GuardNightRoutine.PATROL,
+          GuardNightRoutine.choose(GUARD, day * 24_000L, false, false, true, true, false));
+      assertEquals(GuardNightRoutine.POST,
+          GuardNightRoutine.choose(GUARD, day * 24_000L, false, false, true, false, true));
+    }
+  }
+
+  @Test
   void aWholeNightAndReloadedIdentityKeepTheSameChoice() {
     for (long day = 0; day < 40; day++) {
       GuardNightRoutine expected = GuardNightRoutine.choose(GUARD, day * 24_000L + 13_000L,

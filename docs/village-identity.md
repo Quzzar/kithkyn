@@ -63,6 +63,13 @@ preserving their facing and part. Do not assign opposite halves of one bed to di
 roles. This makes the author's intent explicit and avoids recoloring an entire regional
 palette.
 
+Markets are the deliberate exception to village-colored fabrics. Their tents, awnings,
+decorative cloth banners, rugs and matching candles keep the original stall colors, suggesting
+traders from beyond the village. Do not add those blocks to `primary_blocks`, `secondary_blocks`
+or heraldic `banners`. Regional market variants may change timber, masonry and planting while
+preserving the authored fabrics. The reviewed Birch/Mesa/Jungle stalls use orange, cyan and red
+with white; the existing Desert stalls retain their own original palette.
+
 A banner slot must point at a standing or wall banner authored in the structure. As it is
 placed, its banner base becomes the village's primary color and its generated layers use
 the saved primary and secondary roles. Rotation or wall facing is preserved.

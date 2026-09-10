@@ -8,10 +8,6 @@ import java.util.Map;
 
 import javax.annotation.Nullable;
 
-import com.quzzar.kithkyn.Kithkyn;
-
-import net.minecraft.world.item.ItemStack;
-
 /**
  * Registry of building definitions, populated from datapack JSON under
  * {@code data/<namespace>/kithkyn/buildings/*.json} by {@link BuildingDefinitionLoader}.
@@ -25,13 +21,7 @@ import net.minecraft.world.item.ItemStack;
  */
 public class Buildings {
 
-  /**
-   * The founding set (docs/building-spec.md, "How a village starts"): the
-   * village center plus its two companions, all placed free as one camp plat,
-   * each in the founding village's style. The center must be loaded for
-   * founding to happen at all; a missing companion is skipped loudly so a
-   * datapack without it still founds a camp.
-   */
+  /** Founding always includes the center, mine and storehouse, plus authored starting homes. */
   public static final String VILLAGE_CENTER_CATEGORY = "village_center";
   public static final String FOUNDING_MINE_CATEGORY = "mine";
   public static final String FOUNDING_STOREHOUSE_CATEGORY = "storehouse";
@@ -65,7 +55,6 @@ public class Buildings {
         .thenComparing(BuildingInfo::getName);
     families.replaceAll((family, choices) -> choices.stream().sorted(canonicalFirst).toList());
     registry = new Registry(Map.copyOf(newRegistry), Map.copyOf(families));
-    warnOnDivergentRecipes();
   }
 
   public static Map<String, BuildingInfo> allBuildings() {
@@ -105,12 +94,35 @@ public class Buildings {
     return info.hasWellFormedId() && alternatives(info.getCategory(), info.getLevel(), style).contains(info);
   }
 
-  /** Only offer automatic founding in a style whose own complete starting set is loaded. */
+  /** Resolves the entire authored starting list; absence of any member refuses the whole settlement. */
+  public static java.util.Optional<List<BuildingInfo>> foundingCompanions(BuildingInfo center, VillageStyle style) {
+    List<String> names = center.getStartingBuildings();
+    if (names.isEmpty()) {
+      BuildingInfo mine = resolve(FOUNDING_MINE_CATEGORY, 1, style);
+      BuildingInfo storehouse = resolve(FOUNDING_STOREHOUSE_CATEGORY, 1, style);
+      return mine == null || storehouse == null ? java.util.Optional.empty()
+          : java.util.Optional.of(List.of(mine, storehouse));
+    }
+    List<BuildingInfo> result = new ArrayList<>();
+    for (String name : names) {
+      BuildingInfo info = getByName(name);
+      if (info == null || info.getCategory().equals(VILLAGE_CENTER_CATEGORY)
+          || !isRegionalChoice(info, style)) return java.util.Optional.empty();
+      result.add(info);
+    }
+    if (result.stream().filter(info -> info.getCategory().equals(FOUNDING_MINE_CATEGORY)).count() != 1
+        || result.stream().filter(info -> info.getCategory().equals(FOUNDING_STOREHOUSE_CATEGORY)).count() != 1) {
+      return java.util.Optional.empty();
+    }
+    return java.util.Optional.of(List.copyOf(result));
+  }
+
+  /** Automatic founding requires the complete regional starting set, including authored homes. */
   public static boolean hasFoundingSet(VillageStyle style) {
-    Map<String, BuildingInfo> definitions = registry.byName();
-    return definitions.containsKey(VILLAGE_CENTER_CATEGORY + "_" + style.id() + "_1")
-        && definitions.containsKey(FOUNDING_MINE_CATEGORY + "_" + style.id() + "_1")
-        && definitions.containsKey(FOUNDING_STOREHOUSE_CATEGORY + "_" + style.id() + "_1");
+    BuildingInfo center = registry.byName().get(VILLAGE_CENTER_CATEGORY + "_" + style.id() + "_1");
+    return center != null && foundingCompanions(center, style).isPresent()
+        && registry.byName().containsKey(FOUNDING_MINE_CATEGORY + "_" + style.id() + "_1")
+        && registry.byName().containsKey(FOUNDING_STOREHOUSE_CATEGORY + "_" + style.id() + "_1");
   }
 
   /**
@@ -137,41 +149,6 @@ public class Buildings {
       }
     }
     return out.stream().sorted(Comparator.comparing(BuildingInfo::getName)).toList();
-  }
-
-  /**
-   * Recipes do not vary by style (docs/building-spec.md): every variant of a
-   * category and level costs what its plains variant costs. A datapack that
-   * breaks that is loaded anyway, but says so, because the planner and the
-   * builder both assume the price of a building is the price of its category.
-   */
-  private static void warnOnDivergentRecipes() {
-    Map<String, BuildingInfo> firstSeen = new HashMap<>();
-    for (BuildingInfo info : registry.byName().values()) {
-      // Only real families are held to the rule: a dev-only stand-in such as the
-      // placeholder market is its own thing, not a mispriced variant.
-      if (!info.hasWellFormedId() || VillageStyle.parse(info.getVariant()) == null) {
-        continue;
-      }
-      String key = info.getCategory() + "_" + info.getLevel();
-      BuildingInfo other = firstSeen.putIfAbsent(key, info);
-      if (other != null && !sameRecipe(other.getMaterialCost(), info.getMaterialCost())) {
-        Kithkyn.LOGGER.warn("Building variants '{}' and '{}' are priced differently; variants of one building should share a recipe",
-            other.getName(), info.getName());
-      }
-    }
-  }
-
-  private static boolean sameRecipe(List<ItemStack> a, List<ItemStack> b) {
-    if (a.size() != b.size()) {
-      return false;
-    }
-    for (int i = 0; i < a.size(); i++) {
-      if (a.get(i).getItem() != b.get(i).getItem() || a.get(i).getCount() != b.get(i).getCount()) {
-        return false;
-      }
-    }
-    return true;
   }
 
 }

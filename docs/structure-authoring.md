@@ -39,6 +39,17 @@ commands. This is the loop the current `village_center_plains_1` was built with.
    on the definition and structure file. Keep the unsuffixed canonical layout at each tier.
    If a higher-tier layout has no compatible in-place predecessor, set `"standalone": true`
    and omit `upgrades_from`; its cost is the complete fresh building recipe.
+   Construction prices default to the shared `kithkyn/construction_recipes/<category>_<level>.json`
+   resource. Omit `cost` when creating a regional variant so it inherits that price automatically.
+   A deliberate building-specific exception may supply a complete `cost` array; exporters preserve
+   it and the same recipe validator applies. Prefer a shared recipe for a new economic category or
+   level. See [building-spec.md](building-spec.md).
+   Markets retain their original tent, decorative banner, rug and candle colors. Regional
+   materials may change, but these fabrics must not become village identity slots; see
+   [village-identity.md](village-identity.md).
+   Preserve complete counter trapdoor patterns and supported carpet trim. Do not remove
+   decorative rails to compensate for pathfinding through closed trapdoors; verify the
+   actual entrance with native worker walks instead.
 6. **Look at it**: `/kkdev village gallery <pos>` places every loaded definition on labelled
    plinths. `/reload` picks up JSON edits without a restart; a new `.nbt` needs a restart.
 7. **Verify the palette**, always, before shipping. The decompressed NBT contains every

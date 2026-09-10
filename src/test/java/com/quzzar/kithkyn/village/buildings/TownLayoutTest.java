@@ -75,7 +75,7 @@ class TownLayoutTest {
     var anchor = new TownLayout.Footprint(-110, -210, -90, -190);
     var info = new BuildingInfo("storehouse_plains_1");
     for (Direction side : Direction.Plane.HORIZONTAL) {
-      var placed = local.moved(TownLayout.centeredFrontageOrigin(anchor, local, 2, side));
+      var placed = local.moved(TownLayout.frontageOrigins(anchor, local, 2, side).getFirst());
       Rotation inward = info.rotationFacing(side.getOpposite());
       for (Rotation rotation : Rotation.values()) {
         assertEquals(rotation == inward,

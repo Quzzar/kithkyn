@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.function.Consumer;
 import java.util.function.UnaryOperator;
+import java.util.function.Predicate;
+import java.util.function.Supplier;
 
 import com.quzzar.kithkyn.Kithkyn;
 import com.quzzar.kithkyn.entities.ai.goals.work.PackLogistics;
@@ -17,6 +19,7 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.SwordItem;
 
 /**
@@ -86,6 +89,41 @@ public final class GuardWeapons {
   static boolean wantsSword(boolean holdingSword, boolean liveTarget, double distance, boolean visible) {
     return liveTarget && visible
         && distance <= (holdingSword ? RETURN_TO_CROSSBOW_DISTANCE : DRAW_SWORD_DISTANCE);
+  }
+
+  /** Initial castle sword equipment reuses any real sword and shield already carried. */
+  public static void issueCastleSwordKit(RealPerson person) {
+    StartingKit kit = castleSwordKit(person.personMainInv, person.getMainHandItem(), person.getOffhandItem(),
+        displaced -> person.addItems(List.of(displaced)));
+    person.setItemSlot(EquipmentSlot.MAINHAND, kit.sword());
+    person.setItemSlot(EquipmentSlot.OFFHAND, kit.shield());
+  }
+
+  record StartingKit(ItemStack sword, ItemStack shield) { }
+
+  static StartingKit castleSwordKit(Container pack, ItemStack hand, ItemStack offhand,
+      Consumer<ItemStack> displaced) {
+    ItemStack sword = startingPiece(pack, hand, stack -> stack.getItem() instanceof SwordItem,
+        () -> JobTool.SWORD.basicStack(), displaced);
+    ItemStack shield = startingPiece(pack, offhand, Person::isShield,
+        () -> new ItemStack(Items.SHIELD), displaced);
+    return new StartingKit(sword, shield);
+  }
+
+  /** Only the initial assignment may mint missing pieces; held or packed upgrades survive unchanged. */
+  private static ItemStack startingPiece(Container pack, ItemStack held, Predicate<ItemStack> matches,
+      Supplier<ItemStack> basic, Consumer<ItemStack> displaced) {
+    if (matches.test(held)) return held;
+    ItemStack piece = ItemStack.EMPTY;
+    for (int slot = 0; slot < pack.getContainerSize(); slot++) {
+      if (matches.test(pack.getItem(slot))) {
+        piece = pack.removeItemNoUpdate(slot);
+        break;
+      }
+    }
+    if (piece.isEmpty()) piece = basic.get();
+    if (!held.isEmpty()) displaced.accept(held);
+    return piece;
   }
 
   /** One-time backup kit. A full pack displaces one real stack onto the ground, never deletes it. */

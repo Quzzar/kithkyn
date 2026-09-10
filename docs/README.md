@@ -100,8 +100,10 @@ in it, and update it in the same change that moves what it describes.
   sites, each read from its own LICENSE file, plus the realistic paths forward.
 - [structure-review.md](structure-review.md): decisions from the walkable reference gallery,
   including the retained watchtower, church, fishery, and desert-tavern directions, the village-biome
-  roster, captured Pueblo homes and service buildings, worker households, navigation checks,
+  roster, captured Pueblo and Jungle building selections, worker households, navigation checks,
   and the village identity system that precedes adaptation.
+- [castles.md](castles.md): the Desert castle, royal and captain housing, ruler decisions,
+  five-minute custody and protected evidence transfers.
 - [worker-loops.md](worker-loops.md): what a villager actually does. The three verbs a job is
   built from, roaming versus fixed, what happens when there is nothing to work on, and the
   performance budget that decides how targets get found.

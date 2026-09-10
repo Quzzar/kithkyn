@@ -465,7 +465,7 @@ public final class BirchVillageVerification {
       level.setBlock(pos, pos.getY() < site.getY() ? Blocks.STONE.defaultBlockState() : Blocks.AIR.defaultBlockState(), 2);
     }
     if (obstructed) {
-      // Only north and east are open: the old opposing-flank layout must fail here.
+      // The raised west and south terrain must not be carved to force a fixed founding layout.
       for (BlockPos pos : BlockPos.betweenClosed(site.offset(-60, 0, -60), site.offset(60, 8, 60))) {
         if (pos.getX() < site.getX() - 12 || pos.getZ() > site.getZ() + 12) {
           level.setBlock(pos, Blocks.STONE.defaultBlockState(), 2);
@@ -494,51 +494,33 @@ public final class BirchVillageVerification {
     BlockPos fire = BlockPos.of(center.getOriginLocation()).offset(new BlockPos(14, 1, 14).rotate(center.getRotation()));
     check(level.getBlockState(fire).is(Blocks.CAMPFIRE), "Approved basement campfire missing");
     check(fire.getX() == site.getX() && fire.getZ() == site.getZ(), "Founding anchor shifted");
-    var sides = java.util.EnumSet.noneOf(net.minecraft.core.Direction.class);
-    var centerTemplate = level.getStructureManager().getOrCreate(
-        ResourceLocation.fromNamespaceAndPath(Kithkyn.MODID, center.getInfo().getPath()));
-    BlockPos centerOrigin = BlockPos.of(center.getOriginLocation());
-    BoundingBox centerBounds = BuildingFootprint.bounds(centerTemplate, center.getRotation())
-        .moved(centerOrigin.getX(), centerOrigin.getY(), centerOrigin.getZ());
-    for (Building companion : village.getBuildings()) {
-      String category = companion.getInfo().getCategory();
-      if (!category.equals("mine") && !category.equals("storehouse")) continue;
-      BlockPos at = BlockPos.of(companion.getCenterLocation());
-      var facing = companion.getRotation().rotate(companion.getInfo().getEntranceFacing());
-      var companionTemplate = level.getStructureManager().getOrCreate(
-          ResourceLocation.fromNamespaceAndPath(Kithkyn.MODID, companion.getInfo().getPath()));
-      BlockPos companionOrigin = BlockPos.of(companion.getOriginLocation());
-      var companionBounds = BuildingFootprint.bounds(companionTemplate, companion.getRotation())
-          .moved(companionOrigin.getX(), companionOrigin.getY(), companionOrigin.getZ());
-      int doubledCenterError = facing.getAxis() == net.minecraft.core.Direction.Axis.X
-          ? companionBounds.minZ() + companionBounds.maxZ() - centerBounds.minZ() - centerBounds.maxZ()
-          : companionBounds.minX() + companionBounds.maxX() - centerBounds.minX() - centerBounds.maxX();
-      check(Math.abs(doubledCenterError) <= 1, category + " is not centered alongside the town center");
-      sides.add(facing.getOpposite());
-      int dot = facing.getStepX()*(fire.getX()-at.getX()) + facing.getStepZ()*(fire.getZ()-at.getZ());
-      check(dot > 0, category+" entrance points away from the center");
-      if (category.equals("storehouse")) {
-        check(BlockPos.of(companion.getOriginLocation()).getY() == site.getY(), "Storehouse first step is still buried");
+    if (!obstructed) {
+      for (Building companion : village.getBuildings()) {
+        if (companion == center) continue;
+        int expectedOriginY = site.getY() - 1 - companion.getInfo().getSink();
+        check(BlockPos.of(companion.getOriginLocation()).getY() == expectedOriginY,
+            companion.getName() + " did not apply its sink once to the flat ground course");
       }
     }
-    check(sides.size() == 2, "Founding companions must use distinct sides");
     var footprints = village.getBuildings().stream().map(companion -> {
       var template = level.getStructureManager().getOrCreate(ResourceLocation.fromNamespaceAndPath(Kithkyn.MODID, companion.getInfo().getPath()));
       BlockPos origin = BlockPos.of(companion.getOriginLocation());
       return BuildingFootprint.bounds(template, companion.getRotation()).moved(origin.getX(), 0, origin.getZ());
     }).toList();
+    for (int first = 0; first < footprints.size(); first++) {
+      for (int second = first + 1; second < footprints.size(); second++) {
+        BoundingBox other = footprints.get(second);
+        check(!footprints.get(first).intersects(other.minX() - 1, other.minZ() - 1,
+            other.maxX() + 1, other.maxZ() + 1), "Founding footprints lost their walking gap");
+      }
+    }
     for (BlockPos pos : BlockPos.betweenClosed(site.offset(-60, 0, -60), site.offset(60, 0, 60))) {
       boolean expected = footprints.stream().anyMatch(box -> pos.getX() >= box.minX() && pos.getX() <= box.maxX()
           && pos.getZ() >= box.minZ() && pos.getZ() <= box.maxZ());
       check(village.hasClaimed(pos) == expected, "A rejected trial site left a claim at " + pos);
     }
     if (obstructed) {
-      check(sides.equals(java.util.EnumSet.of(net.minecraft.core.Direction.NORTH, net.minecraft.core.Direction.EAST)),
-          "Founding must choose the open north/east sides, got " + sides);
       check(level.getBlockState(site.offset(-14, 3, 0)).is(Blocks.STONE), "Rejected west site was carved");
-    } else {
-      var iterator = sides.iterator();
-      check(iterator.next().getOpposite() != iterator.next(), "Equal-cost flat terrain should prefer adjacent sides");
     }
     Kithkyn.LOGGER.info("[birch-verify] actual biome selection and full three-building founding PASS");
   }

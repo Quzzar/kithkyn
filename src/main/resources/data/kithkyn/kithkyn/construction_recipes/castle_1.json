@@ -1,0 +1,7 @@
+{
+  "cost": [
+    {"item": "minecraft:oak_log", "count": 64},
+    {"item": "minecraft:cobblestone", "count": 128},
+    {"item": "minecraft:iron_ingot", "count": 16}
+  ]
+}

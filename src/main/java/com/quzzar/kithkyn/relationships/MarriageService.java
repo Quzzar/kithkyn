@@ -247,7 +247,7 @@ public final class MarriageService {
   /** The facts of a proposed marriage, for the brain to weigh: who they are, how they feel, the village's room. */
   private static String decisionSituation(Village village, RealPerson a, RealPerson b, RelationshipPair pair) {
     StringBuilder situation = new StringBuilder();
-    situation.append("You are the collective judgement of ").append(village.getName()).append(". ");
+    situation.append(com.quzzar.kithkyn.village.VillageRuler.context(village));
     situation.append(a.getFullName()).append(" (").append(a.getOccupation().name().toLowerCase())
         .append(") and ").append(b.getFullName()).append(" (").append(b.getOccupation().name().toLowerCase())
         .append(") have each asked to marry the other. ");

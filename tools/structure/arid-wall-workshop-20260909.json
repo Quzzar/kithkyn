@@ -1,5 +1,5 @@
 {
-  "purpose": "Editable sandstone Desert and red sandstone Mesa walls, with oak trapdoors and ladders; one wall stage for every village.",
+  "purpose": "Editable smooth sandstone and smooth red sandstone walls with chiseled gate frames, lit candle clusters of two to four, and four hanging lanterns per gate.",
   "entry": [
     3680.5,
     230,
@@ -27,7 +27,7 @@
     {
       "id": "badlands",
       "style": "badlands",
-      "label": "MESA / PUEBLO\nRed Sandstone wall - EDIT THIS COPY",
+      "label": "MESA / PUEBLO\nSmooth Red Sandstone wall - EDIT THIS COPY",
       "from": [
         3608,
         230,
@@ -47,12 +47,12 @@
         855
       ],
       "status": "placed-and-visually-reviewed",
-      "material": "red_sandstone"
+      "material": "smooth_red_sandstone"
     },
     {
       "id": "desert",
       "style": "desert",
-      "label": "DESERT\nSandstone wall - EDIT THIS COPY",
+      "label": "DESERT\nSmooth Sandstone wall - EDIT THIS COPY",
       "from": [
         3608,
         230,
@@ -72,17 +72,19 @@
         755
       ],
       "status": "placed-and-visually-reviewed",
-      "material": "sandstone"
+      "material": "smooth_sandstone"
     }
   ],
   "status": "placed-and-visually-reviewed",
   "render_review": {
     "passed": true,
     "views": [
-      "run/arid-wall-workshop/sandstone-review/client/screenshots/mesa-red-sandstone.png",
-      "run/arid-wall-workshop/sandstone-review/client/screenshots/desert-sandstone.png"
+      "run/arid-wall-workshop/candles-20260910/render/client/screenshots/mesa-candle-walls.png",
+      "run/arid-wall-workshop/candles-20260910/render/client/screenshots/desert-candle-walls.png",
+      "run/arid-wall-workshop/candles-20260910/render/client/screenshots/mesa-chiseled-gate.png",
+      "run/arid-wall-workshop/candles-20260910/render/client/screenshots/desert-chiseled-gate.png"
     ],
-    "notes": "Both live wall rings visually inspected: regional masonry, complete gates and corners, unchanged oak trapdoors and ladders. Upgrade previews removed."
+    "notes": "Viewed both full rings and both gate details after all candle and framing edits."
   },
   "restyled": true,
   "removed_upgrade_previews": [
@@ -116,11 +118,73 @@
   "native_access": {
     "passed": true,
     "reports": [
-      "run/arid-village-closeout/wall-access-desert/verification.json",
-      "run/arid-village-closeout/wall-access-badlands/verification.json"
+      "run/arid-wall-workshop/candles-20260910/access-desert/verification.json",
+      "run/arid-wall-workshop/candles-20260910/access-badlands/verification.json"
     ],
-    "notes": "Eight guard ascent/descent probes passed per style: all four gates and four corners."
+    "notes": "All eight guard ascent/descent probes passed for each final arid generator palette."
   },
   "private_work": "run/arid-wall-workshop",
-  "editing": "User changes belong to these separate copies; do not regenerate over edits."
+  "editing": "User changes belong to these separate copies; do not regenerate over edits.",
+  "smooth_restyle": {
+    "date": "2026-09-10",
+    "result": "run/arid-wall-workshop/smooth-20260910/result.json",
+    "status": "native-block-comparison-and-visual-review-passed",
+    "runtime_palette": "source-updated-awaiting-next-build-deployment",
+    "compileJava": "passed",
+    "wall_palette_tests": {
+      "tests": 2,
+      "failures": 0,
+      "errors": 0
+    }
+  },
+  "candle_restyle": {
+    "date": "2026-09-10",
+    "work": "run/arid-wall-workshop/candles-20260910",
+    "user_edits": "badlands-user-edits.json",
+    "before_capture_sha256": {
+      "badlands": "6e3bd1cc6a01638a722a20a575eb56c8a3ba5542587a412e4cc20789b1978b5b",
+      "desert": "e6e00b5c81d43ed378bd1efd7c493a273798d7d59881b550555d8124b688cdcf"
+    },
+    "after_capture_sha256": {
+      "badlands": "e680b117bcfbe318177c5bd3ae653ea0152ada33f7fffb8dccb246f835071870",
+      "desert": "d42f4f9e230eb39976dc67b2ea01c8f6a5992936f58493b5dcfaaeecb782aaef"
+    },
+    "native_comparison": [
+      {
+        "style": "badlands",
+        "compared": 1234,
+        "changes": 148,
+        "mismatches": [],
+        "candles": {
+          "3": 20,
+          "4": 10,
+          "2": 8
+        },
+        "lanterns": 16,
+        "chiseled": 160
+      },
+      {
+        "style": "desert",
+        "compared": 1234,
+        "changes": 205,
+        "mismatches": [],
+        "candles": {
+          "4": 12,
+          "3": 15,
+          "2": 11
+        },
+        "lanterns": 16,
+        "chiseled": 160
+      }
+    ],
+    "runtime_palette": "source-updated-awaiting-next-build-deployment",
+    "added_ladder": "The four user-added east-facing-corner rungs are preserved and mirrored into the Desert editing copy; the shared generated climb shafts are unchanged.",
+    "compileJava": "passed",
+    "wall_tests": {
+      "tests": 49,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    }
+  }
 }

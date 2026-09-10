@@ -21,16 +21,6 @@
       9
     ]
   ],
-  "cost": [
-    {
-      "item": "minecraft:stone_bricks",
-      "count": 380
-    },
-    {
-      "item": "minecraft:oak_log",
-      "count": 133
-    }
-  ],
   "grants": [
     "HEALING"
   ],

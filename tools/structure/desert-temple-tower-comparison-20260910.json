@@ -1,0 +1,140 @@
+{
+  "status": "verified_and_visually_reviewed",
+  "entry": [
+    4240.5,
+    230,
+    917.5,
+    180,
+    0
+  ],
+  "bounds": [
+    4204,
+    228,
+    842,
+    4282,
+    255,
+    921
+  ],
+  "items": [
+    {
+      "id": "current_temple",
+      "exhibit": "D07.7",
+      "label": "CURRENT TEMPLE",
+      "detail": "Desert Oasis Temple | CTOV",
+      "source": "/Users/quzzar/Projects/kithkyn/run/desert-integration/datapack/data/kithkyn/structure/church_desert_1.nbt",
+      "origin": [
+        4212,
+        230,
+        891
+      ],
+      "size": [
+        17,
+        14,
+        17
+      ],
+      "source_sha256": "b10c2c6090e90437bab80f4f74a22e5b48a8da178398f2edcb2c96056d47a6e6",
+      "template": "run/pueblo-showcase/desert-temple-tower-20260910/comparison-templates/current_temple.nbt",
+      "template_sha256": "b10c2c6090e90437bab80f4f74a22e5b48a8da178398f2edcb2c96056d47a6e6",
+      "template_id": "kithkyn_pueblo_showcase:desert_temple_tower_20260910_current_temple"
+    },
+    {
+      "id": "alternative_temple",
+      "exhibit": "R01.8",
+      "label": "ALTERNATIVE TEMPLE",
+      "detail": "Temple Plaza 16 | Dungeons and Taverns",
+      "source": "/Users/quzzar/Projects/kithkyn/run/pueblo-showcase/desert-temple-tower-20260910/captures/R01.8.nbt",
+      "origin": [
+        4252,
+        230,
+        891
+      ],
+      "size": [
+        17,
+        11,
+        17
+      ],
+      "source_sha256": "531261d4cab83cb8e6cd12566fa05c8a102e08911190b36f79eb1861ebf39887",
+      "template": "run/pueblo-showcase/desert-temple-tower-20260910/comparison-templates/alternative_temple.nbt",
+      "template_sha256": "0e909c2d75aa74db90f7716bcd6a8d0d197fa0545d2ca14e15b6446fe2b11e25",
+      "template_id": "kithkyn_pueblo_showcase:desert_temple_tower_20260910_alternative_temple"
+    },
+    {
+      "id": "current_tower",
+      "exhibit": "D03.3",
+      "label": "CURRENT WATCHTOWER",
+      "detail": "Desert Observatory | CTOV",
+      "source": "/Users/quzzar/Projects/kithkyn/run/desert-integration/datapack/data/kithkyn/structure/watchtower_desert_1.nbt",
+      "origin": [
+        4215,
+        230,
+        850
+      ],
+      "size": [
+        11,
+        19,
+        14
+      ],
+      "source_sha256": "f110a0345b868b3db60c9458196fb56161ea7903eca6b27159395749e9dbdee1",
+      "template": "run/pueblo-showcase/desert-temple-tower-20260910/comparison-templates/current_tower.nbt",
+      "template_sha256": "e4d43d4eaa0b426b7e57c93f95eccacdd27edf8a6427461528b81cb0824346df",
+      "template_id": "kithkyn_pueblo_showcase:desert_temple_tower_20260910_current_tower"
+    },
+    {
+      "id": "alternative_tower",
+      "exhibit": "V03.7",
+      "label": "ALTERNATIVE WATCHTOWER",
+      "detail": "Desert Small House 6 | Vanilla",
+      "source": "/Users/quzzar/Projects/kithkyn/run/pueblo-showcase/desert-temple-tower-20260910/captures/V03.7.nbt",
+      "origin": [
+        4255,
+        230,
+        850
+      ],
+      "size": [
+        10,
+        18,
+        9
+      ],
+      "source_sha256": "d6b033cde371b78a8e7ff99b356d0e5aeeba3f05d94686f2766b9a29420ad56b",
+      "template": "run/pueblo-showcase/desert-temple-tower-20260910/comparison-templates/alternative_tower.nbt",
+      "template_sha256": "e5ec4dced687e95da3271d52e1d4a7727cb7ba135ce719f6d017c7860a0d5569",
+      "template_id": "kithkyn_pueblo_showcase:desert_temple_tower_20260910_alternative_tower"
+    }
+  ],
+  "selection_changed": true,
+  "purpose": "Walkable comparison of the selected Desert temple and tier-one watchtower with the user-nominated alternatives.",
+  "original_exhibits_preserved": true,
+  "capture_inventory": "run/pueblo-showcase/desert-temple-tower-20260910/captures/inventory.json",
+  "verification": "run/pueblo-showcase/desert-temple-tower-20260910/verification.json",
+  "navigation": {
+    "entry": [
+      4240.5,
+      230,
+      917.5
+    ],
+    "travel_sign": [
+      4234,
+      230,
+      980
+    ],
+    "layout": "Current on west/left; alternatives on east/right. Temples south/near entry, towers north."
+  },
+  "preview": {
+    "bed_color": "blue",
+    "containers": "Empty comparison copies",
+    "entities": "No template entities"
+  },
+  "screenshots": [
+    "run/pueblo-showcase/desert-temple-tower-20260910/render/client/screenshots/temple-comparison.png",
+    "run/pueblo-showcase/desert-temple-tower-20260910/render/client/screenshots/watchtower-comparison.png",
+    "run/pueblo-showcase/desert-temple-tower-20260910/render/client/screenshots/temple-plaza-detail.png"
+  ],
+  "verified_blocks": 2794,
+  "screenshots_viewed": true,
+  "decision": {
+    "temple": "R01.8 replaces D07.7",
+    "watchtower_1": "V03.7 with ladder access",
+    "watchtower_2": "D03.3 with its captured ladder",
+    "manifest": "tools/structure/desert-temple-tower-adoption-20260910.json"
+  }
+}

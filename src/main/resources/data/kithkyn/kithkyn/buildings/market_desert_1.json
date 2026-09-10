@@ -17,16 +17,6 @@
       2
     ]
   ],
-  "cost": [
-    {
-      "item": "minecraft:oak_log",
-      "count": 16
-    },
-    {
-      "item": "minecraft:cobblestone",
-      "count": 14
-    }
-  ],
   "grants": [
     "TRADE"
   ],

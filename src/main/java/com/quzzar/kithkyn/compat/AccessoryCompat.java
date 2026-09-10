@@ -4,6 +4,10 @@ import java.util.List;
 
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.Container;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.neoforged.fml.ModList;
 
 /**
@@ -61,6 +65,16 @@ public final class AccessoryCompat {
       return stack;
     }
     return CuriosAccessories.equip(entity, stack);
+  }
+
+  /** Moves death-droppable accessories into evidence while preserving retained and unsafe dynamic slots. */
+  public static int confiscateDroppable(ServerPlayer player, DamageSource source, List<Container> evidence) {
+    return isPresent() ? CuriosAccessories.confiscate(player, source, evidence) : 0;
+  }
+
+  /** Vanilla equipment can also grant Curios slots; keep it equipped when removal could eject overflow. */
+  public static boolean grantsAccessorySlots(ItemStack stack, EquipmentSlot slot) {
+    return isPresent() && CuriosAccessories.grantsSlots(stack, slot);
   }
 
 }

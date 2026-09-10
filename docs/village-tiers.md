@@ -75,15 +75,16 @@ to players; no journal exists in code yet.
 
 ## The camp: how a village starts
 
-A new village is rank 0 with the **founding set** (see building-spec.md, "How a village
-starts"): the village center (`village_center_plains_1`), the little mine
-(`mine_plains_1`), and a storehouse (`storehouse_plains_1`), all placed free as one camp
-plat around the campfire. The center's beds ARE the starting housing — **4 beds**, so a
-camp supports up to 4 villagers with no houses built (the existing `processNewBuilding`
-bed-registration makes this free; the renamed center still defines 2 beds and its miner
-and guard stations until the content pass strips it to the decided 4-beds-plus-builder
-shape). Founding code places the set and skips payment; the definitions keep their
-normal recipes so later copies cost.
+A new village is rank 0 with its authored founding set: a village center, mine and
+storehouse, plus any starting homes listed by the center. The whole set is surveyed with
+the normal construction placement search before any building is placed. Each building
+uses local terrain and the ordinary spacing and facing preferences. There is no shared
+camp platform or fixed companion side.
+
+The buildings' actual beds define starting housing capacity. Beds can be in the center
+or in separate homes, such as Jungle's four founding huts. Existing bed registration and
+campfire arrivals apply to both. Founding skips payment; the definitions keep normal
+recipes for later construction. See [building-spec.md](building-spec.md).
 
 **Death is permanent.** Villagers never respawn; population recovers only through the
 campfire arrival model. A camp that loses its people to wolves is a dead camp — that

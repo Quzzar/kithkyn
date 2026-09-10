@@ -237,6 +237,9 @@ public class RealPerson extends Person {
   private static final EntityDataAccessor<Boolean> GUARD_CAPTAIN = SynchedEntityData.defineId(RealPerson.class,
       EntityDataSerializers.BOOLEAN);
 
+  private static final EntityDataAccessor<Boolean> GUARD_JAILER = SynchedEntityData.defineId(RealPerson.class,
+      EntityDataSerializers.BOOLEAN);
+
   /** Transient work intent, always released with the active chopping goal. */
   private boolean guardChopping;
 
@@ -639,6 +642,7 @@ public class RealPerson extends Person {
     builder.define(TITLE, "");
     builder.define(WANDERING_MERCHANT, false);
     builder.define(GUARD_CAPTAIN, false);
+    builder.define(GUARD_JAILER, false);
 
   }
 
@@ -1231,6 +1235,10 @@ public class RealPerson extends Person {
   }
 
   private String occupationLabel() {
+    if (getOccupation() == Occupation.LEADER) return com.quzzar.kithkyn.village.VillageRuler.title(getGender());
+    boolean jailer = this.level().isClientSide ? this.entityData.get(GUARD_JAILER)
+        : com.quzzar.kithkyn.village.GuardDuty.isJailer(this);
+    if (jailer) return "Jailer";
     boolean captain = this.level().isClientSide ? this.entityData.get(GUARD_CAPTAIN)
         : com.quzzar.kithkyn.village.GuardDuty.isCaptain(this);
     return getOccupation() == Occupation.GUARD && captain ? "Guard Captain"
@@ -1239,6 +1247,7 @@ public class RealPerson extends Person {
 
   private void refreshGuardCaptain() {
     if (!this.level().isClientSide) {
+      this.entityData.set(GUARD_JAILER, com.quzzar.kithkyn.village.GuardDuty.isJailer(this));
       this.entityData.set(GUARD_CAPTAIN, com.quzzar.kithkyn.village.GuardDuty.isCaptain(this));
     }
   }
@@ -2055,7 +2064,9 @@ public class RealPerson extends Person {
   public GuardNightRoutine guardRoutine() {
     return GuardNightRoutine.choose(this.getUUID(), this.level().getDayTime(), this.level().isNight(),
         com.quzzar.kithkyn.village.GuardDuty.isCaptain(this),
-        com.quzzar.kithkyn.village.GuardDuty.of(this) != null);
+        com.quzzar.kithkyn.village.GuardDuty.of(this) != null,
+        com.quzzar.kithkyn.village.GuardDuty.hasCastlePatrol(this),
+        com.quzzar.kithkyn.village.GuardDuty.isJailer(this));
   }
 
   /** Person-level bedtime is shared by sleeping, night restocking, bell recall and conversations. */
@@ -2091,8 +2102,12 @@ public class RealPerson extends Person {
         // the village stores, and a village with none logs the shortage rather
         // than inventing a meal.
         JobTool guardTool = JobTool.of(this);
-        kit(EquipmentSlot.MAINHAND,
-            guardTool == null ? new ItemStack(Items.STONE_AXE) : guardTool.basicStack());
+        if (com.quzzar.kithkyn.village.GuardDuty.isCastleSwordGuard(this)) {
+          GuardWeapons.issueCastleSwordKit(this);
+        } else {
+          kit(EquipmentSlot.MAINHAND,
+              guardTool == null ? new ItemStack(Items.STONE_AXE) : guardTool.basicStack());
+        }
         GuardWeapons.issueSidearm(this);
         break;
       case LUMBERJACK:
@@ -2262,8 +2277,7 @@ public class RealPerson extends Person {
       return;
     }
 
-    String detail = isWanderingMerchant() ? "Wandering Merchant"
-        : Utils.capitalize(getOccupation().name().toLowerCase());
+    String detail = isWanderingMerchant() ? "Wandering Merchant" : occupationLabel();
     if (getVillage() != null) {
       detail = detail + " of " + getVillage().getName();
     } else if (isWanderingMerchant() && !getVillageName().isBlank()) {

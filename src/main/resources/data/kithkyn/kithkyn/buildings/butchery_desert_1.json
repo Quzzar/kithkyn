@@ -28,16 +28,6 @@
       3
     ]
   ],
-  "cost": [
-    {
-      "item": "minecraft:oak_log",
-      "count": 31
-    },
-    {
-      "item": "minecraft:cobblestone",
-      "count": 41
-    }
-  ],
   "grants": [
     "MEAT",
     "LEATHER",

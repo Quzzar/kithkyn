@@ -31,12 +31,6 @@
       9
     ]
   ],
-  "cost": [
-    {
-      "item": "minecraft:cobblestone",
-      "count": 104
-    }
-  ],
   "grants": [
     "LOGS",
     "PLANKS"

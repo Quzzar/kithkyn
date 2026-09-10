@@ -1,15 +1,5 @@
 {
   "structure": "well_plains_1",
-  "cost": [
-    {
-      "item": "minecraft:oak_log",
-      "count": 5
-    },
-    {
-      "item": "minecraft:cobblestone",
-      "count": 8
-    }
-  ],
   "grants": [
     "WATER"
   ],

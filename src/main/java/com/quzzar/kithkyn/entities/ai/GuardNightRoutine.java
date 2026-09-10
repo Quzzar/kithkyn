@@ -20,11 +20,18 @@ public enum GuardNightRoutine {
    */
   public static GuardNightRoutine choose(UUID person, long dayTime, boolean night,
       boolean captain, boolean hasPost) {
-    if (!night) return hasPost && !captain ? POST : PATROL;
+    return choose(person, dayTime, night, captain, hasPost, false, false);
+  }
+
+  /** Castle routes and the jailer's fixed watch preserve the very same sleeping nights. */
+  public static GuardNightRoutine choose(UUID person, long dayTime, boolean night,
+      boolean captain, boolean hasPost, boolean castlePatrol, boolean jailer) {
+    if (!night) return jailer ? POST : castlePatrol || captain || !hasPost ? PATROL : POST;
     long seed = mix(person.getMostSignificantBits()) ^ person.getLeastSignificantBits()
         ^ Math.floorDiv(dayTime, DAY_LENGTH) * NIGHT_SALT;
     if (chance(seed) < 0.20D) return SLEEP;
-    if (captain || !hasPost || chance(seed ^ PATROL_SALT) < 0.30D) return PATROL;
+    if (jailer) return POST;
+    if (castlePatrol || captain || !hasPost || chance(seed ^ PATROL_SALT) < 0.30D) return PATROL;
     return POST;
   }
 

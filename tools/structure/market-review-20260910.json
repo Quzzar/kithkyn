@@ -1,0 +1,199 @@
+{
+  "status": "verified_and_locally_deployed",
+  "description": "Restore original market tent colors and complete trapdoor/carpet trim across Jungle, Mesa and Desert. Preserve Aaron\u2019s tier-three Mesa repair; fix closed-trapdoor navigation instead of deleting counter decoration.",
+  "work": "run/market-repair-20260910",
+  "color_policy": "Original authored cloth colors are independent of village primary/secondary colors. Regional structural palettes remain.",
+  "user_edit_capture": "run/market-repair-20260910/user-rail-repair/captures/market_badlands_3.nbt",
+  "live_readback": "run/market-repair-20260910/verification.json",
+  "compared_blocks": 2977,
+  "live_gallery_updates": "run/market-repair-20260910/rails-applied.json",
+  "restoration": "run/market-repair-20260910/rail-restoration.json",
+  "navigation_regression_before": "run/market-repair-20260910/rail-access/verification.json",
+  "navigation_after": "run/market-repair-20260910/all-market-access/verification.json",
+  "market_court_entry": [
+    5203.5,
+    230,
+    976.5
+  ],
+  "jungle_workshop_entry": [
+    4970.5,
+    230,
+    977.5
+  ],
+  "screenshots_viewed": [
+    "run/market-repair-20260910/jungle-final-render/client/screenshots/jungle-repaired-counters.png",
+    "run/market-repair-20260910/rail-render/client/screenshots/mesa-restored-railing.png",
+    "run/market-repair-20260910/rail-render/client/screenshots/desert-restored-railing.png"
+  ],
+  "items": [
+    {
+      "id": "market_jungle_1",
+      "style": "jungle",
+      "tier": 1,
+      "origin": [
+        4990,
+        230,
+        889
+      ],
+      "size": [
+        16,
+        6,
+        17
+      ],
+      "template": "run/market-repair-20260910/pack/data/kithkyn/structure/market_jungle_1.nbt",
+      "sha256": "68876b38420002f335f56c1193b4d05fe4aed7605b82b6ed21ec701b3c481d34"
+    },
+    {
+      "id": "market_badlands_1",
+      "style": "badlands",
+      "tier": 1,
+      "origin": [
+        5210,
+        230,
+        886
+      ],
+      "size": [
+        16,
+        6,
+        17
+      ],
+      "template": "run/market-repair-20260910/pack/data/kithkyn/structure/market_badlands_1.nbt",
+      "sha256": "c803061f837cfd42ea6960045d347db2528279c39521a7ac3e72160b4516132c"
+    },
+    {
+      "id": "market_desert_1",
+      "style": "desert",
+      "tier": 1,
+      "origin": [
+        5175,
+        230,
+        886
+      ],
+      "size": [
+        8,
+        6,
+        9
+      ],
+      "template": "run/market-repair-20260910/pack/data/kithkyn/structure/market_desert_1.nbt",
+      "sha256": "4684673b5009fbfdebc2789252b61efe77e722229e0efcaa8b4175cfb2842849"
+    },
+    {
+      "id": "market_jungle_2",
+      "style": "jungle",
+      "tier": 2,
+      "origin": [
+        4990,
+        230,
+        918
+      ],
+      "size": [
+        23,
+        6,
+        17
+      ],
+      "template": "run/market-repair-20260910/pack/data/kithkyn/structure/market_jungle_2.nbt",
+      "sha256": "e50fe2ae7576b9fd5794953ddd66c1b04bf7f6539077eabb0af4a2f3a17b1235"
+    },
+    {
+      "id": "market_badlands_2",
+      "style": "badlands",
+      "tier": 2,
+      "origin": [
+        5210,
+        230,
+        915
+      ],
+      "size": [
+        23,
+        6,
+        17
+      ],
+      "template": "run/market-repair-20260910/pack/data/kithkyn/structure/market_badlands_2.nbt",
+      "sha256": "d669d8339987a85eea19e96d97ace19a78c741c307edbf91f4ab5a1c2429803c"
+    },
+    {
+      "id": "market_desert_2",
+      "style": "desert",
+      "tier": 2,
+      "origin": [
+        5175,
+        230,
+        915
+      ],
+      "size": [
+        15,
+        6,
+        9
+      ],
+      "template": "run/market-repair-20260910/pack/data/kithkyn/structure/market_desert_2.nbt",
+      "sha256": "924f7c24d0d1f2731c7237071f7fea856c09405fdc4088814020fc577359f4b1"
+    },
+    {
+      "id": "market_jungle_3",
+      "style": "jungle",
+      "tier": 3,
+      "origin": [
+        4990,
+        230,
+        946
+      ],
+      "size": [
+        23,
+        6,
+        25
+      ],
+      "template": "run/market-repair-20260910/pack/data/kithkyn/structure/market_jungle_3.nbt",
+      "sha256": "9d1d3a097f64b7e16b835e7f08c92c7a34b14de8a11c74b6036dd78cf57f79fe"
+    },
+    {
+      "id": "market_badlands_3",
+      "style": "badlands",
+      "tier": 3,
+      "origin": [
+        5210,
+        230,
+        944
+      ],
+      "size": [
+        23,
+        6,
+        25
+      ],
+      "template": "run/market-repair-20260910/pack/data/kithkyn/structure/market_badlands_3.nbt",
+      "sha256": "d52356662ef25123b9f2d222cddfe923faa9bd681347a91386e05bcb73ed7caa"
+    },
+    {
+      "id": "market_desert_3",
+      "style": "desert",
+      "tier": 3,
+      "origin": [
+        5175,
+        230,
+        944
+      ],
+      "size": [
+        15,
+        6,
+        17
+      ],
+      "template": "run/market-repair-20260910/pack/data/kithkyn/structure/market_desert_3.nbt",
+      "sha256": "bf970861e7d8347155431d513c286f3a6e044bd6bc0c06dd9845ff7e3eb07e38"
+    }
+  ],
+  "navigation_counts": {
+    "rotated_structures": 36,
+    "access_routes": 144,
+    "physical_station_walks": 72,
+    "shared_container_visits": 72,
+    "actual_transfers": 144,
+    "failures": 0
+  },
+  "deployment": {
+    "sha256": "a70324b51afc4f9f9ffdd393a17c9717b8e3cde3064b10b72de9932e51822015",
+    "world_backup": "/Users/quzzar/Projects/kithkyn/run/backups/before-market-railings-20260910-091456-market-railings",
+    "server_building_definitions": 200,
+    "client_jar_matches": true,
+    "build_checks": "run/market-repair-20260910/build-verification.json",
+    "git_push_performed": false
+  }
+}

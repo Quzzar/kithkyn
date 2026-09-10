@@ -147,6 +147,14 @@ released merely because one side of a desired destination is available. A staff 
 remains their home while either spouse works there; it releases both sides when neither does.
 A spouse already in a valid staff room stays there even if their own job also offers a couple room.
 
+Role-reserved rooms use the same allocator and ledger. The royal suite reserves its pair for
+the castle's `LEADER` and their resident spouse; a single incumbent can use it without being
+married. Other castle employees and unrelated couples cannot occupy either side. Losing the
+ruling job releases the role entitlement for both spouses, and ordinary marriage housing finds
+a replacement room. A guard captain with a spouse does not leave their shared home for the
+castle's single captain bed. Moving into a reserved pair validates the entire destination
+before either spouse's previous bed is released.
+
 Returning spouses claim a pair only after both travelers have joined the resident roster.
 Their restored marriage edge alone does not reserve beds while they are still walking in.
 

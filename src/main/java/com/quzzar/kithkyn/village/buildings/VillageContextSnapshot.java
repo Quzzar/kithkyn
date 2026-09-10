@@ -189,8 +189,7 @@ public record VillageContextSnapshot(
   /** Compact shared facts for the collective build decision. */
   public String plannerBriefing() {
     StringBuilder text = new StringBuilder();
-    text.append("You are the collective judgement of ").append(name)
-        .append(", a ").append(tier).append(". ")
+    text.append(name).append(" is a ").append(tier).append(". ")
         .append(populationFacts()).append(' ')
         .append(housingFacts()).append(' ')
         .append(PlannerFacts.housingConstraint(unhousedAdults, freeGeneralBeds,

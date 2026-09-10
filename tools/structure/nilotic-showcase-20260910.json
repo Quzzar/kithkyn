@@ -1,0 +1,4195 @@
+{
+  "schemaVersion": 1,
+  "recorded": "2026-09-10",
+  "purpose": "Walkable floodplain, swamp and mangrove building references curated around the Towns & Towers Nilotic village, for a future wetland village variant. Selection and editing remain in progress.",
+  "status": "placed_and_verified",
+  "privateCatalog": "run/nilotic-showcase/catalog.json",
+  "privatePreparedTemplates": "run/nilotic-showcase/prepared",
+  "entry": [
+    6561.5,
+    230,
+    986.5
+  ],
+  "exhibitBounds": [
+    6567,
+    228,
+    1002,
+    7685,
+    263,
+    1245
+  ],
+  "concourse": {
+    "from": [
+      6398,
+      229,
+      982
+    ],
+    "to": [
+      7693,
+      229,
+      990
+    ],
+    "connectsTo": "Existing jungle concourse ending at x=6397"
+  },
+  "preservation": "The style, dry-biome and jungle galleries retain their current geometry and edits.",
+  "counts": {
+    "exhibits": 203,
+    "rows": 27,
+    "wings": 6,
+    "nativeCheckedBlocks": 47214,
+    "families": {
+      "tt_nilotic": 12,
+      "tt_nilotic_tower": 1,
+      "ctov_mud_outpost": 10,
+      "dnt_mangrove": 5,
+      "dnt_tavern_mangrove": 22,
+      "ctov_swamp": 32,
+      "ctov_swamp_fortified": 30,
+      "dnt_swamp": 34,
+      "dnt_tavern_swamp": 23,
+      "tt_swamp_boat": 23,
+      "yung_witch": 4
+    }
+  },
+  "sources": [
+    {
+      "jar": "YungsBetterWitchHuts-1.21.1-NeoForge-4.1.1.jar",
+      "sha256": "888b1e6d1ada21982a75abfb4afb040c9bc2cc68777ec5fcd1199b978e3d4f8d"
+    },
+    {
+      "jar": "[Neoforge]ctov-3.6.3.jar",
+      "sha256": "4815b19b83541f09cba556e222612bc5ddcc31f7c4ba2198f4b4d6376cca8b2e"
+    },
+    {
+      "jar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+      "sha256": "1db28e89e0cb76aebe9e40955d1866e8ac1779575d15c2a1e250ac804a762d05"
+    },
+    {
+      "jar": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar",
+      "sha256": "04e3a5f6e9aa83b2f305e836ed6bceb656c7a6cae8d945415fd8d55bc2450696"
+    },
+    {
+      "datapack": "run/world/datapacks/kithkyn-desert",
+      "note": "private approved datapack; per-file hashes are on the entries"
+    }
+  ],
+  "selection": {
+    "included": "Every compatible standalone building, center, tower, hut, tavern ground and useful decoration from the floodplain, swamp and mangrove families of the installed source jars.",
+    "curation": "Floodplain, swamp and mangrove families from every installed source jar, ordered by material kinship with the Nilotic packed-mud and mangrove palette.",
+    "leftOut": "Towns & Towers Iberian and Mediterranean (brick and quartz language), Millenaire (non-vanilla marker blocks), and every CTOV piece needing compatibility-mod blocks.",
+    "duplicates": "Exact source duplicates are retained once. Structurally different buildings remain available.",
+    "omitted": "Generation paths, empty anchors, villager and mob markers, brewing-stand inserts and hut support posts."
+  },
+  "displayPreparation": [
+    "Native Minecraft NBT read/write and round-trip verification",
+    "Resolve jigsaws to final block states",
+    "Clear loot, entity-spawn and executable command data",
+    "Retain hanging decoration through explicit placement commands",
+    "Persistent leaves and contained fluid basins",
+    "Separate labeled footprints with walkable concourse and click-through navigation"
+  ],
+  "verification": {
+    "offline": "run/nilotic-showcase/catalog.json",
+    "live": "run/nilotic-showcase/verification-summary.json",
+    "screenshots": "run/nilotic-showcase/screenshots-plan.json",
+    "renderedViews": "run/nilotic-showcase/screenshots/client/screenshots",
+    "worldBackup": "/Users/quzzar/Projects/kithkyn/run/backups/before-nilotic-showcase-20260910-071254"
+  },
+  "wings": [
+    {
+      "letter": "NA",
+      "title": "NILOTIC VILLAGE",
+      "x": 6569,
+      "endZ": 1139,
+      "rows": [
+        "NA01",
+        "NA02",
+        "NA03",
+        "NA04"
+      ]
+    },
+    {
+      "letter": "NB",
+      "title": "MUD & MANGROVE",
+      "x": 6761,
+      "endZ": 1068,
+      "rows": [
+        "NB01",
+        "NB02"
+      ]
+    },
+    {
+      "letter": "NC",
+      "title": "MANGROVE TAVERN",
+      "x": 6953,
+      "endZ": 1065,
+      "rows": [
+        "NC01",
+        "NC02"
+      ]
+    },
+    {
+      "letter": "ND",
+      "title": "CTOV SWAMP VILLAGES",
+      "x": 7145,
+      "endZ": 1251,
+      "rows": [
+        "ND01",
+        "ND02",
+        "ND03",
+        "ND04",
+        "ND05",
+        "ND06",
+        "ND07",
+        "ND08"
+      ]
+    },
+    {
+      "letter": "NE",
+      "title": "D&T SWAMP VILLAGE",
+      "x": 7337,
+      "endZ": 1237,
+      "rows": [
+        "NE01",
+        "NE02",
+        "NE03",
+        "NE04",
+        "NE05",
+        "NE06",
+        "NE07"
+      ]
+    },
+    {
+      "letter": "NF",
+      "title": "STILTS & HUTS",
+      "x": 7529,
+      "endZ": 1130,
+      "rows": [
+        "NF01",
+        "NF02",
+        "NF03",
+        "NF04"
+      ]
+    }
+  ],
+  "rows": [
+    {
+      "id": "NA01",
+      "title": "Towns & Towers / Nilotic Floodplain (1/2)",
+      "family": "tt_nilotic",
+      "mod": "Towns & Towers",
+      "origin": [
+        6576,
+        230,
+        1010
+      ],
+      "bounds": [
+        6567,
+        228,
+        1002,
+        6719,
+        239,
+        1021
+      ],
+      "entries": [
+        {
+          "id": "NA01.1",
+          "label": "Temple 1",
+          "source": "data/kaisyn/structure/village/exclusives/nilotic/houses/nilotic_temple_1.nbt",
+          "sourceJar": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar",
+          "sourceSha256": "8adba962307430e988cead90a285ab6032cc7ea2b8725587fa78347728fbd167",
+          "origin": [
+            6576,
+            230,
+            1010
+          ],
+          "size": [
+            7,
+            5,
+            7
+          ]
+        },
+        {
+          "id": "NA01.2",
+          "label": "Armorer 1",
+          "source": "data/kaisyn/structure/village/exclusives/nilotic/houses/nilotic_armorer_1.nbt",
+          "sourceJar": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar",
+          "sourceSha256": "90cea19d28a163acc3b1bae2020a979fa2727738269d0c23ae42ef51420abf9d",
+          "origin": [
+            6591,
+            230,
+            1010
+          ],
+          "size": [
+            9,
+            7,
+            9
+          ]
+        },
+        {
+          "id": "NA01.3",
+          "label": "Butcher And Fisher 1",
+          "source": "data/kaisyn/structure/village/exclusives/nilotic/houses/nilotic_butcher_and_fisher_1.nbt",
+          "sourceJar": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar",
+          "sourceSha256": "deac6462f2a1eb9b6eafb06ee11403aee3c971ac54b7f87206ec2340d4243f4f",
+          "origin": [
+            6608,
+            230,
+            1010
+          ],
+          "size": [
+            9,
+            7,
+            9
+          ]
+        },
+        {
+          "id": "NA01.4",
+          "label": "Cartographer 1",
+          "source": "data/kaisyn/structure/village/exclusives/nilotic/houses/nilotic_cartographer_1.nbt",
+          "sourceJar": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar",
+          "sourceSha256": "3567cd7a684d6945d58187da1fe95f634fac107de0439c11c7dd8bfd0bacda99",
+          "origin": [
+            6625,
+            230,
+            1010
+          ],
+          "size": [
+            7,
+            5,
+            7
+          ]
+        },
+        {
+          "id": "NA01.5",
+          "label": "Farmer 1",
+          "source": "data/kaisyn/structure/village/exclusives/nilotic/houses/nilotic_farmer_1.nbt",
+          "sourceJar": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar",
+          "sourceSha256": "4be24364257465f229b148533c2d6284c6df06bf78d005c28d710bca908a83e0",
+          "origin": [
+            6640,
+            230,
+            1010
+          ],
+          "size": [
+            9,
+            6,
+            9
+          ]
+        },
+        {
+          "id": "NA01.6",
+          "label": "Fletcher 1",
+          "source": "data/kaisyn/structure/village/exclusives/nilotic/houses/nilotic_fletcher_1.nbt",
+          "sourceJar": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar",
+          "sourceSha256": "eff8c0392c63ee23d566c3e7b2abbcddce103e0e80c81a72bd9c76789a797e40",
+          "origin": [
+            6657,
+            230,
+            1010
+          ],
+          "size": [
+            9,
+            6,
+            9
+          ]
+        },
+        {
+          "id": "NA01.7",
+          "label": "Large House 1",
+          "source": "data/kaisyn/structure/village/exclusives/nilotic/houses/nilotic_large_house_1.nbt",
+          "sourceJar": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar",
+          "sourceSha256": "83ef8fca2a05cba1680ae1855595bb215b820f298cb6190198eaebc05329d588",
+          "origin": [
+            6674,
+            230,
+            1010
+          ],
+          "size": [
+            9,
+            5,
+            9
+          ]
+        },
+        {
+          "id": "NA01.8",
+          "label": "Leatherworker And Shepherd 1",
+          "source": "data/kaisyn/structure/village/exclusives/nilotic/houses/nilotic_leatherworker_and_shepherd_1.nbt",
+          "sourceJar": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar",
+          "sourceSha256": "ed5b7cc8b29daec8604187842a670c26dc2ecc218e10cb4cbf0523aca72ed516",
+          "origin": [
+            6691,
+            230,
+            1010
+          ],
+          "size": [
+            9,
+            6,
+            9
+          ]
+        },
+        {
+          "id": "NA01.9",
+          "label": "Mason 1",
+          "source": "data/kaisyn/structure/village/exclusives/nilotic/houses/nilotic_mason_1.nbt",
+          "sourceJar": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar",
+          "sourceSha256": "c0b3ce981152200cff0a9dceb5faa85afa52af417276de6f0f813dc62e78cfd1",
+          "origin": [
+            6708,
+            230,
+            1010
+          ],
+          "size": [
+            9,
+            6,
+            9
+          ]
+        }
+      ]
+    },
+    {
+      "id": "NA02",
+      "title": "Towns & Towers / Nilotic Floodplain (2/2)",
+      "family": "tt_nilotic",
+      "mod": "Towns & Towers",
+      "origin": [
+        6576,
+        230,
+        1039
+      ],
+      "bounds": [
+        6567,
+        228,
+        1031,
+        6634,
+        238,
+        1050
+      ],
+      "entries": [
+        {
+          "id": "NA02.1",
+          "label": "Small House 1",
+          "source": "data/kaisyn/structure/village/exclusives/nilotic/houses/nilotic_small_house_1.nbt",
+          "sourceJar": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar",
+          "sourceSha256": "c3c852df1031b0bde7dd7d790f3812bbfbaad443ed6e86b534a63e51145d2005",
+          "origin": [
+            6576,
+            230,
+            1039
+          ],
+          "size": [
+            7,
+            5,
+            7
+          ]
+        },
+        {
+          "id": "NA02.2",
+          "label": "Small House 2",
+          "source": "data/kaisyn/structure/village/exclusives/nilotic/houses/nilotic_small_house_2.nbt",
+          "sourceJar": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar",
+          "sourceSha256": "7b5986e6b7aa06d99089769b4ba3df887ff8f8e00e3b393ef7eb2404ec752111",
+          "origin": [
+            6591,
+            230,
+            1039
+          ],
+          "size": [
+            7,
+            6,
+            7
+          ]
+        },
+        {
+          "id": "NA02.3",
+          "label": "Toolsmith And Weaponsmith 1",
+          "source": "data/kaisyn/structure/village/exclusives/nilotic/houses/nilotic_toolsmith_and_weaponsmith_1.nbt",
+          "sourceJar": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar",
+          "sourceSha256": "e56e698b54e201772e488942f40f838a64f8e79b15fc9c1df52b6ac0f552c4cc",
+          "origin": [
+            6606,
+            230,
+            1039
+          ],
+          "size": [
+            9,
+            6,
+            9
+          ]
+        },
+        {
+          "id": "NA02.4",
+          "label": "Storehouse Draft",
+          "source": "data/kaisyn/structure/village/exclusives/nilotic/houses/nilotic_small_house_1.nbt",
+          "sourceJar": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar",
+          "sourceSha256": "c3c852df1031b0bde7dd7d790f3812bbfbaad443ed6e86b534a63e51145d2005",
+          "origin": [
+            6623,
+            230,
+            1039
+          ],
+          "size": [
+            7,
+            5,
+            7
+          ]
+        }
+      ]
+    },
+    {
+      "id": "NA03",
+      "title": "Towns & Towers / Nilotic Tower",
+      "family": "tt_nilotic_tower",
+      "mod": "Towns & Towers",
+      "origin": [
+        6576,
+        230,
+        1068
+      ],
+      "bounds": [
+        6567,
+        228,
+        1060,
+        6646,
+        263,
+        1096
+      ],
+      "entries": [
+        {
+          "id": "NA03.1",
+          "label": "Nilotic Tower",
+          "source": "data/kaisyn/structure/outpost/towers/exclusives/nilotic/base_plate.nbt",
+          "sourceJar": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar",
+          "sourceSha256": "01eb064283319a3d27fe5d65ff464b24b8858bde122d3f1705cbf406b815a7cc",
+          "origin": [
+            6576,
+            230,
+            1068
+          ],
+          "size": [
+            24,
+            31,
+            26
+          ]
+        },
+        {
+          "id": "NA03.2",
+          "label": "Fishery Draft",
+          "source": "data/ctov/structure/village/desert/deco/oasis.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "ca3537d7e1630041e2c1f920c73287a78cd44093f0089f0c21c92ff1fafe9950",
+          "origin": [
+            6608,
+            230,
+            1068
+          ],
+          "size": [
+            6,
+            3,
+            6
+          ]
+        },
+        {
+          "id": "NA03.3",
+          "label": "Well Draft",
+          "source": "data/nova_structures/structure/tavern/tavern_event_well_mangrove.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "2b2683707a17974e0eb925ff0b163a6f048cbd5f4cda80cc692bb280002f4af8",
+          "origin": [
+            6622,
+            230,
+            1068
+          ],
+          "size": [
+            5,
+            5,
+            5
+          ]
+        },
+        {
+          "id": "NA03.4",
+          "label": "Watchtower Draft",
+          "source": "data/nova_structures/structure/firewatch_tower/firewatch_savanna.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "64415fd7e56170d3439bbf3a3914441cbb56546dae7d76aea8a875ed85afd139",
+          "origin": [
+            6635,
+            230,
+            1068
+          ],
+          "size": [
+            9,
+            19,
+            9
+          ]
+        }
+      ]
+    },
+    {
+      "id": "NB01",
+      "title": "CTOV / Mud Brick Outpost",
+      "family": "ctov_mud_outpost",
+      "mod": "CTOV",
+      "origin": [
+        6768,
+        230,
+        1010
+      ],
+      "bounds": [
+        6759,
+        228,
+        1002,
+        6912,
+        257,
+        1025
+      ],
+      "entries": [
+        {
+          "id": "NB01.1",
+          "label": "Tower",
+          "source": "data/ctov/structure/pillager_outpost/swamp/tower.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "42328d8677ab921a378b74b56b6cd5fd7a37c142dbed0c874e5f1109832b8fb6",
+          "origin": [
+            6768,
+            230,
+            1010
+          ],
+          "size": [
+            13,
+            25,
+            13
+          ]
+        },
+        {
+          "id": "NB01.2",
+          "label": "Allay Cage",
+          "source": "data/ctov/structure/pillager_outpost/swamp/allay_cage.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "d1b275db3351b1fefb3025f3a9bc3a420f258c3f12b3d8f3e3db4ea00fbf0730",
+          "origin": [
+            6789,
+            230,
+            1010
+          ],
+          "size": [
+            6,
+            4,
+            6
+          ]
+        },
+        {
+          "id": "NB01.3",
+          "label": "Cage",
+          "source": "data/ctov/structure/pillager_outpost/swamp/cage.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "9b790e13a7ee7cbe0f9458d61cb1392675852311a2686f368091962427377646",
+          "origin": [
+            6803,
+            230,
+            1010
+          ],
+          "size": [
+            6,
+            4,
+            6
+          ]
+        },
+        {
+          "id": "NB01.4",
+          "label": "Cook Tent",
+          "source": "data/ctov/structure/pillager_outpost/swamp/cook_tent.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "a1c517bd50b7366e81d7ba8cf535e24ce984e12bf4b29372b23ad721b3f27b71",
+          "origin": [
+            6817,
+            230,
+            1010
+          ],
+          "size": [
+            7,
+            5,
+            5
+          ]
+        },
+        {
+          "id": "NB01.5",
+          "label": "Feature Kennel",
+          "source": "data/ctov/structure/pillager_outpost/swamp/feature_kennel.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "db1ad75a5b3710b2cf8b756ba6a31d220e2d66c0a9859c4d74188fd899a9738b",
+          "origin": [
+            6832,
+            230,
+            1010
+          ],
+          "size": [
+            11,
+            5,
+            11
+          ]
+        },
+        {
+          "id": "NB01.6",
+          "label": "Golem Cage",
+          "source": "data/ctov/structure/pillager_outpost/swamp/golem_cage.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "4270b49205da724a65d070874f4d1c59d18e994bfcad067565def2e72fc98f32",
+          "origin": [
+            6851,
+            230,
+            1010
+          ],
+          "size": [
+            6,
+            4,
+            6
+          ]
+        },
+        {
+          "id": "NB01.7",
+          "label": "Log",
+          "source": "data/ctov/structure/pillager_outpost/swamp/log.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "228498d2f722daf348333647def47fd643078b36b8ba90e7ed3a59cb207a9a71",
+          "origin": [
+            6865,
+            230,
+            1010
+          ],
+          "size": [
+            5,
+            2,
+            7
+          ]
+        },
+        {
+          "id": "NB01.8",
+          "label": "Ravager Cage",
+          "source": "data/ctov/structure/pillager_outpost/swamp/ravager_cage.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "9cf4e7d487439767ddda8df41f0ad86c76c869edd916ddd6b261791050e049e5",
+          "origin": [
+            6878,
+            230,
+            1010
+          ],
+          "size": [
+            6,
+            4,
+            7
+          ]
+        },
+        {
+          "id": "NB01.9",
+          "label": "Smith Tent",
+          "source": "data/ctov/structure/pillager_outpost/swamp/smith_tent.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "6e3dc3e8c3fffb1e8335681fd7ce87d4c86524f508f9af78dde3c4d9c7f94aa7",
+          "origin": [
+            6892,
+            230,
+            1010
+          ],
+          "size": [
+            7,
+            5,
+            5
+          ]
+        },
+        {
+          "id": "NB01.10",
+          "label": "Targets",
+          "source": "data/ctov/structure/pillager_outpost/swamp/targets.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "340492a01379af258e6b590f2210d15f050d95d774a611e94a5c7b54a315f48a",
+          "origin": [
+            6907,
+            230,
+            1010
+          ],
+          "size": [
+            3,
+            3,
+            7
+          ]
+        }
+      ]
+    },
+    {
+      "id": "NB02",
+      "title": "Dungeons & Taverns / Mangrove Huts & Landmarks",
+      "family": "dnt_mangrove",
+      "mod": "Dungeons & Tav.",
+      "origin": [
+        6768,
+        230,
+        1043
+      ],
+      "bounds": [
+        6759,
+        228,
+        1035,
+        6868,
+        263,
+        1062
+      ],
+      "entries": [
+        {
+          "id": "NB02.1",
+          "label": "Firewatch Tower",
+          "source": "data/nova_structures/structure/firewatch_tower/firewatch_mangrove.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "ca7a968b8f18a7ef0e4fbcdff389336345b50882fcf7b33623047310bec29087",
+          "origin": [
+            6768,
+            230,
+            1043
+          ],
+          "size": [
+            9,
+            31,
+            9
+          ]
+        },
+        {
+          "id": "NB02.2",
+          "label": "Mud Brick Constructor",
+          "source": "data/nova_structures/structure/remnant/mud_brick_constructor.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "1ca91095b883942f033a748216be34ebf0ee263514b97e980511338fd5e2e1f9",
+          "origin": [
+            6785,
+            230,
+            1043
+          ],
+          "size": [
+            24,
+            20,
+            17
+          ]
+        },
+        {
+          "id": "NB02.3",
+          "label": "Witch Hut 1",
+          "source": "data/nova_structures/structure/mangrove_witch_hut/mangrove_witch_hut_1.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "cadd627a5236f5cbea8fb46544db537f1301b4a8cf05db15c46d084cf70444a1",
+          "origin": [
+            6817,
+            230,
+            1043
+          ],
+          "size": [
+            11,
+            11,
+            10
+          ]
+        },
+        {
+          "id": "NB02.4",
+          "label": "Witch Hut 2",
+          "source": "data/nova_structures/structure/mangrove_witch_hut/mangrove_witch_hut_2.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "f808faa6113ededbf5ae7842125b611a586b2f8fc3cfde99dad971d3e190b72f",
+          "origin": [
+            6836,
+            230,
+            1043
+          ],
+          "size": [
+            9,
+            11,
+            12
+          ]
+        },
+        {
+          "id": "NB02.5",
+          "label": "Witch Hut 3",
+          "source": "data/nova_structures/structure/mangrove_witch_hut/mangrove_witch_hut_3.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "acd8340f7628b8f195c1297e8e7c16413eb571452989f8a14f8dcb953ffaef55",
+          "origin": [
+            6853,
+            230,
+            1043
+          ],
+          "size": [
+            13,
+            11,
+            11
+          ]
+        }
+      ]
+    },
+    {
+      "id": "NC01",
+      "title": "Mangrove Tavern & Grounds (1/2)",
+      "family": "dnt_tavern_mangrove",
+      "mod": "Dungeons & Tav.",
+      "origin": [
+        6960,
+        230,
+        1010
+      ],
+      "bounds": [
+        6951,
+        228,
+        1002,
+        7108,
+        239,
+        1019
+      ],
+      "entries": [
+        {
+          "id": "NC01.1",
+          "label": "Entrance Ground",
+          "source": "data/nova_structures/structure/tavern/tavern_enterance_mangrove.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "2497ae2cf28f3e4d2d600be7251bb9fd816c7b96578a5d6b17cbfc9f4926ef87",
+          "origin": [
+            6960,
+            230,
+            1010
+          ],
+          "size": [
+            3,
+            7,
+            7
+          ]
+        },
+        {
+          "id": "NC01.2",
+          "label": "Animal Fence",
+          "source": "data/nova_structures/structure/tavern/tavern_event_animal_fence_mangrove.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "14b5508469ffaba301346d11d3ac251150b56f1614245bcb0f372100c799c7e5",
+          "origin": [
+            6971,
+            230,
+            1010
+          ],
+          "size": [
+            5,
+            5,
+            5
+          ]
+        },
+        {
+          "id": "NC01.3",
+          "label": "Animal Food",
+          "source": "data/nova_structures/structure/tavern/tavern_event_animal_food_mangrove.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "d0c73612e4c3d62ab9425ef6764e66b7abfb1b46ba31f1ea6d04da8112d1177e",
+          "origin": [
+            6984,
+            230,
+            1010
+          ],
+          "size": [
+            5,
+            5,
+            5
+          ]
+        },
+        {
+          "id": "NC01.4",
+          "label": "Bench Table",
+          "source": "data/nova_structures/structure/tavern/tavern_event_bench_table_mangrove.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "fe35d275071e5bee334fc63356eb9608a94f2f0b7c10460a0216ccfb34920bc2",
+          "origin": [
+            6997,
+            230,
+            1010
+          ],
+          "size": [
+            5,
+            5,
+            5
+          ]
+        },
+        {
+          "id": "NC01.5",
+          "label": "Food Supply",
+          "source": "data/nova_structures/structure/tavern/tavern_event_food_supply_mangrove.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "04b36829b2910ac80f56fd7b8111a20ea99cdf543314525a4f35150652cfc907",
+          "origin": [
+            7010,
+            230,
+            1010
+          ],
+          "size": [
+            5,
+            5,
+            5
+          ]
+        },
+        {
+          "id": "NC01.6",
+          "label": "Hay Storage",
+          "source": "data/nova_structures/structure/tavern/tavern_event_hay_storage_mangrove.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "d95cfaf85dfb354cf32e4db575eb64bc3343e650c72abb8528721003dab05562",
+          "origin": [
+            7023,
+            230,
+            1010
+          ],
+          "size": [
+            5,
+            5,
+            5
+          ]
+        },
+        {
+          "id": "NC01.7",
+          "label": "Log",
+          "source": "data/nova_structures/structure/tavern/tavern_event_log_mangrove.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "09e7aa54f79fb9455e02d339d84380bfca2c96baf635f337736e483af373f2ac",
+          "origin": [
+            7036,
+            230,
+            1010
+          ],
+          "size": [
+            5,
+            5,
+            5
+          ]
+        },
+        {
+          "id": "NC01.8",
+          "label": "Trader Car Armorer",
+          "source": "data/nova_structures/structure/tavern/tavern_event_trader_car_armorer_mangrove.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "bb9d0639da28825e3e3859f3cba94782e46d5543275b55f7217501a6acf1f454",
+          "origin": [
+            7049,
+            230,
+            1010
+          ],
+          "size": [
+            5,
+            4,
+            5
+          ]
+        },
+        {
+          "id": "NC01.9",
+          "label": "Trader Car Butcher",
+          "source": "data/nova_structures/structure/tavern/tavern_event_trader_car_butcher_mangrove.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "b8b40028f08b7b89e3fbef8adba523b27f19773a046fc8eda3bb26e347417a7e",
+          "origin": [
+            7062,
+            230,
+            1010
+          ],
+          "size": [
+            5,
+            4,
+            5
+          ]
+        },
+        {
+          "id": "NC01.10",
+          "label": "Trader Car Farmer",
+          "source": "data/nova_structures/structure/tavern/tavern_event_trader_car_farmer_mangrove.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "1550493a63757ef395a611e85a0dbb42d54d395c677966b3e1e9ace850d66b0f",
+          "origin": [
+            7075,
+            230,
+            1010
+          ],
+          "size": [
+            5,
+            4,
+            5
+          ]
+        },
+        {
+          "id": "NC01.11",
+          "label": "Trader Car Fisher",
+          "source": "data/nova_structures/structure/tavern/tavern_event_trader_car_fisher_mangrove.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "9a5591ce15bb2c618a62f54471705003d40d3ef2bb31e160a863905fcbe3448f",
+          "origin": [
+            7088,
+            230,
+            1010
+          ],
+          "size": [
+            5,
+            4,
+            5
+          ]
+        },
+        {
+          "id": "NC01.12",
+          "label": "Trader Car Fletcher",
+          "source": "data/nova_structures/structure/tavern/tavern_event_trader_car_fletcher_mangrove.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "21d90c19364f6b8116a35372f21adfe4bf50aa655ca4a1ab9dc3a513ec6ad023",
+          "origin": [
+            7101,
+            230,
+            1010
+          ],
+          "size": [
+            5,
+            4,
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "id": "NC02",
+      "title": "Mangrove Tavern & Grounds (2/2)",
+      "family": "dnt_tavern_mangrove",
+      "mod": "Dungeons & Tav.",
+      "origin": [
+        6960,
+        230,
+        1037
+      ],
+      "bounds": [
+        6951,
+        228,
+        1029,
+        7102,
+        246,
+        1059
+      ],
+      "entries": [
+        {
+          "id": "NC02.1",
+          "label": "Trader Car Grindstone",
+          "source": "data/nova_structures/structure/tavern/tavern_event_trader_car_grindstone_mangrove.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "a5b7ee4c8d6f027a64e7f60f6dff40bce4646a19a2dc1b394da9476bc9918a19",
+          "origin": [
+            6960,
+            230,
+            1037
+          ],
+          "size": [
+            5,
+            4,
+            5
+          ]
+        },
+        {
+          "id": "NC02.2",
+          "label": "Trader Car Leather Worker",
+          "source": "data/nova_structures/structure/tavern/tavern_event_trader_car_leather_worker_mangrove.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "50fbae1435cf74d7ef66d88625f0310defcabab60b92315e48cdeebf6fb2700a",
+          "origin": [
+            6973,
+            230,
+            1037
+          ],
+          "size": [
+            5,
+            4,
+            5
+          ]
+        },
+        {
+          "id": "NC02.3",
+          "label": "Trader Car Librarian",
+          "source": "data/nova_structures/structure/tavern/tavern_event_trader_car_librarian_mangrove.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "b95038a3d768e973ede03d9154cd9717b60ba071a6f2d894b203703c11496f91",
+          "origin": [
+            6986,
+            230,
+            1037
+          ],
+          "size": [
+            5,
+            4,
+            5
+          ]
+        },
+        {
+          "id": "NC02.4",
+          "label": "Trader Car Loom",
+          "source": "data/nova_structures/structure/tavern/tavern_event_trader_car_loom_mangrove.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "7e8d55c28f30ac6bb5ed7652305c3e2b7675a16bbdbb690be87ab3263b4fd0bd",
+          "origin": [
+            6999,
+            230,
+            1037
+          ],
+          "size": [
+            5,
+            4,
+            5
+          ]
+        },
+        {
+          "id": "NC02.5",
+          "label": "Trader Car Smallithing Table",
+          "source": "data/nova_structures/structure/tavern/tavern_event_trader_car_smithing_table_mangrove.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "2584c3a969ee158b42c27b08940f1ecf43301f9196b16c128173eb14bc37c77f",
+          "origin": [
+            7012,
+            230,
+            1037
+          ],
+          "size": [
+            5,
+            4,
+            5
+          ]
+        },
+        {
+          "id": "NC02.6",
+          "label": "Trader Car Stonecutter",
+          "source": "data/nova_structures/structure/tavern/tavern_event_trader_car_stonecutter_mangrove.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "96a6056d612b63d0ffb19f44003b3f8f7c2860f964d218cf7a0c39c521daa3c4",
+          "origin": [
+            7025,
+            230,
+            1037
+          ],
+          "size": [
+            5,
+            4,
+            5
+          ]
+        },
+        {
+          "id": "NC02.7",
+          "label": "Trash Trader",
+          "source": "data/nova_structures/structure/tavern/tavern_event_trash_trader_mangrove.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "df6ff6ed27dc5146b97ff70a6f572336c2fb698b9a2cf56ece6d7ec3bfc0a12a",
+          "origin": [
+            7038,
+            230,
+            1037
+          ],
+          "size": [
+            5,
+            5,
+            5
+          ]
+        },
+        {
+          "id": "NC02.8",
+          "label": "Well",
+          "source": "data/nova_structures/structure/tavern/tavern_event_well_mangrove.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "2b2683707a17974e0eb925ff0b163a6f048cbd5f4cda80cc692bb280002f4af8",
+          "origin": [
+            7051,
+            230,
+            1037
+          ],
+          "size": [
+            5,
+            5,
+            5
+          ]
+        },
+        {
+          "id": "NC02.9",
+          "label": "Tavern Building",
+          "source": "data/nova_structures/structure/tavern/tavern_house_mangrove.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "f93c750d1be99e57012b63524f10a2df2434b9ce14e95ab5c571655a55897de0",
+          "origin": [
+            7064,
+            230,
+            1037
+          ],
+          "size": [
+            17,
+            14,
+            19
+          ]
+        },
+        {
+          "id": "NC02.10",
+          "label": "Courtyard Ground",
+          "source": "data/nova_structures/structure/tavern/tavern_middle_mangrove.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "2c5f9aea79fafb3f49ef442cff4451053b9c20edb8e81f0d8ee24b751dd9eac2",
+          "origin": [
+            7089,
+            230,
+            1037
+          ],
+          "size": [
+            11,
+            7,
+            20
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ND01",
+      "title": "CTOV / Swamp Village (1/4)",
+      "family": "ctov_swamp",
+      "mod": "CTOV",
+      "origin": [
+        7152,
+        230,
+        1010
+      ],
+      "bounds": [
+        7143,
+        228,
+        1002,
+        7299,
+        247,
+        1029
+      ],
+      "entries": [
+        {
+          "id": "ND01.1",
+          "label": "Town Center",
+          "source": "data/ctov/structure/village/swamp/town_center.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "f621c0f2e959d896f1dec0280f7600d81384b5a7e296b574beb0be478479b74d",
+          "origin": [
+            7152,
+            230,
+            1010
+          ],
+          "size": [
+            17,
+            15,
+            17
+          ]
+        },
+        {
+          "id": "ND01.2",
+          "label": "Big 1",
+          "source": "data/ctov/structure/village/swamp/house/big_1.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "31fcd4cbaa7be91d9631a2dbe93adf89b3c2188539918e47514f1459beab2d21",
+          "origin": [
+            7177,
+            230,
+            1010
+          ],
+          "size": [
+            9,
+            15,
+            13
+          ]
+        },
+        {
+          "id": "ND01.3",
+          "label": "Big 2",
+          "source": "data/ctov/structure/village/swamp/house/big_2.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "e2a8e4fb74b1b2fa9b43abd382aec090d673ed2939710424f17fd686e6885c75",
+          "origin": [
+            7194,
+            230,
+            1010
+          ],
+          "size": [
+            13,
+            15,
+            12
+          ]
+        },
+        {
+          "id": "ND01.4",
+          "label": "Med 1",
+          "source": "data/ctov/structure/village/swamp/house/med_1.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "f470f9faefe1ca3305bb78f9b8cd3745f5ebfdb22fe91baf38bae8effc731b7f",
+          "origin": [
+            7215,
+            230,
+            1010
+          ],
+          "size": [
+            10,
+            14,
+            11
+          ]
+        },
+        {
+          "id": "ND01.5",
+          "label": "Med 2",
+          "source": "data/ctov/structure/village/swamp/house/med_2.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "e81b20a894e6a0682e25854ec9047662b3ccba54264e713434d3aff632e7bdd5",
+          "origin": [
+            7233,
+            230,
+            1010
+          ],
+          "size": [
+            13,
+            13,
+            8
+          ]
+        },
+        {
+          "id": "ND01.6",
+          "label": "Med 3",
+          "source": "data/ctov/structure/village/swamp/house/med_3.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "60923637e48bf58fd5e7ef9d66e55ec20f8cc2381d783b87e5b0b6c196f817db",
+          "origin": [
+            7254,
+            230,
+            1010
+          ],
+          "size": [
+            13,
+            13,
+            7
+          ]
+        },
+        {
+          "id": "ND01.7",
+          "label": "Small 1",
+          "source": "data/ctov/structure/village/swamp/house/small_1.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "d32775ac1b066320fdbf7bb8cd38cb8bdeb9dfb148247c834e2be72fdb342b0e",
+          "origin": [
+            7275,
+            230,
+            1010
+          ],
+          "size": [
+            7,
+            12,
+            10
+          ]
+        },
+        {
+          "id": "ND01.8",
+          "label": "Small 2",
+          "source": "data/ctov/structure/village/swamp/house/small_2.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "aec72eb6aefd9600971abbc721915b4b247815f6332a25780934934da57f2424",
+          "origin": [
+            7290,
+            230,
+            1010
+          ],
+          "size": [
+            7,
+            13,
+            11
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ND02",
+      "title": "CTOV / Swamp Village (2/4)",
+      "family": "ctov_swamp",
+      "mod": "CTOV",
+      "origin": [
+        7152,
+        230,
+        1047
+      ],
+      "bounds": [
+        7143,
+        228,
+        1039,
+        7295,
+        247,
+        1061
+      ],
+      "entries": [
+        {
+          "id": "ND02.1",
+          "label": "Small 3",
+          "source": "data/ctov/structure/village/swamp/house/small_3.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "392e73a0e215481cf202083252d42f05486d09de1f30ced4ce09ee32fcae6cda",
+          "origin": [
+            7152,
+            230,
+            1047
+          ],
+          "size": [
+            11,
+            13,
+            8
+          ]
+        },
+        {
+          "id": "ND02.2",
+          "label": "Small 4",
+          "source": "data/ctov/structure/village/swamp/house/small_4.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "dcf4bc58ef6618534bd2d11575bfbe5adf30dd0ebd595e607591fa579e4e426e",
+          "origin": [
+            7171,
+            230,
+            1047
+          ],
+          "size": [
+            10,
+            13,
+            10
+          ]
+        },
+        {
+          "id": "ND02.3",
+          "label": "Butcher",
+          "source": "data/ctov/structure/village/swamp/jobsite/butcher.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "7c86ef0870901138eb6541cc96e96ab6315e568efab746d0469036b8adb5fb34",
+          "origin": [
+            7189,
+            230,
+            1047
+          ],
+          "size": [
+            7,
+            13,
+            12
+          ]
+        },
+        {
+          "id": "ND02.4",
+          "label": "Cartographer",
+          "source": "data/ctov/structure/village/swamp/jobsite/cartographer.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "8a0d766d3651f77b5d32a61dbf0ec69d95c1a209c4ebdcfcb9e9dff3d86299a3",
+          "origin": [
+            7204,
+            230,
+            1047
+          ],
+          "size": [
+            7,
+            12,
+            12
+          ]
+        },
+        {
+          "id": "ND02.5",
+          "label": "Chemist",
+          "source": "data/ctov/structure/village/swamp/jobsite/chemist.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "8179915eb27684d7a7ddf452dcf2cd93af35525e114a235db637a8d64c3265a6",
+          "origin": [
+            7219,
+            230,
+            1047
+          ],
+          "size": [
+            7,
+            15,
+            12
+          ]
+        },
+        {
+          "id": "ND02.6",
+          "label": "Farm",
+          "source": "data/ctov/structure/village/swamp/jobsite/farm.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "f0551f4fe90d2fb535fd3eb0acecfa917e4f08348f243d7bbc367a018239169e",
+          "origin": [
+            7234,
+            230,
+            1047
+          ],
+          "size": [
+            7,
+            6,
+            11
+          ]
+        },
+        {
+          "id": "ND02.7",
+          "label": "Fishing Hut",
+          "source": "data/ctov/structure/village/swamp/jobsite/fishing_hut.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "f5cd45f45f52ef6cfe4a03ee194aa3503af1b7c5f4aaaef2f5c3dd5c14027bfd",
+          "origin": [
+            7249,
+            230,
+            1047
+          ],
+          "size": [
+            7,
+            15,
+            10
+          ]
+        },
+        {
+          "id": "ND02.8",
+          "label": "Leatherworker",
+          "source": "data/ctov/structure/village/swamp/jobsite/leatherworker.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "4b38a8e631a845f911fbdb2119662de9ecf6fd3c42048955e5f3ce29ee73622d",
+          "origin": [
+            7264,
+            230,
+            1047
+          ],
+          "size": [
+            8,
+            12,
+            11
+          ]
+        },
+        {
+          "id": "ND02.9",
+          "label": "Library",
+          "source": "data/ctov/structure/village/swamp/jobsite/library.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "5739c7ba8e8abf7df5f865afbb643ff510b8fac8af56e40d7fbc2e6cec8225f6",
+          "origin": [
+            7280,
+            230,
+            1047
+          ],
+          "size": [
+            13,
+            14,
+            10
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ND03",
+      "title": "CTOV / Swamp Village (3/4)",
+      "family": "ctov_swamp",
+      "mod": "CTOV",
+      "origin": [
+        7152,
+        230,
+        1079
+      ],
+      "bounds": [
+        7143,
+        228,
+        1071,
+        7294,
+        247,
+        1092
+      ],
+      "entries": [
+        {
+          "id": "ND03.1",
+          "label": "Mason",
+          "source": "data/ctov/structure/village/swamp/jobsite/mason.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "5f04213aa55c284a4afdf6ee23f089d4cf32e18858f8a1721092f39b5a844c86",
+          "origin": [
+            7152,
+            230,
+            1079
+          ],
+          "size": [
+            8,
+            13,
+            11
+          ]
+        },
+        {
+          "id": "ND03.2",
+          "label": "Orchard",
+          "source": "data/ctov/structure/village/swamp/jobsite/orchard.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "fadf7fa8e63873225f84e1440623ac31f2ede75ce4cd3056f793747e75b1fc9e",
+          "origin": [
+            7168,
+            230,
+            1079
+          ],
+          "size": [
+            7,
+            6,
+            11
+          ]
+        },
+        {
+          "id": "ND03.3",
+          "label": "Pen",
+          "source": "data/ctov/structure/village/swamp/jobsite/pen.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "d1c2ca54947fb286d3bda2e396e2786fb6268583808d2280bba9dd4df4e1f9b0",
+          "origin": [
+            7183,
+            230,
+            1079
+          ],
+          "size": [
+            7,
+            3,
+            8
+          ]
+        },
+        {
+          "id": "ND03.4",
+          "label": "Shepherd",
+          "source": "data/ctov/structure/village/swamp/jobsite/shepherd.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "787e59a10a160bd5f49acd866ebd831fe9931708ea379ebb2e2154ed325ab136",
+          "origin": [
+            7198,
+            230,
+            1079
+          ],
+          "size": [
+            10,
+            12,
+            11
+          ]
+        },
+        {
+          "id": "ND03.5",
+          "label": "Smith",
+          "source": "data/ctov/structure/village/swamp/jobsite/smith.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "8b93d9c1f86af302fc2d7107a91c091021f1fd8c9657d35e3fe4f4b4bc8554d6",
+          "origin": [
+            7216,
+            230,
+            1079
+          ],
+          "size": [
+            10,
+            12,
+            10
+          ]
+        },
+        {
+          "id": "ND03.6",
+          "label": "Vault",
+          "source": "data/ctov/structure/village/swamp/jobsite/vault.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "38e5c95cd47fb94bf7cd6275070a8b2bf6fdc12e28cd9a5d95a0c74c76dd4e71",
+          "origin": [
+            7234,
+            230,
+            1079
+          ],
+          "size": [
+            9,
+            15,
+            9
+          ]
+        },
+        {
+          "id": "ND03.7",
+          "label": "Bush",
+          "source": "data/ctov/structure/village/swamp/deco/bush.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "daff98cfabcfa81cb1475ab138b3a4999b5d89767baf74253f1f5b2a8256dfdc",
+          "origin": [
+            7251,
+            230,
+            1079
+          ],
+          "size": [
+            1,
+            3,
+            2
+          ]
+        },
+        {
+          "id": "ND03.8",
+          "label": "Lamp 1",
+          "source": "data/ctov/structure/village/swamp/deco/lamp_1.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "80dc629a423ee362845a8f791391e159c5583f49e500d96a8348c67bcf66fa55",
+          "origin": [
+            7260,
+            230,
+            1079
+          ],
+          "size": [
+            1,
+            5,
+            2
+          ]
+        },
+        {
+          "id": "ND03.9",
+          "label": "Lamp 2",
+          "source": "data/ctov/structure/village/swamp/deco/lamp_2.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "620aca16ed4130185efebfc5fdab549f393283d6f11eba6cc85b5138ae062f46",
+          "origin": [
+            7269,
+            230,
+            1079
+          ],
+          "size": [
+            2,
+            5,
+            2
+          ]
+        },
+        {
+          "id": "ND03.10",
+          "label": "Lamp 3",
+          "source": "data/ctov/structure/village/swamp/deco/lamp_3.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "73efb8f635830c87d4097a243074926d69cf3023d5a8120f58c9d9ded9edaec3",
+          "origin": [
+            7279,
+            230,
+            1079
+          ],
+          "size": [
+            2,
+            5,
+            2
+          ]
+        },
+        {
+          "id": "ND03.11",
+          "label": "Lamp 4",
+          "source": "data/ctov/structure/village/swamp/deco/lamp_4.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "1dd47501b67b0bbc1fb06778dd74d8f6ce6b7995da88cd8980f3538b08bd1c19",
+          "origin": [
+            7289,
+            230,
+            1079
+          ],
+          "size": [
+            3,
+            5,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ND04",
+      "title": "CTOV / Swamp Village (4/4)",
+      "family": "ctov_swamp",
+      "mod": "CTOV",
+      "origin": [
+        7152,
+        230,
+        1110
+      ],
+      "bounds": [
+        7143,
+        228,
+        1102,
+        7192,
+        239,
+        1117
+      ],
+      "entries": [
+        {
+          "id": "ND04.1",
+          "label": "Lamp 5",
+          "source": "data/ctov/structure/village/swamp/deco/lamp_5.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "6eeb1e12b04f3a3782328c524d046c5c2ee24906c81aeb0b8bd4a4bcdea6d58b",
+          "origin": [
+            7152,
+            230,
+            1110
+          ],
+          "size": [
+            3,
+            5,
+            3
+          ]
+        },
+        {
+          "id": "ND04.2",
+          "label": "Orchid",
+          "source": "data/ctov/structure/village/swamp/deco/orchid.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "ab02571a7fc70a06932a629696a9e1c6afde5c539f6d3d399279d1dec9cfc134",
+          "origin": [
+            7163,
+            230,
+            1110
+          ],
+          "size": [
+            3,
+            2,
+            3
+          ]
+        },
+        {
+          "id": "ND04.3",
+          "label": "Pier",
+          "source": "data/ctov/structure/village/swamp/deco/pier.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "b519bddefb2782acd856776d04614cc4382c2c4bb1374bfe1a14cd37a7982a52",
+          "origin": [
+            7174,
+            230,
+            1110
+          ],
+          "size": [
+            5,
+            2,
+            5
+          ]
+        },
+        {
+          "id": "ND04.4",
+          "label": "Tree",
+          "source": "data/ctov/structure/village/swamp/deco/tree.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "e9c0d2e82752de02f9707ac7c665be04886e81d988afc842f9551a0abb8d150b",
+          "origin": [
+            7187,
+            230,
+            1110
+          ],
+          "size": [
+            3,
+            7,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ND05",
+      "title": "CTOV / Swamp Fortified (1/4)",
+      "family": "ctov_swamp_fortified",
+      "mod": "CTOV",
+      "origin": [
+        7152,
+        230,
+        1135
+      ],
+      "bounds": [
+        7143,
+        228,
+        1127,
+        7295,
+        250,
+        1156
+      ],
+      "entries": [
+        {
+          "id": "ND05.1",
+          "label": "Town Center",
+          "source": "data/ctov/structure/village/swamp_fortified/town_center.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "d1a644c21087dbc7216bce5ed10d1ae2a507e8324d03c82912252637143e90d3",
+          "origin": [
+            7152,
+            230,
+            1135
+          ],
+          "size": [
+            19,
+            18,
+            19
+          ]
+        },
+        {
+          "id": "ND05.2",
+          "label": "Big 1",
+          "source": "data/ctov/structure/village/swamp_fortified/house/big_1.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "47a2866a7bd1fa87020a3df9d8838b37c356162b2317ad8ef3b28342916f07d5",
+          "origin": [
+            7179,
+            230,
+            1135
+          ],
+          "size": [
+            17,
+            8,
+            9
+          ]
+        },
+        {
+          "id": "ND05.3",
+          "label": "Big 2",
+          "source": "data/ctov/structure/village/swamp_fortified/house/big_2.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "6d556787c0875a69208f0d9aacaa188c8c72f45d3d49538a27c0cabf6599576b",
+          "origin": [
+            7204,
+            230,
+            1135
+          ],
+          "size": [
+            19,
+            17,
+            9
+          ]
+        },
+        {
+          "id": "ND05.4",
+          "label": "Med 1",
+          "source": "data/ctov/structure/village/swamp_fortified/house/med_1.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "ba6892ac25418283469ac2a02050499a28ab53036e160cce70b103e206be9661",
+          "origin": [
+            7231,
+            230,
+            1135
+          ],
+          "size": [
+            11,
+            9,
+            11
+          ]
+        },
+        {
+          "id": "ND05.5",
+          "label": "Med 2",
+          "source": "data/ctov/structure/village/swamp_fortified/house/med_2.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "ee0393ef2934bb89038d23c1067d15f4e48525d584cbe858e46891d7f223b8e0",
+          "origin": [
+            7250,
+            230,
+            1135
+          ],
+          "size": [
+            9,
+            17,
+            9
+          ]
+        },
+        {
+          "id": "ND05.6",
+          "label": "Med 3",
+          "source": "data/ctov/structure/village/swamp_fortified/house/med_3.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "061a4047bb42d192a86f0e979e4baaae92a2e193d231d8222944f0482068b785",
+          "origin": [
+            7267,
+            230,
+            1135
+          ],
+          "size": [
+            9,
+            9,
+            9
+          ]
+        },
+        {
+          "id": "ND05.7",
+          "label": "Med 4",
+          "source": "data/ctov/structure/village/swamp_fortified/house/med_4.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "88ceee0bcb0b331714478e97d1cba009aa93a50de46d3ddee5b738969cd345e0",
+          "origin": [
+            7284,
+            230,
+            1135
+          ],
+          "size": [
+            9,
+            9,
+            9
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ND06",
+      "title": "CTOV / Swamp Fortified (2/4)",
+      "family": "ctov_swamp_fortified",
+      "mod": "CTOV",
+      "origin": [
+        7152,
+        230,
+        1174
+      ],
+      "bounds": [
+        7143,
+        228,
+        1166,
+        7301,
+        249,
+        1189
+      ],
+      "entries": [
+        {
+          "id": "ND06.1",
+          "label": "Small 1",
+          "source": "data/ctov/structure/village/swamp_fortified/house/small_1.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "39ddf0379275ccf40466160c0c9a963aaa6f343b7d68a6b377086066cf630e88",
+          "origin": [
+            7152,
+            230,
+            1174
+          ],
+          "size": [
+            9,
+            8,
+            9
+          ]
+        },
+        {
+          "id": "ND06.2",
+          "label": "Small 2",
+          "source": "data/ctov/structure/village/swamp_fortified/house/small_2.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "22eaaea3cf81f6c5b38428ac0f75f9b10df17c0f3b8b831fbf392efc346d6494",
+          "origin": [
+            7169,
+            230,
+            1174
+          ],
+          "size": [
+            7,
+            8,
+            7
+          ]
+        },
+        {
+          "id": "ND06.3",
+          "label": "Butcher",
+          "source": "data/ctov/structure/village/swamp_fortified/jobsite/butcher.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "3597ea60f28f351cc701abeb7b3c084f440fc997694c6c26217c608cf2f8bbe1",
+          "origin": [
+            7184,
+            230,
+            1174
+          ],
+          "size": [
+            7,
+            8,
+            9
+          ]
+        },
+        {
+          "id": "ND06.4",
+          "label": "Cartographer",
+          "source": "data/ctov/structure/village/swamp_fortified/jobsite/cartographer.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "edca33e3401357698735bc23e5f970c7d9b6700c4df9bfb39735cebe237ddeac",
+          "origin": [
+            7199,
+            230,
+            1174
+          ],
+          "size": [
+            9,
+            17,
+            9
+          ]
+        },
+        {
+          "id": "ND06.5",
+          "label": "Chemist",
+          "source": "data/ctov/structure/village/swamp_fortified/jobsite/chemist.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "030a91df9c75ac7cee2ec4ebb4eed44c95abe4827aea82f7388f418b0991515b",
+          "origin": [
+            7216,
+            230,
+            1174
+          ],
+          "size": [
+            11,
+            9,
+            11
+          ]
+        },
+        {
+          "id": "ND06.6",
+          "label": "Farm",
+          "source": "data/ctov/structure/village/swamp_fortified/jobsite/farm.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "ace11db73c02d0547a3bc33188f0d0373bc8b7f594e6bfae4dc7d5bb3d0083e5",
+          "origin": [
+            7235,
+            230,
+            1174
+          ],
+          "size": [
+            13,
+            9,
+            13
+          ]
+        },
+        {
+          "id": "ND06.7",
+          "label": "Fishing Hut",
+          "source": "data/ctov/structure/village/swamp_fortified/jobsite/fishing_hut.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "7a46777ef2b9ab4d99965a06e574564c44c8b88ef6e3f02623699fdd89222640",
+          "origin": [
+            7256,
+            230,
+            1174
+          ],
+          "size": [
+            9,
+            10,
+            9
+          ]
+        },
+        {
+          "id": "ND06.8",
+          "label": "Library",
+          "source": "data/ctov/structure/village/swamp_fortified/jobsite/library.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "12f8aa0ec5aebd34483cec5cbee032d5862ec6c73ec54c27b4058a5c6b13ce84",
+          "origin": [
+            7273,
+            230,
+            1174
+          ],
+          "size": [
+            11,
+            9,
+            11
+          ]
+        },
+        {
+          "id": "ND06.9",
+          "label": "Loomhouse",
+          "source": "data/ctov/structure/village/swamp_fortified/jobsite/loomhouse.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "abe3be2fecf696ffee04fd75ea7109e03612278256fd21429b241e9c1cad9053",
+          "origin": [
+            7292,
+            230,
+            1174
+          ],
+          "size": [
+            7,
+            8,
+            7
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ND07",
+      "title": "CTOV / Swamp Fortified (3/4)",
+      "family": "ctov_swamp_fortified",
+      "mod": "CTOV",
+      "origin": [
+        7152,
+        230,
+        1207
+      ],
+      "bounds": [
+        7143,
+        228,
+        1199,
+        7299,
+        248,
+        1222
+      ],
+      "entries": [
+        {
+          "id": "ND07.1",
+          "label": "Mason",
+          "source": "data/ctov/structure/village/swamp_fortified/jobsite/mason.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "af8ffaaa620cf39865acf005011c984e26f46bc378ebbd4d500b3f26f05692f1",
+          "origin": [
+            7152,
+            230,
+            1207
+          ],
+          "size": [
+            9,
+            8,
+            9
+          ]
+        },
+        {
+          "id": "ND07.2",
+          "label": "Orchard",
+          "source": "data/ctov/structure/village/swamp_fortified/jobsite/orchard.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "6452fe8da22e6ce4f4321163a2420e0ad2a8a51a45b10ed12aeac5359f95569f",
+          "origin": [
+            7169,
+            230,
+            1207
+          ],
+          "size": [
+            13,
+            9,
+            13
+          ]
+        },
+        {
+          "id": "ND07.3",
+          "label": "Pen",
+          "source": "data/ctov/structure/village/swamp_fortified/jobsite/pen.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "3dc3b772672b1cb9cbd8ab2d5529b57ee8d572764c935238b6eb0988e9c6ff3a",
+          "origin": [
+            7190,
+            230,
+            1207
+          ],
+          "size": [
+            7,
+            4,
+            8
+          ]
+        },
+        {
+          "id": "ND07.4",
+          "label": "Smith",
+          "source": "data/ctov/structure/village/swamp_fortified/jobsite/smith.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "9eaf10ce6fff2230234761ad1b2364f562e1540dabd17bf2046d2fe8ac22fa29",
+          "origin": [
+            7205,
+            230,
+            1207
+          ],
+          "size": [
+            9,
+            8,
+            9
+          ]
+        },
+        {
+          "id": "ND07.5",
+          "label": "Tannery",
+          "source": "data/ctov/structure/village/swamp_fortified/jobsite/tannery.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "059eb27faacd3aef95a2dc8084cd85a7946b56f503cd7baca0be8cef99a5ffe0",
+          "origin": [
+            7222,
+            230,
+            1207
+          ],
+          "size": [
+            7,
+            8,
+            7
+          ]
+        },
+        {
+          "id": "ND07.6",
+          "label": "Vault",
+          "source": "data/ctov/structure/village/swamp_fortified/jobsite/vault.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "9379fc0d6cdbdd606f7b8bbc292b2e317563586b858d841a43ad36756d39e974",
+          "origin": [
+            7237,
+            230,
+            1207
+          ],
+          "size": [
+            11,
+            16,
+            11
+          ]
+        },
+        {
+          "id": "ND07.7",
+          "label": "Bush",
+          "source": "data/ctov/structure/village/swamp_fortified/deco/bush.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "81893a8b185484411bf84d6eec81f55def449bbe7ca03959545ee9335ae194eb",
+          "origin": [
+            7256,
+            230,
+            1207
+          ],
+          "size": [
+            1,
+            3,
+            2
+          ]
+        },
+        {
+          "id": "ND07.8",
+          "label": "Lamp 1",
+          "source": "data/ctov/structure/village/swamp_fortified/deco/lamp_1.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "e8b13b7b4887750d77427dbf15df63444d1fcb94a4356045b70109335126d647",
+          "origin": [
+            7265,
+            230,
+            1207
+          ],
+          "size": [
+            1,
+            5,
+            2
+          ]
+        },
+        {
+          "id": "ND07.9",
+          "label": "Lamp 2",
+          "source": "data/ctov/structure/village/swamp_fortified/deco/lamp_2.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "49633bb04de5cceb0ccf4715fc3d91652167c9ebcce3edb9163554f0c924a594",
+          "origin": [
+            7274,
+            230,
+            1207
+          ],
+          "size": [
+            2,
+            5,
+            2
+          ]
+        },
+        {
+          "id": "ND07.10",
+          "label": "Lamp 3",
+          "source": "data/ctov/structure/village/swamp_fortified/deco/lamp_3.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "d4573de7ebc4b52fdc8438a79eec5d2cfedc093e8e889ee12b1537df05373265",
+          "origin": [
+            7284,
+            230,
+            1207
+          ],
+          "size": [
+            2,
+            5,
+            2
+          ]
+        },
+        {
+          "id": "ND07.11",
+          "label": "Lamp 4",
+          "source": "data/ctov/structure/village/swamp_fortified/deco/lamp_4.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "fe984689e6f6f4f94d786ff836e126ca22b49ece628ddc7890f0d6dc41434503",
+          "origin": [
+            7294,
+            230,
+            1207
+          ],
+          "size": [
+            3,
+            5,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ND08",
+      "title": "CTOV / Swamp Fortified (4/4)",
+      "family": "ctov_swamp_fortified",
+      "mod": "CTOV",
+      "origin": [
+        7152,
+        230,
+        1240
+      ],
+      "bounds": [
+        7143,
+        228,
+        1232,
+        7179,
+        239,
+        1245
+      ],
+      "entries": [
+        {
+          "id": "ND08.1",
+          "label": "Lamp 5",
+          "source": "data/ctov/structure/village/swamp_fortified/deco/lamp_5.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "242e85d9cb48336ce2933818a3eacc1df31dd5e885bd38052efd3bae93f7bc87",
+          "origin": [
+            7152,
+            230,
+            1240
+          ],
+          "size": [
+            3,
+            5,
+            3
+          ]
+        },
+        {
+          "id": "ND08.2",
+          "label": "Orchid",
+          "source": "data/ctov/structure/village/swamp_fortified/deco/orchid.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "f5e76754ee01b5b31f1138142a250c424c5fc4f69a7a5dcf1b10a71941586df9",
+          "origin": [
+            7163,
+            230,
+            1240
+          ],
+          "size": [
+            3,
+            2,
+            3
+          ]
+        },
+        {
+          "id": "ND08.3",
+          "label": "Tree",
+          "source": "data/ctov/structure/village/swamp_fortified/deco/tree.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "08f386d1612a41971f5b5792bc30b5650d40bc6b565e2b1881bc02b4e9b0986d",
+          "origin": [
+            7174,
+            230,
+            1240
+          ],
+          "size": [
+            3,
+            7,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "id": "NE01",
+      "title": "Dungeons & Taverns / Swamp Village (1/4)",
+      "family": "dnt_swamp",
+      "mod": "Dungeons & Tav.",
+      "origin": [
+        7344,
+        230,
+        1010
+      ],
+      "bounds": [
+        7335,
+        228,
+        1002,
+        7488,
+        247,
+        1023
+      ],
+      "entries": [
+        {
+          "id": "NE01.1",
+          "label": "Center 1",
+          "source": "data/minecraft/structure/village_swamp/swamp_village_center1.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "5351220708eddd1288000c90fdb74d3f668bea82e70081bf414971fdbbf5f87d",
+          "origin": [
+            7344,
+            230,
+            1010
+          ],
+          "size": [
+            11,
+            7,
+            11
+          ]
+        },
+        {
+          "id": "NE01.2",
+          "label": "Center 2",
+          "source": "data/minecraft/structure/village_swamp/swamp_village_center2.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "0bcaec54346f75c21636b5deeea39a078cd280ebf4067be7612a0eb19adc1fd6",
+          "origin": [
+            7363,
+            230,
+            1010
+          ],
+          "size": [
+            11,
+            7,
+            11
+          ]
+        },
+        {
+          "id": "NE01.3",
+          "label": "Center 3",
+          "source": "data/minecraft/structure/village_swamp/swamp_village_center3.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "81f9e4ac10adad98e699cca59749cda9c69beeb6b3b0395c939037f4f5dee4c0",
+          "origin": [
+            7382,
+            230,
+            1010
+          ],
+          "size": [
+            11,
+            8,
+            11
+          ]
+        },
+        {
+          "id": "NE01.4",
+          "label": "Animal Pen 1",
+          "source": "data/minecraft/structure/village_swamp/swamp_village_animal_pen1.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "dc6d8484c8a740ab11f26fb4a3faaa7be7258747898d515f45e087cd361b8594",
+          "origin": [
+            7401,
+            230,
+            1010
+          ],
+          "size": [
+            5,
+            5,
+            5
+          ]
+        },
+        {
+          "id": "NE01.5",
+          "label": "Animal Pen 2",
+          "source": "data/minecraft/structure/village_swamp/swamp_village_animal_pen2.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "be571335d00fca8133a410860ca5a821c1b429ae8b109ebe53ea6f3daa008ca8",
+          "origin": [
+            7414,
+            230,
+            1010
+          ],
+          "size": [
+            7,
+            5,
+            9
+          ]
+        },
+        {
+          "id": "NE01.6",
+          "label": "Animal Pen 3",
+          "source": "data/minecraft/structure/village_swamp/swamp_village_animal_pen3.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "eb51bed90fd6ea36c7ad211fcd791207cdf2b394f53bc67146f4e36225bbce7c",
+          "origin": [
+            7429,
+            230,
+            1010
+          ],
+          "size": [
+            6,
+            5,
+            7
+          ]
+        },
+        {
+          "id": "NE01.7",
+          "label": "Blast Furnace",
+          "source": "data/minecraft/structure/village_swamp/swamp_village_blast_furnace.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "44a19ef7f464adb3cea1ea52ab0234dd1439d9d5976d9affc72f8c370bf87a99",
+          "origin": [
+            7443,
+            230,
+            1010
+          ],
+          "size": [
+            6,
+            10,
+            9
+          ]
+        },
+        {
+          "id": "NE01.8",
+          "label": "Cartography",
+          "source": "data/minecraft/structure/village_swamp/swamp_village_cartography.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "007109fb2dd7f4c87ceb50af12b8cecfa11373b206de2bab4adb2764762710bc",
+          "origin": [
+            7457,
+            230,
+            1010
+          ],
+          "size": [
+            11,
+            15,
+            7
+          ]
+        },
+        {
+          "id": "NE01.9",
+          "label": "Cauldron",
+          "source": "data/minecraft/structure/village_swamp/swamp_village_cauldron.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "21f71208016a1274416d07366cf9bf5a51e6aef6cffa54fa45b1b4de5cbab15c",
+          "origin": [
+            7476,
+            230,
+            1010
+          ],
+          "size": [
+            10,
+            10,
+            7
+          ]
+        }
+      ]
+    },
+    {
+      "id": "NE02",
+      "title": "Dungeons & Taverns / Swamp Village (2/4)",
+      "family": "dnt_swamp",
+      "mod": "Dungeons & Tav.",
+      "origin": [
+        7344,
+        230,
+        1041
+      ],
+      "bounds": [
+        7335,
+        228,
+        1033,
+        7488,
+        247,
+        1058
+      ],
+      "entries": [
+        {
+          "id": "NE02.1",
+          "label": "Cleric",
+          "source": "data/minecraft/structure/village_swamp/swamp_village_cleric.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "c4dff8a11ffd8de285e4fb72598f7d33adeb64c37cc09fa9d5b109b99156329c",
+          "origin": [
+            7344,
+            230,
+            1041
+          ],
+          "size": [
+            14,
+            15,
+            13
+          ]
+        },
+        {
+          "id": "NE02.2",
+          "label": "Cleric 2",
+          "source": "data/minecraft/structure/village_swamp/swamp_village_cleric2.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "52beaeebe245a8d97bde251259f7a73e1722ab731b463843ab05422642510658",
+          "origin": [
+            7366,
+            230,
+            1041
+          ],
+          "size": [
+            15,
+            15,
+            15
+          ]
+        },
+        {
+          "id": "NE02.3",
+          "label": "Decoration 2",
+          "source": "data/minecraft/structure/village_swamp/swamp_village_decoration2.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "d9920f91d8fffc710455b49ef4b65f94c4bab5d6f7ad43247f975460fb7057e4",
+          "origin": [
+            7389,
+            230,
+            1041
+          ],
+          "size": [
+            2,
+            5,
+            1
+          ]
+        },
+        {
+          "id": "NE02.4",
+          "label": "Decoration 3",
+          "source": "data/minecraft/structure/village_swamp/swamp_village_decoration3.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "f27790b8edb61bdbdbcc32cb1b0cd3253a7de873609e1a75bab13ec1ac660749",
+          "origin": [
+            7399,
+            230,
+            1041
+          ],
+          "size": [
+            5,
+            2,
+            5
+          ]
+        },
+        {
+          "id": "NE02.5",
+          "label": "Decoration 4",
+          "source": "data/minecraft/structure/village_swamp/swamp_village_decoration4.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "fe56df5078634ed8c0a271663fc5a12adf385b43dfe8944eb80af94ae0534ae2",
+          "origin": [
+            7412,
+            230,
+            1041
+          ],
+          "size": [
+            3,
+            7,
+            3
+          ]
+        },
+        {
+          "id": "NE02.6",
+          "label": "Farm 1",
+          "source": "data/minecraft/structure/village_swamp/swamp_village_farm1.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "e50f1594cbf262c5f98d9c2dedb30405d48453f55ed70a1ecd2a18ba87ce7a27",
+          "origin": [
+            7423,
+            230,
+            1041
+          ],
+          "size": [
+            7,
+            5,
+            9
+          ]
+        },
+        {
+          "id": "NE02.7",
+          "label": "Farm 2",
+          "source": "data/minecraft/structure/village_swamp/swamp_village_farm2.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "d3b436ed286049ade08009dd34f913e964c4449fcae69085064c1d7c71c74b31",
+          "origin": [
+            7438,
+            230,
+            1041
+          ],
+          "size": [
+            5,
+            10,
+            12
+          ]
+        },
+        {
+          "id": "NE02.8",
+          "label": "Farm 3",
+          "source": "data/minecraft/structure/village_swamp/swamp_village_farm3.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "d65bb2ea66fc5ebfc1cd15114c437d2d47ae5b5008361ec35117cca4fbd1f835",
+          "origin": [
+            7451,
+            230,
+            1041
+          ],
+          "size": [
+            5,
+            5,
+            7
+          ]
+        },
+        {
+          "id": "NE02.9",
+          "label": "Fisher",
+          "source": "data/minecraft/structure/village_swamp/swamp_village_fisher.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "628fba98130c2c1c8cd097c9d86075d3be4e2439f13f24024a29c77767d07f5d",
+          "origin": [
+            7464,
+            230,
+            1041
+          ],
+          "size": [
+            7,
+            10,
+            10
+          ]
+        },
+        {
+          "id": "NE02.10",
+          "label": "Fletching",
+          "source": "data/minecraft/structure/village_swamp/swamp_village_fletching.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "401ebf069aeb7eab5ca670f83e2ea6a33b0b4b737bc7bc5c2efd6af68518aaf7",
+          "origin": [
+            7479,
+            230,
+            1041
+          ],
+          "size": [
+            7,
+            12,
+            7
+          ]
+        }
+      ]
+    },
+    {
+      "id": "NE03",
+      "title": "Dungeons & Taverns / Swamp Village (3/4)",
+      "family": "dnt_swamp",
+      "mod": "Dungeons & Tav.",
+      "origin": [
+        7344,
+        230,
+        1076
+      ],
+      "bounds": [
+        7335,
+        228,
+        1068,
+        7490,
+        242,
+        1089
+      ],
+      "entries": [
+        {
+          "id": "NE03.1",
+          "label": "Fletching 2",
+          "source": "data/minecraft/structure/village_swamp/swamp_village_fletching2.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "48f7840a2373ec3d364779799c987fab27ab78ce8f391b3b2efac1ba23a65d80",
+          "origin": [
+            7344,
+            230,
+            1076
+          ],
+          "size": [
+            7,
+            10,
+            10
+          ]
+        },
+        {
+          "id": "NE03.2",
+          "label": "Grindstone",
+          "source": "data/minecraft/structure/village_swamp/swamp_village_grindstone.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "df095c37d754d04b442cb2a2280179362ecd428bc5d8025121f808b26bd609a7",
+          "origin": [
+            7359,
+            230,
+            1076
+          ],
+          "size": [
+            7,
+            10,
+            8
+          ]
+        },
+        {
+          "id": "NE03.3",
+          "label": "House 1",
+          "source": "data/minecraft/structure/village_swamp/swamp_village_house1.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "cfc41ff757055547127dcf766599ecb1257e60a5204cecf5c166c0caecdc9f15",
+          "origin": [
+            7374,
+            230,
+            1076
+          ],
+          "size": [
+            12,
+            7,
+            8
+          ]
+        },
+        {
+          "id": "NE03.4",
+          "label": "House 2",
+          "source": "data/minecraft/structure/village_swamp/swamp_village_house2.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "a423c1fdb31157cc6e4877beec1435290bd9bd8aa45e6fa93d8e43264cb05f45",
+          "origin": [
+            7394,
+            230,
+            1076
+          ],
+          "size": [
+            7,
+            7,
+            10
+          ]
+        },
+        {
+          "id": "NE03.5",
+          "label": "House 3",
+          "source": "data/minecraft/structure/village_swamp/swamp_village_house3.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "9848f78f019a860e4f888df98f4763f1f6ac6f879528d649f4c67de0d6974839",
+          "origin": [
+            7409,
+            230,
+            1076
+          ],
+          "size": [
+            7,
+            7,
+            7
+          ]
+        },
+        {
+          "id": "NE03.6",
+          "label": "House 4",
+          "source": "data/minecraft/structure/village_swamp/swamp_village_house4.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "b3d71d2677d2199e50e3fb0a2f5e8a263a7888f709612b750af342b83b7a53e1",
+          "origin": [
+            7424,
+            230,
+            1076
+          ],
+          "size": [
+            8,
+            7,
+            9
+          ]
+        },
+        {
+          "id": "NE03.7",
+          "label": "House 5",
+          "source": "data/minecraft/structure/village_swamp/swamp_village_house5.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "f8b5271403fd6fa63016327d44c7aae13359de223eda67397c6e77cbdcbf3fa1",
+          "origin": [
+            7440,
+            230,
+            1076
+          ],
+          "size": [
+            12,
+            7,
+            11
+          ]
+        },
+        {
+          "id": "NE03.8",
+          "label": "House 6",
+          "source": "data/minecraft/structure/village_swamp/swamp_village_house6.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "62875038a4d00668a036c1c84f6d6640d93f0c79c4cc2d1f638832a8420c9ed6",
+          "origin": [
+            7460,
+            230,
+            1076
+          ],
+          "size": [
+            10,
+            10,
+            11
+          ]
+        },
+        {
+          "id": "NE03.9",
+          "label": "House 7",
+          "source": "data/minecraft/structure/village_swamp/swamp_village_house7.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "57bf843446ac6fb79b6b5378e6ca06420a14ff8ac98d19975934574657943633",
+          "origin": [
+            7478,
+            230,
+            1076
+          ],
+          "size": [
+            10,
+            10,
+            7
+          ]
+        }
+      ]
+    },
+    {
+      "id": "NE04",
+      "title": "Dungeons & Taverns / Swamp Village (4/4)",
+      "family": "dnt_swamp",
+      "mod": "Dungeons & Tav.",
+      "origin": [
+        7344,
+        230,
+        1107
+      ],
+      "bounds": [
+        7335,
+        228,
+        1099,
+        7438,
+        242,
+        1123
+      ],
+      "entries": [
+        {
+          "id": "NE04.1",
+          "label": "House 8",
+          "source": "data/minecraft/structure/village_swamp/swamp_village_house8.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "e89b07ed10c9f408bb2a5b4558100da4a4a7f5630fe4dabf2c0cde841a51338d",
+          "origin": [
+            7344,
+            230,
+            1107
+          ],
+          "size": [
+            10,
+            10,
+            11
+          ]
+        },
+        {
+          "id": "NE04.2",
+          "label": "Library",
+          "source": "data/minecraft/structure/village_swamp/swamp_village_library.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "8054cdb03de793c1b5083fbe3ad971598333becc11cdd70b68b9c7c98939ca20",
+          "origin": [
+            7362,
+            230,
+            1107
+          ],
+          "size": [
+            9,
+            10,
+            9
+          ]
+        },
+        {
+          "id": "NE04.3",
+          "label": "Loom",
+          "source": "data/minecraft/structure/village_swamp/swamp_village_loom.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "21e0c38aa4e4ca649b2ea506dee4e3c92c27a9348dcd8844e36a796c058bfa43",
+          "origin": [
+            7379,
+            230,
+            1107
+          ],
+          "size": [
+            9,
+            10,
+            10
+          ]
+        },
+        {
+          "id": "NE04.4",
+          "label": "Smithing",
+          "source": "data/minecraft/structure/village_swamp/swamp_village_smithing.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "37638d59fec4c46652c0e7aa016b7d0061daecb2195bce017b596a1ddb4808b0",
+          "origin": [
+            7396,
+            230,
+            1107
+          ],
+          "size": [
+            6,
+            10,
+            7
+          ]
+        },
+        {
+          "id": "NE04.5",
+          "label": "Smoker",
+          "source": "data/minecraft/structure/village_swamp/swamp_village_smoker.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "fd5244e8071c9ebae0268c6a022cba74679d03c30c57d505d252a59a42054426",
+          "origin": [
+            7410,
+            230,
+            1107
+          ],
+          "size": [
+            9,
+            10,
+            9
+          ]
+        },
+        {
+          "id": "NE04.6",
+          "label": "Stonecutter",
+          "source": "data/minecraft/structure/village_swamp/swamp_village_stonecutter.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "40fc1b5786ba570c727f2fd6156daf3075af86cb0d119bae57eb9efde7357cb4",
+          "origin": [
+            7427,
+            230,
+            1107
+          ],
+          "size": [
+            9,
+            10,
+            14
+          ]
+        }
+      ]
+    },
+    {
+      "id": "NE05",
+      "title": "Swamp Tavern & Grounds (1/3)",
+      "family": "dnt_tavern_swamp",
+      "mod": "Dungeons & Tav.",
+      "origin": [
+        7344,
+        230,
+        1141
+      ],
+      "bounds": [
+        7335,
+        228,
+        1133,
+        7496,
+        251,
+        1152
+      ],
+      "entries": [
+        {
+          "id": "NE05.1",
+          "label": "Firewatch Tower",
+          "source": "data/nova_structures/structure/firewatch_tower/firewatch_swamp.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "62d5bc2401de409dc0bf08213d8b69fc70bff961d2e898ec04102ccbcdde979d",
+          "origin": [
+            7344,
+            230,
+            1141
+          ],
+          "size": [
+            9,
+            19,
+            9
+          ]
+        },
+        {
+          "id": "NE05.2",
+          "label": "Entrance Ground",
+          "source": "data/nova_structures/structure/tavern/tavern_enterance_swamp.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "c52afd4e83bda37ebedaf088747670c9197f38abe2fc0edbc9066fd872cd182d",
+          "origin": [
+            7361,
+            230,
+            1141
+          ],
+          "size": [
+            3,
+            7,
+            7
+          ]
+        },
+        {
+          "id": "NE05.3",
+          "label": "Animal Fence",
+          "source": "data/nova_structures/structure/tavern/tavern_event_animal_fence_swamp.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "d93a81722902d3d023c77123d1b289ea5d943eca583f2db3ab4ddada2a23718d",
+          "origin": [
+            7372,
+            230,
+            1141
+          ],
+          "size": [
+            5,
+            5,
+            5
+          ]
+        },
+        {
+          "id": "NE05.4",
+          "label": "Animal Food",
+          "source": "data/nova_structures/structure/tavern/tavern_event_animal_food_swamp.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "e0b4ce4eaf983350843f048766dad2f3c085e4f5e24a537ff5904a8ebfe1b4a3",
+          "origin": [
+            7385,
+            230,
+            1141
+          ],
+          "size": [
+            5,
+            5,
+            5
+          ]
+        },
+        {
+          "id": "NE05.5",
+          "label": "Bench Table",
+          "source": "data/nova_structures/structure/tavern/tavern_event_bench_table_swamp.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "2bd78dde6b7a97395be240b431c45c6991533070c0cb8941b2fcafed6894d675",
+          "origin": [
+            7398,
+            230,
+            1141
+          ],
+          "size": [
+            5,
+            5,
+            5
+          ]
+        },
+        {
+          "id": "NE05.6",
+          "label": "Food Supply",
+          "source": "data/nova_structures/structure/tavern/tavern_event_food_supply_swamp.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "b83eb04a2286a4ee734188f553f925580c5f64f1602c88b5b38b830b3932b437",
+          "origin": [
+            7411,
+            230,
+            1141
+          ],
+          "size": [
+            5,
+            5,
+            5
+          ]
+        },
+        {
+          "id": "NE05.7",
+          "label": "Hay Storage",
+          "source": "data/nova_structures/structure/tavern/tavern_event_hay_storage_swamp.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "6c843cc0fbd730e16202361361c94ae8605b44bda1c717faa87b517dcc14974c",
+          "origin": [
+            7424,
+            230,
+            1141
+          ],
+          "size": [
+            5,
+            5,
+            5
+          ]
+        },
+        {
+          "id": "NE05.8",
+          "label": "Log",
+          "source": "data/nova_structures/structure/tavern/tavern_event_log_swamp.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "5a169090d209934acf6e482feab28fb2d657930e25bfeefd1f5402e74ca5a4c9",
+          "origin": [
+            7437,
+            230,
+            1141
+          ],
+          "size": [
+            5,
+            5,
+            5
+          ]
+        },
+        {
+          "id": "NE05.9",
+          "label": "Trader Car Armorer",
+          "source": "data/nova_structures/structure/tavern/tavern_event_trader_car_armorer_swamp.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "cdf5d8bc5c049ac4b725b50fe3b3eb088be1da2c9538194dce311bfba6ce7c0a",
+          "origin": [
+            7450,
+            230,
+            1141
+          ],
+          "size": [
+            5,
+            4,
+            5
+          ]
+        },
+        {
+          "id": "NE05.10",
+          "label": "Trader Car Butcher",
+          "source": "data/nova_structures/structure/tavern/tavern_event_trader_car_butcher_swamp.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "d9690f6f2d0b1ead14db13fbf584dc460b7ebaf21ea5dc589928a49c50249bc1",
+          "origin": [
+            7463,
+            230,
+            1141
+          ],
+          "size": [
+            5,
+            4,
+            5
+          ]
+        },
+        {
+          "id": "NE05.11",
+          "label": "Trader Car Farmer",
+          "source": "data/nova_structures/structure/tavern/tavern_event_trader_car_farmer_swamp.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "03500d5127f7448c23ace52075e37ad3d0cea8e65fba1a21ee8b4709b9c1f093",
+          "origin": [
+            7476,
+            230,
+            1141
+          ],
+          "size": [
+            5,
+            4,
+            5
+          ]
+        },
+        {
+          "id": "NE05.12",
+          "label": "Trader Car Fisher",
+          "source": "data/nova_structures/structure/tavern/tavern_event_trader_car_fisher_swamp.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "90cd0035dabb290e8b1eea17c65ea9c13515a907480f07f8233ba78ab5484869",
+          "origin": [
+            7489,
+            230,
+            1141
+          ],
+          "size": [
+            5,
+            4,
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "id": "NE06",
+      "title": "Swamp Tavern & Grounds (2/3)",
+      "family": "dnt_tavern_swamp",
+      "mod": "Dungeons & Tav.",
+      "origin": [
+        7344,
+        230,
+        1170
+      ],
+      "bounds": [
+        7335,
+        228,
+        1162,
+        7480,
+        245,
+        1191
+      ],
+      "entries": [
+        {
+          "id": "NE06.1",
+          "label": "Trader Car Fletcher",
+          "source": "data/nova_structures/structure/tavern/tavern_event_trader_car_fletcher_swamp.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "3a92f49f38b47d641ca286b701ce5542bd8565326638e533797d208d8ee89a4e",
+          "origin": [
+            7344,
+            230,
+            1170
+          ],
+          "size": [
+            5,
+            4,
+            5
+          ]
+        },
+        {
+          "id": "NE06.2",
+          "label": "Trader Car Grindstone",
+          "source": "data/nova_structures/structure/tavern/tavern_event_trader_car_grindstone_swamp.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "ddc611a5e1555af6189390b8dc970e47898df644f2708fc3bee24777bff6e87f",
+          "origin": [
+            7357,
+            230,
+            1170
+          ],
+          "size": [
+            5,
+            4,
+            5
+          ]
+        },
+        {
+          "id": "NE06.3",
+          "label": "Trader Car Leather Worker",
+          "source": "data/nova_structures/structure/tavern/tavern_event_trader_car_leather_worker_swamp.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "343913ea360243655f75628031bc346f401212c9960ad6569ee1a1acabb53d91",
+          "origin": [
+            7370,
+            230,
+            1170
+          ],
+          "size": [
+            5,
+            4,
+            5
+          ]
+        },
+        {
+          "id": "NE06.4",
+          "label": "Trader Car Librarian",
+          "source": "data/nova_structures/structure/tavern/tavern_event_trader_car_librarian_swamp.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "0edacc3dfc19fa2d044c3ee620ea64bc3af2d1f0e637caa8b04f3d2f1c080a25",
+          "origin": [
+            7383,
+            230,
+            1170
+          ],
+          "size": [
+            5,
+            4,
+            5
+          ]
+        },
+        {
+          "id": "NE06.5",
+          "label": "Trader Car Loom",
+          "source": "data/nova_structures/structure/tavern/tavern_event_trader_car_loom_swamp.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "81633418bff661798a88c417d96ad0e67986f53bcf2b54a84521efce3354f788",
+          "origin": [
+            7396,
+            230,
+            1170
+          ],
+          "size": [
+            5,
+            4,
+            5
+          ]
+        },
+        {
+          "id": "NE06.6",
+          "label": "Trader Car Smallithing Table",
+          "source": "data/nova_structures/structure/tavern/tavern_event_trader_car_smithing_table_swamp.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "cd9d95cf130a6468a69e33aaec290a47ce5d01ada508629458619aeb962827d8",
+          "origin": [
+            7409,
+            230,
+            1170
+          ],
+          "size": [
+            5,
+            4,
+            5
+          ]
+        },
+        {
+          "id": "NE06.7",
+          "label": "Trader Car Stonecutter",
+          "source": "data/nova_structures/structure/tavern/tavern_event_trader_car_stonecutter_swamp.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "309aea22e73f2b64d5e3c6c5dd7e0b5a9150a4bd5d34da556c0226a4231defe6",
+          "origin": [
+            7422,
+            230,
+            1170
+          ],
+          "size": [
+            5,
+            4,
+            5
+          ]
+        },
+        {
+          "id": "NE06.8",
+          "label": "Trash Trader",
+          "source": "data/nova_structures/structure/tavern/tavern_event_trash_trader_swamp.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "22edabae7a0301ce72514dfa5a578b68442df6d98da85b089879948d2fa5816d",
+          "origin": [
+            7435,
+            230,
+            1170
+          ],
+          "size": [
+            5,
+            5,
+            5
+          ]
+        },
+        {
+          "id": "NE06.9",
+          "label": "Well",
+          "source": "data/nova_structures/structure/tavern/tavern_event_well_swamp.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "d3849ff9141d0501f1229eea2e798e1f9c4385ab261d1688904b68a6dcc0f0ac",
+          "origin": [
+            7448,
+            230,
+            1170
+          ],
+          "size": [
+            5,
+            5,
+            5
+          ]
+        },
+        {
+          "id": "NE06.10",
+          "label": "Tavern Building",
+          "source": "data/nova_structures/structure/tavern/tavern_house_swamp.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "c1690d950f164eba8883937355dc97d982803002927407c608871ef523ba6437",
+          "origin": [
+            7461,
+            230,
+            1170
+          ],
+          "size": [
+            17,
+            13,
+            19
+          ]
+        }
+      ]
+    },
+    {
+      "id": "NE07",
+      "title": "Swamp Tavern & Grounds (3/3)",
+      "family": "dnt_tavern_swamp",
+      "mod": "Dungeons & Tav.",
+      "origin": [
+        7344,
+        230,
+        1209
+      ],
+      "bounds": [
+        7335,
+        228,
+        1201,
+        7357,
+        239,
+        1231
+      ],
+      "entries": [
+        {
+          "id": "NE07.1",
+          "label": "Courtyard Ground",
+          "source": "data/nova_structures/structure/tavern/tavern_middle_swamp.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "450287e9121097d58a8fc12ade6c1f33bb23ff57359d3df327876d06fa75530e",
+          "origin": [
+            7344,
+            230,
+            1209
+          ],
+          "size": [
+            11,
+            7,
+            20
+          ]
+        }
+      ]
+    },
+    {
+      "id": "NF01",
+      "title": "Towns & Towers / Swamp Boat Village (1/3)",
+      "family": "tt_swamp_boat",
+      "mod": "Towns & Towers",
+      "origin": [
+        7536,
+        230,
+        1010
+      ],
+      "bounds": [
+        7527,
+        228,
+        1002,
+        7684,
+        247,
+        1034
+      ],
+      "entries": [
+        {
+          "id": "NF01.1",
+          "label": "Temple 1",
+          "source": "data/kaisyn/structure/village/swamp_boat/houses/swamp_temple_1.nbt",
+          "sourceJar": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar",
+          "sourceSha256": "f1ead679e15dccd3c254f70e503a1e89dd2edb9b46f072b861238badd4059d4e",
+          "origin": [
+            7536,
+            230,
+            1010
+          ],
+          "size": [
+            7,
+            8,
+            9
+          ]
+        },
+        {
+          "id": "NF01.2",
+          "label": "Meeting Point 1",
+          "source": "data/kaisyn/structure/village/swamp_boat/town_centers/swamp_meeting_point_1.nbt",
+          "sourceJar": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar",
+          "sourceSha256": "6ab217dcb9f9f9f11af7d75a7d29f12a8ef3e27e7aa70b4a5958d950ff97eb72",
+          "origin": [
+            7551,
+            230,
+            1010
+          ],
+          "size": [
+            25,
+            15,
+            22
+          ]
+        },
+        {
+          "id": "NF01.3",
+          "label": "Armorer 1",
+          "source": "data/kaisyn/structure/village/swamp_boat/houses/swamp_armorer_1.nbt",
+          "sourceJar": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar",
+          "sourceSha256": "38bd40665acdb5208011b31d51a0978ceb444409d7ebadeee45664c57792249b",
+          "origin": [
+            7584,
+            230,
+            1010
+          ],
+          "size": [
+            7,
+            6,
+            5
+          ]
+        },
+        {
+          "id": "NF01.4",
+          "label": "Butcher 1",
+          "source": "data/kaisyn/structure/village/swamp_boat/houses/swamp_butcher_1.nbt",
+          "sourceJar": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar",
+          "sourceSha256": "d6a755914143a965d2647a1cf0ed56ea0296b84e445dd28b29b18b40ff1b7c09",
+          "origin": [
+            7599,
+            230,
+            1010
+          ],
+          "size": [
+            10,
+            6,
+            8
+          ]
+        },
+        {
+          "id": "NF01.5",
+          "label": "Cartographer 1",
+          "source": "data/kaisyn/structure/village/swamp_boat/houses/swamp_cartographer_1.nbt",
+          "sourceJar": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar",
+          "sourceSha256": "adae55bd7cc79d4a7c25e83dc7d4c7b826baa66162b7f31cf7fb040da5d12189",
+          "origin": [
+            7617,
+            230,
+            1010
+          ],
+          "size": [
+            9,
+            8,
+            7
+          ]
+        },
+        {
+          "id": "NF01.6",
+          "label": "Fisher 1",
+          "source": "data/kaisyn/structure/village/swamp_boat/houses/swamp_fisher_1.nbt",
+          "sourceJar": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar",
+          "sourceSha256": "e2874668aabfd390db4bec147e670a2ce21eb07374e511289830b357eb284717",
+          "origin": [
+            7634,
+            230,
+            1010
+          ],
+          "size": [
+            9,
+            7,
+            6
+          ]
+        },
+        {
+          "id": "NF01.7",
+          "label": "Fletcher 1",
+          "source": "data/kaisyn/structure/village/swamp_boat/houses/swamp_fletcher_1.nbt",
+          "sourceJar": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar",
+          "sourceSha256": "3f314292b104ec1e46674699ae51d14cce0753a1f9f58fbd1ad1e5cfec39940f",
+          "origin": [
+            7651,
+            230,
+            1010
+          ],
+          "size": [
+            8,
+            7,
+            7
+          ]
+        },
+        {
+          "id": "NF01.8",
+          "label": "Large Farm 1",
+          "source": "data/kaisyn/structure/village/swamp_boat/houses/swamp_large_farm_1.nbt",
+          "sourceJar": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar",
+          "sourceSha256": "1df60db6191d71a3cde86d6874f9f541bcaa8c2512293829dc6e412222a079a2",
+          "origin": [
+            7667,
+            230,
+            1010
+          ],
+          "size": [
+            15,
+            4,
+            9
+          ]
+        }
+      ]
+    },
+    {
+      "id": "NF02",
+      "title": "Towns & Towers / Swamp Boat Village (2/3)",
+      "family": "tt_swamp_boat",
+      "mod": "Towns & Towers",
+      "origin": [
+        7536,
+        230,
+        1052
+      ],
+      "bounds": [
+        7527,
+        228,
+        1044,
+        7685,
+        239,
+        1063
+      ],
+      "entries": [
+        {
+          "id": "NF02.1",
+          "label": "Large House 1",
+          "source": "data/kaisyn/structure/village/swamp_boat/houses/swamp_large_house_1.nbt",
+          "sourceJar": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar",
+          "sourceSha256": "cc2295c18c78324efc04159e868b3fcc6845c8945b9bb9db0b26465bd75f718d",
+          "origin": [
+            7536,
+            230,
+            1052
+          ],
+          "size": [
+            12,
+            6,
+            8
+          ]
+        },
+        {
+          "id": "NF02.2",
+          "label": "Large House 2",
+          "source": "data/kaisyn/structure/village/swamp_boat/houses/swamp_large_house_2.nbt",
+          "sourceJar": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar",
+          "sourceSha256": "01db874c342c3a819e2a17ce86f29d5630770d9f2042d126d434283025bd414e",
+          "origin": [
+            7556,
+            230,
+            1052
+          ],
+          "size": [
+            12,
+            6,
+            8
+          ]
+        },
+        {
+          "id": "NF02.3",
+          "label": "Leatherworker 1",
+          "source": "data/kaisyn/structure/village/swamp_boat/houses/swamp_leatherworker_1.nbt",
+          "sourceJar": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar",
+          "sourceSha256": "7d6e2522e5f8226ee945ff77c2eca799f6270421e074d4e416aeca21b2589b78",
+          "origin": [
+            7576,
+            230,
+            1052
+          ],
+          "size": [
+            10,
+            7,
+            8
+          ]
+        },
+        {
+          "id": "NF02.4",
+          "label": "Library 1",
+          "source": "data/kaisyn/structure/village/swamp_boat/houses/swamp_library_1.nbt",
+          "sourceJar": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar",
+          "sourceSha256": "95818359e2b3e314e5fd4f2bf80c6fc35b2885f8bc6b13fad504d3e6666427bb",
+          "origin": [
+            7594,
+            230,
+            1052
+          ],
+          "size": [
+            11,
+            6,
+            9
+          ]
+        },
+        {
+          "id": "NF02.5",
+          "label": "Mason 1",
+          "source": "data/kaisyn/structure/village/swamp_boat/houses/swamp_mason_1.nbt",
+          "sourceJar": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar",
+          "sourceSha256": "ab972cf31961910a8c614690e8f983ae9903737a64ce46b954a53323ea1678db",
+          "origin": [
+            7613,
+            230,
+            1052
+          ],
+          "size": [
+            6,
+            5,
+            6
+          ]
+        },
+        {
+          "id": "NF02.6",
+          "label": "Shepherd 1",
+          "source": "data/kaisyn/structure/village/swamp_boat/houses/swamp_shepherd_1.nbt",
+          "sourceJar": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar",
+          "sourceSha256": "bbdd637d7197b4ae68630c92aafea0a9d5047c4879a686915e3d3db1c9d0f6ad",
+          "origin": [
+            7627,
+            230,
+            1052
+          ],
+          "size": [
+            9,
+            6,
+            9
+          ]
+        },
+        {
+          "id": "NF02.7",
+          "label": "Small Farm 1",
+          "source": "data/kaisyn/structure/village/swamp_boat/houses/swamp_small_farm_1.nbt",
+          "sourceJar": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar",
+          "sourceSha256": "b3cbf2fda13a258b22b7534403b7575ac4cd0c10ac24e47186077bd37c0618e3",
+          "origin": [
+            7644,
+            230,
+            1052
+          ],
+          "size": [
+            9,
+            2,
+            7
+          ]
+        },
+        {
+          "id": "NF02.8",
+          "label": "Small House 1",
+          "source": "data/kaisyn/structure/village/swamp_boat/houses/swamp_small_house_1.nbt",
+          "sourceJar": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar",
+          "sourceSha256": "feef686dcb82847c5d9308097fbdc19076c33503cc547f6d618e9cd613dfb1cc",
+          "origin": [
+            7661,
+            230,
+            1052
+          ],
+          "size": [
+            7,
+            6,
+            7
+          ]
+        },
+        {
+          "id": "NF02.9",
+          "label": "Small House 2",
+          "source": "data/kaisyn/structure/village/swamp_boat/houses/swamp_small_house_2.nbt",
+          "sourceJar": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar",
+          "sourceSha256": "48ef0bfba4989ff3134fc9b741abfeedaa7efd6e94208eed35fd1cb5d1faa00b",
+          "origin": [
+            7676,
+            230,
+            1052
+          ],
+          "size": [
+            7,
+            6,
+            8
+          ]
+        }
+      ]
+    },
+    {
+      "id": "NF03",
+      "title": "Towns & Towers / Swamp Boat Village (3/3)",
+      "family": "tt_swamp_boat",
+      "mod": "Towns & Towers",
+      "origin": [
+        7536,
+        230,
+        1081
+      ],
+      "bounds": [
+        7527,
+        228,
+        1073,
+        7616,
+        239,
+        1091
+      ],
+      "entries": [
+        {
+          "id": "NF03.1",
+          "label": "Small House 3",
+          "source": "data/kaisyn/structure/village/swamp_boat/houses/swamp_small_house_3.nbt",
+          "sourceJar": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar",
+          "sourceSha256": "83665a98b14f71f148c30dad055964dae08a062dcc220890b45053630c65c0c0",
+          "origin": [
+            7536,
+            230,
+            1081
+          ],
+          "size": [
+            7,
+            6,
+            6
+          ]
+        },
+        {
+          "id": "NF03.2",
+          "label": "Small House 4",
+          "source": "data/kaisyn/structure/village/swamp_boat/houses/swamp_small_house_4.nbt",
+          "sourceJar": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar",
+          "sourceSha256": "e7a413ab1f7967b88475b57b769cdeb90704c7adc106438069416356ef3881fa",
+          "origin": [
+            7551,
+            230,
+            1081
+          ],
+          "size": [
+            7,
+            6,
+            7
+          ]
+        },
+        {
+          "id": "NF03.3",
+          "label": "Toolsmith 1",
+          "source": "data/kaisyn/structure/village/swamp_boat/houses/swamp_toolsmith_1.nbt",
+          "sourceJar": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar",
+          "sourceSha256": "33281725b6658b1002013f6caaa599edb0d95982b800e7a68d846dad47fe69a5",
+          "origin": [
+            7566,
+            230,
+            1081
+          ],
+          "size": [
+            7,
+            6,
+            7
+          ]
+        },
+        {
+          "id": "NF03.4",
+          "label": "Weaponsmith 1",
+          "source": "data/kaisyn/structure/village/swamp_boat/houses/swamp_weaponsmith_1.nbt",
+          "sourceJar": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar",
+          "sourceSha256": "ab2ffcfabdc94877cbafe439e7d421cc1a82a79512b9db6b763f8737aa1c8971",
+          "origin": [
+            7581,
+            230,
+            1081
+          ],
+          "size": [
+            13,
+            7,
+            8
+          ]
+        },
+        {
+          "id": "NF03.5",
+          "label": "Pipe 1",
+          "source": "data/kaisyn/structure/village/swamp_boat/swamp_pipe_1.nbt",
+          "sourceJar": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar",
+          "sourceSha256": "1bae2c7cb4a4427d8c6c13a88d5896ba25dec23ea1f11245d99a86ce070e30ea",
+          "origin": [
+            7602,
+            230,
+            1081
+          ],
+          "size": [
+            2,
+            3,
+            2
+          ]
+        },
+        {
+          "id": "NF03.6",
+          "label": "Pipe 2",
+          "source": "data/kaisyn/structure/village/swamp_boat/swamp_pipe_2.nbt",
+          "sourceJar": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar",
+          "sourceSha256": "3680ec57a6a5f1c2a0ff7b6c6a60e10e152e4b85edabe576fbf536d2ef53be54",
+          "origin": [
+            7612,
+            230,
+            1081
+          ],
+          "size": [
+            2,
+            2,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "id": "NF04",
+      "title": "YUNG's Better Witch Huts",
+      "family": "yung_witch",
+      "mod": "YUNG's Witch Huts",
+      "origin": [
+        7536,
+        230,
+        1109
+      ],
+      "bounds": [
+        7527,
+        228,
+        1101,
+        7604,
+        241,
+        1124
+      ],
+      "entries": [
+        {
+          "id": "NF04.1",
+          "label": "Witch Circle",
+          "source": "data/betterwitchhuts/structure/witch_circle.nbt",
+          "sourceJar": "YungsBetterWitchHuts-1.21.1-NeoForge-4.1.1.jar",
+          "sourceSha256": "d2cdfeee0c9149886ed5764e5cfedb2603f9bcba0cf7ff689e6379ea1e0cb948",
+          "origin": [
+            7536,
+            230,
+            1109
+          ],
+          "size": [
+            9,
+            5,
+            9
+          ]
+        },
+        {
+          "id": "NF04.2",
+          "label": "Witch Hut Double",
+          "source": "data/betterwitchhuts/structure/witch_hut_double.nbt",
+          "sourceJar": "YungsBetterWitchHuts-1.21.1-NeoForge-4.1.1.jar",
+          "sourceSha256": "6dbdd8c6e0a553de8eacdc8df75277466c74897e51740944bd5f3fa3007c67b2",
+          "origin": [
+            7553,
+            230,
+            1109
+          ],
+          "size": [
+            15,
+            9,
+            13
+          ]
+        },
+        {
+          "id": "NF04.3",
+          "label": "Witch Hut Large",
+          "source": "data/betterwitchhuts/structure/witch_hut_lg.nbt",
+          "sourceJar": "YungsBetterWitchHuts-1.21.1-NeoForge-4.1.1.jar",
+          "sourceSha256": "4b623b65963acae9ca17ba0db1a82702fb8e27c0daae4f43541251db6e4f7e59",
+          "origin": [
+            7576,
+            230,
+            1109
+          ],
+          "size": [
+            11,
+            7,
+            11
+          ]
+        },
+        {
+          "id": "NF04.4",
+          "label": "Witch Hut Small",
+          "source": "data/betterwitchhuts/structure/witch_hut_sm.nbt",
+          "sourceJar": "YungsBetterWitchHuts-1.21.1-NeoForge-4.1.1.jar",
+          "sourceSha256": "e29a9f5cc99740d579106c5b93e7a87482652215cd9b711205ebb4540fe1e406",
+          "origin": [
+            7595,
+            230,
+            1109
+          ],
+          "size": [
+            7,
+            8,
+            9
+          ]
+        }
+      ]
+    },
+    {
+      "id": "NA04",
+      "title": "Market Tier Drafts (Desert restyled)",
+      "family": "market_drafts",
+      "mod": "Kithkyn",
+      "origin": [
+        6576,
+        230,
+        1114
+      ],
+      "bounds": [
+        6567,
+        228,
+        1106,
+        6632,
+        238,
+        1133
+      ],
+      "entries": [
+        {
+          "id": "NA04.1",
+          "label": "Market Tier 1",
+          "source": "run/world/datapacks/kithkyn-desert/data/kithkyn/structure/market_desert_1.nbt",
+          "sourceJar": "kithkyn-desert",
+          "sourceSha256": "4684673b5009fbfdebc2789252b61efe77e722229e0efcaa8b4175cfb2842849",
+          "origin": [
+            6576,
+            230,
+            1114
+          ],
+          "size": [
+            8,
+            6,
+            9
+          ]
+        },
+        {
+          "id": "NA04.2",
+          "label": "Market Tier 2",
+          "source": "run/world/datapacks/kithkyn-desert/data/kithkyn/structure/market_desert_2.nbt",
+          "sourceJar": "kithkyn-desert",
+          "sourceSha256": "924f7c24d0d1f2731c7237071f7fea856c09405fdc4088814020fc577359f4b1",
+          "origin": [
+            6592,
+            230,
+            1114
+          ],
+          "size": [
+            15,
+            6,
+            9
+          ]
+        },
+        {
+          "id": "NA04.3",
+          "label": "Market Tier 3",
+          "source": "run/world/datapacks/kithkyn-desert/data/kithkyn/structure/market_desert_3.nbt",
+          "sourceJar": "kithkyn-desert",
+          "sourceSha256": "bf970861e7d8347155431d513c286f3a6e044bd6bc0c06dd9845ff7e3eb07e38",
+          "origin": [
+            6615,
+            230,
+            1114
+          ],
+          "size": [
+            15,
+            6,
+            17
+          ]
+        }
+      ]
+    }
+  ]
+}

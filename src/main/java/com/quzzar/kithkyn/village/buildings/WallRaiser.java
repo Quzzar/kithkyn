@@ -274,6 +274,7 @@ public final class WallRaiser {
         && PlacedBlockStore.get(serverLevel).isPlayerPlaced(pos)) return;
     BlockState state = desiredState(block, tier, style, identity);
     if (block.piece() == WallBlockPlan.Piece.POST
+        || block.piece() == WallBlockPlan.Piece.GATE_FRAME_POST
         || block.role() == WallCellRole.FOUNDATION) {
       extendFoundationToGround(level, pos, state);
     } else if (isStructuralFoundationPiece(block.piece())) {
@@ -509,6 +510,8 @@ public final class WallRaiser {
   private static boolean isStructuralFoundationPiece(WallBlockPlan.Piece piece) {
     return piece == WallBlockPlan.Piece.BODY
         || piece == WallBlockPlan.Piece.POST
+        || piece == WallBlockPlan.Piece.GATE_FRAME_POST
+        || piece == WallBlockPlan.Piece.GATE_FRAME_BEAM
         || piece == WallBlockPlan.Piece.COBBLE_POST
         || piece == WallBlockPlan.Piece.MOSSY_POST
         || piece == WallBlockPlan.Piece.BEAM_NORTH_SOUTH

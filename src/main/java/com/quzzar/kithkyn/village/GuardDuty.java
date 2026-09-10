@@ -1,6 +1,7 @@
 package com.quzzar.kithkyn.village;
 
 import java.util.Map;
+import java.util.List;
 import java.util.UUID;
 
 import javax.annotation.Nullable;
@@ -54,6 +55,46 @@ public record GuardDuty(BlockPos position, BlockPos lookAt, boolean ranged, bool
   /** Explicit sword patrols use the ordinary patrol route without woodcutting or an axe loadout. */
   public static boolean isSwordPatrol(RealPerson person) {
     return authoredRole(person) == GuardRole.PATROL;
+  }
+
+  /** A keeper uses the existing guard job and fixed sword watch beside the cell. */
+  public static boolean isJailer(RealPerson person) {
+    return authoredRole(person) == GuardRole.JAILER;
+  }
+
+  /** A castle sentry's movement stays within their available assigned castle. */
+  @Nullable
+  public static Building assignedCastle(RealPerson person) {
+    Village village = person.getVillage();
+    if (person.getOccupation() != Occupation.GUARD || village == null) return null;
+    JobAssignment job = village.getJobAssignment(person.getUUID());
+    if (job == null || job.isWallPost()) return null;
+    Building building = village.getBuilding(job.getBuildingUUID());
+    return building != null && !village.isBeingRebuilt(building.getUUID())
+        && building.getInfo() != null && building.getInfo().getCastleLayout() != null ? building : null;
+  }
+
+  /** The presence of a route changes the awake shift without changing the guard's weapon duty. */
+  public static boolean hasCastlePatrol(RealPerson person) {
+    Building castle = assignedCastle(person);
+    return castle != null && !castle.getInfo().getCastleLayout().patrolRoute(authoredRole(person)).isEmpty();
+  }
+
+  /** Authored castle points transformed through the same origin and rotation as the post. */
+  public static List<BlockPos> patrolRoute(RealPerson person) {
+    Building castle = assignedCastle(person);
+    return castle == null ? List.of() : patrolRoute(castle.getInfo(), authoredRole(person),
+        BlockPos.of(castle.getOriginLocation()), castle.getRotation());
+  }
+
+  static List<BlockPos> patrolRoute(BuildingInfo info, @Nullable GuardRole role, BlockPos origin, Rotation rotation) {
+    return info.getCastleLayout() == null ? List.of() : info.getCastleLayout().patrolRoute(role).stream()
+        .map(point -> origin.offset(point.rotate(rotation))).toList();
+  }
+
+  /** Castle sword sentries receive their shield as part of their initial defensive kit. */
+  public static boolean isCastleSwordGuard(RealPerson person) {
+    return assignedCastle(person) != null && authoredRole(person) == GuardRole.SWORD_POST;
   }
 
   @Nullable
@@ -130,7 +171,7 @@ public record GuardDuty(BlockPos position, BlockPos lookAt, boolean ranged, bool
         if (role != null && !role.hasPost()) return null;
         if (role == null && !info.getGrants().contains(RANGED_GUARD_POSTS)) return null;
         BlockPos position = origin.offset(BlockPos.of(station.getKey()).rotate(rotation));
-        boolean ranged = role != GuardRole.SWORD_POST;
+        boolean ranged = role != GuardRole.SWORD_POST && role != GuardRole.JAILER;
         return new GuardDuty(position, position.offset(new BlockPos(0, 0, -8).rotate(rotation)), ranged, ranged);
       }
     }

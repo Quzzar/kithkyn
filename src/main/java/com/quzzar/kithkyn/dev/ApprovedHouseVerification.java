@@ -56,8 +56,10 @@ import net.minecraft.world.level.block.DoorBlock;
 import net.minecraft.world.level.block.FenceGateBlock;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.SlabBlock;
+import net.minecraft.world.level.block.TrapDoorBlock;
 import net.minecraft.world.level.block.state.properties.SlabType;
 import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
+import net.minecraft.world.level.block.state.properties.Half;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -440,10 +442,22 @@ public final class ApprovedHouseVerification {
             "Crossbow station lacks its fixed ranged duty");
         check(JobTool.of(walker) == JobTool.CROSSBOW && walker.getMainHandItem().is(Items.CROSSBOW),
             "Crossbow post did not receive its crossbow");
-        check(walker.personMainInv.countItem(Items.STONE_SWORD) == 1, "Crossbow post lacks its backup sword");
+        // This probe reuses one resident across stations; a previous sword post can leave another sword.
+        check(walker.personMainInv.countItem(Items.STONE_SWORD) >= 1, "Crossbow post lacks its backup sword");
       }
     } else if (visit.kind() == VisitKind.SHARED_CONTAINER) {
       approach = ContainerAccess.approachTo(walker, visit.target(), 6.0D);
+      if (approach == null) {
+        for (BlockPos candidate : BlockPos.betweenClosed(visit.target().offset(-2, -1, -2), visit.target().offset(2, 1, 2))) {
+          Vec3 feet = WorkerFooting.standingPosition(walker, candidate);
+          if (feet == null || !ContainerAccess.canReach(walker, feet.add(0, walker.getEyeHeight(), 0), visit.target(), 6.0D)) continue;
+          var path = walker.getNavigation().createPath(candidate.immutable(), 0);
+          Kithkyn.LOGGER.info("[approved-house-verify] CONTAINER DIAGNOSTIC from {} to {}: reachable={}, end={}, nodes={}",
+              walker.position().subtract(Vec3.atLowerCornerOf(ORIGIN)), candidate.subtract(ORIGIN),
+              path != null && path.canReach(), path == null || path.getEndNode() == null ? null : path.getEndNode().asBlockPos().subtract(ORIGIN),
+              path == null ? 0 : path.getNodeCount());
+        }
+      }
       check(approach != null, "No physical shared-container approach " + visit.target().subtract(ORIGIN));
       var state = walker.level().getBlockState(approach);
       if (state.getBlock() instanceof DoorBlock && !state.getValue(DoorBlock.OPEN)) openingDoor = approach;
@@ -851,7 +865,35 @@ public final class ApprovedHouseVerification {
       level.setBlock(position, Blocks.AIR.defaultBlockState(), 2);
     }
     verifyClosetPlanning(level, person, floor.east(5));
+    verifyTrapdoorCounterPlanning(level, person, floor.east(5));
     Kithkyn.LOGGER.info("[approved-house-verify] FOOTING PASS: fractional floor, exact body clearance, low ceiling/fence/water rejection, clear half-step and blocked low-bridge step");
+  }
+
+  /** Counter panels must obstruct a low passage while an open side panel leaves its aperture usable. */
+  private static void verifyTrapdoorCounterPlanning(ServerLevel level, RealPerson person, BlockPos origin) {
+    for (BlockPos position : BlockPos.betweenClosed(origin, origin.offset(3, 3, 2))) {
+      BlockPos local = position.subtract(origin);
+      boolean solid = local.getY() == 0 || local.getY() == 3
+          || local.getX() > 0 && (local.getZ() != 1 || local.getX() == 3);
+      level.setBlock(position, solid ? Blocks.STONE.defaultBlockState() : Blocks.AIR.defaultBlockState(), 2);
+    }
+    BlockPos counter = origin.offset(1, 1, 1);
+    BlockPos target = origin.offset(2, 1, 1);
+    var panel = Blocks.OAK_TRAPDOOR.defaultBlockState()
+        .setValue(TrapDoorBlock.HALF,
+            Half.TOP)
+        .setValue(TrapDoorBlock.FACING, net.minecraft.core.Direction.NORTH);
+    level.setBlock(counter, panel, 2);
+    ApprovedStructureAccess.moveTo(person, origin.offset(0, 1, 1));
+    var blocked = person.getNavigation().createPath(target, 0);
+    check(blocked == null || !blocked.canReach(), "Closed market counter admitted a route through its panel");
+    level.setBlock(counter, panel.setValue(TrapDoorBlock.OPEN, true), 2);
+    var open = person.getNavigation().createPath(target, 0);
+    check(open != null && open.canReach(), "Open side trapdoor blocked its clear aperture");
+    for (BlockPos position : BlockPos.betweenClosed(origin, origin.offset(3, 3, 2))) {
+      level.setBlock(position, Blocks.AIR.defaultBlockState(), 2);
+    }
+    Kithkyn.LOGGER.info("[approved-house-verify] COUNTER PASS: closed panel rejected, open side aperture reachable");
   }
 
   /** Closet planning may open one wooden door, but must never bypass iron or the wall behind it. */

@@ -5,10 +5,11 @@ public enum GuardRole {
   CAPTAIN,
   PATROL,
   CROSSBOW_POST,
-  SWORD_POST;
+  SWORD_POST,
+  JAILER;
 
   /** Only sentries have a fixed station to return to between threats. */
   public boolean hasPost() {
-    return this == CROSSBOW_POST || this == SWORD_POST;
+    return this == CROSSBOW_POST || this == SWORD_POST || this == JAILER;
   }
 }

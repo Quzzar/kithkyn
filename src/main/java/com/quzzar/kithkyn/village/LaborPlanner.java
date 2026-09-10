@@ -250,7 +250,7 @@ public final class LaborPlanner {
       if (!ignoreCooldown && JobClaiming.isOnCooldown(village, entry.getKey(), now)) {
         continue; // recently placed, swapped, or displaced: let them settle
       }
-      if (!village.canHouseForJob(entry.getKey(), vacancy.getBuildingUUID())) {
+      if (!village.canHouseForJob(entry.getKey(), vacancy)) {
         continue; // their current workplace bed cannot follow them to this post
       }
       RealPerson worker = village.getPerson(level, entry.getKey());
@@ -291,6 +291,7 @@ public final class LaborPlanner {
   /** Pure protection rule used before any urgent reassignment is offered. */
   static boolean mustKeep(Occupation occupation, int sameOccupationCount,
       boolean hungry, boolean storageBackedUp) {
+    if (VillageRuler.hasStableTenure(occupation)) return true;
     if (ALWAYS_STAFFED.contains(occupation) && sameOccupationCount <= 1) {
       return true;
     }
@@ -310,14 +311,15 @@ public final class LaborPlanner {
     options.add(LEAVE_AS_IS);
 
     List<UUID> crewIds = crew.stream().map(RealPerson::getUUID).toList();
-    String situation = situationOf(need, crew);
+    String situation = VillageRuler.context(village) + situationOf(need, crew);
+    Optional<UUID> ruler = VillageRuler.speakerId(village);
     village.setLaborDecisionPending(true);
     LlmService.get().decide("who " + village.getName() + " assigns to urgent " + field + " work", situation, options)
         .whenComplete((result, error) -> {
           if (level.getServer() == null) {
             return;
           }
-          level.getServer().execute(() -> apply(village, level, crewIds, need, result, error));
+          level.getServer().execute(() -> apply(village, level, crewIds, need, result, error, ruler));
         });
   }
 
@@ -339,7 +341,7 @@ public final class LaborPlanner {
    * meantime is simply skipped.
    */
   private static void apply(Village village, ServerLevel level, List<UUID> crewIds, LaborNeed need,
-      Optional<LlmDecision> result, Throwable error) {
+      Optional<LlmDecision> result, Throwable error, Optional<UUID> ruler) {
     village.setLaborDecisionPending(false);
     if (error != null) {
       Kithkyn.LOGGER.error("[labor] '{}' could not decide who fills urgent work; using aptitude fallback",
@@ -360,30 +362,34 @@ public final class LaborPlanner {
     }
     int selected = decision.choiceIndex() < 0 || decision.choiceIndex() > crewIds.size()
         ? 0 : decision.choiceIndex();
-    reassign(village, level, crewIds.get(selected), need, decision.reason());
+    if (reassign(village, level, crewIds.get(selected), need, decision.reason())) {
+      RealPerson worker = village.getPerson(level, crewIds.get(selected));
+      VillageRuler.rememberDecision(village, ruler, "I reassigned " + worker.getFullName()
+          + " to " + need.vacancy().getOccupation().name().toLowerCase() + ": " + decision.reason());
+    }
   }
 
   /** Revalidates both sides of the transfer and performs one count-preserving job move. */
-  private static void reassign(Village village, ServerLevel level, UUID workerId,
+  private static boolean reassign(Village village, ServerLevel level, UUID workerId,
       LaborNeed need, String reason) {
     RealPerson worker = village.getPerson(level, workerId);
     if (worker == null) {
-      return;
+      return false;
     }
     JobAssignment post = matchingOpenPost(village, need.vacancy());
-    if (post == null || !village.canHouseForJob(worker.getUUID(), post.getBuildingUUID())) {
-      return;
+    if (post == null || !village.canHouseForJob(worker.getUUID(), post)) {
+      return false;
     }
     Occupation from = worker.getOccupation();
     if (mustKeep(from, countOf(village, from), isHungry(village),
         village.isStorageBackedUp())) {
       // The model may answer after the crew changes. Never apply a stale choice
       // that would now remove the last essential worker.
-      return;
+      return false;
     }
     JobAssignment vacated = village.releaseJob(worker.getUUID());
     if (vacated == null) {
-      return;
+      return false;
     }
     JobClaiming.prepareForJobChange(village, worker);
     village.assignJob(worker.getUUID(), post);
@@ -394,6 +400,7 @@ public final class LaborPlanner {
         + "; " + need.memoryReason() + ".", Optional.empty());
     Kithkyn.LOGGER.info("[labor] '{}' moved '{}' from {} to {} because {}: {}",
         village.getName(), worker.getFullName(), from, post.getOccupation(), need.memoryReason(), reason);
+    return true;
   }
 
   @javax.annotation.Nullable

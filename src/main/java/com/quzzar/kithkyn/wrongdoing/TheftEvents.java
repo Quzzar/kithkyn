@@ -114,14 +114,17 @@ public final class TheftEvents {
     if (village == null) {
       return null;
     }
-    // The menu does not say which block it came from, so the village's own
-    // containers within reach are the ones that can be open.
-    for (BlockPos pos : BlockPos.betweenClosed(looking.offset(-6, -4, -6), looking.offset(6, 4, 6))) {
-      if (!isVillageContainer(level, village, pos)) {
-        continue;
-      }
-      if (level.getBlockEntity(pos) instanceof Container container && container.stillValid(player)) {
-        return container;
+    // Match the container actually backing this menu. Proximity alone could mistake
+    // an evidence barrel or a player's chest for nearby village stores.
+    java.util.Set<Container> opened = java.util.Collections.newSetFromMap(new java.util.IdentityHashMap<>());
+    for (var slot : event.getContainer().slots) {
+      if (slot.container != player.getInventory()) opened.add(slot.container);
+    }
+    for (BlockPos pos : village.getVillageContainerPositions()) {
+      if (!(level.getBlockEntity(pos) instanceof Container container)) continue;
+      for (Container actual : opened) {
+        if (actual == container || actual instanceof net.minecraft.world.CompoundContainer combined
+            && combined.contains(container)) return container;
       }
     }
     return null;

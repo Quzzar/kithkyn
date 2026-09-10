@@ -19,7 +19,7 @@ def export_production(manifest, manifest_path, java):
     variant = variants.pop()
     work = ROOT / ('run/desert-integration' if variant == 'desert' else 'run/badlands-integration') / manifest_path.stem
     work.mkdir(parents=True, exist_ok=True)
-    recipes = ROOT / 'src/main/resources/data/kithkyn/kithkyn/buildings'
+    recipes = ROOT / 'src/main/resources/data/kithkyn/kithkyn/construction_recipes'
     datapack = ROOT / manifest.get('production_datapack',
         'run/desert-integration/datapack' if variant == 'desert' else 'run/badlands-integration/datapack')
     definitions = datapack / 'data/kithkyn/kithkyn/buildings'
@@ -45,10 +45,12 @@ def export_production(manifest, manifest_path, java):
         assert source_hash == entry['neutral_template_sha256'], f"Reviewed neutral geometry changed: {source}"
         data = read(source)
         info = copy.deepcopy(entry.get('amenities', entry.get('info')))
-        recipe = json.loads((recipes / (binding['recipe'] + '.json')).read_text())
-        info.update(structure=binding['structure'], category=binding['category'],
-                    variant=binding['variant'], cost=recipe['cost'])
+        level = binding['structure'].split('__', 1)[0].rsplit('_', 1)[1]
+        recipe_id = binding['category'] + '_' + level
+        info.update(structure=binding['structure'], category=binding['category'], variant=binding['variant'])
         info.update(binding.get('definition_overrides', {}))
+        if 'cost' not in info:
+            assert (recipes / (recipe_id + '.json')).is_file(), f'Missing shared construction recipe: {recipe_id}'
         if 'upgrades_from' in binding:
             info['upgrades_from'] = binding['upgrades_from']
         else:
@@ -78,7 +80,7 @@ def export_production(manifest, manifest_path, java):
         report.append({'exhibit': entry['exhibit'], 'structure': info['structure'],
                        'review_manifest': str(manifest_path.relative_to(ROOT)),
                        'reviewed_neutral': entry['neutral_template'], 'reviewed_neutral_sha256': source_hash,
-                       'recipe': binding['recipe'], 'definition': str(target.relative_to(ROOT)),
+                       'recipe': 'override' if 'cost' in info else recipe_id, 'definition': str(target.relative_to(ROOT)),
                        'asset': str(output.relative_to(ROOT)), 'identity_neutralization': changed})
     planfile = work / 'export-plan.json'
     planfile.write_text(json.dumps(plan, indent=2) + '\n')

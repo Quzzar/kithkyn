@@ -33,16 +33,6 @@
       6
     ]
   ],
-  "cost": [
-    {
-      "item": "minecraft:oak_log",
-      "count": 124
-    },
-    {
-      "item": "minecraft:stone_bricks",
-      "count": 112
-    }
-  ],
   "grants": [
     "BREAD"
   ],

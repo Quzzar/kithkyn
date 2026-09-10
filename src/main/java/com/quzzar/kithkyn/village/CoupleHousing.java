@@ -38,6 +38,24 @@ final class CoupleHousing {
     return true;
   }
 
+  /** An entitled single incumbent claims one bed only after every reserved room slot is available. */
+  static boolean assignIncumbent(UUID resident, Building building, BuildingInfo.RoomReservation room,
+      Map<UUID, BedAssignment> assigned, List<BedAssignment> open) {
+    List<Integer> indexes = room.beds().stream()
+        .map(bed -> building.getInfo().getBedLocations().indexOf(bed.asLong())).toList();
+    if (indexes.stream().anyMatch(index -> !available(building.getUUID(), index, resident, null, assigned, open))) {
+      return false;
+    }
+    BedAssignment current = assigned.get(resident);
+    if (current != null && current.getBuildingUUID().equals(building.getUUID())
+        && indexes.contains(current.getBedIndex())) return true;
+    int index = indexes.getFirst();
+    release(resident, assigned, open);
+    open.removeIf(bed -> holds(bed, building.getUUID(), index));
+    assigned.put(resident, new BedAssignment(resident, building.getUUID(), index));
+    return true;
+  }
+
   /** The read-only admission check and the final assignment use the same pair eligibility. */
   static BuildingInfo.CoupleBeds availablePair(UUID first, UUID second, Building building,
       Map<UUID, BedAssignment> assigned, List<BedAssignment> open,
@@ -69,7 +87,7 @@ final class CoupleHousing {
     return count;
   }
 
-  private static boolean available(UUID building, int index, UUID first, UUID second,
+  static boolean available(UUID building, int index, UUID first, UUID second,
       Map<UUID, BedAssignment> assigned, List<BedAssignment> open) {
     if (index < 0) return false;
     for (Map.Entry<UUID, BedAssignment> entry : assigned.entrySet()) {

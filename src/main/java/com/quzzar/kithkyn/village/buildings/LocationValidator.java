@@ -98,6 +98,57 @@ public class LocationValidator {
     }
   }
 
+  /** Existing claims that remain unavailable even when no completed building anchors them. */
+  @FunctionalInterface
+  public interface ClaimedGround {
+    boolean contains(int x, int z);
+  }
+
+  /** Additional protection for an unsunk ground origin and its rotated local footprint. */
+  @FunctionalInterface
+  public interface SitePredicate {
+    boolean test(BlockPos ground, BoundingBox localBounds);
+  }
+
+  /**
+   * Read-only building geometry for one search. Founding can reserve each accepted
+   * building here before the world, village registry or live claim grid is changed.
+   */
+  public static final class PlacementContext {
+    private final List<TownLayout.Footprint> anchors;
+    private final int buildingCount;
+    private final double centerRadius;
+    private final ClaimedGround claimed;
+    private final SitePredicate allowed;
+
+    public PlacementContext(List<BoundingBox> worldAnchors, int buildingCount, double centerRadius,
+        ClaimedGround claimed, SitePredicate allowed) {
+      this.anchors = worldAnchors.stream().map(LocationValidator::footprint).toList();
+      this.buildingCount = buildingCount;
+      this.centerRadius = centerRadius;
+      this.claimed = claimed;
+      this.allowed = allowed;
+    }
+
+    /** A new reservation is both a frontage anchor and unavailable ground for later searches. */
+    public PlacementContext withPlannedBuilding(BoundingBox worldBounds) {
+      List<BoundingBox> expanded = new ArrayList<>();
+      for (TownLayout.Footprint anchor : anchors) {
+        expanded.add(new BoundingBox(anchor.minX(), 0, anchor.minZ(), anchor.maxX(), 0, anchor.maxZ()));
+      }
+      expanded.add(worldBounds);
+      return new PlacementContext(expanded, buildingCount + 1, centerRadius, claimed, allowed);
+    }
+
+    public boolean isClaimed(int x, int z) {
+      if (claimed.contains(x, z)) return true;
+      for (TownLayout.Footprint anchor : anchors) {
+        if (x >= anchor.minX() && x <= anchor.maxX() && z >= anchor.minZ() && z <= anchor.maxZ()) return true;
+      }
+      return false;
+    }
+  }
+
   /**
    * Finds the nearest slot around {@code centerPos} that the building fits in one
    * of {@code rotations}. The template is weighed in every listed orientation and
@@ -106,6 +157,23 @@ public class LocationValidator {
    */
   public static Search findValidLocation(ServerLevelAccessor levelAccess, BlockPos centerPos,
       StructureTemplate template, Direction entranceFacing, List<Rotation> rotations, Village village, Random random) {
+    List<BoundingBox> anchors = new ArrayList<>();
+    for (Building building : village.getBuildings()) {
+      BoundingBox local = BuildingUpgrade.footprintOf(levelAccess, building);
+      if (local == null) continue;
+      BlockPos origin = BlockPos.of(building.getOriginLocation());
+      anchors.add(local.moved(origin.getX(), origin.getY(), origin.getZ()));
+    }
+    PlacementContext context = new PlacementContext(anchors, village.getBuildings().size(),
+        village.getTownCenter().getRadius(), (x, z) -> village.hasClaimed(new BlockPos(x, 0, z)),
+        (ground, bounds) -> true);
+    return findValidLocation(levelAccess, centerPos, template, entranceFacing, rotations, village, context, random);
+  }
+
+  /** The ordinary growth search, also usable against buildings reserved by an uncommitted founding plan. */
+  public static Search findValidLocation(ServerLevelAccessor levelAccess, BlockPos centerPos,
+      StructureTemplate template, Direction entranceFacing, List<Rotation> rotations, Village village,
+      PlacementContext context, Random random) {
     ServerLevel level = levelAccess.getLevel();
 
     // The village grows outwards as it builds, but the ring never collapses: a
@@ -113,10 +181,10 @@ public class LocationValidator {
     // somewhere. When this was a plain multiple of the building count, a young
     // village searched a radius of zero and no site was ever scored at all.
     int ringRadius = Math.min(MAX_SEARCH_RADIUS,
-        SEARCH_RADIUS_PER_4_BUILDINGS * (1 + village.getBuildings().size() / 4));
+        SEARCH_RADIUS_PER_4_BUILDINGS * (1 + context.buildingCount / 4));
     int sweepRadius = Math.min(MAX_SEARCH_RADIUS, ringRadius + SWEEP_BEYOND);
     // Never propose the ground the town centre is standing on.
-    int standOff = (int) village.getTownCenter().getRadius() + MIN_STAND_OFF;
+    int standOff = (int) context.centerRadius + MIN_STAND_OFF;
 
     // Each orientation's footprint, read once. The rotated box pivots around the
     // origin, so its min corner can go negative, and the seat and claim maths use
@@ -129,13 +197,13 @@ public class LocationValidator {
       maxSpan = Math.max(maxSpan, Math.max(rotated.getXSpan(), rotated.getZSpan()));
     }
     HeightGrid grid = new HeightGrid(level, centerPos, sweepRadius + maxSpan);
-    Hunt hunt = new Hunt(level, village, boundsByRotation, grid, centerPos, entranceFacing, random);
+    Hunt hunt = new Hunt(level, village, context, boundsByRotation, grid, centerPos, entranceFacing, random);
 
     // City form comes from relationships, not a radial lot lottery. Try the
     // exact frontage slots at both lane widths around every completed building
     // before the general sweep. The scan cap reserves candidates for tight sites
     // and turned buildings so preferred geometry cannot exhaust every fallback.
-    for (PlannedCandidate candidate : plannedCandidates(level, village, boundsByRotation,
+    for (PlannedCandidate candidate : plannedCandidates(context, boundsByRotation,
         centerPos, entranceFacing, sweepRadius)) {
       hunt.consider(candidate.origin().x() - centerPos.getX(),
           candidate.origin().z() - centerPos.getZ(), candidate.rotation(), true);
@@ -195,25 +263,13 @@ public class LocationValidator {
       .thenComparingInt(PlannedCandidate::distanceSqr);
 
   /** Exact edge-aligned growth slots around the village's completed fabric. */
-  private static List<PlannedCandidate> plannedCandidates(ServerLevelAccessor level, Village village,
+  static List<PlannedCandidate> plannedCandidates(PlacementContext context,
       EnumMap<Rotation, BoundingBox> boundsByRotation, BlockPos centre, Direction entranceFacing, int reach) {
-    List<TownLayout.Footprint> anchors = new ArrayList<>();
-    for (Building building : village.getBuildings()) {
-      BoundingBox local = BuildingUpgrade.footprintOf(level, building);
-      if (local == null) {
-        continue;
-      }
-      BlockPos origin = BlockPos.of(building.getOriginLocation());
-      anchors.add(new TownLayout.Footprint(
-          origin.getX() + local.minX(), origin.getZ() + local.minZ(),
-          origin.getX() + local.maxX(), origin.getZ() + local.maxZ()));
-    }
-
     Set<PlannedCandidate> candidates = new LinkedHashSet<>();
     int reachSqr = reach * reach;
     for (var entry : boundsByRotation.entrySet()) {
       TownLayout.Footprint local = footprint(entry.getValue());
-      for (TownLayout.Footprint anchor : anchors) {
+      for (TownLayout.Footprint anchor : context.anchors) {
         for (int gap = TownLayout.PREFERRED_GAP; gap >= MIN_GAP; gap--) {
           for (TownLayout.Origin origin : TownLayout.frontageOrigins(anchor, local, gap)) {
             TownLayout.Footprint placed = local.moved(origin);
@@ -222,12 +278,12 @@ public class LocationValidator {
             int relX = centerX - centre.getX();
             int relZ = centerZ - centre.getZ();
             int distanceSqr = relX * relX + relZ * relZ;
-            if (distanceSqr <= reachSqr && claimFree(village, placed, MIN_GAP)) {
+            if (distanceSqr <= reachSqr && claimFree(context, placed, MIN_GAP)) {
               TownLayout.Relationship relationship = TownLayout.relationship(placed,
-                  (x, z) -> village.hasClaimed(new BlockPos(x, 0, z)));
+                  context::isClaimed);
               TownLayout.Preference preference = TownLayout.preference(placed, entry.getKey().rotate(entranceFacing),
                   new TownLayout.Origin(centre.getX(), centre.getZ()),
-                  (x, z) -> village.hasClaimed(new BlockPos(x, 0, z)));
+                  context::isClaimed);
               candidates.add(new PlannedCandidate(origin, entry.getKey(), preference, relationship, distanceSqr));
             }
           }
@@ -261,9 +317,8 @@ public class LocationValidator {
     return new TownLayout.Footprint(bounds.minX(), bounds.minZ(), bounds.maxX(), bounds.maxZ());
   }
 
-  private static boolean claimFree(Village village, TownLayout.Footprint footprint, int padding) {
-    BlockPos.MutableBlockPos probe = new BlockPos.MutableBlockPos();
-    return TownLayout.hasClearance(footprint, padding, (x, z) -> village.hasClaimed(probe.set(x, 0, z)));
+  private static boolean claimFree(PlacementContext context, TownLayout.Footprint footprint, int padding) {
+    return TownLayout.hasClearance(footprint, padding, context::isClaimed);
   }
 
   /**
@@ -426,6 +481,7 @@ public class LocationValidator {
 
     private final ServerLevel level;
     private final Village village;
+    private final PlacementContext context;
     private final EnumMap<Rotation, BoundingBox> boundsByRotation;
     private final HeightGrid grid;
     private final BlockPos centre;
@@ -443,10 +499,12 @@ public class LocationValidator {
     private int paths;
     private int unloaded;
 
-    Hunt(ServerLevel level, Village village, EnumMap<Rotation, BoundingBox> boundsByRotation, HeightGrid grid,
+    Hunt(ServerLevel level, Village village, PlacementContext context,
+        EnumMap<Rotation, BoundingBox> boundsByRotation, HeightGrid grid,
         BlockPos centre, Direction entranceFacing, Random random) {
       this.level = level;
       this.village = village;
+      this.context = context;
       this.boundsByRotation = boundsByRotation;
       this.grid = grid;
       this.centre = centre;
@@ -506,13 +564,17 @@ public class LocationValidator {
         }
         return;
       }
+      if (!context.allowed.test(candidate, bounds)) {
+        claimed++;
+        return;
+      }
 
       TownLayout.Footprint placed = footprint(bounds).moved(new TownLayout.Origin(x, z));
       TownLayout.Relationship relationship = TownLayout.relationship(placed,
-          (claimX, claimZ) -> village.hasClaimed(new BlockPos(claimX, 0, claimZ)));
+          context::isClaimed);
       TownLayout.Preference preference = TownLayout.preference(placed, rotation.rotate(entranceFacing),
           new TownLayout.Origin(centre.getX(), centre.getZ()),
-          (claimX, claimZ) -> village.hasClaimed(new BlockPos(claimX, 0, claimZ)));
+          context::isClaimed);
       int centerX = Math.floorDiv(placed.minX() + placed.maxX(), 2);
       int centerZ = Math.floorDiv(placed.minZ() + placed.maxZ(), 2);
       int centerRelX = centerX - centre.getX();
@@ -603,7 +665,7 @@ public class LocationValidator {
 
     /** Whether the footprint at (originX, originZ), grown by {@code pad}, touches any claimed column. */
     private boolean overlapsClaim(int originX, int originZ, BoundingBox bounds, int pad) {
-      return !claimFree(village, footprint(bounds).moved(new TownLayout.Origin(originX, originZ)), pad);
+      return !claimFree(context, footprint(bounds).moved(new TownLayout.Origin(originX, originZ)), pad);
     }
 
     Search result(int ringRadius, int sweepRadius) {

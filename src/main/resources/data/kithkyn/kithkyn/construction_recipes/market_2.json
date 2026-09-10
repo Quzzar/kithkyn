@@ -1,0 +1,16 @@
+{
+  "cost": [
+    {
+      "item": "minecraft:oak_log",
+      "count": 32
+    },
+    {
+      "item": "minecraft:cobblestone",
+      "count": 28
+    },
+    {
+      "item": "minecraft:white_wool",
+      "count": 12
+    }
+  ]
+}

@@ -126,7 +126,7 @@ public final class QuartermasterPlanner {
 
   /** The fixed facts of one planning run, handed to every round. */
   private record Context(RealPerson quartermaster, List<Item> items, Map<Item, Integer> counts,
-      int totalSlots, String numbered, String layout, String who, String village) {
+      int totalSlots, String numbered, String layout, String who, String village, String villageSpeaker) {
   }
 
   private QuartermasterPlanner() {
@@ -159,7 +159,7 @@ public final class QuartermasterPlanner {
 
     Context context = new Context(quartermaster, items, snapshot, totalSlots,
         numberedList(items, snapshot, tabsOf(quartermaster, items)), layout(containers),
-        quartermaster.getFullName(), quartermaster.getVillageName());
+        quartermaster.getFullName(), quartermaster.getVillageName(), VillageRuler.context(quartermaster.getVillage()));
     Kithkyn.LOGGER.info("[quartermaster] {} sits down to shelve {} slots across {} item types",
         context.who(), totalSlots, items.size());
     return Dialogue.run(new Shelving(context));
@@ -206,8 +206,7 @@ public final class QuartermasterPlanner {
       int currentRound = round;
       boolean brainSpeaks = speaker == 1;
       String system = brainSpeaks
-          ? "You are the shared good sense of " + context.village()
-              + ", working with your quartermaster " + context.who() + " to shelve the storehouse."
+          ? context.villageSpeaker() + "Work with your quartermaster " + context.who() + " to shelve the storehouse."
           : "You are " + context.who() + ", quartermaster of " + context.village()
               + ". You keep the storehouse and decide which slots hold what.";
       String user = currentRound == 0 ? openingPrompt(context)

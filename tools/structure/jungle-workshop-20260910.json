@@ -1,0 +1,140 @@
+{
+  "status": "placed_block_verified_and_visually_reviewed",
+  "entry": [
+    4970.5,
+    230,
+    977.5,
+    180,
+    0
+  ],
+  "bounds": [
+    4887,
+    228,
+    879,
+    5055,
+    255,
+    980
+  ],
+  "items": [
+    {
+      "id": "market_jungle_1",
+      "label": "JUNGLE MARKET 1",
+      "detail": "Tier 1 | 1 merchant stations",
+      "origin": [
+        4990,
+        230,
+        889
+      ],
+      "size": [
+        16,
+        6,
+        17
+      ],
+      "source": "run/badlands-integration/datapack/data/kithkyn/structure/market_badlands_1.nbt",
+      "source_sha256": "c803061f837cfd42ea6960045d347db2528279c39521a7ac3e72160b4516132c",
+      "definition": "run/jungle-showcase/workshop-20260910/definitions/market_jungle_1.json",
+      "neutral_template": "run/jungle-showcase/workshop-20260910/neutral/market_jungle_1.nbt",
+      "template": "run/jungle-showcase/workshop-20260910/preview/market_jungle_1.nbt",
+      "template_sha256": "68876b38420002f335f56c1193b4d05fe4aed7605b82b6ed21ec701b3c481d34",
+      "template_id": "kithkyn_jungle_showcase:jungle_workshop_20260910_market_jungle_1",
+      "color_revision": "tools/structure/market-review-20260910.json"
+    },
+    {
+      "id": "market_jungle_2",
+      "label": "JUNGLE MARKET 2",
+      "detail": "Tier 2 | 2 merchant stations",
+      "origin": [
+        4990,
+        230,
+        918
+      ],
+      "size": [
+        23,
+        6,
+        17
+      ],
+      "source": "run/badlands-integration/datapack/data/kithkyn/structure/market_badlands_2.nbt",
+      "source_sha256": "d669d8339987a85eea19e96d97ace19a78c741c307edbf91f4ab5a1c2429803c",
+      "definition": "run/jungle-showcase/workshop-20260910/definitions/market_jungle_2.json",
+      "neutral_template": "run/jungle-showcase/workshop-20260910/neutral/market_jungle_2.nbt",
+      "template": "run/jungle-showcase/workshop-20260910/preview/market_jungle_2.nbt",
+      "template_sha256": "e50fe2ae7576b9fd5794953ddd66c1b04bf7f6539077eabb0af4a2f3a17b1235",
+      "template_id": "kithkyn_jungle_showcase:jungle_workshop_20260910_market_jungle_2",
+      "color_revision": "tools/structure/market-review-20260910.json"
+    },
+    {
+      "id": "market_jungle_3",
+      "label": "JUNGLE MARKET 3",
+      "detail": "Tier 3 | 3 merchant stations",
+      "origin": [
+        4990,
+        230,
+        946
+      ],
+      "size": [
+        23,
+        6,
+        25
+      ],
+      "source": "run/badlands-integration/datapack/data/kithkyn/structure/market_badlands_3.nbt",
+      "source_sha256": "d52356662ef25123b9f2d222cddfe923faa9bd681347a91386e05bcb73ed7caa",
+      "definition": "run/jungle-showcase/workshop-20260910/definitions/market_jungle_3.json",
+      "neutral_template": "run/jungle-showcase/workshop-20260910/neutral/market_jungle_3.nbt",
+      "template": "run/jungle-showcase/workshop-20260910/preview/market_jungle_3.nbt",
+      "template_sha256": "9d1d3a097f64b7e16b835e7f08c92c7a34b14de8a11c74b6036dd78cf57f79fe",
+      "template_id": "kithkyn_jungle_showcase:jungle_workshop_20260910_market_jungle_3",
+      "color_revision": "tools/structure/market-review-20260910.json"
+    },
+    {
+      "id": "jungle_wall_ring",
+      "label": "JUNGLE WALL",
+      "detail": "One wall tier | Jungle timber + bamboo decks",
+      "origin": [
+        4895,
+        230,
+        890
+      ],
+      "size": [
+        65,
+        8,
+        64
+      ],
+      "source": "run/arid-wall-workshop/candles-20260910/after/captures/badlands.nbt",
+      "source_sha256": "e680b117bcfbe318177c5bd3ae653ea0152ada33f7fffb8dccb246f835071870",
+      "neutral_template": "run/jungle-showcase/workshop-20260910/neutral/jungle_wall_ring.nbt",
+      "template": "run/jungle-showcase/workshop-20260910/preview/jungle_wall_ring.nbt",
+      "template_sha256": "fe7b356274d2dcdb6b20b2c2f4097dca2bdf1986030b5db444db8fcddf00daec",
+      "template_id": "kithkyn_jungle_showcase:jungle_workshop_20260910_jungle_wall_ring_torches",
+      "lighting": "38 standing torches replace candle clusters"
+    }
+  ],
+  "palette": "Jungle wood frames, bamboo decks and market panels; original orange/cyan/red and white tent fabrics.",
+  "production_activated": false,
+  "verification": "run/jungle-showcase/workshop-20260910/verification.json",
+  "source_reuse": "Reviewed Badlands markets preserve the shared market layouts and access corrections; the arid wall ring preserves all gate and corner ladders.",
+  "identity": "Market tent fabrics and decorative banners retain their original authored colors, independent of village identity; regional timber, masonry and plants may change.",
+  "runtime_access_verified": true,
+  "screenshots": [
+    "run/jungle-showcase/workshop-20260910/render/client/screenshots/jungle-wall-ring.png",
+    "run/jungle-showcase/workshop-20260910/render/client/screenshots/jungle-market-tiers.png",
+    "run/jungle-showcase/workshop-20260910/render/client/screenshots/jungle-gate-detail.png"
+  ],
+  "verified_blocks": 2194,
+  "screenshots_viewed": true,
+  "wall_lighting_update": {
+    "source_capture": "run/jungle-showcase/workshop-20260910/torches/before/jungle_wall_ring.nbt",
+    "source_sha256": "bc9d0761dc52db028769770080c0dab30b9ef337308a110fc7b74739dd477e9c",
+    "candles_replaced": 38,
+    "replacement": "minecraft:torch",
+    "verification": "run/jungle-showcase/workshop-20260910/torches/verification.json",
+    "checked_blocks": 1234,
+    "mismatches": 0,
+    "screenshots": [
+      "run/jungle-showcase/workshop-20260910/torches/render/client/screenshots/jungle-torch-gate.png",
+      "run/jungle-showcase/workshop-20260910/torches/render/client/screenshots/jungle-torch-walls.png"
+    ],
+    "screenshots_viewed": true
+  },
+  "market_access_verification": "run/market-repair-20260910/all-market-access/verification.json",
+  "runtime_access_scope": "All three regional markets: 36 rotated structures, 144 routes, 72 station walks and 72 shared deposits. Wall access is not covered by this check."
+}

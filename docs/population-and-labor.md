@@ -111,6 +111,17 @@ can have one innkeeper bed and one general bed. An explicit empty list makes all
 beds general housing. Coordinates must name actual declared beds. If a couple room is reserved
 for staff, both of its coordinates must be listed, never just one side.
 
+A building can also declare `room_reservations` for specific roles. An `occupation` room
+belongs to the person holding that occupation in the same building; a `guard_role: CAPTAIN`
+room belongs to the existing village-center captain without creating another guard post.
+These rooms stay out of general housing and ordinary staff-bed admission. The exact job,
+including its station, is checked before a worker can use a role room as accommodation.
+An entitled single resident may use one side of a reserved double room, keeping the other
+side for a resident spouse. Both sides must be available before a household moves. A married
+captain keeps their existing couple home when the captain's castle room has only one bed.
+Role-room transfers verify intact beds and clear space above them before releasing the old
+home. The normal saved bed ledger remains authoritative across reloads, role changes and death.
+
 A married farmer or butcher can claim a job using its free staff couple room even when no single
 bed is available. The job housing check verifies a resident spouse and two available sides; final
 assignment moves both spouses through the same atomic couple-room allocator. Only one spouse must

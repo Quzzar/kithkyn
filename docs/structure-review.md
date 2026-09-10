@@ -1195,6 +1195,14 @@ derived NBT remains in the private local datapack and is not copied into shipped
 written redistribution permission. The three Kithkyn-authored Desert market assets do not have
 that dependency.
 
+On September 10, Aaron changed the wall material choice to smooth sandstone for Desert and
+smooth red sandstone for Mesa. The source palette now uses smooth full blocks, stairs and
+slabs; narrow railings keep the matching sandstone wall block because Minecraft has no smooth
+wall-block variant. The editable workshop rings were changed in place, preserving the current
+geometry and all other blocks. The comparison checked 1,238 blocks per ring with zero unexpected
+differences. The live runtime palette awaits the next mod deployment while the user continues
+editing these wall samples.
+
 ### Jungle building showcase: September 9
 
 Aaron broadened the current Pueblo coverage to mesa/badlands and savanna families while
@@ -1219,3 +1227,445 @@ does not activate Jungle as a village style.
 All 189 placed exhibits passed the final block comparison, including restored hanging vines.
 The only block-name differences are Minecraft’s grass-to-short-grass data migration. All
 25 floating headings passed native codecs, and eight rendered views were inspected.
+
+### Jungle Tribal selections: September 10
+
+Aaron selected the JA Tribal family for the first Jungle village. The spoken “GA” identifiers
+match the JA exhibit numbers and building names. Native captures preserve nineteen selected buildings and two unassigned candidates,
+including the later service-building edits. Exact capture hashes, bounds,
+bed heads, household containers, and intended village identity slots are recorded in
+`tools/structure/jungle-selections-20260910.json`. Captures remain private under
+`run/jungle-showcase/selection-20260910-tribal/` and
+`run/jungle-showcase/selection-20260910-services/`; their padded bounds are not final building
+envelopes. No production Jungle catalog is activated by this selection record.
+
+| Exhibit | Selected use | Current beds and authoring decisions |
+| --- | --- | --- |
+| JA01.1 Meeting Point 1 | Village center | No beds. Village banners and four jobs: guard captain, builder, quartermaster, miner. Bell meeting area and campfire cooking area remain distinct amenities. |
+| JA01.4 Animal Pen 1 | Lumberjack station | No bed. Shared chest; the dead bush at local [4,1,7] marks a jungle sapling planting site. |
+| JA01.5 Armorer 1 | Mine entrance | Edited mine with two shared material barrels. Preserve the extension beyond the original source width. |
+| JA01.6 Butcher 1 | Tavern | No bed currently; innkeeper can use general housing. |
+| JA01.7 Cartographer 1 | Two-person treehouse | Two separate bedrooms on different floors, each with a personal chest. Lower bed is primary; upper bed is secondary. |
+| NH06.5 Firewatch Jungle | Watchtower | One upstairs guard bed and personal chest. Four corner lanterns and the removed upper trapdoor are preserved. Guard access and firing position still need verification. |
+| JA01.8 Fisher 1 | Fishery | One secondary-color bed. Barrel is workplace storage. No separate chest was found in the current capture. |
+| JA02.1 Fletcher 1 | Hunting lodge | No bed. Two village banners. This fills the missing hunting role; Shepherd remains the butcher. |
+| JA02.2 Large House 1 | Two-person house | Two separate single beds with their own nearby chests. |
+| JA02.3 Leatherworker 1 | Couple home | Two adjacent upstairs beds share the primary color and the upstairs personal chest. Three village banners. |
+| JA02.5 Mason 1 | Stoneworks | No bed. Existing stonecutter and shared chest. |
+| JA02.6 Shepherd 1 | Butcher | One primary-color bed, nearby private chest, two village banners. |
+| JA02.7 Small Farm 1 | Farm | No bed. Existing composter and shared barrel. |
+| JA02.8 Small House 1 | Bakery | No beds. Floor smoker and shared barrel. |
+| JA02.9 Small House 2 | Single-person house | One bed and private chest. |
+| JA03.1 Small House 3 | Storehouse I | No beds. Two ordinary chests and one trapped chest are communal storage; both banners receive village heraldry. No second tier. |
+| JA03.2 Small House 4 | Single-person house | One bed. |
+| JA03.3 Temple 1 | Church / cleric | No bed. Existing brewing stand and shared chest. |
+| JA03.5 Weaponsmith 1 | Blacksmith | No bed. Existing furnaces and shared chest. |
+
+Every selected bed must use a primary or secondary village color, including both halves of
+each bed. Both beds in the couple hut use the same color. All selected banners receive village
+heraldry. These assignments are recorded intent; the captured NBT and live gallery retain their
+current colors until the reviewed production/preview export. Household container associations
+follow the explicit floor-barrel instruction and nearby bedroom chests; physical access still
+requires verification. Six rendered views were inspected, including the center, couple hut,
+fishery room and unused candidate exteriors.
+
+The five housing designs provide eight beds: six singles and one two-person couple room.
+The butcher, fishery and Firewatch tower add three staff beds. The center contributes none.
+Aaron confirmed **four separate starting homes**. The proposed composition is two copies of
+Small House 2 and two copies of Small House 4, each with one ordinary bed. These house the
+four core workers without consuming the couple home. Exact placement still needs the shared
+founding-layout extension described below.
+
+The existing founding layout currently places only the center, mine and storehouse. Supporting
+starting homes requires extending that shared layout and its placement validation. Also,
+the current miner derives its shaft from its job building: adding a miner station directly
+to the center would make it dig there. The requested design needs a single miner vacancy owned
+by the center and a separate physical worksite at JA01.5, without a duplicate mine vacancy or
+a fallback shaft beneath the plaza. Exact job anchors, mine orientation, terrain placement,
+four-rotation navigation, worker housing and founding behavior remain implementation work.
+
+The service selections are now complete: JA03.1 is the only storehouse tier, JA01.4 is the
+bedless lumberjack station, and JA02.8 is the bedless bakery. JA02.4 Library 1 and JA03.4
+Toolsmith 1 remain unused candidates. Three Jungle market tiers and one Jungle wall ring
+are placed as editable previews of the reviewed shared layouts. The current fishery has the workplace
+barrel but no personal chest; do not silently relabel that barrel as private storage.
+
+Aaron approved stripped bamboo with each original hay block's orientation preserved. All 831
+hay blocks across the 16 affected selected exhibits have been replaced and captured; the other
+two selections contained no hay. No custom thatch block or new dependency is needed. Comparison
+controls and unused candidates remain reference exhibits. Polynesian remains a separate future style.
+
+
+The Jungle wall-and-market editing court is at **4970.5, 230, 977.5**, north of the
+Jungle concourse. Its entry sign is at **4895, 230, 981**. The wall ring is west of the
+path; the three market tiers are east. Jungle timber provides the wall body and gate frames;
+bamboo mosaic forms deck accents and market panels. Oak access trapdoors and the ladder
+routes remain. The markets retain the existing raised barrels, open entrances, station counts,
+and primary/secondary cloth slots. These are vanilla-block adaptations and need no extra mods.
+
+Native readback matched all **2,194** preview blocks. The wall overview, gate detail, and
+three market tiers were rendered and visually reviewed. This verifies placement, not new Jungle
+founding or worker navigation. No Jungle runtime catalog is activated. The editable assets,
+source hashes, definitions and verification are recorded in
+`tools/structure/jungle-workshop-20260910.json`.
+
+### Desert tavern/well comparison and castle: September 10
+
+Aaron prefers **T02.9 Tavern Building** and **T02.8 Well Desert** from Dungeons & Taverns,
+and requested a comparison with the current Desert choices before replacement. The current
+tavern is **D05.2 Oasis Big House**, with two beds; T02.9 has five. The current well is
+**D04.12 Desert Well**, eight by seven blocks; T02.8 is five by five and contains five
+waterlogged blocks. The proposed structures' current live states were captured before
+preparing any review copies.
+
+A separate comparison court is placed at **4240.5, 230, 980.5**, just north of the dry-biome
+concourse. Facing north from its entrance, current buildings are on the left and proposed
+buildings are on the right; wells are nearest the entrance and taverns are behind them.
+The native comparison checked all 2,044 template blocks with no differences. Four rendered
+views were inspected. Exact sources, hashes and locations are recorded in
+`tools/structure/desert-comparison-20260910.json`.
+
+The subsequent decision retains D04.12 as the current well, converts D05.2 to the
+couple home `couple_cottage_desert_1`, and adopts T02.9 as `tavern_desert_1`. D05.2 has
+one shared-color pair and shared upstairs personal storage, with no job. T02.9 has one
+innkeeper bed with its nearby ground-floor chest, four general beds, and one communal
+chest. The Desert catalog now contains 29 definitions. The two changed assets passed
+native placement in all four rotations through instant and incremental construction;
+all beds, personal storage, communal storage and the innkeeper station passed physical
+access checks. Their definitions are live after datapack reload. The records are in
+`tools/structure/desert-tavern-adoption-20260910.json`.
+
+Aaron also edited **R07.2 Desert Fort** into a proposed castle and explicitly chose to
+configure its authoring draft while designing the ruler and jail systems first. Its eight
+beds, ten village banners, two rooftop tent palettes, shared and personal storage, proposed
+guard positions, smithy and jail area are recorded in `tools/structure/desert-castle-20260910.json`.
+Blue represents primary and yellow secondary in the live preview. The complete color pass
+preserves the structure's 3,246 blocks exactly apart from declared identity changes. All eight
+complete beds were checked after restoring the halves affected by Minecraft's neighbor updates;
+temporary bed item drops created by recoloring were identified against the earlier entity
+snapshot and removed by their exact UUIDs.
+
+The intended room split is a royal couple's suite, one separate lower bookshelf room for the
+existing captain, and five general single beds. These are intended role reservations, not
+enforced reservations in the running village. The royal beds sit under stairs, so both sides
+need physical access testing before production use. Castle eligibility, ruler decisions,
+succession, captain accommodation transfer and possible player custody remain in the
+[castle design](castles.md); no active ruler or jail behavior was added in this pass.
+
+
+### Arid candle walls: September 10
+
+Aaron's Mesa gate edits define the shared arid trim: forty chiseled frame cells per
+gate, removal of the last two standing gate-roof lamps, and lit candle clusters of two
+to four everywhere other standing lanterns were placed. Four hanging lanterns remain
+at each gate. Mesa uses orange candles and chiseled red sandstone; Desert uses regular
+candles and chiseled sandstone. Wall bodies, stairs and slabs remain smooth masonry,
+and oak trapdoors and ladders remain unchanged. The extra four corner ladder rungs
+Aaron added were saved and mirrored into the Desert editing copy.
+
+Both editable rings have 160 chiseled blocks, 38 candle clusters and 16 hanging lanterns.
+Native before/after captures matched every expected block, and both rings and gate details
+were photographed and viewed. The shared generator source uses the same frame coordinates;
+all eight guard ascent/descent routes passed for each style. The matching generator was
+deployed on September 10 with the shared-recipe update; the live samples are also updated.
+
+### Desert temple and watchtower comparison: September 10
+
+A separate court north of the tavern-and-well comparison contains four review copies.
+Enter at **4240.5, 230, 917.5**, or use the new travel sign at **4234, 230, 980**.
+Current selections are on the west/left; alternatives are on the east/right:
+
+- Temple: **D07.7 Desert Oasis Temple** (CTOV, `church_desert_1`) beside
+  **R01.8 Temple Plaza 16** (Dungeons and Taverns).
+- Tier-one watchtower: **D03.3 Desert Observatory** (CTOV, `watchtower_desert_1`)
+  beside **V03.7 Desert Small House 6** (vanilla).
+
+Current copies use the production templates, including the watchtower access changes.
+The alternatives were captured fresh from the live gallery; the original exhibits are
+untouched. Comparison beds are blue, containers are empty, and template entities are
+omitted. Native captures matched all 2,794 placed blocks after normalizing empty block
+property maps. The live overview and detail screenshots were rendered and reviewed.
+These are comparison copies only; neither production selection changed.
+The placement record is `tools/structure/desert-temple-tower-comparison-20260910.json`.
+
+### Nilotic and floodplain showcase: September 10
+
+Aaron asked for a curated collection around the Towns & Towers Nilotic village, in the way
+the dry-biome and jungle galleries gather every source mod's take on one biome family. The
+Nilotic palette is packed mud, mangrove wood and thatch-like spruce slabs, so the collection
+takes the floodplain, swamp and mangrove families from every installed structure jar and
+orders them by material kinship with that palette. Towns & Towers Iberian and Mediterranean
+were left out as a brick-and-quartz language, Millenaire for its non-vanilla marker blocks,
+and every CTOV piece that needs compatibility-mod blocks (100 files) was excluded rather than
+shown with holes.
+
+The collection extends the jungle gallery eastward, with an entrance at `6561.5, 230, 986.5`
+and a walkable concourse beginning at x=6398. It holds 196 exhibits in 26 rows and six wings
+with stable NA–NF identifiers: the Nilotic houses and tower; CTOV's mud-brick swamp outpost
+with the Dungeons & Taverns mangrove huts, firewatch tower and mud-brick remnant; the mangrove
+tavern grounds; CTOV's swamp and fortified-swamp villages; the Dungeons & Taverns swamp village
+and swamp tavern grounds; and the Towns & Towers boat village beside YUNG's witch huts. Exact
+source duplicates are kept once. Selection of a playable floodplain catalog remains a later
+authoring step; the showcase does not activate any village style.
+
+All source captures and display NBT stay private under `run/nilotic-showcase/`. The public
+provenance, positions and jar hashes are recorded in
+`tools/structure/nilotic-showcase-20260910.json`. Placement used a per-gallery driver with a
+private acknowledgment namespace, because the shared placer's marker key can be overwritten by
+a second live session; the world was backed up first and the concourse joins the jungle
+concourse at x=6397.
+
+All 196 placed exhibits passed the native block comparison against their prepared templates
+(47,214 blocks). The only differences are seven grass blocks in one exhibit that Minecraft's
+data migration renamed to short grass; no vines were lost and nothing structural is missing.
+All 27 floating headers exist exactly once at their intended scale, and ten rendered views were
+inspected. The placement run was interrupted once by a second live session sharing the console
+and once by a stray search process reading the console pipe; both are recorded in the private
+verification summary, and no exhibit was placed twice.
+
+### Unstructured showcase: September 10
+
+The Unstructured collection extends the gallery eastward from the Nilotic concourse.
+Use the **Unstructured** travel sign at the original gallery hub (`2027, 230, 976`),
+or enter at **7857.5, 230, 986.5**. All 74 source templates appear in 15 rows across
+six wings: ocean village, camps and piglins, towers and landmarks, desert graves,
+temple and dungeon, and passages and piers. Modular sections are labeled as pieces;
+this is a reference collection, not an assembled world-generation dungeon.
+
+The source is Unstructured 0.5.8 for Forge/Minecraft 1.19.4, official CurseForge file
+4443672. Its vanilla-block templates were migrated with Minecraft's native data fixer
+for display in 1.21.1. The older mod was not installed. Original binaries and display
+copies remain private under `run/unstructured-showcase/`; source licensing, hashes,
+positions and stable exhibit identifiers are recorded in
+`tools/structure/unstructured-showcase-20260910.json`.
+
+Native readback checked 46,763 blocks after adding 109 invisible supports for otherwise
+unsupported decorations and a collapsing trap floor. One stone brick moved one block
+under its template's working piston; its destination was verified. Other differences
+are normal block-state updates such as connected fences and flowing water. Spawners,
+TNT, source mobs and container loot were removed for the display copies. Six exterior
+views and the stabilized interior details were rendered for visual review. Existing
+exhibits and edits remain in place. No production village catalog changed.
+
+
+### Desert temple and watchtower selections: September 10
+
+The edited alternative R01.8 Temple Plaza 16 replaces D07.7 as the Desert temple.
+The brewing stand and communal chest were captured from the comparison court. V03.7
+becomes watchtower I, while D03.3 becomes watchtower II with a compatible upgrade path.
+Both use ladders; the smaller tower has widened landing openings after a real adult
+guard caught its head beneath the initial one-cell opening. The corrected designs
+passed construction, physical access, sleep and container-use checks in all rotations,
+and the rendered temple, tower pair and ladder interior were inspected.
+
+The court at **4240.5, 230, 917.5** now labels these selections. The temple on the right
+is selected; watchtower II is on the left and watchtower I is on the right. D07.7 remains
+as a comparison reference. The public provenance and exact private template hashes
+are in `tools/structure/desert-temple-tower-adoption-20260910.json`.
+
+
+### Jungle roof material comparison: September 10
+
+Aaron compared stripped bamboo before deciding against introducing a custom thatch block. Six preview
+copies stand east of the Jungle wall/market workshop, entered through the **Jungle Roofs**
+sign at **5084, 230, 981** (arrival **5084.5, 230, 977.5**). Fresh captures of JA02.9 Small
+House 2 and JA02.2 Large House 1 appear in three columns: original hay, stripped bamboo with
+its ends facing up, and stripped bamboo running along the X axis. Only the hay-block material
+changes between the comparison copies. Native readback matched all 1,029 placed structure blocks.
+These comparison copies remain available after adoption in the selected exhibits.
+
+The approved replacement is `minecraft:stripped_bamboo_block`, preserving the original hay axes:
+714 vertical, 70 along Z and 47 along X. Fresh native captures verified all 831 replacement blocks
+and compared 4,569 structure blocks. The only other changes were six naturally grown vines and
+the expected loss of the center campfire's signal-fire state after removing the hay below it.
+The latest captures are bound in the Jungle selection manifest; production integration remains
+outstanding. Provenance is in `tools/structure/jungle-bamboo-adoption-20260910.json`; comparison
+coordinates remain in `tools/structure/jungle-roof-comparison-20260910.json`.
+
+
+### Jungle wall lighting approval: September 10
+
+The Jungle wall preview is approved with torches replacing its candle clusters. All 38
+candle blocks were replaced with standing torches at their existing positions, and the
+reviewed neutral and preview templates were updated from a fresh live capture. Native
+readback matched all 1,234 wall blocks. The editable ring remains at **4895, 230, 890**
+in the Jungle wall/market workshop. Lighting uses ordinary torches; the wood, bamboo,
+gates and access layout retain their reviewed design. The current wall asset hash and
+verification are recorded in `tools/structure/jungle-workshop-20260910.json`. Production
+Jungle village integration remains separate from this authoring approval.
+
+### Current closeout status: September 10, after bamboo approval
+
+The selected Jungle exhibits now use stripped bamboo in place of every hay block, preserving
+the original axes. Native readback and three viewed live screenshots confirm the change.
+Their latest immutable captures are referenced by the selection manifest. No custom thatch
+block is planned for this pass. The wall torch replacement is also saved and visually checked.
+
+Shared category/level construction recipes are defaults, not a restriction on future designs.
+An explicitly authored building `cost` array replaces the full default and uses the same
+validator. All current bundled definitions inherit the defaults. The optional-override runtime
+passed `check build` (433 tests, zero failures, four skipped) and was deployed to the local
+server and client, retaining the world and galleries. All 200 effective definitions loaded
+without recipe rejection. This is a working-tree deployment, not a Git commit or push.
+
+| Work | Current state |
+| --- | --- |
+| Pueblo/Mesa and Desert catalogs, selected Desert tavern/temple/towers and arid walls | Verified and locally deployed; earlier entries saying these await deployment are historical. |
+| Unstructured structure gallery | Placed, verified and available for review. |
+| Jungle buildings, three market tiers and one wall tier | Choices and edited captures saved; bamboo and torch changes approved and applied. |
+| Playable Jungle villages | Outstanding: production catalog/identity export, four founding homes, center-owned miner linked to the separate mine, worker access and full founding verification. No additional building selection is required to proceed. |
+| Castle authoring | Edited fort, room/bed/container intentions, banners and tent colors captured and visually reviewed. |
+| Castle gameplay | Not buildable yet. Navigation and role reservations need implementation/verification; eligibility, pricing, ruler succession and jail/release rules remain design work. Ruler and jail implementation was explicitly deferred by Aaron. |
+
+The castle's recorded royal/captain bed intentions and guard anchors are not enforced runtime
+assignments. See [castles.md](castles.md) for the design questions and implementation boundary.
+
+### Floodplain donor references: September 10
+
+While Aaron assigned roles in the NA wing (temple, centre, mine, blacksmith, mason, hunting
+lodge, lumberjack lodge, butcher with livestock, homes) and rebuilt NA01.2 as the mine, three
+roles had no Nilotic source: farm fields, a watchtower decision, and water. An editable copy of
+Small House 2 was placed as NA02.4 for his storehouse draft, so the Nilotic collection now shows
+197 exhibits. The lumberjack's tree should be authored as a jungle sapling on dirt, not a
+mangrove propagule: the wood loop refuses propagules because a grown mangrove leaves roots on
+the stand.
+
+A donor gallery of 247 exhibits in 38 rows and three wings (NG farms and pens, NH watchtowers,
+NI wells, fountains and pools) gathers those roles from every culture in Towns & Towers, CTOV,
+Dungeons & Taverns, vanilla, YUNG's Extras and Terralith. Its entrance is at `9153.5, 230, 986.5`
+beyond the Unstructured showcase, which the Codex session placed east of the Nilotic gallery
+in the meantime; the first donor base collided with it and the gallery was relaid after a sky
+probe. All 247 exhibits passed the native block comparison (93,919 blocks) apart from the
+grass rename, three namespace-less air entries in Terralith templates, and one unsupported
+wheat block in the Mesa fortified farm. The public record is
+`tools/structure/nilotic-donors-20260910.json`; captures and display NBT stay private under
+`run/nilotic-donors/`.
+
+### Market counter and color repair: September 10
+
+Markets retain their original tent, decorative banner, rug and candle colors independently
+of the village palette. Jungle and Mesa keep orange/cyan/red and white fabrics; Desert
+keeps its original orange/green/yellow and white. Regional timber, masonry and bamboo remain.
+
+The earlier access edits removed counter trapdoors and left carpet gaps. All three tiers
+of all three styles now retain the complete authored pattern. Aaron’s tier-three Mesa
+railing repair and added orange rug were captured before repair and preserved. Unsupported
+Desert carpet pieces received matching sandstone support. The existing raised barrels stay.
+
+The underlying navigation defect treated closed trapdoors as passable nodes, directing
+villagers through counters beneath low roofs. Closed panels now obstruct those nodes;
+villagers use the existing stall entrance. Native regression checks reject the closed panel
+and retain the usable aperture of an open side panel. All nine markets passed four rotations
+with the largest adult collision body: 144 access routes, 72 physical station walks,
+72 shared-container visits and 144 real item transfers, with zero failures.
+
+The live review copies match all 2,977 saved non-air blocks exactly. All three styles were
+rendered and visually checked. The older three P13 Mesa exhibits were repaired as well.
+The Desert/Mesa comparison court starts at **5203.5, 230, 976.5**; Desert is west and
+Mesa east, with tiers 1, 2 and 3 from north to south. The Jungle workshop remains at
+**4970.5, 230, 977.5** and links to this court.
+
+Current assets, native results, immutable user-edit captures and viewed screenshots are
+recorded in `tools/structure/market-review-20260910.json`. Earlier market entries describing
+removed rails, slab counters or village-colored awnings are superseded by this review.
+Jungle remains an authoring collection pending its production/founding integration.
+
+The market repair passed `check build` with 433 tests, zero failures and zero skips, then
+was deployed to the local server and Prism client. Both use SHA-256
+`a70324b51afc4f9f9ffdd393a17c9717b8e3cde3064b10b72de9932e51822015`; all 200 effective building
+definitions loaded. The world and galleries were backed up and retained. This remains
+a working-tree deployment, without a commit or push.
+
+### Jungle watchtower candidate: September 10
+
+Aaron nominated his edited **NH06.5 Firewatch Jungle** from the Nilotic donor gallery
+as a possible Jungle watchtower. The current selection remains **JA01.7 Cartographer 1**
+from Towns and Towers, with one guard bed, a nearby private chest and an upper shared chest.
+The Firewatch comes from Dungeons and Taverns and has one upstairs bed and chest, a ladder
+and a raised lookout balcony under a bamboo roof. Its occupied envelope is 9 by 18 by 9,
+compared with JA01.7’s 14 by 22 by 12.
+
+Both live structures were captured natively and visually compared. NH06.5 retains the four
+new corner lanterns and the removed upper trapdoor. The capture also preserves live vine
+and cocoa growth; those differences are not all attributed to player edits. The candidate
+remains at **9428, 230, 1215**; JA01.7 remains at **5004, 230, 1010**.
+
+`tools/structure/jungle-tower-comparison-20260910.json` records immutable captures, hashes,
+bed/container coordinates and comparison images. No tower selection was replaced in this
+review. Replacement versus an additional design/tier is undecided; adoption still needs
+guard/identity bindings and native ladder, landing, bed, storage and firing-position checks.
+
+Later on September 10, Aaron assigned the remaining floodplain roles from the donor gallery:
+the Polynesian large and small farms (NG04.1, NG04.2, with a barrel as the crop workstation),
+the CTOV desert oasis pool as the fishery (NI09.3), the D&T mangrove tavern well as the well
+(NI03.9) and the D&T savanna firewatch tower as the watchtower (NH06.7). No tavern and no
+bakery for this village. Editable copies of the pool, well and tower stand on the NA03 row
+beside the Nilotic tower, restyled toward the Nilotic palette by block-type substitution that
+keeps every orientation (mud, mangrove, spruce, jungle trapdoors, andesite, mud bricks, green
+beds), and the three approved Desert market tiers were copied and restyled the same way as the
+NA04 row. Because the Nilotic houses seat their doors on the ground layer, a patchy earthen
+ground course (packed mud, mud, coarse and rooted dirt) now lies under every house footprint in
+the gallery; `run/nilotic-showcase/floors-20260910.json` records it for a sink-1 capture. All
+spoken assignments live in `run/nilotic-showcase/selections-draft.json` until the edited
+exhibits are captured with hashes.
+
+Aaron requested an in-world side-by-side comparison. Editable copies now stand at
+**5280.5, 230, 971.5** (viewing entry), with JA01.7 on the left and NH06.5 on the right.
+The **COMPARE TOWERS** sign beside the original NH06.5 at **9432, 230, 1210** teleports
+to the comparison; a **JUNGLE TOWERS** shortcut also stands by the Desert/Mesa markets at
+**5237, 230, 976**. A return sign leads back to the Jungle workshop.
+
+The originals were retained. Both copies use the saved edited captures at the same base
+elevation, and native readback matches all 1,442 non-air blocks exactly. A rendered
+side-by-side screenshot was inspected. The comparison is recorded in the tower review
+manifest; no production tower selection or gameplay binding changed.
+
+### Jungle treehouse and Firewatch selection: September 10
+
+Aaron selected **NH06.5 Firewatch Jungle** as the watchtower and retained **JA01.7
+Cartographer 1** as a **two-person treehouse**. He added the second bed upstairs in the
+comparison copy. Fresh native captures preserve both selected buildings; the original
+gallery copies remain reference exhibits. The comparison labels now identify the house
+and watchtower, rather than a current/candidate tower choice.
+
+The treehouse has two independent single bedrooms on separate floors, with one personal
+chest per room. Its lower bed receives the primary village color, its upper bed the
+secondary color; it has no guard station or worker-reserved bed. The Firewatch retains
+one primary-color guard bed and its personal chest, plus the four corner lanterns and
+removed upper trapdoor. These are authored role and identity bindings pending production
+export; raw captures keep the player’s placed bed colors.
+
+The selected Jungle collection now has **19 buildings, 11 beds and eight general-home
+beds**. All 21 selected/candidate capture hashes and selected bed/container coordinates
+were revalidated. Four single-bed founding huts remain the starting layout. Production
+Jungle integration and native resident/guard access verification remain outstanding.
+See `tools/structure/jungle-selections-20260910.json` and the tower comparison manifest
+for the authoritative selection and latest captures.
+
+The selected pair and newly added upstairs bedroom were rendered and visually inspected.
+The bed, adjacent personal chest and updated live labels match the captured selection.
+
+### Floodplain selection captured: September 10
+
+With the storehouse finished and the ground courses cornered by hand, the floodplain set was
+captured from a flushed world snapshot: 22 native captures under
+`run/nilotic-showcase/selection-20260910-floodplain/`, each hashed, with an amenity audit of
+beds, containers, work blocks, banners and coloured blocks relative to every gallery origin.
+The public record is `tools/structure/nilotic-selections-20260910.json`: 20 assigned buildings
+(church, centre, mine, lumberjack lodge, hunting lodge, three homes, butcher, stoneworks,
+blacksmith, storehouse, fishery, well, watchtower, three market tiers and the two Polynesian
+farms) plus two unassigned candidates (the butcher-and-fisher house and the Nilotic tower),
+ten beds in all. The centre carries four white banners and the green carpet that becomes the
+primary colour; white beds and banners elsewhere are neutral identity slots. The lumberjack's
+dead bush is recorded as the jungle-sapling planting marker. Aaron also proposed that villages
+adopt allays as free quartermasters the way they recruit golems as guards, with this
+storehouse starting with two; that is recorded as a design proposal with feasibility unchecked.
+Production authoring (neutral exports, definitions, access fixtures) has not started.
+
+Identity rules confirmed by Aaron after the capture: white banners are village banners (four on
+the centre, four he added to the watchtower; its 23 brown banners are decoration), the centre's
+green carpets become the primary colour, every bed is a colour slot, and two bed heads side by
+side with the same facing are one couple unit in a single colour. The storehouse now holds a
+note block as the delivery point for two allays that the village will adopt as auxiliary
+quartermasters; that logic is being built on the `allay-quartermasters` branch. Apron sea
+lanterns inside the padded captures are gallery furniture and must not be exported.

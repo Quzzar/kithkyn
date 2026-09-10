@@ -44,24 +44,6 @@
       10
     ]
   ],
-  "cost": [
-    {
-      "item": "minecraft:oak_log",
-      "count": 48
-    },
-    {
-      "item": "minecraft:cobblestone",
-      "count": 42
-    },
-    {
-      "item": "minecraft:white_wool",
-      "count": 18
-    },
-    {
-      "item": "minecraft:iron_ingot",
-      "count": 4
-    }
-  ],
   "grants": [
     "TRADE",
     "TRADE_INITIATIVE"
