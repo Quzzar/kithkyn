@@ -37,8 +37,9 @@ import net.minecraft.world.phys.Vec3;
  *
  * A worker strikes one log for a chop's worth of ticks; when it gives, the
  * whole connected tree comes down at once through {@link TreeFelling}, and
- * every log lands in the worker's pack. Leaves are left to decay on their own
- * schedule, as natural leaves do once their tree is gone.
+ * every log lands in the worker's pack. Natural canopy that no other living
+ * tree supports decays with the fell, dropping its loot on the ground; an
+ * owned building log cannot hold that severed canopy in place.
  *
  * <b>It only ever cuts real trees.</b> {@link TreeFelling#isFellableLog} holds
  * the two guards, a natural canopy nearby and nobody's ownership, that keep the

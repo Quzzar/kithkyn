@@ -31,8 +31,11 @@ import net.minecraft.world.level.levelgen.Heightmap;
  * connected to it comes away at once, a bounded flood fill over the trunk and
  * its branches, each log yielding its drops. Unowned bee nests or hives attached
  * to removed logs come down too, with normal bee release and Silk Touch loot.
- * The leaves are left to decay on
- * their own schedule, as natural leaves do once their tree is gone.
+ * Natural leaves that belonged to the removed logs decay with the fell. The
+ * cleanup deliberately ignores player- and village-owned logs as support, so
+ * a timber building cannot hold a severed canopy over a lumberjack's next
+ * sapling. Persistent or ownership-marked leaves remain, as does canopy still
+ * supported by another natural tree.
  *
  * <b>It only ever cuts real trees.</b> Two guards keep it off the village's
  * own timber and off anything a player built:
@@ -62,8 +65,18 @@ public final class TreeFelling {
   /** Most logs one fell removes: a ceiling for giant trees so the flood fill always ends. */
   private static final int TREE_LOG_CAP = 256;
 
+  /** Vanilla leaves live at most this many leaf steps from a supporting log. */
+  private static final int CANOPY_REACH = LeavesBlock.DECAY_DISTANCE - 1;
+
+  /** A ceiling for modded giant canopies so one fell always has bounded work. */
+  private static final int CANOPY_LEAF_CAP = 4096;
+
   /** One tree brought down: the log it was struck at, and what its logs dropped. */
   public record FelledTree(BlockPos struck, List<ItemStack> drops) {
+  }
+
+  /** One position in a bounded canopy/support walk and its distance from the start. */
+  private record CanopySearch(BlockPos pos, int distance) {
   }
 
   private TreeFelling() {
@@ -103,8 +116,9 @@ public final class TreeFelling {
    * struck that trunk, nothing came away, and the loop offered the same log
    * again; the lodge now ships a sapling, and the exemption stays so that
    * nothing anyone places against the stand can jam the loop. Otherwise
-   * identical: whole tree, drops returned, leaves left to decay. Attached hives
-   * still respect ownership, so a nearby apiary cannot be lost to stand work.
+   * identical: whole tree, drops returned, and its orphaned natural canopy
+   * decayed. Attached hives still respect ownership, so a nearby apiary cannot
+   * be lost to stand work.
    */
   public static List<ItemStack> fellStand(ServerLevel level, BlockPos struck, @Nullable Entity feller,
       ItemStack tool) {
@@ -122,12 +136,18 @@ public final class TreeFelling {
     BlockState soundFrom = null;
     LongOpenHashSet attachedHives = new LongOpenHashSet();
     PlacedBlockStore placed = PlacedBlockStore.get(level);
+    List<BlockPos> logs = new ArrayList<>();
     for (BlockPos pos : treeLogs(level, struck)) {
       BlockState state = level.getBlockState(pos);
       if (!state.is(BlockTags.LOGS_THAT_BURN) || state.hasBlockEntity()
           || (!stand && !BlockOwnership.mayFell(level, pos))) {
         continue;
       }
+      logs.add(pos);
+    }
+    List<BlockPos> canopy = canopyLeaves(level, logs, placed);
+    for (BlockPos pos : logs) {
+      BlockState state = level.getBlockState(pos);
       drops.addAll(Block.getDrops(state, level, pos, level.getBlockEntity(pos), feller, tool));
       if (soundFrom == null) {
         soundFrom = state;
@@ -144,12 +164,120 @@ public final class TreeFelling {
     for (long hive : attachedHives) {
       fellAttachedHive(level, BlockPos.of(hive), feller, tool, drops);
     }
+    decayOrphanedCanopy(level, canopy, placed);
     if (soundFrom != null) {
       level.playSound((Player) null, struck.getX(), struck.getY(), struck.getZ(),
           soundFrom.getSoundType().getBreakSound(), SoundSource.BLOCKS, 1.0F,
           level.getRandom().nextFloat() * 0.4F + 0.8F);
     }
     return drops;
+  }
+
+  /**
+   * Captures the natural leaves this tree supports before its logs disappear.
+   * This is the same six-direction distance model vanilla leaves use, bounded
+   * both by vanilla's maximum support distance and a hard leaf count. Owned or
+   * persistent leaves are barriers, not part of a natural canopy.
+   */
+  private static List<BlockPos> canopyLeaves(ServerLevel level, List<BlockPos> logs,
+      PlacedBlockStore placed) {
+    List<BlockPos> leaves = new ArrayList<>();
+    ArrayDeque<CanopySearch> frontier = new ArrayDeque<>();
+    LongOpenHashSet visited = new LongOpenHashSet();
+    for (BlockPos log : logs) {
+      BlockPos start = log.immutable();
+      if (visited.add(start.asLong())) {
+        frontier.add(new CanopySearch(start, 0));
+      }
+    }
+    while (!frontier.isEmpty() && leaves.size() < CANOPY_LEAF_CAP) {
+      CanopySearch current = frontier.poll();
+      if (current.distance() >= CANOPY_REACH) {
+        continue;
+      }
+      for (Direction direction : Direction.values()) {
+        BlockPos next = current.pos().relative(direction);
+        if (!visited.add(next.asLong()) || !level.hasChunkAt(next)) {
+          continue;
+        }
+        BlockState state = level.getBlockState(next);
+        if (!isNaturalLeaf(state, next, placed)) {
+          continue;
+        }
+        BlockPos leaf = next.immutable();
+        leaves.add(leaf);
+        int distance = current.distance() + 1;
+        if (distance < CANOPY_REACH) {
+          frontier.add(new CanopySearch(leaf, distance));
+        }
+      }
+    }
+    return leaves;
+  }
+
+  /**
+   * Forces only unsupported natural leaves through the ordinary decay result.
+   * Drops are spawned where each leaf stood, just as a vanilla random decay
+   * would spawn them, so saplings remain physical things for workers to pick up.
+   */
+  private static void decayOrphanedCanopy(ServerLevel level, List<BlockPos> canopy,
+      PlacedBlockStore placed) {
+    for (BlockPos leaf : canopy) {
+      BlockState state = level.getBlockState(leaf);
+      if (!isNaturalLeaf(state, leaf, placed)
+          || hasNaturalSupportOrUnknown(level, leaf, placed)) {
+        continue;
+      }
+      Block.dropResources(state, level, leaf);
+      level.removeBlock(leaf, false);
+    }
+  }
+
+  /** Natural, removable foliage rather than player or village decoration. */
+  private static boolean isNaturalLeaf(BlockState state, BlockPos pos, PlacedBlockStore placed) {
+    return state.is(BlockTags.LEAVES)
+        && state.hasProperty(LeavesBlock.PERSISTENT)
+        && !state.getValue(LeavesBlock.PERSISTENT)
+        && !placed.isPlayerPlaced(pos)
+        && !placed.isVillagePlaced(pos);
+  }
+
+  /**
+   * Whether another natural log can support this leaf through vanilla's leaf
+   * distance. Player- and village-owned logs are structures, so they do not
+   * preserve a canopy whose tree was felled. An unloaded neighbor is unknown
+   * and therefore preserves the leaf rather than risking another tree's canopy.
+   */
+  private static boolean hasNaturalSupportOrUnknown(ServerLevel level, BlockPos start,
+      PlacedBlockStore placed) {
+    ArrayDeque<CanopySearch> frontier = new ArrayDeque<>();
+    LongOpenHashSet visited = new LongOpenHashSet();
+    frontier.add(new CanopySearch(start, 0));
+    visited.add(start.asLong());
+    while (!frontier.isEmpty()) {
+      CanopySearch current = frontier.poll();
+      if (current.distance() >= CANOPY_REACH) {
+        continue;
+      }
+      for (Direction direction : Direction.values()) {
+        BlockPos next = current.pos().relative(direction);
+        if (!level.hasChunkAt(next)) {
+          return true;
+        }
+        BlockState state = level.getBlockState(next);
+        if (state.is(BlockTags.LOGS)
+            && !placed.isPlayerPlaced(next)
+            && !placed.isVillagePlaced(next)) {
+          return true;
+        }
+        int distance = current.distance() + 1;
+        if (distance < CANOPY_REACH && state.is(BlockTags.LEAVES)
+            && visited.add(next.asLong())) {
+          frontier.add(new CanopySearch(next.immutable(), distance));
+        }
+      }
+    }
+    return false;
   }
 
   /** Only hives touching a removed log come down; even stand felling preserves owned apiaries. */

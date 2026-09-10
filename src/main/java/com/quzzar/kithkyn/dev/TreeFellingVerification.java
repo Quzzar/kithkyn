@@ -16,7 +16,9 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.LeavesBlock;
 import net.minecraft.world.level.block.entity.BeehiveBlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -25,6 +27,8 @@ import net.neoforged.neoforge.event.tick.ServerTickEvent;
 /** Native block-entity, ownership and loot regression; opt in only in a disposable world. */
 @EventBusSubscriber(modid = Kithkyn.MODID)
 public final class TreeFellingVerification {
+  private static final int HIVE_CASES = 10;
+  private static final int CANOPY_CASES = 3;
   private static boolean ran;
   private static int tick;
 
@@ -34,7 +38,7 @@ public final class TreeFellingVerification {
   public static void tick(ServerTickEvent.Post event) {
     if (!Boolean.getBoolean("kithkyn.treeFelling.verify") || ran) return;
     if (++tick == 1) {
-      for (int mode = 0; mode < 10; mode++) {
+      for (int mode = 0; mode < HIVE_CASES + CANOPY_CASES; mode++) {
         int x = (-3000 + mode * 24) >> 4;
         for (int dx = -1; dx <= 1; dx++) for (int dz = -1; dz <= 1; dz++) {
           event.getServer().overworld().setChunkForced(x + dx, (-3000 >> 4) + dz, true);
@@ -46,15 +50,19 @@ public final class TreeFellingVerification {
     try {
       ServerLevel level = event.getServer().overworld();
       level.getGameRules().getRule(GameRules.RULE_RANDOMTICKING).set(0, event.getServer());
-      for (int mode = 0; mode < 10; mode++) verify(level, mode);
-      Kithkyn.LOGGER.info("[tree-felling-verify] RESULT PASS: 10 native tree/hive cases");
+      for (int mode = 0; mode < HIVE_CASES; mode++) verifyHive(level, mode);
+      verifyOwnedLogCannotHoldCanopy(level, HIVE_CASES);
+      verifyNaturalTreeKeepsSharedCanopy(level, HIVE_CASES + 1);
+      verifyProtectedLeavesRemain(level, HIVE_CASES + 2);
+      Kithkyn.LOGGER.info("[tree-felling-verify] RESULT PASS: {} native tree/hive/canopy cases",
+          HIVE_CASES + CANOPY_CASES);
     } catch (Exception | AssertionError failure) {
       Kithkyn.LOGGER.error("[tree-felling-verify] RESULT FAIL", failure);
     }
     event.getServer().halt(false);
   }
 
-  private static void verify(ServerLevel level, int mode) {
+  private static void verifyHive(ServerLevel level, int mode) {
     BlockPos log = new BlockPos(-3000 + mode * 24, 160, -3000);
     BlockPos hive = log.east();
     level.getEntitiesOfClass(Bee.class, new AABB(log).inflate(8)).forEach(Bee::discard);
@@ -107,6 +115,77 @@ public final class TreeFellingVerification {
     if (crafted) check(drops.stream().filter(drop -> drop.is(Items.BEEHIVE))
         .mapToInt(ItemStack::getCount).sum() == 1, "Hive loot missing or duplicated");
     Kithkyn.LOGGER.info("[tree-felling-verify] PASS mode={} released={} saved={}", mode, released, savedBees);
+  }
+
+  /** A village beam must not preserve the natural canopy of the tree beside it. */
+  private static void verifyOwnedLogCannotHoldCanopy(ServerLevel level, int mode) {
+    CanopyFixture fixture = canopyFixture(level, mode);
+    BlockPos buildingLog = fixture.leaves().getLast().east();
+    level.setBlock(buildingLog, Blocks.OAK_LOG.defaultBlockState(), 2);
+    PlacedBlockStore.get(level).markVillagePlaced(buildingLog);
+
+    TreeFelling.fell(level, fixture.trunk(), null, ItemStack.EMPTY);
+
+    check(level.getBlockState(buildingLog).is(Blocks.OAK_LOG), "Village beam was felled");
+    for (BlockPos leaf : fixture.leaves()) {
+      check(level.getBlockState(leaf).isAir(), "Village beam kept orphaned leaf at " + leaf);
+    }
+    Kithkyn.LOGGER.info("[tree-felling-verify] PASS owned log cannot hold felled canopy");
+  }
+
+  /** Leaves shared with another living natural tree still belong in the world. */
+  private static void verifyNaturalTreeKeepsSharedCanopy(ServerLevel level, int mode) {
+    CanopyFixture fixture = canopyFixture(level, mode);
+    BlockPos livingLog = fixture.leaves().getLast().east();
+    level.setBlock(livingLog, Blocks.OAK_LOG.defaultBlockState(), 2);
+
+    TreeFelling.fell(level, fixture.trunk(), null, ItemStack.EMPTY);
+
+    check(level.getBlockState(livingLog).is(Blocks.OAK_LOG), "Neighboring natural tree was felled");
+    for (BlockPos leaf : fixture.leaves()) {
+      check(level.getBlockState(leaf).is(Blocks.OAK_LEAVES),
+          "Shared living canopy was removed at " + leaf);
+    }
+    Kithkyn.LOGGER.info("[tree-felling-verify] PASS neighboring tree keeps shared canopy");
+  }
+
+  /** Persistent leaves and explicitly owned natural-state leaves are never canopy cleanup. */
+  private static void verifyProtectedLeavesRemain(ServerLevel level, int mode) {
+    CanopyFixture fixture = canopyFixture(level, mode);
+    BlockPos persistent = fixture.trunk().above(2);
+    BlockPos owned = fixture.trunk().above().west();
+    BlockState persistentLeaf = Blocks.OAK_LEAVES.defaultBlockState()
+        .setValue(LeavesBlock.PERSISTENT, true);
+    level.setBlock(persistent, persistentLeaf, 2);
+    level.setBlock(owned, Blocks.OAK_LEAVES.defaultBlockState(), 2);
+    PlacedBlockStore.get(level).markPlayerPlaced(owned);
+
+    TreeFelling.fell(level, fixture.trunk(), null, ItemStack.EMPTY);
+
+    check(level.getBlockState(persistent).is(Blocks.OAK_LEAVES), "Persistent leaf was removed");
+    check(level.getBlockState(owned).is(Blocks.OAK_LEAVES), "Player-owned leaf was removed");
+    Kithkyn.LOGGER.info("[tree-felling-verify] PASS protected leaves remain");
+  }
+
+  /** A minimal canopy spanning from a two-log trunk toward a possible support log. */
+  private static CanopyFixture canopyFixture(ServerLevel level, int mode) {
+    BlockPos trunk = new BlockPos(-3000 + mode * 24, 160, -3000);
+    PlacedBlockStore placed = PlacedBlockStore.get(level);
+    for (BlockPos pos : BlockPos.betweenClosed(trunk.offset(-3, -1, -3), trunk.offset(7, 4, 3))) {
+      placed.clearPlaced(pos);
+      level.setBlock(pos, Blocks.AIR.defaultBlockState(), 2);
+    }
+    level.setBlock(trunk, Blocks.OAK_LOG.defaultBlockState(), 2);
+    level.setBlock(trunk.above(), Blocks.OAK_LOG.defaultBlockState(), 2);
+    List<BlockPos> leaves = List.of(
+        trunk.above(2), trunk.above(2).east(), trunk.above(2).east(2), trunk.above(2).east(3));
+    for (BlockPos leaf : leaves) {
+      level.setBlock(leaf, Blocks.OAK_LEAVES.defaultBlockState(), 2);
+    }
+    return new CanopyFixture(trunk, leaves);
+  }
+
+  private record CanopyFixture(BlockPos trunk, List<BlockPos> leaves) {
   }
 
   private static void check(boolean condition, String message) {

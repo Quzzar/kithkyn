@@ -58,7 +58,11 @@ places structural village blocks, it records them; that is the contract.
   circles; the two booleans are the stored facts.
 - `mayFell(level, pos)`: nobody placed it. The felling verdict. `TreeFelling` asks it for
   every log of a tree it brings down, and once more up front (with the natural-canopy test)
-  before a log is offered as a tree at all.
+  before a log is offered as a tree at all. Afterward, the same ownership facts keep
+  player- and village-owned logs from counting as living-tree support for the removed
+  trunk's natural canopy: otherwise a roof beam can preserve those leaves forever and
+  block the lumberjack stand's next sapling. Persistent and ownership-marked leaves stay,
+  and a remaining unowned natural log still preserves canopy it shares with the felled tree.
 - **The lumberjack's stand is exempt** (2026-09-02). The lodge used to ship a grown tree, so
   the stamp recorded that trunk as the village's like every other block it set down, and under
   `mayFell` the lumberjack struck it for five seconds, nothing came away, and the loop offered
