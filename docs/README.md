@@ -62,6 +62,8 @@ in it, and update it in the same change that moves what it describes.
 - [buildings.md](buildings.md): the building catalog. The categories a village can
   build, the three axes they vary on (category, variant, level), the production chains
   that connect them, and which biomes can support which. Proposed, not yet decided.
+- [village-biomes.md](village-biomes.md): the canonical village-biome roster, divided into
+  playable catalogs, locked directions, and future settlement systems.
 - [birch-village.md](birch-village.md): the approved playable Birch Forest catalog, exact
   amenities and intentionally omitted tiers, biome selection, identity slots and preservation.
 - [badlands-village.md](badlands-village.md): the approved Pueblo/Mesa local catalog, house

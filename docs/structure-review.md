@@ -168,6 +168,9 @@ Towns and Towers forest, rustic, Swedish, Tudor, Mediterranean, and Iberian fami
 
 ## Recommended village-biome roster
 
+The current three-state roster lives in [village-biomes.md](village-biomes.md). The discussion
+below remains as gallery history and source-family evidence rather than the current status list.
+
 The twelve-group proposal was too coarse. It pooled several complete Towns and Towers families
 under Plains, Forest, Tundra, Badlands, and Jungle, which would discard exactly the settlement
 variety the gallery exposed.
@@ -1754,7 +1757,6 @@ natural founding in a mangrove swamp world) all passed; the public record is
 `tools/structure/floodplain-catalog-20260910.json`.
 The release went live the same afternoon: 104 building definitions, the seven old-family villages removed
 after a flushed snapshot, and Ruwaleni founded at the nearest mangrove swamp (centre -3982 67 5344).
-
 Aaron's first walk through Ruwaleni found four things, fixed and released the same evening: a floor candle
 people pressed into (candles are obstacles now), keepers stuck at closed trapdoors (walls to them now), the
 well one block high (it sinks one), and the mine ramp starting at the pit's edge (its middle column now). The
@@ -1776,7 +1778,6 @@ the building, its door went, and a step leads down into the pit; the miner stand
 with the ramp mouth one column in. The Desert mine gained a shared chest at the pit floor plus two wall
 posts, a fence, a trapdoor and a lantern, exported in its existing frame. Both were captured from a flushed
 snapshot, re-exported, checked and installed in their packs.
-
 ### Jungle catalog verified: September 10
 
 The approved Jungle selection is now a playable private catalog with 22 definitions: nineteen
