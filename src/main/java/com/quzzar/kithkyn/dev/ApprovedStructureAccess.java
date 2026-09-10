@@ -131,11 +131,12 @@ final class ApprovedStructureAccess {
   /** Uses the real building and bed ledgers without unrelated village planning. */
   static final class VillageFixture extends Village {
     private final Building center;
-    VillageFixture(ServerLevel level, Building building, boolean asCenter) {
+    VillageFixture(ServerLevel level, Building building, boolean asCenter, Building... additionalBuildings) {
       super("Approved structure access fixture");
       center = asCenter ? building : null;
       attach(level);
       addBuilding(building);
+      for (Building additional : additionalBuildings) addBuilding(additional);
     }
     @Override public Building getTownCenter() { return center; }
     @Override public void update(ServerLevel ignored) { }

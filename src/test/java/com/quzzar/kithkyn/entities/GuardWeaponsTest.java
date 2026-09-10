@@ -21,6 +21,34 @@ import net.minecraft.world.item.component.ChargedProjectiles;
 class GuardWeaponsTest {
 
   @Test
+  void castleKitGrantsMissingSwordAndShieldOnceAndPreservesCarriedUpgrades() {
+    SimpleContainer pack = new SimpleContainer(4);
+    List<ItemStack> displaced = new ArrayList<>();
+    var kit = GuardWeapons.castleSwordKit(pack, ItemStack.EMPTY, ItemStack.EMPTY, displaced::add);
+    assertTrue(kit.sword().is(Items.STONE_SWORD));
+    assertTrue(kit.shield().is(Items.SHIELD));
+    var repeated = GuardWeapons.castleSwordKit(pack, kit.sword(), kit.shield(), displaced::add);
+    assertSame(kit.sword(), repeated.sword());
+    assertSame(kit.shield(), repeated.shield());
+    assertTrue(displaced.isEmpty());
+    ItemStack sword = new ItemStack(Items.DIAMOND_SWORD);
+    sword.setDamageValue(7);
+    ItemStack shield = new ItemStack(Items.SHIELD);
+    shield.set(DataComponents.CUSTOM_NAME, Component.literal("Castle watch"));
+    pack.setItem(0, sword);
+    pack.setItem(1, shield);
+    ItemStack axe = new ItemStack(Items.IRON_AXE);
+    ItemStack food = new ItemStack(Items.BREAD, 12);
+    var upgraded = GuardWeapons.castleSwordKit(pack, axe, food, displaced::add);
+    assertSame(sword, upgraded.sword());
+    assertSame(shield, upgraded.shield());
+    assertEquals(List.of(axe, food), displaced);
+    assertTrue(pack.isEmpty());
+    assertEquals(7, upgraded.sword().getDamageValue());
+    assertEquals("Castle watch", upgraded.shield().getHoverName().getString());
+  }
+
+  @Test
   void weaponExchangeConservesBothStacksAndComponentsEvenWithAFullPack() {
     ItemStack crossbow = new ItemStack(Items.CROSSBOW);
     crossbow.set(DataComponents.CUSTOM_NAME, Component.literal("The village watch"));

@@ -28,16 +28,23 @@ before releasing an old bed. A married captain stays with their spouse rather th
 moved alone into the castle's single room. Vacancies, role loss and households continue through
 ordinary job and bed reconciliation.
 
-The castle adds one LEADER, one blacksmith, one merchant, two posted crossbow guards,
-two posted sword guards, and one jailer. One sword guard watches the royal-suite approach;
-the former eastern rooftop guard position belongs to the merchant's planted wooden stall.
-The merchant shares the village's existing market and treasury, so trade still requires
-a staffed market. The stall barrel is communal storage, separate from jail evidence.
-Guards acquire or craft shields through the ordinary equipment system when supplies allow.
-The jailer is a GUARD with the JAILER duty and a fixed sword post beside the cell. Castle
-sentries use their authored posts and follow castle waypoints when their night routine chooses
-a patrol. The town captain continues patrolling the village. Sleep and shift choices reuse
-the existing guard routines.
+The castle adds one LEADER, one blacksmith, one merchant, two crossbow guards,
+two sword guards, and one jailer. Crossbow guards carry backup stone swords and patrol
+the first-floor battlements. Sword guards receive a stone sword and shield and patrol the
+ground level. Existing better equipment is retained. Each duty has its own `patrol_routes`
+entry, transformed with the building; a nearby point on another floor does not count as arrival.
+Both sentry groups patrol whenever awake, with their existing 20% chance to sleep each night.
+The town captain continues patrolling the village. The jailer uses the GUARD occupation with
+JAILER duty and remains at the cell whenever awake, with the same nightly sleep chance.
+Combat still interrupts patrols, and rebuilding temporarily suspends access.
+
+The merchant uses the planted wooden stall on the eastern rooftop. This is an additional
+place to trade through the village's existing market and treasury, so trade requires a
+staffed market. Its barrel is communal storage, separate from jail evidence.
+
+Five general beds cannot house all seven non-ruler castle workers. A village needs at least
+two additional general beds elsewhere to fill every castle position. The royal spouse's bed
+remains reserved, and the captain moves from their existing town-center assignment.
 
 ## Identity and appearance
 
@@ -49,8 +56,8 @@ carpets outside the declared tent areas retain their authored colors.
 
 The merchant stands on clear floor inside the eastern rooftop stall. A small carpet patch
 beside the smithy chest is cleared for hand access. Two evidence barrels are placed beside
-the barred rooftop cell. These are functional corrections to the edited fort, not a replacement
-design. Native checks passed 92 access routes, 32 assigned-bed sleeps, 28 personal-container
+the barred rooftop cell. One matching sandstone slab closes a low parapet gap where pathfinding tried an
+unreachable shortcut onto target decorations. Native checks passed 92 access routes, 32 assigned-bed sleeps, 28 personal-container
 deposits and twelve shared-container deposits across all four rotations. Rendered inspection
 confirmed the two barrels and preserved castle appearance before deployment.
 
@@ -124,3 +131,16 @@ An open temporary crafting menu must be able to return its inputs without droppi
 Arrest checks this before changing inventory or teleporting. If the remaining backpack cannot
 hold those inputs, arrest is unavailable for that hit. Ordinary chest menus do not transfer
 the chest's contents, and cursor overflow remains carried by the player.
+
+## Verification
+
+The September 10 native playtest ran all four sentries through every waypoint in all four
+rotations, including real movement and floor checks. Separate access checks walked between
+stations, slept in all beds and deposited into personal and shared containers. The castle
+merchant's actual menu completed bulk purchases and sales with conserved goods and emeralds.
+The jail checks exercised damage-triggered arrest, evidence capacity, countdown and release.
+
+A real builder collected the exact recipe from two storehouses and completed the castle through
+ordinary gathering and construction goals. This exposed and fixed oversized stack truncation
+in shared inventory insertion: the 128-cobblestone recipe now retains both stacks. Beds and jobs
+were unavailable until the ordinary completion callback published the finished building.

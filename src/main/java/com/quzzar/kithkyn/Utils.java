@@ -25,7 +25,6 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.entity.BarrelBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.entity.HopperBlockEntity;
 import net.minecraft.world.level.block.entity.RandomizableContainerBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
@@ -61,19 +60,34 @@ public class Utils {
    * rather than merely delayed. Insert first, drop only the remainder.
    */
   public static void insertItems(Container container, List<ItemStack> items, Entity entity) {
+    insertItemsOrDrop(container, items, remainder -> entity.spawnAtLocation(remainder));
+  }
 
-    for (ItemStack item : items) {
-      if (item.isEmpty()) {
-        continue;
+  /**
+   * Recipe accounting may return more than one stack's worth in one ItemStack. Hopper insertion
+   * assumes legal-sized stacks and silently loses the excess when an empty slot clamps it.
+   * Bound every write by both slot capacity and item capacity, then drop only real overflow.
+   */
+  static void insertItemsOrDrop(Container container, List<ItemStack> items,
+      java.util.function.Consumer<ItemStack> drop) {
+    for (ItemStack offered : items) {
+      if (offered.isEmpty()) continue;
+      ItemStack remainder = offered.copy();
+      if (container != null) {
+        for (int slot = 0; slot < container.getContainerSize() && !remainder.isEmpty(); slot++) {
+          ItemStack stored = container.getItem(slot);
+          if (!container.canPlaceItem(slot, remainder)
+              || (!stored.isEmpty() && !ItemStack.isSameItemSameComponents(stored, remainder))) continue;
+          int capacity = Math.min(container.getMaxStackSize(remainder), remainder.getMaxStackSize());
+          int moved = Math.min(remainder.getCount(), Math.max(0, capacity - stored.getCount()));
+          if (moved == 0) continue;
+          container.setItem(slot, remainder.copyWithCount(stored.getCount() + moved));
+          remainder.shrink(moved);
+          container.setChanged();
+        }
       }
-      ItemStack leftover = container == null
-          ? item
-          : HopperBlockEntity.addItem(null, container, item, null);
-      if (!leftover.isEmpty()) {
-        entity.spawnAtLocation(leftover);
-      }
+      while (!remainder.isEmpty()) drop.accept(remainder.split(remainder.getMaxStackSize()));
     }
-
   }
 
   public static ItemStack removeItem(Container container, Item item, int amount) {

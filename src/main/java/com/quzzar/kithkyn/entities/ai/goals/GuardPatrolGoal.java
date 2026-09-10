@@ -8,11 +8,13 @@ import java.util.function.Supplier;
 import com.quzzar.kithkyn.entities.RealPerson;
 import com.quzzar.kithkyn.entities.ai.GuardNightRoutine;
 import com.quzzar.kithkyn.village.Village;
+import com.quzzar.kithkyn.village.GuardDuty;
 import com.quzzar.kithkyn.village.buildings.Building;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.PathfinderMob;
+import net.minecraft.world.phys.Vec3;
 
 /**
  * A guard's loose watch: pick a building, walk a lap around it looking it over,
@@ -66,6 +68,7 @@ public class GuardPatrolGoal extends Goal {
   private int legTicks;
   private int legTimeout = LEG_TIMEOUT_TICKS;
   private long resumeAt;
+  private boolean castleLap;
 
   public GuardPatrolGoal(RealPerson guard) {
     this(guard, guard::getVillage, HUMAN_SPEED);
@@ -94,9 +97,11 @@ public class GuardPatrolGoal extends Goal {
     return onPatrol() && village.get() != null && guard.getTarget() == null && legIndex < lap.size();
   }
 
-  /** Golems never take a human sleep shift; posted people resume their station at dawn. */
+  /** Golems keep watch; unavailable human workplaces cannot lend their guards a fallback route. */
   private boolean onPatrol() {
-    return !(guard instanceof RealPerson person) || person.guardRoutine() == GuardNightRoutine.PATROL;
+    if (!(guard instanceof RealPerson person)) return true;
+    if (GuardDuty.of(person) != null && GuardDuty.available(person) == null) return false;
+    return person.guardRoutine() == GuardNightRoutine.PATROL;
   }
 
   @Override
@@ -117,7 +122,8 @@ public class GuardPatrolGoal extends Goal {
     if (lookAt != null) {
       guard.getLookControl().setLookAt(lookAt.getX() + 0.5D, lookAt.getY() + 1.0D, lookAt.getZ() + 0.5D);
     }
-    if (target.distSqr(guard.blockPosition()) <= ARRIVED_SQR || legTicks >= legTimeout) {
+    if ((castleLap ? reachedCastlePoint(target, guard.position())
+        : target.distSqr(guard.blockPosition()) <= ARRIVED_SQR) || legTicks >= legTimeout) {
       nextLeg();
     } else if (guard.getNavigation().isDone()) {
       // A path that finished short of a ring point (a doorway, a fence) is
@@ -136,6 +142,13 @@ public class GuardPatrolGoal extends Goal {
     guard.getNavigation().stop();
   }
 
+  /** Tight corridors require reaching the actual floor and point, not a nearby room or landing. */
+  static boolean reachedCastlePoint(BlockPos target, Vec3 position) {
+    double x = position.x - target.getX() - 0.5D;
+    double z = position.z - target.getZ() - 0.5D;
+    return Math.abs(position.y - target.getY()) <= 0.6D && x * x + z * z <= 0.6D * 0.6D;
+  }
+
   private BlockPos current() {
     return legIndex < lap.size() ? lap.get(legIndex) : null;
   }
@@ -151,7 +164,11 @@ public class GuardPatrolGoal extends Goal {
 
   private void walkTo(BlockPos target) {
     if (target != null) {
-      guard.getNavigation().moveTo(target.getX() + 0.5D, target.getY(), target.getZ() + 0.5D, speedModifier);
+      if (castleLap) {
+        guard.getNavigation().moveTo(guard.getNavigation().createPath(target, 0), speedModifier);
+      } else {
+        guard.getNavigation().moveTo(target.getX() + 0.5D, target.getY(), target.getZ() + 0.5D, speedModifier);
+      }
     }
   }
 
@@ -165,19 +182,20 @@ public class GuardPatrolGoal extends Goal {
     legIndex = 0;
     lookAt = null;
     legTimeout = LEG_TIMEOUT_TICKS;
+    castleLap = false;
 
     Building castle = guard instanceof RealPerson person
-        ? com.quzzar.kithkyn.village.GuardDuty.assignedCastle(person) : null;
+        ? GuardDuty.assignedCastle(person) : null;
     if (castle != null) {
-      // Authored rounds include stairs between floors, so allow a complete traversal.
+      // Reaching a patrol floor after a meal or sleep can include the castle stairs.
       legTimeout = 600;
-      BlockPos origin = BlockPos.of(castle.getOriginLocation());
+      castleLap = true;
       lookAt = BlockPos.of(castle.getCenterLocation());
-      List<BlockPos> route = castle.getInfo().getCastleLayout().patrolPoints();
+      List<BlockPos> route = GuardDuty.patrolRoute((RealPerson) guard);
       if (!route.isEmpty()) {
         int first = guard.getRandom().nextInt(route.size());
         for (int index = 0; index < route.size(); index++) {
-          lap.add(origin.offset(route.get((first + index) % route.size()).rotate(castle.getRotation())));
+          lap.add(route.get((first + index) % route.size()));
         }
       }
       return;

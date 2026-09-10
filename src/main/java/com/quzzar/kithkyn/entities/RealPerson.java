@@ -2064,7 +2064,9 @@ public class RealPerson extends Person {
   public GuardNightRoutine guardRoutine() {
     return GuardNightRoutine.choose(this.getUUID(), this.level().getDayTime(), this.level().isNight(),
         com.quzzar.kithkyn.village.GuardDuty.isCaptain(this),
-        com.quzzar.kithkyn.village.GuardDuty.of(this) != null);
+        com.quzzar.kithkyn.village.GuardDuty.of(this) != null,
+        com.quzzar.kithkyn.village.GuardDuty.hasCastlePatrol(this),
+        com.quzzar.kithkyn.village.GuardDuty.isJailer(this));
   }
 
   /** Person-level bedtime is shared by sleeping, night restocking, bell recall and conversations. */
@@ -2100,8 +2102,12 @@ public class RealPerson extends Person {
         // the village stores, and a village with none logs the shortage rather
         // than inventing a meal.
         JobTool guardTool = JobTool.of(this);
-        kit(EquipmentSlot.MAINHAND,
-            guardTool == null ? new ItemStack(Items.STONE_AXE) : guardTool.basicStack());
+        if (com.quzzar.kithkyn.village.GuardDuty.isCastleSwordGuard(this)) {
+          GuardWeapons.issueCastleSwordKit(this);
+        } else {
+          kit(EquipmentSlot.MAINHAND,
+              guardTool == null ? new ItemStack(Items.STONE_AXE) : guardTool.basicStack());
+        }
         GuardWeapons.issueSidearm(this);
         break;
       case LUMBERJACK:

@@ -1,16 +1,15 @@
 # The market, emeralds, and trade
 
-**Decided; the valuation engine is built, trade is not.** Shipped: `economy/ItemValues`
-(the authored raw table plus recipe decomposition outward, memoised and cycle-guarded),
-`economy/Bank` (one spread multiplier both ways), `economy/VillagePricing` (supply and
-demand inside the band), the datapack loader, and `/kkdev economy` for inspection.
-Not built: the MERCHANT occupation, the market building, the physical emerald treasury,
-any trading interface, and any actual transfer of items or emeralds — the engine prices
-things, nothing trades yet. The design agreed on
-[The market, and what emeralds are for](https://github.com/Quzzar/kithkyn/issues/51);
-implementation is a separate effort. Sibling docs:
-[building-spec.md](building-spec.md) for the market building itself,
-[worker-loops.md](worker-loops.md) for the merchant's work cycle.
+The valuation engine, merchant occupation, markets, physical emerald treasury and player
+trade menu are implemented. Prices come from authored raw values plus recipe decomposition,
+with supply and demand constrained by the bank's spread. Trades move real goods and emeralds
+between player inventory and village containers. Wandering merchants use their own ledger.
+
+A castle merchant is another local representative of the same village market. The castle
+stall does not create a second treasury or replace the requirement for a staffed market.
+Jail evidence containers never contribute money or stock. Related design:
+[building-spec.md](building-spec.md) for market tiers,
+[worker-loops.md](worker-loops.md) for merchant work, and [castles.md](castles.md) for castle staffing.
 
 ## Why a market exists at all
 

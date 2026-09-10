@@ -982,23 +982,31 @@
   "guard_posts": [
     {
       "pos": [
-        8,
-        11,
-        13
+        10,
+        6,
+        10
       ],
       "role": "guard",
       "guard_duty": "CROSSBOW_POST",
-      "status": "verified_castle_post"
+      "status": "native_floor_patrol_verified",
+      "equipment": [
+        "crossbow",
+        "stone_sword"
+      ]
     },
     {
       "pos": [
-        26,
-        6,
-        13
+        16,
+        1,
+        23
       ],
       "role": "guard",
       "guard_duty": "SWORD_POST",
-      "status": "verified_castle_post"
+      "status": "native_floor_patrol_verified",
+      "equipment": [
+        "stone_sword",
+        "shield"
+      ]
     },
     {
       "pos": [
@@ -1008,17 +1016,25 @@
       ],
       "role": "guard",
       "guard_duty": "CROSSBOW_POST",
-      "status": "verified_castle_post"
+      "status": "native_floor_patrol_verified",
+      "equipment": [
+        "crossbow",
+        "stone_sword"
+      ]
     },
     {
       "pos": [
-        10,
-        6,
-        21
+        8,
+        1,
+        9
       ],
       "role": "guard",
       "guard_duty": "SWORD_POST",
-      "status": "verified_castle_post"
+      "status": "native_floor_patrol_verified",
+      "equipment": [
+        "stone_sword",
+        "shield"
+      ]
     }
   ],
   "jail": {
@@ -1102,7 +1118,16 @@
     "station_walks": 32,
     "shared_container_deposits": 12,
     "live_patch_report": "run/castle-completion-20260910/live-patch.json",
-    "build_report": "run/castle-completion-20260910/build-verification.json"
+    "build_report": "run/castle-completion-20260910/build-verification.json",
+    "castle_operations": {
+      "guard_patrols": "run/castle-operations-20260910/patrol/verification.json",
+      "room_access": "run/castle-operations-20260910/access/verification.json",
+      "merchant_transactions": "run/castle-operations-20260910/merchant/verification.json",
+      "custody": "run/castle-operations-20260910/custody/verification.json",
+      "paid_construction": "run/castle-operations-20260910/construction/verification.json",
+      "unit_tests": 461,
+      "runtime_sha256": "ddacf55b241822529a03d1b29f21019620a444d1055501356e750c4e299d194a"
+    }
   },
   "source_policy": "Towns and Towers source and derived NBT remain private under run/.",
   "design_document": "docs/castles.md",
@@ -1111,20 +1136,20 @@
   "approved_capture": "run/castle-merchant-20260910/live-20260910-125047/edited/captures/castle.nbt",
   "approved_capture_sha256": "0c4d2960830b18431f8a6fb77e385577c2830a97e1b0fec49c77834049960675",
   "production": {
-    "status": "deployed",
-    "definition": "run/castle-merchant-20260910/production/data/kithkyn/kithkyn/buildings/castle_desert_1.json",
-    "definition_sha256": "243d75bb264ad5ba4cf37ab84a4a632896ddf8c1b32a42b5e56675a306a988e6",
-    "template": "run/castle-merchant-20260910/production/data/kithkyn/structure/castle_desert_1.nbt",
-    "template_sha256": "83b37d1c7997fb3d9a2942dd61318a2769efc856595e8c172ec6221a1c59c079",
-    "recipe": "castle_1",
-    "expected_building_count": 201
+    "definition": "run/castle-operations-20260910/production/data/kithkyn/kithkyn/buildings/castle_desert_1.json",
+    "template": "run/castle-operations-20260910/production/data/kithkyn/structure/castle_desert_1.nbt"
   },
   "deployment": {
     "release": "/Users/quzzar/Projects/kithkyn/run/deployed-runtime/20260910-120838-castle-custody-founding",
     "jar_sha256": "0f913ad9e1c19e70760c8f97b971cbb9e5555d451c7e0f88676a289d468944ed",
     "installed_datapack": "run/world/datapacks/kithkyn-desert",
     "building_definitions": 201,
-    "world_backup": "/Users/quzzar/Projects/kithkyn/run/backups/before-castle-custody-founding-20260910-120838-castle-custody-founding"
+    "world_backup": "/Users/quzzar/Projects/kithkyn/run/backups/before-castle-custody-founding-20260910-120838-castle-custody-founding",
+    "floor_patrol_update": {
+      "release": "/Users/quzzar/Projects/kithkyn/run/deployed-runtime/20260910-134257-castle-floor-patrols",
+      "sha256": "ddacf55b241822529a03d1b29f21019620a444d1055501356e750c4e299d194a",
+      "world_backup": "/Users/quzzar/Projects/kithkyn/run/backups/before-castle-floor-patrols-20260910-134257-castle-floor-patrols"
+    }
   },
   "latest_authoring_update": {
     "capture": {
@@ -1139,5 +1164,68 @@
       "Two crossbow posts and two sword posts, plus jailer"
     ],
     "gameplay_runtime_unchanged": true
+  },
+  "patrol_routes": {
+    "CROSSBOW_POST": [
+      [
+        10,
+        6,
+        10
+      ],
+      [
+        20,
+        6,
+        10
+      ],
+      [
+        26,
+        6,
+        9
+      ],
+      [
+        20,
+        6,
+        14
+      ],
+      [
+        12,
+        6,
+        14
+      ]
+    ],
+    "SWORD_POST": [
+      [
+        16,
+        1,
+        23
+      ],
+      [
+        17,
+        1,
+        17
+      ],
+      [
+        16,
+        1,
+        10
+      ],
+      [
+        8,
+        1,
+        9
+      ]
+    ]
+  },
+  "patrol_verification": "run/castle-operations-20260910/patrol/verification.json",
+  "merchant_verification": "run/castle-operations-20260910/merchant/verification.json",
+  "custody_verification": "run/castle-operations-20260910/custody/verification.json",
+  "access_correction": {
+    "pos": [
+      19,
+      7,
+      20
+    ],
+    "block": "minecraft:sandstone_slab[type=bottom]",
+    "reason": "Extend neighboring parapet cap to prevent unreachable shortcut over target decorations."
   }
 }

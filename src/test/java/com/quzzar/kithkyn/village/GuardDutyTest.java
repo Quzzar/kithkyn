@@ -19,6 +19,30 @@ import net.minecraft.world.level.block.Rotation;
 class GuardDutyTest {
 
   @Test
+  void castleRoutesStayWithTheirWeaponDutyAndRotateWithTheirBuilding() {
+    BuildingInfo info = BuildingInfo.CODEC.parse(JsonOps.INSTANCE, JsonParser.parseString("""
+        {"structure":"castle_desert_1","category":"castle","castle":{
+          "custody_cell":[6,11,18],"release_point":[8,11,17],
+          "evidence_containers":[[9,11,19],[9,12,19]],
+          "patrol_routes":{
+            "CROSSBOW_POST":[[8,11,13],[20,11,13]],
+            "SWORD_POST":[[8,1,13],[20,1,13]]}}}
+        """)).getOrThrow();
+    BlockPos origin = new BlockPos(100, 70, -80);
+    for (Rotation rotation : Rotation.values()) {
+      for (GuardRole role : java.util.List.of(GuardRole.CROSSBOW_POST, GuardRole.SWORD_POST)) {
+        int floor = role == GuardRole.CROSSBOW_POST ? 11 : 1;
+        assertEquals(java.util.List.of(origin.offset(new BlockPos(8, floor, 13).rotate(rotation)),
+            origin.offset(new BlockPos(20, floor, 13).rotate(rotation))),
+            GuardDuty.patrolRoute(info, role, origin, rotation));
+      }
+      assertTrue(GuardDuty.patrolRoute(info, GuardRole.JAILER, origin, rotation).isEmpty());
+      assertTrue(GuardDuty.patrolRoute(info, GuardRole.CAPTAIN, origin, rotation).isEmpty());
+      assertTrue(GuardDuty.patrolRoute(info, null, origin, rotation).isEmpty());
+    }
+  }
+
+  @Test
   void jailerKeepsAFixedSwordPostInsteadOfBecomingACrossbowSentry() {
     BuildingInfo info = BuildingInfo.CODEC.parse(JsonOps.INSTANCE, JsonParser.parseString("""
         {"structure":"castle_desert_1","work_stations":[
