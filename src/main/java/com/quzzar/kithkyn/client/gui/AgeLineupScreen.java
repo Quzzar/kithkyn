@@ -16,6 +16,7 @@ import com.quzzar.kithkyn.entities.genetics.AppearanceGenes;
 import com.quzzar.kithkyn.village.Occupation;
 
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.core.BlockPos;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 import net.minecraft.client.multiplayer.ClientLevel;
@@ -30,11 +31,14 @@ import net.minecraft.world.item.Items;
  *
  * <p>All four preview people share the same appearance genes and default
  * client-side attributes. Only {@link AgeStage} changes, so a screenshot makes
- * model proportions and relative stage scale directly comparable.
+ * model proportions and relative stage scale directly comparable. The same four
+ * can be shown asleep: a client-side sleeping position shuts their eyes without
+ * laying them down, which photographs the closed face at every stage.
  *
  * <p>The undead lineup uses the same genes on the other {@link Kind}, and adds
  * an armed guard at the end: the skeleton a player actually meets first, and
- * the one case where armour and a weapon have to sit right on bone.
+ * the one case where armour and a weapon have to sit right on bone. Asleep, the
+ * undead keep their sockets: a skull has no lids to shut.
  */
 public final class AgeLineupScreen extends Screen {
 
@@ -48,15 +52,29 @@ public final class AgeLineupScreen extends Screen {
 
     private final List<StagePreview> previews;
     private final Kind kind;
+    private final boolean asleep;
 
-    public AgeLineupScreen(ClientLevel level) {
-        this(level, Kind.LIVING);
+    public AgeLineupScreen(ClientLevel level, Kind kind, boolean asleep) {
+        super(Component.literal(title(kind, asleep)));
+        this.kind = kind;
+        this.asleep = asleep;
+        this.previews = createPreviews(level, kind, asleep);
     }
 
-    public AgeLineupScreen(ClientLevel level, Kind kind) {
-        super(Component.literal(kind == Kind.UNDEAD ? "Undead age stages" : "Villager age stages"));
-        this.kind = kind;
-        this.previews = createPreviews(level, kind);
+    private static String title(Kind kind, boolean asleep) {
+        String base = kind == Kind.UNDEAD ? "Undead age stages" : "Villager age stages";
+        return asleep ? base + ", asleep" : base;
+    }
+
+    private static String subtitle(Kind kind, boolean asleep) {
+        if (asleep) {
+            return kind == Kind.UNDEAD
+                    ? "The undead lineup asleep; a skull has no lids to shut"
+                    : "The waking lineup with every eye shut";
+        }
+        return kind == Kind.UNDEAD
+                ? "Same genes as the living lineup; only kind and age change"
+                : "Same appearance and attributes; only age changes";
     }
 
     @Override
@@ -66,9 +84,7 @@ public final class AgeLineupScreen extends Screen {
         graphics.drawCenteredString(font, title, width / 2, 14, PRIMARY_TEXT);
         graphics.drawCenteredString(
                 font,
-                kind == Kind.UNDEAD
-                        ? "Same genes as the living lineup; only kind and age change"
-                        : "Same appearance and attributes; only age changes",
+                subtitle(kind, asleep),
                 width / 2,
                 27,
                 SECONDARY_TEXT);
@@ -105,10 +121,10 @@ public final class AgeLineupScreen extends Screen {
         return false;
     }
 
-    private static List<StagePreview> createPreviews(ClientLevel level, Kind kind) {
+    private static List<StagePreview> createPreviews(ClientLevel level, Kind kind, boolean asleep) {
         List<StagePreview> created = new ArrayList<>();
         for (AgeStage stage : AgeStage.values()) {
-            RealPerson person = previewPerson(level, kind, stage);
+            RealPerson person = previewPerson(level, kind, stage, asleep);
             created.add(new StagePreview(
                     stageName(stage),
                     stage.usesYoungModel() ? "young proportions" : "adult proportions",
@@ -116,7 +132,7 @@ public final class AgeLineupScreen extends Screen {
                     person));
         }
         if (kind == Kind.UNDEAD) {
-            RealPerson guard = previewPerson(level, kind, AgeStage.ADULT);
+            RealPerson guard = previewPerson(level, kind, AgeStage.ADULT, asleep);
             guard.setOccupation(Occupation.GUARD);
             guard.setItemSlot(EquipmentSlot.HEAD, new ItemStack(Items.IRON_HELMET));
             guard.setItemSlot(EquipmentSlot.CHEST, new ItemStack(Items.IRON_CHESTPLATE));
@@ -128,7 +144,7 @@ public final class AgeLineupScreen extends Screen {
         return List.copyOf(created);
     }
 
-    private static RealPerson previewPerson(ClientLevel level, Kind kind, AgeStage stage) {
+    private static RealPerson previewPerson(ClientLevel level, Kind kind, AgeStage stage, boolean asleep) {
         RealPerson person = Objects.requireNonNull(
                 PersonEntityType.PERSON.get().create(level),
                 "Could not create an age-lineup preview person");
@@ -136,6 +152,11 @@ public final class AgeLineupScreen extends Screen {
         person.setAppearanceGenes(AppearanceGenes.fromLegacySeed(PREVIEW_SEED));
         person.setKind(kind);
         person.setLifeStage(stage);
+        if (asleep) {
+            // Sleeping is a position, not a pose: the compositor reads it to
+            // shut the eyes, while the standing pose keeps the face upright.
+            person.setSleepingPos(BlockPos.ZERO);
+        }
         return person;
     }
 

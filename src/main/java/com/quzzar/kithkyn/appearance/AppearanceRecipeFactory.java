@@ -92,7 +92,8 @@ public final class AppearanceRecipeFactory {
         PigmentPalette.hair(inputs.genes().hairPigment()),
         leftEyePigment,
         rightEyePigment,
-        garment.headwearOccludesHair());
+        garment.headwearOccludesHair(),
+        false);
   }
 
   public static Gender expressionFor(AppearanceInputs inputs) {

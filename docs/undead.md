@@ -75,6 +75,9 @@ or renderer:
 - Every undead body is slim, so an undead skin must be authored slim.
 - Heterochromia is an iris condition. A skull has none, so for the undead it is carried in
   the genes, passed on, and expressed nowhere.
+- A skull has no lids either. The sleeping face bake ([appearance.md](appearance.md)) is
+  for the living; a sleeping undead keeps its sockets, and the recipe audit refuses an undead
+  recipe with its eyes closed.
 - Hurt, death and step sounds are the skeleton's. Speech is the same, because they are
   people.
 - The persona sheet and the chat prompt state the kind beside the gender, or the model
@@ -91,6 +94,7 @@ or renderer:
 
 ```bash
 ./gradlew runClientJoinLocal -Puipreview=undead-lineup
+./gradlew runClientJoinLocal -Puipreview=undead-lineup-asleep
 ./gradlew runClientJoinLocal -Puipreview=undead-lineup-world
 ```
 

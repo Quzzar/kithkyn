@@ -71,4 +71,14 @@ class PigmentGeneticsTest {
     int blue = (first & 0xFF) - (second & 0xFF);
     return Math.sqrt(red * red + green * green + blue * blue);
   }
+
+  @Test
+  void eyelidIsDarkerThanTheSkinShadowOnLightAndDarkFaces() {
+    for (int depth : new int[] {0, 128, 255}) {
+      PigmentColor skin = PigmentPalette.skin(PigmentGene.homozygous(depth, 96));
+      int eyelid = PigmentPalette.eyelid(skin);
+      assertTrue(luminance(eyelid) < luminance(skin.shadowRgb()), "eyelid lighter than shadow at depth " + depth);
+      assertTrue(luminance(skin.shadowRgb()) < luminance(skin.baseRgb()), "shadow lighter than base at depth " + depth);
+    }
+  }
 }

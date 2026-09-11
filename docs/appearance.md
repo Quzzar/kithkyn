@@ -148,12 +148,34 @@ v1 `SkinRecipe` fields:
 | `hairPigment` | two RGB shades | diploid hair-pigment gene |
 | `leftEyePigment`, `rightEyePigment` | two RGB shades each | eye-pigment genes + condition |
 | `headwearOccludesHair` | boolean | selected garment metadata |
+| `eyesClosed` | boolean | the vanilla sleeping state, read on the client at render time |
 
 Derivation is one deterministic function `AppearanceInputs -> SkinRecipe`. It uses stable
 rendezvous hashing rather than list indices, so adding an unrelated asset causes minimal
 recipe churn. It selects a model-compatible skin, then same-profile hair and eye masks that
 do not collide. Clothing is selected separately from current occupation and life stage.
 Determinism makes every client agree without syncing the full recipe.
+
+## Sleeping faces
+
+A villager in bed has their eyes shut. The recipe carries an `eyesClosed` flag that the
+client sets from the entity's vanilla sleeping state, which is already synced to every
+client, so no packet or saved field exists for it. A closed face is its own recipe, baked
+once and cached beside the waking one under the same bounded texture cache.
+
+No part carries closed-eye art. The bake leaves the two eye layers out, so the skin that
+every part sheet already paints beneath the eyes shows as lids, and paints the bottom row of
+each eye mask (`AppearanceAsset.lidTexels`) as a lash line in the skin's own shadow,
+pulled deeper than ordinary shading (`PigmentPalette.eyelid`) so it still reads on a dark
+face. Two-row eyes close to their lower row; one-row eyes become a line. Hair and headwear
+composite over the closed face exactly as they do over the open one.
+
+The preview `age-lineup-asleep` ([ui-preview.md](ui-preview.md)) photographs the four
+lineup faces shut, for comparison with the waking `age-lineup` shot.
+
+The undead are left out of this. A skull has no lids, so the client never closes an
+undead person's eyes and the recipe audit refuses an undead recipe with `eyesClosed` set
+([undead.md](undead.md)).
 
 ## Genetics readiness
 

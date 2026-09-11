@@ -42,9 +42,25 @@ public final class VillageTemplateExport {
       CompoundTag root = NbtIo.readCompressed(source, NbtAccounter.unlimitedHeap());
       ListTag palette = root.getList("palette", Tag.TAG_COMPOUND);
       int[] shift = spec.has("crop") ? vector(spec.get("crop")) : new int[]{0, 0, 0};
+      int[] size = vector(spec.get("size"));
+      ListTag blocks = root.getList("blocks", Tag.TAG_COMPOUND);
+      if (spec.has("crop")) {
+        // A crop is an explicit selection, not merely a coordinate translation. Gallery
+        // captures commonly surround a building with labels, fluid-containment barriers,
+        // or a review plinth. Discard every source cell outside the selected cuboid before
+        // rebasing it so those review fixtures can never survive at negative coordinates.
+        blocks.removeIf(tag -> {
+          ListTag position = ((CompoundTag)tag).getList("pos", Tag.TAG_INT);
+          for (int axis = 0; axis < 3; axis++) {
+            int local = position.getInt(axis) - shift[axis];
+            if (local < 0 || local >= size[axis]) return true;
+          }
+          return false;
+        });
+      }
       Set<String> white = new HashSet<>();
       for (JsonElement point : spec.getAsJsonArray("white")) white.add(Arrays.toString(vector(point)));
-      for (Tag value : root.getList("blocks", Tag.TAG_COMPOUND)) {
+      for (Tag value : blocks) {
         CompoundTag block = (CompoundTag)value;
         ListTag pos = block.getList("pos", Tag.TAG_INT);
         int[] local = {pos.getInt(0), pos.getInt(1), pos.getInt(2)};
@@ -70,7 +86,6 @@ public final class VillageTemplateExport {
       }
       CompoundTag air = new CompoundTag(); air.putString("Name", "minecraft:air");
       int airIndex = palette.size(); palette.add(air);
-      ListTag blocks = root.getList("blocks", Tag.TAG_COMPOUND);
       for (JsonElement point : spec.getAsJsonArray("air")) {
         CompoundTag block = new CompoundTag(); block.put("pos", ints(vector(point))); block.putInt("state", airIndex); blocks.add(block);
       }
@@ -119,17 +134,21 @@ public final class VillageTemplateExport {
               && palette.getCompound(block.getInt("state")).getString("Name").equals("minecraft:air");
         });
       }
-      int[] size = vector(spec.get("size"));
       // A block outside the declared size is never intended: it stretches the building's
       // footprint in the world (a gallery sign captured four cells in front of a mine
       // pushed the whole mine back), so the export fails instead of shipping it.
       for (Tag tag : blocks) {
-        ListTag position = ((CompoundTag)tag).getList("pos", Tag.TAG_INT);
+        CompoundTag block = (CompoundTag)tag;
+        ListTag position = block.getList("pos", Tag.TAG_INT);
         for (int axis = 0; axis < 3; axis++) {
           if (position.getInt(axis) < 0 || position.getInt(axis) >= size[axis]) {
             throw new IllegalArgumentException("Block outside the declared size at " + position + " in "
                 + spec.get("output").getAsString() + ": crop it out, override it to air inside horizontal_bounds, or widen size");
           }
+        }
+        if (palette.getCompound(block.getInt("state")).getString("Name").equals("minecraft:barrier")) {
+          throw new IllegalArgumentException("Barrier block in production structure at " + position + " in "
+              + spec.get("output").getAsString() + ": remove gallery containment before export");
         }
       }
       root.put("size", ints(size));
