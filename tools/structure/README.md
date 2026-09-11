@@ -98,7 +98,9 @@ second bakery bed and update identity slots. `birch-tavern-20260909.json` refere
 immutable approved capture, source hash and explicit amenity metadata. The same native
 writer preserves the edited grass and lighting, empties storage, and neutralizes only the
 keeper's assigned bed. Dense captures can declare `ground_layer` so exterior ground-level
-air does not excavate the supporting terrain. The source captures are never rewritten.
+air does not excavate the supporting terrain. `ground_layer` is the highest local template layer
+whose empty cells must preserve existing terrain; account for `sink` when choosing it. A sink-one
+pond building, for example, protects local layers 0 and 1. The source captures are never rewritten.
 
 ## Pueblo center review
 

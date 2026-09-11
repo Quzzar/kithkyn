@@ -1836,3 +1836,11 @@ loops opened the intended first descending step without crossing either authored
 eight routed-worksite walks covered both barrels plus mine descent and return; and eight instant or
 incremental construction placements retained the revised template. The production NBT has zero
 blockstate differences from the flushed gallery capture.
+
+The Jungle fishery's first repair removed its gallery barrier frame and lowered it into the wet
+bank, but its export still encoded 37 empty cells at local layer 1 as air. With `sink: 1`, that is
+the visible terrain layer, so new construction could erase the bank around the pond. The fishery
+now protects both local layers 0 and 1: those cells are omitted and leave existing terrain in place,
+while the pond water and authored foundation remain unchanged. Eight real placements and twelve
+navigation routes passed again across all four rotations, and the 22-template Jungle catalog has
+no barriers or out-of-bounds blocks.
