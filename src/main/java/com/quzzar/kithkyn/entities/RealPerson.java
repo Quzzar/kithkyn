@@ -101,7 +101,7 @@ import com.quzzar.kithkyn.entities.ai.goals.PanicToBedGoal;
 import com.quzzar.kithkyn.entities.ai.goals.RaiseShieldGoal;
 import com.quzzar.kithkyn.entities.ai.goals.RangedBowAttackPassiveGoal;
 import com.quzzar.kithkyn.entities.ai.goals.RangedCrossbowAttackPassiveGoal;
-import com.quzzar.kithkyn.entities.ai.goals.NightWatchRestockGoal;
+import com.quzzar.kithkyn.entities.ai.goals.BedtimeWithoutBedGoal;
 import com.quzzar.kithkyn.entities.ai.goals.SleepAtNightGoal;
 import com.quzzar.kithkyn.entities.ai.goals.SlowToAngerGoal;
 import com.quzzar.kithkyn.entities.ai.goals.StrollAroundVillage;
@@ -1350,7 +1350,7 @@ public class RealPerson extends Person {
   /** Housed sleepers return home; unhoused residents gather near the bell; guards on watch restock. */
   public void respondToBell(BlockPos bell) {
     if (!this.shouldSleepAtNight()) {
-      restockForNightWatch();
+      bedtimeWithoutBed();
       return;
     }
     Village village = this.getVillage();
@@ -1427,14 +1427,14 @@ public class RealPerson extends Person {
   }
 
   /**
-   * The bedtime stow-and-restock without the bed. Guards standing watch this
-   * night do not run goToBed, but bedtime
-   * is when the village hands out gear, rations and upgrades, so the night
-   * watch runs the same routine at their post (NightWatchRestockGoal). Shares
-   * goToBed's cooldown, so a bell ring and the nightly cadence cannot
-   * double-fire it.
+   * The bedtime stow-and-restock without the bed. A guard standing watch
+   * tonight and a resident with no bed to go to never run goToBed, but
+   * bedtime is when the pack goes back to the stores and the village hands
+   * out gear, rations and upgrades, so both run the same routine where they
+   * stand (BedtimeWithoutBedGoal). Shares goToBed's cooldown, so a bell ring
+   * and the nightly cadence cannot double-fire it.
    */
-  public void restockForNightWatch() {
+  public void bedtimeWithoutBed() {
     if (this.callToBedCoolDown > 0 || this.getVillage() == null) {
       return;
     }
@@ -3006,17 +3006,16 @@ public class RealPerson extends Person {
     this.goalSelector.addGoal(6, new com.quzzar.kithkyn.entities.ai.goals.FollowFamilyGoal(this));
     this.goalSelector.addGoal(6, new com.quzzar.kithkyn.entities.ai.goals.RoamGoal(this));
 
-    // Guards have both paths because their routine changes each night without
-    // a job reassignment. Each goal consults the same person-level bedtime.
-    if (!isWanderingMerchant()) {
-      // Ahead of sleep: what the bedtime chest question held back is set down
-      // at home first, and only then does the bed take over.
-      this.goalSelector.addGoal(5, new com.quzzar.kithkyn.entities.ai.goals.StashAtHomeGoal(this));
-      this.goalSelector.addGoal(6, new SleepAtNightGoal(this));
-    }
-    if (getOccupation() == Occupation.GUARD || isWanderingMerchant()) {
-      this.goalSelector.addGoal(6, new NightWatchRestockGoal(this));
-    }
+    // Ahead of sleep: what the bedtime chest question held back is set down
+    // at home first, and only then does the bed take over.
+    this.goalSelector.addGoal(5, new com.quzzar.kithkyn.entities.ai.goals.StashAtHomeGoal(this));
+    this.goalSelector.addGoal(6, new SleepAtNightGoal(this));
+    // Everyone carries both bedtimes, and each goal consults the same
+    // person-level decision on the night: a guard's routine rerolls without a
+    // job reassignment, and a bed is assigned or lost under a goal set built
+    // long before, so which path runs cannot be settled here. (A wandering
+    // merchant never reaches this line: it branched off above.)
+    this.goalSelector.addGoal(6, new BedtimeWithoutBedGoal(this));
     // this.goalSelector.addGoal(6, new RunToClericGoal(this)); Don't need it seems
     this.goalSelector.addGoal(6, new ArmorerRepairPersonArmorGoal(this));
 

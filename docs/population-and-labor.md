@@ -43,7 +43,12 @@ While idle, they stroll near the campfire, sit, chat and eat. The housed sleep i
 beds; an idle person without a bed stays up in a tight huddle by the fire all night, drawing
 closer than the daytime campfire crowd for safety (bedless campfire dozing
 existed once, put villagers to sleep against the lit fire, glitched endlessly, and was
-removed: nobody sleeps rough). They are civilians, and their reaction to danger comes from
+removed: nobody sleeps rough). Staying up is not a way round bedtime: at nightfall a bedless
+resident turns in where they stand, the pack going back to the village stores exactly as a
+sleeper's does on the way to bed, and again through the night as the fire's tidying turns up
+more, so a homeless camper's litter pickups never pile up in the pack (`BedtimeWithoutBedGoal`,
+the standing bedtime the night watch already ran; until 2026-09-11 only a rung bell emptied
+that pack). They are civilians, and their reaction to danger comes from
 personality rather than the Wanderer title. A resolute idle resident can fight back when struck;
 a fearful one flees. They do not receive a free campfire-defense bonus or an unpaid hunting patrol.
 
