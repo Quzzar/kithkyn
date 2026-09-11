@@ -269,9 +269,9 @@
       ],
       "worksites": [],
       "asset": "run/jungle-integration/datapack/data/kithkyn/structure/fishery_jungle_1.nbt",
-      "asset_sha256": "2b63a01dc7dde2c3df5ad7637b72951e00d520bbc623d9b6f7a1ec761434724c",
+      "asset_sha256": "97940b878ce9dc41eacf1b75597f0b6240de946fe82fa16b76939bfbe108a705",
       "definition": "run/jungle-integration/datapack/data/kithkyn/kithkyn/buildings/fishery_jungle_1.json",
-      "definition_sha256": "1537356c0e95ea9718e4f05cbb8c54e6092ca7d18d43f31af5be0b232b3a7208"
+      "definition_sha256": "b150b434a50c9e0810aa79c78c14a15c756a6af0eb79b4afaa9fec754252c261"
     },
     {
       "exhibit": "JA02.1",
@@ -800,6 +800,14 @@
     "release": "20260910-193529-jungle-village",
     "datapack": "run/world/datapacks/kithkyn-jungle",
     "building_definitions_loaded": 126,
-    "world_backup": "before-jungle-village-20260910-193529"
+    "world_backup": "before-jungle-village-20260910-193529",
+    "fishery_repair": {
+      "date": "2026-09-11",
+      "barriers_removed": 108,
+      "sink": 1,
+      "template_audit": "103 active private templates, zero barriers and zero out-of-bounds blocks",
+      "placement": "8 real-template placements passed across both construction paths and four rotations",
+      "access": "12 routes passed across all four rotations"
+    }
   }
 }

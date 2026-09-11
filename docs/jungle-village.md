@@ -21,7 +21,7 @@ catalog and immutable output hashes are recorded in
 | `storehouse_jungle_1` | JA03.1 edited small house | No vacancy; one physical quartermaster worksite and three shared containers |
 | `lumberjack_jungle_1` | JA01.4 animal pen | Lumberjack and one shared chest |
 | `tavern_jungle_1` | JA01.6 butcher | Innkeeper and one shared barrel; no bed |
-| `fishery_jungle_1` | JA01.8 fisher | Fisher, one staff bed and one shared barrel |
+| `fishery_jungle_1` | JA01.8 fisher | Fisher, one staff bed and one shared barrel; seated one block into the wet bank |
 | `hunting_lodge_jungle_1` | JA02.1 fletcher | Hunter and one shared chest |
 | `stoneworks_jungle_1` | JA02.5 mason | Mason and one shared chest |
 | `butchery_jungle_1` | JA02.6 shepherd | Butcher, one staff bed and its personal chest |
@@ -89,6 +89,12 @@ as `kithkyn-jungle` and kept with world backups; the public jar deliberately car
 third-party-derived templates ([structure-sourcing.md](structure-sourcing.md)). A manual sample
 can request `/kithkyn create-village ~ ~ ~ jungle`.
 
+The September 11 fishery repair removed the gallery's two-block water-containment frame from
+the exported cuboid: 108 barrier cells had survived outside the declared 8 by 8 by 13 bounds.
+Its definition now uses `sink: 1`, placing the captured ground course into the riverbank instead
+of raising the whole fishery. The shared template audit rejects barriers and out-of-bounds cells
+in every later public or private catalog export.
+
 ## Verification
 
 Core tests cover biome selection, codec persistence, routed physical worksites, mine ownership,
@@ -108,3 +114,8 @@ codec reloads. After the mine-floor revision, a focused native pass added four r
 runs, eight routed-worksite access routes and eight instant/incremental construction placements
 across all four rotations. The exported template has zero blockstate mismatches against Aaron's
 flushed live capture.
+
+The repaired fishery separately passed eight real placements through both construction paths in
+all four rotations, plus twelve physical routes covering its entrance, fisher station, shared
+barrel and assigned bed. The active private catalogs then passed a 103-template block audit with
+no barriers or out-of-bounds coordinates.
