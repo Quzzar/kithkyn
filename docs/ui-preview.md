@@ -20,6 +20,7 @@ Reasoning about a layout is not looking at it. If you are changing anything unde
 ./gradlew runClientJoinLocal -Puipreview=trade
 ./gradlew runClientJoinLocal -Puipreview=chat
 ./gradlew runClientJoinLocal -Puipreview=age-lineup
+./gradlew runClientJoinLocal -Puipreview=age-lineup-asleep
 ./gradlew runClientJoinLocal -Puipreview=age-lineup-world
 ```
 
@@ -36,6 +37,9 @@ Takes roughly two to four minutes, most of it client startup.
 lets it settle, then calls `Screenshot.grab` and stops the client. Chat and trade use a fixed
 `PersonChatScreen` payload. `age-lineup` creates four unspawned client-side people with identical
 appearance inputs, changes only their age stage, and renders them through the real entity renderer.
+`age-lineup-asleep` is the same four given a client-side sleeping position, which shuts their eyes
+through the sleeping face bake ([appearance.md](appearance.md)) while the standing pose keeps every
+face upright and comparable with the waking shot.
 `age-lineup-world` briefly spawns the same controlled stages in front of the preview player so the
 real entity attachments, name line, role line, camera perspective, and model scale are photographed
 together. The tagged entities are removed immediately after the capture.

@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertSame;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -131,7 +132,8 @@ class AppearanceRecipeFactoryTest {
         valid.hairPigment(),
         valid.leftEyePigment(),
         valid.rightEyePigment(),
-        !valid.headwearOccludesHair());
+        !valid.headwearOccludesHair(),
+        valid.eyesClosed());
 
     assertTrue(AppearanceRecipeAudit.validate(catalog, inputs, invalid).stream()
         .anyMatch(failure -> failure.contains("headwear occlusion")));
@@ -213,5 +215,27 @@ class AppearanceRecipeFactoryTest {
     int green = (first >>> 8 & 0xFF) - (second >>> 8 & 0xFF);
     int blue = (first & 0xFF) - (second & 0xFF);
     return Math.sqrt(red * red + green * green + blue * blue);
+  }
+
+  @Test
+  void aSleepingFaceIsTheSameRecipeWithOnlyTheEyesShut() {
+    AppearanceInputs inputs = new AppearanceInputs(
+        11,
+        AppearanceGenes.fromLegacySeed(11),
+        Gender.FEMALE,
+        Occupation.FARMER,
+        LifeStage.ADULT,
+        GeneticCondition.NONE);
+    SkinRecipe awake = AppearanceRecipeFactory.create(catalog, inputs);
+    SkinRecipe asleep = awake.withEyesClosed(true);
+
+    assertFalse(awake.eyesClosed());
+    assertTrue(asleep.eyesClosed());
+    assertNotEquals(awake, asleep);
+    assertEquals(awake, asleep.withEyesClosed(false));
+    assertSame(awake, awake.withEyesClosed(false));
+    assertEquals(awake.leftEye(), asleep.leftEye());
+    assertEquals(awake.skinPigment(), asleep.skinPigment());
+    assertTrue(AppearanceRecipeAudit.validate(catalog, inputs, asleep).isEmpty());
   }
 }

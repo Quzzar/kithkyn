@@ -14,6 +14,7 @@ import com.quzzar.kithkyn.entities.RealPerson;
 import com.quzzar.kithkyn.entities.genetics.AppearanceGenes;
 
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.core.BlockPos;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 import net.minecraft.client.multiplayer.ClientLevel;
@@ -25,7 +26,9 @@ import net.minecraft.util.Mth;
  *
  * <p>All four preview people share the same appearance genes and default
  * client-side attributes. Only {@link AgeStage} changes, so a screenshot makes
- * model proportions and relative stage scale directly comparable.
+ * model proportions and relative stage scale directly comparable. The same four
+ * can be shown asleep: a client-side sleeping position shuts their eyes without
+ * laying them down, which photographs the closed face at every stage.
  */
 public final class AgeLineupScreen extends Screen {
 
@@ -38,10 +41,12 @@ public final class AgeLineupScreen extends Screen {
     private static final int SECONDARY_TEXT = 0xFF9EA5AE;
 
     private final List<StagePreview> previews;
+    private final boolean asleep;
 
-    public AgeLineupScreen(ClientLevel level) {
-        super(Component.literal("Villager age stages"));
-        this.previews = createPreviews(level);
+    public AgeLineupScreen(ClientLevel level, boolean asleep) {
+        super(Component.literal(asleep ? "Villager age stages, asleep" : "Villager age stages"));
+        this.asleep = asleep;
+        this.previews = createPreviews(level, asleep);
     }
 
     @Override
@@ -51,7 +56,9 @@ public final class AgeLineupScreen extends Screen {
         graphics.drawCenteredString(font, title, width / 2, 14, PRIMARY_TEXT);
         graphics.drawCenteredString(
                 font,
-                "Same appearance and attributes; only age changes",
+                asleep
+                        ? "The waking lineup with every eye shut"
+                        : "Same appearance and attributes; only age changes",
                 width / 2,
                 27,
                 SECONDARY_TEXT);
@@ -92,7 +99,7 @@ public final class AgeLineupScreen extends Screen {
         return false;
     }
 
-    private static List<StagePreview> createPreviews(ClientLevel level) {
+    private static List<StagePreview> createPreviews(ClientLevel level, boolean asleep) {
         AppearanceGenes genes = AppearanceGenes.fromLegacySeed(PREVIEW_SEED);
         List<StagePreview> created = new ArrayList<>();
         for (AgeStage stage : AgeStage.values()) {
@@ -102,6 +109,11 @@ public final class AgeLineupScreen extends Screen {
             person.setAppearanceSeed(PREVIEW_SEED);
             person.setAppearanceGenes(genes);
             person.setLifeStage(stage);
+            if (asleep) {
+                // Sleeping is a position, not a pose: the compositor reads it to
+                // shut the eyes, while the standing pose keeps the face upright.
+                person.setSleepingPos(BlockPos.ZERO);
+            }
             created.add(new StagePreview(stage, person));
         }
         return List.copyOf(created);
