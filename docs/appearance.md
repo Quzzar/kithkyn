@@ -149,6 +149,7 @@ v1 `SkinRecipe` fields:
 | `leftEyePigment`, `rightEyePigment` | two RGB shades each | eye-pigment genes + condition |
 | `headwearOccludesHair` | boolean | selected garment metadata |
 | `eyesClosed` | boolean | the vanilla sleeping state, read on the client at render time |
+| `tatterSeed` | int | `Tatter.WHOLE` (0) for the living; the seed an undead person's rags are cut from |
 
 Derivation is one deterministic function `AppearanceInputs -> SkinRecipe`. It uses stable
 rendezvous hashing rather than list indices, so adding an unrelated asset causes minimal
@@ -176,6 +177,18 @@ lineup faces shut, for comparison with the waking `age-lineup` shot.
 The undead are left out of this. A skull has no lids, so the client never closes an
 undead person's eyes and the recipe audit refuses an undead recipe with `eyesClosed` set
 ([undead.md](undead.md)).
+
+## Rags
+
+The undead wear the same wardrobe, shredded at bake time rather than authored twice. The
+recipe carries a `tatterSeed`, cut from the appearance seed and the garment id, and the
+compositor asks `Tatter` for a mask of the garment's own opaque texels: hems fray upward
+column by column, two rips open the chest, every remaining garment texel is grimed toward
+old cloth, and the texels bordering a tear darken into a torn edge. The skin already copied
+beneath shows through the holes. The mask is a pure function of seed, body geometry and the
+garment, never touches the head UV or a top or bottom face, and removes a bounded share of
+the cloth so the job stays readable. The audit refuses rags on the living and whole cloth on
+the undead.
 
 ## Genetics readiness
 

@@ -134,7 +134,8 @@ class AppearanceRecipeFactoryTest {
         valid.leftEyePigment(),
         valid.rightEyePigment(),
         !valid.headwearOccludesHair(),
-        valid.eyesClosed());
+        valid.eyesClosed(),
+        valid.tatterSeed());
 
     assertTrue(AppearanceRecipeAudit.validate(catalog, inputs, invalid).stream()
         .anyMatch(failure -> failure.contains("headwear occlusion")));
@@ -209,6 +210,7 @@ class AppearanceRecipeFactoryTest {
               }
               // A skull has no iris to split: heterochromia is carried, not shown.
               assertEquals(recipe.leftEye(), recipe.rightEye());
+              assertNotEquals(Tatter.WHOLE, recipe.tatterSeed(), "the undead wear rags");
               assertEquals(Kind.LIVING, catalog.asset(recipe.clothing()).kind(), "clothing is shared");
               SkinRecipe living = AppearanceRecipeFactory.create(
                   catalog, inputs(seed, gender, occupation, lifeStage, condition, Kind.LIVING));
@@ -230,9 +232,22 @@ class AppearanceRecipeFactoryTest {
           for (String id : List.of(recipe.skin(), recipe.hair(), recipe.leftEye(), recipe.rightEye())) {
             assertEquals(Kind.LIVING, catalog.asset(id).kind(), id);
           }
+          assertEquals(Tatter.WHOLE, recipe.tatterSeed(), "the living wear whole cloth");
         }
       }
     }
+  }
+
+  @Test
+  void sharedAuditRejectsWholeClothOnTheUndead() {
+    AppearanceInputs undead = inputs(7729, Gender.MALE, Occupation.GUARD, LifeStage.ADULT, GeneticCondition.NONE,
+        Kind.UNDEAD);
+    SkinRecipe rags = AppearanceRecipeFactory.create(catalog, undead);
+    SkinRecipe whole = new SkinRecipe(rags.model(), rags.expression(), rags.skin(), rags.clothing(), rags.leftEye(),
+        rags.rightEye(), rags.hair(), rags.skinPigment(), rags.hairPigment(), rags.leftEyePigment(),
+        rags.rightEyePigment(), rags.headwearOccludesHair(), rags.eyesClosed(), Tatter.WHOLE);
+    assertTrue(AppearanceRecipeAudit.validate(catalog, undead, whole).stream()
+        .anyMatch(failure -> failure.contains("rags")));
   }
 
   @Test

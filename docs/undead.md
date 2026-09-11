@@ -83,6 +83,14 @@ or renderer:
 - A skull has no lids either. The sleeping face bake ([appearance.md](appearance.md)) is
   for the living; a sleeping undead keeps its sockets, and the recipe audit refuses an undead
   recipe with its eyes closed.
+- **The wardrobe is worn in rags.** An undead person takes the same occupation garment as
+  anyone else and the bake shreds it (`Tatter`): the cloth frays upward from its own hems, so
+  trouser ends show bone toes and cuffs show finger bones whatever the garment's cut, two rips
+  open the chest along the ribs beneath, every remaining texel is grimed toward old cloth, and
+  the texels bordering a hole darken into a torn edge. No wardrobe needs a second set of art,
+  and the job stays readable, because the mask removes a bounded share of a garment. The
+  rags are cut from the person's appearance seed and the garment, so every client bakes the
+  same tears and they never move. Hoods and the head UV are never torn.
 - Hurt, death and step sounds are the skeleton's. Speech is the same, because they are
   people.
 - The persona sheet and the chat prompt state the kind beside the gender, or the model

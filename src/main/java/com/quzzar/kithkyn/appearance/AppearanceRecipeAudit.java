@@ -38,6 +38,8 @@ public final class AppearanceRecipeAudit {
     check(failures, rightEye.kind() == inputs.kind(), "right eye is not of the person's kind");
     check(failures, inputs.kind() == Kind.LIVING || recipe.model() == BodyModel.SLIM, "undead body is not slim");
     check(failures, inputs.kind() == Kind.LIVING || !recipe.eyesClosed(), "undead eyes closed, but a skull has no lids");
+    check(failures, (inputs.kind() == Kind.UNDEAD) == (recipe.tatterSeed() != Tatter.WHOLE),
+        "rags do not match the person's kind");
     check(failures, skin.faceProfile().equals(hair.faceProfile()), "hair face profile does not match skin");
     check(failures, skin.faceProfile().equals(leftEye.faceProfile()), "left-eye profile does not match skin");
     check(failures, skin.faceProfile().equals(rightEye.faceProfile()), "right-eye profile does not match skin");

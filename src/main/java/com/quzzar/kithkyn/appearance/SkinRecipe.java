@@ -2,7 +2,11 @@ package com.quzzar.kithkyn.appearance;
 
 import com.quzzar.kithkyn.entities.Gender;
 
-/** Exact semantic layers and body geometry used to bake one player texture. */
+/**
+ * Exact semantic layers and body geometry used to bake one player texture.
+ * {@code tatterSeed} is {@link Tatter#WHOLE} for the living; for the undead it
+ * is the seed their rags are cut from, so a shredded bake caches on its own.
+ */
 public record SkinRecipe(
     BodyModel model,
     Gender expression,
@@ -16,7 +20,8 @@ public record SkinRecipe(
     PigmentColor leftEyePigment,
     PigmentColor rightEyePigment,
     boolean headwearOccludesHair,
-    boolean eyesClosed) {
+    boolean eyesClosed,
+    int tatterSeed) {
 
   /**
    * The same face with its eyes shut: the eye layers give way to a lash line on the
@@ -28,6 +33,7 @@ public record SkinRecipe(
       return this;
     }
     return new SkinRecipe(model, expression, skin, clothing, leftEye, rightEye, hair,
-        skinPigment, hairPigment, leftEyePigment, rightEyePigment, headwearOccludesHair, closed);
+        skinPigment, hairPigment, leftEyePigment, rightEyePigment, headwearOccludesHair, closed,
+        tatterSeed);
   }
 }

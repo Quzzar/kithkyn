@@ -93,7 +93,9 @@ public final class AppearanceRecipeFactory {
         leftEyePigment,
         rightEyePigment,
         garment.headwearOccludesHair(),
-        false);
+        false,
+        // The undead wear the same wardrobe, in rags (Tatter).
+        kind == Kind.UNDEAD ? Tatter.seed(inputs.seed(), garment.id()) : Tatter.WHOLE);
   }
 
   public static Gender expressionFor(AppearanceInputs inputs) {
