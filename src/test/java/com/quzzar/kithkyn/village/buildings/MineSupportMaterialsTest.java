@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 
 import com.google.gson.JsonParser;
 
+import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Blocks;
@@ -22,6 +23,31 @@ class MineSupportMaterialsTest {
         MineSupportMaterials.blockState(new ItemStack(Items.DIRT)));
     assertEquals(Blocks.DEEPSLATE.defaultBlockState(),
         MineSupportMaterials.blockState(new ItemStack(Items.DEEPSLATE)));
+  }
+
+  /** Item tags are not bound in a unit test, so dirt and stone are exercised natively; sand needs no tag. */
+  @Test
+  void sandPressesIntoSandstoneFourToTheBlock() {
+    SimpleContainer pack = new SimpleContainer(9);
+    pack.setItem(0, new ItemStack(Items.SAND, 9));
+    assertEquals(2, MineSupportMaterials.held(pack), "two blocks' worth of sand");
+    assertEquals(Items.SANDSTONE, MineSupportMaterials.takeOne(pack).getItem());
+    assertEquals(5, pack.countItem(Items.SAND));
+    assertEquals(Items.SANDSTONE, MineSupportMaterials.takeOne(pack).getItem());
+    assertEquals(1, pack.countItem(Items.SAND));
+    assertTrue(MineSupportMaterials.takeOne(pack).isEmpty(), "three sand are no block yet");
+    assertEquals(0, MineSupportMaterials.held(pack));
+  }
+
+  @Test
+  void redSandPressesIntoRedSandstone() {
+    SimpleContainer pack = new SimpleContainer(3);
+    pack.setItem(0, new ItemStack(Items.RED_SAND, 2));
+    pack.setItem(2, new ItemStack(Items.RED_SAND, 2));
+    ItemStack pressed = MineSupportMaterials.takeOne(pack);
+    assertEquals(Items.RED_SANDSTONE, pressed.getItem());
+    assertEquals(Blocks.RED_SANDSTONE.defaultBlockState(), MineSupportMaterials.blockState(pressed));
+    assertTrue(pack.isEmpty(), "both part stacks were spent");
   }
 
   @Test

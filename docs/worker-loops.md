@@ -628,6 +628,15 @@ does not require the bucket, so a miner without one still makes the lining safe 
 reports that the enclosed water or lava is blocking progress. If a later break exposes a fresh
 breach, the next audit seals it before another bucket act.
 
+Lining is spent from the pack, dirt and stone first, and a shaft in sand country lines itself with
+what it digs: four sand press into a sandstone block by hand when the lining runs out, red sand
+into red sandstone (`MineSupportMaterials`), the same table-less press as the miner's torches and
+the farmer's bone meal, and the bedtime restock draws sand from the stores when they hold no dirt
+or stone. The seal comes before the break, so a face whose fall would open an unsealed boundary is
+never broken with an empty pack: the miner fans ribs for material and comes back to it. Before
+that rule the seal failed and the same sand block was broken and reset without end (a Desert mine,
+2026-09-10).
+
 The mine interior is the descending ramp plus every planned prospecting rib. A rib entrance is an
 intentional doorway through the ramp wall, so the lining pass never fills it back in. A flooded
 pocket is followed through both ramp and rib cells, and every six-direction transition from that

@@ -399,9 +399,14 @@ public final class MineStep implements BlockWorkStep {
       // pulling ore is gated on support to seal too (selectVein). Quarry support
       // instead - fan short ribs into the solid rock beside the ramp, which
       // needs none and drops plenty (selectFan) - and let the next sweep resume the
-      // bridge once the pack has refilled. Only support-gated work reroutes; a
-      // diggable face still digs, since breaking stone is itself a support source.
-      if ((this.placeFloor || this.placeSeal)
+      // bridge once the pack has refilled. Only support-gated work reroutes. A
+      // face is support-gated too when its fall would open the shaft to an
+      // unsealed boundary: the seal comes before the break, so an empty pack
+      // broke the same block and reset without end. Sand country made that
+      // permanent, since a sand face drops no lining (Aaron, 2026-09-10); a face
+      // whose boundary is already solid still digs, and breaking stone is itself
+      // a support source.
+      if ((this.placeFloor || this.placeSeal || needsSupportToBreak(person.level(), mouth, rotation))
           && MineSupportMaterials.held(person.personMainInv) == 0) {
         BlockPos fanStand = selectFan(person, mouth, rotation);
         if (fanStand != null) {
@@ -1102,6 +1107,16 @@ public final class MineStep implements BlockWorkStep {
 
   private BlockPos face(BlockPos mouth, Rotation rotation) {
     return mouth.offset(this.offset.rotate(rotation));
+  }
+
+  /**
+   * Whether breaking the next face would leave an open boundary to seal, read the
+   * way {@link #sealAround} will read it before the block comes down: a fluid
+   * beyond the exterior lining, or an open floor, wall or ceiling cell.
+   */
+  private boolean needsSupportToBreak(Level level, BlockPos mouth, Rotation rotation) {
+    return openExteriorBoundary(level, mouth, rotation, this.offset, false) != null
+        || openBoundary(level, mouth, rotation, face(mouth, rotation), this.offset) != null;
   }
 
   /**
