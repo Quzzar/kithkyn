@@ -6,8 +6,8 @@ people, and they look like people.
 ## The decision
 
 `PersonModel` extends `PlayerModel<Person>` on a 64x64 player skin sheet, rendered by
-`PersonRenderer` (a `HumanoidMobRenderer`) with the vanilla player inner and outer armor
-layers, at a base scale of `0.9375`.
+`PersonRenderer` (a `MobRenderer` carrying the vanilla humanoid gear layers and the player
+inner and outer armor layers), at a base scale of `0.9375`.
 
 The vanilla villager model was considered and rejected. Three reasons:
 
@@ -169,7 +169,26 @@ face. Two-row eyes close to their lower row; one-row eyes become a line. Hair an
 composite over the closed face exactly as they do over the open one.
 
 The preview `age-lineup-asleep` ([ui-preview.md](ui-preview.md)) photographs the four
-lineup faces shut, for comparison with the waking `age-lineup` shot.
+lineup faces shut and at rest, for comparison with the waking `age-lineup` shot.
+
+## Sleeping pose and gear
+
+The rest of the sleeping look is the renderer's, keyed on the same vanilla sleeping state.
+`PersonModel` rests the head: turned forty degrees toward one shoulder and rolled ten
+degrees with it, instead of holding the entity's look direction, and the hat layer follows.
+Which shoulder is the person's own, the parity of their appearance seed, so a row of
+sleepers is not a row of clones and no head flips between frames.
+
+Nothing worn or held is drawn in bed. `PersonRenderer` wraps every gear layer (the vanilla
+humanoid head-block, elytra and hand layers, and the player armor) in `AwakeOnlyLayer`,
+which skips the layer while the person sleeps, and poses the arms as empty so they lie flat
+rather than holding the shape of a sword that is not drawn. The gear stays on the entity;
+only the drawing stops, and it is back the moment they wake.
+
+`/kkdev appearance sleep <targets>` puts a person standing in a bed to sleep and `wake` gets
+them up, for looking at any of this on demand. The preview `age-lineup-bed`
+([ui-preview.md](ui-preview.md)) photographs the four stages asleep in beds, dressed in gear
+that must not show.
 
 ## Genetics readiness
 

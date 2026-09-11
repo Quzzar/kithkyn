@@ -14,8 +14,11 @@ import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
-import net.minecraft.client.renderer.entity.HumanoidMobRenderer;
+import net.minecraft.client.renderer.entity.MobRenderer;
+import net.minecraft.client.renderer.entity.layers.CustomHeadLayer;
+import net.minecraft.client.renderer.entity.layers.ElytraLayer;
 import net.minecraft.client.renderer.entity.layers.HumanoidArmorLayer;
+import net.minecraft.client.renderer.entity.layers.ItemInHandLayer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.HumanoidArm;
@@ -23,7 +26,7 @@ import net.minecraft.world.item.CrossbowItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.UseAnim;
 
-public class PersonRenderer extends HumanoidMobRenderer<Person, HumanoidModel<Person>> {
+public class PersonRenderer extends MobRenderer<Person, HumanoidModel<Person>> {
 
     /** The two body geometries, chosen from the person's appearance recipe in {@link #render}. */
     private final PersonModel wideModel;
@@ -35,10 +38,16 @@ public class PersonRenderer extends HumanoidMobRenderer<Person, HumanoidModel<Pe
         this.slimModel = new PersonModel(context.bakeLayer(PersonClientEvents.PERSON_SLIM), true);
         this.model = this.wideModel;
 
-        this.addLayer(new HumanoidArmorLayer<>(this,
+        // The gear a HumanoidMobRenderer would add (head block, elytra, hands) plus
+        // the player armor, each worn only while awake: a sleeper renders bare.
+        this.addLayer(new AwakeOnlyLayer<>(this,
+                new CustomHeadLayer<>(this, context.getModelSet(), context.getItemInHandRenderer())));
+        this.addLayer(new AwakeOnlyLayer<>(this, new ElytraLayer<>(this, context.getModelSet())));
+        this.addLayer(new AwakeOnlyLayer<>(this, new ItemInHandLayer<>(this, context.getItemInHandRenderer())));
+        this.addLayer(new AwakeOnlyLayer<>(this, new HumanoidArmorLayer<>(this,
                 new HumanoidModel<>(context.bakeLayer(ModelLayers.PLAYER_INNER_ARMOR)),
                 new HumanoidModel<>(context.bakeLayer(ModelLayers.PLAYER_OUTER_ARMOR)),
-                context.getModelManager()));
+                context.getModelManager())));
     }
 
     @Override
@@ -270,10 +279,15 @@ public class PersonRenderer extends HumanoidMobRenderer<Person, HumanoidModel<Pe
         ItemStack itemstack = entityIn.getMainHandItem();
         ItemStack itemstack1 = entityIn.getOffhandItem();
         guardmodel.setAllVisible(true);
-        HumanoidModel.ArmPose bipedmodel$armpose = this.getArmPose(entityIn, itemstack, itemstack1,
-                InteractionHand.MAIN_HAND);
-        HumanoidModel.ArmPose bipedmodel$armpose1 = this.getArmPose(entityIn, itemstack, itemstack1,
-                InteractionHand.OFF_HAND);
+        // A sleeper's hands are empty on screen, so the arms lie flat rather than
+        // holding the shape of gear that is not drawn.
+        boolean awake = !entityIn.isSleeping();
+        HumanoidModel.ArmPose bipedmodel$armpose = awake
+                ? this.getArmPose(entityIn, itemstack, itemstack1, InteractionHand.MAIN_HAND)
+                : HumanoidModel.ArmPose.EMPTY;
+        HumanoidModel.ArmPose bipedmodel$armpose1 = awake
+                ? this.getArmPose(entityIn, itemstack, itemstack1, InteractionHand.OFF_HAND)
+                : HumanoidModel.ArmPose.EMPTY;
         guardmodel.crouching = entityIn.isCrouching();
         if (entityIn.getMainArm() == HumanoidArm.RIGHT) {
             guardmodel.rightArmPose = bipedmodel$armpose;
