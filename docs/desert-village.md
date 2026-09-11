@@ -50,6 +50,11 @@ The mine's worker stands at local `[4,0,3]`; the shaft mouth is `[4,1,5]`, facin
 three-block covered lane between the fence and bedroom wall. The market entrance retains one
 orange carpet. These corrections are recorded in `tools/structure/desert-placement-repair-20260910.json`.
 
+The D03.4 lumberjack compound faces east. Its only perimeter approach opens on the east edge at
+local `[14,1,8]`; the cabin door inside the wall does not define the orientation of the full
+building. The September 11 correction changes `entrance_facing` from west to east so placement
+turns that approach toward the village center.
+
 The September 10 comparison decision keeps D04.12 as the well, adopts the Dungeons &
 Taverns T02.9 building as the official tavern, and retains the former D05.2 tavern as
 `couple_cottage_desert_1`. Its two adjacent beds form one general couple room, both in
@@ -110,4 +115,3 @@ from the stores when they hold no dirt or stone. A face whose fall would open an
 boundary is never broken with an empty pack: before this rule the seal failed and the
 same sand block was broken and reset without end (Aaron, 2026-09-10); the miner fans ribs
 for material instead and comes back to the face.
-

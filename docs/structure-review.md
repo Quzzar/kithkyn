@@ -1844,3 +1844,10 @@ now protects both local layers 0 and 1: those cells are omitted and leave existi
 while the pond water and authored foundation remain unchanged. Eight real placements and twelve
 navigation routes passed again across all four rotations, and the 22-template Jungle catalog has
 no barriers or out-of-bounds blocks.
+
+### Desert lumberjack entrance correction: September 11
+
+The D03.4 lumberjack definition incorrectly declared west as its entrance direction. The authored
+compound has one exterior approach opening, on its east edge at local `[14,1,8]`; its west edge is
+closed. The internal cabin door is not the compound entrance. `lumberjack_desert_1` now declares
+east, so the planner can face the actual approach toward the village center in every rotation.

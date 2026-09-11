@@ -1,0 +1,42 @@
+{
+  "status": "corrected_and_verified",
+  "building": "lumberjack_desert_1",
+  "exhibit": "D03.4",
+  "source_manifest": "tools/structure/desert-services-20260909.json",
+  "template_sha256": "de5fa2bc7fc1696e37ef2e63cde441de469691ac306f420c173fea79212602bc",
+  "previous_definition_sha256": "0c7deb5b812df1a503986e212ef28b2944427270ed9914284a9c23325f1e1487",
+  "definition_sha256": "1df457af19ad0086ce009c18bd35c9be19fe01bd59c80be0f7c61bc06574dea8",
+  "previous_entrance_facing": "west",
+  "entrance_facing": "east",
+  "evidence": {
+    "perimeter_approach_opening": [
+      14,
+      1,
+      8
+    ],
+    "approach_edge": "east",
+    "opposite_edge": "closed",
+    "internal_cabin_door_defines_compound_entrance": false
+  },
+  "verification": {
+    "rotated_placement": {
+      "status": "passed",
+      "placements": 8,
+      "rotations": 4,
+      "paths": [
+        "instant",
+        "incremental_reload"
+      ],
+      "report": "run/desert-integration/placement/latest-verification.log"
+    },
+    "physical_access": {
+      "status": "passed",
+      "rotations": 4,
+      "routes": 12,
+      "station_walks": 4,
+      "assigned_bed_sleeps": 4,
+      "personal_container_deposits": 4,
+      "report": "run/desert-integration/access/latest-verification.log"
+    }
+  }
+}

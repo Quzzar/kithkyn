@@ -326,7 +326,7 @@
           "banners": []
         },
         "sink": 0,
-        "entrance_facing": "west",
+        "entrance_facing": "east",
         "grants": [
           "LOGS",
           "PLANKS"
