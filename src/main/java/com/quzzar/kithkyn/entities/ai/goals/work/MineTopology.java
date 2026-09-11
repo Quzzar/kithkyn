@@ -39,14 +39,23 @@ final class MineTopology {
    * one entrance marker, so a child gets a visible threshold without wasting a
    * torch on both walls.
    */
-  private final int radius;
+  private final int minX;
+  private final int maxX;
 
   MineTopology(int radius) {
-    this.radius = radius;
+    this(-radius, radius);
+  }
+
+  MineTopology(int minX, int maxX) {
+    if (minX > 0 || maxX < 0 || minX > maxX) {
+      throw new IllegalArgumentException("Mine corridor must contain local x 0");
+    }
+    this.minX = minX;
+    this.maxX = maxX;
   }
 
   List<BlockPos> entranceTorchCells() {
-    return List.of(new BlockPos(-radius, -1, 0), new BlockPos(radius, -1, 0));
+    return List.of(new BlockPos(minX, -1, 0), new BlockPos(maxX, -1, 0));
   }
 
   /** The walk-cell Y shared by a ramp column and any rib cut from it. */
@@ -65,7 +74,7 @@ final class MineTopology {
       int floor = floorY(z);
       int ceiling = Math.min(floor + MineShaft.RAMP_HEIGHT - 1, -1);
       for (int y = floor; y <= ceiling; y++) {
-        for (int x = -radius; x <= radius; x++) {
+        for (int x = minX; x <= maxX; x++) {
           cells.add(new BlockPos(x, y, z));
         }
       }
@@ -193,14 +202,14 @@ final class MineTopology {
 
   /** The five-cell-high descending shaft, capped below the surface structure. */
   boolean isRamp(BlockPos local) {
-    return MineShaft.withinCorridor(local, radius)
+    return MineShaft.withinCorridor(local, minX, maxX)
         && local.getY() >= -(local.getZ() + 2)
         && local.getY() <= -(local.getZ() - 2);
   }
 
   /** A one-cell-wide horizontal prospecting rib on one of the fixed grid lines. */
   boolean isRib(BlockPos local) {
-    return MineShaft.withinRib(local, radius);
+    return MineShaft.withinRib(local, minX, maxX);
   }
 
   /**
@@ -212,8 +221,8 @@ final class MineTopology {
     if (!isRib(local)) {
       return null;
     }
-    int side = Integer.signum(local.getX());
-    return new BlockPos(side * (radius + 1), local.getY(), local.getZ());
+    int doorwayX = local.getX() < minX ? minX - 1 : maxX + 1;
+    return new BlockPos(doorwayX, local.getY(), local.getZ());
   }
 
   /** Every cell the mine deliberately opens, whether it belongs to the ramp or a rib. */

@@ -15,6 +15,28 @@ import net.minecraft.world.level.block.Rotation;
 class MineShaftTest {
 
   @Test
+  void twoWideShaftUsesOnlyTheTwoAuthoredColumnsInEveryRotation() {
+    for (Rotation rotation : Rotation.values()) {
+      BlockPos mouth = new BlockPos(30, 100, 40);
+      MineShaft root = MineShaft.root(mouth, rotation, 42L, 2);
+
+      assertEquals(2, root.width());
+      assertEquals(-1, root.minX());
+      assertEquals(0, root.maxX());
+      assertTrue(MineShaft.withinCorridor(new BlockPos(-1, -7, 5), root.minX(), root.maxX()));
+      assertTrue(MineShaft.withinCorridor(new BlockPos(0, -7, 5), root.minX(), root.maxX()));
+      assertFalse(MineShaft.withinCorridor(new BlockPos(1, -7, 5), root.minX(), root.maxX()));
+
+      MineShaft left = MineShaft.child(root, new MineBranch(42L, 8, -1, false));
+      MineShaft right = MineShaft.child(root, new MineBranch(42L, 8, 1, false));
+      assertEquals(mouth.offset(new BlockPos(-9, -10, 8).rotate(rotation)), left.entry());
+      assertEquals(mouth.offset(new BlockPos(8, -10, 8).rotate(rotation)), right.entry());
+      assertEquals(2, left.width());
+      assertEquals(2, right.width());
+    }
+  }
+
+  @Test
   void narrowRootAndChildrenKeepTheirWidthAndAdjacentEntryInEveryRotation() {
     for (Rotation rotation : Rotation.values()) {
       BlockPos mouth = new BlockPos(30, 100, 40);

@@ -71,7 +71,9 @@ cover it.
 Before any candidate is scored, the heights of the whole search square are read once from the
 chunk heightmaps (`MOTION_BLOCKING_NO_LEAVES`, the real ground under a canopy) into a grid,
 so every candidate's flatness is arithmetic: its plane is the height most of its columns
-share, and ground with more than one column in eight past the per-column budget, or averaging
+share. A template raised with negative `sink` lifts that plane to the modal height immediately
+outside its rotated public front when the approach stands higher; this keeps its exposed lowest
+step above the bank on uneven ground. Ground with more than one column in eight past the per-column budget, or averaging
 past the levelling budget across the rest, is refused without a block scan. A few tall columns
 are let through because a tree reads as a tall column and is cleared, not levelled; one outlier
 is always allowed through even on a small footprint. The exact scan also uses that allowance for

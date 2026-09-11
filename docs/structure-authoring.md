@@ -224,6 +224,8 @@ A template's layer 0 replaces the terrain's top block; `sink` buries that many m
 stair swallowed by the ground: a bottom-half stair in the layer that meets the surface. Run
 `tools/structure/seating-check.py <data-root>...` over a pack before activating it; a floor
 layer with such a stair wants `sink: -1`, while a farm's or plaza's edging stairs in a ground
-course are a judgement call. The Badlands storehouse, mine, bakery and tavern, the Desert
+course are a judgement call. Runtime placement also checks the rotated public-front ground for
+negative-sink templates and follows a higher approach rather than cutting a sunken doorway.
+The Badlands storehouse, mine, bakery and tavern, the Desert
 small houses and couple cottage, and the Birch mine and second watchtower were raised this way
 on 2026-09-10; buildings already standing keep their seat.

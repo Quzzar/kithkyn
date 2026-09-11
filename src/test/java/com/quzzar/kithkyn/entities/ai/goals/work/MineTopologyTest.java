@@ -18,6 +18,21 @@ class MineTopologyTest {
   private final MineTopology topology = new MineTopology(MineShaft.RADIUS);
 
   @Test
+  void twoWideTopologyKeepsItsAsymmetricRampAndRibsConnected() {
+    MineTopology twoWide = new MineTopology(-1, 0);
+    var cells = twoWide.rampCellsThrough(4);
+
+    assertTrue(cells.stream().allMatch(cell -> cell.getX() == -1 || cell.getX() == 0));
+    assertEquals(java.util.List.of(
+        new BlockPos(-1, -1, 0),
+        new BlockPos(0, -1, 0)), twoWide.entranceTorchCells());
+    assertTrue(twoWide.isRib(new BlockPos(-2, -6, 4)));
+    assertTrue(twoWide.isRib(new BlockPos(1, -6, 4)));
+    assertEquals(new BlockPos(-2, -6, 4), twoWide.ribDoorway(new BlockPos(-9, -6, 4)));
+    assertEquals(new BlockPos(1, -6, 4), twoWide.ribDoorway(new BlockPos(8, -6, 4)));
+  }
+
+  @Test
   void narrowShaftRetainsRampHeadroomAndEntryWhileMovingItsWallsAndRibs() {
     MineTopology narrow = new MineTopology(1);
     var cells = narrow.rampCellsThrough(12);

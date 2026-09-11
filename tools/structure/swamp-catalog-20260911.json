@@ -39,10 +39,6 @@
       ],
       "source": "run/swamp-full-review/approved-live-edits/NF01.2.nbt",
       "source_sha256": "f3754648af10ee49f1d9dfb9877bb3fe6a711d0ba0c86aad51d5b9fc23e6e3fb",
-      "asset": "run/swamp-integration/datapack/data/kithkyn/structure/village_center_swamp_1.nbt",
-      "asset_sha256": "e5848ddf5907ee4ded5284420af5d243e0e052eb219055327b86bef135da9570",
-      "definition": "run/swamp-integration/datapack/data/kithkyn/kithkyn/buildings/village_center_swamp_1.json",
-      "definition_sha256": "8477f8f542807dbeb4f94a92466ef3d83a7074048f515d09e3df02cb1bded372",
       "approval_revision": {
         "recorded": "2026-09-11",
         "capture": "run/swamp-town-center-edit-20260911/capture/NF01.2-user-edit.nbt",
@@ -53,10 +49,15 @@
         ],
         "changes": [
           "hanging soul lantern changed to normal lantern at local 1,4,10",
-          "lower campfire lit at local 9,4,11"
+          "lower campfire lit at local 9,4,11",
+          "15 cobbled deepslate slabs and 5 cobbled deepslate stairs mapped to cobblestone equivalents"
         ],
         "verification": "same 25x15x22 envelope and 8,080 exported cells; no barrier or structure-void blocks"
-      }
+      },
+      "asset": "run/swamp-integration/datapack/data/kithkyn/structure/village_center_swamp_1.nbt",
+      "asset_sha256": "9ed72758f71b5a529c7dbfe07ae23aa0ba47e9dd822d8d43c354784ecd0bfe84",
+      "definition": "run/swamp-integration/datapack/data/kithkyn/kithkyn/buildings/village_center_swamp_1.json",
+      "definition_sha256": "8477f8f542807dbeb4f94a92466ef3d83a7074048f515d09e3df02cb1bded372"
     },
     {
       "exhibit": "NE03.6",
@@ -73,7 +74,7 @@
       "asset": "run/swamp-integration/datapack/data/kithkyn/structure/couple_cottage_swamp_1.nbt",
       "asset_sha256": "8bb48e8579e29f682c10740484929416deaf4829a489602e9c67987df46d2320",
       "definition": "run/swamp-integration/datapack/data/kithkyn/kithkyn/buildings/couple_cottage_swamp_1.json",
-      "definition_sha256": "3880a55dbaa70ba14fdaadb3d56e5e0e53d98524fbdc07201a4b766de20e1a1f"
+      "definition_sha256": "eee7c5b26bf7e36c1873f339214180ff34dd427faaaf7ed6c5bb848e4af4cc8b"
     },
     {
       "exhibit": "NE03.8",
@@ -90,7 +91,7 @@
       "asset": "run/swamp-integration/datapack/data/kithkyn/structure/house_swamp_1__two_bed.nbt",
       "asset_sha256": "860d370b8fdcd66375e01576502bf1d984a97cc9dd6e6d2fc458943cd028cc54",
       "definition": "run/swamp-integration/datapack/data/kithkyn/kithkyn/buildings/house_swamp_1__two_bed.json",
-      "definition_sha256": "46b916f289f079dec71fa64eced0c26ce717e6f3a21565ee3492a765f17a9c15"
+      "definition_sha256": "eac73b1a51f8e4d5bb9dc4a9f0f68edbd93708d54dd43ca32049cd39edcede4a"
     },
     {
       "exhibit": "NE03.5",
@@ -107,7 +108,7 @@
       "asset": "run/swamp-integration/datapack/data/kithkyn/structure/house_swamp_1.nbt",
       "asset_sha256": "0a4b0f7ce0acd578d1d332c7babffe9bba09805b9b801ef4c204336c127ee82e",
       "definition": "run/swamp-integration/datapack/data/kithkyn/kithkyn/buildings/house_swamp_1.json",
-      "definition_sha256": "e5f4a3c5bc0d23e22e04fa1814086382a566995fce36ec125e61bb9fb2218bdd"
+      "definition_sha256": "847eb295870dcf4fb82a09ef519da98c67c58fff6a8a58b917c1ecf6f584fce4"
     },
     {
       "exhibit": "NF04.4",
@@ -141,7 +142,7 @@
       "asset": "run/swamp-integration/datapack/data/kithkyn/structure/church_swamp_1__cleric_couple_home.nbt",
       "asset_sha256": "3a398a12efe0a055fa4c7d24cf83b283c0d87581deb82a27a5d2712b36a05641",
       "definition": "run/swamp-integration/datapack/data/kithkyn/kithkyn/buildings/church_swamp_1__cleric_couple_home.json",
-      "definition_sha256": "ab601e4243f7a5f7d88cb686fb38fde10df135c8aa4b050a93c409ba2e0e4a1b"
+      "definition_sha256": "d269527eab31e47b0ff3d1ef63eac986fde849a7e309e387c1f21c7b3fc06f73"
     },
     {
       "exhibit": "NF04.2",
@@ -158,7 +159,7 @@
       "asset": "run/swamp-integration/datapack/data/kithkyn/structure/church_swamp_1__cleric_mixed_home.nbt",
       "asset_sha256": "c92d5db699c8f3bf6d7cac963ae6fba445658d0e66706502bce0461a9d7a47d5",
       "definition": "run/swamp-integration/datapack/data/kithkyn/kithkyn/buildings/church_swamp_1__cleric_mixed_home.json",
-      "definition_sha256": "afba1db46baf44ab0367f3401ad0881acd9110bc579e8be353a6fe27e5ce0c70"
+      "definition_sha256": "57c43630b1e747742023d9b44cf940cab6f6b8894ae138483a99cb8908c0b7ce"
     },
     {
       "exhibit": "NF04.1",
@@ -192,7 +193,7 @@
       "asset": "run/swamp-integration/datapack/data/kithkyn/structure/blacksmith_swamp_1.nbt",
       "asset_sha256": "385569348ff9dd2928360850e2655304e570ecf1ec38fc4d6b11c05aa63755b9",
       "definition": "run/swamp-integration/datapack/data/kithkyn/kithkyn/buildings/blacksmith_swamp_1.json",
-      "definition_sha256": "47d48d5041744d451e2dcf00a227b0fa1d0fa9e7464e6dde728b30cd68579024"
+      "definition_sha256": "61123c61dbe41d56b8d4a2a42524c76bced204b837c24d811b6a24fbc281db7c"
     },
     {
       "exhibit": "NE06.9",
@@ -243,7 +244,7 @@
       "asset": "run/swamp-integration/datapack/data/kithkyn/structure/bakery_swamp_1.nbt",
       "asset_sha256": "9b4d4759e9e9fc0395ec775e27558f0a50ec7f4a0fd4bab48d6f6c9906d51c08",
       "definition": "run/swamp-integration/datapack/data/kithkyn/kithkyn/buildings/bakery_swamp_1.json",
-      "definition_sha256": "6870c0c6de611ea21c727252ac071d7fb2c6f2e1ff1e571a99ec2aab2124189a"
+      "definition_sha256": "8366c3645d526892aaa690944df476259ec06b10298a0dcbc2eb13fe2f7f5e8b"
     },
     {
       "exhibit": "NE04.3",
@@ -277,7 +278,7 @@
       "asset": "run/swamp-integration/datapack/data/kithkyn/structure/tavern_swamp_1.nbt",
       "asset_sha256": "aede15d3adcbeeb190f9499d1af238b1ec49c6a23f97f81ab99f677d43855792",
       "definition": "run/swamp-integration/datapack/data/kithkyn/kithkyn/buildings/tavern_swamp_1.json",
-      "definition_sha256": "e7730ccc5b1638efa5ad2f3fd15ceb07ea511a77a1c234899a58fa71e7d48f1d"
+      "definition_sha256": "ee471a37433da126f11e7ea9fcbe7d5055bdfcaa1ba5b63d8197409761df1765"
     },
     {
       "exhibit": "NE01.8",
@@ -294,7 +295,7 @@
       "asset": "run/swamp-integration/datapack/data/kithkyn/structure/watchtower_swamp_1.nbt",
       "asset_sha256": "9dc5b6ce54fde28c3925c46de50fc530d14655ca08cebd6dcefbcf07d73daf9a",
       "definition": "run/swamp-integration/datapack/data/kithkyn/kithkyn/buildings/watchtower_swamp_1.json",
-      "definition_sha256": "6c1f8384952aad74417a4e26776a16d6950e927e7d44b518e678ab8636298cfe"
+      "definition_sha256": "de699ef836234511c5ad5cad8dd0347aa4c992a2402f24f281219008e2e070fd"
     },
     {
       "exhibit": "NE05.1",
@@ -326,9 +327,9 @@
       "source": "run/swamp-full-review/approved-live-edits/NE01.6.nbt",
       "source_sha256": "2090c7545920886e0b31b04a69ab2d46a4df0b0ac246877c53ea3547d539bdb4",
       "asset": "run/swamp-integration/datapack/data/kithkyn/structure/mine_swamp_1.nbt",
-      "asset_sha256": "df3d3e01357e33a85816452a43746b810f654bc44c250ab47ae90e955ffc42a1",
+      "asset_sha256": "c29e59f628bff45f4ea109cc4c272cec0d6751b0c95c74ba60334f0c0cd14d87",
       "definition": "run/swamp-integration/datapack/data/kithkyn/kithkyn/buildings/mine_swamp_1.json",
-      "definition_sha256": "592f17ea27fa4c89422a3e3cd4dec9563090d6283e466260bc68bb40a57151f1"
+      "definition_sha256": "db5f5c63a852ec5200f4f4036448a83d040bbfc525742a1c0eef6c5565543be5"
     },
     {
       "exhibit": "NE03.2",
@@ -345,7 +346,7 @@
       "asset": "run/swamp-integration/datapack/data/kithkyn/structure/storehouse_swamp_1.nbt",
       "asset_sha256": "5a922d9ee5313932e54b0866df65da27ce9be5a024c7783a01969bd743e4eec9",
       "definition": "run/swamp-integration/datapack/data/kithkyn/kithkyn/buildings/storehouse_swamp_1.json",
-      "definition_sha256": "a14c6199cf323b41de863c3a74e5dc671a3980cf0f269ac0550819a1a9fa8924"
+      "definition_sha256": "00b7246e3cb021ea4ba3d51f067db911630b9ff9b51a1d3b94bb41828f4bd91d"
     },
     {
       "exhibit": "NF02.5",
@@ -362,7 +363,7 @@
       "asset": "run/swamp-integration/datapack/data/kithkyn/structure/stoneworks_swamp_1.nbt",
       "asset_sha256": "f1426118d52c9c4d2892f1f8fb8e958b980d61b2557499ce495e8c15eb939d59",
       "definition": "run/swamp-integration/datapack/data/kithkyn/kithkyn/buildings/stoneworks_swamp_1.json",
-      "definition_sha256": "4627d172e0eb7625b93aae4fb27b8e7f12560c46b859caa1a5b1c1693220b7ab"
+      "definition_sha256": "d4071e9173801ade0d3cfff5f0ab19f3df91ba9d46c273f79ce30b7009002bd6"
     },
     {
       "exhibit": "NF02.7",
@@ -413,7 +414,7 @@
       "asset": "run/swamp-integration/datapack/data/kithkyn/structure/hunting_lodge_swamp_1.nbt",
       "asset_sha256": "756ecaf3d8ced3f1d48a8a4a48739c161c09159282c2acc19b29f37b1fcbc7b6",
       "definition": "run/swamp-integration/datapack/data/kithkyn/kithkyn/buildings/hunting_lodge_swamp_1.json",
-      "definition_sha256": "70eb0aaadd4296ae5aacaf1fd33d4d3b9ee8790db6543a08cecebbe3d1775025"
+      "definition_sha256": "008dd219781c1a419c54b3395ad2a7725f92ebf512fa182a8d46e4d9cd8b1cb2"
     },
     {
       "exhibit": "NE02.9",
@@ -513,5 +514,28 @@
     "merchant": "run/swamp-integration/merchant/verification.json: conserved buy and sell flows",
     "custody": "run/swamp-integration/custody/verification.json: arrest, evidence, sentence, escape and release",
     "visual_review": "run/swamp-integration/market-render/capture/client/screenshots/"
-  }
+  },
+  "revisions": [
+    {
+      "date": "2026-09-11",
+      "change": "Correct Swamp seating, center masonry and mine width",
+      "raised_structures": [
+        "couple_cottage_swamp_1",
+        "house_swamp_1",
+        "house_swamp_1__two_bed",
+        "church_swamp_1__cleric_couple_home",
+        "church_swamp_1__cleric_mixed_home",
+        "blacksmith_swamp_1",
+        "bakery_swamp_1",
+        "tavern_swamp_1",
+        "watchtower_swamp_1",
+        "storehouse_swamp_1",
+        "stoneworks_swamp_1",
+        "hunting_lodge_swamp_1"
+      ],
+      "placement": "negative-sink structures follow higher public-front ground to keep their lowest course exposed",
+      "mine": "mine_swamp_1 uses two transverse cells, local x -1 and 0, matching its authored opening",
+      "center": "cobbled deepslate stairs and slabs replaced with cobblestone equivalents"
+    }
+  ]
 }

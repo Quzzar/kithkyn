@@ -117,8 +117,9 @@ import net.neoforged.neoforge.common.Tags;
  */
 public final class MineStep implements BlockWorkStep {
 
-  /** The corridor's half-width, the one definition of the shaft's shape (MineShaft). */
-  private int radius = MineShaft.RADIUS;
+  /** The corridor's transverse bounds, shared with excavation and navigation. */
+  private int minX = -MineShaft.RADIUS;
+  private int maxX = MineShaft.RADIUS;
   private MineTopology topology = new MineTopology(MineShaft.RADIUS);
 
   /**
@@ -375,7 +376,7 @@ public final class MineStep implements BlockWorkStep {
   private ShaftPick selectShaft(RealPerson person, MineShaft shaft) {
     BlockPos mouth = shaft.mouth();
     Rotation rotation = shaft.rotation();
-    activateShaft(mouth, rotation, shaft.radius());
+    activateShaft(shaft);
     ShaftPick entrance = selectEntranceClearance(person, shaft);
     if (entrance != null) {
       return entrance;
@@ -612,7 +613,7 @@ public final class MineStep implements BlockWorkStep {
     Level level = person.level();
     int floor = ribFloorY(depth);
     for (int step = 1; step <= FAN_LENGTH; step++) {
-      int x = side * (root.radius() + step);
+      int x = root.ribX(side, step);
       for (int dy = 0; dy < FAN_HEIGHT; dy++) {
         BlockPos cell = root.mouth().offset(new BlockPos(x, floor + dy, depth).rotate(root.rotation()));
         BlockState state = level.getBlockState(cell);
@@ -629,12 +630,24 @@ public final class MineStep implements BlockWorkStep {
     return true;
   }
 
-  private void activateShaft(BlockPos mouth, Rotation rotation, int radius) {
-    if (mouth.equals(this.activeMouth) && rotation == this.activeRotation && radius == this.radius) {
+  /** One rib cell counted out from the active corridor's appropriate edge. */
+  private int ribX(int side, int step) {
+    if (side != -1 && side != 1) {
+      throw new IllegalArgumentException("A mine branch side must be -1 or 1");
+    }
+    return side < 0 ? minX - step : maxX + step;
+  }
+
+  private void activateShaft(MineShaft shaft) {
+    BlockPos mouth = shaft.mouth();
+    Rotation rotation = shaft.rotation();
+    if (mouth.equals(this.activeMouth) && rotation == this.activeRotation
+        && shaft.minX() == this.minX && shaft.maxX() == this.maxX) {
       return;
     }
-    this.radius = radius;
-    this.topology = new MineTopology(radius);
+    this.minX = shaft.minX();
+    this.maxX = shaft.maxX();
+    this.topology = new MineTopology(minX, maxX);
     this.activeMouth = mouth;
     this.activeRotation = rotation;
     this.fanning = false;
@@ -833,7 +846,7 @@ public final class MineStep implements BlockWorkStep {
     for (int side = 1; side >= -1; side -= 2) {
       boolean cutting = true;
       for (int step = 1; step <= FAN_LENGTH && cutting; step++) {
-        int x = side * (radius + step);
+        int x = ribX(side, step);
         for (int dy = 0; dy < FAN_HEIGHT; dy++) {
           BlockPos local = new BlockPos(x, floorY + dy, zr);
           BlockPos world = mouth.offset(local.rotate(rotation));
@@ -885,7 +898,7 @@ public final class MineStep implements BlockWorkStep {
    */
   @Nullable
   private BlockPos ribTorch(RealPerson person, BlockPos mouth, Rotation rotation, int zr, int side, int floorY) {
-    BlockPos cell = new BlockPos(side * (radius + 2), floorY + 1, zr);
+    BlockPos cell = new BlockPos(ribX(side, 2), floorY + 1, zr);
     BlockPos world = mouth.offset(cell.rotate(rotation));
     Level level = person.level();
     if (!level.getBlockState(world).isAir()
@@ -1385,8 +1398,8 @@ public final class MineStep implements BlockWorkStep {
     if (local.getY() == -(local.getZ() - 2) && needsSeal(level, worldCell.above())) {
       return worldCell.above();
     }
-    if (Math.abs(local.getX()) == radius) {
-      int outward = local.getX() > 0 ? radius + 1 : -(radius + 1);
+    if (local.getX() == minX || local.getX() == maxX) {
+      int outward = local.getX() == minX ? minX - 1 : maxX + 1;
       BlockPos wallLocal = new BlockPos(outward, local.getY(), local.getZ());
       if (isDugSpace(wallLocal)) {
         return null; // an intentional rib doorway, not missing shaft lining
@@ -1624,7 +1637,7 @@ public final class MineStep implements BlockWorkStep {
 
   /**
    * Whether the open cursor cell wants a torch: the head-height cell of a ramp
-   * column on the corridor's edge (local x at the radius, y one above the column's
+   * column on either corridor edge, y one above the column's
    * bottom), with the walk cell under it already open, deep enough below the lit
    * mouth ({@link #TORCH_MIN_DEPTH}) and reading dimmer than
    * {@link #TORCH_LIGHT_FLOOR}, while the pack holds a torch to hang and a wall
@@ -1644,7 +1657,8 @@ public final class MineStep implements BlockWorkStep {
    */
   private boolean wantsTorch(RealPerson person, MineShaft shaft, BlockPos cell) {
     BlockPos local = this.offset;
-    if (Math.abs(local.getX()) != radius || local.getY() != -(local.getZ() + 1)) {
+    if ((local.getX() != minX && local.getX() != maxX)
+        || local.getY() != -(local.getZ() + 1)) {
       return false;
     }
     BlockPos mouth = shaft.mouth();
@@ -1674,7 +1688,7 @@ public final class MineStep implements BlockWorkStep {
   @Nullable
   private Direction torchWall(Level level, Rotation rotation, BlockPos cell) {
     for (Direction local : Direction.Plane.HORIZONTAL) {
-      if (MineShaft.withinCorridor(this.offset.relative(local), radius)) {
+      if (MineShaft.withinCorridor(this.offset.relative(local), minX, maxX)) {
         continue;
       }
       Direction worldDir = rotation.rotate(local);
@@ -1952,7 +1966,7 @@ public final class MineStep implements BlockWorkStep {
     // orientation. (Leaning -Z, which every prior angled version did, was Aaron's
     // long-standing "mining the wrong way" bug: the ramp ate back under the door.)
     // Every pick starts over at the mouth: the audit (see the class note).
-    this.offset = new BlockPos(-(radius + 1), -1, MineShaft.ENTRY_COLUMN);
+    this.offset = new BlockPos(minX - 1, -1, MineShaft.ENTRY_COLUMN);
     this.inward = 1;
     this.placeFloor = false;
     this.bailWater = false;
@@ -1968,11 +1982,11 @@ public final class MineStep implements BlockWorkStep {
         return RampScan.DRY_HOLE; // nothing solid within reach of the pattern; try again later
       }
       this.offset = this.offset.offset(1, 0, 0);
-      if (this.offset.getX() >= radius + 1) {
-        this.offset = new BlockPos(-radius, this.offset.getY(), this.offset.getZ() + 1);
+      if (this.offset.getX() > maxX) {
+        this.offset = new BlockPos(minX, this.offset.getY(), this.offset.getZ() + 1);
       }
       if (this.offset.getZ() >= MineShaft.RAMP_HEIGHT - 2 + this.inward) {
-        this.offset = new BlockPos(-radius, this.offset.getY() - 1, this.inward - 1);
+        this.offset = new BlockPos(minX, this.offset.getY() - 1, this.inward - 1);
         this.inward++;
       }
       facePos = face(mouth, rotation);
