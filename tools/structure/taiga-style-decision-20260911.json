@@ -1,0 +1,48 @@
+{
+  "schemaVersion": 1,
+  "recorded": "2026-09-11",
+  "villageBiome": "taiga",
+  "status": "deferred",
+  "environments": [
+    "minecraft:taiga",
+    "minecraft:old_growth_pine_taiga",
+    "minecraft:old_growth_spruce_taiga"
+  ],
+  "leadingOptions": [
+    {
+      "family": "Towns & Towers Polish",
+      "character": "ornate, polished, and comparatively fancy"
+    },
+    {
+      "family": "Towns & Towers Viking",
+      "character": "grittier, colorful, and more strongly distinguished"
+    }
+  ],
+  "candidateSelections": [
+    "V01.1 town center",
+    "V03.5 tier-one church",
+    "V05.2 tier-two church"
+  ],
+  "decision": "Keep both complete families available and return after other village catalogs establish the roster's overall visual balance.",
+  "comparisonGallery": {
+    "entry": [
+      10201.5,
+      230,
+      1224.5
+    ],
+    "manifest": "tools/structure/viking-full-profile-20260911.json"
+  },
+  "nextActiveReview": {
+    "villageBiome": "swamp",
+    "entry": [
+      9929.5,
+      230,
+      1004.5
+    ]
+  },
+  "liveGallery": {
+    "labelsUpdated": true,
+    "visualReview": "passed",
+    "renderedView": "run/viking-full-profile/render-deferred/client/screenshots/taiga-decision-deferred-signs.png"
+  }
+}
