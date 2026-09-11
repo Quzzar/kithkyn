@@ -122,7 +122,22 @@
         "Exact accessible work positions have not yet been authored."
       ],
       "previous_source_capture": "run/jungle-showcase/selection-20260910-tribal/captures/JA01.1.nbt",
-      "previous_source_capture_sha256": "a23ee77e0e55604c5e0d00e3e6179079e563ff9d15e25dabf7712f633a877c66"
+      "previous_source_capture_sha256": "a23ee77e0e55604c5e0d00e3e6179079e563ff9d15e25dabf7712f633a877c66",
+      "revisions": [
+        {
+          "date": "2026-09-11",
+          "note": "Aaron re-edited the centre on a production copy in the Nilotic gallery (NA11): the three white banners replaced by one white wall banner at the back, the bell moved onto a stone post with a lantern in its old place, and the north edge of the floor opened to a natural path. The identity banner list follows the new banner; posts, meeting point and campfire are unchanged.",
+          "template_sha256": "e751e1babe9f596301127cdc79eca7281617c90e539c1b67b9acb33eb624bede",
+          "definition_sha256": "174805b389c6b27ceb26f0a197b855b145a4c5860242086f332e5c717fc24df4",
+          "banners": [
+            [
+              5,
+              2,
+              9
+            ]
+          ]
+        }
+      ]
     },
     {
       "exhibit": "JA01.4",
