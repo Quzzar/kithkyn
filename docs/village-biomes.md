@@ -27,11 +27,11 @@ its production catalog and founding behavior are verified.
 
 | Village biome | Founding environments | Direction |
 | --- | --- | --- |
-| Mediterranean | Plains and Sunflower Plains | Rural Mediterranean farmsteads, stone and plaster homes, tile roofs, courts, and open agriculture |
+| Mediterranean | Plains and Sunflower Plains | White stone and plaster town core with tile roofs, courts, orchards, gardens, and open agriculture |
 | Rustic Woodland | Forest and compatible ordinary oak woodland biomes | Familiar timber woodland settlement with a restrained rustic character |
 | Romanian | Dark Forest, forested highlands, and wooded valleys | Heavy timber roofs, enclosed yards, and substantial woodland buildings |
 | Japanese | Cherry Grove, Flower Forest, and compatible Sakura biomes | Garden settlement shaped around flowering woodland and deliberate landscape details |
-| Viking | Taiga, Old Growth Pine Taiga, Old Growth Spruce Taiga, and compatible cold forests | Cold forest settlement with strong timber halls and steep roofs |
+| Viking | Taiga, Old Growth Pine Taiga, Old Growth Spruce Taiga, and compatible cold forests | Cold forest settlement led by the T&T Viking center, mixing colorful Viking buildings with selected heavy Polish timber and spruce services |
 | Tundra | Snowy Plains, Ice Spikes, and compatible exposed frozen lowlands | Compact igloos and snowbound buildings suited to treeless terrain |
 | Alpine | Meadow, Grove, Snowy Slopes, and compatible mountain valleys and peaks | Swiss-inspired mountain settlement with steep roofs and slope-conscious buildings |
 | Swamp | Swamp, Orchid Swamp, and compatible ordinary wetlands | Boat-based or overgrown wetland village, distinct from the mud-brick Floodplain catalog |
@@ -44,10 +44,11 @@ Jungle is a complete private production catalog with nineteen selected buildings
 market tiers. Its founding layout, housing, physical worksites, wall, and all access routes are
 verified and locally deployed.
 
-Swedish and Polish references do not reserve separate village biomes. Their strongest buildings
-may contribute to Viking, Rustic Woodland, or Alpine when their shape and materials fit the
-selected catalog. Swiss remains the primary direction for Alpine because mountain terrain needs
-architecture distinct from forested Taiga and exposed Tundra.
+Swedish and Polish references do not reserve separate village biomes. Swedish now has a concrete
+Viking role: its temple is the selected tier-one church and its tower is deliberately repurposed
+as the tier-two church upgrade. The Polish family remains a full comparison pool for Viking's
+heavier homes and workplaces. Swiss remains the primary direction for Alpine because mountain
+terrain needs architecture distinct from forested Taiga and exposed Tundra.
 
 Rivers do not receive a separate village biome. An ordinary land village resolves from the
 surrounding environment rather than a narrow river strip. Tropical riverbanks and deltas belong
@@ -72,6 +73,23 @@ individual entrances are Swamp at **9929.5, 230, 1004.5**, Viking at
 **10201.5, 230, 1004.5**, and Mediterranean at **10473.5, 230, 1004.5**. The complete source
 map and placement hashes are recorded in
 `tools/structure/next-village-galleries-20260911.json`.
+
+The first review locked these choices:
+
+- **Swamp:** S01.1 is the town center. The authoring pool combines the complete 23-piece
+  Towns & Towers Boat Village family with the complete 34-piece Dungeons & Taverns Swamp
+  family. Signs at the Swamp court link to both full source wings.
+- **Viking:** V01.1 leads as the town center. V03.5 is the tier-one church and V05.2 is the
+  tier-two church. The complete standalone T&T Viking and Polish families are displayed in a
+  six-row annex at **10201.5, 230, 1224.5** so the remaining homes and workplaces can be
+  selected from the full profiles rather than the earlier representative rows.
+- **Mediterranean:** the M01 white-city family supplies the core. M04.1 through M04.4 supply
+  fields, orchards, and garden language around it.
+
+The Viking annex contains all 43 standalone structures: 22 Viking and 21 Polish. Road pieces
+and terminators are omitted because they are layout internals rather than building candidates.
+The complete source paths, hashes, placement coordinates, and review evidence are recorded in
+`tools/structure/viking-full-profile-20260911.json`.
 
 Unstructured was included in the source audit. Its strongest coherent settlement is the Ocean
 Village family, which belongs in the later Nautical Coast pass rather than one of these three
