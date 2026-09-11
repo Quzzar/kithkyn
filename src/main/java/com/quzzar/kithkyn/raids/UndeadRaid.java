@@ -364,7 +364,7 @@ public final class UndeadRaid {
         event.setProgress(Mth.clamp(1.0F - (now - phaseAt) / (float) COUNTDOWN_TICKS, 0.0F, 1.0F));
       }
       case FIGHTING -> {
-        event.setName(Component.literal("Undead raid on " + village.getName() + ", wave " + wave + " of " + waves));
+        event.setName(Component.literal("Raid on " + village.getName() + ", wave " + wave + " of " + waves));
         event.setColor(BossEvent.BossBarColor.RED);
         event.setProgress(waveSize == 0 ? 0.0F : Mth.clamp(raiders.size() / (float) waveSize, 0.0F, 1.0F));
       }
