@@ -24,6 +24,8 @@ public final class PigmentPalette {
   private static final int EYE_DARK_COOL = 0x5A4A3C;
   private static final int EYE_DARK_WARM = 0x70461F;
   private static final int EYE_SHADOW = 0x171A18;
+  /** Deeper than the 0.22 of ordinary skin shading, so the line reads on a dark face too. */
+  private static final float EYELID_SHADE = 0.7F;
 
   private PigmentPalette() {
   }
@@ -41,6 +43,11 @@ public final class PigmentPalette {
   public static PigmentColor eyes(PigmentGene gene) {
     int base = range(gene, EYE_LIGHT_COOL, EYE_LIGHT_WARM, EYE_DARK_COOL, EYE_DARK_WARM);
     return new PigmentColor(base, mix(base, EYE_SHADOW, 0.38F));
+  }
+
+  /** The lash line of a closed eye: the skin tone pulled most of the way into its shadow. */
+  public static int eyelid(PigmentColor skin) {
+    return mix(skin.baseRgb(), SKIN_SHADOW, EYELID_SHADE);
   }
 
   /** Make the rare second iris visibly different when two nearby genes round alike. */

@@ -30,6 +30,7 @@ import net.neoforged.neoforge.client.event.ClientTickEvent;
  * <pre>
  * ./gradlew runClientJoinLocal -Puipreview=trade
  * ./gradlew runClientJoinLocal -Puipreview=age-lineup
+ * ./gradlew runClientJoinLocal -Puipreview=age-lineup-asleep
  * ./gradlew runClientJoinLocal -Puipreview=age-lineup-world
  * </pre>
  *
@@ -52,6 +53,9 @@ public final class UiPreview {
     private static final int SETTLE_TICKS = 40;
     /** Extra time for server-spawned people and their composed skins to arrive. */
     private static final int WORLD_SETTLE_TICKS = 80;
+    private static final String LINEUP_MODE = "age-lineup";
+    /** The lineup with every eye shut, photographed through the sleeping face bake. */
+    private static final String ASLEEP_LINEUP_MODE = "age-lineup-asleep";
     private static final String WORLD_LINEUP_MODE = "age-lineup-world";
     private static final String WORLD_LINEUP_TAG = "kithkyn_age_lineup_preview";
     private static final String WORLD_LINEUP_CAMERA_TAG = WORLD_LINEUP_TAG + "_camera";
@@ -131,8 +135,8 @@ public final class UiPreview {
             openWorldLineup(client);
             return;
         }
-        if ("age-lineup".equalsIgnoreCase(MODE)) {
-            client.setScreen(new AgeLineupScreen(client.level));
+        if (isLineup()) {
+            client.setScreen(new AgeLineupScreen(client.level, ASLEEP_LINEUP_MODE.equalsIgnoreCase(MODE)));
             return;
         }
         boolean trade = !"chat".equalsIgnoreCase(MODE) && !"typing".equalsIgnoreCase(MODE)
@@ -195,7 +199,7 @@ public final class UiPreview {
         if (isWorldLineup()) {
             return client.screen == null;
         }
-        if ("age-lineup".equalsIgnoreCase(MODE)) {
+        if (isLineup()) {
             return client.screen instanceof AgeLineupScreen;
         }
         return client.screen instanceof PersonChatScreen;
@@ -262,5 +266,9 @@ public final class UiPreview {
 
     private static boolean isWorldLineup() {
         return WORLD_LINEUP_MODE.equalsIgnoreCase(MODE);
+    }
+
+    private static boolean isLineup() {
+        return LINEUP_MODE.equalsIgnoreCase(MODE) || ASLEEP_LINEUP_MODE.equalsIgnoreCase(MODE);
     }
 }

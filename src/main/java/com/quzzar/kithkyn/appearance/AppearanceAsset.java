@@ -49,12 +49,27 @@ public record AppearanceAsset(
   }
 
   public boolean eyeFitsHair(AppearancePart eye, AppearanceAsset hair) {
-    List<Texel> texels = switch (eye) {
+    return eyeTexels(eye).stream()
+        .noneMatch(texel -> hair.frontHairOcclusion.contains(texel.packedIndex()));
+  }
+
+  /**
+   * Where a lowered lid rests: the bottom row of the eye mask. A sleeping face keeps
+   * skin over the rest of the mask and paints only this row as a lash line, so every
+   * authored eye shape closes without a second set of art.
+   */
+  public List<Texel> lidTexels(AppearancePart eye) {
+    List<Texel> texels = eyeTexels(eye);
+    int bottom = texels.stream().mapToInt(Texel::y).max().orElse(-1);
+    return texels.stream().filter(texel -> texel.y() == bottom).toList();
+  }
+
+  private List<Texel> eyeTexels(AppearancePart eye) {
+    return switch (eye) {
       case EYE_LEFT -> leftEyeTexels;
       case EYE_RIGHT -> rightEyeTexels;
       default -> throw new IllegalArgumentException("Not an eye part: " + eye);
     };
-    return texels.stream().noneMatch(texel -> hair.frontHairOcclusion.contains(texel.packedIndex()));
   }
 
   public Set<Integer> pigmentColors(AppearancePart part) {
@@ -70,11 +85,7 @@ public record AppearanceAsset(
    * sources may mix only when this key matches.
    */
   public String eyeGeometryKey(AppearancePart eye) {
-    List<Texel> texels = switch (eye) {
-      case EYE_LEFT -> leftEyeTexels;
-      case EYE_RIGHT -> rightEyeTexels;
-      default -> throw new IllegalArgumentException("Not an eye part: " + eye);
-    };
+    List<Texel> texels = eyeTexels(eye);
     if (texels.isEmpty()) {
       return "";
     }

@@ -19,7 +19,9 @@ import com.quzzar.kithkyn.appearance.AppearanceRecipeFactory;
 import com.quzzar.kithkyn.appearance.BodyModel;
 import com.quzzar.kithkyn.appearance.LifeStage;
 import com.quzzar.kithkyn.appearance.PigmentColor;
+import com.quzzar.kithkyn.appearance.PigmentPalette;
 import com.quzzar.kithkyn.appearance.SkinRecipe;
+import com.quzzar.kithkyn.appearance.Texel;
 import com.quzzar.kithkyn.entities.AgeStage;
 import com.quzzar.kithkyn.entities.Gender;
 import com.quzzar.kithkyn.entities.Person;
@@ -40,6 +42,7 @@ public final class PersonAppearanceTextures implements ResourceManagerReloadList
   public static final PersonAppearanceTextures INSTANCE = new PersonAppearanceTextures();
 
   private static final int TEXTURE_SIZE = 64;
+  private static final int OPAQUE_ALPHA = 0xFF000000;
   private static final int MAXIMUM_CACHED_TEXTURES = 128;
   private static final ResourceLocation CATALOG = ResourceLocation.fromNamespaceAndPath(
       Kithkyn.MODID, "appearance/catalog.json");
@@ -51,9 +54,14 @@ public final class PersonAppearanceTextures implements ResourceManagerReloadList
   private PersonAppearanceTextures() {
   }
 
+  /**
+   * The baked skin for this person as they are right now: their inherited face, with
+   * the eyes shut while they sleep. Vanilla syncs the sleeping state to every client,
+   * so no extra data crosses the wire for it.
+   */
   public ResourceLocation textureFor(Person person) {
     try {
-      SkinRecipe recipe = recipeFor(person);
+      SkinRecipe recipe = recipeFor(person).withEyesClosed(person.isSleeping());
       ResourceLocation cached = textures.get(recipe);
       if (cached != null) {
         return cached;
@@ -126,15 +134,14 @@ public final class PersonAppearanceTextures implements ResourceManagerReloadList
     NativeImage output = new NativeImage(TEXTURE_SIZE, TEXTURE_SIZE, true);
     try (NativeImage skin = loadLayer(resources, skinAsset, AppearancePart.SKIN);
         NativeImage clothing = loadLayer(resources, clothingAsset, AppearancePart.CLOTHING);
-        NativeImage leftEye = loadLayer(resources, leftEyeAsset, AppearancePart.EYE_LEFT);
-        NativeImage rightEye = loadLayer(resources, rightEyeAsset, AppearancePart.EYE_RIGHT);
         NativeImage hair = loadLayer(resources, hairAsset, AppearancePart.HAIR)) {
       copyOpaque(output, skin, skinAsset.pigmentColors(AppearancePart.SKIN), recipe.skinPigment(), null, false);
       copyOpaque(output, clothing, Set.of(), null, null, false);
-      copyOpaque(output, leftEye, leftEyeAsset.pigmentColors(AppearancePart.EYE_LEFT),
-          recipe.leftEyePigment(), null, false);
-      copyOpaque(output, rightEye, rightEyeAsset.pigmentColors(AppearancePart.EYE_RIGHT),
-          recipe.rightEyePigment(), null, false);
+      if (recipe.eyesClosed()) {
+        closeEyes(output, recipe, leftEyeAsset, rightEyeAsset);
+      } else {
+        openEyes(output, resources, recipe, leftEyeAsset, rightEyeAsset);
+      }
       copyOpaque(output, hair, hairAsset.pigmentColors(AppearancePart.HAIR), recipe.hairPigment(),
           clothing, recipe.headwearOccludesHair());
     } catch (IOException | RuntimeException exception) {
@@ -147,6 +154,35 @@ public final class PersonAppearanceTextures implements ResourceManagerReloadList
     ResourceLocation location = dynamicLocation(recipe);
     Minecraft.getInstance().getTextureManager().register(location, texture);
     return location;
+  }
+
+  /** The authored eye masks, each in its inherited iris colour. */
+  private void openEyes(NativeImage output, ResourceManager resources, SkinRecipe recipe,
+      AppearanceAsset leftEyeAsset, AppearanceAsset rightEyeAsset) throws IOException {
+    try (NativeImage leftEye = loadLayer(resources, leftEyeAsset, AppearancePart.EYE_LEFT);
+        NativeImage rightEye = loadLayer(resources, rightEyeAsset, AppearancePart.EYE_RIGHT)) {
+      copyOpaque(output, leftEye, leftEyeAsset.pigmentColors(AppearancePart.EYE_LEFT),
+          recipe.leftEyePigment(), null, false);
+      copyOpaque(output, rightEye, rightEyeAsset.pigmentColors(AppearancePart.EYE_RIGHT),
+          recipe.rightEyePigment(), null, false);
+    }
+  }
+
+  /**
+   * A sleeping face. The eye layers are left out, so the skin already copied beneath
+   * them shows as closed lids, and the bottom row of each mask is painted as a lash
+   * line in the skin's own shadow. No part carries closed-eye art; every authored
+   * shape closes this way.
+   */
+  private static void closeEyes(NativeImage output, SkinRecipe recipe,
+      AppearanceAsset leftEyeAsset, AppearanceAsset rightEyeAsset) {
+    int lash = abgrWithRgb(OPAQUE_ALPHA, PigmentPalette.eyelid(recipe.skinPigment()));
+    for (Texel texel : leftEyeAsset.lidTexels(AppearancePart.EYE_LEFT)) {
+      output.setPixelRGBA(texel.x(), texel.y(), lash);
+    }
+    for (Texel texel : rightEyeAsset.lidTexels(AppearancePart.EYE_RIGHT)) {
+      output.setPixelRGBA(texel.x(), texel.y(), lash);
+    }
   }
 
   private NativeImage loadLayer(ResourceManager resources, AppearanceAsset asset, AppearancePart part)
