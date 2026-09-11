@@ -43,6 +43,52 @@ class GuardDutyTest {
   }
 
   @Test
+  void aCastleSentryUsesItsOwnFloorRouteBeforeTheRoleFallback() {
+    BuildingInfo info = BuildingInfo.CODEC.parse(JsonOps.INSTANCE, JsonParser.parseString("""
+        {"structure":"castle_floodplain_1","category":"castle","work_stations":[
+          {"pos":[4,1,4],"occupation":"BAKER"},
+          {"pos":[5,2,5],"occupation":"GUARD","guard_duty":"SWORD_POST",
+            "patrol_route":[[5,2,5],[8,2,5]]},
+          {"pos":[5,10,5],"occupation":"GUARD","guard_duty":"CROSSBOW_POST",
+            "patrol_route":[[5,10,5],[5,10,8]]}],
+          "castle":{"custody_cell":[6,2,8],"release_point":[6,2,11],
+            "evidence_containers":[[7,5,9],[8,5,9]],
+            "patrol_routes":{"SWORD_POST":[[1,1,1],[2,1,1]],
+              "CROSSBOW_POST":[[1,10,1],[2,10,1]]}}}
+        """)).getOrThrow();
+    BlockPos origin = new BlockPos(100, 70, -80);
+    for (Rotation rotation : Rotation.values()) {
+      assertEquals(java.util.List.of(origin.offset(new BlockPos(5,2,5).rotate(rotation)),
+          origin.offset(new BlockPos(8,2,5).rotate(rotation))),
+          GuardDuty.patrolRoute(info, 1, GuardRole.SWORD_POST, origin, rotation));
+      assertEquals(java.util.List.of(origin.offset(new BlockPos(5,10,5).rotate(rotation)),
+          origin.offset(new BlockPos(5,10,8).rotate(rotation))),
+          GuardDuty.patrolRoute(info, 2, GuardRole.CROSSBOW_POST, origin, rotation));
+    }
+    BuildingInfo restored = BuildingInfo.CODEC.parse(JsonOps.INSTANCE,
+        BuildingInfo.CODEC.encodeStart(JsonOps.INSTANCE, info).getOrThrow()).getOrThrow();
+    assertEquals(java.util.List.of(new BlockPos(5,2,5), new BlockPos(8,2,5)),
+        restored.getGuardPatrolRoute(1));
+    assertNull(restored.validate());
+  }
+
+  @Test
+  void stationPatrolRoutesRequireAPostAndTwoDistinctWaypoints() {
+    BuildingInfo ordinaryGuard = castleWithStation("""
+        {"pos":[5,2,5],"occupation":"GUARD","guard_duty":"JAILER",
+          "patrol_route":[[5,2,5],[8,2,5]]}
+        """);
+    assertEquals("patrol_route requires a CROSSBOW_POST or SWORD_POST guard_duty",
+        ordinaryGuard.validate());
+
+    BuildingInfo onePoint = castleWithStation("""
+        {"pos":[5,2,5],"occupation":"GUARD","guard_duty":"SWORD_POST",
+          "patrol_route":[[5,2,5],[5,2,5]]}
+        """);
+    assertEquals("patrol_route requires at least two distinct waypoints", onePoint.validate());
+  }
+
+  @Test
   void jailerKeepsAFixedSwordPostInsteadOfBecomingACrossbowSentry() {
     BuildingInfo info = BuildingInfo.CODEC.parse(JsonOps.INSTANCE, JsonParser.parseString("""
         {"structure":"castle_desert_1","work_stations":[
@@ -180,5 +226,13 @@ class GuardDutyTest {
           "grants": %s
         }
         """.formatted(ranged ? "[\"RANGED_GUARD_POSTS\"]" : "[\"PROTECTION\"]"))).getOrThrow();
+  }
+
+  private static BuildingInfo castleWithStation(String station) {
+    return BuildingInfo.CODEC.parse(JsonOps.INSTANCE, JsonParser.parseString("""
+        {"structure":"castle_floodplain_1","category":"castle","work_stations":[%s],
+          "castle":{"custody_cell":[6,2,8],"release_point":[6,2,11],
+            "evidence_containers":[[7,5,9],[8,5,9]]}}
+        """.formatted(station))).getOrThrow();
   }
 }

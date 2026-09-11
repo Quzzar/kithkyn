@@ -68,12 +68,17 @@ public class BuildingInfo {
    * placed physical worksite while the vacancy remains part of the civic building.
    */
   public record WorkStation(BlockPos pos, Occupation occupation, java.util.Optional<GuardRole> guardDuty,
-      java.util.Optional<String> worksiteCategory) {
+      java.util.Optional<String> worksiteCategory, java.util.Optional<List<BlockPos>> patrolRoute) {
+    public WorkStation {
+      patrolRoute = patrolRoute.map(List::copyOf);
+    }
+
     public static final Codec<WorkStation> CODEC = RecordCodecBuilder.create(inst -> inst.group(
         BlockPos.CODEC.fieldOf("pos").forGetter(WorkStation::pos),
         KithkynCodecs.forEnum(Occupation.class).fieldOf("occupation").forGetter(WorkStation::occupation),
         KithkynCodecs.forEnum(GuardRole.class).optionalFieldOf("guard_duty").forGetter(WorkStation::guardDuty),
-        Codec.STRING.optionalFieldOf("worksite_category").forGetter(WorkStation::worksiteCategory)
+        Codec.STRING.optionalFieldOf("worksite_category").forGetter(WorkStation::worksiteCategory),
+        BlockPos.CODEC.listOf().optionalFieldOf("patrol_route").forGetter(WorkStation::patrolRoute)
     ).apply(inst, WorkStation::new));
   }
 
@@ -166,6 +171,7 @@ public class BuildingInfo {
       info.addWorkLocation(station.pos().getX(), station.pos().getY(), station.pos().getZ(), station.occupation());
       station.guardDuty().ifPresent(duty -> info.guardRoles.put(station.pos().asLong(), duty));
       station.worksiteCategory().ifPresent(worksite -> info.worksiteCategories.put(station.pos().asLong(), worksite));
+      station.patrolRoute().ifPresent(route -> info.guardPatrolRoutes.put(station.pos().asLong(), route));
     });
     containers.forEach(pos -> info.addContainerLocation(pos.getX(), pos.getY(), pos.getZ()));
     personalContainers.forEach(pos -> info.addPersonalContainerLocation(pos.getX(), pos.getY(), pos.getZ()));
@@ -187,6 +193,7 @@ public class BuildingInfo {
   // Insertion-ordered: JobAssignment station indexes rely on a stable iteration order.
   private LinkedHashMap<Long, Occupation> workLocs;
   private final Map<Long, GuardRole> guardRoles = new LinkedHashMap<>();
+  private final Map<Long, List<BlockPos>> guardPatrolRoutes = new LinkedHashMap<>();
   private final Map<Long, String> worksiteCategories = new LinkedHashMap<>();
   private final LinkedHashMap<Long, Occupation> worksiteLocs = new LinkedHashMap<>();
   @javax.annotation.Nullable
@@ -426,6 +433,19 @@ public class BuildingInfo {
     for (var entry : guardRoles.entrySet()) {
       if (workLocs.get(entry.getKey()) != Occupation.GUARD) return "guard_duty requires a GUARD station";
     }
+    for (var entry : guardPatrolRoutes.entrySet()) {
+      if (workLocs.get(entry.getKey()) != Occupation.GUARD) {
+        return "patrol_route requires a GUARD station";
+      }
+      GuardRole role = guardRoles.get(entry.getKey());
+      if (role != GuardRole.CROSSBOW_POST && role != GuardRole.SWORD_POST) {
+        return "patrol_route requires a CROSSBOW_POST or SWORD_POST guard_duty";
+      }
+      if (castleLayout == null) return "patrol_route requires castle amenities";
+      if (entry.getValue().size() < 2 || new java.util.HashSet<>(entry.getValue()).size() < 2) {
+        return "patrol_route requires at least two distinct waypoints";
+      }
+    }
     if (worksiteCategories.values().stream().anyMatch(String::isBlank)) {
       return "worksite_category cannot be blank";
     }
@@ -591,6 +611,13 @@ public class BuildingInfo {
     return guardRoles.get(position);
   }
 
+  /** A sentry's own floor route; absent metadata falls back to the castle role route. */
+  public List<BlockPos> getGuardPatrolRoute(int stationIndex) {
+    if (stationIndex < 0 || stationIndex >= workLocs.size()) return List.of();
+    Long position = new ArrayList<>(workLocs.keySet()).get(stationIndex);
+    return guardPatrolRoutes.getOrDefault(position, List.of());
+  }
+
   public ArrayList<Long> getBedLocations() {
     return bedLocs;
   }
@@ -695,7 +722,8 @@ public class BuildingInfo {
     return workLocs.entrySet().stream()
         .map(entry -> new WorkStation(BlockPos.of(entry.getKey()), entry.getValue(),
             java.util.Optional.ofNullable(guardRoles.get(entry.getKey())),
-            java.util.Optional.ofNullable(worksiteCategories.get(entry.getKey())))).toList();
+            java.util.Optional.ofNullable(worksiteCategories.get(entry.getKey())),
+            java.util.Optional.ofNullable(guardPatrolRoutes.get(entry.getKey())))).toList();
   }
 
   private List<Worksite> worksites() {

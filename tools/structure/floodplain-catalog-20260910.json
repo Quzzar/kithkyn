@@ -3,7 +3,8 @@
   "status": "verified_and_locally_deployed",
   "source_policy": "Locally approved playable datapack, excluded from public distribution. Source provenance is retained; written redistribution permission is not asserted.",
   "manifests": [
-    "tools/structure/nilotic-selections-20260910.json"
+    "tools/structure/nilotic-selections-20260910.json",
+    "tools/structure/floodplain-castle-20260911.json"
   ],
   "selected": [
     {
@@ -285,6 +286,20 @@
       "definition_sha256": "e14c5fc8f76598f8cb743864e94c4e91a21114b196e3232d0210e5b7f7dd6755",
       "reviewed_capture": "run/nilotic-showcase/selection-20260910-floodplain/captures/NG04.1.nbt",
       "reviewed_capture_sha256": "9bf52e9a72cb1b3e75c194d6d6d19b4431b7d82d43b72defcb203caeedc00e74"
+    },
+    {
+      "exhibit": "SC01.2",
+      "structure": "castle_floodplain_1",
+      "manifest": "tools/structure/floodplain-castle-20260911.json",
+      "recipe": "castle_1",
+      "source_mod": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar",
+      "source_mod_structure": "data/kaisyn/structure/outpost/forts/jungle/base_plate.nbt",
+      "asset": "run/floodplain-integration/datapack/data/kithkyn/structure/castle_floodplain_1.nbt",
+      "asset_sha256": "5e1c3ebe75c056d5f72e0465aad11432502732dc235033b588f42b50958ccc88",
+      "definition": "run/floodplain-integration/datapack/data/kithkyn/kithkyn/buildings/castle_floodplain_1.json",
+      "definition_sha256": "78fd107447545b8db7e6b14955576b53b6a38a5bdbf61f19725f7ec61675a399",
+      "reviewed_capture": "run/floodplain-integration/castle/source-capture.nbt",
+      "reviewed_capture_sha256": "72e2ac81744a032e029267255cc2da8879e4674f8cc038516e4053e753760f6a"
     }
   ],
   "excluded": [
@@ -320,13 +335,19 @@
   "exporter": "run/floodplain-integration/prepare.py",
   "native_writer": "tools/structure/VillageTemplateExport.java (with the entities plan key)",
   "verification": {
-    "static": "run/floodplain-integration/check.py: 20 definitions and templates",
-    "unit_tests": "470 tests, 0 failures",
+    "static": "run/floodplain-integration/check.py: 21 definitions and templates",
+    "unit_tests": "482 tests, 0 failures, 8 skipped",
     "allay_run": "run/allay-verification/run.py RESULT PASS",
     "placement_and_restart": "run/floodplain-integration/placement/verification.json",
     "center": "run/floodplain-integration/center/verification.json",
     "access": "run/floodplain-integration/access/verification.json",
-    "founding": "run/floodplain-integration/founding/verification.json"
+    "founding": "run/floodplain-integration/founding/verification.json",
+    "castle": {
+      "access": "run/swamp-castle-study-20260911/user-final-verification/access/verification.json",
+      "patrol": "run/swamp-castle-study-20260911/user-final-verification/patrol/verification.json",
+      "custody": "run/swamp-castle-study-20260911/user-final-verification/custody/verification.json",
+      "barrier_audit": "passed"
+    }
   },
   "datapack": "run/floodplain-integration/datapack",
   "recipe_catalog": "src/main/resources/data/kithkyn/kithkyn/construction_recipes",
@@ -399,6 +420,13 @@
         "mine_floodplain_1"
       ],
       "note": "Aaron re-edited the mine on a production copy in the gallery (NA08.1): the pit is four columns long, the door is gone and a step leads down into the pit. The miner stands at the pit's west column and the ramp mouth is one column in, so three columns of descent stay inside the pit."
+    },
+    {
+      "date": "2026-09-11",
+      "structures": [
+        "castle_floodplain_1"
+      ],
+      "note": "Captured Aaron's final SC01.2 castle edit with eleven beds, a ruler suite, baker, blacksmith, jailer, two entrance guards, two balcony guards, three roof guards and two non-village evidence barrels. Each sentry has a route local to its assigned floor and post."
     }
   ]
 }

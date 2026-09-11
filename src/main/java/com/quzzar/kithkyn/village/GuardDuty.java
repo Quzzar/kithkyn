@@ -76,20 +76,32 @@ public record GuardDuty(BlockPos position, BlockPos lookAt, boolean ranged, bool
 
   /** The presence of a route changes the awake shift without changing the guard's weapon duty. */
   public static boolean hasCastlePatrol(RealPerson person) {
-    Building castle = assignedCastle(person);
-    return castle != null && !castle.getInfo().getCastleLayout().patrolRoute(authoredRole(person)).isEmpty();
+    return !patrolRoute(person).isEmpty();
   }
 
   /** Authored castle points transformed through the same origin and rotation as the post. */
   public static List<BlockPos> patrolRoute(RealPerson person) {
     Building castle = assignedCastle(person);
-    return castle == null ? List.of() : patrolRoute(castle.getInfo(), authoredRole(person),
+    if (castle == null) return List.of();
+    JobAssignment job = person.getVillage().getJobAssignment(person.getUUID());
+    return job == null ? List.of() : patrolRoute(castle.getInfo(), job.getStationIndex(), authoredRole(person),
         BlockPos.of(castle.getOriginLocation()), castle.getRotation());
   }
 
+  static List<BlockPos> patrolRoute(BuildingInfo info, int stationIndex, @Nullable GuardRole role,
+      BlockPos origin, Rotation rotation) {
+    List<BlockPos> stationRoute = info.getGuardPatrolRoute(stationIndex);
+    return transformRoute(stationRoute.isEmpty() && info.getCastleLayout() != null
+        ? info.getCastleLayout().patrolRoute(role) : stationRoute, origin, rotation);
+  }
+
   static List<BlockPos> patrolRoute(BuildingInfo info, @Nullable GuardRole role, BlockPos origin, Rotation rotation) {
-    return info.getCastleLayout() == null ? List.of() : info.getCastleLayout().patrolRoute(role).stream()
-        .map(point -> origin.offset(point.rotate(rotation))).toList();
+    return info.getCastleLayout() == null ? List.of()
+        : transformRoute(info.getCastleLayout().patrolRoute(role), origin, rotation);
+  }
+
+  private static List<BlockPos> transformRoute(List<BlockPos> route, BlockPos origin, Rotation rotation) {
+    return route.stream().map(point -> origin.offset(point.rotate(rotation))).toList();
   }
 
   /** Castle sword sentries receive their shield as part of their initial defensive kit. */

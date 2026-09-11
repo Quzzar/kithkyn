@@ -1,6 +1,6 @@
 # Castles
 
-## Building and roles
+## Desert castle
 
 The first castle is the edited R07.2 Desert Fort from Towns and Towers. The editable gallery
 copy stands at `4402, 230, 1208`; `tools/structure/desert-castle-20260910.json` records the
@@ -46,7 +46,7 @@ Five general beds cannot house all seven non-ruler castle workers. A village nee
 two additional general beds elsewhere to fill every castle position. The royal spouse's bed
 remains reserved, and the captain moves from their existing town-center assignment.
 
-## Identity and appearance
+### Identity and appearance
 
 All ten banners receive village heraldry, including original ominous patterns. Every bed
 uses a primary or secondary village color; the royal pair shares a color. The white/light-blue
@@ -60,6 +60,40 @@ the barred rooftop cell. One matching sandstone slab closes a low parapet gap wh
 unreachable shortcut onto target decorations. Native checks passed 92 access routes, 32 assigned-bed sleeps, 28 personal-container
 deposits and twelve shared-container deposits across all four rotations. Rendered inspection
 confirmed the two barrels and preserved castle appearance before deployment.
+
+## Floodplain castle
+
+The Floodplain castle is the user-edited SC01.2 Overgrown Stone Fort, derived from the
+Towns and Towers Jungle Fort and restyled with spruce, dark oak, mossed stone and ordinary
+oak foliage. Its final gallery capture stands at `10107, 230, 1308`; the private source and
+production assets live under `run/floodplain-integration/castle/`, while
+`tools/structure/floodplain-castle-20260911.json` records the public metadata and provenance.
+
+The two residential wings provide nine general single beds with shared personal barrels.
+The upstairs ruler suite has a reserved double bed and its own chest. The castle adds a
+leader, baker, blacksmith and jailer. Two sword-and-shield guards cover the entrance, two
+crossbow guards cover the opposing balconies, and three crossbow guards cover the roof.
+These are ordinary authored jobs and housing assignments, so the wider village still needs
+enough residents to fill them.
+
+Each of the seven sentry stations owns a short patrol route on its assigned level. Entrance
+guards remain at the gate, balcony guards remain on their respective balconies, and roof guards
+cover separate parts of the roof. This prevents the upper guard shifts from crowding the central
+ladder while preserving all seven patrols through every building rotation.
+
+The enclosed, multi-block jail room is on the ground floor. Its two evidence barrels sit above the cell door and
+remain outside both village storage and personal storage. Custody uses the same five-minute
+sentence, item rules, reminders, release behavior and theft exclusions described below.
+The eight authored banner positions receive the village banner; all eleven beds receive the
+primary or secondary village color, with both ruler beds sharing the primary color.
+
+The roof is reached by the central ladder. Native testing of all rotations exposed two
+general navigation problems and fixed them in the shared runtime: a body on a rung now
+advances by occupying that exact rung rather than by an unstable fractional-height test,
+and personal-container routing avoids stepping over beds when a floor route exists.
+All 28 sentry runs reached every assigned waypoint across four rotations. The custody fixture
+also passed melee and arrow arrest, all 41 ordinary inventory slots, evidence overflow,
+five-minute reminders, persistence, escape, damaged-cell release and obstructed-exit fallback.
 
 ## Ruler decisions
 
