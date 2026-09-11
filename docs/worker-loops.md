@@ -743,10 +743,12 @@ and the shaft navigator sends the miner back up the ramp. A longer rib would str
 deep face once stranded her over the shaft. That the pathfinder hands her back onto the ramp is the
 live-verify item, not a proof.
 
-**Finished root ribs seed one more generation of shafts** (2026-09-05). Reaching a temporary
-water or lava stop does not count as finishing a shaft. Once the original diagonal reaches bedrock
-and every ordinary rib has either been cut or honestly stopped, the miner revisits the root ribs
-from the shallowest down. A dry, fully open, fully supported eight-block rib may become an entrance:
+**Finished root ribs seed one more generation of shafts** (2026-09-05). A water stop does not
+count as finishing a shaft: a bucket or lining clears it later. Bedrock does, and so does lava
+(2026-09-11): nothing bails or plugs lava, and treating it as temporary left Zawiriko's miner idle at
+a six-cell lava pocket with every rib cut and a complete rib waiting. Once the original diagonal is
+finished that way and every ordinary rib has either been cut or honestly stopped, the miner revisits
+the root ribs from the shallowest down. A dry, fully open, fully supported eight-block rib may become an entrance:
 from its far end the miner drives a new five-wide diagonal outward. That child uses the exact same
 loop, including flooring, lining, bailing, lighting, vein detours, and its own eight-block ribs. The
 miner finishes the entire child before considering the next root rib. Child ribs do not seed more
@@ -778,7 +780,11 @@ storehouse, the walk to bed. That corridor definition is bounded vertically to t
 five-block headroom; a person far below it is no longer mistaken for a valid ramp occupant. If a route
 request finds a villager below that planned excavation, they are returned immediately to the village
 center rather than spending multiple nights aiming at an overhead waypoint. The ordinary stranded
-teleport remains the broader last resort for a cave or obstruction the ramp does not reach.
+teleport remains the broader last resort for a cave or obstruction the ramp does not reach. A
+waypoint that lands in undug rock means the walker is not on the ramp at all but in a cave or pocket
+the planned volume overlaps, which is where a guard who fell in beside Zawiriko's shaft was held for
+five minutes with no path at all (2026-09-11); the ordinary pathfinder takes over there. A request
+made mid-step, between two blocks, is answered with nothing and logged as nothing, as vanilla does.
 
 Approaching a root mine's surface work-station anchor from outside uses ordinary ground navigation.
 That anchor is also excavation headroom, but it must not force a newcomer into the first underground
