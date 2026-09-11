@@ -46,7 +46,9 @@ public class KithkynConfig {
     public static int DaysInYear;
     public static int DaysPerChildStage;
     public static boolean GenerateVillages;
+    public static boolean UndeadVillages;
     public static double UndeadVillageChance;
+    public static boolean ReplacePillagers;
     public static boolean WanderingMerchant;
     public static VillageLoadingMode VillageLoading;
 
@@ -88,6 +90,8 @@ public class KithkynConfig {
     public static int AssaultOpinionHit;
     public static int GrudgeAttackBelow;
     public static int UndeadStrangerBaseline;
+    public static int UndeadRaidStandingBelow;
+    public static int UndeadRaidCooldownDays;
 
     // --- population (advanced) ---
     public static int PopulationCheckIntervalSeconds;
@@ -125,7 +129,9 @@ public class KithkynConfig {
         DaysInYear = COMMON.DaysInYear.get();
         DaysPerChildStage = COMMON.DaysPerChildStage.get();
         GenerateVillages = COMMON.GenerateVillages.get();
+        UndeadVillages = COMMON.UndeadVillages.get();
         UndeadVillageChance = COMMON.UndeadVillageChance.get();
+        ReplacePillagers = COMMON.ReplacePillagers.get();
         WanderingMerchant = COMMON.WanderingMerchant.get();
         VillageLoading = COMMON.VillageLoading.get();
 
@@ -169,6 +175,8 @@ public class KithkynConfig {
         AssaultOpinionHit = ADVANCED.AssaultOpinionHit.get();
         GrudgeAttackBelow = ADVANCED.GrudgeAttackBelow.get();
         UndeadStrangerBaseline = ADVANCED.UndeadStrangerBaseline.get();
+        UndeadRaidStandingBelow = ADVANCED.UndeadRaidStandingBelow.get();
+        UndeadRaidCooldownDays = ADVANCED.UndeadRaidCooldownDays.get();
 
         // population
         PopulationCheckIntervalSeconds = ADVANCED.PopulationCheckIntervalSeconds.get();
@@ -220,7 +228,9 @@ public class KithkynConfig {
         public final ModConfigSpec.IntValue DaysInYear;
         public final ModConfigSpec.IntValue DaysPerChildStage;
         public final ModConfigSpec.BooleanValue GenerateVillages;
+        public final ModConfigSpec.BooleanValue UndeadVillages;
         public final ModConfigSpec.DoubleValue UndeadVillageChance;
+        public final ModConfigSpec.BooleanValue ReplacePillagers;
         public final ModConfigSpec.BooleanValue WanderingMerchant;
         public final ModConfigSpec.EnumValue<VillageLoadingMode> VillageLoading;
 
@@ -238,9 +248,11 @@ public class KithkynConfig {
 
             DaysInYear = builder.comment("Days in one Minecraft year (there are 8 days in one full lunar cycle). Villagers know the current year from the world's age, derived from this.").translation(Kithkyn.MODID + ".config.DaysInYear").defineInRange("Days in Year", 96, 8, 79992);
             DaysPerChildStage = builder.comment("Minecraft days spent in each of the three pre-adult stages: toddler, kid, and teenager. Eight days makes the full childhood last three lunar cycles; change this to tune family pacing without changing save data.").translation(Kithkyn.MODID + ".config.DaysPerChildStage").defineInRange("Days per child stage", 8, 1, 79992);
-            GenerateVillages = builder.comment("Generate kithkyn villages during world generation, replacing vanilla villages. On (default): our living villages generate in the world in place of vanilla ones. Off: no villages generate in the world - you can still spawn one manually with /kithkyn create-village. Only vanilla minecraft:village is affected; other mods' villages are untouched.").translation(Kithkyn.MODID + ".config.GenerateVillages").define("Generate villages", true);
-            UndeadVillageChance = builder.comment("Chance that a naturally founded village is undead: skeleton people who hold every stranger past the grudge line from the first meeting (see 'Undead stranger baseline' in kithkyn-advanced.toml). Rolled once per village from the world seed and the site. 0 founds only living villages; villages placed with /kithkyn create-village are living unless the command says otherwise.").translation(Kithkyn.MODID + ".config.UndeadVillageChance").defineInRange("Undead village chance", 0.2D, 0.0D, 1.0D);
+            GenerateVillages = builder.comment("Replace Minecraft's villages with ours. On (default): our villages are founded in the world and no vanilla village generates. Off: vanilla villages generate as usual and none of ours are founded; you can still place one with /kithkyn create-village. Only vanilla minecraft:village is affected; other mods' villages are untouched.").translation(Kithkyn.MODID + ".config.GenerateVillages").define("Generate villages", true);
+            UndeadVillages = builder.comment("Whether some naturally founded villages are undead: skeleton people who hold every stranger past the grudge line from the first meeting, and whose dead follow a player who has wronged them into the next living village they enter (docs/undead.md). Off: every natural village is living; /kithkyn create-village can still found an undead one by name.").translation(Kithkyn.MODID + ".config.UndeadVillages").define("Undead villages", true);
+            UndeadVillageChance = builder.comment("Chance that a naturally founded village is undead, when undead villages are on. Rolled once per village from the world seed and the site, so the same world always founds the same undead villages. Villages placed with /kithkyn create-village are living unless the command says otherwise.").translation(Kithkyn.MODID + ".config.UndeadVillageChance").defineInRange("Undead village chance", 0.07D, 0.0D, 1.0D);
             WanderingMerchant = builder.comment("Replace Minecraft's wandering trader with a wandering merchant sent out from one of your villages. On (default): whenever the vanilla trader would appear, it is instead a merchant from a random village that has a staffed market, trading at that village's own prices and honouring your standing with it, with the usual trader llamas on a lead; if no village anywhere qualifies, none appears. Off: the ordinary vanilla wandering trader spawns as usual. Uses Minecraft's own trader spawning and wandering; only who shows up changes.").translation(Kithkyn.MODID + ".config.WanderingMerchant").define("Wandering merchant", true);
+            ReplacePillagers = builder.comment("Replace Minecraft's pillagers with the undead. On (default): no pillager outposts generate, no pillager patrols spawn, and a raid is an undead war party: an ominous bottle still brings one down on the next living village you enter, and so does the grudge of an undead village you have wronged (see kithkyn-advanced.toml, raids). Off: outposts, patrols and pillager raids as usual, and the undead never raid. Only vanilla pillagers are affected; woodland mansions and other mods' illagers are untouched.").translation(Kithkyn.MODID + ".config.ReplacePillagers").define("Replace pillagers", true);
             VillageLoading = builder.comment("Whether a village keeps running when no player is near. A village always does its cheap in-memory bookkeeping (mood, relationships, decisions); this only decides whether its chunks stay loaded and ticking, so it keeps building, mining, farming, and defending itself unattended, in full danger from night mobs. HYBRID (default): a village stays awake for six Minecraft days after a player last stood in it, then goes dormant until the next visit. This governs itself, since only villages you have recently visited stay loaded. ALL: every village in the world stays loaded, seen or not, including ones settled in regions you have never explored; the most faithful to living villages and the most costly, and it scales with a number you do not control. OFF: no village keeps chunks loaded, so a village freezes the moment you walk away (Minecraft's own behaviour). A loaded village keeps its own chunks plus a small perimeter and a bubble around each resident who roams; the more it builds, the more it holds loaded.").translation(Kithkyn.MODID + ".config.VillageLoading").defineEnum("Village loading", VillageLoadingMode.HYBRID);
 
             builder.pop();
@@ -290,6 +302,8 @@ public class KithkynConfig {
         public final ModConfigSpec.IntValue AssaultOpinionHit;
         public final ModConfigSpec.IntValue GrudgeAttackBelow;
         public final ModConfigSpec.IntValue UndeadStrangerBaseline;
+        public final ModConfigSpec.IntValue UndeadRaidStandingBelow;
+        public final ModConfigSpec.IntValue UndeadRaidCooldownDays;
 
         // population
         public final ModConfigSpec.IntValue PopulationCheckIntervalSeconds;
@@ -361,6 +375,13 @@ public class KithkynConfig {
             AssaultOpinionHit = builder.comment("How much being struck by a player lowers the victim's own opinion of them, before the blow's damage is added on top. Every strike counts, so one punch is a small grievance and a beating crosses the grudge line.").translation(Kithkyn.MODID + ".config.AssaultOpinionHit").defineInRange("Assault opinion hit", 5, 0, 15);
             GrudgeAttackBelow = builder.comment("Opinion of a player at or below which a villager treats them as an enemy: fighters attack on sight, everyone else keeps their distance. Personal, unlike the standing tiers above, which average the whole village.").translation(Kithkyn.MODID + ".config.GrudgeAttackBelow").defineInRange("Grudge attack below", -30, -100, 0);
             UndeadStrangerBaseline = builder.comment("Opinion an undead villager starts every stranger at, and drifts back to once left alone. Below the grudge line, so undead fighters attack on sight and the rest keep their distance until that one villager has been won over; one good judgement is enough to cross back. The living start strangers at 0.").translation(Kithkyn.MODID + ".config.UndeadStrangerBaseline").defineInRange("Undead stranger baseline", -40, -100, 0);
+
+            builder.pop();
+
+            builder.comment("Undead raids: when the dead of an undead village follow a player into the next living village they enter (docs/undead.md). Only while 'Replace pillagers' is on.").push("raids");
+
+            UndeadRaidStandingBelow = builder.comment("Standing with an undead village at or below which its dead follow you: the next living village you enter is raided by them. The undead start every stranger at their baseline, so this takes real offences seen by their people, the same way a village turns hostile.").translation(Kithkyn.MODID + ".config.UndeadRaidStandingBelow").defineInRange("Undead raid standing below", -60, -100, 0);
+            UndeadRaidCooldownDays = builder.comment("Minecraft days an undead village waits before its dead follow the same player again. 0 means every living village you enter while it holds a grudge is raided.").translation(Kithkyn.MODID + ".config.UndeadRaidCooldownDays").defineInRange("Undead raid cooldown days", 3, 0, 365);
 
             builder.pop();
 

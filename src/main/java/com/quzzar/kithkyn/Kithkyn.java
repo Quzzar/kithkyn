@@ -30,6 +30,7 @@ public class Kithkyn {
         modEventBus.addListener(this::registerCapabilities);
         modEventBus.addListener(KithkynNetworking::register);
         modEventBus.addListener(com.quzzar.kithkyn.village.VillageChunkLoader::onRegisterTicketControllers);
+        modEventBus.addListener(com.quzzar.kithkyn.worldgen.ReplacementPacks::onAddPackFinders);
 
         modContainer.registerConfig(ModConfig.Type.COMMON, KithkynConfig.COMMON_SPEC);
         modContainer.registerConfig(ModConfig.Type.COMMON, KithkynConfig.ADVANCED_SPEC, "kithkyn-advanced.toml");

@@ -39,6 +39,10 @@ public final class GolemDefendVillageGoal extends Goal {
       if (nearby instanceof Mob mob && VillageGolems.isMember(village, mob.getTarget())) {
         threats.add(nearby);
       }
+      // The dead at the gate are a threat before they have picked anyone out.
+      if (nearby instanceof RealPerson raider && raider.isRaider()) {
+        threats.add(nearby);
+      }
       if (VillageGolems.isMember(village, nearby)) {
         if (nearby instanceof RealPerson guard && guard.getOccupation() == Occupation.GUARD
             && guard.getTarget() != null) {

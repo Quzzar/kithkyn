@@ -46,12 +46,30 @@ The baseline was chosen deliberately shallow. At -80 the village would sit on th
 rung and every villager would need four judgements to cross the grudge line, so nobody
 would ever be the first friend. At -40 there is always a next skeleton to win.
 
+## The three switches
+
+Villages, the wandering merchant and pillagers each have one replace-or-vanilla switch in
+the common config, and all three have the same shape: on means ours in place of Minecraft's,
+off means Minecraft's as usual and none of ours.
+
+| Switch | On | Off |
+| --- | --- | --- |
+| Generate villages | our villages are founded, no vanilla village generates | vanilla villages, none of ours |
+| Wandering merchant | a merchant from one of our villages | the vanilla trader |
+| Replace pillagers | no outposts, no patrols, raids are undead war parties | outposts, patrols and pillager raids as usual; the undead never raid |
+
+The village and pillager switches work through two built-in data packs (`ReplacementPacks`),
+each emptying one vanilla structure set, offered to the world only while its switch is on. A
+file in the mod's own data folder would override vanilla unconditionally, which is exactly what
+off must not do. Patrols are refused at spawn, and the vanilla Raid Omen is refused when it
+would apply, so no pillager raid can start while the undead stand in for them.
+
 ## Where undead villages come from
 
-- **Natural founding** rolls the kind once, from the world seed and the site, with
-  `UndeadVillageChance` (default 0.2). The roll is deterministic, so a founding probe and
-  the founding it leads to agree, and the site search cannot reroll its way to a preference.
-  0 founds only living villages.
+- **Natural founding** rolls the kind once, from the world seed and the site, when
+  `Undead villages` is on, with `UndeadVillageChance` (default 0.07). The roll is
+  deterministic, so a founding probe and the founding it leads to agree, and the site search
+  cannot reroll its way to a preference. Off founds only living villages.
 - **Manual founding** is living unless asked: `/kithkyn create-village <pos> <style> undead`.
 - The kind lives on the village (in the brain's strategy tag beside the style) and on each
   person (synced, saved as `Kind`). Campfire arrivals take the village's kind, children
@@ -98,6 +116,45 @@ or renderer:
 - The persona sheet and the chat prompt state the kind beside the gender, or the model
   writes them as the living.
 
+## Raids
+
+Vanilla raids never could target our villages, because a pillager raid homes in on vanilla
+villagers. What ships instead is the raid the world was missing: the dead of an undead village
+marching on a living one, in waves, until they are beaten or give up.
+
+**Two omens start one, and both are the player's doing.**
+
+- **The grudge omen.** A player whose standing with an undead village has fallen to
+  `UndeadRaidStandingBelow` (default -60, between shunned and hostile, so it takes real offences
+  seen by its people) carries that village's grudge. The next living village they stand in is
+  raided by its dead, and the undead village waits `UndeadRaidCooldownDays` before following the
+  same player again. Creative and spectator players carry nothing.
+- **The bottle.** An ominous bottle keeps its purpose. Vanilla turns Bad Omen into Raid Omen the
+  moment the drinker stands in a village; the pillager switch refuses that Raid Omen and the
+  undead come instead, named for the nearest undead village or, with none in the world, as the
+  restless dead.
+
+**What a raid is.** Half a minute of warning, with a boss bar and the raid horn, then waves rise
+at the village's edge and walk in: two waves on easy, three on normal, four on hard, none in
+peace, each wave sized to the village (a hamlet meets a handful, a town a band) and one larger
+than the last. A wave that will not die is reinforced after three minutes; the dead give up
+twelve minutes after the first wave and withdraw. Raiders are undead people in rags, named,
+armed from a seeded kit (a third shoot, iron and chain from the third wave), with no village, no
+bed and nothing to say. The raid lives in the village's strategy tag and survives a restart with
+its raiders still in the world.
+
+**Who fights.** Raiders attack players, the living, and golems. Guards and anyone who fights
+treat a raider as they treat a monster, unarmed villagers keep their distance, and guard golems
+count a raider a threat before it has picked anyone out. Killing a raider is defence: no murder
+is reported, nobody mourns them, and a neighbour who cuts one down that was coming for you is
+remembered for it the way a slain creeper is.
+
+**Aftermath is memory, not mechanics.** Residents remember who brought the dead down on them and,
+when the raid is beaten, every player who cut one of the dead down; reflection decides what
+that was worth. Deaths among the residents go through the village's books like any other.
+
+`/kkdev raid start [now]`, `stop` and `status` drive one by hand; `preview` is the harness hook.
+
 ## What stays the same, on purpose
 
 - Vanilla monsters get a target-people goal at spawn and keep it; wild zombies and skeletons
@@ -111,11 +168,13 @@ or renderer:
 ./gradlew runClientJoinLocal -Puipreview=undead-lineup
 ./gradlew runClientJoinLocal -Puipreview=undead-lineup-asleep
 ./gradlew runClientJoinLocal -Puipreview=undead-lineup-world
+./gradlew runClientJoinLocal -Puipreview=undead-raid
 ```
 
 Both mirror the living age lineups ([ui-preview.md](ui-preview.md)) on the other kind; the
 screen version dresses the adult as a farmer, so the rags read against a dark tunic, and adds
-an armed guard in leather at the end, the skeleton a player actually meets first. Pass `-Pjoinport=<port>` when a deployed server holds 25565. `/kkdev appearance
+an armed guard in leather at the end, the skeleton a player actually meets first. `undead-raid` stands the preview player over the nearest living village and photographs the first
+wave walking in. Pass `-Pjoinport=<port>` when a deployed server holds 25565. `/kkdev appearance
 show` prints the kind, and `/kkdev appearance audit` runs the recipe matrix for both kinds.
 
 ## Code map
@@ -129,4 +188,9 @@ show` prints the kind, and `/kkdev appearance audit` runs the recipe matrix for 
 - `relationships/OpinionService`, `relationships/RelationshipDrift`: the baseline in use.
 - `appearance/*`, `client/appearance/PersonAppearanceTextures`: the kind-filtered recipe.
 - `client/gui/AgeLineupScreen`, `client/gui/UiPreview`: the lineups.
-- `configuration/KithkynConfig`: `UndeadVillageChance`, `UndeadStrangerBaseline`.
+- `raids/UndeadRaid`, `raids/UndeadRaids`, `raids/UndeadRaidPlan`, `raids/RaidCommands`: the
+  raid, its omens, its arithmetic, and the dev commands. `entities/ai/goals/RaidMarchGoal` walks
+  a raider in.
+- `worldgen/ReplacementPacks`: the two data packs behind the village and pillager switches.
+- `configuration/KithkynConfig`: `UndeadVillages`, `UndeadVillageChance`, `ReplacePillagers`,
+  `UndeadStrangerBaseline`, `UndeadRaidStandingBelow`, `UndeadRaidCooldownDays`.

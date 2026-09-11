@@ -72,8 +72,11 @@ public enum Kind {
     return this == UNDEAD ? "undead, a walking skeleton of old bone" : "";
   }
 
-  /** The kind a naturally founded village takes, rolled once from the world seed and the site. */
+  /** The kind a naturally founded village takes, rolled once from the world seed and the site; living while undead villages are off. */
   public static Kind forNaturalFounding(long worldSeed, BlockPos site) {
+    if (!KithkynConfig.UndeadVillages) {
+      return LIVING;
+    }
     return rollForFounding(worldSeed, site, KithkynConfig.UndeadVillageChance);
   }
 

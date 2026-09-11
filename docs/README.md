@@ -27,8 +27,9 @@ in it, and update it in the same change that moves what it describes.
   orphan behavior, personality-driven self-defense, and the transition to an adult bed.
 - [undead.md](undead.md): undead villages. People in every respect but one number, the
   stranger baseline that puts every undead fighter past the grudge line on sight, befriended
-  one person at a time; the founding roll, the kind on person and village, and the skeleton
-  look composed without pigment or hair.
+  one person at a time; the founding roll, the kind on person and village, the skeleton look
+  in ruined rags, the three replace-or-vanilla switches, and undead raids: the dead of a
+  village you have wronged, or an ominous bottle, following you into the next living village.
 - [companions.md](companions.md): the dog or cat some villagers keep. Who is granted one and
   when, the one-per-species cap bonded to the person not the post, the owner naming it and
   choosing its look, the custom follow goal a mob owner needs, the village-tether when the

@@ -212,6 +212,35 @@ public class CoreEvents {
     }
   }
 
+  /**
+   * While the undead replace pillagers, no patrol walks the roads: the patrol
+   * spawner still rolls, and its pillagers are refused here before they exist.
+   */
+  @SubscribeEvent
+  public static void onFinalizeSpawn(net.neoforged.neoforge.event.entity.living.FinalizeSpawnEvent event) {
+    if (com.quzzar.kithkyn.configuration.KithkynConfig.ReplacePillagers
+        && event.getSpawnType() == net.minecraft.world.entity.MobSpawnType.PATROL
+        && event.getEntity() instanceof net.minecraft.world.entity.monster.PatrollingMonster) {
+      event.setSpawnCancelled(true);
+    }
+  }
+
+  /**
+   * An ominous bottle keeps its purpose when pillagers are gone. Vanilla turns
+   * Bad Omen into Raid Omen the moment the drinker stands in a village, and
+   * starts a pillager raid when that runs out. The Raid Omen is refused here,
+   * so no pillager raid can follow, and the undead come instead (docs/undead.md).
+   */
+  @SubscribeEvent
+  public static void onEffectApplicable(net.neoforged.neoforge.event.entity.living.MobEffectEvent.Applicable event) {
+    if (com.quzzar.kithkyn.configuration.KithkynConfig.ReplacePillagers
+        && event.getEffectInstance().is(net.minecraft.world.effect.MobEffects.RAID_OMEN)
+        && event.getEntity() instanceof net.minecraft.server.level.ServerPlayer player) {
+      event.setResult(net.neoforged.neoforge.event.entity.living.MobEffectEvent.Applicable.Result.DO_NOT_APPLY);
+      com.quzzar.kithkyn.raids.UndeadRaids.omen(player);
+    }
+  }
+
   @SubscribeEvent
   public static void onLivingDeath(LivingDeathEvent event) {
 
@@ -220,18 +249,26 @@ public class CoreEvents {
     }
 
     // A villager who kills something that was hunting a neighbour is remembered
-    // for it by the neighbour, and only by them.
-    if (event.getEntity() instanceof net.minecraft.world.entity.monster.Enemy
+    // for it by the neighbour, and only by them. A raider counts as something.
+    boolean raiderFell = event.getEntity() instanceof RealPerson fallen && fallen.isRaider();
+    if ((event.getEntity() instanceof net.minecraft.world.entity.monster.Enemy || raiderFell)
         && event.getEntity() instanceof net.minecraft.world.entity.Mob hunter
         && hunter.getTarget() instanceof RealPerson rescued
         && event.getSource().getEntity() instanceof RealPerson defender
         && !defender.getUUID().equals(rescued.getUUID())) {
       rescued.logMemory(defender.getFullName() + " killed the "
-          + event.getEntity().getName().getString() + " that was coming for me.",
+          + (raiderFell ? "raider" : event.getEntity().getName().getString()) + " that was coming for me.",
           java.util.Optional.of(defender.getUUID()));
     }
 
     if (event.getEntity() instanceof RealPerson person) {
+
+      // A raider's death is the raid's business, not the village's books: no
+      // murder is reported and no neighbour mourns them (docs/undead.md).
+      if (person.isRaider()) {
+        com.quzzar.kithkyn.raids.UndeadRaids.onRaiderDeath(person, event.getSource());
+        return;
+      }
 
       if (person.getVillage() != null) {
 
