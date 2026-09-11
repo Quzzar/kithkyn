@@ -231,7 +231,10 @@ Every asset also carries a `kind`, living unless it says `"kind": "undead"`. Ski
 eyes are only ever selected from assets of the person's kind; an undead skin must be slim,
 because every undead body is; and undead parts carry no pigment at all, because bone is bone
 whatever the genes say. The catalog refuses an undead part that declares pigment as firmly
-as it refuses a living part without it. Heterochromia is expressed only on living eyes.
+as it refuses a living part without it. Heterochromia is expressed only on living eyes. In the
+lab, an undead pack is exempt from base completeness and the two-shade underpaint: a
+transparency skeleton is thin because most of each limb face is clear, and the compositor
+copies only opaque texels, so those holes survive into the baked skin.
 
 Pigment compatibility is explicit manifest data as well. Every selectable living skin, hair, and
 left/right eye layer lists the exact source RGB colors that represent its biological pigment.

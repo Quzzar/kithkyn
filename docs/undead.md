@@ -66,9 +66,14 @@ or renderer:
 - `AppearanceInputs` carries the kind, and every catalog asset declares one (living unless
   it says otherwise). Skin, hair and both eyes come from assets of the person's kind.
   Clothing is shared: an undead smith wears the apron, an undead guard shows their iron.
-- The `skeleton` pack is an authored Skin Splice Lab pack: bone two-tone on every base UV
-  face, hollow sockets as the eye pair, a nasal cavity and teeth, rib gaps and a spine, joint
-  lines on the limbs, an empty hair layer and no garment of its own.
+- The `skeleton` pack is the provided transparency skeleton, taken into the Skin Splice Lab as a
+  source-backed pack. Its limbs are two-texel bones with the rest of each face left clear, so the
+  player model reads as thin bone, and the holes stay holes: an undead pack is exempt from the
+  lab's base-completeness and underpaint checks. Its ribcage was drawn on the jacket overlay
+  above an empty torso; the pack moves it onto the base torso, texel for texel, so a garment
+  covers it the way it covers anyone's chest instead of the bones floating outside the shirt.
+  The sockets become the eye pair. Nothing else is repainted, and it has no hair layer and no
+  garment of its own.
 - **Undead parts carry no pigment.** Bone is bone whatever the genes say, so an undead asset
   that declared pigment texels would be painted flesh-coloured; the catalog refuses it, and
   refuses a living asset without pigment, as before.
