@@ -18,8 +18,9 @@ import net.minecraft.world.level.block.Rotation;
  * One frame in a mine's bounded shaft network, and the ramps and parent ribs
  * that form the way in and out.
  *
- * <p>The shaft is the corridor the miner's cursor digs (MineStep): {@link #RADIUS}
- * either side of the mouth's centre line, ramping one block down for every
+ * <p>The shaft is the corridor the miner's cursor digs (MineStep). Its authored
+ * transverse bounds may sit symmetrically around the mouth or, for a two-wide
+ * entrance, occupy local x -1 and 0. It ramps one block down for every
  * block forward, so the walk cell of column {@code z} sits {@code z + 2} below
  * the mouth. In the mine's own frame the mouth is the origin, forward is +z,
  * and a world position is read into that frame by undoing the shaft's rotation
@@ -41,7 +42,7 @@ import net.minecraft.world.level.block.Rotation;
  */
 public final class MineShaft {
 
-  /** Cells either side of the centre line the shaft is dug to: five wide. */
+  /** Default cells either side of the centre line: five wide. */
   public static final int RADIUS = 2;
 
   /** The threshold and ramp headroom do not shrink with the corridor width. */
@@ -65,7 +66,8 @@ public final class MineShaft {
   /** How near the mouth counts as standing at it, squared. */
   private static final double AT_MOUTH_SQR = 9.0D;
 
-  private final int radius;
+  private final int minX;
+  private final int maxX;
   private final BlockPos mouth;
   private final Rotation rotation;
   private final long rootStation;
@@ -74,9 +76,10 @@ public final class MineShaft {
   @Nullable
   private final MineBranch branch;
 
-  private MineShaft(BlockPos mouth, Rotation rotation, long rootStation, int radius,
+  private MineShaft(BlockPos mouth, Rotation rotation, long rootStation, int minX, int maxX,
       @Nullable MineShaft parent, @Nullable MineBranch branch) {
-    this.radius = radius;
+    this.minX = minX;
+    this.maxX = maxX;
     this.mouth = mouth;
     this.rotation = rotation;
     this.rootStation = rootStation;
@@ -89,13 +92,32 @@ public final class MineShaft {
     return root(mouth, rotation, rootStation, 5);
   }
 
-  /** A shaft with an authored odd corridor width. */
+  /** A shaft with an authored corridor width. Even widths keep the mouth in local x 0. */
   public static MineShaft root(BlockPos mouth, Rotation rotation, long rootStation, int width) {
-    if (width != 3 && width != 5) throw new IllegalArgumentException("Mine width must be 3 or 5");
-    return new MineShaft(mouth, rotation, rootStation, width / 2, null, null);
+    if (width != 2 && width != 3 && width != 5) {
+      throw new IllegalArgumentException("Mine width must be 2, 3 or 5");
+    }
+    int minX = -width / 2;
+    return new MineShaft(mouth, rotation, rootStation, minX, minX + width - 1, null, null);
   }
 
-  public int radius() { return radius; }
+  /** Largest transverse distance, retained for spacing older symmetric shafts. */
+  public int radius() { return Math.max(-minX, maxX); }
+
+  public int width() { return maxX - minX + 1; }
+
+  public int minX() { return minX; }
+
+  public int maxX() { return maxX; }
+
+  /** One rib cell counted out from the appropriate edge of this corridor. */
+  public int ribX(int side, int step) {
+    if (side != -1 && side != 1) {
+      throw new IllegalArgumentException("A mine branch side must be -1 or 1");
+    }
+    if (step < 1) throw new IllegalArgumentException("A mine rib step must be positive");
+    return side < 0 ? minX - step : maxX + step;
+  }
 
   /** The same authored frame for excavation, navigation, and child-shaft planning. */
   public static MineShaft root(Building building, BlockPos station) {
@@ -115,9 +137,10 @@ public final class MineShaft {
     if (root.parent != null || root.rootStation != branch.rootStation()) {
       throw new IllegalArgumentException("A child shaft must belong to its root work station");
     }
-    BlockPos mouth = childMouth(root.mouth, root.rotation, branch.sourceDepth(), branch.side(), root.radius);
+    BlockPos mouth = childMouth(root.mouth, root.rotation, branch.sourceDepth(), branch.side(),
+        root.minX, root.maxX);
     Rotation rotation = outwardRotation(root.rotation, branch.side());
-    return new MineShaft(mouth, rotation, root.rootStation, root.radius, root, branch);
+    return new MineShaft(mouth, rotation, root.rootStation, root.minX, root.maxX, root, branch);
   }
 
   public BlockPos mouth() {
@@ -173,7 +196,15 @@ public final class MineShaft {
 
   public static BlockPos childMouth(BlockPos rootMouth, Rotation rootRotation,
       int sourceDepth, int side, int radius) {
-    int end = side * (radius + RIB_LENGTH + 1);
+    return childMouth(rootMouth, rootRotation, sourceDepth, side, -radius, radius);
+  }
+
+  private static BlockPos childMouth(BlockPos rootMouth, Rotation rootRotation,
+      int sourceDepth, int side, int minX, int maxX) {
+    if (side != -1 && side != 1) {
+      throw new IllegalArgumentException("A mine branch side must be -1 or 1");
+    }
+    int end = side < 0 ? minX - RIB_LENGTH - 1 : maxX + RIB_LENGTH + 1;
     int y = floorY(sourceDepth) + 1;
     return rootMouth.offset(new BlockPos(end, y, sourceDepth).rotate(rootRotation));
   }
@@ -198,9 +229,14 @@ public final class MineShaft {
   }
 
   public static boolean withinCorridor(BlockPos local, int radius) {
+    return withinCorridor(local, -radius, radius);
+  }
+
+  public static boolean withinCorridor(BlockPos local, int minX, int maxX) {
     int floorY = local.getZ() < 0 ? -1 : -(local.getZ() + 2);
     int topY = Math.min(floorY + RAMP_HEIGHT - 1, -1);
-    return Math.abs(local.getX()) <= radius
+    return local.getX() >= minX
+        && local.getX() <= maxX
         && local.getZ() >= ENTRY_COLUMN
         && local.getY() >= floorY
         && local.getY() <= topY;
@@ -212,12 +248,18 @@ public final class MineShaft {
   }
 
   public static boolean withinRib(BlockPos local, int radius) {
+    return withinRib(local, -radius, radius);
+  }
+
+  public static boolean withinRib(BlockPos local, int minX, int maxX) {
     int z = local.getZ();
     if (z < RIB_MIN_LINE || z % RIB_PITCH != 0) {
       return false;
     }
-    int ax = Math.abs(local.getX());
-    if (ax < radius + 1 || ax > radius + RIB_LENGTH) {
+    int x = local.getX();
+    boolean left = x >= minX - RIB_LENGTH && x < minX;
+    boolean right = x > maxX && x <= maxX + RIB_LENGTH;
+    if (!left && !right) {
       return false;
     }
     int floorY = z < 0 ? -1 : -(z + 2);
@@ -233,12 +275,17 @@ public final class MineShaft {
   }
 
   public static boolean withinExcavation(BlockPos local, int radius) {
+    return withinExcavation(local, -radius, radius);
+  }
+
+  public static boolean withinExcavation(BlockPos local, int minX, int maxX) {
     int z = local.getZ();
     int floorY = z < 0 ? -1 : -(z + 2);
-    boolean betweenRampSteps = Math.abs(local.getX()) <= radius
+    boolean betweenRampSteps = local.getX() >= minX
+        && local.getX() <= maxX
         && z >= ENTRY_COLUMN
         && local.getY() == floorY - 1;
-    return withinCorridor(local, radius) || withinRib(local, radius)
+    return withinCorridor(local, minX, maxX) || withinRib(local, minX, maxX)
         || withinEntranceClearance(local) || betweenRampSteps;
   }
 
@@ -261,16 +308,21 @@ public final class MineShaft {
   }
 
   public static boolean belowExcavation(BlockPos local, int radius) {
+    return belowExcavation(local, -radius, radius);
+  }
+
+  public static boolean belowExcavation(BlockPos local, int minX, int maxX) {
     int z = local.getZ();
     int floorY = z < 0 ? -1 : -(z + 2);
-    boolean belowRamp = Math.abs(local.getX()) <= radius
+    boolean belowRamp = local.getX() >= minX
+        && local.getX() <= maxX
         && z >= ENTRY_COLUMN
         && local.getY() < floorY - 1;
-    int ax = Math.abs(local.getX());
+    int x = local.getX();
     boolean belowRib = z >= RIB_MIN_LINE
         && z % RIB_PITCH == 0
-        && ax >= radius + 1
-        && ax <= radius + RIB_LENGTH
+        && (x >= minX - RIB_LENGTH && x < minX
+            || x > maxX && x <= maxX + RIB_LENGTH)
         && local.getY() < floorY;
     return belowRamp || belowRib;
   }
@@ -409,7 +461,7 @@ public final class MineShaft {
       return false;
     }
     for (MineShaft shaft : shafts) {
-      if (belowExcavation(shaft.local(world), shaft.radius)) {
+      if (belowExcavation(shaft.local(world), shaft.minX, shaft.maxX)) {
         return true;
       }
     }
@@ -420,14 +472,14 @@ public final class MineShaft {
   private BlockPos hop(BlockPos from, BlockPos to) {
     BlockPos localFrom = local(from);
     BlockPos localTo = local(to);
-    boolean fromIn = withinExcavation(localFrom, radius);
+    boolean fromIn = withinExcavation(localFrom, minX, maxX);
     // The root mouth is also the surface work-station anchor. Its clearance
     // belongs to excavation, but approaching that station from outside must
     // not require walking into the first stair before it has been dug.
     if (this.parent == null && !fromIn && localTo.equals(BlockPos.ZERO)) {
       return null;
     }
-    boolean toIn = withinExcavation(localTo, radius);
+    boolean toIn = withinExcavation(localTo, minX, maxX);
     if (!fromIn && !toIn) {
       return null;
     }
@@ -440,7 +492,7 @@ public final class MineShaft {
       // route even though every planned footing is open, leaving the miner to
       // repeat the child target from the village center forever.
       if (localFrom.getZ() == localTo.getZ()
-          && (withinRib(localFrom, radius) || withinRib(localTo, radius))
+          && (withinRib(localFrom, minX, maxX) || withinRib(localTo, minX, maxX))
           && Math.abs(localTo.getX() - localFrom.getX()) > HOP) {
         return ribWalkCell(localFrom, localTo.getX());
       }
@@ -450,7 +502,7 @@ public final class MineShaft {
         // cell from the source line. The target is still far down the rib, so
         // first land on the ramp's centre doorway; the next request will begin
         // the adjacent horizontal hops above.
-        if (withinRib(localTo, radius)
+        if (withinRib(localTo, minX, maxX)
             && Math.abs(localTo.getX() - localFrom.getX()) > HOP) {
           return walkCell(localTo.getZ());
         }
@@ -459,7 +511,7 @@ public final class MineShaft {
       return walkCell(localFrom.getZ() + (ahead > 0 ? HOP : -HOP));
     }
     if (fromIn) {
-      if (withinRib(localFrom, radius)) {
+      if (withinRib(localFrom, minX, maxX)) {
         // First leave a rib through its doorway. Treating every non-corridor
         // target as outside the mine sent a miner UP the ramp while their work
         // waited four blocks farther along this same branch.
@@ -513,7 +565,7 @@ public final class MineShaft {
   }
 
   private boolean contains(BlockPos world) {
-    return withinExcavation(local(world), radius);
+    return withinExcavation(local(world), minX, maxX);
   }
 
   @Nullable
@@ -521,7 +573,7 @@ public final class MineShaft {
       boolean leaving) {
     for (MineShaft child : children) {
       BlockPos local = child.local(world);
-      if (withinExcavation(local, child.radius) && (!leaving || local.getZ() >= 0)) {
+      if (withinExcavation(local, child.minX, child.maxX) && (!leaving || local.getZ() >= 0)) {
         return child;
       }
     }
@@ -561,7 +613,7 @@ public final class MineShaft {
       int floor = floorY(z);
       int ceiling = Math.min(floor + RAMP_HEIGHT - 1, -1);
       for (int y = floor; y <= ceiling; y++) {
-        for (int x = -shaft.radius; x <= shaft.radius; x++) {
+        for (int x = shaft.minX; x <= shaft.maxX; x++) {
           BlockPos world = shaft.mouth.offset(new BlockPos(x, y, z).rotate(shaft.rotation));
           if (world.getY() >= minimumBuildY) {
             consumer.accept(world);
@@ -573,7 +625,7 @@ public final class MineShaft {
       }
       for (int side = 1; side >= -1; side -= 2) {
         for (int step = 1; step <= RIB_LENGTH; step++) {
-          int x = side * (shaft.radius + step);
+          int x = shaft.ribX(side, step);
           for (int y = floor; y < floor + RIB_HEIGHT; y++) {
             BlockPos world = shaft.mouth.offset(new BlockPos(x, y, z).rotate(shaft.rotation));
             if (world.getY() >= minimumBuildY) {

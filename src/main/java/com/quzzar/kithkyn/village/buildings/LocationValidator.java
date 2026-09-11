@@ -156,7 +156,8 @@ public class LocationValidator {
    * whichever way slots in. Pass a single rotation to search one fixed facing.
    */
   public static Search findValidLocation(ServerLevelAccessor levelAccess, BlockPos centerPos,
-      StructureTemplate template, Direction entranceFacing, List<Rotation> rotations, Village village, Random random) {
+      StructureTemplate template, Direction entranceFacing, int sink, List<Rotation> rotations,
+      Village village, Random random) {
     List<BoundingBox> anchors = new ArrayList<>();
     for (Building building : village.getBuildings()) {
       BoundingBox local = BuildingUpgrade.footprintOf(levelAccess, building);
@@ -167,13 +168,14 @@ public class LocationValidator {
     PlacementContext context = new PlacementContext(anchors, village.getBuildings().size(),
         village.getTownCenter().getRadius(), (x, z) -> village.hasClaimed(new BlockPos(x, 0, z)),
         (ground, bounds) -> true);
-    return findValidLocation(levelAccess, centerPos, template, entranceFacing, rotations, village, context, random);
+    return findValidLocation(levelAccess, centerPos, template, entranceFacing, sink,
+        rotations, village, context, random);
   }
 
   /** The ordinary growth search, also usable against buildings reserved by an uncommitted founding plan. */
   public static Search findValidLocation(ServerLevelAccessor levelAccess, BlockPos centerPos,
-      StructureTemplate template, Direction entranceFacing, List<Rotation> rotations, Village village,
-      PlacementContext context, Random random) {
+      StructureTemplate template, Direction entranceFacing, int sink, List<Rotation> rotations,
+      Village village, PlacementContext context, Random random) {
     ServerLevel level = levelAccess.getLevel();
 
     // The village grows outwards as it builds, but the ring never collapses: a
@@ -197,7 +199,8 @@ public class LocationValidator {
       maxSpan = Math.max(maxSpan, Math.max(rotated.getXSpan(), rotated.getZSpan()));
     }
     HeightGrid grid = new HeightGrid(level, centerPos, sweepRadius + maxSpan);
-    Hunt hunt = new Hunt(level, village, context, boundsByRotation, grid, centerPos, entranceFacing, random);
+    Hunt hunt = new Hunt(level, village, context, boundsByRotation, grid, centerPos,
+        entranceFacing, sink, random);
 
     // City form comes from relationships, not a radial lot lottery. Try the
     // exact frontage slots at both lane widths around every completed building
@@ -355,6 +358,15 @@ public class LocationValidator {
   }
 
   /**
+   * Raised templates expose their lowest course above the surrounding ground.
+   * If the authored front meets a bank above the footprint's modal plane, seat
+   * the whole building against that approach instead of burying its entrance.
+   */
+  static int seatingPlane(int footprintPlane, int sink, int approachPlane) {
+    return sink < 0 ? Math.max(footprintPlane, approachPlane) : footprintPlane;
+  }
+
+  /**
    * Ground heights for the whole search square, read once from the chunk
    * heightmaps so every candidate's flatness is arithmetic rather than a block
    * scan (docs/site-selection.md, the first runtime mitigation). Chunks that
@@ -420,7 +432,7 @@ public class LocationValidator {
      * column happened to be a dip in an otherwise level plain.
      */
     @Nullable
-    Reading read(int originX, int originZ, BoundingBox bounds) {
+    Reading read(int originX, int originZ, BoundingBox bounds, int sink, Direction front) {
       int[] footprint = new int[bounds.getXSpan() * bounds.getZSpan()];
       int i = 0;
       for (int x = bounds.minX(); x <= bounds.maxX(); x++) {
@@ -443,6 +455,13 @@ public class LocationValidator {
           plane = footprint[j];
         }
       }
+      if (sink < 0) {
+        int approach = frontHeight(originX, originZ, bounds, front);
+        if (approach == NO_GROUND) {
+          return null;
+        }
+        plane = seatingPlane(plane, sink, approach);
+      }
       int steep = 0;
       int offPlane = 0;
       int levelOffPlane = 0;
@@ -456,6 +475,39 @@ public class LocationValidator {
         }
       }
       return new Reading(plane, footprint.length, steep, offPlane, levelOffPlane);
+    }
+
+    /** Modal ground immediately outside the authored front edge, ties to higher ground. */
+    private int frontHeight(int originX, int originZ, BoundingBox bounds, Direction front) {
+      int span = front.getAxis() == Direction.Axis.X ? bounds.getZSpan() : bounds.getXSpan();
+      int[] heights = new int[span];
+      int index = 0;
+      if (front.getAxis() == Direction.Axis.X) {
+        int x = originX + (front == Direction.WEST ? bounds.minX() - 1 : bounds.maxX() + 1);
+        for (int z = bounds.minZ(); z <= bounds.maxZ(); z++) {
+          heights[index++] = ground(x, originZ + z);
+        }
+      } else {
+        int z = originZ + (front == Direction.NORTH ? bounds.minZ() - 1 : bounds.maxZ() + 1);
+        for (int x = bounds.minX(); x <= bounds.maxX(); x++) {
+          heights[index++] = ground(originX + x, z);
+        }
+      }
+      if (Arrays.stream(heights).anyMatch(height -> height == NO_GROUND)) {
+        return NO_GROUND;
+      }
+      Arrays.sort(heights);
+      int mode = heights[0];
+      int run = 0;
+      int bestRun = 0;
+      for (int i = 0; i < heights.length; i++) {
+        run = i > 0 && heights[i] == heights[i - 1] ? run + 1 : 1;
+        if (run >= bestRun) {
+          bestRun = run;
+          mode = heights[i];
+        }
+      }
+      return mode;
     }
   }
 
@@ -486,6 +538,7 @@ public class LocationValidator {
     private final HeightGrid grid;
     private final BlockPos centre;
     private final Direction entranceFacing;
+    private final int sink;
     private final Random random;
 
     @Nullable
@@ -501,7 +554,7 @@ public class LocationValidator {
 
     Hunt(ServerLevel level, Village village, PlacementContext context,
         EnumMap<Rotation, BoundingBox> boundsByRotation, HeightGrid grid,
-        BlockPos centre, Direction entranceFacing, Random random) {
+        BlockPos centre, Direction entranceFacing, int sink, Random random) {
       this.level = level;
       this.village = village;
       this.context = context;
@@ -509,6 +562,7 @@ public class LocationValidator {
       this.grid = grid;
       this.centre = centre;
       this.entranceFacing = entranceFacing;
+      this.sink = sink;
       this.random = random;
     }
 
@@ -528,7 +582,7 @@ public class LocationValidator {
       int x = centre.getX() + relX;
       int z = centre.getZ() + relZ;
       BoundingBox bounds = boundsByRotation.get(rotation);
-      Reading reading = grid.read(x, z, bounds);
+      Reading reading = grid.read(x, z, bounds, sink, rotation.rotate(entranceFacing));
       if (reading == null) {
         unloaded++;
         return;

@@ -85,6 +85,16 @@ class BuildingEntranceTest {
   }
 
   @Test
+  void aTwoBlockAuthoredMineOpeningIsAccepted() {
+    var json = JsonParser.parseString("{\"facing\":\"south\",\"offset\":[0,1,1],\"width\":2}");
+    BuildingInfo.MineEntrance entrance = BuildingInfo.MineEntrance.CODEC
+        .parse(JsonOps.INSTANCE, json).getOrThrow();
+
+    assertEquals(2, entrance.width());
+    assertEquals(new BlockPos(0, 1, 1), entrance.offset());
+  }
+
+  @Test
   void legacyStorehousesKeepTheirActualGroundWhileFreshOnesGetTheRaisedStep() throws Exception {
     BuildingInfo info = definition("storehouse_birch_forest_1");
     Buildings.reload(Map.of(info.getName(), info));

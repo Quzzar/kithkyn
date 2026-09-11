@@ -10,6 +10,13 @@ import org.junit.jupiter.api.Test;
 
 class LocationPreferenceTest {
 
+  @Test
+  void raisedDoorstepTemplatesFollowAHigherFrontBank() {
+    assertEquals(64, LocationValidator.seatingPlane(62, -1, 64));
+    assertEquals(62, LocationValidator.seatingPlane(62, -1, 61));
+    assertEquals(62, LocationValidator.seatingPlane(62, 0, 64));
+  }
+
   private static LocationValidator.Fit fit(int gap, int inward, int cost, Rotation rotation) {
     return new LocationValidator.Fit(rotation, BlockPos.ZERO,
         new SitePreparation.SiteCost(cost, 0, 0, false, false, ""),

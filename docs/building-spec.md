@@ -33,8 +33,9 @@ against the enum before it is authored.
 the miner excavates the underground ramp and branches at runtime. `sink` specifies how the
 lowest authored layer seats against the terrain: zero replaces the surface block, while -1
 places that layer above it. `mine_entrance` specifies a cardinal descent direction, a mouth
-offset from each MINER station, and a width of three or five blocks (default five). The
-building's rotation applies to both direction and offset. Width changes the side walls and
+offset from each MINER station, and a width of two, three or five blocks (default five). The
+building's rotation applies to both direction and offset. A two-wide corridor occupies local
+x -1 and 0 so its mouth remains a real walk cell instead of a half-block center. Width changes the side walls and
 branch mouths; it does not change the one-down-per-forward-block slope, headroom, or entrance
 step. Children inherit their root's width. The top entrance remains open rather than being
 lined as though its outdoor air were a cave. Existing shafts retain their saved entrance
@@ -107,7 +108,10 @@ homes and services can form streets and courtyards with natural sprawl. Building
 two-block gaps and inward fronts, with one-block gaps and other rotations when needed.
 They can align with any previously planned building rather than fixed sides of the center.
 
-Each building uses its own local ground elevation and applies its authored sink once.
+Each building uses its own local ground elevation and applies its authored sink once. A template
+with negative `sink` also reads the ground immediately outside its rotated public front. When
+that approach is higher than the footprint's modal plane, the building follows it so an exposed
+doorstep does not sit in a cut trench.
 The same terrain-preparation queues as normal construction clear and fill only its footprint.
 Founding applies this work immediately, without charging the recipe. Ground between buildings
 stays natural. Normal completion hooks register amenities and clear natural overhead vegetation.

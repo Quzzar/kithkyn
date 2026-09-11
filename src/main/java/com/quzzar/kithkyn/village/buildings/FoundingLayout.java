@@ -33,7 +33,7 @@ public final class FoundingLayout {
       var template = village.getLevel().getStructureManager().getOrCreate(
           net.minecraft.resources.ResourceLocation.fromNamespaceAndPath(com.quzzar.kithkyn.Kithkyn.MODID, info.getPath()));
       var search = LocationValidator.findValidLocation(village.getLevel(), anchor, template,
-          info.getEntranceFacing(), List.of(Rotation.values()), village, context, random);
+          info.getEntranceFacing(), info.getSink(), List.of(Rotation.values()), village, context, random);
       if (!search.found()) return Optional.empty();
       var structure = new InstantBuildStructure(new Building(info.getName(), search.rotation()), random, village.getLevel())
           .withIdentity(village.getIdentity()).seatAtOrigin(search.site().below(info.getSink()), new HashSet<>());

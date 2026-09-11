@@ -50,15 +50,17 @@ public class BuildingInfo {
     }
 
     public MineEntrance {
-      if (width != 3 && width != 5) throw new IllegalArgumentException("Mine width must be 3 or 5");
+      if (width != 2 && width != 3 && width != 5) {
+        throw new IllegalArgumentException("Mine width must be 2, 3 or 5");
+      }
     }
 
     public static final Codec<MineEntrance> CODEC = RecordCodecBuilder.create(inst -> inst.group(
         Direction.CODEC.optionalFieldOf("facing", Direction.SOUTH).forGetter(MineEntrance::facing),
         BlockPos.CODEC.optionalFieldOf("offset", BlockPos.ZERO).forGetter(MineEntrance::offset),
-        Codec.INT.validate(width -> width == 3 || width == 5
+        Codec.INT.validate(width -> width == 2 || width == 3 || width == 5
             ? com.mojang.serialization.DataResult.success(width)
-            : com.mojang.serialization.DataResult.error(() -> "Mine width must be 3 or 5"))
+            : com.mojang.serialization.DataResult.error(() -> "Mine width must be 2, 3 or 5"))
             .optionalFieldOf("width", 5).forGetter(MineEntrance::width)
     ).apply(inst, MineEntrance::new));
   }
