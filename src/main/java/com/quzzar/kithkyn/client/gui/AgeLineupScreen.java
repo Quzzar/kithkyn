@@ -32,8 +32,9 @@ import net.minecraft.world.item.Items;
  * <p>All four preview people share the same appearance genes and default
  * client-side attributes. Only {@link AgeStage} changes, so a screenshot makes
  * model proportions and relative stage scale directly comparable. The same four
- * can be shown asleep: a client-side sleeping position shuts their eyes without
- * laying them down, which photographs the closed face at every stage.
+ * can be shown asleep: a client-side sleeping position shuts their eyes and rests
+ * their heads without laying them down, which photographs the sleeping face at
+ * every stage. The beds themselves are the world preview's job.
  *
  * <p>The undead lineup uses the same genes on the other {@link Kind}, dresses
  * the adult as a farmer so the rags read against a dark garment, and adds an
@@ -70,8 +71,8 @@ public final class AgeLineupScreen extends Screen {
     private static String subtitle(Kind kind, boolean asleep) {
         if (asleep) {
             return kind == Kind.UNDEAD
-                    ? "The undead lineup asleep; a skull has no lids to shut"
-                    : "The waking lineup with every eye shut";
+                    ? "The undead lineup asleep: heads at rest, and a skull has no lids to shut"
+                    : "The waking lineup asleep: eyes shut, heads at rest";
         }
         return kind == Kind.UNDEAD
                 ? "Same genes as the living lineup; only kind and age change"
@@ -163,7 +164,8 @@ public final class AgeLineupScreen extends Screen {
         person.setLifeStage(stage);
         if (asleep) {
             // Sleeping is a position, not a pose: the compositor reads it to
-            // shut the eyes, while the standing pose keeps the face upright.
+            // shut the eyes and the model reads it to rest the head, while the
+            // standing pose keeps every body upright and comparable.
             person.setSleepingPos(BlockPos.ZERO);
         }
         return person;

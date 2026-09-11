@@ -1,0 +1,98 @@
+{
+  "exhibit": "SC01.2",
+  "label": "Floodplain Castle",
+  "gallery_origin": [10107, 230, 1308],
+  "capture_size": [31, 27, 31],
+  "source_exhibit": "JH01.4",
+  "source_mod": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar",
+  "source_mod_structure": "data/kaisyn/structure/outpost/forts/jungle/base_plate.nbt",
+  "source_mod_sha256": "fbac5e09371f93ff7be44b193be4436c585081ed6fc5a569ac6e62571cece708",
+  "source_capture": "run/floodplain-integration/castle/source-capture.nbt",
+  "source_capture_sha256": "72e2ac81744a032e029267255cc2da8879e4674f8cc038516e4053e753760f6a",
+  "status": "verified",
+  "capacity": {
+    "beds": 11,
+    "general_single_beds": 9,
+    "royal_couple_beds": 2
+  },
+  "rooms": [
+    {
+      "id": "royal_suite",
+      "beds": [[19, 10, 20], [20, 10, 20]],
+      "reservation": "LEADER and spouse",
+      "personal_containers": [[21, 11, 16]]
+    },
+    {
+      "id": "east_ground_rooms",
+      "beds": [[23, 2, 13], [25, 2, 13]],
+      "personal_containers": [[26, 2, 13]]
+    },
+    {
+      "id": "west_ground_rooms",
+      "beds": [[5, 2, 17], [7, 2, 17]],
+      "personal_containers": [[4, 2, 17]]
+    },
+    {
+      "id": "west_upper_rooms",
+      "beds": [[7, 6, 13], [7, 6, 15]],
+      "personal_containers": [[7, 6, 17]]
+    },
+    {
+      "id": "east_upper_rooms",
+      "beds": [[23, 6, 13], [23, 6, 15], [23, 6, 17]],
+      "personal_containers": [[26, 6, 17]]
+    }
+  ],
+  "work_areas": [
+    {"role": "leader", "pos": [19, 10, 17]},
+    {"role": "baker", "pos": [10, 10, 19]},
+    {"role": "blacksmith", "pos": [21, 18, 11]},
+    {"role": "jailer", "pos": [14, 2, 10]}
+  ],
+  "guard_posts": {
+    "entrance_sword_and_shield": [[14, 1, 26], [16, 1, 26]],
+    "balcony_crossbow_and_sword": [[15, 10, 5], [15, 10, 25]],
+    "roof_crossbow_and_sword": [[9, 18, 9], [15, 18, 22], [21, 18, 9]]
+  },
+  "patrol_routes": [
+    {"post": [14, 1, 26], "waypoints": [[14, 1, 26], [14, 2, 23]]},
+    {"post": [16, 1, 26], "waypoints": [[16, 1, 26], [16, 2, 23]]},
+    {"post": [15, 10, 5], "waypoints": [[15, 10, 5], [13, 10, 4], [17, 10, 4]]},
+    {"post": [15, 10, 25], "waypoints": [[15, 10, 25], [13, 10, 25], [15, 10, 23], [17, 10, 23]]},
+    {"post": [9, 18, 9], "waypoints": [[9, 18, 9], [8, 18, 8], [9, 18, 11], [11, 18, 11]]},
+    {"post": [15, 18, 22], "waypoints": [[15, 18, 22], [13, 18, 22], [13, 18, 19], [17, 18, 19], [17, 18, 22]]},
+    {"post": [21, 18, 9], "waypoints": [[21, 18, 9], [19, 18, 8], [19, 18, 11], [22, 18, 11]]}
+  ],
+  "jail": {
+    "cell": [16, 2, 8],
+    "release_point": [16, 2, 11],
+    "evidence_containers": [[16, 5, 9], [17, 5, 9]],
+    "sentence_seconds": 300,
+    "evidence_is_village_storage": false
+  },
+  "village_identity": {
+    "banner_slots": 8,
+    "bed_policy": "Single beds alternate primary and secondary; the royal pair shares the primary color."
+  },
+  "shared_containers": [[10, 3, 20], [21, 19, 18]],
+  "excluded_decorative_containers": [
+    {"pos": [9, 10, 17], "reason": "The cake blocks a reliable hand approach to the baker counter."},
+    {"pos": [10, 14, 20], "reason": "Decorative and outside the resident route."}
+  ],
+  "production": {
+    "definition": "run/floodplain-integration/datapack/data/kithkyn/kithkyn/buildings/castle_floodplain_1.json",
+    "template": "run/floodplain-integration/datapack/data/kithkyn/structure/castle_floodplain_1.nbt",
+    "template_sha256": "5e1c3ebe75c056d5f72e0465aad11432502732dc235033b588f42b50958ccc88",
+    "definition_sha256": "78fd107447545b8db7e6b14955576b53b6a38a5bdbf61f19725f7ec61675a399"
+  },
+  "verification": {
+    "barrier_audit": "passed",
+    "static_pack": "run/floodplain-integration/check.py: 21 definitions and templates",
+    "physical_access": "run/swamp-castle-study-20260911/user-final-verification/access/verification.json",
+    "guard_patrols": "run/swamp-castle-study-20260911/user-final-verification/patrol/verification.json: 28 sentry runs across four rotations",
+    "custody": "run/swamp-castle-study-20260911/user-final-verification/custody/verification.json: all custody, evidence, timer, escape and safe-release checks passed",
+    "visual_review": "run/swamp-castle-study-20260911/sc01-2-restyle/render/client/screenshots/"
+  },
+  "source_policy": "Towns and Towers source and derived NBT remain private under run/.",
+  "design_document": "docs/castles.md"
+}

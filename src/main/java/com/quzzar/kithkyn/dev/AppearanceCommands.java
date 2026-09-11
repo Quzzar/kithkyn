@@ -41,10 +41,14 @@ import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.commands.SharedSuggestionProvider;
 import net.minecraft.commands.arguments.EntityArgument;
+import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.level.block.BedBlock;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BedPart;
 
 /** Live development controls and invariant audits for the layered appearance system. */
 public final class AppearanceCommands {
@@ -146,7 +150,17 @@ public final class AppearanceCommands {
                     .executes(context -> setOccupation(
                         context.getSource(),
                         EntityArgument.getEntity(context, "target"),
-                        StringArgumentType.getString(context, "occupation"))))));
+                        StringArgumentType.getString(context, "occupation"))))))
+        .then(Commands.literal("sleep")
+            .then(Commands.argument("targets", EntityArgument.entities())
+                .executes(context -> sleep(
+                    context.getSource(),
+                    EntityArgument.getEntities(context, "targets")))))
+        .then(Commands.literal("wake")
+            .then(Commands.argument("targets", EntityArgument.entities())
+                .executes(context -> wake(
+                    context.getSource(),
+                    EntityArgument.getEntities(context, "targets")))));
   }
 
   private static int show(CommandSourceStack source, Entity entity) {
@@ -528,6 +542,60 @@ public final class AppearanceCommands {
             + occupation.name().toLowerCase(Locale.ROOT)
             + ". This development override does not update the village's job-assignment ledger."), true);
     return 1;
+  }
+
+  /**
+   * Puts each targeted person to bed where they stand, for looking at the sleeping
+   * render on demand: shut eyes, the head at rest, no gear. The target must be standing
+   * in a bed, either half; a sleep started anywhere else ends on the next tick, when
+   * vanilla finds no bed beneath them. The village's night is not consulted, so a person
+   * with AI gets up as soon as a goal decides they should.
+   */
+  private static int sleep(CommandSourceStack source, Collection<? extends Entity> entities) {
+    int slept = 0;
+    for (Entity entity : entities) {
+      RealPerson person = requirePerson(source, entity);
+      if (person == null) {
+        continue;
+      }
+      BlockPos head = bedHeadUnder(person);
+      if (head == null) {
+        source.sendFailure(Component.literal(person.getFullName() + " is not standing in a bed."));
+        continue;
+      }
+      person.startSleeping(head);
+      slept++;
+    }
+    int count = slept;
+    source.sendSuccess(() -> Component.literal("Put " + count + " to bed."), true);
+    return slept;
+  }
+
+  /** Gets each targeted person up; nothing happens to anyone already awake. */
+  private static int wake(CommandSourceStack source, Collection<? extends Entity> entities) {
+    int woken = 0;
+    for (Entity entity : entities) {
+      RealPerson person = requirePerson(source, entity);
+      if (person != null) {
+        person.stopSleeping();
+        woken++;
+      }
+    }
+    int count = woken;
+    source.sendSuccess(() -> Component.literal("Woke " + count + "."), true);
+    return woken;
+  }
+
+  /** The head half of the bed the person stands in, or null when they stand in no bed. */
+  private static BlockPos bedHeadUnder(RealPerson person) {
+    BlockPos at = person.blockPosition();
+    BlockState state = person.level().getBlockState(at);
+    if (!(state.getBlock() instanceof BedBlock)) {
+      return null;
+    }
+    // A bed's facing runs from its foot to its head, the same step vanilla takes when a
+    // player clicks the foot half.
+    return state.getValue(BedBlock.PART) == BedPart.HEAD ? at : at.relative(state.getValue(BedBlock.FACING));
   }
 
   private static AppearanceInputs inputs(RealPerson person) {

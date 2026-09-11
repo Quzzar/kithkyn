@@ -16,8 +16,10 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.Container;
 import net.minecraft.world.entity.ai.navigation.GroundPathNavigation;
 import net.minecraft.world.level.ClipContext;
+import net.minecraft.world.level.block.BedBlock;
 import net.minecraft.world.level.block.DoorBlock;
 import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
+import net.minecraft.world.level.pathfinder.Path;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 
@@ -56,15 +58,38 @@ public final class ContainerAccess {
         candidates.add(new Approach(pos.immutable(), feet));
       }
     }
-    candidates.sort(Comparator.<Approach>comparingDouble(candidate ->
-        candidate.feet().add(0.0D, eyeHeight, 0.0D).distanceToSqr(Vec3.atCenterOf(target)))
+    candidates.sort(Comparator.<Approach>comparingInt(candidate ->
+        Math.abs(candidate.feet().y - candidate.node().getY()) < 0.01D ? 0 : 1)
+        .thenComparingDouble(candidate ->
+            candidate.feet().add(0.0D, eyeHeight, 0.0D).distanceToSqr(Vec3.atCenterOf(target)))
         .thenComparingDouble(candidate -> candidate.feet().distanceToSqr(person.position())));
+    Approach best = null;
+    int fewestBedSteps = Integer.MAX_VALUE;
     for (Approach candidate : candidates.stream().limit(PATHS_PER_SCAN).toList()) {
-      var path = person.getNavigation().createPath(candidate.node(), 0);
+      Path path = person.getNavigation().createPath(candidate.node(), 0);
       if (path != null && path.canReach() && path.getEndNode() != null
-          && path.getEndNode().asBlockPos().equals(candidate.node())) return candidate.node();
+          && path.getEndNode().asBlockPos().equals(candidate.node())) {
+        int bedSteps = bedSteps(person, path);
+        if (bedSteps < fewestBedSteps) {
+          best = candidate;
+          fewestBedSteps = bedSteps;
+        }
+        if (bedSteps == 0) return candidate.node();
+      }
     }
+    if (best != null) return best.node();
     return closedClosetDoor(person, target, reachSqr, allowedStanding);
+  }
+
+  /** Beds are valid low surfaces, but mobs can catch on their edge while trying to cross them diagonally. */
+  private static int bedSteps(RealPerson person, Path path) {
+    int count = 0;
+    for (int index = 0; index < path.getNodeCount(); index++) {
+      if (person.level().getBlockState(path.getNode(index).asBlockPos().below()).getBlock() instanceof BedBlock) {
+        count++;
+      }
+    }
+    return count;
   }
 
   /** A one-cell closet has no inside stance until the ordinary door goal opens its wooden door. */

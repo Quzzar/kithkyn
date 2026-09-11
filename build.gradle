@@ -191,6 +191,16 @@ tasks.withType(Test).configureEach {
     useJUnitPlatform()
 }
 
+var auditStructureTemplates = tasks.register("auditStructureTemplates", Exec) {
+    group = "verification"
+    description = "Rejects structure templates containing barrier states or out-of-bounds cells."
+    commandLine "python3", "tools/structure/audit-templates.py", "src/main/resources/data/kithkyn/structure"
+}
+
+tasks.named("check").configure {
+    dependsOn auditStructureTemplates
+}
+
 // This block of code expands all declared replace properties in the specified resource targets.
 // A missing property will result in an error. Properties are expanded using ${} Groovy notation.
 var generateModMetadata = tasks.register("generateModMetadata", ProcessResources) {

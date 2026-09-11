@@ -78,7 +78,10 @@ public final class CustodyVerification {
     level.getGameRules().getRule(GameRules.RULE_KEEPINVENTORY).set(false, level.getServer());
     BlockPos origin = new BlockPos(2400, 159, 2400);
     for (int x = 147; x <= 153; x++) for (int z = 147; z <= 153; z++) level.setChunkForced(x, z, true);
-    Building castle = ApprovedStructureAccess.place(level, origin, Buildings.getByName("castle_desert_1"), Rotation.NONE);
+    String castleId = System.getProperty("kithkyn.custody.id", "castle_desert_1");
+    var castleInfo = Buildings.getByName(castleId);
+    check(castleInfo != null, "Missing castle definition " + castleId);
+    Building castle = ApprovedStructureAccess.place(level, origin, castleInfo, Rotation.NONE);
     var village = new TestVillage(level, castle);
     VillageManager.get(level).getVillages().put(village.getID(), village);
     var guard = new ApprovedStructureAccess.Person(level, village);

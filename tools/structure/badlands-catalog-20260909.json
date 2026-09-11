@@ -317,11 +317,11 @@
       "source_mod": "[Neoforge]ctov-3.6.3.jar",
       "source_mod_structure": "data/ctov/structure/village/mesa_fortified/jobsite/farm.nbt",
       "asset": "run/badlands-integration/datapack/data/kithkyn/structure/farm_badlands_1.nbt",
-      "asset_sha256": "3e2bbf8d6e214a20bf41b744634ecde4052ed172392b346895934253dbc6d39f",
+      "asset_sha256": "6e0b24b26d58df102be47d21f73fa76b896b9e390ba0a5d102c8de407dc36322",
       "definition": "run/badlands-integration/datapack/data/kithkyn/kithkyn/buildings/farm_badlands_1.json",
       "definition_sha256": "2dad3d5bb54699721975ff551a46309135f545e1b3994e3375e89ffcb0cb3c4d",
       "reviewed_neutral": "run/pueblo-showcase/services-approved-20260909-183601/neutral/P09.7.nbt",
-      "reviewed_neutral_sha256": "2734e169ed8d43f6cd49cd7c453908525dab77da1a53d0ef9899fcde5c435b82"
+      "reviewed_neutral_sha256": "530c8b441e5789e9517ff704f855a5e9fd20275f8a6d260e88f06c58f6f1e33b"
     },
     {
       "exhibit": "P10.4",

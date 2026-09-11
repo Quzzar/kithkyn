@@ -312,7 +312,13 @@ public final class ApprovedHouseVerification {
       else beginWalk(level);
     } else {
       boolean temporary = residents.isEmpty();
-      walker = temporary ? new ApprovedStructureAccess.Person(level, village) : residents.getFirst();
+      walker = temporary ? new ApprovedStructureAccess.Person(level, village) : residents.stream()
+          .filter(person -> village.getJobAssignment(person.getUUID()) == null)
+          .findFirst().orElse(residents.getFirst());
+      if (!temporary && residents.getFirst() != walker) {
+        residents.remove(walker);
+        residents.addFirst(walker);
+      }
       walker.setLifeStage(AgeStage.ADULT);
       setProbeBody(walker);
       ApprovedStructureAccess.moveTo(walker, entrance);
@@ -332,7 +338,9 @@ public final class ApprovedHouseVerification {
       var spouses = marriedResidents(level);
       check(village.getBedAssignment(spouses.getFirst().getUUID()) == null
           && village.getBedAssignment(spouses.get(1).getUUID()) == null, "Worker couple was pre-housed");
-      claimWorkplace(spouses.getFirst());
+      BuildingInfo.RoomReservation room = info.getRoomReservation(
+          info.getBedLocations().indexOf(pair.first().asLong()));
+      claimWorkplace(spouses.getFirst(), room == null ? null : room.occupation().orElse(null));
       checkCouple(spouses.getFirst(), spouses.get(1), pair);
     }
     for (int single = 0; single < info.getWorkerSingleBedCount(); single++) {
@@ -371,10 +379,16 @@ public final class ApprovedHouseVerification {
   }
 
   private static void claimWorkplace(ApprovedStructureAccess.Person worker) {
+    claimWorkplace(worker, null);
+  }
+
+  private static void claimWorkplace(ApprovedStructureAccess.Person worker, Occupation requiredOccupation) {
     JobAssignment job = village.getUnassignedJobs().stream()
-        .filter(open -> open.getBuildingUUID().equals(building.getUUID())).findFirst()
+        .filter(open -> open.getBuildingUUID().equals(building.getUUID()))
+        .filter(open -> requiredOccupation == null || open.getOccupation() == requiredOccupation)
+        .findFirst()
         .orElseThrow(() -> new AssertionError("More worker rooms than stations in " + label()));
-    check(village.canHouseForJob(worker.getUUID(), building.getUUID()), "Unhoused worker cannot claim the authored room");
+    check(village.canHouseForJob(worker.getUUID(), job), "Unhoused worker cannot claim the authored room");
     village.assignJob(worker.getUUID(), job);
     worker.setOccupation(job.getOccupation());
     check(village.getJobAssignment(worker.getUUID()) != null, "Worker claim did not book its station");
@@ -496,14 +510,18 @@ public final class ApprovedHouseVerification {
       // while the same body is still checking later stations. Founding proves
       // real job and routed-worksite behavior; fixed crossbow posts still need
       // their actual equipment and duty here.
-      if (existing != null) {
-        walker.setOccupation(existing.getOccupation());
-        walker.issueStartingKit();
-      } else if (physicalCategory == null && visit.occupation() == Occupation.GUARD
+      if (physicalCategory == null && visit.occupation() == Occupation.GUARD
           && guardRole == GuardRole.CROSSBOW_POST) {
-        village.assignJob(walker.getUUID(), new JobAssignment(walker.getUUID(), visit.occupation(),
-            building.getUUID(), visit.stationIndex()));
+        if (existing == null || !existing.getBuildingUUID().equals(building.getUUID())
+            || existing.getStationIndex() != visit.stationIndex()) {
+          village.releaseJob(walker.getUUID());
+          village.assignJob(walker.getUUID(), new JobAssignment(walker.getUUID(), visit.occupation(),
+              building.getUUID(), visit.stationIndex()));
+        }
         walker.setOccupation(visit.occupation());
+        walker.issueStartingKit();
+      } else if (existing != null) {
+        walker.setOccupation(existing.getOccupation());
         walker.issueStartingKit();
       } else {
         village.releaseJob(walker.getUUID());
@@ -736,7 +754,11 @@ public final class ApprovedHouseVerification {
     var doors = walker.goalSelector.getAvailableGoals().stream()
         .filter(goal -> goal.getGoal() instanceof OpenDoorGoal)
         .map(goal -> "running=" + goal.isRunning() + ",canUse=" + goal.getGoal().canUse()).toList();
-    return "collision=" + walker.horizontalCollision + ",canOpenDoors="
+    BlockPos feet = walker.blockPosition();
+    return "collision=" + walker.horizontalCollision + ",onClimbable=" + walker.onClimbable()
+        + ",feet=" + feet.subtract(ORIGIN) + ",feetState=" + walker.level().getBlockState(feet)
+        + ",belowState=" + walker.level().getBlockState(feet.below()) + ",motion=" + walker.getDeltaMovement()
+        + ",canOpenDoors="
         + ((GroundPathNavigation) walker.getNavigation()).canOpenDoors() + ",doorGoals=" + doors
         + ",pathDone=" + walker.getNavigation().isDone() + ",nextNode="
         + (path == null ? "none" : path.getNextNodeIndex()) + ",nearbyNodes=" + nodes;

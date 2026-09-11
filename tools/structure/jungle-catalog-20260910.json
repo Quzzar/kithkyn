@@ -247,7 +247,7 @@
       "recipe": "fishery_1",
       "source_mod_structure": "data/kaisyn/structure/village/jungle_tribal/houses/jungle_fisher_1.nbt",
       "source_capture": "run/jungle-showcase/bamboo-adoption-20260910/after-placement/captures/JA01.8.nbt",
-      "source_capture_sha256": "75709284e8d942de4916bc601a744ccf358c55f4c39448ad90259454479385a1",
+      "source_capture_sha256": "fdf9520d05a6576c3b12e2133baef9c5acdbcb2d1a8a74fa8a5a0fec5ab02c41",
       "gallery_origin": [
         5026,
         230,
@@ -263,13 +263,14 @@
         8,
         13
       ],
+      "ground_layer": 1,
       "beds": 1,
       "stations": [
         "FISHER"
       ],
       "worksites": [],
       "asset": "run/jungle-integration/datapack/data/kithkyn/structure/fishery_jungle_1.nbt",
-      "asset_sha256": "97940b878ce9dc41eacf1b75597f0b6240de946fe82fa16b76939bfbe108a705",
+      "asset_sha256": "4df5059390a048c9f5d7162d50668ed452ceb02415bba10f94a35747e2d17be2",
       "definition": "run/jungle-integration/datapack/data/kithkyn/kithkyn/buildings/fishery_jungle_1.json",
       "definition_sha256": "b150b434a50c9e0810aa79c78c14a15c756a6af0eb79b4afaa9fec754252c261"
     },
@@ -804,8 +805,9 @@
     "fishery_repair": {
       "date": "2026-09-11",
       "barriers_removed": 108,
+      "ground_air_removed": 37,
       "sink": 1,
-      "template_audit": "103 active private templates, zero barriers and zero out-of-bounds blocks",
+      "template_audit": "Jungle catalog: 22 templates, zero barriers and zero out-of-bounds blocks; fishery layers 0-1 contain no explicit air",
       "placement": "8 real-template placements passed across both construction paths and four rotations",
       "access": "12 routes passed across all four rotations"
     }

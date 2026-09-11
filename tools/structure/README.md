@@ -26,7 +26,7 @@ themselves — they only transform files you point them at.
 | `flatten.py` | Map pre-1.13 numeric block ids to modern blockstates |
 | `split_scene.py` | Crop the separate buildings out of one multi-building `.schematic` (flood-fill footprints; rejects trees by composition) |
 | `validate.py` | Flag blocks that would drop on placement — bed and door halves, wall torches, gravity-affected stacks, carpet on nothing |
-| `audit-templates.py` | Reject production templates containing barrier blocks or coordinates outside their declared size |
+| `audit-templates.py` | Reject production templates containing barrier states or coordinates outside their declared size |
 | `navcheck.py` | Score how walkable a finished structure is for a villager |
 | `roof.py` | Fix roof-stair facing |
 | `seating-check.py` | Flag catalog buildings seated one block low: a bottom-half stair in the layer that meets the ground is a doorstep swallowed by the terrain |
@@ -37,9 +37,10 @@ Each script's `__main__` is an example driver; point the glob at your own
 structure directory. Run them from this directory so their imports resolve.
 
 Run `python3 tools/structure/audit-templates.py <data/kithkyn/structure>` over every
-public or private catalog before deployment. Gallery containment barriers and blocks outside
-an explicit crop are review fixtures, never building content. The native exporter enforces the
-same invariants while writing a template.
+public or private catalog before deployment. Gallery containment barriers, including unused
+palette entries, are review fixtures, never building content. Blocks outside an explicit crop
+are invalid for the same reason. The native exporter enforces both invariants while writing a
+template. `./gradlew check` runs the audit over the public catalog automatically.
 
 The Birch export expects the canonical project root, prepared Minecraft runtime dependencies,
 an approved capture directory and a destination asset directory. It never reads a live world.
@@ -97,7 +98,9 @@ second bakery bed and update identity slots. `birch-tavern-20260909.json` refere
 immutable approved capture, source hash and explicit amenity metadata. The same native
 writer preserves the edited grass and lighting, empties storage, and neutralizes only the
 keeper's assigned bed. Dense captures can declare `ground_layer` so exterior ground-level
-air does not excavate the supporting terrain. The source captures are never rewritten.
+air does not excavate the supporting terrain. `ground_layer` is the highest local template layer
+whose empty cells must preserve existing terrain; account for `sink` when choosing it. A sink-one
+pond building, for example, protects local layers 0 and 1. The source captures are never rewritten.
 
 ## Pueblo center review
 

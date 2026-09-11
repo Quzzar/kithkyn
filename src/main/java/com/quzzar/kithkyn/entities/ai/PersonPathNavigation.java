@@ -143,6 +143,9 @@ public final class PersonPathNavigation extends GroundPathNavigation {
    * walk starts or ends down one of the village's mine shafts. The goal keeps
    * asking for its real target, and each answer is the next hop from wherever
    * the walker has got to, so the shaft is descended and climbed by the ramp.
+   * A hop that lands in undug rock means the walker is not on the ramp at all
+   * but in a cave or pocket the planned volume overlaps, and the ordinary path
+   * is the only thing that can take them anywhere.
    */
   @Override
   @Nullable
@@ -155,7 +158,19 @@ public final class PersonPathNavigation extends GroundPathNavigation {
         person.tpToHome();
         return null;
       }
+      if (!canUpdatePath()) {
+        // Mid-air between two steps: vanilla answers nothing too, and a shaft hop
+        // asked for now only logged a failure that was not one.
+        return null;
+      }
       BlockPos hop = MineShaft.waypoint(person.getVillage(), this.mob.blockPosition(), pos);
+      if (hop != null && !openFooting(hop)) {
+        // The plan says shaft, the world says rock. A guard who fell into a cave
+        // pocket beside Zawiriko's ramp was held here for minutes (2026-09-11):
+        // the hop through stone could never be reached, so every request got no
+        // path at all. Off the ramp, the ordinary pathfinder decides.
+        hop = null;
+      }
       if (hop != null) {
         Path path = super.createPath(hop, MINE_WAYPOINT_ACCURACY);
         if (path == null || !path.canReach()) {
@@ -194,6 +209,13 @@ public final class PersonPathNavigation extends GroundPathNavigation {
       return super.createPath(Set.of(pos), accuracy);
     }
     return super.createPath(pos, accuracy);
+  }
+
+  /** Whether feet and head at {@code cell} are clear: a dug shaft cell rather than planned rock. */
+  private boolean openFooting(BlockPos cell) {
+    BlockPos head = cell.above();
+    return this.level.getBlockState(cell).getCollisionShape(this.level, cell).isEmpty()
+        && this.level.getBlockState(head).getCollisionShape(this.level, head).isEmpty();
   }
 
   /**
@@ -253,7 +275,11 @@ public final class PersonPathNavigation extends GroundPathNavigation {
           this.level.getBlockState(this.path.getNextNodePos()));
       if (Math.abs(this.mob.getX() - next.x) < 0.45D
           && Math.abs(this.mob.getZ() - next.z) < 0.45D
-          && Math.abs(this.mob.getY() - next.y) < 0.35D) this.path.advance();
+          // A climbing body's feet can oscillate anywhere inside the rung's
+          // block. Occupying that exact rung is sufficient to advance toward
+          // the next one; comparing its fractional height advances too early
+          // near the top and can drop the body before it reaches the landing.
+          && this.mob.blockPosition().equals(this.path.getNextNodePos())) this.path.advance();
       this.doStuckDetection(this.getTempMobPos());
       return;
     }

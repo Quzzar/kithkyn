@@ -1778,6 +1778,32 @@ the building, its door went, and a step leads down into the pit; the miner stand
 with the ramp mouth one column in. The Desert mine gained a shared chest at the pit floor plus two wall
 posts, a fence, a trapdoor and a lantern, exported in its existing frame. Both were captured from a flushed
 snapshot, re-exported, checked and installed in their packs.
+
+### Floodplain castle: September 11
+
+Aaron selected SC01.2, the Towns and Towers Jungle Fort, as the Floodplain castle. The
+restyle replaced the dark tropical timber with spruce and dark-oak accents, retained the
+mossed stone silhouette, removed cobwebs and converted eight banners into village identity
+slots. Aaron then rebuilt the interior into two residential wings with nine single beds, a
+reserved ruler suite with two beds, a baker, a rooftop blacksmith, a ground-floor jail and
+seven guard posts. The two barrels above the jail door are custody evidence and are excluded
+from every village and personal storage list.
+
+Custody now recognizes the authored jail as one enclosed, flat room rather than requiring a
+one-block standing cell. It flood-fills only supported interior tiles, rejects open rooms and
+large courtyards, and treats crossing the room boundary as escape.
+
+The final gallery structure at `10107, 230, 1308` was captured from a flushed snapshot and
+exported as `castle_floodplain_1`; empty space above its ground course is explicit so terrain
+cannot fill the rooms. Container contents are stripped, doors start closed, and the template
+contains no barrier states. Native access testing uses a two-block adult and covers all beds,
+personal barrels, shared stores, stations, ladders and rotations. It exposed and fixed a
+rotation-sensitive ladder transition and a container route that preferred stepping across a
+bed over clear floor. Guard and custody fixtures exercise the seven sentries and five-minute
+jail flow separately. The five upper sentries use station-specific balcony and roof routes so
+they do not crowd the central ladder. Public provenance and coordinates are recorded in
+`tools/structure/floodplain-castle-20260911.json`.
+
 ### Jungle catalog verified: September 10
 
 The approved Jungle selection is now a playable private catalog with 22 definitions: nineteen
@@ -1810,3 +1836,18 @@ loops opened the intended first descending step without crossing either authored
 eight routed-worksite walks covered both barrels plus mine descent and return; and eight instant or
 incremental construction placements retained the revised template. The production NBT has zero
 blockstate differences from the flushed gallery capture.
+
+The Jungle fishery's first repair removed its gallery barrier frame and lowered it into the wet
+bank, but its export still encoded 37 empty cells at local layer 1 as air. With `sink: 1`, that is
+the visible terrain layer, so new construction could erase the bank around the pond. The fishery
+now protects both local layers 0 and 1: those cells are omitted and leave existing terrain in place,
+while the pond water and authored foundation remain unchanged. Eight real placements and twelve
+navigation routes passed again across all four rotations, and the 22-template Jungle catalog has
+no barriers or out-of-bounds blocks.
+
+### Desert lumberjack entrance correction: September 11
+
+The D03.4 lumberjack definition incorrectly declared west as its entrance direction. The authored
+compound has one exterior approach opening, on its east edge at local `[14,1,8]`; its west edge is
+closed. The internal cabin door is not the compound entrance. `lumberjack_desert_1` now declares
+east, so the planner can face the actual approach toward the village center in every rotation.

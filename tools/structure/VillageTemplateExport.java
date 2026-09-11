@@ -32,6 +32,34 @@ public final class VillageTemplateExport {
 
   static int[] vector(JsonElement value) { return new Gson().fromJson(value, int[].class); }
 
+  /** Remove palette states no surviving block uses and remap every state index. */
+  static void compactPalette(ListTag palette, ListTag blocks) {
+    boolean[] used = new boolean[palette.size()];
+    for (Tag value : blocks) {
+      int state = ((CompoundTag)value).getInt("state");
+      if (state < 0 || state >= palette.size()) {
+        throw new IllegalArgumentException("Block refers to missing palette state " + state);
+      }
+      used[state] = true;
+    }
+    int[] remap = new int[palette.size()];
+    ListTag compact = new ListTag();
+    for (int state = 0; state < palette.size(); state++) {
+      if (!used[state]) {
+        remap[state] = -1;
+        continue;
+      }
+      remap[state] = compact.size();
+      compact.add(palette.get(state).copy());
+    }
+    for (Tag value : blocks) {
+      CompoundTag block = (CompoundTag)value;
+      block.putInt("state", remap[block.getInt("state")]);
+    }
+    palette.clear();
+    palette.addAll(compact);
+  }
+
   public static void main(String[] args) throws Exception {
     JsonArray plan = JsonParser.parseString(Files.readString(Path.of(args[0]))).getAsJsonArray();
     for (JsonElement entry : plan) {
@@ -134,6 +162,7 @@ public final class VillageTemplateExport {
               && palette.getCompound(block.getInt("state")).getString("Name").equals("minecraft:air");
         });
       }
+      compactPalette(palette, blocks);
       // A block outside the declared size is never intended: it stretches the building's
       // footprint in the world (a gallery sign captured four cells in front of a mine
       // pushed the whole mine back), so the export fails instead of shipping it.
@@ -149,6 +178,12 @@ public final class VillageTemplateExport {
         if (palette.getCompound(block.getInt("state")).getString("Name").equals("minecraft:barrier")) {
           throw new IllegalArgumentException("Barrier block in production structure at " + position + " in "
               + spec.get("output").getAsString() + ": remove gallery containment before export");
+        }
+      }
+      for (Tag state : palette) {
+        if (((CompoundTag)state).getString("Name").equals("minecraft:barrier")) {
+          throw new IllegalArgumentException("Barrier state in production structure palette in "
+              + spec.get("output").getAsString());
         }
       }
       root.put("size", ints(size));

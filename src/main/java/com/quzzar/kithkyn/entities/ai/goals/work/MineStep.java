@@ -104,7 +104,9 @@ import net.neoforged.neoforge.common.Tags;
  * rib cell as dug space, and a cut rib is lit with a torch; a rib that meets liquid
  * or a cave simply stops there.
  *
- * <p>Bedrock plus a finished set of root ribs opens a bounded second pass. The
+ * <p>Bedrock or lava, plus a finished set of root ribs, opens a bounded second
+ * pass. Lava finishes a root because nothing bails or plugs it; water is the
+ * temporary stop that a bucket or lining clears later. The
  * miner revisits complete eight-block root ribs from the top down and, where a
  * five-wide corridor will not overlap an existing child, drives a new diagonal
  * shaft outward from the rib end. A child runs this exact same excavation loop,
@@ -290,7 +292,7 @@ public final class MineStep implements BlockWorkStep {
     DRY_HOLE,
   }
 
-  /** A shaft either offered work, must wait, or has reached bedrock and finished every rib. */
+  /** A shaft either offered work, must wait, or is driven as deep as it ever will be with every rib finished. */
   private record ShaftPick(@Nullable BlockPos stand, boolean exhausted) {
   }
 
@@ -486,7 +488,11 @@ public final class MineStep implements BlockWorkStep {
       if (fanStand != null) {
         return new ShaftPick(fanStand, false);
       }
-      boolean exhausted = this.block == Blocks.BEDROCK;
+      // Bedrock ends a ramp for good, and so does lava: nothing bails or plugs it,
+      // so waiting on it parked Zawiriko's miner idle with every rib cut and a
+      // complete rib ready to seed a child (Aaron, 2026-09-11). Water is the
+      // temporary stop a bucket or lining clears later, so it finishes nothing.
+      boolean exhausted = this.block == Blocks.BEDROCK || this.block == Blocks.LAVA;
       logIdleState(person, exhausted ? NoWork.EXHAUSTED : NoWork.BLOCKED,
           "blocked shaft has no rib work: mouth=" + mouth.toShortString()
           + ", block=" + this.block.getName().getString()
@@ -2080,8 +2086,16 @@ public final class MineStep implements BlockWorkStep {
         + ", support=" + MineSupportMaterials.held(person.personMainInv)
         + ", water=" + (reachableWater == null
             ? "none" : reachableWater.cell().toShortString());
-    if (!state.equals(this.lastFluidDeadEnd)) {
-      this.lastFluidDeadEnd = state;
+    // Dedupe on the reason, not the cell: the sweep alternates between the faces
+    // of one pocket, so a per-cell key wrote a line on every pick for as long as
+    // the stop held (hundreds an hour at Zawiriko's lava, 2026-09-11).
+    String reason = mouth.toShortString() + " " + this.block.getName().getString()
+        + (carriesBucket(person) ? " bucket" : " no-bucket")
+        + (breach == null ? " closed" : " open")
+        + (MineSupportMaterials.held(person.personMainInv) > 0 ? " support" : " no-support")
+        + (reachableWater == null ? " no-water" : " water");
+    if (!reason.equals(this.lastFluidDeadEnd)) {
+      this.lastFluidDeadEnd = reason;
       Kithkyn.LOGGER.info("[mine-state] {} cannot advance flooded shaft: {}",
           person.getName().getString(), state);
     }
