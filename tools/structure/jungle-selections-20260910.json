@@ -214,7 +214,7 @@
         1018
       ],
       "role": "mine",
-      "status": "captured_pending_production_authoring",
+      "status": "approved_and_deployed",
       "capacity": {
         "beds": 0,
         "single_beds": 0,
@@ -282,7 +282,16 @@
               0,
               4
             ]
-          ]
+          ],
+          "verification": {
+            "status": "passed",
+            "exact_capture_state_mismatches": 0,
+            "asset_contract_test": "JunglePlacementAssetsTest",
+            "rotations": 4,
+            "construction_placements": 8,
+            "production_access_routes": 8,
+            "excavation_runs": 4
+          }
         }
       ]
     },

@@ -17,7 +17,7 @@ catalog and immutable output hashes are recorded in
 | Id | Selected use | Beds and stations |
 | --- | --- | --- |
 | `village_center_jungle_1` | JA01.1 meeting point | No beds; quartermaster, builder, guard captain and miner vacancies |
-| `mine_jungle_1` | JA01.5 edited armorer | No vacancy; one physical miner worksite and two shared barrels |
+| `mine_jungle_1` | JA01.5 edited armorer | No vacancy; one sunken physical miner worksite and two shared barrels at the stair rim |
 | `storehouse_jungle_1` | JA03.1 edited small house | No vacancy; one physical quartermaster worksite and three shared containers |
 | `lumberjack_jungle_1` | JA01.4 animal pen | Lumberjack and one shared chest |
 | `tavern_jungle_1` | JA01.6 butcher | Innkeeper and one shared barrel; no bed |
@@ -53,9 +53,10 @@ The quartermaster and miner vacancies remain owned by the center, while their ph
 happens in the separately placed storehouse and mine. A `worksite_category` on each center post
 routes the worker to the nearest matching building; the target building declares a `worksites`
 position without creating a duplicate vacancy. Removing or rebuilding that target makes the
-workplace temporarily unavailable. The mine alone owns its three-block-wide shaft, which leaves
-the east wall two blocks from the worksite so the authored mouth, workstation footing and final
-surface step do not overlap.
+workplace temporarily unavailable. The mine alone owns its three-block-wide shaft. Its four-by-three
+pit is one block deep, with three stairs down its west side and both material barrels at that stair
+rim. The miner stands in the pit's west column; the eastward ramp mouth is one column inward and one
+block above that post, keeping the first descending cuts inside the pavilion.
 
 The bell is the meeting and arrival point. The campfire is a separate cooking and idle amenity;
 it does not redefine the village center.
@@ -80,8 +81,8 @@ the other regional styles.
 ## Authoring and local installation
 
 `run/jungle-integration/prepare.py` reads the immutable capture record, crops the approved
-structures, neutralizes village identity slots, moves the butcher's inaccessible chest and the
-mine's embedded barrels, opens the mine mouth, and assembles
+structures, neutralizes village identity slots, moves the butcher's inaccessible chest and applies
+the approved sunken mine-floor revision, then assembles
 `run/jungle-integration/datapack/`. Programmatically placed chests and barrels receive native
 block-entity data from `tools/structure/VillageTemplateExport.java`. The private pack is installed
 as `kithkyn-jungle` and kept with world backups; the public jar deliberately carries none of the
@@ -91,7 +92,8 @@ can request `/kithkyn create-village ~ ~ ~ jungle`.
 ## Verification
 
 Core tests cover biome selection, codec persistence, routed physical worksites, mine ownership,
-the Jungle wall palette and unchanged fallback behavior. Native checks run the private catalog
+the Jungle wall palette and unchanged fallback behavior. An opt-in private-asset test fixes the
+mine's pit, stair, barrel, worksite and mouth geometry. Native checks run the private catalog
 through the shared reviewed-village, access and real-placement fixtures.
 
 The September 10 integration passed the complete access suite: 84 rotated structures, 224 real
@@ -102,4 +104,7 @@ four rotations, including colors, frames, save receipts and upgrade preservation
 restart retained all 176 buildings. The founding fixture passed 22 strict templates, all four
 center rotations, eight market upgrade fits, natural Jungle selection, four starting homes,
 four assigned workers, distinct bell and campfire locations, routed mine/storehouse work and
-codec reloads.
+codec reloads. After the mine-floor revision, a focused native pass added four real excavation
+runs, eight routed-worksite access routes and eight instant/incremental construction placements
+across all four rotations. The exported template has zero blockstate mismatches against Aaron's
+flushed live capture.
