@@ -37,12 +37,13 @@ import net.minecraft.world.item.ShearsItem;
 import net.minecraft.world.item.TieredItem;
 
 /**
- * Puts one bedtime question to a villager who has a chest of their own: of
- * what they are carrying home tonight, what would they rather keep than hand
- * back to the village stores? The rules lay out the facts, what is in the
- * pack and what the chest already holds, and one option per kind of item
- * carried; the model keeps any number of them, or none, in character, over
- * the multi-pick sibling of decide() (docs/llm-brain.md).
+ * Puts one bedtime question to a villager who has a chest of their own, in
+ * two halves: of what they are carrying home tonight, what would they rather
+ * keep than hand back to the village stores, and of what the chest already
+ * holds, what would they rather take out and carry? The rules lay out the
+ * facts, what is in the pack and what the chest holds, and one option per
+ * kind of item on either side; the model picks any number of them, or none,
+ * in character, over the multi-pick sibling of decide() (docs/llm-brain.md).
  *
  * <p>The chest is for keepsakes, and the briefing says so: the village runs on
  * what its workers bring in, so the question is what is truly personal, not
@@ -53,55 +54,81 @@ import net.minecraft.world.item.TieredItem;
  * at all, since the miner once kept the bucket and the torches the restock had
  * just handed over, and the shaft flooded while they sat in a barrel at home.
  *
- * <p>Silence keeps nothing. The rules' own choice is what always happened,
- * the whole pack back to the stores, so a mute or absent model costs the
- * village no goods; only an explicit pick holds something back. What is kept
- * stays in the pack for the walk home and is set down in the chest by hand
- * ({@link com.quzzar.kithkyn.entities.ai.goals.StashAtHomeGoal}), so
- * nothing teleports. The answer lands through {@link RealPerson#settleStash},
+ * <p>Taking out (2026-09-11) is the other direction of the same visit: a
+ * keepsake to use or give, or supplies the village has since run short of.
+ * What is taken out rides in the pack and meets the next bedtime like
+ * anything else carried, so it returns to the stores then unless it is kept
+ * again. The chest is read only when its chunk is resident; out of sight it
+ * offers nothing to take out, the same "cannot recall" the briefing states.
+ *
+ * <p>Silence keeps nothing and takes nothing. The rules' own choice is what
+ * always happened, the whole pack back to the stores and the chest left as it
+ * is, so a mute or absent model costs the village no goods; only an explicit
+ * pick holds something back or lifts something out. Both happen by hand at
+ * the chest ({@link com.quzzar.kithkyn.entities.ai.goals.StashAtHomeGoal}),
+ * so nothing teleports. The answer lands through {@link RealPerson#settleStash},
  * which stows the rest of the pack: the pack is held whole while the question
  * is out, or the answer would arrive to empty pockets.
  */
 public final class StashOffer {
+
+  /** One option of the question: a kind of item, held back from the stores or taken out of the chest. */
+  public record Pick(Item item, int count, boolean fromChest) {
+    /** The option as the model reads it, naming the cost of holding back and the act of taking out. */
+    public String option() {
+      return fromChest
+          ? "Take the " + count + " " + plain(item) + " out of your chest to carry"
+          : "Hold back the " + count + " " + plain(item) + " from the village stores";
+    }
+  }
 
   private StashOffer() {
   }
 
   /**
    * Asks, and settles the villager's stash on the main thread when the answer
-   * lands. A villager carrying nothing, or a village with no brain ready, is
-   * settled at once with nothing kept.
+   * lands. A villager with nothing to keep or take out, or a village with no
+   * brain ready, is settled at once with nothing kept and nothing taken.
    */
   public static void offer(RealPerson person, BlockPos chest) {
-    Map<Item, Integer> carried = carried(person);
+    Map<Item, Integer> carried = counts(person.personMainInv);
+    Container container = PersonalChest.container(person, chest);
+    Map<Item, Integer> stored = container == null ? Map.of() : counts(container);
+    List<Pick> picks = picks(carried, stored);
     LlmService llm = LlmService.get();
     MinecraftServer server = person.getServer();
-    if (carried.isEmpty() || !llm.isReady() || server == null) {
-      person.settleStash(Set.of());
+    if (picks.isEmpty() || !llm.isReady() || server == null) {
+      person.settleStash(Set.of(), Set.of());
       return;
     }
-    List<Item> kinds = new ArrayList<>();
     List<String> options = new ArrayList<>();
-    for (Item item : carried.keySet()) {
-      if (!isKit(item)) {
-        kinds.add(item);
-      }
-    }
-    if (kinds.isEmpty()) {
-      person.settleStash(Set.of());
-      return;
-    }
-    for (Item item : kinds) {
-      options.add("Hold back the " + carried.get(item) + " " + plain(item) + " from the village stores");
+    for (Pick pick : picks) {
+      options.add(pick.option());
     }
     String purpose = person.getFullName() + "'s chest at home";
-    llm.choose(purpose, situation(person, chest, carried), options).whenComplete((selection, error) -> {
+    llm.choose(purpose, situation(person, container, carried, stored), options).whenComplete((selection, error) -> {
       if (error != null) {
         Kithkyn.LOGGER.error("'{}' could not weigh what to keep at home", person.getFullName(), error);
       }
       Optional<LlmSelection> settled = selection == null ? Optional.empty() : selection;
-      server.execute(() -> finish(person, kinds, settled));
+      server.execute(() -> finish(person, picks, settled));
     });
+  }
+
+  /**
+   * The question's options in order: each kind carried that is not the job's
+   * kit, then each kind the chest holds. The chest side has no kit filter:
+   * whatever is in there is the villager's own.
+   */
+  public static List<Pick> picks(Map<Item, Integer> carried, Map<Item, Integer> stored) {
+    List<Pick> picks = new ArrayList<>();
+    carried.forEach((item, count) -> {
+      if (!isKit(item)) {
+        picks.add(new Pick(item, count, false));
+      }
+    });
+    stored.forEach((item, count) -> picks.add(new Pick(item, count, true)));
+    return picks;
   }
 
   /**
@@ -116,13 +143,14 @@ public final class StashOffer {
   }
 
   /** The facts the model decides on, kept to a few lines so a small model reads all of them. */
-  private static String situation(RealPerson person, BlockPos chest, Map<Item, Integer> carried) {
+  private static String situation(RealPerson person, @Nullable Container container,
+      Map<Item, Integer> carried, Map<Item, Integer> stored) {
     List<String> pack = new ArrayList<>();
     carried.forEach((item, count) -> pack.add(count + " " + plain(item)));
     StringBuilder situation = new StringBuilder(CraftOffer.identityLead(person))
-        .append("You are turning in for the night carrying ").append(String.join(", ", pack))
+        .append("You are turning in for the night carrying ")
+        .append(pack.isEmpty() ? "nothing" : String.join(", ", pack))
         .append(". Your home has a small chest for keepsakes");
-    Container container = PersonalChest.container(person, chest);
     if (container == null) {
       situation.append("; you cannot recall exactly what is in it. ");
     } else {
@@ -134,8 +162,13 @@ public final class StashOffer {
         .append(" home is lost to the village's work. ").append(villageNeed(person.getVillage()))
         .append(" Most nights a worker keeps nothing. Hold something back only")
         .append(" if it is truly personal, a gift, a memento or a bite of something you fancy, never")
-        .append(" supplies or your day's produce. Give your reason in a few words.");
-    return situation.toString();
+        .append(" supplies or your day's produce.");
+    if (!stored.isEmpty()) {
+      situation.append(" You may also take something out of the chest to carry: it rides in your pack")
+          .append(" from tomorrow and goes to the stores at your next bedtime unless you keep it again,")
+          .append(" so take out only what you mean to use or give, or what the village is short of.");
+    }
+    return situation.append(" Give your reason in a few words.").toString();
   }
 
   /**
@@ -177,34 +210,41 @@ public final class StashOffer {
         + (shortfall.isEmpty() ? " and has everything it needs for it." : " and is still short " + shortfall + ".");
   }
 
-  private static void finish(RealPerson person, List<Item> kinds, Optional<LlmSelection> selection) {
+  private static void finish(RealPerson person, List<Pick> picks, Optional<LlmSelection> selection) {
     if (!person.isAlive()) {
       return;
     }
     Set<Item> keep = new LinkedHashSet<>();
+    Set<Item> takeOut = new LinkedHashSet<>();
     if (selection.isEmpty()) {
-      Kithkyn.LOGGER.debug("'{}' had no answer on what to keep at home, so the pack goes to the stores",
+      Kithkyn.LOGGER.debug("'{}' had no answer on their chest at home, so the pack goes to the stores and the chest stays as it is",
           person.getFullName());
     } else {
       for (int index : selection.get().choiceIndexes()) {
-        keep.add(kinds.get(index));
+        Pick pick = picks.get(index);
+        (pick.fromChest() ? takeOut : keep).add(pick.item());
       }
-      if (keep.isEmpty()) {
-        Kithkyn.LOGGER.info("'{}' keeps nothing back tonight: {}", person.getFullName(),
+      if (keep.isEmpty() && takeOut.isEmpty()) {
+        Kithkyn.LOGGER.info("'{}' keeps nothing back tonight and leaves the chest as it is: {}", person.getFullName(),
             selection.get().reason());
-      } else {
+      }
+      if (!keep.isEmpty()) {
         Kithkyn.LOGGER.info("'{}' keeps the {} for their chest at home: {}", person.getFullName(),
             names(keep), selection.get().reason());
       }
+      if (!takeOut.isEmpty()) {
+        Kithkyn.LOGGER.info("'{}' takes the {} out of their chest at home: {}", person.getFullName(),
+            names(takeOut), selection.get().reason());
+      }
     }
-    person.settleStash(keep);
+    person.settleStash(keep, takeOut);
   }
 
-  /** Each kind of item in the pack with how many, in pack order. */
-  private static Map<Item, Integer> carried(RealPerson person) {
+  /** Each kind of item in a container with how many, in slot order. */
+  public static Map<Item, Integer> counts(Container container) {
     Map<Item, Integer> counts = new LinkedHashMap<>();
-    for (int slot = 0; slot < person.personMainInv.getContainerSize(); slot++) {
-      ItemStack stack = person.personMainInv.getItem(slot);
+    for (int slot = 0; slot < container.getContainerSize(); slot++) {
+      ItemStack stack = container.getItem(slot);
       if (!stack.isEmpty()) {
         counts.merge(stack.getItem(), stack.getCount(), Integer::sum);
       }

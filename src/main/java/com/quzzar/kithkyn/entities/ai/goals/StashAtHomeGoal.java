@@ -1,6 +1,8 @@
 package com.quzzar.kithkyn.entities.ai.goals;
 
+import java.util.ArrayList;
 import java.util.EnumSet;
+import java.util.List;
 import java.util.Set;
 
 import com.quzzar.kithkyn.Kithkyn;
@@ -20,10 +22,12 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.phys.Vec3;
 
 /**
- * The walk that follows a bedtime "keep it": a villager who chose to hold
- * things back from the village stores ({@link StashOffer}) carries them home
- * and sets them down in their own chest by hand. Runs ahead of
- * {@link SleepAtNightGoal}, which takes over the moment the pack is put away.
+ * The walk that follows a bedtime "keep it" or "take it out": a villager who
+ * chose to hold things back from the village stores ({@link StashOffer})
+ * carries them home and sets them down in their own chest by hand, and one
+ * who chose to take things out lifts them from the chest into the pack at the
+ * same visit. Runs ahead of {@link SleepAtNightGoal}, which takes over the
+ * moment the chest is done.
  *
  * <p>Two legs when the walk starts outside: to the doorstep first, then to
  * a standing position with hand access to the chest ({@link LocationManager#getEntrance}). A path aimed straight at a
@@ -38,8 +42,9 @@ import net.minecraft.world.phys.Vec3;
  * a path reaches proved worthless live: a villager who has not come closer
  * to the leg's target for a stretch (stood at the foot of a ladder, or found
  * no way in) gives up, as does one still walking after a few minutes. A chest
- * that is gone or full gives up on arrival. In every case the items stay in
- * the pack and the next bedtime stow returns them to the stores as before.
+ * that is gone or full gives up on arrival. In every case what was to be kept
+ * stays in the pack, where the next bedtime stow returns it to the stores as
+ * before, and what was to be taken out stays in the chest.
  */
 public class StashAtHomeGoal extends Goal {
 
@@ -77,7 +82,8 @@ public class StashAtHomeGoal extends Goal {
   @Override
   public boolean canUse() {
     Set<Item> keeping = person.keepingForHome();
-    if (keeping.isEmpty()) {
+    Set<Item> taking = person.takingFromHome();
+    if (keeping.isEmpty() && taking.isEmpty()) {
       return false;
     }
     if (!person.level().isNight()) {
@@ -86,7 +92,7 @@ public class StashAtHomeGoal extends Goal {
       person.doneKeeping();
       return false;
     }
-    if (keeping.stream().noneMatch(item -> person.personMainInv.countItem(item) > 0)) {
+    if (taking.isEmpty() && keeping.stream().noneMatch(item -> person.personMainInv.countItem(item) > 0)) {
       person.doneKeeping(); // already set down, or stowed by a refire
       return false;
     }
@@ -100,8 +106,8 @@ public class StashAtHomeGoal extends Goal {
 
   @Override
   public boolean canContinueToUse() {
-    return !person.keepingForHome().isEmpty() && this.chest != null && this.ticks < GIVE_UP_TICKS
-        && person.level().isNight();
+    return (!person.keepingForHome().isEmpty() || !person.takingFromHome().isEmpty())
+        && this.chest != null && this.ticks < GIVE_UP_TICKS && person.level().isNight();
   }
 
   @Override
@@ -163,15 +169,15 @@ public class StashAtHomeGoal extends Goal {
       this.stalledTicks++;
     }
     if (this.stalledTicks >= STALL_TICKS) {
-      Kithkyn.LOGGER.info("'{}' made no headway toward their chest at home ({} blocks off, {}); the {} stays in the pack",
+      Kithkyn.LOGGER.info("'{}' made no headway toward their chest at home ({} blocks off, {}); {}",
           person.getFullName(), Math.round(distance), this.indoors ? "indoors" : "on the way to the door",
-          StashOffer.names(person.keepingForHome()));
+          pending());
       person.doneKeeping();
       return;
     }
     if (this.ticks >= GIVE_UP_TICKS) {
-      Kithkyn.LOGGER.info("'{}' could not reach their chest at home tonight; the {} stays in the pack",
-          person.getFullName(), StashOffer.names(person.keepingForHome()));
+      Kithkyn.LOGGER.info("'{}' could not reach their chest at home tonight; {}",
+          person.getFullName(), pending());
       person.doneKeeping();
       return;
     }
@@ -199,25 +205,49 @@ public class StashAtHomeGoal extends Goal {
     }
   }
 
+  /** What an abandoned visit leaves where it is: "the wheat stays in the pack, the apple stays in the chest". */
+  private String pending() {
+    List<String> parts = new ArrayList<>();
+    if (!person.keepingForHome().isEmpty()) {
+      parts.add("the " + StashOffer.names(person.keepingForHome()) + " stays in the pack");
+    }
+    if (!person.takingFromHome().isEmpty()) {
+      parts.add("the " + StashOffer.names(person.takingFromHome()) + " stays in the chest");
+    }
+    return String.join(", ", parts);
+  }
+
+  /** At the chest: set the kept kinds down first, which frees the pack, then lift the taken kinds out. */
   private void putAway() {
     Set<Item> keeping = person.keepingForHome();
+    Set<Item> taking = person.takingFromHome();
     Container container = PersonalChest.container(person, this.chest);
     if (container == null) {
-      Kithkyn.LOGGER.info("'{}' found no chest at home to keep the {} in", person.getFullName(),
-          StashOffer.names(keeping));
+      Kithkyn.LOGGER.info("'{}' found no chest at home; {}", person.getFullName(), pending());
       person.doneKeeping();
       return;
     }
-    int moved = 0;
+    int put = 0;
     for (Item item : keeping) {
-      moved += PackLogistics.depositCarried(person, container, item, "home");
+      put += PackLogistics.depositCarried(person, container, item, "home");
     }
-    if (moved > 0) {
+    if (put > 0) {
       Kithkyn.LOGGER.info("'{}' put {} item(s) of {} away in their chest at home", person.getFullName(),
-          moved, StashOffer.names(keeping));
-    } else {
+          put, StashOffer.names(keeping));
+    } else if (!keeping.isEmpty()) {
       Kithkyn.LOGGER.info("'{}' found no room in their chest at home for the {}", person.getFullName(),
           StashOffer.names(keeping));
+    }
+    int took = 0;
+    for (Item item : taking) {
+      took += PackLogistics.takeStored(person, container, item, "home");
+    }
+    if (took > 0) {
+      Kithkyn.LOGGER.info("'{}' took {} item(s) of {} out of their chest at home", person.getFullName(),
+          took, StashOffer.names(taking));
+    } else if (!taking.isEmpty()) {
+      Kithkyn.LOGGER.info("'{}' found none of the {} left in their chest at home, or no room in the pack for it",
+          person.getFullName(), StashOffer.names(taking));
     }
     person.doneKeeping();
   }
