@@ -71,6 +71,9 @@ in it, and update it in the same change that moves what it describes.
 - [floodplain-village.md](floodplain-village.md): the approved Floodplain (mangrove swamp) local
   catalog from the Nilotic selection: roles, founding set, identity rules, the mud brick wall
   palette, authoring pipeline and verification.
+- [jungle-village.md](jungle-village.md): the approved playable Jungle catalog, including its
+  bedless center, four-home founding sprawl, routed mine and storehouse worksites, bamboo roofs,
+  repaired markets, Firewatch tower and timber perimeter.
 - [appearance.md](appearance.md): why villagers use the player model and not the vanilla
   villager model, the wide/slim model split by gender, and the client-side runtime skin
   compositor that bakes a villager's look from inherited skin, hair, and eye structures,

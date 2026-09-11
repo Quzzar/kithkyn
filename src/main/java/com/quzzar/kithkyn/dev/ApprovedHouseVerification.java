@@ -483,10 +483,32 @@ public final class ApprovedHouseVerification {
     consolidation = null;
     transferStarted = -1;
     if (visit.kind() == VisitKind.STATION) {
-      village.assignJob(walker.getUUID(), new JobAssignment(walker.getUUID(), visit.occupation(),
-          building.getUUID(), visit.stationIndex()));
-      walker.setOccupation(visit.occupation());
-      walker.issueStartingKit();
+      // Each authored post belongs to a different worker. Start each trip at
+      // the shared entrance instead of chaining one probe between adjacent
+      // posts and accumulating its previous arrival tolerance.
+      ApprovedStructureAccess.moveTo(walker, entrance);
+      long localStation = new ArrayList<>(building.getInfo().getWorkLocations().keySet()).get(visit.stationIndex());
+      String physicalCategory = building.getInfo().getWorksiteCategory(localStation);
+      GuardRole guardRole = building.getInfo().getGuardRole(visit.stationIndex());
+      JobAssignment existing = village.getJobAssignment(walker.getUUID());
+      // A center-only access fixture has no founding companions. Use a neutral
+      // probe for ordinary stations so a builder cannot grade or build paths
+      // while the same body is still checking later stations. Founding proves
+      // real job and routed-worksite behavior; fixed crossbow posts still need
+      // their actual equipment and duty here.
+      if (existing != null) {
+        walker.setOccupation(existing.getOccupation());
+        walker.issueStartingKit();
+      } else if (physicalCategory == null && visit.occupation() == Occupation.GUARD
+          && guardRole == GuardRole.CROSSBOW_POST) {
+        village.assignJob(walker.getUUID(), new JobAssignment(walker.getUUID(), visit.occupation(),
+            building.getUUID(), visit.stationIndex()));
+        walker.setOccupation(visit.occupation());
+        walker.issueStartingKit();
+      } else {
+        village.releaseJob(walker.getUUID());
+        walker.setOccupation(Occupation.WANDERER);
+      }
       ApprovedStructureAccess.enableWalking(walker);
       if (visit.occupation() == Occupation.GUARD
           && building.getInfo().getGuardRole(visit.stationIndex()) == GuardRole.CROSSBOW_POST) {
@@ -548,7 +570,13 @@ public final class ApprovedHouseVerification {
         walker.getNavigation().stop();
       }
     }
-    boolean arrived = walker.onGround() && walker.distanceToSqr(Vec3.atBottomCenterOf(approach)) <= 0.75D
+    // Coordinate navigation deliberately accepts a node within one block of
+    // its target. That is sufficient for a shaft return once the miner is on
+    // the surface beside the authored entrance; requiring the exact block
+    // center makes an otherwise complete return loop forever.
+    double arrivalDistance = visit.kind() == VisitKind.MINE_RETURN ? 4.0D : 0.75D;
+    boolean arrived = walker.onGround()
+        && walker.distanceToSqr(Vec3.atBottomCenterOf(approach)) <= arrivalDistance
         && Math.abs(walker.getY() - approach.getY()) < 0.51D;
     if (visit.kind() == VisitKind.SHARED_CONTAINER) {
       arrived &= handArrival;
@@ -606,7 +634,15 @@ public final class ApprovedHouseVerification {
         + walker.position().subtract(Vec3.atLowerCornerOf(ORIGIN)) + " toward " + approach.subtract(ORIGIN)
         + "; " + movementDetails());
     if (ticks % 10 == 0 || walker.getNavigation().isDone()) {
-      walker.getNavigation().moveTo(walker.getNavigation().createPath(approach, 0), 0.6D);
+      if (visit.kind() == VisitKind.MINE_DESCENT || visit.kind() == VisitKind.MINE_RETURN) {
+        // Production work goals use the coordinate overload, where
+        // PersonPathNavigation advances the shaft one validated ramp hop at a
+        // time. Calling createPath directly here would bypass that mine hook.
+        walker.getNavigation().moveTo(
+            approach.getX() + 0.5D, approach.getY(), approach.getZ() + 0.5D, 0.6D);
+      } else {
+        walker.getNavigation().moveTo(walker.getNavigation().createPath(approach, 0), 0.6D);
+      }
     }
   }
 

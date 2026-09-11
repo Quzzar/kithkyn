@@ -78,8 +78,9 @@ public final class VillageTemplateExport {
           JsonObject edit = value.getAsJsonObject();
           ListTag position = ints(vector(edit.get("pos")));
           blocks.removeIf(tag -> ((CompoundTag)tag).get("pos").equals(position));
+          String blockName = edit.get("name").getAsString();
           CompoundTag state = new CompoundTag();
-          state.putString("Name", edit.get("name").getAsString());
+          state.putString("Name", blockName);
           CompoundTag properties = new CompoundTag();
           edit.getAsJsonObject("properties").entrySet().forEach(property ->
               properties.putString(property.getKey(), property.getValue().getAsString()));
@@ -87,7 +88,14 @@ public final class VillageTemplateExport {
           int stateIndex = palette.indexOf(state);
           if (stateIndex < 0) { palette.add(state); stateIndex = palette.size() - 1; }
           CompoundTag block = new CompoundTag();
-          block.put("pos", position); block.putInt("state", stateIndex); blocks.add(block);
+          block.put("pos", position);
+          block.putInt("state", stateIndex);
+          if (Set.of("minecraft:barrel", "minecraft:chest", "minecraft:trapped_chest").contains(blockName)) {
+            CompoundTag blockEntity = new CompoundTag();
+            blockEntity.putString("id", blockName);
+            block.put("nbt", blockEntity);
+          }
+          blocks.add(block);
         }
       }
       if (spec.has("horizontal_bounds")) {

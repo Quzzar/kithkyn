@@ -115,4 +115,39 @@ class WallPaletteTest {
   void everyVillageHasOnlyOneWallStage() {
     assertArrayEquals(new WallTier[] {WallTier.WOOD}, WallTier.values());
   }
+
+  @Test
+  void jungleWallsUseTimberBambooAndTorches() {
+    var ring = WallRoute.aroundBox(0, 48, 0, 48);
+    var gates = Set.of(BlockPos.asLong(24, 0, 0), BlockPos.asLong(48, 0, 24),
+        BlockPos.asLong(24, 0, 48), BlockPos.asLong(0, 0, 24));
+    var style = VillageStyle.JUNGLE;
+    var wall = new WallProject(ring, gates, Collections.nCopies(ring.size(), 64), WallTier.WOOD, style);
+    int timber = 0, bamboo = 0, frames = 0, torches = 0, hanging = 0;
+    for (var cell : wall.plannedBlocks()) {
+      var state = cell.desiredState(wall.getTier(), style);
+      if (cell.piece() == WallBlockPlan.Piece.BODY || cell.piece() == WallBlockPlan.Piece.POST) {
+        assertTrue(state.is(Blocks.JUNGLE_PLANKS));
+        timber++;
+      } else if (cell.piece() == WallBlockPlan.Piece.WALKWAY || cell.piece() == WallBlockPlan.Piece.SLAB
+          || cell.piece().name().startsWith("STEP_")) {
+        assertTrue(state.is(Blocks.BAMBOO_MOSAIC) || state.is(Blocks.BAMBOO_MOSAIC_SLAB)
+            || state.is(Blocks.BAMBOO_MOSAIC_STAIRS));
+        bamboo++;
+      } else if (cell.piece() == WallBlockPlan.Piece.GATE_FRAME_POST
+          || cell.piece() == WallBlockPlan.Piece.GATE_FRAME_BEAM) {
+        assertTrue(state.is(Blocks.STRIPPED_JUNGLE_WOOD));
+        frames++;
+      } else if (cell.piece() == WallBlockPlan.Piece.LANTERN) {
+        assertTrue(state.is(Blocks.TORCH));
+        torches++;
+      } else if (cell.piece() == WallBlockPlan.Piece.LANTERN_HANGING) {
+        assertTrue(state.is(Blocks.LANTERN));
+        hanging++;
+      }
+    }
+    assertTrue(timber > 0 && bamboo > 0 && frames > 0 && torches > 0);
+    assertEquals(16, hanging);
+    assertEquals(Items.JUNGLE_LOG, WallTier.WOOD.material(style));
+  }
 }

@@ -291,7 +291,14 @@ public final class MineShaft {
       return List.of();
     }
     List<MineShaft> out = new ArrayList<>();
-    for (Map.Entry<Long, Occupation> station : info.getWorkLocations().entrySet()) {
+    java.util.LinkedHashMap<Long, Occupation> stations = new java.util.LinkedHashMap<>();
+    info.getWorkLocations().forEach((position, occupation) -> {
+      if (info.getWorksiteCategory(position) == null) {
+        stations.put(position, occupation);
+      }
+    });
+    stations.putAll(info.getWorksiteLocations());
+    for (Map.Entry<Long, Occupation> station : stations.entrySet()) {
       if (station.getValue() != Occupation.MINER) {
         continue;
       }

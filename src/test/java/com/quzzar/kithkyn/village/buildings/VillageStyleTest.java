@@ -38,7 +38,7 @@ class VillageStyleTest {
   @Test
   void bundledBirchLeadsTheEnumAndIsWhatUnknownSavedStylesReadAs() {
     assertEquals(List.of(VillageStyle.BIRCH_FOREST, VillageStyle.DESERT, VillageStyle.BADLANDS,
-        VillageStyle.FLOODPLAIN), List.of(VillageStyle.values()));
+        VillageStyle.FLOODPLAIN, VillageStyle.JUNGLE), List.of(VillageStyle.values()));
     assertEquals(VillageStyle.BIRCH_FOREST, VillageStyle.DEFAULT);
     assertEquals(VillageStyle.BIRCH_FOREST, VillageStyle.fromId(""));
     assertEquals(VillageStyle.BIRCH_FOREST, VillageStyle.fromId("plains"));
@@ -108,7 +108,7 @@ class VillageStyleTest {
   void unfinishedConventionalFamiliesBuildBirchRatherThanARemovedCatalog() {
     List<TagKey<Biome>> unfinished = List.of(Tags.Biomes.IS_PLAINS, Tags.Biomes.IS_FOREST,
         Tags.Biomes.IS_DECIDUOUS_TREE, Tags.Biomes.IS_SWAMP, Tags.Biomes.IS_TAIGA,
-        Tags.Biomes.IS_CONIFEROUS_TREE, Tags.Biomes.IS_MOUNTAIN, Tags.Biomes.IS_JUNGLE);
+        Tags.Biomes.IS_CONIFEROUS_TREE, Tags.Biomes.IS_MOUNTAIN);
     for (long seed = 0; seed < 20; seed++) {
       for (TagKey<Biome> tag : unfinished) {
         assertFamily(tag, VillageStyle.BIRCH_FOREST, seed);
@@ -119,6 +119,17 @@ class VillageStyleTest {
       assertEquals(VillageStyle.BIRCH_FOREST,
           VillageStyle.select(Tags.Biomes.IS_ICY::equals, "ice_spikes", 0.0F, true, 0.5F, seed, ALL_STYLES));
     }
+  }
+
+  @Test
+  void jungleFamiliesUseJungleOnlyWhenItsFoundingCatalogIsLoaded() {
+    assertEquals(VillageStyle.JUNGLE,
+        VillageStyle.select(Tags.Biomes.IS_JUNGLE::equals, "jungle", 0.95F, true, 0.9F, 7L, ALL_STYLES));
+    assertEquals(VillageStyle.JUNGLE,
+        VillageStyle.select(NO_TAGS, "sparse_jungle_hills", 0.95F, true, 0.8F, 7L, ALL_STYLES));
+    assertEquals(VillageStyle.FLOODPLAIN,
+        VillageStyle.select(Tags.Biomes.IS_JUNGLE::equals, "jungle", 0.95F, true, 0.9F, 7L,
+            style -> style == VillageStyle.FLOODPLAIN));
   }
 
   @Test

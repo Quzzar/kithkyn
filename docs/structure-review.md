@@ -1304,8 +1304,8 @@ routes remain. The markets retain the existing raised barrels, open entrances, s
 and primary/secondary cloth slots. These are vanilla-block adaptations and need no extra mods.
 
 Native readback matched all **2,194** preview blocks. The wall overview, gate detail, and
-three market tiers were rendered and visually reviewed. This verifies placement, not new Jungle
-founding or worker navigation. No Jungle runtime catalog is activated. The editable assets,
+three market tiers were rendered and visually reviewed. This stage verified placement, before
+Jungle founding and worker navigation were implemented. The editable assets,
 source hashes, definitions and verification are recorded in
 `tools/structure/jungle-workshop-20260910.json`.
 
@@ -1512,8 +1512,8 @@ without recipe rejection. This is a working-tree deployment, not a Git commit or
 | --- | --- |
 | Pueblo/Mesa and Desert catalogs, selected Desert tavern/temple/towers and arid walls | Verified and locally deployed; earlier entries saying these await deployment are historical. |
 | Unstructured structure gallery | Placed, verified and available for review. |
-| Jungle buildings, three market tiers and one wall tier | Choices and edited captures saved; bamboo and torch changes approved and applied. |
-| Playable Jungle villages | Outstanding: production catalog/identity export, four founding homes, center-owned miner linked to the separate mine, worker access and full founding verification. No additional building selection is required to proceed. |
+| Jungle buildings, three market tiers and one wall tier | Verified as a complete private catalog; bamboo, market repairs and torch-lit timber walls are applied. |
+| Playable Jungle villages | Complete: four-home founding sprawl, center-owned miner and quartermaster routed to separate worksites, identity export, access, construction, restart and natural-founding checks all pass. |
 | Castle authoring | Edited fort, room/bed/container intentions, banners and tent colors captured and visually reviewed. |
 | Castle gameplay | Not buildable yet. Navigation and role reservations need implementation/verification; eligibility, pricing, ruler succession and jail/release rules remain design work. Ruler and jail implementation was explicitly deferred by Aaron. |
 
@@ -1568,7 +1568,8 @@ Mesa east, with tiers 1, 2 and 3 from north to south. The Jungle workshop remain
 Current assets, native results, immutable user-edit captures and viewed screenshots are
 recorded in `tools/structure/market-review-20260910.json`. Earlier market entries describing
 removed rails, slab counters or village-colored awnings are superseded by this review.
-Jungle remains an authoring collection pending its production/founding integration.
+At this point in the review, Jungle remained an authoring collection pending its later
+production/founding integration.
 
 The market repair passed `check build` with 433 tests, zero failures and zero skips, then
 was deployed to the local server and Prism client. Both use SHA-256
@@ -1637,8 +1638,8 @@ export; raw captures keep the player’s placed bed colors.
 
 The selected Jungle collection now has **19 buildings, 11 beds and eight general-home
 beds**. All 21 selected/candidate capture hashes and selected bed/container coordinates
-were revalidated. Four single-bed founding huts remain the starting layout. Production
-Jungle integration and native resident/guard access verification remain outstanding.
+were revalidated. Four single-bed founding huts remain the starting layout. At the time of
+this capture, production integration and native resident/guard access verification remained.
 See `tools/structure/jungle-selections-20260910.json` and the tower comparison manifest
 for the authoritative selection and latest captures.
 
@@ -1776,3 +1777,27 @@ with the ramp mouth one column in. The Desert mine gained a shared chest at the 
 posts, a fence, a trapdoor and a lantern, exported in its existing frame. Both were captured from a flushed
 snapshot, re-exported, checked and installed in their packs.
 
+### Jungle catalog verified: September 10
+
+The approved Jungle selection is now a playable private catalog with 22 definitions: nineteen
+selected buildings and the three repaired market tiers. Its bedless center owns the founding
+quartermaster, builder, captain and miner vacancies. The starting planner places a mine, a
+storehouse and four one-bed homes with ordinary growth placement, while the center's quartermaster
+and miner route to non-vacancy physical worksites in those separate buildings. This also fixed a
+real ownership error exposed by the center test: a routed miner post must not create a shaft under
+the civic building; only the physical mine owns and excavates that shaft.
+
+The final mine uses a three-block-wide eastward mouth, offset two blocks from its worksite so its
+surface workstation, opening and final ramp headroom do not compete for one cell. Its two material
+barrels and the butcher's personal chest moved to reachable positions. The native exporter now
+writes block-entity data for chests and barrels created by export overrides, so strict template
+loading sees the same containers as physical access does.
+
+All five native checks pass. The access fixture walked 84 rotations and 224 routes, including every
+bed, personal container, workstation, shared container and mine descent/return. The construction
+fixture passed 176 instant and incremental placements across four rotations; a full server restart
+retained all 176. The reviewed-village fixture passed 22 strict templates, all four founding
+rotations, the market upgrades, natural Jungle selection, the four starting homes, routed worksites,
+village identity and codec reloads. The public record is
+`tools/structure/jungle-catalog-20260910.json`; implementation and operating details are in
+[jungle-village.md](jungle-village.md).

@@ -1,10 +1,12 @@
 # Building spec: every building, variant, level, recipe, and unlock
 
-**Birch Forest integration, revised 2026-09-09:** [birch-village.md](birch-village.md) is the current
+**Regional integrations, revised 2026-09-10:** [birch-village.md](birch-village.md) is the current
 approved catalog for `birch_forest`. Its 23 templates and exact amenities supersede this
 document's older generic tier counts, founding contents and candidate choices for that family.
 In particular it has no tier-3 house/farm or higher center/storehouse/mine/church. The bakery
-and tavern are separate buildings, each with one worker bed and private storage.
+and tavern are separate buildings, each with one worker bed and private storage. The approved
+private catalogs for Desert, Badlands, Floodplain and Jungle are documented separately; Jungle's
+22-template catalog and four-home start are specified in [jungle-village.md](jungle-village.md).
 
 **The catalogue below enumerates 36 categories; 22 of them survived the cut.** The totals in
 this document count the full map of the possible, not the shipping set — see
@@ -17,8 +19,9 @@ at level 2, `watchtower` at level 2, `market` at levels 1 to 3), with real MASON
 FISHER, BAKER, BUTCHER and INNKEEPER occupations behind the workplaces. The old Village Life
 families (plains, taiga, snowy, savanna and the bundled desert set), which carried the
 level-3 houses, level-2 mines and level-3 farms this document once counted, were removed on
-2026-09-10. Desert and Badlands ship as private datapacks with their own enumerations
-([desert-village.md](desert-village.md), [badlands-village.md](badlands-village.md)).
+2026-09-10. Desert, Badlands, Floodplain and Jungle ship locally as private datapacks with their
+own enumerations ([desert-village.md](desert-village.md), [badlands-village.md](badlands-village.md),
+[floodplain-village.md](floodplain-village.md), [jungle-village.md](jungle-village.md)).
 
 **One occupation exists only as a name in these tables**: HERDER is not in the
 Occupation enum, and a definition naming one fails the codec
@@ -86,6 +89,14 @@ Starting beds and jobs come from those authored buildings. A bedless Jungle cent
 four separate one-person huts for its four founding workers. Centers with accommodation
 can keep it inside the center. Normal bed registration, job assignment and campfire arrivals
 apply; founding does not spawn a separate crew or simulate paid construction projects.
+
+A founding job may belong to the center while its physical workplace sits in another starting
+building. The center's `work_stations` entry declares `worksite_category`; the matching building
+declares a same-occupation position in `worksites`. A `worksites` entry is a destination only and
+never creates a second vacancy. Job location, work area and workplace storage resolve through that
+physical building. If no matching completed building exists, the worker keeps the center-owned job
+and waits. A routed miner station does not create a shaft below the center; the physical mine
+worksite owns the shaft geometry.
 
 ### Founding uses ordinary construction placement
 
