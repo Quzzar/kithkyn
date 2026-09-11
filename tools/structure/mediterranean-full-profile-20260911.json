@@ -1,0 +1,1498 @@
+{
+  "schemaVersion": 1,
+  "recorded": "2026-09-11T19:25:21.902389-04:00",
+  "purpose": "Complete standalone Towns & Towers Mediterranean and Iberian building profiles for the Mediterranean catalog selection.",
+  "status": "verified",
+  "entry": [
+    10473.5,
+    230,
+    1224.5
+  ],
+  "bounds": [
+    10470,
+    220,
+    1220,
+    10649,
+    270,
+    1500
+  ],
+  "returnPosition": [
+    13213.0,
+    64.0,
+    1382.8
+  ],
+  "selectionRule": "Every standalone house, town center, fort, field, family-specific decoration and Iberian profession insert; streets, terminators and the bishop villager template are excluded.",
+  "sources": [
+    "Towns & Towers 1.13.9 (kaisyn namespace): village/exclusives/mediterranean, outpost/forts/exclusives/mediterranean, village/exclusives/iberian, outpost/forts/exclusives/iberian"
+  ],
+  "counts": {
+    "mediterranean": 29,
+    "iberian": 31,
+    "total": 60,
+    "rows": 7
+  },
+  "rows": [
+    {
+      "id": "M06",
+      "title": "FULL MEDITERRANEAN \u2014 CENTER + HOMES",
+      "family": "mediterranean",
+      "origin": [
+        10480,
+        230,
+        1230
+      ],
+      "bounds": [
+        10470,
+        220,
+        1221,
+        10649,
+        270,
+        1256
+      ],
+      "maxHeight": 17,
+      "entries": [
+        {
+          "id": "M06.1",
+          "label": "Town Center 1",
+          "role": "center",
+          "family": "mediterranean",
+          "source": "data/kaisyn/structure/village/exclusives/mediterranean/town_centers/med_meeting_point_1.nbt",
+          "sourceSha256": "122c91145feb6f703bcd29ec37df42e91cbcdd2c4261e931706c4d6e9c5d9b39",
+          "preparedSha256": "3c4abda662f00ce832c304db543ad712b210d9d8117a86c98fc75933c5604843",
+          "size": [
+            25,
+            17,
+            23
+          ],
+          "origin": [
+            10480,
+            230,
+            1230
+          ],
+          "privateTemplate": "kithkyn_mediterranean_profile:mediterranean/town_centers__med_meeting_point_1"
+        },
+        {
+          "id": "M06.2",
+          "label": "Large House 1",
+          "role": "house",
+          "family": "mediterranean",
+          "source": "data/kaisyn/structure/village/exclusives/mediterranean/houses/regular/med_large_house_1.nbt",
+          "sourceSha256": "221014882e8e521fd592d8934908ceb161cf623179e6e4bd3341a29a7bac08fd",
+          "preparedSha256": "40335aa2548c1ae47abf2e2ffdf142aa97ab93bfe357a71026ec8d86617297ca",
+          "size": [
+            10,
+            7,
+            10
+          ],
+          "origin": [
+            10511,
+            230,
+            1230
+          ],
+          "privateTemplate": "kithkyn_mediterranean_profile:mediterranean/houses__regular__med_large_house_1"
+        },
+        {
+          "id": "M06.3",
+          "label": "Large House 2",
+          "role": "house",
+          "family": "mediterranean",
+          "source": "data/kaisyn/structure/village/exclusives/mediterranean/houses/regular/med_large_house_2.nbt",
+          "sourceSha256": "870df32d6db79ff2031bcf375e83b6f944a7a3ec61526e5cf70162ce68a732ae",
+          "preparedSha256": "74def54e44b5f09db586fcab2b4220d52ee30aa95acab551d79f291a7739f08f",
+          "size": [
+            5,
+            7,
+            10
+          ],
+          "origin": [
+            10527,
+            230,
+            1230
+          ],
+          "privateTemplate": "kithkyn_mediterranean_profile:mediterranean/houses__regular__med_large_house_2"
+        },
+        {
+          "id": "M06.4",
+          "label": "Large House 3",
+          "role": "house",
+          "family": "mediterranean",
+          "source": "data/kaisyn/structure/village/exclusives/mediterranean/houses/regular/med_large_house_3.nbt",
+          "sourceSha256": "88cac7b02561d57ed67d13558751b7bbc37137138913d9a3ae3e3c5cebcc6dea",
+          "preparedSha256": "6584c1b0c9de7a446fbc4807e61a0d717c21933512573952e663637a53ab455d",
+          "size": [
+            10,
+            10,
+            5
+          ],
+          "origin": [
+            10538,
+            230,
+            1230
+          ],
+          "privateTemplate": "kithkyn_mediterranean_profile:mediterranean/houses__regular__med_large_house_3"
+        },
+        {
+          "id": "M06.5",
+          "label": "Medium House 1",
+          "role": "house",
+          "family": "mediterranean",
+          "source": "data/kaisyn/structure/village/exclusives/mediterranean/houses/regular/med_medium_house_1.nbt",
+          "sourceSha256": "fd1f5429ed819eee861b12564f0b96b0e57a7b8670822b0a612834eff77b11a0",
+          "preparedSha256": "047c35033241a2b31e1f5136e280f09d2ec86717a6051b036bffb157aed662a9",
+          "size": [
+            5,
+            8,
+            5
+          ],
+          "origin": [
+            10554,
+            230,
+            1230
+          ],
+          "privateTemplate": "kithkyn_mediterranean_profile:mediterranean/houses__regular__med_medium_house_1"
+        },
+        {
+          "id": "M06.6",
+          "label": "Medium House 2",
+          "role": "house",
+          "family": "mediterranean",
+          "source": "data/kaisyn/structure/village/exclusives/mediterranean/houses/regular/med_medium_house_2.nbt",
+          "sourceSha256": "832401dc6b809dd9f9a16b60233a0fa82cb1c2408ae5d76ac3de555230eadb33",
+          "preparedSha256": "7de34e00451a4002d42316a72306c9ec93e8b71c4d61a5b83465ed16f41074e0",
+          "size": [
+            5,
+            8,
+            10
+          ],
+          "origin": [
+            10565,
+            230,
+            1230
+          ],
+          "privateTemplate": "kithkyn_mediterranean_profile:mediterranean/houses__regular__med_medium_house_2"
+        },
+        {
+          "id": "M06.7",
+          "label": "Small House 1",
+          "role": "house",
+          "family": "mediterranean",
+          "source": "data/kaisyn/structure/village/exclusives/mediterranean/houses/regular/med_small_house_1.nbt",
+          "sourceSha256": "63f6f16380cc4d6fcc4a788297804560d7edb15f5cad695bf9286c84e2d08497",
+          "preparedSha256": "87bef9d811b1ed17a2170247cfc8c74b55263cf89522b7731668863a81372fae",
+          "size": [
+            5,
+            7,
+            5
+          ],
+          "origin": [
+            10576,
+            230,
+            1230
+          ],
+          "privateTemplate": "kithkyn_mediterranean_profile:mediterranean/houses__regular__med_small_house_1"
+        },
+        {
+          "id": "M06.8",
+          "label": "Small House 2",
+          "role": "house",
+          "family": "mediterranean",
+          "source": "data/kaisyn/structure/village/exclusives/mediterranean/houses/regular/med_small_house_2.nbt",
+          "sourceSha256": "358501266329ccf736fec27e682b15e7439d411a0289203d5702e24dea85e6ff",
+          "preparedSha256": "9e92b7b72bda7fc789276a86e9a113018f4246cfd530c9da300f884241679629",
+          "size": [
+            5,
+            6,
+            5
+          ],
+          "origin": [
+            10587,
+            230,
+            1230
+          ],
+          "privateTemplate": "kithkyn_mediterranean_profile:mediterranean/houses__regular__med_small_house_2"
+        },
+        {
+          "id": "M06.9",
+          "label": "Small House 3",
+          "role": "house",
+          "family": "mediterranean",
+          "source": "data/kaisyn/structure/village/exclusives/mediterranean/houses/regular/med_small_house_3.nbt",
+          "sourceSha256": "731e958026cb622ab932c119598cc5e7cd6942bab7410bb2ececf897e02e9a25",
+          "preparedSha256": "d947ea7832510351f2d212c19608ff679c4cca256ece56c6868bebf5c09d1646",
+          "size": [
+            5,
+            6,
+            5
+          ],
+          "origin": [
+            10598,
+            230,
+            1230
+          ],
+          "privateTemplate": "kithkyn_mediterranean_profile:mediterranean/houses__regular__med_small_house_3"
+        },
+        {
+          "id": "M06.10",
+          "label": "Small House 4",
+          "role": "house",
+          "family": "mediterranean",
+          "source": "data/kaisyn/structure/village/exclusives/mediterranean/houses/regular/med_small_house_4.nbt",
+          "sourceSha256": "73c1400d54d698cc77e77c217b44fa16c6adf24119cce0361305cf48ea7078ef",
+          "preparedSha256": "0667a8a42d00ecda79c5d81ab63ba98637229043e020ba38a133dd3490f016af",
+          "size": [
+            5,
+            6,
+            5
+          ],
+          "origin": [
+            10609,
+            230,
+            1230
+          ],
+          "privateTemplate": "kithkyn_mediterranean_profile:mediterranean/houses__regular__med_small_house_4"
+        },
+        {
+          "id": "M06.11",
+          "label": "Small House 5",
+          "role": "house",
+          "family": "mediterranean",
+          "source": "data/kaisyn/structure/village/exclusives/mediterranean/houses/regular/med_small_house_5.nbt",
+          "sourceSha256": "488c5dee8f694922f91d956879b354fe2d26b61ee5865f529a76145c1a02fb0e",
+          "preparedSha256": "53483347af3bd59e5202a26e54db1eaa8a0652e32a57e43ab276257b44691ef4",
+          "size": [
+            5,
+            7,
+            5
+          ],
+          "origin": [
+            10620,
+            230,
+            1230
+          ],
+          "privateTemplate": "kithkyn_mediterranean_profile:mediterranean/houses__regular__med_small_house_5"
+        },
+        {
+          "id": "M06.12",
+          "label": "Corner Small House 1",
+          "role": "house",
+          "family": "mediterranean",
+          "source": "data/kaisyn/structure/village/exclusives/mediterranean/houses/corner/med_small_house_1.nbt",
+          "sourceSha256": "951bf23e5befbf22764dfbf04e4f21f17af7fd6412affaecc1d5999f9ee4e37e",
+          "preparedSha256": "ae48a559ffd44376529fb4adf11f0409a42af24d7bd18a40d44170ed89aeaa5e",
+          "size": [
+            5,
+            6,
+            5
+          ],
+          "origin": [
+            10631,
+            230,
+            1230
+          ],
+          "privateTemplate": "kithkyn_mediterranean_profile:mediterranean/houses__corner__med_small_house_1"
+        },
+        {
+          "id": "M06.13",
+          "label": "Corner Small House 2",
+          "role": "house",
+          "family": "mediterranean",
+          "source": "data/kaisyn/structure/village/exclusives/mediterranean/houses/corner/med_small_house_2.nbt",
+          "sourceSha256": "416fa03d6d107c9589d153e4a28419fca3e1e53302f93a86ad0a8c779d1e0922",
+          "preparedSha256": "29e9034852cc0ce3ab3733024f387643e8a074838a5b8e4802d92c0751499b00",
+          "size": [
+            5,
+            6,
+            5
+          ],
+          "origin": [
+            10642,
+            230,
+            1230
+          ],
+          "privateTemplate": "kithkyn_mediterranean_profile:mediterranean/houses__corner__med_small_house_2"
+        }
+      ]
+    },
+    {
+      "id": "M07",
+      "title": "FULL MEDITERRANEAN \u2014 WORKPLACES",
+      "family": "mediterranean",
+      "origin": [
+        10480,
+        230,
+        1274
+      ],
+      "bounds": [
+        10470,
+        220,
+        1265,
+        10610,
+        270,
+        1287
+      ],
+      "maxHeight": 10,
+      "entries": [
+        {
+          "id": "M07.1",
+          "label": "Armorer And Weaponsmith 1",
+          "role": "work",
+          "family": "mediterranean",
+          "source": "data/kaisyn/structure/village/exclusives/mediterranean/houses/regular/med_armorer_and_weaponsmith_1.nbt",
+          "sourceSha256": "14f88d78586d409186f83f054a38f43aef75db852968a9cf8a29d40a1a2ab3fe",
+          "preparedSha256": "fe7501c8f61a6269181c4be531fb38ec02fdd245a8f8df940683d6da8bb6b9a2",
+          "size": [
+            10,
+            8,
+            10
+          ],
+          "origin": [
+            10480,
+            230,
+            1274
+          ],
+          "privateTemplate": "kithkyn_mediterranean_profile:mediterranean/houses__regular__med_armorer_and_weaponsmith_1"
+        },
+        {
+          "id": "M07.2",
+          "label": "Butcher 1",
+          "role": "food",
+          "family": "mediterranean",
+          "source": "data/kaisyn/structure/village/exclusives/mediterranean/houses/regular/med_butcher_1.nbt",
+          "sourceSha256": "e69838da87c1629a6f32418bda52d5a8baca027ccaa0df4112043f3e2d35077f",
+          "preparedSha256": "74e995bbcc152105d4b39c6103ea909874dc128b86a76be941c0929f74b1250b",
+          "size": [
+            10,
+            10,
+            5
+          ],
+          "origin": [
+            10496,
+            230,
+            1274
+          ],
+          "privateTemplate": "kithkyn_mediterranean_profile:mediterranean/houses__regular__med_butcher_1"
+        },
+        {
+          "id": "M07.3",
+          "label": "Cartographer 1",
+          "role": "work",
+          "family": "mediterranean",
+          "source": "data/kaisyn/structure/village/exclusives/mediterranean/houses/regular/med_cartographer_1.nbt",
+          "sourceSha256": "f3439342b538fb98be5eb4dc7d0957427e30a83199eaf8ac3803059623559c3a",
+          "preparedSha256": "574d97710b147b8d5031dfa9cff5fcb78fd581599e508ab2dae7f2896bb596de",
+          "size": [
+            10,
+            10,
+            5
+          ],
+          "origin": [
+            10512,
+            230,
+            1274
+          ],
+          "privateTemplate": "kithkyn_mediterranean_profile:mediterranean/houses__regular__med_cartographer_1"
+        },
+        {
+          "id": "M07.4",
+          "label": "Farmer And Mason 1",
+          "role": "food",
+          "family": "mediterranean",
+          "source": "data/kaisyn/structure/village/exclusives/mediterranean/houses/regular/med_farmer_and_mason_1.nbt",
+          "sourceSha256": "eebc570afd6313a751b2bb104b580e3f711bb0a5a2d2741b3c89707876b56568",
+          "preparedSha256": "441d71011c9b95590c4696ad37e6d2ccb65842e9f0ab61c482e643a13a9ffebc",
+          "size": [
+            10,
+            8,
+            10
+          ],
+          "origin": [
+            10528,
+            230,
+            1274
+          ],
+          "privateTemplate": "kithkyn_mediterranean_profile:mediterranean/houses__regular__med_farmer_and_mason_1"
+        },
+        {
+          "id": "M07.5",
+          "label": "Fisher 1",
+          "role": "food",
+          "family": "mediterranean",
+          "source": "data/kaisyn/structure/village/exclusives/mediterranean/houses/regular/med_fisher_1.nbt",
+          "sourceSha256": "6dc104633fd7322825b7eb51d5fd8683179b3735489cd565fff0b3755a76d547",
+          "preparedSha256": "cb3cb25368ee60914903d8aac434b46c9058034b229afd87c9f0f92a18f389c1",
+          "size": [
+            5,
+            7,
+            10
+          ],
+          "origin": [
+            10544,
+            230,
+            1274
+          ],
+          "privateTemplate": "kithkyn_mediterranean_profile:mediterranean/houses__regular__med_fisher_1"
+        },
+        {
+          "id": "M07.6",
+          "label": "Fletcher And Toolsmith 1",
+          "role": "work",
+          "family": "mediterranean",
+          "source": "data/kaisyn/structure/village/exclusives/mediterranean/houses/regular/med_fletcher_and_toolsmith_1.nbt",
+          "sourceSha256": "2f32ebf8eaf8dabf7003f623bf7aee8c6ad7126c7ea3daede2540fb2579e9276",
+          "preparedSha256": "861c0b0aa39315cb25bb4b5adf3cd002a15debc6d8c3bfa81f9e80afecdc49de",
+          "size": [
+            5,
+            10,
+            10
+          ],
+          "origin": [
+            10555,
+            230,
+            1274
+          ],
+          "privateTemplate": "kithkyn_mediterranean_profile:mediterranean/houses__regular__med_fletcher_and_toolsmith_1"
+        },
+        {
+          "id": "M07.7",
+          "label": "Leatherworker 1",
+          "role": "work",
+          "family": "mediterranean",
+          "source": "data/kaisyn/structure/village/exclusives/mediterranean/houses/regular/med_leatherworker_1.nbt",
+          "sourceSha256": "f5d00344a3a70c92b63ec785517de449c3f7b55323d2b53a7aa1cde75dec1ad7",
+          "preparedSha256": "c0b153b5569a86d90a78cd801f686e059b1b39729fa0f12b11a6de34e86ec102",
+          "size": [
+            10,
+            8,
+            10
+          ],
+          "origin": [
+            10566,
+            230,
+            1274
+          ],
+          "privateTemplate": "kithkyn_mediterranean_profile:mediterranean/houses__regular__med_leatherworker_1"
+        },
+        {
+          "id": "M07.8",
+          "label": "Library 1",
+          "role": "civic",
+          "family": "mediterranean",
+          "source": "data/kaisyn/structure/village/exclusives/mediterranean/houses/regular/med_library_1.nbt",
+          "sourceSha256": "86495ed7fbde5f247f67354b66fada7619a08e16104817cda21899ab1b620e89",
+          "preparedSha256": "3127b35444fd95eb9127a419665d54866fc58392cfb1a7ff0013054678acd5fe",
+          "size": [
+            10,
+            10,
+            10
+          ],
+          "origin": [
+            10582,
+            230,
+            1274
+          ],
+          "privateTemplate": "kithkyn_mediterranean_profile:mediterranean/houses__regular__med_library_1"
+        },
+        {
+          "id": "M07.9",
+          "label": "Shepherd 1",
+          "role": "food",
+          "family": "mediterranean",
+          "source": "data/kaisyn/structure/village/exclusives/mediterranean/houses/regular/med_shepherd_1.nbt",
+          "sourceSha256": "7a7aeb009b8489eb68dcaba7af2ba6d6f10b18af24432398cf44ce037e476988",
+          "preparedSha256": "e0e22b477015fef8d4f3ceb0383b02593f3b4bfbdd31ce35cf0af0234b5b130f",
+          "size": [
+            10,
+            8,
+            5
+          ],
+          "origin": [
+            10598,
+            230,
+            1274
+          ],
+          "privateTemplate": "kithkyn_mediterranean_profile:mediterranean/houses__regular__med_shepherd_1"
+        }
+      ]
+    },
+    {
+      "id": "M08",
+      "title": "FULL MEDITERRANEAN \u2014 FORT + FIELDS + DETAILS",
+      "family": "mediterranean",
+      "origin": [
+        10480,
+        230,
+        1318
+      ],
+      "bounds": [
+        10470,
+        220,
+        1309,
+        10576,
+        270,
+        1345
+      ],
+      "maxHeight": 15,
+      "entries": [
+        {
+          "id": "M08.1",
+          "label": "Fort",
+          "role": "fort",
+          "family": "mediterranean",
+          "source": "data/kaisyn/structure/outpost/forts/exclusives/mediterranean/base_plate.nbt",
+          "sourceSha256": "0c90ca97d65f2b2d1ea435085150b7f407f6795ee40c355dc952a2d6198fc4fa",
+          "preparedSha256": "e283bfedfe577bace293a4afe255178f624be5ab6a583730a6b336273e268ed7",
+          "size": [
+            16,
+            15,
+            19
+          ],
+          "origin": [
+            10480,
+            230,
+            1318
+          ],
+          "privateTemplate": "kithkyn_mediterranean_profile:mediterranean/fort__base_plate"
+        },
+        {
+          "id": "M08.2",
+          "label": "Field 1",
+          "role": "food",
+          "family": "mediterranean",
+          "source": "data/kaisyn/structure/outpost/forts/exclusives/mediterranean/fields/field_1.nbt",
+          "sourceSha256": "c6be3519bf5eb3048037338b7dd21ae735133753bf496690fad5d3abb8e93092",
+          "preparedSha256": "f6f3710dcfe65a8d8e10ea3651aceda375b9f3c8bea154d3c40165ae9854ca7f",
+          "size": [
+            14,
+            3,
+            24
+          ],
+          "origin": [
+            10502,
+            230,
+            1318
+          ],
+          "privateTemplate": "kithkyn_mediterranean_profile:mediterranean/fort__fields__field_1"
+        },
+        {
+          "id": "M08.3",
+          "label": "Field 2",
+          "role": "food",
+          "family": "mediterranean",
+          "source": "data/kaisyn/structure/outpost/forts/exclusives/mediterranean/fields/field_2.nbt",
+          "sourceSha256": "c271874989de1fbd42ecc34eb20d89bf76c9c02b81e6ec7086dac63e2a9e539e",
+          "preparedSha256": "d43abba6b46ec88a094a70b1724d34581fc5b27a08ff8944afae4548bd872e19",
+          "size": [
+            13,
+            5,
+            18
+          ],
+          "origin": [
+            10522,
+            230,
+            1318
+          ],
+          "privateTemplate": "kithkyn_mediterranean_profile:mediterranean/fort__fields__field_2"
+        },
+        {
+          "id": "M08.4",
+          "label": "Corner Small Garden 1",
+          "role": "food",
+          "family": "mediterranean",
+          "source": "data/kaisyn/structure/village/exclusives/mediterranean/houses/corner/med_small_garden_1.nbt",
+          "sourceSha256": "8419002dabc00f47b87900287f99994bbb6f8d88c9dd59aae9d6e664520feeda",
+          "preparedSha256": "567613da1cdca0060d7ef828a82cbcac8b1818d048cdb74660aa090ea15e8542",
+          "size": [
+            5,
+            5,
+            5
+          ],
+          "origin": [
+            10541,
+            230,
+            1318
+          ],
+          "privateTemplate": "kithkyn_mediterranean_profile:mediterranean/houses__corner__med_small_garden_1"
+        },
+        {
+          "id": "M08.5",
+          "label": "Corner Small Stall 1",
+          "role": "detail",
+          "family": "mediterranean",
+          "source": "data/kaisyn/structure/village/exclusives/mediterranean/houses/corner/med_small_stall_1.nbt",
+          "sourceSha256": "3759934014ee0f47e4cfeb152a6a537dabc3624d5184e79e61f3ecc47ca2f14e",
+          "preparedSha256": "b854577a77004d317759b3afcee5fa79f933a1b808c5388a84b42b47f49e89dd",
+          "size": [
+            5,
+            5,
+            5
+          ],
+          "origin": [
+            10552,
+            230,
+            1318
+          ],
+          "privateTemplate": "kithkyn_mediterranean_profile:mediterranean/houses__corner__med_small_stall_1"
+        },
+        {
+          "id": "M08.6",
+          "label": "Planter 1",
+          "role": "detail",
+          "family": "mediterranean",
+          "source": "data/kaisyn/structure/village/exclusives/mediterranean/med_planter_1.nbt",
+          "sourceSha256": "71c66889a3e7f2ef8b2218fa6c30d4d12978195cee8a14fe7cb1cae07b93a0fd",
+          "preparedSha256": "bb3f4f7b6589e0cabb3aee837ae42fee005c3474e56c50ef05e515f510b1fc06",
+          "size": [
+            4,
+            4,
+            4
+          ],
+          "origin": [
+            10563,
+            230,
+            1318
+          ],
+          "privateTemplate": "kithkyn_mediterranean_profile:mediterranean/med_planter_1"
+        },
+        {
+          "id": "M08.7",
+          "label": "Lamp 1",
+          "role": "detail",
+          "family": "mediterranean",
+          "source": "data/kaisyn/structure/village/exclusives/mediterranean/med_lamp_1.nbt",
+          "sourceSha256": "8ad71f09f4a24e5f9ed8702a21daa5f11bf9a2f15c95f4af981841fcd765e97b",
+          "preparedSha256": "dcef634eaa0c41982a76512e128398c695b627f30a25916b0f635fe196c5d85b",
+          "size": [
+            1,
+            4,
+            2
+          ],
+          "origin": [
+            10573,
+            230,
+            1318
+          ],
+          "privateTemplate": "kithkyn_mediterranean_profile:mediterranean/med_lamp_1"
+        }
+      ]
+    },
+    {
+      "id": "M09",
+      "title": "FULL IBERIAN \u2014 CENTER + LARGE HOMES",
+      "family": "iberian",
+      "origin": [
+        10480,
+        230,
+        1362
+      ],
+      "bounds": [
+        10470,
+        220,
+        1353,
+        10638,
+        270,
+        1382
+      ],
+      "maxHeight": 16,
+      "entries": [
+        {
+          "id": "M09.1",
+          "label": "Town Center 1",
+          "role": "center",
+          "family": "iberian",
+          "source": "data/kaisyn/structure/village/exclusives/iberian/town_centers/iberian_meeting_point_1.nbt",
+          "sourceSha256": "09e5a26c683c8b7c5a4540176162c1f0e619c53d67cfc08a2c40b6bddbc7246e",
+          "preparedSha256": "ca4e06307b87ba1a32aab7b11e2693eb221c7fe1b63970d052da7110c59242e8",
+          "size": [
+            17,
+            5,
+            17
+          ],
+          "origin": [
+            10480,
+            230,
+            1362
+          ],
+          "privateTemplate": "kithkyn_mediterranean_profile:iberian/town_centers__iberian_meeting_point_1"
+        },
+        {
+          "id": "M09.2",
+          "label": "Temple 1",
+          "role": "civic",
+          "family": "iberian",
+          "source": "data/kaisyn/structure/village/exclusives/iberian/houses/iberian_temple_1.nbt",
+          "sourceSha256": "0f432950b7bbe7badf092e6d64f633ad2b859fc94bbba190879ebe1cebee175d",
+          "preparedSha256": "522a5cf4c2b2715ed772f4e3eca3ea5b141220e9804490878e8be934b8d55d0e",
+          "size": [
+            15,
+            16,
+            11
+          ],
+          "origin": [
+            10503,
+            230,
+            1362
+          ],
+          "privateTemplate": "kithkyn_mediterranean_profile:iberian/houses__iberian_temple_1"
+        },
+        {
+          "id": "M09.3",
+          "label": "Large House 1",
+          "role": "house",
+          "family": "iberian",
+          "source": "data/kaisyn/structure/village/exclusives/iberian/houses/iberian_large_house_1.nbt",
+          "sourceSha256": "12180c958d3fe047a3a69b299361a699485fb01eec4ae26991994b1a88fcc5f1",
+          "preparedSha256": "cdbebdc93694c024284171245423846bd85bece6acc7334f7e9c7b4104af72ac",
+          "size": [
+            17,
+            9,
+            15
+          ],
+          "origin": [
+            10524,
+            230,
+            1362
+          ],
+          "privateTemplate": "kithkyn_mediterranean_profile:iberian/houses__iberian_large_house_1"
+        },
+        {
+          "id": "M09.4",
+          "label": "Large House 2",
+          "role": "house",
+          "family": "iberian",
+          "source": "data/kaisyn/structure/village/exclusives/iberian/houses/iberian_large_house_2.nbt",
+          "sourceSha256": "d3330cf5225e1d91dc95ea72d05e6aa0bc256efdba9b647cae2dd8568658b747",
+          "preparedSha256": "376a0fa335648b6082c7609e4f0a4cdbf714f4b70f1d3449ce49e3e182c3ccaf",
+          "size": [
+            16,
+            8,
+            14
+          ],
+          "origin": [
+            10547,
+            230,
+            1362
+          ],
+          "privateTemplate": "kithkyn_mediterranean_profile:iberian/houses__iberian_large_house_2"
+        },
+        {
+          "id": "M09.5",
+          "label": "Medium House 1",
+          "role": "house",
+          "family": "iberian",
+          "source": "data/kaisyn/structure/village/exclusives/iberian/houses/iberian_medium_house_1.nbt",
+          "sourceSha256": "a7f387cac15a7eeaa7341c04d26153aa9dc65e060c8dd259b59fe2996162c437",
+          "preparedSha256": "544c12e1d7893beb2473f72d473a15d49613b016264c97e05624c7e2bf0f73a3",
+          "size": [
+            11,
+            9,
+            9
+          ],
+          "origin": [
+            10569,
+            230,
+            1362
+          ],
+          "privateTemplate": "kithkyn_mediterranean_profile:iberian/houses__iberian_medium_house_1"
+        },
+        {
+          "id": "M09.6",
+          "label": "Medium House 2",
+          "role": "house",
+          "family": "iberian",
+          "source": "data/kaisyn/structure/village/exclusives/iberian/houses/iberian_medium_house_2.nbt",
+          "sourceSha256": "50f3b9a4d8dea09b47dd8ef6fffd81da3d57cd0353e30160f1f6363af858c6e4",
+          "preparedSha256": "d4af0aa6c9c779ddf68f9f4e59c9819b7315c6453b306a7519c365724c89710f",
+          "size": [
+            12,
+            10,
+            10
+          ],
+          "origin": [
+            10586,
+            230,
+            1362
+          ],
+          "privateTemplate": "kithkyn_mediterranean_profile:iberian/houses__iberian_medium_house_2"
+        },
+        {
+          "id": "M09.7",
+          "label": "Medium House 3",
+          "role": "house",
+          "family": "iberian",
+          "source": "data/kaisyn/structure/village/exclusives/iberian/houses/iberian_medium_house_3.nbt",
+          "sourceSha256": "93a102d4f1f6fdf60ca6e8a41e8fa0a73fd861279e1561c2250008999d23bea6",
+          "preparedSha256": "1b94296a101ac1d82b64801fb74ebe37c8eaaad9b9f831328a87e436c6c57607",
+          "size": [
+            12,
+            8,
+            9
+          ],
+          "origin": [
+            10604,
+            230,
+            1362
+          ],
+          "privateTemplate": "kithkyn_mediterranean_profile:iberian/houses__iberian_medium_house_3"
+        },
+        {
+          "id": "M09.8",
+          "label": "Medium House 4",
+          "role": "house",
+          "family": "iberian",
+          "source": "data/kaisyn/structure/village/exclusives/iberian/houses/iberian_medium_house_4.nbt",
+          "sourceSha256": "8fa81affce31281eb83b00cceb36778d613c7e26a6a88e2cabc3d5ac206d12a8",
+          "preparedSha256": "b64adeaa9e050064d57c3f4ad1384fe1929dcce33c18d8860f45da1567f05fb7",
+          "size": [
+            14,
+            11,
+            12
+          ],
+          "origin": [
+            10622,
+            230,
+            1362
+          ],
+          "privateTemplate": "kithkyn_mediterranean_profile:iberian/houses__iberian_medium_house_4"
+        }
+      ]
+    },
+    {
+      "id": "M10",
+      "title": "FULL IBERIAN \u2014 HOMES",
+      "family": "iberian",
+      "origin": [
+        10480,
+        230,
+        1406
+      ],
+      "bounds": [
+        10470,
+        220,
+        1397,
+        10591,
+        270,
+        1420
+      ],
+      "maxHeight": 10,
+      "entries": [
+        {
+          "id": "M10.1",
+          "label": "Medium House 5",
+          "role": "house",
+          "family": "iberian",
+          "source": "data/kaisyn/structure/village/exclusives/iberian/houses/iberian_medium_house_5.nbt",
+          "sourceSha256": "802d5f67c198eeb7d8804137a4f0e4537cafbe6a0b71c3eec5243fd5b551a1ad",
+          "preparedSha256": "7acb2c879f1488e6792defdedb5c7ba1b750e60f62d19b873932aeb1fe3a2e63",
+          "size": [
+            12,
+            9,
+            11
+          ],
+          "origin": [
+            10480,
+            230,
+            1406
+          ],
+          "privateTemplate": "kithkyn_mediterranean_profile:iberian/houses__iberian_medium_house_5"
+        },
+        {
+          "id": "M10.2",
+          "label": "Medium House 6",
+          "role": "house",
+          "family": "iberian",
+          "source": "data/kaisyn/structure/village/exclusives/iberian/houses/iberian_medium_house_6.nbt",
+          "sourceSha256": "d21d5ec12b2793a81196f0890e0ee48ead8c41adf4d8df1c232c2497220ca38c",
+          "preparedSha256": "cd80343c41febdb6496ce7de5e4120ccaa22a0b3675d6a5223172a9e52f41d2a",
+          "size": [
+            15,
+            9,
+            11
+          ],
+          "origin": [
+            10498,
+            230,
+            1406
+          ],
+          "privateTemplate": "kithkyn_mediterranean_profile:iberian/houses__iberian_medium_house_6"
+        },
+        {
+          "id": "M10.3",
+          "label": "Medium House 7",
+          "role": "house",
+          "family": "iberian",
+          "source": "data/kaisyn/structure/village/exclusives/iberian/houses/iberian_medium_house_7.nbt",
+          "sourceSha256": "e749e847181159470d99c364b7f649e18f11efef550f82cf4381e53bcc80408b",
+          "preparedSha256": "968eefa1267f9af50f22dd1a3eca7d22b51550594e23e5d3f476411df6002a77",
+          "size": [
+            11,
+            10,
+            9
+          ],
+          "origin": [
+            10519,
+            230,
+            1406
+          ],
+          "privateTemplate": "kithkyn_mediterranean_profile:iberian/houses__iberian_medium_house_7"
+        },
+        {
+          "id": "M10.4",
+          "label": "Medium House 8",
+          "role": "house",
+          "family": "iberian",
+          "source": "data/kaisyn/structure/village/exclusives/iberian/houses/iberian_medium_house_8.nbt",
+          "sourceSha256": "e317c17bd19cf30d2ec85a6d0459a9354864a6fd3b5e08be4d27d4860dd783f7",
+          "preparedSha256": "00881f88b292647afd8decf87031b12ebb9e70ded6c584cc20270f3ddc4691d7",
+          "size": [
+            11,
+            7,
+            10
+          ],
+          "origin": [
+            10536,
+            230,
+            1406
+          ],
+          "privateTemplate": "kithkyn_mediterranean_profile:iberian/houses__iberian_medium_house_8"
+        },
+        {
+          "id": "M10.5",
+          "label": "Small House 1",
+          "role": "house",
+          "family": "iberian",
+          "source": "data/kaisyn/structure/village/exclusives/iberian/houses/iberian_small_house_1.nbt",
+          "sourceSha256": "b139cf79c5548686d32fb8a1d9da2f989bfd102b1ee3d044d61deec55442a91c",
+          "preparedSha256": "84e285363fc0e1374efc627ddf8e77c1174599633337c5933c92d480e83df1a2",
+          "size": [
+            8,
+            6,
+            7
+          ],
+          "origin": [
+            10553,
+            230,
+            1406
+          ],
+          "privateTemplate": "kithkyn_mediterranean_profile:iberian/houses__iberian_small_house_1"
+        },
+        {
+          "id": "M10.6",
+          "label": "Small House 2",
+          "role": "house",
+          "family": "iberian",
+          "source": "data/kaisyn/structure/village/exclusives/iberian/houses/iberian_small_house_2.nbt",
+          "sourceSha256": "3cd648e2df795b37c92f8f38aeb2773e3eb2948e4bdbde14da9683f8dc975101",
+          "preparedSha256": "90b88e5c010c1a6b4b59ff6b9439cfbb39ec5e41ded595fa7d70e11ce9096d7e",
+          "size": [
+            8,
+            6,
+            6
+          ],
+          "origin": [
+            10567,
+            230,
+            1406
+          ],
+          "privateTemplate": "kithkyn_mediterranean_profile:iberian/houses__iberian_small_house_2"
+        },
+        {
+          "id": "M10.7",
+          "label": "Small House 3",
+          "role": "house",
+          "family": "iberian",
+          "source": "data/kaisyn/structure/village/exclusives/iberian/houses/iberian_small_house_3.nbt",
+          "sourceSha256": "a6b842bf2a8be8ae30cd5f7d6111204068d7b092860669aa1958bb71cb0953c5",
+          "preparedSha256": "c35b40b711530a286a34055e57800538ac9362a53cc73adce710385ababdf7d1",
+          "size": [
+            8,
+            6,
+            8
+          ],
+          "origin": [
+            10581,
+            230,
+            1406
+          ],
+          "privateTemplate": "kithkyn_mediterranean_profile:iberian/houses__iberian_small_house_3"
+        }
+      ]
+    },
+    {
+      "id": "M11",
+      "title": "FULL IBERIAN \u2014 FORT + DETAILS",
+      "family": "iberian",
+      "origin": [
+        10480,
+        230,
+        1450
+      ],
+      "bounds": [
+        10470,
+        220,
+        1441,
+        10542,
+        270,
+        1481
+      ],
+      "maxHeight": 21,
+      "entries": [
+        {
+          "id": "M11.1",
+          "label": "Fort",
+          "role": "fort",
+          "family": "iberian",
+          "source": "data/kaisyn/structure/outpost/forts/exclusives/iberian/base_plate.nbt",
+          "sourceSha256": "a35034199e733b547844011448e0437cf05e7b20fe559649a8806a1fa69403f3",
+          "preparedSha256": "7c5c2fdc1531577ea6b19cd76e0647d34a0af911c31d66972ddf5e5c4e38647a",
+          "size": [
+            29,
+            21,
+            28
+          ],
+          "origin": [
+            10480,
+            230,
+            1450
+          ],
+          "privateTemplate": "kithkyn_mediterranean_profile:iberian/fort__base_plate"
+        },
+        {
+          "id": "M11.2",
+          "label": "Garden 1",
+          "role": "food",
+          "family": "iberian",
+          "source": "data/kaisyn/structure/village/exclusives/iberian/houses/iberian_garden_1.nbt",
+          "sourceSha256": "199a74a48a92bd76b8ffd3821d3477ce7aa805f7129286652f34cd1c2234b93c",
+          "preparedSha256": "485837c786613a2dfd7c7f41f88bc29f07c241a9a8f890965b79e1b0c1db4211",
+          "size": [
+            8,
+            5,
+            7
+          ],
+          "origin": [
+            10515,
+            230,
+            1450
+          ],
+          "privateTemplate": "kithkyn_mediterranean_profile:iberian/houses__iberian_garden_1"
+        },
+        {
+          "id": "M11.3",
+          "label": "Plants 1",
+          "role": "detail",
+          "family": "iberian",
+          "source": "data/kaisyn/structure/village/exclusives/iberian/iberian_plants_1.nbt",
+          "sourceSha256": "3cc2b49df08395fc65ca7ef72b389418f8c3a94818e908a1acf0cff9faa8df28",
+          "preparedSha256": "a9fee260dc12ad94882655472f570f9adcd918759f8cd56e5c780ae0db3996bd",
+          "size": [
+            4,
+            3,
+            4
+          ],
+          "origin": [
+            10529,
+            230,
+            1450
+          ],
+          "privateTemplate": "kithkyn_mediterranean_profile:iberian/iberian_plants_1"
+        },
+        {
+          "id": "M11.4",
+          "label": "Lamp Post 1",
+          "role": "detail",
+          "family": "iberian",
+          "source": "data/kaisyn/structure/village/exclusives/iberian/iberian_lamp_post_1.nbt",
+          "sourceSha256": "4f48706c9c86b82695c4f823cb791ca7b1f3be66ebee2b6c2a8cdd4cd7fb977c",
+          "preparedSha256": "a0d59392ebcbe8b9e2a4062e6d5fd7cdd9edc08135ff814d3d839c72b4f7be3f",
+          "size": [
+            1,
+            4,
+            2
+          ],
+          "origin": [
+            10539,
+            230,
+            1450
+          ],
+          "privateTemplate": "kithkyn_mediterranean_profile:iberian/iberian_lamp_post_1"
+        }
+      ]
+    },
+    {
+      "id": "M12",
+      "title": "FULL IBERIAN \u2014 PROFESSION INSERTS",
+      "family": "iberian",
+      "origin": [
+        10480,
+        230,
+        1494
+      ],
+      "bounds": [
+        10470,
+        220,
+        1485,
+        10584,
+        270,
+        1500
+      ],
+      "maxHeight": 2,
+      "entries": [
+        {
+          "id": "M12.1",
+          "label": "Armorer 1 Insert",
+          "role": "insert",
+          "family": "iberian",
+          "source": "data/kaisyn/structure/village/exclusives/iberian/professions_misc/iberian_armorer_1.nbt",
+          "sourceSha256": "2e756fa4373f22989a3e69ad8018d06e69330731fd89174fec1db482ae6925df",
+          "preparedSha256": "3a42ee17832ebde5bf5166b8a7bf02249efc070fe7d5243793e090b2fa4d3ddf",
+          "size": [
+            3,
+            2,
+            3
+          ],
+          "origin": [
+            10480,
+            230,
+            1494
+          ],
+          "privateTemplate": "kithkyn_mediterranean_profile:iberian/professions_misc__iberian_armorer_1"
+        },
+        {
+          "id": "M12.2",
+          "label": "Butcher 1 Insert",
+          "role": "food",
+          "family": "iberian",
+          "source": "data/kaisyn/structure/village/exclusives/iberian/professions_misc/iberian_butcher_1.nbt",
+          "sourceSha256": "aaba47be458a622e3fbbd5c2d684eda3c331d93fc8f6f64fd0312fd07019eaf7",
+          "preparedSha256": "ebc8de8f11a21200fe1df07bc49f506cefc08424043527a9ba5de9bb33a5a27c",
+          "size": [
+            3,
+            2,
+            3
+          ],
+          "origin": [
+            10489,
+            230,
+            1494
+          ],
+          "privateTemplate": "kithkyn_mediterranean_profile:iberian/professions_misc__iberian_butcher_1"
+        },
+        {
+          "id": "M12.3",
+          "label": "Cartographer 1 Insert",
+          "role": "insert",
+          "family": "iberian",
+          "source": "data/kaisyn/structure/village/exclusives/iberian/professions_misc/iberian_cartographer_1.nbt",
+          "sourceSha256": "e6723f39a0853b86aa8bb8eee02771a766c9e2bc32390e09479e0e144908cb92",
+          "preparedSha256": "808371819ef1a1f545a551a0b015ece592505e72755d1dda78787e0bf40724b9",
+          "size": [
+            3,
+            2,
+            3
+          ],
+          "origin": [
+            10498,
+            230,
+            1494
+          ],
+          "privateTemplate": "kithkyn_mediterranean_profile:iberian/professions_misc__iberian_cartographer_1"
+        },
+        {
+          "id": "M12.4",
+          "label": "Farmer 1 Insert",
+          "role": "food",
+          "family": "iberian",
+          "source": "data/kaisyn/structure/village/exclusives/iberian/professions_misc/iberian_farmer_1.nbt",
+          "sourceSha256": "cdef033074ad0666ffb4034264d07cf61afea0a1dd80361fb54cfa93595e0e84",
+          "preparedSha256": "5fd5e545e20b7154af4f6bcba30611a4ba1ae5d64c65ee08e6051bafaa305e8d",
+          "size": [
+            3,
+            2,
+            3
+          ],
+          "origin": [
+            10507,
+            230,
+            1494
+          ],
+          "privateTemplate": "kithkyn_mediterranean_profile:iberian/professions_misc__iberian_farmer_1"
+        },
+        {
+          "id": "M12.5",
+          "label": "Fisher 1 Insert",
+          "role": "food",
+          "family": "iberian",
+          "source": "data/kaisyn/structure/village/exclusives/iberian/professions_misc/iberian_fisher_1.nbt",
+          "sourceSha256": "bb95228f038c6c7044f6d3d173b5cb9f4d9fd4336aaa5256b8ba5d13dba7becb",
+          "preparedSha256": "b437acee59d06abcf44c17538cde3f8d756c9de0c963b890998b6b85ba45d7c5",
+          "size": [
+            3,
+            2,
+            3
+          ],
+          "origin": [
+            10516,
+            230,
+            1494
+          ],
+          "privateTemplate": "kithkyn_mediterranean_profile:iberian/professions_misc__iberian_fisher_1"
+        },
+        {
+          "id": "M12.6",
+          "label": "Fletcher 1 Insert",
+          "role": "insert",
+          "family": "iberian",
+          "source": "data/kaisyn/structure/village/exclusives/iberian/professions_misc/iberian_fletcher_1.nbt",
+          "sourceSha256": "d2c4d4361d5385f7f065d30ebea9e1e3571892572e15b701f18aa1b7f11f5606",
+          "preparedSha256": "3ef8548c5a0858123ecc6f56b7b4d3d3ec90fe13bdaac37c42f7a9f187955bb6",
+          "size": [
+            3,
+            2,
+            3
+          ],
+          "origin": [
+            10525,
+            230,
+            1494
+          ],
+          "privateTemplate": "kithkyn_mediterranean_profile:iberian/professions_misc__iberian_fletcher_1"
+        },
+        {
+          "id": "M12.7",
+          "label": "Leatherworker 1 Insert",
+          "role": "insert",
+          "family": "iberian",
+          "source": "data/kaisyn/structure/village/exclusives/iberian/professions_misc/iberian_leatherworker_1.nbt",
+          "sourceSha256": "e68690f1b45a78ab26ab9fa18da41aacd84c57d23b537375d0be7ec49fdfe837",
+          "preparedSha256": "698759432f1d4f5614d9a305ae7fba9dee42957bbfff7fe9a99839825315ba3b",
+          "size": [
+            3,
+            2,
+            3
+          ],
+          "origin": [
+            10534,
+            230,
+            1494
+          ],
+          "privateTemplate": "kithkyn_mediterranean_profile:iberian/professions_misc__iberian_leatherworker_1"
+        },
+        {
+          "id": "M12.8",
+          "label": "Librarian 1 Insert",
+          "role": "insert",
+          "family": "iberian",
+          "source": "data/kaisyn/structure/village/exclusives/iberian/professions_misc/iberian_librarian_1.nbt",
+          "sourceSha256": "624b5688e18bc526c9116ebdb0529baee835371418564ece4d84a83eb8cd24ce",
+          "preparedSha256": "7d5ec608785051b91c844682d793e1239402473c3c2b04fcc8aa32499b0db28e",
+          "size": [
+            3,
+            2,
+            3
+          ],
+          "origin": [
+            10543,
+            230,
+            1494
+          ],
+          "privateTemplate": "kithkyn_mediterranean_profile:iberian/professions_misc__iberian_librarian_1"
+        },
+        {
+          "id": "M12.9",
+          "label": "Mason 1 Insert",
+          "role": "insert",
+          "family": "iberian",
+          "source": "data/kaisyn/structure/village/exclusives/iberian/professions_misc/iberian_mason_1.nbt",
+          "sourceSha256": "d214c656c362510bb944f04cc3062ca3f07629eb1a1e1f7553dc19f26f47a1ff",
+          "preparedSha256": "fafb4601bb796c3852a6ddd9626655c8d05321b0d91cc77f682212f9587a8857",
+          "size": [
+            3,
+            2,
+            3
+          ],
+          "origin": [
+            10552,
+            230,
+            1494
+          ],
+          "privateTemplate": "kithkyn_mediterranean_profile:iberian/professions_misc__iberian_mason_1"
+        },
+        {
+          "id": "M12.10",
+          "label": "Shepherd 1 Insert",
+          "role": "food",
+          "family": "iberian",
+          "source": "data/kaisyn/structure/village/exclusives/iberian/professions_misc/iberian_shepherd_1.nbt",
+          "sourceSha256": "3cac5c25bb6bdf2c658e7efe36ba3c215f5dbc24db71122bd8c478cae500f090",
+          "preparedSha256": "431e506ea27367204fd9daf13bf022e9bb703a29f600f659dde49490894e520c",
+          "size": [
+            3,
+            2,
+            3
+          ],
+          "origin": [
+            10561,
+            230,
+            1494
+          ],
+          "privateTemplate": "kithkyn_mediterranean_profile:iberian/professions_misc__iberian_shepherd_1"
+        },
+        {
+          "id": "M12.11",
+          "label": "Toolsmith 1 Insert",
+          "role": "insert",
+          "family": "iberian",
+          "source": "data/kaisyn/structure/village/exclusives/iberian/professions_misc/iberian_toolsmith_1.nbt",
+          "sourceSha256": "f79294a6d34d182c898a430f65b79dc32c55ce0065f705ccbd03df31b9f138fc",
+          "preparedSha256": "913d25dfc3ed6ee95f9268ec5a60620a20e32eaed42ebef19180599d231d1c58",
+          "size": [
+            3,
+            2,
+            3
+          ],
+          "origin": [
+            10570,
+            230,
+            1494
+          ],
+          "privateTemplate": "kithkyn_mediterranean_profile:iberian/professions_misc__iberian_toolsmith_1"
+        },
+        {
+          "id": "M12.12",
+          "label": "Weaponsmith 1 Insert",
+          "role": "insert",
+          "family": "iberian",
+          "source": "data/kaisyn/structure/village/exclusives/iberian/professions_misc/iberian_weaponsmith_1.nbt",
+          "sourceSha256": "6c14acfb3a608306ff9e539ee48c123f6da82e53c1e2eafdbb9e342b0f0ed737",
+          "preparedSha256": "324675fe4c2f99ef116f7762c83eb939855bef02b29402b3e7f4b3404535b302",
+          "size": [
+            3,
+            2,
+            3
+          ],
+          "origin": [
+            10579,
+            230,
+            1494
+          ],
+          "privateTemplate": "kithkyn_mediterranean_profile:iberian/professions_misc__iberian_weaponsmith_1"
+        }
+      ]
+    }
+  ],
+  "decisions": {
+    "mediterranean": {
+      "core": "M01 Towns & Towers Mediterranean white-city family",
+      "landscapeDonors": [
+        "M04.1",
+        "M04.2",
+        "M04.3",
+        "M04.4"
+      ],
+      "annexPurpose": "Select the production catalog (center, homes, workplaces, fort, fields, details) from the complete family, with the Iberian family beside it as the heavier donor."
+    }
+  },
+  "verification": {
+    "preparedTemplates": 60,
+    "placedTemplates": 60,
+    "allPlacementResponsesConfirmed": true,
+    "worldSaved": true,
+    "worldBackup": "/Users/quzzar/Projects/kithkyn/run/backups/before-mediterranean-full-profile-20260911-192522",
+    "renderedViews": [
+      "/Users/quzzar/Projects/kithkyn/run/mediterranean-full-profile/render/client/screenshots/mediterranean-full-town-center.png",
+      "/Users/quzzar/Projects/kithkyn/run/mediterranean-full-profile/render/client/screenshots/mediterranean-full-center-homes.png",
+      "/Users/quzzar/Projects/kithkyn/run/mediterranean-full-profile/render/client/screenshots/mediterranean-full-workplaces-fort-fields.png",
+      "/Users/quzzar/Projects/kithkyn/run/mediterranean-full-profile/render/client/screenshots/iberian-full-center-homes.png",
+      "/Users/quzzar/Projects/kithkyn/run/mediterranean-full-profile/render/client/screenshots/iberian-full-fort-details-inserts.png"
+    ],
+    "visualReview": "All seven rows photographed from a disposable capture client on the live server after placement: every structure stands on its own lit platform behind its sign, the Mediterranean rows read as white plaster and terracotta with awnings and item frames restored, the Iberian rows as vined brick under timber roofs, the two forts and the fields intact, the twelve profession inserts legible as a row of workstations.",
+    "visualFindings": [
+      "Six pieces with waterlogged stairs or slabs (M06.2, M07.1, M07.8, M09.1, M09.3, M11.1) and the Iberian fisher insert (M12.5) flooded their aprons and poured off the platform edge in the first capture; the courts' fluid barriers only ring water sitting at a template edge. Each now stands inside a barrier ring two cells out, the spilled flows drained, and a 4,000-cell sweep found no water at or below platform level (the only hits were the ocean at y=50 under the concourse).",
+      "The first camera cut the Mediterranean town center at the frame edge, so a fifth view was added on the center alone.",
+      "Cauldron-only pieces (M07.7 leatherworker, M08.1 fort) do not leak and were left unringed."
+    ]
+  },
+  "worldBackup": "/Users/quzzar/Projects/kithkyn/run/backups/before-mediterranean-full-profile-20260911-192522",
+  "fluidContainment": {
+    "rule": "barrier ring two cells outside every piece holding water blocks or waterlogged blocks, floor to one above the highest wet block; cauldron-only pieces are left alone",
+    "rings": [
+      {
+        "id": "M06.2",
+        "ring": [
+          10509,
+          230,
+          1228,
+          10522,
+          231,
+          1241
+        ]
+      },
+      {
+        "id": "M07.1",
+        "ring": [
+          10478,
+          230,
+          1272,
+          10491,
+          232,
+          1285
+        ]
+      },
+      {
+        "id": "M07.8",
+        "ring": [
+          10580,
+          230,
+          1272,
+          10593,
+          232,
+          1285
+        ]
+      },
+      {
+        "id": "M09.1",
+        "ring": [
+          10478,
+          230,
+          1360,
+          10498,
+          232,
+          1380
+        ]
+      },
+      {
+        "id": "M09.3",
+        "ring": [
+          10522,
+          230,
+          1360,
+          10542,
+          232,
+          1378
+        ]
+      },
+      {
+        "id": "M11.1",
+        "ring": [
+          10478,
+          230,
+          1448,
+          10510,
+          232,
+          1479
+        ]
+      },
+      {
+        "id": "M12.5",
+        "ring": [
+          10514,
+          230,
+          1492,
+          10520,
+          231,
+          1498
+        ]
+      }
+    ]
+  }
+}
