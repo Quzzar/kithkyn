@@ -15,6 +15,7 @@ final class BuiltInWallSegmentCatalog implements WallSegmentCatalog {
   static final BuiltInWallSegmentCatalog INSTANCE = new BuiltInWallSegmentCatalog(AuthoredWoodWallSegments.INSTANCE);
   static final BuiltInWallSegmentCatalog BIRCH_FOREST = new BuiltInWallSegmentCatalog(AuthoredWoodWallSegments.BIRCH_FOREST);
   static final BuiltInWallSegmentCatalog ARID = new BuiltInWallSegmentCatalog(AuthoredWoodWallSegments.ARID);
+  static final BuiltInWallSegmentCatalog SWAMP = new BuiltInWallSegmentCatalog(AuthoredWoodWallSegments.SWAMP);
   private final AuthoredWoodWallSegments authored;
 
   /** Long enough to read as a structure, short enough for several builders to share the ring. */

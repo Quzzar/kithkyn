@@ -65,18 +65,18 @@ confirmed the two barrels and preserved castle appearance before deployment.
 
 The Swamp castle is the user-edited SC01.2 Overgrown Stone Fort, derived from the
 Towns and Towers Jungle Fort and restyled with spruce, dark oak, mossed stone and ordinary
-oak foliage. It belongs to the planned ordinary Swamp village, separate from the playable
+oak foliage. It belongs to the playable ordinary Swamp village, separate from the
 Floodplain village for mangrove biomes. Its final gallery capture stands at `10107, 230, 1308`;
 the private staged assets live under `run/swamp-integration/castle/`, while
 `tools/structure/swamp-castle-20260911.json` records the public metadata and provenance.
 
 This building uses the same castle category, ruler, custody, evidence, housing and guard systems
 as the Desert castle. It is a different physical structure: Desert uses R07.2, while Swamp uses
-SC01.2. The Swamp definition remains staged until the complete Swamp catalog and style token land.
+SC01.2. Its definition ships in the complete private Swamp catalog.
 
 The two residential wings provide nine general single beds with shared personal barrels.
 The upstairs ruler suite has a reserved double bed and its own chest. The castle adds a
-leader, baker, blacksmith and jailer. Two sword-and-shield guards cover the entrance, two
+leader, baker, merchant, blacksmith and jailer. Two sword-and-shield guards cover the entrance, two
 crossbow guards cover the opposing balconies, and three crossbow guards cover the roof.
 These are ordinary authored jobs and housing assignments, so the wider village still needs
 enough residents to fill them.

@@ -51,8 +51,15 @@ public final class CastleMerchantVerification {
 
   private static void verify(ServerLevel level) {
     BlockPos origin = new BlockPos(2400, 159, 2400);
-    var castle = ApprovedStructureAccess.place(level, origin, Buildings.getByName("castle_desert_1"), Rotation.NONE);
-    var market = ApprovedStructureAccess.place(level, origin.offset(96,0,0), Buildings.getByName("market_desert_1"), Rotation.NONE);
+    String castleId = System.getProperty("kithkyn.castleMerchant.id", "castle_desert_1");
+    var castleInfo = Buildings.getByName(castleId);
+    check(castleInfo != null, "Missing castle definition " + castleId);
+    String marketId = System.getProperty("kithkyn.castleMerchant.marketId",
+        "market_" + castleInfo.getVariant() + "_1");
+    var marketInfo = Buildings.getByName(marketId);
+    check(marketInfo != null, "Missing market definition " + marketId);
+    var castle = ApprovedStructureAccess.place(level, origin, castleInfo, Rotation.NONE);
+    var market = ApprovedStructureAccess.place(level, origin.offset(96,0,0), marketInfo, Rotation.NONE);
     Village village = new ApprovedStructureAccess.VillageFixture(level, castle, true, market);
     var merchant = new ApprovedStructureAccess.Person(level, village);
     village.getPopulation().add(merchant.getUUID());
@@ -61,7 +68,11 @@ public final class CastleMerchantVerification {
     village.assignJob(merchant.getUUID(), castleJob);
     merchant.setOccupation(Occupation.MERCHANT);
     merchant.setNoAi(true);
-    merchant.moveTo(2424.5,170,2411.5);
+    BlockPos merchantStation = castle.getInfo().getWorkLocations().entrySet().stream()
+        .filter(entry -> entry.getValue() == Occupation.MERCHANT).map(entry -> BlockPos.of(entry.getKey()))
+        .findFirst().orElseThrow(() -> new AssertionError("Castle has no merchant station"));
+    BlockPos merchantWorld = origin.offset(merchantStation);
+    merchant.moveTo(merchantWorld.getX() + 0.5, merchantWorld.getY(), merchantWorld.getZ() + 0.5);
     check(level.addFreshEntity(merchant), "Merchant failed to spawn");
     check(Treasury.tradeBlocker(village, level).isPresent(), "Castle stall incorrectly substitutes for market staffing");
     var marketWorker = new ApprovedStructureAccess.Person(level, village);

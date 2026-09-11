@@ -363,14 +363,15 @@ CTOV fortified plains is a defense or development state of `plains`, while Chris
 Halloween are possible seasonal treatments. This keeps biome, progression, and event state from
 becoming one overloaded axis.
 
-### Current runtime selection: 2026-09-10
+### Current runtime selection: 2026-09-11
 
-Five styles exist today, in this stable order: `birch_forest`, `desert`, `badlands`,
-`floodplain`, `jungle`. Birch Forest is the only catalog bundled in the jar and so the default: a blank
+Six styles exist today, in this stable order: `birch_forest`, `desert`, `badlands`,
+`floodplain`, `jungle`, `swamp`. Birch Forest is the only catalog bundled in the jar and so the default: a blank
 or unknown saved style reads as Birch. Desert ([desert-village.md](desert-village.md)),
 Badlands ([badlands-village.md](badlands-village.md)) and Floodplain
-([floodplain-village.md](floodplain-village.md)) and Jungle
-([jungle-village.md](jungle-village.md)) are installed as private datapacks that
+([floodplain-village.md](floodplain-village.md)), Jungle
+([jungle-village.md](jungle-village.md)) and Swamp
+([swamp-village.md](swamp-village.md)) are installed as private datapacks that
 supply their own definitions and templates under the ids the code resolves; without its pack
 a style has no founding set and is never selected automatically. The old Village Life families
 (plains, taiga, snowy, savanna and the bundled desert set) were removed on 2026-09-10; see
@@ -387,7 +388,7 @@ reroll an existing village. An explicit style argument on the command still over
 
 Selection first honors `kithkyn:village_style/<style>` biome tags, so a datapack can map a
 vanilla or modded biome precisely without a second mapping format. If a biome has several
-explicit tags, the stable order is Birch Forest, Desert, Badlands, Floodplain, Jungle. Only styles
+explicit tags, the stable order is Birch Forest, Desert, Badlands, Floodplain, Jungle, Swamp. Only styles
 whose own center, mine, and storehouse definitions are loaded are automatic candidates.
 
 Conventional families then retain deterministic assignments, but only where a finished
@@ -400,7 +401,8 @@ catalog exists:
 | Desert or sandy, excluding the mesa/badlands and savanna families above | Desert |
 | Mangrove: vanilla mangrove swamp through the `kithkyn:village_style/floodplain` tag, and untagged registry paths containing `mangrove` | Floodplain |
 | Jungle, including conventional Jungle tags and registry paths containing `jungle` | Jungle |
-| Every other conventional family (plains, forest, taiga, snowy, plain swamp and the rest) | No conventional mapping; the climate cluster below decides |
+| Ordinary swamp, including the broad conventional Swamp tag and registry paths containing `swamp` after mangrove is excluded | Swamp |
+| Every other conventional family (plains, forest, taiga, snowy and the rest) | No conventional mapping; the climate cluster below decides |
 
 Birch wins before broader family tags; an explicit style tag can override even a birch-named
 biome. This name heuristic is a compatibility fallback for mods that omit conventional tags,
@@ -408,14 +410,14 @@ not a substitute for those tags.
 
 The broad Pueblo assignment includes wooded badlands and savanna plateau for now. As more
 catalogs become playable, explicit style tags can separate those biomes without rerolling
-existing villages. Jungle is now a complete strict catalog: it does not borrow missing buildings
+existing villages. Jungle and Swamp are complete strict catalogs: neither borrows missing buildings
 from Birch or another regional family.
 
 A family with no conventional mapping uses its precipitation, base temperature, downfall, and
 conventional hot/dry/wet tags to choose a cluster. Only a hot, dry climate has a choice to
 make, and that choice is randomly varied between founding sites but deterministic for the same
-world seed, biome, and site. Plain vanilla swamp carries the conventional hot and wet tags and
-so builds Floodplain until a swamp catalog of its own exists:
+world seed, biome, and site. Ordinary swamp is already resolved conventionally before this climate
+fallback; the hot-and-wet cluster remains useful for unclassified tropical wetlands:
 
 | Climate | Candidate architecture cluster |
 | --- | --- |

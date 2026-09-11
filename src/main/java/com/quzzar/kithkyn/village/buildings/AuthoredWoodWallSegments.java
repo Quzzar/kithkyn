@@ -34,6 +34,7 @@ final class AuthoredWoodWallSegments {
   static final AuthoredWoodWallSegments BIRCH_FOREST = loadBundled("birch_forest");
 
   static final AuthoredWoodWallSegments ARID = loadBundled("wood", true);
+  static final AuthoredWoodWallSegments SWAMP = loadBundled("swamp");
 
   private static final String RESOURCE_ROOT =
       "data/kithkyn/structure/wall/";
@@ -456,15 +457,21 @@ final class AuthoredWoodWallSegments {
         case "z" -> WallBlockPlan.Piece.BEAM_NORTH_SOUTH;
         default -> WallBlockPlan.Piece.POST;
       };
-      case "minecraft:oak_fence" -> WallBlockPlan.Piece.PARAPET;
-      case "minecraft:oak_slab" -> WallBlockPlan.Piece.SLAB;
-      case "minecraft:oak_trapdoor" -> WallBlockPlan.trapdoorPiece(
+      case "minecraft:oak_log" -> switch (properties.getString("axis")) {
+        case "x" -> WallBlockPlan.Piece.BEAM_EAST_WEST;
+        case "z" -> WallBlockPlan.Piece.BEAM_NORTH_SOUTH;
+        default -> WallBlockPlan.Piece.POST;
+      };
+      case "minecraft:oak_fence", "minecraft:spruce_fence" -> WallBlockPlan.Piece.PARAPET;
+      case "minecraft:oak_slab", "minecraft:spruce_slab" -> WallBlockPlan.Piece.SLAB;
+      case "minecraft:oak_trapdoor", "minecraft:spruce_trapdoor" -> WallBlockPlan.trapdoorPiece(
           horizontal(properties.getString("facing")));
       case "minecraft:ladder" -> WallBlockPlan.ladderPiece(
           horizontal(properties.getString("facing")));
       case "minecraft:lantern" -> "true".equals(properties.getString("hanging"))
           ? WallBlockPlan.Piece.LANTERN_HANGING
           : WallBlockPlan.Piece.LANTERN;
+      case "minecraft:candle" -> WallBlockPlan.Piece.LANTERN;
       case "minecraft:campfire" -> WallBlockPlan.campfirePiece(
           horizontal(properties.getString("facing")));
       default -> null;

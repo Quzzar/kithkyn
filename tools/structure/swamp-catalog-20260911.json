@@ -1,0 +1,503 @@
+{
+  "schemaVersion": 1,
+  "recorded": "2026-09-11",
+  "status": "verified",
+  "style": "swamp",
+  "description": "Approved ordinary-Swamp village catalog.",
+  "founding": {
+    "center": "village_center_swamp_1",
+    "center_beds": 0,
+    "starting_buildings": [
+      "mine_swamp_1",
+      "storehouse_swamp_1",
+      "house_swamp_1",
+      "house_swamp_1",
+      "house_swamp_1",
+      "house_swamp_1"
+    ],
+    "starting_beds": 4
+  },
+  "identity": {
+    "beds": "primary or secondary village color",
+    "banners": "village banner",
+    "market_fabrics": "original shared market colors"
+  },
+  "wall": {
+    "source": "run/swamp-wall-study-20260911/approved-live-edit",
+    "implementation": "bundled authored swamp wall segment family"
+  },
+  "buildings": [
+    {
+      "exhibit": "NF01.2",
+      "structure": "village_center_swamp_1",
+      "category": "village_center",
+      "level": 1,
+      "size": [
+        25,
+        15,
+        22
+      ],
+      "source": "run/swamp-full-review/approved-live-edits/NF01.2.nbt",
+      "source_sha256": "5f41ff4df5ef8d13f0af15ffed439f563f6bb1cdb5896c75dce7a3e48c237f7b",
+      "asset": "run/swamp-integration/datapack/data/kithkyn/structure/village_center_swamp_1.nbt",
+      "asset_sha256": "b9b9cd3d18a84117053149b9fbe6c0be523c67451724775434c3d397b47f0418",
+      "definition": "run/swamp-integration/datapack/data/kithkyn/kithkyn/buildings/village_center_swamp_1.json",
+      "definition_sha256": "8477f8f542807dbeb4f94a92466ef3d83a7074048f515d09e3df02cb1bded372"
+    },
+    {
+      "exhibit": "NE03.6",
+      "structure": "couple_cottage_swamp_1",
+      "category": "couple_cottage",
+      "level": 1,
+      "size": [
+        8,
+        7,
+        9
+      ],
+      "source": "run/swamp-full-review/approved-live-edits/NE03.6.nbt",
+      "source_sha256": "d39cd3c340c4340756ec2ec0e593a3fde09ba745a8c0248c21cd11b7240c4b3c",
+      "asset": "run/swamp-integration/datapack/data/kithkyn/structure/couple_cottage_swamp_1.nbt",
+      "asset_sha256": "8bb48e8579e29f682c10740484929416deaf4829a489602e9c67987df46d2320",
+      "definition": "run/swamp-integration/datapack/data/kithkyn/kithkyn/buildings/couple_cottage_swamp_1.json",
+      "definition_sha256": "3880a55dbaa70ba14fdaadb3d56e5e0e53d98524fbdc07201a4b766de20e1a1f"
+    },
+    {
+      "exhibit": "NE03.8",
+      "structure": "house_swamp_1__two_bed",
+      "category": "house",
+      "level": 1,
+      "size": [
+        10,
+        8,
+        11
+      ],
+      "source": "run/swamp-full-review/approved-live-edits/NE03.8.nbt",
+      "source_sha256": "8e7915fb4ce92a71c101b41cc547427e8ae07b2b6799a8707ef61907dbe547ca",
+      "asset": "run/swamp-integration/datapack/data/kithkyn/structure/house_swamp_1__two_bed.nbt",
+      "asset_sha256": "860d370b8fdcd66375e01576502bf1d984a97cc9dd6e6d2fc458943cd028cc54",
+      "definition": "run/swamp-integration/datapack/data/kithkyn/kithkyn/buildings/house_swamp_1__two_bed.json",
+      "definition_sha256": "46b916f289f079dec71fa64eced0c26ce717e6f3a21565ee3492a765f17a9c15"
+    },
+    {
+      "exhibit": "NE03.5",
+      "structure": "house_swamp_1",
+      "category": "house",
+      "level": 1,
+      "size": [
+        7,
+        7,
+        7
+      ],
+      "source": "run/swamp-full-review/approved-live-edits/NE03.5.nbt",
+      "source_sha256": "6b3b638cae7e054957db7dddb03b9f5d862dec8c4e94287ba2c128863e724909",
+      "asset": "run/swamp-integration/datapack/data/kithkyn/structure/house_swamp_1.nbt",
+      "asset_sha256": "0a4b0f7ce0acd578d1d332c7babffe9bba09805b9b801ef4c204336c127ee82e",
+      "definition": "run/swamp-integration/datapack/data/kithkyn/kithkyn/buildings/house_swamp_1.json",
+      "definition_sha256": "e5f4a3c5bc0d23e22e04fa1814086382a566995fce36ec125e61bb9fb2218bdd"
+    },
+    {
+      "exhibit": "NF04.4",
+      "structure": "church_swamp_1__cleric_home",
+      "category": "church",
+      "level": 1,
+      "size": [
+        7,
+        8,
+        9
+      ],
+      "source": "run/swamp-full-review/approved-live-edits/NF04.4.nbt",
+      "source_sha256": "7d4b69d6f6db74954a95242697cec0b461a3c37b41efe7d5b4f7d7a24dcfb561",
+      "asset": "run/swamp-integration/datapack/data/kithkyn/structure/church_swamp_1__cleric_home.nbt",
+      "asset_sha256": "e9f5873eb030fb37bfc7365408047e34f172d24ab9eb2b2e18509e603b6f2bfa",
+      "definition": "run/swamp-integration/datapack/data/kithkyn/kithkyn/buildings/church_swamp_1__cleric_home.json",
+      "definition_sha256": "c0b3355125adc05f5fd6885ed4f779bef82db1ad4208e21a703b6ef7e213765c"
+    },
+    {
+      "exhibit": "NF04.3",
+      "structure": "church_swamp_1__cleric_couple_home",
+      "category": "church",
+      "level": 1,
+      "size": [
+        11,
+        7,
+        11
+      ],
+      "source": "run/swamp-full-review/approved-live-edits/NF04.3.nbt",
+      "source_sha256": "d5907e2f5f581f570980ce4a2db9c9650231148e435146acee53c32eff626d55",
+      "asset": "run/swamp-integration/datapack/data/kithkyn/structure/church_swamp_1__cleric_couple_home.nbt",
+      "asset_sha256": "3a398a12efe0a055fa4c7d24cf83b283c0d87581deb82a27a5d2712b36a05641",
+      "definition": "run/swamp-integration/datapack/data/kithkyn/kithkyn/buildings/church_swamp_1__cleric_couple_home.json",
+      "definition_sha256": "ab601e4243f7a5f7d88cb686fb38fde10df135c8aa4b050a93c409ba2e0e4a1b"
+    },
+    {
+      "exhibit": "NF04.2",
+      "structure": "church_swamp_1__cleric_mixed_home",
+      "category": "church",
+      "level": 1,
+      "size": [
+        15,
+        9,
+        13
+      ],
+      "source": "run/swamp-full-review/approved-live-edits/NF04.2.nbt",
+      "source_sha256": "827a8d0a55a878e0d8dc04aac6429f9a1eaa34db484ef9086e1d8e4541b61fb2",
+      "asset": "run/swamp-integration/datapack/data/kithkyn/structure/church_swamp_1__cleric_mixed_home.nbt",
+      "asset_sha256": "c92d5db699c8f3bf6d7cac963ae6fba445658d0e66706502bce0461a9d7a47d5",
+      "definition": "run/swamp-integration/datapack/data/kithkyn/kithkyn/buildings/church_swamp_1__cleric_mixed_home.json",
+      "definition_sha256": "afba1db46baf44ab0367f3401ad0881acd9110bc579e8be353a6fe27e5ce0c70"
+    },
+    {
+      "exhibit": "NF04.1",
+      "structure": "church_swamp_1",
+      "category": "church",
+      "level": 1,
+      "size": [
+        9,
+        4,
+        9
+      ],
+      "source": "run/swamp-full-review/approved-live-edits/NF04.1.nbt",
+      "source_sha256": "0b0ea2a837467bc4b7653cabfa41989fa86374554f0fd96f98ad6a7c2e0af578",
+      "asset": "run/swamp-integration/datapack/data/kithkyn/structure/church_swamp_1.nbt",
+      "asset_sha256": "ee403ee2dedf6bc5b0992cba8c1ee3e1218bb8f3a1685812bd35c21659ccde25",
+      "definition": "run/swamp-integration/datapack/data/kithkyn/kithkyn/buildings/church_swamp_1.json",
+      "definition_sha256": "3869f0bef44ca902bd807cb81d890d944243322b4e4273154ad6e0733d9df297"
+    },
+    {
+      "exhibit": "NE04.4",
+      "structure": "blacksmith_swamp_1",
+      "category": "blacksmith",
+      "level": 1,
+      "size": [
+        6,
+        6,
+        7
+      ],
+      "source": "run/swamp-full-review/approved-live-edits/NE04.4.nbt",
+      "source_sha256": "e5b4b8e3754843f27eadb724134ebf363562e636fcb63d435190019c1e25ebf3",
+      "asset": "run/swamp-integration/datapack/data/kithkyn/structure/blacksmith_swamp_1.nbt",
+      "asset_sha256": "385569348ff9dd2928360850e2655304e570ecf1ec38fc4d6b11c05aa63755b9",
+      "definition": "run/swamp-integration/datapack/data/kithkyn/kithkyn/buildings/blacksmith_swamp_1.json",
+      "definition_sha256": "47d48d5041744d451e2dcf00a227b0fa1d0fa9e7464e6dde728b30cd68579024"
+    },
+    {
+      "exhibit": "NE06.9",
+      "structure": "well_swamp_1",
+      "category": "well",
+      "level": 1,
+      "size": [
+        5,
+        5,
+        5
+      ],
+      "source": "run/swamp-full-review/approved-live-edits/NE06.9.nbt",
+      "source_sha256": "2014c100442245cdd4bf5f7fe11007510d3928db4d852be43af4c7596eadf73c",
+      "asset": "run/swamp-integration/datapack/data/kithkyn/structure/well_swamp_1.nbt",
+      "asset_sha256": "0323fa08fa8008059c89c16d288d9472f0849da644decc121c91ce65e551c189",
+      "definition": "run/swamp-integration/datapack/data/kithkyn/kithkyn/buildings/well_swamp_1.json",
+      "definition_sha256": "c1d1a3a3539966722af9d8030ca14f80671e13eda81b414fadb50456a3b6bddc"
+    },
+    {
+      "exhibit": "NE01.5",
+      "structure": "lumberjack_swamp_1",
+      "category": "lumberjack",
+      "level": 1,
+      "size": [
+        7,
+        5,
+        9
+      ],
+      "source": "run/swamp-full-review/approved-live-edits/NE01.5.nbt",
+      "source_sha256": "50ae33d844bcd9cc22b3dc50aa3063215f1327842b540b982dae4465add55822",
+      "asset": "run/swamp-integration/datapack/data/kithkyn/structure/lumberjack_swamp_1.nbt",
+      "asset_sha256": "fe00c4fc7ee1fa683a2affde4d5e4122b7e1695f73eb43be5b9d9d3ebdb261e4",
+      "definition": "run/swamp-integration/datapack/data/kithkyn/kithkyn/buildings/lumberjack_swamp_1.json",
+      "definition_sha256": "3ed540d29adb5f31a2a2788bcd9eb536435e7c816ebb1fae48393ffa622a3a57"
+    },
+    {
+      "exhibit": "NE04.5",
+      "structure": "bakery_swamp_1",
+      "category": "bakery",
+      "level": 1,
+      "size": [
+        9,
+        9,
+        9
+      ],
+      "source": "run/swamp-full-review/approved-live-edits/NE04.5.nbt",
+      "source_sha256": "bed37c44b99affaaf22b173f8a55164c8ccde889f24b7c5327c53512bd1ce3f7",
+      "asset": "run/swamp-integration/datapack/data/kithkyn/structure/bakery_swamp_1.nbt",
+      "asset_sha256": "9b4d4759e9e9fc0395ec775e27558f0a50ec7f4a0fd4bab48d6f6c9906d51c08",
+      "definition": "run/swamp-integration/datapack/data/kithkyn/kithkyn/buildings/bakery_swamp_1.json",
+      "definition_sha256": "6870c0c6de611ea21c727252ac071d7fb2c6f2e1ff1e571a99ec2aab2124189a"
+    },
+    {
+      "exhibit": "NE04.3",
+      "structure": "butchery_swamp_1",
+      "category": "butchery",
+      "level": 1,
+      "size": [
+        9,
+        6,
+        10
+      ],
+      "source": "run/swamp-full-review/approved-live-edits/NE04.3.nbt",
+      "source_sha256": "26627cf38c9a614556f0ad2b658adf8850c38a270f9b55214d5dcda2574cf618",
+      "asset": "run/swamp-integration/datapack/data/kithkyn/structure/butchery_swamp_1.nbt",
+      "asset_sha256": "2984ac8c7685541ca1ccaa6623ee0b7fbab22b62daf070ff18cb6305d9d1b041",
+      "definition": "run/swamp-integration/datapack/data/kithkyn/kithkyn/buildings/butchery_swamp_1.json",
+      "definition_sha256": "91388bd8e54c59a366dcf0a4d500287f57e31e9897796c9fb00748a6a47468eb"
+    },
+    {
+      "exhibit": "NE06.10",
+      "structure": "tavern_swamp_1",
+      "category": "tavern",
+      "level": 1,
+      "size": [
+        17,
+        13,
+        19
+      ],
+      "source": "run/swamp-full-review/approved-live-edits/NE06.10.nbt",
+      "source_sha256": "087616c00b628f108fc7e5e5c2b553500d24759a908cddedf22b671011b7a483",
+      "asset": "run/swamp-integration/datapack/data/kithkyn/structure/tavern_swamp_1.nbt",
+      "asset_sha256": "aede15d3adcbeeb190f9499d1af238b1ec49c6a23f97f81ab99f677d43855792",
+      "definition": "run/swamp-integration/datapack/data/kithkyn/kithkyn/buildings/tavern_swamp_1.json",
+      "definition_sha256": "e7730ccc5b1638efa5ad2f3fd15ceb07ea511a77a1c234899a58fa71e7d48f1d"
+    },
+    {
+      "exhibit": "NE01.8",
+      "structure": "watchtower_swamp_1",
+      "category": "watchtower",
+      "level": 1,
+      "size": [
+        11,
+        13,
+        7
+      ],
+      "source": "run/swamp-full-review/approved-live-edits/NE01.8.nbt",
+      "source_sha256": "d0ce50f47337c3fde73b6a98e2f2caeda822f2d9cd5179d4e72290581a812a33",
+      "asset": "run/swamp-integration/datapack/data/kithkyn/structure/watchtower_swamp_1.nbt",
+      "asset_sha256": "9dc5b6ce54fde28c3925c46de50fc530d14655ca08cebd6dcefbcf07d73daf9a",
+      "definition": "run/swamp-integration/datapack/data/kithkyn/kithkyn/buildings/watchtower_swamp_1.json",
+      "definition_sha256": "6c1f8384952aad74417a4e26776a16d6950e927e7d44b518e678ab8636298cfe"
+    },
+    {
+      "exhibit": "NE05.1",
+      "structure": "watchtower_swamp_2",
+      "category": "watchtower",
+      "level": 2,
+      "size": [
+        9,
+        19,
+        9
+      ],
+      "source": "run/swamp-full-review/approved-live-edits/NE05.1.nbt",
+      "source_sha256": "35902aa45d2144f28c9bd93bcc8b841e4daa658092c3ddb032079c886427d467",
+      "asset": "run/swamp-integration/datapack/data/kithkyn/structure/watchtower_swamp_2.nbt",
+      "asset_sha256": "1620e657aaab0ffa9ef0103f350e0dee598b8c1e99184ec1f3c35142ebf354f2",
+      "definition": "run/swamp-integration/datapack/data/kithkyn/kithkyn/buildings/watchtower_swamp_2.json",
+      "definition_sha256": "a519228e54fe4831255adbf005d7f5ea816f0893766bc2723560816d6755b750"
+    },
+    {
+      "exhibit": "NE01.6",
+      "structure": "mine_swamp_1",
+      "category": "mine",
+      "level": 1,
+      "size": [
+        6,
+        5,
+        7
+      ],
+      "source": "run/swamp-full-review/approved-live-edits/NE01.6.nbt",
+      "source_sha256": "2090c7545920886e0b31b04a69ab2d46a4df0b0ac246877c53ea3547d539bdb4",
+      "asset": "run/swamp-integration/datapack/data/kithkyn/structure/mine_swamp_1.nbt",
+      "asset_sha256": "df3d3e01357e33a85816452a43746b810f654bc44c250ab47ae90e955ffc42a1",
+      "definition": "run/swamp-integration/datapack/data/kithkyn/kithkyn/buildings/mine_swamp_1.json",
+      "definition_sha256": "592f17ea27fa4c89422a3e3cd4dec9563090d6283e466260bc68bb40a57151f1"
+    },
+    {
+      "exhibit": "NE03.2",
+      "structure": "storehouse_swamp_1",
+      "category": "storehouse",
+      "level": 1,
+      "size": [
+        7,
+        7,
+        8
+      ],
+      "source": "run/swamp-full-review/approved-live-edits/NE03.2.nbt",
+      "source_sha256": "34ef9ee7bacf96fcb60c4062787cb1877df998c07ca05d6047baf255fab97002",
+      "asset": "run/swamp-integration/datapack/data/kithkyn/structure/storehouse_swamp_1.nbt",
+      "asset_sha256": "5a922d9ee5313932e54b0866df65da27ce9be5a024c7783a01969bd743e4eec9",
+      "definition": "run/swamp-integration/datapack/data/kithkyn/kithkyn/buildings/storehouse_swamp_1.json",
+      "definition_sha256": "a14c6199cf323b41de863c3a74e5dc671a3980cf0f269ac0550819a1a9fa8924"
+    },
+    {
+      "exhibit": "NF02.5",
+      "structure": "stoneworks_swamp_1",
+      "category": "stoneworks",
+      "level": 1,
+      "size": [
+        6,
+        4,
+        6
+      ],
+      "source": "run/swamp-full-review/approved-live-edits/NF02.5.nbt",
+      "source_sha256": "2155fd035007b1678ee1b9ff0d5fb57176cd68a1a43bb4dedaade644f0294600",
+      "asset": "run/swamp-integration/datapack/data/kithkyn/structure/stoneworks_swamp_1.nbt",
+      "asset_sha256": "f1426118d52c9c4d2892f1f8fb8e958b980d61b2557499ce495e8c15eb939d59",
+      "definition": "run/swamp-integration/datapack/data/kithkyn/kithkyn/buildings/stoneworks_swamp_1.json",
+      "definition_sha256": "4627d172e0eb7625b93aae4fb27b8e7f12560c46b859caa1a5b1c1693220b7ab"
+    },
+    {
+      "exhibit": "NF02.7",
+      "structure": "farm_swamp_1",
+      "category": "farm",
+      "level": 1,
+      "size": [
+        9,
+        2,
+        7
+      ],
+      "source": "run/swamp-full-review/approved-live-edits/NF02.7.nbt",
+      "source_sha256": "77c3985959aa1b05058b14da2f8c0e25ea351633dc2f1a1b7732fbe993814ab5",
+      "asset": "run/swamp-integration/datapack/data/kithkyn/structure/farm_swamp_1.nbt",
+      "asset_sha256": "4024cde08d0014dadd5faafbaa7f1f656ae6d8bdb557495c30bd8b1a861e0a96",
+      "definition": "run/swamp-integration/datapack/data/kithkyn/kithkyn/buildings/farm_swamp_1.json",
+      "definition_sha256": "31fad18391ca11b25c8ab7f47b5e1ecedc2e53711c382c7c442a0f486c7719ec"
+    },
+    {
+      "exhibit": "NF01.8",
+      "structure": "farm_swamp_2",
+      "category": "farm",
+      "level": 2,
+      "size": [
+        15,
+        4,
+        9
+      ],
+      "source": "run/swamp-full-review/approved-live-edits/NF01.8.nbt",
+      "source_sha256": "40156f419f6fba486ed0ab3ce75774d459188713746ca3efbfd61533ccf8def5",
+      "asset": "run/swamp-integration/datapack/data/kithkyn/structure/farm_swamp_2.nbt",
+      "asset_sha256": "a897e99c91a5c9cac3e2033b9dcd36733321c1cb57c77f81ba5c2c0aa94646cc",
+      "definition": "run/swamp-integration/datapack/data/kithkyn/kithkyn/buildings/farm_swamp_2.json",
+      "definition_sha256": "facba6409580fcd3b18a9fd3068476ff4948ad00623c9df8ddb8d1d0da041185"
+    },
+    {
+      "exhibit": "NF01.7",
+      "structure": "hunting_lodge_swamp_1",
+      "category": "hunting_lodge",
+      "level": 1,
+      "size": [
+        8,
+        6,
+        7
+      ],
+      "source": "run/swamp-full-review/approved-live-edits/NF01.7.nbt",
+      "source_sha256": "1e82be440f3b834ca5d45a9f2319910fa6cb98582e0d8ee206d6c2ae5205def6",
+      "asset": "run/swamp-integration/datapack/data/kithkyn/structure/hunting_lodge_swamp_1.nbt",
+      "asset_sha256": "756ecaf3d8ced3f1d48a8a4a48739c161c09159282c2acc19b29f37b1fcbc7b6",
+      "definition": "run/swamp-integration/datapack/data/kithkyn/kithkyn/buildings/hunting_lodge_swamp_1.json",
+      "definition_sha256": "70eb0aaadd4296ae5aacaf1fd33d4d3b9ee8790db6543a08cecebbe3d1775025"
+    },
+    {
+      "exhibit": "NE02.9",
+      "structure": "fishery_swamp_1",
+      "category": "fishery",
+      "level": 1,
+      "size": [
+        7,
+        9,
+        10
+      ],
+      "source": "run/swamp-full-review/approved-live-edits/NE02.9.nbt",
+      "source_sha256": "0f168c5408266cb229d24815309508e0bd6340db7e7c986a6f5fdde524abf6f9",
+      "asset": "run/swamp-integration/datapack/data/kithkyn/structure/fishery_swamp_1.nbt",
+      "asset_sha256": "95f0590cf45a8c820db8e5fce126052fc8f4fbeb42d01f2b0d0567c38e4a323c",
+      "definition": "run/swamp-integration/datapack/data/kithkyn/kithkyn/buildings/fishery_swamp_1.json",
+      "definition_sha256": "6bf74ce91cceb928938995a60c600ac955e4ff7cb167bb1b0107c52effcadbcc"
+    },
+    {
+      "exhibit": "SHARED-MARKET-1",
+      "structure": "market_swamp_1",
+      "category": "market",
+      "level": 1,
+      "size": [
+        16,
+        6,
+        17
+      ],
+      "source": "run/market-repair-20260910/pack/data/kithkyn/structure/market_jungle_1.nbt",
+      "source_sha256": "68876b38420002f335f56c1193b4d05fe4aed7605b82b6ed21ec701b3c481d34",
+      "asset": "run/swamp-integration/datapack/data/kithkyn/structure/market_swamp_1.nbt",
+      "asset_sha256": "a2a634253b8a67b0d09716d12decec5b8ff35cf6dcb3006b252c0735d11de899",
+      "definition": "run/swamp-integration/datapack/data/kithkyn/kithkyn/buildings/market_swamp_1.json",
+      "definition_sha256": "4048764f40b67b30410d6112d35bd2f138f7a8ead2eb4c9e2c5a2d3b176a3ff2"
+    },
+    {
+      "exhibit": "SHARED-MARKET-2",
+      "structure": "market_swamp_2",
+      "category": "market",
+      "level": 2,
+      "size": [
+        23,
+        6,
+        17
+      ],
+      "source": "run/market-repair-20260910/pack/data/kithkyn/structure/market_jungle_2.nbt",
+      "source_sha256": "e50fe2ae7576b9fd5794953ddd66c1b04bf7f6539077eabb0af4a2f3a17b1235",
+      "asset": "run/swamp-integration/datapack/data/kithkyn/structure/market_swamp_2.nbt",
+      "asset_sha256": "f509ca1443861778b2e1d7ac58fa9ff96f5420f102f05021ef9ec4b0ea682a2e",
+      "definition": "run/swamp-integration/datapack/data/kithkyn/kithkyn/buildings/market_swamp_2.json",
+      "definition_sha256": "91ce500627e10b8bf6cdca9a6d5382e1a10db8fe6f51cfdf801655d8df81ced1"
+    },
+    {
+      "exhibit": "SHARED-MARKET-3",
+      "structure": "market_swamp_3",
+      "category": "market",
+      "level": 3,
+      "size": [
+        23,
+        6,
+        25
+      ],
+      "source": "run/market-repair-20260910/pack/data/kithkyn/structure/market_jungle_3.nbt",
+      "source_sha256": "9d1d3a097f64b7e16b835e7f08c92c7a34b14de8a11c74b6036dd78cf57f79fe",
+      "asset": "run/swamp-integration/datapack/data/kithkyn/structure/market_swamp_3.nbt",
+      "asset_sha256": "b931ec442398007a34891ad0c7a17353646341aecea7d9d33b4c5b9459e2f9fb",
+      "definition": "run/swamp-integration/datapack/data/kithkyn/kithkyn/buildings/market_swamp_3.json",
+      "definition_sha256": "05581c09b815e443b66835e1929e371140a9bbfbc056e8c4fa5c59c0bea5a920"
+    },
+    {
+      "exhibit": "SC01.2",
+      "structure": "castle_swamp_1",
+      "category": "castle",
+      "level": 1,
+      "size": [
+        31,
+        27,
+        31
+      ],
+      "source": "run/swamp-integration/castle/source-capture.nbt",
+      "source_sha256": "72e2ac81744a032e029267255cc2da8879e4674f8cc038516e4053e753760f6a",
+      "asset": "run/swamp-integration/datapack/data/kithkyn/structure/castle_swamp_1.nbt",
+      "asset_sha256": "5e1c3ebe75c056d5f72e0465aad11432502732dc235033b588f42b50958ccc88",
+      "definition": "run/swamp-integration/datapack/data/kithkyn/kithkyn/buildings/castle_swamp_1.json",
+      "definition_sha256": "e8931db161b0b8bdd7fa218f3ef69d6fa386bdf7f4f2738bcc013ffb067108f2"
+    }
+  ],
+  "verification": {
+    "static_audit": "27 templates, 51,238 unique cells, no barriers or structure voids",
+    "placement": "run/swamp-integration/placement/verification.json: 216 real placements",
+    "restart": "run/swamp-integration/placement/latest-verification.log: 216 buildings and 72 entities survived restart",
+    "access": "run/swamp-integration/access/verification.json: 104 rotations and 384 routes",
+    "center": "run/swamp-integration/center/verification.json: 16 physical station walks",
+    "founding": "run/swamp-integration/founding/verification.json: four rotations and natural Swamp selection",
+    "construction": "run/swamp-integration/construction/verification.json: ordinary paid incremental castle build",
+    "patrol": "run/swamp-integration/patrol/verification.json: 28 sentry runs",
+    "merchant": "run/swamp-integration/merchant/verification.json: conserved buy and sell flows",
+    "custody": "run/swamp-integration/custody/verification.json: arrest, evidence, sentence, escape and release",
+    "visual_review": "run/swamp-integration/market-render/capture/client/screenshots/"
+  }
+}

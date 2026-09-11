@@ -18,6 +18,7 @@ These catalogs are integrated, selectable, and verified as complete founding vil
 | Pueblo | Badlands, Eroded Badlands, Wooded Badlands, and compatible mesa families | Dense adobe and terracotta housing, roof terraces, courtyards, and red sandstone walls |
 | Floodplain | Mangrove Swamp and compatible tropical floodplain biomes | Mud brick, mangrove details, raised earth, and water-oriented sites |
 | Jungle Tribal | Jungle, Bamboo Jungle, and Sparse Jungle | Jungle timber, stripped bamboo roofs, compact huts, treehouses, three markets, the timber wall, and the Firewatch tower |
+| Swamp | Swamp, Orchid Swamp, and compatible ordinary wetlands | Mossy ruins, oak-and-spruce wetland buildings, two campfires, candlelit timber walls, and the configured SC01.2 castle |
 
 ## Locked directions
 
@@ -34,15 +35,14 @@ its production catalog and founding behavior are verified.
 | Taiga | Taiga, Old Growth Pine Taiga, Old Growth Spruce Taiga, and compatible cold forests | Cold forest settlement; its final visual language is deliberately deferred between the ornate Polish family and the grittier T&T Viking family |
 | Tundra | Snowy Plains, Ice Spikes, and compatible exposed frozen lowlands | Compact igloos and snowbound buildings suited to treeless terrain |
 | Alpine | Meadow, Grove, Snowy Slopes, and compatible mountain valleys and peaks | Swiss-inspired mountain settlement with steep roofs and slope-conscious buildings |
-| Swamp | Swamp, Orchid Swamp, and compatible ordinary wetlands | Boat-based or overgrown wetland village, distinct from the mud-brick Floodplain catalog; SC01.2 is its configured castle |
 | Polynesian Coast | Sparse Jungle, tropical beaches, warm-ocean islands, and compatible tropical coasts | Open, warm-climate coastal buildings based on the Polynesian reference family |
 | Nautical Coast | Beach, Stony Shore, and compatible temperate or cold coasts | Fishing town, docks, shoreline buildings, and lighthouse landmarks |
 | Savanna Tent | Savanna, Savanna Plateau, Windswept Savanna, and compatible dry grasslands | African-inspired tent and grassland settlement with portable-looking structures and a coherent warm-climate material palette |
 | Mushroom | Mushroom Fields and compatible fungal biomes | Fantasy mushroom settlement drawn from the complete mushroom reference families |
 
-Jungle is a complete private production catalog with nineteen selected buildings and three
-market tiers. Its founding layout, housing, physical worksites, wall, and all access routes are
-verified and locally deployed.
+Jungle and ordinary Swamp are complete private production catalogs. Each has a bedless center,
+four-home founding sprawl, routed mine and storehouse worksites, regional markets, and its own
+wall treatment. Swamp remains separate from the mud-brick Floodplain catalog used by mangroves.
 
 Swedish and Polish are source languages in the current review rather than settled biome
 assignments. The Swedish temple and tower remain a useful candidate church progression for a
@@ -57,15 +57,12 @@ to Floodplain when site selection can classify them reliably.
 
 ## Next authoring shortlist
 
-The next scouting pass prioritizes three catalogs:
+The next scouting pass prioritizes two catalogs now that Swamp is playable:
 
-1. **Swamp** fills the clearest remaining wetland gap. Its court compares the Towns & Towers
-   boat village, the Dungeons & Taverns swamp family, open and fortified CTOV swamp buildings,
-   and wetland service and defense pieces.
-2. **Taiga** will give taiga and old-growth spruce forests a coherent cold-timber identity. Its
+1. **Taiga** will give taiga and old-growth spruce forests a coherent cold-timber identity. Its
    court compares complete Viking and Polish families with Swedish, CTOV taiga, spruce service,
    and tower donors. Final family selection is deferred while other village catalogs are built.
-3. **Mediterranean** gives Plains and Sunflower Plains a distinct rural culture. Its court
+2. **Mediterranean** gives Plains and Sunflower Plains a distinct rural culture. Its court
    compares the Mediterranean and Iberian families with CTOV Plains civic buildings, fields,
    gardens, tavern, well, and fortified donors.
 
@@ -77,9 +74,8 @@ map and placement hashes are recorded in
 
 The current review status is:
 
-- **Swamp:** S01.1 is the town center. The authoring pool combines the complete 23-piece
-  Towns & Towers Boat Village family with the complete 34-piece Dungeons & Taverns Swamp
-  family. Signs at the Swamp court link to both full source wings.
+- **Swamp:** the source court remains as the provenance and comparison gallery for its completed
+  production catalog. The selected village center is NF01.2 and SC01.2 is its castle.
 - **Taiga:** source selection is deferred. The ornate Polish family and grittier T&T Viking
   family remain the two leading alternatives; neither is the production direction yet. V01.1,
   V03.5, and V05.2 remain candidates rather than locked selections. The complete standalone T&T
