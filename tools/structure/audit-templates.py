@@ -20,7 +20,11 @@ def problems(path):
     root = read(path)
     size = root["size"]
     palette = root["palette"]
-    failures = []
+    failures = [
+        (f"palette[{index}]", state["Name"], "barrier state in production template")
+        for index, state in enumerate(palette)
+        if state["Name"] == "minecraft:barrier"
+    ]
     for block in root["blocks"]:
         position = tuple(block["pos"])
         name = palette[block["state"]]["Name"]
@@ -51,7 +55,7 @@ def main(arguments):
     if failed:
         print(f"{failed} of {len(paths)} templates failed")
         return 1
-    print(f"PASS {len(paths)} templates: no barriers or out-of-bounds blocks")
+    print(f"PASS {len(paths)} templates: no barrier states or out-of-bounds blocks")
     return 0
 
 
