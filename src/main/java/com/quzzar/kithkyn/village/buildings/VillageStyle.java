@@ -24,9 +24,10 @@ import net.neoforged.neoforge.common.Tags;
  *
  * Every style is a strict catalog: a village raises only what its own family
  * authored and never borrows another family's building to fill a gap. Birch
- * Forest is the one bundled catalog and so the default; Desert, Badlands and
- * Floodplain and Jungle arrive through private datapacks (docs/desert-village.md,
- * docs/badlands-village.md, docs/floodplain-village.md, docs/jungle-village.md), so they are only
+ * Forest is the one bundled catalog and so the default; Desert, Badlands,
+ * Floodplain, Jungle and Swamp arrive through private datapacks (docs/desert-village.md,
+ * docs/badlands-village.md, docs/floodplain-village.md, docs/jungle-village.md,
+ * docs/swamp-village.md), so they are only
  * automatic candidates while their founding sets are loaded.
  *
  * Explicit datapack style tags take precedence over conventional biome families.
@@ -34,7 +35,7 @@ import net.neoforged.neoforge.common.Tags;
  * the world seed and founding site, not the world's mutable random stream.
  */
 public enum VillageStyle {
-  BIRCH_FOREST, DESERT, BADLANDS, FLOODPLAIN, JUNGLE;
+  BIRCH_FOREST, DESERT, BADLANDS, FLOODPLAIN, JUNGLE, SWAMP;
 
   /**
    * What a blank or unknown saved style reads as, the answer for every climate
@@ -157,16 +158,16 @@ public enum VillageStyle {
     if (tagged.test(Tags.Biomes.IS_DESERT) || tagged.test(Tags.Biomes.IS_SANDY)) {
       return DESERT;
     }
+    // Mangrove is checked before the broad swamp tag so its established
+    // Floodplain architecture stays distinct from ordinary Swamp.
+    if (path.contains("mangrove")) {
+      return FLOODPLAIN;
+    }
     if (tagged.test(Tags.Biomes.IS_JUNGLE) || path.contains("jungle")) {
       return JUNGLE;
     }
-    // The floodplain catalog is the mangrove family: vanilla mangrove swamp
-    // carries the explicit style tag, and a modded mangrove biome is still
-    // recognizable by name. Plain swamp stays unmapped for a catalog of its
-    // own; being hot and wet under the conventional tags it builds floodplain
-    // through the climate cluster meanwhile.
-    if (path.contains("mangrove")) {
-      return FLOODPLAIN;
+    if (tagged.test(Tags.Biomes.IS_SWAMP) || path.contains("swamp")) {
+      return SWAMP;
     }
     return null;
   }

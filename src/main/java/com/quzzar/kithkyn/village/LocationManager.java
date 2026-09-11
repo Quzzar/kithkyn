@@ -313,7 +313,9 @@ public class LocationManager {
                                 || !level.getBlockState(support).isFaceSturdy(level, support, Direction.UP)) continue;
                         boolean open = true;
                         for(BlockPos feet : List.of(outside, inside)) {
-                            for(int head = 0; head < 3; head++) {
+                            // Adult people use a two-block-tall collision box. Requiring a third
+                            // empty block rejected valid authored doorless entries with a low roof.
+                            for(int head = 0; head < 2; head++) {
                                 BlockPos body = feet.above(head);
                                 if(!level.getFluidState(body).isEmpty()
                                         || !level.getBlockState(body).getCollisionShape(level, body).isEmpty()) open = false;

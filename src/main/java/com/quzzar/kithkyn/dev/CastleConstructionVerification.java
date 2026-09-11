@@ -10,9 +10,15 @@ import com.quzzar.kithkyn.village.Village;
 import com.quzzar.kithkyn.village.VillageManager;
 import com.quzzar.kithkyn.village.buildings.BuildProgress;
 import com.quzzar.kithkyn.village.buildings.Building;
+import com.quzzar.kithkyn.village.buildings.BuildingInfo;
 import com.quzzar.kithkyn.village.buildings.Buildings;
+import com.quzzar.kithkyn.village.buildings.ConstructionChoice;
+import com.quzzar.kithkyn.village.buildings.ConstructionMode;
+import com.quzzar.kithkyn.village.buildings.ConstructionQuote;
 import com.quzzar.kithkyn.village.buildings.InstantBuildStructure;
 import com.quzzar.kithkyn.village.buildings.StructureInProgress;
+import com.quzzar.kithkyn.village.buildings.UrbanPlanner;
+import com.quzzar.kithkyn.village.buildings.VillageStyle;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -43,6 +49,8 @@ public final class CastleConstructionVerification {
   private static BuildProgress lastPhase;
   private static int originalBeds;
   private static int originalBuildings;
+  private static int castleBeds;
+  private static int castleJobs;
   private static boolean paid;
   private static final List<Container> stores = new ArrayList<>();
   private static final List<ItemStack> recipe = new ArrayList<>();
@@ -90,7 +98,7 @@ public final class CastleConstructionVerification {
         complete(level);
         finished = true;
         Kithkyn.LOGGER.info("{} RESULT PASS: physical two-storehouse recipe collection, ordinary walking GatherStep/BuildStep, "
-            + "incremental paid castle, eight jobs and eight beds published only after completion, protected evidence; ticks={} walked={}",
+            + "incremental paid castle, authored jobs and beds published only after completion, protected evidence; ticks={} walked={}",
             PREFIX, ticks - started, walked.size());
         event.getServer().halt(false);
       } else {
@@ -122,23 +130,26 @@ public final class CastleConstructionVerification {
     for (BlockPos pos : BlockPos.betweenClosed(new BlockPos(2960, 157, 2960), new BlockPos(3119, 185, 3119))) {
       level.setBlock(pos, pos.getY() <= 159 ? Blocks.SANDSTONE.defaultBlockState() : Blocks.AIR.defaultBlockState(), 2);
     }
-    Building center = stamp(level, "village_center_desert_1", new BlockPos(3000, 159, 3000));
-    Building first = stamp(level, "storehouse_desert_1", new BlockPos(3035, 159, 3000));
-    Building second = stamp(level, "storehouse_desert_1", new BlockPos(3000, 159, 3035));
-    village = new ApprovedStructureAccess.VillageFixture(level, center, true, first, second);
+    String castleId = System.getProperty("kithkyn.castleConstruction.id", "castle_desert_1");
+    BuildingInfo castleInfo = Buildings.getByName(castleId);
+    check(castleInfo != null && castleInfo.getCastleLayout() != null, "Missing castle definition " + castleId);
+    String variant = castleInfo.getVariant();
+    Building center = stamp(level, "village_center_" + variant + "_1", new BlockPos(3000, 159, 3000));
+    Building first = stamp(level, "storehouse_" + variant + "_1", new BlockPos(3035, 159, 3000));
+    Building second = stamp(level, "storehouse_" + variant + "_1", new BlockPos(3000, 159, 3035));
+    String housingId = System.getProperty("kithkyn.castleConstruction.housingId", "");
+    Building housing = housingId.isBlank() ? null : stamp(level, housingId, new BlockPos(3035, 159, 3035));
+    village = housing == null
+        ? new ApprovedStructureAccess.VillageFixture(level, center, true, first, second)
+        : new ApprovedStructureAccess.VillageFixture(level, center, true, first, second, housing);
+    village.setStyle(VillageStyle.fromId(variant));
     VillageManager.get(level).getVillages().put(village.getID(), village);
     for (BlockPos position : village.getVillageContainerPositions()) {
       if (level.getBlockEntity(position) instanceof Container container) container.clearContent();
     }
     stores.add(container(level, first));
     stores.add(container(level, second));
-    check(village.startProjectAt(Buildings.getByName("castle_desert_1"), new BlockPos(3060, 159, 3060)),
-        "Ordinary startProjectAt refused flat castle site");
-    project = village.getCurrentProject();
-    check(project != null && project.isGathering(), "Castle skipped its unpaid gathering phase");
-    originalBeds = village.getTotalBeds();
-    originalBuildings = village.getBuildings().size();
-    recipe.addAll(project.requiredMaterials().stream().map(ItemStack::copy).toList());
+    recipe.addAll(ConstructionQuote.requiredFor(castleInfo, ConstructionMode.FRESH));
     check(!recipe.isEmpty(), "Castle recipe was empty");
     int itemIndex = 0;
     for (ItemStack required : recipe) {
@@ -154,6 +165,21 @@ public final class CastleConstructionVerification {
       store.setChanged();
     }
     check(stores.stream().noneMatch(Container::isEmpty), "Fixture must require both real storehouses");
+    UrbanPlanner.Candidate candidate = UrbanPlanner.optionsFor(village).buildable().stream()
+        .filter(option -> option.info() == castleInfo).findFirst()
+        .orElseThrow(() -> new AssertionError("Ordinary planner did not offer affordable " + castleId));
+    var start = Village.class.getDeclaredMethod("startProject", ConstructionChoice.class);
+    start.setAccessible(true);
+    check((boolean) start.invoke(village, candidate.choice()),
+        "Ordinary project start refused the planner-offered castle");
+    project = village.getCurrentProject();
+    check(project != null && project.isGathering(), "Castle skipped its unpaid gathering phase");
+    originalBeds = village.getTotalBeds();
+    originalBuildings = village.getBuildings().size();
+    castleBeds = castleInfo.getBedLocations().size();
+    castleJobs = castleInfo.getWorkLocations().size();
+    check(ConstructionQuote.captureProject(village, project, village.stockTally()).affordable(),
+        "Construction project did not retain the planner's affordable recipe");
     builder = new ApprovedStructureAccess.Person(level, village);
     builder.setLifeStage(AgeStage.ADULT);
     village.getPopulation().add(builder.getUUID());
@@ -163,7 +189,8 @@ public final class CastleConstructionVerification {
     builder.issueStartingKit();
     ApprovedStructureAccess.moveTo(builder, new BlockPos(2998, 160, 2998));
     check(level.addFreshEntity(builder), "Could not spawn construction worker");
-    ApprovedStructureAccess.assignSingle(village, builder.getUUID(), center.getUUID());
+    ApprovedStructureAccess.assignSingle(village, builder.getUUID(),
+        housing == null ? center.getUUID() : housing.getUUID());
     ApprovedStructureAccess.enableWalking(builder);
     builder.goalSelector.addGoal(3, new WorkLoopGoal<>(builder, new GatherStep()));
     builder.goalSelector.addGoal(4, new WorkLoopGoal<>(builder, new BuildStep()));
@@ -192,10 +219,12 @@ public final class CastleConstructionVerification {
     publication.invoke(village);
     Building castle = village.getBuilding(project.getBuilding().getUUID());
     check(castle != null && village.getCurrentProject() == null, "Completed castle was not published");
-    check(village.getBuildings().size() == originalBuildings + 1 && village.getTotalBeds() == originalBeds + 8,
-        "Completion did not add exactly one castle and eight beds");
-    check(village.getUnassignedJobs().stream().filter(job -> job.getBuildingUUID().equals(castle.getUUID())).count() == 8,
-        "Castle completion did not publish all eight jobs");
+    check(village.getBuildings().size() == originalBuildings + 1
+            && village.getTotalBeds() == originalBeds + castleBeds,
+        "Completion did not add exactly one castle and its authored beds");
+    check(village.getUnassignedJobs().stream()
+            .filter(job -> job.getBuildingUUID().equals(castle.getUUID())).count() == castleJobs,
+        "Castle completion did not publish all authored jobs");
     BlockPos origin = BlockPos.of(castle.getOriginLocation());
     for (long bed : castle.getInfo().getBedLocations()) {
       check(level.getBlockState(origin.offset(BlockPos.of(bed).rotate(castle.getRotation()))).getBlock() instanceof BedBlock,

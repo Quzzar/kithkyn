@@ -158,6 +158,12 @@ public final class VillageNamer {
           List.of("Taluma", "Olanui", "Mavira", "Kesalo"),
           List.of("Talu", "Ola", "Mavi", "Kesa", "Nalu", "Ira", "Vela", "Suma"),
           List.of("ma", "nui", "vira", "alo", "ara", "eli", "una", "ori"));
+      case SWAMP -> new NamingProfile(
+          "An old wetland settlement of mossy stone ruins, oak houses, spruce walkways,"
+              + " candlelit palisades, fishing pools and crooked towers above dark water."
+              + " Earthy, hushed invented names with a marshland sound.",
+          List.of("Mirefen", "Willowmere", "Duskmarsh", "Mosswick"),
+          List.of("Mire", "Willow", "Dusk", "Moss", "Brack", "Sedge", "Gloam", "Reed"));
     };
   }
 

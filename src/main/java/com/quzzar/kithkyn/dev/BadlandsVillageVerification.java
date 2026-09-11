@@ -46,7 +46,7 @@ import net.neoforged.neoforge.event.tick.ServerTickEvent;
 /**
  * Shared private-catalog checks for the reviewed regional villages. Opt in with
  * the legacy Badlands flag or {@code -Dkithkyn.reviewedVillage.style=<style>}
- * for desert, floodplain or Jungle; each catalog's authored numbers live in its
+ * for Desert, Floodplain, Jungle or Swamp; each catalog's authored numbers live in its
  * {@link Catalog} record so the checks read facts rather than guess them.
  */
 @EventBusSubscriber(modid = Kithkyn.MODID)
@@ -86,6 +86,11 @@ public final class BadlandsVillageVerification {
     case JUNGLE -> new Catalog("[jungle-verify]", 22, 4, 6, new int[] {2, 2, 0}, Map.of(), List.of(), false,
         new String[][] {{id("market", 1), id("market", 2)}, {id("market", 2), id("market", 3)}},
         7, 4, 4, 1, 4, 0, 0, new BlockPos(3, 1, 5), new BlockPos(2, 2, 5), 1, Biomes.JUNGLE);
+    case SWAMP -> new Catalog("[swamp-verify]", 27, 2, 3, new int[] {2, 0, 0}, Map.of(),
+        List.of("church_swamp_1__cleric_couple_home"), false,
+        new String[][] {{id("market", 1), id("market", 2)}, {id("market", 2), id("market", 3)},
+            {id("farm", 1), id("farm", 2)}},
+        7, 4, 4, 1, 4, 0, 0, new BlockPos(12, 4, 13), new BlockPos(14, 6, 11), 2, Biomes.SWAMP);
     case BIRCH_FOREST -> null;
   };
   private static final String PREFIX = CATALOG == null ? "[reviewed-village-verify]" : CATALOG.prefix();
@@ -159,12 +164,12 @@ public final class BadlandsVillageVerification {
     check(VillageStyle.fromBiome(registry.getHolderOrThrow(Biomes.MANGROVE_SWAMP), 0L, BlockPos.ZERO, everything)
         == VillageStyle.FLOODPLAIN, "Mangrove swamp must select Floodplain");
     check(VillageStyle.fromBiome(registry.getHolderOrThrow(Biomes.SWAMP), 0L, BlockPos.ZERO, everything)
-        == VillageStyle.FLOODPLAIN, "Plain swamp is hot and wet and builds floodplain until it has a catalog of its own");
+        == VillageStyle.SWAMP, "Plain swamp must select the ordinary Swamp catalog");
     for (var biome : List.of(Biomes.JUNGLE, Biomes.BAMBOO_JUNGLE, Biomes.SPARSE_JUNGLE)) {
       check(VillageStyle.fromBiome(registry.getHolderOrThrow(biome), 0L, BlockPos.ZERO, everything)
           == VillageStyle.JUNGLE, "Jungle coverage missing " + biome.location());
     }
-    Kithkyn.LOGGER.info("{} BIOMES PASS: Pueblo, Desert, Birch, Floodplain and all three Jungle biomes", PREFIX);
+    Kithkyn.LOGGER.info("{} BIOMES PASS: Pueblo, Desert, Birch, Floodplain, Swamp and all three Jungle biomes", PREFIX);
   }
 
   private static void verifyCatalogue(ServerLevel level) {
@@ -385,7 +390,7 @@ public final class BadlandsVillageVerification {
         && village.getBedAssignmentsView().size() == CATALOG.foundingJobs()
         && village.getUnassignedBeds().size() == CATALOG.foundingBeds() - CATALOG.foundingJobs(),
         "Founding workers did not receive distinct beds");
-    if (STYLE == VillageStyle.JUNGLE) {
+    if (STYLE == VillageStyle.JUNGLE || STYLE == VillageStyle.SWAMP) {
       verifyRoutedWorksite(village, residents, Occupation.MINER, "mine");
       verifyRoutedWorksite(village, residents, Occupation.QUARTERMASTER, "storehouse");
       Building mine = village.getBuildings().stream()

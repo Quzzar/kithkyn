@@ -8,8 +8,8 @@ finished regional village after Birch Forest, Desert and Badlands
 `floodplain`; vanilla `minecraft:mangrove_swamp` selects it through the
 `kithkyn:village_style/floodplain` biome tag, an untagged modded biome whose registry path
 contains `mangrove` selects it by name, and an unclassified hot, wet climate rolls it as its
-cluster. Plain vanilla swamp is reserved for a separate Swamp village; being hot and wet under
-NeoForge's conventional tags it builds Floodplain until that exists.
+cluster. Plain vanilla swamp now selects the separate ordinary Swamp catalog; the broad hot-and-wet
+cluster remains a fallback for tropical wetlands that declare neither family.
 
 ## Selected buildings
 
@@ -121,5 +121,4 @@ well it raises follow the new data.
 
 The September 11 review confirmed that SC01.2 belongs to Swamp rather than Floodplain. The
 completed structure and its successful access, sentry and custody results are retained under
-`tools/structure/swamp-castle-20260911.json`; it is staged outside this production datapack
-until the Swamp catalog is complete.
+`tools/structure/swamp-castle-20260911.json`; it is installed only with the separate Swamp datapack.

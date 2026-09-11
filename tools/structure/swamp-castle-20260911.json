@@ -1,15 +1,23 @@
 {
   "exhibit": "SC01.2",
   "label": "Swamp Castle",
-  "gallery_origin": [10107, 230, 1308],
-  "capture_size": [31, 27, 31],
+  "gallery_origin": [
+    10107,
+    230,
+    1308
+  ],
+  "capture_size": [
+    31,
+    27,
+    31
+  ],
   "source_exhibit": "JH01.4",
   "source_mod": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar",
   "source_mod_structure": "data/kaisyn/structure/outpost/forts/jungle/base_plate.nbt",
   "source_mod_sha256": "fbac5e09371f93ff7be44b193be4436c585081ed6fc5a569ac6e62571cece708",
   "source_capture": "run/swamp-integration/castle/source-capture.nbt",
   "source_capture_sha256": "72e2ac81744a032e029267255cc2da8879e4674f8cc038516e4053e753760f6a",
-  "status": "configured_and_verified_pending_swamp_catalog",
+  "status": "configured_and_verified",
   "runtime_model": {
     "shared_with": "castle_desert_1",
     "new_building_category": false,
@@ -29,55 +37,414 @@
   "rooms": [
     {
       "id": "royal_suite",
-      "beds": [[19, 10, 20], [20, 10, 20]],
+      "beds": [
+        [
+          19,
+          10,
+          20
+        ],
+        [
+          20,
+          10,
+          20
+        ]
+      ],
       "reservation": "LEADER and spouse",
-      "personal_containers": [[21, 11, 16]]
+      "personal_containers": [
+        [
+          21,
+          11,
+          16
+        ]
+      ]
     },
     {
       "id": "east_ground_rooms",
-      "beds": [[23, 2, 13], [25, 2, 13]],
-      "personal_containers": [[26, 2, 13]]
+      "beds": [
+        [
+          23,
+          2,
+          13
+        ],
+        [
+          25,
+          2,
+          13
+        ]
+      ],
+      "personal_containers": [
+        [
+          26,
+          2,
+          13
+        ]
+      ]
     },
     {
       "id": "west_ground_rooms",
-      "beds": [[5, 2, 17], [7, 2, 17]],
-      "personal_containers": [[4, 2, 17]]
+      "beds": [
+        [
+          5,
+          2,
+          17
+        ],
+        [
+          7,
+          2,
+          17
+        ]
+      ],
+      "personal_containers": [
+        [
+          4,
+          2,
+          17
+        ]
+      ]
     },
     {
       "id": "west_upper_rooms",
-      "beds": [[7, 6, 13], [7, 6, 15]],
-      "personal_containers": [[7, 6, 17]]
+      "beds": [
+        [
+          7,
+          6,
+          13
+        ],
+        [
+          7,
+          6,
+          15
+        ]
+      ],
+      "personal_containers": [
+        [
+          7,
+          6,
+          17
+        ]
+      ]
     },
     {
       "id": "east_upper_rooms",
-      "beds": [[23, 6, 13], [23, 6, 15], [23, 6, 17]],
-      "personal_containers": [[26, 6, 17]]
+      "beds": [
+        [
+          23,
+          6,
+          13
+        ],
+        [
+          23,
+          6,
+          15
+        ],
+        [
+          23,
+          6,
+          17
+        ]
+      ],
+      "personal_containers": [
+        [
+          26,
+          6,
+          17
+        ]
+      ]
     }
   ],
   "work_areas": [
-    {"role": "leader", "pos": [19, 10, 17]},
-    {"role": "baker", "pos": [10, 10, 19]},
-    {"role": "blacksmith", "pos": [21, 18, 11]},
-    {"role": "jailer", "pos": [14, 2, 10]}
+    {
+      "role": "leader",
+      "pos": [
+        19,
+        10,
+        17
+      ]
+    },
+    {
+      "role": "baker",
+      "pos": [
+        10,
+        10,
+        19
+      ]
+    },
+    {
+      "role": "merchant",
+      "pos": [
+        10,
+        2,
+        19
+      ]
+    },
+    {
+      "role": "blacksmith",
+      "pos": [
+        21,
+        18,
+        11
+      ]
+    },
+    {
+      "role": "jailer",
+      "pos": [
+        14,
+        2,
+        10
+      ]
+    }
   ],
   "guard_posts": {
-    "entrance_sword_and_shield": [[14, 1, 26], [16, 1, 26]],
-    "balcony_crossbow_and_sword": [[15, 10, 5], [15, 10, 25]],
-    "roof_crossbow_and_sword": [[9, 18, 9], [15, 18, 22], [21, 18, 9]]
+    "entrance_sword_and_shield": [
+      [
+        14,
+        1,
+        26
+      ],
+      [
+        16,
+        1,
+        26
+      ]
+    ],
+    "balcony_crossbow_and_sword": [
+      [
+        15,
+        10,
+        5
+      ],
+      [
+        15,
+        10,
+        25
+      ]
+    ],
+    "roof_crossbow_and_sword": [
+      [
+        9,
+        18,
+        9
+      ],
+      [
+        15,
+        18,
+        22
+      ],
+      [
+        21,
+        18,
+        9
+      ]
+    ]
   },
   "patrol_routes": [
-    {"post": [14, 1, 26], "waypoints": [[14, 1, 26], [14, 2, 23]]},
-    {"post": [16, 1, 26], "waypoints": [[16, 1, 26], [16, 2, 23]]},
-    {"post": [15, 10, 5], "waypoints": [[15, 10, 5], [13, 10, 4], [17, 10, 4]]},
-    {"post": [15, 10, 25], "waypoints": [[15, 10, 25], [13, 10, 25], [15, 10, 23], [17, 10, 23]]},
-    {"post": [9, 18, 9], "waypoints": [[9, 18, 9], [8, 18, 8], [9, 18, 11], [11, 18, 11]]},
-    {"post": [15, 18, 22], "waypoints": [[15, 18, 22], [13, 18, 22], [13, 18, 19], [17, 18, 19], [17, 18, 22]]},
-    {"post": [21, 18, 9], "waypoints": [[21, 18, 9], [19, 18, 8], [19, 18, 11], [22, 18, 11]]}
+    {
+      "post": [
+        14,
+        1,
+        26
+      ],
+      "waypoints": [
+        [
+          14,
+          1,
+          26
+        ],
+        [
+          14,
+          2,
+          23
+        ]
+      ]
+    },
+    {
+      "post": [
+        16,
+        1,
+        26
+      ],
+      "waypoints": [
+        [
+          16,
+          1,
+          26
+        ],
+        [
+          16,
+          2,
+          23
+        ]
+      ]
+    },
+    {
+      "post": [
+        15,
+        10,
+        5
+      ],
+      "waypoints": [
+        [
+          15,
+          10,
+          5
+        ],
+        [
+          13,
+          10,
+          4
+        ],
+        [
+          17,
+          10,
+          4
+        ]
+      ]
+    },
+    {
+      "post": [
+        15,
+        10,
+        25
+      ],
+      "waypoints": [
+        [
+          15,
+          10,
+          25
+        ],
+        [
+          13,
+          10,
+          25
+        ],
+        [
+          15,
+          10,
+          23
+        ],
+        [
+          17,
+          10,
+          23
+        ]
+      ]
+    },
+    {
+      "post": [
+        9,
+        18,
+        9
+      ],
+      "waypoints": [
+        [
+          9,
+          18,
+          9
+        ],
+        [
+          8,
+          18,
+          8
+        ],
+        [
+          9,
+          18,
+          11
+        ],
+        [
+          11,
+          18,
+          11
+        ]
+      ]
+    },
+    {
+      "post": [
+        15,
+        18,
+        22
+      ],
+      "waypoints": [
+        [
+          15,
+          18,
+          22
+        ],
+        [
+          13,
+          18,
+          22
+        ],
+        [
+          13,
+          18,
+          19
+        ],
+        [
+          17,
+          18,
+          19
+        ],
+        [
+          17,
+          18,
+          22
+        ]
+      ]
+    },
+    {
+      "post": [
+        21,
+        18,
+        9
+      ],
+      "waypoints": [
+        [
+          21,
+          18,
+          9
+        ],
+        [
+          19,
+          18,
+          8
+        ],
+        [
+          19,
+          18,
+          11
+        ],
+        [
+          22,
+          18,
+          11
+        ]
+      ]
+    }
   ],
   "jail": {
-    "cell": [16, 2, 8],
-    "release_point": [16, 2, 11],
-    "evidence_containers": [[16, 5, 9], [17, 5, 9]],
+    "cell": [
+      16,
+      2,
+      8
+    ],
+    "release_point": [
+      16,
+      2,
+      11
+    ],
+    "evidence_containers": [
+      [
+        16,
+        5,
+        9
+      ],
+      [
+        17,
+        5,
+        9
+      ]
+    ],
     "sentence_seconds": 300,
     "evidence_is_village_storage": false
   },
@@ -85,27 +452,54 @@
     "banner_slots": 8,
     "bed_policy": "Single beds alternate primary and secondary; the royal pair shares the primary color."
   },
-  "shared_containers": [[10, 3, 20], [21, 19, 18]],
+  "shared_containers": [
+    [
+      10,
+      3,
+      20
+    ],
+    [
+      21,
+      19,
+      18
+    ]
+  ],
   "excluded_decorative_containers": [
-    {"pos": [9, 10, 17], "reason": "The cake blocks a reliable hand approach to the baker counter."},
-    {"pos": [10, 14, 20], "reason": "Decorative and outside the resident route."}
+    {
+      "pos": [
+        9,
+        10,
+        17
+      ],
+      "reason": "The cake blocks a reliable hand approach to the baker counter."
+    },
+    {
+      "pos": [
+        10,
+        14,
+        20
+      ],
+      "reason": "Decorative and outside the resident route."
+    }
   ],
   "staged": {
     "definition": "run/swamp-integration/castle/castle_swamp_1.json",
     "template": "run/swamp-integration/castle/castle_swamp_1.nbt",
     "template_sha256": "5e1c3ebe75c056d5f72e0465aad11432502732dc235033b588f42b50958ccc88",
-    "definition_sha256": "c1bb5047e102a939db6dff891cff4150f38170350753fe9a7a9c5e733c2ae214"
+    "definition_sha256": "e8931db161b0b8bdd7fa218f3ef69d6fa386bdf7f4f2738bcc013ffb067108f2"
   },
   "verification": {
-    "barrier_audit": "passed",
+    "barrier_audit": "passed: no barrier or structure-void states",
     "authored_blocks_removed": 0,
     "export_state_changes": "The two halves of one authored spruce door start closed; all other authored block states are preserved.",
-    "physical_access": "run/swamp-castle-study-20260911/user-final-verification/access/verification.json",
-    "guard_patrols": "run/swamp-castle-study-20260911/user-final-verification/patrol/verification.json: 28 sentry runs across four rotations",
-    "custody": "run/swamp-castle-study-20260911/user-final-verification/custody/verification.json: all custody, evidence, timer, escape and safe-release checks passed",
+    "physical_access": "run/swamp-integration/access/verification.json: all four rotations included in the 104-layout catalog pass",
+    "construction": "run/swamp-integration/construction/verification.json: planner offered and ordinary builder paid for and completed the castle",
+    "guard_patrols": "run/swamp-integration/patrol/verification.json: 28 sentry runs across four rotations",
+    "merchant": "run/swamp-integration/merchant/verification.json: real buys and sells conserved goods and payment",
+    "custody": "run/swamp-integration/custody/verification.json: arrest, evidence, timer, escape and safe release passed",
     "visual_review": "run/swamp-castle-study-20260911/sc01-2-restyle/render/client/screenshots/"
   },
-  "catalog_status": "Reserved for the separate Swamp catalog; not installed in the playable Floodplain datapack.",
+  "catalog_status": "Included and verified in the separate playable ordinary-Swamp private datapack; never part of Floodplain.",
   "source_policy": "Towns and Towers source and derived NBT remain private under run/.",
   "design_document": "docs/castles.md"
 }

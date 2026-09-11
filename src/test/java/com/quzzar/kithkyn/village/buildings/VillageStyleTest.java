@@ -38,7 +38,7 @@ class VillageStyleTest {
   @Test
   void bundledBirchLeadsTheEnumAndIsWhatUnknownSavedStylesReadAs() {
     assertEquals(List.of(VillageStyle.BIRCH_FOREST, VillageStyle.DESERT, VillageStyle.BADLANDS,
-        VillageStyle.FLOODPLAIN, VillageStyle.JUNGLE), List.of(VillageStyle.values()));
+        VillageStyle.FLOODPLAIN, VillageStyle.JUNGLE, VillageStyle.SWAMP), List.of(VillageStyle.values()));
     assertEquals(VillageStyle.BIRCH_FOREST, VillageStyle.DEFAULT);
     assertEquals(VillageStyle.BIRCH_FOREST, VillageStyle.fromId(""));
     assertEquals(VillageStyle.BIRCH_FOREST, VillageStyle.fromId("plains"));
@@ -107,7 +107,7 @@ class VillageStyleTest {
   @Test
   void unfinishedConventionalFamiliesBuildBirchRatherThanARemovedCatalog() {
     List<TagKey<Biome>> unfinished = List.of(Tags.Biomes.IS_PLAINS, Tags.Biomes.IS_FOREST,
-        Tags.Biomes.IS_DECIDUOUS_TREE, Tags.Biomes.IS_SWAMP, Tags.Biomes.IS_TAIGA,
+        Tags.Biomes.IS_DECIDUOUS_TREE, Tags.Biomes.IS_TAIGA,
         Tags.Biomes.IS_CONIFEROUS_TREE, Tags.Biomes.IS_MOUNTAIN);
     for (long seed = 0; seed < 20; seed++) {
       for (TagKey<Biome> tag : unfinished) {
@@ -153,7 +153,7 @@ class VillageStyleTest {
   }
 
   @Test
-  void mangroveFamiliesAreFloodplainWhilePlainSwampWaitsForItsOwnCatalog() {
+  void mangroveFamiliesAreFloodplainWhilePlainSwampUsesItsOwnCatalog() {
     assertEquals(VillageStyle.FLOODPLAIN,
         VillageStyle.select(VillageStyle.FLOODPLAIN.biomeTag()::equals, "mangrove_swamp", 0.8F, true, 0.9F, 3L, ALL_STYLES));
     assertEquals(VillageStyle.FLOODPLAIN,
@@ -162,12 +162,16 @@ class VillageStyleTest {
     assertEquals(VillageStyle.FLOODPLAIN,
         VillageStyle.select(NO_TAGS, "mangrove_bayou", 0.8F, true, 0.9F, 3L, ALL_STYLES));
     Set<TagKey<Biome>> swamp = Set.of(Tags.Biomes.IS_SWAMP, Tags.Biomes.IS_HOT_OVERWORLD, Tags.Biomes.IS_WET_OVERWORLD);
-    assertEquals(VillageStyle.FLOODPLAIN,
+    assertEquals(VillageStyle.SWAMP,
         VillageStyle.select(swamp::contains, "swamp", 0.8F, true, 0.9F, 3L, ALL_STYLES),
-        "plain swamp has no mapping of its own; hot and wet under the conventional tags, it builds floodplain meanwhile");
-    assertEquals(VillageStyle.BIRCH_FOREST,
+        "plain swamp has its own conventional mapping");
+    assertEquals(VillageStyle.SWAMP,
         VillageStyle.select(Tags.Biomes.IS_SWAMP::equals, "swamp", 0.8F, true, 0.9F, 3L, ALL_STYLES),
-        "a modded swamp without the hot tag is temperate and builds the bundled set");
+        "a modded swamp needs no climate tags when its family is known");
+    assertEquals(VillageStyle.FLOODPLAIN,
+        VillageStyle.select(Tags.Biomes.IS_SWAMP::equals, "swamp", 0.8F, true, 0.9F, 3L,
+            style -> style == VillageStyle.FLOODPLAIN),
+        "without the Swamp pack, its hot-wet climate fallback remains Floodplain");
     for (long seed = 0; seed < 20; seed++) {
       assertEquals(VillageStyle.FLOODPLAIN,
           VillageStyle.select(NO_TAGS, "steaming_marsh", 1.2F, true, 0.9F, seed, ALL_STYLES),

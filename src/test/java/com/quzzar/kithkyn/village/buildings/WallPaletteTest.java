@@ -150,4 +150,33 @@ class WallPaletteTest {
     assertEquals(16, hanging);
     assertEquals(Items.JUNGLE_LOG, WallTier.WOOD.material(style));
   }
+
+  @Test
+  void swampWallsUseTheApprovedMossyOakSpruceAndSingleCandleDesign() {
+    var ring = WallRoute.aroundBox(0, 48, 0, 48);
+    var gates = Set.of(BlockPos.asLong(24, 0, 0), BlockPos.asLong(48, 0, 24),
+        BlockPos.asLong(24, 0, 48), BlockPos.asLong(0, 0, 24));
+    var style = VillageStyle.SWAMP;
+    var wall = new WallProject(ring, gates, Collections.nCopies(ring.size(), 64), WallTier.WOOD, style);
+    int mossy = 0, oak = 0, spruce = 0, candles = 0, hanging = 0;
+    for (var cell : wall.plannedBlocks()) {
+      var state = cell.desiredState(wall.getTier(), style);
+      if (state.is(Blocks.MOSSY_COBBLESTONE)) mossy++;
+      if (state.is(Blocks.OAK_LOG) || state.is(Blocks.OAK_PLANKS) || state.is(Blocks.OAK_STAIRS)) oak++;
+      if (state.is(Blocks.SPRUCE_FENCE) || state.is(Blocks.SPRUCE_SLAB)
+          || state.is(Blocks.SPRUCE_TRAPDOOR)) spruce++;
+      if (state.is(Blocks.CANDLE)) {
+        assertEquals(1, state.getValue(CandleBlock.CANDLES));
+        assertTrue(state.getValue(CandleBlock.LIT));
+        candles++;
+      }
+      if (state.is(Blocks.LANTERN)) {
+        assertTrue(state.getValue(LanternBlock.HANGING));
+        hanging++;
+      }
+    }
+    assertTrue(mossy > 0 && oak > 0 && spruce > 0 && candles > 0);
+    assertEquals(16, hanging, "The four authored hanging gate lanterns remain on every gate");
+    assertEquals(Items.OAK_LOG, WallTier.WOOD.material(style));
+  }
 }

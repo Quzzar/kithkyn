@@ -1806,7 +1806,7 @@ they do not crowd the central ladder. Public provenance and coordinates are reco
 
 The first integration mistakenly placed this building in the Floodplain catalog. Floodplain is
 the separate mangrove/Nilotic village, so the castle was removed from that datapack and retained
-for the planned ordinary Swamp catalog. A source-to-export audit found zero authored block
+for the ordinary Swamp catalog. A source-to-export audit found zero authored block
 positions removed; the only authored state change closes one two-block spruce door.
 
 ### Jungle catalog verified: September 10
