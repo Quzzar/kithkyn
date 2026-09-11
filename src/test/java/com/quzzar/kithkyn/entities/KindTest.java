@@ -51,6 +51,18 @@ class KindTest {
   }
 
   @Test
+  void theUndeadVillagesSwitchFoundsOnlyTheLiving() {
+    BlockPos site = new BlockPos(12, 64, 12);
+    com.quzzar.kithkyn.configuration.KithkynConfig.UndeadVillageChance = 1.0D;
+    com.quzzar.kithkyn.configuration.KithkynConfig.UndeadVillages = false;
+    assertEquals(Kind.LIVING, Kind.forNaturalFounding(1L, site));
+    com.quzzar.kithkyn.configuration.KithkynConfig.UndeadVillages = true;
+    assertEquals(Kind.UNDEAD, Kind.forNaturalFounding(1L, site));
+    com.quzzar.kithkyn.configuration.KithkynConfig.UndeadVillages = false;
+    com.quzzar.kithkyn.configuration.KithkynConfig.UndeadVillageChance = 0.0D;
+  }
+
+  @Test
   void onlyTheUndeadDescribeThemselves() {
     assertTrue(Kind.LIVING.describe().isEmpty());
     assertTrue(Kind.UNDEAD.describe().contains("undead"));

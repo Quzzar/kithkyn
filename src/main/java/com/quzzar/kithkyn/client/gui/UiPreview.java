@@ -39,6 +39,7 @@ import net.neoforged.neoforge.client.event.ClientTickEvent;
  * ./gradlew runClientJoinLocal -Puipreview=undead-lineup
  * ./gradlew runClientJoinLocal -Puipreview=undead-lineup-asleep
  * ./gradlew runClientJoinLocal -Puipreview=undead-lineup-world
+ * ./gradlew runClientJoinLocal -Puipreview=undead-raid
  * </pre>
  *
  * The client joins the local development server, opens the named preview over
@@ -70,6 +71,11 @@ public final class UiPreview {
     private static final String UNDEAD_LINEUP_MODE = "undead-lineup";
     private static final String UNDEAD_ASLEEP_LINEUP_MODE = "undead-lineup-asleep";
     private static final String UNDEAD_WORLD_LINEUP_MODE = "undead-lineup-world";
+    /** The dead at the gate of the nearest living village, photographed from a vantage point (docs/undead.md). */
+    private static final String UNDEAD_RAID_MODE = "undead-raid";
+    /** Long enough for the first wave to rise at the edge, walk in and meet the guards at the fire. */
+    private static final int RAID_SETTLE_TICKS = 300;
+    private static final float RAID_CAMERA_PITCH = 37.0F;
     private static final String WORLD_LINEUP_TAG = "kithkyn_age_lineup_preview";
     private static final String WORLD_LINEUP_CAMERA_TAG = WORLD_LINEUP_TAG + "_camera";
     private static final String WORLD_LINEUP_RETURN_TAG = WORLD_LINEUP_TAG + "_return";
@@ -113,7 +119,7 @@ public final class UiPreview {
         // Preview captures compare our UI, not transient system notices. Clear
         // toasts during settling so the final rendered frame is unobstructed.
         client.getToasts().clear();
-        if (isWorldLineup()) {
+        if (isWorldLineup() || isUndeadRaid()) {
             client.options.hideGui = false;
             client.gui.getChat().clearMessages(false);
         }
@@ -126,7 +132,7 @@ public final class UiPreview {
         // Joining a server can drop the pause menu over us the moment the
         // window loses focus, and the first run photographed exactly that.
         if (!isExpectedScreen(client)) {
-            if (isWorldLineup()) {
+            if (isWorldLineup() || isUndeadRaid()) {
                 client.setScreen(null);
             } else {
                 openSample(client);
@@ -145,8 +151,16 @@ public final class UiPreview {
             aimCamera(client, BED_LINEUP_TARGET_Y, BED_LINEUP_DISTANCE);
         } else if (isWorldLineup()) {
             aimCamera(client, STANDING_LINEUP_TARGET_Y, STANDING_LINEUP_DISTANCE);
+        } else if (isUndeadRaid()) {
+            // The server stands the camera north of the village, back and up in
+            // a fixed proportion to its reach, so due south at this pitch looks
+            // at the middle of it whatever its size. Same race as the beds.
+            client.player.setYRot(0.0F);
+            client.player.yRotO = 0.0F;
+            client.player.setXRot(RAID_CAMERA_PITCH);
+            client.player.xRotO = RAID_CAMERA_PITCH;
         }
-        int settleTicks = isWorldLineup() ? WORLD_SETTLE_TICKS : SETTLE_TICKS;
+        int settleTicks = isUndeadRaid() ? RAID_SETTLE_TICKS : isWorldLineup() ? WORLD_SETTLE_TICKS : SETTLE_TICKS;
         if (++ticks < settleTicks) {
             return;
         }
@@ -160,10 +174,17 @@ public final class UiPreview {
         if (isWorldLineup()) {
             cleanWorldLineup(client);
         }
+        if (isUndeadRaid()) {
+            sendCommand(client, "kkdev raid stop");
+        }
         client.execute(client::stop);
     }
 
     private static void openSample(Minecraft client) {
+        if (isUndeadRaid()) {
+            openUndeadRaid(client);
+            return;
+        }
         if (isWorldLineup()) {
             openWorldLineup(client);
             return;
@@ -229,7 +250,7 @@ public final class UiPreview {
     }
 
     private static boolean isExpectedScreen(Minecraft client) {
-        if (isWorldLineup()) {
+        if (isWorldLineup() || isUndeadRaid()) {
             return client.screen == null;
         }
         if (isLineup()) {
@@ -369,6 +390,25 @@ public final class UiPreview {
     private static boolean isWorldLineup() {
         return WORLD_LINEUP_MODE.equalsIgnoreCase(MODE) || UNDEAD_WORLD_LINEUP_MODE.equalsIgnoreCase(MODE)
                 || isBedLineup();
+    }
+
+    /**
+     * The dead at the gate. The server picks the nearest living village, stands
+     * the player over it and starts a raid at once; by the time the shot is
+     * taken the first wave has risen at the edge and walked in.
+     */
+    private static void openUndeadRaid(Minecraft client) {
+        client.setScreen(null);
+        client.options.setCameraType(CameraType.FIRST_PERSON);
+        client.options.hideGui = false;
+        // A pause menu dropped by a focus change a frame before the shot is
+        // baked into the grab, so this mode never pauses on lost focus.
+        client.options.pauseOnLostFocus = false;
+        sendCommand(client, "kkdev raid preview");
+    }
+
+    private static boolean isUndeadRaid() {
+        return UNDEAD_RAID_MODE.equalsIgnoreCase(MODE);
     }
 
     private static boolean isBedLineup() {

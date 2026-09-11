@@ -46,6 +46,7 @@ public final class DevCommands {
         .then(RelationshipCommands.branch())
         .then(com.quzzar.kithkyn.entities.UndertakingCommands.branch())
         .then(com.quzzar.kithkyn.llm.LlmEvents.devBranch())
+        .then(com.quzzar.kithkyn.raids.RaidCommands.branch())
         .then(com.quzzar.kithkyn.events.KithkynCommands.devBranch()));
     Kithkyn.LOGGER.info("Developer commands are ON (/kkdev). Turn them off before shipping.");
   }

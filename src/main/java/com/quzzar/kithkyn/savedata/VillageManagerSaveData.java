@@ -216,6 +216,7 @@ public class VillageManagerSaveData extends SavedData {
     public void tick(ServerLevel level) {
         attach(level);
         villages.values().forEach(village -> village.update(level));
+        com.quzzar.kithkyn.raids.UndeadRaids.scanGrudges(level, villages.values());
         if (!villages.isEmpty()) {
             setDirty();
         }

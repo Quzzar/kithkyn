@@ -444,6 +444,96 @@ public class Village {
     brain.getStrategy().putString(KIND_KEY, kind.id());
   }
 
+  /** The raid at this village's gate, kept in the strategy tag so it survives a restart (docs/undead.md). */
+  @Nullable private com.quzzar.kithkyn.raids.UndeadRaid raid;
+  private boolean raidLoaded;
+
+  @Nullable
+  public com.quzzar.kithkyn.raids.UndeadRaid getRaid() {
+    if (!raidLoaded) {
+      raidLoaded = true;
+      if (brain.getStrategy().contains(com.quzzar.kithkyn.raids.UndeadRaid.TAG)) {
+        raid = com.quzzar.kithkyn.raids.UndeadRaid.load(brain.getStrategy().getCompound(com.quzzar.kithkyn.raids.UndeadRaid.TAG));
+      }
+    }
+    return raid;
+  }
+
+  public boolean isUnderRaid() {
+    return getRaid() != null;
+  }
+
+  /** Puts the dead at the gate; refused while another raid is on. */
+  public boolean beginRaid(com.quzzar.kithkyn.raids.UndeadRaid raid) {
+    if (getRaid() != null) {
+      return false;
+    }
+    this.raid = raid;
+    brain.getStrategy().put(com.quzzar.kithkyn.raids.UndeadRaid.TAG, raid.save());
+    return true;
+  }
+
+  /** Ends the raid at once, whatever its state: the dev command's hook. */
+  public void endRaid() {
+    com.quzzar.kithkyn.raids.UndeadRaid current = getRaid();
+    if (current != null && level != null) {
+      current.withdraw(level);
+    }
+    raid = null;
+    brain.getStrategy().remove(com.quzzar.kithkyn.raids.UndeadRaid.TAG);
+  }
+
+  private void tickRaid(ServerLevel level) {
+    com.quzzar.kithkyn.raids.UndeadRaid current = getRaid();
+    if (current == null) {
+      return;
+    }
+    if (current.tick(this, level)) {
+      raid = null;
+      brain.getStrategy().remove(com.quzzar.kithkyn.raids.UndeadRaid.TAG);
+    } else {
+      brain.getStrategy().put(com.quzzar.kithkyn.raids.UndeadRaid.TAG, current.save());
+    }
+  }
+
+  /** Where the raid cooldowns of an undead village live: player id to the game time its dead may follow them again. */
+  private static final String GRUDGES_KEY = "raid_grudges";
+
+  public boolean grudgeOnCooldown(UUID player, long now) {
+    var grudges = brain.getStrategy().getCompound(GRUDGES_KEY);
+    return grudges.contains(player.toString()) && grudges.getLong(player.toString()) > now;
+  }
+
+  public void recordGrudgeRaid(UUID player, long until) {
+    var grudges = brain.getStrategy().getCompound(GRUDGES_KEY);
+    grudges.putLong(player.toString(), until);
+    brain.getStrategy().put(GRUDGES_KEY, grudges);
+  }
+
+  /** The town's centre block, or null before the village has one. */
+  @Nullable
+  public BlockPos centerPosition() {
+    return getTownCenter() == null ? null : BlockPos.of(getTownCenter().getCenterLocation());
+  }
+
+  /** Whether a position lies within the village's edge, the ring arrivals walk in from. */
+  public boolean contains(BlockPos pos) {
+    BlockPos center = centerPosition();
+    if (center == null) {
+      return false;
+    }
+    double radius = edgeRadius(center);
+    double dx = pos.getX() - center.getX();
+    double dz = pos.getZ() - center.getZ();
+    return dx * dx + dz * dz <= radius * radius;
+  }
+
+  /** A loaded surface position on the village's edge, or null when the edge is not loaded there. */
+  @Nullable
+  public BlockPos edgeSpawnPosition() {
+    return getTownCenter() == null || level == null ? null : edgeSpawnPos();
+  }
+
   public void initNew(BlockPos centerLoc) {
     var plan = planFounding(centerLoc, Rotation.values()[random.nextInt(Rotation.values().length)], true);
     if (plan.isPresent() && found(plan.get())) return;
@@ -1619,6 +1709,8 @@ public class Village {
     // bed is free.
     reconcileBeds();
 
+    tickRaid(level);
+
     // Recompute attractiveness every 10 seconds, phase-staggered per village so
     // many villages don't all scan their containers on the same tick.
     if (attractiveness == null || (time + Math.floorMod(id.hashCode(), 10)) % 10 == 0) {
@@ -2018,7 +2110,8 @@ public class Village {
         // village would absorb the very trader that just pulled up to it.
         // The living do not settle among the undead, nor the reverse: a village
         // is one kind for its life (docs/undead.md).
-        p -> p.isAlive() && p.getVillage() == null && !p.isWanderingMerchant() && p.getKind() == getKind());
+        p -> p.isAlive() && p.getVillage() == null && !p.isWanderingMerchant() && !p.isRaider()
+            && p.getKind() == getKind());
     return wanderers.stream()
         .min(java.util.Comparator.comparingDouble(
             p -> p.distanceToSqr(center.getX(), center.getY(), center.getZ())))
@@ -2155,14 +2248,26 @@ public class Village {
 
   /** A surface point just beyond the outermost building, or null when unloaded. */
   @javax.annotation.Nullable
-  private BlockPos edgeSpawnPos() {
-    BlockPos center = BlockPos.of(getTownCenter().getCenterLocation());
+  /** How far the village's edge lies from its centre, for whoever needs the village's reach; 0 before it has a centre. */
+  public double edgeRadius() {
+    BlockPos center = centerPosition();
+    return center == null ? 0.0D : edgeRadius(center);
+  }
+
+  /** How far the village's edge lies from its centre: the arrival distance, or just past its farthest building. */
+  private double edgeRadius(BlockPos center) {
     double radius = com.quzzar.kithkyn.configuration.KithkynConfig.ArrivalEdgeMinDistance;
     for (Building building : buildings.values()) {
       BlockPos origin = BlockPos.of(building.getOriginLocation());
       double dist = Math.sqrt(center.distSqr(origin)) + 8.0;
       radius = Math.max(radius, dist);
     }
+    return radius;
+  }
+
+  private BlockPos edgeSpawnPos() {
+    BlockPos center = BlockPos.of(getTownCenter().getCenterLocation());
+    double radius = edgeRadius(center);
     double angle = random.nextDouble() * Math.PI * 2;
     int x = center.getX() + (int) Math.round(Math.cos(angle) * radius);
     int z = center.getZ() + (int) Math.round(Math.sin(angle) * radius);

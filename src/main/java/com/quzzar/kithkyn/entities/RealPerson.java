@@ -231,6 +231,17 @@ public class RealPerson extends Person {
    * The home village and virtual ledger it trades from are server-only
    * ({@link #sourceVillageUuid}, {@link #wanderingStock}).
    */
+  /**
+   * Marks a raider: one of the dead sent against a living village
+   * (docs/undead.md). Synced for the same reason the merchant flag is, and
+   * because the raid target and the name of the dead they march for are
+   * server-side state beside it.
+   */
+  private static final EntityDataAccessor<Boolean> RAIDER = SynchedEntityData.defineId(RealPerson.class,
+      EntityDataSerializers.BOOLEAN);
+  private String raidTargetVillage = "";
+  private String raidSourceName = "";
+
   private static final EntityDataAccessor<Boolean> WANDERING_MERCHANT = SynchedEntityData.defineId(RealPerson.class,
       EntityDataSerializers.BOOLEAN);
 
@@ -644,6 +655,7 @@ public class RealPerson extends Person {
     builder.define(GENDER, "NONBINARY");
     builder.define(TITLE, "");
     builder.define(WANDERING_MERCHANT, false);
+    builder.define(RAIDER, false);
     builder.define(GUARD_CAPTAIN, false);
     builder.define(GUARD_JAILER, false);
 
@@ -672,6 +684,9 @@ public class RealPerson extends Person {
     this.camp = compound.contains("Camp") ? BlockPos.of(compound.getLong("Camp")) : null;
 
     this.entityData.set(WANDERING_MERCHANT, compound.getBoolean("WanderingMerchant"));
+    this.entityData.set(RAIDER, compound.getBoolean("Raider"));
+    this.raidTargetVillage = compound.getString("RaidTarget");
+    this.raidSourceName = compound.getString("RaidSource");
     this.sourceVillageUuid = compound.getString("SourceVillageUUID");
     this.spouseUuid = compound.getString("SpouseUUID");
     this.firstParentUuid = compound.getString("FirstParentUUID");
@@ -726,6 +741,9 @@ public class RealPerson extends Person {
     }
 
     compound.putBoolean("WanderingMerchant", this.entityData.get(WANDERING_MERCHANT));
+    compound.putBoolean("Raider", this.entityData.get(RAIDER));
+    compound.putString("RaidTarget", this.raidTargetVillage);
+    compound.putString("RaidSource", this.raidSourceName);
     if (!this.sourceVillageUuid.isEmpty()) {
       compound.putString("SourceVillageUUID", this.sourceVillageUuid);
     }
@@ -1157,6 +1175,30 @@ public class RealPerson extends Person {
   /** Whether this person is a wandering merchant (config "Wandering merchant"). */
   public boolean isWanderingMerchant() {
     return this.entityData.get(WANDERING_MERCHANT);
+  }
+
+  /** Whether this person is one of the dead sent against a living village. */
+  public boolean isRaider() {
+    return this.entityData.get(RAIDER);
+  }
+
+  /** The id of the village this raider marches on; empty for anyone else. */
+  public String getRaidTargetVillageId() {
+    return raidTargetVillage;
+  }
+
+  /**
+   * Turns a freshly spawned undead person into a raider of the given village,
+   * marching for the named dead. Rebuilds the goals, because the constructor
+   * registered a villager's before the flag existed, the way a merchant does.
+   */
+  public void becomeRaider(String targetVillageId, String sourceName) {
+    this.entityData.set(RAIDER, true);
+    this.raidTargetVillage = targetVillageId;
+    this.raidSourceName = sourceName;
+    setTitle("Raider");
+    setVillageName(sourceName);
+    reloadState();
   }
 
   public void setWanderingMerchant(boolean value) {
@@ -2299,6 +2341,11 @@ public class RealPerson extends Person {
    * When titles exist, the title replaces the occupation + village line.
    */
   public void openChat(ServerPlayer player) {
+    // The dead at the gate have nothing to say.
+    if (isRaider()) {
+      player.displayClientMessage(Component.literal(getFullName() + " has nothing to say to you."), true);
+      return;
+    }
     // Somebody the village has stopped speaking to gets nothing to open. This
     // is the cost of standing being real: it is felt on arrival, before you can
     // explain yourself (docs/economy.md, #64).
@@ -2430,6 +2477,10 @@ public class RealPerson extends Person {
 
   /** Whether a hostile is close enough for an idle resident to defend the camp from it. */
   private boolean isCampfireThreat(LivingEntity mob) {
+    // The dead at the gate are a threat to everyone who fights, wherever they stand.
+    if (mob instanceof RealPerson raider && raider.isRaider()) {
+      return !isRaider();
+    }
     if (!(mob instanceof Enemy) || mob instanceof Creeper || mob instanceof EnderMan) {
       return false;
     }
@@ -2564,11 +2615,38 @@ public class RealPerson extends Person {
     this.goalSelector.addGoal(8, new RandomLookAroundGoal(this));
   }
 
+  /**
+   * The goal set of a raider (docs/undead.md): march on the village, fight
+   * whoever is living there and whoever defends it, and nothing else. No
+   * bed, no meals, no work, no talk: the dead are not here to settle.
+   */
+  private void registerRaiderGoals() {
+    this.setImmobile(false);
+    this.goalSelector.addGoal(0, new FloatGoal(this));
+    this.goalSelector.addGoal(2, new RangedCrossbowAttackPassiveGoal<>(this, 1.0D, 8.0F));
+    this.goalSelector.addGoal(2, new RangedBowAttackPassiveGoal<>(this, 0.6D, 20, 15.0F));
+    this.goalSelector.addGoal(2, new PersonMeleeGoal(this, 1.0D, true));
+    this.goalSelector.addGoal(1, new RaiseShieldGoal(this));
+    this.goalSelector.addGoal(3, new com.quzzar.kithkyn.entities.ai.goals.RaidMarchGoal(this));
+    this.goalSelector.addGoal(8, new RandomLookAroundGoal(this));
+    this.targetSelector.addGoal(1, new net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal(this));
+    this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, 10, true, false, null));
+    this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, RealPerson.class, 10, true, false,
+        (target) -> target instanceof RealPerson other && !other.isRaider()
+            && other.getKind() == com.quzzar.kithkyn.entities.Kind.LIVING));
+    this.targetSelector.addGoal(4, new NearestAttackableTargetGoal<>(this,
+        net.minecraft.world.entity.animal.AbstractGolem.class, 10, true, false, null));
+  }
+
   @Override
   protected void registerGoals() {
 
     // A wandering merchant runs its own small goal set (above) and none of the
     // village-worker machinery, so it branches out before any of that.
+    if (isRaider()) {
+      registerRaiderGoals();
+      return;
+    }
     if (isWanderingMerchant()) {
       registerWanderingMerchantGoals();
       return;
@@ -2611,7 +2689,7 @@ public class RealPerson extends Person {
       this.goalSelector.addGoal(1, new PanicToBedGoal(this, 0.6D));
 
       this.goalSelector.addGoal(5, new AvoidEntityGoal<>(this, Mob.class, 12.0F, 0.5D, 0.5D, (mob) -> {
-        return mob instanceof Enemy;
+        return mob instanceof Enemy || mob instanceof RealPerson raider && raider.isRaider();
       }));
 
       // The unarmed answer to a grudge or a village threat is distance: the

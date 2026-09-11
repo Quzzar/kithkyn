@@ -36,6 +36,14 @@ _Avoid_: Race, species, mob type
 A bed assigned to one adult, either in general housing or at their own live-in workplace.
 _Avoid_: Home ownership
 
+**Raider**:
+One of the dead sent against a living village: an undead person with no village, no bed and nothing to say, who exists only for the raid and is defence, not murder, to kill.
+_Avoid_: Pillager, mob, monster
+
+**Grudge omen**:
+What a player carries once their standing with an undead village has fallen far enough: the next living village they stand in is raided by its dead. The ominous bottle is the other omen.
+_Avoid_: Bad Omen, raid trigger
+
 **Reference family**:
 A coherent collection of gallery structures used as architectural evidence while authoring one village biome. Its source name never becomes a runtime village property.
 _Avoid_: Culture, runtime style axis
