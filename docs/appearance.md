@@ -72,8 +72,10 @@ AppearanceInputs  ->  SkinRecipe  ->  baked DynamicTexture
 - **`SkinRecipe`** is the flat list of selected semantic layer ids, rendered model, gender
   expression, and the garment's hair-occlusion flag. The compositor reads only this.
 - **`AppearanceInputs`** fills the recipe from `{ seed, appearanceGenes, gender,
-  occupation, lifeStage, condition }`. Genetics selects the person's stable parts;
-  occupation and life stage select clothing independently.
+  occupation, lifeStage, condition, kind }`. Genetics selects the person's stable parts;
+  occupation and life stage select clothing independently. The kind (living or undead,
+  [undead.md](undead.md)) picks which body of skin, hair and eye assets the genes select
+  within; clothing is shared across kinds.
 
 The stable seed retains the old `SkinVariant` NBT key for existing saves, but it is no longer
 a whole-skin pool index. `AppearanceGenes` is saved separately; people from older saves derive
@@ -147,6 +149,7 @@ v1 `SkinRecipe` fields:
 | `leftEyePigment`, `rightEyePigment` | two RGB shades each | eye-pigment genes + condition |
 | `headwearOccludesHair` | boolean | selected garment metadata |
 | `eyesClosed` | boolean | the vanilla sleeping state, read on the client at render time |
+| `tatterSeed` | int | `Tatter.WHOLE` (0) for the living; the seed an undead person's rags are cut from |
 
 Derivation is one deterministic function `AppearanceInputs -> SkinRecipe`. It uses stable
 rendezvous hashing rather than list indices, so adding an unrelated asset causes minimal
@@ -189,6 +192,23 @@ only the drawing stops, and it is back the moment they wake.
 them up, for looking at any of this on demand. The preview `age-lineup-bed`
 ([ui-preview.md](ui-preview.md)) photographs the four stages asleep in beds, dressed in gear
 that must not show.
+
+The undead are left out of this. A skull has no lids, so the client never closes an
+undead person's eyes and the recipe audit refuses an undead recipe with `eyesClosed` set
+([undead.md](undead.md)).
+
+## Rags
+
+The undead wear the same wardrobe, ruined at bake time rather than authored twice. The
+recipe carries a `tatterSeed`, cut from the appearance seed and the garment id, and the
+compositor asks `Tatter` for a mask of the garment's own opaque texels at the shipped
+strength: hems fray upward column by column, limb columns are torn short to the elbow or
+knee, slashes cross the limbs, wide rips open the chest and back, every remaining garment
+texel is grimed toward old cloth, and the texels bordering a tear darken into a torn edge.
+The skin already copied beneath shows through the holes. The mask is a pure function of
+seed, body geometry and the garment, never touches the head UV or a top or bottom face, and
+removes a bounded share of the cloth. The audit refuses rags on the living and whole cloth
+on the undead.
 
 ## Genetics readiness
 
@@ -240,7 +260,16 @@ one face profile, and each selected eye must avoid the chosen hairstyle's front-
 mask. The generated selection table carries both fields so invalid combinations are excluded
 before a recipe reaches the compositor.
 
-Pigment compatibility is explicit manifest data as well. Every selectable skin, hair, and
+Every asset also carries a `kind`, living unless it says `"kind": "undead"`. Skin, hair and
+eyes are only ever selected from assets of the person's kind; an undead skin must be slim,
+because every undead body is; and undead parts carry no pigment at all, because bone is bone
+whatever the genes say. The catalog refuses an undead part that declares pigment as firmly
+as it refuses a living part without it. Heterochromia is expressed only on living eyes. In the
+lab, an undead pack is exempt from base completeness and the two-shade underpaint: a
+transparency skeleton is thin because most of each limb face is clear, and the compositor
+copies only opaque texels, so those holes survive into the baked skin.
+
+Pigment compatibility is explicit manifest data as well. Every selectable living skin, hair, and
 left/right eye layer lists the exact source RGB colors that represent its biological pigment.
 The exporter verifies those colors survive in the shipped layer after binary-alpha
 normalization. This is what keeps a hair ribbon, beard clasp, mouth, sclera, or garment strap
@@ -279,9 +308,9 @@ rendering classes, so it runs on an integrated or dedicated server.
 
 | Command | Purpose |
 | --- | --- |
-| `/kkdev appearance audit` | Background-audit the built-in catalog, all 208 packaged 64x64 PNG layers, and 2,112 deterministic recipes across every gender, occupation, life stage, and condition. |
+| `/kkdev appearance audit` | Background-audit the built-in catalog, all 212 packaged 64x64 PNG layers, and 4,224 deterministic recipes across every kind, gender, occupation, life stage, and condition. |
 | `/kkdev appearance audit <targets>` | Validate live villagers, including recipe contracts, NBT round-trip stability, and agreement between stored and synced conditions. |
-| `/kkdev appearance show <target>` | Print mechanical stats plus the selected structures, garment, model, expression, raw pigment alleles, expressed percentages, and final two-shade RGB colors. |
+| `/kkdev appearance show <target>` | Print mechanical stats plus the kind, the selected structures, garment, model, expression, raw pigment alleles, expressed percentages, and final two-shade RGB colors. |
 | `/kkdev appearance reroll <target>` | Roll a new appearance seed and founder appearance genes without changing occupation or condition. |
 | `/kkdev appearance inherit <child> <firstParent> <secondParent>` | Recombine both parents' mechanical and appearance genes onto the target, record its parentage, and make it a Toddler. |
 | `/kkdev appearance child <firstParent> <secondParent>` | Run `ChildCreationService` once to create a new Toddler near the parents with inherited mechanical stats, recombined appearance genes, and persistent parentage. Same-village parents register the child as a resident. Repeating the command produces distinct siblings. |

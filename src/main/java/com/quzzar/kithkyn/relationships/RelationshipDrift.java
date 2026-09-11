@@ -92,9 +92,10 @@ public final class RelationshipDrift {
   }
 
   /**
-   * Time passing (#64's last part). What a villager feels about an OUTSIDER —
-   * a player, mostly — creeps back toward indifference, one step per drift,
-   * from either direction.
+   * Time passing (#64's last part). What a villager feels about an OUTSIDER,
+   * a player mostly, creeps back toward what their kind starts a stranger
+   * at (indifference for the living, the undead's grudge for the undead), one
+   * step per drift, from either direction.
    *
    * Village mood already decays; personal regard did not, so a player who
    * robbed a village once was resented by everyone who saw it for the rest of
@@ -118,17 +119,28 @@ public final class RelationshipDrift {
       if (social.relationships().isEmpty()) {
         continue;
       }
+      int baseline = resident.getKind().strangerBaseline();
       Map<UUID, Integer> softened = new HashMap<>();
       for (Map.Entry<UUID, Integer> entry : social.relationships().entrySet()) {
         if (village.hasResident(entry.getKey())) {
           softened.put(entry.getKey(), entry.getValue());
           continue;
         }
-        int opinion = entry.getValue();
-        softened.put(entry.getKey(), opinion + Integer.signum(-opinion) * Math.min(Math.abs(opinion), FORGIVENESS_STEP));
+        softened.put(entry.getKey(), forgiven(entry.getValue(), baseline));
       }
       resident.setData(KithkynAttachments.SOCIAL.get(), social.withRelationships(softened));
     }
+  }
+
+  /**
+   * One drift's worth of forgiveness: the opinion moves one step toward the
+   * baseline and stops there, whichever side of it it started on. Goodwill
+   * fades the same way a grudge does; for the undead that means a friendship
+   * left untended sinks back to the grudge they hold every stranger in.
+   */
+  static int forgiven(int opinion, int baseline) {
+    int distance = baseline - opinion;
+    return opinion + Integer.signum(distance) * Math.min(Math.abs(distance), FORGIVENESS_STEP);
   }
 
   /**

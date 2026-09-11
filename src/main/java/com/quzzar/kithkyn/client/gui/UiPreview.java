@@ -36,6 +36,9 @@ import net.neoforged.neoforge.client.event.ClientTickEvent;
  * ./gradlew runClientJoinLocal -Puipreview=age-lineup-asleep
  * ./gradlew runClientJoinLocal -Puipreview=age-lineup-world
  * ./gradlew runClientJoinLocal -Puipreview=age-lineup-bed
+ * ./gradlew runClientJoinLocal -Puipreview=undead-lineup
+ * ./gradlew runClientJoinLocal -Puipreview=undead-lineup-asleep
+ * ./gradlew runClientJoinLocal -Puipreview=undead-lineup-world
  * </pre>
  *
  * The client joins the local development server, opens the named preview over
@@ -63,6 +66,10 @@ public final class UiPreview {
     private static final String WORLD_LINEUP_MODE = "age-lineup-world";
     /** The world lineup asleep: each stage in its own bed, dressed in gear the bed must not show. */
     private static final String BED_LINEUP_MODE = "age-lineup-bed";
+    /** The same lineups on the other kind (docs/undead.md). */
+    private static final String UNDEAD_LINEUP_MODE = "undead-lineup";
+    private static final String UNDEAD_ASLEEP_LINEUP_MODE = "undead-lineup-asleep";
+    private static final String UNDEAD_WORLD_LINEUP_MODE = "undead-lineup-world";
     private static final String WORLD_LINEUP_TAG = "kithkyn_age_lineup_preview";
     private static final String WORLD_LINEUP_CAMERA_TAG = WORLD_LINEUP_TAG + "_camera";
     private static final String WORLD_LINEUP_RETURN_TAG = WORLD_LINEUP_TAG + "_return";
@@ -162,7 +169,7 @@ public final class UiPreview {
             return;
         }
         if (isLineup()) {
-            client.setScreen(new AgeLineupScreen(client.level, ASLEEP_LINEUP_MODE.equalsIgnoreCase(MODE)));
+            client.setScreen(new AgeLineupScreen(client.level, lineupKind(), isAsleepLineup()));
             return;
         }
         boolean trade = !"chat".equalsIgnoreCase(MODE) && !"typing".equalsIgnoreCase(MODE)
@@ -336,7 +343,8 @@ public final class UiPreview {
                 + "SkinVariant:" + AgeLineupScreen.PREVIEW_SEED + ","
                 + "StatBlock:{Strength:10,Dexterity:10,Constitution:10,Intelligence:10,"
                 + "Wisdom:10,Charisma:10,Size:10,Eyesight:10},"
-                + "AgeStage:\"" + stage.name() + "\",FirstName:\"Avery\",LastName:\"Stone\","
+                + "AgeStage:\"" + stage.name() + "\",Kind:\"" + lineupKind().name() + "\","
+                + "FirstName:\"Avery\",LastName:\"Stone\","
                 + "Title:\"Adult\",Occupation:\"WANDERER\",NoAI:1b,Immobile:1b,"
                 + "Invulnerable:1b,Silent:1b,CustomNameVisible:1b" + gear + "}";
     }
@@ -359,14 +367,26 @@ public final class UiPreview {
     }
 
     private static boolean isWorldLineup() {
-        return WORLD_LINEUP_MODE.equalsIgnoreCase(MODE) || isBedLineup();
+        return WORLD_LINEUP_MODE.equalsIgnoreCase(MODE) || UNDEAD_WORLD_LINEUP_MODE.equalsIgnoreCase(MODE)
+                || isBedLineup();
     }
 
     private static boolean isBedLineup() {
         return BED_LINEUP_MODE.equalsIgnoreCase(MODE);
     }
 
+    private static com.quzzar.kithkyn.entities.Kind lineupKind() {
+        return MODE != null && MODE.toLowerCase(java.util.Locale.ROOT).startsWith("undead")
+                ? com.quzzar.kithkyn.entities.Kind.UNDEAD
+                : com.quzzar.kithkyn.entities.Kind.LIVING;
+    }
+
     private static boolean isLineup() {
-        return LINEUP_MODE.equalsIgnoreCase(MODE) || ASLEEP_LINEUP_MODE.equalsIgnoreCase(MODE);
+        return LINEUP_MODE.equalsIgnoreCase(MODE) || ASLEEP_LINEUP_MODE.equalsIgnoreCase(MODE)
+                || UNDEAD_LINEUP_MODE.equalsIgnoreCase(MODE) || UNDEAD_ASLEEP_LINEUP_MODE.equalsIgnoreCase(MODE);
+    }
+
+    private static boolean isAsleepLineup() {
+        return ASLEEP_LINEUP_MODE.equalsIgnoreCase(MODE) || UNDEAD_ASLEEP_LINEUP_MODE.equalsIgnoreCase(MODE);
     }
 }

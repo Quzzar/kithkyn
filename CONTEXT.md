@@ -28,6 +28,10 @@ _Avoid_: Material swap
 A pre-adult person’s place in a resident parent’s household. It is valid nighttime accommodation but does not reserve or consume a bed.
 _Avoid_: Bedless, free housing
 
+**Kind**:
+Whether a person, and the village they belong to, is living or undead. Fixed at founding and inherited; every arrival takes the village's kind.
+_Avoid_: Race, species, mob type
+
 **Independent housing**:
 A bed assigned to one adult, either in general housing or at their own live-in workplace.
 _Avoid_: Home ownership
@@ -36,6 +40,10 @@ _Avoid_: Home ownership
 A coherent collection of gallery structures used as architectural evidence while authoring one village biome. Its source name never becomes a runtime village property.
 _Avoid_: Culture, runtime style axis
 
+**Stranger baseline**:
+The opinion a person holds of anyone they have never met, read from their kind: indifference for the living, a grudge on sight for the undead. Never stored; it is what an absent opinion means and where an outsider's opinion fades back to.
+_Avoid_: Default reputation, starting standing
+
 **Teenager**:
 The final pre-adult age stage. A teenager may hold a normal occupation while dependently housed, but needs independent housing upon becoming an Adult.
 _Avoid_: Apprentice, young adult
@@ -43,6 +51,10 @@ _Avoid_: Apprentice, young adult
 **Wanderer**:
 A work-eligible person who belongs to a village’s idle labor pool, or a village-less person traveling between settlements. Toddler and Kid are not Wanderers even when their stored occupation is idle.
 _Avoid_: Nitwit, unemployed child
+
+**Undead**:
+The kind whose people start every stranger past the grudge line. People in every other respect: jobs, marriage, children, pets. Skeletons today; a zombie would be a second undead look, not a third kind.
+_Avoid_: Skeleton villager, hostile mob, monster
 
 **Village banner**:
 The persistent banner design representing one village, composed from its village colors and Minecraft banner-pattern layers.

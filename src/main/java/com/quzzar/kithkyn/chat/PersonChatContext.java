@@ -320,7 +320,11 @@ public final class PersonChatContext {
     // The persona blurb (which the persona writer already wrote from this same
     // gender) follows when one has been generated.
     PersonaData persona = person.getData(KithkynAttachments.PERSONA.get());
-    system.append("About you: You are ").append(person.getGender().describe()).append('.');
+    system.append("About you: You are ").append(person.getGender().describe());
+    if (person.getKind() == com.quzzar.kithkyn.entities.Kind.UNDEAD) {
+      system.append(", and ").append(person.getKind().describe());
+    }
+    system.append('.');
     if (!persona.isEmpty()) {
       system.append(' ').append(persona.blurb());
       if (!persona.quirk().isBlank()) {

@@ -127,6 +127,7 @@ function runtimeManifest(manifest, exportedFiles) {
     eyes: manifest.eyes,
     pigmentColors: manifest.pigmentColors,
     headwearOccludesHair: manifest.headwearOccludesHair ?? false,
+    ...(manifest.kind ? { kind: manifest.kind } : {}),
     files: Object.fromEntries(exportedFiles.map((fileName) => [fileName, {}])),
   };
 }

@@ -23,9 +23,13 @@ Reasoning about a layout is not looking at it. If you are changing anything unde
 ./gradlew runClientJoinLocal -Puipreview=age-lineup-asleep
 ./gradlew runClientJoinLocal -Puipreview=age-lineup-world
 ./gradlew runClientJoinLocal -Puipreview=age-lineup-bed
+./gradlew runClientJoinLocal -Puipreview=undead-lineup
+./gradlew runClientJoinLocal -Puipreview=undead-lineup-asleep
+./gradlew runClientJoinLocal -Puipreview=undead-lineup-world
 ```
 
-Start the local development server first. The preview client joins it as `Dev`, opens the named
+Start the local development server first. It listens on 25565 by default; pass
+`-Pjoinport=<port>` to join a private one when a deployed server already holds that port. The preview client joins it as `Dev`, opens the named
 preview over controlled sample data, writes `run-preview/screenshots/ui-<mode>.png`, and quits.
 The separate `run-preview/` game directory keeps its config and session files away from the server.
 Read the PNG directly.
@@ -51,6 +55,9 @@ into one wearing a sword, a shield and a full iron set, then put to bed through
 client log lists what the server still has on each of them, so a bare body is provably gear the
 renderer left off. Beds and camera stand are removed with the entities. Needs developer commands on,
 which the local development server has.
+The three `undead-` modes are the same lineups on the other kind ([undead.md](undead.md)); the
+screen versions dress the adult as a farmer and add an armed guard in leather, so the rags read
+against dark cloth, and the asleep one shows that a skull keeps its sockets.
 
 Two traps are already paid for, and both cost an hour the first time:
 
@@ -60,6 +67,11 @@ Two traps are already paid for, and both cost an hour the first time:
   this reason. Use `-P`, not `-D`.
 - **Wait for the joined world.** Screens need a player inventory and entity previews need a client
   level. Waiting at the title screen cannot exercise either real path.
+- **A fresh `run-preview/` stops at the accessibility onboarding screen.** Minecraft shows it once
+  per game directory and quick play waits behind it, so the first run in a new checkout sits at that
+  screen until someone clicks, then stops. Seed `run-preview/options.txt` with
+  `onboardAccessibility:false` (the client writes it after the first dismissal), and the next run
+  joins straight away.
 
 ## Sample data, not live data
 

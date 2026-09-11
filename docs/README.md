@@ -25,6 +25,10 @@ in it, and update it in the same change that moves what it describes.
 - [families.md](families.md): parentage, autonomous family-planning conversations and births,
   multiple births, the four-stage growth lifecycle, dependent housing and sleep, family travel,
   orphan behavior, personality-driven self-defense, and the transition to an adult bed.
+- [undead.md](undead.md): undead villages. People in every respect but one number, the
+  stranger baseline that puts every undead fighter past the grudge line on sight, befriended
+  one person at a time; the founding roll, the kind on person and village, and the skeleton
+  look composed without pigment or hair.
 - [companions.md](companions.md): the dog or cat some villagers keep. Who is granted one and
   when, the one-per-species cap bonded to the person not the post, the owner naming it and
   choosing its look, the custom follow goal a mob owner needs, the village-tether when the

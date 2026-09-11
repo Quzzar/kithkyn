@@ -375,6 +375,8 @@ public class Village {
 
   /** Where the founding style lives: in the brain's strategy tag, beside the goal and the shelving plan. */
   private static final String STYLE_KEY = "style";
+  /** Where the village's kind lives, next to its style: both are fixed at founding for life. */
+  private static final String KIND_KEY = "kind";
 
   public Village(String name) {
     this(VillageIdentity.legacy(name));
@@ -426,6 +428,20 @@ public class Village {
   /** Sets the style once, before founding places the first building. */
   public void setStyle(VillageStyle style) {
     brain.getStrategy().putString(STYLE_KEY, style.id());
+  }
+
+  /**
+   * Living or undead (docs/undead.md), fixed at founding. Every arrival takes
+   * the village's kind, so a village is all one kind for its life. Villages
+   * saved before kinds existed read as living, which is what they were.
+   */
+  public com.quzzar.kithkyn.entities.Kind getKind() {
+    return com.quzzar.kithkyn.entities.Kind.fromId(brain.getStrategy().getString(KIND_KEY));
+  }
+
+  /** Sets the kind once, at founding, before anyone arrives. */
+  public void setKind(com.quzzar.kithkyn.entities.Kind kind) {
+    brain.getStrategy().putString(KIND_KEY, kind.id());
   }
 
   public void initNew(BlockPos centerLoc) {
@@ -1982,6 +1998,7 @@ public class Village {
 
     PersonaSpawner.trySpawn(level, spawnPos, person -> {
       person.setVillage(id);
+      person.setKind(getKind());
       person.setOccupation(Occupation.WANDERER);
     }).thenAccept(attempt -> attempt.spawned().ifPresent(person -> {
       pendingArrivals.add(new PendingTraveler(person.getUUID(), deadline, fire.asLong()));
@@ -1999,7 +2016,9 @@ public class Village {
         // A wandering merchant is village-less on purpose: it belongs to its
         // home village's economy, not this roster. Never recruit one, or a
         // village would absorb the very trader that just pulled up to it.
-        p -> p.isAlive() && p.getVillage() == null && !p.isWanderingMerchant());
+        // The living do not settle among the undead, nor the reverse: a village
+        // is one kind for its life (docs/undead.md).
+        p -> p.isAlive() && p.getVillage() == null && !p.isWanderingMerchant() && p.getKind() == getKind());
     return wanderers.stream()
         .min(java.util.Comparator.comparingDouble(
             p -> p.distanceToSqr(center.getX(), center.getY(), center.getZ())))

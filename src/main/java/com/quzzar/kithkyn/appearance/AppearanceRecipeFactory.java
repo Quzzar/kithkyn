@@ -3,9 +3,16 @@ package com.quzzar.kithkyn.appearance;
 import java.util.List;
 
 import com.quzzar.kithkyn.entities.Gender;
+import com.quzzar.kithkyn.entities.Kind;
 import com.quzzar.kithkyn.entities.genetics.GeneticCondition;
 
-/** Pure deterministic selection of compatible semantic layers from appearance genes. */
+/**
+ * Pure deterministic selection of compatible semantic layers from appearance genes.
+ *
+ * Skin, hair and eyes come from assets of the person's kind, so a living face
+ * never grows a skull's sockets and a skull never grows hair; clothing is
+ * shared across kinds because a job is a job.
+ */
 public final class AppearanceRecipeFactory {
 
   private static final long SKIN_SALT = 0x243F6A8885A308D3L;
@@ -20,9 +27,13 @@ public final class AppearanceRecipeFactory {
   public static SkinRecipe create(AppearanceCatalog catalog, AppearanceInputs inputs) {
     Gender expression = expressionFor(inputs);
     BodyModel model = modelFor(inputs);
-    boolean heterochromia = inputs.condition() == GeneticCondition.HETEROCHROMIA;
+    Kind kind = inputs.kind();
+    // Heterochromia is an iris condition; a skull has none to show it on, so
+    // for the undead it is carried in the genes and expressed nowhere.
+    boolean heterochromia = inputs.condition() == GeneticCondition.HETEROCHROMIA && kind == Kind.LIVING;
 
     List<AppearanceAsset> skins = catalog.withPart(AppearancePart.SKIN).stream()
+        .filter(asset -> asset.kind() == kind)
         .filter(asset -> asset.model() == model)
         .filter(asset -> fits(asset, AppearancePart.SKIN, expression))
         .filter(asset -> canBuildFace(catalog, asset, expression, heterochromia))
@@ -82,7 +93,9 @@ public final class AppearanceRecipeFactory {
         leftEyePigment,
         rightEyePigment,
         garment.headwearOccludesHair(),
-        false);
+        false,
+        // The undead wear the same wardrobe, in rags (Tatter).
+        kind == Kind.UNDEAD ? Tatter.seed(inputs.seed(), garment.id()) : Tatter.WHOLE);
   }
 
   public static Gender expressionFor(AppearanceInputs inputs) {
@@ -97,6 +110,10 @@ public final class AppearanceRecipeFactory {
   }
 
   public static BodyModel modelFor(AppearanceInputs inputs) {
+    // Bone is thin: every undead body is slim, whatever its expression.
+    if (inputs.kind() == Kind.UNDEAD) {
+      return BodyModel.SLIM;
+    }
     return switch (expressionFor(inputs)) {
       case MALE -> BodyModel.WIDE;
       case FEMALE -> BodyModel.SLIM;
@@ -113,6 +130,7 @@ public final class AppearanceRecipeFactory {
   private static List<AppearanceAsset> compatibleHair(AppearanceCatalog catalog, AppearanceAsset skin,
       Gender expression) {
     return catalog.withPart(AppearancePart.HAIR).stream()
+        .filter(asset -> asset.kind() == skin.kind())
         .filter(asset -> asset.faceProfile().equals(skin.faceProfile()))
         .filter(asset -> fits(asset, AppearancePart.HAIR, expression))
         .toList();
@@ -132,6 +150,7 @@ public final class AppearanceRecipeFactory {
       AppearanceAsset hair, Gender expression) {
     return catalog.assets().stream()
         .filter(asset -> asset.has(AppearancePart.EYE_LEFT) && asset.has(AppearancePart.EYE_RIGHT))
+        .filter(asset -> asset.kind() == skin.kind())
         .filter(asset -> asset.faceProfile().equals(skin.faceProfile()))
         .filter(asset -> fits(asset, AppearancePart.EYE_LEFT, expression))
         .filter(asset -> fits(asset, AppearancePart.EYE_RIGHT, expression))
@@ -150,9 +169,9 @@ public final class AppearanceRecipeFactory {
     return asset.genderOf(part).fits(expression);
   }
 
-  private static AppearanceAsset pick(List<AppearanceAsset> candidates, int gene, long salt, String kind) {
+  private static AppearanceAsset pick(List<AppearanceAsset> candidates, int gene, long salt, String partName) {
     if (candidates.isEmpty()) {
-      throw new IllegalStateException("No compatible " + kind + " assets");
+      throw new IllegalStateException("No compatible " + partName + " assets");
     }
     AppearanceAsset selected = null;
     long selectedScore = 0L;

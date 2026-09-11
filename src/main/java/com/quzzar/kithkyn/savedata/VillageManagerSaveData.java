@@ -74,8 +74,8 @@ public class VillageManagerSaveData extends SavedData {
 
     /** Names only viable sites, then rechecks the exact prepared geometry before committing. */
     public boolean registerNaturalVillage(BlockPos location,
-            com.quzzar.kithkyn.village.buildings.VillageStyle style, Village.FoundingPlan plan,
-            java.util.function.Consumer<Boolean> onComplete) {
+            com.quzzar.kithkyn.village.buildings.VillageStyle style, com.quzzar.kithkyn.entities.Kind kind,
+            Village.FoundingPlan plan, java.util.function.Consumer<Boolean> onComplete) {
         if (level == null || !naturalSiteAvailable(location)) return false;
         long reservation = location.asLong();
         if (!pendingFoundings.add(reservation)) return false;
@@ -87,6 +87,7 @@ public class VillageManagerSaveData extends SavedData {
                     var identity = com.quzzar.kithkyn.village.VillageIdentity.generate(name, serverLevel.getRandom());
                     Village village = new Village(identity);
                     village.setStyle(style);
+                    village.setKind(kind);
                     village.attach(serverLevel);
                     founded = village.found(plan);
                     if (founded) {
@@ -169,6 +170,17 @@ public class VillageManagerSaveData extends SavedData {
      */
     public void registerVillage(ServerLevelAccessor levelAccess, BlockPos location,
             @javax.annotation.Nullable com.quzzar.kithkyn.village.buildings.VillageStyle style) {
+        registerVillage(levelAccess, location, style, com.quzzar.kithkyn.entities.Kind.LIVING);
+    }
+
+    /**
+     * Founds a village of the given kind: a manual founding is living unless
+     * the command says undead, because a placed village is a deliberate act
+     * and a surprise kind would be a bug report (docs/undead.md).
+     */
+    public void registerVillage(ServerLevelAccessor levelAccess, BlockPos location,
+            @javax.annotation.Nullable com.quzzar.kithkyn.village.buildings.VillageStyle style,
+            com.quzzar.kithkyn.entities.Kind kind) {
         // One name for life (#60): the LLM name is requested BEFORE the camp is
         // placed, and founding runs when it lands moments later, so the village
         // never carries a provisional name. The wait opens a short window in
@@ -188,6 +200,7 @@ public class VillageManagerSaveData extends SavedData {
                 var identity = com.quzzar.kithkyn.village.VillageIdentity.generate(name, serverLevel.getRandom());
                 Village village = new Village(identity);
                 village.setStyle(selectedStyle);
+                village.setKind(kind);
                 village.attach(serverLevel);
                 village.initNew(location);
                 if (village.getTownCenter() == null) return;

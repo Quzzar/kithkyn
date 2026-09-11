@@ -64,7 +64,9 @@ public final class WanderingMerchantSpawner {
     EconomySnapshot ledger = source.getEconomySnapshot().copy();
     String villageId = source.getID();
     String villageName = source.getName();
+    com.quzzar.kithkyn.entities.Kind kind = source.getKind();
     PersonaSpawner.trySpawn(level, pos, merchant -> {
+      merchant.setKind(kind);
       merchant.setWanderingMerchant(true);
       merchant.setOccupation(Occupation.WANDERING_MERCHANT);
       merchant.setSourceVillageUuid(villageId);

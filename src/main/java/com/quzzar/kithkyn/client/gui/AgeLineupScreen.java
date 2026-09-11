@@ -10,8 +10,10 @@ import org.joml.Vector3f;
 
 import com.quzzar.kithkyn.PersonEntityType;
 import com.quzzar.kithkyn.entities.AgeStage;
+import com.quzzar.kithkyn.entities.Kind;
 import com.quzzar.kithkyn.entities.RealPerson;
 import com.quzzar.kithkyn.entities.genetics.AppearanceGenes;
+import com.quzzar.kithkyn.village.Occupation;
 
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.core.BlockPos;
@@ -20,6 +22,9 @@ import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 
 /**
  * A controlled visual comparison of every villager age stage.
@@ -30,6 +35,12 @@ import net.minecraft.util.Mth;
  * can be shown asleep: a client-side sleeping position shuts their eyes and rests
  * their heads without laying them down, which photographs the sleeping face at
  * every stage. The beds themselves are the world preview's job.
+ *
+ * <p>The undead lineup uses the same genes on the other {@link Kind}, dresses
+ * the adult as a farmer so the rags read against a dark garment, and adds an
+ * armed guard in leather at the end: the skeleton a player actually meets
+ * first, and the one case where armour and a weapon have to sit right on bone.
+ * Asleep, the undead keep their sockets: a skull has no lids to shut.
  */
 public final class AgeLineupScreen extends Screen {
 
@@ -42,12 +53,30 @@ public final class AgeLineupScreen extends Screen {
     private static final int SECONDARY_TEXT = 0xFF9EA5AE;
 
     private final List<StagePreview> previews;
+    private final Kind kind;
     private final boolean asleep;
 
-    public AgeLineupScreen(ClientLevel level, boolean asleep) {
-        super(Component.literal(asleep ? "Villager age stages, asleep" : "Villager age stages"));
+    public AgeLineupScreen(ClientLevel level, Kind kind, boolean asleep) {
+        super(Component.literal(title(kind, asleep)));
+        this.kind = kind;
         this.asleep = asleep;
-        this.previews = createPreviews(level, asleep);
+        this.previews = createPreviews(level, kind, asleep);
+    }
+
+    private static String title(Kind kind, boolean asleep) {
+        String base = kind == Kind.UNDEAD ? "Undead age stages" : "Villager age stages";
+        return asleep ? base + ", asleep" : base;
+    }
+
+    private static String subtitle(Kind kind, boolean asleep) {
+        if (asleep) {
+            return kind == Kind.UNDEAD
+                    ? "The undead lineup asleep: heads at rest, and a skull has no lids to shut"
+                    : "The waking lineup asleep: eyes shut, heads at rest";
+        }
+        return kind == Kind.UNDEAD
+                ? "Same genes as the living lineup; only kind and age change"
+                : "Same appearance and attributes; only age changes";
     }
 
     @Override
@@ -57,9 +86,7 @@ public final class AgeLineupScreen extends Screen {
         graphics.drawCenteredString(font, title, width / 2, 14, PRIMARY_TEXT);
         graphics.drawCenteredString(
                 font,
-                asleep
-                        ? "The waking lineup asleep: eyes shut, heads at rest"
-                        : "Same appearance and attributes; only age changes",
+                subtitle(kind, asleep),
                 width / 2,
                 27,
                 SECONDARY_TEXT);
@@ -84,14 +111,10 @@ public final class AgeLineupScreen extends Screen {
             renderPerson(graphics, centerX, baselineY, entityScale, preview.person());
             graphics.disableScissor();
 
-            graphics.drawCenteredString(
-                    font, stageName(preview.stage()), centerX, baselineY + 10, PRIMARY_TEXT);
-            graphics.drawCenteredString(
-                    font,
-                    preview.stage().usesYoungModel() ? "young proportions" : "adult proportions",
-                    centerX,
-                    baselineY + 22,
-                    SECONDARY_TEXT);
+            graphics.drawCenteredString(font, preview.label(), centerX, baselineY + 10, PRIMARY_TEXT);
+            // Five columns leave no room for the long caption; say the same thing shorter.
+            String detail = font.width(preview.detail()) <= columnWidth - 8 ? preview.detail() : preview.shortDetail();
+            graphics.drawCenteredString(font, detail, centerX, baselineY + 22, SECONDARY_TEXT);
         }
     }
 
@@ -100,25 +123,52 @@ public final class AgeLineupScreen extends Screen {
         return false;
     }
 
-    private static List<StagePreview> createPreviews(ClientLevel level, boolean asleep) {
-        AppearanceGenes genes = AppearanceGenes.fromLegacySeed(PREVIEW_SEED);
+    private static List<StagePreview> createPreviews(ClientLevel level, Kind kind, boolean asleep) {
         List<StagePreview> created = new ArrayList<>();
         for (AgeStage stage : AgeStage.values()) {
-            RealPerson person = Objects.requireNonNull(
-                    PersonEntityType.PERSON.get().create(level),
-                    "Could not create an age-lineup preview person");
-            person.setAppearanceSeed(PREVIEW_SEED);
-            person.setAppearanceGenes(genes);
-            person.setLifeStage(stage);
-            if (asleep) {
-                // Sleeping is a position, not a pose: the compositor reads it to
-                // shut the eyes and the model reads it to rest the head, while the
-                // standing pose keeps every body upright and comparable.
-                person.setSleepingPos(BlockPos.ZERO);
+            RealPerson person = previewPerson(level, kind, stage, asleep);
+            // The undead adult farms: a dark garment, so rags read against bone,
+            // where the wanderer's white shirt hid them.
+            boolean farmer = kind == Kind.UNDEAD && stage == AgeStage.ADULT;
+            if (farmer) {
+                person.setOccupation(Occupation.FARMER);
             }
-            created.add(new StagePreview(stage, person));
+            created.add(new StagePreview(
+                    stageName(stage),
+                    farmer ? "adult proportions, farmer" : stage.usesYoungModel() ? "young proportions" : "adult proportions",
+                    farmer ? "farmer" : stage.usesYoungModel() ? "young build" : "adult build",
+                    person));
+        }
+        if (kind == Kind.UNDEAD) {
+            RealPerson guard = previewPerson(level, kind, AgeStage.ADULT, asleep);
+            guard.setOccupation(Occupation.GUARD);
+            // Leather rather than iron: iron plate hides the whole body, leather
+            // shows the rags and bone between the pieces.
+            guard.setItemSlot(EquipmentSlot.HEAD, new ItemStack(Items.LEATHER_HELMET));
+            guard.setItemSlot(EquipmentSlot.CHEST, new ItemStack(Items.LEATHER_CHESTPLATE));
+            guard.setItemSlot(EquipmentSlot.LEGS, new ItemStack(Items.LEATHER_LEGGINGS));
+            guard.setItemSlot(EquipmentSlot.FEET, new ItemStack(Items.LEATHER_BOOTS));
+            guard.setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(Items.BOW));
+            created.add(new StagePreview("Guard", "armed, in leather", "in leather", guard));
         }
         return List.copyOf(created);
+    }
+
+    private static RealPerson previewPerson(ClientLevel level, Kind kind, AgeStage stage, boolean asleep) {
+        RealPerson person = Objects.requireNonNull(
+                PersonEntityType.PERSON.get().create(level),
+                "Could not create an age-lineup preview person");
+        person.setAppearanceSeed(PREVIEW_SEED);
+        person.setAppearanceGenes(AppearanceGenes.fromLegacySeed(PREVIEW_SEED));
+        person.setKind(kind);
+        person.setLifeStage(stage);
+        if (asleep) {
+            // Sleeping is a position, not a pose: the compositor reads it to
+            // shut the eyes and the model reads it to rest the head, while the
+            // standing pose keeps every body upright and comparable.
+            person.setSleepingPos(BlockPos.ZERO);
+        }
+        return person;
     }
 
     /** Draws every stage from the same floor line and at the same camera scale. */
@@ -152,6 +202,6 @@ public final class AgeLineupScreen extends Screen {
         return Character.toUpperCase(lower.charAt(0)) + lower.substring(1);
     }
 
-    private record StagePreview(AgeStage stage, RealPerson person) {
+    private record StagePreview(String label, String detail, String shortDetail, RealPerson person) {
     }
 }

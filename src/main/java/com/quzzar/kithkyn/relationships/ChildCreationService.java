@@ -96,6 +96,8 @@ public final class ChildCreationService {
     child.setStatBlock(genome.stats());
     child.setAppearanceSeed(genome.appearanceSeed());
     child.setAppearanceGenes(genome.appearance());
+    // A kind breeds true: a village is one kind, so both parents share it.
+    child.setKind(firstParent.getKind());
     child.setParents(firstParent, secondParent);
     child.takeHouseholdSurname(householdSurname(firstParent, secondParent));
     child.setLifeStage(AgeStage.TODDLER);

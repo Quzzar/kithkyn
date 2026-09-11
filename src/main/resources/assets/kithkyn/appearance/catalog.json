@@ -5630,6 +5630,67 @@
     }
   },
   {
+    "slug": "skeleton",
+    "label": "Skeleton",
+    "model": "slim",
+    "disabledParts": [
+      "clothing"
+    ],
+    "genderCategories": {
+      "source": "nonbinary",
+      "skin": "nonbinary",
+      "clothing": "nonbinary",
+      "hair": "nonbinary",
+      "eyes": "nonbinary",
+      "eyeLeft": "nonbinary",
+      "eyeRight": "nonbinary"
+    },
+    "clothingProfile": {
+      "occupations": [],
+      "lifeStages": [
+        "adult"
+      ]
+    },
+    "faceProfile": "eye-y-12",
+    "frontHairOcclusion": [],
+    "eyes": {
+      "left": [
+        [
+          9,
+          12
+        ],
+        [
+          10,
+          12
+        ]
+      ],
+      "right": [
+        [
+          13,
+          12
+        ],
+        [
+          14,
+          12
+        ]
+      ]
+    },
+    "pigmentColors": {
+      "skin": [],
+      "hair": [],
+      "eyeLeft": [],
+      "eyeRight": []
+    },
+    "headwearOccludesHair": false,
+    "kind": "undead",
+    "files": {
+      "skin.png": {},
+      "hair.png": {},
+      "eyes-left.png": {},
+      "eyes-right.png": {}
+    }
+  },
+  {
     "slug": "trader-guy-3-clothing",
     "label": "Trader Guy 3 Clothing",
     "model": "universal",

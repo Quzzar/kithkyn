@@ -14,6 +14,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.quzzar.kithkyn.entities.Gender;
+import com.quzzar.kithkyn.entities.Kind;
 import com.quzzar.kithkyn.village.Occupation;
 
 /** Validated, data-driven catalogue of every semantic person-texture layer. */
@@ -127,7 +128,21 @@ public final class AppearanceCatalog {
         pigmentColors,
         occupations,
         lifeStages,
-        object.has("headwearOccludesHair") && object.get("headwearOccludesHair").getAsBoolean());
+        object.has("headwearOccludesHair") && object.get("headwearOccludesHair").getAsBoolean(),
+        parseKind(object));
+  }
+
+  /** Living unless the asset says otherwise; an unknown kind is a typo, not a third kind. */
+  private static Kind parseKind(JsonObject object) {
+    if (!object.has("kind")) {
+      return Kind.LIVING;
+    }
+    String raw = object.get("kind").getAsString();
+    Kind kind = Kind.parse(raw);
+    if (kind == null) {
+      throw new IllegalArgumentException("Unknown appearance asset kind: " + raw);
+    }
+    return kind;
   }
 
   private static void addPart(Set<AppearancePart> available, Set<String> disabled, JsonObject files,
@@ -219,14 +234,29 @@ public final class AppearanceCatalog {
         throw new IllegalArgumentException(asset.id() + " has mismatched bilateral eye geometry");
       }
     }
+    // Living parts carry pigment texels the genes recolor. Undead parts carry
+    // none: bone is bone whatever the genes say, so an undead asset that
+    // declares pigment is a mistake the compositor would paint flesh-colored.
     for (AppearancePart part : List.of(
         AppearancePart.SKIN,
         AppearancePart.HAIR,
         AppearancePart.EYE_LEFT,
         AppearancePart.EYE_RIGHT)) {
-      if (asset.has(part) && asset.pigmentColors(part).isEmpty()) {
+      if (!asset.has(part)) {
+        continue;
+      }
+      boolean pigmented = !asset.pigmentColors(part).isEmpty();
+      if (asset.kind() == Kind.LIVING && !pigmented) {
         throw new IllegalArgumentException(asset.id() + " has no pigment colors for " + part);
       }
+      if (asset.kind() == Kind.UNDEAD && pigmented) {
+        throw new IllegalArgumentException(asset.id() + " is undead and must not declare pigment colors for " + part);
+      }
+    }
+    // The undead always take the slim body (AppearanceRecipeFactory.modelFor), so a
+    // wide undead skin could never be selected and would only hide a gap.
+    if (asset.kind() == Kind.UNDEAD && asset.has(AppearancePart.SKIN) && asset.model() != BodyModel.SLIM) {
+      throw new IllegalArgumentException(asset.id() + " is an undead skin and must use the slim body");
     }
     if (asset.has(AppearancePart.CLOTHING) && asset.lifeStages().isEmpty()) {
       throw new IllegalArgumentException(asset.id() + " clothing has no life stage");

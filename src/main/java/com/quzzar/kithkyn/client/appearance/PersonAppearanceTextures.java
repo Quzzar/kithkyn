@@ -21,6 +21,7 @@ import com.quzzar.kithkyn.appearance.LifeStage;
 import com.quzzar.kithkyn.appearance.PigmentColor;
 import com.quzzar.kithkyn.appearance.PigmentPalette;
 import com.quzzar.kithkyn.appearance.SkinRecipe;
+import com.quzzar.kithkyn.appearance.Tatter;
 import com.quzzar.kithkyn.appearance.Texel;
 import com.quzzar.kithkyn.entities.AgeStage;
 import com.quzzar.kithkyn.entities.Gender;
@@ -61,7 +62,9 @@ public final class PersonAppearanceTextures implements ResourceManagerReloadList
    */
   public ResourceLocation textureFor(Person person) {
     try {
-      SkinRecipe recipe = recipeFor(person).withEyesClosed(person.isSleeping());
+      // A skull has no lids: a sleeping undead keeps its sockets.
+      SkinRecipe recipe = recipeFor(person)
+          .withEyesClosed(person.isSleeping() && person.getKind() == com.quzzar.kithkyn.entities.Kind.LIVING);
       ResourceLocation cached = textures.get(recipe);
       if (cached != null) {
         return cached;
@@ -101,7 +104,8 @@ public final class PersonAppearanceTextures implements ResourceManagerReloadList
         gender,
         occupation,
         wardrobeStage(person, occupation),
-        person.getGeneticCondition());
+        person.getGeneticCondition(),
+        person.getKind());
   }
 
   private static LifeStage wardrobeStage(Person person, Occupation occupation) {
@@ -136,7 +140,11 @@ public final class PersonAppearanceTextures implements ResourceManagerReloadList
         NativeImage clothing = loadLayer(resources, clothingAsset, AppearancePart.CLOTHING);
         NativeImage hair = loadLayer(resources, hairAsset, AppearancePart.HAIR)) {
       copyOpaque(output, skin, skinAsset.pigmentColors(AppearancePart.SKIN), recipe.skinPigment(), null, false);
-      copyOpaque(output, clothing, Set.of(), null, null, false);
+      if (recipe.tatterSeed() == Tatter.WHOLE) {
+        copyOpaque(output, clothing, Set.of(), null, null, false);
+      } else {
+        copyRags(output, clothing, recipe);
+      }
       if (recipe.eyesClosed()) {
         closeEyes(output, recipe, leftEyeAsset, rightEyeAsset);
       } else {
@@ -182,6 +190,34 @@ public final class PersonAppearanceTextures implements ResourceManagerReloadList
     }
     for (Texel texel : rightEyeAsset.lidTexels(AppearancePart.EYE_RIGHT)) {
       output.setPixelRGBA(texel.x(), texel.y(), lash);
+    }
+  }
+
+  /**
+   * The garment as the undead wear it: torn from the hems up and across the
+   * chest, grimed, and frayed at every tear. The skin already copied beneath
+   * shows through the holes, which on a skeleton is bone.
+   */
+  private static void copyRags(NativeImage destination, NativeImage garment, SkinRecipe recipe) {
+    boolean[] opaque = new boolean[TEXTURE_SIZE * TEXTURE_SIZE];
+    for (int y = 0; y < TEXTURE_SIZE; y++) {
+      for (int x = 0; x < TEXTURE_SIZE; x++) {
+        opaque[y * TEXTURE_SIZE + x] = isOpaque(garment.getPixelRGBA(x, y));
+      }
+    }
+    Tatter.Mask rags = Tatter.of(recipe.tatterSeed(), recipe.model(), opaque, Tatter.Strength.RUINED);
+    for (int y = 0; y < TEXTURE_SIZE; y++) {
+      for (int x = 0; x < TEXTURE_SIZE; x++) {
+        if (!opaque[y * TEXTURE_SIZE + x] || rags.isTorn(x, y)) {
+          continue;
+        }
+        int pixel = garment.getPixelRGBA(x, y);
+        int rgb = Tatter.grime(rgbFromAbgr(pixel));
+        if (rags.isFrayed(x, y)) {
+          rgb = Tatter.fray(rgb);
+        }
+        destination.setPixelRGBA(x, y, abgrWithRgb(pixel, rgb));
+      }
     }
   }
 

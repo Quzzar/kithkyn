@@ -143,6 +143,8 @@ alone, long before the village average moves; the mechanics are on
 through whoever witnessed them and what reflection makes of it.
 
 Each rung keeps the ones above it, and **every rung is escapable**: what a villager feels
-about an outsider fades toward indifference on its own, so staying away and behaving is a
-way back. A grudge that cannot be worked off is a permanent tax rather than a punishment.
+about an outsider fades toward their stranger baseline on its own, so staying away and
+behaving is a way back. A grudge that cannot be worked off is a permanent tax rather than a
+punishment. For the living the baseline is indifference; the undead start every stranger
+past the grudge line, and are won over one person at a time ([undead.md](undead.md)).
 `/kkdev village standing` reports the number and what it currently costs you.

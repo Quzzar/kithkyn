@@ -109,6 +109,11 @@ assault still go through reflection like anything else, and the victim's own log
 they feel in their skin before they have had time to think. The village-scale consequences
 (standing, and its hostile rung) are on [economy.md](economy.md).
 
+**A stranger is not zero but a baseline.** An opinion with no entry yet reads as the
+villager's kind's stranger baseline: 0 for the living, a grudge on sight for the undead
+([undead.md](undead.md)). The baseline is never stored; it is what an absent entry means,
+and it is where an outsider's opinion fades back to when left alone.
+
 **The clamp on a judgement is load-bearing, not decoration.** On its first live outing the
 model was asked for a number between -15 and 15 and answered 100. `OpinionService` caps a
 single judgement at 15 either way, which is the only reason one dramatic evening does not
