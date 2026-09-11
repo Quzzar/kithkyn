@@ -248,7 +248,7 @@
       "structure": "mine_desert_1",
       "manifest": "tools/structure/desert-services-20260909.json",
       "recipe": "mine_1",
-      "asset_sha256": "e313bddea3bf9be266c1a47d38788480656ff71c5a077e8e1b8b7b0fac19ea7d",
+      "asset_sha256": "f278bbd84c32383b90a566c2792ff714dfa1b1c62c14c292c9c835d68607b20d",
       "definition_sha256": "564cd6818c2c0450ce033229529f0e69624612e8f7b50432dea6ff1e041e05ad",
       "source_mod": "[Neoforge]ctov-3.6.3.jar",
       "source_mod_structure": "data/ctov/structure/village/desert_oasis/jobsite/pen.nbt",
@@ -461,6 +461,13 @@
         "mine_desert_1"
       ],
       "note": "Aaron edited a production copy in the gallery: a shared chest at the pit, two wall posts, a fence, a trapdoor and a lantern added. Re-exported in the same frame; the chest joins the shared containers."
+    },
+    {
+      "date": "2026-09-10",
+      "structures": [
+        "mine_desert_1"
+      ],
+      "note": "The evening re-export had carried the gallery row sign at (6, 0, -4), outside the template; scrubbed and the template rebuilt within its bounds."
     }
   ]
 }

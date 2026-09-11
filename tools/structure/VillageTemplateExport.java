@@ -14,7 +14,8 @@ import java.util.*;
  * exact tag types such as {@code Health:10.0f}, or a JSON object parsed as SNBT text (integers become
  * ints, decimals doubles, booleans bytes). Entries are appended to the template's entity list as
  * {@code pos}, {@code blockPos} (the floor of {@code pos}) and {@code nbt}, then pass through the same
- * hygiene as captured entities below.
+ * hygiene as captured entities below. Every block must lie inside {@code size}: one outside it
+ * fails the export rather than stretching the building's footprint in the world.
  */
 public final class VillageTemplateExport {
   static ListTag ints(int... values) {
@@ -118,7 +119,20 @@ public final class VillageTemplateExport {
               && palette.getCompound(block.getInt("state")).getString("Name").equals("minecraft:air");
         });
       }
-      root.put("size", ints(vector(spec.get("size"))));
+      int[] size = vector(spec.get("size"));
+      // A block outside the declared size is never intended: it stretches the building's
+      // footprint in the world (a gallery sign captured four cells in front of a mine
+      // pushed the whole mine back), so the export fails instead of shipping it.
+      for (Tag tag : blocks) {
+        ListTag position = ((CompoundTag)tag).getList("pos", Tag.TAG_INT);
+        for (int axis = 0; axis < 3; axis++) {
+          if (position.getInt(axis) < 0 || position.getInt(axis) >= size[axis]) {
+            throw new IllegalArgumentException("Block outside the declared size at " + position + " in "
+                + spec.get("output").getAsString() + ": crop it out, override it to air inside horizontal_bounds, or widen size");
+          }
+        }
+      }
+      root.put("size", ints(size));
       if (spec.has("entities")) {
         ListTag entities = root.getList("entities", Tag.TAG_COMPOUND);
         for (JsonElement value : spec.getAsJsonArray("entities")) {
