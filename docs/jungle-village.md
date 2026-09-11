@@ -92,8 +92,10 @@ can request `/kithkyn create-village ~ ~ ~ jungle`.
 The September 11 fishery repair removed the gallery's two-block water-containment frame from
 the exported cuboid: 108 barrier cells had survived outside the declared 8 by 8 by 13 bounds.
 Its definition now uses `sink: 1`, placing the captured ground course into the riverbank instead
-of raising the whole fishery. The shared template audit rejects barriers and out-of-bounds cells
-in every later public or private catalog export.
+of raising the whole fishery. Because that sink also places local layer 1 at terrain height, the
+export now treats layers 0 and 1 as ground: 37 empty cells around the pond are omitted instead of
+encoded as air, so construction preserves the surrounding bank. The shared template audit rejects
+barriers and out-of-bounds cells in every later public or private catalog export.
 
 ## Verification
 
@@ -117,5 +119,6 @@ flushed live capture.
 
 The repaired fishery separately passed eight real placements through both construction paths in
 all four rotations, plus twelve physical routes covering its entrance, fisher station, shared
-barrel and assigned bed. The active private catalogs then passed a 103-template block audit with
-no barriers or out-of-bounds coordinates.
+barrel and assigned bed. After correcting its ground contract, the same focused placement and
+access checks passed again. Its two terrain-seated layers contain no explicit air, and all 22
+Jungle templates pass the block audit with no barriers or out-of-bounds coordinates.
