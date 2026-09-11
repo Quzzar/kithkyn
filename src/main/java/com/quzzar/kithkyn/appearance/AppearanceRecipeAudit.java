@@ -3,6 +3,7 @@ package com.quzzar.kithkyn.appearance;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.quzzar.kithkyn.entities.Kind;
 import com.quzzar.kithkyn.entities.genetics.GeneticCondition;
 
 /** Shared invariant checks used by automated tests and live development audits. */
@@ -31,6 +32,11 @@ public final class AppearanceRecipeAudit {
     check(failures, rightEye.has(AppearancePart.EYE_RIGHT), "right-eye asset has no right eye");
     check(failures, hair.has(AppearancePart.HAIR), "hair asset has no hair layer");
     check(failures, recipe.model() == skin.model(), "skin geometry does not match recipe geometry");
+    check(failures, skin.kind() == inputs.kind(), "skin is not of the person's kind");
+    check(failures, hair.kind() == inputs.kind(), "hair is not of the person's kind");
+    check(failures, leftEye.kind() == inputs.kind(), "left eye is not of the person's kind");
+    check(failures, rightEye.kind() == inputs.kind(), "right eye is not of the person's kind");
+    check(failures, inputs.kind() == Kind.LIVING || recipe.model() == BodyModel.SLIM, "undead body is not slim");
     check(failures, skin.faceProfile().equals(hair.faceProfile()), "hair face profile does not match skin");
     check(failures, skin.faceProfile().equals(leftEye.faceProfile()), "left-eye profile does not match skin");
     check(failures, skin.faceProfile().equals(rightEye.faceProfile()), "right-eye profile does not match skin");
@@ -51,7 +57,8 @@ public final class AppearanceRecipeAudit {
     check(failures, recipe.headwearOccludesHair() == clothing.headwearOccludesHair(),
         "headwear occlusion flag does not match clothing");
 
-    boolean heterochromia = inputs.condition() == GeneticCondition.HETEROCHROMIA;
+    // Heterochromia shows only on living eyes (AppearanceRecipeFactory.create).
+    boolean heterochromia = inputs.condition() == GeneticCondition.HETEROCHROMIA && inputs.kind() == Kind.LIVING;
     if (heterochromia) {
       check(failures, !recipe.leftEye().equals(recipe.rightEye()),
           "heterochromia did not select a second eye source");

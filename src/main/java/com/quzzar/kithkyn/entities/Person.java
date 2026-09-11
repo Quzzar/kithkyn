@@ -146,6 +146,9 @@ public class Person extends PathfinderMob implements CrossbowAttackMob, NeutralM
       EntityDataSerializers.BOOLEAN);
   private static final EntityDataAccessor<Boolean> EATING = SynchedEntityData.defineId(Person.class,
       EntityDataSerializers.BOOLEAN);
+  /** Living or undead ({@link Kind}). Synced because the renderer composes the look from it. */
+  private static final EntityDataAccessor<String> KIND = SynchedEntityData.defineId(Person.class,
+      EntityDataSerializers.STRING);
 
   private static final Map<Pose, EntityDimensions> SIZE_BY_POSE = ImmutableMap.<Pose, EntityDimensions>builder()
       .put(Pose.STANDING, EntityDimensions.scalable(0.6F, 1.95F).withEyeHeight(1.62F))
@@ -258,23 +261,42 @@ public class Person extends PathfinderMob implements CrossbowAttackMob, NeutralM
     super.doPush(entityIn);
   }
 
+  /** Living or undead. Set by whoever spawns the person from the village they join; living by default. */
+  public Kind getKind() {
+    return Kind.fromId(this.entityData.get(KIND));
+  }
+
+  public void setKind(Kind kind) {
+    this.entityData.set(KIND, kind.name());
+  }
+
   @Override
   protected SoundEvent getAmbientSound() {
     return null;
   }
 
+  // The undead sound like what they are made of: bone, not flesh. Speech is
+  // the same either way, because they are people either way.
   @Override
   protected SoundEvent getHurtSound(DamageSource damageSourceIn) {
     if (this.isBlocking()) {
       return SoundEvents.SHIELD_BLOCK;
-    } else {
-      return SoundEvents.PLAYER_HURT;
     }
+    return getKind() == Kind.UNDEAD ? SoundEvents.SKELETON_HURT : SoundEvents.PLAYER_HURT;
   }
 
   @Override
   protected SoundEvent getDeathSound() {
-    return SoundEvents.PLAYER_DEATH;
+    return getKind() == Kind.UNDEAD ? SoundEvents.SKELETON_DEATH : SoundEvents.PLAYER_DEATH;
+  }
+
+  @Override
+  protected void playStepSound(BlockPos pos, net.minecraft.world.level.block.state.BlockState state) {
+    if (getKind() == Kind.UNDEAD) {
+      this.playSound(SoundEvents.SKELETON_STEP, 0.15F, 1.0F);
+      return;
+    }
+    super.playStepSound(pos, state);
   }
 
   public static int slotToInventoryIndex(EquipmentSlot slot) {
@@ -335,6 +357,8 @@ public class Person extends PathfinderMob implements CrossbowAttackMob, NeutralM
     this.setInterrupted(compound.getBoolean("Interrupted"));
     this.shieldCoolDown = compound.getInt("ShieldCooldown");
     this.setDaysSinceSleep(compound.getInt("DaysSinceSleep"));
+    // Absent on every save from before the undead existed, which is what living means.
+    this.setKind(Kind.fromId(compound.getString("Kind")));
     ListTag listnbt = compound.getList("Inventory", 10);
     for (int i = 0; i < listnbt.size(); ++i) {
       CompoundTag compoundnbt = listnbt.getCompound(i);
@@ -398,6 +422,7 @@ public class Person extends PathfinderMob implements CrossbowAttackMob, NeutralM
     compound.putBoolean("RunningToEat", this.isRunningToEat());
     compound.putBoolean("Interrupted", this.isInterrupted());
     compound.putInt("DaysSinceSleep", this.getDaysSinceSleep());
+    compound.putString("Kind", this.getKind().name());
 
     ListTag listnbt = new ListTag();
     for (int i = 0; i < this.personEquipInv.getContainerSize(); ++i) {
@@ -626,6 +651,7 @@ public class Person extends PathfinderMob implements CrossbowAttackMob, NeutralM
     builder.define(RUNNING_TO_EAT, false);
     builder.define(INTERRUPTED, false);
     builder.define(DAYS_SINCE_SLEEP, 0);
+    builder.define(KIND, Kind.LIVING.name());
   }
 
   public boolean isCharging() {

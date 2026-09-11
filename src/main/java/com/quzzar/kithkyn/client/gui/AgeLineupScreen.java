@@ -10,8 +10,10 @@ import org.joml.Vector3f;
 
 import com.quzzar.kithkyn.PersonEntityType;
 import com.quzzar.kithkyn.entities.AgeStage;
+import com.quzzar.kithkyn.entities.Kind;
 import com.quzzar.kithkyn.entities.RealPerson;
 import com.quzzar.kithkyn.entities.genetics.AppearanceGenes;
+import com.quzzar.kithkyn.village.Occupation;
 
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
@@ -19,6 +21,9 @@ import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 
 /**
  * A controlled visual comparison of every villager age stage.
@@ -26,6 +31,10 @@ import net.minecraft.util.Mth;
  * <p>All four preview people share the same appearance genes and default
  * client-side attributes. Only {@link AgeStage} changes, so a screenshot makes
  * model proportions and relative stage scale directly comparable.
+ *
+ * <p>The undead lineup uses the same genes on the other {@link Kind}, and adds
+ * an armed guard at the end: the skeleton a player actually meets first, and
+ * the one case where armour and a weapon have to sit right on bone.
  */
 public final class AgeLineupScreen extends Screen {
 
@@ -38,10 +47,16 @@ public final class AgeLineupScreen extends Screen {
     private static final int SECONDARY_TEXT = 0xFF9EA5AE;
 
     private final List<StagePreview> previews;
+    private final Kind kind;
 
     public AgeLineupScreen(ClientLevel level) {
-        super(Component.literal("Villager age stages"));
-        this.previews = createPreviews(level);
+        this(level, Kind.LIVING);
+    }
+
+    public AgeLineupScreen(ClientLevel level, Kind kind) {
+        super(Component.literal(kind == Kind.UNDEAD ? "Undead age stages" : "Villager age stages"));
+        this.kind = kind;
+        this.previews = createPreviews(level, kind);
     }
 
     @Override
@@ -51,7 +66,9 @@ public final class AgeLineupScreen extends Screen {
         graphics.drawCenteredString(font, title, width / 2, 14, PRIMARY_TEXT);
         graphics.drawCenteredString(
                 font,
-                "Same appearance and attributes; only age changes",
+                kind == Kind.UNDEAD
+                        ? "Same genes as the living lineup; only kind and age change"
+                        : "Same appearance and attributes; only age changes",
                 width / 2,
                 27,
                 SECONDARY_TEXT);
@@ -76,14 +93,10 @@ public final class AgeLineupScreen extends Screen {
             renderPerson(graphics, centerX, baselineY, entityScale, preview.person());
             graphics.disableScissor();
 
-            graphics.drawCenteredString(
-                    font, stageName(preview.stage()), centerX, baselineY + 10, PRIMARY_TEXT);
-            graphics.drawCenteredString(
-                    font,
-                    preview.stage().usesYoungModel() ? "young proportions" : "adult proportions",
-                    centerX,
-                    baselineY + 22,
-                    SECONDARY_TEXT);
+            graphics.drawCenteredString(font, preview.label(), centerX, baselineY + 10, PRIMARY_TEXT);
+            // Five columns leave no room for the long caption; say the same thing shorter.
+            String detail = font.width(preview.detail()) <= columnWidth - 8 ? preview.detail() : preview.shortDetail();
+            graphics.drawCenteredString(font, detail, centerX, baselineY + 22, SECONDARY_TEXT);
         }
     }
 
@@ -92,19 +105,38 @@ public final class AgeLineupScreen extends Screen {
         return false;
     }
 
-    private static List<StagePreview> createPreviews(ClientLevel level) {
-        AppearanceGenes genes = AppearanceGenes.fromLegacySeed(PREVIEW_SEED);
+    private static List<StagePreview> createPreviews(ClientLevel level, Kind kind) {
         List<StagePreview> created = new ArrayList<>();
         for (AgeStage stage : AgeStage.values()) {
-            RealPerson person = Objects.requireNonNull(
-                    PersonEntityType.PERSON.get().create(level),
-                    "Could not create an age-lineup preview person");
-            person.setAppearanceSeed(PREVIEW_SEED);
-            person.setAppearanceGenes(genes);
-            person.setLifeStage(stage);
-            created.add(new StagePreview(stage, person));
+            RealPerson person = previewPerson(level, kind, stage);
+            created.add(new StagePreview(
+                    stageName(stage),
+                    stage.usesYoungModel() ? "young proportions" : "adult proportions",
+                    stage.usesYoungModel() ? "young build" : "adult build",
+                    person));
+        }
+        if (kind == Kind.UNDEAD) {
+            RealPerson guard = previewPerson(level, kind, AgeStage.ADULT);
+            guard.setOccupation(Occupation.GUARD);
+            guard.setItemSlot(EquipmentSlot.HEAD, new ItemStack(Items.IRON_HELMET));
+            guard.setItemSlot(EquipmentSlot.CHEST, new ItemStack(Items.IRON_CHESTPLATE));
+            guard.setItemSlot(EquipmentSlot.LEGS, new ItemStack(Items.IRON_LEGGINGS));
+            guard.setItemSlot(EquipmentSlot.FEET, new ItemStack(Items.IRON_BOOTS));
+            guard.setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(Items.BOW));
+            created.add(new StagePreview("Guard", "armed, in iron", "in iron", guard));
         }
         return List.copyOf(created);
+    }
+
+    private static RealPerson previewPerson(ClientLevel level, Kind kind, AgeStage stage) {
+        RealPerson person = Objects.requireNonNull(
+                PersonEntityType.PERSON.get().create(level),
+                "Could not create an age-lineup preview person");
+        person.setAppearanceSeed(PREVIEW_SEED);
+        person.setAppearanceGenes(AppearanceGenes.fromLegacySeed(PREVIEW_SEED));
+        person.setKind(kind);
+        person.setLifeStage(stage);
+        return person;
     }
 
     /** Draws every stage from the same floor line and at the same camera scale. */
@@ -138,6 +170,6 @@ public final class AgeLineupScreen extends Screen {
         return Character.toUpperCase(lower.charAt(0)) + lower.substring(1);
     }
 
-    private record StagePreview(AgeStage stage, RealPerson person) {
+    private record StagePreview(String label, String detail, String shortDetail, RealPerson person) {
     }
 }

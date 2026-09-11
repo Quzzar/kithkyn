@@ -71,8 +71,13 @@ final class PersonaPrompts {
         List<String> traits = buildTraits(person);
         String traitText = traits.isEmpty() ? "unremarkable in every measurable way" : String.join(", ", traits);
 
+        // The undead say so up front, beside their gender: it is the one fact a
+        // blurb written without it gets wrong in every line.
+        String kind = person.getKind() == com.quzzar.kithkyn.entities.Kind.UNDEAD
+                ? "; " + person.getKind().describe()
+                : "";
         return "Name: " + person.getFullName()
-                + " (" + person.getGender().name().toLowerCase(Locale.ROOT) + "). Personality: "
+                + " (" + person.getGender().name().toLowerCase(Locale.ROOT) + kind + "). Personality: "
                 + person.getPersonality().displayName() + ". Traits: " + traitText + ".";
     }
 

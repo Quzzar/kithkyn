@@ -64,7 +64,9 @@ neoForge {
         // a real player online (gift attribution and Hero of the Village need one).
         clientJoinLocal {
             client()
-            programArguments.addAll '--quickPlayMultiplayer', 'localhost:25565'
+            // The port is a property so a preview can join a private server while a
+            // deployed one holds 25565: -Pjoinport=25599.
+            programArguments.addAll '--quickPlayMultiplayer', 'localhost:' + (findProperty('joinport') ?: '25565')
             systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
             // The UI preview needs a real player now that the screen is a
             // container, so it runs on the join-local configuration.

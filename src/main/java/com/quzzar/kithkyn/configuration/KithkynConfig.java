@@ -46,6 +46,7 @@ public class KithkynConfig {
     public static int DaysInYear;
     public static int DaysPerChildStage;
     public static boolean GenerateVillages;
+    public static double UndeadVillageChance;
     public static boolean WanderingMerchant;
     public static VillageLoadingMode VillageLoading;
 
@@ -86,6 +87,7 @@ public class KithkynConfig {
     public static double StandingWorstMarkup;
     public static int AssaultOpinionHit;
     public static int GrudgeAttackBelow;
+    public static int UndeadStrangerBaseline;
 
     // --- population (advanced) ---
     public static int PopulationCheckIntervalSeconds;
@@ -123,6 +125,7 @@ public class KithkynConfig {
         DaysInYear = COMMON.DaysInYear.get();
         DaysPerChildStage = COMMON.DaysPerChildStage.get();
         GenerateVillages = COMMON.GenerateVillages.get();
+        UndeadVillageChance = COMMON.UndeadVillageChance.get();
         WanderingMerchant = COMMON.WanderingMerchant.get();
         VillageLoading = COMMON.VillageLoading.get();
 
@@ -165,6 +168,7 @@ public class KithkynConfig {
         StandingWorstMarkup = ADVANCED.StandingWorstMarkup.get();
         AssaultOpinionHit = ADVANCED.AssaultOpinionHit.get();
         GrudgeAttackBelow = ADVANCED.GrudgeAttackBelow.get();
+        UndeadStrangerBaseline = ADVANCED.UndeadStrangerBaseline.get();
 
         // population
         PopulationCheckIntervalSeconds = ADVANCED.PopulationCheckIntervalSeconds.get();
@@ -216,6 +220,7 @@ public class KithkynConfig {
         public final ModConfigSpec.IntValue DaysInYear;
         public final ModConfigSpec.IntValue DaysPerChildStage;
         public final ModConfigSpec.BooleanValue GenerateVillages;
+        public final ModConfigSpec.DoubleValue UndeadVillageChance;
         public final ModConfigSpec.BooleanValue WanderingMerchant;
         public final ModConfigSpec.EnumValue<VillageLoadingMode> VillageLoading;
 
@@ -234,6 +239,7 @@ public class KithkynConfig {
             DaysInYear = builder.comment("Days in one Minecraft year (there are 8 days in one full lunar cycle). Villagers know the current year from the world's age, derived from this.").translation(Kithkyn.MODID + ".config.DaysInYear").defineInRange("Days in Year", 96, 8, 79992);
             DaysPerChildStage = builder.comment("Minecraft days spent in each of the three pre-adult stages: toddler, kid, and teenager. Eight days makes the full childhood last three lunar cycles; change this to tune family pacing without changing save data.").translation(Kithkyn.MODID + ".config.DaysPerChildStage").defineInRange("Days per child stage", 8, 1, 79992);
             GenerateVillages = builder.comment("Generate kithkyn villages during world generation, replacing vanilla villages. On (default): our living villages generate in the world in place of vanilla ones. Off: no villages generate in the world - you can still spawn one manually with /kithkyn create-village. Only vanilla minecraft:village is affected; other mods' villages are untouched.").translation(Kithkyn.MODID + ".config.GenerateVillages").define("Generate villages", true);
+            UndeadVillageChance = builder.comment("Chance that a naturally founded village is undead: skeleton people who hold every stranger past the grudge line from the first meeting (see 'Undead stranger baseline' in kithkyn-advanced.toml). Rolled once per village from the world seed and the site. 0 founds only living villages; villages placed with /kithkyn create-village are living unless the command says otherwise.").translation(Kithkyn.MODID + ".config.UndeadVillageChance").defineInRange("Undead village chance", 0.2D, 0.0D, 1.0D);
             WanderingMerchant = builder.comment("Replace Minecraft's wandering trader with a wandering merchant sent out from one of your villages. On (default): whenever the vanilla trader would appear, it is instead a merchant from a random village that has a staffed market, trading at that village's own prices and honouring your standing with it, with the usual trader llamas on a lead; if no village anywhere qualifies, none appears. Off: the ordinary vanilla wandering trader spawns as usual. Uses Minecraft's own trader spawning and wandering; only who shows up changes.").translation(Kithkyn.MODID + ".config.WanderingMerchant").define("Wandering merchant", true);
             VillageLoading = builder.comment("Whether a village keeps running when no player is near. A village always does its cheap in-memory bookkeeping (mood, relationships, decisions); this only decides whether its chunks stay loaded and ticking, so it keeps building, mining, farming, and defending itself unattended, in full danger from night mobs. HYBRID (default): a village stays awake for six Minecraft days after a player last stood in it, then goes dormant until the next visit. This governs itself, since only villages you have recently visited stay loaded. ALL: every village in the world stays loaded, seen or not, including ones settled in regions you have never explored; the most faithful to living villages and the most costly, and it scales with a number you do not control. OFF: no village keeps chunks loaded, so a village freezes the moment you walk away (Minecraft's own behaviour). A loaded village keeps its own chunks plus a small perimeter and a bubble around each resident who roams; the more it builds, the more it holds loaded.").translation(Kithkyn.MODID + ".config.VillageLoading").defineEnum("Village loading", VillageLoadingMode.HYBRID);
 
@@ -283,6 +289,7 @@ public class KithkynConfig {
         public final ModConfigSpec.DoubleValue StandingWorstMarkup;
         public final ModConfigSpec.IntValue AssaultOpinionHit;
         public final ModConfigSpec.IntValue GrudgeAttackBelow;
+        public final ModConfigSpec.IntValue UndeadStrangerBaseline;
 
         // population
         public final ModConfigSpec.IntValue PopulationCheckIntervalSeconds;
@@ -353,6 +360,7 @@ public class KithkynConfig {
             StandingWorstMarkup = builder.comment("What the village charges at its most grudging, as a multiple of the ordinary price, reached at the bottom of the disliked band.").translation(Kithkyn.MODID + ".config.StandingWorstMarkup").defineInRange("Standing worst markup", 2.0D, 1.0D, 10.0D);
             AssaultOpinionHit = builder.comment("How much being struck by a player lowers the victim's own opinion of them, before the blow's damage is added on top. Every strike counts, so one punch is a small grievance and a beating crosses the grudge line.").translation(Kithkyn.MODID + ".config.AssaultOpinionHit").defineInRange("Assault opinion hit", 5, 0, 15);
             GrudgeAttackBelow = builder.comment("Opinion of a player at or below which a villager treats them as an enemy: fighters attack on sight, everyone else keeps their distance. Personal, unlike the standing tiers above, which average the whole village.").translation(Kithkyn.MODID + ".config.GrudgeAttackBelow").defineInRange("Grudge attack below", -30, -100, 0);
+            UndeadStrangerBaseline = builder.comment("Opinion an undead villager starts every stranger at, and drifts back to once left alone. Below the grudge line, so undead fighters attack on sight and the rest keep their distance until that one villager has been won over; one good judgement is enough to cross back. The living start strangers at 0.").translation(Kithkyn.MODID + ".config.UndeadStrangerBaseline").defineInRange("Undead stranger baseline", -40, -100, 0);
 
             builder.pop();
 

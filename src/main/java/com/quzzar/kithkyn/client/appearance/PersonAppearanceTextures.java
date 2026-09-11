@@ -93,7 +93,8 @@ public final class PersonAppearanceTextures implements ResourceManagerReloadList
         gender,
         occupation,
         wardrobeStage(person, occupation),
-        person.getGeneticCondition());
+        person.getGeneticCondition(),
+        person.getKind());
   }
 
   private static LifeStage wardrobeStage(Person person, Occupation occupation) {

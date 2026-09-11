@@ -22,6 +22,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import com.quzzar.kithkyn.entities.Gender;
+import com.quzzar.kithkyn.entities.Kind;
 import com.quzzar.kithkyn.entities.genetics.AppearanceGenes;
 import com.quzzar.kithkyn.entities.genetics.GeneticCondition;
 import com.quzzar.kithkyn.village.Occupation;
@@ -154,7 +155,7 @@ class AppearanceRecipeFactoryTest {
 
   @Test
   void everyShippedLayerIsAnExactHardEdged64PixelTexture() throws IOException {
-    assertEquals(65, catalog.assets().size());
+    assertEquals(66, catalog.assets().size());
     for (AppearanceAsset asset : catalog.assets()) {
       for (AppearancePart part : AppearancePart.values()) {
         if (!asset.has(part)) {
@@ -177,7 +178,9 @@ class AppearanceRecipeFactoryTest {
               }
             }
           }
-          if (part != AppearancePart.CLOTHING) {
+          if (part != AppearancePart.CLOTHING && asset.kind() == Kind.UNDEAD) {
+            assertTrue(asset.pigmentColors(part).isEmpty(), path + " is undead and carries no pigment");
+          } else if (part != AppearancePart.CLOTHING) {
             assertFalse(asset.pigmentColors(part).isEmpty(), path);
             assertTrue(opaqueColors.containsAll(asset.pigmentColors(part)), path);
           }
@@ -186,15 +189,75 @@ class AppearanceRecipeFactoryTest {
     }
   }
 
+  @Test
+  void theUndeadAreBoneFromSkinToEyesAndKeepTheirJobsClothing() {
+    for (Gender gender : Gender.values()) {
+      for (Occupation occupation : Occupation.values()) {
+        for (LifeStage lifeStage : LifeStage.values()) {
+          for (GeneticCondition condition : GeneticCondition.values()) {
+            for (int seed = 0; seed < 12; seed++) {
+              AppearanceInputs inputs = inputs(seed, gender, occupation, lifeStage, condition, Kind.UNDEAD);
+              SkinRecipe recipe = assertDoesNotThrow(
+                  () -> AppearanceRecipeFactory.create(catalog, inputs),
+                  "undead " + gender + " " + occupation + " " + lifeStage + " " + condition + " seed=" + seed);
+              assertValid(recipe, inputs);
+              assertEquals(BodyModel.SLIM, recipe.model());
+              for (String id : List.of(recipe.skin(), recipe.hair(), recipe.leftEye(), recipe.rightEye())) {
+                assertEquals(Kind.UNDEAD, catalog.asset(id).kind(), id);
+              }
+              // A skull has no iris to split: heterochromia is carried, not shown.
+              assertEquals(recipe.leftEye(), recipe.rightEye());
+              assertEquals(Kind.LIVING, catalog.asset(recipe.clothing()).kind(), "clothing is shared");
+              SkinRecipe living = AppearanceRecipeFactory.create(
+                  catalog, inputs(seed, gender, occupation, lifeStage, condition, Kind.LIVING));
+              assertEquals(living.clothing(), recipe.clothing(), "the job dresses both kinds alike");
+            }
+          }
+        }
+      }
+    }
+  }
+
+  @Test
+  void theLivingNeverBorrowUndeadParts() {
+    for (Gender gender : Gender.values()) {
+      for (GeneticCondition condition : GeneticCondition.values()) {
+        for (int seed = 0; seed < 96; seed++) {
+          SkinRecipe recipe = AppearanceRecipeFactory.create(
+              catalog, inputs(seed, gender, Occupation.WANDERER, LifeStage.ADULT, condition));
+          for (String id : List.of(recipe.skin(), recipe.hair(), recipe.leftEye(), recipe.rightEye())) {
+            assertEquals(Kind.LIVING, catalog.asset(id).kind(), id);
+          }
+        }
+      }
+    }
+  }
+
+  @Test
+  void sharedAuditRejectsALivingSkinOnAnUndeadPerson() {
+    AppearanceInputs living = inputs(7729, Gender.MALE, Occupation.GUARD, LifeStage.ADULT, GeneticCondition.NONE);
+    AppearanceInputs undead = inputs(7729, Gender.MALE, Occupation.GUARD, LifeStage.ADULT, GeneticCondition.NONE,
+        Kind.UNDEAD);
+    SkinRecipe livingRecipe = AppearanceRecipeFactory.create(catalog, living);
+    assertTrue(AppearanceRecipeAudit.validate(catalog, undead, livingRecipe).stream()
+        .anyMatch(failure -> failure.contains("not of the person's kind")));
+  }
+
   private static AppearanceInputs inputs(int seed, Gender gender, Occupation occupation,
       LifeStage lifeStage, GeneticCondition condition) {
+    return inputs(seed, gender, occupation, lifeStage, condition, Kind.LIVING);
+  }
+
+  private static AppearanceInputs inputs(int seed, Gender gender, Occupation occupation,
+      LifeStage lifeStage, GeneticCondition condition, Kind kind) {
     return new AppearanceInputs(
         seed,
         AppearanceGenes.fromLegacySeed(seed * 31 + 17),
         gender,
         occupation,
         lifeStage,
-        condition);
+        condition,
+        kind);
   }
 
   private static void assertValid(SkinRecipe recipe, AppearanceInputs inputs) {

@@ -31,6 +31,8 @@ import net.neoforged.neoforge.client.event.ClientTickEvent;
  * ./gradlew runClientJoinLocal -Puipreview=trade
  * ./gradlew runClientJoinLocal -Puipreview=age-lineup
  * ./gradlew runClientJoinLocal -Puipreview=age-lineup-world
+ * ./gradlew runClientJoinLocal -Puipreview=undead-lineup
+ * ./gradlew runClientJoinLocal -Puipreview=undead-lineup-world
  * </pre>
  *
  * The client joins the local development server, opens the named preview over
@@ -53,6 +55,9 @@ public final class UiPreview {
     /** Extra time for server-spawned people and their composed skins to arrive. */
     private static final int WORLD_SETTLE_TICKS = 80;
     private static final String WORLD_LINEUP_MODE = "age-lineup-world";
+    /** The same lineups on the other kind (docs/undead.md). */
+    private static final String UNDEAD_LINEUP_MODE = "undead-lineup";
+    private static final String UNDEAD_WORLD_LINEUP_MODE = "undead-lineup-world";
     private static final String WORLD_LINEUP_TAG = "kithkyn_age_lineup_preview";
     private static final String WORLD_LINEUP_CAMERA_TAG = WORLD_LINEUP_TAG + "_camera";
     private static final String WORLD_LINEUP_CENTER_TAG = WORLD_LINEUP_TAG + "_center";
@@ -131,8 +136,8 @@ public final class UiPreview {
             openWorldLineup(client);
             return;
         }
-        if ("age-lineup".equalsIgnoreCase(MODE)) {
-            client.setScreen(new AgeLineupScreen(client.level));
+        if ("age-lineup".equalsIgnoreCase(MODE) || UNDEAD_LINEUP_MODE.equalsIgnoreCase(MODE)) {
+            client.setScreen(new AgeLineupScreen(client.level, lineupKind()));
             return;
         }
         boolean trade = !"chat".equalsIgnoreCase(MODE) && !"typing".equalsIgnoreCase(MODE)
@@ -195,7 +200,7 @@ public final class UiPreview {
         if (isWorldLineup()) {
             return client.screen == null;
         }
-        if ("age-lineup".equalsIgnoreCase(MODE)) {
+        if ("age-lineup".equalsIgnoreCase(MODE) || UNDEAD_LINEUP_MODE.equalsIgnoreCase(MODE)) {
             return client.screen instanceof AgeLineupScreen;
         }
         return client.screen instanceof PersonChatScreen;
@@ -242,7 +247,8 @@ public final class UiPreview {
                 + "SkinVariant:" + AgeLineupScreen.PREVIEW_SEED + ","
                 + "StatBlock:{Strength:10,Dexterity:10,Constitution:10,Intelligence:10,"
                 + "Wisdom:10,Charisma:10,Size:10,Eyesight:10},"
-                + "AgeStage:\"" + stage.name() + "\",FirstName:\"Avery\",LastName:\"Stone\","
+                + "AgeStage:\"" + stage.name() + "\",Kind:\"" + lineupKind().name() + "\","
+                + "FirstName:\"Avery\",LastName:\"Stone\","
                 + "Title:\"Adult\",Occupation:\"WANDERER\",NoAI:1b,Immobile:1b,"
                 + "Invulnerable:1b,Silent:1b,CustomNameVisible:1b}";
     }
@@ -261,6 +267,12 @@ public final class UiPreview {
     }
 
     private static boolean isWorldLineup() {
-        return WORLD_LINEUP_MODE.equalsIgnoreCase(MODE);
+        return WORLD_LINEUP_MODE.equalsIgnoreCase(MODE) || UNDEAD_WORLD_LINEUP_MODE.equalsIgnoreCase(MODE);
+    }
+
+    private static com.quzzar.kithkyn.entities.Kind lineupKind() {
+        return MODE != null && MODE.toLowerCase(java.util.Locale.ROOT).startsWith("undead")
+                ? com.quzzar.kithkyn.entities.Kind.UNDEAD
+                : com.quzzar.kithkyn.entities.Kind.LIVING;
     }
 }

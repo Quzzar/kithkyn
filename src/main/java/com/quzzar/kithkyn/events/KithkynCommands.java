@@ -60,7 +60,8 @@ public class KithkynCommands {
                         .then(Commands.literal("create-village")
                                 .then(Commands.argument("pos", BlockPosArgument.blockPos())
                                         .executes(ctx -> createVillage(ctx.getSource(),
-                                                BlockPosArgument.getLoadedBlockPos(ctx, "pos"), null))
+                                                BlockPosArgument.getLoadedBlockPos(ctx, "pos"), null,
+                                                com.quzzar.kithkyn.entities.Kind.LIVING))
                                         // The style normally follows the biome; naming one here overrides it.
                                         .then(Commands.argument("style", StringArgumentType.word())
                                                 .suggests((ctx, builder) -> net.minecraft.commands.SharedSuggestionProvider.suggest(
@@ -73,15 +74,38 @@ public class KithkynCommands {
                                                         return 0;
                                                     }
                                                     return createVillage(ctx.getSource(),
-                                                            BlockPosArgument.getLoadedBlockPos(ctx, "pos"), style);
-                                                })))));
+                                                            BlockPosArgument.getLoadedBlockPos(ctx, "pos"), style,
+                                                            com.quzzar.kithkyn.entities.Kind.LIVING);
+                                                })
+                                                // Living unless told otherwise: an undead village is asked for by name.
+                                                .then(Commands.argument("kind", StringArgumentType.word())
+                                                        .suggests((ctx, builder) -> net.minecraft.commands.SharedSuggestionProvider.suggest(
+                                                                java.util.Arrays.stream(com.quzzar.kithkyn.entities.Kind.values()).map(com.quzzar.kithkyn.entities.Kind::id), builder))
+                                                        .executes(ctx -> {
+                                                            String wantedStyle = StringArgumentType.getString(ctx, "style");
+                                                            VillageStyle style = VillageStyle.parse(wantedStyle);
+                                                            if (style == null) {
+                                                                ctx.getSource().sendFailure(Component.literal("No such style: " + wantedStyle));
+                                                                return 0;
+                                                            }
+                                                            String wantedKind = StringArgumentType.getString(ctx, "kind");
+                                                            com.quzzar.kithkyn.entities.Kind kind = com.quzzar.kithkyn.entities.Kind.parse(wantedKind);
+                                                            if (kind == null) {
+                                                                ctx.getSource().sendFailure(Component.literal("No such kind: " + wantedKind));
+                                                                return 0;
+                                                            }
+                                                            return createVillage(ctx.getSource(),
+                                                                    BlockPosArgument.getLoadedBlockPos(ctx, "pos"), style, kind);
+                                                        }))))));
     }
 
-    private static int createVillage(CommandSourceStack source, BlockPos pos, @javax.annotation.Nullable VillageStyle style) {
+    private static int createVillage(CommandSourceStack source, BlockPos pos, @javax.annotation.Nullable VillageStyle style,
+            com.quzzar.kithkyn.entities.Kind kind) {
         ServerLevel level = source.getLevel();
-        VillageManager.get(level).registerVillage(level, pos, style);
+        VillageManager.get(level).registerVillage(level, pos, style, kind);
         source.sendSuccess(() -> Component.literal("Village founding requested at " + pos.toShortString()
-                + (style == null ? "" : " in the " + style.id() + " style")), true);
+                + (style == null ? "" : " in the " + style.id() + " style")
+                + (kind == com.quzzar.kithkyn.entities.Kind.LIVING ? "" : ", " + kind.id())), true);
         return 1;
     }
 

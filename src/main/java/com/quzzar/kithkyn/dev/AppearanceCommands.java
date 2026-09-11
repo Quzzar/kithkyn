@@ -163,7 +163,7 @@ public final class AppearanceCommands {
       List<String> failures = AppearanceRecipeAudit.validate(catalog, inputs, recipe);
       String output = person.getFullName()
           + " — appearance " + (failures.isEmpty() ? "PASS" : "FAIL")
-          + "\n  state: " + inputs.gender().name().toLowerCase(Locale.ROOT)
+          + "\n  state: " + inputs.kind().id() + ", " + inputs.gender().name().toLowerCase(Locale.ROOT)
           + ", " + person.getLifeStage().name().toLowerCase(Locale.ROOT)
           + " (" + inputs.lifeStage().name().toLowerCase(Locale.ROOT) + " wardrobe)"
           + ", " + inputs.occupation().name().toLowerCase(Locale.ROOT)
@@ -250,34 +250,37 @@ public final class AppearanceCommands {
     }
 
     int recipeCount = 0;
-    for (Gender gender : Gender.values()) {
-      for (Occupation occupation : Occupation.values()) {
-        for (LifeStage lifeStage : LifeStage.values()) {
-          for (GeneticCondition condition : GeneticCondition.values()) {
-            for (int seed = 0; seed < SYSTEM_AUDIT_SEEDS; seed++) {
-              recipeCount++;
-              AppearanceInputs inputs = new AppearanceInputs(
-                  seed,
-                  AppearanceGenes.fromLegacySeed(seed * 31 + 17),
-                  gender,
-                  occupation,
-                  lifeStage,
-                  condition);
-              try {
-                SkinRecipe recipe = AppearanceRecipeFactory.create(catalog, inputs);
-                SkinRecipe repeated = AppearanceRecipeFactory.create(catalog, inputs);
-                List<String> recipeFailures = new ArrayList<>(
-                    AppearanceRecipeAudit.validate(catalog, inputs, recipe));
-                if (!recipe.equals(repeated)) {
-                  recipeFailures.add("same inputs produced a different recipe");
+    for (com.quzzar.kithkyn.entities.Kind kind : com.quzzar.kithkyn.entities.Kind.values()) {
+      for (Gender gender : Gender.values()) {
+        for (Occupation occupation : Occupation.values()) {
+          for (LifeStage lifeStage : LifeStage.values()) {
+            for (GeneticCondition condition : GeneticCondition.values()) {
+              for (int seed = 0; seed < SYSTEM_AUDIT_SEEDS; seed++) {
+                recipeCount++;
+                AppearanceInputs inputs = new AppearanceInputs(
+                    seed,
+                    AppearanceGenes.fromLegacySeed(seed * 31 + 17),
+                    gender,
+                    occupation,
+                    lifeStage,
+                    condition,
+                    kind);
+                try {
+                  SkinRecipe recipe = AppearanceRecipeFactory.create(catalog, inputs);
+                  SkinRecipe repeated = AppearanceRecipeFactory.create(catalog, inputs);
+                  List<String> recipeFailures = new ArrayList<>(
+                      AppearanceRecipeAudit.validate(catalog, inputs, recipe));
+                  if (!recipe.equals(repeated)) {
+                    recipeFailures.add("same inputs produced a different recipe");
+                  }
+                  if (!recipeFailures.isEmpty()) {
+                    failures.add(kind.id() + "/" + gender + "/" + occupation + "/" + lifeStage + "/" + condition
+                        + "/seed=" + seed + ": " + String.join("; ", recipeFailures));
+                  }
+                } catch (RuntimeException exception) {
+                  failures.add(kind.id() + "/" + gender + "/" + occupation + "/" + lifeStage + "/" + condition
+                      + "/seed=" + seed + ": " + safeMessage(exception));
                 }
-                if (!recipeFailures.isEmpty()) {
-                  failures.add(gender + "/" + occupation + "/" + lifeStage + "/" + condition
-                      + "/seed=" + seed + ": " + String.join("; ", recipeFailures));
-                }
-              } catch (RuntimeException exception) {
-                failures.add(gender + "/" + occupation + "/" + lifeStage + "/" + condition
-                    + "/seed=" + seed + ": " + safeMessage(exception));
               }
             }
           }
@@ -537,7 +540,8 @@ public final class AppearanceCommands {
         person.getGender(),
         occupation,
         wardrobeStage(person, occupation),
-        person.getGeneticCondition());
+        person.getGeneticCondition(),
+        person.getKind());
   }
 
   private static String describeStats(StatBlock stats) {

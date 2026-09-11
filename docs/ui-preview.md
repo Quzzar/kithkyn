@@ -21,9 +21,12 @@ Reasoning about a layout is not looking at it. If you are changing anything unde
 ./gradlew runClientJoinLocal -Puipreview=chat
 ./gradlew runClientJoinLocal -Puipreview=age-lineup
 ./gradlew runClientJoinLocal -Puipreview=age-lineup-world
+./gradlew runClientJoinLocal -Puipreview=undead-lineup
+./gradlew runClientJoinLocal -Puipreview=undead-lineup-world
 ```
 
-Start the local development server first. The preview client joins it as `Dev`, opens the named
+Start the local development server first. It listens on 25565 by default; pass
+`-Pjoinport=<port>` to join a private one when a deployed server already holds that port. The preview client joins it as `Dev`, opens the named
 preview over controlled sample data, writes `run-preview/screenshots/ui-<mode>.png`, and quits.
 The separate `run-preview/` game directory keeps its config and session files away from the server.
 Read the PNG directly.
@@ -38,7 +41,8 @@ lets it settle, then calls `Screenshot.grab` and stops the client. Chat and trad
 appearance inputs, changes only their age stage, and renders them through the real entity renderer.
 `age-lineup-world` briefly spawns the same controlled stages in front of the preview player so the
 real entity attachments, name line, role line, camera perspective, and model scale are photographed
-together. The tagged entities are removed immediately after the capture.
+together. The tagged entities are removed immediately after the capture. The two `undead-` modes are
+the same lineups on the other kind ([undead.md](undead.md)); the screen version adds an armed guard.
 
 Two traps are already paid for, and both cost an hour the first time:
 
@@ -48,6 +52,11 @@ Two traps are already paid for, and both cost an hour the first time:
   this reason. Use `-P`, not `-D`.
 - **Wait for the joined world.** Screens need a player inventory and entity previews need a client
   level. Waiting at the title screen cannot exercise either real path.
+- **A fresh `run-preview/` stops at the accessibility onboarding screen.** Minecraft shows it once
+  per game directory and quick play waits behind it, so the first run in a new checkout sits at that
+  screen until someone clicks, then stops. Seed `run-preview/options.txt` with
+  `onboardAccessibility:false` (the client writes it after the first dismissal), and the next run
+  joins straight away.
 
 ## Sample data, not live data
 

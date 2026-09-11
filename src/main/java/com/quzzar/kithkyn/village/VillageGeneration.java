@@ -75,6 +75,7 @@ public final class VillageGeneration {
             probe.attach(level);
             VillageStyle style = VillageStyle.fromBiome(level.getBiome(surface), level.getSeed(), surface);
             probe.setStyle(style);
+            com.quzzar.kithkyn.entities.Kind kind = com.quzzar.kithkyn.entities.Kind.forNaturalFounding(level.getSeed(), surface);
             Rotation rotation = Rotation.values()[RandomSource.create(level.getSeed() ^ column.asLong())
                 .nextInt(Rotation.values().length)];
             var plan = probe.planFounding(surface, rotation, false);
@@ -83,9 +84,9 @@ public final class VillageGeneration {
                 search.reject(column);
             } else {
                 search.reserve();
-                boolean reserved = manager.registerNaturalVillage(surface, style, plan.get(), success -> {
+                boolean reserved = manager.registerNaturalVillage(surface, style, kind, plan.get(), success -> {
                     search.complete(success);
-                    if (success) Kithkyn.LOGGER.info("Natural village founded at {} after nearby-site search", surface);
+                    if (success) Kithkyn.LOGGER.info("Natural {} village founded at {} after nearby-site search", kind.id(), surface);
                 });
                 if (!reserved) search.complete(false);
             }

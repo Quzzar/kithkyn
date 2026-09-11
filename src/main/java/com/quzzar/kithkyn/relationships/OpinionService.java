@@ -27,6 +27,11 @@ import net.minecraft.util.Mth;
  * feelings about a resident live in the village's relationship web as that
  * person's private lean on the pair, while feelings about a player (or anyone
  * who is not a resident) live on the villager themselves.
+ *
+ * A stranger is not read as zero but as the villager's kind's baseline
+ * ({@link com.quzzar.kithkyn.entities.Kind#strangerBaseline()}): indifference
+ * for the living, a grudge on sight for the undead. The baseline is never
+ * stored; it is what an absent entry means.
  */
 public final class OpinionService {
 
@@ -66,13 +71,14 @@ public final class OpinionService {
       return pair == null ? 0 : pair.opinionOf(person.getUUID());
     }
     return person.getData(KithkynAttachments.SOCIAL.get())
-        .relationships().getOrDefault(target, 0);
+        .relationships().getOrDefault(target, person.getKind().strangerBaseline());
   }
 
   private static void applyToOutsider(RealPerson person, UUID target, int delta) {
     PersonSocialData social = person.getData(KithkynAttachments.SOCIAL.get());
     Map<UUID, Integer> relationships = new HashMap<>(social.relationships());
-    int updated = Mth.clamp(relationships.getOrDefault(target, 0) + delta, -100, 100);
+    int updated = Mth.clamp(
+        relationships.getOrDefault(target, person.getKind().strangerBaseline()) + delta, -100, 100);
     relationships.put(target, updated);
     person.setData(KithkynAttachments.SOCIAL.get(), social.withRelationships(relationships));
   }

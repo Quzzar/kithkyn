@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import com.quzzar.kithkyn.entities.Kind;
 import com.quzzar.kithkyn.village.Occupation;
 
 /** Metadata for one source pack whose semantic layers can be selected independently. */
@@ -20,7 +21,8 @@ public record AppearanceAsset(
     Map<AppearancePart, Set<Integer>> pigmentColors,
     Set<Occupation> occupations,
     Set<LifeStage> lifeStages,
-    boolean headwearOccludesHair) {
+    boolean headwearOccludesHair,
+    Kind kind) {
 
   public AppearanceAsset {
     availableParts = Set.copyOf(availableParts);
