@@ -1,0 +1,1082 @@
+{
+  "schemaVersion": 1,
+  "recorded": "2026-09-11T06:30:39.098990-04:00",
+  "purpose": "Complete standalone Towns & Towers Viking and Polish building profiles for the Viking village decision.",
+  "status": "verified",
+  "entry": [
+    10201.5,
+    230,
+    1224.5
+  ],
+  "bounds": [
+    10198,
+    220,
+    1220,
+    10360,
+    270,
+    1468
+  ],
+  "returnPosition": [
+    767.5,
+    65.6875,
+    -45.5
+  ],
+  "selectionRule": "Every standalone house, town center, and family-specific decoration; streets and terminators are excluded from the building profile.",
+  "counts": {
+    "viking": 22,
+    "polish": 21,
+    "total": 43,
+    "rows": 6
+  },
+  "rows": [
+    {
+      "id": "V06",
+      "title": "FULL VIKING \u2014 CENTER + HOMES",
+      "family": "viking",
+      "origin": [
+        10208,
+        230,
+        1230
+      ],
+      "bounds": [
+        10198,
+        220,
+        1221,
+        10315,
+        270,
+        1250
+      ],
+      "maxHeight": 11,
+      "entries": [
+        {
+          "id": "V06.1",
+          "label": "Town Center 1",
+          "role": "center",
+          "family": "viking",
+          "source": "data/kaisyn/structure/village/snowy_taiga_viking/town_centers/snowy_taiga_meeting_point_1.nbt",
+          "sourceSha256": "2fc1862f7b6a4b69484487c4aebb1d283d095c711c60435c936e6f88b537c882",
+          "preparedSha256": "876fa4959f8d1867bbb4b01568c674f1304f0ce02746f7dc3f4353ddb8172027",
+          "size": [
+            17,
+            11,
+            17
+          ],
+          "origin": [
+            10208,
+            230,
+            1230
+          ],
+          "privateTemplate": "kithkyn_viking_profile:viking/snowy_taiga_meeting_point_1"
+        },
+        {
+          "id": "V06.2",
+          "label": "Temple 1",
+          "role": "civic",
+          "family": "viking",
+          "source": "data/kaisyn/structure/village/snowy_taiga_viking/houses/snowy_taiga_temple_1.nbt",
+          "sourceSha256": "9d2639cbb3c69e2e49ea0066ca2f9aa686e2b7596d8e02d6fdb93bb492c57bdd",
+          "preparedSha256": "365922afbc21e3b27e95925efc10f0547c2a76b9b81984475bb3e614e8d09329",
+          "size": [
+            11,
+            8,
+            10
+          ],
+          "origin": [
+            10231,
+            230,
+            1230
+          ],
+          "privateTemplate": "kithkyn_viking_profile:viking/snowy_taiga_temple_1"
+        },
+        {
+          "id": "V06.3",
+          "label": "Small House 1",
+          "role": "house",
+          "family": "viking",
+          "source": "data/kaisyn/structure/village/snowy_taiga_viking/houses/snowy_taiga_small_house_1.nbt",
+          "sourceSha256": "5b1cb29adce05a7ce5a6a3ace47bb1abae27100855d2bad19c9ee71c08be10f1",
+          "preparedSha256": "e758fa7f87a918d68abdbff1c279ad94ad574d22ab2e0168b046d38396c65659",
+          "size": [
+            7,
+            7,
+            7
+          ],
+          "origin": [
+            10248,
+            230,
+            1230
+          ],
+          "privateTemplate": "kithkyn_viking_profile:viking/snowy_taiga_small_house_1"
+        },
+        {
+          "id": "V06.4",
+          "label": "Small House 2",
+          "role": "house",
+          "family": "viking",
+          "source": "data/kaisyn/structure/village/snowy_taiga_viking/houses/snowy_taiga_small_house_2.nbt",
+          "sourceSha256": "35a82b412a75a239af3fd17c1af5aa2e92a8a8d19ff4e077c0ba5d300f3cca61",
+          "preparedSha256": "18d4ee398d24dfb368640804d6318a80a282395e013163bb8c8d28a92471f209",
+          "size": [
+            9,
+            7,
+            7
+          ],
+          "origin": [
+            10261,
+            230,
+            1230
+          ],
+          "privateTemplate": "kithkyn_viking_profile:viking/snowy_taiga_small_house_2"
+        },
+        {
+          "id": "V06.5",
+          "label": "Small House 3",
+          "role": "house",
+          "family": "viking",
+          "source": "data/kaisyn/structure/village/snowy_taiga_viking/houses/snowy_taiga_small_house_3.nbt",
+          "sourceSha256": "f7f5d6835bb7602c911db2e2aeac658c4c0cb03b3a24649abf631bc66ca7ba94",
+          "preparedSha256": "7797b9bf914cca17d7774667a875821b6c8d692d0b6afe3ec6717f4d311b25e9",
+          "size": [
+            9,
+            7,
+            7
+          ],
+          "origin": [
+            10276,
+            230,
+            1230
+          ],
+          "privateTemplate": "kithkyn_viking_profile:viking/snowy_taiga_small_house_3"
+        },
+        {
+          "id": "V06.6",
+          "label": "Small House 4",
+          "role": "house",
+          "family": "viking",
+          "source": "data/kaisyn/structure/village/snowy_taiga_viking/houses/snowy_taiga_small_house_4.nbt",
+          "sourceSha256": "1aee77a05c4c2a329a2f6b45ea27a993ce41f34d96bdeb631a2014b6a4632b92",
+          "preparedSha256": "506d0e77521157104846ba0d98640e15fb4fcf4e414b367dc2da89301c9547c7",
+          "size": [
+            9,
+            8,
+            11
+          ],
+          "origin": [
+            10291,
+            230,
+            1230
+          ],
+          "privateTemplate": "kithkyn_viking_profile:viking/snowy_taiga_small_house_4"
+        },
+        {
+          "id": "V06.7",
+          "label": "Small House 5",
+          "role": "house",
+          "family": "viking",
+          "source": "data/kaisyn/structure/village/snowy_taiga_viking/houses/snowy_taiga_small_house_5.nbt",
+          "sourceSha256": "db982d615031c7e219185ecf0e9257f5304132c262c089cd0611353507bb67b4",
+          "preparedSha256": "4146fe23b314cbbc839944d2ad9aec1f71c713e74a11fcd027513ff84cc02174",
+          "size": [
+            7,
+            7,
+            6
+          ],
+          "origin": [
+            10306,
+            230,
+            1230
+          ],
+          "privateTemplate": "kithkyn_viking_profile:viking/snowy_taiga_small_house_5"
+        }
+      ]
+    },
+    {
+      "id": "V07",
+      "title": "FULL VIKING \u2014 WORKPLACES",
+      "family": "viking",
+      "origin": [
+        10208,
+        230,
+        1274
+      ],
+      "bounds": [
+        10198,
+        220,
+        1265,
+        10342,
+        270,
+        1286
+      ],
+      "maxHeight": 10,
+      "entries": [
+        {
+          "id": "V07.1",
+          "label": "Armorer 1",
+          "role": "work",
+          "family": "viking",
+          "source": "data/kaisyn/structure/village/snowy_taiga_viking/houses/snowy_taiga_armorer_1.nbt",
+          "sourceSha256": "61ba229667dd174bc2b393ed75714b4b2050f88bfd352089b85fe4d4373eb146",
+          "preparedSha256": "98c9adbc7a813b5bc347911cff68b324095148e4fa5d464721c116d1af8e040b",
+          "size": [
+            9,
+            8,
+            7
+          ],
+          "origin": [
+            10208,
+            230,
+            1274
+          ],
+          "privateTemplate": "kithkyn_viking_profile:viking/snowy_taiga_armorer_1"
+        },
+        {
+          "id": "V07.2",
+          "label": "Butcher 1",
+          "role": "work",
+          "family": "viking",
+          "source": "data/kaisyn/structure/village/snowy_taiga_viking/houses/snowy_taiga_butcher_1.nbt",
+          "sourceSha256": "241cd5da6fc1b92f2e36a873f28b1d561e72f907a11f915f331a779ca8defaf6",
+          "preparedSha256": "1063e746ffc2ed9022130b5341b13cf5ee87c87698b3dc001a461e4069d1c36a",
+          "size": [
+            9,
+            8,
+            7
+          ],
+          "origin": [
+            10223,
+            230,
+            1274
+          ],
+          "privateTemplate": "kithkyn_viking_profile:viking/snowy_taiga_butcher_1"
+        },
+        {
+          "id": "V07.3",
+          "label": "Cartographer 1",
+          "role": "work",
+          "family": "viking",
+          "source": "data/kaisyn/structure/village/snowy_taiga_viking/houses/snowy_taiga_cartographer_1.nbt",
+          "sourceSha256": "4ffd67fa7dfc9da6d12017b898814be9e24e90c381035fb5d20fb17b84dad0f2",
+          "preparedSha256": "9ebaea4f43b852afaa50f08011494724338a2664639dbe98f8d01a67a8eac8b1",
+          "size": [
+            7,
+            9,
+            7
+          ],
+          "origin": [
+            10238,
+            230,
+            1274
+          ],
+          "privateTemplate": "kithkyn_viking_profile:viking/snowy_taiga_cartographer_1"
+        },
+        {
+          "id": "V07.4",
+          "label": "Fletcher 1",
+          "role": "work",
+          "family": "viking",
+          "source": "data/kaisyn/structure/village/snowy_taiga_viking/houses/snowy_taiga_fletcher_1.nbt",
+          "sourceSha256": "9bbe5633aab496ba9064a80ab3ff709288ad8895d106670ebad571d9ce6f60e8",
+          "preparedSha256": "71f256efe6a71c749f5f9ef7889b3ab4ee3b748a51b91f1ebe562b1ade7a5f2b",
+          "size": [
+            7,
+            5,
+            7
+          ],
+          "origin": [
+            10251,
+            230,
+            1274
+          ],
+          "privateTemplate": "kithkyn_viking_profile:viking/snowy_taiga_fletcher_1"
+        },
+        {
+          "id": "V07.5",
+          "label": "Leatherworker 1",
+          "role": "work",
+          "family": "viking",
+          "source": "data/kaisyn/structure/village/snowy_taiga_viking/houses/snowy_taiga_leatherworker_1.nbt",
+          "sourceSha256": "c48de196b47b7f4a76d154fe6f2ab2f24f3204489e1c893ebd2c50aa7f844acb",
+          "preparedSha256": "a4bf14e4ffd38085f6330b1cd76d5c90e30e804ff370d926c7818ee56239d784",
+          "size": [
+            9,
+            8,
+            7
+          ],
+          "origin": [
+            10264,
+            230,
+            1274
+          ],
+          "privateTemplate": "kithkyn_viking_profile:viking/snowy_taiga_leatherworker_1"
+        },
+        {
+          "id": "V07.6",
+          "label": "Library 1",
+          "role": "civic",
+          "family": "viking",
+          "source": "data/kaisyn/structure/village/snowy_taiga_viking/houses/snowy_taiga_library_1.nbt",
+          "sourceSha256": "4ec13335e72acef08404e16787cfbe7c1c2ed787bac274f317a7d7c9d19eb03e",
+          "preparedSha256": "a70a63c9ac664af791ca4df7b11233e8f4d56c1813eea40806aa168655f53716",
+          "size": [
+            7,
+            10,
+            9
+          ],
+          "origin": [
+            10279,
+            230,
+            1274
+          ],
+          "privateTemplate": "kithkyn_viking_profile:viking/snowy_taiga_library_1"
+        },
+        {
+          "id": "V07.7",
+          "label": "Mason 1",
+          "role": "work",
+          "family": "viking",
+          "source": "data/kaisyn/structure/village/snowy_taiga_viking/houses/snowy_taiga_mason_1.nbt",
+          "sourceSha256": "0439aca2e987cb3b5277407d6d7928ca1a8ade22d4424e577e30e25e9bc196df",
+          "preparedSha256": "9cde1929fa121a2d2653ff44054706a4e5b98dab5a31eb938f5e9be663664173",
+          "size": [
+            7,
+            5,
+            7
+          ],
+          "origin": [
+            10292,
+            230,
+            1274
+          ],
+          "privateTemplate": "kithkyn_viking_profile:viking/snowy_taiga_mason_1"
+        },
+        {
+          "id": "V07.8",
+          "label": "Shepherd 1",
+          "role": "work",
+          "family": "viking",
+          "source": "data/kaisyn/structure/village/snowy_taiga_viking/houses/snowy_taiga_shepherd_1.nbt",
+          "sourceSha256": "36f9851cb4efeda87d566cebfbea938db6a58e16a0e89d7b35cdfadaa3668c3d",
+          "preparedSha256": "28bb18945a8cdc90881091fe3a04076aad5c9a7ece6e82f0746a105139db13c0",
+          "size": [
+            7,
+            7,
+            9
+          ],
+          "origin": [
+            10305,
+            230,
+            1274
+          ],
+          "privateTemplate": "kithkyn_viking_profile:viking/snowy_taiga_shepherd_1"
+        },
+        {
+          "id": "V07.9",
+          "label": "Toolsmith 1",
+          "role": "work",
+          "family": "viking",
+          "source": "data/kaisyn/structure/village/snowy_taiga_viking/houses/snowy_taiga_toolsmith_1.nbt",
+          "sourceSha256": "cce15ed86da164be46c4988ca4c14c1de0a72cd6cd6d1e969a2143dca93a86ba",
+          "preparedSha256": "35e2045f190bbed1961252afa1f46d4cef71b046f689bfc8d941bd912468468c",
+          "size": [
+            9,
+            9,
+            7
+          ],
+          "origin": [
+            10318,
+            230,
+            1274
+          ],
+          "privateTemplate": "kithkyn_viking_profile:viking/snowy_taiga_toolsmith_1"
+        },
+        {
+          "id": "V07.10",
+          "label": "Weaponsmith 1",
+          "role": "work",
+          "family": "viking",
+          "source": "data/kaisyn/structure/village/snowy_taiga_viking/houses/snowy_taiga_weaponsmith_1.nbt",
+          "sourceSha256": "a576304aedda8fb4d11820f9b98b86fee4f4404e553ad48c0b52f27b01a47dc0",
+          "preparedSha256": "447a3848b1f094474d67a59754eb5c5deb0513b3d0c821c12958682efa1d2517",
+          "size": [
+            7,
+            5,
+            7
+          ],
+          "origin": [
+            10333,
+            230,
+            1274
+          ],
+          "privateTemplate": "kithkyn_viking_profile:viking/snowy_taiga_weaponsmith_1"
+        }
+      ]
+    },
+    {
+      "id": "V08",
+      "title": "FULL VIKING \u2014 FOOD + DETAILS",
+      "family": "viking",
+      "origin": [
+        10208,
+        230,
+        1318
+      ],
+      "bounds": [
+        10198,
+        220,
+        1309,
+        10267,
+        270,
+        1329
+      ],
+      "maxHeight": 8,
+      "entries": [
+        {
+          "id": "V08.1",
+          "label": "Fisher 1",
+          "role": "food",
+          "family": "viking",
+          "source": "data/kaisyn/structure/village/snowy_taiga_viking/houses/snowy_taiga_fisher_1.nbt",
+          "sourceSha256": "5b874854d2ab55c3555dafe0583a1244603ca0fd97454530ecd5b517f661612c",
+          "preparedSha256": "218b816d426cd0768ee73fc534e5723fdce14696bccf487eafc6c26b3ea2e178",
+          "size": [
+            10,
+            8,
+            7
+          ],
+          "origin": [
+            10208,
+            230,
+            1318
+          ],
+          "privateTemplate": "kithkyn_viking_profile:viking/snowy_taiga_fisher_1"
+        },
+        {
+          "id": "V08.2",
+          "label": "Large Farm 1",
+          "role": "food",
+          "family": "viking",
+          "source": "data/kaisyn/structure/village/snowy_taiga_viking/houses/snowy_taiga_large_farm_1.nbt",
+          "sourceSha256": "6d45c7111146cf24b81ff1a90394b8c85f97f0f88da8690eda3cda2696f47c77",
+          "preparedSha256": "1258fd08e41e91afde0ffc5754502de05c93ecd7e7baf7c20c9fd5927001d725",
+          "size": [
+            10,
+            5,
+            8
+          ],
+          "origin": [
+            10224,
+            230,
+            1318
+          ],
+          "privateTemplate": "kithkyn_viking_profile:viking/snowy_taiga_large_farm_1"
+        },
+        {
+          "id": "V08.3",
+          "label": "Small Farm 1",
+          "role": "food",
+          "family": "viking",
+          "source": "data/kaisyn/structure/village/snowy_taiga_viking/houses/snowy_taiga_small_farm_1.nbt",
+          "sourceSha256": "13d68717b1d575edc45d9b4ca662ab4a2467b4dd6e0acb5f0b0d65fabbc43c28",
+          "preparedSha256": "a3990b1dd766039990e9993578d854ce717c46ae6a7f396724634569c1ec8081",
+          "size": [
+            7,
+            5,
+            7
+          ],
+          "origin": [
+            10240,
+            230,
+            1318
+          ],
+          "privateTemplate": "kithkyn_viking_profile:viking/snowy_taiga_small_farm_1"
+        },
+        {
+          "id": "V08.4",
+          "label": "Drakkar 1",
+          "role": "detail",
+          "family": "viking",
+          "source": "data/kaisyn/structure/village/snowy_taiga_viking/snowy_taiga_drakkar_1.nbt",
+          "sourceSha256": "307387d57d93312ecda10ad14c93782c3ec28ba0a7bad810015aa992cf772f1a",
+          "preparedSha256": "cec8baf8d7a6617391a680423dd9e8e24ead1193875afa22ffad404b314f0883",
+          "size": [
+            3,
+            2,
+            5
+          ],
+          "origin": [
+            10253,
+            230,
+            1318
+          ],
+          "privateTemplate": "kithkyn_viking_profile:viking/snowy_taiga_drakkar_1"
+        },
+        {
+          "id": "V08.5",
+          "label": "Wood Pile 1",
+          "role": "detail",
+          "family": "viking",
+          "source": "data/kaisyn/structure/village/snowy_taiga_viking/snowy_taiga_wood_pile_1.nbt",
+          "sourceSha256": "e49eb8ba4e772efd2fffe7e5ff4322a036becc392a6b43569791178bbde9533c",
+          "preparedSha256": "ca2f6892ae06b3ad52fb24aafd32ae46b75153b3fe1ca0853625280d94f01cb4",
+          "size": [
+            3,
+            2,
+            5
+          ],
+          "origin": [
+            10262,
+            230,
+            1318
+          ],
+          "privateTemplate": "kithkyn_viking_profile:viking/snowy_taiga_wood_pile_1"
+        }
+      ]
+    },
+    {
+      "id": "V09",
+      "title": "FULL POLISH \u2014 CENTER + HOMES",
+      "family": "polish",
+      "origin": [
+        10208,
+        230,
+        1362
+      ],
+      "bounds": [
+        10198,
+        220,
+        1353,
+        10360,
+        270,
+        1378
+      ],
+      "maxHeight": 8,
+      "entries": [
+        {
+          "id": "V09.1",
+          "label": "Town Center 1",
+          "role": "center",
+          "family": "polish",
+          "source": "data/kaisyn/structure/village/old_growth_taiga_polish/town_centers/old_growth_taiga_meeting_point_1.nbt",
+          "sourceSha256": "174ecd14e161c3b53eda33b6441e47a23fedd8fe224c0d80a7ae3fb86e4a079f",
+          "preparedSha256": "eb7b2ccea18ffa97510be09c0b2e118682c6ba5edcdf4c0d67bdf1b750d05e38",
+          "size": [
+            13,
+            6,
+            13
+          ],
+          "origin": [
+            10208,
+            230,
+            1362
+          ],
+          "privateTemplate": "kithkyn_viking_profile:polish/old_growth_taiga_meeting_point_1"
+        },
+        {
+          "id": "V09.2",
+          "label": "Temple 1",
+          "role": "civic",
+          "family": "polish",
+          "source": "data/kaisyn/structure/village/old_growth_taiga_polish/houses/old_growth_taiga_temple_1.nbt",
+          "sourceSha256": "a74e509cf0feea6f7487e7b68387819ffae0f605a8c4e6597ed3533e53e32d43",
+          "preparedSha256": "2c36163abba52dd77c8a6645b478501f47d2847f76d2f69f6af51a103cb3a207",
+          "size": [
+            9,
+            8,
+            11
+          ],
+          "origin": [
+            10227,
+            230,
+            1362
+          ],
+          "privateTemplate": "kithkyn_viking_profile:polish/old_growth_taiga_temple_1"
+        },
+        {
+          "id": "V09.3",
+          "label": "Medium House 1",
+          "role": "house",
+          "family": "polish",
+          "source": "data/kaisyn/structure/village/old_growth_taiga_polish/houses/old_growth_taiga_medium_house_1.nbt",
+          "sourceSha256": "88d11d8b5a226f21a1a437aedeb6ab078b7c5b9b4668a5ce99c415808e3dfb12",
+          "preparedSha256": "3e227b6f45f7f4900c3203576566fe219683bf3def1dcb49851bacf57a529dba",
+          "size": [
+            10,
+            7,
+            8
+          ],
+          "origin": [
+            10242,
+            230,
+            1362
+          ],
+          "privateTemplate": "kithkyn_viking_profile:polish/old_growth_taiga_medium_house_1"
+        },
+        {
+          "id": "V09.4",
+          "label": "Medium House 2",
+          "role": "house",
+          "family": "polish",
+          "source": "data/kaisyn/structure/village/old_growth_taiga_polish/houses/old_growth_taiga_medium_house_2.nbt",
+          "sourceSha256": "e91f93fb3352cc1dacfbf0f6d5a15d058d34975b3bf029ce4c3d61459e68aef1",
+          "preparedSha256": "1123def65ad6731ccc0d87772e861bcb2a21c29318c305d672227d473eaa8fee",
+          "size": [
+            9,
+            8,
+            8
+          ],
+          "origin": [
+            10258,
+            230,
+            1362
+          ],
+          "privateTemplate": "kithkyn_viking_profile:polish/old_growth_taiga_medium_house_2"
+        },
+        {
+          "id": "V09.5",
+          "label": "Small House 1",
+          "role": "house",
+          "family": "polish",
+          "source": "data/kaisyn/structure/village/old_growth_taiga_polish/houses/old_growth_taiga_small_house_1.nbt",
+          "sourceSha256": "6b45bd4225314f731865c6fb8d99072b93715bf5e081c719624e51b7189030c3",
+          "preparedSha256": "0aeac1d9bfc60b62dd76d21dc6c28fd6b705554c78a610257b27467c5aaad47f",
+          "size": [
+            9,
+            6,
+            8
+          ],
+          "origin": [
+            10273,
+            230,
+            1362
+          ],
+          "privateTemplate": "kithkyn_viking_profile:polish/old_growth_taiga_small_house_1"
+        },
+        {
+          "id": "V09.6",
+          "label": "Small House 2",
+          "role": "house",
+          "family": "polish",
+          "source": "data/kaisyn/structure/village/old_growth_taiga_polish/houses/old_growth_taiga_small_house_2.nbt",
+          "sourceSha256": "9adc0723d8c94f4cb01442563273dd504f5de823a9f12672566882f16a145d5c",
+          "preparedSha256": "15718c4be43a0982a77393fd87ae5fbcfe26a4c3e55cf042a85695853b3ff16c",
+          "size": [
+            9,
+            6,
+            8
+          ],
+          "origin": [
+            10288,
+            230,
+            1362
+          ],
+          "privateTemplate": "kithkyn_viking_profile:polish/old_growth_taiga_small_house_2"
+        },
+        {
+          "id": "V09.7",
+          "label": "Small House 3",
+          "role": "house",
+          "family": "polish",
+          "source": "data/kaisyn/structure/village/old_growth_taiga_polish/houses/old_growth_taiga_small_house_3.nbt",
+          "sourceSha256": "8df9726c343c95ac54ed5a035566ba2cb973b686f66a3d7c6074fe03e607b765",
+          "preparedSha256": "ecf7be7013064ab79423ab027834b1a347636c52457063e3cb86b2ffe580d0a1",
+          "size": [
+            10,
+            6,
+            9
+          ],
+          "origin": [
+            10303,
+            230,
+            1362
+          ],
+          "privateTemplate": "kithkyn_viking_profile:polish/old_growth_taiga_small_house_3"
+        },
+        {
+          "id": "V09.8",
+          "label": "Small House 4",
+          "role": "house",
+          "family": "polish",
+          "source": "data/kaisyn/structure/village/old_growth_taiga_polish/houses/old_growth_taiga_small_house_4.nbt",
+          "sourceSha256": "d27785d4a28e3a0aced24004da81cddb7fd891f9b47052896f5abd66f997de2d",
+          "preparedSha256": "0a285afe88bda2a1ad4559253bfb9524ef8f35a7213417f5a8feaefb75972187",
+          "size": [
+            9,
+            6,
+            8
+          ],
+          "origin": [
+            10319,
+            230,
+            1362
+          ],
+          "privateTemplate": "kithkyn_viking_profile:polish/old_growth_taiga_small_house_4"
+        },
+        {
+          "id": "V09.9",
+          "label": "Small House 5",
+          "role": "house",
+          "family": "polish",
+          "source": "data/kaisyn/structure/village/old_growth_taiga_polish/houses/old_growth_taiga_small_house_5.nbt",
+          "sourceSha256": "11cc4b2a6d6adabe06c1f29f7243f1710a0ab5d93508cb25324af736ce1b8fb8",
+          "preparedSha256": "bc39ed133d993ff83b014eb2d9ca06b826074f5b0ebbc56d3b4bb6f0ebb262c8",
+          "size": [
+            9,
+            7,
+            8
+          ],
+          "origin": [
+            10334,
+            230,
+            1362
+          ],
+          "privateTemplate": "kithkyn_viking_profile:polish/old_growth_taiga_small_house_5"
+        },
+        {
+          "id": "V09.10",
+          "label": "Small House 6",
+          "role": "house",
+          "family": "polish",
+          "source": "data/kaisyn/structure/village/old_growth_taiga_polish/houses/old_growth_taiga_small_house_6.nbt",
+          "sourceSha256": "51ebe1f73a2f632ab9d269bf8ca9dede6ad4ae8668a12f1222baec8667794dd8",
+          "preparedSha256": "47880da83fe8e9277ef4a80ac967fcecd30ac21a7d347f2d28cf7372276f72d6",
+          "size": [
+            9,
+            7,
+            8
+          ],
+          "origin": [
+            10349,
+            230,
+            1362
+          ],
+          "privateTemplate": "kithkyn_viking_profile:polish/old_growth_taiga_small_house_6"
+        }
+      ]
+    },
+    {
+      "id": "V10",
+      "title": "FULL POLISH \u2014 WORKPLACES",
+      "family": "polish",
+      "origin": [
+        10208,
+        230,
+        1406
+      ],
+      "bounds": [
+        10198,
+        220,
+        1397,
+        10352,
+        270,
+        1421
+      ],
+      "maxHeight": 9,
+      "entries": [
+        {
+          "id": "V10.1",
+          "label": "Armorer And Butcher 1",
+          "role": "work",
+          "family": "polish",
+          "source": "data/kaisyn/structure/village/old_growth_taiga_polish/houses/old_growth_taiga_armorer_and_butcher_1.nbt",
+          "sourceSha256": "e0edddb69c98953076c9b3cfa125be0aa8bc739eb54cfc4cbd1fddfe627423ff",
+          "preparedSha256": "8be33425622d03f37c4e88390fc1532b5af09a6504d3a073f2083cb18ffb9598",
+          "size": [
+            13,
+            9,
+            10
+          ],
+          "origin": [
+            10208,
+            230,
+            1406
+          ],
+          "privateTemplate": "kithkyn_viking_profile:polish/old_growth_taiga_armorer_and_butcher_1"
+        },
+        {
+          "id": "V10.2",
+          "label": "Cartographer 1",
+          "role": "work",
+          "family": "polish",
+          "source": "data/kaisyn/structure/village/old_growth_taiga_polish/houses/old_growth_taiga_cartographer_1.nbt",
+          "sourceSha256": "5e096528da89b25669b6ad34b5f788d784a5afe3267ac3fa914fbcd80076466d",
+          "preparedSha256": "98aec8a11c7a358b0ff611bb287a1dff8ff44de8fcaba49a3faaf143fb0b6615",
+          "size": [
+            13,
+            7,
+            10
+          ],
+          "origin": [
+            10227,
+            230,
+            1406
+          ],
+          "privateTemplate": "kithkyn_viking_profile:polish/old_growth_taiga_cartographer_1"
+        },
+        {
+          "id": "V10.3",
+          "label": "Fletcher 1",
+          "role": "work",
+          "family": "polish",
+          "source": "data/kaisyn/structure/village/old_growth_taiga_polish/houses/old_growth_taiga_fletcher_1.nbt",
+          "sourceSha256": "faefa38bafa42d24a75939df2801792b999babf2f1d3ce41fce021ebe8b82df9",
+          "preparedSha256": "bb8a668bd5a50d3f278e1cf4ed98094434c89dacd88f7c1ea99080b7a2ea31d7",
+          "size": [
+            11,
+            6,
+            9
+          ],
+          "origin": [
+            10246,
+            230,
+            1406
+          ],
+          "privateTemplate": "kithkyn_viking_profile:polish/old_growth_taiga_fletcher_1"
+        },
+        {
+          "id": "V10.4",
+          "label": "Leatherworker 1",
+          "role": "work",
+          "family": "polish",
+          "source": "data/kaisyn/structure/village/old_growth_taiga_polish/houses/old_growth_taiga_leatherworker_1.nbt",
+          "sourceSha256": "3fb485a65202f0908e4c95009897d7ac91659e9c3f36badacc68945ccd881400",
+          "preparedSha256": "be1a37f78d09444b25edad36a65639c43d29164f69909c27ffd50370c826b594",
+          "size": [
+            11,
+            7,
+            9
+          ],
+          "origin": [
+            10263,
+            230,
+            1406
+          ],
+          "privateTemplate": "kithkyn_viking_profile:polish/old_growth_taiga_leatherworker_1"
+        },
+        {
+          "id": "V10.5",
+          "label": "Library 1",
+          "role": "civic",
+          "family": "polish",
+          "source": "data/kaisyn/structure/village/old_growth_taiga_polish/houses/old_growth_taiga_library_1.nbt",
+          "sourceSha256": "713f68f80745bf80425c37f9bd9ee5f85167f58b3bc9c0ed23a1041baa8e4e2e",
+          "preparedSha256": "a302c01eed0f63db6122713af7828d6b00590da7f90c94706aa19ccd97e28944",
+          "size": [
+            13,
+            7,
+            12
+          ],
+          "origin": [
+            10280,
+            230,
+            1406
+          ],
+          "privateTemplate": "kithkyn_viking_profile:polish/old_growth_taiga_library_1"
+        },
+        {
+          "id": "V10.6",
+          "label": "Mason 1",
+          "role": "work",
+          "family": "polish",
+          "source": "data/kaisyn/structure/village/old_growth_taiga_polish/houses/old_growth_taiga_mason_1.nbt",
+          "sourceSha256": "1069c291460b29209817c877b40740978927836f5d75514a6ffc8c64090bb359",
+          "preparedSha256": "a8c758f7f8cda67795670acec10225b92943e36d9c7ac1b58854ac106185464a",
+          "size": [
+            13,
+            7,
+            10
+          ],
+          "origin": [
+            10299,
+            230,
+            1406
+          ],
+          "privateTemplate": "kithkyn_viking_profile:polish/old_growth_taiga_mason_1"
+        },
+        {
+          "id": "V10.7",
+          "label": "Shepherd 1",
+          "role": "work",
+          "family": "polish",
+          "source": "data/kaisyn/structure/village/old_growth_taiga_polish/houses/old_growth_taiga_shepherd_1.nbt",
+          "sourceSha256": "4d5673037e175fb2f5237320adefe674da8a714527325acfc6970da3891646f9",
+          "preparedSha256": "597dcda28b93819ae1dd87120e1587c7385fd848951ce0612e3b8441241294f1",
+          "size": [
+            13,
+            7,
+            10
+          ],
+          "origin": [
+            10318,
+            230,
+            1406
+          ],
+          "privateTemplate": "kithkyn_viking_profile:polish/old_growth_taiga_shepherd_1"
+        },
+        {
+          "id": "V10.8",
+          "label": "Toolsmith And Weaponsmith 1",
+          "role": "work",
+          "family": "polish",
+          "source": "data/kaisyn/structure/village/old_growth_taiga_polish/houses/old_growth_taiga_toolsmith_and_weaponsmith_1.nbt",
+          "sourceSha256": "08699873b49f8a82cf2ceca49d4e2768a1637cdcf6b87b80a22654874608aaa3",
+          "preparedSha256": "4aa4b8f8447f575a263e1da18238725c3d6f636916f6ef22e9d971ad78cf42e3",
+          "size": [
+            13,
+            7,
+            10
+          ],
+          "origin": [
+            10337,
+            230,
+            1406
+          ],
+          "privateTemplate": "kithkyn_viking_profile:polish/old_growth_taiga_toolsmith_and_weaponsmith_1"
+        }
+      ]
+    },
+    {
+      "id": "V11",
+      "title": "FULL POLISH \u2014 FOOD + DETAILS",
+      "family": "polish",
+      "origin": [
+        10208,
+        230,
+        1450
+      ],
+      "bounds": [
+        10198,
+        220,
+        1441,
+        10246,
+        270,
+        1465
+      ],
+      "maxHeight": 9,
+      "entries": [
+        {
+          "id": "V11.1",
+          "label": "Fisher 1",
+          "role": "food",
+          "family": "polish",
+          "source": "data/kaisyn/structure/village/old_growth_taiga_polish/houses/old_growth_taiga_fisher_1.nbt",
+          "sourceSha256": "0ec07f5b661ce692d9eb499468798e087df5f5bfef2844a64b3fe97d77148ec9",
+          "preparedSha256": "d87e295549f18c15b688b6273a7b703b03133327db02be5d989e5a1c718559c8",
+          "size": [
+            13,
+            9,
+            12
+          ],
+          "origin": [
+            10208,
+            230,
+            1450
+          ],
+          "privateTemplate": "kithkyn_viking_profile:polish/old_growth_taiga_fisher_1"
+        },
+        {
+          "id": "V11.2",
+          "label": "Small Farm 1",
+          "role": "food",
+          "family": "polish",
+          "source": "data/kaisyn/structure/village/old_growth_taiga_polish/houses/old_growth_taiga_small_farm_1.nbt",
+          "sourceSha256": "b0ee77c0fd4783766c54729cd3645884a02702650fe5535ab6cc97713ee5fdf9",
+          "preparedSha256": "cded217cd32da5f73dc27f12cbf12d8ec3c5ff64e01bbbab00fe84f60c652e7d",
+          "size": [
+            8,
+            4,
+            6
+          ],
+          "origin": [
+            10227,
+            230,
+            1450
+          ],
+          "privateTemplate": "kithkyn_viking_profile:polish/old_growth_taiga_small_farm_1"
+        },
+        {
+          "id": "V11.3",
+          "label": "Planter 1",
+          "role": "detail",
+          "family": "polish",
+          "source": "data/kaisyn/structure/village/old_growth_taiga_polish/old_growth_taiga_planter_1.nbt",
+          "sourceSha256": "6fda0479b54a0af1a97ca15cbaab29a789db4c81ec669ae4fac71438e533dbb1",
+          "preparedSha256": "af5832d735659eecd525445b0f339e4489cb6d306024cac2af668645e4fbca0d",
+          "size": [
+            3,
+            2,
+            5
+          ],
+          "origin": [
+            10241,
+            230,
+            1450
+          ],
+          "privateTemplate": "kithkyn_viking_profile:polish/old_growth_taiga_planter_1"
+        }
+      ]
+    }
+  ],
+  "decisions": {
+    "swamp": {
+      "townCenter": "S01.1",
+      "buildingPools": [
+        "Towns & Towers Swamp Boat \u2014 23 standalone pieces",
+        "Dungeons & Taverns Swamp \u2014 34 standalone pieces"
+      ],
+      "fullProfileTeleports": {
+        "townsAndTowers": [
+          7529.5,
+          230,
+          1004.5
+        ],
+        "dungeonsAndTaverns": [
+          7337.5,
+          230,
+          1004.5
+        ]
+      }
+    },
+    "viking": {
+      "leadingTownCenter": "V01.1",
+      "churchTier1": "V03.5",
+      "churchTier2": "V05.2",
+      "note": "V05.2 is intentionally repurposed from the Swedish tower source as the church upgrade.",
+      "familiesUnderComparison": [
+        "complete Towns & Towers Viking",
+        "complete Towns & Towers Polish",
+        "CTOV Taiga and Dungeons & Taverns spruce services"
+      ]
+    },
+    "mediterranean": {
+      "core": "M01 Towns & Towers Mediterranean white-city family",
+      "landscapeDonors": [
+        "M04.1",
+        "M04.2",
+        "M04.3",
+        "M04.4"
+      ],
+      "possibleCrossStyleDonor": "M04.3 Iberian Garden may also be evaluated for Viking."
+    }
+  },
+  "verification": {
+    "preparedTemplates": 43,
+    "placedTemplates": 43,
+    "allPlacementResponsesConfirmed": true,
+    "worldSaved": true,
+    "worldBackup": "/Users/quzzar/Projects/kithkyn/run/backups/before-next-village-galleries-20260911-063039",
+    "visualReview": "passed",
+    "visualFindings": [
+      "All six rows are separated and readable with no structure overlap.",
+      "Viking and Polish structure decorations render correctly.",
+      "V03.5 and V05.2 are visually distinct and suitable as tier-one and tier-two church silhouettes."
+    ],
+    "renderedViews": [
+      "run/viking-full-profile/render/client/screenshots/viking-full-homes.png",
+      "run/viking-full-profile/render/client/screenshots/viking-full-workplaces.png",
+      "run/viking-full-profile/render/client/screenshots/polish-full-profile.png",
+      "run/viking-full-profile/render/client/screenshots/viking-selected-church-tiers.png",
+      "run/viking-full-profile/render-tier-two/client/screenshots/viking-church-tier-two.png"
+    ]
+  },
+  "worldBackup": "/Users/quzzar/Projects/kithkyn/run/backups/before-next-village-galleries-20260911-063039"
+}
