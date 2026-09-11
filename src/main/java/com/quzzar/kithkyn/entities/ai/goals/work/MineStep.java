@@ -743,6 +743,9 @@ public final class MineStep implements BlockWorkStep {
           || here == Blocks.BEDROCK || isLight(level, world)) {
         continue;
       }
+      if (wetInteriorNeighbour(level, mouth, rotation, local) != null) {
+        continue; // a plug, or the wall of a wet pocket: that water is the fluid pass's work, not dry frontier
+      }
       BlockPos frontierStand = standToMine(person, mouth, rotation, world);
       if (frontierStand == null) {
         continue;
@@ -1204,6 +1207,8 @@ public final class MineStep implements BlockWorkStep {
     if (!needsSeal(level, cell)) {
       return; // sealed in the meantime
     }
+    boolean plug = this.activeMouth != null && isLiquid(level, cell)
+        && isDugSpace(cell.subtract(this.activeMouth).rotate(inverse(this.activeRotation)));
     if (!placeSupport(person, cell, "I ran out of dirt or stone to wall off the cave in my mine")) {
       resetShaft();
       return;
@@ -1212,7 +1217,8 @@ public final class MineStep implements BlockWorkStep {
       this.pendingFloodBoundary = null;
       this.pendingFloodInside = null;
     }
-    Kithkyn.LOGGER.info("[mine] {} sealed the shaft lining at {}",
+    Kithkyn.LOGGER.info(plug ? "[mine] {} plugged the water in the shaft at {}"
+        : "[mine] {} sealed the shaft lining at {}",
         person.getName().getString(), cell.toShortString());
   }
 
@@ -1793,7 +1799,11 @@ public final class MineStep implements BlockWorkStep {
     return true; // hold this target while the off-hand bucket remains visible
   }
 
-  /** Close an air or fluid boundary beside the next block before breaking it. */
+  /**
+   * Close an air or fluid boundary beside the next block before breaking it, and
+   * plug any interior water against it: whatever path chose this block (the sweep,
+   * the frontier recovery, a vein, a rib), nothing is broken into a wet pocket.
+   */
   private boolean sealAround(RealPerson person, BlockPos mouth, Rotation rotation, BlockPos world) {
     Level level = person.level();
     BlockPos local = world.subtract(mouth).rotate(inverse(rotation));
@@ -1812,7 +1822,35 @@ public final class MineStep implements BlockWorkStep {
         return false;
       }
     }
+    for (Direction direction : Direction.values()) {
+      BlockPos next = local.relative(direction);
+      BlockPos beside = mouth.offset(next.rotate(rotation));
+      if (isDugSpace(next) && level.getBlockState(beside).is(Blocks.WATER)
+          && !placeSupport(person, beside,
+              "I ran out of dirt or stone to plug the water beside the face")) {
+        resetShaft();
+        return false;
+      }
+    }
     return true;
+  }
+
+  /**
+   * The interior cell beside {@code local} that holds water, if any. A solid ramp
+   * or rib cell with water against it is a plug the fluid pass laid, or the last
+   * wall of a wet pocket, and breaking it only floods the cell it opens: it is
+   * lining until nothing wet is left beside it. Water only: lava is never plugged
+   * or bailed, so a face beside lava keeps the rules it always had.
+   */
+  @Nullable
+  private BlockPos wetInteriorNeighbour(Level level, BlockPos mouth, Rotation rotation, BlockPos local) {
+    for (Direction direction : Direction.values()) {
+      BlockPos next = local.relative(direction);
+      if (isDugSpace(next) && level.getBlockState(mouth.offset(next.rotate(rotation))).is(Blocks.WATER)) {
+        return next;
+      }
+    }
+    return null;
   }
 
   /** Any fluid occupying the cell, flowing or still. */
@@ -1988,6 +2026,20 @@ public final class MineStep implements BlockWorkStep {
       // exactly what left a hole under every torch.
     } while (this.block == Blocks.AIR
         || isLight(person.level(), facePos));
+
+    // A solid cell with interior water against it is not frontier rock: it is a
+    // plug the fluid pass laid, or the last wall of a wet pocket, and breaking it
+    // only floods the cell it opens. Work the pocket from that water first; the
+    // plugs come out as ordinary rock once nothing wet is left beside them. Without
+    // this the sweep met the first plug as stone on the very next pick, dug it, the
+    // pocket refilled it, and Calirra's miner laid and dug the same block seven
+    // hundred times in an hour (2026-09-11).
+    BlockPos wet = wetInteriorNeighbour(person.level(), mouth, rotation, this.offset);
+    if (wet != null) {
+      this.offset = wet;
+      this.block = person.level().getBlockState(face(mouth, rotation)).getBlock();
+      return selectFluidWork(person, mouth, rotation);
+    }
 
     if (impassable(person)) {
       return RampScan.BLOCKED; // the fan-out takes over; the obstacle is logged once, on the way in
