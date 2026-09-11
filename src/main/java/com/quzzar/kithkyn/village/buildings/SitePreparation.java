@@ -161,12 +161,15 @@ public final class SitePreparation {
           if (level.getBlockEntity(pos) != null) {
             return PrepWork.impossible();
           }
-          if (state.is(CLEARABLE)) {
-            toBreak.add(pos.asLong());
+          if (!state.getFluidState().isEmpty()) {
+            if (fluidCoversSitePlane(y, plane)) {
+              return PrepWork.impossible();
+            }
             y--;
             continue;
           }
-          if (!state.getFluidState().isEmpty()) {
+          if (state.is(CLEARABLE)) {
+            toBreak.add(pos.asLong());
             y--;
             continue;
           }
@@ -259,12 +262,15 @@ public final class SitePreparation {
           if (level.getBlockEntity(pos) != null) {
             return SiteCost.impossible("something with contents is in the way at " + pos.toShortString());
           }
-          if (state.is(CLEARABLE)) {
-            clear++;
+          if (!state.getFluidState().isEmpty()) {
+            if (fluidCoversSitePlane(y, plane)) {
+              return SiteCost.impossible("water covers the build plane at " + pos.toShortString());
+            }
             y--;
             continue;
           }
-          if (!state.getFluidState().isEmpty()) {
+          if (state.is(CLEARABLE)) {
+            clear++;
             y--;
             continue;
           }
@@ -292,6 +298,11 @@ public final class SitePreparation {
       return SiteCost.earthwork(assessment.reason());
     }
     return new SiteCost(clear, cut, fill, false, false, "");
+  }
+
+  /** Water at the proposed surface would leave the authored foundation floating or flooded. */
+  static boolean fluidCoversSitePlane(int fluidY, int plane) {
+    return fluidY >= plane;
   }
 
 }

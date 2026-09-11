@@ -128,6 +128,13 @@ labour is deliberate. The village holds the
 surface-not-shape line; a player is free to break it, and a slope they level is found on the
 next search once the refusal expires. The refusal is logged at INFO with the same sentence.
 
+Water covering the proposed build plane is never a land-building site. The motion-blocking
+heightmap includes a swamp's water surface, so the exact scan must reject fluid at that plane
+instead of looking through it and pricing the mud below. Fluid strictly below a dry build plane
+can still be filled as a local depression within the ordinary terrain budget. This keeps a
+building beside or above a small filled hollow possible without letting its foundation float on
+one block of water or silently accepting a deeper pool.
+
 `SitePreparation.score` prices any candidate
 footprint in blocks moved (clear, cut, fill, or impossible) using the
 `kithkyn:clearable` whitelist tag, the per-column and average levelling budgets below,
