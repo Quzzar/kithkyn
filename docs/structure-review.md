@@ -1788,9 +1788,11 @@ and miner route to non-vacancy physical worksites in those separate buildings. T
 real ownership error exposed by the center test: a routed miner post must not create a shaft under
 the civic building; only the physical mine owns and excavates that shaft.
 
-The final mine uses a three-block-wide eastward mouth, offset two blocks from its worksite so its
-surface workstation, opening and final ramp headroom do not compete for one cell. Its two material
-barrels and the butcher's personal chest moved to reachable positions. The native exporter now
+Aaron's final mine edit adds a four-by-three pit one block beneath the pavilion, three jungle stairs
+down its west side and two material barrels at the stair rim. The miner's post is in the pit's west
+column; its three-block-wide eastward mouth sits one column inward and one block above the post, so
+the first descending cuts remain under the pavilion. The butcher's personal chest also moved to a
+reachable position. The native exporter now
 writes block-entity data for chests and barrels created by export overrides, so strict template
 loading sees the same containers as physical access does.
 
@@ -1802,3 +1804,9 @@ rotations, the market upgrades, natural Jungle selection, the four starting home
 village identity and codec reloads. The public record is
 `tools/structure/jungle-catalog-20260910.json`; implementation and operating details are in
 [jungle-village.md](jungle-village.md).
+
+The approved mine-floor revision was then checked separately in every rotation. Four real mining
+loops opened the intended first descending step without crossing either authored entrance edge;
+eight routed-worksite walks covered both barrels plus mine descent and return; and eight instant or
+incremental construction placements retained the revised template. The production NBT has zero
+blockstate differences from the flushed gallery capture.
