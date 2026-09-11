@@ -616,9 +616,14 @@ work, and nightfall clear the line and start the next cast with a fresh wait.
 
 The miner is neither: it sweeps a pattern outward and downward from its work station, digging a
 real shaft, treating lava and water and bedrock and wrong-tool as obstacles. Air and fluid at the
-shaft's outer floor, walls, or ceiling are sealing work first. The miner closes every reachable
-breach one block at a time before clearing liquid. A bucket-holder then drains the connected water
-that is reachable from the dry side, exposing any farther boundary for the next sealing pass. The bucket
+shaft's outer floor, walls, or ceiling are sealing work first. The miner closes every breach one
+block at a time before clearing liquid, from wherever he stands in the shaft: whether a cell beside
+a leak can be stood on is not modelled, because a leak at the far edge of a lake never had one and
+a miner with dirt in hand should simply plug it (Aaron, 2026-09-11). Without a bucket the water
+itself is plugged the same way, source by source, nearest the face first, and the plugs are
+quarried back out as ordinary rock once the pocket is dry, so a bucketless village still tunnels
+through a pond or a lake bed at the cost of its lining. A bucket-holder drains the connected water
+that is reachable from the dry side instead, exposing any farther boundary for the next sealing pass. The bucket
 moves into the off hand before that act, swings from the off hand, remains visible for a short
 beat, and then returns to the pack. It is a reusable tool, never filled or consumed. Bailing
 is still possible with food or another item in the off hand: equipping the bucket exchanges the

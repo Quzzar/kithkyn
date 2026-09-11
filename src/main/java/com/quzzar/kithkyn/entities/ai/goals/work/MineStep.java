@@ -652,10 +652,7 @@ public final class MineStep implements BlockWorkStep {
       this.pendingFloodInside = null;
       return null;
     }
-    BlockPos stand = nearestMineStand(person, mouth, rotation, this.pendingFloodInside);
-    if (stand == null) {
-      return null; // another floor or drain pass may still be needed first
-    }
+    BlockPos stand = standAnywhere(person, mouth, rotation, this.pendingFloodInside);
     this.offset = this.pendingFloodInside;
     this.block = person.level().getBlockState(face(mouth, rotation)).getBlock();
     this.placeFloor = false;
@@ -1391,16 +1388,9 @@ public final class MineStep implements BlockWorkStep {
   }
 
   private record BoundaryBreach(BlockPos inside, BlockPos boundary, @Nullable BlockPos stand) {
-
-    boolean reachable() {
-      return stand != null;
-    }
   }
 
-  private record Bulkhead(BlockPos inside, BlockPos cell, BlockPos stand) {
-  }
-
-  private record ReachableWater(BlockPos inside, BlockPos cell, BlockPos stand) {
+  private record ReachableWater(BlockPos inside, BlockPos cell, @Nullable BlockPos stand) {
   }
 
   /**
@@ -1428,7 +1418,7 @@ public final class MineStep implements BlockWorkStep {
         BlockPos breachLocal = breach.subtract(mouth).rotate(inverse(rotation));
         BlockPos stand = nearestMineStand(person, mouth, rotation, breachLocal);
         BoundaryBreach candidate = new BoundaryBreach(local, breach, stand);
-        if (candidate.reachable()) {
+        if (candidate.stand() != null) {
           return candidate;
         }
         if (firstUnreachable == null) {
@@ -1474,34 +1464,14 @@ public final class MineStep implements BlockWorkStep {
   }
 
   /**
-   * A flooded rib whose outside source cannot be reached is closed at the
-   * doorway instead. The target remains part of the planned mine topology, so
-   * this is deliberately narrower than ordinary boundary sealing: only a rib
-   * doorway may be sacrificed, never a cell in the descending ramp.
-   */
-  @Nullable
-  private Bulkhead reachableRibBulkhead(RealPerson person, BlockPos mouth,
-      Rotation rotation, @Nullable BoundaryBreach breach) {
-    if (breach == null || !inRib(breach.inside())) {
-      return null;
-    }
-    BlockPos doorway = topology.ribDoorway(breach.inside());
-    BlockPos cell = mouth.offset(doorway.rotate(rotation));
-    if (!isLiquid(person.level(), cell)) {
-      return null;
-    }
-    BlockPos stand = nearestMineStand(person, mouth, rotation, doorway);
-    return stand == null ? null : new Bulkhead(doorway, cell, stand);
-  }
-
-  /**
-   * Water the miner can drain from the connected side of an otherwise
-   * unreachable leak. Only ramp water is considered: a flooded rib has its
-   * narrower doorway bulkhead, and lava remains an honest stop.
+   * The next water of the connected pocket to work. With a bucket, ramp water
+   * the miner can stand beside to bail; a flooded rib is left to its lining and
+   * lava remains an honest stop. Without one, the nearest water to the face in
+   * ramp or rib, to be plugged from wherever the miner stands.
    */
   @Nullable
   private ReachableWater reachableWater(RealPerson person, BlockPos mouth,
-      Rotation rotation, BlockPos start) {
+      Rotation rotation, BlockPos start, boolean toBail) {
     Level level = person.level();
     Deque<BlockPos> frontier = new ArrayDeque<>();
     Set<BlockPos> seen = new HashSet<>();
@@ -1512,6 +1482,9 @@ public final class MineStep implements BlockWorkStep {
       BlockPos world = mouth.offset(local.rotate(rotation));
       if (!isDugSpace(local) || !level.getBlockState(world).is(Blocks.WATER)) {
         continue;
+      }
+      if (!toBail) {
+        return new ReachableWater(local, world, null);
       }
       if (onRamp(local)) {
         BlockPos stand = nearestMineStand(person, mouth, rotation, local);
@@ -1760,8 +1733,8 @@ public final class MineStep implements BlockWorkStep {
     }
     BlockPos start = face.subtract(mouth).rotate(inverse(rotation));
     BoundaryBreach boundary = openBoundaryAroundFluidPocket(person, mouth, rotation, start);
-    if (boundary != null && boundary.reachable()) {
-      return false; // the world changed on the walk; seal this reachable edge first
+    if (boundary != null && MineSupportMaterials.held(person.personMainInv) > 0) {
+      return false; // the world changed on the walk; seal this edge first
     }
     if (!showBucket(person)) {
       return false;
@@ -2016,45 +1989,61 @@ public final class MineStep implements BlockWorkStep {
     return RampScan.WORK;
   }
 
-  /** Select reachable lining or draining work for the current flooded cell. */
+  /**
+   * Select lining, draining or plugging work for the current flooded cell. A
+   * leak is sealed whether or not a cell beside it can be stood on: the
+   * miner's reach is not modelled for lining, since a leak at the far edge of
+   * a lake never had a cell beside it and a miner with dirt in hand should
+   * simply plug it (Aaron, 2026-09-11). Without a bucket the water itself is
+   * plugged the same way, source by source, nearest the face first; the plugs
+   * are quarried back out as ordinary rock once the pocket is dry.
+   */
   private RampScan selectFluidWork(RealPerson person, BlockPos mouth, Rotation rotation) {
     BoundaryBreach breach = openBoundaryAroundFluidPocket(person, mouth, rotation, this.offset);
-    Bulkhead bulkhead = breach != null && !breach.reachable()
-        ? reachableRibBulkhead(person, mouth, rotation, breach)
-        : null;
-    ReachableWater reachableWater = breach != null && !breach.reachable() && bulkhead == null
-        ? reachableWater(person, mouth, rotation, this.offset)
-        : null;
-    MineFluidPolicy.Action action = MineFluidPolicy.next(
-        breach != null, breach != null && breach.reachable(), bulkhead != null,
-        reachableWater != null, carriesBucket(person));
+    boolean hasBucket = carriesBucket(person);
+    ReachableWater water = reachableWater(person, mouth, rotation, this.offset, hasBucket);
+    MineFluidPolicy.Action action = MineFluidPolicy.next(breach != null, water != null, hasBucket,
+        MineSupportMaterials.held(person.personMainInv) > 0);
     if (action == MineFluidPolicy.Action.SEAL) {
       this.offset = breach.inside();
       this.block = person.level().getBlockState(face(mouth, rotation)).getBlock();
       this.sealCell = breach.boundary();
-      this.sealStand = breach.stand();
-      this.placeSeal = true;
-      return RampScan.WORK;
-    }
-    if (action == MineFluidPolicy.Action.BULKHEAD) {
-      this.offset = bulkhead.inside();
-      this.block = person.level().getBlockState(bulkhead.cell()).getBlock();
-      this.sealCell = bulkhead.cell();
-      this.sealStand = bulkhead.stand();
+      this.sealStand = breach.stand() != null ? breach.stand() : standAnywhere(person, mouth, rotation, breach.inside());
       this.placeSeal = true;
       return RampScan.WORK;
     }
     if (action == MineFluidPolicy.Action.BAIL) {
-      if (reachableWater != null) {
-        this.offset = reachableWater.inside();
-        this.block = person.level().getBlockState(reachableWater.cell()).getBlock();
-      }
+      this.offset = water.inside();
+      this.block = person.level().getBlockState(water.cell()).getBlock();
       this.bailWater = true;
       this.lastFluidDeadEnd = null;
       return RampScan.WORK;
     }
-    logFluidDeadEnd(person, mouth, rotation, breach, bulkhead, reachableWater);
+    if (action == MineFluidPolicy.Action.PLUG) {
+      this.offset = water.inside();
+      this.block = person.level().getBlockState(water.cell()).getBlock();
+      this.sealCell = water.cell();
+      this.sealStand = standAnywhere(person, mouth, rotation, water.inside());
+      this.placeSeal = true;
+      this.lastFluidDeadEnd = null;
+      return RampScan.WORK;
+    }
+    logFluidDeadEnd(person, mouth, rotation, breach, water);
     return RampScan.BLOCKED;
+  }
+
+  /**
+   * Somewhere in the shaft to lay a block from when nothing beside the target
+   * can be stood on: the nearest dry planned cell to it, else to the face, else
+   * the walkway cell just inside the mouth, which every shaft has from its first
+   * day. Lining is placed from here without a reach check.
+   */
+  private BlockPos standAnywhere(RealPerson person, BlockPos mouth, Rotation rotation, BlockPos targetLocal) {
+    BlockPos stand = nearestMineStand(person, mouth, rotation, targetLocal);
+    if (stand == null) {
+      stand = nearestMineStand(person, mouth, rotation, this.offset);
+    }
+    return stand != null ? stand : mouth.offset(new BlockPos(0, -1, MineShaft.ENTRY_COLUMN).rotate(rotation));
   }
 
   /**
@@ -2077,8 +2066,7 @@ public final class MineStep implements BlockWorkStep {
   }
 
   private void logFluidDeadEnd(RealPerson person, BlockPos mouth, Rotation rotation,
-      @Nullable BoundaryBreach breach, @Nullable Bulkhead bulkhead,
-      @Nullable ReachableWater reachableWater) {
+      @Nullable BoundaryBreach breach, @Nullable ReachableWater reachableWater) {
     BlockPos world = face(mouth, rotation);
     String state = "mouth=" + mouth.toShortString()
         + ", face=" + world.toShortString()
@@ -2089,8 +2077,8 @@ public final class MineStep implements BlockWorkStep {
         + ", boundary=" + (breach == null ? "none" : breach.boundary().toShortString())
         + ", breachStand=" + (breach == null || breach.stand() == null
             ? "none" : breach.stand().toShortString())
-        + ", bulkhead=" + (bulkhead == null ? "none" : bulkhead.cell().toShortString())
-        + ", reachableWater=" + (reachableWater == null
+        + ", support=" + MineSupportMaterials.held(person.personMainInv)
+        + ", water=" + (reachableWater == null
             ? "none" : reachableWater.cell().toShortString());
     if (!state.equals(this.lastFluidDeadEnd)) {
       this.lastFluidDeadEnd = state;
