@@ -76,6 +76,13 @@ class SiteTerrainPolicyTest {
     assertTrue(new LocationValidator.Reading(65, 8, 2, 8, 0).screenedOut() != null);
   }
 
+  @Test
+  void waterSurfaceIsNotBuildableButWaterBelowThePlaneCanBeFilled() {
+    assertTrue(SitePreparation.fluidCoversSitePlane(62, 62));
+    assertTrue(SitePreparation.fluidCoversSitePlane(63, 62));
+    assertFalse(SitePreparation.fluidCoversSitePlane(61, 62));
+  }
+
   private static List<SiteTerrainPolicy.Column> levelFootprint(int width, int depth) {
     List<SiteTerrainPolicy.Column> columns = new ArrayList<>();
     for (int x = 0; x < width; x++) {
