@@ -85,6 +85,7 @@ import com.quzzar.kithkyn.entities.ai.goals.work.GradeStep;
 import com.quzzar.kithkyn.entities.ai.goals.work.ClearBrushStep;
 import com.quzzar.kithkyn.entities.ai.goals.work.CompostStep;
 import com.quzzar.kithkyn.entities.ai.goals.work.FetchBonemealStep;
+import com.quzzar.kithkyn.entities.ai.goals.work.FetchMineSupportStep;
 import com.quzzar.kithkyn.entities.ai.goals.work.PlantStep;
 import com.quzzar.kithkyn.entities.ai.goals.work.StashBonemealStep;
 import com.quzzar.kithkyn.entities.ai.goals.ArmorerRepairPersonArmorGoal;
@@ -2709,6 +2710,9 @@ public class RealPerson extends Person {
       // Ahead of the work goal: a full pack is worth a trip before more digging.
       this.goalSelector.addGoal(3, new WorkLoopGoal<>(this, new HaulStep()));
       this.goalSelector.addGoal(4, new WorkLoopGoal<>(this, new MineStep()));
+      // Behind it: a shaft standing down for want of lining sends the miner to
+      // the stores for dirt, stone or sand rather than waiting on bedtime.
+      this.goalSelector.addGoal(5, new WorkLoopGoal<>(this, new FetchMineSupportStep()));
     }
     if (getOccupation() == Occupation.BUILDER) {
       // A lone builder does it all in one order: gathering the recipe, raising

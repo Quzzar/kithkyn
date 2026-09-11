@@ -632,7 +632,9 @@ Lining is spent from the pack, dirt and stone first, and a shaft in sand country
 what it digs: four sand press into a sandstone block by hand when the lining runs out, red sand
 into red sandstone (`MineSupportMaterials`), the same table-less press as the miner's torches and
 the farmer's bone meal, and the bedtime restock draws sand from the stores when they hold no dirt
-or stone. The seal comes before the break, so a face whose fall would open an unsealed boundary is
+or stone, and by day a shaft standing down for want of lining sends the miner to a chest holding
+dirt, stone or sand (`FetchMineSupportStep`, the miner's counterpart of the farmer's daytime bone
+meal fetch). The seal comes before the break, so a face whose fall would open an unsealed boundary is
 never broken with an empty pack: the miner fans ribs for material and comes back to it. Before
 that rule the seal failed and the same sand block was broken and reset without end (a Desert mine,
 2026-09-10).
