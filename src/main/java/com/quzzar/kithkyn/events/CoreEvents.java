@@ -270,6 +270,14 @@ public class CoreEvents {
         return;
       }
 
+      // The living are written into the register of the dead, whole, before
+      // the body drops what it carried; an undead village may raise them
+      // later (docs/undead.md). The undead dying again are gone for good.
+      if (person.level() instanceof ServerLevel grave) {
+        VillageManager.get(grave).getGraveyard().bury(person,
+            event.getSource().getLocalizedDeathMessage(person).getString(), grave.getGameTime());
+      }
+
       if (person.getVillage() != null) {
 
         UUID killerUUID = null;

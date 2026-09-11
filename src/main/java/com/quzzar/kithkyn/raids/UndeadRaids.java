@@ -96,7 +96,7 @@ public final class UndeadRaids {
     }
     String sourceName = source == null ? NAMELESS_DEAD : "the dead of " + source.getName();
     UndeadRaid raid = UndeadRaid.begin(sourceName, culprit == null ? null : culprit.getUUID(), waves,
-        level.getGameTime(), atOnce);
+        target.getPopulation().size(), level.getGameTime(), atOnce);
     if (!target.beginRaid(raid)) {
       return false;
     }

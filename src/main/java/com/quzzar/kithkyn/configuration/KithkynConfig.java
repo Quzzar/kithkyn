@@ -103,6 +103,7 @@ public class KithkynConfig {
     public static int WandererRecruitRadius;
     public static int WandererCap;
     public static int WandererPoolCap;
+    public static int GraveyardCap;
 
     // --- families (advanced) ---
     public static int FamilyFirstTalkDelayDays;
@@ -188,6 +189,7 @@ public class KithkynConfig {
         WandererRecruitRadius = ADVANCED.WandererRecruitRadius.get();
         WandererCap = ADVANCED.WandererCap.get();
         WandererPoolCap = ADVANCED.WandererPoolCap.get();
+        GraveyardCap = ADVANCED.GraveyardCap.get();
 
         // families
         FamilyFirstTalkDelayDays = ADVANCED.FamilyFirstTalkDelayDays.get();
@@ -315,6 +317,7 @@ public class KithkynConfig {
         public final ModConfigSpec.IntValue WandererRecruitRadius;
         public final ModConfigSpec.IntValue WandererCap;
         public final ModConfigSpec.IntValue WandererPoolCap;
+        public final ModConfigSpec.IntValue GraveyardCap;
 
         // families
         public final ModConfigSpec.IntValue FamilyFirstTalkDelayDays;
@@ -396,6 +399,7 @@ public class KithkynConfig {
             WandererRecruitRadius = builder.comment("How far (blocks) a growing village looks for an existing wanderer to recruit before spawning a new arrival.").translation(Kithkyn.MODID + ".config.WandererRecruitRadius").defineInRange("Wanderer recruit radius", 128, 16, 512);
             WandererCap = builder.comment("Loaded wanderers the world keeps on foot. Past the cap, a leaver reaching the village edge passes beyond the horizon at once instead of walking there.").translation(Kithkyn.MODID + ".config.WandererCap").defineInRange("Wanderer cap", 8, 0, 256);
             WandererPoolCap = builder.comment("Most people the world remembers on the road beyond the horizon. Past it the longest-gone is forgotten; 0 forgets everyone the moment they cross.").translation(Kithkyn.MODID + ".config.WandererPoolCap").defineInRange("Wanderer pool cap", 64, 0, 1024);
+            GraveyardCap = builder.comment("Most of the dead the world remembers whole, so an undead village can raise them (docs/undead.md). Past it the longest-dead is forgotten; 0 buries nobody, and undead villages only ever conjure the long dead.").translation(Kithkyn.MODID + ".config.GraveyardCap").defineInRange("Register of the dead cap", 256, 0, 4096);
 
             builder.pop();
 

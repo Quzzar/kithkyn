@@ -12,6 +12,7 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.quzzar.kithkyn.Kithkyn;
 import com.quzzar.kithkyn.configuration.KithkynConfig;
 import com.quzzar.kithkyn.entities.AgeStage;
+import com.quzzar.kithkyn.entities.Kind;
 import com.quzzar.kithkyn.entities.RealPerson;
 
 import net.minecraft.core.BlockPos;
@@ -90,16 +91,22 @@ public final class WandererPool {
   }
 
   /**
-   * Brings the person longest on the road back into the world, standing at
-   * {@code pos} but not yet added to the level, or null when nobody is on the
-   * road. An entry that no longer restores (a build change since it was saved)
-   * is dropped with an error rather than tried again forever: saves under old
-   * names do not load, by decision, and the pool is no exception.
+   * Brings the person of the given kind longest on the road back into the
+   * world, standing at {@code pos} but not yet added to the level, or null
+   * when nobody of that kind is on the road: the living do not settle among
+   * the undead, nor the reverse (docs/undead.md). An entry that no longer
+   * restores (a build change since it was saved) is dropped with an error
+   * rather than tried again forever: saves under old names do not load, by
+   * decision, and the pool is no exception.
    */
   @Nullable
-  public RealPerson draw(ServerLevel level, BlockPos pos) {
-    while (!entries.isEmpty()) {
-      Entry entry = entries.remove(0);
+  public RealPerson draw(ServerLevel level, BlockPos pos, Kind kind) {
+    for (int index = 0; index < entries.size(); index++) {
+      Entry entry = entries.get(index);
+      if (kindOf(entry.person()) != kind) {
+        continue;
+      }
+      entries.remove(index--);
       onChange.run();
       RealPerson restored = restore(level, pos, entry);
       if (restored != null) {
@@ -107,6 +114,11 @@ public final class WandererPool {
       }
     }
     return null;
+  }
+
+  /** The kind a saved person is; living for anyone saved before kinds existed. */
+  static Kind kindOf(CompoundTag person) {
+    return Kind.fromId(person.getString("Kind"));
   }
 
   /** Draws every banked spouse, parent, dependent child, and dependent sibling of an anchor. */

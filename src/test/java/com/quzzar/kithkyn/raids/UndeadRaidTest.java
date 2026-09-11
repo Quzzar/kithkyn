@@ -15,10 +15,10 @@ class UndeadRaidTest {
 
   @Test
   void theCountdownIsHalfAMinuteUnlessSkipped() {
-    UndeadRaid raid = UndeadRaid.begin("the dead of Barrowdown", null, 3, 1000L, false);
+    UndeadRaid raid = UndeadRaid.begin("the dead of Barrowdown", null, 3, 5, 1000L, false);
     assertFalse(raid.countdownOver(1000L + UndeadRaid.COUNTDOWN_TICKS - 1));
     assertTrue(raid.countdownOver(1000L + UndeadRaid.COUNTDOWN_TICKS));
-    assertTrue(UndeadRaid.begin("the restless dead", null, 3, 1000L, true).countdownOver(1000L));
+    assertTrue(UndeadRaid.begin("the restless dead", null, 3, 5, 1000L, true).countdownOver(1000L));
   }
 
   @Test
@@ -26,7 +26,7 @@ class UndeadRaidTest {
     UUID culprit = UUID.randomUUID();
     UUID defender = UUID.randomUUID();
     UUID raider = UUID.randomUUID();
-    UndeadRaid raid = UndeadRaid.begin("the dead of Barrowdown", culprit, 4, 500L, false);
+    UndeadRaid raid = UndeadRaid.begin("the dead of Barrowdown", culprit, 4, 7, 500L, false);
     raid.raiderDied(raider, defender);
     raid.raiderDied(UUID.randomUUID(), defender);
     raid.raiderDied(UUID.randomUUID(), null);
@@ -37,6 +37,7 @@ class UndeadRaidTest {
     assertEquals("the dead of Barrowdown", loaded.sourceName());
     assertEquals(culprit, loaded.culprit());
     assertEquals(4, loaded.waves());
+    assertEquals(7, loaded.residentsAtStart());
     assertEquals(UndeadRaid.Phase.COMING, loaded.phase());
     assertEquals(0, loaded.wave());
     assertEquals(500L, loaded.phaseAt());
@@ -47,7 +48,7 @@ class UndeadRaidTest {
 
   @Test
   void theNamelessDeadHaveNoCulprit() {
-    UndeadRaid loaded = UndeadRaid.load(UndeadRaid.begin(UndeadRaids.NAMELESS_DEAD, null, 2, 0L, true).save());
+    UndeadRaid loaded = UndeadRaid.load(UndeadRaid.begin(UndeadRaids.NAMELESS_DEAD, null, 2, 0, 0L, true).save());
     assertNull(loaded.culprit());
     assertEquals("The restless dead", UndeadRaid.capitalize(loaded.sourceName()));
   }

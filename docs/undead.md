@@ -74,7 +74,31 @@ would apply, so no pillager raid can start while the undead stand in for them.
 - The kind lives on the village (in the brain's strategy tag beside the style) and on each
   person (synced, saved as `Kind`). Campfire arrivals take the village's kind, children
   take their parents', a wandering merchant takes its home village's, and a village never
-  recruits a village-less wanderer of the other kind. A village is one kind for its life.
+  recruits a village-less wanderer of the other kind, whether roaming nearby or on the road
+  beyond the horizon. A village is one kind for its life, until it falls (below).
+
+## The dead return
+
+An undead village does not take strangers from nowhere while there are dead to raise. Every
+living villager who dies is written whole into the **register of the dead** (`Graveyard`),
+the way the road keeps a wanderer: their entire record, with when, where and how it ended.
+Raiders are never buried, they were never alive, and the undead dying again are gone for good.
+The register is one list for the whole server, bounded by `Register of the dead cap`.
+
+When an undead village's campfire loop calls for an arrival and nobody of its kind is roaming
+nearby or on the road, it raises someone from the register: **its own dead first, then the
+nearest, then the most recent.** The risen come back at the village's edge and walk in like
+anyone else. Only with the register empty is one of the long dead conjured, the way a living
+village conjures a newcomer, so an undead village founded in a fresh world still fills.
+
+What rises is the same person. `Raising` says exactly what of a record survives: name, gender,
+genes, stats, virtues, personality, age, parents, and every attachment, which is where the
+persona, the personal log, the chat history and the opinions of players live. So the dead
+remember, and a villager who liked you in life likes you still, whatever the undead baseline
+says about strangers. What stays in the grave is the old life, village, job, title, marriage,
+camp, and the pack and clothes they dropped where they fell, and the body's moment, its wounds
+and effects. The risen gain one memory, of how it ended and where they rose, and are undead from
+then on.
 
 ## The look
 
@@ -153,6 +177,12 @@ remembered for it the way a slain creeper is.
 when the raid is beaten, every player who cut one of the dead down; reflection decides what
 that was worth. Deaths among the residents go through the village's books like any other.
 
+**The village can fall.** If every resident dies while the dead are at the gate, the raid ends
+as the village falling: it turns undead, the raiders go back to the dark, and the ordinary
+arrival loop, forced below the population floor, raises its own dead first to fill it again.
+The name, the buildings, the stores and the golems stay. A village that had nobody when the
+dead set out cannot fall; it is only ever lost, not emptied.
+
 `/kkdev raid start [now]`, `stop` and `status` drive one by hand; `preview` is the harness hook.
 
 ## What stays the same, on purpose
@@ -191,6 +221,8 @@ show` prints the kind, and `/kkdev appearance audit` runs the recipe matrix for 
 - `raids/UndeadRaid`, `raids/UndeadRaids`, `raids/UndeadRaidPlan`, `raids/RaidCommands`: the
   raid, its omens, its arithmetic, and the dev commands. `entities/ai/goals/RaidMarchGoal` walks
   a raider in.
+- `village/Graveyard`, `village/Raising`: the register of the dead and what of a record rises.
+  `village/WandererPool` keeps the road's kinds apart.
 - `worldgen/ReplacementPacks`: the two data packs behind the village and pillager switches.
 - `configuration/KithkynConfig`: `UndeadVillages`, `UndeadVillageChance`, `ReplacePillagers`,
   `UndeadStrangerBaseline`, `UndeadRaidStandingBelow`, `UndeadRaidCooldownDays`.

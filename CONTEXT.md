@@ -44,6 +44,14 @@ _Avoid_: Pillager, mob, monster
 What a player carries once their standing with an undead village has fallen far enough: the next living village they stand in is raided by its dead. The ominous bottle is the other omen.
 _Avoid_: Bad Omen, raid trigger
 
+**Register of the dead**:
+The level-wide list of every living villager who died, saved whole with when, where and how it ended, from which an undead village raises its arrivals: its own dead first, then the nearest, then the most recent.
+_Avoid_: Graveyard pool, respawn list, corpse list
+
+**Risen**:
+A person raised from the register of the dead into an undead village: the same person, memories and opinions intact, with the old life (village, job, title, marriage, belongings) left in the grave.
+_Avoid_: Respawned villager, revived, zombie
+
 **Reference family**:
 A coherent collection of gallery structures used as architectural evidence while authoring one village biome. Its source name never becomes a runtime village property.
 _Avoid_: Culture, runtime style axis
