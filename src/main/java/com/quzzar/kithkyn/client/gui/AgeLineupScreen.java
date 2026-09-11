@@ -35,10 +35,11 @@ import net.minecraft.world.item.Items;
  * can be shown asleep: a client-side sleeping position shuts their eyes without
  * laying them down, which photographs the closed face at every stage.
  *
- * <p>The undead lineup uses the same genes on the other {@link Kind}, and adds
- * an armed guard at the end: the skeleton a player actually meets first, and
- * the one case where armour and a weapon have to sit right on bone. Asleep, the
- * undead keep their sockets: a skull has no lids to shut.
+ * <p>The undead lineup uses the same genes on the other {@link Kind}, dresses
+ * the adult as a farmer so the rags read against a dark garment, and adds an
+ * armed guard in leather at the end: the skeleton a player actually meets
+ * first, and the one case where armour and a weapon have to sit right on bone.
+ * Asleep, the undead keep their sockets: a skull has no lids to shut.
  */
 public final class AgeLineupScreen extends Screen {
 
@@ -125,21 +126,29 @@ public final class AgeLineupScreen extends Screen {
         List<StagePreview> created = new ArrayList<>();
         for (AgeStage stage : AgeStage.values()) {
             RealPerson person = previewPerson(level, kind, stage, asleep);
+            // The undead adult farms: a dark garment, so rags read against bone,
+            // where the wanderer's white shirt hid them.
+            boolean farmer = kind == Kind.UNDEAD && stage == AgeStage.ADULT;
+            if (farmer) {
+                person.setOccupation(Occupation.FARMER);
+            }
             created.add(new StagePreview(
                     stageName(stage),
-                    stage.usesYoungModel() ? "young proportions" : "adult proportions",
-                    stage.usesYoungModel() ? "young build" : "adult build",
+                    farmer ? "adult proportions, farmer" : stage.usesYoungModel() ? "young proportions" : "adult proportions",
+                    farmer ? "farmer" : stage.usesYoungModel() ? "young build" : "adult build",
                     person));
         }
         if (kind == Kind.UNDEAD) {
             RealPerson guard = previewPerson(level, kind, AgeStage.ADULT, asleep);
             guard.setOccupation(Occupation.GUARD);
-            guard.setItemSlot(EquipmentSlot.HEAD, new ItemStack(Items.IRON_HELMET));
-            guard.setItemSlot(EquipmentSlot.CHEST, new ItemStack(Items.IRON_CHESTPLATE));
-            guard.setItemSlot(EquipmentSlot.LEGS, new ItemStack(Items.IRON_LEGGINGS));
-            guard.setItemSlot(EquipmentSlot.FEET, new ItemStack(Items.IRON_BOOTS));
+            // Leather rather than iron: iron plate hides the whole body, leather
+            // shows the rags and bone between the pieces.
+            guard.setItemSlot(EquipmentSlot.HEAD, new ItemStack(Items.LEATHER_HELMET));
+            guard.setItemSlot(EquipmentSlot.CHEST, new ItemStack(Items.LEATHER_CHESTPLATE));
+            guard.setItemSlot(EquipmentSlot.LEGS, new ItemStack(Items.LEATHER_LEGGINGS));
+            guard.setItemSlot(EquipmentSlot.FEET, new ItemStack(Items.LEATHER_BOOTS));
             guard.setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(Items.BOW));
-            created.add(new StagePreview("Guard", "armed, in iron", "in iron", guard));
+            created.add(new StagePreview("Guard", "armed, in leather", "in leather", guard));
         }
         return List.copyOf(created);
     }

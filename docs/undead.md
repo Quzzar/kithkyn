@@ -84,13 +84,15 @@ or renderer:
   for the living; a sleeping undead keeps its sockets, and the recipe audit refuses an undead
   recipe with its eyes closed.
 - **The wardrobe is worn in rags.** An undead person takes the same occupation garment as
-  anyone else and the bake shreds it (`Tatter`): the cloth frays upward from its own hems, so
-  trouser ends show bone toes and cuffs show finger bones whatever the garment's cut, two rips
-  open the chest along the ribs beneath, every remaining texel is grimed toward old cloth, and
-  the texels bordering a hole darken into a torn edge. No wardrobe needs a second set of art,
-  and the job stays readable, because the mask removes a bounded share of a garment. The
-  rags are cut from the person's appearance seed and the garment, so every client bakes the
-  same tears and they never move. Hoods and the head UV are never torn.
+  anyone else and the bake ruins it (`Tatter`, decided at the heaviest of three cuts rendered
+  side by side): hems fray four rows deep, most sleeves and trouser legs are torn short so
+  forearms and shins are bone, four wide rips open the chest and back onto the ribs, slashes
+  cross the limbs, every remaining texel is grimed toward old cloth, and the texels bordering
+  a hole darken into a torn edge. No wardrobe needs a second set of art. The garment's colour
+  and collar survive, so a village still reads as dressed, but the job is told by held tools
+  and guard armour more than by cloth. The rags are cut from the person's appearance seed
+  and the garment, so every client bakes the same tears and they never move. Hoods and the
+  head UV are never torn.
 - Hurt, death and step sounds are the skeleton's. Speech is the same, because they are
   people.
 - The persona sheet and the chat prompt state the kind beside the gender, or the model
@@ -112,8 +114,8 @@ or renderer:
 ```
 
 Both mirror the living age lineups ([ui-preview.md](ui-preview.md)) on the other kind; the
-screen version adds an armed guard in iron at the end, the skeleton a player actually meets
-first. Pass `-Pjoinport=<port>` when a deployed server holds 25565. `/kkdev appearance
+screen version dresses the adult as a farmer, so the rags read against a dark tunic, and adds
+an armed guard in leather at the end, the skeleton a player actually meets first. Pass `-Pjoinport=<port>` when a deployed server holds 25565. `/kkdev appearance
 show` prints the kind, and `/kkdev appearance audit` runs the recipe matrix for both kinds.
 
 ## Code map

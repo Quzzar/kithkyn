@@ -180,15 +180,16 @@ undead person's eyes and the recipe audit refuses an undead recipe with `eyesClo
 
 ## Rags
 
-The undead wear the same wardrobe, shredded at bake time rather than authored twice. The
+The undead wear the same wardrobe, ruined at bake time rather than authored twice. The
 recipe carries a `tatterSeed`, cut from the appearance seed and the garment id, and the
-compositor asks `Tatter` for a mask of the garment's own opaque texels: hems fray upward
-column by column, two rips open the chest, every remaining garment texel is grimed toward
-old cloth, and the texels bordering a tear darken into a torn edge. The skin already copied
-beneath shows through the holes. The mask is a pure function of seed, body geometry and the
-garment, never touches the head UV or a top or bottom face, and removes a bounded share of
-the cloth so the job stays readable. The audit refuses rags on the living and whole cloth on
-the undead.
+compositor asks `Tatter` for a mask of the garment's own opaque texels at the shipped
+strength: hems fray upward column by column, limb columns are torn short to the elbow or
+knee, slashes cross the limbs, wide rips open the chest and back, every remaining garment
+texel is grimed toward old cloth, and the texels bordering a tear darken into a torn edge.
+The skin already copied beneath shows through the holes. The mask is a pure function of
+seed, body geometry and the garment, never touches the head UV or a top or bottom face, and
+removes a bounded share of the cloth. The audit refuses rags on the living and whole cloth
+on the undead.
 
 ## Genetics readiness
 

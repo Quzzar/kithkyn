@@ -19,22 +19,27 @@ import org.junit.jupiter.api.Test;
 class TatterTest {
 
   private static final int SIZE = 64;
+  /** A lighter cut than the shipped one, for the comparisons below. */
+  private static final Tatter.Strength LIGHT = new Tatter.Strength(
+      new float[] {0.5F, 0.2F}, 1, 2, 3, 4, 0.0F, 0, 0.0F);
+  private static final List<Tatter.Strength> STRENGTHS = List.of(LIGHT, Tatter.Strength.RUINED);
 
   @Test
   void theSameSeedCutsTheSameRags() {
     boolean[] garment = fullGarment();
-    Tatter.Mask first = Tatter.of(4242, BodyModel.SLIM, garment);
-    Tatter.Mask again = Tatter.of(4242, BodyModel.SLIM, garment);
+    Tatter.Mask first = Tatter.of(4242, BodyModel.SLIM, garment, Tatter.Strength.RUINED);
+    Tatter.Mask again = Tatter.of(4242, BodyModel.SLIM, garment, Tatter.Strength.RUINED);
     assertEquals(first, again);
-    assertNotEquals(first.torn(), Tatter.of(4243, BodyModel.SLIM, garment).torn());
+    assertNotEquals(first.torn(), Tatter.of(4243, BodyModel.SLIM, garment, Tatter.Strength.RUINED).torn());
   }
 
   @Test
   void ragsNeverTouchTheHeadOrATopOrBottomFace() {
     boolean[] garment = fullGarment();
+    for (Tatter.Strength strength : STRENGTHS) {
     for (BodyModel model : BodyModel.values()) {
       for (int seed = 1; seed < 64; seed++) {
-        Tatter.Mask mask = Tatter.of(seed, model, garment);
+        Tatter.Mask mask = Tatter.of(seed, model, garment, strength);
         assertFalse(mask.torn().isEmpty(), "seed " + seed + " tore nothing");
         for (int packed : mask.torn()) {
           int x = packed % SIZE;
@@ -44,6 +49,7 @@ class TatterTest {
           assertFalse(y >= 48 && y < 52, "tore a top or bottom face at " + x + "," + y);
         }
       }
+    }
     }
   }
 
@@ -56,7 +62,7 @@ class TatterTest {
         garment[y * SIZE + x] = true;
       }
     }
-    Tatter.Mask mask = Tatter.of(99, BodyModel.WIDE, garment);
+    Tatter.Mask mask = Tatter.of(99, BodyModel.WIDE, garment, Tatter.Strength.RUINED);
     for (int packed : mask.torn()) {
       assertTrue(garment[packed], "tore a texel the garment never had");
     }
@@ -68,7 +74,7 @@ class TatterTest {
   }
 
   @Test
-  void aRealWardrobeKeepsMostOfItsCloth() throws IOException {
+  void aRealWardrobeIsRuinedButNotGone() throws IOException {
     boolean[] garment = shipped("fieldhand-tunic");
     int cloth = 0;
     for (boolean opaque : garment) {
@@ -77,15 +83,19 @@ class TatterTest {
       }
     }
     for (int seed = 1; seed < 32; seed++) {
-      Tatter.Mask mask = Tatter.of(seed, BodyModel.SLIM, garment);
-      assertTrue(mask.torn().size() >= cloth / 20, "seed " + seed + " barely tore the tunic");
-      assertTrue(mask.torn().size() <= cloth / 4, "seed " + seed + " shredded the tunic past recognition");
+      Tatter.Mask light = Tatter.of(seed, BodyModel.SLIM, garment, LIGHT);
+      assertFalse(light.torn().isEmpty(), "seed " + seed + " tore nothing");
+      assertTrue(light.torn().size() <= cloth / 4, "seed " + seed + " shredded the tunic past recognition");
+      Tatter.Mask ruined = Tatter.of(seed, BodyModel.SLIM, garment, Tatter.Strength.RUINED);
+      assertTrue(ruined.torn().size() > light.torn().size(), "seed " + seed + ": ruined tore less than a light cut");
+      assertTrue(ruined.torn().size() >= cloth / 5, "seed " + seed + ": ruined is not ruined");
+      assertTrue(ruined.torn().size() <= cloth * 3 / 5, "seed " + seed + ": ruined left no garment at all");
     }
   }
 
   @Test
   void everyFrayedTexelBordersATear() {
-    Tatter.Mask mask = Tatter.of(7, BodyModel.SLIM, fullGarment());
+    Tatter.Mask mask = Tatter.of(7, BodyModel.SLIM, fullGarment(), Tatter.Strength.RUINED);
     for (int packed : mask.frayed()) {
       int x = packed % SIZE;
       int y = packed / SIZE;

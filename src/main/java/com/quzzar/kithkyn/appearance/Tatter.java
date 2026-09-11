@@ -9,12 +9,12 @@ import java.util.Set;
  * The rags the undead wear (docs/undead.md).
  *
  * An undead person takes the same occupation wardrobe as anyone else, and the
- * bake shreds it: the garment frays upward from its own hems, so trouser ends
- * show bone toes and cuffs show finger bones whatever the garment's cut, two
- * rips open the chest along the ribs, every remaining texel is grimed toward
- * old cloth, and the texels bordering a hole darken into a torn edge. No
- * wardrobe needs a second set of art, and the job stays readable, because the
- * mask only ever removes a bounded share of a garment.
+ * bake shreds it: the garment frays upward from its own hems, sleeves and
+ * trouser legs are torn short so forearms and shins are bone, rips open the
+ * chest and back along the ribs, every remaining texel is grimed toward old
+ * cloth, and the texels bordering a hole darken into a torn edge. No wardrobe
+ * needs a second set of art, and the mask only ever removes a bounded share
+ * of a garment, so its colour still says something about the job.
  *
  * The mask is a pure function of a seed, the body geometry and the garment's
  * own opaque texels, so every client bakes the same rags for the same person
@@ -29,16 +29,37 @@ public final class Tatter {
 
   private static final int TEXTURE_SIZE = 64;
 
-  /** Chance a hem texel is torn away, then that the texel above goes too, then the one above that. */
-  private static final float HEM_TORN = 0.65F;
-  private static final float HEM_TORN_DEEPER = 0.29F;
-  private static final float HEM_TORN_DEEPEST = 0.10F;
   /** A column keeps at least this much garment above its hem before it is torn at all. */
   private static final int MINIMUM_COLUMN = 3;
-  /** Rips across the chest and back, each two rows tall along the ribs beneath. */
-  private static final int RIPS = 2;
-  private static final int RIP_HEIGHT = 2;
   private static final float RIP_JAG = 0.35F;
+
+  /**
+   * How hard the rags are worn. {@code hem} is the chance a column's hem texel
+   * goes, then the one above it, and so on up; rips cross the chest and back;
+   * {@code stripChance} is the chance a limb column is torn short to
+   * {@code stripKeep} rows, a sleeve ending at the elbow or a trouser leg at the
+   * knee; {@code slashChance} is a short vertical slash on a limb face.
+   */
+  public record Strength(
+      float[] hem,
+      int rips,
+      int ripHeight,
+      int ripMinWidth,
+      int ripMaxWidth,
+      float stripChance,
+      int stripKeep,
+      float slashChance) {
+
+    /**
+     * What the undead wear (decided 2026-09-11 over two lighter cuts): barely a
+     * garment. Four wide rips open the chest and back onto the ribs, most sleeves
+     * and trouser legs are torn short so forearms and shins are bone, slashes
+     * cross the limbs, and hems fray four rows deep. The garment's colour and
+     * collar survive; its cut mostly does not.
+     */
+    public static final Strength RUINED = new Strength(
+        new float[] {0.85F, 0.60F, 0.35F, 0.15F}, 4, 3, 4, 7, 0.60F, 5, 0.6F);
+  }
   /** Grime: pull toward luminance, then darken; fray: darken a torn edge further. */
   private static final float GRIME_DESATURATION = 0.28F;
   private static final float GRIME_DARKENING = 0.85F;
@@ -77,29 +98,37 @@ public final class Tatter {
    * Cuts the rags. {@code opaque} is the garment layer's opacity, indexed
    * {@code y * 64 + x}; only opaque texels are ever torn or frayed.
    */
-  public static Mask of(int seed, BodyModel model, boolean[] opaque) {
+  public static Mask of(int seed, BodyModel model, boolean[] opaque, Strength strength) {
     if (opaque.length != TEXTURE_SIZE * TEXTURE_SIZE) {
       throw new IllegalArgumentException("A garment is 64x64");
     }
     Random random = new Random(seed);
     Set<Integer> torn = new HashSet<>();
     int armWidth = model == BodyModel.SLIM ? 3 : 4;
+    List<Face> torso = sideFaces(16, 16, 8, 12, 4);
     List<List<Face>> limbs = List.of(
-        sideFaces(16, 16, 8, 12, 4),
         sideFaces(40, 16, armWidth, 12, 4),
         sideFaces(32, 48, armWidth, 12, 4),
         sideFaces(0, 16, 4, 12, 4),
         sideFaces(16, 48, 4, 12, 4));
     for (List<Face> faces : limbs) {
       for (Face face : faces) {
-        tearHem(random, opaque, face, torn);
+        stripShort(random, opaque, face, torn, strength);
       }
     }
-    List<Face> torso = limbs.getFirst();
-    for (int rip = 0; rip < RIPS; rip++) {
+    for (Face face : torso) {
+      tearHem(random, opaque, face, torn, strength);
+    }
+    for (List<Face> faces : limbs) {
+      for (Face face : faces) {
+        tearHem(random, opaque, face, torn, strength);
+        slash(random, opaque, face, torn, strength);
+      }
+    }
+    for (int rip = 0; rip < strength.rips(); rip++) {
       // Front and back twice as often as a side: that is where the ribs are seen.
       Face face = torso.get(List.of(1, 3, 1, 0, 2).get(random.nextInt(5)));
-      ripAcross(random, opaque, face, torn);
+      ripAcross(random, opaque, face, torn, strength);
     }
     return new Mask(torn, fray(opaque, torn));
   }
@@ -133,12 +162,12 @@ public final class Tatter {
         new Face(u + depth + width + depth, v + depth, width, height));
   }
 
-  /** Frays one face upward from the lowest garment texel in each column. */
-  private static void tearHem(Random random, boolean[] opaque, Face face, Set<Integer> torn) {
+  /** Frays one face upward from the lowest garment texel still standing in each column. */
+  private static void tearHem(Random random, boolean[] opaque, Face face, Set<Integer> torn, Strength strength) {
     for (int x = face.x(); x < face.x() + face.width(); x++) {
       int hem = -1;
       for (int y = face.y() + face.height() - 1; y >= face.y(); y--) {
-        if (opaque[index(x, y)]) {
+        if (opaque[index(x, y)] && !torn.contains(index(x, y))) {
           hem = y;
           break;
         }
@@ -149,25 +178,57 @@ public final class Tatter {
       if (hem < 0 || hem - face.y() < MINIMUM_COLUMN) {
         continue;
       }
-      if (roll < HEM_TORN) {
-        torn.add(index(x, hem));
+      for (int depth = 0; depth < strength.hem().length; depth++) {
+        int y = hem - depth;
+        if (roll < strength.hem()[depth] && y >= face.y() && opaque[index(x, y)]) {
+          torn.add(index(x, y));
+        }
       }
-      if (roll < HEM_TORN_DEEPER && opaque[index(x, hem - 1)]) {
-        torn.add(index(x, hem - 1));
+    }
+  }
+
+  /** Tears a limb column short, to a sleeve at the elbow or a trouser leg at the knee. */
+  private static void stripShort(Random random, boolean[] opaque, Face face, Set<Integer> torn, Strength strength) {
+    for (int x = face.x(); x < face.x() + face.width(); x++) {
+      // One roll per column, whatever it decides.
+      boolean stripped = random.nextFloat() < strength.stripChance();
+      if (!stripped) {
+        continue;
       }
-      if (roll < HEM_TORN_DEEPEST && opaque[index(x, hem - 2)]) {
-        torn.add(index(x, hem - 2));
+      for (int y = face.y() + strength.stripKeep(); y < face.y() + face.height(); y++) {
+        if (opaque[index(x, y)]) {
+          torn.add(index(x, y));
+        }
+      }
+    }
+  }
+
+  /** A short vertical slash in the upper half of a limb face. */
+  private static void slash(Random random, boolean[] opaque, Face face, Set<Integer> torn, Strength strength) {
+    // Rolled for every face, so a face without a slash does not move the next one's.
+    boolean slashed = random.nextFloat() < strength.slashChance();
+    int x = face.x() + random.nextInt(face.width());
+    int y = face.y() + 1 + random.nextInt(4);
+    int length = 2 + random.nextInt(2);
+    if (!slashed) {
+      return;
+    }
+    for (int sy = y; sy < y + length && sy < face.y() + face.height(); sy++) {
+      if (opaque[index(x, sy)]) {
+        torn.add(index(x, sy));
       }
     }
   }
 
   /** One rip, wider than tall, in the upper two thirds of a torso face, with jagged ends. */
-  private static void ripAcross(Random random, boolean[] opaque, Face face, Set<Integer> torn) {
-    int width = face.width() >= 8 ? 3 + random.nextInt(3) : 2;
+  private static void ripAcross(Random random, boolean[] opaque, Face face, Set<Integer> torn, Strength strength) {
+    int width = face.width() >= 8
+        ? strength.ripMinWidth() + random.nextInt(strength.ripMaxWidth() - strength.ripMinWidth() + 1)
+        : 2;
     int x = face.x() + random.nextInt(face.width() - width + 1);
-    int lowest = face.y() + face.height() - 2 - RIP_HEIGHT;
+    int lowest = face.y() + face.height() - 2 - strength.ripHeight();
     int y = face.y() + 2 + random.nextInt(lowest - (face.y() + 2) + 1);
-    for (int ry = y; ry < y + RIP_HEIGHT; ry++) {
+    for (int ry = y; ry < y + strength.ripHeight(); ry++) {
       for (int rx = x; rx < x + width; rx++) {
         boolean end = rx == x || rx == x + width - 1;
         // The roll is made for every texel, so a jag that is kept does not

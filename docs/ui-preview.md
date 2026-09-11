@@ -47,8 +47,9 @@ face upright and comparable with the waking shot.
 `age-lineup-world` briefly spawns the same controlled stages in front of the preview player so the
 real entity attachments, name line, role line, camera perspective, and model scale are photographed
 together. The tagged entities are removed immediately after the capture. The three `undead-` modes are
-the same lineups on the other kind ([undead.md](undead.md)); the screen versions add an armed guard, and
-the asleep one shows that a skull keeps its sockets.
+the same lineups on the other kind ([undead.md](undead.md)); the screen versions dress the adult as a farmer and add
+an armed guard in leather, so the rags read against dark cloth, and the asleep one shows that a
+skull keeps its sockets.
 
 Two traps are already paid for, and both cost an hour the first time:
 

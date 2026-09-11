@@ -205,7 +205,7 @@ public final class PersonAppearanceTextures implements ResourceManagerReloadList
         opaque[y * TEXTURE_SIZE + x] = isOpaque(garment.getPixelRGBA(x, y));
       }
     }
-    Tatter.Mask rags = Tatter.of(recipe.tatterSeed(), recipe.model(), opaque);
+    Tatter.Mask rags = Tatter.of(recipe.tatterSeed(), recipe.model(), opaque, Tatter.Strength.RUINED);
     for (int y = 0; y < TEXTURE_SIZE; y++) {
       for (int x = 0; x < TEXTURE_SIZE; x++) {
         if (!opaque[y * TEXTURE_SIZE + x] || rags.isTorn(x, y)) {
