@@ -65,13 +65,17 @@ public final class UndeadRaid {
     COMING,
     FIGHTING,
     BEATEN,
-    WITHDRAWN
+    WITHDRAWN,
+    /** Every resident died while the dead were at the gate: the village is theirs now. */
+    FALLEN
   }
 
   private final String sourceName;
   @Nullable
   private final UUID culprit;
   private final int waves;
+  /** How many residents the village had when the dead set out; a village that had none cannot fall. */
+  private final int residentsAtStart;
   private Phase phase;
   private int wave;
   private int waveSize;
@@ -82,11 +86,12 @@ public final class UndeadRaid {
   @Nullable
   private ServerBossEvent bar;
 
-  private UndeadRaid(String sourceName, @Nullable UUID culprit, int waves, Phase phase, int wave, int waveSize,
-      long phaseAt, long firstWaveAt) {
+  private UndeadRaid(String sourceName, @Nullable UUID culprit, int waves, int residentsAtStart, Phase phase,
+      int wave, int waveSize, long phaseAt, long firstWaveAt) {
     this.sourceName = sourceName;
     this.culprit = culprit;
     this.waves = waves;
+    this.residentsAtStart = residentsAtStart;
     this.phase = phase;
     this.wave = wave;
     this.waveSize = waveSize;
@@ -100,8 +105,9 @@ public final class UndeadRaid {
    * is who they followed, if anyone. {@code atOnce} skips the countdown, which
    * only the dev command wants.
    */
-  public static UndeadRaid begin(String sourceName, @Nullable UUID culprit, int waves, long gameTime, boolean atOnce) {
-    return new UndeadRaid(sourceName, culprit, waves, Phase.COMING, 0, 0,
+  public static UndeadRaid begin(String sourceName, @Nullable UUID culprit, int waves, int residentsAtStart,
+      long gameTime, boolean atOnce) {
+    return new UndeadRaid(sourceName, culprit, waves, residentsAtStart, Phase.COMING, 0, 0,
         atOnce ? gameTime - COUNTDOWN_TICKS : gameTime, 0L);
   }
 
@@ -110,6 +116,7 @@ public final class UndeadRaid {
         tag.getString("source"),
         tag.hasUUID("culprit") ? tag.getUUID("culprit") : null,
         tag.getInt("waves"),
+        tag.getInt("residents_at_start"),
         Phase.valueOf(tag.getString("phase")),
         tag.getInt("wave"),
         tag.getInt("wave_size"),
@@ -132,6 +139,7 @@ public final class UndeadRaid {
       tag.putUUID("culprit", culprit);
     }
     tag.putInt("waves", waves);
+    tag.putInt("residents_at_start", residentsAtStart);
     tag.putString("phase", phase.name());
     tag.putInt("wave", wave);
     tag.putInt("wave_size", waveSize);
@@ -167,6 +175,10 @@ public final class UndeadRaid {
 
   public int waves() {
     return waves;
+  }
+
+  public int residentsAtStart() {
+    return residentsAtStart;
   }
 
   public Set<UUID> raiders() {
@@ -209,7 +221,9 @@ public final class UndeadRaid {
       }
       case FIGHTING -> {
         prune(level);
-        if (raiders.isEmpty()) {
+        if (residentsAtStart > 0 && village.getPopulation().isEmpty()) {
+          fall(village, level);
+        } else if (raiders.isEmpty()) {
           if (wave >= waves) {
             end(village, level, Phase.BEATEN);
           } else {
@@ -222,7 +236,7 @@ public final class UndeadRaid {
           end(village, level, Phase.WITHDRAWN);
         }
       }
-      case BEATEN, WITHDRAWN -> {
+      case BEATEN, WITHDRAWN, FALLEN -> {
         if (now - phaseAt >= AFTERMATH_TICKS) {
           bar().removeAllPlayers();
           return true;
@@ -319,6 +333,20 @@ public final class UndeadRaid {
     }
   }
 
+  /**
+   * The village is the dead's now: everyone who lived here died at the gate.
+   * It turns undead, the raiders go back to the dark, and the ordinary
+   * arrival loop raises its own dead first to fill it again (docs/undead.md).
+   */
+  private void fall(Village village, ServerLevel level) {
+    withdraw(level);
+    village.setKind(Kind.UNDEAD);
+    phase = Phase.FALLEN;
+    phaseAt = level.getGameTime();
+    Kithkyn.LOGGER.info("[raid] '{}' has fallen to {}", village.getName(), sourceName);
+    tell(village, level, village.getName() + " has fallen to the dead.");
+  }
+
   /** Every player who cut one of the dead down is remembered for it by every resident. */
   private void rememberDefenders(Village village, ServerLevel level) {
     for (Map.Entry<UUID, Integer> entry : kills.entrySet()) {
@@ -377,6 +405,11 @@ public final class UndeadRaid {
         event.setName(Component.literal("The dead withdrew"));
         event.setColor(BossEvent.BossBarColor.YELLOW);
         event.setProgress(0.0F);
+      }
+      case FALLEN -> {
+        event.setName(Component.literal(village.getName() + " has fallen to the dead"));
+        event.setColor(BossEvent.BossBarColor.PURPLE);
+        event.setProgress(1.0F);
       }
     }
     Set<ServerPlayer> near = Set.copyOf(playersNear(village, level));

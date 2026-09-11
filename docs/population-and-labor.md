@@ -346,7 +346,9 @@ the village edge past the wanderer cap: the whole person is saved into the serve
 Recruitment (**implemented**): a growing village that rolls an arrival fills it in this
 order, and only the last step conjures anyone: a loaded wanderer within the recruit radius
 (they walk in from wherever they are, pack, axe and all), then the person longest on the road beyond the
-horizon (restored at the village edge and walking in, stats and memories intact), then a
+horizon (restored at the village edge and walking in, stats and memories intact, and only of
+the village's own kind), then, for an undead village only, someone from the register of the dead
+([undead.md](undead.md)), and last a
 new persona. So the same souls circulate between settlements however far apart they stand,
 and a village that collapses seeds the ones that grow. Two caps bound this: the wanderer
 cap on people walking the loaded world (past it a leaver passes beyond the horizon straight

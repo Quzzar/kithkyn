@@ -2067,7 +2067,7 @@ public class Village {
     BlockPos edge = edgeSpawnPos();
     BlockPos road = edge != null ? edge : fire;
     var wanderers = VillageManager.get(level).getWanderers();
-    RealPerson returning = wanderers.draw(level, road);
+    RealPerson returning = wanderers.draw(level, road, getKind());
     if (returning != null) {
       List<RealPerson> family = new ArrayList<>();
       family.add(returning);
@@ -2086,6 +2086,19 @@ public class Village {
       Kithkyn.LOGGER.info("the household [{}] came in off the road to village '{}' together",
           family.stream().map(RealPerson::getFullName).toList(), name);
       return;
+    }
+
+    // The undead do not take strangers from nowhere while there are dead to
+    // raise: the register of the dead comes before conjuring, its own dead
+    // first (docs/undead.md). Only with the register empty is one of the
+    // long dead conjured, the way a living village conjures a newcomer.
+    if (getKind() == com.quzzar.kithkyn.entities.Kind.UNDEAD) {
+      RealPerson risen = VillageManager.get(level).getGraveyard().raise(level, road, this);
+      if (risen != null) {
+        admitReturning(risen, fire, deadline);
+        Kithkyn.LOGGER.info("'{}' rose from the dead and is arriving at village '{}'", risen.getFullName(), name);
+        return;
+      }
     }
 
     PersonaSpawner.trySpawn(level, spawnPos, person -> {

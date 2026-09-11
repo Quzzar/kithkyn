@@ -9,6 +9,7 @@ import java.util.Set;
 import com.mojang.serialization.Codec;
 import com.quzzar.kithkyn.Kithkyn;
 import com.quzzar.kithkyn.village.Village;
+import com.quzzar.kithkyn.village.Graveyard;
 import com.quzzar.kithkyn.village.WandererPool;
 
 import net.minecraft.core.BlockPos;
@@ -39,6 +40,7 @@ public class VillageManagerSaveData extends SavedData {
 
     /** Everyone on the road beyond the horizon: one list for the whole server (docs/population-and-labor.md). */
     private final WandererPool wanderers = new WandererPool(this::setDirty);
+    private final Graveyard graveyard = new Graveyard(this::setDirty);
 
     // Runtime-only: the level this registry belongs to, re-attached on access.
     private ServerLevel level;
@@ -131,6 +133,11 @@ public class VillageManagerSaveData extends SavedData {
                     .resultOrPartial(error -> Kithkyn.LOGGER.error("Failed to load the wanderers beyond the horizon: {}", error))
                     .ifPresent(data.wanderers::load);
         }
+        if (tag.contains("TheDead")) {
+            Graveyard.CODEC.parse(NbtOps.INSTANCE, tag.get("TheDead"))
+                    .resultOrPartial(error -> Kithkyn.LOGGER.error("Failed to load the register of the dead: {}", error))
+                    .ifPresent(data.graveyard::load);
+        }
         return data;
     }
 
@@ -148,6 +155,12 @@ public class VillageManagerSaveData extends SavedData {
                 .orElse(null);
         if (road != null) {
             tag.put("Wanderers", road);
+        }
+        Tag dead = Graveyard.CODEC.encodeStart(NbtOps.INSTANCE, List.copyOf(graveyard.entries()))
+                .resultOrPartial(error -> Kithkyn.LOGGER.error("Failed to save the register of the dead: {}", error))
+                .orElse(null);
+        if (dead != null) {
+            tag.put("TheDead", dead);
         }
         return tag;
     }
@@ -261,6 +274,10 @@ public class VillageManagerSaveData extends SavedData {
 
     public WandererPool getWanderers() {
         return wanderers;
+    }
+
+    public Graveyard getGraveyard() {
+        return graveyard;
     }
 
 }
