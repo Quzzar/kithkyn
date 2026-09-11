@@ -82,12 +82,22 @@ The current review status is:
   Viking and Polish families remain displayed in a six-row annex at
   **10201.5, 230, 1224.5** for the later decision.
 - **Mediterranean:** the M01 white-city family supplies the core. M04.1 through M04.4 supply
-  fields, orchards, and garden language around it.
+  fields, orchards, and garden language around it. The complete standalone T&T Mediterranean and
+  Iberian families are displayed in a seven-row annex at **10473.5, 230, 1224.5**, south of the
+  court, for the catalog selection that comes next.
 
 The Viking annex contains all 43 standalone structures: 22 Viking and 21 Polish. Road pieces
 and terminators are omitted because they are layout internals rather than building candidates.
 The complete source paths, hashes, placement coordinates, and review evidence are recorded in
 `tools/structure/viking-full-profile-20260911.json`.
+
+The Mediterranean annex contains all 60 standalone structures: 29 Mediterranean (the town
+center, 23 houses and workplaces, the fort, two fields, the planter and the lamp) and 31 Iberian
+(the town center, the temple, 14 houses, the fort, the garden, plants and lamp post, and the
+twelve profession inserts T&T drops into Iberian houses). Streets, terminators and the bishop
+villager template are omitted for the same reason. Pieces whose waterlogged blocks would flood the
+platform stand inside barrier rings. The complete source paths, hashes, placement coordinates and
+review evidence are recorded in `tools/structure/mediterranean-full-profile-20260911.json`.
 
 Unstructured was included in the source audit. Its strongest coherent settlement is the Ocean
 Village family, which belongs in the later Nautical Coast pass rather than one of these three
