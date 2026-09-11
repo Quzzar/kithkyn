@@ -79,7 +79,8 @@ in it, and update it in the same change that moves what it describes.
 - [appearance.md](appearance.md): why villagers use the player model and not the vanilla
   villager model, the wide/slim model split by gender, and the client-side runtime skin
   compositor that bakes a villager's look from inherited skin, hair, and eye structures,
-  continuous pigment genes, and occupation- or life-stage-driven clothing.
+  continuous pigment genes, and occupation- or life-stage-driven clothing, plus the sleeping
+  look: eyes shut, head at rest, gear off.
 - [appearance-wardrobes.md](appearance-wardrobes.md): the occupational clothing catalog,
   current role coverage, implementation gaps, and the separation between inherited appearance
   and replaceable job clothing.

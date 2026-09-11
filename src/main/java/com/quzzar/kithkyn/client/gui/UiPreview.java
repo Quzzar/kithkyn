@@ -5,11 +5,14 @@ import java.util.Locale;
 
 import com.quzzar.kithkyn.Kithkyn;
 import com.quzzar.kithkyn.entities.AgeStage;
+import com.quzzar.kithkyn.entities.Person;
 import com.quzzar.kithkyn.networking.MarketOffersPacket;
 
 import net.minecraft.client.CameraType;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.Screenshot;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -32,6 +35,7 @@ import net.neoforged.neoforge.client.event.ClientTickEvent;
  * ./gradlew runClientJoinLocal -Puipreview=age-lineup
  * ./gradlew runClientJoinLocal -Puipreview=age-lineup-asleep
  * ./gradlew runClientJoinLocal -Puipreview=age-lineup-world
+ * ./gradlew runClientJoinLocal -Puipreview=age-lineup-bed
  * </pre>
  *
  * The client joins the local development server, opens the named preview over
@@ -57,11 +61,25 @@ public final class UiPreview {
     /** The lineup with every eye shut, photographed through the sleeping face bake. */
     private static final String ASLEEP_LINEUP_MODE = "age-lineup-asleep";
     private static final String WORLD_LINEUP_MODE = "age-lineup-world";
+    /** The world lineup asleep: each stage in its own bed, dressed in gear the bed must not show. */
+    private static final String BED_LINEUP_MODE = "age-lineup-bed";
     private static final String WORLD_LINEUP_TAG = "kithkyn_age_lineup_preview";
     private static final String WORLD_LINEUP_CAMERA_TAG = WORLD_LINEUP_TAG + "_camera";
-    private static final String WORLD_LINEUP_CENTER_TAG = WORLD_LINEUP_TAG + "_center";
     private static final String WORLD_LINEUP_RETURN_TAG = WORLD_LINEUP_TAG + "_return";
     private static final double[] WORLD_LINEUP_OFFSETS = {2.7D, 0.9D, -0.9D, -2.7D};
+    /** The standing lineup's chest height and its distance south of the camera. */
+    private static final double STANDING_LINEUP_TARGET_Y = 199.35D;
+    private static final double STANDING_LINEUP_DISTANCE = 5.5D;
+    /** Foot block x of each side-on bed, the head one block east; together centred on the camera. */
+    private static final int[] BED_LINEUP_FEET = {-5, -2, 1, 4};
+    /** The mattress height and the beds' distance south of the camera stand. */
+    private static final double BED_LINEUP_TARGET_Y = 199.5D;
+    private static final double BED_LINEUP_DISTANCE = 6.0D;
+    /** A sword, a shield and a full iron set: all on the sleeper, none of it to be drawn. */
+    private static final String BED_LINEUP_GEAR = ",HandItems:[{id:\"minecraft:iron_sword\",count:1},"
+            + "{id:\"minecraft:shield\",count:1}],"
+            + "ArmorItems:[{id:\"minecraft:iron_boots\",count:1},{id:\"minecraft:iron_leggings\",count:1},"
+            + "{id:\"minecraft:iron_chestplate\",count:1},{id:\"minecraft:iron_helmet\",count:1}]";
 
     private static int ticks = -1;
     private static boolean shot;
@@ -116,11 +134,19 @@ public final class UiPreview {
             PersonChatScreen.onReply(0, "Aye, and the north road's been thick with bandits "
                     + "since the frost broke, so mind yourself past the old mill.", false);
         }
+        if (isBedLineup()) {
+            aimCamera(client, BED_LINEUP_TARGET_Y, BED_LINEUP_DISTANCE);
+        } else if (isWorldLineup()) {
+            aimCamera(client, STANDING_LINEUP_TARGET_Y, STANDING_LINEUP_DISTANCE);
+        }
         int settleTicks = isWorldLineup() ? WORLD_SETTLE_TICKS : SETTLE_TICKS;
         if (++ticks < settleTicks) {
             return;
         }
         shot = true;
+        if (isBedLineup()) {
+            logBedLineup(client);
+        }
         Screenshot.grab(client.gameDirectory, "ui-" + MODE + ".png",
                 client.getMainRenderTarget(),
                 message -> Kithkyn.LOGGER.info("UI preview saved: {}", message.getString()));
@@ -217,38 +243,102 @@ public final class UiPreview {
                 "execute at @s run summon minecraft:marker ~ ~ ~ {Tags:[\""
                         + WORLD_LINEUP_TAG + "\",\"" + WORLD_LINEUP_RETURN_TAG + "\"]}");
         sendCommand(client, "fill -6 198 -2 6 198 9 minecraft:grass_block");
-        sendCommand(client, "tp @s 0.5 199 0.5 0 0");
         sendCommand(client, "effect give @s minecraft:night_vision 30 0 true");
+        if (isBedLineup()) {
+            summonBedLineup(client);
+        } else {
+            summonStandingLineup(client);
+        }
+        sendCommand(client, "tag @s remove " + WORLD_LINEUP_CAMERA_TAG);
+    }
+
+    /**
+     * Points the first-person camera due south and down at the lineup, every settle
+     * tick, from the eye height the teleport has landed the player at. A server-side
+     * facing teleport used to do this and lost the race once, photographing the sky
+     * above the beds; the client owns its own look direction, so it aims itself.
+     */
+    private static void aimCamera(Minecraft client, double targetY, double distance) {
+        float pitch = (float) Math.toDegrees(Math.atan2(client.player.getEyeY() - targetY, distance));
+        client.player.setYRot(0.0F);
+        client.player.yRotO = 0.0F;
+        client.player.setXRot(pitch);
+        client.player.xRotO = pitch;
+    }
+
+    /** The four stages standing in a row, each turned to face the camera. */
+    private static void summonStandingLineup(Minecraft client) {
+        sendCommand(client, "tp @s 0.5 199 0.5 0 0");
         for (int index = 0; index < AgeStage.values().length; index++) {
             AgeStage stage = AgeStage.values()[index];
             String command = String.format(
                     Locale.ROOT,
                     "execute at @s rotated as @s run summon kithkyn:person ^%.2f ^ ^5.50 %s",
                     WORLD_LINEUP_OFFSETS[index],
-                    worldPersonNbt(stage));
+                    worldPersonNbt(stage, ""));
             sendCommand(client, command);
         }
-        sendCommand(client,
-                "execute at @s rotated as @s run summon minecraft:marker ^ ^0.35 ^5.50 "
-                        + "{Tags:[\"" + WORLD_LINEUP_TAG + "\",\"" + WORLD_LINEUP_CENTER_TAG + "\"]}");
         sendCommand(client,
                 "execute as @e[type=kithkyn:person,tag=" + WORLD_LINEUP_TAG
                         + ",distance=..16] at @s run tp @s ~ ~ ~ facing entity "
                         + "@a[tag=" + WORLD_LINEUP_CAMERA_TAG + ",limit=1] eyes");
-        sendCommand(client,
-                "tp @s ~ ~ ~ facing entity @e[type=minecraft:marker,tag="
-                        + WORLD_LINEUP_CENTER_TAG + ",limit=1,sort=nearest] eyes");
-        sendCommand(client, "tag @s remove " + WORLD_LINEUP_CAMERA_TAG);
     }
 
-    private static String worldPersonNbt(AgeStage stage) {
+    /**
+     * The four stages asleep, each in a bed lying side-on to the camera with its head to
+     * the east, photographed from a two-block stand so the camera looks down onto them.
+     * Every sleeper is summoned armed and armored and then put to bed through the
+     * developer command, so the shot must show bare sleepers with their heads turned;
+     * {@link #logBedLineup} records what the server still has on them, so bare bodies
+     * read as gear the renderer left off and not gear the server took away.
+     */
+    private static void summonBedLineup(Minecraft client) {
+        sendCommand(client, "fill 0 199 0 0 200 0 minecraft:grass_block");
+        sendCommand(client, "tp @s 0.5 201 0.5 0 0");
+        for (int index = 0; index < AgeStage.values().length; index++) {
+            int foot = BED_LINEUP_FEET[index];
+            int head = foot + 1;
+            sendCommand(client, String.format(Locale.ROOT,
+                    "setblock %d 199 6 minecraft:red_bed[facing=east,part=foot]", foot));
+            sendCommand(client, String.format(Locale.ROOT,
+                    "setblock %d 199 6 minecraft:red_bed[facing=east,part=head]", head));
+            sendCommand(client, String.format(Locale.ROOT,
+                    "summon kithkyn:person %.1f 199.6 6.5 %s",
+                    head + 0.5D,
+                    worldPersonNbt(AgeStage.values()[index], BED_LINEUP_GEAR)));
+        }
+        sendCommand(client,
+                "kkdev appearance sleep @e[type=kithkyn:person,tag=" + WORLD_LINEUP_TAG + ",distance=..16]");
+    }
+
+    /**
+     * What the server still has on each sleeper at the moment of the shot. Scoreboard
+     * tags never reach the client, so this reads every person near the preview player,
+     * which in the sky above spawn is the lineup and nobody else.
+     */
+    private static void logBedLineup(Minecraft client) {
+        for (Entity entity : client.level.entitiesForRendering()) {
+            if (entity instanceof Person person && person.distanceToSqr(client.player) < 16.0D * 16.0D) {
+                Kithkyn.LOGGER.info("Bed lineup: {} sleeping={} hands={} {} armor={} {} {} {}",
+                        person.getLifeStage(), person.isSleeping(),
+                        person.getMainHandItem().getItem(), person.getOffhandItem().getItem(),
+                        person.getItemBySlot(EquipmentSlot.HEAD).getItem(),
+                        person.getItemBySlot(EquipmentSlot.CHEST).getItem(),
+                        person.getItemBySlot(EquipmentSlot.LEGS).getItem(),
+                        person.getItemBySlot(EquipmentSlot.FEET).getItem());
+            }
+        }
+    }
+
+    /** A summoned lineup person; {@code gear} is extra NBT, empty or the bed lineup's kit. */
+    private static String worldPersonNbt(AgeStage stage, String gear) {
         return "{Tags:[\"" + WORLD_LINEUP_TAG + "\"],"
                 + "SkinVariant:" + AgeLineupScreen.PREVIEW_SEED + ","
                 + "StatBlock:{Strength:10,Dexterity:10,Constitution:10,Intelligence:10,"
                 + "Wisdom:10,Charisma:10,Size:10,Eyesight:10},"
                 + "AgeStage:\"" + stage.name() + "\",FirstName:\"Avery\",LastName:\"Stone\","
                 + "Title:\"Adult\",Occupation:\"WANDERER\",NoAI:1b,Immobile:1b,"
-                + "Invulnerable:1b,Silent:1b,CustomNameVisible:1b}";
+                + "Invulnerable:1b,Silent:1b,CustomNameVisible:1b" + gear + "}";
     }
 
     private static void cleanWorldLineup(Minecraft client) {
@@ -256,6 +346,10 @@ public final class UiPreview {
                 "tp @s @e[type=minecraft:marker,tag=" + WORLD_LINEUP_RETURN_TAG + ",limit=1]");
         sendCommand(client, "kill @e[tag=" + WORLD_LINEUP_TAG + "]");
         sendCommand(client, "fill -6 198 -2 6 198 9 minecraft:air");
+        if (isBedLineup()) {
+            // The beds and the camera stand.
+            sendCommand(client, "fill -6 199 -2 6 200 9 minecraft:air");
+        }
         sendCommand(client, "effect clear @s minecraft:night_vision");
         sendCommand(client, "tag @s remove " + WORLD_LINEUP_CAMERA_TAG);
     }
@@ -265,7 +359,11 @@ public final class UiPreview {
     }
 
     private static boolean isWorldLineup() {
-        return WORLD_LINEUP_MODE.equalsIgnoreCase(MODE);
+        return WORLD_LINEUP_MODE.equalsIgnoreCase(MODE) || isBedLineup();
+    }
+
+    private static boolean isBedLineup() {
+        return BED_LINEUP_MODE.equalsIgnoreCase(MODE);
     }
 
     private static boolean isLineup() {

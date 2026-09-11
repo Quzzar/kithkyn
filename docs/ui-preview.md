@@ -22,6 +22,7 @@ Reasoning about a layout is not looking at it. If you are changing anything unde
 ./gradlew runClientJoinLocal -Puipreview=age-lineup
 ./gradlew runClientJoinLocal -Puipreview=age-lineup-asleep
 ./gradlew runClientJoinLocal -Puipreview=age-lineup-world
+./gradlew runClientJoinLocal -Puipreview=age-lineup-bed
 ```
 
 Start the local development server first. The preview client joins it as `Dev`, opens the named
@@ -38,11 +39,18 @@ lets it settle, then calls `Screenshot.grab` and stops the client. Chat and trad
 `PersonChatScreen` payload. `age-lineup` creates four unspawned client-side people with identical
 appearance inputs, changes only their age stage, and renders them through the real entity renderer.
 `age-lineup-asleep` is the same four given a client-side sleeping position, which shuts their eyes
-through the sleeping face bake ([appearance.md](appearance.md)) while the standing pose keeps every
-face upright and comparable with the waking shot.
+through the sleeping face bake and rests their heads to one side through the model
+([appearance.md](appearance.md)), while the standing pose keeps every body upright and comparable
+with the waking shot.
 `age-lineup-world` briefly spawns the same controlled stages in front of the preview player so the
 real entity attachments, name line, role line, camera perspective, and model scale are photographed
 together. The tagged entities are removed immediately after the capture.
+`age-lineup-bed` is the world lineup asleep: four beds side-on to the camera, each stage summoned
+into one wearing a sword, a shield and a full iron set, then put to bed through
+`/kkdev appearance sleep`, so the shot must show bare sleepers with shut eyes and turned heads. The
+client log lists what the server still has on each of them, so a bare body is provably gear the
+renderer left off. Beds and camera stand are removed with the entities. Needs developer commands on,
+which the local development server has.
 
 Two traps are already paid for, and both cost an hour the first time:
 
