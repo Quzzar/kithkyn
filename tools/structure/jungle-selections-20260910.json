@@ -250,7 +250,41 @@
         "Center owns the single miner vacancy; this separate building is its physical worksite."
       ],
       "previous_source_capture": "run/jungle-showcase/selection-20260910-services/captures/JA01.5.nbt",
-      "previous_source_capture_sha256": "ba473ece4305b9a82350f8e2d134fa789f9ff655980934b6025ea0044644e171"
+      "previous_source_capture_sha256": "ba473ece4305b9a82350f8e2d134fa789f9ff655980934b6025ea0044644e171",
+      "revisions": [
+        {
+          "date": "2026-09-10",
+          "note": "Aaron cut a four by three pit one block deep into the pavilion floor with three jungle stairs down its west side and moved the two barrels to the stair rim, on a copy in the jungle gallery at 4924, 229, 920. Exported as a 6 by 6 by 5 template with the miner post at the pit's west column and the ramp mouth one column in, facing east, so the first steps of the descent stay inside the building.",
+          "template_sha256": "70868db7facac1a0a0d86386b2a718ce14c37e0fe3835ebdd2b3a8174affbe5e",
+          "definition_sha256": "7e1d363e1d74e35db037ccd3a8409e6ac61cc8a87c55ca1299856b78c6287cd3",
+          "worksite": [
+            1,
+            0,
+            2
+          ],
+          "mine_entrance": {
+            "facing": "east",
+            "offset": [
+              1,
+              1,
+              0
+            ],
+            "width": 3
+          },
+          "containers": [
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              4
+            ]
+          ]
+        }
+      ]
     },
     {
       "exhibit": "JA01.6",
