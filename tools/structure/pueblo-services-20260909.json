@@ -552,7 +552,7 @@
           "minecraft:water": 13
         }
       },
-      "neutral_template_sha256": "2734e169ed8d43f6cd49cd7c453908525dab77da1a53d0ef9899fcde5c435b82",
+      "neutral_template_sha256": "530c8b441e5789e9517ff704f855a5e9fd20275f8a6d260e88f06c58f6f1e33b",
       "export_options_file": "run/pueblo-showcase/services-approved-20260909-183601/P09.7-export-options.json",
       "source_mod": "[Neoforge]ctov-3.6.3.jar",
       "production": {

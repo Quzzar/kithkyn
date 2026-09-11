@@ -247,7 +247,7 @@
       "recipe": "fishery_1",
       "source_mod_structure": "data/kaisyn/structure/village/jungle_tribal/houses/jungle_fisher_1.nbt",
       "source_capture": "run/jungle-showcase/bamboo-adoption-20260910/after-placement/captures/JA01.8.nbt",
-      "source_capture_sha256": "75709284e8d942de4916bc601a744ccf358c55f4c39448ad90259454479385a1",
+      "source_capture_sha256": "fdf9520d05a6576c3b12e2133baef9c5acdbcb2d1a8a74fa8a5a0fec5ab02c41",
       "gallery_origin": [
         5026,
         230,
@@ -269,7 +269,7 @@
       ],
       "worksites": [],
       "asset": "run/jungle-integration/datapack/data/kithkyn/structure/fishery_jungle_1.nbt",
-      "asset_sha256": "97940b878ce9dc41eacf1b75597f0b6240de946fe82fa16b76939bfbe108a705",
+      "asset_sha256": "03b2a56a00a6b5b434b612a5b9ad3a77809145f43bdda1f973fff02b9c21b1b6",
       "definition": "run/jungle-integration/datapack/data/kithkyn/kithkyn/buildings/fishery_jungle_1.json",
       "definition_sha256": "b150b434a50c9e0810aa79c78c14a15c756a6af0eb79b4afaa9fec754252c261"
     },

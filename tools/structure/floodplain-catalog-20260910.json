@@ -266,11 +266,11 @@
       "source_mod": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar",
       "source_mod_structure": "data/kaisyn/structure/village/sparse_jungle_polynesian/houses/sparse_jungle_small_farm_1.nbt",
       "asset": "run/floodplain-integration/datapack/data/kithkyn/structure/farm_floodplain_1.nbt",
-      "asset_sha256": "03d6613a27484c6d5eb7c14080a653e3038b12b3d078d1b776830ba455cd55b4",
+      "asset_sha256": "2a6656eb98b5affe840d885cd0a0e7b0da585af2e14f0e7b3cc1f1dc2790a361",
       "definition": "run/floodplain-integration/datapack/data/kithkyn/kithkyn/buildings/farm_floodplain_1.json",
       "definition_sha256": "7b7bd052fcf3b3e48090c032111ad5ba874bf966148c7610ebf89c3471223770",
       "reviewed_capture": "run/nilotic-showcase/selection-20260910-floodplain/captures/NG04.2.nbt",
-      "reviewed_capture_sha256": "8cd26ad998ffe6f798e906b2c585493c3e777d43f1b77aaed7024d2b0062e9dd"
+      "reviewed_capture_sha256": "e52a80942a2487375f7f7538accb0c78f10231ae75ea7c171bbc07af7c5698e9"
     },
     {
       "exhibit": "NG04.1",
