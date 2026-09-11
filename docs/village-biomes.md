@@ -53,6 +53,30 @@ Rivers do not receive a separate village biome. An ordinary land village resolve
 surrounding environment rather than a narrow river strip. Tropical riverbanks and deltas belong
 to Floodplain when site selection can classify them reliably.
 
+## Next authoring shortlist
+
+The next scouting pass prioritizes three catalogs:
+
+1. **Swamp** fills the clearest remaining wetland gap. Its court compares the Towns & Towers
+   boat village, the Dungeons & Taverns swamp family, open and fortified CTOV swamp buildings,
+   and wetland service and defense pieces.
+2. **Viking** gives taiga and old-growth spruce forests a coherent cold-timber identity. Its
+   court starts with the full Viking family, then compares Polish, Swedish, CTOV taiga, spruce
+   service, and tower donors.
+3. **Mediterranean** gives Plains and Sunflower Plains a distinct rural culture. Its court
+   compares the Mediterranean and Iberian families with CTOV Plains civic buildings, fields,
+   gardens, tavern, well, and fortified donors.
+
+The three walk-through courts begin at **9913.5, 230, 986.5** in the live showcase world. The
+individual entrances are Swamp at **9929.5, 230, 1004.5**, Viking at
+**10201.5, 230, 1004.5**, and Mediterranean at **10473.5, 230, 1004.5**. The complete source
+map and placement hashes are recorded in
+`tools/structure/next-village-galleries-20260911.json`.
+
+Unstructured was included in the source audit. Its strongest coherent settlement is the Ocean
+Village family, which belongs in the later Nautical Coast pass rather than one of these three
+courts.
+
 ## Future systems
 
 These ideas require placement or simulation work beyond an ordinary land village catalog.

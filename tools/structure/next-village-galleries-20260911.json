@@ -1,0 +1,2016 @@
+{
+  "schemaVersion": 1,
+  "recorded": "2026-09-11T00:00:26.567250-04:00",
+  "purpose": "Curated walk-through galleries for the three strongest next village directions.",
+  "status": "placed",
+  "entry": [
+    9913.5,
+    230,
+    986.5
+  ],
+  "bounds": [
+    9709,
+    220,
+    974,
+    10720,
+    272,
+    1215
+  ],
+  "selection": {
+    "priorityOrder": [
+      "swamp",
+      "viking",
+      "mediterranean"
+    ],
+    "criteria": [
+      "fills a biome family with no playable Kithkyn catalog",
+      "has a coherent complete core rather than only isolated donors",
+      "was explicitly favored during the village-roster discussion"
+    ],
+    "unstructured": "Scouted; its strongest coherent set is Ocean Village, reserved for the later Nautical Coast gallery."
+  },
+  "sources": [
+    "Towns & Towers",
+    "ChoiceTheorem's Overhauled Village",
+    "Dungeons & Taverns",
+    "Unstructured (scouted; no direct selections)"
+  ],
+  "counts": {
+    "courts": 3,
+    "rows": 14,
+    "candidates": 78
+  },
+  "courts": [
+    {
+      "id": "swamp",
+      "rank": 1,
+      "title": "SWAMP WETLAND",
+      "subtitle": "ordinary swamp / boats / overgrown timber",
+      "biomes": [
+        "minecraft:swamp"
+      ],
+      "why": "The clearest unfinished biome family and the strongest set of complete donor villages.",
+      "base_x": 9936,
+      "path_block": "minecraft:mud_bricks",
+      "rows": [
+        {
+          "id": "S01",
+          "title": "T&T BOAT VILLAGE \u2014 CORE",
+          "origin": [
+            9936,
+            230,
+            1010
+          ],
+          "bounds": [
+            9926,
+            220,
+            1001,
+            10040,
+            272,
+            1035
+          ],
+          "entries": [
+            {
+              "id": "S01.1",
+              "sourceId": "C07.1",
+              "label": "Town center 1",
+              "role": "center",
+              "sourceFamily": "tt_boats",
+              "sourceMod": "Towns and Towers",
+              "source": "data/kaisyn/structure/village/swamp_boat/town_centers/swamp_meeting_point_1.nbt",
+              "sourceSha256": "659c06842a9de142aedae71d6a7243f0f6288af7273a1b614a683d25bd38b4b1",
+              "size": [
+                25,
+                15,
+                22
+              ],
+              "origin": [
+                9936,
+                230,
+                1010
+              ],
+              "privateTemplate": "kithkyn_showcase:tt_boats/00"
+            },
+            {
+              "id": "S01.2",
+              "sourceId": "C07.2",
+              "label": "Large house 1",
+              "role": "house",
+              "sourceFamily": "tt_boats",
+              "sourceMod": "Towns and Towers",
+              "source": "data/kaisyn/structure/village/swamp_boat/houses/swamp_large_house_1.nbt",
+              "sourceSha256": "d8533e8e9e0158bfec840205cdd16c570d541a2a99a26b9237bbc02382461cc5",
+              "size": [
+                12,
+                6,
+                8
+              ],
+              "origin": [
+                9967,
+                230,
+                1010
+              ],
+              "privateTemplate": "kithkyn_showcase:tt_boats/01"
+            },
+            {
+              "id": "S01.3",
+              "sourceId": "C07.3",
+              "label": "Large house 2",
+              "role": "house",
+              "sourceFamily": "tt_boats",
+              "sourceMod": "Towns and Towers",
+              "source": "data/kaisyn/structure/village/swamp_boat/houses/swamp_large_house_2.nbt",
+              "sourceSha256": "b269ee01dd703ebbd4b09aa7cf80c5646bbd70d34a29a993aefb3901b1cad170",
+              "size": [
+                12,
+                6,
+                8
+              ],
+              "origin": [
+                9985,
+                230,
+                1010
+              ],
+              "privateTemplate": "kithkyn_showcase:tt_boats/02"
+            },
+            {
+              "id": "S01.4",
+              "sourceId": "C07.4",
+              "label": "Armorer",
+              "role": "work",
+              "sourceFamily": "tt_boats",
+              "sourceMod": "Towns and Towers",
+              "source": "data/kaisyn/structure/village/swamp_boat/houses/swamp_armorer_1.nbt",
+              "sourceSha256": "a6d1c5fba48a4ea3964bed621ab8349693550cc824189e8abaa62be39bd05911",
+              "size": [
+                7,
+                6,
+                5
+              ],
+              "origin": [
+                10003,
+                230,
+                1010
+              ],
+              "privateTemplate": "kithkyn_showcase:tt_boats/03"
+            },
+            {
+              "id": "S01.5",
+              "sourceId": "C07.5",
+              "label": "Fisher",
+              "role": "food",
+              "sourceFamily": "tt_boats",
+              "sourceMod": "Towns and Towers",
+              "source": "data/kaisyn/structure/village/swamp_boat/houses/swamp_fisher_1.nbt",
+              "sourceSha256": "5235a2a3dbb62c13a0f8cd36ce77260bcac32430bc46ebf14ee6e9ce4c1db790",
+              "size": [
+                9,
+                7,
+                6
+              ],
+              "origin": [
+                10016,
+                230,
+                1010
+              ],
+              "privateTemplate": "kithkyn_showcase:tt_boats/04"
+            },
+            {
+              "id": "S01.6",
+              "sourceId": "C07.6",
+              "label": "Temple / landmark",
+              "role": "civic",
+              "sourceFamily": "tt_boats",
+              "sourceMod": "Towns and Towers",
+              "source": "data/kaisyn/structure/village/swamp_boat/houses/swamp_temple_1.nbt",
+              "sourceSha256": "390d7c6f97afad8f430a4dd00809f8a1b648da8d59ea8fa89b7a9f75761e2adf",
+              "size": [
+                7,
+                8,
+                9
+              ],
+              "origin": [
+                10031,
+                230,
+                1010
+              ],
+              "privateTemplate": "kithkyn_showcase:tt_boats/05"
+            }
+          ]
+        },
+        {
+          "id": "S02",
+          "title": "D&T SWAMP \u2014 COMPLETE ROLES",
+          "origin": [
+            9936,
+            230,
+            1054
+          ],
+          "bounds": [
+            9926,
+            220,
+            1045,
+            10041,
+            272,
+            1070
+          ],
+          "entries": [
+            {
+              "id": "S02.1",
+              "sourceId": "F03.1",
+              "label": "Swamp center 1",
+              "role": "center",
+              "sourceFamily": "dnt_village_swamp",
+              "sourceMod": "Dungeons and Taverns",
+              "source": "data/minecraft/structure/village_swamp/swamp_village_center1.nbt",
+              "sourceSha256": "d5d4af90ae6120f50b9bf33865d32b90922b67e0822dc008fd22ede1140afda1",
+              "size": [
+                11,
+                7,
+                11
+              ],
+              "origin": [
+                9936,
+                230,
+                1054
+              ],
+              "privateTemplate": "kithkyn_showcase:dnt_village_swamp/00"
+            },
+            {
+              "id": "S02.2",
+              "sourceId": "F03.4",
+              "label": "House 1",
+              "role": "house",
+              "sourceFamily": "dnt_village_swamp",
+              "sourceMod": "Dungeons and Taverns",
+              "source": "data/minecraft/structure/village_swamp/swamp_village_house1.nbt",
+              "sourceSha256": "d230d27f1b9490f17415baa8d61345596f68b05aa0876eadd3cb9a3a42b71762",
+              "size": [
+                12,
+                7,
+                8
+              ],
+              "origin": [
+                9953,
+                230,
+                1054
+              ],
+              "privateTemplate": "kithkyn_showcase:dnt_village_swamp/03"
+            },
+            {
+              "id": "S02.3",
+              "sourceId": "F03.5",
+              "label": "House 2",
+              "role": "house",
+              "sourceFamily": "dnt_village_swamp",
+              "sourceMod": "Dungeons and Taverns",
+              "source": "data/minecraft/structure/village_swamp/swamp_village_house8.nbt",
+              "sourceSha256": "7da48ed8b58dbf4c882b4e5c76b3135af3c6521c79d9d606937dcbdc455147cb",
+              "size": [
+                10,
+                10,
+                11
+              ],
+              "origin": [
+                9971,
+                230,
+                1054
+              ],
+              "privateTemplate": "kithkyn_showcase:dnt_village_swamp/04"
+            },
+            {
+              "id": "S02.4",
+              "sourceId": "F03.6",
+              "label": "Farm",
+              "role": "food",
+              "sourceFamily": "dnt_village_swamp",
+              "sourceMod": "Dungeons and Taverns",
+              "source": "data/minecraft/structure/village_swamp/swamp_village_farm1.nbt",
+              "sourceSha256": "54c723395d4043899b281a29484fe7d656f2c3f7c9e5eca5d5041484e8024e7c",
+              "size": [
+                7,
+                5,
+                9
+              ],
+              "origin": [
+                9987,
+                230,
+                1054
+              ],
+              "privateTemplate": "kithkyn_showcase:dnt_village_swamp/05"
+            },
+            {
+              "id": "S02.5",
+              "sourceId": "F03.7",
+              "label": "Fishery",
+              "role": "food",
+              "sourceFamily": "dnt_village_swamp",
+              "sourceMod": "Dungeons and Taverns",
+              "source": "data/minecraft/structure/village_swamp/swamp_village_fisher.nbt",
+              "sourceSha256": "6e22f06b3bdb37c93dda9732135e7c7caed631df19b44c2f0a57e2f1ec9a4ad0",
+              "size": [
+                7,
+                10,
+                10
+              ],
+              "origin": [
+                10000,
+                230,
+                1054
+              ],
+              "privateTemplate": "kithkyn_showcase:dnt_village_swamp/06"
+            },
+            {
+              "id": "S02.6",
+              "sourceId": "F03.8",
+              "label": "Smithy",
+              "role": "work",
+              "sourceFamily": "dnt_village_swamp",
+              "sourceMod": "Dungeons and Taverns",
+              "source": "data/minecraft/structure/village_swamp/swamp_village_smithing.nbt",
+              "sourceSha256": "de9f80e077994894d4f5fa52c946b12e304ec3d69ba6a66ea8f1e8abf3246e64",
+              "size": [
+                6,
+                10,
+                7
+              ],
+              "origin": [
+                10013,
+                230,
+                1054
+              ],
+              "privateTemplate": "kithkyn_showcase:dnt_village_swamp/07"
+            },
+            {
+              "id": "S02.7",
+              "sourceId": "F03.9",
+              "label": "Chapel",
+              "role": "civic",
+              "sourceFamily": "dnt_village_swamp",
+              "sourceMod": "Dungeons and Taverns",
+              "source": "data/minecraft/structure/village_swamp/swamp_village_cleric.nbt",
+              "sourceSha256": "b36a670a0def19e5f15dba6c3ff96204858fab21a79d9bcf4ae1261237c40806",
+              "size": [
+                14,
+                15,
+                13
+              ],
+              "origin": [
+                10025,
+                230,
+                1054
+              ],
+              "privateTemplate": "kithkyn_showcase:dnt_village_swamp/08"
+            }
+          ]
+        },
+        {
+          "id": "S03",
+          "title": "CTOV \u2014 OPEN + FORTIFIED",
+          "origin": [
+            9936,
+            230,
+            1098
+          ],
+          "bounds": [
+            9926,
+            220,
+            1089,
+            10075,
+            272,
+            1120
+          ],
+          "entries": [
+            {
+              "id": "S03.1",
+              "sourceId": "E07.1",
+              "label": "Town center 1",
+              "role": "center",
+              "sourceFamily": "ctov_swamp",
+              "sourceMod": "CTOV",
+              "source": "data/ctov/structure/village/swamp/town_center.nbt",
+              "sourceSha256": "27b7f5a1d1dca9c221c745b01004d25ad265e448dda005c86eb8d798ec25e854",
+              "size": [
+                17,
+                15,
+                17
+              ],
+              "origin": [
+                9936,
+                230,
+                1098
+              ],
+              "privateTemplate": "kithkyn_showcase:ctov_swamp/00"
+            },
+            {
+              "id": "S03.2",
+              "sourceId": "E07.2",
+              "label": "Small house",
+              "role": "house",
+              "sourceFamily": "ctov_swamp",
+              "sourceMod": "CTOV",
+              "source": "data/ctov/structure/village/swamp/house/small_1.nbt",
+              "sourceSha256": "fe7fdb3094b55e18144090b83d538eb075f2213f84e57470ea7fbc863817daa6",
+              "size": [
+                7,
+                12,
+                10
+              ],
+              "origin": [
+                9959,
+                230,
+                1098
+              ],
+              "privateTemplate": "kithkyn_showcase:ctov_swamp/01"
+            },
+            {
+              "id": "S03.3",
+              "sourceId": "E07.3",
+              "label": "Large house",
+              "role": "house",
+              "sourceFamily": "ctov_swamp",
+              "sourceMod": "CTOV",
+              "source": "data/ctov/structure/village/swamp/house/big_1.nbt",
+              "sourceSha256": "9a16a734212bf135ff61fde3fc77788ccaf369658d7fe9faca4edad8002217c3",
+              "size": [
+                9,
+                15,
+                13
+              ],
+              "origin": [
+                9972,
+                230,
+                1098
+              ],
+              "privateTemplate": "kithkyn_showcase:ctov_swamp/02"
+            },
+            {
+              "id": "S03.4",
+              "sourceId": "E07.4",
+              "label": "Farm",
+              "role": "food",
+              "sourceFamily": "ctov_swamp",
+              "sourceMod": "CTOV",
+              "source": "data/ctov/structure/village/swamp/jobsite/farm.nbt",
+              "sourceSha256": "6f3495ecf2ea02ae5baf06d991c40a6eec8f92985c96afa852ee77b28b1ab80c",
+              "size": [
+                7,
+                6,
+                11
+              ],
+              "origin": [
+                9987,
+                230,
+                1098
+              ],
+              "privateTemplate": "kithkyn_showcase:ctov_swamp/03"
+            },
+            {
+              "id": "S03.5",
+              "sourceId": "E07.5",
+              "label": "Smithy",
+              "role": "work",
+              "sourceFamily": "ctov_swamp",
+              "sourceMod": "CTOV",
+              "source": "data/ctov/structure/village/swamp/jobsite/smith.nbt",
+              "sourceSha256": "78fbf63ef4d4b3b5ced8885bad83922b9474084bf2d15d50ec2b800531b50f2f",
+              "size": [
+                10,
+                12,
+                10
+              ],
+              "origin": [
+                10000,
+                230,
+                1098
+              ],
+              "privateTemplate": "kithkyn_showcase:ctov_swamp/04"
+            },
+            {
+              "id": "S03.6",
+              "sourceId": "E08.1",
+              "label": "Town center 1",
+              "role": "center",
+              "sourceFamily": "ctov_swamp_fortified",
+              "sourceMod": "CTOV",
+              "source": "data/ctov/structure/village/swamp_fortified/town_center.nbt",
+              "sourceSha256": "2f4ab80376ff177514b033279159ede48e6dbeac7ffc19ce8f56a970a1247405",
+              "size": [
+                19,
+                18,
+                19
+              ],
+              "origin": [
+                10016,
+                230,
+                1098
+              ],
+              "privateTemplate": "kithkyn_showcase:ctov_swamp_fortified/00"
+            },
+            {
+              "id": "S03.7",
+              "sourceId": "E08.3",
+              "label": "Large house",
+              "role": "house",
+              "sourceFamily": "ctov_swamp_fortified",
+              "sourceMod": "CTOV",
+              "source": "data/ctov/structure/village/swamp_fortified/house/big_1.nbt",
+              "sourceSha256": "10d473e04af3355329c9ac630442a67846ef2f4a93b234b196987f31027f783b",
+              "size": [
+                17,
+                8,
+                9
+              ],
+              "origin": [
+                10041,
+                230,
+                1098
+              ],
+              "privateTemplate": "kithkyn_showcase:ctov_swamp_fortified/02"
+            },
+            {
+              "id": "S03.8",
+              "sourceId": "E08.5",
+              "label": "Smithy",
+              "role": "work",
+              "sourceFamily": "ctov_swamp_fortified",
+              "sourceMod": "CTOV",
+              "source": "data/ctov/structure/village/swamp_fortified/jobsite/smith.nbt",
+              "sourceSha256": "ef90bf1841c2ac19709d55e6309c1770073eb5fd4277962ec9d48da435fa79c9",
+              "size": [
+                9,
+                8,
+                9
+              ],
+              "origin": [
+                10064,
+                230,
+                1098
+              ],
+              "privateTemplate": "kithkyn_showcase:ctov_swamp_fortified/04"
+            }
+          ]
+        },
+        {
+          "id": "S04",
+          "title": "WETLAND TAVERN + DEFENSE",
+          "origin": [
+            9936,
+            230,
+            1142
+          ],
+          "bounds": [
+            9926,
+            220,
+            1133,
+            10008,
+            272,
+            1164
+          ],
+          "entries": [
+            {
+              "id": "S04.1",
+              "sourceId": "G05.1",
+              "label": "Swamp Tavern",
+              "role": "tavern",
+              "sourceFamily": "dnt_regional_swamp",
+              "sourceMod": "Dungeons and Taverns",
+              "source": "data/nova_structures/structure/tavern/tavern_house_swamp.nbt",
+              "sourceSha256": "ba8760d9b5f8cd32f8051d0a1d1cc000f2b48491d324c38bed0eef318bc29e9a",
+              "size": [
+                17,
+                13,
+                19
+              ],
+              "origin": [
+                9936,
+                230,
+                1142
+              ],
+              "privateTemplate": "kithkyn_showcase:dnt_regional_swamp/00"
+            },
+            {
+              "id": "S04.2",
+              "sourceId": "G05.2",
+              "label": "Swamp Firewatch",
+              "role": "tower",
+              "sourceFamily": "dnt_regional_swamp",
+              "sourceMod": "Dungeons and Taverns",
+              "source": "data/nova_structures/structure/firewatch_tower/firewatch_swamp.nbt",
+              "sourceSha256": "58b3eba582022c99a2ab4d7c2437512d954c611f54c956230862d011416f6208",
+              "size": [
+                9,
+                19,
+                9
+              ],
+              "origin": [
+                9959,
+                230,
+                1142
+              ],
+              "privateTemplate": "kithkyn_showcase:dnt_regional_swamp/01"
+            },
+            {
+              "id": "S04.3",
+              "sourceId": "NH03.4",
+              "label": "Swamp Tower",
+              "role": "donor",
+              "sourceFamily": "tt_towers",
+              "sourceMod": "Towns & Towers",
+              "source": "data/kaisyn/structure/outpost/towers/swamp/base_plate.nbt",
+              "sourceSha256": "9ad1f690cafc7c887854a9a47a406b1c46f488191a61265d521b0ca4a3cdb264",
+              "size": [
+                19,
+                34,
+                19
+              ],
+              "origin": [
+                9974,
+                230,
+                1142
+              ],
+              "privateTemplate": "kithkyn_nilotic_donors:nh03_4"
+            },
+            {
+              "id": "S04.4",
+              "sourceId": "NI10.7",
+              "label": "Swamp Fishing Hut",
+              "role": "donor",
+              "sourceFamily": "ctov_pools",
+              "sourceMod": "CTOV",
+              "source": "data/ctov/structure/village/swamp/jobsite/fishing_hut.nbt",
+              "sourceSha256": "557e461e149bef74de79d3bd7b42dde2d483d25f8811da9010003e04cf59c9cb",
+              "size": [
+                7,
+                15,
+                10
+              ],
+              "origin": [
+                9999,
+                230,
+                1142
+              ],
+              "privateTemplate": "kithkyn_nilotic_donors:ni10_7"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "viking",
+      "rank": 2,
+      "title": "VIKING TAIGA",
+      "subtitle": "spruce halls / steep roofs / cold timber",
+      "biomes": [
+        "minecraft:taiga",
+        "minecraft:old_growth_pine_taiga",
+        "minecraft:old_growth_spruce_taiga"
+      ],
+      "why": "It gives the taiga family a strong identity and already has a coherent core kit.",
+      "base_x": 10208,
+      "path_block": "minecraft:spruce_planks",
+      "rows": [
+        {
+          "id": "V01",
+          "title": "T&T VIKING \u2014 CORE",
+          "origin": [
+            10208,
+            230,
+            1010
+          ],
+          "bounds": [
+            10198,
+            220,
+            1001,
+            10303,
+            272,
+            1030
+          ],
+          "entries": [
+            {
+              "id": "V01.1",
+              "sourceId": "C04.1",
+              "label": "Town center 1",
+              "role": "center",
+              "sourceFamily": "tt_viking",
+              "sourceMod": "Towns and Towers",
+              "source": "data/kaisyn/structure/village/snowy_taiga_viking/town_centers/snowy_taiga_meeting_point_1.nbt",
+              "sourceSha256": "876fa4959f8d1867bbb4b01568c674f1304f0ce02746f7dc3f4353ddb8172027",
+              "size": [
+                17,
+                11,
+                17
+              ],
+              "origin": [
+                10208,
+                230,
+                1010
+              ],
+              "privateTemplate": "kithkyn_showcase:tt_viking/00"
+            },
+            {
+              "id": "V01.2",
+              "sourceId": "C04.2",
+              "label": "Small house 1",
+              "role": "house",
+              "sourceFamily": "tt_viking",
+              "sourceMod": "Towns and Towers",
+              "source": "data/kaisyn/structure/village/snowy_taiga_viking/houses/snowy_taiga_small_house_1.nbt",
+              "sourceSha256": "e758fa7f87a918d68abdbff1c279ad94ad574d22ab2e0168b046d38396c65659",
+              "size": [
+                7,
+                7,
+                7
+              ],
+              "origin": [
+                10231,
+                230,
+                1010
+              ],
+              "privateTemplate": "kithkyn_showcase:tt_viking/01"
+            },
+            {
+              "id": "V01.3",
+              "sourceId": "C04.3",
+              "label": "Small house 2",
+              "role": "house",
+              "sourceFamily": "tt_viking",
+              "sourceMod": "Towns and Towers",
+              "source": "data/kaisyn/structure/village/snowy_taiga_viking/houses/snowy_taiga_small_house_2.nbt",
+              "sourceSha256": "18d4ee398d24dfb368640804d6318a80a282395e013163bb8c8d28a92471f209",
+              "size": [
+                9,
+                7,
+                7
+              ],
+              "origin": [
+                10244,
+                230,
+                1010
+              ],
+              "privateTemplate": "kithkyn_showcase:tt_viking/02"
+            },
+            {
+              "id": "V01.4",
+              "sourceId": "C04.4",
+              "label": "Armorer",
+              "role": "work",
+              "sourceFamily": "tt_viking",
+              "sourceMod": "Towns and Towers",
+              "source": "data/kaisyn/structure/village/snowy_taiga_viking/houses/snowy_taiga_armorer_1.nbt",
+              "sourceSha256": "98c9adbc7a813b5bc347911cff68b324095148e4fa5d464721c116d1af8e040b",
+              "size": [
+                9,
+                8,
+                7
+              ],
+              "origin": [
+                10259,
+                230,
+                1010
+              ],
+              "privateTemplate": "kithkyn_showcase:tt_viking/03"
+            },
+            {
+              "id": "V01.5",
+              "sourceId": "C04.5",
+              "label": "Fisher",
+              "role": "food",
+              "sourceFamily": "tt_viking",
+              "sourceMod": "Towns and Towers",
+              "source": "data/kaisyn/structure/village/snowy_taiga_viking/houses/snowy_taiga_fisher_1.nbt",
+              "sourceSha256": "218b816d426cd0768ee73fc534e5723fdce14696bccf487eafc6c26b3ea2e178",
+              "size": [
+                10,
+                8,
+                7
+              ],
+              "origin": [
+                10274,
+                230,
+                1010
+              ],
+              "privateTemplate": "kithkyn_showcase:tt_viking/04"
+            },
+            {
+              "id": "V01.6",
+              "sourceId": "C04.6",
+              "label": "Temple / landmark",
+              "role": "civic",
+              "sourceFamily": "tt_viking",
+              "sourceMod": "Towns and Towers",
+              "source": "data/kaisyn/structure/village/snowy_taiga_viking/houses/snowy_taiga_temple_1.nbt",
+              "sourceSha256": "365922afbc21e3b27e95925efc10f0547c2a76b9b81984475bb3e614e8d09329",
+              "size": [
+                11,
+                8,
+                10
+              ],
+              "origin": [
+                10290,
+                230,
+                1010
+              ],
+              "privateTemplate": "kithkyn_showcase:tt_viking/05"
+            }
+          ]
+        },
+        {
+          "id": "V02",
+          "title": "POLISH \u2014 OLD GROWTH DONORS",
+          "origin": [
+            10208,
+            230,
+            1054
+          ],
+          "bounds": [
+            10198,
+            220,
+            1045,
+            10292,
+            272,
+            1070
+          ],
+          "entries": [
+            {
+              "id": "V02.1",
+              "sourceId": "C01.1",
+              "label": "Town center 1",
+              "role": "center",
+              "sourceFamily": "tt_polish",
+              "sourceMod": "Towns and Towers",
+              "source": "data/kaisyn/structure/village/old_growth_taiga_polish/town_centers/old_growth_taiga_meeting_point_1.nbt",
+              "sourceSha256": "eb7b2ccea18ffa97510be09c0b2e118682c6ba5edcdf4c0d67bdf1b750d05e38",
+              "size": [
+                13,
+                6,
+                13
+              ],
+              "origin": [
+                10208,
+                230,
+                1054
+              ],
+              "privateTemplate": "kithkyn_showcase:tt_polish/00"
+            },
+            {
+              "id": "V02.2",
+              "sourceId": "C01.2",
+              "label": "Medium house 1",
+              "role": "house",
+              "sourceFamily": "tt_polish",
+              "sourceMod": "Towns and Towers",
+              "source": "data/kaisyn/structure/village/old_growth_taiga_polish/houses/old_growth_taiga_medium_house_1.nbt",
+              "sourceSha256": "3e227b6f45f7f4900c3203576566fe219683bf3def1dcb49851bacf57a529dba",
+              "size": [
+                10,
+                7,
+                8
+              ],
+              "origin": [
+                10227,
+                230,
+                1054
+              ],
+              "privateTemplate": "kithkyn_showcase:tt_polish/01"
+            },
+            {
+              "id": "V02.3",
+              "sourceId": "C01.4",
+              "label": "Armorer + butcher",
+              "role": "work",
+              "sourceFamily": "tt_polish",
+              "sourceMod": "Towns and Towers",
+              "source": "data/kaisyn/structure/village/old_growth_taiga_polish/houses/old_growth_taiga_armorer_and_butcher_1.nbt",
+              "sourceSha256": "8be33425622d03f37c4e88390fc1532b5af09a6504d3a073f2083cb18ffb9598",
+              "size": [
+                13,
+                9,
+                10
+              ],
+              "origin": [
+                10243,
+                230,
+                1054
+              ],
+              "privateTemplate": "kithkyn_showcase:tt_polish/03"
+            },
+            {
+              "id": "V02.4",
+              "sourceId": "C01.5",
+              "label": "Fisher",
+              "role": "food",
+              "sourceFamily": "tt_polish",
+              "sourceMod": "Towns and Towers",
+              "source": "data/kaisyn/structure/village/old_growth_taiga_polish/houses/old_growth_taiga_fisher_1.nbt",
+              "sourceSha256": "d87e295549f18c15b688b6273a7b703b03133327db02be5d989e5a1c718559c8",
+              "size": [
+                13,
+                9,
+                12
+              ],
+              "origin": [
+                10262,
+                230,
+                1054
+              ],
+              "privateTemplate": "kithkyn_showcase:tt_polish/04"
+            },
+            {
+              "id": "V02.5",
+              "sourceId": "C01.6",
+              "label": "Temple / landmark",
+              "role": "civic",
+              "sourceFamily": "tt_polish",
+              "sourceMod": "Towns and Towers",
+              "source": "data/kaisyn/structure/village/old_growth_taiga_polish/houses/old_growth_taiga_temple_1.nbt",
+              "sourceSha256": "2c36163abba52dd77c8a6645b478501f47d2847f76d2f69f6af51a103cb3a207",
+              "size": [
+                9,
+                8,
+                11
+              ],
+              "origin": [
+                10281,
+                230,
+                1054
+              ],
+              "privateTemplate": "kithkyn_showcase:tt_polish/05"
+            }
+          ]
+        },
+        {
+          "id": "V03",
+          "title": "SWEDISH \u2014 SHIELD DONORS",
+          "origin": [
+            10208,
+            230,
+            1098
+          ],
+          "bounds": [
+            10198,
+            220,
+            1089,
+            10279,
+            272,
+            1112
+          ],
+          "entries": [
+            {
+              "id": "V03.1",
+              "sourceId": "A06.1",
+              "label": "Town center 1",
+              "role": "center",
+              "sourceFamily": "tt_swedish",
+              "sourceMod": "Towns and Towers",
+              "source": "data/kaisyn/structure/village/exclusives/swedish/town_centers/swedish_meeting_point_1.nbt",
+              "sourceSha256": "c7975902a2522660841814a25ca09cefd799039884a9d6f8753c2ce6e10790d1",
+              "size": [
+                9,
+                5,
+                9
+              ],
+              "origin": [
+                10208,
+                230,
+                1098
+              ],
+              "privateTemplate": "kithkyn_showcase:tt_swedish/00"
+            },
+            {
+              "id": "V03.2",
+              "sourceId": "A06.2",
+              "label": "Small house 1",
+              "role": "house",
+              "sourceFamily": "tt_swedish",
+              "sourceMod": "Towns and Towers",
+              "source": "data/kaisyn/structure/village/exclusives/swedish/houses/swedish_small_house_1.nbt",
+              "sourceSha256": "7afc6ee363e6e16a78f18832714b14f18e8136073afce2a87349047d67b6a620",
+              "size": [
+                7,
+                8,
+                8
+              ],
+              "origin": [
+                10223,
+                230,
+                1098
+              ],
+              "privateTemplate": "kithkyn_showcase:tt_swedish/01"
+            },
+            {
+              "id": "V03.3",
+              "sourceId": "A06.4",
+              "label": "Armorer",
+              "role": "work",
+              "sourceFamily": "tt_swedish",
+              "sourceMod": "Towns and Towers",
+              "source": "data/kaisyn/structure/village/exclusives/swedish/houses/swedish_armorer_1.nbt",
+              "sourceSha256": "eca35aac81ddf41fa7051497b41f5dd30cd3e5ba6eb30eddf2c5390bea3a871a",
+              "size": [
+                9,
+                8,
+                9
+              ],
+              "origin": [
+                10236,
+                230,
+                1098
+              ],
+              "privateTemplate": "kithkyn_showcase:tt_swedish/03"
+            },
+            {
+              "id": "V03.4",
+              "sourceId": "A06.5",
+              "label": "Farmer + fisher",
+              "role": "food",
+              "sourceFamily": "tt_swedish",
+              "sourceMod": "Towns and Towers",
+              "source": "data/kaisyn/structure/village/exclusives/swedish/houses/swedish_farmer_and_fisher_1.nbt",
+              "sourceSha256": "6a6d9cc5570036c5a998e38c673d6a8c907e67b227dec1580ee7f38298579fc1",
+              "size": [
+                8,
+                9,
+                11
+              ],
+              "origin": [
+                10251,
+                230,
+                1098
+              ],
+              "privateTemplate": "kithkyn_showcase:tt_swedish/04"
+            },
+            {
+              "id": "V03.5",
+              "sourceId": "A06.6",
+              "label": "Temple / landmark",
+              "role": "civic",
+              "sourceFamily": "tt_swedish",
+              "sourceMod": "Towns and Towers",
+              "source": "data/kaisyn/structure/village/exclusives/swedish/houses/swedish_library_and_temple_1.nbt",
+              "sourceSha256": "eb74fb3bcd25c365b8192c3baa1e82d86e9dd0719f5878cd313ceb63b11bdf27",
+              "size": [
+                12,
+                18,
+                10
+              ],
+              "origin": [
+                10265,
+                230,
+                1098
+              ],
+              "privateTemplate": "kithkyn_showcase:tt_swedish/05"
+            }
+          ]
+        },
+        {
+          "id": "V04",
+          "title": "TAIGA + SPRUCE SERVICES",
+          "origin": [
+            10208,
+            230,
+            1142
+          ],
+          "bounds": [
+            10198,
+            220,
+            1133,
+            10345,
+            272,
+            1164
+          ],
+          "entries": [
+            {
+              "id": "V04.1",
+              "sourceId": "E09.1",
+              "label": "Town center 1",
+              "role": "center",
+              "sourceFamily": "ctov_taiga",
+              "sourceMod": "CTOV",
+              "source": "data/ctov/structure/village/taiga/town_center.nbt",
+              "sourceSha256": "6c60570a11c0ef6f9fe65a89bfc3022c4ff71c61656ee637742f16de096e4b86",
+              "size": [
+                13,
+                13,
+                13
+              ],
+              "origin": [
+                10208,
+                230,
+                1142
+              ],
+              "privateTemplate": "kithkyn_showcase:ctov_taiga/00"
+            },
+            {
+              "id": "V04.2",
+              "sourceId": "E09.2",
+              "label": "Small house",
+              "role": "house",
+              "sourceFamily": "ctov_taiga",
+              "sourceMod": "CTOV",
+              "source": "data/ctov/structure/village/taiga/house/small_1.nbt",
+              "sourceSha256": "0dfaf309719a7645d3e602695fcda108ce3fee00d29f5064e063ba1da678ac28",
+              "size": [
+                9,
+                11,
+                9
+              ],
+              "origin": [
+                10227,
+                230,
+                1142
+              ],
+              "privateTemplate": "kithkyn_showcase:ctov_taiga/01"
+            },
+            {
+              "id": "V04.3",
+              "sourceId": "E09.3",
+              "label": "Large house",
+              "role": "house",
+              "sourceFamily": "ctov_taiga",
+              "sourceMod": "CTOV",
+              "source": "data/ctov/structure/village/taiga/house/big_1.nbt",
+              "sourceSha256": "d68c9c39a48e4550d12fa15acc04d18ddd6e692e037b03aeb736fc23bbcad3a3",
+              "size": [
+                15,
+                17,
+                12
+              ],
+              "origin": [
+                10242,
+                230,
+                1142
+              ],
+              "privateTemplate": "kithkyn_showcase:ctov_taiga/02"
+            },
+            {
+              "id": "V04.4",
+              "sourceId": "E09.4",
+              "label": "Farm",
+              "role": "food",
+              "sourceFamily": "ctov_taiga",
+              "sourceMod": "CTOV",
+              "source": "data/ctov/structure/village/taiga/jobsite/farm.nbt",
+              "sourceSha256": "27fbbbb105802f285ec2dd458188c62c079dfd8b706fd398fe41cfbe65ef9de0",
+              "size": [
+                16,
+                10,
+                12
+              ],
+              "origin": [
+                10263,
+                230,
+                1142
+              ],
+              "privateTemplate": "kithkyn_showcase:ctov_taiga/03"
+            },
+            {
+              "id": "V04.5",
+              "sourceId": "E09.5",
+              "label": "Smithy",
+              "role": "work",
+              "sourceFamily": "ctov_taiga",
+              "sourceMod": "CTOV",
+              "source": "data/ctov/structure/village/taiga/jobsite/smith.nbt",
+              "sourceSha256": "7be2531385a7fc16eef1cde086ce55977fb83f409e1797d539ebb94a52e483ae",
+              "size": [
+                11,
+                10,
+                11
+              ],
+              "origin": [
+                10285,
+                230,
+                1142
+              ],
+              "privateTemplate": "kithkyn_showcase:ctov_taiga/04"
+            },
+            {
+              "id": "V04.6",
+              "sourceId": "F06.1",
+              "label": "Spruce Tavern",
+              "role": "tavern",
+              "sourceFamily": "dnt_regional_spruce",
+              "sourceMod": "Dungeons and Taverns",
+              "source": "data/nova_structures/structure/tavern/tavern_house_spruce.nbt",
+              "sourceSha256": "b064a033a2688f7e43c2390c1ea2cc2c587970e72da907837d3eaec530da443d",
+              "size": [
+                17,
+                14,
+                19
+              ],
+              "origin": [
+                10302,
+                230,
+                1142
+              ],
+              "privateTemplate": "kithkyn_showcase:dnt_regional_spruce/00"
+            },
+            {
+              "id": "V04.7",
+              "sourceId": "F06.2",
+              "label": "Spruce Firewatch",
+              "role": "tower",
+              "sourceFamily": "dnt_regional_spruce",
+              "sourceMod": "Dungeons and Taverns",
+              "source": "data/nova_structures/structure/firewatch_tower/firewatch_taiga.nbt",
+              "sourceSha256": "27e0917ca62fdea638e831baf5154c9f83110ede68f02e1b41b9361217b553a9",
+              "size": [
+                9,
+                19,
+                9
+              ],
+              "origin": [
+                10325,
+                230,
+                1142
+              ],
+              "privateTemplate": "kithkyn_showcase:dnt_regional_spruce/01"
+            },
+            {
+              "id": "V04.8",
+              "sourceId": "F06.3",
+              "label": "Spruce Well",
+              "role": "well",
+              "sourceFamily": "dnt_regional_spruce",
+              "sourceMod": "Dungeons and Taverns",
+              "source": "data/nova_structures/structure/well/well_spruce.nbt",
+              "sourceSha256": "6d7f413f8a8049a8f914d3ed2670db00efbf951823ffe9ab3034a2efd3ba96d2",
+              "size": [
+                3,
+                12,
+                3
+              ],
+              "origin": [
+                10340,
+                222,
+                1142
+              ],
+              "privateTemplate": "kithkyn_showcase:dnt_regional_spruce/02"
+            }
+          ]
+        },
+        {
+          "id": "V05",
+          "title": "TAIGA DEFENSE SILHOUETTES",
+          "origin": [
+            10208,
+            230,
+            1186
+          ],
+          "bounds": [
+            10198,
+            220,
+            1177,
+            10272,
+            272,
+            1204
+          ],
+          "entries": [
+            {
+              "id": "V05.1",
+              "sourceId": "NH03.2",
+              "label": "Snowy Taiga Tower",
+              "role": "donor",
+              "sourceFamily": "tt_towers",
+              "sourceMod": "Towns & Towers",
+              "source": "data/kaisyn/structure/outpost/towers/snowy_taiga/base_plate.nbt",
+              "sourceSha256": "902801d06dc3be49e5c74dcfba971373f768db0abb78fd082d0a101e98780510",
+              "size": [
+                13,
+                35,
+                13
+              ],
+              "origin": [
+                10208,
+                230,
+                1186
+              ],
+              "privateTemplate": "kithkyn_nilotic_donors:nh03_2"
+            },
+            {
+              "id": "V05.2",
+              "sourceId": "NH01.3",
+              "label": "Swedish Tower",
+              "role": "donor",
+              "sourceFamily": "tt_towers",
+              "sourceMod": "Towns & Towers",
+              "source": "data/kaisyn/structure/outpost/towers/exclusives/swedish/base_plate.nbt",
+              "sourceSha256": "97a94d730078f72d0a7165b880ddd858036f198809b87095e78dee14c693d188",
+              "size": [
+                24,
+                37,
+                15
+              ],
+              "origin": [
+                10227,
+                230,
+                1186
+              ],
+              "privateTemplate": "kithkyn_nilotic_donors:nh01_3"
+            },
+            {
+              "id": "V05.3",
+              "sourceId": "NH05.4",
+              "label": "Taiga Tower",
+              "role": "donor",
+              "sourceFamily": "ctov_towers",
+              "sourceMod": "CTOV",
+              "source": "data/ctov/structure/pillager_outpost/taiga/tower.nbt",
+              "sourceSha256": "d129927dfc18c29ff6d5cf8ccee2a8c893c36bf23619883146a329f3a77af861",
+              "size": [
+                13,
+                15,
+                13
+              ],
+              "origin": [
+                10257,
+                230,
+                1186
+              ],
+              "privateTemplate": "kithkyn_nilotic_donors:nh05_4"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mediterranean",
+      "rank": 3,
+      "title": "MEDITERRANEAN PLAINS",
+      "subtitle": "stone / plaster / tile / courtyards",
+      "biomes": [
+        "minecraft:plains",
+        "minecraft:sunflower_plains"
+      ],
+      "why": "It covers the common Plains family with a distinct culture instead of another generic oak village.",
+      "base_x": 10480,
+      "path_block": "minecraft:smooth_sandstone",
+      "rows": [
+        {
+          "id": "M01",
+          "title": "T&T MEDITERRANEAN \u2014 CORE",
+          "origin": [
+            10480,
+            230,
+            1010
+          ],
+          "bounds": [
+            10470,
+            220,
+            1001,
+            10566,
+            272,
+            1036
+          ],
+          "entries": [
+            {
+              "id": "M01.1",
+              "sourceId": "A03.1",
+              "label": "Town center 1",
+              "role": "center",
+              "sourceFamily": "tt_mediterranean",
+              "sourceMod": "Towns and Towers",
+              "source": "data/kaisyn/structure/village/exclusives/mediterranean/town_centers/med_meeting_point_1.nbt",
+              "sourceSha256": "3c4abda662f00ce832c304db543ad712b210d9d8117a86c98fc75933c5604843",
+              "size": [
+                25,
+                17,
+                23
+              ],
+              "origin": [
+                10480,
+                230,
+                1010
+              ],
+              "privateTemplate": "kithkyn_showcase:tt_mediterranean/00"
+            },
+            {
+              "id": "M01.2",
+              "sourceId": "A03.2",
+              "label": "Corner house 1",
+              "role": "house",
+              "sourceFamily": "tt_mediterranean",
+              "sourceMod": "Towns and Towers",
+              "source": "data/kaisyn/structure/village/exclusives/mediterranean/houses/corner/med_small_house_1.nbt",
+              "sourceSha256": "ae48a559ffd44376529fb4adf11f0409a42af24d7bd18a40d44170ed89aeaa5e",
+              "size": [
+                5,
+                6,
+                5
+              ],
+              "origin": [
+                10511,
+                230,
+                1010
+              ],
+              "privateTemplate": "kithkyn_showcase:tt_mediterranean/01"
+            },
+            {
+              "id": "M01.3",
+              "sourceId": "A03.3",
+              "label": "Large house 1",
+              "role": "house",
+              "sourceFamily": "tt_mediterranean",
+              "sourceMod": "Towns and Towers",
+              "source": "data/kaisyn/structure/village/exclusives/mediterranean/houses/regular/med_large_house_1.nbt",
+              "sourceSha256": "40335aa2548c1ae47abf2e2ffdf142aa97ab93bfe357a71026ec8d86617297ca",
+              "size": [
+                10,
+                7,
+                10
+              ],
+              "origin": [
+                10522,
+                230,
+                1010
+              ],
+              "privateTemplate": "kithkyn_showcase:tt_mediterranean/02_regular"
+            },
+            {
+              "id": "M01.4",
+              "sourceId": "A03.4",
+              "label": "Armorer + weaponsmith",
+              "role": "work",
+              "sourceFamily": "tt_mediterranean",
+              "sourceMod": "Towns and Towers",
+              "source": "data/kaisyn/structure/village/exclusives/mediterranean/houses/regular/med_armorer_and_weaponsmith_1.nbt",
+              "sourceSha256": "fe7501c8f61a6269181c4be531fb38ec02fdd245a8f8df940683d6da8bb6b9a2",
+              "size": [
+                10,
+                8,
+                10
+              ],
+              "origin": [
+                10538,
+                230,
+                1010
+              ],
+              "privateTemplate": "kithkyn_showcase:tt_mediterranean/03"
+            },
+            {
+              "id": "M01.5",
+              "sourceId": "A03.5",
+              "label": "Food / fishery",
+              "role": "food",
+              "sourceFamily": "tt_mediterranean",
+              "sourceMod": "Towns and Towers",
+              "source": "data/kaisyn/structure/village/exclusives/mediterranean/houses/regular/med_farmer_and_mason_1.nbt",
+              "sourceSha256": "441d71011c9b95590c4696ad37e6d2ccb65842e9f0ab61c482e643a13a9ffebc",
+              "size": [
+                10,
+                8,
+                10
+              ],
+              "origin": [
+                10554,
+                230,
+                1010
+              ],
+              "privateTemplate": "kithkyn_showcase:tt_mediterranean/04"
+            }
+          ]
+        },
+        {
+          "id": "M02",
+          "title": "T&T IBERIAN \u2014 HEAVIER DONORS",
+          "origin": [
+            10480,
+            230,
+            1054
+          ],
+          "bounds": [
+            10470,
+            220,
+            1045,
+            10565,
+            272,
+            1074
+          ],
+          "entries": [
+            {
+              "id": "M02.1",
+              "sourceId": "A02.1",
+              "label": "Town center 1",
+              "role": "center",
+              "sourceFamily": "tt_iberian",
+              "sourceMod": "Towns and Towers",
+              "source": "data/kaisyn/structure/village/exclusives/iberian/town_centers/iberian_meeting_point_1.nbt",
+              "sourceSha256": "ca4e06307b87ba1a32aab7b11e2693eb221c7fe1b63970d052da7110c59242e8",
+              "size": [
+                17,
+                5,
+                17
+              ],
+              "origin": [
+                10480,
+                230,
+                1054
+              ],
+              "privateTemplate": "kithkyn_showcase:tt_iberian/00"
+            },
+            {
+              "id": "M02.2",
+              "sourceId": "A02.2",
+              "label": "Large house 1",
+              "role": "house",
+              "sourceFamily": "tt_iberian",
+              "sourceMod": "Towns and Towers",
+              "source": "data/kaisyn/structure/village/exclusives/iberian/houses/iberian_large_house_1.nbt",
+              "sourceSha256": "cdbebdc93694c024284171245423846bd85bece6acc7334f7e9c7b4104af72ac",
+              "size": [
+                17,
+                9,
+                15
+              ],
+              "origin": [
+                10503,
+                230,
+                1054
+              ],
+              "privateTemplate": "kithkyn_showcase:tt_iberian/01"
+            },
+            {
+              "id": "M02.3",
+              "sourceId": "A02.3",
+              "label": "Large house 2",
+              "role": "house",
+              "sourceFamily": "tt_iberian",
+              "sourceMod": "Towns and Towers",
+              "source": "data/kaisyn/structure/village/exclusives/iberian/houses/iberian_large_house_2.nbt",
+              "sourceSha256": "376a0fa335648b6082c7609e4f0a4cdbf714f4b70f1d3449ce49e3e182c3ccaf",
+              "size": [
+                16,
+                8,
+                14
+              ],
+              "origin": [
+                10526,
+                230,
+                1054
+              ],
+              "privateTemplate": "kithkyn_showcase:tt_iberian/02"
+            },
+            {
+              "id": "M02.4",
+              "sourceId": "A02.4",
+              "label": "Temple / landmark",
+              "role": "civic",
+              "sourceFamily": "tt_iberian",
+              "sourceMod": "Towns and Towers",
+              "source": "data/kaisyn/structure/village/exclusives/iberian/houses/iberian_temple_1.nbt",
+              "sourceSha256": "522a5cf4c2b2715ed772f4e3eca3ea5b141220e9804490878e8be934b8d55d0e",
+              "size": [
+                15,
+                16,
+                11
+              ],
+              "origin": [
+                10548,
+                230,
+                1054
+              ],
+              "privateTemplate": "kithkyn_showcase:tt_iberian/03"
+            }
+          ]
+        },
+        {
+          "id": "M03",
+          "title": "CTOV PLAINS \u2014 CIVIC DONORS",
+          "origin": [
+            10480,
+            230,
+            1098
+          ],
+          "bounds": [
+            10470,
+            220,
+            1089,
+            10591,
+            272,
+            1118
+          ],
+          "entries": [
+            {
+              "id": "M03.1",
+              "sourceId": "E02.1",
+              "label": "Town center 1",
+              "role": "center",
+              "sourceFamily": "ctov_plains",
+              "sourceMod": "CTOV",
+              "source": "data/ctov/structure/village/plains/town_center.nbt",
+              "sourceSha256": "428a91aefcb4e0aa72c9c86b97c07bc779bad82ec2c77b490e80865e9a223b70",
+              "size": [
+                17,
+                10,
+                17
+              ],
+              "origin": [
+                10480,
+                230,
+                1098
+              ],
+              "privateTemplate": "kithkyn_showcase:ctov_plains/00"
+            },
+            {
+              "id": "M03.2",
+              "sourceId": "E02.2",
+              "label": "Small house",
+              "role": "house",
+              "sourceFamily": "ctov_plains",
+              "sourceMod": "CTOV",
+              "source": "data/ctov/structure/village/plains/house/small_1.nbt",
+              "sourceSha256": "156acdd83dcb15281006b79f64d46187da537d4123c81003903aec9b0d666c52",
+              "size": [
+                9,
+                9,
+                8
+              ],
+              "origin": [
+                10503,
+                230,
+                1098
+              ],
+              "privateTemplate": "kithkyn_showcase:ctov_plains/01"
+            },
+            {
+              "id": "M03.3",
+              "sourceId": "E02.3",
+              "label": "Large house",
+              "role": "house",
+              "sourceFamily": "ctov_plains",
+              "sourceMod": "CTOV",
+              "source": "data/ctov/structure/village/plains/house/big_1.nbt",
+              "sourceSha256": "a12408149ba5028f262e2570aa1ce34c3f9ed67fe33c0f40935dd0ef06e9b8f4",
+              "size": [
+                13,
+                16,
+                11
+              ],
+              "origin": [
+                10518,
+                230,
+                1098
+              ],
+              "privateTemplate": "kithkyn_showcase:ctov_plains/02"
+            },
+            {
+              "id": "M03.4",
+              "sourceId": "E02.4",
+              "label": "Farm",
+              "role": "food",
+              "sourceFamily": "ctov_plains",
+              "sourceMod": "CTOV",
+              "source": "data/ctov/structure/village/plains/jobsite/farm.nbt",
+              "sourceSha256": "e4664b9e018826667de838138c003854bcb69ace78ab6435fbdb98d97ffadeed",
+              "size": [
+                11,
+                4,
+                11
+              ],
+              "origin": [
+                10537,
+                230,
+                1098
+              ],
+              "privateTemplate": "kithkyn_showcase:ctov_plains/03"
+            },
+            {
+              "id": "M03.5",
+              "sourceId": "E02.5",
+              "label": "Smithy",
+              "role": "work",
+              "sourceFamily": "ctov_plains",
+              "sourceMod": "CTOV",
+              "source": "data/ctov/structure/village/plains/jobsite/smith.nbt",
+              "sourceSha256": "6324699c6d5f0c9279ee59c0d054c28958c478ea2286c6d6ec2f0fd9decfbff4",
+              "size": [
+                12,
+                9,
+                10
+              ],
+              "origin": [
+                10554,
+                230,
+                1098
+              ],
+              "privateTemplate": "kithkyn_showcase:ctov_plains/04"
+            },
+            {
+              "id": "M03.6",
+              "sourceId": "E03.1",
+              "label": "Town center 1",
+              "role": "center",
+              "sourceFamily": "ctov_plains_fortified",
+              "sourceMod": "CTOV",
+              "source": "data/ctov/structure/village/plains_fortified/town_center.nbt",
+              "sourceSha256": "c3b11de002850a61981e2a22e5839cb16e351df1e24898563406ea25bd9e562b",
+              "size": [
+                17,
+                28,
+                17
+              ],
+              "origin": [
+                10572,
+                230,
+                1098
+              ],
+              "privateTemplate": "kithkyn_showcase:ctov_plains_fortified/00"
+            }
+          ]
+        },
+        {
+          "id": "M04",
+          "title": "FIELDS + OAK SERVICES",
+          "origin": [
+            10480,
+            230,
+            1142
+          ],
+          "bounds": [
+            10470,
+            220,
+            1133,
+            10588,
+            272,
+            1169
+          ],
+          "entries": [
+            {
+              "id": "M04.1",
+              "sourceId": "NG01.1",
+              "label": "Mediterranean Fort Field 1",
+              "role": "donor",
+              "sourceFamily": "tt_farms",
+              "sourceMod": "Towns & Towers",
+              "source": "data/kaisyn/structure/outpost/forts/exclusives/mediterranean/fields/field_1.nbt",
+              "sourceSha256": "f6f3710dcfe65a8d8e10ea3651aceda375b9f3c8bea154d3c40165ae9854ca7f",
+              "size": [
+                14,
+                3,
+                24
+              ],
+              "origin": [
+                10480,
+                230,
+                1142
+              ],
+              "privateTemplate": "kithkyn_nilotic_donors:ng01_1"
+            },
+            {
+              "id": "M04.2",
+              "sourceId": "NG01.2",
+              "label": "Mediterranean Fort Field 2",
+              "role": "donor",
+              "sourceFamily": "tt_farms",
+              "sourceMod": "Towns & Towers",
+              "source": "data/kaisyn/structure/outpost/forts/exclusives/mediterranean/fields/field_2.nbt",
+              "sourceSha256": "d43abba6b46ec88a094a70b1724d34581fc5b27a08ff8944afae4548bd872e19",
+              "size": [
+                13,
+                5,
+                18
+              ],
+              "origin": [
+                10500,
+                230,
+                1142
+              ],
+              "privateTemplate": "kithkyn_nilotic_donors:ng01_2"
+            },
+            {
+              "id": "M04.3",
+              "sourceId": "NG01.6",
+              "label": "Iberian Garden 1",
+              "role": "donor",
+              "sourceFamily": "tt_farms",
+              "sourceMod": "Towns & Towers",
+              "source": "data/kaisyn/structure/village/exclusives/iberian/houses/iberian_garden_1.nbt",
+              "sourceSha256": "485837c786613a2dfd7c7f41f88bc29f07c241a9a8f890965b79e1b0c1db4211",
+              "size": [
+                8,
+                5,
+                7
+              ],
+              "origin": [
+                10519,
+                230,
+                1142
+              ],
+              "privateTemplate": "kithkyn_nilotic_donors:ng01_6"
+            },
+            {
+              "id": "M04.4",
+              "sourceId": "NG01.7",
+              "label": "Mediterranean Small Garden 1",
+              "role": "donor",
+              "sourceFamily": "tt_farms",
+              "sourceMod": "Towns & Towers",
+              "source": "data/kaisyn/structure/village/exclusives/mediterranean/houses/corner/med_small_garden_1.nbt",
+              "sourceSha256": "567613da1cdca0060d7ef828a82cbcac8b1818d048cdb74660aa090ea15e8542",
+              "size": [
+                5,
+                5,
+                5
+              ],
+              "origin": [
+                10533,
+                230,
+                1142
+              ],
+              "privateTemplate": "kithkyn_nilotic_donors:ng01_7"
+            },
+            {
+              "id": "M04.5",
+              "sourceId": "F04.1",
+              "label": "Oak Tavern",
+              "role": "tavern",
+              "sourceFamily": "dnt_regional_oak",
+              "sourceMod": "Dungeons and Taverns",
+              "source": "data/nova_structures/structure/tavern/tavern_house_oak.nbt",
+              "sourceSha256": "f24ddb7f540be70752868dcac2129fe61031336f65ff993e0903cd8436efa3c2",
+              "size": [
+                18,
+                13,
+                20
+              ],
+              "origin": [
+                10544,
+                230,
+                1142
+              ],
+              "privateTemplate": "kithkyn_showcase:dnt_regional_oak/00"
+            },
+            {
+              "id": "M04.6",
+              "sourceId": "F04.2",
+              "label": "Oak Firewatch",
+              "role": "tower",
+              "sourceFamily": "dnt_regional_oak",
+              "sourceMod": "Dungeons and Taverns",
+              "source": "data/nova_structures/structure/firewatch_tower/firewatch_forest.nbt",
+              "sourceSha256": "07e27a2c16b0fd71e189a108721d9fc3419fe1041d0a7c178545964ec233a9b9",
+              "size": [
+                9,
+                19,
+                9
+              ],
+              "origin": [
+                10568,
+                230,
+                1142
+              ],
+              "privateTemplate": "kithkyn_showcase:dnt_regional_oak/01"
+            },
+            {
+              "id": "M04.7",
+              "sourceId": "F04.3",
+              "label": "Oak Well",
+              "role": "well",
+              "sourceFamily": "dnt_regional_oak",
+              "sourceMod": "Dungeons and Taverns",
+              "source": "data/nova_structures/structure/well/well_oak.nbt",
+              "sourceSha256": "e0884a983ad1202c83c94ff12740fbc5382cbfd6de93af56c17f7fc1ecbc1902",
+              "size": [
+                3,
+                11,
+                3
+              ],
+              "origin": [
+                10583,
+                222,
+                1142
+              ],
+              "privateTemplate": "kithkyn_showcase:dnt_regional_oak/02"
+            }
+          ]
+        },
+        {
+          "id": "M05",
+          "title": "FORTIFIED PLAINS DONORS",
+          "origin": [
+            10480,
+            230,
+            1186
+          ],
+          "bounds": [
+            10470,
+            220,
+            1177,
+            10536,
+            272,
+            1199
+          ],
+          "entries": [
+            {
+              "id": "M05.1",
+              "sourceId": "E03.2",
+              "label": "Small house",
+              "role": "house",
+              "sourceFamily": "ctov_plains_fortified",
+              "sourceMod": "CTOV",
+              "source": "data/ctov/structure/village/plains_fortified/house/small_1.nbt",
+              "sourceSha256": "aa99b9422b6012a571fedd2d9266ec956a21b922343fa325bfb7f1ef309c5e64",
+              "size": [
+                7,
+                10,
+                7
+              ],
+              "origin": [
+                10480,
+                230,
+                1186
+              ],
+              "privateTemplate": "kithkyn_showcase:ctov_plains_fortified/01"
+            },
+            {
+              "id": "M05.2",
+              "sourceId": "E03.3",
+              "label": "Large house",
+              "role": "house",
+              "sourceFamily": "ctov_plains_fortified",
+              "sourceMod": "CTOV",
+              "source": "data/ctov/structure/village/plains_fortified/house/big_1.nbt",
+              "sourceSha256": "bcf7089f0d1dfd640fe9ce4052abf7ec390cb18fb5c6454d852c862d08abc5bb",
+              "size": [
+                9,
+                15,
+                9
+              ],
+              "origin": [
+                10493,
+                230,
+                1186
+              ],
+              "privateTemplate": "kithkyn_showcase:ctov_plains_fortified/02"
+            },
+            {
+              "id": "M05.3",
+              "sourceId": "E03.4",
+              "label": "Farm",
+              "role": "food",
+              "sourceFamily": "ctov_plains_fortified",
+              "sourceMod": "CTOV",
+              "source": "data/ctov/structure/village/plains_fortified/jobsite/farm.nbt",
+              "sourceSha256": "3b0b9e4f7b4986e102df3e6585daef81cd1d35db946705aefe6f894c30e171fa",
+              "size": [
+                9,
+                6,
+                9
+              ],
+              "origin": [
+                10508,
+                230,
+                1186
+              ],
+              "privateTemplate": "kithkyn_showcase:ctov_plains_fortified/03"
+            },
+            {
+              "id": "M05.4",
+              "sourceId": "E03.5",
+              "label": "Smithy",
+              "role": "work",
+              "sourceFamily": "ctov_plains_fortified",
+              "sourceMod": "CTOV",
+              "source": "data/ctov/structure/village/plains_fortified/jobsite/smith.nbt",
+              "sourceSha256": "5056b01f899b199822554b24921373fbeee6c38abab6644b9b55672b8dea58d5",
+              "size": [
+                11,
+                9,
+                10
+              ],
+              "origin": [
+                10523,
+                230,
+                1186
+              ],
+              "privateTemplate": "kithkyn_showcase:ctov_plains_fortified/04"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "placedTemplates": 78,
+    "expectedTemplates": 78,
+    "allPlacementResponsesConfirmed": true,
+    "worldSaved": true,
+    "worldBackup": "/Users/quzzar/Projects/kithkyn/run/backups/before-next-village-galleries-20260911-000026",
+    "renderedViews": [
+      "run/next-village-galleries/render/client/screenshots/swamp-front.png",
+      "run/next-village-galleries/render/client/screenshots/swamp-overview.png",
+      "run/next-village-galleries/render/client/screenshots/viking-front.png",
+      "run/next-village-galleries/render/client/screenshots/viking-overview.png",
+      "run/next-village-galleries/render/client/screenshots/mediterranean-front.png",
+      "run/next-village-galleries/render/client/screenshots/mediterranean-overview.png"
+    ],
+    "visualReview": "Passed: separate court identities, walkable approaches, contained wetland water, no exhibit collisions."
+  },
+  "worldBackup": "/Users/quzzar/Projects/kithkyn/run/backups/before-next-village-galleries-20260911-000026",
+  "returnPosition": [
+    4920.412308142715,
+    230.0,
+    922.2306405518239
+  ]
+}
