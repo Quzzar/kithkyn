@@ -8,9 +8,12 @@ import com.quzzar.kithkyn.village.VillageGolems;
 import com.quzzar.kithkyn.village.VillageManager;
 import com.quzzar.kithkyn.village.buildings.Building;
 import com.quzzar.kithkyn.village.buildings.WorkerFooting;
+import java.util.ArrayDeque;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.UUID;
 import javax.annotation.Nullable;
 import net.minecraft.core.BlockPos;
@@ -31,8 +34,11 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.animal.AbstractGolem;
+import net.minecraft.world.level.block.DoorBlock;
+import net.minecraft.world.level.block.FenceGateBlock;
 import net.minecraft.world.level.saveddata.SavedData;
 import net.minecraft.world.level.block.entity.BarrelBlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.phys.Vec3;
 
@@ -160,7 +166,7 @@ public final class VillageCustody extends SavedData {
       ledger.release(player, sentence, custodyLevel, true, "Your sentence is complete. You have thirty seconds to leave peacefully.");
       return;
     }
-    if (custodyLevel != player.serverLevel() || escaped(player.position(), sentence.cell())) {
+    if (custodyLevel != player.serverLevel()) {
       ledger.release(player, sentence, custodyLevel, false, "You escaped custody. You have thirty seconds before the village guards pursue you again.");
       return;
     }
@@ -171,6 +177,10 @@ public final class VillageCustody extends SavedData {
         .findFirst().orElse(null);
     if (castle == null || village.isBeingRebuilt(castle.getUUID()) || !validCell(player.serverLevel(), sentence.cell())) {
       ledger.release(player, sentence, custodyLevel, true, "The cell is no longer usable. You have been released with thirty seconds to leave.");
+      return;
+    }
+    if (escaped(player.serverLevel(), player.position(), sentence.cell())) {
+      ledger.release(player, sentence, custodyLevel, false, "You escaped custody. You have thirty seconds before the village guards pursue you again.");
       return;
     }
     applyFatigue(player, sentence, now);
@@ -189,6 +199,13 @@ public final class VillageCustody extends SavedData {
         || position.y < cell.getY() - 0.5D || position.y > cell.getY() + 2.0D;
   }
 
+  /** An enclosed room may contain several standing tiles; crossing its physical boundary is escape. */
+  static boolean escaped(ServerLevel level, Vec3 position, BlockPos cell) {
+    if (position.y < cell.getY() - 0.5D || position.y > cell.getY() + 2.0D) return true;
+    BlockPos occupied = BlockPos.containing(position.x, cell.getY(), position.z);
+    return !cellInterior(level, cell).contains(occupied);
+  }
+
   /** Death from another source ends custody rather than sending a respawned player back into prison. */
   public static void died(ServerPlayer player) {
     VillageCustody ledger = get(player.serverLevel());
@@ -199,15 +216,47 @@ public final class VillageCustody extends SavedData {
     }
   }
 
-  /** A missing wall, unsupported floor, flooded cell or blocked body prevents an arrest. */
+  /** A missing wall, unsupported floor, flooded room or blocked body prevents an arrest. */
   public static boolean validCell(ServerLevel level, BlockPos cell) {
-    if (!level.hasChunkAt(cell) || !WorkerFooting.canStand(level, cell)) return false;
-    for (Direction side : Direction.Plane.HORIZONTAL) {
-      BlockPos wall = cell.relative(side);
-      if (level.getBlockState(wall).getCollisionShape(level, wall).isEmpty()
-          && level.getBlockState(wall.above()).getCollisionShape(level, wall.above()).isEmpty()) return false;
+    return !cellInterior(level, cell).isEmpty();
+  }
+
+  /** Flood-fills one flat jail room, bounded to keep an open castle or courtyard from becoming a cell. */
+  private static Set<BlockPos> cellInterior(ServerLevel level, BlockPos cell) {
+    if (!level.hasChunkAt(cell) || !WorkerFooting.canStand(level, cell)) return Set.of();
+    Set<BlockPos> interior = new HashSet<>();
+    ArrayDeque<BlockPos> open = new ArrayDeque<>();
+    interior.add(cell.immutable());
+    open.add(cell.immutable());
+    while (!open.isEmpty()) {
+      BlockPos current = open.removeFirst();
+      for (Direction side : Direction.Plane.HORIZONTAL) {
+        BlockPos neighbor = current.relative(side);
+        if (!level.hasChunkAt(neighbor)) return Set.of();
+        if (blocksCellBoundary(level, neighbor)) continue;
+        if (WorkerFooting.canStand(level, neighbor)) {
+          if (interior.add(neighbor.immutable())) {
+            if (interior.size() > 64) return Set.of();
+            open.addLast(neighbor.immutable());
+          }
+          continue;
+        }
+        return Set.of();
+      }
     }
-    return true;
+    return Set.copyOf(interior);
+  }
+
+  private static boolean blocksCellBoundary(ServerLevel level, BlockPos position) {
+    for (BlockPos part : List.of(position, position.above())) {
+      BlockState state = level.getBlockState(part);
+      if ((state.getBlock() instanceof DoorBlock && state.getValue(DoorBlock.OPEN))
+          || (state.getBlock() instanceof FenceGateBlock && state.getValue(FenceGateBlock.OPEN))) {
+        continue;
+      }
+      if (!state.getCollisionShape(level, part).isEmpty()) return true;
+    }
+    return false;
   }
 
   private void release(ServerPlayer player, Sentence sentence, @Nullable ServerLevel level, boolean relocate, String message) {
@@ -282,8 +331,11 @@ public final class VillageCustody extends SavedData {
 
   @Nullable
   private static BlockPos safeReleasePoint(ServerLevel level, BlockPos cell, BlockPos requested) {
+    Set<BlockPos> interior = cellInterior(level, cell);
     for (BlockPos candidate : BlockPos.withinManhattan(requested, 6, 4, 6)) {
-      if ((Math.abs(candidate.getX() - cell.getX()) > 1 || Math.abs(candidate.getZ() - cell.getZ()) > 1)
+      boolean outsideCell = interior.isEmpty() || interior.stream().allMatch(tile ->
+          Math.abs(candidate.getX() - tile.getX()) > 1 || Math.abs(candidate.getZ() - tile.getZ()) > 1);
+      if (outsideCell
           && level.hasChunkAt(candidate) && WorkerFooting.canStand(level, candidate)) return candidate.immutable();
     }
     return null;

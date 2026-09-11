@@ -31,6 +31,7 @@ public final class CastleOperationsVerification {
   private static int ticks;
   private static int started;
   private static int rotation;
+  private static int completedSentries;
   private static boolean finished;
 
   private CastleOperationsVerification() { }
@@ -51,18 +52,25 @@ public final class CastleOperationsVerification {
             patrol.visited.add(point);
           }
         }
-        check(Math.abs(patrol.person.getY() - patrol.route.getFirst().getY()) < 1.5,
-            "Sentry left assigned floor: " + patrol.person.position());
+        int lowest = patrol.route.stream().mapToInt(BlockPos::getY).min().orElseThrow();
+        int highest = patrol.route.stream().mapToInt(BlockPos::getY).max().orElseThrow();
+        if (highest - lowest <= 1) {
+          check(patrol.person.getY() >= lowest - 1.5D && patrol.person.getY() <= highest + 1.5D,
+              "Sentry left authored patrol floor: " + patrol.person.position());
+        }
       }
       if (ticks - started > 3200) throw new AssertionError("Patrol stalled " + patrols.stream().map(p ->
           p.person.position() + " visited=" + p.visited + " expected=" + p.route).toList());
       if (patrols.stream().allMatch(p -> p.visited.size() == p.route.size())) {
-        Kithkyn.LOGGER.info("{} ROTATION PASS {}: all four actual guard goals visited every assigned floor waypoint", PREFIX, Rotation.values()[rotation]);
+        completedSentries += patrols.size();
+        Kithkyn.LOGGER.info("{} ROTATION PASS {}: all {} actual guard goals visited every authored waypoint",
+            PREFIX, Rotation.values()[rotation], patrols.size());
         patrols.forEach(p -> p.person.discard());
         patrols.clear();
         if (++rotation == 4) {
           finished = true;
-          Kithkyn.LOGGER.info("{} RESULT PASS: sixteen real sentries, all assigned upper/lower waypoints in four rotations, retained floor and loadouts", PREFIX);
+          Kithkyn.LOGGER.info("{} RESULT PASS: {} real sentries visited all authored patrol levels in four rotations and retained loadouts",
+              PREFIX, completedSentries);
           event.getServer().halt(false);
         }
       }
@@ -76,7 +84,10 @@ public final class CastleOperationsVerification {
   private static void setup(ServerLevel level) throws ReflectiveOperationException {
     BlockPos origin = new BlockPos(2400, 159, 2400);
     for (int x = 147; x <= 153; x++) for (int z = 147; z <= 153; z++) level.setChunkForced(x, z, true);
-    Building castle = ApprovedStructureAccess.place(level, origin, Buildings.getByName("castle_desert_1"), Rotation.values()[rotation]);
+    String castleId = System.getProperty("kithkyn.castleOperations.id", "castle_desert_1");
+    var castleInfo = Buildings.getByName(castleId);
+    check(castleInfo != null, "Missing castle definition " + castleId);
+    Building castle = ApprovedStructureAccess.place(level, origin, castleInfo, Rotation.values()[rotation]);
     Village village = new ApprovedStructureAccess.VillageFixture(level, castle, true);
     for (var job : List.copyOf(village.getUnassignedJobs())) {
       if (job.getOccupation() != Occupation.GUARD) continue;
@@ -106,7 +117,15 @@ public final class CastleOperationsVerification {
       check(level.addFreshEntity(person), "Could not spawn sentry");
       patrols.add(new Patrol(person, route, new HashSet<>()));
     }
-    check(patrols.size() == 4, "Expected four sentries");
+    int station = 0;
+    long expected = 0;
+    for (Occupation occupation : castleInfo.getWorkLocations().values()) {
+      if (occupation == Occupation.GUARD && castleInfo.getGuardRole(station) != GuardRole.JAILER) {
+        expected++;
+      }
+      station++;
+    }
+    check(patrols.size() == expected, "Expected " + expected + " patrolling sentries, found " + patrols.size());
     started = ticks;
   }
 

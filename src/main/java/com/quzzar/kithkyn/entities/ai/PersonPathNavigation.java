@@ -275,7 +275,11 @@ public final class PersonPathNavigation extends GroundPathNavigation {
           this.level.getBlockState(this.path.getNextNodePos()));
       if (Math.abs(this.mob.getX() - next.x) < 0.45D
           && Math.abs(this.mob.getZ() - next.z) < 0.45D
-          && Math.abs(this.mob.getY() - next.y) < 0.35D) this.path.advance();
+          // A climbing body's feet can oscillate anywhere inside the rung's
+          // block. Occupying that exact rung is sufficient to advance toward
+          // the next one; comparing its fractional height advances too early
+          // near the top and can drop the body before it reaches the landing.
+          && this.mob.blockPosition().equals(this.path.getNextNodePos())) this.path.advance();
       this.doStuckDetection(this.getTempMobPos());
       return;
     }
