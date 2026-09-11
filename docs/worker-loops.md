@@ -263,7 +263,8 @@ weapon loadout, or assigned bed. Combat outranks the routine and wakes a sleepin
 
 `RealPerson.shouldSleepAtNight()` supplies the same person-level decision to sleep,
 restocking, bell recall and conversation. Guards staying awake run bedtime's usual gear
-and ration restock where they stand (`NightWatchRestockGoal`, sharing `goToBed`'s cadence).
+and ration restock where they stand (`BedtimeWithoutBedGoal`, the standing bedtime an unhoused
+resident runs at the fire too, sharing `goToBed`'s cadence).
 A bell restocks a guard on watch; on a sleeping night it sends them home. The ordinary
 housing gate in `JobClaiming` still applies to every guard.
 One village center guard slot is the **Guard Captain**

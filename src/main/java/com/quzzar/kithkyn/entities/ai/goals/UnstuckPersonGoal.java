@@ -20,8 +20,9 @@ import net.minecraft.world.entity.ai.goal.Goal;
  * because a sleeper's leftover path read as "stuck", and the one sleep path
  * (SleepAtNightGoal) zeroes daysSinceSleep before lying down, so the branch
  * below cannot fire against a sleeper. A guard on watch this night zeroes it in
- * NightWatchRestockGoal instead, so a bedded guard on watch does not read as
- * three days wedged.
+ * BedtimeWithoutBedGoal instead, so a bedded guard on watch does not read as
+ * three days wedged; an unhoused resident's standing bedtime there leaves the
+ * count alone, since their night is genuinely unslept.
  *
  * <p>Nights are counted in RealPerson.aiStep at daybreak for every villager,
  * whatever goal held them, and after three unslept nights the villager is set

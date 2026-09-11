@@ -6,7 +6,7 @@ import com.quzzar.kithkyn.entities.RealPerson;
 import com.quzzar.kithkyn.entities.ai.GuardNightRoutine;
 import com.quzzar.kithkyn.entities.ai.goals.GuardPatrolGoal;
 import com.quzzar.kithkyn.entities.ai.goals.GuardPostGoal;
-import com.quzzar.kithkyn.entities.ai.goals.NightWatchRestockGoal;
+import com.quzzar.kithkyn.entities.ai.goals.BedtimeWithoutBedGoal;
 import com.quzzar.kithkyn.entities.ai.goals.SleepAtNightGoal;
 import com.quzzar.kithkyn.entities.ai.goals.StrollAroundVillage;
 import com.quzzar.kithkyn.village.BedAssignment;
@@ -69,7 +69,7 @@ public final class GuardNightVerification {
     GuardPostGoal post = guard.goal(GuardPostGoal.class);
     GuardPatrolGoal patrol = guard.goal(GuardPatrolGoal.class);
     SleepAtNightGoal sleep = guard.goal(SleepAtNightGoal.class);
-    NightWatchRestockGoal restock = guard.goal(NightWatchRestockGoal.class);
+    BedtimeWithoutBedGoal restock = guard.goal(BedtimeWithoutBedGoal.class);
 
     clock(level, 6000L);
     check(post.canUse() && !patrol.canUse() && !sleep.canUse() && guard.isFixedRangedGuard(),
