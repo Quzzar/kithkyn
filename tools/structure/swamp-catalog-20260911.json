@@ -38,11 +38,25 @@
         22
       ],
       "source": "run/swamp-full-review/approved-live-edits/NF01.2.nbt",
-      "source_sha256": "5f41ff4df5ef8d13f0af15ffed439f563f6bb1cdb5896c75dce7a3e48c237f7b",
+      "source_sha256": "f3754648af10ee49f1d9dfb9877bb3fe6a711d0ba0c86aad51d5b9fc23e6e3fb",
       "asset": "run/swamp-integration/datapack/data/kithkyn/structure/village_center_swamp_1.nbt",
-      "asset_sha256": "b9b9cd3d18a84117053149b9fbe6c0be523c67451724775434c3d397b47f0418",
+      "asset_sha256": "e5848ddf5907ee4ded5284420af5d243e0e052eb219055327b86bef135da9570",
       "definition": "run/swamp-integration/datapack/data/kithkyn/kithkyn/buildings/village_center_swamp_1.json",
-      "definition_sha256": "8477f8f542807dbeb4f94a92466ef3d83a7074048f515d09e3df02cb1bded372"
+      "definition_sha256": "8477f8f542807dbeb4f94a92466ef3d83a7074048f515d09e3df02cb1bded372",
+      "approval_revision": {
+        "recorded": "2026-09-11",
+        "capture": "run/swamp-town-center-edit-20260911/capture/NF01.2-user-edit.nbt",
+        "world_origin": [
+          10850,
+          230,
+          1000
+        ],
+        "changes": [
+          "hanging soul lantern changed to normal lantern at local 1,4,10",
+          "lower campfire lit at local 9,4,11"
+        ],
+        "verification": "same 25x15x22 envelope and 8,080 exported cells; no barrier or structure-void blocks"
+      }
     },
     {
       "exhibit": "NE03.6",
