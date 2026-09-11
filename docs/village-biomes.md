@@ -31,7 +31,7 @@ its production catalog and founding behavior are verified.
 | Rustic Woodland | Forest and compatible ordinary oak woodland biomes | Familiar timber woodland settlement with a restrained rustic character |
 | Romanian | Dark Forest, forested highlands, and wooded valleys | Heavy timber roofs, enclosed yards, and substantial woodland buildings |
 | Japanese | Cherry Grove, Flower Forest, and compatible Sakura biomes | Garden settlement shaped around flowering woodland and deliberate landscape details |
-| Viking | Taiga, Old Growth Pine Taiga, Old Growth Spruce Taiga, and compatible cold forests | Cold forest settlement led by the T&T Viking center, mixing colorful Viking buildings with selected heavy Polish timber and spruce services |
+| Taiga | Taiga, Old Growth Pine Taiga, Old Growth Spruce Taiga, and compatible cold forests | Cold forest settlement; its final visual language is deliberately deferred between the ornate Polish family and the grittier T&T Viking family |
 | Tundra | Snowy Plains, Ice Spikes, and compatible exposed frozen lowlands | Compact igloos and snowbound buildings suited to treeless terrain |
 | Alpine | Meadow, Grove, Snowy Slopes, and compatible mountain valleys and peaks | Swiss-inspired mountain settlement with steep roofs and slope-conscious buildings |
 | Swamp | Swamp, Orchid Swamp, and compatible ordinary wetlands | Boat-based or overgrown wetland village, distinct from the mud-brick Floodplain catalog |
@@ -44,11 +44,12 @@ Jungle is a complete private production catalog with nineteen selected buildings
 market tiers. Its founding layout, housing, physical worksites, wall, and all access routes are
 verified and locally deployed.
 
-Swedish and Polish references do not reserve separate village biomes. Swedish now has a concrete
-Viking role: its temple is the selected tier-one church and its tower is deliberately repurposed
-as the tier-two church upgrade. The Polish family remains a full comparison pool for Viking's
-heavier homes and workplaces. Swiss remains the primary direction for Alpine because mountain
-terrain needs architecture distinct from forested Taiga and exposed Tundra.
+Swedish and Polish are source languages in the current review rather than settled biome
+assignments. The Swedish temple and tower remain a useful candidate church progression for a
+future Taiga catalog. The complete Polish family remains the ornate Taiga option, while the T&T
+Viking family remains the grittier option with a stronger identity of its own. Swiss remains the
+primary direction for Alpine because mountain terrain needs architecture distinct from forested
+Taiga and exposed Tundra.
 
 Rivers do not receive a separate village biome. An ordinary land village resolves from the
 surrounding environment rather than a narrow river strip. Tropical riverbanks and deltas belong
@@ -61,9 +62,9 @@ The next scouting pass prioritizes three catalogs:
 1. **Swamp** fills the clearest remaining wetland gap. Its court compares the Towns & Towers
    boat village, the Dungeons & Taverns swamp family, open and fortified CTOV swamp buildings,
    and wetland service and defense pieces.
-2. **Viking** gives taiga and old-growth spruce forests a coherent cold-timber identity. Its
-   court starts with the full Viking family, then compares Polish, Swedish, CTOV taiga, spruce
-   service, and tower donors.
+2. **Taiga** will give taiga and old-growth spruce forests a coherent cold-timber identity. Its
+   court compares complete Viking and Polish families with Swedish, CTOV taiga, spruce service,
+   and tower donors. Final family selection is deferred while other village catalogs are built.
 3. **Mediterranean** gives Plains and Sunflower Plains a distinct rural culture. Its court
    compares the Mediterranean and Iberian families with CTOV Plains civic buildings, fields,
    gardens, tavern, well, and fortified donors.
@@ -74,15 +75,16 @@ individual entrances are Swamp at **9929.5, 230, 1004.5**, Viking at
 map and placement hashes are recorded in
 `tools/structure/next-village-galleries-20260911.json`.
 
-The first review locked these choices:
+The current review status is:
 
 - **Swamp:** S01.1 is the town center. The authoring pool combines the complete 23-piece
   Towns & Towers Boat Village family with the complete 34-piece Dungeons & Taverns Swamp
   family. Signs at the Swamp court link to both full source wings.
-- **Viking:** V01.1 leads as the town center. V03.5 is the tier-one church and V05.2 is the
-  tier-two church. The complete standalone T&T Viking and Polish families are displayed in a
-  six-row annex at **10201.5, 230, 1224.5** so the remaining homes and workplaces can be
-  selected from the full profiles rather than the earlier representative rows.
+- **Taiga:** source selection is deferred. The ornate Polish family and grittier T&T Viking
+  family remain the two leading alternatives; neither is the production direction yet. V01.1,
+  V03.5, and V05.2 remain candidates rather than locked selections. The complete standalone T&T
+  Viking and Polish families remain displayed in a six-row annex at
+  **10201.5, 230, 1224.5** for the later decision.
 - **Mediterranean:** the M01 white-city family supplies the core. M04.1 through M04.4 supply
   fields, orchards, and garden language around it.
 
