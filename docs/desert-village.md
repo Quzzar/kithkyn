@@ -99,3 +99,15 @@ village's existing staffed market and treasury. Two stacked evidence barrels bes
 rooftop cell are excluded from village storage and theft rules. See [castles.md](castles.md) for custody, inventory handling
 and ruler decisions. All four rotations passed physical access and role-allocation
 checks; the live private catalog now loads 201 total building definitions.
+
+## Mining in sand
+
+A desert shaft passes through nothing but sand for its first columns, and sand falls, so
+it is no lining. The miner presses four sand into a sandstone block by hand when the lining
+runs out (`MineSupportMaterials`), the same table-less press as the torch and bone meal
+crafts, so a desert shaft lines itself with what it digs; the bedtime restock draws sand
+from the stores when they hold no dirt or stone. A face whose fall would open an unsealed
+boundary is never broken with an empty pack: before this rule the seal failed and the
+same sand block was broken and reset without end (Aaron, 2026-09-10); the miner fans ribs
+for material instead and comes back to the face.
+

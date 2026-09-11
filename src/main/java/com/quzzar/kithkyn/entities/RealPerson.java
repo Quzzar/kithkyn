@@ -1898,6 +1898,20 @@ public class RealPerson extends Person {
         this.addItems(List.of(got));
       }
     }
+    // Sand country: the stores hold what the builder cleared, and four sand press
+    // into a block of lining at the wall (MineSupportMaterials), so sand fills
+    // the rest of the pack when the stores have no dirt or stone left.
+    for (Item sand : MineSupportMaterials.pressableSand()) {
+      if (wanted <= 0) {
+        return;
+      }
+      ItemStack got = this.getVillage().gatherItemStackFromVillage(
+          new ItemStack(sand, wanted * MineSupportMaterials.SAND_PER_BLOCK), depositToLoc);
+      if (!got.isEmpty()) {
+        wanted -= got.getCount() / MineSupportMaterials.SAND_PER_BLOCK;
+        this.addItems(List.of(got));
+      }
+    }
   }
 
   /**
