@@ -352,6 +352,8 @@ public class RealPerson extends Person {
   // skipped by the stow, until StashAtHomeGoal sets it down in their own
   // chest; empty when nothing is being kept.
   private transient Set<Item> keepingForHome = Set.of();
+  // And what the same answer said to take out of the chest and carry.
+  private transient Set<Item> takingFromHome = Set.of();
 
   // Village-directed walk target (arriving at the campfire / leaving the
   // village); driven by Village.tickTravelers, executed by VillageTravelGoal.
@@ -1369,18 +1371,26 @@ public class RealPerson extends Person {
 
   /**
    * Once a night, a villager with a chest of their own is asked what, if
-   * anything, they would rather keep than return to the stores (StashOffer).
+   * anything, they would rather keep than return to the stores, and what, if
+   * anything, they would rather take out of the chest and carry (StashOffer).
    * True when the question went out: the stow then waits for the answer.
    */
   private boolean maybeOfferStash() {
     long day = this.level().getDayTime() / 24000L;
     // Night only: a daytime panic runs goToBed too, and that is no time to be
     // asked what to keep.
-    if (this.stashOfferDay == day || !this.level().isNight() || this.personMainInv.isEmpty()) {
+    if (this.stashOfferDay == day || !this.level().isNight()) {
       return false;
     }
     BlockPos chest = PersonalChest.of(this);
     if (chest == null) {
+      return false;
+    }
+    // Nothing carried and nothing in the chest leaves no question to ask. A
+    // chest out of sight reads as nothing to take out, the same "cannot
+    // recall" the briefing states.
+    Container home = PersonalChest.container(this, chest);
+    if (this.personMainInv.isEmpty() && (home == null || home.isEmpty())) {
       return false;
     }
     this.stashOfferDay = day;
@@ -1390,10 +1400,11 @@ public class RealPerson extends Person {
   }
 
   /**
-   * The bedtime chest question answered, or given up on: note what to keep, if
-   * anything, then the rest of the pack goes to the stores as it always did.
+   * The bedtime chest question answered, or given up on: note what to keep and
+   * what to take out of the chest, if anything, then the rest of the pack goes
+   * to the stores as it always did.
    */
-  void settleStash(Set<Item> keep) {
+  void settleStash(Set<Item> keep, Set<Item> takeOut) {
     this.stashPending = false;
     Set<Item> carried = new LinkedHashSet<>();
     for (Item item : keep) {
@@ -1402,7 +1413,8 @@ public class RealPerson extends Person {
       }
     }
     this.keepingForHome = Collections.unmodifiableSet(carried);
-    if (!this.keepingForHome.isEmpty() && this.isSleeping()) {
+    this.takingFromHome = Collections.unmodifiableSet(new LinkedHashSet<>(takeOut));
+    if ((!this.keepingForHome.isEmpty() || !this.takingFromHome.isEmpty()) && this.isSleeping()) {
       // The answer came after they had lain down. A sleeper at night is
       // immobile (Person.isImmobile) and an immobile entity ticks no goals, so
       // the walk home could only have started at dawn, and did, live: a
@@ -1421,9 +1433,15 @@ public class RealPerson extends Person {
     return this.keepingForHome;
   }
 
-  /** The kept items are put away, or the trip was given up: nothing is held back any more. */
+  /** The kinds of item this villager means to take out of their own chest tonight; empty when none. */
+  public Set<Item> takingFromHome() {
+    return this.takingFromHome;
+  }
+
+  /** The chest visit is over, done or given up: nothing is held back and nothing waits to be taken out. */
   public void doneKeeping() {
     this.keepingForHome = Set.of();
+    this.takingFromHome = Set.of();
   }
 
   /**

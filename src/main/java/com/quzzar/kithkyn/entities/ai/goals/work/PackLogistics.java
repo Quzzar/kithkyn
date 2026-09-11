@@ -184,6 +184,38 @@ public final class PackLogistics {
   }
 
   /**
+   * Lift everything of this item the chest holds into the worker's pack,
+   * dropping nothing: whatever does not fit stays in the chest. The mirror of
+   * depositCarried, for the bedtime "take it out". Returns how many items moved.
+   */
+  public static int takeStored(RealPerson person, Container chest, Item item, String role) {
+    return takeMatching(person, chest, stack -> stack.is(item), role);
+  }
+
+  /** The same lift for whatever passes the test rather than one item. */
+  public static int takeMatching(RealPerson person, Container chest,
+      java.util.function.Predicate<ItemStack> take, String role) {
+    Container pack = person.personMainInv;
+    int moved = 0;
+    for (int slot = 0; slot < chest.getContainerSize(); slot++) {
+      ItemStack stack = chest.getItem(slot);
+      if (stack.isEmpty() || !take.test(stack)) {
+        continue;
+      }
+      int before = stack.getCount();
+      ItemStack leftover = net.minecraft.world.level.block.entity.HopperBlockEntity
+          .addItem(chest, pack, stack, null);
+      chest.setItem(slot, leftover);
+      moved += before - leftover.getCount();
+    }
+    if (moved > 0) {
+      Kithkyn.LOGGER.debug("[resource-flow] {} ({}) lifted {} item(s) out of a chest",
+          person.getName().getString(), role, moved);
+    }
+    return moved;
+  }
+
+  /**
    * Offers every non-kept pack stack to a storage operation and writes the
    * returned remainder back into the same slot. Nothing leaves the pack until
    * the destination accepts it, so a full village cannot turn a failed bedtime

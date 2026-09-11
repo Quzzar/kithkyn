@@ -102,8 +102,9 @@ sleeps in the corresponding room (`village/PersonalChest`; the rule, and which
 workplaces get one, are in [building-spec.md](building-spec.md)). What goes in is decided at
 bedtime, in character: a villager with a chest of their own is asked once a night which kinds
 of what they are carrying home to keep, any number or none, rather than hand it all back to the
-stores (`entities/StashOffer`, the third personal decision in [llm-brain.md](llm-brain.md), over
-`LlmService.choose`, the multi-pick sibling of `decide()`). The briefing names the pack and what the
+stores, and which kinds of what the chest already holds to take out and carry (`entities/StashOffer`,
+the third personal decision in [llm-brain.md](llm-brain.md), over `LlmService.choose`, the
+multi-pick sibling of `decide()`). The briefing names the pack and what the
 chest already holds, calls the chest a small one for keepsakes and says what a store is for: the
 village lives on what its workers bring in, and anything held back at home is lost to its work, then
 what the village is saving for or building and what it is still short of, in the same words as the
@@ -117,12 +118,18 @@ The job's kit (any tool, and what the restock hands out: torches, the bucket, th
 on the list at all, since the miner once kept theirs and the shaft flooded while the bucket sat
 in a barrel at home. Silence keeps nothing, so a mute model costs the village
 no goods. Kept items stay in the pack, the bedtime stow skips them, and `StashAtHomeGoal` walks
-them home and sets them down in the chest by hand ahead of sleep, so nothing teleports here
-either. The camp circle's chest works the same way for the four who sleep there. A chest that cannot be
-reached, is gone, or is full gives the trip up, and the next stow returns the goods as before.
-The chat briefing tells a villager what their chest holds (when its chunk is in sight) and who
-they share it with, so they can speak to it. Watch for `keeps the ... for their chest at home`
-and `put N ... away in their chest at home` in the log.
+them home and sets them down in the chest by hand ahead of sleep, lifting whatever was chosen to
+take out into the pack at the same visit, so nothing teleports here in either direction. Taking
+out (2026-09-11) is for a keepsake to use or give, or supplies the village has since run short
+of: what comes out rides in the pack and meets the next bedtime like anything else carried,
+returning to the stores then unless it is kept again. The question is asked whenever the pack or
+the chest holds anything; a chest out of sight offers nothing to take out. The camp circle's
+chest works the same way for the four who sleep there. A chest that cannot be reached, is gone,
+or is full gives the trip up: the next stow returns the kept goods as before, and what was to be
+taken out stays in the chest. The chat briefing tells a villager what their chest holds (when its
+chunk is in sight) and who they share it with, so they can speak to it. Watch for `keeps the ...
+for their chest at home`, `put N ... away in their chest at home`, `takes the ... out of their
+chest at home` and `took N ... out of their chest at home` in the log.
 
 The walk home goes to the doorstep first when it starts outside (`LocationManager.getEntrance`,
 the cell outside the lowest door nearest the building's authored front, read from the standing blocks), then to supported
