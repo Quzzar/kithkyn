@@ -630,7 +630,13 @@ a leak can be stood on is not modelled, because a leak at the far edge of a lake
 a miner with dirt in hand should simply plug it (Aaron, 2026-09-11). Without a bucket the water
 itself is plugged the same way, source by source, nearest the face first, and the plugs are
 quarried back out as ordinary rock once the pocket is dry, so a bucketless village still tunnels
-through a pond or a lake bed at the cost of its lining. A bucket-holder drains the connected water
+through a pond or a lake bed at the cost of its lining. A plug stays in while anything wet is left
+beside it: a solid ramp or rib cell with water against it is lining, not frontier, so the sweep and
+the frontier recovery work that water first instead of breaking the cell, and the seal-before-break
+pass plugs interior water beside a face the way it seals a leak outside it. Without that rule the
+first plug was met as stone on the very next pick and dug, the pocket refilled it, and Calirra's
+miner laid and dug the same block seven hundred times in an hour (2026-09-11). A bucket-holder
+drains the connected water
 that is reachable from the dry side instead, exposing any farther boundary for the next sealing pass. The bucket
 moves into the off hand before that act, swings from the off hand, remains visible for a short
 beat, and then returns to the pack. It is a reusable tool, never filled or consumed. Bailing
@@ -662,11 +668,12 @@ one quiet pocket update and seals the newly exposed source edge before excavatin
 neighbour updates per removed cell is not equivalent: the source can refill the head of the pocket
 while its tail is still being emptied. Any already-scheduled fluid ticks inside that drained pocket
 are cancelled; sealing its source edge performs the normal neighbour update that resumes the
-surrounding simulation outside the mine. She never fills planned walking cells with a temporary wall:
-that wall eventually separated her from the leak it was meant to approach.
-A flooded rib whose outside edge still cannot be reached is closed at its own doorway, so its water
-does not block another rib or the main ramp. With no bucket, genuinely unreachable water remains an
-obstacle and only that excavation front falls back to its ordinary rib-mining behavior.
+surrounding simulation outside the mine. A plug is the one fill of a planned walking cell, and it is
+temporary by construction, quarried once its pocket is dry; the earlier bulkhead, a wall left
+standing in the ramp, eventually separated her from the leak it was meant to approach and is gone.
+A flooded rib is worked the same way as the ramp: its water is bailed or plugged and its plugs
+quarried once dry. Lava is never plugged or bailed, so a face beside it keeps the old rules and lava
+ends a ramp for good.
 
 Mine supports are a family, not exact cobblestone. Any placeable dirt-family block, natural stone,
 cobbled stone, or sandstone can pay for a floor, wall, ceiling, or vein plug, and the actual block

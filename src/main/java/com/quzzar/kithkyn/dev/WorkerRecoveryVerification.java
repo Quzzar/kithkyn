@@ -133,7 +133,9 @@ public final class WorkerRecoveryVerification {
       }
     }
     miner.setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(Items.STONE_PICKAXE));
-    miner.personMainInv.setItem(0, new ItemStack(Items.DIRT, 64));
+    // Twenty dirt against thirty leaks and seventy-five wet cells: without a bucket
+    // the support runs out mid-pocket, so the ribs must be cut for stone on the way.
+    miner.personMainInv.setItem(0, new ItemStack(Items.DIRT, bucket ? 64 : 20));
     if (bucket) {
       for (int slot = 1; slot < miner.personMainInv.getContainerSize(); slot++) {
         miner.personMainInv.setItem(slot, new ItemStack(Items.APPLE, 64));
@@ -146,15 +148,25 @@ public final class WorkerRecoveryVerification {
     BlockPos leftRib = world(shaft, new BlockPos(-3, -18, 16));
     BlockPos rightRib = world(shaft, new BlockPos(3, -18, 16));
     BlockPos flooded = world(shaft, new BlockPos(0, -19, 17));
-    for (int pick = 0; pick < 50 && !level.getBlockState(leftRib).isAir()
-        && !level.getBlockState(rightRib).isAir(); pick++) {
-      BlockPos stand = mine.select(miner);
-      check(stand != null, "flooded ramp selected no work: " + rotation);
-      standAt(miner, stand);
-      mine.acquired(miner, stand);
-      for (int act = 0; act < 2000 && mine.act(miner, stand); act++) { }
-      mine.released(miner, stand);
-      if (bucket && level.getFluidState(flooded).isEmpty()) break;
+    if (bucket) {
+      for (int pick = 0; pick < 50 && !level.getFluidState(flooded).isEmpty(); pick++) {
+        pick(level, mine, miner, "flooded ramp selected no work: " + rotation);
+      }
+    } else {
+      // Without a bucket the pocket is plugged source by source, never quarried while
+      // wet, and the plugs come out as ordinary rock once it is dry, back into the
+      // pack. The loop that laid and dug the same plug 700 times in an hour at
+      // Calirra (2026-09-11) reached neither milestone, and never ran short.
+      int picks = 0;
+      while (picks < 600 && (wetPocket(level, shaft) || !level.getBlockState(flooded).isAir())) {
+        pick(level, mine, miner, "plugging pocket selected no work: " + rotation + " at pick " + picks);
+        picks++;
+      }
+      check(!wetPocket(level, shaft), "flooded frontier never dried without a bucket: " + rotation);
+      check(level.getBlockState(flooded).isAir(), "dry plugs were not quarried back out: " + rotation);
+      BlockPos lining = world(shaft, new BlockPos(3, -19, 17));
+      check(!level.getBlockState(lining).isAir() && level.getFluidState(lining).isEmpty(),
+          "a sealed leak outside the corridor was quarried with the plugs: " + rotation);
     }
     if (bucket) {
       check(level.getFluidState(flooded).isEmpty(), "food in the offhand prevented bailing");
@@ -172,7 +184,7 @@ public final class WorkerRecoveryVerification {
     }
     check(level.getBlockState(leftRib).isAir() || level.getBlockState(rightRib).isAir(),
         "miner never resumed dry side cuts: " + rotation);
-    check(miner.personMainInv.countItem(Items.DIRT) < 64, "miner skipped reachable lining: " + rotation);
+    check(miner.personMainInv.countItem(Items.DIRT) < 20, "miner skipped reachable lining: " + rotation);
     check(miner.personMainInv.countItem(Items.BUCKET) == 0, "fixture unexpectedly supplied a bucket");
     miner.discard();
   }
@@ -200,6 +212,28 @@ public final class WorkerRecoveryVerification {
         "arrival after reload retained an old access complaint");
     restored.discard();
     approach.arrived();
+  }
+
+  /** One pick of the mine loop, stood where it asked, acted through and released. */
+  private static void pick(ServerLevel level, MineStep mine, RealPerson miner, String failure) {
+    BlockPos stand = mine.select(miner);
+    check(stand != null, failure);
+    standAt(miner, stand);
+    mine.acquired(miner, stand);
+    for (int act = 0; act < 2000 && mine.act(miner, stand); act++) { }
+    mine.released(miner, stand);
+  }
+
+  /** Whether any interior cell of the fixture's flooded frontier rows still holds fluid. */
+  private static boolean wetPocket(ServerLevel level, MineShaft shaft) {
+    for (int z = 17; z <= 21; z++) {
+      for (BlockPos local : BlockPos.betweenClosed(-2, -z - 2, z, 2, -19, z)) {
+        if (!level.getFluidState(world(shaft, local)).isEmpty()) {
+          return true;
+        }
+      }
+    }
+    return false;
   }
 
   private static java.util.List<String> blockers(RealPerson person) {
