@@ -13,9 +13,8 @@ NeoForge's conventional tags it builds Floodplain until that exists.
 
 ## Selected buildings
 
-The public selection records are `tools/structure/nilotic-selections-20260910.json` and
-`tools/structure/floodplain-castle-20260911.json`; the catalog record is
-`tools/structure/floodplain-catalog-20260910.json`. The datapack holds twenty-one
+The public selection record is `tools/structure/nilotic-selections-20260910.json`; the catalog
+record is `tools/structure/floodplain-catalog-20260910.json`. The datapack holds twenty
 definitions, all new ids, so the pack needs no filter:
 
 | Id | Source exhibit | Beds | Stations |
@@ -37,9 +36,8 @@ definitions, all new ids, so the pack needs no filter:
 | `couple_cottage_floodplain_1` | Nilotic small house 1 with the couple bed | 2 | none |
 | `market_floodplain_1`, `_2`, `_3` | the Desert market tiers restyled | 0 | one to three merchants |
 | `farm_floodplain_1`, `_2` | the Polynesian small and large farms | 0 | farmer |
-| `castle_floodplain_1` | user-edited, swamp-restyled Towns and Towers Jungle Fort | 11 | ruler, baker, blacksmith, jailer, two sword guards and five crossbow guards |
 
-There is no separate tavern or bakery, though the optional castle supplies a baker station.
+There is no separate tavern, bakery or castle.
 There is only one storehouse level: more storehouses are the answer to storage strain, and
 the adopted allays help there
 ([allay-quartermasters.md](allay-quartermasters.md)). The market tiers and the farms are
@@ -79,12 +77,9 @@ and slabs, mud brick walls as railings, jungle trapdoors, muddy mangrove roots o
 gatehouse uprights and roof rim, brown candle clusters on every standing lamp, and the four
 hanging gate lanterns kept. Wall bills are priced in mud bricks.
 
-The castle is an optional late village building rather than part of founding. Its nine
-general single beds occupy two residential wings; the ruler and spouse share the reserved
-double room. The jail evidence barrels above the cell door are excluded from village storage.
-Two sword-and-shield guards patrol the entrance, two crossbow guards cover the balconies,
-and three crossbow guards cover the roof. The baker and blacksmith use their authored work
-areas. All eight banners receive village heraldry.
+The user-edited SC01.2 castle is reserved for the separate ordinary Swamp village. It was
+briefly exported here as `castle_floodplain_1` due to a catalog ownership error, then removed
+without changing the other twenty Floodplain buildings.
 
 ## Authoring and local installation
 
@@ -124,9 +119,7 @@ rule, lodge composting, the sunk well and the mine ramp that starts at the pit's
 Ruwaleni was deleted and the site founded again as Mavulena, centre -3984 66 5344, so its mine and any
 well it raises follow the new data.
 
-The September 11 castle pass captured the final user-edited SC01.2 structure at
-`10107, 230, 1308`, removed container contents and closed doors for production, and passed
-the no-barrier audit. Native access verification walks every bed, personal barrel, shared
-store, workstation and roof ladder in all four rotations with an adult two-block collision
-body. Separate native checks cover all seven sentry posts on routes local to their assigned
-entrance, balcony or roof level, plus the five-minute custody cycle.
+The September 11 review confirmed that SC01.2 belongs to Swamp rather than Floodplain. The
+completed structure and its successful access, sentry and custody results are retained under
+`tools/structure/swamp-castle-20260911.json`; it is staged outside this production datapack
+until the Swamp catalog is complete.

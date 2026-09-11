@@ -1779,9 +1779,9 @@ with the ramp mouth one column in. The Desert mine gained a shared chest at the 
 posts, a fence, a trapdoor and a lantern, exported in its existing frame. Both were captured from a flushed
 snapshot, re-exported, checked and installed in their packs.
 
-### Floodplain castle: September 11
+### Swamp castle: September 11
 
-Aaron selected SC01.2, the Towns and Towers Jungle Fort, as the Floodplain castle. The
+Aaron selected SC01.2, the Towns and Towers Jungle Fort, as the Swamp castle. The
 restyle replaced the dark tropical timber with spruce and dark-oak accents, retained the
 mossed stone silhouette, removed cobwebs and converted eight banners into village identity
 slots. Aaron then rebuilt the interior into two residential wings with nine single beds, a
@@ -1794,7 +1794,7 @@ one-block standing cell. It flood-fills only supported interior tiles, rejects o
 large courtyards, and treats crossing the room boundary as escape.
 
 The final gallery structure at `10107, 230, 1308` was captured from a flushed snapshot and
-exported as `castle_floodplain_1`; empty space above its ground course is explicit so terrain
+staged as `castle_swamp_1`; empty space above its ground course is explicit so terrain
 cannot fill the rooms. Container contents are stripped, doors start closed, and the template
 contains no barrier states. Native access testing uses a two-block adult and covers all beds,
 personal barrels, shared stores, stations, ladders and rotations. It exposed and fixed a
@@ -1802,7 +1802,12 @@ rotation-sensitive ladder transition and a container route that preferred steppi
 bed over clear floor. Guard and custody fixtures exercise the seven sentries and five-minute
 jail flow separately. The five upper sentries use station-specific balcony and roof routes so
 they do not crowd the central ladder. Public provenance and coordinates are recorded in
-`tools/structure/floodplain-castle-20260911.json`.
+`tools/structure/swamp-castle-20260911.json`.
+
+The first integration mistakenly placed this building in the Floodplain catalog. Floodplain is
+the separate mangrove/Nilotic village, so the castle was removed from that datapack and retained
+for the planned ordinary Swamp catalog. A source-to-export audit found zero authored block
+positions removed; the only authored state change closes one two-block spruce door.
 
 ### Jungle catalog verified: September 10
 

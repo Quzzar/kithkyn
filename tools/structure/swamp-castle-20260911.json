@@ -1,15 +1,26 @@
 {
   "exhibit": "SC01.2",
-  "label": "Floodplain Castle",
+  "label": "Swamp Castle",
   "gallery_origin": [10107, 230, 1308],
   "capture_size": [31, 27, 31],
   "source_exhibit": "JH01.4",
   "source_mod": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar",
   "source_mod_structure": "data/kaisyn/structure/outpost/forts/jungle/base_plate.nbt",
   "source_mod_sha256": "fbac5e09371f93ff7be44b193be4436c585081ed6fc5a569ac6e62571cece708",
-  "source_capture": "run/floodplain-integration/castle/source-capture.nbt",
+  "source_capture": "run/swamp-integration/castle/source-capture.nbt",
   "source_capture_sha256": "72e2ac81744a032e029267255cc2da8879e4674f8cc038516e4053e753760f6a",
-  "status": "verified",
+  "status": "configured_and_verified_pending_swamp_catalog",
+  "runtime_model": {
+    "shared_with": "castle_desert_1",
+    "new_building_category": false,
+    "structure_relationship": "Same ruler, custody, evidence, housing and guard systems; different authored building and role layout.",
+    "shared_navigation_extensions": [
+      "A climber advances after occupying the next ladder rung.",
+      "Container routes prefer clear floor over crossing a bed.",
+      "Each sentry station may declare its own local patrol route.",
+      "Custody accepts a bounded multi-block room as one cell."
+    ]
+  },
   "capacity": {
     "beds": 11,
     "general_single_beds": 9,
@@ -79,20 +90,22 @@
     {"pos": [9, 10, 17], "reason": "The cake blocks a reliable hand approach to the baker counter."},
     {"pos": [10, 14, 20], "reason": "Decorative and outside the resident route."}
   ],
-  "production": {
-    "definition": "run/floodplain-integration/datapack/data/kithkyn/kithkyn/buildings/castle_floodplain_1.json",
-    "template": "run/floodplain-integration/datapack/data/kithkyn/structure/castle_floodplain_1.nbt",
+  "staged": {
+    "definition": "run/swamp-integration/castle/castle_swamp_1.json",
+    "template": "run/swamp-integration/castle/castle_swamp_1.nbt",
     "template_sha256": "5e1c3ebe75c056d5f72e0465aad11432502732dc235033b588f42b50958ccc88",
-    "definition_sha256": "78fd107447545b8db7e6b14955576b53b6a38a5bdbf61f19725f7ec61675a399"
+    "definition_sha256": "c1bb5047e102a939db6dff891cff4150f38170350753fe9a7a9c5e733c2ae214"
   },
   "verification": {
     "barrier_audit": "passed",
-    "static_pack": "run/floodplain-integration/check.py: 21 definitions and templates",
+    "authored_blocks_removed": 0,
+    "export_state_changes": "The two halves of one authored spruce door start closed; all other authored block states are preserved.",
     "physical_access": "run/swamp-castle-study-20260911/user-final-verification/access/verification.json",
     "guard_patrols": "run/swamp-castle-study-20260911/user-final-verification/patrol/verification.json: 28 sentry runs across four rotations",
     "custody": "run/swamp-castle-study-20260911/user-final-verification/custody/verification.json: all custody, evidence, timer, escape and safe-release checks passed",
     "visual_review": "run/swamp-castle-study-20260911/sc01-2-restyle/render/client/screenshots/"
   },
+  "catalog_status": "Reserved for the separate Swamp catalog; not installed in the playable Floodplain datapack.",
   "source_policy": "Towns and Towers source and derived NBT remain private under run/.",
   "design_document": "docs/castles.md"
 }

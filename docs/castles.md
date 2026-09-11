@@ -61,13 +61,18 @@ unreachable shortcut onto target decorations. Native checks passed 92 access rou
 deposits and twelve shared-container deposits across all four rotations. Rendered inspection
 confirmed the two barrels and preserved castle appearance before deployment.
 
-## Floodplain castle
+## Swamp castle
 
-The Floodplain castle is the user-edited SC01.2 Overgrown Stone Fort, derived from the
+The Swamp castle is the user-edited SC01.2 Overgrown Stone Fort, derived from the
 Towns and Towers Jungle Fort and restyled with spruce, dark oak, mossed stone and ordinary
-oak foliage. Its final gallery capture stands at `10107, 230, 1308`; the private source and
-production assets live under `run/floodplain-integration/castle/`, while
-`tools/structure/floodplain-castle-20260911.json` records the public metadata and provenance.
+oak foliage. It belongs to the planned ordinary Swamp village, separate from the playable
+Floodplain village for mangrove biomes. Its final gallery capture stands at `10107, 230, 1308`;
+the private staged assets live under `run/swamp-integration/castle/`, while
+`tools/structure/swamp-castle-20260911.json` records the public metadata and provenance.
+
+This building uses the same castle category, ruler, custody, evidence, housing and guard systems
+as the Desert castle. It is a different physical structure: Desert uses R07.2, while Swamp uses
+SC01.2. The Swamp definition remains staged until the complete Swamp catalog and style token land.
 
 The two residential wings provide nine general single beds with shared personal barrels.
 The upstairs ruler suite has a reserved double bed and its own chest. The castle adds a
@@ -91,6 +96,9 @@ The roof is reached by the central ladder. Native testing of all rotations expos
 general navigation problems and fixed them in the shared runtime: a body on a rung now
 advances by occupying that exact rung rather than by an unstable fractional-height test,
 and personal-container routing avoids stepping over beds when a floor route exists.
+The export removed no authored block positions. It only closed the two halves of one spruce
+door for the template's starting state and wrote explicit air into otherwise empty interior
+cells so terrain cannot fill the rooms.
 All 28 sentry runs reached every assigned waypoint across four rotations. The custody fixture
 also passed melee and arrow arrest, all 41 ordinary inventory slots, evidence overflow,
 five-minute reminders, persistence, escape, damaged-cell release and obstructed-exit fallback.
