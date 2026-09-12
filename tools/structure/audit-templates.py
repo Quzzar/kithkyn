@@ -1,10 +1,15 @@
 #!/usr/bin/env python3
-"""Reject production structure templates containing gallery fixtures or invalid cells."""
+"""Reject production structure templates containing invalid authored geometry."""
 
 from pathlib import Path
+import re
 import sys
 
 from nbt import read
+
+
+MARKET_NAME = re.compile(r"^.*market(?:_.+)?_(\d+)\.nbt$")
+AIR = {"minecraft:air", "minecraft:cave_air", "minecraft:void_air"}
 
 
 def templates(arguments):
@@ -25,6 +30,10 @@ def problems(path):
         for index, state in enumerate(palette)
         if state["Name"] == "minecraft:barrier"
     ]
+    blocks = {
+        tuple(block["pos"]): palette[block["state"]]
+        for block in root["blocks"]
+    }
     for block in root["blocks"]:
         position = tuple(block["pos"])
         name = palette[block["state"]]["Name"]
@@ -36,6 +45,36 @@ def problems(path):
             reasons.append("gallery barrier in production template")
         if reasons:
             failures.append((position, name, "; ".join(reasons)))
+
+    market = MARKET_NAME.match(path.name)
+    if market is not None:
+        expected = int(market.group(1))
+        entrances = sorted(
+            position
+            for position, state in blocks.items()
+            if position[1] == 1 and state["Name"].endswith("_carpet")
+        )
+        if len(entrances) != expected:
+            failures.append((
+                "market entrances",
+                "carpet",
+                f"expected {expected} one-block entrance carpets, found {len(entrances)}",
+            ))
+
+        entrance_set = set(entrances)
+        for position in entrances:
+            x, y, z = position
+            below = blocks.get((x, y - 1, z), {"Name": "minecraft:air"})["Name"]
+            if below in AIR:
+                failures.append((position, blocks[position]["Name"], "entrance carpet has no authored support"))
+
+            for adjacent in ((x + 1, y, z), (x, y, z + 1)):
+                if adjacent in entrance_set and blocks[adjacent]["Name"] == blocks[position]["Name"]:
+                    failures.append((
+                        position,
+                        blocks[position]["Name"],
+                        f"same-color entrance carpet projects two blocks through {adjacent}",
+                    ))
     return failures
 
 
@@ -55,7 +94,10 @@ def main(arguments):
     if failed:
         print(f"{failed} of {len(paths)} templates failed")
         return 1
-    print(f"PASS {len(paths)} templates: no barrier states or out-of-bounds blocks")
+    print(
+        f"PASS {len(paths)} templates: no barrier states, out-of-bounds blocks, "
+        "or malformed market entrances"
+    )
     return 0
 
 

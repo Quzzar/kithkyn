@@ -193,7 +193,7 @@ tasks.withType(Test).configureEach {
 
 var auditStructureTemplates = tasks.register("auditStructureTemplates", Exec) {
     group = "verification"
-    description = "Rejects structure templates containing barrier states or out-of-bounds cells."
+    description = "Rejects structure templates containing gallery fixtures, invalid cells, or malformed market entrances."
     commandLine "python3", "tools/structure/audit-templates.py", "src/main/resources/data/kithkyn/structure"
 }
 

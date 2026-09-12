@@ -221,7 +221,7 @@
     "barriers": 0,
     "structureVoids": 0,
     "visualReview": "passed after the one-block market entrance and brown-candle wall corrections",
-    "marketEntranceValidator": "tools/structure/validate-market-entrances.py"
+    "marketEntranceValidator": "tools/structure/audit-templates.py"
   },
   "castleReview": {
     "status": "open; no Tundra castle selected",

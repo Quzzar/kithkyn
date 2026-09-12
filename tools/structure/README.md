@@ -26,7 +26,7 @@ themselves — they only transform files you point them at.
 | `flatten.py` | Map pre-1.13 numeric block ids to modern blockstates |
 | `split_scene.py` | Crop the separate buildings out of one multi-building `.schematic` (flood-fill footprints; rejects trees by composition) |
 | `validate.py` | Flag blocks that would drop on placement — bed and door halves, wall torches, gravity-affected stacks, carpet on nothing |
-| `audit-templates.py` | Reject production templates containing barrier states or coordinates outside their declared size |
+| `audit-templates.py` | Reject production templates containing barrier states, coordinates outside their declared size, or malformed leveled-market entrances |
 | `navcheck.py` | Score how walkable a finished structure is for a villager |
 | `roof.py` | Fix roof-stair facing |
 | `seating-check.py` | Flag catalog buildings seated one block low: a bottom-half stair in the layer that meets the ground is a doorstep swallowed by the terrain |
@@ -44,6 +44,12 @@ public or private catalog before deployment. Gallery containment barriers, inclu
 palette entries, are review fixtures, never building content. Blocks outside an explicit crop
 are invalid for the same reason. The native exporter enforces both invariants while writing a
 template. `./gradlew check` runs the audit over the public catalog automatically.
+
+Leveled market templates follow the filename convention `*market*_<level>.nbt`. Their level is
+also their number of stalls, so the audit requires exactly that many carpet cells at local Y=1:
+one supported entrance carpet per stall. Two adjacent carpets of the same color are rejected
+because they create the recurring two-block entrance projection. Run this same audit over each
+private village catalog before copying it into a live datapack.
 
 The Birch export expects the canonical project root, prepared Minecraft runtime dependencies,
 an approved capture directory and a destination asset directory. It never reads a live world.
