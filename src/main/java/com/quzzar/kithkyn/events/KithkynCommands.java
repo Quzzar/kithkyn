@@ -102,7 +102,12 @@ public class KithkynCommands {
     private static int createVillage(CommandSourceStack source, BlockPos pos, @javax.annotation.Nullable VillageStyle style,
             com.quzzar.kithkyn.entities.Kind kind) {
         ServerLevel level = source.getLevel();
-        VillageManager.get(level).registerVillage(level, pos, style, kind);
+        if (!VillageManager.get(level).registerVillage(level, pos, style, kind)) {
+            source.sendFailure(Component.literal("No village founded at " + pos.toShortString() + ": within "
+                    + com.quzzar.kithkyn.village.VillageGeneration.MIN_SEPARATION_BLOCKS
+                    + " blocks of another village or a founding still being named"));
+            return 0;
+        }
         source.sendSuccess(() -> Component.literal("Village founding requested at " + pos.toShortString()
                 + (style == null ? "" : " in the " + style.id() + " style")
                 + (kind == com.quzzar.kithkyn.entities.Kind.LIVING ? "" : ", " + kind.id())), true);

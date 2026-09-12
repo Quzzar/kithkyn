@@ -1716,7 +1716,10 @@ public class RealPerson extends Person {
     }
     int taken = 0;
     for (int slot = 0; slot < container.getContainerSize() && taken < want.getCount(); slot++) {
-      if (container.getItem(slot).is(want.getItem())) {
+      // The same match the stores make (Utils.removeItem): a cleric asking for
+      // a splash of regeneration must not be handed the splash of harming
+      // beside it in their own chest.
+      if (ItemStack.isSameItemSameComponents(container.getItem(slot), want)) {
         taken += container.removeItem(slot, want.getCount() - taken).getCount();
       }
     }

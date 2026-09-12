@@ -44,6 +44,17 @@ class StationGrantsTest {
   }
 
   @Test
+  void aStationRoutedToASeparateWorksiteLeavesTheGrantToThatWorksite() {
+    BuildingInfo center = parse("{\"structure\":\"camp\",\"work_stations\":["
+        + "{\"pos\":[1,1,1],\"occupation\":\"QUARTERMASTER\",\"worksite_category\":\"storehouse\"},"
+        + "{\"pos\":[2,1,1],\"occupation\":\"MINER\",\"worksite_category\":\"mine\"}]}");
+    assertTrue(StationGrants.missing(center).isEmpty());
+    BuildingInfo storehouse = parse("{\"structure\":\"storehouse\",\"work_stations\":["
+        + "{\"pos\":[1,1,1],\"occupation\":\"QUARTERMASTER\"}]}");
+    assertEquals(List.of("QUARTERMASTER station needs the STORAGE grant"), StationGrants.missing(storehouse));
+  }
+
+  @Test
   void aConditionalGrantCountsAndTradesWithoutACanonicalGrantAreLeftAlone() {
     BuildingInfo inn = parse("{\"structure\":\"inn\",\"work_stations\":[{\"pos\":[1,1,1],\"occupation\":\"INNKEEPER\"}],"
         + "\"grants_if\":[{\"capability\":\"WANDERERS\",\"requires_supply\":[\"minecraft:bread\"]}]}");

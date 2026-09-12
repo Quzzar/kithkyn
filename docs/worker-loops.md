@@ -958,6 +958,18 @@ seconds; the guard's roll was one in twenty until 2026-09-01, which left a fresh
 quarter of an hour per tree for the lodge it could not yet afford); combat goals outrank the
 guard's chopping.
 
+**Bounded, 2026-09-12: a woodland pass asks the navigator about a handful of trees, not all of
+them (#138).** The lumberjack's village-wide pass covers the whole claim plus a margin, which from
+the lodge reaches up to ninety blocks, while one path search never goes further than about
+forty-eight. Every tree past that was asked about anyway, up to four searches a tree, and each
+failed search spends its whole node budget first. On the live server one lumberjack ran 2,325 such
+searches in six minutes and reached 19 trees; the scans held the server at five ticks a second,
+and one held a tick past the sixty-second watchdog and took the server down. A pass now considers
+only trees within one search's reach of where the worker stands, asks about them nearest first,
+spends at most six searches in total, and leaves a tree it found no way to out of that worker's
+scans for two minutes. The nearest reachable tree is taken rather than a random one. Trimming a
+way into a hemmed-in stand shares the same six-search budget.
+
 **Attached bee nests (2026-09-08).** Shared tree felling also removes unowned bee nests
 and beehives touching a log actually removed, once each. It releases occupants normally;
 Silk Touch preserves bees in the native hive drop instead. Player/village-owned hives,

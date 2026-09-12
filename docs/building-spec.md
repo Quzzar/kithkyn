@@ -552,7 +552,9 @@ buildings will do what"). The table lives in `StationGrants`. The loader warns a
 station whose grant is missing rather than rejecting the building, so a private datapack still
 loads and its author sees the gap in the log; a test holds the bundled catalog to zero
 warnings. Guard, builder and leader stations are exempt: the watchtower's guards grant
-`PROTECTION` while the centre's captain does not, and that is a planning choice.
+`PROTECTION` while the centre's captain does not, and that is a planning choice. So is a
+station with a `worksite_category`: the centre's quartermaster and miner posts work at the
+storehouse and the mine, and those definitions carry `STORAGE` and `ORES`.
 
 Capability resolution is a fixed point: grant everything unconditional, then re-evaluate
 `grants_if` until nothing new appears. Two buildings that each require the other's capability

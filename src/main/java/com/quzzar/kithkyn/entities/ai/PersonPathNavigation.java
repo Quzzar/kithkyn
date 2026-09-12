@@ -108,6 +108,17 @@ public final class PersonPathNavigation extends GroundPathNavigation {
     super(mob, level);
   }
 
+  /**
+   * How far from where a person stands one ordinary path search can take them.
+   * The search never expands a node further than this from its start, so a
+   * target beyond it is only ever answered with a partial path, and asking costs
+   * the whole node budget first. Callers choosing among many targets use this to
+   * leave out the ones no single search can reach (#138).
+   */
+  public static float searchRange(Mob mob) {
+    return Math.max(MINIMUM_SEARCH_RANGE, (float)mob.getAttributeValue(Attributes.FOLLOW_RANGE));
+  }
+
   @Override
   protected PathFinder createPathFinder(int maxVisitedNodes) {
     PersonNodeEvaluator evaluator = new PersonNodeEvaluator();
@@ -124,8 +135,7 @@ public final class PersonPathNavigation extends GroundPathNavigation {
   @Override
   @Nullable
   protected Path createPath(Set<BlockPos> targets, int regionOffset, boolean offsetUpward, int accuracy) {
-    float perceptionRange = (float)this.mob.getAttributeValue(Attributes.FOLLOW_RANGE);
-    float range = Math.max(MINIMUM_SEARCH_RANGE, perceptionRange);
+    float range = searchRange(this.mob);
     Path route = super.createPath(targets, regionOffset, offsetUpward, accuracy, range);
     // Reaching a watch platform can take more than 48 blocks of walking even
     // when it is nearby in a straight line. Retry exact work destinations with
