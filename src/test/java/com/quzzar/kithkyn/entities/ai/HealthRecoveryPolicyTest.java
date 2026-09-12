@@ -28,6 +28,21 @@ class HealthRecoveryPolicyTest {
   }
 
   @Test
+  void theClericIsSoughtByDayWhileHurtAndNotYetRegenerating() {
+    assertTrue(HealthRecoveryPolicy.shouldSeekCleric(5.0F, 18.0F, false, false));
+    assertFalse(HealthRecoveryPolicy.shouldSeekCleric(5.0F, 18.0F, true, false));
+    assertFalse(HealthRecoveryPolicy.shouldSeekCleric(5.0F, 18.0F, false, true));
+    assertFalse(HealthRecoveryPolicy.shouldSeekCleric(7.0F, 18.0F, false, false));
+    assertEquals(48.0D, HealthRecoveryPolicy.CLERIC_SEARCH_RANGE);
+  }
+
+  @Test
+  void aRecoveryEndsALittleAboveTheLineItStartedAt() {
+    assertFalse(HealthRecoveryPolicy.isBackOverTheLine(7.9F, 18.0F));
+    assertTrue(HealthRecoveryPolicy.isBackOverTheLine(8.0F, 18.0F));
+  }
+
+  @Test
   void foodAlwaysWinsOverCampfireRecovery() {
     assertFalse(HealthRecoveryPolicy.shouldSeekCampfire(5.0F, 18.0F, true, 1_200L, 1_200L));
     assertTrue(HealthRecoveryPolicy.shouldSeekCampfire(5.0F, 18.0F, false, 1_200L, 1_200L));
