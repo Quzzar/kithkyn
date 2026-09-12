@@ -85,6 +85,9 @@ in it, and update it in the same change that moves what it describes.
 - [swamp-village.md](swamp-village.md): the approved ordinary Swamp catalog, its four-home
   founding sprawl, two campfires, mossy oak-and-spruce walls, tiered towers, and the castle's
   ruler and five-minute custody systems.
+- [mediterranean-village.md](mediterranean-village.md): the approved Mediterranean (Plains)
+  catalog: the church centre with its cleric, berry and glow-berry farms with a pasture, the
+  hedged quartz wall, and the M08.1 fort with its sword guards and jail.
 - [appearance.md](appearance.md): why villagers use the player model and not the vanilla
   villager model, the wide/slim model split by gender, and the client-side runtime skin
   compositor that bakes a villager's look from inherited skin, hair, and eye structures,

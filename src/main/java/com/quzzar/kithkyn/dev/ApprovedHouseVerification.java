@@ -243,27 +243,40 @@ public final class ApprovedHouseVerification {
     }
     List<Long> containers = new ArrayList<>(info.getPersonalContainerLocations());
     containers.addAll(info.getContainerLocations());
+    // Report every unreachable container and station of a placement at once: a catalog
+    // author fixes them in one pass instead of one five-minute run per cell.
+    List<BlockPos> unreachableContainers = new ArrayList<>();
     for (long position : containers) {
       BlockPos target = world(BlockPos.of(position));
       check(level.getBlockEntity(target) instanceof Container, "Missing container " + target.subtract(ORIGIN));
       ApprovedStructureAccess.moveTo(probe, entrance);
       double reach = info.getPersonalContainerLocations().contains(position) ? 9.0D : 6.0D;
       if (ContainerAccess.approachTo(probe, target, reach) == null) {
-        throw new AssertionError("No reachable container approach " + target.subtract(ORIGIN) + " " + label());
+        unreachableContainers.add(target.subtract(ORIGIN));
+        continue;
       }
       routes++;
     }
+    check(unreachableContainers.isEmpty(), "No reachable container approach " + unreachableContainers + " " + label());
     int stationIndex = 0;
+    List<String> badStations = new ArrayList<>();
     for (var station : info.getWorkLocations().entrySet()) {
       BlockPos target = world(BlockPos.of(station.getKey()));
-      check(WorkerFooting.canStand(probe, target), "Station lacks supported body clearance "
-          + target.subtract(ORIGIN) + " " + label());
+      if (!WorkerFooting.canStand(probe, target)) {
+        badStations.add("no body clearance at " + target.subtract(ORIGIN));
+        stationIndex++;
+        continue;
+      }
       var path = ApprovedStructureAccess.route(probe, entrance, target, 0, 0);
-      check(path != null && path.getEndNode() != null && path.getEndNode().asBlockPos().equals(target),
-          "Unreachable station " + target.subtract(ORIGIN) + " " + label());
+      if (path == null || path.getEndNode() == null || !path.getEndNode().asBlockPos().equals(target)) {
+        badStations.add("unreachable at " + target.subtract(ORIGIN));
+        stationIndex++;
+        continue;
+      }
       visits.add(new Visit(VisitKind.STATION, target, stationIndex++, station.getValue()));
       routes++;
     }
+    check(badStations.isEmpty(), "Stations " + badStations + " " + label());
     if (reviewTargets.has(info.getName())) {
       for (BlockPos local : BlockPos.CODEC.listOf().parse(JsonOps.INSTANCE, reviewTargets.get(info.getName())).getOrThrow()) {
         BlockPos target = world(local);

@@ -19,6 +19,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.CaveVines;
 import net.minecraft.world.level.block.CropBlock;
 import net.minecraft.world.level.block.SweetBerryBushBlock;
 import net.minecraft.world.level.block.state.BlockState;
@@ -28,8 +29,11 @@ import net.minecraft.world.level.block.state.BlockState;
  *
  * Berry bushes are picked rather than broken - the bush stays and its age is
  * wound back - and a crop block is replanted at stage one, so a farmer does not
- * strip their own field to bare earth. Melons and pumpkins are neither: they
- * regrow from the stem that produced them, so they simply come away.
+ * strip their own field to bare earth. Glow berries are picked the same way: the
+ * cave vine keeps hanging and grows its next berry (the Mediterranean pasture
+ * trains them on a trellis, docs/mediterranean-village.md). Melons and pumpkins
+ * are neither: they regrow from the stem that produced them, so they simply come
+ * away.
  */
 public final class HarvestStep implements BlockWorkStep {
 
@@ -83,6 +87,13 @@ public final class HarvestStep implements BlockWorkStep {
           SoundSource.BLOCKS, 1.0F, 0.8F + person.getRandom().nextFloat() * 0.4F);
       person.level().setBlock(target, state.setValue(SweetBerryBushBlock.AGE, Integer.valueOf(1)), 2);
       person.addItems(Arrays.asList(new ItemStack(Items.SWEET_BERRIES, picked)));
+      return false;
+    }
+    if (state.getBlock() instanceof CaveVines && state.getValue(CaveVines.BERRIES)) {
+      person.level().playSound((Player) null, target, SoundEvents.CAVE_VINES_PICK_BERRIES,
+          SoundSource.BLOCKS, 1.0F, 0.8F + person.getRandom().nextFloat() * 0.4F);
+      person.level().setBlock(target, state.setValue(CaveVines.BERRIES, Boolean.FALSE), 2);
+      person.addItems(Arrays.asList(new ItemStack(Items.GLOW_BERRIES, 1)));
       return false;
     }
 
@@ -157,6 +168,9 @@ public final class HarvestStep implements BlockWorkStep {
     Block block = state.getBlock();
     if (block instanceof CropBlock crop) {
       return crop.isMaxAge(state);
+    }
+    if (block instanceof CaveVines) {
+      return state.getValue(CaveVines.BERRIES);
     }
     return block == Blocks.MELON || block == Blocks.PUMPKIN || block instanceof SweetBerryBushBlock;
   }
