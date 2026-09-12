@@ -112,9 +112,11 @@ its provenance. It keeps the Desert model: four beds, the ruler's double bed wit
 barrel behind the fenced west room, a baker's corner (cake, cauldron, furnace) and a smithy
 (smithing table, grindstone) that share one chest between their two north bedrooms, seven
 barrels and two chests of village storage, and nine authored banner slots. The jail is the
-tower's upper floor: the cell behind iron bars, two evidence barrels beside it, the release point
+tower's upper floor: the cell behind iron bars, two evidence chests beside it, the release point
 and the jailer's post on the same floor at the top of the ladder. Four sword guards patrol the
-north gate, the south gate and the two halves of the yard. It has no merchant stall.
+north gate, the south gate and the two halves of the yard. It has no merchant stall. Evidence
+lives in whichever containers a castle layout names: barrels in the Desert and Swamp castles,
+chests here.
 
 ## Ruler decisions
 
@@ -160,8 +162,9 @@ An unavailable or damaged castle cannot silently strand an active prisoner.
 The two evidence barrels are stacked at castle-local `[9,11,19]` and `[9,12,19]`. The release position
 is `[8,11,17]`; the cell is `[6,11,18]`. All coordinates rotate and translate with the castle.
 
-Confiscation transfers eligible death-drop items into available barrel space, including normal
-inventory, armor, offhand and supported accessory slots. Existing barrel contents are never
+Confiscation transfers eligible death-drop items into available space in the layout's evidence
+containers (barrels or chests), including normal
+inventory, armor, offhand and supported accessory slots. Existing evidence contents are never
 erased. Only quantities successfully inserted are removed from the player; anything that does
 not fit remains with them. Item components, names, enchantments and container contents remain
 on the moved stacks. Items are not automatically returned at release; players retrieve them.

@@ -91,13 +91,15 @@ public final class BadlandsVillageVerification {
         new String[][] {{id("market", 1), id("market", 2)}, {id("market", 2), id("market", 3)},
             {id("farm", 1), id("farm", 2)}},
         7, 4, 4, 1, 4, 0, 0, new BlockPos(12, 4, 13), new BlockPos(14, 6, 11), 2, Biomes.SWAMP);
-    // The Mediterranean centre is the church: its founding jobs add a cleric to the
-    // usual quartermaster, builder, captain and miner; its four founding homes are
-    // three one-bed houses and the two-bed house, and the mine adds a general bed.
+    // The Mediterranean centre is the church: quartermaster, builder, captain and a cleric.
+    // The mine employs and houses its own miner, so the fifth founding job and the sixth
+    // founding bed are the mine's; the founding homes are three one-bed houses and the
+    // two-bed house.
     case MEDITERRANEAN -> new Catalog("[mediterranean-verify]", 24, 6, 10, new int[] {6, 0, 0},
         Map.of("house_mediterranean_1__couple_room", 1), List.of(), false,
-        new String[][] {{id("market", 1), id("market", 2)}, {id("market", 2), id("market", 3)}},
-        7, 6, 5, 1, 5, 0, 0, new BlockPos(12, 1, 1), new BlockPos(12, 3, 2), 1, Biomes.PLAINS);
+        new String[][] {{id("market", 1), id("market", 2)}, {id("market", 2), id("market", 3)},
+            {id("farm", 1), id("farm", 2)}},
+        7, 6, 5, 1, 4, 0, 0, new BlockPos(12, 1, 1), new BlockPos(12, 3, 2), 1, Biomes.PLAINS);
     case BIRCH_FOREST -> null;
   };
   /** Centre jobs beyond the founding four that a catalog's centre also opens at founding. */
@@ -410,7 +412,9 @@ public final class BadlandsVillageVerification {
         && village.getUnassignedBeds().size() == CATALOG.foundingBeds() - CATALOG.foundingJobs(),
         "Founding workers did not receive distinct beds");
     if (STYLE == VillageStyle.JUNGLE || STYLE == VillageStyle.SWAMP || STYLE == VillageStyle.MEDITERRANEAN) {
-      verifyRoutedWorksite(village, residents, Occupation.MINER, "mine");
+      if (STYLE != VillageStyle.MEDITERRANEAN) {
+        verifyRoutedWorksite(village, residents, Occupation.MINER, "mine");
+      }
       verifyRoutedWorksite(village, residents, Occupation.QUARTERMASTER, "storehouse");
       Building mine = village.getBuildings().stream()
           .filter(building -> building.getInfo().getCategory().equals("mine")).findFirst().orElseThrow();

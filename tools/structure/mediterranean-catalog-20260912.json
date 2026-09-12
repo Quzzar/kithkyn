@@ -16,7 +16,8 @@
       "house_mediterranean_1",
       "house_mediterranean_1__two_bed"
     ],
-    "starting_beds": 6
+    "starting_beds": 6,
+    "note": "the centre employs quartermaster, builder, captain and cleric; the mine employs and houses its own miner"
   },
   "identity": {
     "beds": "primary or secondary village color; couple halves share primary",
@@ -43,17 +44,11 @@
       "source_sha256": "3fdc8c955b0b447e90e0f11ecf43357c155dd998938cf6362b406e920098c95e",
       "capture": "run/mediterranean-integration/selection-capture-20260912-022651/captures/M06_1.nbt",
       "entities": 0,
-      "carpets_cleared_under_stations": [
-        [
-          12,
-          1,
-          12
-        ]
-      ],
+      "carpets_cleared_under_stations": [],
       "asset": "run/mediterranean-integration/datapack/data/kithkyn/structure/village_center_mediterranean_1.nbt",
-      "asset_sha256": "b90ee558a4bc84f45c07b12d8fd89d698b254f7c0a773a8d1f94545fd865550b",
+      "asset_sha256": "5a2712a2738e25fed6f26ef38d15ace09828b1265cb2cbfb939629461143c985",
       "definition": "run/mediterranean-integration/datapack/data/kithkyn/kithkyn/buildings/village_center_mediterranean_1.json",
-      "definition_sha256": "6acefb285bf40803fd774f5ef4ad3bc609abc873045c6bfe11b8ab92fe6803b8"
+      "definition_sha256": "441e2dc61b2f84b0a7e9373d9e47a3ea2dfe2496a05cc6f9fc82e47cc43757b8"
     },
     {
       "exhibit": "M06.5",
@@ -229,15 +224,9 @@
       "source_sha256": "cb7d9364802509a6455e210ef0a016e33afbf11ac3ed6d55bb33770cd9969454",
       "capture": "run/mediterranean-integration/selection-capture-20260912-022651/captures/M07_3.nbt",
       "entities": 0,
-      "carpets_cleared_under_stations": [
-        [
-          2,
-          5,
-          2
-        ]
-      ],
+      "carpets_cleared_under_stations": [],
       "asset": "run/mediterranean-integration/datapack/data/kithkyn/structure/watchtower_mediterranean_1.nbt",
-      "asset_sha256": "67679c0a69924a2bb4d479dd4936e4b496b00b1b11ff5d9cf17b7eb8422270e4",
+      "asset_sha256": "be27ababd73b277fa55d31de0bc117f39e86f2177a9cf2047c7f3e20fffa5c5b",
       "definition": "run/mediterranean-integration/datapack/data/kithkyn/kithkyn/buildings/watchtower_mediterranean_1.json",
       "definition_sha256": "699bfa7a4f5a0f1b099aecf40d23574311e729b2753522becc8ed6b21100d44c"
     },
@@ -257,7 +246,7 @@
       "entities": 0,
       "carpets_cleared_under_stations": [],
       "asset": "run/mediterranean-integration/datapack/data/kithkyn/structure/stoneworks_mediterranean_1.nbt",
-      "asset_sha256": "dabcae07605ed24a9fecaa111ae155b487220b29897c0ee343a06f3a88431b20",
+      "asset_sha256": "fb6afee9a8e1415898e5037aa726a0bf96498af0308d47d78a9ae227551d18d8",
       "definition": "run/mediterranean-integration/datapack/data/kithkyn/kithkyn/buildings/stoneworks_mediterranean_1.json",
       "definition_sha256": "706da074e50ddeddf1ae5dbf5cee6807e4418db53efc2798ccd918bb4b3b5493"
     },
@@ -315,15 +304,9 @@
       "source_sha256": "51f0543e0e7db0b133651f1ac30502a02b0e123873c29bc9c037a6b861976f27",
       "capture": "run/mediterranean-integration/selection-capture-20260912-022651/captures/M07_7.nbt",
       "entities": 0,
-      "carpets_cleared_under_stations": [
-        [
-          4,
-          1,
-          7
-        ]
-      ],
+      "carpets_cleared_under_stations": [],
       "asset": "run/mediterranean-integration/datapack/data/kithkyn/structure/bakery_mediterranean_1.nbt",
-      "asset_sha256": "9ee09df7fffd7d0091f26bb600a015bca3671cf9fa0a418a173cb4da4c8297b5",
+      "asset_sha256": "d3b95f39a237851418a5b7bf7587c949c7318abc9daed1bdba884fff40bb6ce7",
       "definition": "run/mediterranean-integration/datapack/data/kithkyn/kithkyn/buildings/bakery_mediterranean_1.json",
       "definition_sha256": "394c05bebc2ce6242c6edda0ae9922de12be36a7ddd8ba32511f0842cec67a72"
     },
@@ -345,7 +328,7 @@
       "asset": "run/mediterranean-integration/datapack/data/kithkyn/structure/mine_mediterranean_1.nbt",
       "asset_sha256": "20c081fe702024b764e3b6e956f74befedb5ea437b44fac141ca671ccb096548",
       "definition": "run/mediterranean-integration/datapack/data/kithkyn/kithkyn/buildings/mine_mediterranean_1.json",
-      "definition_sha256": "1d67635e0b4b529c1bc6cf575984d0d7d8ed63cef3bde78a3cd8856420a1a013"
+      "definition_sha256": "9e741110fcdbceca3afaca446ed3a77f11dd1a5e69a4b001a693b9d4aa6f7646"
     },
     {
       "exhibit": "M08.1",
@@ -361,55 +344,9 @@
       "source_sha256": "54b678eee20e4038def560b1c7872fc2190715cb32524dc738378deaac058e39",
       "capture": "run/mediterranean-integration/selection-capture-20260912-022651/captures/M08_1.nbt",
       "entities": 0,
-      "carpets_cleared_under_stations": [
-        [
-          10,
-          2,
-          14
-        ],
-        [
-          13,
-          2,
-          11
-        ],
-        [
-          8,
-          2,
-          7
-        ],
-        [
-          9,
-          2,
-          16
-        ],
-        [
-          9,
-          2,
-          14
-        ],
-        [
-          7,
-          2,
-          14
-        ],
-        [
-          7,
-          2,
-          4
-        ],
-        [
-          9,
-          2,
-          7
-        ],
-        [
-          11,
-          2,
-          9
-        ]
-      ],
+      "carpets_cleared_under_stations": [],
       "asset": "run/mediterranean-integration/datapack/data/kithkyn/structure/castle_mediterranean_1.nbt",
-      "asset_sha256": "dd71aa647438cfe1c1db0d2ceb2753cf0f51c78fe54534350395ad0d98aa808c",
+      "asset_sha256": "3a75502c236268ed47ed4aef4ad9bbc56b2c702a245cf90d7e60825b2c8d67dc",
       "definition": "run/mediterranean-integration/datapack/data/kithkyn/kithkyn/buildings/castle_mediterranean_1.json",
       "definition_sha256": "d42de1e36cba5f8e017b840f751912b0be84ba4510f61c2f19e5a6118a33f9fa"
     },
@@ -451,7 +388,7 @@
       "asset": "run/mediterranean-integration/datapack/data/kithkyn/structure/farm_mediterranean_2.nbt",
       "asset_sha256": "fa33736a5647d7ea2f43c96c897a24b844363de50755c8a674b8bf4074243b81",
       "definition": "run/mediterranean-integration/datapack/data/kithkyn/kithkyn/buildings/farm_mediterranean_2.json",
-      "definition_sha256": "13967018e23811da1efa36a30a9813e085eed862d7ddf0c63377194a909c61ec"
+      "definition_sha256": "b71db7c115d6eb27959f88ab114be24e9dd6c831f75de68d2132d28f81f90daa"
     },
     {
       "exhibit": "M08.3",
@@ -571,10 +508,10 @@
   "verification": {
     "placement": "PASS: [building-placement-verify] RESULT PASS: 192 real-template placements, both paths, four rotations, colors, frames, entity/save receipts and upgrade preservation",
     "restart": "PASS: [building-placement-verify] RESTART PASS: 192 saved buildings and 64 original entities survived real server shutdown/restart without replenishment",
-    "founding": "PASS: [mediterranean-verify] RESULT PASS: 24 strict native templates, 6 housing alternatives, 8 upgrade fits, four founding rotations and codec reloads, natural biome selection, 6 beds, 5 positions, distinct meeting/fire locations and village identity",
-    "center": "PASS: [approved-house-verify] RESULT PASS: 4 rotated structures, 24 access routes, 0 physical room walks and assigned-bed sleeps, 0 physical personal-container deposits, 0 failed placements; probe size=18; station walks=20, shared deposits=4, mine walks=0, review walks=0",
-    "access": "PASS: [approved-house-verify] RESULT PASS: 92 rotated structures, 392 access routes, 96 physical room walks and assigned-bed sleeps, 96 physical personal-container deposits, 0 failed placements; probe size=18; station walks=100, shared deposits=120, mine walks=8, review walks=0",
-    "construction": "PASS: [castle-construction-verify] RESULT PASS: physical two-storehouse recipe collection, ordinary walking GatherStep/BuildStep, incremental paid castle, authored jobs and beds published only after completion, protected evidence; ticks=28459 walked=134",
+    "founding": "PASS: [mediterranean-verify] RESULT PASS: 24 strict native templates, 6 housing alternatives, 12 upgrade fits, four founding rotations and codec reloads, natural biome selection, 6 beds, 5 positions, distinct meeting/fire locations and village identity",
+    "center": "PASS: [approved-house-verify] RESULT PASS: 4 rotated structures, 20 access routes, 0 physical room walks and assigned-bed sleeps, 0 physical personal-container deposits, 0 failed placements; probe size=18; station walks=16, shared deposits=4, mine walks=0, review walks=0",
+    "access": "PASS: [approved-house-verify] RESULT PASS: 92 rotated structures, 396 access routes, 96 physical room walks and assigned-bed sleeps, 96 physical personal-container deposits, 0 failed placements; probe size=18; station walks=104, shared deposits=120, mine walks=8, review walks=0",
+    "construction": "PASS: [castle-construction-verify] RESULT PASS: physical two-storehouse recipe collection, ordinary walking GatherStep/BuildStep, incremental paid castle, authored jobs and beds published only after completion, protected evidence; ticks=29059 walked=139",
     "patrol": "PASS: [castle-operations-verify] RESULT PASS: 16 real sentries visited all authored patrol levels in four rotations and retained loadouts",
     "merchant": "not applicable: the M08.1 fort has no merchant stall, so the castle merchant systems and their check do not apply",
     "custody": "PASS: [custody-verify] RESULT PASS: real melee/arrow arrest, private minute notices, saved expiry, inventory capacity and identity, escape and damaged-cell release, full-cell fallback and village-only grace",

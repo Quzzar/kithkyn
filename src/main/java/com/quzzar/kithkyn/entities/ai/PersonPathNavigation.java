@@ -138,6 +138,11 @@ public final class PersonPathNavigation extends GroundPathNavigation {
     return route;
   }
 
+  private boolean isSolidWithoutCollision(BlockPos pos) {
+    BlockState state = this.level.getBlockState(pos);
+    return state.isSolid() && state.getCollisionShape(this.level, pos).isEmpty();
+  }
+
   /**
    * The path to {@code pos}, or to the next ramp waypoint on the way when this
    * walk starts or ends down one of the village's mine shafts. The goal keeps
@@ -207,6 +212,13 @@ public final class PersonPathNavigation extends GroundPathNavigation {
       // A doorway can be the final approach to a closet container. Ground
       // navigation otherwise lifts this solid target above the door and roof.
       return super.createPath(Set.of(pos), accuracy);
+    }
+    // Vanilla aims one block above any target flagged solid, and a sign or a banner is
+    // flagged solid although it has no collision: a name plate beside a bed made the cell
+    // in front of it unreachable, while a player walks straight into it. A cell open to
+    // the body is the target as given.
+    if (isSolidWithoutCollision(pos)) {
+      return createPath(java.util.Set.of(pos), 8, false, accuracy);
     }
     return super.createPath(pos, accuracy);
   }
