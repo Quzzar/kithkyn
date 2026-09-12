@@ -70,6 +70,7 @@ one chest, the jail cell behind iron bars on the tower's upper floor with its tw
 chests (the custody system takes any container the layout names, barrel or chest), a jailer
 post beside it, and four sword-guard posts whose routes cover the north gate, the south gate
 and both halves of the yard. Its nine authored pillager banners are village banner slots.
+It grants bread and repair, which its baker and smithy stations need.
 Unlike the Desert and Swamp castles it has no merchant stall.
 
 ## Authoring and installation
