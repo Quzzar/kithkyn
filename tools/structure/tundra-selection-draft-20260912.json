@@ -232,9 +232,9 @@
       "Ice Cathedral Study",
       "T17.3 Tundra Keep Study"
     ],
-    "note": "The first three are clean source donors. Ice Cathedral Study is a snow-and-packed-ice palette pass over the Ice Spider Fort silhouette. T17.3 Tundra Keep Study converts the Snowy Plains Tower to snow, packed ice, blue ice, spruce, village-banner sockets and a primary-color bed while preserving its navigation and amenities.",
+    "note": "The first three are clean source donors. Ice Cathedral Study is a snow-and-packed-ice palette pass over the Ice Spider Fort silhouette. T17.3 Tundra Keep Study converts the Snowy Plains Tower to snow, packed ice, blue ice, stone brick, village-banner sockets and a primary-color bed while preserving its navigation and amenities. Its structural logs, planks, stairs, slabs, fences and decorative trapdoors were replaced with stone-brick blocks, stairs, slabs and walls; functional doors, ladders, signs, chests, barrels and workstations remain usable.",
     "t17Study": {
-      "status": "editable live proposal; visually verified but not selected",
+      "status": "editable live stone-brick proposal; visually verified but not selected",
       "origin": [
         11338,
         230,
@@ -243,6 +243,7 @@
       "manifest": "run/tundra-selection-draft-20260912/review/t17-study-manifest.json",
       "bannerSlots": 8,
       "logicalBeds": 1,
+      "stoneBrickReplacements": 691,
       "entities": 0,
       "barriers": 0,
       "structureVoids": 0
