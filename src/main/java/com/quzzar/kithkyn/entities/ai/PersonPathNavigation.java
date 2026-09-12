@@ -104,7 +104,7 @@ public final class PersonPathNavigation extends GroundPathNavigation {
   @Nullable
   private String lastMinePathFailure;
 
-  /** The last long retry that failed, so a stuck walker is not charged for it on every re-plan. */
+  /** The long retries that failed lately, so a stuck walker is not charged for them on every re-plan. */
   private final LongRetryMemo longRetry = new LongRetryMemo();
 
   public PersonPathNavigation(Mob mob, Level level) {
@@ -149,7 +149,7 @@ public final class PersonPathNavigation extends GroundPathNavigation {
         && this.longRetry.worthRetrying(targets, this.mob.blockPosition(), now)) {
       Path longer = super.createPath(targets, regionOffset, offsetUpward, accuracy, EXACT_SEARCH_RANGE);
       if (longer != null && longer.canReach()) {
-        this.longRetry.reached();
+        this.longRetry.reached(targets);
       } else {
         this.longRetry.failed(targets, this.mob.blockPosition(), now);
       }

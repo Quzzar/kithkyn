@@ -977,7 +977,9 @@ so one who was stuck, or whose post was walled off, paid for that retry twice a 
 live server long retries were 38% of all path-search time and reached their target 1.2% of the
 time, the costliest being one guard asking 200 times for a post six blocks away. A failed long
 retry is now not repeated for the same target for five seconds unless the person has moved four
-blocks since (`LongRetryMemo`), and one that reaches its target clears the memory.
+blocks since (`LongRetryMemo`), and one that reaches its target clears it. The last sixteen failures
+are kept, not one: a villager stuck beside a chest asks for each of the nine cells round it in
+turn, and a single remembered failure was forgotten before its cell came round again.
 
 **Attached bee nests (2026-09-08).** Shared tree felling also removes unowned bee nests
 and beehives touching a log actually removed, once each. It releases occupants normally;
