@@ -99,7 +99,7 @@ public final class BadlandsVillageVerification {
         Map.of("house_mediterranean_1__couple_room", 1), List.of(), false,
         new String[][] {{id("market", 1), id("market", 2)}, {id("market", 2), id("market", 3)},
             {id("farm", 1), id("farm", 2)}},
-        7, 6, 5, 1, 4, 0, 0, new BlockPos(12, 1, 1), new BlockPos(12, 3, 2), 1, Biomes.PLAINS);
+        7, 6, 5, 1, 4, 0, 0, new BlockPos(7, 1, 2), new BlockPos(7, 3, 3), 1, Biomes.PLAINS);
     case BIRCH_FOREST -> null;
   };
   /** Centre jobs beyond the founding four that a catalog's centre also opens at founding. */
