@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "status": "selection_in_progress_user_edits_captured",
+  "status": "services_locked_review_workshop_verified",
   "style": "tundra",
   "sourceGallery": "tools/structure/tundra-full-profile-20260912.json",
   "liveCapture": {
@@ -14,19 +14,24 @@
     ],
     "preserves": [
       "user-authored beds and storage",
-      "town-center banners and barrel markers",
+      "town-center banners, barrel markers, and four adoptable snow golems",
       "spruce planting marker",
       "farm crops and glow berries",
-      "mine excavation and entrance edits",
-      "three persistent sheep in the T02.1 butchery enclosure"
-    ]
+      "the three-block-wide south-running mine excavation",
+      "three persistent sheep in the T02.1 butchery enclosure",
+      "the edited T04.4 bakery, T04.8 hunter, T09.10 well, and T11.2 tavern"
+    ],
+    "round2Manifest": "run/tundra-selection-draft-20260912/capture-round2-manifest.json",
+    "round2Structures": 5,
+    "snowGolemCapture": "run/tundra-selection-draft-20260912/golem-capture-final2/T01.1-with-golems.nbt",
+    "snowGolems": 4
   },
   "selected": [
     {
       "category": "village_center",
       "level": 1,
       "exhibit": "T01.1",
-      "notes": "Four beds in diagonal primary/secondary pairs; all eight banners use village identity. Core job-station positions remain to be assigned."
+      "notes": "Four beds in diagonal primary/secondary pairs; all eight banners use village identity; four ordinary snow golems spawn unclaimed and may be adopted by nearby guards. Core job-station positions still require exact metadata."
     },
     {
       "category": "couple_cottage",
@@ -119,62 +124,111 @@
       "category": "mine",
       "level": 1,
       "exhibit": "T05.6",
-      "notes": "User-carved mine shell; mouth, worksite, width, sink and forward direction require the production access audit."
-    }
-  ],
-  "recommended": [
-    {
-      "category": "hunting_lodge",
-      "level": 1,
-      "exhibit": "T06.3",
-      "reason": "The native hunter hut is the clearest compact first tier."
+      "notes": "The north-facing doorway leads to the user-carved, continuous three-block-wide shaft running south through local x=3..5, z=4..9. Mine access geometry passed review."
     },
     {
       "category": "hunting_lodge",
-      "level": 2,
-      "exhibit": "T04.4",
-      "reason": "The fenced fire camp gives the liked Artist Studio shell a distinct larger hunting-camp role."
+      "level": 1,
+      "exhibit": "T04.8",
+      "notes": "Selected and user-edited hunter building; one bed, two chests, furnace, fire and target."
     },
     {
       "category": "bakery",
       "level": 1,
-      "exhibit": "T04.5",
-      "reason": "Purpose-built bakery shell; strip its remaining structure-void marker before production."
+      "exhibit": "T04.4",
+      "notes": "Selected and user-edited bakery; one logical bed, smoker, cakes and the retained snowy outdoor bake-fire roof."
     },
     {
       "category": "tavern",
       "level": 1,
-      "exhibit": "T08.3",
-      "reason": "The complete Snowy Igloo tavern is a better production building than the modular Dungeons & Taverns pieces."
+      "exhibit": "T11.2",
+      "notes": "Five logical beds: two upstairs reserved for two tavern keepers and three downstairs for general housing. Three source structure-void markers must be stripped in production."
     },
     {
       "category": "well",
       "level": 1,
-      "exhibit": "T12.5",
-      "reason": "The standalone snowy tavern well is already compact and palette-compatible."
+      "exhibit": "T09.10",
+      "notes": "Selected compact blue-ice and stone-brick well feature."
     },
     {
-      "category": "watchtower",
-      "level": 2,
-      "exhibit": "T15.2",
-      "reason": "Optional larger snowy outpost tower if this catalog receives a watchtower upgrade."
+      "category": "market",
+      "levels": [
+        1,
+        2,
+        3
+      ],
+      "structures": [
+        "market_snowy_1",
+        "market_snowy_2",
+        "market_snowy_3"
+      ],
+      "notes": "All three repaired counter, entrance and trapdoor patterns passed visual review. Market tents retain the established red, cyan, orange and white trade colors rather than village identity colors."
+    },
+    {
+      "category": "wall",
+      "level": 1,
+      "review": "tundra_wall_ring",
+      "notes": "One wall tier only. The reviewed palette is snow block, packed-ice accents, spruce rails and trapdoors, stone-brick slabs, lanterns and light-blue candles."
     }
   ],
   "remaining": [
-    "assign the four core town-center job stations",
-    "review and lock the recommended bakery, hunting-lodge, tavern, well and optional watchtower upgrade",
-    "author and review three Tundra market tiers while retaining the standard market colors",
-    "author and review the Tundra wall family",
-    "audit the mine mouth, forward direction, width, sink and terrain-clearing bounds",
-    "map all beds to dynamic primary or secondary colors and all banners to village identity",
-    "record exact beds, couple pairing, personal storage, shared storage, stations, entrances and grants",
-    "strip structure voids and audit every production template for barriers and structure voids",
-    "run placement, access, founding, upgrade, restart and visual verification"
+    "capture any user edits made to the market and wall review copies",
+    "assign exact four-core-job town-center station coordinates and all remaining stations, beds, personal/shared storage, entrances and grants",
+    "export the selected structures as production templates with dynamic bed and banner identity slots",
+    "choose a Tundra castle only if one of the displayed donors or the ice-palette study is approved",
+    "run placement, access, founding, upgrade, restart and final production visual verification"
   ],
   "futureCastleDonor": {
     "exhibit": "T17.3",
     "label": "Snowy Plains Tower",
     "source": "data/kaisyn/structure/outpost/towers/snowy_plains/base_plate.nbt",
     "decision": "Keep as a strong general castle reference for a future village variant; it is not assigned as the Tundra castle."
+  },
+  "selectionDecisions": {
+    "watchtowerUpgrade": "none; T03.1 is the only watchtower tier",
+    "townCenterSnowGolems": 4,
+    "marketCloth": "fixed trade colors, not primary/secondary village colors",
+    "buildingBeds": "every non-market bed maps dynamically to the village primary or secondary color; both halves of a couple bed use one color",
+    "banners": "all authored village-banner positions use the generated village banner"
+  },
+  "mineAudit": {
+    "exhibit": "T05.6",
+    "entranceFace": "north",
+    "shaftDirection": "south",
+    "shaftWidth": 3,
+    "shaftLocalBounds": [
+      3,
+      0,
+      4,
+      5,
+      0,
+      9
+    ],
+    "status": "passed"
+  },
+  "reviewWorkshop": {
+    "entry": [
+      11107.5,
+      230,
+      1810.5
+    ],
+    "manifest": "run/tundra-selection-draft-20260912/review/manifest.json",
+    "markets": 3,
+    "wallSets": 1,
+    "castleSourceDonors": 3,
+    "castlePaletteStudies": 1,
+    "barriers": 0,
+    "structureVoids": 0,
+    "visualReview": "passed"
+  },
+  "castleReview": {
+    "status": "open; no Tundra castle selected",
+    "workshopCandidates": [
+      "Ice Spider Fort",
+      "Grand Ice Hall",
+      "Taiga Castle",
+      "Ice Cathedral Study"
+    ],
+    "note": "The first three are clean source donors. Ice Cathedral Study is an explicitly labeled snow-and-packed-ice palette pass over the Ice Spider Fort silhouette."
   }
 }

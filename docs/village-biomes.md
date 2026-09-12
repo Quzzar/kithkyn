@@ -82,12 +82,15 @@ The current review status is:
   12 CTOV snowy outpost pieces and five Towns & Towers or Terralith landmarks. Fifty Snowy Igloo
   compatibility shells are kept visible with unavailable custom work blocks replaced only in
   their private display copies. The exact sources, hashes, positions and screenshots are recorded
-  in `tools/structure/tundra-full-profile-20260912.json`. Selection is now in progress and the
-  first twenty edited or shortlisted structures are preserved in the private live capture. The
-  selected center, homes, storehouse, food buildings, first watchtower, first church, workshops,
-  two farm tiers and mine are recorded in `tools/structure/tundra-selection-draft-20260912.json`.
-  The remaining catalog work is the final service-building review, three markets, walls, exact
-  metadata and production verification.
+  in `tools/structure/tundra-full-profile-20260912.json`. The selected center, homes, storehouse,
+  food buildings, sole watchtower, church, workshops, two farm tiers, mine, T04.8 hunter, T04.4
+  bakery, T11.2 tavern and T09.10 well are recorded in
+  `tools/structure/tundra-selection-draft-20260912.json`. Four snow golems begin at the centre as
+  unclaimed guard recruits. Three complete market tiers preserve the market's established trade
+  colors, and the single-tier wall uses snow, packed ice and spruce. The design workshop begins at
+  **11107.5, 230, 1810.5** and also displays three clean castle donors plus a labeled ice-palette
+  study; no Tundra castle has been selected. Exact production metadata, export and runtime
+  verification remain.
 - **Mediterranean:** the production catalog is selected and verified
   ([mediterranean-village.md](mediterranean-village.md)): the M06.1 church is its centre, the
   M08.1 fort its castle, and the rest comes from annex rows M06 to M08 and the edited court
