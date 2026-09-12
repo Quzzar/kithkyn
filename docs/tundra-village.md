@@ -37,7 +37,7 @@ The private datapack contains 23 definitions:
 | `butchery_tundra_1` | T02.1 butcher station and three persistent sheep in the enclosure |
 | `fishery_tundra_1` | T02.3 fisher's hut with its worker bed and storage |
 | `lumberjack_tundra_1` | T02.4 lumber yard with a worker bed, personal and shared storage, and a spruce planting site |
-| `watchtower_tundra_1` | T03.1 sole tower level; crossbow post, guard bed and personal chest; a spruce gate and final ladder rung keep the upper landing navigable |
+| `watchtower_tundra_1` | T03.1 sole tower level; crossbow post, guard bed and personal chest; the authored fence, lantern and six-rung ladder remain unchanged |
 | `church_tundra_1` | T03.2 cleric station with a worker bed and personal chest |
 | `stoneworks_tundra_1` | T03.4 mason station with a worker bed plus separate personal and workplace chests |
 | `blacksmith_tundra_1` | T03.5 forge with a worker bed, personal barrel and workplace chest |
@@ -69,6 +69,11 @@ snow golems and three sheep. It also corrects the three approved market counters
 sit above a complete foundation like the other working regional markets. The private production
 assets remain under `run/tundra-integration/datapack`; source and output hashes are recorded in
 `tools/structure/tundra-catalog-20260912.json`.
+
+T03.1 is exported without navigation-driven block overrides. Person navigation represents the
+open cell above the top ladder rung as a two-way ladder transition and rejects decorative lantern,
+candle, fence, gate and wall tops as false floors. Guards therefore descend through the authored
+ladder opening instead of attempting an impossible lantern-to-railing shortcut.
 
 Manual testing can create the style with `/kithkyn create-village ~ ~ ~ tundra`. Natural founding
 in a snowy or icy lowland uses the same style selector and founding path.

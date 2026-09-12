@@ -22,6 +22,7 @@ import net.minecraft.world.level.block.DoorBlock;
 import net.minecraft.world.level.block.FenceGateBlock;
 import net.minecraft.world.level.block.LadderBlock;
 import net.minecraft.world.level.block.CandleBlock;
+import net.minecraft.world.level.block.LanternBlock;
 import net.minecraft.world.level.block.TrapDoorBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
@@ -56,12 +57,19 @@ import net.minecraft.world.phys.Vec3;
  * a rung (anything in the climbable tag) is a node the feet can stand in, its
  * floor is its own height rather than whatever lies under the ladder, and it
  * is joined to the rungs above and below it. Reaching the top is vanilla's
- * step-up onto the landing; leaving from the top is vanilla's one-block drop
- * into the top rung. What vanilla will not do on its own is the climb itself
- * with nobody pressing into the wall, so {@link #tick()} supplies the vanilla
+ * step-up onto the landing. The open cell immediately above a top rung is a
+ * transition node, even when the body's edge still counts as grounded on the
+ * landing, and it connects back down to that rung. What vanilla will not do
+ * on its own is the climb itself with nobody pressing into the wall, so
+ * {@link #tick()} supplies the vanilla
  * climbing speed while the next node is straight up, and holds the walk still
  * meanwhile: walking into the wall is what vanilla reads as "climb up", which
  * is the wrong answer on the way down.
+ *
+ * <b>Narrow decoration is not a floor.</b> Vanilla can join the collision tops
+ * of a lantern and a fence into a path that a full-width body cannot actually
+ * walk. People reject the tops of lanterns, candles, fences, gates and walls
+ * as footing, so they use the real stair or ladder route through a building.
  *
  * <b>Route sight is not eyesight.</b> Vanilla uses the follow-range attribute
  * both for sensing and as the maximum distance a path search may expand. That
@@ -563,8 +571,8 @@ public final class PersonPathNavigation extends GroundPathNavigation {
       if (this.mob.onClimbable()) {
         return this.getStartNode(feet);
       }
-      if (!this.mob.onGround() && isClimbable(this.currentContext.getBlockState(feet.below()))) {
-        return this.getStartNode(feet.below());
+      if (isLadderTransition(feet)) {
+        return this.getStartNode(feet);
       }
       return super.getStart();
     }
@@ -592,6 +600,9 @@ public final class PersonPathNavigation extends GroundPathNavigation {
       if (type == PathType.OPEN && isClimbable(state)) {
         return PathType.WALKABLE; // a rung is somewhere the feet can be
       }
+      if (type == PathType.OPEN && isLadderTransition(new BlockPos(x, y, z))) {
+        return PathType.WALKABLE;
+      }
       return type;
     }
 
@@ -599,8 +610,22 @@ public final class PersonPathNavigation extends GroundPathNavigation {
     @Override
     public PathType getPathTypeOfMob(PathfindingContext context, int x, int y, int z, Mob mob) {
       PathType type = super.getPathTypeOfMob(context, x, y, z, mob);
+      BlockPos position = new BlockPos(x, y, z);
+      BlockState support = context.getBlockState(position.below());
+      if (type == PathType.WALKABLE && (support.is(BlockTags.FENCES)
+          || support.is(BlockTags.WALLS)
+          || support.getBlock() instanceof FenceGateBlock
+          || support.getBlock() instanceof LanternBlock
+          || support.getBlock() instanceof CandleBlock)) {
+        // Vanilla can chain narrow collision tops into a nominal shortcut,
+        // such as stepping from a lantern onto a fence. A full villager body
+        // cannot execute that route, so these decorative and barrier tops are
+        // obstacles rather than floors. Stairs and slabs retain vanilla's
+        // movement rules.
+        return PathType.BLOCKED;
+      }
       if (type != PathType.BLOCKED || getPathType(context, x, y, z) != PathType.WALKABLE) return type;
-      Vec3 standing = WorkerFooting.standingPosition(mob, new BlockPos(x, y, z));
+      Vec3 standing = WorkerFooting.standingPosition(mob, position);
       if (standing == null || standing.y >= y) return type;
       // Only replace ordinary solid-cell rejection. Gates, rails and hazards keep
       // their existing rules even when their collision shape leaves physical room.
@@ -631,7 +656,8 @@ public final class PersonPathNavigation extends GroundPathNavigation {
     /** A rung's floor is the rung, not whatever is under the ladder. */
     @Override
     protected double getFloorLevel(BlockPos pos) {
-      return isClimbable(this.currentContext.getBlockState(pos)) ? pos.getY() : super.getFloorLevel(pos);
+      return isClimbable(this.currentContext.getBlockState(pos)) || isLadderTransition(pos)
+          ? pos.getY() : super.getFloorLevel(pos);
     }
 
     @Override
@@ -644,25 +670,38 @@ public final class PersonPathNavigation extends GroundPathNavigation {
         if (!crossesOpenPanel(node, neighbor)) outputArray[clearCount++] = neighbor;
       }
       count = clearCount;
-      if (!isClimbable(this.currentContext.getBlockState(new BlockPos(node.x, node.y, node.z)))) {
+      BlockPos nodePos = new BlockPos(node.x, node.y, node.z);
+      if (isLadderTransition(nodePos)) {
+        Node rung = rung(node.x, node.y - 1, node.z);
+        if (this.isNeighborValid(rung, node)) outputArray[count++] = rung;
         return count;
       }
-      // Vanilla may offer a fall to the ground beside a high rung. Taking that
-      // edge leaves the ladder early and can strand the body on a nearby rail.
-      // Descend the rungs first; ordinary same-height and one-step exits remain.
-      int safeCount = 0;
-      for (int i = 0; i < count; i++) {
-        Node neighbor = outputArray[i];
-        if (neighbor.y >= node.y - 1) outputArray[safeCount++] = neighbor;
-      }
-      count = safeCount;
-      for (int step : new int[] {1, -1}) {
-        Node rung = rung(node.x, node.y + step, node.z);
-        if (this.isNeighborValid(rung, node)) {
-          outputArray[count++] = rung;
+      if (isClimbable(this.currentContext.getBlockState(nodePos))) {
+        // Vanilla may offer a fall to the ground beside a high rung. Taking that
+        // edge leaves the ladder early and can strand the body on a nearby rail.
+        // Descend the rungs first; ordinary same-height and one-step exits remain.
+        int safeCount = 0;
+        for (int i = 0; i < count; i++) {
+          Node neighbor = outputArray[i];
+          if (neighbor.y >= node.y - 1) outputArray[safeCount++] = neighbor;
         }
+        count = safeCount;
+        for (int step : new int[] {1, -1}) {
+          Node rung = rung(node.x, node.y + step, node.z);
+          if (this.isNeighborValid(rung, node)) {
+            outputArray[count++] = rung;
+          }
+        }
+        return count;
       }
       return count;
+    }
+
+    /** The open cell immediately above a ladder's top rung, where a climber crosses onto its landing. */
+    private boolean isLadderTransition(BlockPos pos) {
+      return this.currentContext.getBlockState(pos).getCollisionShape(
+          this.currentContext.level(), pos).isEmpty()
+          && this.currentContext.getBlockState(pos.below()).getBlock() instanceof LadderBlock;
     }
 
     /** An open leaf is passable along its aperture, but still blocks transverse approaches. */

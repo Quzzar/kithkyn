@@ -45,6 +45,12 @@ palette entries, are review fixtures, never building content. Blocks outside an 
 are invalid for the same reason. The native exporter enforces both invariants while writing a
 template. `./gradlew check` runs the audit over the public catalog automatically.
 
+A navigation failure is evidence about pathfinding or an authored route; it is not permission to
+edit the build. Do not add, remove or replace authored structure cells merely to make `navcheck` or
+a native access fixture pass. Keep the approved build unchanged, fix the navigation behavior when
+the route is physically valid, or record the failure for design review. Structure geometry changes
+only when the user explicitly authors or approves that design revision.
+
 Leveled market templates follow the filename convention `*market*_<level>.nbt`. Their level is
 also their number of stalls, so the audit requires exactly that many carpet cells at local Y=1:
 one supported entrance carpet per stall. Two adjacent carpets of the same color are rejected

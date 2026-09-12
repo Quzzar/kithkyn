@@ -190,7 +190,7 @@
       "source": "run/tundra-selection-draft-20260912/captures/T03.1.nbt",
       "source_sha256": "e0aacd68a7eac5659d5b13480b3972319477b1016cec55f40f7f75b840439c69",
       "asset": "run/tundra-integration/datapack/data/kithkyn/structure/watchtower_tundra_1.nbt",
-      "asset_sha256": "b2ef26ba425e84a6c3ca8d81594065a90541019ba902b39d10e25da783d88766",
+      "asset_sha256": "a8f31b5c87da468858f032b9bb7cfd92dabc89384c824976efec97e2f26441a2",
       "definition": "run/tundra-integration/datapack/data/kithkyn/kithkyn/buildings/watchtower_tundra_1.json",
       "definition_sha256": "fd2138d67b4253642d45cfb8f0750ab980b43075fa33959018b946576cee163a"
     },
@@ -417,7 +417,7 @@
     }
   ],
   "verification": {
-    "gradle_build": "passed",
+    "gradle_check": "passed",
     "template_audit": {
       "result": "passed",
       "templates": 23,
@@ -474,6 +474,11 @@
       "failed": 0,
       "log": "run/tundra-integration/access/latest-verification.log"
     },
+    "watchtower_source_geometry": {
+      "result": "passed",
+      "non_air_coordinate_sets_equal": true,
+      "state_changes": "Only the two authored red bed halves are neutralized to white for village-color substitution."
+    },
     "visual_review": "passed in the live Tundra gallery before production promotion"
   },
   "revisions": [
@@ -487,10 +492,11 @@
       ]
     },
     {
-      "reason": "A guard could reach the T03.1 upper post but the solid rail blocked the preferred descent route.",
-      "change": "Added the final ladder rung and replaced one matching spruce rail cell with a closed spruce gate that guards open during descent.",
+      "reason": "T03.1 exposed a one-way top-of-ladder transition and a false lantern-to-fence route in person navigation.",
+      "change": "Removed the access-driven rung and gate overrides, restored the approved solid geometry, and fixed PersonPathNavigation to use the authored ladder route in both directions.",
       "scope": [
-        "watchtower_tundra_1"
+        "watchtower_tundra_1",
+        "PersonPathNavigation"
       ]
     }
   ]
