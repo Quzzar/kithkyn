@@ -104,6 +104,9 @@ public final class PersonPathNavigation extends GroundPathNavigation {
   @Nullable
   private String lastMinePathFailure;
 
+  /** The long retries that failed lately, so a stuck walker is not charged for them on every re-plan. */
+  private final LongRetryMemo longRetry = new LongRetryMemo();
+
   public PersonPathNavigation(Mob mob, Level level) {
     super(mob, level);
   }
@@ -140,8 +143,16 @@ public final class PersonPathNavigation extends GroundPathNavigation {
     // Reaching a watch platform can take more than 48 blocks of walking even
     // when it is nearby in a straight line. Retry exact work destinations with
     // a longer horizon and bounded extra search work, retaining loaded chunks.
-    if (accuracy == 0 && range < EXACT_SEARCH_RANGE && (route == null || !route.canReach())) {
+    // A retry that just failed from here is not asked again (LongRetryMemo).
+    long now = this.level.getGameTime();
+    if (accuracy == 0 && range < EXACT_SEARCH_RANGE && (route == null || !route.canReach())
+        && this.longRetry.worthRetrying(targets, this.mob.blockPosition(), now)) {
       Path longer = super.createPath(targets, regionOffset, offsetUpward, accuracy, EXACT_SEARCH_RANGE);
+      if (longer != null && longer.canReach()) {
+        this.longRetry.reached(targets);
+      } else {
+        this.longRetry.failed(targets, this.mob.blockPosition(), now);
+      }
       if (longer != null && (route == null || longer.canReach()
           || longer.getDistToTarget() < route.getDistToTarget())) route = longer;
     }

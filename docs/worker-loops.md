@@ -970,6 +970,17 @@ spends at most six searches in total, and leaves a tree it found no way to out o
 scans for two minutes. The nearest reachable tree is taken rather than a random one. Trimming a
 way into a hemmed-in stand shares the same six-search budget.
 
+**The long retry is remembered, 2026-09-12 (#138).** An exact destination that the ordinary
+48-block search cannot reach is retried with a 128-block horizon and double the node budget, for
+posts such as a watch platform whose way in is a long detour. A worker re-plans every ten ticks,
+so one who was stuck, or whose post was walled off, paid for that retry twice a second: on the
+live server long retries were 38% of all path-search time and reached their target 1.2% of the
+time, the costliest being one guard asking 200 times for a post six blocks away. A failed long
+retry is now not repeated for the same target for five seconds unless the person has moved four
+blocks since (`LongRetryMemo`), and one that reaches its target clears it. The last sixteen failures
+are kept, not one: a villager stuck beside a chest asks for each of the nine cells round it in
+turn, and a single remembered failure was forgotten before its cell came round again.
+
 **Attached bee nests (2026-09-08).** Shared tree felling also removes unowned bee nests
 and beehives touching a log actually removed, once each. It releases occupants normally;
 Silk Touch preserves bees in the native hive drop instead. Player/village-owned hives,
