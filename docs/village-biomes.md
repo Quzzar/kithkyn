@@ -58,8 +58,9 @@ to Floodplain when site selection can classify them reliably.
 ## Next authoring shortlist
 
 Tundra is complete. Taiga remains intentionally parked until the ornate Polish and grittier
-Viking directions can be judged after more village catalogs are complete. Alpine, Romanian,
-Japanese, Savanna Tent, Polynesian Coast and Mushroom remain available as the next catalog pass.
+Viking directions can be judged after more village catalogs are complete. Polynesian Coast is in
+its selection pass (below). Alpine, Romanian, Japanese, Savanna Tent and Mushroom remain available
+as the next catalog pass.
 
 The three walk-through courts begin at **9913.5, 230, 986.5** in the live showcase world. The
 individual entrances are Swamp at **9929.5, 230, 1004.5**, Viking at
@@ -98,6 +99,20 @@ The current review status is:
   The court, the seven-row annex at **10473.5, 230, 1224.5** and the workshop row of restyled
   markets and the hedged wall at **10473.5, 230, 1532.5** remain as provenance and comparison
   galleries.
+- **Polynesian Coast:** the selection gallery stands in the sky above the **trio-20260912** test
+  world, not the showcase world: Aaron chose it while the showcase world was not being served.
+  It begins at **609.5, 230, 10.5**, about 600 blocks east of that world's spawn. Rows PC01 to
+  PC03 hold all 18 standalone Towns & Towers Polynesian structures: the town center, the tiki
+  torch, eight homes, and eight workplaces and farms. Rows PC04 to PC06 keep 16 tropical-coast
+  donors apart for the roles the family lacks: the CTOV Beach bakery, warehouse, vault, sawmill,
+  woodworker, hunter, tavern, barracks, priest tower, sanctuary, goddess statue and well, and the
+  Dungeons & Taverns acacia and mangrove taverns, mangrove firewatch and jungle well. Pieces
+  holding water stand inside one-block barrier rings, and the deep jungle well hangs its shaft
+  below the platform on a floor. The CTOV Beach work blocks that belong to mods the server lacks
+  are replaced by vanilla stand-ins in the private display copies only. No roles are selected yet. Two questions stay open: both
+  Polynesian farms already serve the Floodplain catalog, and Sparse Jungle currently founds
+  Jungle villages, so which catalog keeps that biome is undecided. The exact sources, hashes and
+  placements are recorded in `tools/structure/polynesian-full-profile-20260912.json`.
 
 The Viking annex contains all 43 standalone structures: 22 Viking and 21 Polish. Road pieces
 and terminators are omitted because they are layout internals rather than building candidates.
