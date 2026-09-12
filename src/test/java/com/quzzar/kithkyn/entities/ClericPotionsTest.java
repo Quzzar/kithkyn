@@ -100,6 +100,24 @@ class ClericPotionsTest {
   }
 
   @Test
+  void theBriefingCountsSpareBottlesInThePackAndNeverTheSeed() {
+    SimpleContainer pack = new SimpleContainer(9);
+    ItemStack hand = splash(Potions.REGENERATION);
+    pack.setItem(0, splash(Potions.HARMING));
+
+    // The only harm is the seed: nothing to tell. The hand's regeneration is not in the pack.
+    assertEquals(0, ClericPotions.sparePackCount(hand, ItemStack.EMPTY, pack, splash(Potions.HARMING)));
+    assertEquals(0, ClericPotions.sparePackCount(hand, ItemStack.EMPTY, pack, splash(Potions.REGENERATION)));
+
+    // Two more harm: two spare. One regeneration in the pack beside the hand's: one spare.
+    pack.setItem(1, splash(Potions.HARMING));
+    pack.setItem(2, splash(Potions.HARMING));
+    pack.setItem(3, splash(Potions.REGENERATION));
+    assertEquals(2, ClericPotions.sparePackCount(hand, ItemStack.EMPTY, pack, splash(Potions.HARMING)));
+    assertEquals(1, ClericPotions.sparePackCount(hand, ItemStack.EMPTY, pack, splash(Potions.REGENERATION)));
+  }
+
+  @Test
   void brewingRestocksTheEmptiestBrewFirstAndStopsAtTheTarget() {
     SimpleContainer pack = new SimpleContainer(9);
     ItemStack hand = splash(Potions.REGENERATION);

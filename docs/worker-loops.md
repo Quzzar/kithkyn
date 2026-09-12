@@ -377,9 +377,12 @@ decides what they can do:
   Potions do not stack, so each bottle needs a pack slot, and a full pack waits.
 
 The last bottle of a brew is the **seed**. It is never thrown and never given away in
-conversation (the one exception to "anything goes" in `PersonChatDispatcher.takeFromSlots`),
-because a cleric who parts with it has lost the brew for good and would have to be handed
-another before making more. Above the seed, potions are theirs to give like anything else.
+conversation, because a cleric who parts with it has lost the brew for good and would have to
+be handed another before making more. The clean half of that rule is in the chat briefing: a
+cleric is told the bottles they can spare of each brew, "you have this many minus one", so a
+model that gives only what it was told it has never offers the seed. The take itself
+(`PersonChatDispatcher.takeFromSlots`) caps at the spare as a backstop, the one exception to
+"anything goes". Above the seed, potions are theirs to give like anything else.
 
 The loadout is issued, not authored. Every cleric starts with a splash of regeneration and a
 splash of healing (`SignatureGear`). At bedtime, before the pack is shelved (their potions are

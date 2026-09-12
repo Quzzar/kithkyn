@@ -14,6 +14,7 @@ import com.quzzar.kithkyn.compat.AccessoryCompat;
 import com.quzzar.kithkyn.entities.MarriageStatus;
 import com.quzzar.kithkyn.entities.PersonalLogData;
 import com.quzzar.kithkyn.entities.UndertakingData;
+import com.quzzar.kithkyn.entities.ClericPotions;
 import com.quzzar.kithkyn.entities.RealPerson;
 import com.quzzar.kithkyn.entities.KithkynAttachments;
 import com.quzzar.kithkyn.llm.LlmService.FewShotExample;
@@ -547,15 +548,30 @@ public final class PersonChatContext {
     return String.join(" and ", parts);
   }
 
-  /** The FULL pocket contents, aggregated by item — they know their own bags. */
+  /**
+   * The FULL pocket contents, aggregated by item — they know their own bags.
+   * With one omission: a cleric is told the bottles they can spare of each
+   * brew, never the seed ({@link ClericPotions#sparePackCount}). A model that
+   * gives only what the briefing says it has then never offers the last bottle,
+   * which is the cleaner half of the rule; the take in
+   * {@code PersonChatDispatcher.takeFromSlots} is the backstop.
+   */
   private static String pocketsSummary(RealPerson person) {
     Map<String, Integer> counts = new LinkedHashMap<>();
+    boolean cleric = ClericPotions.isCleric(person);
     for (int i = 0; i < person.personMainInv.getContainerSize(); i++) {
       ItemStack stack = person.personMainInv.getItem(i);
-      if (!stack.isEmpty()) {
-        counts.merge(itemName(stack), stack.getCount(), Integer::sum);
+      if (stack.isEmpty()) {
+        continue;
       }
+      if (cleric && ClericPotions.isThrowable(stack)) {
+        // Counted once per brew, as the spare, however many slots it fills.
+        counts.putIfAbsent(itemName(stack), ClericPotions.sparePackCount(person, stack));
+        continue;
+      }
+      counts.merge(itemName(stack), stack.getCount(), Integer::sum);
     }
+    counts.values().removeIf(count -> count <= 0);
     List<String> parts = new ArrayList<>();
     counts.forEach((name, count) -> parts.add(count + " " + name));
     return String.join(", ", parts);

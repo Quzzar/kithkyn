@@ -19,9 +19,8 @@ import net.minecraft.world.item.alchemy.Potions;
  * crafting table, the librarian's book, the blacksmith's iron ingot, the
  * cleric's splash potions of healing and regeneration. This is the one place they are
  * named, so the starting kit that first hands them out
- * ({@link RealPerson#issueStartingKit}), the day-to-day check that keeps them in
- * hand ({@link RealPerson#tendSignatureGear}), and the rule that keeps a
- * villager from giving their own away all read the same list.
+ * ({@link RealPerson#issueStartingKit}) and the day-to-day check that keeps them
+ * in hand ({@link RealPerson#tendSignatureGear}) read the same list.
  *
  * <p>Tiered tools (an axe, a pickaxe, a hoe, a bow) are not here: {@link JobTool}
  * maintains those, since a tool comes in tiers and is made again from real
@@ -43,7 +42,7 @@ public final class SignatureGear {
    */
   public record Piece(EquipmentSlot slot, Supplier<ItemStack> fresh) {
 
-    /** The kind of item the piece is, for naming and for the give-away guard. */
+    /** The kind of item the piece is, for naming. */
     public Item item() {
       return this.fresh.get().getItem();
     }

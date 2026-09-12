@@ -205,6 +205,24 @@ public final class ClericPotions {
     return Math.max(0, Math.min(stack.getCount(), total - 1));
   }
 
+  /**
+   * How many bottles of this brew in the pack are spare: the pack's count,
+   * capped at everything but the seed. What the chat briefing tells a cleric
+   * they have in their pockets, so a model that only ever offers what it was
+   * told about never offers the seed (Aaron, 2026-09-12: "you have this many
+   * minus one").
+   */
+  public static int sparePackCount(ItemStack mainHand, ItemStack offHand, Container pack, ItemStack brew) {
+    int inPack = 0;
+    for (int slot = 0; slot < pack.getContainerSize(); slot++) {
+      ItemStack stack = pack.getItem(slot);
+      if (sameBrew(stack, brew)) {
+        inPack += stack.getCount();
+      }
+    }
+    return Math.max(0, Math.min(inPack, carried(mainHand, offHand, pack, brew) - 1));
+  }
+
   /** The carried brew furthest below {@link #STOCK_TARGET}, or null when every brew is stocked. */
   @Nullable
   public static Stock lowestBelowTarget(ItemStack mainHand, ItemStack offHand, Container pack) {
@@ -263,6 +281,10 @@ public final class ClericPotions {
 
   public static int giveable(RealPerson person, ItemStack stack) {
     return giveable(person.getMainHandItem(), person.getOffhandItem(), person.personMainInv, stack);
+  }
+
+  public static int sparePackCount(RealPerson person, ItemStack brew) {
+    return sparePackCount(person.getMainHandItem(), person.getOffhandItem(), person.personMainInv, brew);
   }
 
   @Nullable

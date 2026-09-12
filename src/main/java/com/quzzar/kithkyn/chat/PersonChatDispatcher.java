@@ -719,20 +719,12 @@ public final class PersonChatDispatcher {
   }
 
   /**
-   * A give is honoured only for an item actually in the villager's pockets, and
-   * only once in a while.
-   *
-   * The pockets check was the ONLY gate, which turned out not to be a gate at
-   * all: the model offers items on ordinary conversational turns - a torch when
-   * asked how business is, a diamond when asked what is in her inventory - and
-   * anything a villager happened to be carrying could be handed over on any
-   * turn. Aaron was given a diamond for asking a question.
-   *
-   * The prompt now tells them to give only when asked, which helps and cannot
-   * be relied on: it is a request to a 3B model, not a rule. This is the rule.
-   * A villager parting with something occasionally is the charm; a villager
-   * emptying their pockets over a conversation is the bug, and a cooldown
-   * bounds the second without touching the first.
+   * A give is honoured for any item actually in the villager's pockets, as
+   * often as they like: a villager's things are theirs to part with (Aaron,
+   * 2026-09-12: no cooldown, and no guard on the job's own gear). The model
+   * once offered items on ordinary turns, a torch when asked how business is,
+   * a diamond for asking a question; the prompt now tells them to give only
+   * when asked, and that is the only brake on how often.
    */
   private static void executeGive(RealPerson person, ServerPlayer player, String itemId, int requestedCount) {
     ResourceLocation id = ResourceLocation.tryParse(itemId.contains(":") ? itemId : "minecraft:" + itemId);
