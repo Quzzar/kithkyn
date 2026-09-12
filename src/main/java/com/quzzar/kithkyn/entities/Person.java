@@ -83,8 +83,6 @@ import net.minecraft.world.item.BowItem;
 import net.minecraft.world.item.CrossbowItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.SplashPotionItem;
-import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.ProjectileWeaponItem;
 import net.minecraft.world.item.component.ChargedProjectiles;
@@ -929,11 +927,15 @@ public class Person extends PathfinderMob implements CrossbowAttackMob, NeutralM
     }
   }
 
-  /** Something a villager can eat or drink to heal: food, or a potion that is not thrown. */
+  /**
+   * Something a villager eats to heal: food, eaten or drunk (a honey bottle is
+   * a meal). A potion is not: the eating path cannot drink one, since a bite a
+   * second ends the use before a drink finishes and a potion has no food value
+   * to heal by. A potion is drunk only when it would help, by DrinkPotionGoal,
+   * which knows what each one does.
+   */
   public static boolean isMeal(ItemStack stack) {
-    return !stack.isEmpty()
-        && (stack.getUseAnimation() == UseAnim.EAT
-            || (stack.getUseAnimation() == UseAnim.DRINK && !(stack.getItem() instanceof SplashPotionItem)));
+    return !stack.isEmpty() && stack.has(DataComponents.FOOD);
   }
 
   /** The pack slot holding the first meal, or -1 when the pack has none. */

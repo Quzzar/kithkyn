@@ -32,6 +32,27 @@ public final class RangedShotSafety {
     return false;
   }
 
+  /**
+   * An enemy in the corridor would take a helpful throw meant for someone
+   * behind it: the bottle breaks on the first body it meets (Aaron, 2026-09-12:
+   * a helpful potion is never thrown where it would reach an enemy).
+   */
+  public static boolean blockedByEnemy(LivingEntity shooter, LivingEntity target) {
+    Vec3 from = shooter.getEyePosition();
+    Vec3 to = target.getBoundingBox().getCenter();
+    for (LivingEntity nearby : shooter.level().getEntitiesOfClass(LivingEntity.class,
+        new AABB(from, to).inflate(CLEARANCE))) {
+      if (nearby == shooter || nearby == target || !nearby.isAlive()) {
+        continue;
+      }
+      if (com.quzzar.kithkyn.entities.ClericPotions.isEnemy(shooter, nearby)
+          && intersects(from, to, nearby.getBoundingBox())) {
+        return true;
+      }
+    }
+    return false;
+  }
+
   /** A finite segment also excludes allies behind the shooter or beyond the target. */
   static boolean intersects(Vec3 from, Vec3 to, AABB body) {
     AABB clearance = body.inflate(CLEARANCE);

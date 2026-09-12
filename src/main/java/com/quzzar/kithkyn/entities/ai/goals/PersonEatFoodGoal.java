@@ -43,6 +43,10 @@ public class PersonEatFoodGoal extends Goal {
         || !person.hasMeal()) {
       return false;
     }
+    // The off hand is busy with a potion being drunk or aimed (OffHandUse): the meal waits.
+    if (com.quzzar.kithkyn.entities.OffHandUse.inUse(person)) {
+      return false;
+    }
     return (!person.isRunningToEat() && person.isEating())
         || (person.getTarget() == null && !person.isAggressive());
   }

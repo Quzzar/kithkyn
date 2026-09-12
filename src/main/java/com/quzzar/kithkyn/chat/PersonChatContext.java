@@ -568,7 +568,7 @@ public final class PersonChatContext {
       if (stack.isEmpty()) {
         continue;
       }
-      if (cleric && ClericPotions.isThrowable(stack)) {
+      if (cleric && ClericPotions.isStock(stack)) {
         // Counted once per brew, as the spare, however many slots it fills.
         counts.putIfAbsent(itemName(stack), ClericPotions.sparePackCount(person, stack));
         continue;
@@ -599,7 +599,9 @@ public final class PersonChatContext {
       return "You carry no potions at all, so there is nothing you can brew more of until someone hands you a bottle.";
     }
     return "In reserve, not counted above and not for giving: one " + String.join(", one ", brews)
-        + ". Each is the recipe you brew three more of at your station; give the last one away and that brew is lost to you.";
+        + ". Each is the recipe you brew three more of at your station; give the last one away and that brew is lost to you."
+        + " You drink ordinary potions yourself when one would help you, and throw splash and lingering potions:"
+        + " helpful ones at friends when no enemy stands in the splash, harmful ones at enemies when no friend does.";
   }
 
   /**
