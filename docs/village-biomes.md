@@ -91,6 +91,14 @@ The current review status is:
   **11107.5, 230, 1810.5** and also displays three clean castle donors, the Ice Cathedral palette
   study, and an editable T17.3 Tundra Keep conversion at **11338, 230, 1935**. Those remain general
   references: the production Tundra catalog has no castle.
+- **Romanian:** active Dark Forest selection begins at **12401.5, 230, 1004.5**. Rows R01 through
+  R05 contain the complete 22-structure Towns & Towers Romanian family: its centre, all homes,
+  combined workplaces, farm and details. Rows R06 and R07 keep 13 supplemental dark-forest
+  services visibly separate, including dark-oak tavern, well and tower options, a Tudor church,
+  Halloween civic buildings and the stone T17.3 keep study. This is a source-selection gallery,
+  not a second copy of the playable Birch catalog; the Romanian production palette, roles and
+  final captures remain to be chosen. Exact hashes and placements are recorded in
+  `tools/structure/romanian-full-profile-20260912.json`.
 - **Mediterranean:** the production catalog is selected and verified
   ([mediterranean-village.md](mediterranean-village.md)): the M06.1 church is its centre, the
   M08.1 fort its castle, and the rest comes from annex rows M06 to M08 and the edited court
