@@ -15,7 +15,11 @@ import com.quzzar.kithkyn.village.Occupation;
  * <p>Only the trades with one unmistakable grant are listed. A guard post is
  * not: the watchtower's guards grant PROTECTION while the center's captain and
  * a castle's sentries do not, and that is a planning decision the definitions
- * make on purpose. The builder and the leader grant nothing.
+ * make on purpose. The builder and the leader grant nothing. A station that
+ * routes its worker to a separate physical worksite (the centre's quartermaster
+ * post whose shelves are the storehouse, its miner post whose pit is the mine)
+ * is exempt too: the grant belongs to the worksite's own definition, which
+ * already carries it, and the vacancy stays with the civic building.
  */
 public final class StationGrants {
 
@@ -50,11 +54,14 @@ public final class StationGrants {
    */
   public static List<String> missing(BuildingInfo info) {
     List<String> problems = new ArrayList<>();
-    for (Occupation occupation : info.getWorkLocations().values().stream().distinct().toList()) {
+    List<Occupation> seen = new ArrayList<>();
+    for (BuildingInfo.WorkStation station : info.workStations()) {
+      Occupation occupation = station.occupation();
       String grant = canonical(occupation);
-      if (grant == null) {
+      if (grant == null || station.worksiteCategory().isPresent() || seen.contains(occupation)) {
         continue;
       }
+      seen.add(occupation);
       boolean declared = info.getGrants().contains(grant)
           || info.getConditionalGrants().stream().anyMatch(conditional -> conditional.capability().equals(grant));
       if (!declared) {

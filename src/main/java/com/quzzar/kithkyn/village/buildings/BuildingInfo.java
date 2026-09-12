@@ -720,7 +720,8 @@ public class BuildingInfo {
     return bedLocs.stream().map(BlockPos::of).toList();
   }
 
-  private List<WorkStation> workStations() {
+  /** The authored posts, in station order; package-visible so StationGrants can read each post's worksite routing. */
+  List<WorkStation> workStations() {
     return workLocs.entrySet().stream()
         .map(entry -> new WorkStation(BlockPos.of(entry.getKey()), entry.getValue(),
             java.util.Optional.ofNullable(guardRoles.get(entry.getKey())),

@@ -173,27 +173,40 @@ public class VillageManagerSaveData extends SavedData {
         }
     }
 
-    public void registerVillage(ServerLevelAccessor levelAccess, BlockPos location) {
-        registerVillage(levelAccess, location, null);
+    public boolean registerVillage(ServerLevelAccessor levelAccess, BlockPos location) {
+        return registerVillage(levelAccess, location, null);
     }
 
     /**
      * Founds a village at the site in the given style, or, with none given, in
      * the style the biome there calls for ({@link com.quzzar.kithkyn.village.buildings.VillageStyle#fromBiome}).
      */
-    public void registerVillage(ServerLevelAccessor levelAccess, BlockPos location,
+    public boolean registerVillage(ServerLevelAccessor levelAccess, BlockPos location,
             @javax.annotation.Nullable com.quzzar.kithkyn.village.buildings.VillageStyle style) {
-        registerVillage(levelAccess, location, style, com.quzzar.kithkyn.entities.Kind.LIVING);
+        return registerVillage(levelAccess, location, style, com.quzzar.kithkyn.entities.Kind.LIVING);
     }
 
     /**
      * Founds a village of the given kind: a manual founding is living unless
      * the command says undead, because a placed village is a deliberate act
      * and a surprise kind would be a bug report (docs/undead.md).
+     *
+     * <p>A manual founding keeps the same separation from other villages that a
+     * natural one does. On 2026-09-12 three foundings landed within a few blocks
+     * of each other near Sorevia: the second began while the first was still
+     * being cleared (#138), and the third logged a POI conflict on the first's
+     * blocks. Returns false, founding nothing, when the site is within
+     * {@code VillageGeneration.MIN_SEPARATION_BLOCKS} of a standing village
+     * centre or a founding still being named.
      */
-    public void registerVillage(ServerLevelAccessor levelAccess, BlockPos location,
+    public boolean registerVillage(ServerLevelAccessor levelAccess, BlockPos location,
             @javax.annotation.Nullable com.quzzar.kithkyn.village.buildings.VillageStyle style,
             com.quzzar.kithkyn.entities.Kind kind) {
+        if (!naturalSiteAvailable(location)) {
+            Kithkyn.LOGGER.info("Refused to found a village at {}: within {} blocks of another village or a pending founding",
+                    location.toShortString(), com.quzzar.kithkyn.village.VillageGeneration.MIN_SEPARATION_BLOCKS);
+            return false;
+        }
         // One name for life (#60): the LLM name is requested BEFORE the camp is
         // placed, and founding runs when it lands moments later, so the village
         // never carries a provisional name. The wait opens a short window in
@@ -202,7 +215,7 @@ public class VillageManagerSaveData extends SavedData {
         // skipped.
         long site = location.asLong();
         if (!pendingFoundings.add(site)) {
-            return;
+            return false;
         }
         ServerLevel serverLevel = level != null ? level : levelAccess.getLevel();
         var selectedStyle = style != null ? style
@@ -223,6 +236,7 @@ public class VillageManagerSaveData extends SavedData {
                 pendingFoundings.remove(site);
             }
         });
+        return true;
     }
 
     /** Runs every second, driven by the overworld tick handler. */
