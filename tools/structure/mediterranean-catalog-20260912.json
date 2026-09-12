@@ -1,0 +1,583 @@
+{
+  "schemaVersion": 1,
+  "recorded": "2026-09-12",
+  "status": "verified",
+  "style": "mediterranean",
+  "description": "Aaron's Mediterranean village catalog: the Towns & Towers Mediterranean white-stone family from annex rows M06-M08 plus the two edited court copies, as he arranged them live on 2026-09-11 and 2026-09-12.",
+  "snapshot": "run/mediterranean-integration/selection-capture-20260912-022651",
+  "founding": {
+    "center": "village_center_mediterranean_1",
+    "center_beds": 0,
+    "starting_buildings": [
+      "mine_mediterranean_1",
+      "storehouse_mediterranean_1",
+      "house_mediterranean_1",
+      "house_mediterranean_1",
+      "house_mediterranean_1",
+      "house_mediterranean_1__two_bed"
+    ],
+    "starting_beds": 6
+  },
+  "identity": {
+    "beds": "primary or secondary village color; couple halves share primary",
+    "awnings": "every orange wool cell is a primary-colour slot; white wool stays white",
+    "banners": "village banner",
+    "market_fabrics": "original shared market colors"
+  },
+  "wall": {
+    "source": "run/mediterranean-full-profile workshop row W2, edited live by Aaron",
+    "implementation": "bundled authored mediterranean wall segment family (tools/structure/mediterranean-walls-20260912.json)"
+  },
+  "buildings": [
+    {
+      "exhibit": "M06.1",
+      "structure": "village_center_mediterranean_1",
+      "category": "village_center",
+      "level": 1,
+      "size": [
+        25,
+        17,
+        23
+      ],
+      "source": "run/mediterranean-integration/cropped/M06.1.nbt",
+      "source_sha256": "3fdc8c955b0b447e90e0f11ecf43357c155dd998938cf6362b406e920098c95e",
+      "capture": "run/mediterranean-integration/selection-capture-20260912-022651/captures/M06_1.nbt",
+      "entities": 0,
+      "carpets_cleared_under_stations": [
+        [
+          12,
+          1,
+          12
+        ]
+      ],
+      "asset": "run/mediterranean-integration/datapack/data/kithkyn/structure/village_center_mediterranean_1.nbt",
+      "asset_sha256": "b90ee558a4bc84f45c07b12d8fd89d698b254f7c0a773a8d1f94545fd865550b",
+      "definition": "run/mediterranean-integration/datapack/data/kithkyn/kithkyn/buildings/village_center_mediterranean_1.json",
+      "definition_sha256": "6acefb285bf40803fd774f5ef4ad3bc609abc873045c6bfe11b8ab92fe6803b8"
+    },
+    {
+      "exhibit": "M06.5",
+      "structure": "house_mediterranean_1",
+      "category": "house",
+      "level": 1,
+      "size": [
+        5,
+        8,
+        5
+      ],
+      "source": "run/mediterranean-integration/cropped/M06.5.nbt",
+      "source_sha256": "ecd2a6eb8e8a62d03f036e45ce4718f7cdab2cb963155c3c2e71b4666bee67de",
+      "capture": "run/mediterranean-integration/selection-capture-20260912-022651/captures/M06_5.nbt",
+      "entities": 0,
+      "carpets_cleared_under_stations": [],
+      "asset": "run/mediterranean-integration/datapack/data/kithkyn/structure/house_mediterranean_1.nbt",
+      "asset_sha256": "1232128747df202c48da200293d2c3b390a35cee4aca04573e1853556d30dfff",
+      "definition": "run/mediterranean-integration/datapack/data/kithkyn/kithkyn/buildings/house_mediterranean_1.json",
+      "definition_sha256": "af2515202b0bfd754ce068156d52fab0b77e3b8f957b0f4aaaf9d50cec00c4dd"
+    },
+    {
+      "exhibit": "M06.3",
+      "structure": "house_mediterranean_1__two_bed",
+      "category": "house",
+      "level": 1,
+      "size": [
+        5,
+        7,
+        10
+      ],
+      "source": "run/mediterranean-integration/cropped/M06.3.nbt",
+      "source_sha256": "388df4ee9926245111d504c6ef60cf79b2fdc39ed45cf8a5eb49a7c812e0cdd8",
+      "capture": "run/mediterranean-integration/selection-capture-20260912-022651/captures/M06_3.nbt",
+      "entities": 0,
+      "carpets_cleared_under_stations": [],
+      "asset": "run/mediterranean-integration/datapack/data/kithkyn/structure/house_mediterranean_1__two_bed.nbt",
+      "asset_sha256": "477530486a77ba112506997cb4f25ebda681ecc97ec453f525bc196dd673f147",
+      "definition": "run/mediterranean-integration/datapack/data/kithkyn/kithkyn/buildings/house_mediterranean_1__two_bed.json",
+      "definition_sha256": "9fff398deb14f7eab856457e1e439c95ea577b7a65615227747221724ec336a1"
+    },
+    {
+      "exhibit": "M06.2",
+      "structure": "house_mediterranean_1__two_room",
+      "category": "house",
+      "level": 1,
+      "size": [
+        10,
+        7,
+        10
+      ],
+      "source": "run/mediterranean-integration/cropped/M06.2.nbt",
+      "source_sha256": "823785e113502eb83e652c8129d5e98bbdc508737de7aa590426b82ae990f10b",
+      "capture": "run/mediterranean-integration/selection-capture-20260912-022651/captures/M06_2.nbt",
+      "entities": 1,
+      "carpets_cleared_under_stations": [],
+      "asset": "run/mediterranean-integration/datapack/data/kithkyn/structure/house_mediterranean_1__two_room.nbt",
+      "asset_sha256": "0b4de64f41c4c8d5c657d5a1907fadbee5d25da25d41684fef93a5a3b408cb23",
+      "definition": "run/mediterranean-integration/datapack/data/kithkyn/kithkyn/buildings/house_mediterranean_1__two_room.json",
+      "definition_sha256": "ffa5d1e7360051b1153dce0c524671313caba885ebd3c43f64b7944c83e0c061"
+    },
+    {
+      "exhibit": "M06.4",
+      "structure": "house_mediterranean_1__couple_room",
+      "category": "house",
+      "level": 1,
+      "size": [
+        10,
+        10,
+        5
+      ],
+      "source": "run/mediterranean-integration/cropped/M06.4.nbt",
+      "source_sha256": "3b18603993bd70035018a7cf403433d91078b673d396c88acdf49574d1a88a1e",
+      "capture": "run/mediterranean-integration/selection-capture-20260912-022651/captures/M06_4.nbt",
+      "entities": 0,
+      "carpets_cleared_under_stations": [],
+      "asset": "run/mediterranean-integration/datapack/data/kithkyn/structure/house_mediterranean_1__couple_room.nbt",
+      "asset_sha256": "491edc815dee95800e34977c3c4b760f4d6a1ce2823718ca4725a79eafd2bcaf",
+      "definition": "run/mediterranean-integration/datapack/data/kithkyn/kithkyn/buildings/house_mediterranean_1__couple_room.json",
+      "definition_sha256": "72dd3e601928b2a4b6275ee2050f1338ac7da14a14c43dfa5a362c549332a3e2"
+    },
+    {
+      "exhibit": "M06.10",
+      "structure": "house_mediterranean_1__small_4",
+      "category": "house",
+      "level": 1,
+      "size": [
+        5,
+        6,
+        5
+      ],
+      "source": "run/mediterranean-integration/cropped/M06.10.nbt",
+      "source_sha256": "e49bb00f055a0b825f5f380a0b2388bf6f5bc0da723d9f2c808c6ab82a79d58c",
+      "capture": "run/mediterranean-integration/selection-capture-20260912-022651/captures/M06_10.nbt",
+      "entities": 0,
+      "carpets_cleared_under_stations": [],
+      "asset": "run/mediterranean-integration/datapack/data/kithkyn/structure/house_mediterranean_1__small_4.nbt",
+      "asset_sha256": "e30715f705c4e614700258175bc9f310d86650d2d356f113b43d34702d6bf1c6",
+      "definition": "run/mediterranean-integration/datapack/data/kithkyn/kithkyn/buildings/house_mediterranean_1__small_4.json",
+      "definition_sha256": "51e8a9d8b8b104d30d6287d5cb00906a048c8f0eecba42b5b0b9253274c35bab"
+    },
+    {
+      "exhibit": "M06.11",
+      "structure": "house_mediterranean_1__small_5",
+      "category": "house",
+      "level": 1,
+      "size": [
+        5,
+        7,
+        5
+      ],
+      "source": "run/mediterranean-integration/cropped/M06.11.nbt",
+      "source_sha256": "2e9630dadb2399568d67c29d15f55e96f4e9f25242afd4455b8e8533401093aa",
+      "capture": "run/mediterranean-integration/selection-capture-20260912-022651/captures/M06_11.nbt",
+      "entities": 0,
+      "carpets_cleared_under_stations": [],
+      "asset": "run/mediterranean-integration/datapack/data/kithkyn/structure/house_mediterranean_1__small_5.nbt",
+      "asset_sha256": "0cc71a9cf0c3422f5d727d49cdfd14a86ab51468e8289c4b0cb2c532eb762039",
+      "definition": "run/mediterranean-integration/datapack/data/kithkyn/kithkyn/buildings/house_mediterranean_1__small_5.json",
+      "definition_sha256": "c79e002cdda21e2221036e74a45cf7ffda2a5b95443756339e7fbd4c1242e300"
+    },
+    {
+      "exhibit": "M06.6",
+      "structure": "couple_cottage_mediterranean_1",
+      "category": "couple_cottage",
+      "level": 1,
+      "size": [
+        5,
+        8,
+        10
+      ],
+      "source": "run/mediterranean-integration/cropped/M06.6.nbt",
+      "source_sha256": "2b9f699348bea6d26505c6d30000841fa51c14656200899484261cd3e7b6f8ad",
+      "capture": "run/mediterranean-integration/selection-capture-20260912-022651/captures/M06_6.nbt",
+      "entities": 0,
+      "carpets_cleared_under_stations": [],
+      "asset": "run/mediterranean-integration/datapack/data/kithkyn/structure/couple_cottage_mediterranean_1.nbt",
+      "asset_sha256": "c181259702b9f6735a2053098380965a8cb591922756d4a23fceb6dde0c39ebb",
+      "definition": "run/mediterranean-integration/datapack/data/kithkyn/kithkyn/buildings/couple_cottage_mediterranean_1.json",
+      "definition_sha256": "8739ff6e1a5aef48d287a2a7176ce03aaf8c887efd354310dcf36cf82473f769"
+    },
+    {
+      "exhibit": "M07.1",
+      "structure": "blacksmith_mediterranean_1",
+      "category": "blacksmith",
+      "level": 1,
+      "size": [
+        10,
+        8,
+        10
+      ],
+      "source": "run/mediterranean-integration/cropped/M07.1.nbt",
+      "source_sha256": "9d407f5082faa5d9de05e612e81702113326570b3d7c01391e76f0f74654bdfe",
+      "capture": "run/mediterranean-integration/selection-capture-20260912-022651/captures/M07_1.nbt",
+      "entities": 1,
+      "carpets_cleared_under_stations": [],
+      "asset": "run/mediterranean-integration/datapack/data/kithkyn/structure/blacksmith_mediterranean_1.nbt",
+      "asset_sha256": "7147904b085485bb1c8a0399d3a02c9ada667820288e591c67a44939ba27dc90",
+      "definition": "run/mediterranean-integration/datapack/data/kithkyn/kithkyn/buildings/blacksmith_mediterranean_1.json",
+      "definition_sha256": "d6f2b1fcb45da9ba67e9f26ef5916e651b9dabc38381f3ec38e814db45a26ad0"
+    },
+    {
+      "exhibit": "M07.3",
+      "structure": "watchtower_mediterranean_1",
+      "category": "watchtower",
+      "level": 1,
+      "size": [
+        10,
+        10,
+        5
+      ],
+      "source": "run/mediterranean-integration/cropped/M07.3.nbt",
+      "source_sha256": "cb7d9364802509a6455e210ef0a016e33afbf11ac3ed6d55bb33770cd9969454",
+      "capture": "run/mediterranean-integration/selection-capture-20260912-022651/captures/M07_3.nbt",
+      "entities": 0,
+      "carpets_cleared_under_stations": [
+        [
+          2,
+          5,
+          2
+        ]
+      ],
+      "asset": "run/mediterranean-integration/datapack/data/kithkyn/structure/watchtower_mediterranean_1.nbt",
+      "asset_sha256": "67679c0a69924a2bb4d479dd4936e4b496b00b1b11ff5d9cf17b7eb8422270e4",
+      "definition": "run/mediterranean-integration/datapack/data/kithkyn/kithkyn/buildings/watchtower_mediterranean_1.json",
+      "definition_sha256": "699bfa7a4f5a0f1b099aecf40d23574311e729b2753522becc8ed6b21100d44c"
+    },
+    {
+      "exhibit": "M07.4",
+      "structure": "stoneworks_mediterranean_1",
+      "category": "stoneworks",
+      "level": 1,
+      "size": [
+        10,
+        8,
+        10
+      ],
+      "source": "run/mediterranean-integration/cropped/M07.4.nbt",
+      "source_sha256": "09dc27d74a5d47ecf6864d1a90fc53f7d70b02eff769a0539e5958f76edc2460",
+      "capture": "run/mediterranean-integration/selection-capture-20260912-022651/captures/M07_4.nbt",
+      "entities": 0,
+      "carpets_cleared_under_stations": [],
+      "asset": "run/mediterranean-integration/datapack/data/kithkyn/structure/stoneworks_mediterranean_1.nbt",
+      "asset_sha256": "dabcae07605ed24a9fecaa111ae155b487220b29897c0ee343a06f3a88431b20",
+      "definition": "run/mediterranean-integration/datapack/data/kithkyn/kithkyn/buildings/stoneworks_mediterranean_1.json",
+      "definition_sha256": "706da074e50ddeddf1ae5dbf5cee6807e4418db53efc2798ccd918bb4b3b5493"
+    },
+    {
+      "exhibit": "M07.5",
+      "structure": "storehouse_mediterranean_1",
+      "category": "storehouse",
+      "level": 1,
+      "size": [
+        5,
+        7,
+        10
+      ],
+      "source": "run/mediterranean-integration/cropped/M07.5.nbt",
+      "source_sha256": "a68fc4d24630fd27fa19ad0f7fb214d794e67e132a9892ad9869ed24a5c6dfce",
+      "capture": "run/mediterranean-integration/selection-capture-20260912-022651/captures/M07_5.nbt",
+      "entities": 0,
+      "carpets_cleared_under_stations": [],
+      "asset": "run/mediterranean-integration/datapack/data/kithkyn/structure/storehouse_mediterranean_1.nbt",
+      "asset_sha256": "a614a06fd97e475de3b2639bd5b986978cd2b03d4eea40b91a0e5e38c26d0bb4",
+      "definition": "run/mediterranean-integration/datapack/data/kithkyn/kithkyn/buildings/storehouse_mediterranean_1.json",
+      "definition_sha256": "24e2045bb61eb0c5734c3e6efecf581fb202d03fc4beca56561791e48bde7ac9"
+    },
+    {
+      "exhibit": "M07.6",
+      "structure": "hunting_lodge_mediterranean_1",
+      "category": "hunting_lodge",
+      "level": 1,
+      "size": [
+        5,
+        10,
+        10
+      ],
+      "source": "run/mediterranean-integration/cropped/M07.6.nbt",
+      "source_sha256": "24fbbbd6597f41947275bb3403f7974be18b47a5c612feb6a2580755e93182ce",
+      "capture": "run/mediterranean-integration/selection-capture-20260912-022651/captures/M07_6.nbt",
+      "entities": 0,
+      "carpets_cleared_under_stations": [],
+      "asset": "run/mediterranean-integration/datapack/data/kithkyn/structure/hunting_lodge_mediterranean_1.nbt",
+      "asset_sha256": "3184d7288fee1a0a4026557cb7247b0190507b538f83b55cfa570309b08443c2",
+      "definition": "run/mediterranean-integration/datapack/data/kithkyn/kithkyn/buildings/hunting_lodge_mediterranean_1.json",
+      "definition_sha256": "a80554a2605da4cc34df42e16fbb58e9b6a3690b56650ae531e84f537b20ea76"
+    },
+    {
+      "exhibit": "M07.7",
+      "structure": "bakery_mediterranean_1",
+      "category": "bakery",
+      "level": 1,
+      "size": [
+        10,
+        8,
+        10
+      ],
+      "source": "run/mediterranean-integration/cropped/M07.7.nbt",
+      "source_sha256": "51f0543e0e7db0b133651f1ac30502a02b0e123873c29bc9c037a6b861976f27",
+      "capture": "run/mediterranean-integration/selection-capture-20260912-022651/captures/M07_7.nbt",
+      "entities": 0,
+      "carpets_cleared_under_stations": [
+        [
+          4,
+          1,
+          7
+        ]
+      ],
+      "asset": "run/mediterranean-integration/datapack/data/kithkyn/structure/bakery_mediterranean_1.nbt",
+      "asset_sha256": "9ee09df7fffd7d0091f26bb600a015bca3671cf9fa0a418a173cb4da4c8297b5",
+      "definition": "run/mediterranean-integration/datapack/data/kithkyn/kithkyn/buildings/bakery_mediterranean_1.json",
+      "definition_sha256": "394c05bebc2ce6242c6edda0ae9922de12be36a7ddd8ba32511f0842cec67a72"
+    },
+    {
+      "exhibit": "M07.8",
+      "structure": "mine_mediterranean_1",
+      "category": "mine",
+      "level": 1,
+      "size": [
+        10,
+        10,
+        10
+      ],
+      "source": "run/mediterranean-integration/cropped/M07.8.nbt",
+      "source_sha256": "ddae128b30a60f78098d21b7380777e979b14703ea6fd22063a75d394567a85b",
+      "capture": "run/mediterranean-integration/selection-capture-20260912-022651/captures/M07_8.nbt",
+      "entities": 0,
+      "carpets_cleared_under_stations": [],
+      "asset": "run/mediterranean-integration/datapack/data/kithkyn/structure/mine_mediterranean_1.nbt",
+      "asset_sha256": "20c081fe702024b764e3b6e956f74befedb5ea437b44fac141ca671ccb096548",
+      "definition": "run/mediterranean-integration/datapack/data/kithkyn/kithkyn/buildings/mine_mediterranean_1.json",
+      "definition_sha256": "1d67635e0b4b529c1bc6cf575984d0d7d8ed63cef3bde78a3cd8856420a1a013"
+    },
+    {
+      "exhibit": "M08.1",
+      "structure": "castle_mediterranean_1",
+      "category": "castle",
+      "level": 1,
+      "size": [
+        16,
+        15,
+        19
+      ],
+      "source": "run/mediterranean-integration/cropped/M08.1.nbt",
+      "source_sha256": "54b678eee20e4038def560b1c7872fc2190715cb32524dc738378deaac058e39",
+      "capture": "run/mediterranean-integration/selection-capture-20260912-022651/captures/M08_1.nbt",
+      "entities": 0,
+      "carpets_cleared_under_stations": [
+        [
+          10,
+          2,
+          14
+        ],
+        [
+          13,
+          2,
+          11
+        ],
+        [
+          8,
+          2,
+          7
+        ],
+        [
+          9,
+          2,
+          16
+        ],
+        [
+          9,
+          2,
+          14
+        ],
+        [
+          7,
+          2,
+          14
+        ],
+        [
+          7,
+          2,
+          4
+        ],
+        [
+          9,
+          2,
+          7
+        ],
+        [
+          11,
+          2,
+          9
+        ]
+      ],
+      "asset": "run/mediterranean-integration/datapack/data/kithkyn/structure/castle_mediterranean_1.nbt",
+      "asset_sha256": "dd71aa647438cfe1c1db0d2ceb2753cf0f51c78fe54534350395ad0d98aa808c",
+      "definition": "run/mediterranean-integration/datapack/data/kithkyn/kithkyn/buildings/castle_mediterranean_1.json",
+      "definition_sha256": "d42de1e36cba5f8e017b840f751912b0be84ba4510f61c2f19e5a6118a33f9fa"
+    },
+    {
+      "exhibit": "M05.3",
+      "structure": "farm_mediterranean_1",
+      "category": "farm",
+      "level": 1,
+      "size": [
+        9,
+        6,
+        9
+      ],
+      "source": "run/mediterranean-integration/cropped/M05.3.nbt",
+      "source_sha256": "768284675ad398d7f76e6ca21cb38a56928fb6e79bf01b89d38f5c5302f42c15",
+      "capture": "run/mediterranean-integration/selection-capture-20260912-022651/captures/M05_3.nbt",
+      "entities": 0,
+      "carpets_cleared_under_stations": [],
+      "asset": "run/mediterranean-integration/datapack/data/kithkyn/structure/farm_mediterranean_1.nbt",
+      "asset_sha256": "c001a7f42a57bbc460fe708ccda8f2ddb20e69280784dd3fc2f810e5c929b1fa",
+      "definition": "run/mediterranean-integration/datapack/data/kithkyn/kithkyn/buildings/farm_mediterranean_1.json",
+      "definition_sha256": "067c5d47c08fd780f98696fedc80c66116804a50a0ac69a9709d0db38cb64640"
+    },
+    {
+      "exhibit": "M08.2",
+      "structure": "farm_mediterranean_2",
+      "category": "farm",
+      "level": 2,
+      "size": [
+        14,
+        3,
+        24
+      ],
+      "source": "run/mediterranean-integration/cropped/M08.2.nbt",
+      "source_sha256": "537702f95c566ad1a3749b751061319387f4f1be6183b0f38ea7ac4b04902eb1",
+      "capture": "run/mediterranean-integration/selection-capture-20260912-022651/captures/M08_2.nbt",
+      "entities": 0,
+      "carpets_cleared_under_stations": [],
+      "asset": "run/mediterranean-integration/datapack/data/kithkyn/structure/farm_mediterranean_2.nbt",
+      "asset_sha256": "fa33736a5647d7ea2f43c96c897a24b844363de50755c8a674b8bf4074243b81",
+      "definition": "run/mediterranean-integration/datapack/data/kithkyn/kithkyn/buildings/farm_mediterranean_2.json",
+      "definition_sha256": "13967018e23811da1efa36a30a9813e085eed862d7ddf0c63377194a909c61ec"
+    },
+    {
+      "exhibit": "M08.3",
+      "structure": "lumberjack_mediterranean_1",
+      "category": "lumberjack",
+      "level": 1,
+      "size": [
+        13,
+        5,
+        18
+      ],
+      "source": "run/mediterranean-integration/cropped/M08.3.nbt",
+      "source_sha256": "95bc3f680f70943e624c3a0939237e5ae9b9f641131b3b061981b14eb58c2aa4",
+      "capture": "run/mediterranean-integration/selection-capture-20260912-022651/captures/M08_3.nbt",
+      "entities": 0,
+      "carpets_cleared_under_stations": [],
+      "asset": "run/mediterranean-integration/datapack/data/kithkyn/structure/lumberjack_mediterranean_1.nbt",
+      "asset_sha256": "a7d4b4c540bb66aa3ba31771ca6275e99c30b54838b3776577195e47b1c68662",
+      "definition": "run/mediterranean-integration/datapack/data/kithkyn/kithkyn/buildings/lumberjack_mediterranean_1.json",
+      "definition_sha256": "cc8e5c4ab16eee4f21a64db5348f655364e639cb86ec4063039b48ef70405d31"
+    },
+    {
+      "exhibit": "M08.6",
+      "structure": "well_mediterranean_1",
+      "category": "well",
+      "level": 1,
+      "size": [
+        4,
+        4,
+        4
+      ],
+      "source": "run/mediterranean-integration/cropped/M08.6.nbt",
+      "source_sha256": "d90ae4f9e724349b5ff8971f3853643e4572270f74a2022a6018c303afa01a45",
+      "capture": "run/mediterranean-integration/selection-capture-20260912-022651/captures/M08_6.nbt",
+      "entities": 0,
+      "carpets_cleared_under_stations": [],
+      "asset": "run/mediterranean-integration/datapack/data/kithkyn/structure/well_mediterranean_1.nbt",
+      "asset_sha256": "13b3a4dfe47f04c370f544e3b7900ce71552418a26a7bc249b2c4413841a04ec",
+      "definition": "run/mediterranean-integration/datapack/data/kithkyn/kithkyn/buildings/well_mediterranean_1.json",
+      "definition_sha256": "91081609171d67f93131c860e32ec49621f26bb8be995fb735233073d49f647e"
+    },
+    {
+      "exhibit": "M04.2",
+      "structure": "butchery_mediterranean_1",
+      "category": "butchery",
+      "level": 1,
+      "size": [
+        13,
+        5,
+        18
+      ],
+      "source": "run/mediterranean-integration/cropped/M04.2.nbt",
+      "source_sha256": "4956e04b0fff821785bd4e0f96be096048941c9197462398b52fdb7ea63f544f",
+      "capture": "run/mediterranean-integration/selection-capture-20260912-022651/captures/M04_2.nbt",
+      "entities": 6,
+      "carpets_cleared_under_stations": [],
+      "asset": "run/mediterranean-integration/datapack/data/kithkyn/structure/butchery_mediterranean_1.nbt",
+      "asset_sha256": "b1cb50ae5cffe4efeb62dac887f85674acd352611042c7b351e07cf56ba95b7a",
+      "definition": "run/mediterranean-integration/datapack/data/kithkyn/kithkyn/buildings/butchery_mediterranean_1.json",
+      "definition_sha256": "e26f94964eef56ef6de2fa87668ffd05a6df36d1855f140a3fca38e368baa4b6"
+    },
+    {
+      "exhibit": "W1.1",
+      "structure": "market_mediterranean_1",
+      "category": "market",
+      "level": 1,
+      "size": [
+        8,
+        6,
+        9
+      ],
+      "source": "run/world/datapacks/kithkyn-desert/data/kithkyn/structure/market_desert_1.nbt",
+      "source_sha256": "231850f4ead24d663a59a1a65860e91c94aae7045c3227c4934ac0e93ea47fe3",
+      "restyle": "the Mediterranean workshop palette: quartz bricks, quartz pillars, spruce rails, plain candles, azalea and fern pots; the stripe-matched awning stairs are kept",
+      "asset": "run/mediterranean-integration/datapack/data/kithkyn/structure/market_mediterranean_1.nbt",
+      "asset_sha256": "d014540174d6be4127926afb1162faa22d900c69344e2cf8c606407807ac8a18",
+      "definition": "run/mediterranean-integration/datapack/data/kithkyn/kithkyn/buildings/market_mediterranean_1.json",
+      "definition_sha256": "d0bd536d891b1816ac1f6f74fb24d5491e0a5c8c42442224d3444035e99bcf7b"
+    },
+    {
+      "exhibit": "W1.2",
+      "structure": "market_mediterranean_2",
+      "category": "market",
+      "level": 2,
+      "size": [
+        15,
+        6,
+        9
+      ],
+      "source": "run/world/datapacks/kithkyn-desert/data/kithkyn/structure/market_desert_2.nbt",
+      "source_sha256": "13fd75b28fab8255b4efcb5178270b16c806c5b8edff20f6b9ed1532f768a3f0",
+      "restyle": "the Mediterranean workshop palette: quartz bricks, quartz pillars, spruce rails, plain candles, azalea and fern pots; the stripe-matched awning stairs are kept",
+      "asset": "run/mediterranean-integration/datapack/data/kithkyn/structure/market_mediterranean_2.nbt",
+      "asset_sha256": "5fb3bd1c8945d0a712842ff11865f0a91f25a195f071d203d16fa1d1621d98da",
+      "definition": "run/mediterranean-integration/datapack/data/kithkyn/kithkyn/buildings/market_mediterranean_2.json",
+      "definition_sha256": "53026cc48d7f0b2890cbbcbb2cc8dcd81c37750ef9e42c1ce85a63f8331e3d76"
+    },
+    {
+      "exhibit": "W1.3",
+      "structure": "market_mediterranean_3",
+      "category": "market",
+      "level": 3,
+      "size": [
+        15,
+        6,
+        17
+      ],
+      "source": "run/world/datapacks/kithkyn-desert/data/kithkyn/structure/market_desert_3.nbt",
+      "source_sha256": "ea62335fc76156a94438d13687312797cebb923f29818726a7a1cbba83b8a733",
+      "restyle": "the Mediterranean workshop palette: quartz bricks, quartz pillars, spruce rails, plain candles, azalea and fern pots; the stripe-matched awning stairs are kept",
+      "asset": "run/mediterranean-integration/datapack/data/kithkyn/structure/market_mediterranean_3.nbt",
+      "asset_sha256": "453245fd2616acf574887518d1704765c4ce06e1e64536480bd26d4035a51a14",
+      "definition": "run/mediterranean-integration/datapack/data/kithkyn/kithkyn/buildings/market_mediterranean_3.json",
+      "definition_sha256": "d03b6d7f70378ad96fb6e8fab9d38f80a4382044520402af181965514dfcbf51"
+    }
+  ],
+  "verification": {
+    "placement": "PASS: [building-placement-verify] RESULT PASS: 192 real-template placements, both paths, four rotations, colors, frames, entity/save receipts and upgrade preservation",
+    "restart": "PASS: [building-placement-verify] RESTART PASS: 192 saved buildings and 64 original entities survived real server shutdown/restart without replenishment",
+    "founding": "PASS: [mediterranean-verify] RESULT PASS: 24 strict native templates, 6 housing alternatives, 8 upgrade fits, four founding rotations and codec reloads, natural biome selection, 6 beds, 5 positions, distinct meeting/fire locations and village identity",
+    "center": "PASS: [approved-house-verify] RESULT PASS: 4 rotated structures, 24 access routes, 0 physical room walks and assigned-bed sleeps, 0 physical personal-container deposits, 0 failed placements; probe size=18; station walks=20, shared deposits=4, mine walks=0, review walks=0",
+    "access": "PASS: [approved-house-verify] RESULT PASS: 92 rotated structures, 392 access routes, 96 physical room walks and assigned-bed sleeps, 96 physical personal-container deposits, 0 failed placements; probe size=18; station walks=100, shared deposits=120, mine walks=8, review walks=0",
+    "construction": "PASS: [castle-construction-verify] RESULT PASS: physical two-storehouse recipe collection, ordinary walking GatherStep/BuildStep, incremental paid castle, authored jobs and beds published only after completion, protected evidence; ticks=28459 walked=134",
+    "patrol": "PASS: [castle-operations-verify] RESULT PASS: 16 real sentries visited all authored patrol levels in four rotations and retained loadouts",
+    "merchant": "not applicable: the M08.1 fort has no merchant stall, so the castle merchant systems and their check do not apply",
+    "custody": "PASS: [custody-verify] RESULT PASS: real melee/arrow arrest, private minute notices, saved expiry, inventory capacity and identity, escape and damaged-cell release, full-cell fallback and village-only grace",
+    "static_audit": "audit-templates.py PASS 24 templates: no barrier states or out-of-bounds blocks"
+  }
+}

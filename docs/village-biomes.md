@@ -57,14 +57,11 @@ to Floodplain when site selection can classify them reliably.
 
 ## Next authoring shortlist
 
-The next scouting pass prioritizes two catalogs now that Swamp is playable:
+The next scouting pass prioritizes one catalog now that Swamp and Mediterranean are playable:
 
 1. **Taiga** will give taiga and old-growth spruce forests a coherent cold-timber identity. Its
    court compares complete Viking and Polish families with Swedish, CTOV taiga, spruce service,
    and tower donors. Final family selection is deferred while other village catalogs are built.
-2. **Mediterranean** gives Plains and Sunflower Plains a distinct rural culture. Its court
-   compares the Mediterranean and Iberian families with CTOV Plains civic buildings, fields,
-   gardens, tavern, well, and fortified donors.
 
 The three walk-through courts begin at **9913.5, 230, 986.5** in the live showcase world. The
 individual entrances are Swamp at **9929.5, 230, 1004.5**, Viking at
@@ -81,10 +78,13 @@ The current review status is:
   V03.5, and V05.2 remain candidates rather than locked selections. The complete standalone T&T
   Viking and Polish families remain displayed in a six-row annex at
   **10201.5, 230, 1224.5** for the later decision.
-- **Mediterranean:** the M01 white-city family supplies the core. M04.1 through M04.4 supply
-  fields, orchards, and garden language around it. The complete standalone T&T Mediterranean and
-  Iberian families are displayed in a seven-row annex at **10473.5, 230, 1224.5**, south of the
-  court, for the catalog selection that comes next.
+- **Mediterranean:** the production catalog is selected and verified
+  ([mediterranean-village.md](mediterranean-village.md)): the M06.1 church is its centre, the
+  M08.1 fort its castle, and the rest comes from annex rows M06 to M08 and the edited court
+  copies of M04.2 and M05.3, recorded in `tools/structure/mediterranean-catalog-20260912.json`.
+  The court, the seven-row annex at **10473.5, 230, 1224.5** and the workshop row of restyled
+  markets and the hedged wall at **10473.5, 230, 1532.5** remain as provenance and comparison
+  galleries.
 
 The Viking annex contains all 43 standalone structures: 22 Viking and 21 Polish. Road pieces
 and terminators are omitted because they are layout internals rather than building candidates.

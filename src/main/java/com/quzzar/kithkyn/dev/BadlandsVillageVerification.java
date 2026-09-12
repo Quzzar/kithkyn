@@ -92,12 +92,12 @@ public final class BadlandsVillageVerification {
             {id("farm", 1), id("farm", 2)}},
         7, 4, 4, 1, 4, 0, 0, new BlockPos(12, 4, 13), new BlockPos(14, 6, 11), 2, Biomes.SWAMP);
     // The Mediterranean centre is the church: its founding jobs add a cleric to the
-    // usual quartermaster, builder, captain and miner, and its four founding homes are
-    // three one-bed houses and the two-bed house.
+    // usual quartermaster, builder, captain and miner; its four founding homes are
+    // three one-bed houses and the two-bed house, and the mine adds a general bed.
     case MEDITERRANEAN -> new Catalog("[mediterranean-verify]", 24, 6, 10, new int[] {6, 0, 0},
         Map.of("house_mediterranean_1__couple_room", 1), List.of(), false,
         new String[][] {{id("market", 1), id("market", 2)}, {id("market", 2), id("market", 3)}},
-        7, 5, 5, 1, 5, 0, 0, new BlockPos(12, 1, 1), new BlockPos(12, 3, 2), 1, Biomes.PLAINS);
+        7, 6, 5, 1, 5, 0, 0, new BlockPos(12, 1, 1), new BlockPos(12, 3, 2), 1, Biomes.PLAINS);
     case BIRCH_FOREST -> null;
   };
   /** Centre jobs beyond the founding four that a catalog's centre also opens at founding. */

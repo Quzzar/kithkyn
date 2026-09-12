@@ -103,6 +103,19 @@ All 28 sentry runs reached every assigned waypoint across four rotations. The cu
 also passed melee and arrow arrest, all 41 ordinary inventory slots, evidence overflow,
 five-minute reminders, persistence, escape, damaged-cell release and obstructed-exit fallback.
 
+## Mediterranean castle
+
+The Mediterranean castle is Aaron's edited M08.1 Towns & Towers fort, exported from the live
+annex on 2026-09-12 and staged with the rest of the catalog under
+`run/mediterranean-integration/`; `tools/structure/mediterranean-catalog-20260912.json` records
+its provenance. It keeps the Desert model: four beds, the ruler's double bed with its own
+barrel behind the fenced west room, a baker's corner (cake, cauldron, furnace) and a smithy
+(smithing table, grindstone) that share one chest between their two north bedrooms, seven
+barrels and two chests of village storage, and nine authored banner slots. The jail is the
+tower's upper floor: the cell behind iron bars, two evidence barrels beside it, the release point
+and the jailer's post on the same floor at the top of the ladder. Four sword guards patrol the
+north gate, the south gate and the two halves of the yard. It has no merchant stall.
+
 ## Ruler decisions
 
 The existing LEADER occupation supplies the ruler. Its title is King, Queen or Sovereign,

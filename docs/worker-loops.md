@@ -533,6 +533,11 @@ another farm's crops or a player's nearby composter. A missing footprint fails c
 pass below is the deliberate exception: it is village groundskeeping around the farm rather than
 work on the field itself, so its twelve-block exterior reach remains part of the loop.
 
+Harvesting picks rather than breaks whatever regrows on its own: a sweet berry bush is wound
+back to a young bush, and a glow berry is taken off its cave vine while the vine keeps hanging
+(the Mediterranean pasture trains glow berries on a trellis, docs/mediterranean-village.md).
+Only true crops are broken and replanted at stage one.
+
 The farmer gets the same treatment: a field that is all still growing used to mean pure
 wandering, and now the wait is a production chain, run as four separate steps so any link
 also stands alone (`entities/ai/goals/work/`):
