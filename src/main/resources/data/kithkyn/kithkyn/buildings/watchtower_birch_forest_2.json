@@ -39,6 +39,36 @@
       9
     ]
   ],
+  "bed_containers": [
+    {
+      "bed": [
+        7,
+        1,
+        6
+      ],
+      "containers": [
+        [
+          10,
+          1,
+          9
+        ]
+      ]
+    },
+    {
+      "bed": [
+        7,
+        5,
+        8
+      ],
+      "containers": [
+        [
+          10,
+          1,
+          9
+        ]
+      ]
+    }
+  ],
   "containers": [],
   "grants": [
     "PROTECTION",

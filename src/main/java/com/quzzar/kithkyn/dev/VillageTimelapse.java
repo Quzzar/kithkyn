@@ -44,6 +44,11 @@ public final class VillageTimelapse {
   private VillageTimelapse() {
   }
 
+  /** Whether this server currently owns the one runtime-only tick sprint session. */
+  public static boolean isRunning(MinecraftServer server) {
+    return active != null && active.server == server;
+  }
+
   /** Command branch mounted at {@code /kkdev village timelapse}. */
   public static LiteralArgumentBuilder<CommandSourceStack> branch() {
     return Commands.literal("timelapse")
@@ -82,6 +87,10 @@ public final class VillageTimelapse {
       return 0;
     }
     MinecraftServer server = source.getServer();
+    if (VillageCleanup.isRunning(server)) {
+      source.sendFailure(Component.literal("Stop village cleanup before starting a village timelapse."));
+      return 0;
+    }
     if (server.tickRateManager().isSprinting()) {
       source.sendFailure(Component.literal(
           "Minecraft is already tick-sprinting. Stop that sprint before starting a village timelapse."));

@@ -121,6 +121,7 @@ public class KithkynCommands {
     public static com.mojang.brigadier.builder.LiteralArgumentBuilder<net.minecraft.commands.CommandSourceStack> devBranch() {
         return Commands.literal("village")
                         .then(com.quzzar.kithkyn.dev.VillageTimelapse.branch())
+                        .then(com.quzzar.kithkyn.dev.VillageCleanup.branch())
                         .then(Commands.literal("attractiveness")
                                 .executes(ctx -> reportAttractiveness(ctx.getSource(),
                                         BlockPos.containing(ctx.getSource().getPosition())))

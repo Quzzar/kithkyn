@@ -1,5 +1,10 @@
 package com.quzzar.kithkyn.entities.ai;
 
+import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.Set;
+import java.util.UUID;
+
 /**
  * How much server-thread time the long path retries of every person may take
  * between them, so a burst of them cannot hold up a tick.
@@ -25,9 +30,13 @@ package com.quzzar.kithkyn.entities.ai;
  * because the cost of a node is what varies: the same search took 3 microseconds
  * a node on the warm server and over 20 two minutes after a restart.
  *
- * <p>A retry the bucket cannot pay for does not run. The caller keeps the
- * ordinary search's answer, exactly as if the retry had failed, and nothing is
- * remembered as failed, so the person asks again at their next re-plan.
+ * <p>A retry the bucket cannot pay for waits in first-come order. A person may
+ * use at most one admission in a tick, so one goal trying several candidate
+ * cells cannot spend the whole shared bucket before another person is seen.
+ * Waiters that stop asking are forgotten, rather than holding the queue forever.
+ * A deferred caller keeps the ordinary search's answer, exactly as if the retry
+ * had failed, and nothing is remembered as failed, so it asks again at its next
+ * re-plan.
  */
 public final class LongRetryBudget {
 
@@ -37,13 +46,37 @@ public final class LongRetryBudget {
   /** Most time the bucket holds: ten milliseconds, a fifth of a tick. */
   public static final long CAPACITY_NANOS = 10_000_000L;
 
+  /** A goal normally replans every ten ticks; two seconds lets a quiet waiter return without blocking forever. */
+  static final long WAITER_TIMEOUT_TICKS = 40L;
+
   private long balance = CAPACITY_NANOS;
   private long refilledAt;
+  private long admissionsAt = Long.MIN_VALUE;
+  private final Set<UUID> admittedThisTick = new HashSet<>();
+  private final LinkedHashMap<UUID, Long> waiting = new LinkedHashMap<>();
 
-  /** Whether a long retry may start at this game time: while any time is left. */
-  public boolean admits(long gameTime) {
+  /** Whether this requester may start a long retry at this game time. */
+  public boolean admits(long gameTime, UUID requester) {
     refill(gameTime);
-    return this.balance > 0L;
+    beginTick(gameTime);
+    forgetStaleWaiters(gameTime);
+    if (this.admittedThisTick.contains(requester)) {
+      return false;
+    }
+    if (this.balance <= 0L) {
+      this.waiting.put(requester, gameTime);
+      return false;
+    }
+    if (!this.waiting.isEmpty()) {
+      UUID first = this.waiting.keySet().iterator().next();
+      this.waiting.put(requester, gameTime);
+      if (!first.equals(requester)) {
+        return false;
+      }
+      this.waiting.remove(requester);
+    }
+    this.admittedThisTick.add(requester);
+    return true;
   }
 
   /** A long retry at this game time took {@code nanos} of server-thread time. */
@@ -56,6 +89,9 @@ public final class LongRetryBudget {
     if (gameTime < this.refilledAt) {
       // Game time only runs backwards when another world is loaded: it starts full.
       this.balance = CAPACITY_NANOS;
+      this.waiting.clear();
+      this.admittedThisTick.clear();
+      this.admissionsAt = Long.MIN_VALUE;
     } else {
       long elapsed = gameTime - this.refilledAt;
       long ticksToFull = Math.ceilDiv(CAPACITY_NANOS - this.balance, REFILL_NANOS_PER_TICK);
@@ -63,5 +99,16 @@ public final class LongRetryBudget {
           ? CAPACITY_NANOS : this.balance + elapsed * REFILL_NANOS_PER_TICK;
     }
     this.refilledAt = gameTime;
+  }
+
+  private void beginTick(long gameTime) {
+    if (this.admissionsAt != gameTime) {
+      this.admittedThisTick.clear();
+      this.admissionsAt = gameTime;
+    }
+  }
+
+  private void forgetStaleWaiters(long gameTime) {
+    this.waiting.entrySet().removeIf(entry -> gameTime - entry.getValue() > WAITER_TIMEOUT_TICKS);
   }
 }

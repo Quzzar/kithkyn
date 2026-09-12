@@ -953,7 +953,7 @@ lying down through an exterior wall. Distant travel retains the existing mine wa
 **Built, 2026-09-02: villagers climb ladders.** Vanilla mobs can climb, a zombie pressed against
 a ladder goes up, but they never plan to: the path search looks sideways, one step up and down a
 drop, so a ladder shaft is invisible to it and the watchtower's bed at the top of one was a bed
-nobody could reach. In the same evaluator a rung (anything in the climbable tag) is now a node
+nobody could reach. In the same evaluator an actual ladder rung is now a node
 the feet can stand in, its floor is its own height rather than the ground under the ladder, and
 it is joined to the rungs above and below it; a closed trapdoor over the top rung is a lid and
 ends the ladder. Reaching a landing is vanilla's step up, and leaving from one is vanilla's
@@ -962,6 +962,15 @@ body pressing into the wall, so while the next node is straight up the navigatio
 still and supplies vanilla's climbing speed; on the way down it holds still and lets the ladder's
 own slide do it. Where the person re-plans mid-climb the route starts from the rung they are on,
 not from the floor beneath, which is where vanilla would have started them.
+
+**Corrected, 2026-09-12: a rung is an actual ladder, not every climbable block.** Minecraft's
+climbable tag also contains ordinary vines, cave vines, twisting and weeping vines, and
+scaffolding. Giving all of them the ladder's vertical edges made a patrol plan a reachable route
+up decorative vines and then become stranded in them. Those blocks retain vanilla's ordinary
+walking behavior, including a villager being able to cross a vine at ground level; only a ladder
+gets the authored ascent and descent behavior above. Local footing checks from the move control
+also use the pathfinding context supplied by vanilla rather than the temporary context of a
+finished path search, so strafing after a search cannot crash the server.
 
 **Built, 2026-08-31: lumberjacks and guards clear nearby woodland; whole trees, and never the
 village's own.** The lumberjack's planted stand remains its reliable, renewable source of work,
