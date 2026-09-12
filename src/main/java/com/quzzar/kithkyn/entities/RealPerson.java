@@ -919,6 +919,7 @@ public class RealPerson extends Person {
     }
     if (ClericPotions.isCleric(this)) {
       stowStockFromMainHand();
+      restMarkInOffHand();
     }
     BlockPos depositTo = LocationManager.getJobLocation(this);
     for (SignatureGear.Piece piece : SignatureGear.of(getOccupation())) {
@@ -978,6 +979,31 @@ public class RealPerson extends Person {
         this.personMainInv.setItem(slot, held);
         setItemSlot(EquipmentSlot.MAINHAND, ItemStack.EMPTY);
         return;
+      }
+    }
+  }
+
+  /**
+   * At rest the cleric's off hand holds the mark, the splash of regeneration
+   * (Aaron, 2026-09-12). A different bottle left there, the old kit's splash of
+   * healing or one handed over, is swapped for a matching bottle from the pack.
+   * Never while a throw or drink holds the hand (OffHandUse) or a meal is being
+   * eaten, and a hand holding something that is not a potion is left alone.
+   */
+  private void restMarkInOffHand() {
+    ItemStack held = getOffhandItem();
+    if (!ClericPotions.isStock(held) || OffHandUse.inUse(this) || isEating() || isUsingItem()) {
+      return;
+    }
+    for (SignatureGear.Piece piece : SignatureGear.of(getOccupation())) {
+      if (piece.slot() != EquipmentSlot.OFFHAND || piece.matches(held)) {
+        continue;
+      }
+      for (int slot = 0; slot < this.personMainInv.getContainerSize(); slot++) {
+        if (piece.matches(this.personMainInv.getItem(slot))) {
+          this.setItemSlot(EquipmentSlot.OFFHAND, EquipmentSwap.exchange(this.personMainInv, slot, held));
+          return;
+        }
       }
     }
   }

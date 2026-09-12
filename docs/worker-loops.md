@@ -404,7 +404,8 @@ Each is the seed of its brew, so a new cleric brews at their station before it t
 any. The off hand is the cleric's one working slot (Aaron, 2026-09-12): it rests on the splash
 of regeneration, a bottle to throw or drink is swapped into it for the use, and the resting
 bottle comes back after (`OffHandUse`). The main hand stays empty; a bottle left there by the
-old two-handed kit goes into the pack. At bedtime, before the pack is shelved (their potions are
+old two-handed kit goes into the pack, and a different bottle left in the off hand at rest is
+swapped for a splash of regeneration from the pack at the next daily tending. At bedtime, before the pack is shelved (their potions are
 kept, like a guard's weapons), a cleric lifts one bottle of every brew the village stores
 hold that they do not yet carry. So a player who leaves a splash of harming in a village chest
 has armed the cleric, and the swamp's witch circle is a cleric someone handed harm. The
