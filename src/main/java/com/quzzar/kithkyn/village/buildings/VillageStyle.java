@@ -25,17 +25,17 @@ import net.neoforged.neoforge.common.Tags;
  * Every style is a strict catalog: a village raises only what its own family
  * authored and never borrows another family's building to fill a gap. Birch
  * Forest is the one bundled catalog and so the default; Desert, Badlands,
- * Floodplain, Jungle and Swamp arrive through private datapacks (docs/desert-village.md,
- * docs/badlands-village.md, docs/floodplain-village.md, docs/jungle-village.md,
- * docs/swamp-village.md), so they are only
- * automatic candidates while their founding sets are loaded.
+ * Floodplain, Jungle, Swamp and Mediterranean arrive through private datapacks
+ * (docs/desert-village.md, docs/badlands-village.md, docs/floodplain-village.md,
+ * docs/jungle-village.md, docs/swamp-village.md, docs/mediterranean-village.md), so they
+ * are only automatic candidates while their founding sets are loaded.
  *
  * Explicit datapack style tags take precedence over conventional biome families.
  * An unfamiliar family chooses among climate-compatible loaded catalogs using
  * the world seed and founding site, not the world's mutable random stream.
  */
 public enum VillageStyle {
-  BIRCH_FOREST, DESERT, BADLANDS, FLOODPLAIN, JUNGLE, SWAMP;
+  BIRCH_FOREST, DESERT, BADLANDS, FLOODPLAIN, JUNGLE, SWAMP, MEDITERRANEAN;
 
   /**
    * What a blank or unknown saved style reads as, the answer for every climate
@@ -168,6 +168,15 @@ public enum VillageStyle {
     }
     if (tagged.test(Tags.Biomes.IS_SWAMP) || path.contains("swamp")) {
       return SWAMP;
+    }
+    // The Mediterranean white-stone town is the temperate Plains family's
+    // catalog (docs/village-biomes.md); a snowy or frozen plain is not that
+    // country. Without its pack, plains fall through to the temperate cluster
+    // like every other unfinished family.
+    boolean wintry = tagged.test(Tags.Biomes.IS_SNOWY) || tagged.test(Tags.Biomes.IS_ICY)
+        || path.contains("snow") || path.contains("ice") || path.contains("frozen");
+    if (!wintry && (tagged.test(Tags.Biomes.IS_PLAINS) || path.endsWith("plains"))) {
+      return MEDITERRANEAN;
     }
     return null;
   }

@@ -179,4 +179,31 @@ class WallPaletteTest {
     assertEquals(16, hanging, "The four authored hanging gate lanterns remain on every gate");
     assertEquals(Items.OAK_LOG, WallTier.WOOD.material(style));
   }
+
+  @Test
+  void mediterraneanWallsAreQuartzWithCopingStairsTorchesAndAPersistentHedge() {
+    var ring = WallRoute.aroundBox(0, 48, 0, 48);
+    var gates = Set.of(BlockPos.asLong(24, 0, 0), BlockPos.asLong(48, 0, 24),
+        BlockPos.asLong(24, 0, 48), BlockPos.asLong(0, 0, 24));
+    var style = VillageStyle.MEDITERRANEAN;
+    var wall = new WallProject(ring, gates, Collections.nCopies(ring.size(), 64), WallTier.WOOD, style);
+    int quartz = 0, coping = 0, spruce = 0, torches = 0, jungle = 0, darkOak = 0;
+    for (var cell : wall.plannedBlocks()) {
+      var state = cell.desiredState(wall.getTier(), style);
+      if (state.is(Blocks.QUARTZ_BRICKS) || state.is(Blocks.QUARTZ_SLAB)) quartz++;
+      if (state.is(Blocks.QUARTZ_STAIRS)) coping++;
+      if (state.is(Blocks.SPRUCE_FENCE) || state.is(Blocks.SPRUCE_TRAPDOOR)) spruce++;
+      if (state.is(Blocks.WALL_TORCH)) torches++;
+      if (state.is(Blocks.JUNGLE_LEAVES) || state.is(Blocks.DARK_OAK_LEAVES)) {
+        assertTrue(state.getValue(net.minecraft.world.level.block.LeavesBlock.PERSISTENT),
+            "hedge leaves must never decay");
+        if (state.is(Blocks.JUNGLE_LEAVES)) jungle++; else darkOak++;
+      }
+      assertFalse(state.is(Blocks.OAK_STAIRS) || state.is(Blocks.OAK_LEAVES),
+          "the neutral capture vocabulary must resolve through the palette");
+    }
+    assertTrue(quartz > 0 && coping > 0 && spruce > 0 && torches > 0);
+    assertTrue(jungle > 0 && darkOak > 0, "both leaf species appear in the hedge");
+    assertEquals(Items.COBBLESTONE, WallTier.WOOD.material(style));
+  }
 }

@@ -16,14 +16,24 @@ final class BuiltInWallSegmentCatalog implements WallSegmentCatalog {
   static final BuiltInWallSegmentCatalog BIRCH_FOREST = new BuiltInWallSegmentCatalog(AuthoredWoodWallSegments.BIRCH_FOREST);
   static final BuiltInWallSegmentCatalog ARID = new BuiltInWallSegmentCatalog(AuthoredWoodWallSegments.ARID);
   static final BuiltInWallSegmentCatalog SWAMP = new BuiltInWallSegmentCatalog(AuthoredWoodWallSegments.SWAMP);
+  static final BuiltInWallSegmentCatalog MEDITERRANEAN =
+      new BuiltInWallSegmentCatalog(AuthoredWoodWallSegments.MEDITERRANEAN, true);
   private final AuthoredWoodWallSegments authored;
+  private final boolean hedged;
 
   /** Long enough to read as a structure, short enough for several builders to share the ring. */
   private static final int MAX_SECTION_LENGTH = 7;
   private static final int WOOD_GATEHOUSE_RADIUS = 8;
+  /** The hedge stops short of a gate so the approach stays open. */
+  private static final int HEDGE_GATE_CLEARANCE = 2;
 
   private BuiltInWallSegmentCatalog(AuthoredWoodWallSegments authored) {
+    this(authored, false);
+  }
+
+  private BuiltInWallSegmentCatalog(AuthoredWoodWallSegments authored, boolean hedged) {
     this.authored = authored;
+    this.hedged = hedged;
   }
 
   @Override
@@ -251,7 +261,75 @@ final class BuiltInWallSegmentCatalog implements WallSegmentCatalog {
       put(blocks, block.pos().getX(), block.pos().getY(), block.pos().getZ(),
           block.piece(), block.role());
     }
+    if (this.hedged && isLinear(sectionKind)) {
+      addHedge(blocks, ring, gates, ground, from, to);
+    }
     return List.copyOf(blocks.values());
+  }
+
+  /**
+   * The Mediterranean hedge: a low, broken line of leaves along both faces of
+   * every linear run, the way Aaron dressed the workshop wall on 2026-09-12.
+   * Height and species come from a stable position hash so reloads and repeated
+   * construction checks agree. The bottom leaf is a foundation, so a downhill
+   * face grows down to its own ground. Route columns keep the wall and rigid
+   * features keep their clearance: those overlaps resolve against the hedge.
+   */
+  private static void addHedge(Map<Long, WallBlockPlan> blocks, List<Long> ring,
+      Set<Long> gates, List<Integer> ground, int from, int to) {
+    Set<Long> route = new HashSet<>();
+    for (long column : ring) {
+      route.add(BlockPos.asLong(BlockPos.getX(column), 0, BlockPos.getZ(column)));
+    }
+    for (int i = from; i < to; i++) {
+      if (distanceToGate(ring, gates, i) <= HEDGE_GATE_CLEARANCE) {
+        continue;
+      }
+      int x = BlockPos.getX(ring.get(i));
+      int z = BlockPos.getZ(ring.get(i));
+      int floor = WallRaiser.seamFloor(ground, i);
+      for (Delta aside : hedgeSides(tangentAt(ring, i))) {
+        int hx = x + aside.x();
+        int hz = z + aside.z();
+        if (route.contains(BlockPos.asLong(hx, 0, hz))) {
+          continue;
+        }
+        int height = hedgeHeight(hx, hz);
+        for (int y = floor; y < floor + height; y++) {
+          put(blocks, hx, y, hz, hedgeLeaves(hx, y, hz),
+              y == floor ? WallCellRole.FOUNDATION : WallCellRole.EXACT);
+        }
+      }
+    }
+  }
+
+  /** Both faces of the wall: the normals of an axis run, the two face-adjacent cells of a diagonal step. */
+  private static List<Delta> hedgeSides(Delta tangent) {
+    if (tangent.x() != 0 && tangent.z() != 0) {
+      return List.of(new Delta(tangent.x(), 0), new Delta(0, tangent.z()));
+    }
+    return List.of(new Delta(-tangent.z(), tangent.x()), new Delta(tangent.z(), -tangent.x()));
+  }
+
+  /** Mostly one or two leaves high, a few taller tufts, and gaps so it reads as brush rather than a rail. */
+  private static int hedgeHeight(int x, int z) {
+    int roll = Math.floorMod(31 * x + 17 * z + 7, 8);
+    if (roll < 2) return 0;
+    if (roll < 5) return 1;
+    return roll < 7 ? 2 : 3;
+  }
+
+  private static WallBlockPlan.Piece hedgeLeaves(int x, int y, int z) {
+    return Math.floorMod(13 * x + 29 * z + 5 * y, 2) == 0
+        ? WallBlockPlan.Piece.LEAVES : WallBlockPlan.Piece.LEAVES_DARK;
+  }
+
+  private static Delta tangentAt(List<Long> ring, int index) {
+    Delta outgoing = delta(ring, index, next(index, ring.size()));
+    if (outgoing.x() != 0 || outgoing.z() != 0) {
+      return outgoing;
+    }
+    return delta(ring, previous(index, ring.size()), index);
   }
 
   private static void addPalisadeColumn(Map<Long, WallBlockPlan> blocks, int x, int z,

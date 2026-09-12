@@ -48,7 +48,8 @@ public record WallBlockPlan(long position, Piece piece, WallCellRole role) {
     TORCH, TORCH_NORTH, TORCH_EAST, TORCH_SOUTH, TORCH_WEST,
     // Append only: saved section signatures include these ordinals.
     BANNER_NORTH, BANNER_EAST, BANNER_SOUTH, BANNER_WEST,
-    GATE_FRAME_POST, GATE_FRAME_BEAM;
+    GATE_FRAME_POST, GATE_FRAME_BEAM,
+    LEAVES, LEAVES_DARK;
   }
 
   public BlockPos pos() {
@@ -102,7 +103,25 @@ public record WallBlockPlan(long position, Piece piece, WallCellRole role) {
       case BANNER_EAST -> wallBanner(Direction.EAST);
       case BANNER_SOUTH -> wallBanner(Direction.SOUTH);
       case BANNER_WEST -> wallBanner(Direction.WEST);
+      case LEAVES -> leaves(palette.leaves());
+      case LEAVES_DARK -> leaves(palette.leavesDark());
     };
+  }
+
+  /** Hedge leaves never decay: no log feeds them and no player planted them. */
+  private static BlockState leaves(net.minecraft.world.level.block.Block block) {
+    BlockState state = block.defaultBlockState();
+    return state.hasProperty(net.minecraft.world.level.block.LeavesBlock.PERSISTENT)
+        ? state.setValue(net.minecraft.world.level.block.LeavesBlock.PERSISTENT, Boolean.TRUE) : state;
+  }
+
+  /** Foliage decorates a wall without thickening it: no clearance, no foundation, no post. */
+  public boolean isFoliage() {
+    return isFoliage(this.piece);
+  }
+
+  static boolean isFoliage(Piece piece) {
+    return piece == Piece.LEAVES || piece == Piece.LEAVES_DARK;
   }
 
   private static BlockState wallTorch(Direction direction) {

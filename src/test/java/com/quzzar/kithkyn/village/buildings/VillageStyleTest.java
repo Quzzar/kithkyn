@@ -38,10 +38,11 @@ class VillageStyleTest {
   @Test
   void bundledBirchLeadsTheEnumAndIsWhatUnknownSavedStylesReadAs() {
     assertEquals(List.of(VillageStyle.BIRCH_FOREST, VillageStyle.DESERT, VillageStyle.BADLANDS,
-        VillageStyle.FLOODPLAIN, VillageStyle.JUNGLE, VillageStyle.SWAMP), List.of(VillageStyle.values()));
+        VillageStyle.FLOODPLAIN, VillageStyle.JUNGLE, VillageStyle.SWAMP, VillageStyle.MEDITERRANEAN),
+        List.of(VillageStyle.values()));
     assertEquals(VillageStyle.BIRCH_FOREST, VillageStyle.DEFAULT);
     assertEquals(VillageStyle.BIRCH_FOREST, VillageStyle.fromId(""));
-    assertEquals(VillageStyle.BIRCH_FOREST, VillageStyle.fromId("plains"));
+    assertEquals(VillageStyle.BIRCH_FOREST, VillageStyle.fromId("taiga"));
     assertEquals(VillageStyle.BIRCH_FOREST, VillageStyle.fromId("removed_family"));
     assertEquals(VillageStyle.DESERT, VillageStyle.fromId("DESERT"));
     assertNull(VillageStyle.parse("taiga"));
@@ -106,7 +107,7 @@ class VillageStyleTest {
 
   @Test
   void unfinishedConventionalFamiliesBuildBirchRatherThanARemovedCatalog() {
-    List<TagKey<Biome>> unfinished = List.of(Tags.Biomes.IS_PLAINS, Tags.Biomes.IS_FOREST,
+    List<TagKey<Biome>> unfinished = List.of(Tags.Biomes.IS_FOREST,
         Tags.Biomes.IS_DECIDUOUS_TREE, Tags.Biomes.IS_TAIGA,
         Tags.Biomes.IS_CONIFEROUS_TREE, Tags.Biomes.IS_MOUNTAIN);
     for (long seed = 0; seed < 20; seed++) {
@@ -118,6 +119,25 @@ class VillageStyleTest {
           VillageStyle.select(Tags.Biomes.IS_SNOWY::equals, "snowy_plains", 0.0F, true, 0.5F, seed, ALL_STYLES));
       assertEquals(VillageStyle.BIRCH_FOREST,
           VillageStyle.select(Tags.Biomes.IS_ICY::equals, "ice_spikes", 0.0F, true, 0.5F, seed, ALL_STYLES));
+    }
+  }
+
+  @Test
+  void plainsFamiliesUseTheMediterraneanCatalogOnlyWhenItIsLoaded() {
+    assertEquals(VillageStyle.MEDITERRANEAN,
+        VillageStyle.select(Tags.Biomes.IS_PLAINS::equals, "plains", 0.8F, true, 0.4F, 5L, ALL_STYLES));
+    assertEquals(VillageStyle.MEDITERRANEAN,
+        VillageStyle.select(NO_TAGS, "sunflower_plains", 0.8F, true, 0.4F, 5L, ALL_STYLES),
+        "the vanilla plains are recognizable by name without any tag");
+    Set<TagKey<Biome>> snowyPlain = Set.of(Tags.Biomes.IS_PLAINS, Tags.Biomes.IS_SNOWY);
+    assertEquals(VillageStyle.BIRCH_FOREST,
+        VillageStyle.select(snowyPlain::contains, "snowy_plains", 0.0F, true, 0.5F, 5L, ALL_STYLES),
+        "a snowy plain is not Mediterranean country");
+    for (long seed = 0; seed < 20; seed++) {
+      assertEquals(VillageStyle.BIRCH_FOREST,
+          VillageStyle.select(Tags.Biomes.IS_PLAINS::equals, "plains", 0.8F, true, 0.4F, seed,
+              style -> style != VillageStyle.MEDITERRANEAN),
+          "without the Mediterranean pack, plains stay a temperate Birch village");
     }
   }
 

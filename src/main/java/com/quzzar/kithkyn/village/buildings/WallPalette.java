@@ -30,7 +30,28 @@ record WallPalette(Block post, Block deck, Block stairs, Block slab,
       case SWAMP -> new WallPalette(
           Blocks.OAK_LOG, Blocks.OAK_PLANKS, Blocks.OAK_STAIRS,
           Blocks.SPRUCE_SLAB, Blocks.SPRUCE_FENCE, Blocks.SPRUCE_TRAPDOOR);
+      case MEDITERRANEAN -> new WallPalette(
+          Blocks.QUARTZ_BRICKS, Blocks.QUARTZ_BRICKS, Blocks.QUARTZ_STAIRS,
+          Blocks.QUARTZ_SLAB, Blocks.SPRUCE_FENCE, Blocks.SPRUCE_TRAPDOOR);
     };
+  }
+
+  /**
+   * The Mediterranean wall wears a low hedge along both faces (Aaron's
+   * 2026-09-12 workshop edit): two leaf blocks mixed by position. Other
+   * families author no foliage, so their pair is never placed.
+   */
+  Block leaves() {
+    return this.post == Blocks.QUARTZ_BRICKS ? Blocks.JUNGLE_LEAVES : Blocks.OAK_LEAVES;
+  }
+
+  Block leavesDark() {
+    return Blocks.DARK_OAK_LEAVES;
+  }
+
+  /** Whether the route grows the procedural hedge beside its linear runs. */
+  boolean hedged() {
+    return this.post == Blocks.QUARTZ_BRICKS;
   }
 
   /**

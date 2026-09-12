@@ -1,0 +1,2026 @@
+{
+  "schemaVersion": 1,
+  "recorded": "2026-09-12T03:10:00-04:00",
+  "status": "bundled; unit-tested; built on real terrain and reviewed",
+  "description": "The Mediterranean wall family: the shared wood geometry plus Aaron's 2026-09-12 live edits on the workshop row W2 (parapet fences to coping stairs, lanterns replaced by face torches, the tower's inner rail closed, quartz-slab gate roof, a hedge of jungle and dark oak leaves at both feet), written in the loader's neutral vocabulary so the Mediterranean palette resolves it as quartz bricks, quartz stairs and slabs, spruce rails and persistent leaves.",
+  "live_source": {
+    "row": "run/mediterranean-full-profile/workshop-manifest.json (W2, origins x 10480..10550, y 230, z 1582)",
+    "blocks": "run/mediterranean-full-profile/w2-live-blocks.json (read from the saved region file after save-all flush, 2026-09-12 01:05)",
+    "edits": "run/mediterranean-full-profile/w2-edits.json (diff against the restyled wood placement)"
+  },
+  "vocabulary": {
+    "minecraft:stripped_oak_log": "POST or BEAM (axis)",
+    "minecraft:oak_fence": "PARAPET",
+    "minecraft:oak_slab": "SLAB",
+    "minecraft:oak_trapdoor": "TRAPDOOR_*",
+    "minecraft:oak_stairs": "STEP_* (new; palette stair, rotates with rigid pieces)",
+    "minecraft:wall_torch": "TORCH_*",
+    "minecraft:oak_leaves": "LEAVES (new; palette leaves, persistent)",
+    "minecraft:dark_oak_leaves": "LEAVES_DARK (new)"
+  },
+  "palette": {
+    "post": "minecraft:quartz_bricks",
+    "deck": "minecraft:quartz_bricks",
+    "stairs": "minecraft:quartz_stairs",
+    "slab": "minecraft:quartz_slab",
+    "railing": "minecraft:spruce_fence",
+    "trapdoor": "minecraft:spruce_trapdoor",
+    "leaves": [
+      "minecraft:jungle_leaves",
+      "minecraft:dark_oak_leaves"
+    ],
+    "material": "minecraft:cobblestone"
+  },
+  "hedge": "linear runs: both faces, height 0-3 by a stable hash of the column (2/8 gap, 3/8 one, 2/8 two, 1/8 three), species by hash, foot cell FOUNDATION filling open air down to the ground, none within two columns of a gate, never on a route column; rigid pieces carry the authored leaves inside their box; the leaves Aaron set beside the three run pieces (21, 15 and 20) are not authored cells, because a run cell rides the post height of its ordinal and the hedge must sit on the ground",
+  "linear_captures": "straight and terrace are three deep (wall line at z=1) so the face torches have a cell; the loader places cells beside the line at the lateral neighbour of the route column",
+  "tool": "tools/structure/EditTemplateBlocks.java with run/mediterranean-walls-20260912/family-plan.json",
+  "pieces": [
+    {
+      "kind": "straight",
+      "source": "src/main/resources/data/kithkyn/structure/wall/wood/straight.nbt",
+      "source_sha256": "157899d57a90d12c69d7b5db302919d494e0e94efd9c52dc4d81b691a070d8e5",
+      "output": "src/main/resources/data/kithkyn/structure/wall/mediterranean/straight.nbt",
+      "output_sha256": "ce506193d9b7840af900f36e5f125148eb6a304a02959852a93a8f87a96fa3b9",
+      "size": [
+        7,
+        8,
+        3
+      ],
+      "shift": [
+        0,
+        0,
+        1
+      ],
+      "removed_lanterns": [
+        [
+          1,
+          7,
+          1
+        ],
+        [
+          4,
+          6,
+          1
+        ]
+      ],
+      "set": [
+        {
+          "pos": [
+            0,
+            4,
+            1
+          ],
+          "name": "minecraft:oak_stairs",
+          "properties": {
+            "facing": "north",
+            "half": "bottom",
+            "shape": "straight",
+            "waterlogged": "false"
+          }
+        },
+        {
+          "pos": [
+            1,
+            5,
+            0
+          ],
+          "name": "minecraft:wall_torch",
+          "properties": {
+            "facing": "north"
+          }
+        },
+        {
+          "pos": [
+            1,
+            5,
+            2
+          ],
+          "name": "minecraft:wall_torch",
+          "properties": {
+            "facing": "south"
+          }
+        },
+        {
+          "pos": [
+            1,
+            6,
+            1
+          ],
+          "name": "minecraft:oak_stairs",
+          "properties": {
+            "facing": "north",
+            "half": "bottom",
+            "shape": "straight",
+            "waterlogged": "false"
+          }
+        },
+        {
+          "pos": [
+            2,
+            5,
+            1
+          ],
+          "name": "minecraft:oak_stairs",
+          "properties": {
+            "facing": "south",
+            "half": "bottom",
+            "shape": "straight",
+            "waterlogged": "false"
+          }
+        },
+        {
+          "pos": [
+            3,
+            4,
+            1
+          ],
+          "name": "minecraft:oak_stairs",
+          "properties": {
+            "facing": "north",
+            "half": "bottom",
+            "shape": "straight",
+            "waterlogged": "false"
+          }
+        },
+        {
+          "pos": [
+            4,
+            5,
+            1
+          ],
+          "name": "minecraft:oak_stairs",
+          "properties": {
+            "facing": "north",
+            "half": "bottom",
+            "shape": "straight",
+            "waterlogged": "false"
+          }
+        },
+        {
+          "pos": [
+            5,
+            4,
+            1
+          ],
+          "name": "minecraft:oak_stairs",
+          "properties": {
+            "facing": "south",
+            "half": "bottom",
+            "shape": "straight",
+            "waterlogged": "false"
+          }
+        },
+        {
+          "pos": [
+            6,
+            3,
+            1
+          ],
+          "name": "minecraft:oak_stairs",
+          "properties": {
+            "facing": "north",
+            "half": "bottom",
+            "shape": "straight",
+            "waterlogged": "false"
+          }
+        }
+      ],
+      "set_summary": {
+        "oak_stairs": 7,
+        "wall_torch": 2
+      },
+      "dropped_outside_box": [],
+      "leaves_left_to_the_procedural_hedge": 21
+    },
+    {
+      "kind": "terrace",
+      "source": "src/main/resources/data/kithkyn/structure/wall/wood/terrace.nbt",
+      "source_sha256": "aca98a586336c5145470b0b422a7d15ce576150187173c9a3dbdf2a518b83d8e",
+      "output": "src/main/resources/data/kithkyn/structure/wall/mediterranean/terrace.nbt",
+      "output_sha256": "e6aca98cbe6de48f7c5a5ce68e0a093961142ff954bcd9ab6c2df0469e783d21",
+      "size": [
+        8,
+        9,
+        3
+      ],
+      "shift": [
+        0,
+        0,
+        1
+      ],
+      "removed_lanterns": [
+        [
+          2,
+          7,
+          1
+        ],
+        [
+          6,
+          8,
+          1
+        ]
+      ],
+      "set": [
+        {
+          "pos": [
+            0,
+            5,
+            1
+          ],
+          "name": "minecraft:oak_stairs",
+          "properties": {
+            "facing": "north",
+            "half": "bottom",
+            "shape": "straight",
+            "waterlogged": "false"
+          }
+        },
+        {
+          "pos": [
+            1,
+            4,
+            1
+          ],
+          "name": "minecraft:oak_stairs",
+          "properties": {
+            "facing": "north",
+            "half": "bottom",
+            "shape": "straight",
+            "waterlogged": "false"
+          }
+        },
+        {
+          "pos": [
+            2,
+            6,
+            1
+          ],
+          "name": "minecraft:oak_stairs",
+          "properties": {
+            "facing": "south",
+            "half": "bottom",
+            "shape": "straight",
+            "waterlogged": "false"
+          }
+        },
+        {
+          "pos": [
+            3,
+            5,
+            1
+          ],
+          "name": "minecraft:oak_stairs",
+          "properties": {
+            "facing": "north",
+            "half": "bottom",
+            "shape": "straight",
+            "waterlogged": "false"
+          }
+        },
+        {
+          "pos": [
+            4,
+            4,
+            1
+          ],
+          "name": "minecraft:oak_stairs",
+          "properties": {
+            "facing": "south",
+            "half": "bottom",
+            "shape": "straight",
+            "waterlogged": "false"
+          }
+        },
+        {
+          "pos": [
+            5,
+            6,
+            1
+          ],
+          "name": "minecraft:oak_stairs",
+          "properties": {
+            "facing": "north",
+            "half": "bottom",
+            "shape": "straight",
+            "waterlogged": "false"
+          }
+        },
+        {
+          "pos": [
+            6,
+            6,
+            0
+          ],
+          "name": "minecraft:wall_torch",
+          "properties": {
+            "facing": "north"
+          }
+        },
+        {
+          "pos": [
+            6,
+            6,
+            2
+          ],
+          "name": "minecraft:wall_torch",
+          "properties": {
+            "facing": "south"
+          }
+        },
+        {
+          "pos": [
+            6,
+            7,
+            1
+          ],
+          "name": "minecraft:oak_stairs",
+          "properties": {
+            "facing": "south",
+            "half": "bottom",
+            "shape": "straight",
+            "waterlogged": "false"
+          }
+        },
+        {
+          "pos": [
+            7,
+            5,
+            1
+          ],
+          "name": "minecraft:oak_stairs",
+          "properties": {
+            "facing": "south",
+            "half": "bottom",
+            "shape": "straight",
+            "waterlogged": "false"
+          }
+        }
+      ],
+      "set_summary": {
+        "oak_stairs": 8,
+        "wall_torch": 2
+      },
+      "dropped_outside_box": [],
+      "leaves_left_to_the_procedural_hedge": 15
+    },
+    {
+      "kind": "diagonal",
+      "source": "src/main/resources/data/kithkyn/structure/wall/wood/diagonal.nbt",
+      "source_sha256": "b4cb27e0e8b817fe88e9a882638186adc1f5e2678ad17a060f5c9e81e9e8e1f3",
+      "output": "src/main/resources/data/kithkyn/structure/wall/mediterranean/diagonal.nbt",
+      "output_sha256": "087755e04c204bd736c8aa0e2b16e0157cbbf062d35116634acf6a33634c1a15",
+      "size": [
+        7,
+        8,
+        7
+      ],
+      "shift": [
+        0,
+        0,
+        0
+      ],
+      "removed_lanterns": [
+        [
+          1,
+          6,
+          1
+        ],
+        [
+          3,
+          7,
+          3
+        ],
+        [
+          5,
+          6,
+          5
+        ]
+      ],
+      "set": [
+        {
+          "pos": [
+            0,
+            4,
+            0
+          ],
+          "name": "minecraft:oak_stairs",
+          "properties": {
+            "facing": "north",
+            "half": "bottom",
+            "shape": "straight",
+            "waterlogged": "false"
+          }
+        },
+        {
+          "pos": [
+            1,
+            5,
+            1
+          ],
+          "name": "minecraft:oak_stairs",
+          "properties": {
+            "facing": "north",
+            "half": "bottom",
+            "shape": "straight",
+            "waterlogged": "false"
+          }
+        },
+        {
+          "pos": [
+            2,
+            4,
+            2
+          ],
+          "name": "minecraft:oak_stairs",
+          "properties": {
+            "facing": "south",
+            "half": "bottom",
+            "shape": "straight",
+            "waterlogged": "false"
+          }
+        },
+        {
+          "pos": [
+            2,
+            5,
+            3
+          ],
+          "name": "minecraft:wall_torch",
+          "properties": {
+            "facing": "west"
+          }
+        },
+        {
+          "pos": [
+            3,
+            6,
+            3
+          ],
+          "name": "minecraft:oak_stairs",
+          "properties": {
+            "facing": "north",
+            "half": "bottom",
+            "shape": "straight",
+            "waterlogged": "false"
+          }
+        },
+        {
+          "pos": [
+            4,
+            4,
+            4
+          ],
+          "name": "minecraft:oak_stairs",
+          "properties": {
+            "facing": "north",
+            "half": "bottom",
+            "shape": "straight",
+            "waterlogged": "false"
+          }
+        },
+        {
+          "pos": [
+            4,
+            5,
+            3
+          ],
+          "name": "minecraft:wall_torch",
+          "properties": {
+            "facing": "east"
+          }
+        },
+        {
+          "pos": [
+            5,
+            5,
+            5
+          ],
+          "name": "minecraft:oak_stairs",
+          "properties": {
+            "facing": "south",
+            "half": "bottom",
+            "shape": "straight",
+            "waterlogged": "false"
+          }
+        },
+        {
+          "pos": [
+            6,
+            3,
+            6
+          ],
+          "name": "minecraft:oak_stairs",
+          "properties": {
+            "facing": "north",
+            "half": "bottom",
+            "shape": "straight",
+            "waterlogged": "false"
+          }
+        }
+      ],
+      "set_summary": {
+        "oak_stairs": 7,
+        "wall_torch": 2
+      },
+      "dropped_outside_box": [],
+      "leaves_left_to_the_procedural_hedge": 20
+    },
+    {
+      "kind": "corner_tower",
+      "source": "src/main/resources/data/kithkyn/structure/wall/wood/corner_tower.nbt",
+      "source_sha256": "73c76b6c1162778a06895121cdd0b93c3e980809cf900a0420603b0e40702779",
+      "output": "src/main/resources/data/kithkyn/structure/wall/mediterranean/corner_tower.nbt",
+      "output_sha256": "6f2794a3865a34ad5b6cc2f1252cf499e6f491552cd3560217774cf1eebe6d5c",
+      "size": [
+        12,
+        8,
+        6
+      ],
+      "shift": [
+        0,
+        0,
+        0
+      ],
+      "removed_lanterns": [
+        [
+          4,
+          7,
+          0
+        ],
+        [
+          10,
+          7,
+          4
+        ]
+      ],
+      "set": [
+        {
+          "pos": [
+            0,
+            0,
+            1
+          ],
+          "name": "minecraft:oak_leaves",
+          "properties": {
+            "persistent": "true",
+            "distance": "7",
+            "waterlogged": "false"
+          }
+        },
+        {
+          "pos": [
+            0,
+            4,
+            1
+          ],
+          "name": "minecraft:wall_torch",
+          "properties": {
+            "facing": "south"
+          }
+        },
+        {
+          "pos": [
+            0,
+            5,
+            0
+          ],
+          "name": "minecraft:oak_stairs",
+          "properties": {
+            "facing": "south",
+            "half": "bottom",
+            "shape": "straight",
+            "waterlogged": "false"
+          }
+        },
+        {
+          "pos": [
+            1,
+            0,
+            1
+          ],
+          "name": "minecraft:oak_leaves",
+          "properties": {
+            "persistent": "true",
+            "distance": "7",
+            "waterlogged": "false"
+          }
+        },
+        {
+          "pos": [
+            1,
+            4,
+            0
+          ],
+          "name": "minecraft:oak_stairs",
+          "properties": {
+            "facing": "north",
+            "half": "bottom",
+            "shape": "straight",
+            "waterlogged": "false"
+          }
+        },
+        {
+          "pos": [
+            2,
+            0,
+            1
+          ],
+          "name": "minecraft:dark_oak_leaves",
+          "properties": {
+            "persistent": "true",
+            "distance": "7",
+            "waterlogged": "false"
+          }
+        },
+        {
+          "pos": [
+            2,
+            1,
+            1
+          ],
+          "name": "minecraft:oak_leaves",
+          "properties": {
+            "persistent": "true",
+            "distance": "7",
+            "waterlogged": "false"
+          }
+        },
+        {
+          "pos": [
+            2,
+            3,
+            0
+          ],
+          "name": "minecraft:oak_stairs",
+          "properties": {
+            "facing": "north",
+            "half": "bottom",
+            "shape": "straight",
+            "waterlogged": "false"
+          }
+        },
+        {
+          "pos": [
+            3,
+            0,
+            1
+          ],
+          "name": "minecraft:oak_leaves",
+          "properties": {
+            "persistent": "true",
+            "distance": "7",
+            "waterlogged": "false"
+          }
+        },
+        {
+          "pos": [
+            3,
+            1,
+            1
+          ],
+          "name": "minecraft:dark_oak_leaves",
+          "properties": {
+            "persistent": "true",
+            "distance": "7",
+            "waterlogged": "false"
+          }
+        },
+        {
+          "pos": [
+            3,
+            5,
+            0
+          ],
+          "name": "minecraft:oak_stairs",
+          "properties": {
+            "facing": "south",
+            "half": "bottom",
+            "shape": "straight",
+            "waterlogged": "false"
+          }
+        },
+        {
+          "pos": [
+            4,
+            0,
+            1
+          ],
+          "name": "minecraft:dark_oak_leaves",
+          "properties": {
+            "persistent": "true",
+            "distance": "7",
+            "waterlogged": "false"
+          }
+        },
+        {
+          "pos": [
+            4,
+            6,
+            0
+          ],
+          "name": "minecraft:oak_stairs",
+          "properties": {
+            "facing": "north",
+            "half": "bottom",
+            "shape": "straight",
+            "waterlogged": "false"
+          }
+        },
+        {
+          "pos": [
+            5,
+            0,
+            1
+          ],
+          "name": "minecraft:oak_leaves",
+          "properties": {
+            "persistent": "true",
+            "distance": "7",
+            "waterlogged": "false"
+          }
+        },
+        {
+          "pos": [
+            5,
+            0,
+            2
+          ],
+          "name": "minecraft:dark_oak_leaves",
+          "properties": {
+            "persistent": "true",
+            "distance": "7",
+            "waterlogged": "false"
+          }
+        },
+        {
+          "pos": [
+            5,
+            4,
+            0
+          ],
+          "name": "minecraft:oak_stairs",
+          "properties": {
+            "facing": "south",
+            "half": "bottom",
+            "shape": "straight",
+            "waterlogged": "false"
+          }
+        },
+        {
+          "pos": [
+            6,
+            0,
+            1
+          ],
+          "name": "minecraft:oak_leaves",
+          "properties": {
+            "persistent": "true",
+            "distance": "7",
+            "waterlogged": "false"
+          }
+        },
+        {
+          "pos": [
+            6,
+            0,
+            3
+          ],
+          "name": "minecraft:oak_leaves",
+          "properties": {
+            "persistent": "true",
+            "distance": "7",
+            "waterlogged": "false"
+          }
+        },
+        {
+          "pos": [
+            6,
+            1,
+            1
+          ],
+          "name": "minecraft:oak_leaves",
+          "properties": {
+            "persistent": "true",
+            "distance": "7",
+            "waterlogged": "false"
+          }
+        },
+        {
+          "pos": [
+            6,
+            1,
+            2
+          ],
+          "name": "minecraft:stripped_oak_log",
+          "properties": {
+            "axis": "y"
+          }
+        },
+        {
+          "pos": [
+            6,
+            2,
+            2
+          ],
+          "name": "minecraft:stripped_oak_log",
+          "properties": {
+            "axis": "y"
+          }
+        },
+        {
+          "pos": [
+            6,
+            3,
+            2
+          ],
+          "name": "minecraft:stripped_oak_log",
+          "properties": {
+            "axis": "y"
+          }
+        },
+        {
+          "pos": [
+            7,
+            0,
+            0
+          ],
+          "name": "minecraft:dark_oak_leaves",
+          "properties": {
+            "persistent": "true",
+            "distance": "7",
+            "waterlogged": "false"
+          }
+        },
+        {
+          "pos": [
+            7,
+            1,
+            0
+          ],
+          "name": "minecraft:oak_leaves",
+          "properties": {
+            "persistent": "true",
+            "distance": "7",
+            "waterlogged": "false"
+          }
+        },
+        {
+          "pos": [
+            7,
+            4,
+            1
+          ],
+          "name": "minecraft:stripped_oak_log",
+          "properties": {
+            "axis": "y"
+          }
+        },
+        {
+          "pos": [
+            8,
+            0,
+            1
+          ],
+          "name": "minecraft:oak_leaves",
+          "properties": {
+            "persistent": "true",
+            "distance": "7",
+            "waterlogged": "false"
+          }
+        },
+        {
+          "pos": [
+            8,
+            0,
+            3
+          ],
+          "name": "minecraft:dark_oak_leaves",
+          "properties": {
+            "persistent": "true",
+            "distance": "7",
+            "waterlogged": "false"
+          }
+        },
+        {
+          "pos": [
+            8,
+            1,
+            0
+          ],
+          "name": "minecraft:stripped_oak_log",
+          "properties": {
+            "axis": "y"
+          }
+        },
+        {
+          "pos": [
+            8,
+            1,
+            1
+          ],
+          "name": "minecraft:oak_leaves",
+          "properties": {
+            "persistent": "true",
+            "distance": "7",
+            "waterlogged": "false"
+          }
+        },
+        {
+          "pos": [
+            8,
+            1,
+            3
+          ],
+          "name": "minecraft:oak_leaves",
+          "properties": {
+            "persistent": "true",
+            "distance": "7",
+            "waterlogged": "false"
+          }
+        },
+        {
+          "pos": [
+            8,
+            2,
+            0
+          ],
+          "name": "minecraft:stripped_oak_log",
+          "properties": {
+            "axis": "y"
+          }
+        },
+        {
+          "pos": [
+            8,
+            3,
+            0
+          ],
+          "name": "minecraft:stripped_oak_log",
+          "properties": {
+            "axis": "y"
+          }
+        },
+        {
+          "pos": [
+            9,
+            0,
+            0
+          ],
+          "name": "minecraft:dark_oak_leaves",
+          "properties": {
+            "persistent": "true",
+            "distance": "7",
+            "waterlogged": "false"
+          }
+        },
+        {
+          "pos": [
+            9,
+            0,
+            1
+          ],
+          "name": "minecraft:dark_oak_leaves",
+          "properties": {
+            "persistent": "true",
+            "distance": "7",
+            "waterlogged": "false"
+          }
+        },
+        {
+          "pos": [
+            9,
+            0,
+            2
+          ],
+          "name": "minecraft:oak_leaves",
+          "properties": {
+            "persistent": "true",
+            "distance": "7",
+            "waterlogged": "false"
+          }
+        },
+        {
+          "pos": [
+            9,
+            0,
+            4
+          ],
+          "name": "minecraft:dark_oak_leaves",
+          "properties": {
+            "persistent": "true",
+            "distance": "7",
+            "waterlogged": "false"
+          }
+        },
+        {
+          "pos": [
+            9,
+            1,
+            4
+          ],
+          "name": "minecraft:dark_oak_leaves",
+          "properties": {
+            "persistent": "true",
+            "distance": "7",
+            "waterlogged": "false"
+          }
+        },
+        {
+          "pos": [
+            9,
+            5,
+            3
+          ],
+          "name": "minecraft:oak_stairs",
+          "properties": {
+            "facing": "north",
+            "half": "bottom",
+            "shape": "straight",
+            "waterlogged": "false"
+          }
+        },
+        {
+          "pos": [
+            10,
+            0,
+            2
+          ],
+          "name": "minecraft:dark_oak_leaves",
+          "properties": {
+            "persistent": "true",
+            "distance": "7",
+            "waterlogged": "false"
+          }
+        },
+        {
+          "pos": [
+            10,
+            0,
+            3
+          ],
+          "name": "minecraft:oak_leaves",
+          "properties": {
+            "persistent": "true",
+            "distance": "7",
+            "waterlogged": "false"
+          }
+        },
+        {
+          "pos": [
+            10,
+            0,
+            5
+          ],
+          "name": "minecraft:oak_leaves",
+          "properties": {
+            "persistent": "true",
+            "distance": "7",
+            "waterlogged": "false"
+          }
+        },
+        {
+          "pos": [
+            10,
+            1,
+            3
+          ],
+          "name": "minecraft:oak_leaves",
+          "properties": {
+            "persistent": "true",
+            "distance": "7",
+            "waterlogged": "false"
+          }
+        },
+        {
+          "pos": [
+            10,
+            4,
+            5
+          ],
+          "name": "minecraft:wall_torch",
+          "properties": {
+            "facing": "west"
+          }
+        },
+        {
+          "pos": [
+            10,
+            6,
+            4
+          ],
+          "name": "minecraft:oak_stairs",
+          "properties": {
+            "facing": "south",
+            "half": "bottom",
+            "shape": "straight",
+            "waterlogged": "false"
+          }
+        },
+        {
+          "pos": [
+            11,
+            0,
+            4
+          ],
+          "name": "minecraft:dark_oak_leaves",
+          "properties": {
+            "persistent": "true",
+            "distance": "7",
+            "waterlogged": "false"
+          }
+        },
+        {
+          "pos": [
+            11,
+            4,
+            4
+          ],
+          "name": "minecraft:wall_torch",
+          "properties": {
+            "facing": "north"
+          }
+        },
+        {
+          "pos": [
+            11,
+            5,
+            5
+          ],
+          "name": "minecraft:oak_stairs",
+          "properties": {
+            "facing": "south",
+            "half": "bottom",
+            "shape": "straight",
+            "waterlogged": "false"
+          }
+        }
+      ],
+      "set_summary": {
+        "oak_leaves": 16,
+        "wall_torch": 3,
+        "oak_stairs": 9,
+        "dark_oak_leaves": 12,
+        "stripped_oak_log": 7
+      },
+      "dropped_outside_box": [
+        [
+          [
+            0,
+            0,
+            -1
+          ],
+          "minecraft:jungle_leaves"
+        ],
+        [
+          [
+            0,
+            4,
+            -1
+          ],
+          "minecraft:wall_torch"
+        ],
+        [
+          [
+            1,
+            0,
+            -1
+          ],
+          "minecraft:dark_oak_leaves"
+        ],
+        [
+          [
+            2,
+            0,
+            -1
+          ],
+          "minecraft:dark_oak_leaves"
+        ],
+        [
+          [
+            3,
+            0,
+            -1
+          ],
+          "minecraft:jungle_leaves"
+        ],
+        [
+          [
+            3,
+            1,
+            -1
+          ],
+          "minecraft:jungle_leaves"
+        ],
+        [
+          [
+            4,
+            0,
+            -1
+          ],
+          "minecraft:jungle_leaves"
+        ],
+        [
+          [
+            4,
+            1,
+            -1
+          ],
+          "minecraft:dark_oak_leaves"
+        ],
+        [
+          [
+            5,
+            0,
+            -1
+          ],
+          "minecraft:jungle_leaves"
+        ],
+        [
+          [
+            6,
+            0,
+            -1
+          ],
+          "minecraft:dark_oak_leaves"
+        ],
+        [
+          [
+            8,
+            0,
+            -1
+          ],
+          "minecraft:dark_oak_leaves"
+        ]
+      ],
+      "leaves_left_to_the_procedural_hedge": 0
+    },
+    {
+      "kind": "gatehouse",
+      "source": "src/main/resources/data/kithkyn/structure/wall/wood/gatehouse.nbt",
+      "source_sha256": "f291a1e5b56dce5d22d95842ea21b31f465ec9b5423472065e681a56af5ba89f",
+      "output": "src/main/resources/data/kithkyn/structure/wall/mediterranean/gatehouse.nbt",
+      "output_sha256": "166fa7e176fdabade5f9c80c860d9975bc64e197ee75afe492a96dc0ec91d9e2",
+      "size": [
+        17,
+        8,
+        5
+      ],
+      "shift": [
+        0,
+        0,
+        0
+      ],
+      "removed_lanterns": [
+        [
+          1,
+          6,
+          2
+        ],
+        [
+          4,
+          6,
+          2
+        ],
+        [
+          12,
+          6,
+          2
+        ],
+        [
+          16,
+          7,
+          2
+        ]
+      ],
+      "set": [
+        {
+          "pos": [
+            0,
+            0,
+            1
+          ],
+          "name": "minecraft:oak_leaves",
+          "properties": {
+            "persistent": "true",
+            "distance": "7",
+            "waterlogged": "false"
+          }
+        },
+        {
+          "pos": [
+            0,
+            0,
+            3
+          ],
+          "name": "minecraft:oak_leaves",
+          "properties": {
+            "persistent": "true",
+            "distance": "7",
+            "waterlogged": "false"
+          }
+        },
+        {
+          "pos": [
+            0,
+            1,
+            1
+          ],
+          "name": "minecraft:oak_leaves",
+          "properties": {
+            "persistent": "true",
+            "distance": "7",
+            "waterlogged": "false"
+          }
+        },
+        {
+          "pos": [
+            0,
+            3,
+            2
+          ],
+          "name": "minecraft:oak_stairs",
+          "properties": {
+            "facing": "north",
+            "half": "bottom",
+            "shape": "straight",
+            "waterlogged": "false"
+          }
+        },
+        {
+          "pos": [
+            1,
+            0,
+            1
+          ],
+          "name": "minecraft:oak_leaves",
+          "properties": {
+            "persistent": "true",
+            "distance": "7",
+            "waterlogged": "false"
+          }
+        },
+        {
+          "pos": [
+            1,
+            0,
+            3
+          ],
+          "name": "minecraft:dark_oak_leaves",
+          "properties": {
+            "persistent": "true",
+            "distance": "7",
+            "waterlogged": "false"
+          }
+        },
+        {
+          "pos": [
+            1,
+            4,
+            1
+          ],
+          "name": "minecraft:wall_torch",
+          "properties": {
+            "facing": "north"
+          }
+        },
+        {
+          "pos": [
+            1,
+            4,
+            3
+          ],
+          "name": "minecraft:wall_torch",
+          "properties": {
+            "facing": "south"
+          }
+        },
+        {
+          "pos": [
+            1,
+            5,
+            2
+          ],
+          "name": "minecraft:oak_stairs",
+          "properties": {
+            "facing": "south",
+            "half": "bottom",
+            "shape": "straight",
+            "waterlogged": "false"
+          }
+        },
+        {
+          "pos": [
+            2,
+            0,
+            1
+          ],
+          "name": "minecraft:dark_oak_leaves",
+          "properties": {
+            "persistent": "true",
+            "distance": "7",
+            "waterlogged": "false"
+          }
+        },
+        {
+          "pos": [
+            2,
+            0,
+            3
+          ],
+          "name": "minecraft:oak_leaves",
+          "properties": {
+            "persistent": "true",
+            "distance": "7",
+            "waterlogged": "false"
+          }
+        },
+        {
+          "pos": [
+            2,
+            1,
+            3
+          ],
+          "name": "minecraft:oak_leaves",
+          "properties": {
+            "persistent": "true",
+            "distance": "7",
+            "waterlogged": "false"
+          }
+        },
+        {
+          "pos": [
+            2,
+            4,
+            2
+          ],
+          "name": "minecraft:oak_stairs",
+          "properties": {
+            "facing": "north",
+            "half": "bottom",
+            "shape": "straight",
+            "waterlogged": "false"
+          }
+        },
+        {
+          "pos": [
+            3,
+            0,
+            1
+          ],
+          "name": "minecraft:dark_oak_leaves",
+          "properties": {
+            "persistent": "true",
+            "distance": "7",
+            "waterlogged": "false"
+          }
+        },
+        {
+          "pos": [
+            3,
+            0,
+            3
+          ],
+          "name": "minecraft:oak_leaves",
+          "properties": {
+            "persistent": "true",
+            "distance": "7",
+            "waterlogged": "false"
+          }
+        },
+        {
+          "pos": [
+            3,
+            1,
+            1
+          ],
+          "name": "minecraft:dark_oak_leaves",
+          "properties": {
+            "persistent": "true",
+            "distance": "7",
+            "waterlogged": "false"
+          }
+        },
+        {
+          "pos": [
+            3,
+            1,
+            3
+          ],
+          "name": "minecraft:dark_oak_leaves",
+          "properties": {
+            "persistent": "true",
+            "distance": "7",
+            "waterlogged": "false"
+          }
+        },
+        {
+          "pos": [
+            3,
+            4,
+            2
+          ],
+          "name": "minecraft:oak_stairs",
+          "properties": {
+            "facing": "south",
+            "half": "bottom",
+            "shape": "straight",
+            "waterlogged": "false"
+          }
+        },
+        {
+          "pos": [
+            4,
+            0,
+            1
+          ],
+          "name": "minecraft:oak_leaves",
+          "properties": {
+            "persistent": "true",
+            "distance": "7",
+            "waterlogged": "false"
+          }
+        },
+        {
+          "pos": [
+            4,
+            0,
+            3
+          ],
+          "name": "minecraft:oak_leaves",
+          "properties": {
+            "persistent": "true",
+            "distance": "7",
+            "waterlogged": "false"
+          }
+        },
+        {
+          "pos": [
+            4,
+            0,
+            4
+          ],
+          "name": "minecraft:dark_oak_leaves",
+          "properties": {
+            "persistent": "true",
+            "distance": "7",
+            "waterlogged": "false"
+          }
+        },
+        {
+          "pos": [
+            4,
+            1,
+            1
+          ],
+          "name": "minecraft:dark_oak_leaves",
+          "properties": {
+            "persistent": "true",
+            "distance": "7",
+            "waterlogged": "false"
+          }
+        },
+        {
+          "pos": [
+            4,
+            1,
+            3
+          ],
+          "name": "minecraft:oak_leaves",
+          "properties": {
+            "persistent": "true",
+            "distance": "7",
+            "waterlogged": "false"
+          }
+        },
+        {
+          "pos": [
+            4,
+            2,
+            1
+          ],
+          "name": "minecraft:oak_leaves",
+          "properties": {
+            "persistent": "true",
+            "distance": "7",
+            "waterlogged": "false"
+          }
+        },
+        {
+          "pos": [
+            4,
+            2,
+            3
+          ],
+          "name": "minecraft:oak_leaves",
+          "properties": {
+            "persistent": "true",
+            "distance": "7",
+            "waterlogged": "false"
+          }
+        },
+        {
+          "pos": [
+            4,
+            5,
+            2
+          ],
+          "name": "minecraft:oak_stairs",
+          "properties": {
+            "facing": "north",
+            "half": "bottom",
+            "shape": "straight",
+            "waterlogged": "false"
+          }
+        },
+        {
+          "pos": [
+            5,
+            0,
+            1
+          ],
+          "name": "minecraft:dark_oak_leaves",
+          "properties": {
+            "persistent": "true",
+            "distance": "7",
+            "waterlogged": "false"
+          }
+        },
+        {
+          "pos": [
+            5,
+            0,
+            3
+          ],
+          "name": "minecraft:dark_oak_leaves",
+          "properties": {
+            "persistent": "true",
+            "distance": "7",
+            "waterlogged": "false"
+          }
+        },
+        {
+          "pos": [
+            6,
+            0,
+            0
+          ],
+          "name": "minecraft:dark_oak_leaves",
+          "properties": {
+            "persistent": "true",
+            "distance": "7",
+            "waterlogged": "false"
+          }
+        },
+        {
+          "pos": [
+            6,
+            0,
+            4
+          ],
+          "name": "minecraft:oak_leaves",
+          "properties": {
+            "persistent": "true",
+            "distance": "7",
+            "waterlogged": "false"
+          }
+        },
+        {
+          "pos": [
+            10,
+            0,
+            0
+          ],
+          "name": "minecraft:oak_leaves",
+          "properties": {
+            "persistent": "true",
+            "distance": "7",
+            "waterlogged": "false"
+          }
+        },
+        {
+          "pos": [
+            10,
+            0,
+            4
+          ],
+          "name": "minecraft:dark_oak_leaves",
+          "properties": {
+            "persistent": "true",
+            "distance": "7",
+            "waterlogged": "false"
+          }
+        },
+        {
+          "pos": [
+            11,
+            0,
+            1
+          ],
+          "name": "minecraft:oak_leaves",
+          "properties": {
+            "persistent": "true",
+            "distance": "7",
+            "waterlogged": "false"
+          }
+        },
+        {
+          "pos": [
+            11,
+            4,
+            2
+          ],
+          "name": "minecraft:oak_stairs",
+          "properties": {
+            "facing": "south",
+            "half": "bottom",
+            "shape": "straight",
+            "waterlogged": "false"
+          }
+        },
+        {
+          "pos": [
+            12,
+            0,
+            1
+          ],
+          "name": "minecraft:dark_oak_leaves",
+          "properties": {
+            "persistent": "true",
+            "distance": "7",
+            "waterlogged": "false"
+          }
+        },
+        {
+          "pos": [
+            12,
+            5,
+            2
+          ],
+          "name": "minecraft:oak_stairs",
+          "properties": {
+            "facing": "south",
+            "half": "bottom",
+            "shape": "straight",
+            "waterlogged": "false"
+          }
+        },
+        {
+          "pos": [
+            13,
+            0,
+            1
+          ],
+          "name": "minecraft:oak_leaves",
+          "properties": {
+            "persistent": "true",
+            "distance": "7",
+            "waterlogged": "false"
+          }
+        },
+        {
+          "pos": [
+            13,
+            0,
+            3
+          ],
+          "name": "minecraft:dark_oak_leaves",
+          "properties": {
+            "persistent": "true",
+            "distance": "7",
+            "waterlogged": "false"
+          }
+        },
+        {
+          "pos": [
+            13,
+            1,
+            1
+          ],
+          "name": "minecraft:dark_oak_leaves",
+          "properties": {
+            "persistent": "true",
+            "distance": "7",
+            "waterlogged": "false"
+          }
+        },
+        {
+          "pos": [
+            13,
+            1,
+            3
+          ],
+          "name": "minecraft:dark_oak_leaves",
+          "properties": {
+            "persistent": "true",
+            "distance": "7",
+            "waterlogged": "false"
+          }
+        },
+        {
+          "pos": [
+            13,
+            4,
+            2
+          ],
+          "name": "minecraft:oak_stairs",
+          "properties": {
+            "facing": "north",
+            "half": "bottom",
+            "shape": "straight",
+            "waterlogged": "false"
+          }
+        },
+        {
+          "pos": [
+            14,
+            0,
+            1
+          ],
+          "name": "minecraft:oak_leaves",
+          "properties": {
+            "persistent": "true",
+            "distance": "7",
+            "waterlogged": "false"
+          }
+        },
+        {
+          "pos": [
+            14,
+            0,
+            3
+          ],
+          "name": "minecraft:dark_oak_leaves",
+          "properties": {
+            "persistent": "true",
+            "distance": "7",
+            "waterlogged": "false"
+          }
+        },
+        {
+          "pos": [
+            14,
+            3,
+            2
+          ],
+          "name": "minecraft:oak_stairs",
+          "properties": {
+            "facing": "south",
+            "half": "bottom",
+            "shape": "straight",
+            "waterlogged": "false"
+          }
+        },
+        {
+          "pos": [
+            15,
+            0,
+            1
+          ],
+          "name": "minecraft:dark_oak_leaves",
+          "properties": {
+            "persistent": "true",
+            "distance": "7",
+            "waterlogged": "false"
+          }
+        },
+        {
+          "pos": [
+            15,
+            0,
+            3
+          ],
+          "name": "minecraft:oak_leaves",
+          "properties": {
+            "persistent": "true",
+            "distance": "7",
+            "waterlogged": "false"
+          }
+        },
+        {
+          "pos": [
+            15,
+            5,
+            2
+          ],
+          "name": "minecraft:oak_stairs",
+          "properties": {
+            "facing": "north",
+            "half": "bottom",
+            "shape": "straight",
+            "waterlogged": "false"
+          }
+        },
+        {
+          "pos": [
+            16,
+            0,
+            1
+          ],
+          "name": "minecraft:oak_leaves",
+          "properties": {
+            "persistent": "true",
+            "distance": "7",
+            "waterlogged": "false"
+          }
+        },
+        {
+          "pos": [
+            16,
+            0,
+            3
+          ],
+          "name": "minecraft:oak_leaves",
+          "properties": {
+            "persistent": "true",
+            "distance": "7",
+            "waterlogged": "false"
+          }
+        },
+        {
+          "pos": [
+            16,
+            5,
+            1
+          ],
+          "name": "minecraft:wall_torch",
+          "properties": {
+            "facing": "north"
+          }
+        },
+        {
+          "pos": [
+            16,
+            5,
+            3
+          ],
+          "name": "minecraft:wall_torch",
+          "properties": {
+            "facing": "south"
+          }
+        },
+        {
+          "pos": [
+            16,
+            6,
+            2
+          ],
+          "name": "minecraft:oak_stairs",
+          "properties": {
+            "facing": "south",
+            "half": "bottom",
+            "shape": "straight",
+            "waterlogged": "false"
+          }
+        }
+      ],
+      "set_summary": {
+        "oak_leaves": 20,
+        "oak_stairs": 11,
+        "dark_oak_leaves": 17,
+        "wall_torch": 4
+      },
+      "dropped_outside_box": [
+        [
+          [
+            12,
+            0,
+            3
+          ],
+          "minecraft:jungle_leaves (ladder foot)"
+        ]
+      ],
+      "leaves_left_to_the_procedural_hedge": 0
+    }
+  ],
+  "ladder_foot": "the jungle leaf Aaron placed in front of the gatehouse ladder (local 12,0,3) was dropped so guards can still climb; the tower ladder foot was already clear",
+  "verification": {
+    "unit_tests": "MediterraneanWallTest (face torches beside the run on both faces with a planned wall block behind them; coping stairs face across the wall on every run and gate; the hedge lines both faces off the route and clear of the gate approaches, feet as foundations; codec round trip), WallPaletteTest.mediterraneanWallsAreQuartzWithCopingStairsTorchesAndAPersistentHedge, VillageStyleTest.plainsFamiliesUseTheMediterraneanCatalogOnlyWhenItIsLoaded; ./gradlew check green 2026-09-12 02:50",
+    "terrain_preview": {
+      "harness": "run/mediterranean-walls-20260912/terrain-preview.py: a throwaway normal world (seed kithkyn-mediterranean) with developer commands on, /kkdev village wall-area from the console at a located biome, then the disposable capture client on the same port",
+      "sites": [
+        {
+          "biome": "minecraft:plains",
+          "box": [
+            -88,
+            72,
+            -40,
+            120
+          ],
+          "feedback": "Built mediterranean wall preview: 50 sections, 4 gates, 1792 blocks placed across 168 route columns."
+        },
+        {
+          "biome": "minecraft:windswept_hills",
+          "box": [
+            -212,
+            -212,
+            -172,
+            -172
+          ],
+          "feedback": "Built mediterranean wall preview: 37 sections, 4 gates, 1593 blocks placed across 136 route columns."
+        }
+      ],
+      "views": "run/mediterranean-walls-20260912/preview/{plains,hills}-{north-overview,east-overview,corner-close,run-eye-level,gate-close}.png",
+      "reviewed": "the ring follows both plots with terrace steps, the coping and face torches read on every run, the towers and gates carry their authored leaves, and the procedural hedge lines the runs on both faces; on the hills the south gate stands at a pond edge and the wall keeps its footing"
+    }
+  }
+}

@@ -311,6 +311,24 @@ The opt-in `kithkyn.gateBanner.verify=true` disposable-server check exercises ac
 block entities, white-primary villages, instant and incremental construction, save/rebind,
 attachment survival, and player-edit protection.
 
+The Mediterranean family (`data/kithkyn/structure/wall/mediterranean/`, 2026-09-12) is the
+wood geometry carrying Aaron's workshop edits: the parapet fences become coping stairs that
+alternate their facing along the run, the lanterns come down and wall torches hang on both
+faces at the top course, the tower's inner rail is closed with masonry, and a low hedge of
+jungle and dark oak leaves lines both feet. Three capture rules carry it. `oak_stairs` map to the
+directional `STEP` pieces, which now turn with a gate or tower like the other directional
+pieces. A linear capture may be three cells deep: the wall line per route ordinal is the z of
+its solid cells, and a cell captured beside the line (a face torch) is placed beside the route
+column on the same face instead of collapsing onto it, which changes nothing for the one-deep
+and diagonal families. `oak_leaves` and `dark_oak_leaves` map to the `LEAVES` and `LEAVES_DARK`
+pieces: they resolve through the palette as persistent leaves, never widen a feature's clearance,
+and the lowest leaf of a column is a foundation that fills only open air down to its own ground.
+Rigid pieces keep the authored hedge inside their box (the tower's outer north row and the leaf
+in front of the gatehouse ladder were dropped); linear runs grow it procedurally on both faces,
+one to three leaves by a stable position hash with gaps, none within two columns of a gate and
+never on a route column or inside a feature's clearance. The derivation is reproducible with
+`tools/structure/EditTemplateBlocks.java` from `tools/structure/mediterranean-walls-20260912.json`.
+
 ## Planning and developer preview
 
 Walls are safety projects. An established village starts its regional wall after
