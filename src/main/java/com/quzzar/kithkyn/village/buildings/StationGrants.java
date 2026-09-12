@@ -15,7 +15,12 @@ import com.quzzar.kithkyn.village.Occupation;
  * <p>Only the trades with one unmistakable grant are listed. A guard post is
  * not: the watchtower's guards grant PROTECTION while the center's captain and
  * a castle's sentries do not, and that is a planning decision the definitions
- * make on purpose. The builder and the leader grant nothing. A station that
+ * make on purpose. The builder and the leader grant nothing. Nor does the
+ * quartermaster: the post keeps the village's shelves in order, but STORAGE
+ * means shelves, and those belong to the storehouse, which grants it. The
+ * desert and floodplain centres keep their quartermaster at the centre by
+ * design, with no chest there, and STORAGE on them would send allays and the
+ * planner to shelves that do not exist. A station that
  * routes its worker to a separate physical worksite (the centre's quartermaster
  * post whose shelves are the storehouse, its miner post whose pit is the mine)
  * is exempt too: the grant belongs to the worksite's own definition, which
@@ -36,7 +41,6 @@ public final class StationGrants {
       Map.entry(Occupation.MASON, "CUT_STONE"),
       Map.entry(Occupation.MERCHANT, "TRADE"),
       Map.entry(Occupation.MINER, "ORES"),
-      Map.entry(Occupation.QUARTERMASTER, "STORAGE"),
       Map.entry(Occupation.INNKEEPER, "WANDERERS"));
 
   private StationGrants() {
