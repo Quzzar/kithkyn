@@ -101,6 +101,13 @@ public final class PersonPathNavigation extends GroundPathNavigation {
   /** Squared distance of one diagonal stair step in the mine. */
   private static final double ADJACENT_MINE_STEP_SQR = 3.0D;
 
+  /**
+   * The server-thread time long retries may take, shared by every person in
+   * every dimension: one thread runs all their path searches, and it is that
+   * thread's ticks the budget keeps.
+   */
+  private static final LongRetryBudget LONG_RETRY_BUDGET = new LongRetryBudget();
+
   @Nullable
   private String lastMinePathFailure;
 
@@ -143,11 +150,22 @@ public final class PersonPathNavigation extends GroundPathNavigation {
     // Reaching a watch platform can take more than 48 blocks of walking even
     // when it is nearby in a straight line. Retry exact work destinations with
     // a longer horizon and bounded extra search work, retaining loaded chunks.
-    // A retry that just failed from here is not asked again (LongRetryMemo).
+    // A retry that just failed from here is not asked again (LongRetryMemo), and
+    // one the shared budget cannot pay for now waits for a later re-plan
+    // (LongRetryBudget). A mine shaft hop is an exact target, so it comes here too.
     long now = this.level.getGameTime();
     if (accuracy == 0 && range < EXACT_SEARCH_RANGE && (route == null || !route.canReach())
         && this.longRetry.worthRetrying(targets, this.mob.blockPosition(), now)) {
+      if (!LONG_RETRY_BUDGET.admits(now)) {
+        if (Kithkyn.LOGGER.isDebugEnabled()) {
+          Kithkyn.LOGGER.debug("[path-budget] {} at {} to {}: long retry deferred",
+              this.mob.getName().getString(), this.mob.blockPosition(), targets);
+        }
+        return route;
+      }
+      long started = System.nanoTime();
       Path longer = super.createPath(targets, regionOffset, offsetUpward, accuracy, EXACT_SEARCH_RANGE);
+      LONG_RETRY_BUDGET.charge(now, System.nanoTime() - started);
       if (longer != null && longer.canReach()) {
         this.longRetry.reached(targets);
       } else {
