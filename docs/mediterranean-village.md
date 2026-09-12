@@ -70,6 +70,7 @@ one chest, the jail cell behind iron bars on the tower's upper floor with its tw
 chests (the custody system takes any container the layout names, barrel or chest), a jailer
 post beside it, and four sword-guard posts whose routes cover the north gate, the south gate
 and both halves of the yard. Its nine authored pillager banners are village banner slots.
+It grants bread and repair, which its baker and smithy stations need.
 Unlike the Desert and Swamp castles it has no merchant stall.
 
 ## Authoring and installation
@@ -92,6 +93,15 @@ building templates stay in the private local datapack; only the wall family is b
 
 Manual testing can create the style with `/kithkyn create-village ~ ~ ~ mediterranean`. Natural
 founding on a temperate plain uses the same selector and founding path.
+
+On 2026-09-12 Aaron trimmed the town centre on the workshop copy south of the wall row (row W3 of
+`run/mediterranean-full-profile`): both 3x5 paving arms that ran past the body came off, one row was
+added at the north and south ends, the paving edges were worn irregular, and he placed the forecourt
+campfire himself. The footprint went from 25x17x23 to 15x17x25 with the origin 5 east and 1 north, so
+every authored cell of the definition and the verification harness's plaza and bell cells moved by
+(-5, 0, +1). The centre was recaptured from that box, re-exported, and the placement, restart,
+founding, centre and access checks were rerun; the `revisions` list in the catalog record carries the
+capture paths and hashes.
 
 ## Verification
 
