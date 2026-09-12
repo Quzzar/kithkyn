@@ -87,7 +87,8 @@ The current review status is:
   bakery, T11.2 tavern and T09.10 well are recorded in
   `tools/structure/tundra-selection-draft-20260912.json`. Four snow golems begin at the centre as
   unclaimed guard recruits. Three complete market tiers preserve the market's established trade
-  colors, and the single-tier wall uses snow, packed ice and spruce. The design workshop begins at
+  colors; every stall has one supported entrance carpet. The single-level wall uses snow, packed
+  ice, spruce and single lit brown candles. The design workshop begins at
   **11107.5, 230, 1810.5** and also displays three clean castle donors plus a labeled ice-palette
   study; no Tundra castle has been selected. Exact production metadata, export and runtime
   verification remain.

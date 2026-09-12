@@ -162,17 +162,16 @@
         "market_snowy_2",
         "market_snowy_3"
       ],
-      "notes": "All three repaired counter, entrance and trapdoor patterns passed visual review. Market tents retain the established red, cyan, orange and white trade colors rather than village identity colors."
+      "notes": "All three repaired counter, entrance and trapdoor patterns passed structural and visual review. Each stall has exactly one supported entrance carpet, and same-color entrance carpets never project two blocks. Market tents retain the established red, cyan, orange and white trade colors rather than village identity colors."
     },
     {
       "category": "wall",
       "level": 1,
       "review": "tundra_wall_ring",
-      "notes": "One wall tier only. The reviewed palette is snow block, packed-ice accents, spruce rails and trapdoors, stone-brick slabs, lanterns and light-blue candles."
+      "notes": "One wall level only. The reviewed palette is snow block, packed-ice accents, spruce rails and trapdoors, stone-brick slabs, lanterns and single lit brown candles."
     }
   ],
   "remaining": [
-    "capture any user edits made to the market and wall review copies",
     "assign exact four-core-job town-center station coordinates and all remaining stations, beds, personal/shared storage, entrances and grants",
     "export the selected structures as production templates with dynamic bed and banner identity slots",
     "choose a Tundra castle only if one of the displayed donors or the ice-palette study is approved",
@@ -188,6 +187,8 @@
     "watchtowerUpgrade": "none; T03.1 is the only watchtower tier",
     "townCenterSnowGolems": 4,
     "marketCloth": "fixed trade colors, not primary/secondary village colors",
+    "marketEntrances": "one supported entrance carpet per stall; a same-color entrance carpet may not project two blocks",
+    "wallCandles": "single lit brown candles",
     "buildingBeds": "every non-market bed maps dynamically to the village primary or secondary color; both halves of a couple bed use one color",
     "banners": "all authored village-banner positions use the generated village banner"
   },
@@ -219,7 +220,8 @@
     "castlePaletteStudies": 1,
     "barriers": 0,
     "structureVoids": 0,
-    "visualReview": "passed"
+    "visualReview": "passed after the one-block market entrance and brown-candle wall corrections",
+    "marketEntranceValidator": "tools/structure/validate-market-entrances.py"
   },
   "castleReview": {
     "status": "open; no Tundra castle selected",
