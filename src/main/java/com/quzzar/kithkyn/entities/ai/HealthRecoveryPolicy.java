@@ -71,6 +71,15 @@ public final class HealthRecoveryPolicy {
     return isBadlyHurt(health, maximumHealth) && !regenerating && !night;
   }
 
+  /**
+   * A potion that mends is drunk below two thirds of health: sooner than
+   * eating, since a potion is carried for exactly this and regeneration heals
+   * over time rather than at once (ClericPotions.need).
+   */
+  public static boolean shouldDrinkForHealth(float health, float maximumHealth) {
+    return maximumHealth > 0.0F && health < maximumHealth * 2.0F / 3.0F;
+  }
+
   /** The first game tick at which another campfire recovery may begin. */
   public static long nextCampfireUse(long gameTime) {
     return gameTime + CAMPFIRE_COOLDOWN_TICKS;

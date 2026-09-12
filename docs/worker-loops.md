@@ -317,8 +317,8 @@ two health every ten seconds everyone gets. Below a third of their health, with 
 fight, a villager takes a bite a second until they are back over the line
 (`PersonEatFoodGoal`). A bite heals by Aaron's rule: the food's nutrition as hearts plus a
 quarter of its saturation as hearts, so an apple heals about four and a half hearts and cooked
-beef more than a full bar (`Person.eatFood`). A meal is anything edible in the off hand or the
-pack: only guards are issued rations (topped up to six bites at the bedtime restock from the
+beef more than a full bar (`Person.eatFood`). A meal is food in the off hand or the
+pack (a potion is not: it is drunk when it would help, see the cleric's potions below): only guards are issued rations (topped up to six bites at the bedtime restock from the
 village's own food, best first by what a bite heals, never conjured: a village with no food
 logs the shortage and the guard goes without), but a fisher
 carries cod and a farmer carrots, and food from the pack is brought to the off hand for the
@@ -358,25 +358,38 @@ has not thrown, so a cleric out of potions cannot pin a patient for the day.
 ## The cleric's potions are stock
 
 Decided 2026-09-12. A cleric's potions are real items, not a spell (`ClericPotions`). Every
-throw consumes one splash potion from the cleric's hands or pack, and what the cleric carries
-decides what they can do:
+potion used is a real bottle from the cleric's hands or pack, and what the cleric carries
+decides what they can do. How a bottle is used follows from what it is (Aaron, 2026-09-12): an
+ordinary potion is drunk, a splash or lingering potion is thrown. Whether a throw goes to a
+friend or a foe follows from what the brew would do to the body it lands on, so a splash of
+healing burns the undead, a splash of harming heals them, and poison and regeneration do not
+take on them at all:
 
 - **Healing** (`HealStep`): a hurt villager or player within ten blocks gets a splash of
-  healing when nearly dead and regeneration otherwise, whichever the cleric carries, and
-  nothing when they carry neither to spare.
-- **Harm** (`ThrowPotionAttackGoal`): a cleric carrying a harmful splash potion (harming,
-  poison, weakness, slowness: every effect of it hurts) acquires hostile mobs as targets and
-  throws it at them. A cleric carrying only healing never acquires a target. Two rules are
+  healing when nearly dead and regeneration otherwise, then anything else that mends
+  (absorption, health boost), whichever the cleric carries, and nothing when they carry none to
+  spare. The brew must help that patient as a whole, and it is never thrown while an enemy
+  stands inside the burst or in the way (Aaron, 2026-09-12): the cleric holds the throw until
+  the enemy is clear.
+- **Harm** (`ThrowPotionAttackGoal`): a cleric carrying a harmful splash or lingering potion
+  (harming, poison, weakness, slowness: every effect of it hurts) acquires hostile mobs it would
+  hurt as targets and throws it at them, so a splash of harming is never thrown at a zombie. A
+  cleric carrying only healing never acquires a target. Two rules are
   absolute: harm is never thrown while an ally stands inside the burst around the target, and
   never through a friend in the way; the cleric closes in and waits for a clear throw instead.
   Harm sits ahead of healing at the same priority, so a cleric with both fights first and tends
   after.
+- **Drinking** (`DrinkPotionGoal`, any villager): an ordinary potion is drunk when it answers
+  what is wrong right now: water breathing when out of air under water, fire resistance when
+  burning, and below two thirds of health healing, regeneration, absorption or health boost.
+  Only a potion that helps the drinker as a whole is drunk, so nobody drinks harm, and a cleric
+  never drinks the seed. Potions are not meals: the eating path could never finish a drink.
 - **Brewing** (`BrewStep`): at their station, a cleric turns one carried potion of a brew into
   three more of it, in a session as long as a brewing stand's. The stand needs nothing put in
   it: the carried bottle is the recipe. The brew furthest below four carried is made first.
   Potions do not stack, so each bottle needs a pack slot, and a full pack waits.
 
-The last bottle of a brew is the **seed**. It is never thrown and never given away in
+The last bottle of a brew is the **seed**. It is never thrown or drunk, and never given away in
 conversation, because a cleric who parts with it has lost the brew for good and would have to
 be handed another before making more. The clean half of that rule is in the chat briefing: a
 cleric is told the bottles they can spare of each brew, "you have this many minus one", so a
@@ -385,9 +398,14 @@ the brews held in reserve and why, so the cleric also knows what they can brew. 
 (`PersonChatDispatcher.takeFromSlots`) caps at the spare as a backstop, the one exception to
 "anything goes". Above the seed, potions are theirs to give like anything else.
 
-The loadout is issued, not authored. Every cleric starts with a splash of regeneration and a
-splash of healing (`SignatureGear`). At bedtime, before the pack is shelved (their potions are
-kept, like a guard's weapons), a cleric lifts one bottle of every splash brew the village stores
+The loadout is issued, not authored. Every cleric starts with a splash of regeneration in the
+off hand, and a splash of healing and a potion of regeneration in the pack (`SignatureGear`).
+Each is the seed of its brew, so a new cleric brews at their station before it throws or drinks
+any. The off hand is the cleric's one working slot (Aaron, 2026-09-12): it rests on the splash
+of regeneration, a bottle to throw or drink is swapped into it for the use, and the resting
+bottle comes back after (`OffHandUse`). The main hand stays empty; a bottle left there by the
+old two-handed kit goes into the pack. At bedtime, before the pack is shelved (their potions are
+kept, like a guard's weapons), a cleric lifts one bottle of every brew the village stores
 hold that they do not yet carry. So a player who leaves a splash of harming in a village chest
 has armed the cleric, and the swamp's witch circle is a cleric someone handed harm. The
 authored-per-station alternative, marking a church's station healer or battle-cleric, was

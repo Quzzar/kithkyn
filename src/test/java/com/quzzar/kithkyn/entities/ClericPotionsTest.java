@@ -8,12 +8,15 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.List;
+import java.util.function.Predicate;
 
 import org.junit.jupiter.api.Test;
 
 import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.SimpleContainer;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.alchemy.Potion;
@@ -24,6 +27,18 @@ class ClericPotionsTest {
 
   private static ItemStack splash(Holder<Potion> potion) {
     ItemStack stack = new ItemStack(Items.SPLASH_POTION);
+    stack.set(DataComponents.POTION_CONTENTS, new PotionContents(potion));
+    return stack;
+  }
+
+  private static ItemStack drink(Holder<Potion> potion) {
+    ItemStack stack = new ItemStack(Items.POTION);
+    stack.set(DataComponents.POTION_CONTENTS, new PotionContents(potion));
+    return stack;
+  }
+
+  private static ItemStack lingering(Holder<Potion> potion) {
+    ItemStack stack = new ItemStack(Items.LINGERING_POTION);
     stack.set(DataComponents.POTION_CONTENTS, new PotionContents(potion));
     return stack;
   }
@@ -136,5 +151,56 @@ class ClericPotionsTest {
       pack.setItem(slot, splash(Potions.REGENERATION));
     }
     assertNull(ClericPotions.lowestBelowTarget(hand, ItemStack.EMPTY, pack));
+  }
+
+  @Test
+  void ordinaryPotionsAreDrunkAndSplashAndLingeringOnesAreThrown() {
+    assertTrue(ClericPotions.isDrinkable(drink(Potions.REGENERATION)));
+    assertFalse(ClericPotions.isThrowable(drink(Potions.REGENERATION)));
+    assertTrue(ClericPotions.isStock(drink(Potions.REGENERATION)));
+    assertTrue(ClericPotions.isThrowable(lingering(Potions.POISON)));
+    assertFalse(ClericPotions.isDrinkable(lingering(Potions.POISON)));
+    assertFalse(ClericPotions.isDrinkable(splash(Potions.HEALING)));
+    assertFalse(ClericPotions.isStock(drink(Potions.WATER)));
+  }
+
+  @Test
+  void whatABrewDoesDependsOnTheBodyItReaches() {
+    Predicate<MobEffectInstance> everything = effect -> true;
+    assertEquals(ClericPotions.Outcome.HELPS, ClericPotions.outcome(splash(Potions.HEALING), false, everything));
+    assertEquals(ClericPotions.Outcome.HURTS, ClericPotions.outcome(splash(Potions.HARMING), false, everything));
+    // The undead: healing and harm trade places, and poison and regeneration do not take.
+    assertEquals(ClericPotions.Outcome.HURTS, ClericPotions.outcome(splash(Potions.HEALING), true, everything));
+    assertEquals(ClericPotions.Outcome.HELPS, ClericPotions.outcome(splash(Potions.HARMING), true, everything));
+    Predicate<MobEffectInstance> undead = effect -> !effect.getEffect().equals(MobEffects.POISON)
+        && !effect.getEffect().equals(MobEffects.REGENERATION);
+    assertEquals(ClericPotions.Outcome.NOTHING, ClericPotions.outcome(splash(Potions.POISON), true, undead));
+    assertEquals(ClericPotions.Outcome.NOTHING, ClericPotions.outcome(drink(Potions.REGENERATION), true, undead));
+    // Help and harm at once: the turtle master's slowness and resistance.
+    assertEquals(ClericPotions.Outcome.MIXED, ClericPotions.outcome(splash(Potions.TURTLE_MASTER), false, everything));
+    assertFalse(ClericPotions.isBeneficial(splash(Potions.TURTLE_MASTER)));
+    assertFalse(ClericPotions.isHarmful(splash(Potions.TURTLE_MASTER)));
+  }
+
+  @Test
+  void aDrinkableBrewHasItsOwnSeed() {
+    SimpleContainer pack = new SimpleContainer(9);
+    pack.setItem(0, drink(Potions.REGENERATION));
+    assertNull(ClericPotions.spare(ItemStack.EMPTY, ItemStack.EMPTY, pack, ClericPotions::isDrinkable));
+    pack.setItem(1, drink(Potions.REGENERATION));
+    assertNotNull(ClericPotions.spare(ItemStack.EMPTY, ItemStack.EMPTY, pack, ClericPotions::isDrinkable));
+    // A splash of the same potion is another brew, not a second bottle of this one.
+    pack.setItem(1, splash(Potions.REGENERATION));
+    assertNull(ClericPotions.spare(ItemStack.EMPTY, ItemStack.EMPTY, pack, ClericPotions::isDrinkable));
+    assertEquals(2, ClericPotions.stock(ItemStack.EMPTY, ItemStack.EMPTY, pack).size());
+    assertEquals(0, ClericPotions.giveable(ItemStack.EMPTY, ItemStack.EMPTY, pack, pack.getItem(0)));
+  }
+
+  @Test
+  void mendingMeansHealingRegenerationAbsorptionOrHealthBoost() {
+    assertTrue(ClericPotions.mends(splash(Potions.HEALING)));
+    assertTrue(ClericPotions.mends(drink(Potions.REGENERATION)));
+    assertFalse(ClericPotions.mends(splash(Potions.SWIFTNESS)));
+    assertFalse(ClericPotions.mends(drink(Potions.FIRE_RESISTANCE)));
   }
 }

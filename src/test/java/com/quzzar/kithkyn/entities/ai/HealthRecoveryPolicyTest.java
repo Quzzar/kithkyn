@@ -47,4 +47,11 @@ class HealthRecoveryPolicyTest {
     assertFalse(HealthRecoveryPolicy.shouldSeekCampfire(5.0F, 18.0F, true, 1_200L, 1_200L));
     assertTrue(HealthRecoveryPolicy.shouldSeekCampfire(5.0F, 18.0F, false, 1_200L, 1_200L));
   }
+
+  @org.junit.jupiter.api.Test
+  void potionsThatMendAreDrunkBelowTwoThirdsOfHealth() {
+    org.junit.jupiter.api.Assertions.assertTrue(HealthRecoveryPolicy.shouldDrinkForHealth(26.0F, 40.0F));
+    org.junit.jupiter.api.Assertions.assertFalse(HealthRecoveryPolicy.shouldDrinkForHealth(27.0F, 40.0F));
+    org.junit.jupiter.api.Assertions.assertFalse(HealthRecoveryPolicy.shouldDrinkForHealth(10.0F, 0.0F));
+  }
 }
