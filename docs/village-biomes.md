@@ -57,11 +57,10 @@ to Floodplain when site selection can classify them reliably.
 
 ## Next authoring shortlist
 
-The next scouting pass prioritizes one catalog now that Swamp and Mediterranean are playable:
-
-1. **Taiga** will give taiga and old-growth spruce forests a coherent cold-timber identity. Its
-   court compares complete Viking and Polish families with Swedish, CTOV taiga, spruce service,
-   and tower donors. Final family selection is deferred while other village catalogs are built.
+The next active authoring review is **Tundra**. Its complete source gallery compares the Snowy
+Igloo family with snowy tavern, outpost, inn, igloo and tower donors. Taiga remains intentionally
+parked until the ornate Polish and grittier Viking directions can be judged after more village
+catalogs are complete.
 
 The three walk-through courts begin at **9913.5, 230, 986.5** in the live showcase world. The
 individual entrances are Swamp at **9929.5, 230, 1004.5**, Viking at
@@ -78,6 +77,12 @@ The current review status is:
   V03.5, and V05.2 remain candidates rather than locked selections. The complete standalone T&T
   Viking and Polish families remain displayed in a six-row annex at
   **10201.5, 230, 1224.5** for the later decision.
+- **Tundra:** the complete source gallery begins at **11107.5, 230, 986.5**. Its 17 rows contain
+  all 77 standalone CTOV Snowy Igloo templates, 23 Dungeons & Taverns snowy tavern modules,
+  12 CTOV snowy outpost pieces and five Towns & Towers or Terralith landmarks. Fifty Snowy Igloo
+  compatibility shells are kept visible with unavailable custom work blocks replaced only in
+  their private display copies. The exact sources, hashes, positions and screenshots are recorded
+  in `tools/structure/tundra-full-profile-20260912.json`.
 - **Mediterranean:** the production catalog is selected and verified
   ([mediterranean-village.md](mediterranean-village.md)): the M06.1 church is its centre, the
   M08.1 fort its castle, and the rest comes from annex rows M06 to M08 and the edited court
@@ -98,6 +103,11 @@ twelve profession inserts T&T drops into Iberian houses). Streets, terminators a
 villager template are omitted for the same reason. Pieces whose waterlogged blocks would flood the
 platform stand inside barrier rings. The complete source paths, hashes, placement coordinates and
 review evidence are recorded in `tools/structure/mediterranean-full-profile-20260911.json`.
+
+The Tundra gallery contains all 117 useful snowy reference structures. Road pieces and entity-only
+jigsaw templates are omitted because they do not present a building choice. Unavailable
+compatibility blocks are normalized to vanilla markers only in the private gallery copy, leaving
+the source hashes and original templates untouched.
 
 Unstructured was included in the source audit. Its strongest coherent settlement is the Ocean
 Village family, which belongs in the later Nautical Coast pass rather than one of these three
