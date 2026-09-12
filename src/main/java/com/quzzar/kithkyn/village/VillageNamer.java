@@ -171,6 +171,12 @@ public final class VillageNamer {
           List.of("Solvara", "Castellina", "Marisol", "Terravento"),
           List.of("Sol", "Castel", "Mari", "Terra", "Val", "Bel", "Alva", "Piet"),
           List.of("vara", "lina", "sol", "vento", "mare", "eta", "ora", "ino"));
+      case TUNDRA -> new NamingProfile(
+          "A close northern settlement of snow-covered stone, spruce timber, packed-ice trim,"
+              + " berry greenhouses, warm bakehouses and candlelit walls in an exposed frozen plain."
+              + " Clear, sturdy invented names with a wintry old-world sound.",
+          List.of("Frostmere", "Skelwick", "Eirhavn", "Winterholt"),
+          List.of("Eir", "Skel", "Frost", "Winter", "Rime", "Hail", "Sven", "Bryn"));
     };
   }
 

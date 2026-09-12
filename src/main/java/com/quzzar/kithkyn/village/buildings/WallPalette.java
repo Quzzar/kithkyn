@@ -33,6 +33,9 @@ record WallPalette(Block post, Block deck, Block stairs, Block slab,
       case MEDITERRANEAN -> new WallPalette(
           Blocks.QUARTZ_BRICKS, Blocks.QUARTZ_BRICKS, Blocks.QUARTZ_STAIRS,
           Blocks.QUARTZ_SLAB, Blocks.SPRUCE_FENCE, Blocks.SPRUCE_TRAPDOOR);
+      case TUNDRA -> new WallPalette(
+          Blocks.SNOW_BLOCK, Blocks.SNOW_BLOCK, Blocks.STONE_BRICK_STAIRS,
+          Blocks.STONE_BRICK_SLAB, Blocks.SPRUCE_FENCE, Blocks.SPRUCE_TRAPDOOR);
     };
   }
 
@@ -63,6 +66,7 @@ record WallPalette(Block post, Block deck, Block stairs, Block slab,
     if (this.post == Blocks.SMOOTH_RED_SANDSTONE) return Blocks.CHISELED_RED_SANDSTONE;
     if (this.post == Blocks.MUD_BRICKS) return Blocks.MUDDY_MANGROVE_ROOTS;
     if (this.post == Blocks.JUNGLE_PLANKS) return Blocks.STRIPPED_JUNGLE_WOOD;
+    if (this.post == Blocks.SNOW_BLOCK) return Blocks.PACKED_ICE;
     return this.post;
   }
 
@@ -71,10 +75,11 @@ record WallPalette(Block post, Block deck, Block stairs, Block slab,
     Block candle = this.post == Blocks.SMOOTH_SANDSTONE ? Blocks.CANDLE
         : this.post == Blocks.SMOOTH_RED_SANDSTONE ? Blocks.ORANGE_CANDLE
         : this.post == Blocks.MUD_BRICKS ? Blocks.BROWN_CANDLE
-        : this.post == Blocks.OAK_LOG ? Blocks.CANDLE : null;
+        : this.post == Blocks.OAK_LOG ? Blocks.CANDLE
+        : this.post == Blocks.SNOW_BLOCK ? Blocks.BROWN_CANDLE : null;
     if (this.post == Blocks.JUNGLE_PLANKS) return Blocks.TORCH.defaultBlockState();
     if (candle == null) return Blocks.LANTERN.defaultBlockState();
-    if (this.post == Blocks.OAK_LOG) {
+    if (this.post == Blocks.OAK_LOG || this.post == Blocks.SNOW_BLOCK) {
       return candle.defaultBlockState().setValue(CandleBlock.CANDLES, 1)
           .setValue(CandleBlock.LIT, true);
     }

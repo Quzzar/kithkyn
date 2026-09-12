@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "status": "services_locked_review_workshop_verified",
+  "status": "production_locked_verified",
   "style": "tundra",
   "sourceGallery": "tools/structure/tundra-full-profile-20260912.json",
   "liveCapture": {
@@ -31,7 +31,7 @@
       "category": "village_center",
       "level": 1,
       "exhibit": "T01.1",
-      "notes": "Four beds in diagonal primary/secondary pairs; all eight banners use village identity; four ordinary snow golems spawn unclaimed and may be adopted by nearby guards. Core job-station positions still require exact metadata."
+      "notes": "Four worker beds in diagonal primary/secondary pairs; eight village-banner slots; four personal barrels; exact quartermaster, builder, captain and miner stations; four captured snow golems. The quartermaster and miner route to the naturally placed storehouse and mine."
     },
     {
       "category": "couple_cottage",
@@ -57,7 +57,7 @@
       "category": "storehouse",
       "level": 1,
       "exhibit": "T01.5",
-      "notes": "User conversion with three storage barrels and no bed."
+      "notes": "Storehouse with two reachable village-storage barrels and the quartermaster worksite. The lowest barrel behind the stack remains visual and is not declared storage."
     },
     {
       "category": "house",
@@ -88,7 +88,7 @@
       "category": "watchtower",
       "level": 1,
       "exhibit": "T03.1",
-      "notes": "Compact cartographer tower repurposed as the first watchtower."
+      "notes": "Sole watchtower tier with a crossbow guard post, worker bed and personal chest. A final ladder rung and closed spruce landing gate preserve the rail silhouette while allowing the guard to return home."
     },
     {
       "category": "church",
@@ -158,11 +158,11 @@
         3
       ],
       "structures": [
-        "market_snowy_1",
-        "market_snowy_2",
-        "market_snowy_3"
+        "market_tundra_1",
+        "market_tundra_2",
+        "market_tundra_3"
       ],
-      "notes": "All three repaired counter, entrance and trapdoor patterns passed structural and visual review. Each stall has exactly one supported entrance carpet, and same-color entrance carpets never project two blocks. Market tents retain the established red, cyan, orange and white trade colors rather than village identity colors."
+      "notes": "All three repaired counter, entrance and trapdoor patterns passed structural, visual and physical access review. Each stall has exactly one supported entrance carpet and keeps the established red, cyan, orange and white trade colors. Counter barrels sit above a complete stone-brick foundation."
     },
     {
       "category": "wall",
@@ -171,12 +171,7 @@
       "notes": "One wall level only. The reviewed palette is snow block, packed-ice accents, spruce rails and trapdoors, stone-brick slabs, lanterns and single lit brown candles."
     }
   ],
-  "remaining": [
-    "assign exact four-core-job town-center station coordinates and all remaining stations, beds, personal/shared storage, entrances and grants",
-    "export the selected structures as production templates with dynamic bed and banner identity slots",
-    "choose a Tundra castle only if one of the displayed donors or the ice-palette study is approved",
-    "run placement, access, founding, upgrade, restart and final production visual verification"
-  ],
+  "remaining": [],
   "futureCastleDonor": {
     "exhibit": "T17.3",
     "label": "Snowy Plains Tower",
@@ -190,7 +185,8 @@
     "marketEntrances": "one supported entrance carpet per stall; a same-color entrance carpet may not project two blocks",
     "wallCandles": "single lit brown candles",
     "buildingBeds": "every non-market bed maps dynamically to the village primary or secondary color; both halves of a couple bed use one color",
-    "banners": "all authored village-banner positions use the generated village banner"
+    "banners": "all authored village-banner positions use the generated village banner",
+    "castle": "none; the playable Tundra catalog deliberately has no castle"
   },
   "mineAudit": {
     "exhibit": "T05.6",
@@ -224,7 +220,7 @@
     "marketEntranceValidator": "tools/structure/audit-templates.py"
   },
   "castleReview": {
-    "status": "open; no Tundra castle selected",
+    "status": "closed; no castle belongs to the Tundra production catalog",
     "workshopCandidates": [
       "Ice Spider Fort",
       "Grand Ice Hall",
@@ -232,7 +228,7 @@
       "Ice Cathedral Study",
       "T17.3 Tundra Keep Study"
     ],
-    "note": "The first three are clean source donors. Ice Cathedral Study is a snow-and-packed-ice palette pass over the Ice Spider Fort silhouette. T17.3 Tundra Keep Study converts the Snowy Plains Tower to snow, packed ice, blue ice, stone brick, village-banner sockets and a primary-color bed while preserving its navigation and amenities. Its structural logs, planks, stairs, slabs, fences and decorative trapdoors were replaced with stone-brick blocks, stairs, slabs and walls; functional doors, ladders, signs, chests, barrels and workstations remain usable.",
+    "note": "The gallery studies remain general references for future village variants. None is exported or registered as a Tundra building.",
     "t17Study": {
       "status": "editable live stone-brick proposal; visually verified but not selected",
       "origin": [
@@ -248,5 +244,11 @@
       "barriers": 0,
       "structureVoids": 0
     }
+  },
+  "production": {
+    "catalog": "tools/structure/tundra-catalog-20260912.json",
+    "privateDatapack": "run/tundra-integration/datapack",
+    "definitions": 23,
+    "status": "verified_playable"
   }
 }

@@ -19,6 +19,8 @@ These catalogs are integrated, selectable, and verified as complete founding vil
 | Floodplain | Mangrove Swamp and compatible tropical floodplain biomes | Mud brick, mangrove details, raised earth, and water-oriented sites |
 | Jungle Tribal | Jungle, Bamboo Jungle, and Sparse Jungle | Jungle timber, stripped bamboo roofs, compact huts, treehouses, three markets, the timber wall, and the Firewatch tower |
 | Swamp | Swamp, Orchid Swamp, and compatible ordinary wetlands | Mossy ruins, oak-and-spruce wetland buildings, two campfires, candlelit timber walls, and the configured SC01.2 castle |
+| Mediterranean | Plains and Sunflower Plains | White stone and plaster town core with tile roofs, courts, orchards, gardens, and open agriculture |
+| Tundra | Snowy Plains, Ice Spikes, snowy beaches, frozen rivers, and compatible exposed frozen lowlands | Compact snowbound buildings, packed-ice accents, spruce details, enclosed cold-weather farming, and four founding snow golems |
 
 ## Locked directions
 
@@ -28,21 +30,19 @@ its production catalog and founding behavior are verified.
 
 | Village biome | Founding environments | Direction |
 | --- | --- | --- |
-| Mediterranean | Plains and Sunflower Plains | White stone and plaster town core with tile roofs, courts, orchards, gardens, and open agriculture |
 | Rustic Woodland | Forest and compatible ordinary oak woodland biomes | Familiar timber woodland settlement with a restrained rustic character |
 | Romanian | Dark Forest, forested highlands, and wooded valleys | Heavy timber roofs, enclosed yards, and substantial woodland buildings |
 | Japanese | Cherry Grove, Flower Forest, and compatible Sakura biomes | Garden settlement shaped around flowering woodland and deliberate landscape details |
 | Taiga | Taiga, Old Growth Pine Taiga, Old Growth Spruce Taiga, and compatible cold forests | Cold forest settlement; its final visual language is deliberately deferred between the ornate Polish family and the grittier T&T Viking family |
-| Tundra | Snowy Plains, Ice Spikes, and compatible exposed frozen lowlands | Compact igloos and snowbound buildings suited to treeless terrain |
 | Alpine | Meadow, Grove, Snowy Slopes, and compatible mountain valleys and peaks | Swiss-inspired mountain settlement with steep roofs and slope-conscious buildings |
 | Polynesian Coast | Sparse Jungle, tropical beaches, warm-ocean islands, and compatible tropical coasts | Open, warm-climate coastal buildings based on the Polynesian reference family |
 | Nautical Coast | Beach, Stony Shore, and compatible temperate or cold coasts | Fishing town, docks, shoreline buildings, and lighthouse landmarks |
 | Savanna Tent | Savanna, Savanna Plateau, Windswept Savanna, and compatible dry grasslands | African-inspired tent and grassland settlement with portable-looking structures and a coherent warm-climate material palette |
 | Mushroom | Mushroom Fields and compatible fungal biomes | Fantasy mushroom settlement drawn from the complete mushroom reference families |
 
-Jungle and ordinary Swamp are complete private production catalogs. Each has a bedless center,
-four-home founding sprawl, routed mine and storehouse worksites, regional markets, and its own
-wall treatment. Swamp remains separate from the mud-brick Floodplain catalog used by mangroves.
+Jungle, ordinary Swamp, Mediterranean and Tundra are complete private production catalogs.
+Swamp remains separate from the mud-brick Floodplain catalog used by mangroves. Tundra starts
+from a four-bed centre with a naturally placed mine and storehouse and deliberately has no castle.
 
 Swedish and Polish are source languages in the current review rather than settled biome
 assignments. The Swedish temple and tower remain a useful candidate church progression for a
@@ -57,10 +57,9 @@ to Floodplain when site selection can classify them reliably.
 
 ## Next authoring shortlist
 
-The next active authoring review is **Tundra**. Its complete source gallery compares the Snowy
-Igloo family with snowy tavern, outpost, inn, igloo and tower donors. Taiga remains intentionally
-parked until the ornate Polish and grittier Viking directions can be judged after more village
-catalogs are complete.
+Tundra is complete. Taiga remains intentionally parked until the ornate Polish and grittier
+Viking directions can be judged after more village catalogs are complete. Alpine, Romanian,
+Japanese, Savanna Tent, Polynesian Coast and Mushroom remain available as the next catalog pass.
 
 The three walk-through courts begin at **9913.5, 230, 986.5** in the live showcase world. The
 individual entrances are Swamp at **9929.5, 230, 1004.5**, Viking at
@@ -84,14 +83,14 @@ The current review status is:
   their private display copies. The exact sources, hashes, positions and screenshots are recorded
   in `tools/structure/tundra-full-profile-20260912.json`. The selected center, homes, storehouse,
   food buildings, sole watchtower, church, workshops, two farm tiers, mine, T04.8 hunter, T04.4
-  bakery, T11.2 tavern and T09.10 well are recorded in
-  `tools/structure/tundra-selection-draft-20260912.json`. Four snow golems begin at the centre as
+  bakery, T11.2 tavern and T09.10 well form the verified 23-building private production catalog
+  recorded in `tools/structure/tundra-catalog-20260912.json`. Four snow golems begin at the centre as
   unclaimed guard recruits. Three complete market tiers preserve the market's established trade
   colors; every stall has one supported entrance carpet. The single-level wall uses snow, packed
   ice, spruce and single lit brown candles. The design workshop begins at
   **11107.5, 230, 1810.5** and also displays three clean castle donors, the Ice Cathedral palette
-  study, and an editable T17.3 Tundra Keep conversion at **11338, 230, 1935**. No Tundra castle
-  has been selected. Exact production metadata, export and runtime verification remain.
+  study, and an editable T17.3 Tundra Keep conversion at **11338, 230, 1935**. Those remain general
+  references: the production Tundra catalog has no castle.
 - **Mediterranean:** the production catalog is selected and verified
   ([mediterranean-village.md](mediterranean-village.md)): the M06.1 church is its centre, the
   M08.1 fort its castle, and the rest comes from annex rows M06 to M08 and the edited court

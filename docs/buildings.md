@@ -365,14 +365,15 @@ becoming one overloaded axis.
 
 ### Current runtime selection: 2026-09-12
 
-Seven styles exist today, in this stable order: `birch_forest`, `desert`, `badlands`,
-`floodplain`, `jungle`, `swamp`, `mediterranean`. Birch Forest is the only catalog bundled in the jar and so the default: a blank
+Eight styles exist today, in this stable order: `birch_forest`, `desert`, `badlands`,
+`floodplain`, `jungle`, `swamp`, `mediterranean`, `tundra`. Birch Forest is the only catalog bundled in the jar and so the default: a blank
 or unknown saved style reads as Birch. Desert ([desert-village.md](desert-village.md)),
 Badlands ([badlands-village.md](badlands-village.md)) and Floodplain
 ([floodplain-village.md](floodplain-village.md)), Jungle
 ([jungle-village.md](jungle-village.md)), Swamp
 ([swamp-village.md](swamp-village.md)) and Mediterranean
-([mediterranean-village.md](mediterranean-village.md)) are installed as private datapacks that
+([mediterranean-village.md](mediterranean-village.md)) and Tundra
+([tundra-village.md](tundra-village.md)) are installed as private datapacks that
 supply their own definitions and templates under the ids the code resolves; without its pack
 a style has no founding set and is never selected automatically. The old Village Life families
 (plains, taiga, snowy, savanna and the bundled desert set) were removed on 2026-09-10; see
@@ -389,7 +390,8 @@ reroll an existing village. An explicit style argument on the command still over
 
 Selection first honors `kithkyn:village_style/<style>` biome tags, so a datapack can map a
 vanilla or modded biome precisely without a second mapping format. If a biome has several
-explicit tags, the stable order is Birch Forest, Desert, Badlands, Floodplain, Jungle, Swamp, Mediterranean.
+explicit tags, the stable order is Birch Forest, Desert, Badlands, Floodplain, Jungle, Swamp,
+Mediterranean, Tundra.
 Only styles whose own center, mine, and storehouse definitions are loaded are automatic candidates.
 
 Conventional families then retain deterministic assignments, but only where a finished
@@ -403,8 +405,9 @@ catalog exists:
 | Mangrove: vanilla mangrove swamp through the `kithkyn:village_style/floodplain` tag, and untagged registry paths containing `mangrove` | Floodplain |
 | Jungle, including conventional Jungle tags and registry paths containing `jungle` | Jungle |
 | Ordinary swamp, including the broad conventional Swamp tag and registry paths containing `swamp` after mangrove is excluded | Swamp |
+| Snowy or icy lowlands, including their conventional tags and registry paths containing snow, ice, frozen or frost | Tundra |
 | Temperate plains: the conventional Plains tag and registry paths ending in `plains`, unless the biome is also snowy, icy or named for snow, ice or frost | Mediterranean |
-| Every other conventional family (forest, taiga, snowy and the rest) | No conventional mapping; the climate cluster below decides |
+| Every other conventional family (forest, taiga and the rest) | No conventional mapping; the climate cluster below decides |
 
 Birch wins before broader family tags; an explicit style tag can override even a birch-named
 biome. This name heuristic is a compatibility fallback for mods that omit conventional tags,
@@ -525,7 +528,7 @@ the player, with a caravan, or abstract is an open question below.
 | | Count |
 | --- | --- |
 | Categories | 37 |
-| Implemented village biomes | 3 (Birch Forest bundled; Desert and Badlands as private datapacks) |
+| Implemented village biomes | 8 (Birch Forest bundled; seven private datapack catalogs) |
 | Towns and Towers Overworld village-biome floor | 26 |
 | Additional village biomes already justified by reviewed families | 6 |
 | Existing structure-plan estimate, based on five village biomes | ~130 |
