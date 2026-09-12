@@ -232,7 +232,7 @@ public final class CastleConstructionVerification {
     }
     for (BlockPos local : castle.getInfo().getCastleLayout().evidenceContainers()) {
       BlockPos world = origin.offset(local.rotate(castle.getRotation()));
-      check(level.getBlockState(world).is(Blocks.BARREL), "Incremental build lost an evidence barrel");
+      check(level.getBlockEntity(world) instanceof net.minecraft.world.Container, "Incremental build lost an evidence container");
       check(!village.getVillageContainerPositions().contains(world), "Evidence became shared storage after completion");
     }
   }

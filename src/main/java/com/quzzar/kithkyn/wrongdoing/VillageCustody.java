@@ -37,7 +37,6 @@ import net.minecraft.world.entity.animal.AbstractGolem;
 import net.minecraft.world.level.block.DoorBlock;
 import net.minecraft.world.level.block.FenceGateBlock;
 import net.minecraft.world.level.saveddata.SavedData;
-import net.minecraft.world.level.block.entity.BarrelBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.phys.Vec3;
@@ -112,8 +111,10 @@ public final class VillageCustody extends SavedData {
           .anyMatch(sentence -> sentence.occupies(village.getID(), castle.getUUID().toString(), now))) continue;
       BlockPos release = safeReleasePoint(level, cell, world(castle, layout.releasePoint()));
       if (release == null) continue;
+      // Any authored container holds evidence: the Desert and Swamp castles use barrels,
+      // the Mediterranean fort keeps Aaron's two chests.
       List<Container> evidence = layout.evidenceContainers().stream().map(local -> level.getBlockEntity(world(castle, local)))
-          .filter(entity -> entity instanceof BarrelBlockEntity).map(entity -> (Container) entity).distinct().toList();
+          .filter(entity -> entity instanceof Container).map(entity -> (Container) entity).distinct().toList();
       if (!EvidenceInventory.canArrestWithoutDrops(player, evidence)) continue;
       MobEffectInstance fatigue = player.getEffect(MobEffects.DIG_SLOWDOWN);
       CompoundTag previous = fatigue == null ? null : (CompoundTag) fatigue.save();
@@ -129,7 +130,7 @@ public final class VillageCustody extends SavedData {
       clearGuardTargets(level, village, player);
       player.sendSystemMessage(Component.literal("The guards of " + village.getName()
           + " have taken you into custody. You have 5 minutes remaining. "
-          + confiscated + " items were placed in the evidence barrels; anything that did not fit remains with you."));
+          + confiscated + " items were placed in the evidence store; anything that did not fit remains with you."));
       Kithkyn.LOGGER.info("[custody] {} apprehended by {} until game tick {}", player.getUUID(), village.getID(), sentence.releaseAt());
       return true;
     }

@@ -95,7 +95,7 @@ public final class CustodyVerification {
     check(VillageCustody.validCell(level, cell), "Authored cell is not enclosed and safe: " + cell);
     List<Container> evidence = castle.getInfo().getCastleLayout().evidenceContainers().stream()
         .map(local -> (Container) level.getBlockEntity(origin.offset(local))).toList();
-    check(evidence.size() == 2 && evidence.stream().allMatch(java.util.Objects::nonNull), "Two authored evidence barrels missing");
+    check(evidence.size() == 2 && evidence.stream().allMatch(java.util.Objects::nonNull), "Two authored evidence containers missing");
     verifyEvidenceTheft(level, village, evidence, release);
     verifyInventory(level, evidence, release, level.damageSources().mobAttack(guard));
 
