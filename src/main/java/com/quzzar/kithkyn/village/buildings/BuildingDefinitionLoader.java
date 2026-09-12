@@ -60,6 +60,12 @@ public class BuildingDefinitionLoader extends SimpleJsonResourceReloadListener {
                         Kithkyn.LOGGER.error("Rejected building definition {} ({})", id, problem);
                         return;
                     }
+                    // A warning, not a rejection: the building still stands and
+                    // staffs its post, but the planner cannot see what the post
+                    // gives, so the author is told (StationGrants).
+                    for (String missing : StationGrants.missing(info)) {
+                        Kithkyn.LOGGER.warn("Building definition {}: {}", id, missing);
+                    }
                     ResourceLocation recipeId = BuildingRecipe.idFor(info);
                     BuildingRecipe recipe;
                     if (json.getAsJsonObject().has("cost")) {

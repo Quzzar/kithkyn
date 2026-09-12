@@ -17,7 +17,7 @@ import net.minecraft.world.item.alchemy.Potions;
  * The item a trade holds as the mark of its work, for the trades whose mark is
  * not a tool: the quartermaster's ledger (a writable book), the builder's
  * crafting table, the librarian's book, the blacksmith's iron ingot, the
- * cleric's healing and regeneration potions. This is the one place they are
+ * cleric's splash potions of healing and regeneration. This is the one place they are
  * named, so the starting kit that first hands them out
  * ({@link RealPerson#issueStartingKit}), the day-to-day check that keeps them in
  * hand ({@link RealPerson#tendSignatureGear}), and the rule that keeps a
@@ -75,12 +75,14 @@ public final class SignatureGear {
       // The quartermaster keeps the village's stores; a writable book reads as
       // the ledger they are forever taking count in.
       case QUARTERMASTER -> List.of(new Piece(EquipmentSlot.MAINHAND, () -> new ItemStack(Items.WRITABLE_BOOK)));
-      // A splash of regeneration to throw over the hurt, a healing potion kept
-      // in the off hand. HealStep makes each throw fresh, so these are the
-      // cleric's mark, not the flask it draws from.
+      // A splash of regeneration in hand and a splash of healing in the off
+      // hand: the two brews every cleric starts with. Unlike the other marks
+      // these are real stock (ClericPotions): a throw consumes one, and the
+      // last bottle of a brew is the seed the cleric brews more from, so it is
+      // never thrown or given away.
       case CLERIC -> List.of(
           new Piece(EquipmentSlot.MAINHAND, SignatureGear::regenSplash),
-          new Piece(EquipmentSlot.OFFHAND, SignatureGear::healing));
+          new Piece(EquipmentSlot.OFFHAND, SignatureGear::healingSplash));
       default -> List.of();
     };
   }
@@ -91,8 +93,8 @@ public final class SignatureGear {
     return stack;
   }
 
-  private static ItemStack healing() {
-    ItemStack stack = new ItemStack(Items.POTION);
+  private static ItemStack healingSplash() {
+    ItemStack stack = new ItemStack(Items.SPLASH_POTION);
     stack.set(DataComponents.POTION_CONTENTS, new PotionContents(Potions.HEALING));
     return stack;
   }

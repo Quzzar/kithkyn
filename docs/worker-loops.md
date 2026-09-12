@@ -342,6 +342,53 @@ sleep, a missing or doused fire, and an existing regeneration effect all prevent
 starting. Each person's one-minute cooldown is persisted on the entity, so changing jobs or
 reloading cannot reset it.
 
+### Seeking the cleric
+
+Built 2026-09-12. A badly hurt villager with a cleric in reach goes to the cleric instead of
+the fire (Aaron: if there is a cleric nearby, they are a better source of healing than eating
+or the campfire). `SeekClericGoal` finds the nearest awake cleric of the villager's own village
+within forty-eight blocks, walks to within five, and stands there; the cleric's own round sees a
+hurt neighbour inside ten blocks and throws. It shares fetching food's priority and is
+registered ahead of it, so a villager goes to the cleric when one is near and fetches food when
+none is. Eating is not displaced: it holds no movement flag, so a villager with a meal eats on
+the way and while they wait. The visit ends when the patient is back over the line or already
+regenerating, when the cleric sleeps or leaves, at night, or after a minute beside a cleric who
+has not thrown, so a cleric out of potions cannot pin a patient for the day.
+
+## The cleric's potions are stock
+
+Decided 2026-09-12. A cleric's potions are real items, not a spell (`ClericPotions`). Every
+throw consumes one splash potion from the cleric's hands or pack, and what the cleric carries
+decides what they can do:
+
+- **Healing** (`HealStep`): a hurt villager or player within ten blocks gets a splash of
+  healing when nearly dead and regeneration otherwise, whichever the cleric carries, and
+  nothing when they carry neither to spare.
+- **Harm** (`ThrowPotionAttackGoal`): a cleric carrying a harmful splash potion (harming,
+  poison, weakness, slowness: every effect of it hurts) acquires hostile mobs as targets and
+  throws it at them. A cleric carrying only healing never acquires a target. Two rules are
+  absolute: harm is never thrown while an ally stands inside the burst around the target, and
+  never through a friend in the way; the cleric closes in and waits for a clear throw instead.
+  Harm sits ahead of healing at the same priority, so a cleric with both fights first and tends
+  after.
+- **Brewing** (`BrewStep`): at their station, a cleric turns one carried potion of a brew into
+  three more of it, in a session as long as a brewing stand's. The stand needs nothing put in
+  it: the carried bottle is the recipe. The brew furthest below four carried is made first.
+  Potions do not stack, so each bottle needs a pack slot, and a full pack waits.
+
+The last bottle of a brew is the **seed**. It is never thrown and never given away in
+conversation (the one exception to "anything goes" in `PersonChatDispatcher.takeFromSlots`),
+because a cleric who parts with it has lost the brew for good and would have to be handed
+another before making more. Above the seed, potions are theirs to give like anything else.
+
+The loadout is issued, not authored. Every cleric starts with a splash of regeneration and a
+splash of healing (`SignatureGear`). At bedtime, before the pack is shelved (their potions are
+kept, like a guard's weapons), a cleric lifts one bottle of every splash brew the village stores
+hold that they do not yet carry. So a player who leaves a splash of harming in a village chest
+has armed the cleric, and the swamp's witch circle is a cleric someone handed harm. The
+authored-per-station alternative, marking a church's station healer or battle-cleric, was
+considered and set aside for this.
+
 ## The builder builds, and between builds it makes the village walkable
 
 **Damage maintenance, 2026-09-09.** Between construction projects the builder repairs

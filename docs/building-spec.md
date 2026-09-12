@@ -545,6 +545,15 @@ library variant the village built, or whether a future datapack adds a third way
 | `requires_capability` | When the village's capability set is recomputed, on a building finishing or being lost | Static. Either the village has `LEARNING` or it does not. |
 | `requires_supply` | On the brain's slow tick, against real container contents | Dynamic. An inn with no ale grants nothing this tick and grants again when the brewery catches up. |
 
+**A station declares its grant.** A definition that adds a work station also carries the
+grant that post stands for: a cleric station comes with `HEALING`, a blacksmith station with
+`REPAIR`, and a building with both carries both (Aaron, 2026-09-12: "the planner knows what
+buildings will do what"). The table lives in `StationGrants`. The loader warns about every
+station whose grant is missing rather than rejecting the building, so a private datapack still
+loads and its author sees the gap in the log; a test holds the bundled catalog to zero
+warnings. Guard, builder and leader stations are exempt: the watchtower's guards grant
+`PROTECTION` while the centre's captain does not, and that is a planning choice.
+
 Capability resolution is a fixed point: grant everything unconditional, then re-evaluate
 `grants_if` until nothing new appears. Two buildings that each require the other's capability
 simply never grant, which is the correct and quiet failure.

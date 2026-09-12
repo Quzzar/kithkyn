@@ -18,6 +18,7 @@ import com.quzzar.kithkyn.Kithkyn;
 import com.quzzar.kithkyn.chat.PersonChatContext.AssembledChat;
 import com.quzzar.kithkyn.chat.PersonChatContext.Turn;
 import com.quzzar.kithkyn.configuration.KithkynConfig;
+import com.quzzar.kithkyn.entities.ClericPotions;
 import com.quzzar.kithkyn.entities.RealPerson;
 import com.quzzar.kithkyn.entities.UndertakingData;
 import com.quzzar.kithkyn.entities.UndertakingService;
@@ -836,6 +837,11 @@ public final class PersonChatDispatcher {
    * own tool or token included: a villager parting with what they work with is
    * their business, and by day the tool-tending pass draws it back
    * ({@link RealPerson#tendJobTool}, {@link RealPerson#tendSignatureGear}).
+   *
+   * <p>The one exception is the cleric's last potion of a brew. Potions are
+   * stock the cleric can only grow from a bottle they already hold
+   * ({@link ClericPotions}), so giving the last one away loses the brew for
+   * good; everything above that seed is theirs to give like anything else.
    */
   private static int takeFromSlots(RealPerson person, net.minecraft.world.item.Item item, int want) {
     int collected = 0;
@@ -845,7 +851,7 @@ public final class PersonChatDispatcher {
       }
       ItemStack worn = person.getItemBySlot(eq);
       if (!worn.isEmpty() && worn.getItem() == item) {
-        int take = Math.min(want - collected, worn.getCount());
+        int take = Math.min(want - collected, giveable(person, worn));
         worn.shrink(take);
         person.setItemSlot(eq, worn.isEmpty() ? ItemStack.EMPTY : worn);
         collected += take;
@@ -854,12 +860,17 @@ public final class PersonChatDispatcher {
     for (int i = 0; i < person.personMainInv.getContainerSize() && collected < want; i++) {
       ItemStack stack = person.personMainInv.getItem(i);
       if (!stack.isEmpty() && stack.getItem() == item) {
-        int take = Math.min(want - collected, stack.getCount());
+        int take = Math.min(want - collected, giveable(person, stack));
         person.personMainInv.removeItem(i, take);
         collected += take;
       }
     }
     return collected;
+  }
+
+  /** How much of a stack may leave: all of it, except a cleric's seed potion. */
+  private static int giveable(RealPerson person, ItemStack stack) {
+    return ClericPotions.isCleric(person) ? ClericPotions.giveable(person, stack) : stack.getCount();
   }
 
   /** How many of {@code item} the villager holds across every slot. */
