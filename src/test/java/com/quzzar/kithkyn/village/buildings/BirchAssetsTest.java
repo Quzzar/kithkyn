@@ -59,7 +59,7 @@ class BirchAssetsTest {
   }
 
   @Test
-  void everyDeclaredAmenityExistsAndAllDynamicBedsHaveOneRole() throws Exception {
+  void everyDeclaredAmenityExistsAndEveryPhysicalBedHasOneDynamicColorRole() throws Exception {
     int count = 0;
     int tallGrass = 0;
     Path dataRoot = data();
@@ -149,6 +149,23 @@ class BirchAssetsTest {
             assertEquals("east", rear.getCompound("Properties").getString("facing"));
           }
         }
+        Set<BlockPos> primary = Set.copyOf(info.getVillageIdentitySlots().primaryBlocks());
+        Set<BlockPos> secondary = Set.copyOf(info.getVillageIdentitySlots().secondaryBlocks());
+        for (var entry : states.entrySet()) {
+          CompoundTag state = entry.getValue();
+          if (!state.getString("Name").endsWith("_bed")
+              || !state.getCompound("Properties").getString("part").equals("head")) {
+            continue;
+          }
+          var facing = net.minecraft.core.Direction.byName(
+              state.getCompound("Properties").getString("facing"));
+          assertNotNull(facing, file + " bed has no facing at " + entry.getKey());
+          BlockPos foot = entry.getKey().relative(facing.getOpposite());
+          boolean usesPrimary = primary.contains(entry.getKey()) || primary.contains(foot);
+          boolean usesSecondary = secondary.contains(entry.getKey()) || secondary.contains(foot);
+          assertTrue(usesPrimary ^ usesSecondary,
+              file + " bed must use exactly one village color at " + entry.getKey());
+        }
         for (long packed : info.getBedLocations()) {
           CompoundTag state = states.get(BlockPos.of(packed));
           assertNotNull(state, file+" bed "+BlockPos.of(packed));
@@ -157,8 +174,12 @@ class BirchAssetsTest {
         }
         List<BlockPos> roles = new ArrayList<>(info.getVillageIdentitySlots().primaryBlocks());
         roles.addAll(info.getVillageIdentitySlots().secondaryBlocks());
-        assertEquals(info.getBedLocations().size(), roles.size(), file.toString());
         assertEquals(roles.size(), new HashSet<>(roles).size());
+        for (long packed : info.getBedLocations()) {
+          BlockPos bed = BlockPos.of(packed);
+          assertTrue(primary.contains(bed) ^ secondary.contains(bed),
+              file + " declared bed must use exactly one village color at " + bed);
+        }
         Set<Long> shared = new HashSet<>(info.getContainerLocations());
         for (long packed : info.getPersonalContainerLocations()) assertFalse(shared.contains(packed), file.toString());
         shared.addAll(info.getPersonalContainerLocations());
@@ -182,6 +203,8 @@ class BirchAssetsTest {
     assertEquals(Set.of(com.quzzar.kithkyn.village.Occupation.BAKER), Set.copyOf(bakery.getWorkLocations().values()));
     assertEquals(List.of(new BlockPos(14,1,16).asLong()), tavern.getBedLocations());
     assertEquals(Set.of(com.quzzar.kithkyn.village.Occupation.INNKEEPER), Set.copyOf(tavern.getWorkLocations().values()));
+    assertEquals(Set.of(new BlockPos(7,1,2), new BlockPos(10,1,2), new BlockPos(14,5,16)),
+        Set.copyOf(tavern.getVillageIdentitySlots().secondaryBlocks()));
     long ceilingBarrel = new BlockPos(13,4,16).asLong();
     assertEquals(List.of(ceilingBarrel), tavern.getPersonalContainerLocations());
     assertFalse(tavern.getContainerLocations().contains(ceilingBarrel));

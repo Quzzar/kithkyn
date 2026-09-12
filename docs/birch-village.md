@@ -36,7 +36,7 @@ Amenities come from the actual selected definition, not a global bed or chest co
 
 The bakery grants BREAD and employs the baker. The separate tavern grants WANDERERS and
 employs the innkeeper. Its back-room bed is the only assigned housing slot; the other three
-authored beds remain furnishings.
+authored beds remain furnishings and follow the village's secondary color.
 This integration does not add a new physical innkeeper food-service loop or new hospitality bonuses.
 
 ## Biome selection
@@ -76,6 +76,8 @@ Tower beds follow the same one/two rule. The hunter and butcher use secondary. S
 center, storehouse and mine banners become the village's saved flag. Decorative market
 banners are not identity slots. Neutral white in the exported source marks dynamic slots;
 both instant and incremental placement resolve the actual colors while placing the blocks.
+Every physical bed is an identity slot even when it is furnishing rather than an assignable
+housing slot, so no authored bed color survives into a completed village.
 
 Containers start empty. Personal chests are excluded from communal storage. The butcher's
 six initial animals are marked as village stock; the center's golem remains ordinary until
