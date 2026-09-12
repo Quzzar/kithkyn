@@ -46,7 +46,7 @@ class CoupleBedsDefinitionTest {
          "couple_beds":[[[0,1,0],[1,1,0]]],"worker_beds":[[0,1,0]],
          "work_stations":[{"pos":[3,1,1],"occupation":"FARMER"}]}
         """).validate());
-    assertEquals("worker_beds requires a workplace", parse("""
+    assertEquals("worker_beds requires a workplace or routed worksite", parse("""
         {"structure":"house_birch_forest_1","beds":[[0,1,0]],"worker_beds":[[0,1,0]]}
         """).validate());
   }

@@ -21,6 +21,7 @@ These catalogs are integrated, selectable, and verified as complete founding vil
 | Swamp | Swamp, Orchid Swamp, and compatible ordinary wetlands | Mossy ruins, oak-and-spruce wetland buildings, two campfires, candlelit timber walls, and the configured SC01.2 castle |
 | Mediterranean | Plains and Sunflower Plains | White stone and plaster town core with tile roofs, courts, orchards, gardens, and open agriculture |
 | Tundra | Snowy Plains, Ice Spikes, snowy beaches, frozen rivers, and compatible exposed frozen lowlands | Compact snowbound buildings, packed-ice accents, spruce details, enclosed cold-weather farming, and four founding snow golems |
+| Romanian | Dark Forest, forested highlands, and wooded valleys | Steep birch roofs, heavy dark-oak frames, enclosed yards, substantial woodland homes, and timber-and-deepslate walls |
 
 ## Locked directions
 
@@ -31,7 +32,6 @@ its production catalog and founding behavior are verified.
 | Village biome | Founding environments | Direction |
 | --- | --- | --- |
 | Rustic Woodland | Forest and compatible ordinary oak woodland biomes | Familiar timber woodland settlement with a restrained rustic character |
-| Romanian | Dark Forest, forested highlands, and wooded valleys | Heavy timber roofs, enclosed yards, and substantial woodland buildings |
 | Japanese | Cherry Grove, Flower Forest, and compatible Sakura biomes | Garden settlement shaped around flowering woodland and deliberate landscape details |
 | Taiga | Taiga, Old Growth Pine Taiga, Old Growth Spruce Taiga, and compatible cold forests | Cold forest settlement; its final visual language is deliberately deferred between the ornate Polish family and the grittier T&T Viking family |
 | Alpine | Meadow, Grove, Snowy Slopes, and compatible mountain valleys and peaks | Swiss-inspired mountain settlement with steep roofs and slope-conscious buildings |
@@ -40,7 +40,7 @@ its production catalog and founding behavior are verified.
 | Savanna Tent | Savanna, Savanna Plateau, Windswept Savanna, and compatible dry grasslands | African-inspired tent and grassland settlement with portable-looking structures and a coherent warm-climate material palette |
 | Mushroom | Mushroom Fields and compatible fungal biomes | Fantasy mushroom settlement drawn from the complete mushroom reference families |
 
-Jungle, ordinary Swamp, Mediterranean and Tundra are complete private production catalogs.
+Jungle, ordinary Swamp, Mediterranean, Tundra and Romanian are complete private production catalogs.
 Swamp remains separate from the mud-brick Floodplain catalog used by mangroves. Tundra starts
 from a four-bed centre with a naturally placed mine and storehouse and deliberately has no castle.
 
@@ -57,8 +57,8 @@ to Floodplain when site selection can classify them reliably.
 
 ## Next authoring shortlist
 
-Tundra is complete. Taiga remains intentionally parked until the ornate Polish and grittier
-Viking directions can be judged after more village catalogs are complete. Alpine, Romanian,
+Tundra and Romanian are complete. Taiga remains intentionally parked until the ornate Polish and
+grittier Viking directions can be judged after more village catalogs are complete. Alpine,
 Japanese, Savanna Tent, Polynesian Coast and Mushroom remain available as the next catalog pass.
 
 The three walk-through courts begin at **9913.5, 230, 986.5** in the live showcase world. The
@@ -91,14 +91,29 @@ The current review status is:
   **11107.5, 230, 1810.5** and also displays three clean castle donors, the Ice Cathedral palette
   study, and an editable T17.3 Tundra Keep conversion at **11338, 230, 1935**. Those remain general
   references: the production Tundra catalog has no castle.
-- **Romanian:** active Dark Forest selection begins at **12401.5, 230, 1004.5**. Rows R01 through
+- **Romanian:** the completed Dark Forest selection begins at **12401.5, 230, 1004.5**. Rows R01 through
   R05 contain the complete 22-structure Towns & Towers Romanian family: its centre, all homes,
   combined workplaces, farm and details. Rows R06 and R07 keep 13 supplemental dark-forest
   services visibly separate, including dark-oak tavern, well and tower options, a Tudor church,
-  Halloween civic buildings and the stone T17.3 keep study. This is a source-selection gallery,
-  not a second copy of the playable Birch catalog; the Romanian production palette, roles and
-  final captures remain to be chosen. Exact hashes and placements are recorded in
-  `tools/structure/romanian-full-profile-20260912.json`.
+  Halloween civic buildings and the stone T17.3 keep study. The first selection pass assigns the
+  R01.1 shell as both town center and church, seven housing forms, two storehouse forms, two
+  butcher forms, blacksmith, R04.3 bakery, fishery, hunting lodge, stoneworks, mine, farm and
+  R06.3 well. R06.1 and R06.2 now stand in the gallery as Romanian-palette tavern and watchtower
+  studies. Row R08 begins at **12401.5, 230, 1314.5** and holds three structurally verified market
+  tiers plus all five single-level wall modules as editable Romanian palette studies. The market
+  copies retain the repaired counters, supported one-block entrance carpets and fixed trade-stall
+  colors; the user's revised rearward barrels and one-block foundation extensions are captured
+  consistently across the three tiers and promoted as the Romanian market assets. The approved
+  stripped-dark-oak wall family begins at **12578.5, 230, 1314.5**. It keeps the same five modular
+  shapes and replaces the broad white-concrete body with vertical stripped dark oak. The brighter
+  white version remains beside it only as comparison provenance; it was rejected because it read
+  too brightly against the Dark Forest identity. The edited source copies are captured, including
+  the center banners, bakery interior, R04.4 fisher's birch-slab roof and both service conversions.
+  The final user-edited lumberjack is the separate R05.3 copy at **12490, 230, 1186**; the original
+  mine remains untouched. Its home, personal barrel, work barrel and planting site complete the
+  verified 24-definition production catalog. A castle is deliberately omitted. Exact source hashes,
+  selections and verification evidence are recorded in `tools/structure/romanian-catalog-20260912.json`
+  and `tools/structure/romanian-selection-20260912.json`.
 - **Mediterranean:** the production catalog is selected and verified
   ([mediterranean-village.md](mediterranean-village.md)): the M06.1 church is its centre, the
   M08.1 fort its castle, and the rest comes from annex rows M06 to M08 and the edited court

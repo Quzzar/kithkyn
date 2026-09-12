@@ -48,7 +48,7 @@ import net.neoforged.neoforge.event.tick.ServerTickEvent;
 /**
  * Shared private-catalog checks for the reviewed regional villages. Opt in with
  * the legacy Badlands flag or {@code -Dkithkyn.reviewedVillage.style=<style>}
- * for Desert, Floodplain, Jungle, Swamp, Mediterranean or Tundra; each catalog's authored numbers live in its
+ * for Desert, Floodplain, Jungle, Swamp, Mediterranean, Tundra or Romanian; each catalog's authored numbers live in its
  * {@link Catalog} record so the checks read facts rather than guess them.
  */
 @EventBusSubscriber(modid = Kithkyn.MODID)
@@ -106,10 +106,15 @@ public final class BadlandsVillageVerification {
         new String[][] {{id("market", 1), id("market", 2)}, {id("market", 2), id("market", 3)},
             {id("farm", 1), id("farm", 2)}},
         3, 4, 4, 1, 4, 4, 0, new BlockPos(8, 1, 7), new BlockPos(8, 2, 8), 0, Biomes.SNOWY_PLAINS);
+    case ROMANIAN -> new Catalog("[romanian-verify]", 24, 4, 8, new int[] {4, 0, 0},
+        Map.of(), List.of(), true,
+        new String[][] {{id("market", 1), id("market", 2)}, {id("market", 2), id("market", 3)}},
+        3, 4, 5, 1, 5, 0, 0, new BlockPos(12, 2, 27), new BlockPos(12, 2, 27), 1, Biomes.DARK_FOREST);
     case BIRCH_FOREST -> null;
   };
   /** Centre jobs beyond the founding four that a catalog's centre also opens at founding. */
   private static final Map<Occupation, Long> EXTRA_CENTER_JOBS = STYLE == VillageStyle.MEDITERRANEAN
+      || STYLE == VillageStyle.ROMANIAN
       ? Map.of(Occupation.CLERIC, 1L) : Map.of();
   private static final String PREFIX = CATALOG == null ? "[reviewed-village-verify]" : CATALOG.prefix();
   private static int ticks;
@@ -218,10 +223,13 @@ public final class BadlandsVillageVerification {
       var physicalBeds = blocks.stream().filter(block -> block.state().getBlock() instanceof BedBlock
           && block.state().getValue(BedBlock.PART) == net.minecraft.world.level.block.state.properties.BedPart.HEAD)
           .map(block -> block.pos().asLong()).collect(java.util.stream.Collectors.toSet());
-      check(physicalBeds.equals(new java.util.HashSet<>(info.getBedLocations())),
-          "Physical and assigned beds differ in " + info.getName());
+      check(physicalBeds.containsAll(info.getBedLocations()),
+          "Assigned bed is absent from the template in " + info.getName());
       var slots = info.getVillageIdentitySlots();
-      for (long bed : info.getBedLocations()) {
+      // A structure can retain an authored bed that is intentionally unavailable
+      // for housing, such as the Romanian tavern's iron-barred display cell. It
+      // must still be neutral in the asset and recolor with the village identity.
+      for (long bed : physicalBeds) {
         BlockPos position = BlockPos.of(bed);
         var state = states.get(position);
         check(state.is(Blocks.WHITE_BED), "Authored bed must be neutral in " + info.getName());
@@ -279,8 +287,9 @@ public final class BadlandsVillageVerification {
     }
     if (CATALOG.tavern()) {
       BuildingInfo tavern = info(id("tavern", 1));
-      check(tavern.getBedLocations().size() == 2 && tavern.getWorkerSingleBedCount() == 1,
-          "Tavern must keep one staff bed and one general bed");
+      int beds = STYLE == VillageStyle.ROMANIAN ? 3 : 2;
+      check(tavern.getBedLocations().size() == beds && tavern.getWorkerSingleBedCount() == 1,
+          "Tavern must keep one staff bed and its approved general beds");
     }
     Kithkyn.LOGGER.info("{} CATALOGUE PASS: {} actual templates and all {} authored housing choices", PREFIX,
         CATALOG.templates(), CATALOG.homes());
@@ -410,7 +419,8 @@ public final class BadlandsVillageVerification {
 
   private static void verifyReload(ServerLevel level, Village village) throws ReflectiveOperationException {
     List<ApprovedStructureAccess.Person> residents = new ArrayList<>();
-    for (var job : List.copyOf(village.getUnassignedJobs())) {
+    int staffedJobs = Math.min(CATALOG.foundingJobs(), CATALOG.foundingBeds());
+    for (var job : List.copyOf(village.getUnassignedJobs()).subList(0, staffedJobs)) {
       var person = new ApprovedStructureAccess.Person(level, village);
       person.setLifeStage(AgeStage.ADULT);
       person.setNoAi(true);
@@ -423,12 +433,13 @@ public final class BadlandsVillageVerification {
       residents.add(person);
     }
     ApprovedStructureAccess.reconcileBeds(village);
-    check(village.getJobAssignmentsView().size() == CATALOG.foundingJobs()
-        && village.getBedAssignmentsView().size() == CATALOG.foundingJobs()
-        && village.getUnassignedBeds().size() == CATALOG.foundingBeds() - CATALOG.foundingJobs(),
+    check(village.getJobAssignmentsView().size() == staffedJobs
+        && village.getBedAssignmentsView().size() == staffedJobs
+        && village.getUnassignedBeds().size() == CATALOG.foundingBeds() - staffedJobs,
         "Founding workers did not receive distinct beds");
     if (STYLE == VillageStyle.JUNGLE || STYLE == VillageStyle.SWAMP
-        || STYLE == VillageStyle.MEDITERRANEAN || STYLE == VillageStyle.TUNDRA) {
+        || STYLE == VillageStyle.MEDITERRANEAN || STYLE == VillageStyle.TUNDRA
+        || STYLE == VillageStyle.ROMANIAN) {
       if (STYLE != VillageStyle.MEDITERRANEAN) {
         verifyRoutedWorksite(village, residents, Occupation.MINER, "mine");
       }

@@ -91,6 +91,9 @@ in it, and update it in the same change that moves what it describes.
 - [tundra-village.md](tundra-village.md): the approved playable Tundra catalog: its four-bed
   snow-golem centre, naturally placed mine and storehouse, cold-weather farms, fixed-colour
   markets, packed-ice wall and deliberate absence of a castle.
+- [romanian-village.md](romanian-village.md): the approved playable Romanian Dark Forest catalog:
+  its combined center and church, founding mine and storehouse housing, enclosed livestock,
+  steep birch roofs, timber-and-deepslate wall and deliberate absence of a castle.
 - [appearance.md](appearance.md): why villagers use the player model and not the vanilla
   villager model, the wide/slim model split by gender, and the client-side runtime skin
   compositor that bakes a villager's look from inherited skin, hair, and eye structures,

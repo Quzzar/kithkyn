@@ -18,6 +18,8 @@ final class BuiltInWallSegmentCatalog implements WallSegmentCatalog {
   static final BuiltInWallSegmentCatalog SWAMP = new BuiltInWallSegmentCatalog(AuthoredWoodWallSegments.SWAMP);
   static final BuiltInWallSegmentCatalog MEDITERRANEAN =
       new BuiltInWallSegmentCatalog(AuthoredWoodWallSegments.MEDITERRANEAN, true);
+  static final BuiltInWallSegmentCatalog ROMANIAN =
+      new BuiltInWallSegmentCatalog(AuthoredWoodWallSegments.ROMANIAN);
   private final AuthoredWoodWallSegments authored;
   private final boolean hedged;
 

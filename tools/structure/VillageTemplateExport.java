@@ -111,6 +111,12 @@ public final class VillageTemplateExport {
         for (String key : List.of("Items", "LootTable", "LootTableSeed", "item", "RecipesUsed")) data.remove(key);
         if (data.contains("BurnTime")) data.putShort("BurnTime", (short)0);
         if (data.contains("CookTime")) data.putShort("CookTime", (short)0);
+        if (Set.of("minecraft:barrel", "minecraft:chest", "minecraft:trapped_chest").contains(name)
+            && !block.contains("nbt", Tag.TAG_COMPOUND)) {
+          CompoundTag container = new CompoundTag();
+          container.putString("id", name);
+          block.put("nbt", container);
+        }
       }
       CompoundTag air = new CompoundTag(); air.putString("Name", "minecraft:air");
       int airIndex = palette.size(); palette.add(air);
@@ -202,6 +208,12 @@ public final class VillageTemplateExport {
         }
         root.put("entities", entities);
       }
+      root.getList("entities", Tag.TAG_COMPOUND).removeIf(value -> {
+        CompoundTag entity = ((CompoundTag)value).getCompound("nbt");
+        String id = entity.getString("id");
+        return (id.equals("minecraft:item_frame") || id.equals("minecraft:glow_item_frame"))
+            && !entity.contains("Item", Tag.TAG_COMPOUND);
+      });
       for (Tag value : root.getList("entities", Tag.TAG_COMPOUND)) {
         CompoundTag entity = ((CompoundTag)value).getCompound("nbt");
         for (String key : List.of("UUID", "Leash", "AngryAt", "NeoForgeData")) entity.remove(key);

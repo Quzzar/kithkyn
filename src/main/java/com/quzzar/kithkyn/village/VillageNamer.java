@@ -177,6 +177,13 @@ public final class VillageNamer {
               + " Clear, sturdy invented names with a wintry old-world sound.",
           List.of("Frostmere", "Skelwick", "Eirhavn", "Winterholt"),
           List.of("Eir", "Skel", "Frost", "Winter", "Rime", "Hail", "Sven", "Bryn"));
+      case ROMANIAN -> new NamingProfile(
+          "A sheltered Dark Forest settlement of steep pale roofs, dark-oak frames, enclosed yards,"
+              + " substantial woodland houses, torchlit timber walls and a tall church around its bell."
+              + " Warm, lyrical invented names with an eastern woodland sound.",
+          List.of("Codrenia", "Valea Lunii", "Branovia", "Miercana"),
+          List.of("Cod", "Vale", "Bran", "Mier", "Lun", "Sor", "Dra", "Veli"),
+          List.of("enia", "ovia", "ana", "esti", "ora", "eni", "ava", "ina"));
     };
   }
 

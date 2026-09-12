@@ -386,7 +386,10 @@ public final class PersonPathNavigation extends GroundPathNavigation {
     BlockState rungState = this.level.getBlockState(rungPos);
     boolean ladder = rungState.getBlock() instanceof LadderBlock;
     boolean descendingLadder = descending && ladder;
-    next = ladderApproach(next, rungState);
+    // Center over the shaft before descending. The outward offset used to
+    // enter a ladder can aim a wide body into a wall in a one-block shaft;
+    // the centered body has clearance on every side and can slide normally.
+    if (!descending) next = ladderApproach(next, rungState);
     double dx = next.x - this.mob.getX();
     double dz = next.z - this.mob.getZ();
     // Merely sharing the rung's block is not enough: the trailing half of the
@@ -396,8 +399,20 @@ public final class PersonPathNavigation extends GroundPathNavigation {
     double alignment = descending ? Math.min(MAX_LADDER_OFFSET, clearance) : 0.4D;
     if (Math.abs(dx) > alignment || Math.abs(dz) > alignment) {
       if (ladder) {
-        this.mob.getMoveControl().setWantedPosition(next.x, descending ? this.mob.getY() : next.y,
-            next.z, this.speedModifier);
+        if (descending) {
+          // Turning a walking body in a one-block shaft can briefly steer it
+          // into a side wall; vanilla interprets that collision as a request
+          // to climb upward. Translate directly toward the rung centre while
+          // holding height, then begin the descent once the full body clears.
+          this.mob.getMoveControl().setWantedPosition(
+              this.mob.getX(), this.mob.getY(), this.mob.getZ(), 0.0D);
+          this.mob.horizontalCollision = false;
+          this.mob.setDeltaMovement(
+              Mth.clamp(dx * 0.25D, -0.04D, 0.04D), 0.0D,
+              Mth.clamp(dz * 0.25D, -0.04D, 0.04D));
+        } else {
+          this.mob.getMoveControl().setWantedPosition(next.x, next.y, next.z, this.speedModifier);
+        }
       }
       return; // leaving the ladder sideways is the move control's ordinary walk
     }
@@ -415,7 +430,11 @@ public final class PersonPathNavigation extends GroundPathNavigation {
     this.mob.getMoveControl().setWantedPosition(this.mob.getX(), this.mob.getY(), this.mob.getZ(), 0.0D);
     if (descendingLadder) {
       Vec3 motion = this.mob.getDeltaMovement();
-      this.mob.setDeltaMovement(0.0D, motion.y, 0.0D);
+      // Horizontal contact with a rung makes vanilla inject upward climbing
+      // velocity even while the route points down. Explicitly slide down so a
+      // resident can leave an upper room instead of hanging on its top rung.
+      this.mob.horizontalCollision = false;
+      this.mob.setDeltaMovement(0.0D, Math.min(motion.y, -0.15D), 0.0D);
     }
     if (onLadder && next.y > this.mob.getY() + 0.05D) {
       // Climbing straight up has no stride, so only the leftover velocity of the
@@ -425,7 +444,7 @@ public final class PersonPathNavigation extends GroundPathNavigation {
       this.mob.setDeltaMovement(Mth.clamp((next.x - this.mob.getX()) * 0.2D, -0.05D, 0.05D), CLIMB_SPEED,
           Mth.clamp((next.z - this.mob.getZ()) * 0.2D, -0.05D, 0.05D));
     }
-    // Downward needs nothing: a body on a ladder slides at the ladder's own rate.
+    // Downward velocity is supplied above because vanilla's wall contact otherwise wins.
   }
 
   private static boolean isClimbable(BlockState state) {
@@ -481,6 +500,9 @@ public final class PersonPathNavigation extends GroundPathNavigation {
     // descent still requires the body to pass over the rung before advancing.
     var facing = state.getValue(LadderBlock.FACING);
     double offset = Math.max(0.125D, this.mob.getBbWidth() / 2.0D - 0.2625D);
+    // The facing points away from the supporting wall; the ladder's thin
+    // collision plate lies on the opposite side of the cell. Keep the body's
+    // centre on the open side of that plate.
     return target.add(facing.getStepX() * offset, 0, facing.getStepZ() * offset);
   }
 
@@ -597,11 +619,11 @@ public final class PersonPathNavigation extends GroundPathNavigation {
       if (type == PathType.FENCE && state.getBlock() instanceof FenceGateBlock) {
         return PathType.DOOR_WOOD_CLOSED;
       }
+      if (isLadderTransition(new BlockPos(x, y, z))) {
+        return PathType.WALKABLE;
+      }
       if (type == PathType.OPEN && isClimbable(state)) {
         return PathType.WALKABLE; // a rung is somewhere the feet can be
-      }
-      if (type == PathType.OPEN && isLadderTransition(new BlockPos(x, y, z))) {
-        return PathType.WALKABLE;
       }
       return type;
     }
@@ -692,6 +714,17 @@ public final class PersonPathNavigation extends GroundPathNavigation {
             outputArray[count++] = rung;
           }
         }
+        BlockPos transitionPos = nodePos.above();
+        if (isLadderTransition(transitionPos)) {
+          Node transition = this.getNode(transitionPos.getX(), transitionPos.getY(), transitionPos.getZ());
+          PathType type = getCachedPathType(transition.x, transition.y, transition.z);
+          float malus = this.mob.getPathfindingMalus(type);
+          if (malus >= 0.0F) {
+            transition.type = type;
+            transition.costMalus = Math.max(transition.costMalus, malus);
+            if (this.isNeighborValid(transition, node)) outputArray[count++] = transition;
+          }
+        }
         return count;
       }
       return count;
@@ -699,8 +732,9 @@ public final class PersonPathNavigation extends GroundPathNavigation {
 
     /** The open cell immediately above a ladder's top rung, where a climber crosses onto its landing. */
     private boolean isLadderTransition(BlockPos pos) {
-      return this.currentContext.getBlockState(pos).getCollisionShape(
-          this.currentContext.level(), pos).isEmpty()
+      BlockState state = this.currentContext.getBlockState(pos);
+      return (state.getCollisionShape(this.currentContext.level(), pos).isEmpty()
+          || isOpenPanel(state))
           && this.currentContext.getBlockState(pos.below()).getBlock() instanceof LadderBlock;
     }
 
