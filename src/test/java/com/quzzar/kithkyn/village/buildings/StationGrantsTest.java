@@ -49,9 +49,16 @@ class StationGrantsTest {
         + "{\"pos\":[1,1,1],\"occupation\":\"QUARTERMASTER\",\"worksite_category\":\"storehouse\"},"
         + "{\"pos\":[2,1,1],\"occupation\":\"MINER\",\"worksite_category\":\"mine\"}]}");
     assertTrue(StationGrants.missing(center).isEmpty());
-    BuildingInfo storehouse = parse("{\"structure\":\"storehouse\",\"work_stations\":["
-        + "{\"pos\":[1,1,1],\"occupation\":\"QUARTERMASTER\"}]}");
-    assertEquals(List.of("QUARTERMASTER station needs the STORAGE grant"), StationGrants.missing(storehouse));
+    BuildingInfo mine = parse("{\"structure\":\"mine\",\"work_stations\":["
+        + "{\"pos\":[1,1,1],\"occupation\":\"MINER\"}]}");
+    assertEquals(List.of("MINER station needs the ORES grant"), StationGrants.missing(mine));
+  }
+
+  @Test
+  void aQuartermasterPostAtACentreWithNoShelvesNeedsNoStorageGrant() {
+    BuildingInfo desertCentre = parse("{\"structure\":\"camp\",\"work_stations\":["
+        + "{\"pos\":[8,1,3],\"occupation\":\"QUARTERMASTER\"},{\"pos\":[2,1,1],\"occupation\":\"BUILDER\"}]}");
+    assertTrue(StationGrants.missing(desertCentre).isEmpty());
   }
 
   @Test

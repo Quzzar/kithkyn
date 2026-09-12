@@ -553,8 +553,10 @@ station whose grant is missing rather than rejecting the building, so a private 
 loads and its author sees the gap in the log; a test holds the bundled catalog to zero
 warnings. Guard, builder and leader stations are exempt: the watchtower's guards grant
 `PROTECTION` while the centre's captain does not, and that is a planning choice. So is a
-station with a `worksite_category`: the centre's quartermaster and miner posts work at the
-storehouse and the mine, and those definitions carry `STORAGE` and `ORES`.
+station with a `worksite_category`: the centre's miner post works at the mine, and the mine
+carries `ORES`. The quartermaster is exempt outright: `STORAGE` means shelves, the storehouse
+that holds them grants it, and the desert and floodplain centres keep their quartermaster at a
+centre with no chest by design.
 
 Capability resolution is a fixed point: grant everything unconditional, then re-evaluate
 `grants_if` until nothing new appears. Two buildings that each require the other's capability
