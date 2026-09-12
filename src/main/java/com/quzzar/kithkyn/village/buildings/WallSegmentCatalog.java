@@ -30,6 +30,7 @@ public interface WallSegmentCatalog {
       case BIRCH_FOREST -> BuiltInWallSegmentCatalog.BIRCH_FOREST;
       case DESERT, BADLANDS, FLOODPLAIN, JUNGLE -> BuiltInWallSegmentCatalog.ARID;
       case SWAMP -> BuiltInWallSegmentCatalog.SWAMP;
+      case MEDITERRANEAN -> BuiltInWallSegmentCatalog.MEDITERRANEAN;
     };
   }
 }

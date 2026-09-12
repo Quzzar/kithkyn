@@ -164,6 +164,13 @@ public final class VillageNamer {
               + " Earthy, hushed invented names with a marshland sound.",
           List.of("Mirefen", "Willowmere", "Duskmarsh", "Mosswick"),
           List.of("Mire", "Willow", "Dusk", "Moss", "Brack", "Sedge", "Gloam", "Reed"));
+      case MEDITERRANEAN -> new NamingProfile(
+          "A sunlit hill town of white quartz and plaster, terracotta tile roofs, courtyards,"
+              + " olive and orchard terraces, striped market awnings and hedged stone walls."
+              + " Warm, open invented names with a southern coastal sound.",
+          List.of("Solvara", "Castellina", "Marisol", "Terravento"),
+          List.of("Sol", "Castel", "Mari", "Terra", "Val", "Bel", "Alva", "Piet"),
+          List.of("vara", "lina", "sol", "vento", "mare", "eta", "ora", "ino"));
     };
   }
 

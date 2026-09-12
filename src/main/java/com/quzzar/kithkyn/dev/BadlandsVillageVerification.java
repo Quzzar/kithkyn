@@ -91,8 +91,18 @@ public final class BadlandsVillageVerification {
         new String[][] {{id("market", 1), id("market", 2)}, {id("market", 2), id("market", 3)},
             {id("farm", 1), id("farm", 2)}},
         7, 4, 4, 1, 4, 0, 0, new BlockPos(12, 4, 13), new BlockPos(14, 6, 11), 2, Biomes.SWAMP);
+    // The Mediterranean centre is the church: its founding jobs add a cleric to the
+    // usual quartermaster, builder, captain and miner, and its four founding homes are
+    // three one-bed houses and the two-bed house.
+    case MEDITERRANEAN -> new Catalog("[mediterranean-verify]", 24, 6, 10, new int[] {6, 0, 0},
+        Map.of("house_mediterranean_1__couple_room", 1), List.of(), false,
+        new String[][] {{id("market", 1), id("market", 2)}, {id("market", 2), id("market", 3)}},
+        7, 5, 5, 1, 5, 0, 0, new BlockPos(12, 1, 1), new BlockPos(12, 3, 2), 1, Biomes.PLAINS);
     case BIRCH_FOREST -> null;
   };
+  /** Centre jobs beyond the founding four that a catalog's centre also opens at founding. */
+  private static final Map<Occupation, Long> EXTRA_CENTER_JOBS = STYLE == VillageStyle.MEDITERRANEAN
+      ? Map.of(Occupation.CLERIC, 1L) : Map.of();
   private static final String PREFIX = CATALOG == null ? "[reviewed-village-verify]" : CATALOG.prefix();
   private static int ticks;
   private static int upgrades;
@@ -169,7 +179,13 @@ public final class BadlandsVillageVerification {
       check(VillageStyle.fromBiome(registry.getHolderOrThrow(biome), 0L, BlockPos.ZERO, everything)
           == VillageStyle.JUNGLE, "Jungle coverage missing " + biome.location());
     }
-    Kithkyn.LOGGER.info("{} BIOMES PASS: Pueblo, Desert, Birch, Floodplain, Swamp and all three Jungle biomes", PREFIX);
+    for (var biome : List.of(Biomes.PLAINS, Biomes.SUNFLOWER_PLAINS)) {
+      check(VillageStyle.fromBiome(registry.getHolderOrThrow(biome), 0L, BlockPos.ZERO, everything)
+          == VillageStyle.MEDITERRANEAN, "Mediterranean coverage missing " + biome.location());
+    }
+    check(VillageStyle.fromBiome(registry.getHolderOrThrow(Biomes.SNOWY_PLAINS), 0L, BlockPos.ZERO, everything)
+        != VillageStyle.MEDITERRANEAN, "A snowy plain is not Mediterranean country");
+    Kithkyn.LOGGER.info("{} BIOMES PASS: Pueblo, Desert, Birch, Floodplain, Swamp, both Plains and all three Jungle biomes", PREFIX);
   }
 
   private static void verifyCatalogue(ServerLevel level) {
@@ -318,8 +334,11 @@ public final class BadlandsVillageVerification {
     village.getJobAssignmentsView().values().forEach(job -> jobs.add(job.getOccupation()));
     Map<Occupation, Long> counts = jobs.stream().collect(java.util.stream.Collectors.groupingBy(
         occupation -> occupation, () -> new EnumMap<>(Occupation.class), java.util.stream.Collectors.counting()));
-    check(jobs.size() == CATALOG.foundingJobs() && counts.equals(Map.of(Occupation.GUARD, (long) CATALOG.guards(),
-        Occupation.BUILDER, 1L, Occupation.QUARTERMASTER, 1L, Occupation.MINER, 1L)),
+    Map<Occupation, Long> expectedJobs = new EnumMap<>(Occupation.class);
+    expectedJobs.putAll(Map.of(Occupation.GUARD, (long) CATALOG.guards(),
+        Occupation.BUILDER, 1L, Occupation.QUARTERMASTER, 1L, Occupation.MINER, 1L));
+    expectedJobs.putAll(EXTRA_CENTER_JOBS);
+    check(jobs.size() == CATALOG.foundingJobs() && counts.equals(expectedJobs),
         "Wrong starting job positions " + counts);
     check(center.getInfo().getGuardRole(2) == GuardRole.CAPTAIN, "Lost center captain duty");
     if (STYLE == VillageStyle.BADLANDS) {
@@ -390,7 +409,7 @@ public final class BadlandsVillageVerification {
         && village.getBedAssignmentsView().size() == CATALOG.foundingJobs()
         && village.getUnassignedBeds().size() == CATALOG.foundingBeds() - CATALOG.foundingJobs(),
         "Founding workers did not receive distinct beds");
-    if (STYLE == VillageStyle.JUNGLE || STYLE == VillageStyle.SWAMP) {
+    if (STYLE == VillageStyle.JUNGLE || STYLE == VillageStyle.SWAMP || STYLE == VillageStyle.MEDITERRANEAN) {
       verifyRoutedWorksite(village, residents, Occupation.MINER, "mine");
       verifyRoutedWorksite(village, residents, Occupation.QUARTERMASTER, "storehouse");
       Building mine = village.getBuildings().stream()

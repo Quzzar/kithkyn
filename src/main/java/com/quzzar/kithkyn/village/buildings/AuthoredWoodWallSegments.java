@@ -35,6 +35,7 @@ final class AuthoredWoodWallSegments {
 
   static final AuthoredWoodWallSegments ARID = loadBundled("wood", true);
   static final AuthoredWoodWallSegments SWAMP = loadBundled("swamp");
+  static final AuthoredWoodWallSegments MEDITERRANEAN = loadBundled("mediterranean");
 
   private static final String RESOURCE_ROOT =
       "data/kithkyn/structure/wall/";
@@ -119,7 +120,10 @@ final class AuthoredWoodWallSegments {
           template.relativeTop(ordinal)
               - (WallTier.WOOD.height() - 1 + LINEAR_DETAIL_HEADROOM));
       int y = base + cell.y() - template.baseY(ordinal) - topShift;
-      put(blocks, new BlockPos(route.getX(), y, route.getZ()),
+      // The wall line itself follows the route column; a cell captured beside
+      // the line (a face-mounted torch) keeps its side of the wall.
+      Vec aside = transform.apply(0, cell.z() - template.lineZ(ordinal));
+      put(blocks, new BlockPos(route.getX() + aside.x(), y, route.getZ() + aside.z()),
           transform.piece(cell.piece()));
       if (isPost(cell.piece())) {
         postBottoms.merge(ringIndex, y, Math::min);
@@ -185,6 +189,7 @@ final class AuthoredWoodWallSegments {
     }
     List<PlacedCell> placedCells = new ArrayList<>(template.cells().size());
     Map<Long, PlacedCell> postBottoms = new LinkedHashMap<>();
+    Map<Long, PlacedCell> leafBottoms = new LinkedHashMap<>();
     for (Cell cell : template.cells()) {
       if (isInwardRoofLantern(kind, cell, template.structuralMinZ())) {
         continue;
@@ -204,6 +209,14 @@ final class AuthoredWoodWallSegments {
         long column = BlockPos.asLong(position.getX(), 0, position.getZ());
         postBottoms.put(column, new PlacedCell(position, piece));
       }
+      if (WallBlockPlan.isFoliage(piece)) {
+        leafBottoms.merge(column(position), new PlacedCell(position, piece),
+            (left, right) -> left.position().getY() <= right.position().getY() ? left : right);
+      }
+    }
+    // A hedge at a feature's foot reaches its own ground on the downhill side.
+    for (PlacedCell bottom : leafBottoms.values()) {
+      put(blocks, bottom.position(), bottom.piece(), WallCellRole.FOUNDATION);
     }
     for (Map.Entry<Long, PlacedCell> entry : postBottoms.entrySet()) {
       int x = BlockPos.getX(entry.getKey());
@@ -406,12 +419,50 @@ final class AuthoredWoodWallSegments {
         topY[index] = 0;
       }
     }
-    // Face-mounted flags do not enlarge rigid clearance or displace nearby wall sections.
-    List<Cell> structure = cells.stream().filter(cell -> !isBanner(cell.piece())).toList();
+    // Face-mounted flags and foliage do not enlarge rigid clearance or displace nearby wall sections.
+    List<Cell> structure = cells.stream()
+        .filter(cell -> !isBanner(cell.piece()) && !WallBlockPlan.isFoliage(cell.piece())).toList();
     int minZ = structure.stream().mapToInt(Cell::z).min().orElse(0);
     int maxZ = structure.stream().mapToInt(Cell::z).max().orElse(size.getInt(2) - 1);
     return new Template(List.copyOf(cells), baseY, topY,
-        size.getInt(0), size.getInt(1), size.getInt(2), minZ, maxZ);
+        size.getInt(0), size.getInt(1), size.getInt(2), minZ, maxZ, lineZ(cells, routeLength));
+  }
+
+  /**
+   * Where the wall itself runs through each route ordinal: the z of its solid
+   * cells, so a captured attachment beside the wall knows which face it hangs
+   * on. Every existing family is one cell deep or sits on the diagonal, so this
+   * is the identity for them.
+   */
+  private static int[] lineZ(List<Cell> cells, int routeLength) {
+    int[] line = new int[routeLength];
+    java.util.Arrays.fill(line, Integer.MIN_VALUE);
+    for (Cell cell : cells) {
+      if (cell.x() < 0 || cell.x() >= routeLength || isAttachment(cell.piece())) {
+        continue;
+      }
+      line[cell.x()] = line[cell.x()] == Integer.MIN_VALUE ? cell.z() : Math.min(line[cell.x()], cell.z());
+    }
+    int fallback = 0;
+    for (int index = 0; index < routeLength; index++) {
+      if (line[index] != Integer.MIN_VALUE) {
+        fallback = line[index];
+        break;
+      }
+    }
+    for (int index = 0; index < routeLength; index++) {
+      if (line[index] == Integer.MIN_VALUE) {
+        line[index] = fallback;
+      } else {
+        fallback = line[index];
+      }
+    }
+    return line;
+  }
+
+  /** Cells that hang on the wall rather than forming it. */
+  private static boolean isAttachment(WallBlockPlan.Piece piece) {
+    return isBanner(piece) || WallBlockPlan.isFoliage(piece) || constructionPriority(piece) > 0;
   }
 
   private static int supportPriority(WallBlockPlan.Piece piece) {
@@ -429,7 +480,8 @@ final class AuthoredWoodWallSegments {
           LADDER_NORTH, LADDER_EAST, LADDER_SOUTH, LADDER_WEST,
           LANTERN, LANTERN_HANGING, TORCH, TORCH_NORTH, TORCH_EAST, TORCH_SOUTH, TORCH_WEST,
           BANNER_NORTH, BANNER_EAST, BANNER_SOUTH, BANNER_WEST,
-          CAMPFIRE_NORTH, CAMPFIRE_EAST, CAMPFIRE_SOUTH, CAMPFIRE_WEST -> 1;
+          CAMPFIRE_NORTH, CAMPFIRE_EAST, CAMPFIRE_SOUTH, CAMPFIRE_WEST,
+          LEAVES, LEAVES_DARK -> 1;
       default -> 0;
     };
   }
@@ -474,6 +526,12 @@ final class AuthoredWoodWallSegments {
       case "minecraft:candle" -> WallBlockPlan.Piece.LANTERN;
       case "minecraft:campfire" -> WallBlockPlan.campfirePiece(
           horizontal(properties.getString("facing")));
+      // Authored coping stairs (the Mediterranean parapet) resolve through the palette's stair.
+      case "minecraft:oak_stairs" -> "top".equals(properties.getString("half"))
+          ? null
+          : WallBlockPlan.step(horizontal(properties.getString("facing")));
+      case "minecraft:oak_leaves" -> WallBlockPlan.Piece.LEAVES;
+      case "minecraft:dark_oak_leaves" -> WallBlockPlan.Piece.LEAVES_DARK;
       default -> null;
     };
   }
@@ -558,9 +616,13 @@ final class AuthoredWoodWallSegments {
   }
 
   private record Template(List<Cell> cells, int[] baseY, int[] topY,
-      int sizeX, int sizeY, int sizeZ, int structuralMinZ, int structuralMaxZ) {
+      int sizeX, int sizeY, int sizeZ, int structuralMinZ, int structuralMaxZ, int[] lineZ) {
     int routeLength() {
       return this.baseY.length;
+    }
+
+    int lineZ(int ordinal) {
+      return this.lineZ[ordinal];
     }
 
     int baseY(int ordinal) {
@@ -634,6 +696,8 @@ final class AuthoredWoodWallSegments {
             WallBlockPlan.torchPiece(direction(apply(directionVector(piece))));
         case BANNER_NORTH, BANNER_EAST, BANNER_SOUTH, BANNER_WEST ->
             WallBlockPlan.bannerPiece(direction(apply(directionVector(piece))));
+        case STEP_NORTH, STEP_EAST, STEP_SOUTH, STEP_WEST ->
+            WallBlockPlan.step(direction(apply(directionVector(piece))));
         default -> piece;
       };
     }
@@ -660,10 +724,10 @@ final class AuthoredWoodWallSegments {
 
     private static Vec directionVector(WallBlockPlan.Piece piece) {
       return switch (piece) {
-        case TRAPDOOR_NORTH, LADDER_NORTH, CAMPFIRE_NORTH, TORCH_NORTH, BANNER_NORTH -> new Vec(0, -1);
-        case TRAPDOOR_EAST, LADDER_EAST, CAMPFIRE_EAST, TORCH_EAST, BANNER_EAST -> new Vec(1, 0);
-        case TRAPDOOR_SOUTH, LADDER_SOUTH, CAMPFIRE_SOUTH, TORCH_SOUTH, BANNER_SOUTH -> new Vec(0, 1);
-        case TRAPDOOR_WEST, LADDER_WEST, CAMPFIRE_WEST, TORCH_WEST, BANNER_WEST -> new Vec(-1, 0);
+        case TRAPDOOR_NORTH, LADDER_NORTH, CAMPFIRE_NORTH, TORCH_NORTH, BANNER_NORTH, STEP_NORTH -> new Vec(0, -1);
+        case TRAPDOOR_EAST, LADDER_EAST, CAMPFIRE_EAST, TORCH_EAST, BANNER_EAST, STEP_EAST -> new Vec(1, 0);
+        case TRAPDOOR_SOUTH, LADDER_SOUTH, CAMPFIRE_SOUTH, TORCH_SOUTH, BANNER_SOUTH, STEP_SOUTH -> new Vec(0, 1);
+        case TRAPDOOR_WEST, LADDER_WEST, CAMPFIRE_WEST, TORCH_WEST, BANNER_WEST, STEP_WEST -> new Vec(-1, 0);
         default -> throw new IllegalArgumentException("Piece has no horizontal direction: " + piece);
       };
     }

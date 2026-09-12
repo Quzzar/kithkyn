@@ -237,7 +237,11 @@ public final class WallRaiser {
     if (block.isBanner() && level instanceof ServerLevel serverLevel
         && PlacedBlockStore.get(serverLevel).isPlayerPlaced(pos)) return;
     BlockState state = desiredState(block, tier, style, identity);
-    if (block.piece() == WallBlockPlan.Piece.POST
+    if (block.isFoliage()) {
+      if (block.role() == WallCellRole.FOUNDATION) {
+        extendFoliageToGround(level, pos, state);
+      }
+    } else if (block.piece() == WallBlockPlan.Piece.POST
         || block.piece() == WallBlockPlan.Piece.GATE_FRAME_POST
         || block.role() == WallCellRole.FOUNDATION) {
       extendFoundationToGround(level, pos, state);
@@ -268,6 +272,24 @@ public final class WallRaiser {
       if (!existing.getCollisionShape(level, support).isEmpty()
           && !isNaturalClearable(level, support, existing)
           && !(support.getY() == surface - 1 && embedSurface)) {
+        continue;
+      }
+      level.setBlock(support, state, 3);
+      markVillagePlaced(level, support);
+    }
+  }
+
+  /**
+   * A hedge foot fills the open air below it down to the ground and nothing
+   * more: no soil is embedded and no existing block, natural brush aside, is
+   * replaced by leaves.
+   */
+  private static void extendFoliageToGround(Level level, BlockPos foot, BlockState state) {
+    int surface = surfaceY(level, foot.getX(), foot.getZ());
+    for (BlockPos support : foundationPositions(foot, surface)) {
+      BlockState existing = level.getBlockState(support);
+      if (!existing.getCollisionShape(level, support).isEmpty()
+          && !isNaturalClearable(level, support, existing)) {
         continue;
       }
       level.setBlock(support, state, 3);
