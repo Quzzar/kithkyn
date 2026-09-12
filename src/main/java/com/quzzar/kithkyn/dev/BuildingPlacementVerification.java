@@ -73,6 +73,7 @@ public final class BuildingPlacementVerification {
   private static int fixtureIndex;
   private static int finishedAt = -1;
   private static boolean restarting;
+  private static boolean restartChecked;
 
   private record Fixture(Building building, List<UUID> entities, VillageIdentity identity) {
     private static final Codec<Fixture> CODEC = RecordCodecBuilder.create(instance -> instance.group(
@@ -126,7 +127,16 @@ public final class BuildingPlacementVerification {
         }
       }
       if (restarting) {
-        if (ticks == 200) {
+        if (ticks >= 200 && !restartChecked) {
+          // Forced fixture chunks come back with the world, but their entity sections load
+          // asynchronously, like the fresh chunks the placement pass waits for. Counting at a
+          // fixed tick reported whichever inhabitant was checked first as lost.
+          if (!fixtures.stream().allMatch(fixture -> entitiesReady(level, fixture.building()))) {
+            if (++readinessWait > 2400) throw new AssertionError("Restarted fixture entity chunks never became ready");
+            if (readinessWait == 1) Kithkyn.LOGGER.info("[building-placement-verify] Waiting for restarted entity chunks before counting inhabitants");
+            return;
+          }
+          restartChecked = true;
           verify(level);
           Set<UUID> before = ApprovedStructureAccess.entityIds(level);
           for (Fixture fixture : fixtures) {

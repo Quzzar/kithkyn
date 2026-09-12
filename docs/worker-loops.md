@@ -342,6 +342,57 @@ sleep, a missing or doused fire, and an existing regeneration effect all prevent
 starting. Each person's one-minute cooldown is persisted on the entity, so changing jobs or
 reloading cannot reset it.
 
+### Seeking the cleric
+
+Built 2026-09-12. A badly hurt villager with a cleric in reach goes to the cleric instead of
+the fire (Aaron: if there is a cleric nearby, they are a better source of healing than eating
+or the campfire). `SeekClericGoal` finds the nearest awake cleric of the villager's own village
+within forty-eight blocks, walks to within five, and stands there; the cleric's own round sees a
+hurt neighbour inside ten blocks and throws. It shares fetching food's priority and is
+registered ahead of it, so a villager goes to the cleric when one is near and fetches food when
+none is. Eating is not displaced: it holds no movement flag, so a villager with a meal eats on
+the way and while they wait. The visit ends when the patient is back over the line or already
+regenerating, when the cleric sleeps or leaves, at night, or after a minute beside a cleric who
+has not thrown, so a cleric out of potions cannot pin a patient for the day.
+
+## The cleric's potions are stock
+
+Decided 2026-09-12. A cleric's potions are real items, not a spell (`ClericPotions`). Every
+throw consumes one splash potion from the cleric's hands or pack, and what the cleric carries
+decides what they can do:
+
+- **Healing** (`HealStep`): a hurt villager or player within ten blocks gets a splash of
+  healing when nearly dead and regeneration otherwise, whichever the cleric carries, and
+  nothing when they carry neither to spare.
+- **Harm** (`ThrowPotionAttackGoal`): a cleric carrying a harmful splash potion (harming,
+  poison, weakness, slowness: every effect of it hurts) acquires hostile mobs as targets and
+  throws it at them. A cleric carrying only healing never acquires a target. Two rules are
+  absolute: harm is never thrown while an ally stands inside the burst around the target, and
+  never through a friend in the way; the cleric closes in and waits for a clear throw instead.
+  Harm sits ahead of healing at the same priority, so a cleric with both fights first and tends
+  after.
+- **Brewing** (`BrewStep`): at their station, a cleric turns one carried potion of a brew into
+  three more of it, in a session as long as a brewing stand's. The stand needs nothing put in
+  it: the carried bottle is the recipe. The brew furthest below four carried is made first.
+  Potions do not stack, so each bottle needs a pack slot, and a full pack waits.
+
+The last bottle of a brew is the **seed**. It is never thrown and never given away in
+conversation, because a cleric who parts with it has lost the brew for good and would have to
+be handed another before making more. The clean half of that rule is in the chat briefing: a
+cleric is told the bottles they can spare of each brew, "you have this many minus one", so a
+model that gives only what it was told it has never offers the seed, and a separate line names
+the brews held in reserve and why, so the cleric also knows what they can brew. The take itself
+(`PersonChatDispatcher.takeFromSlots`) caps at the spare as a backstop, the one exception to
+"anything goes". Above the seed, potions are theirs to give like anything else.
+
+The loadout is issued, not authored. Every cleric starts with a splash of regeneration and a
+splash of healing (`SignatureGear`). At bedtime, before the pack is shelved (their potions are
+kept, like a guard's weapons), a cleric lifts one bottle of every splash brew the village stores
+hold that they do not yet carry. So a player who leaves a splash of harming in a village chest
+has armed the cleric, and the swamp's witch circle is a cleric someone handed harm. The
+authored-per-station alternative, marking a church's station healer or battle-cleric, was
+considered and set aside for this.
+
 ## The builder builds, and between builds it makes the village walkable
 
 **Damage maintenance, 2026-09-09.** Between construction projects the builder repairs
@@ -906,6 +957,29 @@ two-in-five roll every five seconds, against the guard's twelve blocks and one i
 seconds; the guard's roll was one in twenty until 2026-09-01, which left a fresh camp waiting a
 quarter of an hour per tree for the lodge it could not yet afford); combat goals outrank the
 guard's chopping.
+
+**Bounded, 2026-09-12: a woodland pass asks the navigator about a handful of trees, not all of
+them (#138).** The lumberjack's village-wide pass covers the whole claim plus a margin, which from
+the lodge reaches up to ninety blocks, while one path search never goes further than about
+forty-eight. Every tree past that was asked about anyway, up to four searches a tree, and each
+failed search spends its whole node budget first. On the live server one lumberjack ran 2,325 such
+searches in six minutes and reached 19 trees; the scans held the server at five ticks a second,
+and one held a tick past the sixty-second watchdog and took the server down. A pass now considers
+only trees within one search's reach of where the worker stands, asks about them nearest first,
+spends at most six searches in total, and leaves a tree it found no way to out of that worker's
+scans for two minutes. The nearest reachable tree is taken rather than a random one. Trimming a
+way into a hemmed-in stand shares the same six-search budget.
+
+**The long retry is remembered, 2026-09-12 (#138).** An exact destination that the ordinary
+48-block search cannot reach is retried with a 128-block horizon and double the node budget, for
+posts such as a watch platform whose way in is a long detour. A worker re-plans every ten ticks,
+so one who was stuck, or whose post was walled off, paid for that retry twice a second: on the
+live server long retries were 38% of all path-search time and reached their target 1.2% of the
+time, the costliest being one guard asking 200 times for a post six blocks away. A failed long
+retry is now not repeated for the same target for five seconds unless the person has moved four
+blocks since (`LongRetryMemo`), and one that reaches its target clears it. The last sixteen failures
+are kept, not one: a villager stuck beside a chest asks for each of the nine cells round it in
+turn, and a single remembered failure was forgotten before its cell came round again.
 
 **Attached bee nests (2026-09-08).** Shared tree felling also removes unowned bee nests
 and beehives touching a log actually removed, once each. It releases occupants normally;

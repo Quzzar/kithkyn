@@ -74,6 +74,7 @@ import com.quzzar.kithkyn.entities.ai.goals.work.MineStep;
 import com.quzzar.kithkyn.entities.ai.goals.work.BuildStep;
 import com.quzzar.kithkyn.entities.ai.goals.work.WallStep;
 import com.quzzar.kithkyn.entities.ai.goals.work.MarketStep;
+import com.quzzar.kithkyn.entities.ai.goals.work.BrewStep;
 import com.quzzar.kithkyn.entities.ai.goals.work.HealStep;
 import com.quzzar.kithkyn.entities.ai.goals.work.HuntStep;
 import com.quzzar.kithkyn.entities.ai.goals.work.FetchStep;
@@ -90,6 +91,8 @@ import com.quzzar.kithkyn.entities.ai.goals.work.PlantStep;
 import com.quzzar.kithkyn.entities.ai.goals.work.StashBonemealStep;
 import com.quzzar.kithkyn.entities.ai.goals.ArmorerRepairPersonArmorGoal;
 import com.quzzar.kithkyn.entities.ai.goals.CampfireRecoveryGoal;
+import com.quzzar.kithkyn.entities.ai.goals.SeekClericGoal;
+import com.quzzar.kithkyn.entities.ai.goals.ThrowPotionAttackGoal;
 import com.quzzar.kithkyn.entities.ai.goals.ReturnBackToVillageGoal;
 import com.quzzar.kithkyn.entities.ai.goals.RunAwayGoal;
 import com.quzzar.kithkyn.entities.ai.goals.PersonEatFoodGoal;
@@ -1515,7 +1518,15 @@ public class RealPerson extends Person {
     // loose item first: each rejected remainder is written back to the same pack
     // slot, so full shelves cannot destroy it after the entity despawns.
     final BlockPos preferredStorage = depositToLoc;
-    boolean storedAll = GuardWeapons.stowUnkept(this, this.keepingForHome,
+    // A cleric's potions are their working stock, not haul: they stay in the
+    // pack overnight like the guard's weapons (ClericPotions).
+    Set<Item> keeping = this.keepingForHome;
+    if (ClericPotions.isCleric(this)) {
+      Set<Item> kept = new java.util.HashSet<>(keeping);
+      kept.addAll(ClericPotions.STOCK_ITEMS);
+      keeping = kept;
+    }
+    boolean storedAll = GuardWeapons.stowUnkept(this, keeping,
         stack -> this.getVillage().storeAwayFrom(stack, List.of(), preferredStorage));
     if (!storedAll) {
       // Not a NoResourceBookkeepingEvent: that reports a shortage, while a
@@ -1557,6 +1568,9 @@ public class RealPerson extends Person {
       // after (PersonEatFoodGoal). Only then top up the rations.
       maybeEquipOrForgeShield(depositToLoc);
       restockRations(depositToLoc);
+    }
+    if (ClericPotions.isCleric(this)) {
+      restockClericSeeds();
     }
 
     // Take 1 sponge if builder or miner // TODO, change to if needed
@@ -1622,6 +1636,51 @@ public class RealPerson extends Person {
   }
 
   /**
+   * A cleric's loadout is issued, not authored: any splash potion the village
+   * stores hold of a brew the cleric does not yet carry is lifted into the pack
+   * as a new seed, one bottle each, from the nearest chests that have any. A
+   * player who leaves a splash of harming in a village chest has armed the
+   * cleric; the brewing round grows it from there (ClericPotions, BrewStep).
+   * Nothing is conjured, and brews already carried are left on the shelf.
+   */
+  private void restockClericSeeds() {
+    Village village = getVillage();
+    if (village == null) {
+      return;
+    }
+    java.util.function.Predicate<ItemStack> newBrew = stack ->
+        ClericPotions.isThrowable(stack)
+            && ClericPotions.carried(getMainHandItem(), getOffhandItem(),
+                this.personMainInv, stack) == 0;
+    for (int visit = 0; visit < 3; visit++) {
+      BlockPos chestPos = com.quzzar.kithkyn.entities.ai.goals.work.PackLogistics.chestWhere(this, village, newBrew);
+      Container chest = chestPos == null ? null
+          : com.quzzar.kithkyn.entities.ai.goals.work.PackLogistics.containerAt(this, chestPos);
+      if (chest == null) {
+        return;
+      }
+      int taken = 0;
+      for (int slot = 0; slot < chest.getContainerSize(); slot++) {
+        ItemStack stack = chest.getItem(slot);
+        if (!newBrew.test(stack)) {
+          continue;
+        }
+        // Into the pack first, out of the chest only once it fit: a full pack
+        // moves nothing and ends the visit.
+        if (!this.personMainInv.addItem(stack.copyWithCount(1)).isEmpty()) {
+          break;
+        }
+        chest.removeItem(slot, 1);
+        taken++;
+      }
+      if (taken > 0) {
+        chest.setChanged();
+        Kithkyn.LOGGER.info("'{}' took {} new potion seed(s) from the village stores", getFullName(), taken);
+      }
+    }
+  }
+
+  /**
    * A stack for tomorrow's work, taken from this villager's own chest at home
    * first and from village stores for whatever that leaves short. What a
    * villager held back for themselves at an earlier bedtime is theirs to work
@@ -1657,7 +1716,10 @@ public class RealPerson extends Person {
     }
     int taken = 0;
     for (int slot = 0; slot < container.getContainerSize() && taken < want.getCount(); slot++) {
-      if (container.getItem(slot).is(want.getItem())) {
+      // The same match the stores make (Utils.removeItem): a cleric asking for
+      // a splash of regeneration must not be handed the splash of harming
+      // beside it in their own chest.
+      if (ItemStack.isSameItemSameComponents(container.getItem(slot), want)) {
         taken += container.removeItem(slot, want.getCount() - taken).getCount();
       }
     }
@@ -2659,6 +2721,12 @@ public class RealPerson extends Person {
 
     this.goalSelector.addGoal(0, new FloatGoal(this));
     this.goalSelector.addGoal(0, new PersonEatFoodGoal(this));
+    // A hurt villager with a cleric in reach goes to be tended first: the
+    // cleric's splash outlasts anything else on offer, and eating holds no
+    // movement flag, so a meal is taken on the way and while waiting. Same
+    // priority as fetching food and registered ahead of it, so the cleric wins
+    // when both are possible and food is fetched when no cleric is near.
+    this.goalSelector.addGoal(1, new SeekClericGoal(this));
     // A hurt villager with nothing to eat goes and gets some, from the stores
     // or their own chest, before any work; the eating goal takes over on arrival.
     this.goalSelector.addGoal(1, new com.quzzar.kithkyn.entities.ai.goals.FetchFoodWhenHurtGoal(this));
@@ -2757,7 +2825,19 @@ public class RealPerson extends Person {
     }
 
     if (getOccupation() == Occupation.CLERIC) {
+      // What a cleric does is what they carry (ClericPotions). Harm first at
+      // the same priority as healing, registered ahead of it, so a cleric with
+      // a target and a harmful splash to spare fights before tending; a cleric
+      // carrying only healing never acquires a target at all, since the threat
+      // goal below asks for the harmful stock. Brewing sits below both: more
+      // potions are made when nobody needs one thrown.
+      this.goalSelector.addGoal(2, new ThrowPotionAttackGoal(this));
       this.goalSelector.addGoal(2, new WorkLoopGoal<>(this, new HealStep(1, 7, 7.0F)));
+      this.goalSelector.addGoal(3, new WorkLoopGoal<>(this, new BrewStep()));
+      this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, Mob.class, 10, true, false,
+          (mob) -> mob instanceof Enemy && !(mob instanceof Creeper)
+              && ClericPotions.hasThrowable(this,
+                  ClericPotions::isHarmful)));
     }
     if (getOccupation() == Occupation.GUARD) {
       com.quzzar.kithkyn.village.GuardDuty guardDuty = com.quzzar.kithkyn.village.GuardDuty.of(this);
@@ -3112,7 +3192,6 @@ public class RealPerson extends Person {
     // long before, so which path runs cannot be settled here. (A wandering
     // merchant never reaches this line: it branched off above.)
     this.goalSelector.addGoal(6, new BedtimeWithoutBedGoal(this));
-    // this.goalSelector.addGoal(6, new RunToClericGoal(this)); Don't need it seems
     this.goalSelector.addGoal(6, new ArmorerRepairPersonArmorGoal(this));
 
     // Below the work goals, which sit at 4: a goal can only take movement from

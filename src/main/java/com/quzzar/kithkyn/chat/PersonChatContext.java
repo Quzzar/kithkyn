@@ -14,6 +14,7 @@ import com.quzzar.kithkyn.compat.AccessoryCompat;
 import com.quzzar.kithkyn.entities.MarriageStatus;
 import com.quzzar.kithkyn.entities.PersonalLogData;
 import com.quzzar.kithkyn.entities.UndertakingData;
+import com.quzzar.kithkyn.entities.ClericPotions;
 import com.quzzar.kithkyn.entities.RealPerson;
 import com.quzzar.kithkyn.entities.KithkynAttachments;
 import com.quzzar.kithkyn.llm.LlmService.FewShotExample;
@@ -379,6 +380,10 @@ public final class PersonChatContext {
     }
     String pockets = pocketsSummary(person);
     system.append("Your pockets: ").append(pockets.isEmpty() ? "empty" : pockets).append(".\n");
+    String reserve = potionReserveLine(person);
+    if (!reserve.isEmpty()) {
+      system.append(reserve).append('\n');
+    }
     system.append(personalHousingLine(person)).append('\n');
     // Their own chest at home, stated on the same rule as the pockets: what it
     // holds when it is in sight, and that they have none when they have none,
@@ -547,18 +552,54 @@ public final class PersonChatContext {
     return String.join(" and ", parts);
   }
 
-  /** The FULL pocket contents, aggregated by item — they know their own bags. */
+  /**
+   * The FULL pocket contents, aggregated by item — they know their own bags.
+   * With one omission: a cleric is told the bottles they can spare of each
+   * brew, never the seed ({@link ClericPotions#sparePackCount}). A model that
+   * gives only what the briefing says it has then never offers the last bottle,
+   * which is the cleaner half of the rule; the take in
+   * {@code PersonChatDispatcher.takeFromSlots} is the backstop.
+   */
   private static String pocketsSummary(RealPerson person) {
     Map<String, Integer> counts = new LinkedHashMap<>();
+    boolean cleric = ClericPotions.isCleric(person);
     for (int i = 0; i < person.personMainInv.getContainerSize(); i++) {
       ItemStack stack = person.personMainInv.getItem(i);
-      if (!stack.isEmpty()) {
-        counts.merge(itemName(stack), stack.getCount(), Integer::sum);
+      if (stack.isEmpty()) {
+        continue;
       }
+      if (cleric && ClericPotions.isThrowable(stack)) {
+        // Counted once per brew, as the spare, however many slots it fills.
+        counts.putIfAbsent(itemName(stack), ClericPotions.sparePackCount(person, stack));
+        continue;
+      }
+      counts.merge(itemName(stack), stack.getCount(), Integer::sum);
     }
+    counts.values().removeIf(count -> count <= 0);
     List<String> parts = new ArrayList<>();
     counts.forEach((name, count) -> parts.add(count + " " + name));
     return String.join(", ", parts);
+  }
+
+  /**
+   * A cleric's seeds, said plainly: one bottle of each brew is kept back as the
+   * recipe they brew more from at their station, and is not for giving. This
+   * is the context behind the spare counts in the pockets line, and it tells
+   * the cleric what they can make (Aaron, 2026-09-12). Empty for anyone else.
+   */
+  private static String potionReserveLine(RealPerson person) {
+    if (!ClericPotions.isCleric(person)) {
+      return "";
+    }
+    List<String> brews = new ArrayList<>();
+    for (ClericPotions.Stock stock : ClericPotions.stock(person)) {
+      brews.add(itemName(stock.sample()));
+    }
+    if (brews.isEmpty()) {
+      return "You carry no potions at all, so there is nothing you can brew more of until someone hands you a bottle.";
+    }
+    return "In reserve, not counted above and not for giving: one " + String.join(", one ", brews)
+        + ". Each is the recipe you brew three more of at your station; give the last one away and that brew is lost to you.";
   }
 
   /**
