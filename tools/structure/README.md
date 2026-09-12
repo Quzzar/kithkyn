@@ -31,6 +31,7 @@ themselves — they only transform files you point them at.
 | `roof.py` | Fix roof-stair facing |
 | `seating-check.py` | Flag catalog buildings seated one block low: a bottom-half stair in the layer that meets the ground is a doorstep swallowed by the terrain |
 | `export-birch.py` | Derive the approved Birch assets from the immutable capture manifest, rebase amenities, and print new definitions as an apply_patch patch |
+| `RemoveTemplateBlocks.java` | Drop listed cells from structure templates with Minecraft's typed NBT reader and writer (plan: `[{"path", "remove": [[x,y,z], ...]}]`); the September 12 market floor-mat repair, `market-mat-repair-20260912.json`, is its record |
 | `VillageTemplateExport.java` | Native Minecraft NBT export preserving typed entity data, clearing gameplay inventories, neutralizing explicit identity slots, and carving declared air | An optional `entities` plan key adds authored livestock or allays to a template.
 
 Each script's `__main__` is an example driver; point the glob at your own
