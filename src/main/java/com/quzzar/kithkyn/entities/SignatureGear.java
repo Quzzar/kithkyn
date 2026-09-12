@@ -10,6 +10,7 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.alchemy.Potion;
 import net.minecraft.world.item.alchemy.PotionContents;
 import net.minecraft.world.item.alchemy.Potions;
 
@@ -17,7 +18,7 @@ import net.minecraft.world.item.alchemy.Potions;
  * The item a trade holds as the mark of its work, for the trades whose mark is
  * not a tool: the quartermaster's ledger (a writable book), the builder's
  * crafting table, the librarian's book, the blacksmith's iron ingot, the
- * cleric's splash potions of healing and regeneration. This is the one place they are
+ * cleric's splash potion of regeneration. This is the one place they are
  * named, so the starting kit that first hands them out
  * ({@link RealPerson#issueStartingKit}) and the day-to-day check that keeps them
  * in hand ({@link RealPerson#tendSignatureGear}) read the same list.
@@ -49,8 +50,8 @@ public final class SignatureGear {
 
     /**
      * Whether {@code held} is a right item for this piece: the same item, and,
-     * when the mark is a potion, the same brew (so a cleric's healing potion is
-     * not mistaken for their splash of regeneration).
+     * when the mark is a potion, the same brew (so a cleric's splash of healing
+     * is not mistaken for their splash of regeneration).
      */
     public boolean matches(ItemStack held) {
       ItemStack want = this.fresh.get();
@@ -74,27 +75,31 @@ public final class SignatureGear {
       // The quartermaster keeps the village's stores; a writable book reads as
       // the ledger they are forever taking count in.
       case QUARTERMASTER -> List.of(new Piece(EquipmentSlot.MAINHAND, () -> new ItemStack(Items.WRITABLE_BOOK)));
-      // A splash of regeneration in hand and a splash of healing in the off
-      // hand: the two brews every cleric starts with. Unlike the other marks
-      // these are real stock (ClericPotions): a throw consumes one, and the
-      // last bottle of a brew is the seed the cleric brews more from, so it is
-      // never thrown or given away.
-      case CLERIC -> List.of(
-          new Piece(EquipmentSlot.MAINHAND, SignatureGear::regenSplash),
-          new Piece(EquipmentSlot.OFFHAND, SignatureGear::healingSplash));
+      // The cleric works from the off hand alone (Aaron, 2026-09-12): it rests
+      // on a splash of regeneration, and a bottle to throw or drink is swapped
+      // into it for the use (OffHandUse). The main hand stays empty. Unlike the
+      // other marks this is real stock (ClericPotions): a throw consumes it, and
+      // the last bottle of a brew is the seed the cleric brews more from.
+      case CLERIC -> List.of(new Piece(EquipmentSlot.OFFHAND, () -> potion(Items.SPLASH_POTION, Potions.REGENERATION)));
       default -> List.of();
     };
   }
 
-  private static ItemStack regenSplash() {
-    ItemStack stack = new ItemStack(Items.SPLASH_POTION);
-    stack.set(DataComponents.POTION_CONTENTS, new PotionContents(Potions.REGENERATION));
-    return stack;
+  /**
+   * What a trade's starting kit also puts in the pack, beyond the marks it
+   * holds: the cleric's other two brews, a splash of healing and a potion of
+   * regeneration to drink, beside the splash of regeneration in hand (Aaron,
+   * 2026-09-12). Handed out once, with the kit. Empty for every other trade.
+   */
+  public static List<ItemStack> startingPack(Occupation occupation) {
+    return occupation == Occupation.CLERIC
+        ? List.of(potion(Items.SPLASH_POTION, Potions.HEALING), potion(Items.POTION, Potions.REGENERATION))
+        : List.of();
   }
 
-  private static ItemStack healingSplash() {
-    ItemStack stack = new ItemStack(Items.SPLASH_POTION);
-    stack.set(DataComponents.POTION_CONTENTS, new PotionContents(Potions.HEALING));
+  private static ItemStack potion(Item item, net.minecraft.core.Holder<Potion> potion) {
+    ItemStack stack = new ItemStack(item);
+    stack.set(DataComponents.POTION_CONTENTS, new PotionContents(potion));
     return stack;
   }
 }

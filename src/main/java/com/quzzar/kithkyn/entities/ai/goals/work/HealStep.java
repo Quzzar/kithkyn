@@ -4,12 +4,16 @@ import java.util.List;
 
 import javax.annotation.Nullable;
 
+import com.quzzar.kithkyn.Kithkyn;
 import com.quzzar.kithkyn.entities.ClericPotions;
+import com.quzzar.kithkyn.entities.OffHandUse;
 import com.quzzar.kithkyn.entities.Person;
 import com.quzzar.kithkyn.entities.RealPerson;
+import com.quzzar.kithkyn.entities.ai.goals.RangedShotSafety;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.Mth;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Pose;
@@ -28,9 +32,16 @@ import net.minecraft.world.item.ItemStack;
  * within three quarters of their range, crouches to steady the throw, waits out
  * a charge that is longer the further away the patient is, and lobs a splash
  * potion from their own stock ({@link ClericPotions}): healing if the patient
- * is nearly dead, regeneration otherwise, whichever they carry. Each throw
- * consumes a bottle, and the last of a brew is never thrown, so a cleric with
- * only their seed potions left has nobody to tend until they brew more.
+ * is nearly dead, regeneration otherwise, then anything else that mends, and
+ * only a brew that helps that patient as a whole. Each throw consumes a bottle,
+ * and the last of a brew is never thrown, so a cleric with only their seed
+ * potions left has nobody to tend until they brew more. A helpful throw is never
+ * made while an enemy stands inside the burst or in the way (Aaron,
+ * 2026-09-12): the cleric holds it until the enemy is clear.
+ *
+ * The bottle comes up into the off hand as the cleric crouches, and the hand's
+ * resting bottle comes back once it is thrown or the throw is held
+ * ({@link OffHandUse}).
  */
 public final class HealStep implements WorkStep<LivingEntity> {
 
@@ -39,6 +50,7 @@ public final class HealStep implements WorkStep<LivingEntity> {
   private final int minChargeTicks;
   private final int maxChargeTicks;
   private final float throwRange;
+  private final OffHandUse offHand = new OffHandUse();
 
   private boolean charging;
   private int chargeLeft;
@@ -82,12 +94,20 @@ public final class HealStep implements WorkStep<LivingEntity> {
     }
     // A potion thrown at a wall helps nobody. Hold the charge and close up.
     if (!person.getSensing().hasLineOfSight(target)) {
-      this.charging = false;
-      person.setPose(Pose.STANDING);
+      holdThrow(person);
       person.getNavigation().moveTo(target, 0.5D);
       return true;
     }
+    // A helpful splash that would also reach an enemy, or break on one on the
+    // way, is held until the enemy is clear.
+    if (ClericPotions.helpfulSplashWouldCatchEnemy(person, target) || RangedShotSafety.blockedByEnemy(person, target)) {
+      holdThrow(person);
+      return true;
+    }
     if (!this.charging) {
+      if (!this.offHand.ready(person, brew)) {
+        return true;
+      }
       this.charging = true;
       person.setPose(Pose.CROUCHING);
       this.chargeLeft = (int) Mth.lerp(person.distanceTo(target) / this.throwRange,
@@ -97,7 +117,14 @@ public final class HealStep implements WorkStep<LivingEntity> {
     if (this.chargeLeft-- > 0) {
       return true;
     }
-    ClericPotions.throwOne(person, target, brew);
+    ItemStack held = person.getOffhandItem();
+    if (ClericPotions.isThrowable(held) && ClericPotions.outcomeOn(held, target) == ClericPotions.Outcome.HELPS) {
+      person.swing(InteractionHand.OFF_HAND);
+      Kithkyn.LOGGER.debug("'{}' threw a {} to {}", person.getFullName(), held.getHoverName().getString(),
+          target.getName().getString());
+      ClericPotions.throwOne(person, target, held);
+    }
+    this.offHand.restore(person);
     this.charging = false;
     person.setPose(Pose.STANDING);
     return false;
@@ -105,9 +132,8 @@ public final class HealStep implements WorkStep<LivingEntity> {
 
   @Override
   public void released(RealPerson person, LivingEntity target) {
-    this.charging = false;
+    holdThrow(person);
     this.chargeLeft = 0;
-    person.setPose(Pose.STANDING);
   }
 
   @Override
@@ -131,6 +157,13 @@ public final class HealStep implements WorkStep<LivingEntity> {
   @Override
   public int actEveryTicks() {
     return 20;
+  }
+
+  /** Stand down from a throw: the resting bottle back in hand, the charge undone. */
+  private void holdThrow(RealPerson person) {
+    this.offHand.restore(person);
+    this.charging = false;
+    person.setPose(Pose.STANDING);
   }
 
   private boolean needsTending(RealPerson person, LivingEntity candidate) {

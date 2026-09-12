@@ -917,6 +917,10 @@ public class RealPerson extends Person {
     if (getVillage() == null) {
       return;
     }
+    if (ClericPotions.isCleric(this)) {
+      stowStockFromMainHand();
+      restMarkInOffHand();
+    }
     BlockPos depositTo = LocationManager.getJobLocation(this);
     for (SignatureGear.Piece piece : SignatureGear.of(getOccupation())) {
       String name = StashOffer.plain(piece.item());
@@ -957,6 +961,51 @@ public class RealPerson extends Person {
       }
     }
     return false;
+  }
+
+  /**
+   * The cleric works from the off hand alone (Aaron, 2026-09-12). A bottle
+   * still in the main hand, from the old two-handed kit or put there some other
+   * way, goes into the pack so the hand stays empty. MOVED, never copied; a full
+   * pack leaves it where it is until there is room.
+   */
+  private void stowStockFromMainHand() {
+    ItemStack held = getMainHandItem();
+    if (!ClericPotions.isStock(held)) {
+      return;
+    }
+    for (int slot = 0; slot < this.personMainInv.getContainerSize(); slot++) {
+      if (this.personMainInv.getItem(slot).isEmpty()) {
+        this.personMainInv.setItem(slot, held);
+        setItemSlot(EquipmentSlot.MAINHAND, ItemStack.EMPTY);
+        return;
+      }
+    }
+  }
+
+  /**
+   * At rest the cleric's off hand holds the mark, the splash of regeneration
+   * (Aaron, 2026-09-12). A different bottle left there, the old kit's splash of
+   * healing or one handed over, is swapped for a matching bottle from the pack.
+   * Never while a throw or drink holds the hand (OffHandUse) or a meal is being
+   * eaten, and a hand holding something that is not a potion is left alone.
+   */
+  private void restMarkInOffHand() {
+    ItemStack held = getOffhandItem();
+    if (!ClericPotions.isStock(held) || OffHandUse.inUse(this) || isEating() || isUsingItem()) {
+      return;
+    }
+    for (SignatureGear.Piece piece : SignatureGear.of(getOccupation())) {
+      if (piece.slot() != EquipmentSlot.OFFHAND || piece.matches(held)) {
+        continue;
+      }
+      for (int slot = 0; slot < this.personMainInv.getContainerSize(); slot++) {
+        if (piece.matches(this.personMainInv.getItem(slot))) {
+          this.setItemSlot(EquipmentSlot.OFFHAND, EquipmentSwap.exchange(this.personMainInv, slot, held));
+          return;
+        }
+      }
+    }
   }
 
   /**
@@ -1636,7 +1685,7 @@ public class RealPerson extends Person {
   }
 
   /**
-   * A cleric's loadout is issued, not authored: any splash potion the village
+   * A cleric's loadout is issued, not authored: any potion the village
    * stores hold of a brew the cleric does not yet carry is lifted into the pack
    * as a new seed, one bottle each, from the nearest chests that have any. A
    * player who leaves a splash of harming in a village chest has armed the
@@ -1649,7 +1698,7 @@ public class RealPerson extends Person {
       return;
     }
     java.util.function.Predicate<ItemStack> newBrew = stack ->
-        ClericPotions.isThrowable(stack)
+        ClericPotions.isStock(stack)
             && ClericPotions.carried(getMainHandItem(), getOffhandItem(),
                 this.personMainInv, stack) == 0;
     for (int visit = 0; visit < 3; visit++) {
@@ -2289,6 +2338,10 @@ public class RealPerson extends Person {
         for (SignatureGear.Piece piece : SignatureGear.of(getOccupation())) {
           kit(piece.slot(), piece.fresh().get());
         }
+        // Anything else the kit brings rides in the pack: the cleric's other two brews.
+        for (ItemStack stack : SignatureGear.startingPack(getOccupation())) {
+          this.addItems(List.of(stack));
+        }
         break;
     }
   }
@@ -2721,6 +2774,8 @@ public class RealPerson extends Person {
 
     this.goalSelector.addGoal(0, new FloatGoal(this));
     this.goalSelector.addGoal(0, new PersonEatFoodGoal(this));
+    // A potion that would help is drunk, never eaten (Person.isMeal), from the off hand like a meal.
+    this.goalSelector.addGoal(0, new com.quzzar.kithkyn.entities.ai.goals.DrinkPotionGoal(this));
     // A hurt villager with a cleric in reach goes to be tended first: the
     // cleric's splash outlasts anything else on offer, and eating holds no
     // movement flag, so a meal is taken on the way and while waiting. Same
@@ -2829,15 +2884,17 @@ public class RealPerson extends Person {
       // the same priority as healing, registered ahead of it, so a cleric with
       // a target and a harmful splash to spare fights before tending; a cleric
       // carrying only healing never acquires a target at all, since the threat
-      // goal below asks for the harmful stock. Brewing sits below both: more
-      // potions are made when nobody needs one thrown.
+      // goal below asks for the harmful stock, judged on each body: a splash of
+      // harming heals the undead, so a zombie is never its target. Brewing sits
+      // below both: more potions are made when nobody needs one thrown.
+      // Drinking is everyone's (DrinkPotionGoal, registered with eating).
       this.goalSelector.addGoal(2, new ThrowPotionAttackGoal(this));
       this.goalSelector.addGoal(2, new WorkLoopGoal<>(this, new HealStep(1, 7, 7.0F)));
       this.goalSelector.addGoal(3, new WorkLoopGoal<>(this, new BrewStep()));
       this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, Mob.class, 10, true, false,
           (mob) -> mob instanceof Enemy && !(mob instanceof Creeper)
-              && ClericPotions.hasThrowable(this,
-                  ClericPotions::isHarmful)));
+              && ClericPotions.hasThrowable(this, stack -> ClericPotions.isHarmful(stack)
+                  && ClericPotions.outcomeOn(stack, mob) == ClericPotions.Outcome.HURTS)));
     }
     if (getOccupation() == Occupation.GUARD) {
       com.quzzar.kithkyn.village.GuardDuty guardDuty = com.quzzar.kithkyn.village.GuardDuty.of(this);
