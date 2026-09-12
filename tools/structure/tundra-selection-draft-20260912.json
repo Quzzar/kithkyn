@@ -1,0 +1,180 @@
+{
+  "schemaVersion": 1,
+  "status": "selection_in_progress_user_edits_captured",
+  "style": "tundra",
+  "sourceGallery": "tools/structure/tundra-full-profile-20260912.json",
+  "liveCapture": {
+    "manifest": "run/tundra-selection-draft-20260912/capture-manifest.json",
+    "structures": 20,
+    "livestockCapture": "run/tundra-selection-draft-20260912/livestock-capture/T02.1-with-sheep.nbt",
+    "playerPositionAtCapture": [
+      11197.358212996756,
+      230.79673560066868,
+      1140.0032591076867
+    ],
+    "preserves": [
+      "user-authored beds and storage",
+      "town-center banners and barrel markers",
+      "spruce planting marker",
+      "farm crops and glow berries",
+      "mine excavation and entrance edits",
+      "three persistent sheep in the T02.1 butchery enclosure"
+    ]
+  },
+  "selected": [
+    {
+      "category": "village_center",
+      "level": 1,
+      "exhibit": "T01.1",
+      "notes": "Four beds in diagonal primary/secondary pairs; all eight banners use village identity. Core job-station positions remain to be assigned."
+    },
+    {
+      "category": "couple_cottage",
+      "level": 1,
+      "exhibit": "T01.2",
+      "notes": "One double bed, both halves secondary; shared personal chest."
+    },
+    {
+      "category": "house",
+      "level": 1,
+      "design": "two_single",
+      "exhibit": "T01.3",
+      "notes": "Two separate single beds."
+    },
+    {
+      "category": "house",
+      "level": 1,
+      "design": "one_single",
+      "exhibit": "T01.4",
+      "notes": "One single bed."
+    },
+    {
+      "category": "storehouse",
+      "level": 1,
+      "exhibit": "T01.5",
+      "notes": "User conversion with three storage barrels and no bed."
+    },
+    {
+      "category": "house",
+      "level": 1,
+      "design": "three_single",
+      "exhibit": "T01.6",
+      "notes": "Three separate single beds."
+    },
+    {
+      "category": "butchery",
+      "level": 1,
+      "exhibit": "T02.1",
+      "notes": "Butcher building; animal enclosure receives three sheep."
+    },
+    {
+      "category": "fishery",
+      "level": 1,
+      "exhibit": "T02.3",
+      "notes": "Fishing hut with one bed and one barrel."
+    },
+    {
+      "category": "lumberjack",
+      "level": 1,
+      "exhibit": "T02.4",
+      "notes": "Orchard shell converted for lumberjack; dead bush marks a spruce sapling; includes bed and two barrels."
+    },
+    {
+      "category": "watchtower",
+      "level": 1,
+      "exhibit": "T03.1",
+      "notes": "Compact cartographer tower repurposed as the first watchtower."
+    },
+    {
+      "category": "church",
+      "level": 1,
+      "exhibit": "T03.2",
+      "notes": "Chemist shell repurposed as the first church."
+    },
+    {
+      "category": "stoneworks",
+      "level": 1,
+      "exhibit": "T03.4",
+      "notes": "Bed and personal chest beside it; workstation chest across the room."
+    },
+    {
+      "category": "blacksmith",
+      "level": 1,
+      "exhibit": "T03.5",
+      "notes": "Bed with personal barrel; separate workstation chest."
+    },
+    {
+      "category": "farm",
+      "level": 1,
+      "exhibit": "T05.5",
+      "notes": "Compact wheat-and-carrot farm with storage barrel."
+    },
+    {
+      "category": "farm",
+      "level": 2,
+      "exhibit": "T06.2",
+      "notes": "Larger berry and glow-berry greenhouse."
+    },
+    {
+      "category": "mine",
+      "level": 1,
+      "exhibit": "T05.6",
+      "notes": "User-carved mine shell; mouth, worksite, width, sink and forward direction require the production access audit."
+    }
+  ],
+  "recommended": [
+    {
+      "category": "hunting_lodge",
+      "level": 1,
+      "exhibit": "T06.3",
+      "reason": "The native hunter hut is the clearest compact first tier."
+    },
+    {
+      "category": "hunting_lodge",
+      "level": 2,
+      "exhibit": "T04.4",
+      "reason": "The fenced fire camp gives the liked Artist Studio shell a distinct larger hunting-camp role."
+    },
+    {
+      "category": "bakery",
+      "level": 1,
+      "exhibit": "T04.5",
+      "reason": "Purpose-built bakery shell; strip its remaining structure-void marker before production."
+    },
+    {
+      "category": "tavern",
+      "level": 1,
+      "exhibit": "T08.3",
+      "reason": "The complete Snowy Igloo tavern is a better production building than the modular Dungeons & Taverns pieces."
+    },
+    {
+      "category": "well",
+      "level": 1,
+      "exhibit": "T12.5",
+      "reason": "The standalone snowy tavern well is already compact and palette-compatible."
+    },
+    {
+      "category": "watchtower",
+      "level": 2,
+      "exhibit": "T15.2",
+      "reason": "Optional larger snowy outpost tower if this catalog receives a watchtower upgrade."
+    }
+  ],
+  "remaining": [
+    "assign the four core town-center job stations",
+    "review and lock the recommended bakery, hunting-lodge, tavern, well and optional watchtower upgrade",
+    "author and review three Tundra market tiers while retaining the standard market colors",
+    "author and review the Tundra wall family",
+    "audit the mine mouth, forward direction, width, sink and terrain-clearing bounds",
+    "map all beds to dynamic primary or secondary colors and all banners to village identity",
+    "record exact beds, couple pairing, personal storage, shared storage, stations, entrances and grants",
+    "strip structure voids and audit every production template for barriers and structure voids",
+    "run placement, access, founding, upgrade, restart and visual verification"
+  ],
+  "futureCastleDonor": {
+    "exhibit": "T17.3",
+    "label": "Snowy Plains Tower",
+    "source": "data/kaisyn/structure/outpost/towers/snowy_plains/base_plate.nbt",
+    "decision": "Keep as a strong general castle reference for a future village variant; it is not assigned as the Tundra castle."
+  }
+}

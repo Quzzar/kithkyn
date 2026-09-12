@@ -82,7 +82,12 @@ The current review status is:
   12 CTOV snowy outpost pieces and five Towns & Towers or Terralith landmarks. Fifty Snowy Igloo
   compatibility shells are kept visible with unavailable custom work blocks replaced only in
   their private display copies. The exact sources, hashes, positions and screenshots are recorded
-  in `tools/structure/tundra-full-profile-20260912.json`.
+  in `tools/structure/tundra-full-profile-20260912.json`. Selection is now in progress and the
+  first twenty edited or shortlisted structures are preserved in the private live capture. The
+  selected center, homes, storehouse, food buildings, first watchtower, first church, workshops,
+  two farm tiers and mine are recorded in `tools/structure/tundra-selection-draft-20260912.json`.
+  The remaining catalog work is the final service-building review, three markets, walls, exact
+  metadata and production verification.
 - **Mediterranean:** the production catalog is selected and verified
   ([mediterranean-village.md](mediterranean-village.md)): the M06.1 church is its centre, the
   M08.1 fort its castle, and the rest comes from annex rows M06 to M08 and the edited court
@@ -107,7 +112,9 @@ review evidence are recorded in `tools/structure/mediterranean-full-profile-2026
 The Tundra gallery contains all 117 useful snowy reference structures. Road pieces and entity-only
 jigsaw templates are omitted because they do not present a building choice. Unavailable
 compatibility blocks are normalized to vanilla markers only in the private gallery copy, leaving
-the source hashes and original templates untouched.
+the source hashes and original templates untouched. T17.3, the Snowy Plains tower, is retained as
+a strong general castle donor for a future village variant; it is not assigned to Tundra merely
+because it appears in the Tundra gallery.
 
 Unstructured was included in the source audit. Its strongest coherent settlement is the Ocean
 Village family, which belongs in the later Nautical Coast pass rather than one of these three
