@@ -10,13 +10,14 @@ import com.quzzar.kithkyn.Kithkyn;
 import com.quzzar.kithkyn.entities.RealPerson;
 import com.quzzar.kithkyn.entities.GuardWeapons;
 import com.quzzar.kithkyn.entities.JobTool;
+import com.quzzar.kithkyn.entities.ai.PersonPathNavigation;
 import com.quzzar.kithkyn.entities.ai.goals.ShortageWatch;
 import com.quzzar.kithkyn.village.LocationManager;
 import com.quzzar.kithkyn.village.TreeFelling;
 import com.quzzar.kithkyn.village.Village;
 
 import it.unimi.dsi.fastutil.longs.Long2LongOpenHashMap;
-import it.unimi.dsi.fastutil.longs.Long2ObjectOpenHashMap;
+import it.unimi.dsi.fastutil.longs.LongOpenHashSet;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.BlockTags;
@@ -101,6 +102,29 @@ public final class ChopStep implements WorkStep<ChopStep.Cut> {
   /** Paths the navigator is asked for per tree before it is called unreachable. */
   private static final int PATHS_PER_TREE = 4;
 
+  /**
+   * Paths one pass may ask the navigator for, across every tree or leaf it
+   * considers. A search that fails spends its whole node budget first, tens of
+   * milliseconds to over a second each, and the woodland pass once asked for up
+   * to four per tree across sixty-odd trees: on 2026-09-12 one scan held the
+   * live server's tick past the sixty-second watchdog, and scans like it kept
+   * the server at five ticks a second (#138).
+   */
+  private static final int PATHS_PER_PASS = 6;
+
+  /**
+   * How long a tree the worker could not walk to stays out of their woodland
+   * scans. Without it the same unreachable trunks were asked about on every
+   * scan, every few seconds, for as long as they stood.
+   */
+  private static final int UNREACHABLE_TREE_TICKS = 20 * 60 * 2;
+
+  /**
+   * Slack taken off the navigator's search range: a route winds, so a trunk
+   * this close to the edge of the range is out of reach in practice too.
+   */
+  private static final int PATH_RANGE_SLACK = 4;
+
   /** How far out and up from a hemmed-in trunk to look for a leaf blocking the way in. */
   private static final int LEAF_CLEAR_RADIUS = 3;
 
@@ -122,6 +146,9 @@ public final class ChopStep implements WorkStep<ChopStep.Cut> {
   private final boolean villageWide;
 
   private final ShortageWatch dry = new ShortageWatch();
+
+  /** Tree bases this worker found no way to, and the game time each is tried again. */
+  private final Long2LongOpenHashMap unreachableUntil = new Long2LongOpenHashMap();
 
   private BlockPos chopping;
   private int chopTime;
@@ -382,57 +409,125 @@ public final class ChopStep implements WorkStep<ChopStep.Cut> {
   }
 
   /**
-   * Reservoir-samples a fellable tree with a natural canopy that the worker
-   * can walk up to, and returns its base and the spot to cut it from. Each
-   * tree is flood-filled once per scan and every log on it mapped to the base,
-   * and each base is asked for its standing spot once, because every log of a
-   * tree in the box asks.
+   * The nearest fellable tree with a natural canopy that the worker can walk
+   * up to, and the spot to cut it from; null when none is found this pass.
+   *
+   * <p>Only trees one path search can reach from where the worker stands are
+   * considered ({@link PersonPathNavigation#searchRange}): the village-wide
+   * box reaches up to ninety blocks from a lumberjack at the lodge, and every
+   * search to a trunk past the range was answered with a partial path after
+   * spending its whole node budget. The far corners are reached as the worker
+   * works their way out, which is how they were reached before, since no search
+   * could ever have picked them. The rest are asked about nearest first, at most
+   * {@link #PATHS_PER_PASS} searches a pass, and a tree with no way to it is left
+   * out of this worker's scans for {@link #UNREACHABLE_TREE_TICKS} (#138).
    */
   @Nullable
   private Cut findWoodlandTree(RealPerson person, ServerLevel level, BlockPos around, int radius) {
+    long now = level.getGameTime();
+    this.unreachableUntil.long2LongEntrySet().removeIf(entry -> entry.getLongValue() <= now);
+    BlockPos worker = person.blockPosition();
+    int reach = Math.max(0, (int) PersonPathNavigation.searchRange(person) - PATH_RANGE_SLACK);
+    ScanBounds bounds = ScanBounds.within(around, radius, worker, reach);
+    if (bounds == null) {
+      return null;
+    }
     BlockPos.MutableBlockPos cursor = new BlockPos.MutableBlockPos();
-    Long2LongOpenHashMap baseOf = new Long2LongOpenHashMap();
-    Long2ObjectOpenHashMap<BlockPos> standOf = new Long2ObjectOpenHashMap<>();
-    Cut found = null;
-    int seen = 0;
-    for (int x = -radius; x <= radius; ++x) {
+    LongOpenHashSet mapped = new LongOpenHashSet();
+    LongOpenHashSet counted = new LongOpenHashSet();
+    List<BlockPos> candidates = new ArrayList<>();
+    int remembered = 0;
+    for (int x = bounds.minX(); x <= bounds.maxX(); ++x) {
       for (int y = -WOODLAND_VERTICAL_RADIUS; y <= WOODLAND_VERTICAL_RADIUS; ++y) {
-        for (int z = -radius; z <= radius; ++z) {
-          cursor.setWithOffset(around, x, y, z);
-          if (!TreeFelling.isFellableWood(level, cursor)) {
+        for (int z = bounds.minZ(); z <= bounds.maxZ(); ++z) {
+          cursor.set(x, around.getY() + y, z);
+          if (mapped.contains(cursor.asLong()) || !TreeFelling.isFellableWood(level, cursor)) {
             continue;
           }
-          long key = cursor.asLong();
-          if (!baseOf.containsKey(key)) {
-            List<BlockPos> logs = TreeFelling.treeWood(level, cursor.immutable());
-            long base = lowestOf(logs).asLong();
-            for (BlockPos log : logs) {
-              baseOf.put(log.asLong(), base);
-            }
+          // Each tree is flood-filled once a scan and every log on it mapped,
+          // because every log of a tree in the box would otherwise ask again.
+          List<BlockPos> logs = TreeFelling.treeWood(level, cursor.immutable());
+          for (BlockPos log : logs) {
+            mapped.add(log.asLong());
           }
-          long baseKey = baseOf.get(key);
-          if (!standOf.containsKey(baseKey)) {
-            standOf.put(baseKey, standBeside(person, level, BlockPos.of(baseKey)));
-          }
-          BlockPos stand = standOf.get(baseKey);
-          if (stand == null) {
+          BlockPos base = lowestOf(logs);
+          if (!counted.add(base.asLong()) || !ScanBounds.withinReach(base, worker, reach)) {
             continue;
           }
-          if (person.getRandom().nextInt(++seen) == 0) {
-            found = new Cut(BlockPos.of(baseKey), stand);
+          if (this.unreachableUntil.containsKey(base.asLong())) {
+            remembered++;
+            continue;
           }
+          candidates.add(base);
         }
+      }
+    }
+    candidates.sort(Comparator.comparingLong(base -> ScanBounds.horizontalDistSqr(base, worker)));
+    Cut found = null;
+    int budget = PATHS_PER_PASS;
+    int asked = 0;
+    for (BlockPos base : candidates) {
+      if (budget <= 0) {
+        break;
+      }
+      StandSearch search = standBeside(person, level, base, budget);
+      budget -= search.pathsAsked();
+      asked++;
+      if (search.stand() != null) {
+        found = new Cut(base, search.stand());
+        break;
+      }
+      if (search.decided()) {
+        this.unreachableUntil.put(base.asLong(), now + UNREACHABLE_TREE_TICKS);
       }
     }
     // Once per scan that rolled to fell: what the box held. A guard that picks
     // nothing for an hour is either surrounded by nothing fellable or by trunks
     // nobody can stand beside, and only this line tells the two apart.
-    int trees = new java.util.HashSet<>(baseOf.values()).size();
-    int cuttable = (int) standOf.values().stream().filter(java.util.Objects::nonNull).count();
-    Kithkyn.LOGGER.debug("[chop] {} ({}) scanned the woodland round {}: {} tree(s), {} with ground to cut from{}",
-        person.getName().getString(), person.getOccupation(), around.toShortString(), trees, cuttable,
+    Kithkyn.LOGGER.debug("[chop] {} ({}) scanned the woodland round {}: {} tree(s) in reach, {} asked about "
+            + "with {} path(s), {} left alone as unreachable{}",
+        person.getName().getString(), person.getOccupation(), around.toShortString(), counted.size(), asked,
+        PATHS_PER_PASS - budget, remembered,
         found == null ? "" : ", chose the one at " + found.log().toShortString());
     return found;
+  }
+
+  /**
+   * The columns a woodland scan reads: the requested box, cut down to the
+   * square a single path search can cover from where the worker stands.
+   * Package-visible for tests.
+   */
+  record ScanBounds(int minX, int maxX, int minZ, int maxZ) {
+
+    /** The overlap of the scan box and the worker's reach, or null when they do not meet. */
+    @Nullable
+    static ScanBounds within(BlockPos around, int radius, BlockPos worker, int reach) {
+      int minX = Math.max(around.getX() - radius, worker.getX() - reach);
+      int maxX = Math.min(around.getX() + radius, worker.getX() + reach);
+      int minZ = Math.max(around.getZ() - radius, worker.getZ() - reach);
+      int maxZ = Math.min(around.getZ() + radius, worker.getZ() + reach);
+      return minX > maxX || minZ > maxZ ? null : new ScanBounds(minX, maxX, minZ, maxZ);
+    }
+
+    /** Across the ground only: a trunk up a hillside is no further to walk to than its footprint. */
+    static long horizontalDistSqr(BlockPos a, BlockPos b) {
+      long dx = a.getX() - b.getX();
+      long dz = a.getZ() - b.getZ();
+      return dx * dx + dz * dz;
+    }
+
+    static boolean withinReach(BlockPos pos, BlockPos worker, int reach) {
+      return horizontalDistSqr(pos, worker) <= (long) reach * reach;
+    }
+  }
+
+  /**
+   * What asking the navigator about one trunk found and cost. {@code decided}
+   * is false only when the pass's budget ran out before the tree had its full
+   * {@link #PATHS_PER_TREE}, so an unanswered tree is not mistaken for an
+   * unreachable one.
+   */
+  private record StandSearch(@Nullable BlockPos stand, int pathsAsked, boolean decided) {
   }
 
   /** The base of a tree: the lowest of its logs. */
@@ -456,6 +551,11 @@ public final class ChopStep implements WorkStep<ChopStep.Cut> {
    */
   @Nullable
   private static BlockPos standBeside(RealPerson person, ServerLevel level, BlockPos base) {
+    return standBeside(person, level, base, PATHS_PER_TREE).stand();
+  }
+
+  /** The same, asking the navigator at most {@code maxPaths} times, and saying what that cost. */
+  private static StandSearch standBeside(RealPerson person, ServerLevel level, BlockPos base, int maxPaths) {
     List<BlockPos> spots = new ArrayList<>();
     BlockPos.MutableBlockPos feet = new BlockPos.MutableBlockPos();
     for (int dx = -2; dx <= 2; dx++) {
@@ -476,11 +576,14 @@ public final class ChopStep implements WorkStep<ChopStep.Cut> {
       }
     }
     spots.sort(Comparator.comparingInt(spot -> spot.distManhattan(base)));
+    int limit = Math.min(maxPaths, PATHS_PER_TREE);
     int asked = 0;
     for (BlockPos spot : spots) {
-      if (asked++ >= PATHS_PER_TREE) {
-        break;
+      if (asked >= limit) {
+        // Out of this tree's allowance, or out of the pass's budget first.
+        return new StandSearch(null, asked, asked >= PATHS_PER_TREE);
       }
+      asked++;
       Path path = person.getNavigation().createPath(spot, 1);
       if (path == null || !path.canReach()) {
         continue;
@@ -492,10 +595,10 @@ public final class ChopStep implements WorkStep<ChopStep.Cut> {
       // Where the path actually ends is where the worker will stand.
       BlockPos there = end.asBlockPos();
       if (axeReachesFrom(there, eyesAt(there, person), base)) {
-        return there;
+        return new StandSearch(there, asked, true);
       }
     }
-    return null;
+    return new StandSearch(null, asked, true);
   }
 
   /**
@@ -522,13 +625,15 @@ public final class ChopStep implements WorkStep<ChopStep.Cut> {
     }
     leaves.sort(Comparator.comparingDouble(leaf -> leaf.distSqr(person.blockPosition())));
     int asked = 0;
+    int budget = PATHS_PER_PASS;
     for (BlockPos leaf : leaves) {
-      if (asked++ >= LEAVES_PER_PASS) {
+      if (asked++ >= LEAVES_PER_PASS || budget <= 0) {
         break;
       }
-      BlockPos stand = standBeside(person, level, leaf);
-      if (stand != null) {
-        return new Cut(leaf, stand);
+      StandSearch search = standBeside(person, level, leaf, budget);
+      budget -= search.pathsAsked();
+      if (search.stand() != null) {
+        return new Cut(leaf, search.stand());
       }
     }
     return null;

@@ -202,7 +202,18 @@ public class VillageManagerSaveData extends SavedData {
     public boolean registerVillage(ServerLevelAccessor levelAccess, BlockPos location,
             @javax.annotation.Nullable com.quzzar.kithkyn.village.buildings.VillageStyle style,
             com.quzzar.kithkyn.entities.Kind kind) {
-        if (!naturalSiteAvailable(location)) {
+        return registerVillage(levelAccess, location, style, kind, true);
+    }
+
+    /**
+     * The founding itself, with the separation check optional. Only the dev
+     * founding probe passes false: it reproduces a founding at exactly the site
+     * a player used, whether or not another village has since grown up beside it.
+     */
+    public boolean registerVillage(ServerLevelAccessor levelAccess, BlockPos location,
+            @javax.annotation.Nullable com.quzzar.kithkyn.village.buildings.VillageStyle style,
+            com.quzzar.kithkyn.entities.Kind kind, boolean requireSeparation) {
+        if (requireSeparation && !naturalSiteAvailable(location)) {
             Kithkyn.LOGGER.info("Refused to found a village at {}: within {} blocks of another village or a pending founding",
                     location.toShortString(), com.quzzar.kithkyn.village.VillageGeneration.MIN_SEPARATION_BLOCKS);
             return false;
