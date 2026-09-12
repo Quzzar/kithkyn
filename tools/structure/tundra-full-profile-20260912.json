@@ -1,0 +1,3102 @@
+{
+  "schemaVersion": 1,
+  "recorded": "2026-09-12T09:54:30.203249-04:00",
+  "purpose": "Complete Tundra source gallery for selecting the production village catalog.",
+  "status": "placed",
+  "entry": [
+    11107.5,
+    230,
+    986.5
+  ],
+  "bounds": [
+    11110,
+    220,
+    990,
+    11246,
+    292,
+    1795
+  ],
+  "returnPosition": [
+    10489.9,
+    232.0,
+    1321.6
+  ],
+  "selectionRule": "Every standalone CTOV Snowy Igloo template, every non-entity Dungeons & Taverns snowy tavern module, the complete CTOV snowy outpost building/detail set, and the Towns & Towers and Terralith snowy landmarks. Road pieces and entity-only jigsaw templates are omitted.",
+  "compatibilityPolicy": "Snowy Igloo templates that reference absent compatibility mods remain visible as full architectural shells; their unavailable palette entries are replaced in the private display copy with neutral vanilla worksite markers.",
+  "sources": [
+    "ChoiceTheorem's Overhauled Village 3.6.3: Snowy Igloo village and snowy outpost",
+    "Dungeons & Taverns 4.4.4: complete snowy tavern building and ground modules",
+    "Towns & Towers 1.13.9: Snowy Slopes inn and Snowy Plains outpost tower",
+    "Terralith 2.6.2: igloo and winter mage tower"
+  ],
+  "counts": {
+    "igloo": 77,
+    "tavern": 23,
+    "outpost": 12,
+    "landmark": 5,
+    "total": 117,
+    "rows": 17,
+    "compatibilityShells": 50
+  },
+  "rows": [
+    {
+      "id": "T01",
+      "title": "SNOWY IGLOO \u2014 CENTER + HOMES",
+      "family": "igloo",
+      "origin": [
+        11120,
+        230,
+        1000
+      ],
+      "bounds": [
+        11110,
+        220,
+        991,
+        11209,
+        247,
+        1020
+      ],
+      "maxHeight": 13,
+      "entries": [
+        {
+          "id": "T01.1",
+          "label": "Town Center",
+          "role": "center",
+          "family": "igloo",
+          "source": "data/ctov/structure/village/snowy_igloo/town_center.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "b7c700ccd1fa1ac3930860669ecdca2a54982735b611d92b4b9158ce0d20421b",
+          "preparedSha256": "97353fdfe486cb6ab8867caa18f94b73d4b5d361ca868e6da05dd673db87b3e5",
+          "size": [
+            17,
+            13,
+            17
+          ],
+          "origin": [
+            11120,
+            230,
+            1000
+          ],
+          "privateTemplate": "kithkyn_tundra_profile:igloo/town_center",
+          "compatibilityNamespaces": []
+        },
+        {
+          "id": "T01.2",
+          "label": "Med 1",
+          "role": "house",
+          "family": "igloo",
+          "source": "data/ctov/structure/village/snowy_igloo/house/med_1.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "ebd4627d976523bddd71a850c5dfa95a675bf7e73af4b429cef8cc796979707d",
+          "preparedSha256": "050e681c75ca2cb4705d6616e3a578573858bef76be6e3d8880d02907a9f2a25",
+          "size": [
+            8,
+            8,
+            7
+          ],
+          "origin": [
+            11143,
+            230,
+            1000
+          ],
+          "privateTemplate": "kithkyn_tundra_profile:igloo/house__med_1",
+          "compatibilityNamespaces": []
+        },
+        {
+          "id": "T01.3",
+          "label": "Med 2",
+          "role": "house",
+          "family": "igloo",
+          "source": "data/ctov/structure/village/snowy_igloo/house/med_2.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "355ec39ca5a9a866271279fdc213ef39eb8ba14b9d121821bdfa1c7ebb379c40",
+          "preparedSha256": "811d84b7173544dc95009c561d44ecd54a91ea1377a514438b5a852b5c961efc",
+          "size": [
+            8,
+            8,
+            8
+          ],
+          "origin": [
+            11157,
+            230,
+            1000
+          ],
+          "privateTemplate": "kithkyn_tundra_profile:igloo/house__med_2",
+          "compatibilityNamespaces": []
+        },
+        {
+          "id": "T01.4",
+          "label": "Small 1",
+          "role": "house",
+          "family": "igloo",
+          "source": "data/ctov/structure/village/snowy_igloo/house/small_1.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "c3b44b6d020655f7dcb5eb6536bc8ec357a99d5be6c9a080258ae9b62e365e54",
+          "preparedSha256": "73369012f8af8d33cdd54fd5a9432986a90c563eeb92550cbd733f53d0d0b55e",
+          "size": [
+            7,
+            7,
+            7
+          ],
+          "origin": [
+            11171,
+            230,
+            1000
+          ],
+          "privateTemplate": "kithkyn_tundra_profile:igloo/house__small_1",
+          "compatibilityNamespaces": []
+        },
+        {
+          "id": "T01.5",
+          "label": "Small 2",
+          "role": "house",
+          "family": "igloo",
+          "source": "data/ctov/structure/village/snowy_igloo/house/small_2.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "9f728684365f59ff25e29009f24f7095344ae0862467108df7477355bbb42e19",
+          "preparedSha256": "0a27bea786c7b578b40033769150c03a3ac92fd3b22849de3b7e5c0b30744a14",
+          "size": [
+            8,
+            7,
+            5
+          ],
+          "origin": [
+            11184,
+            230,
+            1000
+          ],
+          "privateTemplate": "kithkyn_tundra_profile:igloo/house__small_2",
+          "compatibilityNamespaces": []
+        },
+        {
+          "id": "T01.6",
+          "label": "Small 3",
+          "role": "house",
+          "family": "igloo",
+          "source": "data/ctov/structure/village/snowy_igloo/house/small_3.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "15370fcf8b4ca43f3f9f3dab60b8000530c1b552904f9e2222fcbc457882133c",
+          "preparedSha256": "574bbb9e764c0857e51d40b8c01b2e644855755f8f2c33c51d0a09f2851bdc86",
+          "size": [
+            9,
+            7,
+            6
+          ],
+          "origin": [
+            11198,
+            230,
+            1000
+          ],
+          "privateTemplate": "kithkyn_tundra_profile:igloo/house__small_3",
+          "compatibilityNamespaces": []
+        }
+      ]
+    },
+    {
+      "id": "T02",
+      "title": "SNOWY IGLOO \u2014 FOOD + OUTDOORS",
+      "family": "igloo",
+      "origin": [
+        11120,
+        230,
+        1048
+      ],
+      "bounds": [
+        11110,
+        220,
+        1039,
+        11181,
+        243,
+        1062
+      ],
+      "maxHeight": 9,
+      "entries": [
+        {
+          "id": "T02.1",
+          "label": "Butcher",
+          "role": "food",
+          "family": "igloo",
+          "source": "data/ctov/structure/village/snowy_igloo/jobsite/butcher.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "b53c5e07d92a88d3cbe92b6365e251dad57547066fb10fc9e1db05df3c51c4d0",
+          "preparedSha256": "5e2eeec36b4412b5d8824dabd71f766b55d314b0a459702d151db4c2594ab0de",
+          "size": [
+            6,
+            7,
+            9
+          ],
+          "origin": [
+            11120,
+            230,
+            1048
+          ],
+          "privateTemplate": "kithkyn_tundra_profile:igloo/jobsite__butcher",
+          "compatibilityNamespaces": []
+        },
+        {
+          "id": "T02.2",
+          "label": "Farm",
+          "role": "food",
+          "family": "igloo",
+          "source": "data/ctov/structure/village/snowy_igloo/jobsite/farm.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "130c4ff59edb0ffb16d26d85f6ca6ded64065474e05dca1200bcd4e755f6d86e",
+          "preparedSha256": "f5e5a39e9a9c101a0e5d24641ad214949815187272d179862b128929635c830d",
+          "size": [
+            7,
+            7,
+            11
+          ],
+          "origin": [
+            11132,
+            230,
+            1048
+          ],
+          "privateTemplate": "kithkyn_tundra_profile:igloo/jobsite__farm",
+          "compatibilityNamespaces": []
+        },
+        {
+          "id": "T02.3",
+          "label": "Fishing Hut",
+          "role": "food",
+          "family": "igloo",
+          "source": "data/ctov/structure/village/snowy_igloo/jobsite/fishing_hut.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "982a1192822b98d8ff96260c87635b5249423a8ce1685401a6839f8f1335e29c",
+          "preparedSha256": "d3a05e2dacedd8c612a7b9e48511697dce3af21e7e9ee36996cf4adce1258324",
+          "size": [
+            9,
+            9,
+            5
+          ],
+          "origin": [
+            11145,
+            230,
+            1048
+          ],
+          "privateTemplate": "kithkyn_tundra_profile:igloo/jobsite__fishing_hut",
+          "compatibilityNamespaces": []
+        },
+        {
+          "id": "T02.4",
+          "label": "Orchard",
+          "role": "food",
+          "family": "igloo",
+          "source": "data/ctov/structure/village/snowy_igloo/jobsite/orchard.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "1c0bf080ed49decb314084f9379eccf597aaf8a7ff4225a62b555e0549a73515",
+          "preparedSha256": "b510dd358e9dd7f84f70ec7468ab83aaeb346675547f7b0122ca795bcef06ab7",
+          "size": [
+            7,
+            7,
+            11
+          ],
+          "origin": [
+            11160,
+            230,
+            1048
+          ],
+          "privateTemplate": "kithkyn_tundra_profile:igloo/jobsite__orchard",
+          "compatibilityNamespaces": []
+        },
+        {
+          "id": "T02.5",
+          "label": "Shepherd",
+          "role": "food",
+          "family": "igloo",
+          "source": "data/ctov/structure/village/snowy_igloo/jobsite/shepherd.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "6e44f984006eb8637b6e7da7255845bfa6607c9ff69d5113e35cfe36877a5fb1",
+          "preparedSha256": "733f26f6dfd3d8f3fc116a060c578d688cce4888a07f126ba67e53bbaae77067",
+          "size": [
+            6,
+            7,
+            5
+          ],
+          "origin": [
+            11173,
+            230,
+            1048
+          ],
+          "privateTemplate": "kithkyn_tundra_profile:igloo/jobsite__shepherd",
+          "compatibilityNamespaces": []
+        }
+      ]
+    },
+    {
+      "id": "T03",
+      "title": "SNOWY IGLOO \u2014 WORKSHOPS + CIVIC",
+      "family": "igloo",
+      "origin": [
+        11120,
+        230,
+        1096
+      ],
+      "bounds": [
+        11110,
+        220,
+        1087,
+        11196,
+        248,
+        1109
+      ],
+      "maxHeight": 14,
+      "entries": [
+        {
+          "id": "T03.1",
+          "label": "Cartographer",
+          "role": "work",
+          "family": "igloo",
+          "source": "data/ctov/structure/village/snowy_igloo/jobsite/cartographer.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "3a2b9c6e04cb711bd8ef9a1b6422b38be1073fc1be32171a5cb0216304a41954",
+          "preparedSha256": "80b1fdae69cefb2b78a619857e02b6f60e34ce4d8ed7a44ba537991cf3d707b8",
+          "size": [
+            6,
+            11,
+            9
+          ],
+          "origin": [
+            11120,
+            230,
+            1096
+          ],
+          "privateTemplate": "kithkyn_tundra_profile:igloo/jobsite__cartographer",
+          "compatibilityNamespaces": []
+        },
+        {
+          "id": "T03.2",
+          "label": "Chemist",
+          "role": "work",
+          "family": "igloo",
+          "source": "data/ctov/structure/village/snowy_igloo/jobsite/chemist.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "d2abc83a8097b377f5fb4b151966eec3fa03944de2b210320aa3e121181ba442",
+          "preparedSha256": "639245d84798a5434306fbd82662bbd86281e294067d45c5bb3e08ce5e22c930",
+          "size": [
+            8,
+            10,
+            5
+          ],
+          "origin": [
+            11132,
+            230,
+            1096
+          ],
+          "privateTemplate": "kithkyn_tundra_profile:igloo/jobsite__chemist",
+          "compatibilityNamespaces": []
+        },
+        {
+          "id": "T03.3",
+          "label": "Library",
+          "role": "work",
+          "family": "igloo",
+          "source": "data/ctov/structure/village/snowy_igloo/jobsite/library.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "a1212e321fb4602f7d841c8857aeeb0b8d1872e702812d14ef70aac4d9a3b3fb",
+          "preparedSha256": "8bd43fc4e76c176888da761e63dc4c8f2ecf35d72f04872353e3ff790edac1e7",
+          "size": [
+            8,
+            8,
+            7
+          ],
+          "origin": [
+            11146,
+            230,
+            1096
+          ],
+          "privateTemplate": "kithkyn_tundra_profile:igloo/jobsite__library",
+          "compatibilityNamespaces": []
+        },
+        {
+          "id": "T03.4",
+          "label": "Mason",
+          "role": "work",
+          "family": "igloo",
+          "source": "data/ctov/structure/village/snowy_igloo/jobsite/mason.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "39d5da9396a7cc48cecea74512f407126026fa491be311b781c2271cfb162d39",
+          "preparedSha256": "0e20ad795a2b5ad762da718c792dd821fa1e6935c1c4a6472f2f4a73f49f847e",
+          "size": [
+            6,
+            7,
+            7
+          ],
+          "origin": [
+            11160,
+            230,
+            1096
+          ],
+          "privateTemplate": "kithkyn_tundra_profile:igloo/jobsite__mason",
+          "compatibilityNamespaces": []
+        },
+        {
+          "id": "T03.5",
+          "label": "Smith",
+          "role": "work",
+          "family": "igloo",
+          "source": "data/ctov/structure/village/snowy_igloo/jobsite/smith.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "a5d99875eacbee954bc0ad67d510929ab8b6ed45d80eb02df69773846ddb8f01",
+          "preparedSha256": "b56a5861dcfb4658e1d2a964e5d24b3a7e9aedc06717c84165af8495bd4dc6ce",
+          "size": [
+            7,
+            6,
+            8
+          ],
+          "origin": [
+            11172,
+            230,
+            1096
+          ],
+          "privateTemplate": "kithkyn_tundra_profile:igloo/jobsite__smith",
+          "compatibilityNamespaces": []
+        },
+        {
+          "id": "T03.6",
+          "label": "Vault",
+          "role": "work",
+          "family": "igloo",
+          "source": "data/ctov/structure/village/snowy_igloo/jobsite/vault.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "812bf685b442a0073738f4f26cc65e2d2ef4dcc511b9265b0ba12ffecd622d72",
+          "preparedSha256": "4db1a82b4e62c2af51b80de3c7097fea326f69de2c3b1f95e455625a4aac6394",
+          "size": [
+            9,
+            14,
+            10
+          ],
+          "origin": [
+            11185,
+            230,
+            1096
+          ],
+          "privateTemplate": "kithkyn_tundra_profile:igloo/jobsite__vault",
+          "compatibilityNamespaces": []
+        }
+      ]
+    },
+    {
+      "id": "T04",
+      "title": "SNOWY IGLOO \u2014 COMPAT SERVICES A",
+      "family": "igloo",
+      "origin": [
+        11120,
+        230,
+        1144
+      ],
+      "bounds": [
+        11110,
+        220,
+        1135,
+        11246,
+        254,
+        1159
+      ],
+      "maxHeight": 20,
+      "entries": [
+        {
+          "id": "T04.1",
+          "label": "Alchemist",
+          "role": "work",
+          "family": "igloo",
+          "source": "data/ctov/structure/village/snowy_igloo/jobsite/alchemist.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "10d416133998f20486088606fab6965b1ec350257bfb33014e4ffbaf001c7d46",
+          "preparedSha256": "d6c3800cc7b3723d4a6afcfe31b185f88b403dfe9ee876d7f149a0a4110a2a08",
+          "size": [
+            10,
+            7,
+            10
+          ],
+          "origin": [
+            11120,
+            230,
+            1144
+          ],
+          "privateTemplate": "kithkyn_tundra_profile:igloo/jobsite__alchemist",
+          "compatibilityNamespaces": [
+            "villagersplus"
+          ]
+        },
+        {
+          "id": "T04.2",
+          "label": "Aquarium",
+          "role": "work",
+          "family": "igloo",
+          "source": "data/ctov/structure/village/snowy_igloo/jobsite/aquarium.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "75349d18d19649d9f2168993c5b514761cd38b787c4cb4d70ddddd84a8ce0655",
+          "preparedSha256": "71e0b2e3d3e7808d15b38eddec80e57dbe7ff8f361be245c9aec91fc7cd32341",
+          "size": [
+            9,
+            9,
+            10
+          ],
+          "origin": [
+            11136,
+            230,
+            1144
+          ],
+          "privateTemplate": "kithkyn_tundra_profile:igloo/jobsite__aquarium",
+          "compatibilityNamespaces": [
+            "villagersplus"
+          ]
+        },
+        {
+          "id": "T04.3",
+          "label": "Archery Range",
+          "role": "work",
+          "family": "igloo",
+          "source": "data/ctov/structure/village/snowy_igloo/jobsite/archery_range.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "24d708c6c8d770f8cf68a1911b3e596af0db8f74c3133843b81296f942ca3f6e",
+          "preparedSha256": "cdf06eaba1881979c85a8b39ce50d273ebb266b5e7f145709bc75c7207b4e014",
+          "size": [
+            11,
+            20,
+            12
+          ],
+          "origin": [
+            11151,
+            230,
+            1144
+          ],
+          "privateTemplate": "kithkyn_tundra_profile:igloo/jobsite__archery_range",
+          "compatibilityNamespaces": [
+            "archers"
+          ]
+        },
+        {
+          "id": "T04.4",
+          "label": "Artist Studio",
+          "role": "work",
+          "family": "igloo",
+          "source": "data/ctov/structure/village/snowy_igloo/jobsite/artist_studio.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "e64a85aeceb96deaa86cf9e8b9cfffffcd7408b2aba32648487c41544376117c",
+          "preparedSha256": "f689e0bffb774a2f19355cc7f206489e0a19c630f8dd2832ab0f94187f6a955f",
+          "size": [
+            11,
+            15,
+            9
+          ],
+          "origin": [
+            11168,
+            230,
+            1144
+          ],
+          "privateTemplate": "kithkyn_tundra_profile:igloo/jobsite__artist_studio",
+          "compatibilityNamespaces": [
+            "easel_does_it"
+          ]
+        },
+        {
+          "id": "T04.5",
+          "label": "Bakery",
+          "role": "work",
+          "family": "igloo",
+          "source": "data/ctov/structure/village/snowy_igloo/jobsite/bakery.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "f3e80888a0262bf3dd56efbb7cc180f6c1ee20e689d0426393916810edb0ee82",
+          "preparedSha256": "2f8a6917a8cf12078aab1ad966178fd9b26f782da460d0d7138bf7512ddaa2a7",
+          "size": [
+            7,
+            7,
+            8
+          ],
+          "origin": [
+            11185,
+            230,
+            1144
+          ],
+          "privateTemplate": "kithkyn_tundra_profile:igloo/jobsite__bakery",
+          "compatibilityNamespaces": [
+            "jmc"
+          ]
+        },
+        {
+          "id": "T04.6",
+          "label": "Balloon Stand",
+          "role": "work",
+          "family": "igloo",
+          "source": "data/ctov/structure/village/snowy_igloo/jobsite/balloon_stand.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "976e7abffb5f15d3b10c44414e472e71774a91a676c3ebc494fe19a39540d13e",
+          "preparedSha256": "46f44825efc0d7a39a2d5e3344bab58668c93e74c2da2f331ca1359daa2543fd",
+          "size": [
+            5,
+            7,
+            5
+          ],
+          "origin": [
+            11198,
+            230,
+            1144
+          ],
+          "privateTemplate": "kithkyn_tundra_profile:igloo/jobsite__balloon_stand",
+          "compatibilityNamespaces": [
+            "cloudstorage"
+          ]
+        },
+        {
+          "id": "T04.7",
+          "label": "Barracks",
+          "role": "work",
+          "family": "igloo",
+          "source": "data/ctov/structure/village/snowy_igloo/jobsite/barracks.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "5c350448bf61bbd99952158382498b6ae12859451a2f3f5dcd827f2fbee604ba",
+          "preparedSha256": "203ac5a98f5afded85d721e2d56b4a174c70adda53252a3f200fc6cc0cec7bad",
+          "size": [
+            11,
+            20,
+            12
+          ],
+          "origin": [
+            11209,
+            230,
+            1144
+          ],
+          "privateTemplate": "kithkyn_tundra_profile:igloo/jobsite__barracks",
+          "compatibilityNamespaces": [
+            "rogues"
+          ]
+        },
+        {
+          "id": "T04.8",
+          "label": "Botanist",
+          "role": "work",
+          "family": "igloo",
+          "source": "data/ctov/structure/village/snowy_igloo/jobsite/botanist.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "9dd79ffa320ac51be9cecc545004587789f8d899ea2b75e63dd1586b1a8faf6b",
+          "preparedSha256": "fa74327ec34855e0e10e55167ebcb47b8fa5c23f8805ee9893db4c2aa55046b7",
+          "size": [
+            7,
+            7,
+            11
+          ],
+          "origin": [
+            11226,
+            230,
+            1144
+          ],
+          "privateTemplate": "kithkyn_tundra_profile:igloo/jobsite__botanist",
+          "compatibilityNamespaces": [
+            "beautify"
+          ]
+        },
+        {
+          "id": "T04.9",
+          "label": "Chicken Coop",
+          "role": "work",
+          "family": "igloo",
+          "source": "data/ctov/structure/village/snowy_igloo/jobsite/chicken_coop.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "aaf679885bda5effad7b0c66268b3f0fefce7ba894f71e5b96b496a9effa9535",
+          "preparedSha256": "844bb5bd9292d0a126a3ae9c5c6bea79d19f48473f3a9c7ed8401c9bfc72dbde",
+          "size": [
+            5,
+            5,
+            5
+          ],
+          "origin": [
+            11239,
+            230,
+            1144
+          ],
+          "privateTemplate": "kithkyn_tundra_profile:igloo/jobsite__chicken_coop",
+          "compatibilityNamespaces": [
+            "incubation"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "T05",
+      "title": "SNOWY IGLOO \u2014 COMPAT SERVICES B",
+      "family": "igloo",
+      "origin": [
+        11120,
+        230,
+        1192
+      ],
+      "bounds": [
+        11110,
+        220,
+        1183,
+        11236,
+        254,
+        1210
+      ],
+      "maxHeight": 20,
+      "entries": [
+        {
+          "id": "T05.1",
+          "label": "Computer Lab",
+          "role": "work",
+          "family": "igloo",
+          "source": "data/ctov/structure/village/snowy_igloo/jobsite/computer_lab.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "bc0a7b0d365aa68e6b305b689f96fede490459d3ec1e183a9cf76e5b2bb5b5b9",
+          "preparedSha256": "0ad01e783cb3bc66b31b3b8db15db2c0009678c83878c23aac25f5d9080377e0",
+          "size": [
+            9,
+            12,
+            10
+          ],
+          "origin": [
+            11120,
+            230,
+            1192
+          ],
+          "privateTemplate": "kithkyn_tundra_profile:igloo/jobsite__computer_lab",
+          "compatibilityNamespaces": [
+            "advancedperipherals",
+            "computercraft"
+          ]
+        },
+        {
+          "id": "T05.2",
+          "label": "Engineer",
+          "role": "work",
+          "family": "igloo",
+          "source": "data/ctov/structure/village/snowy_igloo/jobsite/engineer.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "0eaf32cb24775c1a94fe3eb0b21a239edd73ef4bfc11869e346c8167fb08e37f",
+          "preparedSha256": "8bc7f28e0d42d913363cdec96d7a6952e20bf58e703cc1804f24491d45670da2",
+          "size": [
+            7,
+            5,
+            8
+          ],
+          "origin": [
+            11135,
+            230,
+            1192
+          ],
+          "privateTemplate": "kithkyn_tundra_profile:igloo/jobsite__engineer",
+          "compatibilityNamespaces": [
+            "morevillagers"
+          ]
+        },
+        {
+          "id": "T05.3",
+          "label": "Factory",
+          "role": "work",
+          "family": "igloo",
+          "source": "data/ctov/structure/village/snowy_igloo/jobsite/factory.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "47e1bbe870bcbf1511ab401d2e7e4f8c335ac93aecc6bc9d830c9315966269d8",
+          "preparedSha256": "e7ddab799ac48937d2a9721e31c555e3a078a9eb6a5a8183acc8e4a148566d52",
+          "size": [
+            15,
+            20,
+            15
+          ],
+          "origin": [
+            11148,
+            230,
+            1192
+          ],
+          "privateTemplate": "kithkyn_tundra_profile:igloo/jobsite__factory",
+          "compatibilityNamespaces": [
+            "create"
+          ]
+        },
+        {
+          "id": "T05.4",
+          "label": "Fd Farm",
+          "role": "food",
+          "family": "igloo",
+          "source": "data/ctov/structure/village/snowy_igloo/jobsite/fd_farm.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "d68455f9c71f15d8e315ef94c3cd3c0384d6724b827b2467f457c739537ce707",
+          "preparedSha256": "8efb2a0dbf2e8a426059c8af4fa90b5bc45c1d83104cd489f1c66fb3e865d291",
+          "size": [
+            7,
+            8,
+            11
+          ],
+          "origin": [
+            11169,
+            230,
+            1192
+          ],
+          "privateTemplate": "kithkyn_tundra_profile:igloo/jobsite__fd_farm",
+          "compatibilityNamespaces": [
+            "farmersdelight"
+          ]
+        },
+        {
+          "id": "T05.5",
+          "label": "Flower Farm",
+          "role": "food",
+          "family": "igloo",
+          "source": "data/ctov/structure/village/snowy_igloo/jobsite/flower_farm.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "da769abf0c34621c4cc5a24e10ec627bcc377b209183d1704f3aefbd327b5e01",
+          "preparedSha256": "b863a69e243171463e896d1f0dcb3b8195427d6d5e63e17cbd53d4fe38ad08a0",
+          "size": [
+            9,
+            10,
+            9
+          ],
+          "origin": [
+            11182,
+            230,
+            1192
+          ],
+          "privateTemplate": "kithkyn_tundra_profile:igloo/jobsite__flower_farm",
+          "compatibilityNamespaces": [
+            "floralis"
+          ]
+        },
+        {
+          "id": "T05.6",
+          "label": "Forager",
+          "role": "work",
+          "family": "igloo",
+          "source": "data/ctov/structure/village/snowy_igloo/jobsite/forager.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "9174310e3aaea9c6beb5a1ac503c4268a4a31f691fa5a675040fe0c00ac0ad66",
+          "preparedSha256": "9b07c2aeb35669fd5486ee4e7246691f669d94afcdc9e67035407b43c0d7b0b0",
+          "size": [
+            9,
+            9,
+            10
+          ],
+          "origin": [
+            11197,
+            230,
+            1192
+          ],
+          "privateTemplate": "kithkyn_tundra_profile:igloo/jobsite__forager",
+          "compatibilityNamespaces": [
+            "biomeswevegone"
+          ]
+        },
+        {
+          "id": "T05.7",
+          "label": "Garden",
+          "role": "work",
+          "family": "igloo",
+          "source": "data/ctov/structure/village/snowy_igloo/jobsite/garden.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "9147d071a413e5b6bad48bac51a04261fbd8e311757966be48c5a42d03e1c4e4",
+          "preparedSha256": "885db5230b85df47cc457655f22687e4c5d702f32cc171242da56c4f96ab5df2",
+          "size": [
+            9,
+            6,
+            8
+          ],
+          "origin": [
+            11212,
+            230,
+            1192
+          ],
+          "privateTemplate": "kithkyn_tundra_profile:igloo/jobsite__garden",
+          "compatibilityNamespaces": [
+            "morevillagers"
+          ]
+        },
+        {
+          "id": "T05.8",
+          "label": "Gazebo",
+          "role": "work",
+          "family": "igloo",
+          "source": "data/ctov/structure/village/snowy_igloo/jobsite/gazebo.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "7d9da7169b8852c53e46b0f2cfb9b4587ee1736c0c83f8adc414ec86c2893c14",
+          "preparedSha256": "56762cb5fa354efeefef29ddd500781c301c65373a7b4cc06574026a2e888dde",
+          "size": [
+            7,
+            10,
+            7
+          ],
+          "origin": [
+            11227,
+            230,
+            1192
+          ],
+          "privateTemplate": "kithkyn_tundra_profile:igloo/jobsite__gazebo",
+          "compatibilityNamespaces": [
+            "spell_engine"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "T06",
+      "title": "SNOWY IGLOO \u2014 COMPAT SERVICES C",
+      "family": "igloo",
+      "origin": [
+        11120,
+        230,
+        1240
+      ],
+      "bounds": [
+        11110,
+        220,
+        1231,
+        11227,
+        249,
+        1252
+      ],
+      "maxHeight": 15,
+      "entries": [
+        {
+          "id": "T06.1",
+          "label": "Gunsmith",
+          "role": "work",
+          "family": "igloo",
+          "source": "data/ctov/structure/village/snowy_igloo/jobsite/gunsmith.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "c122d2a6c58a0e42be22fef06894fa8e68664f0ef431f7ac8b5756f64b4909fa",
+          "preparedSha256": "af3761aea9b391914d6399d8c1c22c6f7bd1b9b3cd1cfdacd2d4dbfc08e7d849",
+          "size": [
+            9,
+            10,
+            9
+          ],
+          "origin": [
+            11120,
+            230,
+            1240
+          ],
+          "privateTemplate": "kithkyn_tundra_profile:igloo/jobsite__gunsmith",
+          "compatibilityNamespaces": [
+            "scguns"
+          ]
+        },
+        {
+          "id": "T06.2",
+          "label": "Horticulturist",
+          "role": "work",
+          "family": "igloo",
+          "source": "data/ctov/structure/village/snowy_igloo/jobsite/horticulturist.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "f02949eae3936cfda35f68c85dbb98307f66adcdc932ccd34d17db7dfae5fe36",
+          "preparedSha256": "525a599b7bdc3ed2c61fee60fb9141ac90ef8653358c18993d28b7236c9f28e4",
+          "size": [
+            9,
+            14,
+            9
+          ],
+          "origin": [
+            11135,
+            230,
+            1240
+          ],
+          "privateTemplate": "kithkyn_tundra_profile:igloo/jobsite__horticulturist",
+          "compatibilityNamespaces": [
+            "villagersplus"
+          ]
+        },
+        {
+          "id": "T06.3",
+          "label": "Hunter",
+          "role": "work",
+          "family": "igloo",
+          "source": "data/ctov/structure/village/snowy_igloo/jobsite/hunter.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "e01f7c7771edb0ca383168d903742f11f6659f9467db83bd8054680ce6019b84",
+          "preparedSha256": "203f97dbd784ac748bbe52e8030a5143c0f12a1f3ec9b85299ed49dad7c36a64",
+          "size": [
+            5,
+            4,
+            6
+          ],
+          "origin": [
+            11150,
+            230,
+            1240
+          ],
+          "privateTemplate": "kithkyn_tundra_profile:igloo/jobsite__hunter",
+          "compatibilityNamespaces": [
+            "morevillagers"
+          ]
+        },
+        {
+          "id": "T06.4",
+          "label": "Hunter Trainer",
+          "role": "work",
+          "family": "igloo",
+          "source": "data/ctov/structure/village/snowy_igloo/jobsite/hunter_trainer.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "a512a81d8cbc5a681729be659dd240135deb28278cf25428cefa11bf83a496ae",
+          "preparedSha256": "44592208c5322a7c3bd6a1e3d5c01b55d029a108cb19ddb880577797872eb36f",
+          "size": [
+            8,
+            8,
+            7
+          ],
+          "origin": [
+            11161,
+            230,
+            1240
+          ],
+          "privateTemplate": "kithkyn_tundra_profile:igloo/jobsite__hunter_trainer",
+          "compatibilityNamespaces": [
+            "vampirism"
+          ]
+        },
+        {
+          "id": "T06.5",
+          "label": "Imengineer",
+          "role": "work",
+          "family": "igloo",
+          "source": "data/ctov/structure/village/snowy_igloo/jobsite/imengineer.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "dc9ed5db558407752e11b9ca958b82552dca03a1f4cd00c5b06a7a5f19113814",
+          "preparedSha256": "fc68f1cae24f2570eedf91a3355b110b3000e41c5df8ebd2d9b3143def481115",
+          "size": [
+            7,
+            5,
+            8
+          ],
+          "origin": [
+            11175,
+            230,
+            1240
+          ],
+          "privateTemplate": "kithkyn_tundra_profile:igloo/jobsite__imengineer",
+          "compatibilityNamespaces": [
+            "immersiveengineering"
+          ]
+        },
+        {
+          "id": "T06.6",
+          "label": "Irons Jewelry",
+          "role": "work",
+          "family": "igloo",
+          "source": "data/ctov/structure/village/snowy_igloo/jobsite/irons_jewelry.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "35b3ef3450dae1c20ac4f23922ecee6db3bb432efbc3d803aee03d140dcddd9a",
+          "preparedSha256": "5388c8549b7f3cc0e7426167669b0cd67ba50ce6a4692e12926675039553d962",
+          "size": [
+            9,
+            15,
+            9
+          ],
+          "origin": [
+            11188,
+            230,
+            1240
+          ],
+          "privateTemplate": "kithkyn_tundra_profile:igloo/jobsite__irons_jewelry",
+          "compatibilityNamespaces": [
+            "irons_jewelry"
+          ]
+        },
+        {
+          "id": "T06.7",
+          "label": "Jewelry Shop",
+          "role": "work",
+          "family": "igloo",
+          "source": "data/ctov/structure/village/snowy_igloo/jobsite/jewelry_shop.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "a174dd5a812b0a8d09ee1b3a18942e21616485a38f47d34c6a47b47424927507",
+          "preparedSha256": "7d502629a0e5c640dcc89f6ac8635ff0ae214a3477626ab48dcf6adf4ea3a6e4",
+          "size": [
+            9,
+            15,
+            9
+          ],
+          "origin": [
+            11203,
+            230,
+            1240
+          ],
+          "privateTemplate": "kithkyn_tundra_profile:igloo/jobsite__jewelry_shop",
+          "compatibilityNamespaces": [
+            "jewelry"
+          ]
+        },
+        {
+          "id": "T06.8",
+          "label": "Krusty Krab",
+          "role": "work",
+          "family": "igloo",
+          "source": "data/ctov/structure/village/snowy_igloo/jobsite/krusty_krab.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "b8c6c3b4aeb0b9e3794766da4a310b461708225f44a2f31146a6c1c1f87f50ec",
+          "preparedSha256": "72c6541b07d40203f834c386d30c307d63975d5c1b7abc162534303fdd63c626",
+          "size": [
+            7,
+            7,
+            8
+          ],
+          "origin": [
+            11218,
+            230,
+            1240
+          ],
+          "privateTemplate": "kithkyn_tundra_profile:igloo/jobsite__krusty_krab",
+          "compatibilityNamespaces": [
+            "jellyfishing"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "T07",
+      "title": "SNOWY IGLOO \u2014 COMPAT SERVICES D",
+      "family": "igloo",
+      "origin": [
+        11120,
+        230,
+        1288
+      ],
+      "bounds": [
+        11110,
+        220,
+        1279,
+        11243,
+        249,
+        1303
+      ],
+      "maxHeight": 15,
+      "entries": [
+        {
+          "id": "T07.1",
+          "label": "Mechanic",
+          "role": "work",
+          "family": "igloo",
+          "source": "data/ctov/structure/village/snowy_igloo/jobsite/mechanic.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "f23232edf997fbc4162112b1911dc4656b4c0b92d89e151e1b6791f959a01382",
+          "preparedSha256": "a9b39407ecd890f4cad7981169a7f04d43285a639b476194a5eeb1575dab00b1",
+          "size": [
+            9,
+            7,
+            9
+          ],
+          "origin": [
+            11120,
+            230,
+            1288
+          ],
+          "privateTemplate": "kithkyn_tundra_profile:igloo/jobsite__mechanic",
+          "compatibilityNamespaces": [
+            "pneumaticcraft"
+          ]
+        },
+        {
+          "id": "T07.2",
+          "label": "Occultist",
+          "role": "work",
+          "family": "igloo",
+          "source": "data/ctov/structure/village/snowy_igloo/jobsite/occultist.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "9fedfe06c36dc5c2b21f0489226c87457d0aa399fca5ee4488f8fe9b5c8f64e9",
+          "preparedSha256": "39e7b57e559194e6c6f6f9a49b2fbf0353885509b9a7915b039fdc9ff893979f",
+          "size": [
+            9,
+            9,
+            12
+          ],
+          "origin": [
+            11135,
+            230,
+            1288
+          ],
+          "privateTemplate": "kithkyn_tundra_profile:igloo/jobsite__occultist",
+          "compatibilityNamespaces": [
+            "villagersplus"
+          ]
+        },
+        {
+          "id": "T07.3",
+          "label": "Oceanographer",
+          "role": "work",
+          "family": "igloo",
+          "source": "data/ctov/structure/village/snowy_igloo/jobsite/oceanographer.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "c796a1f336d9978cba933b6f597fa5d974a42526218276661f87de8d834626dc",
+          "preparedSha256": "e1e10de753d2397c46613cd8ea297cbeaeaae2f1867fab4448a675ba1eee0357",
+          "size": [
+            9,
+            6,
+            9
+          ],
+          "origin": [
+            11150,
+            230,
+            1288
+          ],
+          "privateTemplate": "kithkyn_tundra_profile:igloo/jobsite__oceanographer",
+          "compatibilityNamespaces": [
+            "morevillagers"
+          ]
+        },
+        {
+          "id": "T07.4",
+          "label": "Petshop",
+          "role": "work",
+          "family": "igloo",
+          "source": "data/ctov/structure/village/snowy_igloo/jobsite/petshop.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "13da54c949b0a7191450354c9a0d4186620c4d1b770c6ab56144093bc26c7419",
+          "preparedSha256": "69b305152f46cf39022f11aadb525311c4bdcbf4d786c3568ac94f1593cd350f",
+          "size": [
+            9,
+            10,
+            10
+          ],
+          "origin": [
+            11165,
+            230,
+            1288
+          ],
+          "privateTemplate": "kithkyn_tundra_profile:igloo/jobsite__petshop",
+          "compatibilityNamespaces": [
+            "domesticationinnovation",
+            "rats",
+            "simplycats"
+          ]
+        },
+        {
+          "id": "T07.5",
+          "label": "Pokecenter",
+          "role": "work",
+          "family": "igloo",
+          "source": "data/ctov/structure/village/snowy_igloo/jobsite/pokecenter.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "69f48649e91469f7f89067a3ac01c96f961f4bd69f90258794452e5312c02582",
+          "preparedSha256": "2c3688ccacb10f8998e39880bed82aa7502a9930c6c7bf64e72e5c0e4cb15293",
+          "size": [
+            15,
+            15,
+            11
+          ],
+          "origin": [
+            11180,
+            230,
+            1288
+          ],
+          "privateTemplate": "kithkyn_tundra_profile:igloo/jobsite__pokecenter",
+          "compatibilityNamespaces": [
+            "cobblemon"
+          ]
+        },
+        {
+          "id": "T07.6",
+          "label": "Priest Tower",
+          "role": "landmark",
+          "family": "igloo",
+          "source": "data/ctov/structure/village/snowy_igloo/jobsite/priest_tower.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "fe65b19ad5bafde8d4b869bac696ae197f193bcda9dbb8c449ad8badaa48fe32",
+          "preparedSha256": "f1e387c707aedae8203bb4c0d5571ee9f959e96efd693537343facbf9ffd0744",
+          "size": [
+            9,
+            6,
+            9
+          ],
+          "origin": [
+            11201,
+            230,
+            1288
+          ],
+          "privateTemplate": "kithkyn_tundra_profile:igloo/jobsite__priest_tower",
+          "compatibilityNamespaces": [
+            "irons_spellbooks"
+          ]
+        },
+        {
+          "id": "T07.7",
+          "label": "Restaurant",
+          "role": "work",
+          "family": "igloo",
+          "source": "data/ctov/structure/village/snowy_igloo/jobsite/restaurant.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "cc1d3bb1a01a46e948623d221949029627edadee79faa500a24763ca5e98609f",
+          "preparedSha256": "9c54ca8bc12cdb37ee3ffb8d231da20c64570315b0dea0f8aa044e803d8f69e0",
+          "size": [
+            7,
+            7,
+            8
+          ],
+          "origin": [
+            11216,
+            230,
+            1288
+          ],
+          "privateTemplate": "kithkyn_tundra_profile:igloo/jobsite__restaurant",
+          "compatibilityNamespaces": [
+            "farmersdelight"
+          ]
+        },
+        {
+          "id": "T07.8",
+          "label": "Sanctuary",
+          "role": "work",
+          "family": "igloo",
+          "source": "data/ctov/structure/village/snowy_igloo/jobsite/sanctuary.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "13f4faa24c4641aad6942494c3fc8037240ca821e30cb524d78e53f121a8d303",
+          "preparedSha256": "874d78bd8fca0c9fd04b3af7a1d3cd2e223ca58277f03af306e04d7df5a82f54",
+          "size": [
+            12,
+            15,
+            12
+          ],
+          "origin": [
+            11229,
+            230,
+            1288
+          ],
+          "privateTemplate": "kithkyn_tundra_profile:igloo/jobsite__sanctuary",
+          "compatibilityNamespaces": [
+            "paladins"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "T08",
+      "title": "SNOWY IGLOO \u2014 COMPAT SERVICES E",
+      "family": "igloo",
+      "origin": [
+        11120,
+        230,
+        1336
+      ],
+      "bounds": [
+        11110,
+        220,
+        1327,
+        11237,
+        249,
+        1351
+      ],
+      "maxHeight": 15,
+      "entries": [
+        {
+          "id": "T08.1",
+          "label": "Sawmill",
+          "role": "work",
+          "family": "igloo",
+          "source": "data/ctov/structure/village/snowy_igloo/jobsite/sawmill.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "59d2e7c7c32598de7831cb4834aaba8a1d589d7133509dff9a5b00d3052bfee8",
+          "preparedSha256": "2592b338a8141ca664407a44c8813d3886690e5e64c8f032cee0196ccdb14f92",
+          "size": [
+            9,
+            10,
+            9
+          ],
+          "origin": [
+            11120,
+            230,
+            1336
+          ],
+          "privateTemplate": "kithkyn_tundra_profile:igloo/jobsite__sawmill",
+          "compatibilityNamespaces": [
+            "sawmill"
+          ]
+        },
+        {
+          "id": "T08.2",
+          "label": "Scriber",
+          "role": "work",
+          "family": "igloo",
+          "source": "data/ctov/structure/village/snowy_igloo/jobsite/scriber.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "ce2338d27dad7dc5c9983cc2c694e044b6bd63e27c827f095d5fd9a886fef194",
+          "preparedSha256": "0c2c41c99133562f0e6f450d69334f473b3a6c301269885c1302078b427ff7f9",
+          "size": [
+            9,
+            12,
+            9
+          ],
+          "origin": [
+            11135,
+            230,
+            1336
+          ],
+          "privateTemplate": "kithkyn_tundra_profile:igloo/jobsite__scriber",
+          "compatibilityNamespaces": [
+            "iceandfire"
+          ]
+        },
+        {
+          "id": "T08.3",
+          "label": "Tavern",
+          "role": "work",
+          "family": "igloo",
+          "source": "data/ctov/structure/village/snowy_igloo/jobsite/tavern.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "1da7cdae4afa932eb44dacbdcb48e2a496aed2da2fa9a59b3db6fd1197b9008a",
+          "preparedSha256": "567c467cc0178bedef5790bb5b274b5a9f157f34d45cb4d2b3d14e2cfd725ad0",
+          "size": [
+            11,
+            15,
+            12
+          ],
+          "origin": [
+            11150,
+            230,
+            1336
+          ],
+          "privateTemplate": "kithkyn_tundra_profile:igloo/jobsite__tavern",
+          "compatibilityNamespaces": [
+            "village_taverns"
+          ]
+        },
+        {
+          "id": "T08.4",
+          "label": "Vineyard",
+          "role": "work",
+          "family": "igloo",
+          "source": "data/ctov/structure/village/snowy_igloo/jobsite/vineyard.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "bf184a394123b3896f338a0671ea50ced0cc8b1486756ed59358fca54697acad",
+          "preparedSha256": "1810e579c10ec35997f8ac4648909fad02c97b8403e03294f35820aef1487629",
+          "size": [
+            11,
+            15,
+            11
+          ],
+          "origin": [
+            11167,
+            230,
+            1336
+          ],
+          "privateTemplate": "kithkyn_tundra_profile:igloo/jobsite__vineyard",
+          "compatibilityNamespaces": [
+            "vinery"
+          ]
+        },
+        {
+          "id": "T08.5",
+          "label": "Warehouse",
+          "role": "work",
+          "family": "igloo",
+          "source": "data/ctov/structure/village/snowy_igloo/jobsite/warehouse.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "ee849d5525f31f82d104be9ea77de47082da948fb5b28867fb8e2035a4b2534f",
+          "preparedSha256": "3ba9e1c7905a2279cfc877a6a1fb5e12198f6fae765645b616d0e866d5c39404",
+          "size": [
+            9,
+            9,
+            10
+          ],
+          "origin": [
+            11184,
+            230,
+            1336
+          ],
+          "privateTemplate": "kithkyn_tundra_profile:igloo/jobsite__warehouse",
+          "compatibilityNamespaces": [
+            "wares"
+          ]
+        },
+        {
+          "id": "T08.6",
+          "label": "Windmill",
+          "role": "work",
+          "family": "igloo",
+          "source": "data/ctov/structure/village/snowy_igloo/jobsite/windmill.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "b6a18e2dbf65b66bfc0353f5a8508f5a2660da35843adf9eb64691223cda24a1",
+          "preparedSha256": "73c04a13266a3e8b2d76a8898c43d7a0063f8cd4833794157f1abd2af25d3671",
+          "size": [
+            9,
+            15,
+            7
+          ],
+          "origin": [
+            11199,
+            230,
+            1336
+          ],
+          "privateTemplate": "kithkyn_tundra_profile:igloo/jobsite__windmill",
+          "compatibilityNamespaces": [
+            "create"
+          ]
+        },
+        {
+          "id": "T08.7",
+          "label": "Wizard Tower",
+          "role": "landmark",
+          "family": "igloo",
+          "source": "data/ctov/structure/village/snowy_igloo/jobsite/wizard_tower.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "48f6dc92665c3638f90ae5148762f4d09784a5a83bcaf2761fe85da934343019",
+          "preparedSha256": "d9d3fef1400b7d0e68ac481d0ca209ccb4151faa7904ea32ba68569f87ebe620",
+          "size": [
+            9,
+            6,
+            9
+          ],
+          "origin": [
+            11214,
+            230,
+            1336
+          ],
+          "privateTemplate": "kithkyn_tundra_profile:igloo/jobsite__wizard_tower",
+          "compatibilityNamespaces": [
+            "runes",
+            "spell_engine"
+          ]
+        },
+        {
+          "id": "T08.8",
+          "label": "Woodworker",
+          "role": "work",
+          "family": "igloo",
+          "source": "data/ctov/structure/village/snowy_igloo/jobsite/woodworker.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "edfb38c5c7fb36011e12563cfdd0380b30b07cc3568a1f52a5fa38ed1318ba0a",
+          "preparedSha256": "7742fa154225bfdfc060d070cfad105a3bdd0ae8b02f5a5395e9a72ac2196236",
+          "size": [
+            6,
+            7,
+            7
+          ],
+          "origin": [
+            11229,
+            230,
+            1336
+          ],
+          "privateTemplate": "kithkyn_tundra_profile:igloo/jobsite__woodworker",
+          "compatibilityNamespaces": [
+            "morevillagers"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "T09",
+      "title": "SNOWY IGLOO \u2014 VILLAGE DETAILS",
+      "family": "igloo",
+      "origin": [
+        11120,
+        230,
+        1384
+      ],
+      "bounds": [
+        11110,
+        220,
+        1375,
+        11206,
+        239,
+        1391
+      ],
+      "maxHeight": 5,
+      "entries": [
+        {
+          "id": "T09.1",
+          "label": "Bench",
+          "role": "detail",
+          "family": "igloo",
+          "source": "data/ctov/structure/village/snowy_igloo/deco/bench.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "7e5709f13b396c4984a6fa05c086ab7f0c30225d63777a74b57dbfe363a8ca50",
+          "preparedSha256": "8da9b393ac054952678b9aa92ccca71dc5ea822f81363f36dcd1debf362b031e",
+          "size": [
+            5,
+            1,
+            3
+          ],
+          "origin": [
+            11120,
+            230,
+            1384
+          ],
+          "privateTemplate": "kithkyn_tundra_profile:igloo/deco__bench",
+          "compatibilityNamespaces": []
+        },
+        {
+          "id": "T09.2",
+          "label": "Berry",
+          "role": "detail",
+          "family": "igloo",
+          "source": "data/ctov/structure/village/snowy_igloo/deco/berry.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "a437211b38f0156fed25cc8db61c9b148e8079af88c6f94f1c394bf9e4e933ac",
+          "preparedSha256": "bb7ad1e43d49721594bd9e399fce388fcda2c4a154ee02ffefa87a0ad00c8e0a",
+          "size": [
+            5,
+            3,
+            4
+          ],
+          "origin": [
+            11131,
+            230,
+            1384
+          ],
+          "privateTemplate": "kithkyn_tundra_profile:igloo/deco__berry",
+          "compatibilityNamespaces": []
+        },
+        {
+          "id": "T09.3",
+          "label": "Bucket",
+          "role": "detail",
+          "family": "igloo",
+          "source": "data/ctov/structure/village/snowy_igloo/deco/bucket.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "be002cde0169f77e7b40ce51631f4d123428dc96cbd9db7ebff0b7552e66954f",
+          "preparedSha256": "b2b393ab4f13a1140fed8af1da8634afd7ee0cc254c661a395f171a442113932",
+          "size": [
+            3,
+            1,
+            4
+          ],
+          "origin": [
+            11142,
+            230,
+            1384
+          ],
+          "privateTemplate": "kithkyn_tundra_profile:igloo/deco__bucket",
+          "compatibilityNamespaces": []
+        },
+        {
+          "id": "T09.4",
+          "label": "Lamp 1",
+          "role": "detail",
+          "family": "igloo",
+          "source": "data/ctov/structure/village/snowy_igloo/deco/lamp_1.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "7a4ed7cbdc715e9809c9c284727646698066c3e02510ff31dfce83d7b4d3548a",
+          "preparedSha256": "aee6ccce5c2d75e4453970f995b3bc907c9d9ed4e6533b18d1b98ef8cc5795b1",
+          "size": [
+            1,
+            5,
+            2
+          ],
+          "origin": [
+            11151,
+            230,
+            1384
+          ],
+          "privateTemplate": "kithkyn_tundra_profile:igloo/deco__lamp_1",
+          "compatibilityNamespaces": []
+        },
+        {
+          "id": "T09.5",
+          "label": "Lamp 2",
+          "role": "detail",
+          "family": "igloo",
+          "source": "data/ctov/structure/village/snowy_igloo/deco/lamp_2.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "1b2f172e7fc7d536370f0885f37a0d062f406ec82c225c2c3bc230eded059197",
+          "preparedSha256": "995364ef522319ff6277c2537ffbc668e5aedd6ee79f43ae8fe071a786412119",
+          "size": [
+            2,
+            5,
+            2
+          ],
+          "origin": [
+            11158,
+            230,
+            1384
+          ],
+          "privateTemplate": "kithkyn_tundra_profile:igloo/deco__lamp_2",
+          "compatibilityNamespaces": []
+        },
+        {
+          "id": "T09.6",
+          "label": "Lamp 3",
+          "role": "detail",
+          "family": "igloo",
+          "source": "data/ctov/structure/village/snowy_igloo/deco/lamp_3.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "0f39fdd02edf1a3e114405042f934a44f5f96d19f787a64546653bc461d764ed",
+          "preparedSha256": "5c0829cd6f71117108e208d8ca6b02207da38aa2b8f40aaeac9cab5fd247e157",
+          "size": [
+            2,
+            5,
+            2
+          ],
+          "origin": [
+            11166,
+            230,
+            1384
+          ],
+          "privateTemplate": "kithkyn_tundra_profile:igloo/deco__lamp_3",
+          "compatibilityNamespaces": []
+        },
+        {
+          "id": "T09.7",
+          "label": "Lamp 4",
+          "role": "detail",
+          "family": "igloo",
+          "source": "data/ctov/structure/village/snowy_igloo/deco/lamp_4.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "a578eb050a74e1e5c5fc33a6dd56a5c093f1ddd66f41a6db4071c3131b429a23",
+          "preparedSha256": "9ffd1418785a9327435a8afa9f45e3688f837671d9e69e0be75897e003a19ab6",
+          "size": [
+            3,
+            5,
+            2
+          ],
+          "origin": [
+            11174,
+            230,
+            1384
+          ],
+          "privateTemplate": "kithkyn_tundra_profile:igloo/deco__lamp_4",
+          "compatibilityNamespaces": []
+        },
+        {
+          "id": "T09.8",
+          "label": "Lamp 5",
+          "role": "detail",
+          "family": "igloo",
+          "source": "data/ctov/structure/village/snowy_igloo/deco/lamp_5.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "ebf601a77e47f8693e9292ddfe598d97834bad6a3955bfe89e0a8aafe904c547",
+          "preparedSha256": "f4065a61e5072f099aef2bcdbfa80ea3ea7a2d4e9f09d8a6ebda26286bae1361",
+          "size": [
+            3,
+            5,
+            3
+          ],
+          "origin": [
+            11183,
+            230,
+            1384
+          ],
+          "privateTemplate": "kithkyn_tundra_profile:igloo/deco__lamp_5",
+          "compatibilityNamespaces": []
+        },
+        {
+          "id": "T09.9",
+          "label": "Snowman",
+          "role": "detail",
+          "family": "igloo",
+          "source": "data/ctov/structure/village/snowy_igloo/deco/snowman.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "cc83ce4e079ef74aef0d5133f6703ed9356b5ab5f1c719031ed97e40bae215b1",
+          "preparedSha256": "3347cc748eed4113165db349d1a941d3c95e427a37076fa2fbc247cbec9133d7",
+          "size": [
+            2,
+            3,
+            3
+          ],
+          "origin": [
+            11192,
+            230,
+            1384
+          ],
+          "privateTemplate": "kithkyn_tundra_profile:igloo/deco__snowman",
+          "compatibilityNamespaces": []
+        },
+        {
+          "id": "T09.10",
+          "label": "Statue",
+          "role": "landmark",
+          "family": "igloo",
+          "source": "data/ctov/structure/village/snowy_igloo/deco/statue.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "42029382c39decfd6238a5820221522bf92d09e328b7e3dc19c8070576195ae4",
+          "preparedSha256": "76a4c84a932941bf5a95880fd8378b7d48f91356bd24fbbd58ff5a559ff8c79d",
+          "size": [
+            4,
+            4,
+            4
+          ],
+          "origin": [
+            11200,
+            230,
+            1384
+          ],
+          "privateTemplate": "kithkyn_tundra_profile:igloo/deco__statue",
+          "compatibilityNamespaces": []
+        }
+      ]
+    },
+    {
+      "id": "T10",
+      "title": "SNOWY IGLOO \u2014 COMPAT DETAILS",
+      "family": "igloo",
+      "origin": [
+        11120,
+        230,
+        1432
+      ],
+      "bounds": [
+        11110,
+        220,
+        1423,
+        11217,
+        241,
+        1443
+      ],
+      "maxHeight": 7,
+      "entries": [
+        {
+          "id": "T10.1",
+          "label": "Archeology Tent",
+          "role": "detail",
+          "family": "igloo",
+          "source": "data/ctov/structure/village/snowy_igloo/deco/archeology_tent.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "429f5c293238ebec62ecd66dea151a62a3a09421f7690e8010d117585c6f2c4c",
+          "preparedSha256": "e04f08460b75ac241120f30450c5f084a68e83ea56e9a6f4f4833d37fa6da0ad",
+          "size": [
+            5,
+            7,
+            5
+          ],
+          "origin": [
+            11120,
+            230,
+            1432
+          ],
+          "privateTemplate": "kithkyn_tundra_profile:igloo/deco__archeology_tent",
+          "compatibilityNamespaces": [
+            "betterarcheology"
+          ]
+        },
+        {
+          "id": "T10.2",
+          "label": "Bard House",
+          "role": "detail",
+          "family": "igloo",
+          "source": "data/ctov/structure/village/snowy_igloo/deco/bard_house.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "5e7a79a02de17589f320808cc916cd6c5cdb1d40ec2deb23d39122d21251cfeb",
+          "preparedSha256": "d127e5ca7bf1725486645ec77a47c5ce75f7ccad94ad677a3f6e3bc73b1ceaee",
+          "size": [
+            7,
+            6,
+            7
+          ],
+          "origin": [
+            11131,
+            230,
+            1432
+          ],
+          "privateTemplate": "kithkyn_tundra_profile:igloo/deco__bard_house",
+          "compatibilityNamespaces": [
+            "etched"
+          ]
+        },
+        {
+          "id": "T10.3",
+          "label": "Beekeeper",
+          "role": "detail",
+          "family": "igloo",
+          "source": "data/ctov/structure/village/snowy_igloo/deco/beekeeper.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "1598fb440b0874065eea6fd3e878b1df1fb9835a13f1bd886e3d3f5271ad19d2",
+          "preparedSha256": "44fafacf78cc7ac2a0e9a14cd456d0ae28c1bc8718e01a3f2c8d9db71db70690",
+          "size": [
+            3,
+            3,
+            3
+          ],
+          "origin": [
+            11144,
+            230,
+            1432
+          ],
+          "privateTemplate": "kithkyn_tundra_profile:igloo/deco__beekeeper",
+          "compatibilityNamespaces": [
+            "friendsandfoes"
+          ]
+        },
+        {
+          "id": "T10.4",
+          "label": "Climatologist",
+          "role": "detail",
+          "family": "igloo",
+          "source": "data/ctov/structure/village/snowy_igloo/deco/climatologist.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "2cbe1c4552c8aad6e17f10b09300219bda463c679a0b68615201b65fe1707bd6",
+          "preparedSha256": "6e7109fe949be1ca9d1d9990d6202b166c42cce7c80da503a3e1a78892b2c0fe",
+          "size": [
+            7,
+            7,
+            8
+          ],
+          "origin": [
+            11153,
+            230,
+            1432
+          ],
+          "privateTemplate": "kithkyn_tundra_profile:igloo/deco__climatologist",
+          "compatibilityNamespaces": [
+            "toughasnails"
+          ]
+        },
+        {
+          "id": "T10.5",
+          "label": "Copper Golem",
+          "role": "detail",
+          "family": "igloo",
+          "source": "data/ctov/structure/village/snowy_igloo/deco/copper_golem.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "7aec13e8041b1b33e53acc842abaee5d9231e3f1a26c7b3ecd64f76b44da690b",
+          "preparedSha256": "44084fd2eadede4c811be277c05bdd2ceaa7df7f8c39787f6cde6b19df721f96",
+          "size": [
+            7,
+            5,
+            6
+          ],
+          "origin": [
+            11166,
+            230,
+            1432
+          ],
+          "privateTemplate": "kithkyn_tundra_profile:igloo/deco__copper_golem",
+          "compatibilityNamespaces": [
+            "friendsandfoes"
+          ]
+        },
+        {
+          "id": "T10.6",
+          "label": "Garbage Heaps",
+          "role": "detail",
+          "family": "igloo",
+          "source": "data/ctov/structure/village/snowy_igloo/deco/garbage_heaps.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "c73ca16e1c2e410c5a9283483b6fb99bc40d14df036a4ef226a448f8fd84634f",
+          "preparedSha256": "0365b4ce2d994fb728446a189a0a5cc2351a8cff14199ea3f51d9fb4db71a35a",
+          "size": [
+            7,
+            5,
+            7
+          ],
+          "origin": [
+            11179,
+            230,
+            1432
+          ],
+          "privateTemplate": "kithkyn_tundra_profile:igloo/deco__garbage_heaps",
+          "compatibilityNamespaces": [
+            "rats"
+          ]
+        },
+        {
+          "id": "T10.7",
+          "label": "Goddess Statue",
+          "role": "landmark",
+          "family": "igloo",
+          "source": "data/ctov/structure/village/snowy_igloo/deco/goddess_statue.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "da981776550599f762e53569fa0d75ba4ddcdf0432dcd34ed6858d55b263e941",
+          "preparedSha256": "a408a948a4c038ea310c865de96dc8f67ebf08fb28a86528b806b0005ac8f3fa",
+          "size": [
+            3,
+            5,
+            4
+          ],
+          "origin": [
+            11192,
+            230,
+            1432
+          ],
+          "privateTemplate": "kithkyn_tundra_profile:igloo/deco__goddess_statue",
+          "compatibilityNamespaces": [
+            "paraglider"
+          ]
+        },
+        {
+          "id": "T10.8",
+          "label": "Picnic Mat",
+          "role": "detail",
+          "family": "igloo",
+          "source": "data/ctov/structure/village/snowy_igloo/deco/picnic_mat.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "923bd75bb24a2a3a9292f27e031de6dc48a208bab5b3bf9a6fc47608530bee1b",
+          "preparedSha256": "255bbde2f47a1b51fa67908e4cd532e227a81a223e84bc295c42a663f3ba3388",
+          "size": [
+            5,
+            7,
+            5
+          ],
+          "origin": [
+            11201,
+            230,
+            1432
+          ],
+          "privateTemplate": "kithkyn_tundra_profile:igloo/deco__picnic_mat",
+          "compatibilityNamespaces": [
+            "muffins_picnic"
+          ]
+        },
+        {
+          "id": "T10.9",
+          "label": "Vm",
+          "role": "detail",
+          "family": "igloo",
+          "source": "data/ctov/structure/village/snowy_igloo/deco/vm.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "f3ba4c730195b16ae65d4a7b93be6b580e6197e34ec2f0e5134d40c7c8307dbe",
+          "preparedSha256": "ae9832596c34140c81287318c82e0183abdea551afa9c9d787977c43c6676080",
+          "size": [
+            3,
+            5,
+            4
+          ],
+          "origin": [
+            11212,
+            230,
+            1432
+          ],
+          "privateTemplate": "kithkyn_tundra_profile:igloo/deco__vm",
+          "compatibilityNamespaces": [
+            "vm"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "T11",
+      "title": "SNOWY TAVERN \u2014 BUILDING + GROUNDS",
+      "family": "tavern",
+      "origin": [
+        11120,
+        230,
+        1480
+      ],
+      "bounds": [
+        11110,
+        220,
+        1471,
+        11209,
+        247,
+        1503
+      ],
+      "maxHeight": 13,
+      "entries": [
+        {
+          "id": "T11.1",
+          "label": "Entrance",
+          "role": "work",
+          "family": "tavern",
+          "source": "data/nova_structures/structure/tavern/tavern_enterance_snowy.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "eb4fc119383d6d4e5c26d8c524b73962bf572b773f054d95d01c7f9154472dc9",
+          "preparedSha256": "53878a861056d6b24b71bbcfd43b4ab83711d45bc90e76a56e4bff51d12f376d",
+          "size": [
+            3,
+            8,
+            7
+          ],
+          "origin": [
+            11120,
+            230,
+            1480
+          ],
+          "privateTemplate": "kithkyn_tundra_profile:tavern/tavern_enterance_snowy",
+          "compatibilityNamespaces": []
+        },
+        {
+          "id": "T11.2",
+          "label": "House",
+          "role": "landmark",
+          "family": "tavern",
+          "source": "data/nova_structures/structure/tavern/tavern_house_snowy.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "7074400c9f5bc04ff160523fcc5f5ce1eedb4e90f6b5ad6a04e5790941c11141",
+          "preparedSha256": "f21f145835d1241c70fe7ed09dbc4cb945f13d40a1e315a3466ae7e2c8624b65",
+          "size": [
+            17,
+            13,
+            19
+          ],
+          "origin": [
+            11129,
+            230,
+            1480
+          ],
+          "privateTemplate": "kithkyn_tundra_profile:tavern/tavern_house_snowy",
+          "compatibilityNamespaces": []
+        },
+        {
+          "id": "T11.3",
+          "label": "Middle",
+          "role": "work",
+          "family": "tavern",
+          "source": "data/nova_structures/structure/tavern/tavern_middle_snowy.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "e64bab2a6f251658013dc792f964b42557f9f6c05792e7c4770f8019a0701fcb",
+          "preparedSha256": "bb10e5df72bd81bc51f68ed9eb19ba25f76356c5b053f05ccdedbdb94edb65e7",
+          "size": [
+            11,
+            7,
+            20
+          ],
+          "origin": [
+            11152,
+            230,
+            1480
+          ],
+          "privateTemplate": "kithkyn_tundra_profile:tavern/tavern_middle_snowy",
+          "compatibilityNamespaces": []
+        },
+        {
+          "id": "T11.4",
+          "label": "Animal Fence",
+          "role": "detail",
+          "family": "tavern",
+          "source": "data/nova_structures/structure/tavern/tavern_event_animal_fence_snowy.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "19aec05963606b76b20222a72947d50c706dcfc031a3a245abc98545ab032c8f",
+          "preparedSha256": "3fa940fd55f038e7be83fd81d99b1fe1f3a48ff677fd3830352fc737e55aa70c",
+          "size": [
+            5,
+            5,
+            5
+          ],
+          "origin": [
+            11169,
+            230,
+            1480
+          ],
+          "privateTemplate": "kithkyn_tundra_profile:tavern/tavern_event_animal_fence_snowy",
+          "compatibilityNamespaces": []
+        },
+        {
+          "id": "T11.5",
+          "label": "Animal Food",
+          "role": "food",
+          "family": "tavern",
+          "source": "data/nova_structures/structure/tavern/tavern_event_animal_food_snowy.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "f811e0da52deb70f63e327ab6de0a407c7b6a246c2d27c30e8b69515e14748f6",
+          "preparedSha256": "f3e03c7c3a2170688682e5fb5c5ab089131ed00928ed4d577ad69c2c4d13b3ee",
+          "size": [
+            5,
+            5,
+            5
+          ],
+          "origin": [
+            11180,
+            230,
+            1480
+          ],
+          "privateTemplate": "kithkyn_tundra_profile:tavern/tavern_event_animal_food_snowy",
+          "compatibilityNamespaces": []
+        },
+        {
+          "id": "T11.6",
+          "label": "Bench Table",
+          "role": "detail",
+          "family": "tavern",
+          "source": "data/nova_structures/structure/tavern/tavern_event_bench_table_snowy.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "416b1ba99b04abcd478ff047a351ec8b565655067d9e6ecc1d45efd317f189a8",
+          "preparedSha256": "5fdc838907a7ca055f4ebc0750dd37eddb30e9a84b834a5e9bf55d9067413aed",
+          "size": [
+            5,
+            5,
+            5
+          ],
+          "origin": [
+            11191,
+            230,
+            1480
+          ],
+          "privateTemplate": "kithkyn_tundra_profile:tavern/tavern_event_bench_table_snowy",
+          "compatibilityNamespaces": []
+        },
+        {
+          "id": "T11.7",
+          "label": "Food Supply",
+          "role": "food",
+          "family": "tavern",
+          "source": "data/nova_structures/structure/tavern/tavern_event_food_supply_snowy.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "b2d3816e376bdafc06a0c0525bf559927e1e327e22ee045bf2cbf85711a7fdf9",
+          "preparedSha256": "41dc96b7204b416a1a48c4665c7adaab733435c0dec7d81a1f92ffade16415f1",
+          "size": [
+            5,
+            5,
+            5
+          ],
+          "origin": [
+            11202,
+            230,
+            1480
+          ],
+          "privateTemplate": "kithkyn_tundra_profile:tavern/tavern_event_food_supply_snowy",
+          "compatibilityNamespaces": []
+        }
+      ]
+    },
+    {
+      "id": "T12",
+      "title": "SNOWY TAVERN \u2014 YARD DETAILS",
+      "family": "tavern",
+      "origin": [
+        11120,
+        230,
+        1528
+      ],
+      "bounds": [
+        11110,
+        220,
+        1519,
+        11171,
+        239,
+        1536
+      ],
+      "maxHeight": 5,
+      "entries": [
+        {
+          "id": "T12.1",
+          "label": "Hay Storage",
+          "role": "detail",
+          "family": "tavern",
+          "source": "data/nova_structures/structure/tavern/tavern_event_hay_storage_snowy.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "df7c023c1bcd4ac623c2051d6fb1306aa4e20160a0d30ab21a84ebe99eff606b",
+          "preparedSha256": "6fc86522e8526d1eb5ef44f07e451d5e5f04c8e72e40a31b24298774ed49fb6a",
+          "size": [
+            5,
+            5,
+            5
+          ],
+          "origin": [
+            11120,
+            230,
+            1528
+          ],
+          "privateTemplate": "kithkyn_tundra_profile:tavern/tavern_event_hay_storage_snowy",
+          "compatibilityNamespaces": []
+        },
+        {
+          "id": "T12.2",
+          "label": "Log",
+          "role": "detail",
+          "family": "tavern",
+          "source": "data/nova_structures/structure/tavern/tavern_event_log_snowy.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "fa6ea84b110f0b2c8592133e08247714543720a77e87edb838b09c28844cbf44",
+          "preparedSha256": "7bc5f782c754e56a669b5ffeffa148ae1f5acaffdb83dcecbe62b2fb7315c323",
+          "size": [
+            5,
+            5,
+            5
+          ],
+          "origin": [
+            11131,
+            230,
+            1528
+          ],
+          "privateTemplate": "kithkyn_tundra_profile:tavern/tavern_event_log_snowy",
+          "compatibilityNamespaces": []
+        },
+        {
+          "id": "T12.3",
+          "label": "Trash Trader",
+          "role": "detail",
+          "family": "tavern",
+          "source": "data/nova_structures/structure/tavern/tavern_event_trash_trader_snowy.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "33935775bd492becc11730c84e0d39f33bed6d7192705a52218ae47ca3e45601",
+          "preparedSha256": "6a72f3e5cb60f7c1ae31da4055add6a92781654baf0c68f32dfb29e2527ff9e2",
+          "size": [
+            5,
+            5,
+            5
+          ],
+          "origin": [
+            11142,
+            230,
+            1528
+          ],
+          "privateTemplate": "kithkyn_tundra_profile:tavern/tavern_event_trash_trader_snowy",
+          "compatibilityNamespaces": []
+        },
+        {
+          "id": "T12.4",
+          "label": "Wandering Farmer",
+          "role": "food",
+          "family": "tavern",
+          "source": "data/nova_structures/structure/tavern/tavern_event_wandering_farmer_snowy.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "3c66731d9ed1e04c9622cde03fbb6cea6ebe40b944071a6896d96c262dc3e0a1",
+          "preparedSha256": "45f3acda868cb884bde2ee30320c26ed36406617a76a7eb321b4fd4926af215d",
+          "size": [
+            5,
+            1,
+            5
+          ],
+          "origin": [
+            11153,
+            230,
+            1528
+          ],
+          "privateTemplate": "kithkyn_tundra_profile:tavern/tavern_event_wandering_farmer_snowy",
+          "compatibilityNamespaces": []
+        },
+        {
+          "id": "T12.5",
+          "label": "Well",
+          "role": "detail",
+          "family": "tavern",
+          "source": "data/nova_structures/structure/tavern/tavern_event_well_snowy.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "62dc12c66bcefef4d5ffc28536a4d16a7ecc6eb7aa2ecb0b3a098b962877844e",
+          "preparedSha256": "1c1992206afde592feee1bc7210521e5c4207ea7f08e3d4018a3b023967e6f07",
+          "size": [
+            5,
+            5,
+            5
+          ],
+          "origin": [
+            11164,
+            230,
+            1528
+          ],
+          "privateTemplate": "kithkyn_tundra_profile:tavern/tavern_event_well_snowy",
+          "compatibilityNamespaces": []
+        }
+      ]
+    },
+    {
+      "id": "T13",
+      "title": "SNOWY TAVERN \u2014 MARKET CARTS A",
+      "family": "tavern",
+      "origin": [
+        11120,
+        230,
+        1576
+      ],
+      "bounds": [
+        11110,
+        220,
+        1567,
+        11182,
+        239,
+        1584
+      ],
+      "maxHeight": 5,
+      "entries": [
+        {
+          "id": "T13.1",
+          "label": "Trader Car Armorer",
+          "role": "detail",
+          "family": "tavern",
+          "source": "data/nova_structures/structure/tavern/tavern_event_trader_car_armorer_snowy.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "8619db61c7491653b48fdb45629899747279357bd886af76b2e363b97adcf849",
+          "preparedSha256": "b63cde79074b6911dfd4f87711a70c0a4f1f3fcf19c5897447b242991da11cb0",
+          "size": [
+            5,
+            5,
+            5
+          ],
+          "origin": [
+            11120,
+            230,
+            1576
+          ],
+          "privateTemplate": "kithkyn_tundra_profile:tavern/tavern_event_trader_car_armorer_snowy",
+          "compatibilityNamespaces": []
+        },
+        {
+          "id": "T13.2",
+          "label": "Trader Car Butcher",
+          "role": "food",
+          "family": "tavern",
+          "source": "data/nova_structures/structure/tavern/tavern_event_trader_car_butcher_snowy.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "294594e175d11d165c03890c20a255ce54205e6f3eeddbeccc47de443cdbb760",
+          "preparedSha256": "7d744a229874cf4aaab5a308f625d8c70f054952a1647710c2fc4b76fcecd409",
+          "size": [
+            5,
+            5,
+            5
+          ],
+          "origin": [
+            11131,
+            230,
+            1576
+          ],
+          "privateTemplate": "kithkyn_tundra_profile:tavern/tavern_event_trader_car_butcher_snowy",
+          "compatibilityNamespaces": []
+        },
+        {
+          "id": "T13.3",
+          "label": "Trader Car Farmer",
+          "role": "food",
+          "family": "tavern",
+          "source": "data/nova_structures/structure/tavern/tavern_event_trader_car_farmer_snowy.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "ff742e3ba0b4e02d3e5493a2a09e68cc6c124004e4913382fc78fc8c2c632928",
+          "preparedSha256": "2cae1a4f9f6720f0f7db18d75373ff7a957cb104067ada8662ef9604534226f3",
+          "size": [
+            5,
+            5,
+            5
+          ],
+          "origin": [
+            11142,
+            230,
+            1576
+          ],
+          "privateTemplate": "kithkyn_tundra_profile:tavern/tavern_event_trader_car_farmer_snowy",
+          "compatibilityNamespaces": []
+        },
+        {
+          "id": "T13.4",
+          "label": "Trader Car Fisher",
+          "role": "detail",
+          "family": "tavern",
+          "source": "data/nova_structures/structure/tavern/tavern_event_trader_car_fisher_snowy.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "9533b3edadb0ee0448f624f0abccb8cfaf8c0a3c460b549b85acf8c76e4d91cc",
+          "preparedSha256": "b6b41ca46ab3bfd53ab33398d032915e0a4977e465651883603f86906a675439",
+          "size": [
+            5,
+            5,
+            5
+          ],
+          "origin": [
+            11153,
+            230,
+            1576
+          ],
+          "privateTemplate": "kithkyn_tundra_profile:tavern/tavern_event_trader_car_fisher_snowy",
+          "compatibilityNamespaces": []
+        },
+        {
+          "id": "T13.5",
+          "label": "Trader Car Fletcher",
+          "role": "detail",
+          "family": "tavern",
+          "source": "data/nova_structures/structure/tavern/tavern_event_trader_car_fletcher_snowy.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "ba51b7e530f85e24907487a56813cbd65dd7935941288d94d5834dc52b18383a",
+          "preparedSha256": "da5462ce2549cd051eb7f5b05fd6a0139fccad864703be62fde74c2c2e50d007",
+          "size": [
+            5,
+            5,
+            5
+          ],
+          "origin": [
+            11164,
+            230,
+            1576
+          ],
+          "privateTemplate": "kithkyn_tundra_profile:tavern/tavern_event_trader_car_fletcher_snowy",
+          "compatibilityNamespaces": []
+        },
+        {
+          "id": "T13.6",
+          "label": "Trader Car Grindstone",
+          "role": "detail",
+          "family": "tavern",
+          "source": "data/nova_structures/structure/tavern/tavern_event_trader_car_grindstone_snowy.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "c9a87644aac266e3b5f2a334077d3544116ff7f7bbfc2a84aff83fab209c19b1",
+          "preparedSha256": "fa01f79396c6b3bb871e95bd3307c52ebb0d41a534df4f13d1b0c39c559a3961",
+          "size": [
+            5,
+            5,
+            5
+          ],
+          "origin": [
+            11175,
+            230,
+            1576
+          ],
+          "privateTemplate": "kithkyn_tundra_profile:tavern/tavern_event_trader_car_grindstone_snowy",
+          "compatibilityNamespaces": []
+        }
+      ]
+    },
+    {
+      "id": "T14",
+      "title": "SNOWY TAVERN \u2014 MARKET CARTS B",
+      "family": "tavern",
+      "origin": [
+        11120,
+        230,
+        1624
+      ],
+      "bounds": [
+        11110,
+        220,
+        1615,
+        11171,
+        239,
+        1632
+      ],
+      "maxHeight": 5,
+      "entries": [
+        {
+          "id": "T14.1",
+          "label": "Trader Car Leather Worker",
+          "role": "detail",
+          "family": "tavern",
+          "source": "data/nova_structures/structure/tavern/tavern_event_trader_car_leather_worker_snowy.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "4aae831bf022ea383e031cbb3e19fe5bebb663585143a5bb1d913a2a0bfd9e49",
+          "preparedSha256": "7b500060da07e16986c4ad4afdcd000da18ecbf88dc023319560a5f0e65e6ae8",
+          "size": [
+            5,
+            5,
+            5
+          ],
+          "origin": [
+            11120,
+            230,
+            1624
+          ],
+          "privateTemplate": "kithkyn_tundra_profile:tavern/tavern_event_trader_car_leather_worker_snowy",
+          "compatibilityNamespaces": []
+        },
+        {
+          "id": "T14.2",
+          "label": "Trader Car Librarian",
+          "role": "detail",
+          "family": "tavern",
+          "source": "data/nova_structures/structure/tavern/tavern_event_trader_car_librarian_snowy.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "460bab0c58de5dc946c51a70714e159cc7914fc02c1ccb666d60bec3988feb5a",
+          "preparedSha256": "a8a3ff9b4eb34522a1642628fd7c7975c52192d694f76b88b3cdce87c6c864f1",
+          "size": [
+            5,
+            5,
+            5
+          ],
+          "origin": [
+            11131,
+            230,
+            1624
+          ],
+          "privateTemplate": "kithkyn_tundra_profile:tavern/tavern_event_trader_car_librarian_snowy",
+          "compatibilityNamespaces": []
+        },
+        {
+          "id": "T14.3",
+          "label": "Trader Car Loom",
+          "role": "detail",
+          "family": "tavern",
+          "source": "data/nova_structures/structure/tavern/tavern_event_trader_car_loom_snowy.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "e97cc64004794f198f98813ddbc1de89f000cc42a33795668f13c893c9f8aba0",
+          "preparedSha256": "7e125f366b7ee40203d78fc47336a2b945fcdbd169f68a2a7aabc0b0bc1c2937",
+          "size": [
+            5,
+            5,
+            5
+          ],
+          "origin": [
+            11142,
+            230,
+            1624
+          ],
+          "privateTemplate": "kithkyn_tundra_profile:tavern/tavern_event_trader_car_loom_snowy",
+          "compatibilityNamespaces": []
+        },
+        {
+          "id": "T14.4",
+          "label": "Trader Car Smithing Table",
+          "role": "detail",
+          "family": "tavern",
+          "source": "data/nova_structures/structure/tavern/tavern_event_trader_car_smithing_table_snowy.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "29591cf046f42dcec7ae08655896655cc0e3ff4cb7db6a34605d92eb88f4cb24",
+          "preparedSha256": "5e2db794bb88eaa78944ab786c06f8c7848d8e97a7709757ec8105eb9963633a",
+          "size": [
+            5,
+            5,
+            5
+          ],
+          "origin": [
+            11153,
+            230,
+            1624
+          ],
+          "privateTemplate": "kithkyn_tundra_profile:tavern/tavern_event_trader_car_smithing_table_snowy",
+          "compatibilityNamespaces": []
+        },
+        {
+          "id": "T14.5",
+          "label": "Trader Car Stonecutter",
+          "role": "detail",
+          "family": "tavern",
+          "source": "data/nova_structures/structure/tavern/tavern_event_trader_car_stonecutter_snowy.nbt",
+          "sourceJar": "dungeons-and-taverns-v4.4.4 [NeoForge].jar",
+          "sourceSha256": "8c41673cbf5038a681fb58ea1d4302f11669ecb4dd8911b05c55bddcde248703",
+          "preparedSha256": "e5792e7ea80bac44f571e14c2466d702efc9502480c4f4e0ac784940591e0d37",
+          "size": [
+            5,
+            5,
+            5
+          ],
+          "origin": [
+            11164,
+            230,
+            1624
+          ],
+          "privateTemplate": "kithkyn_tundra_profile:tavern/tavern_event_trader_car_stonecutter_snowy",
+          "compatibilityNamespaces": []
+        }
+      ]
+    },
+    {
+      "id": "T15",
+      "title": "SNOWY OUTPOST \u2014 TOWERS + CAMPS",
+      "family": "outpost",
+      "origin": [
+        11120,
+        230,
+        1672
+      ],
+      "bounds": [
+        11110,
+        220,
+        1663,
+        11203,
+        264,
+        1691
+      ],
+      "maxHeight": 30,
+      "entries": [
+        {
+          "id": "T15.1",
+          "label": "Base Plate",
+          "role": "landmark",
+          "family": "outpost",
+          "source": "data/ctov/structure/pillager_outpost/snowy/base_plate.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "aaa612a9e37d85d5286619f9a9c0397ed448c58c2cea9dc7bebaec5b731d8a11",
+          "preparedSha256": "20ccd9a06511426ddb4a36393330a5c1b994591a1953f4916bc22a35d05dd45e",
+          "size": [
+            16,
+            30,
+            16
+          ],
+          "origin": [
+            11120,
+            230,
+            1672
+          ],
+          "privateTemplate": "kithkyn_tundra_profile:outpost/base_plate",
+          "compatibilityNamespaces": []
+        },
+        {
+          "id": "T15.2",
+          "label": "Tower",
+          "role": "landmark",
+          "family": "outpost",
+          "source": "data/ctov/structure/pillager_outpost/snowy/tower.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "808da4a6af45dc1611ac67666fc2827f27a525150c49a6f3633bccf622660c47",
+          "preparedSha256": "793d45d0b5d1790955a61d6d10653cfd682aacffba71e128de1fa36389ab0e4f",
+          "size": [
+            13,
+            17,
+            13
+          ],
+          "origin": [
+            11142,
+            230,
+            1672
+          ],
+          "privateTemplate": "kithkyn_tundra_profile:outpost/tower",
+          "compatibilityNamespaces": []
+        },
+        {
+          "id": "T15.3",
+          "label": "Cook Tent",
+          "role": "work",
+          "family": "outpost",
+          "source": "data/ctov/structure/pillager_outpost/snowy/cook_tent.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "71ffab8d8ff454ef7df137667d31f2b4b5818f07456198df4f5e7e6cb404c5a8",
+          "preparedSha256": "6aa352055bd097b0c824d7bdbf6a71c25e96c7d38e6c83c8ca60cf418e6cdd5e",
+          "size": [
+            7,
+            5,
+            5
+          ],
+          "origin": [
+            11161,
+            230,
+            1672
+          ],
+          "privateTemplate": "kithkyn_tundra_profile:outpost/cook_tent",
+          "compatibilityNamespaces": []
+        },
+        {
+          "id": "T15.4",
+          "label": "Smith Tent",
+          "role": "work",
+          "family": "outpost",
+          "source": "data/ctov/structure/pillager_outpost/snowy/smith_tent.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "8500e79902fe3e8e9cc2ab07bb9c37daa5ce9bcdddd40b9e4cb4bc4b2a6e3a71",
+          "preparedSha256": "79f65b9ce5391bb506ba6a266df38966ba43b711f778f9e372afcd3e4dc561d5",
+          "size": [
+            7,
+            5,
+            5
+          ],
+          "origin": [
+            11174,
+            230,
+            1672
+          ],
+          "privateTemplate": "kithkyn_tundra_profile:outpost/smith_tent",
+          "compatibilityNamespaces": []
+        },
+        {
+          "id": "T15.5",
+          "label": "Log",
+          "role": "detail",
+          "family": "outpost",
+          "source": "data/ctov/structure/pillager_outpost/snowy/log.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "6b82c8cf84521393f9d55b01bc11ab4ff55aa6f95f1fb2a698df8e58afb1bd9c",
+          "preparedSha256": "ca4a93cd93c1e40f3f6a2e7aaeab877ca1a4c5d1f6d92e09b506b0d224a9dece",
+          "size": [
+            5,
+            2,
+            7
+          ],
+          "origin": [
+            11187,
+            230,
+            1672
+          ],
+          "privateTemplate": "kithkyn_tundra_profile:outpost/log",
+          "compatibilityNamespaces": []
+        },
+        {
+          "id": "T15.6",
+          "label": "Targets",
+          "role": "detail",
+          "family": "outpost",
+          "source": "data/ctov/structure/pillager_outpost/snowy/targets.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "fc65f658bc61f50a39339e8f5b2ffb59329b776c957858abdbae4c7e495ad514",
+          "preparedSha256": "59b94e7abb9a26a45d5a3be4e273c893ae027c85546cf9d6f0f1c3c6902d4bea",
+          "size": [
+            3,
+            3,
+            7
+          ],
+          "origin": [
+            11198,
+            230,
+            1672
+          ],
+          "privateTemplate": "kithkyn_tundra_profile:outpost/targets",
+          "compatibilityNamespaces": []
+        }
+      ]
+    },
+    {
+      "id": "T16",
+      "title": "SNOWY OUTPOST \u2014 YARDS + CAGES",
+      "family": "outpost",
+      "origin": [
+        11120,
+        230,
+        1720
+      ],
+      "bounds": [
+        11110,
+        220,
+        1711,
+        11202,
+        239,
+        1736
+      ],
+      "maxHeight": 5,
+      "entries": [
+        {
+          "id": "T16.1",
+          "label": "Allay Cage",
+          "role": "work",
+          "family": "outpost",
+          "source": "data/ctov/structure/pillager_outpost/snowy/allay_cage.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "f76a2c0743dfe62a884d2c8a3b497f4475322ecfbf5fc27d7a160399cc4ecb0b",
+          "preparedSha256": "6cc394fe9b94705362b2e62b2b5c3844f8dcf134e18f2deae62f0cd106c546d6",
+          "size": [
+            6,
+            4,
+            6
+          ],
+          "origin": [
+            11120,
+            230,
+            1720
+          ],
+          "privateTemplate": "kithkyn_tundra_profile:outpost/allay_cage",
+          "compatibilityNamespaces": []
+        },
+        {
+          "id": "T16.2",
+          "label": "Cage",
+          "role": "work",
+          "family": "outpost",
+          "source": "data/ctov/structure/pillager_outpost/snowy/cage.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "82f90108b3d343badca2af308e0afbdd89f5df126d7d087bebdd230795319316",
+          "preparedSha256": "82e9e4df298b45ed2206aaf39c4e5d2ec67e7aa7fa856327cb68324e0f665cbb",
+          "size": [
+            6,
+            4,
+            6
+          ],
+          "origin": [
+            11132,
+            230,
+            1720
+          ],
+          "privateTemplate": "kithkyn_tundra_profile:outpost/cage",
+          "compatibilityNamespaces": []
+        },
+        {
+          "id": "T16.3",
+          "label": "Feature Kennel",
+          "role": "work",
+          "family": "outpost",
+          "source": "data/ctov/structure/pillager_outpost/snowy/feature_kennel.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "ff7cc58fd3e9e7542b00f4b1399453a3094104fc3a0e77783f923548d8d52968",
+          "preparedSha256": "30316d7d492a341d155ab935b4dd1cf9fec8cbd3c6bf794c5032cea8758fcb0f",
+          "size": [
+            11,
+            5,
+            11
+          ],
+          "origin": [
+            11144,
+            230,
+            1720
+          ],
+          "privateTemplate": "kithkyn_tundra_profile:outpost/feature_kennel",
+          "compatibilityNamespaces": []
+        },
+        {
+          "id": "T16.4",
+          "label": "Feature Plates",
+          "role": "detail",
+          "family": "outpost",
+          "source": "data/ctov/structure/pillager_outpost/snowy/feature_plates.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "72ef4aee152ce8dd6fbcf2a2b23d5b9a59959234ee47ea6cb62ca80421088fb4",
+          "preparedSha256": "1fcab346db743a65c50fd3470f8be0a9372021f35e46d8853960e50247439992",
+          "size": [
+            15,
+            1,
+            13
+          ],
+          "origin": [
+            11161,
+            230,
+            1720
+          ],
+          "privateTemplate": "kithkyn_tundra_profile:outpost/feature_plates",
+          "compatibilityNamespaces": []
+        },
+        {
+          "id": "T16.5",
+          "label": "Golem Cage",
+          "role": "work",
+          "family": "outpost",
+          "source": "data/ctov/structure/pillager_outpost/snowy/golem_cage.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "1ae44ab1341e163b6aa491db721ef5213e488ee89e43839290f07891a22e68a1",
+          "preparedSha256": "82e9e4df298b45ed2206aaf39c4e5d2ec67e7aa7fa856327cb68324e0f665cbb",
+          "size": [
+            6,
+            4,
+            6
+          ],
+          "origin": [
+            11182,
+            230,
+            1720
+          ],
+          "privateTemplate": "kithkyn_tundra_profile:outpost/golem_cage",
+          "compatibilityNamespaces": []
+        },
+        {
+          "id": "T16.6",
+          "label": "Ravager Cage",
+          "role": "work",
+          "family": "outpost",
+          "source": "data/ctov/structure/pillager_outpost/snowy/ravager_cage.nbt",
+          "sourceJar": "[Neoforge]ctov-3.6.3.jar",
+          "sourceSha256": "12fbd1d655bfce74609b66cd9ea92a469b904a7fd7aa83ceb7e4f560f8f3d24e",
+          "preparedSha256": "5170c0e424914a6b17a1a21bddc888126b1b945d2cf59bcdb57cc9c594023025",
+          "size": [
+            6,
+            4,
+            7
+          ],
+          "origin": [
+            11194,
+            230,
+            1720
+          ],
+          "privateTemplate": "kithkyn_tundra_profile:outpost/ravager_cage",
+          "compatibilityNamespaces": []
+        }
+      ]
+    },
+    {
+      "id": "T17",
+      "title": "TUNDRA \u2014 LANDMARK DONORS",
+      "family": "landmark",
+      "origin": [
+        11120,
+        230,
+        1768
+      ],
+      "bounds": [
+        11110,
+        220,
+        1759,
+        11231,
+        292,
+        1795
+      ],
+      "maxHeight": 58,
+      "entries": [
+        {
+          "id": "T17.1",
+          "label": "Snowy Slopes Inn",
+          "role": "center",
+          "family": "landmark",
+          "source": "data/kaisyn/structure/village/snowy_slopes_inn/town_centers/snowy_slopes_meeting_point_1.nbt",
+          "sourceJar": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar",
+          "sourceSha256": "f8318c86fdb30ab92d3c0aeb1f16dc86e6ac9c620fd11834839f51594334ef81",
+          "preparedSha256": "89829439053bedb2cc0193889159004abf86a21508ed296129985759a51d4449",
+          "size": [
+            21,
+            12,
+            15
+          ],
+          "origin": [
+            11120,
+            230,
+            1768
+          ],
+          "privateTemplate": "kithkyn_tundra_profile:landmark/tt__snowy_slopes_meeting_point_1",
+          "compatibilityNamespaces": []
+        },
+        {
+          "id": "T17.2",
+          "label": "Snowy Inn Table",
+          "role": "work",
+          "family": "landmark",
+          "source": "data/kaisyn/structure/village/snowy_slopes_inn/snowy_slopes_table_1.nbt",
+          "sourceJar": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar",
+          "sourceSha256": "ee472f9c495af1d30133f1296750c29e927a1fb65a3ef92feacca21fa4e2b515",
+          "preparedSha256": "2584ae2afab02f68742595852041e9cb99e3b5a70ed7bc280b0e8af1de189234",
+          "size": [
+            10,
+            3,
+            6
+          ],
+          "origin": [
+            11147,
+            230,
+            1768
+          ],
+          "privateTemplate": "kithkyn_tundra_profile:landmark/tt__snowy_slopes_table_1",
+          "compatibilityNamespaces": []
+        },
+        {
+          "id": "T17.3",
+          "label": "Snowy Plains Tower",
+          "role": "landmark",
+          "family": "landmark",
+          "source": "data/kaisyn/structure/outpost/towers/snowy_plains/base_plate.nbt",
+          "sourceJar": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar",
+          "sourceSha256": "2ca9b719268935f3b750325ff48f6e7b17f2a2d4e18e5bb7273bd498b42c7987",
+          "preparedSha256": "c6bbe7b1b1722483cb37e30231c3c809eda72ad15c3222fbb51135bc4854cde9",
+          "size": [
+            23,
+            38,
+            23
+          ],
+          "origin": [
+            11163,
+            230,
+            1768
+          ],
+          "privateTemplate": "kithkyn_tundra_profile:landmark/tt__snowy_plains_tower",
+          "compatibilityNamespaces": []
+        },
+        {
+          "id": "T17.4",
+          "label": "Terralith Igloo",
+          "role": "work",
+          "family": "landmark",
+          "source": "data/terralith/structure/regular/igloo.nbt",
+          "sourceJar": "Terralith_1.21.x_v2.6.2.jar",
+          "sourceSha256": "5880f76a2d1dee60cc394b24f2c891eef0a9146b72318845234382f897172a48",
+          "preparedSha256": "ee7e68ec064ae63a751ed7df261c158081513f70b3cb7b31846abb650ad1da4e",
+          "size": [
+            7,
+            5,
+            8
+          ],
+          "origin": [
+            11192,
+            230,
+            1768
+          ],
+          "privateTemplate": "kithkyn_tundra_profile:landmark/terralith__igloo",
+          "compatibilityNamespaces": []
+        },
+        {
+          "id": "T17.5",
+          "label": "Winter Mage Tower",
+          "role": "landmark",
+          "family": "landmark",
+          "source": "data/terralith/structure/mage/winter_tower.nbt",
+          "sourceJar": "Terralith_1.21.x_v2.6.2.jar",
+          "sourceSha256": "07e0f7b1b7e3a8b5e692bf704826ebd33f6eb1ae47a2ae6c0d8ecc8b700899a6",
+          "preparedSha256": "73866d214b6d5b654927950af4549d1cbab1a4462bf92fa6737d15582676020f",
+          "size": [
+            24,
+            58,
+            24
+          ],
+          "origin": [
+            11205,
+            230,
+            1768
+          ],
+          "privateTemplate": "kithkyn_tundra_profile:landmark/terralith__winter_tower",
+          "compatibilityNamespaces": []
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "preparedTemplates": 117,
+    "placedTemplates": 117,
+    "allPlacementResponsesConfirmed": true,
+    "compatibilityPalettesNormalized": true,
+    "worldSaved": true,
+    "worldBackup": "/Users/quzzar/Projects/kithkyn/run/backups/before-tundra-full-profile-20260912-095838",
+    "playerTeleported": true,
+    "visualReview": "passed",
+    "renderedViews": [
+      "run/tundra-full-profile/render/client/screenshots/tundra-core.png",
+      "run/tundra-full-profile/render/client/screenshots/tundra-native-food.png",
+      "run/tundra-full-profile/render/client/screenshots/tundra-native-workshops.png",
+      "run/tundra-full-profile/render/client/screenshots/tundra-compat-a.png",
+      "run/tundra-full-profile/render/client/screenshots/tundra-compat-b.png",
+      "run/tundra-full-profile/render/client/screenshots/tundra-details-and-tavern.png",
+      "run/tundra-full-profile/render/client/screenshots/tundra-tavern-core.png",
+      "run/tundra-full-profile/render/client/screenshots/tundra-tavern-carts.png",
+      "run/tundra-full-profile/render/client/screenshots/tundra-outpost.png",
+      "run/tundra-full-profile/render/client/screenshots/tundra-outpost-yards.png",
+      "run/tundra-full-profile/render/client/screenshots/tundra-landmarks.png"
+    ]
+  },
+  "worldBackup": "/Users/quzzar/Projects/kithkyn/run/backups/before-tundra-full-profile-20260912-095838"
+}

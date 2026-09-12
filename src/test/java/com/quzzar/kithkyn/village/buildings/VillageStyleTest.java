@@ -38,7 +38,8 @@ class VillageStyleTest {
   @Test
   void bundledBirchLeadsTheEnumAndIsWhatUnknownSavedStylesReadAs() {
     assertEquals(List.of(VillageStyle.BIRCH_FOREST, VillageStyle.DESERT, VillageStyle.BADLANDS,
-        VillageStyle.FLOODPLAIN, VillageStyle.JUNGLE, VillageStyle.SWAMP, VillageStyle.MEDITERRANEAN),
+        VillageStyle.FLOODPLAIN, VillageStyle.JUNGLE, VillageStyle.SWAMP, VillageStyle.MEDITERRANEAN,
+        VillageStyle.TUNDRA),
         List.of(VillageStyle.values()));
     assertEquals(VillageStyle.BIRCH_FOREST, VillageStyle.DEFAULT);
     assertEquals(VillageStyle.BIRCH_FOREST, VillageStyle.fromId(""));
@@ -114,11 +115,16 @@ class VillageStyleTest {
       for (TagKey<Biome> tag : unfinished) {
         assertFamily(tag, VillageStyle.BIRCH_FOREST, seed);
       }
-      // Snow and ice used to map to their own family; a freezing biome is Birch now too.
-      assertEquals(VillageStyle.BIRCH_FOREST,
+      assertEquals(VillageStyle.TUNDRA,
           VillageStyle.select(Tags.Biomes.IS_SNOWY::equals, "snowy_plains", 0.0F, true, 0.5F, seed, ALL_STYLES));
-      assertEquals(VillageStyle.BIRCH_FOREST,
+      assertEquals(VillageStyle.TUNDRA,
           VillageStyle.select(Tags.Biomes.IS_ICY::equals, "ice_spikes", 0.0F, true, 0.5F, seed, ALL_STYLES));
+      assertEquals(VillageStyle.TUNDRA,
+          VillageStyle.select(NO_TAGS, "frosted_lowlands", 0.0F, true, 0.5F, seed, ALL_STYLES));
+      assertEquals(VillageStyle.BIRCH_FOREST,
+          VillageStyle.select(Tags.Biomes.IS_SNOWY::equals, "snowy_plains", 0.0F, true, 0.5F, seed,
+              style -> style == VillageStyle.BIRCH_FOREST),
+          "without the Tundra pack, snowy biomes fall back to the bundled catalog");
     }
   }
 
@@ -130,9 +136,9 @@ class VillageStyleTest {
         VillageStyle.select(NO_TAGS, "sunflower_plains", 0.8F, true, 0.4F, 5L, ALL_STYLES),
         "the vanilla plains are recognizable by name without any tag");
     Set<TagKey<Biome>> snowyPlain = Set.of(Tags.Biomes.IS_PLAINS, Tags.Biomes.IS_SNOWY);
-    assertEquals(VillageStyle.BIRCH_FOREST,
+    assertEquals(VillageStyle.TUNDRA,
         VillageStyle.select(snowyPlain::contains, "snowy_plains", 0.0F, true, 0.5F, 5L, ALL_STYLES),
-        "a snowy plain is not Mediterranean country");
+        "a snowy plain is Tundra country");
     for (long seed = 0; seed < 20; seed++) {
       assertEquals(VillageStyle.BIRCH_FOREST,
           VillageStyle.select(Tags.Biomes.IS_PLAINS::equals, "plains", 0.8F, true, 0.4F, seed,

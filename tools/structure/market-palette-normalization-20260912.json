@@ -1,0 +1,66 @@
+{
+  "schemaVersion": 1,
+  "recorded": "2026-09-12T13:45:00-04:00",
+  "status": "applied to active integration packs, live datapacks and review gallery; visually verified",
+  "decision": "Every village variant uses the same ordered market stalls: red for tier one, cyan added at tier two, and orange added at tier three. White remains the alternating stripe color. Green and yellow market stalls are retired.",
+  "stallOrder": [
+    "red",
+    "cyan",
+    "orange"
+  ],
+  "awningStairs": {
+    "red": "minecraft:mangrove_stairs",
+    "white": "minecraft:birch_stairs",
+    "cyan": "minecraft:warped_stairs",
+    "orange": "minecraft:acacia_stairs"
+  },
+  "perStall": {
+    "coloredWool": 12,
+    "coloredCarpet": 13,
+    "coloredWallBanners": 8,
+    "coloredCandles": 2,
+    "coloredAwningStairs": 4,
+    "whiteAwningStairs": 3,
+    "totalAwningStairs": 7,
+    "supportedEntranceCarpets": 1
+  },
+  "changedFamilies": {
+    "desert": "orange/green/yellow converted to red/cyan/orange",
+    "floodplain": "orange/green/yellow converted to red/cyan/orange; canonical mud-brick stair edge restored to colored-and-white stripes",
+    "mediterranean": "orange/green/yellow converted to red/cyan/orange, including the plain candles on the first stall",
+    "swamp": "single-material spruce stair edge restored to colored-and-white stripes"
+  },
+  "alreadyConformingFamilies": [
+    "birch",
+    "mesa",
+    "jungle",
+    "tundra"
+  ],
+  "updatedTemplateCopies": 36,
+  "layers": [
+    "integration source packs",
+    "live world datapacks",
+    "all-variant market review datapack"
+  ],
+  "gallery": {
+    "entry": [
+      11594.5,
+      260.0,
+      1892.5
+    ],
+    "markets": 24,
+    "status": "refreshed and visually verified"
+  },
+  "screenshots": [
+    "run/market-all-variants-20260912/normalized-render/client/screenshots/normalized-desert-markets.png",
+    "run/market-all-variants-20260912/final-stripes-render/client/screenshots/final-floodplain-stripes.png",
+    "run/market-all-variants-20260912/final-stripes-render/client/screenshots/final-swamp-stripes.png",
+    "run/market-all-variants-20260912/normalized-render/client/screenshots/normalized-mediterranean-markets.png"
+  ],
+  "backups": {
+    "templatesBeforePaletteNormalization": "run/backups/before-market-stall-normalization-20260912-133700",
+    "templatesBeforeFinalWhiteStripeNormalization": "run/backups/before-market-stall-normalization-20260912-134307",
+    "worldBeforeFinalGalleryRefresh": "run/backups/before-market-gallery-t17-stone-20260912-134326"
+  },
+  "validator": "tools/structure/audit-templates.py enforces the stall colors, per-stall component counts, colored stair accents, white stair stripes and one-block supported entrances"
+}

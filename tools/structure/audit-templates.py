@@ -1,10 +1,28 @@
 #!/usr/bin/env python3
-"""Reject production structure templates containing gallery fixtures or invalid cells."""
+"""Reject production structure templates containing invalid authored geometry."""
 
+from collections import Counter
 from pathlib import Path
+import re
 import sys
 
 from nbt import read
+
+
+MARKET_NAME = re.compile(r"^.*market(?:_.+)?_(\d+)\.nbt$")
+AIR = {"minecraft:air", "minecraft:cave_air", "minecraft:void_air"}
+MARKET_COLORS = ("red", "cyan", "orange")
+MARKET_PART_COUNTS = {
+    "wool": 12,
+    "carpet": 13,
+    "wall_banner": 8,
+    "candle": 2,
+}
+MARKET_ACCENT_STAIRS = {
+    "red": "minecraft:mangrove_stairs",
+    "cyan": "minecraft:warped_stairs",
+    "orange": "minecraft:acacia_stairs",
+}
 
 
 def templates(arguments):
@@ -25,6 +43,10 @@ def problems(path):
         for index, state in enumerate(palette)
         if state["Name"] == "minecraft:barrier"
     ]
+    blocks = {
+        tuple(block["pos"]): palette[block["state"]]
+        for block in root["blocks"]
+    }
     for block in root["blocks"]:
         position = tuple(block["pos"])
         name = palette[block["state"]]["Name"]
@@ -36,6 +58,84 @@ def problems(path):
             reasons.append("gallery barrier in production template")
         if reasons:
             failures.append((position, name, "; ".join(reasons)))
+
+    market = MARKET_NAME.match(path.name)
+    if market is not None:
+        expected = int(market.group(1))
+        counts = Counter(state["Name"] for state in blocks.values())
+        expected_colors = MARKET_COLORS[:expected]
+        for color in expected_colors:
+            for suffix, per_stall in MARKET_PART_COUNTS.items():
+                name = f"minecraft:{color}_{suffix}"
+                if counts[name] != per_stall:
+                    failures.append((
+                        "market palette",
+                        name,
+                        f"expected {per_stall} blocks for the {color} stall, found {counts[name]}",
+                    ))
+            stairs = MARKET_ACCENT_STAIRS[color]
+            if counts[stairs] != 4:
+                failures.append((
+                    "market stair trim",
+                    stairs,
+                    f"expected four striped awning stairs for the {color} stall, found {counts[stairs]}",
+                ))
+
+        for color in MARKET_COLORS[expected:]:
+            for suffix in MARKET_PART_COUNTS:
+                name = f"minecraft:{color}_{suffix}"
+                if counts[name]:
+                    failures.append((
+                        "market palette",
+                        name,
+                        f"tier {expected} includes the later-tier {color} stall color",
+                    ))
+
+        awning_stairs = sum(
+            1
+            for position, state in blocks.items()
+            if position[1] == 4 and state["Name"].endswith("_stairs")
+        )
+        if awning_stairs != expected * 7:
+            failures.append((
+                "market stair trim",
+                "stairs",
+                f"expected {expected * 7} alternating awning stairs, found {awning_stairs}",
+            ))
+        neutral_stairs = counts["minecraft:birch_stairs"]
+        if neutral_stairs != expected * 3:
+            failures.append((
+                "market stair trim",
+                "minecraft:birch_stairs",
+                f"expected {expected * 3} white-stripe awning stairs, found {neutral_stairs}",
+            ))
+
+        entrances = sorted(
+            position
+            for position, state in blocks.items()
+            if position[1] == 1 and state["Name"].endswith("_carpet")
+        )
+        if len(entrances) != expected:
+            failures.append((
+                "market entrances",
+                "carpet",
+                f"expected {expected} one-block entrance carpets, found {len(entrances)}",
+            ))
+
+        entrance_set = set(entrances)
+        for position in entrances:
+            x, y, z = position
+            below = blocks.get((x, y - 1, z), {"Name": "minecraft:air"})["Name"]
+            if below in AIR:
+                failures.append((position, blocks[position]["Name"], "entrance carpet has no authored support"))
+
+            for adjacent in ((x + 1, y, z), (x, y, z + 1)):
+                if adjacent in entrance_set and blocks[adjacent]["Name"] == blocks[position]["Name"]:
+                    failures.append((
+                        position,
+                        blocks[position]["Name"],
+                        f"same-color entrance carpet projects two blocks through {adjacent}",
+                    ))
     return failures
 
 
@@ -55,7 +155,10 @@ def main(arguments):
     if failed:
         print(f"{failed} of {len(paths)} templates failed")
         return 1
-    print(f"PASS {len(paths)} templates: no barrier states or out-of-bounds blocks")
+    print(
+        f"PASS {len(paths)} templates: no barrier states, out-of-bounds blocks, "
+        "or malformed market entrances"
+    )
     return 0
 
 

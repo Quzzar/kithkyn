@@ -206,4 +206,33 @@ class WallPaletteTest {
     assertTrue(jungle > 0 && darkOak > 0, "both leaf species appear in the hedge");
     assertEquals(Items.COBBLESTONE, WallTier.WOOD.material(style));
   }
+
+  @Test
+  void tundraWallsUseSnowPackedIceSpruceAndSingleBrownCandles() {
+    var ring = WallRoute.aroundBox(0, 48, 0, 48);
+    var gates = Set.of(BlockPos.asLong(24, 0, 0), BlockPos.asLong(48, 0, 24),
+        BlockPos.asLong(24, 0, 48), BlockPos.asLong(0, 0, 24));
+    var style = VillageStyle.TUNDRA;
+    var wall = new WallProject(ring, gates, Collections.nCopies(ring.size(), 64), WallTier.WOOD, style);
+    int snow = 0, ice = 0, spruce = 0, slabs = 0, candles = 0, hanging = 0;
+    for (var cell : wall.plannedBlocks()) {
+      var state = cell.desiredState(wall.getTier(), style);
+      if (state.is(Blocks.SNOW_BLOCK)) snow++;
+      if (state.is(Blocks.PACKED_ICE)) ice++;
+      if (state.is(Blocks.SPRUCE_FENCE) || state.is(Blocks.SPRUCE_TRAPDOOR)) spruce++;
+      if (state.is(Blocks.STONE_BRICK_SLAB)) slabs++;
+      if (state.is(Blocks.BROWN_CANDLE)) {
+        assertEquals(1, state.getValue(CandleBlock.CANDLES));
+        assertTrue(state.getValue(CandleBlock.LIT));
+        candles++;
+      }
+      if (state.is(Blocks.LANTERN)) {
+        assertTrue(state.getValue(LanternBlock.HANGING));
+        hanging++;
+      }
+    }
+    assertTrue(snow > 0 && ice > 0 && spruce > 0 && slabs > 0 && candles > 0);
+    assertEquals(16, hanging);
+    assertEquals(Items.COBBLESTONE, WallTier.WOOD.material(style));
+  }
 }

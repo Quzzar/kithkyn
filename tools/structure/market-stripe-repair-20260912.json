@@ -2,6 +2,7 @@
   "schemaVersion": 1,
   "recorded": "2026-09-12T02:00:00-04:00",
   "status": "applied; jar copies pending release",
+  "current_palette_policy": "Superseded by tools/structure/market-palette-normalization-20260912.json: every market now uses red, cyan and orange stalls with white stripes; green and yellow are no longer market stall colors.",
   "description": "Restore stripe-matched awning stairs on every market template. Each eave stair takes the stair the original market set used for the stripe colour above it, so the awning stripes continue down the eaves instead of stopping at one family-wide stair type.",
   "mapping": {
     "white": "minecraft:birch_stairs",

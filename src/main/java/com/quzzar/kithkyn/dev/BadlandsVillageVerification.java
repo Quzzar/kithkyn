@@ -31,6 +31,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.Container;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.entity.animal.SnowGolem;
 import net.minecraft.world.level.block.AbstractBannerBlock;
 import net.minecraft.world.level.block.entity.BannerBlockEntity;
 import net.minecraft.world.level.GameRules;
@@ -39,6 +40,7 @@ import net.minecraft.world.level.block.BedBlock;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
+import net.minecraft.world.phys.AABB;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.tick.ServerTickEvent;
@@ -46,7 +48,7 @@ import net.neoforged.neoforge.event.tick.ServerTickEvent;
 /**
  * Shared private-catalog checks for the reviewed regional villages. Opt in with
  * the legacy Badlands flag or {@code -Dkithkyn.reviewedVillage.style=<style>}
- * for Desert, Floodplain, Jungle or Swamp; each catalog's authored numbers live in its
+ * for Desert, Floodplain, Jungle, Swamp, Mediterranean or Tundra; each catalog's authored numbers live in its
  * {@link Catalog} record so the checks read facts rather than guess them.
  */
 @EventBusSubscriber(modid = Kithkyn.MODID)
@@ -100,6 +102,10 @@ public final class BadlandsVillageVerification {
         new String[][] {{id("market", 1), id("market", 2)}, {id("market", 2), id("market", 3)},
             {id("farm", 1), id("farm", 2)}},
         7, 6, 5, 1, 4, 0, 0, new BlockPos(7, 1, 2), new BlockPos(7, 3, 3), 1, Biomes.PLAINS);
+    case TUNDRA -> new Catalog("[tundra-verify]", 23, 3, 6, new int[] {3, 0, 0}, Map.of(), List.of(), false,
+        new String[][] {{id("market", 1), id("market", 2)}, {id("market", 2), id("market", 3)},
+            {id("farm", 1), id("farm", 2)}},
+        3, 4, 4, 1, 4, 4, 0, new BlockPos(8, 1, 7), new BlockPos(8, 2, 8), 0, Biomes.SNOWY_PLAINS);
     case BIRCH_FOREST -> null;
   };
   /** Centre jobs beyond the founding four that a catalog's centre also opens at founding. */
@@ -185,9 +191,12 @@ public final class BadlandsVillageVerification {
       check(VillageStyle.fromBiome(registry.getHolderOrThrow(biome), 0L, BlockPos.ZERO, everything)
           == VillageStyle.MEDITERRANEAN, "Mediterranean coverage missing " + biome.location());
     }
-    check(VillageStyle.fromBiome(registry.getHolderOrThrow(Biomes.SNOWY_PLAINS), 0L, BlockPos.ZERO, everything)
-        != VillageStyle.MEDITERRANEAN, "A snowy plain is not Mediterranean country");
-    Kithkyn.LOGGER.info("{} BIOMES PASS: Pueblo, Desert, Birch, Floodplain, Swamp, both Plains and all three Jungle biomes", PREFIX);
+    for (var biome : List.of(Biomes.SNOWY_PLAINS, Biomes.ICE_SPIKES, Biomes.SNOWY_BEACH,
+        Biomes.FROZEN_RIVER, Biomes.FROZEN_OCEAN, Biomes.DEEP_FROZEN_OCEAN)) {
+      check(VillageStyle.fromBiome(registry.getHolderOrThrow(biome), 0L, BlockPos.ZERO, everything)
+          == VillageStyle.TUNDRA, "Tundra coverage missing " + biome.location());
+    }
+    Kithkyn.LOGGER.info("{} BIOMES PASS: Pueblo, Desert, Birch, Floodplain, Swamp, both Plains, all three Jungle biomes and exposed frozen lowlands", PREFIX);
   }
 
   private static void verifyCatalogue(ServerLevel level) {
@@ -362,6 +371,13 @@ public final class BadlandsVillageVerification {
     for (BlockPos fire : village.getCampfirePositions()) {
       check(!fire.equals(plaza) && level.getBlockState(fire).is(Blocks.CAMPFIRE), "Missing or conflated campfire " + fire);
     }
+    if (STYLE == VillageStyle.TUNDRA) {
+      BoundingBox bounds = ApprovedStructureAccess.footprint(level, center);
+      AABB search = new AABB(bounds.minX(), bounds.minY(), bounds.minZ(),
+          bounds.maxX() + 1, bounds.maxY() + 1, bounds.maxZ() + 1).inflate(16.0D);
+      check(level.getEntitiesOfClass(SnowGolem.class, search).size() == 4,
+          "Tundra centre must place exactly four snow golems");
+    }
     for (Building building : village.getBuildings()) {
       verifyBanners(level, village, building);
       for (long bed : building.getInfo().getBedLocations()) {
@@ -411,7 +427,8 @@ public final class BadlandsVillageVerification {
         && village.getBedAssignmentsView().size() == CATALOG.foundingJobs()
         && village.getUnassignedBeds().size() == CATALOG.foundingBeds() - CATALOG.foundingJobs(),
         "Founding workers did not receive distinct beds");
-    if (STYLE == VillageStyle.JUNGLE || STYLE == VillageStyle.SWAMP || STYLE == VillageStyle.MEDITERRANEAN) {
+    if (STYLE == VillageStyle.JUNGLE || STYLE == VillageStyle.SWAMP
+        || STYLE == VillageStyle.MEDITERRANEAN || STYLE == VillageStyle.TUNDRA) {
       if (STYLE != VillageStyle.MEDITERRANEAN) {
         verifyRoutedWorksite(village, residents, Occupation.MINER, "mine");
       }
