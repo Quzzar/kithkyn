@@ -964,7 +964,7 @@ the lodge reaches up to ninety blocks, while one path search never goes further 
 forty-eight. Every tree past that was asked about anyway, up to four searches a tree, and each
 failed search spends its whole node budget first. On the live server one lumberjack ran 2,325 such
 searches in six minutes and reached 19 trees; the scans held the server at five ticks a second,
-and one held a tick past the sixty-second watchdog and took the server down. A pass now considers
+and the watchdog took the server down (below four ticks a second it does, see below). A pass now considers
 only trees within one search's reach of where the worker stands, asks about them nearest first,
 spends at most six searches in total, and leaves a tree it found no way to out of that worker's
 scans for two minutes. The nearest reachable tree is taken rather than a random one. Trimming a
@@ -980,6 +980,31 @@ retry is now not repeated for the same target for five seconds unless the person
 blocks since (`LongRetryMemo`), and one that reaches its target clears it. The last sixteen failures
 are kept, not one: a villager stuck beside a chest asks for each of the nine cells round it in
 turn, and a single remembered failure was forgotten before its cell came round again.
+
+**Long retries share a time budget, 2026-09-12 (#138).** The memo stops a person asking again
+for a target that just failed, not the first asking, and first askings come in bursts: a villager
+trying the twelve cells round a chest ran twelve long searches in one tick, a miner's shaft hop
+is an exact target too, and in the live server's busiest seconds long retries expanded 25,000 to
+80,000 nodes. The retries of every person now draw on one budget of server-thread time
+(`LongRetryBudget`): five milliseconds a tick, of which ten at most can be saved up. A retry
+starts while any time is left and is charged what it took, so over any stretch of ticks long
+retries cost at most the refill, plus ten milliseconds, plus one search. A retry the budget cannot
+pay for does not run: the caller keeps the ordinary search's answer, nothing is remembered as
+failed, and the next re-plan asks again, so a watch platform or ramp waypoint that only a long
+retry finds is found a few re-plans later rather than at once. Time is counted rather than nodes
+because the cost of a node is what moves: three microseconds on the warm server, over twenty in
+the first minutes after a start, which is when a restarted server is most at risk.
+`dev/LongRetryVerification` replays the burst: 96 exact requests in one tick from lanes that run
+past the 48-block horizon onto open ground, and a corridor target only a long retry can reach.
+
+**The watchdog kills a slow server, not only a stuck one.** Its "a single server tick took 60
+seconds" measures how far the server has fallen behind its tick schedule, and the server only
+jumps the schedule forward (the "Can't keep up" warning) once every 300 ticks. Below four ticks a
+second those 300 ticks take more than 75 seconds, so the lag passes sixty before the jump comes.
+The 12:28 kill on 2026-09-12 came two minutes after a restart: the server thread was still logging
+path searches when the watchdog reported, and its own "Can't keep up, 62,578 ms behind" followed
+four seconds later. A crash report's stack is where the thread happened to be at that moment,
+which is wherever it spends most of its time; sample the thread before blaming one call.
 
 **Attached bee nests (2026-09-08).** Shared tree felling also removes unowned bee nests
 and beehives touching a log actually removed, once each. It releases occupants normally;
