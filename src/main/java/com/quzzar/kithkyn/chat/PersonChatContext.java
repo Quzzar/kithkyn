@@ -380,6 +380,10 @@ public final class PersonChatContext {
     }
     String pockets = pocketsSummary(person);
     system.append("Your pockets: ").append(pockets.isEmpty() ? "empty" : pockets).append(".\n");
+    String reserve = potionReserveLine(person);
+    if (!reserve.isEmpty()) {
+      system.append(reserve).append('\n');
+    }
     system.append(personalHousingLine(person)).append('\n');
     // Their own chest at home, stated on the same rule as the pockets: what it
     // holds when it is in sight, and that they have none when they have none,
@@ -575,6 +579,27 @@ public final class PersonChatContext {
     List<String> parts = new ArrayList<>();
     counts.forEach((name, count) -> parts.add(count + " " + name));
     return String.join(", ", parts);
+  }
+
+  /**
+   * A cleric's seeds, said plainly: one bottle of each brew is kept back as the
+   * recipe they brew more from at their station, and is not for giving. This
+   * is the context behind the spare counts in the pockets line, and it tells
+   * the cleric what they can make (Aaron, 2026-09-12). Empty for anyone else.
+   */
+  private static String potionReserveLine(RealPerson person) {
+    if (!ClericPotions.isCleric(person)) {
+      return "";
+    }
+    List<String> brews = new ArrayList<>();
+    for (ClericPotions.Stock stock : ClericPotions.stock(person)) {
+      brews.add(itemName(stock.sample()));
+    }
+    if (brews.isEmpty()) {
+      return "You carry no potions at all, so there is nothing you can brew more of until someone hands you a bottle.";
+    }
+    return "In reserve, not counted above and not for giving: one " + String.join(", one ", brews)
+        + ". Each is the recipe you brew three more of at your station; give the last one away and that brew is lost to you.";
   }
 
   /**

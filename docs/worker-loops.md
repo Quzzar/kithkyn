@@ -380,7 +380,8 @@ The last bottle of a brew is the **seed**. It is never thrown and never given aw
 conversation, because a cleric who parts with it has lost the brew for good and would have to
 be handed another before making more. The clean half of that rule is in the chat briefing: a
 cleric is told the bottles they can spare of each brew, "you have this many minus one", so a
-model that gives only what it was told it has never offers the seed. The take itself
+model that gives only what it was told it has never offers the seed, and a separate line names
+the brews held in reserve and why, so the cleric also knows what they can brew. The take itself
 (`PersonChatDispatcher.takeFromSlots`) caps at the spare as a backstop, the one exception to
 "anything goes". Above the seed, potions are theirs to give like anything else.
 
