@@ -1,0 +1,2490 @@
+{
+  "schemaVersion": 1,
+  "recorded": "2026-09-12T02:00:00-04:00",
+  "status": "applied; jar copies pending release",
+  "description": "Restore stripe-matched awning stairs on every market template. Each eave stair takes the stair the original market set used for the stripe colour above it, so the awning stripes continue down the eaves instead of stopping at one family-wide stair type.",
+  "mapping": {
+    "white": "minecraft:birch_stairs",
+    "red": "minecraft:mangrove_stairs",
+    "cyan": "minecraft:warped_stairs",
+    "orange": "minecraft:acacia_stairs",
+    "green": "minecraft:mossy_cobblestone_stairs",
+    "yellow": "minecraft:bamboo_stairs"
+  },
+  "precedent": "The original Plains, Savanna, Taiga and Snowy markets (removed from the jar in 2a55bb2, \"Remove the old Village Life catalogs\") used birch under white, mangrove under red, warped under cyan and acacia under orange. Green and yellow stripes only exist in the Desert and Floodplain markets and had no original stair; they take the mossy cobblestone and bamboo stairs Aaron chose on the Mediterranean workshop tier 3.",
+  "defect": "Every regional restyle mapped all awning stairs to one family stair (smooth sandstone, smooth red sandstone, mud brick, jungle, spruce); Birch kept only the warped stairs under cyan. Decision: Aaron, 2026-09-12, \"do what the original set had\".",
+  "stripe_rule": "A stair is an awning stair when a wool, terracotta or concrete block touches it, checked behind its high side first, then above, then beside; every stair in these templates qualifies.",
+  "tool": "tools/structure/ReplaceTemplateBlocks.java (typed NbtIo read and write; swaps the named cells to the new block keeping facing, half and shape; drops palette entries nothing uses any more, which is why the datapack palettes shrink)",
+  "plan": "run/market-stripe-repair-20260912/plan.json (restripe.py plans and audits; before.json and after.json hold the hashes)",
+  "files": [
+    {
+      "path": "src/main/resources/data/kithkyn/structure/market_birch_forest_1.nbt",
+      "cells": [
+        [
+          7,
+          4,
+          5
+        ],
+        [
+          7,
+          4,
+          7
+        ],
+        [
+          7,
+          4,
+          9
+        ],
+        [
+          7,
+          4,
+          11
+        ]
+      ],
+      "changes": [
+        {
+          "stripe": "red",
+          "from": "birch_stairs",
+          "to": "mangrove_stairs",
+          "count": 4
+        }
+      ],
+      "sha256_before": "1a49392c2f337cbee9675429a780015738f0d2f9df105ffe3ad2db787b9e61f9",
+      "sha256_after": "96cb7b449f7e7c11bb787411b600fb25d8b3bd82279afeae5c350f15d0aa767e"
+    },
+    {
+      "path": "src/main/resources/data/kithkyn/structure/market_birch_forest_2.nbt",
+      "cells": [
+        [
+          14,
+          4,
+          5
+        ],
+        [
+          14,
+          4,
+          7
+        ],
+        [
+          14,
+          4,
+          9
+        ],
+        [
+          14,
+          4,
+          11
+        ]
+      ],
+      "changes": [
+        {
+          "stripe": "red",
+          "from": "birch_stairs",
+          "to": "mangrove_stairs",
+          "count": 4
+        }
+      ],
+      "sha256_before": "edfa5665973b23ee54538398c0fe604d4031b7749492a240decabc23de9c0b3b",
+      "sha256_after": "8a273920e519cc6f0b403e3484559b8f600497433303237e55b328119fea5fca"
+    },
+    {
+      "path": "src/main/resources/data/kithkyn/structure/market_birch_forest_3.nbt",
+      "cells": [
+        [
+          8,
+          4,
+          9
+        ],
+        [
+          10,
+          4,
+          9
+        ],
+        [
+          12,
+          4,
+          9
+        ],
+        [
+          14,
+          4,
+          9
+        ],
+        [
+          14,
+          4,
+          13
+        ],
+        [
+          14,
+          4,
+          15
+        ],
+        [
+          14,
+          4,
+          17
+        ],
+        [
+          14,
+          4,
+          19
+        ]
+      ],
+      "changes": [
+        {
+          "stripe": "orange",
+          "from": "birch_stairs",
+          "to": "acacia_stairs",
+          "count": 4
+        },
+        {
+          "stripe": "red",
+          "from": "birch_stairs",
+          "to": "mangrove_stairs",
+          "count": 4
+        }
+      ],
+      "sha256_before": "3e7f8d03135e4144fc6821d9378b6adc5b79037dc383ac86c2a4501ecdee9dce",
+      "sha256_after": "0abba67c34258a62a072f87b8e6c345e9108a8f70c195aa1bd7fec5cb1bdbea6"
+    },
+    {
+      "path": "run/world/datapacks/kithkyn-badlands/data/kithkyn/structure/market_badlands_1.nbt",
+      "cells": [
+        [
+          7,
+          4,
+          5
+        ],
+        [
+          7,
+          4,
+          6
+        ],
+        [
+          7,
+          4,
+          7
+        ],
+        [
+          7,
+          4,
+          8
+        ],
+        [
+          7,
+          4,
+          9
+        ],
+        [
+          7,
+          4,
+          10
+        ],
+        [
+          7,
+          4,
+          11
+        ]
+      ],
+      "changes": [
+        {
+          "stripe": "red",
+          "from": "smooth_red_sandstone_stairs",
+          "to": "mangrove_stairs",
+          "count": 4
+        },
+        {
+          "stripe": "white",
+          "from": "smooth_red_sandstone_stairs",
+          "to": "birch_stairs",
+          "count": 3
+        }
+      ],
+      "sha256_before": "c803061f837cfd42ea6960045d347db2528279c39521a7ac3e72160b4516132c",
+      "sha256_after": "3d88852925b3896128e59a934d0bea6d4f8eabe22f56ef92f22cd78000ec949c"
+    },
+    {
+      "path": "run/world/datapacks/kithkyn-badlands/data/kithkyn/structure/market_badlands_2.nbt",
+      "cells": [
+        [
+          8,
+          4,
+          5
+        ],
+        [
+          8,
+          4,
+          6
+        ],
+        [
+          8,
+          4,
+          7
+        ],
+        [
+          8,
+          4,
+          8
+        ],
+        [
+          8,
+          4,
+          9
+        ],
+        [
+          8,
+          4,
+          10
+        ],
+        [
+          8,
+          4,
+          11
+        ],
+        [
+          14,
+          4,
+          5
+        ],
+        [
+          14,
+          4,
+          6
+        ],
+        [
+          14,
+          4,
+          7
+        ],
+        [
+          14,
+          4,
+          8
+        ],
+        [
+          14,
+          4,
+          9
+        ],
+        [
+          14,
+          4,
+          10
+        ],
+        [
+          14,
+          4,
+          11
+        ]
+      ],
+      "changes": [
+        {
+          "stripe": "cyan",
+          "from": "smooth_red_sandstone_stairs",
+          "to": "warped_stairs",
+          "count": 4
+        },
+        {
+          "stripe": "red",
+          "from": "smooth_red_sandstone_stairs",
+          "to": "mangrove_stairs",
+          "count": 4
+        },
+        {
+          "stripe": "white",
+          "from": "smooth_red_sandstone_stairs",
+          "to": "birch_stairs",
+          "count": 6
+        }
+      ],
+      "sha256_before": "86e36d1c67433967ec056c5e940f870ccfe4b7a94e4ca0c79d9d9616425f60a4",
+      "sha256_after": "a5244cdddc558601064c0a7154569091179916c2cc2d42c67bd4594cd32f189f"
+    },
+    {
+      "path": "run/world/datapacks/kithkyn-badlands/data/kithkyn/structure/market_badlands_3.nbt",
+      "cells": [
+        [
+          8,
+          4,
+          9
+        ],
+        [
+          8,
+          4,
+          13
+        ],
+        [
+          8,
+          4,
+          14
+        ],
+        [
+          8,
+          4,
+          15
+        ],
+        [
+          8,
+          4,
+          16
+        ],
+        [
+          8,
+          4,
+          17
+        ],
+        [
+          8,
+          4,
+          18
+        ],
+        [
+          8,
+          4,
+          19
+        ],
+        [
+          9,
+          4,
+          9
+        ],
+        [
+          10,
+          4,
+          9
+        ],
+        [
+          11,
+          4,
+          9
+        ],
+        [
+          12,
+          4,
+          9
+        ],
+        [
+          13,
+          4,
+          9
+        ],
+        [
+          14,
+          4,
+          9
+        ],
+        [
+          14,
+          4,
+          13
+        ],
+        [
+          14,
+          4,
+          14
+        ],
+        [
+          14,
+          4,
+          15
+        ],
+        [
+          14,
+          4,
+          16
+        ],
+        [
+          14,
+          4,
+          17
+        ],
+        [
+          14,
+          4,
+          18
+        ],
+        [
+          14,
+          4,
+          19
+        ]
+      ],
+      "changes": [
+        {
+          "stripe": "cyan",
+          "from": "smooth_red_sandstone_stairs",
+          "to": "warped_stairs",
+          "count": 4
+        },
+        {
+          "stripe": "orange",
+          "from": "smooth_red_sandstone_stairs",
+          "to": "acacia_stairs",
+          "count": 4
+        },
+        {
+          "stripe": "red",
+          "from": "smooth_red_sandstone_stairs",
+          "to": "mangrove_stairs",
+          "count": 4
+        },
+        {
+          "stripe": "white",
+          "from": "smooth_red_sandstone_stairs",
+          "to": "birch_stairs",
+          "count": 9
+        }
+      ],
+      "sha256_before": "d52356662ef25123b9f2d222cddfe923faa9bd681347a91386e05bcb73ed7caa",
+      "sha256_after": "7affb03999da5c2b2b5cb814a9c7adcfdcd6bbe0a6cf75fdc2c5b0d7aa86adf2"
+    },
+    {
+      "path": "run/world/datapacks/kithkyn-desert/data/kithkyn/structure/market_desert_1.nbt",
+      "cells": [
+        [
+          3,
+          4,
+          1
+        ],
+        [
+          3,
+          4,
+          2
+        ],
+        [
+          3,
+          4,
+          3
+        ],
+        [
+          3,
+          4,
+          4
+        ],
+        [
+          3,
+          4,
+          5
+        ],
+        [
+          3,
+          4,
+          6
+        ],
+        [
+          3,
+          4,
+          7
+        ]
+      ],
+      "changes": [
+        {
+          "stripe": "orange",
+          "from": "smooth_sandstone_stairs",
+          "to": "acacia_stairs",
+          "count": 4
+        },
+        {
+          "stripe": "white",
+          "from": "smooth_sandstone_stairs",
+          "to": "birch_stairs",
+          "count": 3
+        }
+      ],
+      "sha256_before": "f379c03bb1008fed8d125f2a97f960c3cffb93ca05342eb36aab6f77e2a6fa4e",
+      "sha256_after": "231850f4ead24d663a59a1a65860e91c94aae7045c3227c4934ac0e93ea47fe3"
+    },
+    {
+      "path": "run/world/datapacks/kithkyn-desert/data/kithkyn/structure/market_desert_2.nbt",
+      "cells": [
+        [
+          4,
+          4,
+          1
+        ],
+        [
+          4,
+          4,
+          2
+        ],
+        [
+          4,
+          4,
+          3
+        ],
+        [
+          4,
+          4,
+          4
+        ],
+        [
+          4,
+          4,
+          5
+        ],
+        [
+          4,
+          4,
+          6
+        ],
+        [
+          4,
+          4,
+          7
+        ],
+        [
+          10,
+          4,
+          1
+        ],
+        [
+          10,
+          4,
+          2
+        ],
+        [
+          10,
+          4,
+          3
+        ],
+        [
+          10,
+          4,
+          4
+        ],
+        [
+          10,
+          4,
+          5
+        ],
+        [
+          10,
+          4,
+          6
+        ],
+        [
+          10,
+          4,
+          7
+        ]
+      ],
+      "changes": [
+        {
+          "stripe": "green",
+          "from": "smooth_sandstone_stairs",
+          "to": "mossy_cobblestone_stairs",
+          "count": 4
+        },
+        {
+          "stripe": "orange",
+          "from": "smooth_sandstone_stairs",
+          "to": "acacia_stairs",
+          "count": 4
+        },
+        {
+          "stripe": "white",
+          "from": "smooth_sandstone_stairs",
+          "to": "birch_stairs",
+          "count": 6
+        }
+      ],
+      "sha256_before": "5285a4d9ae574e2a11d5fd37e7e48113fc58a547668a375c35254908f05582b4",
+      "sha256_after": "13fd75b28fab8255b4efcb5178270b16c806c5b8edff20f6b9ed1532f768a3f0"
+    },
+    {
+      "path": "run/world/datapacks/kithkyn-desert/data/kithkyn/structure/market_desert_3.nbt",
+      "cells": [
+        [
+          4,
+          4,
+          5
+        ],
+        [
+          4,
+          4,
+          9
+        ],
+        [
+          4,
+          4,
+          10
+        ],
+        [
+          4,
+          4,
+          11
+        ],
+        [
+          4,
+          4,
+          12
+        ],
+        [
+          4,
+          4,
+          13
+        ],
+        [
+          4,
+          4,
+          14
+        ],
+        [
+          4,
+          4,
+          15
+        ],
+        [
+          5,
+          4,
+          5
+        ],
+        [
+          6,
+          4,
+          5
+        ],
+        [
+          7,
+          4,
+          5
+        ],
+        [
+          8,
+          4,
+          5
+        ],
+        [
+          9,
+          4,
+          5
+        ],
+        [
+          10,
+          4,
+          5
+        ],
+        [
+          10,
+          4,
+          9
+        ],
+        [
+          10,
+          4,
+          10
+        ],
+        [
+          10,
+          4,
+          11
+        ],
+        [
+          10,
+          4,
+          12
+        ],
+        [
+          10,
+          4,
+          13
+        ],
+        [
+          10,
+          4,
+          14
+        ],
+        [
+          10,
+          4,
+          15
+        ]
+      ],
+      "changes": [
+        {
+          "stripe": "green",
+          "from": "smooth_sandstone_stairs",
+          "to": "mossy_cobblestone_stairs",
+          "count": 4
+        },
+        {
+          "stripe": "orange",
+          "from": "smooth_sandstone_stairs",
+          "to": "acacia_stairs",
+          "count": 4
+        },
+        {
+          "stripe": "white",
+          "from": "smooth_sandstone_stairs",
+          "to": "birch_stairs",
+          "count": 9
+        },
+        {
+          "stripe": "yellow",
+          "from": "smooth_sandstone_stairs",
+          "to": "bamboo_stairs",
+          "count": 4
+        }
+      ],
+      "sha256_before": "bdeb1d950c8747f346a4ef47d56d72075844e70de6840f3978e16900872eb69a",
+      "sha256_after": "ea62335fc76156a94438d13687312797cebb923f29818726a7a1cbba83b8a733"
+    },
+    {
+      "path": "run/world/datapacks/kithkyn-floodplain/data/kithkyn/structure/market_floodplain_1.nbt",
+      "cells": [
+        [
+          3,
+          4,
+          1
+        ],
+        [
+          3,
+          4,
+          2
+        ],
+        [
+          3,
+          4,
+          3
+        ],
+        [
+          3,
+          4,
+          4
+        ],
+        [
+          3,
+          4,
+          5
+        ],
+        [
+          3,
+          4,
+          6
+        ],
+        [
+          3,
+          4,
+          7
+        ]
+      ],
+      "changes": [
+        {
+          "stripe": "orange",
+          "from": "mud_brick_stairs",
+          "to": "acacia_stairs",
+          "count": 4
+        },
+        {
+          "stripe": "white",
+          "from": "mud_brick_stairs",
+          "to": "birch_stairs",
+          "count": 3
+        }
+      ],
+      "sha256_before": "c539143f131d25839049a805e493be5a9476cd65f4b3d8419403d6a9714d8f27",
+      "sha256_after": "ec0ba7a0e24de39ed252fea2c7a932e513706f99b483fc5343ba1b13a7b04c27"
+    },
+    {
+      "path": "run/world/datapacks/kithkyn-floodplain/data/kithkyn/structure/market_floodplain_2.nbt",
+      "cells": [
+        [
+          4,
+          4,
+          1
+        ],
+        [
+          4,
+          4,
+          2
+        ],
+        [
+          4,
+          4,
+          3
+        ],
+        [
+          4,
+          4,
+          4
+        ],
+        [
+          4,
+          4,
+          5
+        ],
+        [
+          4,
+          4,
+          6
+        ],
+        [
+          4,
+          4,
+          7
+        ],
+        [
+          10,
+          4,
+          1
+        ],
+        [
+          10,
+          4,
+          2
+        ],
+        [
+          10,
+          4,
+          3
+        ],
+        [
+          10,
+          4,
+          4
+        ],
+        [
+          10,
+          4,
+          5
+        ],
+        [
+          10,
+          4,
+          6
+        ],
+        [
+          10,
+          4,
+          7
+        ]
+      ],
+      "changes": [
+        {
+          "stripe": "green",
+          "from": "mud_brick_stairs",
+          "to": "mossy_cobblestone_stairs",
+          "count": 4
+        },
+        {
+          "stripe": "orange",
+          "from": "mud_brick_stairs",
+          "to": "acacia_stairs",
+          "count": 4
+        },
+        {
+          "stripe": "white",
+          "from": "mud_brick_stairs",
+          "to": "birch_stairs",
+          "count": 6
+        }
+      ],
+      "sha256_before": "d2a6a2eab39a74f84f2a03f13fcba8b7f951b07873c213a4991f4796a2ffe42d",
+      "sha256_after": "b23bb9f8745766124e2dea8d16f6059fd660f8bbe9333025dc2f329f68a6a67d"
+    },
+    {
+      "path": "run/world/datapacks/kithkyn-floodplain/data/kithkyn/structure/market_floodplain_3.nbt",
+      "cells": [
+        [
+          4,
+          4,
+          5
+        ],
+        [
+          4,
+          4,
+          9
+        ],
+        [
+          4,
+          4,
+          10
+        ],
+        [
+          4,
+          4,
+          11
+        ],
+        [
+          4,
+          4,
+          12
+        ],
+        [
+          4,
+          4,
+          13
+        ],
+        [
+          4,
+          4,
+          14
+        ],
+        [
+          4,
+          4,
+          15
+        ],
+        [
+          5,
+          4,
+          5
+        ],
+        [
+          6,
+          4,
+          5
+        ],
+        [
+          7,
+          4,
+          5
+        ],
+        [
+          8,
+          4,
+          5
+        ],
+        [
+          9,
+          4,
+          5
+        ],
+        [
+          10,
+          4,
+          5
+        ],
+        [
+          10,
+          4,
+          9
+        ],
+        [
+          10,
+          4,
+          10
+        ],
+        [
+          10,
+          4,
+          11
+        ],
+        [
+          10,
+          4,
+          12
+        ],
+        [
+          10,
+          4,
+          13
+        ],
+        [
+          10,
+          4,
+          14
+        ],
+        [
+          10,
+          4,
+          15
+        ]
+      ],
+      "changes": [
+        {
+          "stripe": "green",
+          "from": "mud_brick_stairs",
+          "to": "mossy_cobblestone_stairs",
+          "count": 4
+        },
+        {
+          "stripe": "orange",
+          "from": "mud_brick_stairs",
+          "to": "acacia_stairs",
+          "count": 4
+        },
+        {
+          "stripe": "white",
+          "from": "mud_brick_stairs",
+          "to": "birch_stairs",
+          "count": 9
+        },
+        {
+          "stripe": "yellow",
+          "from": "mud_brick_stairs",
+          "to": "bamboo_stairs",
+          "count": 4
+        }
+      ],
+      "sha256_before": "1232b70a001dccfd587f210419aa4fd268799b92d58d6b35435f0ff3a698dd1a",
+      "sha256_after": "7307a2951c2797c49fb5c9171b19cb2d9c1357bbb2a7165efacb2c86d16e7003"
+    },
+    {
+      "path": "run/world/datapacks/kithkyn-jungle/data/kithkyn/structure/market_jungle_1.nbt",
+      "cells": [
+        [
+          7,
+          4,
+          5
+        ],
+        [
+          7,
+          4,
+          6
+        ],
+        [
+          7,
+          4,
+          7
+        ],
+        [
+          7,
+          4,
+          8
+        ],
+        [
+          7,
+          4,
+          9
+        ],
+        [
+          7,
+          4,
+          10
+        ],
+        [
+          7,
+          4,
+          11
+        ]
+      ],
+      "changes": [
+        {
+          "stripe": "red",
+          "from": "jungle_stairs",
+          "to": "mangrove_stairs",
+          "count": 4
+        },
+        {
+          "stripe": "white",
+          "from": "jungle_stairs",
+          "to": "birch_stairs",
+          "count": 3
+        }
+      ],
+      "sha256_before": "68876b38420002f335f56c1193b4d05fe4aed7605b82b6ed21ec701b3c481d34",
+      "sha256_after": "bea3691a8a32aa4e8aa38c614314110355140fb31f8d904767d562d03f8dc893"
+    },
+    {
+      "path": "run/world/datapacks/kithkyn-jungle/data/kithkyn/structure/market_jungle_2.nbt",
+      "cells": [
+        [
+          8,
+          4,
+          5
+        ],
+        [
+          8,
+          4,
+          6
+        ],
+        [
+          8,
+          4,
+          7
+        ],
+        [
+          8,
+          4,
+          8
+        ],
+        [
+          8,
+          4,
+          9
+        ],
+        [
+          8,
+          4,
+          10
+        ],
+        [
+          8,
+          4,
+          11
+        ],
+        [
+          14,
+          4,
+          5
+        ],
+        [
+          14,
+          4,
+          6
+        ],
+        [
+          14,
+          4,
+          7
+        ],
+        [
+          14,
+          4,
+          8
+        ],
+        [
+          14,
+          4,
+          9
+        ],
+        [
+          14,
+          4,
+          10
+        ],
+        [
+          14,
+          4,
+          11
+        ]
+      ],
+      "changes": [
+        {
+          "stripe": "cyan",
+          "from": "jungle_stairs",
+          "to": "warped_stairs",
+          "count": 4
+        },
+        {
+          "stripe": "red",
+          "from": "jungle_stairs",
+          "to": "mangrove_stairs",
+          "count": 4
+        },
+        {
+          "stripe": "white",
+          "from": "jungle_stairs",
+          "to": "birch_stairs",
+          "count": 6
+        }
+      ],
+      "sha256_before": "a2f050de12d777326f5b7e29bafd6c20bca4685d959bfe4bcd61f428ddbcdc49",
+      "sha256_after": "ca9d3c34ed91f876ab965439ed49157ef0c474345f76c7bcabbca9c74d2078d0"
+    },
+    {
+      "path": "run/world/datapacks/kithkyn-jungle/data/kithkyn/structure/market_jungle_3.nbt",
+      "cells": [
+        [
+          8,
+          4,
+          9
+        ],
+        [
+          8,
+          4,
+          13
+        ],
+        [
+          8,
+          4,
+          14
+        ],
+        [
+          8,
+          4,
+          15
+        ],
+        [
+          8,
+          4,
+          16
+        ],
+        [
+          8,
+          4,
+          17
+        ],
+        [
+          8,
+          4,
+          18
+        ],
+        [
+          8,
+          4,
+          19
+        ],
+        [
+          9,
+          4,
+          9
+        ],
+        [
+          10,
+          4,
+          9
+        ],
+        [
+          11,
+          4,
+          9
+        ],
+        [
+          12,
+          4,
+          9
+        ],
+        [
+          13,
+          4,
+          9
+        ],
+        [
+          14,
+          4,
+          9
+        ],
+        [
+          14,
+          4,
+          13
+        ],
+        [
+          14,
+          4,
+          14
+        ],
+        [
+          14,
+          4,
+          15
+        ],
+        [
+          14,
+          4,
+          16
+        ],
+        [
+          14,
+          4,
+          17
+        ],
+        [
+          14,
+          4,
+          18
+        ],
+        [
+          14,
+          4,
+          19
+        ]
+      ],
+      "changes": [
+        {
+          "stripe": "cyan",
+          "from": "jungle_stairs",
+          "to": "warped_stairs",
+          "count": 4
+        },
+        {
+          "stripe": "orange",
+          "from": "jungle_stairs",
+          "to": "acacia_stairs",
+          "count": 4
+        },
+        {
+          "stripe": "red",
+          "from": "jungle_stairs",
+          "to": "mangrove_stairs",
+          "count": 4
+        },
+        {
+          "stripe": "white",
+          "from": "jungle_stairs",
+          "to": "birch_stairs",
+          "count": 9
+        }
+      ],
+      "sha256_before": "9d1d3a097f64b7e16b835e7f08c92c7a34b14de8a11c74b6036dd78cf57f79fe",
+      "sha256_after": "37bc35b5b0d157aff672c4ebf3ca65602c87ef129cc141f15a20f30195c9550d"
+    },
+    {
+      "path": "run/world/datapacks/kithkyn-swamp/data/kithkyn/structure/market_swamp_1.nbt",
+      "cells": [
+        [
+          7,
+          4,
+          5
+        ],
+        [
+          7,
+          4,
+          6
+        ],
+        [
+          7,
+          4,
+          7
+        ],
+        [
+          7,
+          4,
+          8
+        ],
+        [
+          7,
+          4,
+          9
+        ],
+        [
+          7,
+          4,
+          10
+        ],
+        [
+          7,
+          4,
+          11
+        ]
+      ],
+      "changes": [
+        {
+          "stripe": "red",
+          "from": "spruce_stairs",
+          "to": "mangrove_stairs",
+          "count": 4
+        },
+        {
+          "stripe": "white",
+          "from": "spruce_stairs",
+          "to": "birch_stairs",
+          "count": 3
+        }
+      ],
+      "sha256_before": "a2a634253b8a67b0d09716d12decec5b8ff35cf6dcb3006b252c0735d11de899",
+      "sha256_after": "27ad495db7e9152d6a88350849439c10be12a5281f7db1c112b2d863f48189e2"
+    },
+    {
+      "path": "run/world/datapacks/kithkyn-swamp/data/kithkyn/structure/market_swamp_2.nbt",
+      "cells": [
+        [
+          8,
+          4,
+          5
+        ],
+        [
+          8,
+          4,
+          6
+        ],
+        [
+          8,
+          4,
+          7
+        ],
+        [
+          8,
+          4,
+          8
+        ],
+        [
+          8,
+          4,
+          9
+        ],
+        [
+          8,
+          4,
+          10
+        ],
+        [
+          8,
+          4,
+          11
+        ],
+        [
+          14,
+          4,
+          5
+        ],
+        [
+          14,
+          4,
+          6
+        ],
+        [
+          14,
+          4,
+          7
+        ],
+        [
+          14,
+          4,
+          8
+        ],
+        [
+          14,
+          4,
+          9
+        ],
+        [
+          14,
+          4,
+          10
+        ],
+        [
+          14,
+          4,
+          11
+        ]
+      ],
+      "changes": [
+        {
+          "stripe": "cyan",
+          "from": "spruce_stairs",
+          "to": "warped_stairs",
+          "count": 4
+        },
+        {
+          "stripe": "red",
+          "from": "spruce_stairs",
+          "to": "mangrove_stairs",
+          "count": 4
+        },
+        {
+          "stripe": "white",
+          "from": "spruce_stairs",
+          "to": "birch_stairs",
+          "count": 6
+        }
+      ],
+      "sha256_before": "a529fc3afc3c358fd674c86059c59ca3e417cd641ec1c1335c29a49bf0da87ff",
+      "sha256_after": "f53a40f88d481545c3e5fa8266543cb6d1b0fe0427dbc6ca582d8482d9317dc8"
+    },
+    {
+      "path": "run/world/datapacks/kithkyn-swamp/data/kithkyn/structure/market_swamp_3.nbt",
+      "cells": [
+        [
+          8,
+          4,
+          9
+        ],
+        [
+          8,
+          4,
+          13
+        ],
+        [
+          8,
+          4,
+          14
+        ],
+        [
+          8,
+          4,
+          15
+        ],
+        [
+          8,
+          4,
+          16
+        ],
+        [
+          8,
+          4,
+          17
+        ],
+        [
+          8,
+          4,
+          18
+        ],
+        [
+          8,
+          4,
+          19
+        ],
+        [
+          9,
+          4,
+          9
+        ],
+        [
+          10,
+          4,
+          9
+        ],
+        [
+          11,
+          4,
+          9
+        ],
+        [
+          12,
+          4,
+          9
+        ],
+        [
+          13,
+          4,
+          9
+        ],
+        [
+          14,
+          4,
+          9
+        ],
+        [
+          14,
+          4,
+          13
+        ],
+        [
+          14,
+          4,
+          14
+        ],
+        [
+          14,
+          4,
+          15
+        ],
+        [
+          14,
+          4,
+          16
+        ],
+        [
+          14,
+          4,
+          17
+        ],
+        [
+          14,
+          4,
+          18
+        ],
+        [
+          14,
+          4,
+          19
+        ]
+      ],
+      "changes": [
+        {
+          "stripe": "cyan",
+          "from": "spruce_stairs",
+          "to": "warped_stairs",
+          "count": 4
+        },
+        {
+          "stripe": "orange",
+          "from": "spruce_stairs",
+          "to": "acacia_stairs",
+          "count": 4
+        },
+        {
+          "stripe": "red",
+          "from": "spruce_stairs",
+          "to": "mangrove_stairs",
+          "count": 4
+        },
+        {
+          "stripe": "white",
+          "from": "spruce_stairs",
+          "to": "birch_stairs",
+          "count": 9
+        }
+      ],
+      "sha256_before": "b931ec442398007a34891ad0c7a17353646341aecea7d9d33b4c5b9459e2f9fb",
+      "sha256_after": "a64bcba82913e92d6729616692cf2683f950e58871158fb5e9d59ace9c688036"
+    },
+    {
+      "path": "run/market-repair-20260910/pack/data/kithkyn/structure/market_badlands_1.nbt",
+      "cells": [
+        [
+          7,
+          4,
+          5
+        ],
+        [
+          7,
+          4,
+          6
+        ],
+        [
+          7,
+          4,
+          7
+        ],
+        [
+          7,
+          4,
+          8
+        ],
+        [
+          7,
+          4,
+          9
+        ],
+        [
+          7,
+          4,
+          10
+        ],
+        [
+          7,
+          4,
+          11
+        ]
+      ],
+      "changes": [
+        {
+          "stripe": "red",
+          "from": "smooth_red_sandstone_stairs",
+          "to": "mangrove_stairs",
+          "count": 4
+        },
+        {
+          "stripe": "white",
+          "from": "smooth_red_sandstone_stairs",
+          "to": "birch_stairs",
+          "count": 3
+        }
+      ],
+      "sha256_before": "c803061f837cfd42ea6960045d347db2528279c39521a7ac3e72160b4516132c",
+      "sha256_after": "3d88852925b3896128e59a934d0bea6d4f8eabe22f56ef92f22cd78000ec949c"
+    },
+    {
+      "path": "run/market-repair-20260910/pack/data/kithkyn/structure/market_badlands_2.nbt",
+      "cells": [
+        [
+          8,
+          4,
+          5
+        ],
+        [
+          8,
+          4,
+          6
+        ],
+        [
+          8,
+          4,
+          7
+        ],
+        [
+          8,
+          4,
+          8
+        ],
+        [
+          8,
+          4,
+          9
+        ],
+        [
+          8,
+          4,
+          10
+        ],
+        [
+          8,
+          4,
+          11
+        ],
+        [
+          14,
+          4,
+          5
+        ],
+        [
+          14,
+          4,
+          6
+        ],
+        [
+          14,
+          4,
+          7
+        ],
+        [
+          14,
+          4,
+          8
+        ],
+        [
+          14,
+          4,
+          9
+        ],
+        [
+          14,
+          4,
+          10
+        ],
+        [
+          14,
+          4,
+          11
+        ]
+      ],
+      "changes": [
+        {
+          "stripe": "cyan",
+          "from": "smooth_red_sandstone_stairs",
+          "to": "warped_stairs",
+          "count": 4
+        },
+        {
+          "stripe": "red",
+          "from": "smooth_red_sandstone_stairs",
+          "to": "mangrove_stairs",
+          "count": 4
+        },
+        {
+          "stripe": "white",
+          "from": "smooth_red_sandstone_stairs",
+          "to": "birch_stairs",
+          "count": 6
+        }
+      ],
+      "sha256_before": "86e36d1c67433967ec056c5e940f870ccfe4b7a94e4ca0c79d9d9616425f60a4",
+      "sha256_after": "a5244cdddc558601064c0a7154569091179916c2cc2d42c67bd4594cd32f189f"
+    },
+    {
+      "path": "run/market-repair-20260910/pack/data/kithkyn/structure/market_badlands_3.nbt",
+      "cells": [
+        [
+          8,
+          4,
+          9
+        ],
+        [
+          8,
+          4,
+          13
+        ],
+        [
+          8,
+          4,
+          14
+        ],
+        [
+          8,
+          4,
+          15
+        ],
+        [
+          8,
+          4,
+          16
+        ],
+        [
+          8,
+          4,
+          17
+        ],
+        [
+          8,
+          4,
+          18
+        ],
+        [
+          8,
+          4,
+          19
+        ],
+        [
+          9,
+          4,
+          9
+        ],
+        [
+          10,
+          4,
+          9
+        ],
+        [
+          11,
+          4,
+          9
+        ],
+        [
+          12,
+          4,
+          9
+        ],
+        [
+          13,
+          4,
+          9
+        ],
+        [
+          14,
+          4,
+          9
+        ],
+        [
+          14,
+          4,
+          13
+        ],
+        [
+          14,
+          4,
+          14
+        ],
+        [
+          14,
+          4,
+          15
+        ],
+        [
+          14,
+          4,
+          16
+        ],
+        [
+          14,
+          4,
+          17
+        ],
+        [
+          14,
+          4,
+          18
+        ],
+        [
+          14,
+          4,
+          19
+        ]
+      ],
+      "changes": [
+        {
+          "stripe": "cyan",
+          "from": "smooth_red_sandstone_stairs",
+          "to": "warped_stairs",
+          "count": 4
+        },
+        {
+          "stripe": "orange",
+          "from": "smooth_red_sandstone_stairs",
+          "to": "acacia_stairs",
+          "count": 4
+        },
+        {
+          "stripe": "red",
+          "from": "smooth_red_sandstone_stairs",
+          "to": "mangrove_stairs",
+          "count": 4
+        },
+        {
+          "stripe": "white",
+          "from": "smooth_red_sandstone_stairs",
+          "to": "birch_stairs",
+          "count": 9
+        }
+      ],
+      "sha256_before": "d52356662ef25123b9f2d222cddfe923faa9bd681347a91386e05bcb73ed7caa",
+      "sha256_after": "7affb03999da5c2b2b5cb814a9c7adcfdcd6bbe0a6cf75fdc2c5b0d7aa86adf2"
+    },
+    {
+      "path": "run/market-repair-20260910/pack/data/kithkyn/structure/market_desert_1.nbt",
+      "cells": [
+        [
+          3,
+          4,
+          1
+        ],
+        [
+          3,
+          4,
+          2
+        ],
+        [
+          3,
+          4,
+          3
+        ],
+        [
+          3,
+          4,
+          4
+        ],
+        [
+          3,
+          4,
+          5
+        ],
+        [
+          3,
+          4,
+          6
+        ],
+        [
+          3,
+          4,
+          7
+        ]
+      ],
+      "changes": [
+        {
+          "stripe": "orange",
+          "from": "smooth_sandstone_stairs",
+          "to": "acacia_stairs",
+          "count": 4
+        },
+        {
+          "stripe": "white",
+          "from": "smooth_sandstone_stairs",
+          "to": "birch_stairs",
+          "count": 3
+        }
+      ],
+      "sha256_before": "32c3b280f5895fa68834f7c645fba1c6ac97d5c058f1d1b31b36fc037c56ee2e",
+      "sha256_after": "714999b6bdffc0ff89a868bd3b71ffe0e39590d41324ce76e6f5ac3931a868d5"
+    },
+    {
+      "path": "run/market-repair-20260910/pack/data/kithkyn/structure/market_desert_2.nbt",
+      "cells": [
+        [
+          4,
+          4,
+          1
+        ],
+        [
+          4,
+          4,
+          2
+        ],
+        [
+          4,
+          4,
+          3
+        ],
+        [
+          4,
+          4,
+          4
+        ],
+        [
+          4,
+          4,
+          5
+        ],
+        [
+          4,
+          4,
+          6
+        ],
+        [
+          4,
+          4,
+          7
+        ],
+        [
+          10,
+          4,
+          1
+        ],
+        [
+          10,
+          4,
+          2
+        ],
+        [
+          10,
+          4,
+          3
+        ],
+        [
+          10,
+          4,
+          4
+        ],
+        [
+          10,
+          4,
+          5
+        ],
+        [
+          10,
+          4,
+          6
+        ],
+        [
+          10,
+          4,
+          7
+        ]
+      ],
+      "changes": [
+        {
+          "stripe": "green",
+          "from": "smooth_sandstone_stairs",
+          "to": "mossy_cobblestone_stairs",
+          "count": 4
+        },
+        {
+          "stripe": "orange",
+          "from": "smooth_sandstone_stairs",
+          "to": "acacia_stairs",
+          "count": 4
+        },
+        {
+          "stripe": "white",
+          "from": "smooth_sandstone_stairs",
+          "to": "birch_stairs",
+          "count": 6
+        }
+      ],
+      "sha256_before": "5285a4d9ae574e2a11d5fd37e7e48113fc58a547668a375c35254908f05582b4",
+      "sha256_after": "13fd75b28fab8255b4efcb5178270b16c806c5b8edff20f6b9ed1532f768a3f0"
+    },
+    {
+      "path": "run/market-repair-20260910/pack/data/kithkyn/structure/market_desert_3.nbt",
+      "cells": [
+        [
+          4,
+          4,
+          5
+        ],
+        [
+          4,
+          4,
+          9
+        ],
+        [
+          4,
+          4,
+          10
+        ],
+        [
+          4,
+          4,
+          11
+        ],
+        [
+          4,
+          4,
+          12
+        ],
+        [
+          4,
+          4,
+          13
+        ],
+        [
+          4,
+          4,
+          14
+        ],
+        [
+          4,
+          4,
+          15
+        ],
+        [
+          5,
+          4,
+          5
+        ],
+        [
+          6,
+          4,
+          5
+        ],
+        [
+          7,
+          4,
+          5
+        ],
+        [
+          8,
+          4,
+          5
+        ],
+        [
+          9,
+          4,
+          5
+        ],
+        [
+          10,
+          4,
+          5
+        ],
+        [
+          10,
+          4,
+          9
+        ],
+        [
+          10,
+          4,
+          10
+        ],
+        [
+          10,
+          4,
+          11
+        ],
+        [
+          10,
+          4,
+          12
+        ],
+        [
+          10,
+          4,
+          13
+        ],
+        [
+          10,
+          4,
+          14
+        ],
+        [
+          10,
+          4,
+          15
+        ]
+      ],
+      "changes": [
+        {
+          "stripe": "green",
+          "from": "smooth_sandstone_stairs",
+          "to": "mossy_cobblestone_stairs",
+          "count": 4
+        },
+        {
+          "stripe": "orange",
+          "from": "smooth_sandstone_stairs",
+          "to": "acacia_stairs",
+          "count": 4
+        },
+        {
+          "stripe": "white",
+          "from": "smooth_sandstone_stairs",
+          "to": "birch_stairs",
+          "count": 9
+        },
+        {
+          "stripe": "yellow",
+          "from": "smooth_sandstone_stairs",
+          "to": "bamboo_stairs",
+          "count": 4
+        }
+      ],
+      "sha256_before": "bdeb1d950c8747f346a4ef47d56d72075844e70de6840f3978e16900872eb69a",
+      "sha256_after": "ea62335fc76156a94438d13687312797cebb923f29818726a7a1cbba83b8a733"
+    },
+    {
+      "path": "run/market-repair-20260910/pack/data/kithkyn/structure/market_jungle_1.nbt",
+      "cells": [
+        [
+          7,
+          4,
+          5
+        ],
+        [
+          7,
+          4,
+          6
+        ],
+        [
+          7,
+          4,
+          7
+        ],
+        [
+          7,
+          4,
+          8
+        ],
+        [
+          7,
+          4,
+          9
+        ],
+        [
+          7,
+          4,
+          10
+        ],
+        [
+          7,
+          4,
+          11
+        ]
+      ],
+      "changes": [
+        {
+          "stripe": "red",
+          "from": "jungle_stairs",
+          "to": "mangrove_stairs",
+          "count": 4
+        },
+        {
+          "stripe": "white",
+          "from": "jungle_stairs",
+          "to": "birch_stairs",
+          "count": 3
+        }
+      ],
+      "sha256_before": "68876b38420002f335f56c1193b4d05fe4aed7605b82b6ed21ec701b3c481d34",
+      "sha256_after": "bea3691a8a32aa4e8aa38c614314110355140fb31f8d904767d562d03f8dc893"
+    },
+    {
+      "path": "run/market-repair-20260910/pack/data/kithkyn/structure/market_jungle_2.nbt",
+      "cells": [
+        [
+          8,
+          4,
+          5
+        ],
+        [
+          8,
+          4,
+          6
+        ],
+        [
+          8,
+          4,
+          7
+        ],
+        [
+          8,
+          4,
+          8
+        ],
+        [
+          8,
+          4,
+          9
+        ],
+        [
+          8,
+          4,
+          10
+        ],
+        [
+          8,
+          4,
+          11
+        ],
+        [
+          14,
+          4,
+          5
+        ],
+        [
+          14,
+          4,
+          6
+        ],
+        [
+          14,
+          4,
+          7
+        ],
+        [
+          14,
+          4,
+          8
+        ],
+        [
+          14,
+          4,
+          9
+        ],
+        [
+          14,
+          4,
+          10
+        ],
+        [
+          14,
+          4,
+          11
+        ]
+      ],
+      "changes": [
+        {
+          "stripe": "cyan",
+          "from": "jungle_stairs",
+          "to": "warped_stairs",
+          "count": 4
+        },
+        {
+          "stripe": "red",
+          "from": "jungle_stairs",
+          "to": "mangrove_stairs",
+          "count": 4
+        },
+        {
+          "stripe": "white",
+          "from": "jungle_stairs",
+          "to": "birch_stairs",
+          "count": 6
+        }
+      ],
+      "sha256_before": "a2f050de12d777326f5b7e29bafd6c20bca4685d959bfe4bcd61f428ddbcdc49",
+      "sha256_after": "ca9d3c34ed91f876ab965439ed49157ef0c474345f76c7bcabbca9c74d2078d0"
+    },
+    {
+      "path": "run/market-repair-20260910/pack/data/kithkyn/structure/market_jungle_3.nbt",
+      "cells": [
+        [
+          8,
+          4,
+          9
+        ],
+        [
+          8,
+          4,
+          13
+        ],
+        [
+          8,
+          4,
+          14
+        ],
+        [
+          8,
+          4,
+          15
+        ],
+        [
+          8,
+          4,
+          16
+        ],
+        [
+          8,
+          4,
+          17
+        ],
+        [
+          8,
+          4,
+          18
+        ],
+        [
+          8,
+          4,
+          19
+        ],
+        [
+          9,
+          4,
+          9
+        ],
+        [
+          10,
+          4,
+          9
+        ],
+        [
+          11,
+          4,
+          9
+        ],
+        [
+          12,
+          4,
+          9
+        ],
+        [
+          13,
+          4,
+          9
+        ],
+        [
+          14,
+          4,
+          9
+        ],
+        [
+          14,
+          4,
+          13
+        ],
+        [
+          14,
+          4,
+          14
+        ],
+        [
+          14,
+          4,
+          15
+        ],
+        [
+          14,
+          4,
+          16
+        ],
+        [
+          14,
+          4,
+          17
+        ],
+        [
+          14,
+          4,
+          18
+        ],
+        [
+          14,
+          4,
+          19
+        ]
+      ],
+      "changes": [
+        {
+          "stripe": "cyan",
+          "from": "jungle_stairs",
+          "to": "warped_stairs",
+          "count": 4
+        },
+        {
+          "stripe": "orange",
+          "from": "jungle_stairs",
+          "to": "acacia_stairs",
+          "count": 4
+        },
+        {
+          "stripe": "red",
+          "from": "jungle_stairs",
+          "to": "mangrove_stairs",
+          "count": 4
+        },
+        {
+          "stripe": "white",
+          "from": "jungle_stairs",
+          "to": "birch_stairs",
+          "count": 9
+        }
+      ],
+      "sha256_before": "9d1d3a097f64b7e16b835e7f08c92c7a34b14de8a11c74b6036dd78cf57f79fe",
+      "sha256_after": "37bc35b5b0d157aff672c4ebf3ca65602c87ef129cc141f15a20f30195c9550d"
+    }
+  ],
+  "live": {
+    "datapacks_reloaded": "2026-09-12T01:55:19-04:00 (/reload, \"Loaded 153 village building definitions\")",
+    "jar_templates": "market_birch_forest_1-3 take effect at the next release; the deployed server runs 5313a23",
+    "built_markets_restriped_in_world": {
+      "Velqara market_desert_1 (origin 4709,159,1856, rotation 180)": "7 stairs",
+      "Mediterranean workshop W1 tiers 1-3 (run/mediterranean-full-profile/workshop-manifest.json)": "30 stairs; the green and yellow stairs already matched"
+    },
+    "commands": "run/market-stripe-repair-20260912/live-setblocks.json"
+  },
+  "audit_after": "restripe.py audit: 0 stairs off their stripe across all 27 files; audit-templates.py PASS on the public catalog"
+}
