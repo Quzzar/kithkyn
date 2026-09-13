@@ -147,6 +147,10 @@ world:
   raises the market barrels.
 - It checks every station, worksite, meeting point, custody cell and release point for dry, flat
   footing, and accounts for every container.
+- It gives every definition the authored cost and grants that the live tree's building-cost
+  contract requires (its `CONTRACT` table). Prices are set by analogy with the Jungle catalog:
+  homes are 20 to 36 items, mixed-use buildings are priced whole, the lumberjack is the stone-only
+  bootstrap and the well is 16 cobblestone.
 - Where layer 0 is a ground course (paving, the pond, the pen floor, a plinth), the building
   seats it flush with the ground. Where layer 0 is stilts and fence bases, it stands them on the
   ground, as the gallery showed them.

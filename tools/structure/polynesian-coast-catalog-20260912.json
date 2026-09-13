@@ -53,7 +53,7 @@
       "asset": "run/polynesian-integration/datapack/data/kithkyn/structure/village_center_polynesian_coast_1.nbt",
       "asset_sha256": "6b82a8fc987739077072ce621243d12432431ca881dd6781ce425a1a1f6cd644",
       "definition": "run/polynesian-integration/datapack/data/kithkyn/kithkyn/buildings/village_center_polynesian_coast_1.json",
-      "definition_sha256": "10f65ffc0ad876e03ed161f91353dfa12a6ee39e31faaeed93e5c43093cb54de"
+      "definition_sha256": "d5803d4425eca9cf17207d19c588c3a2ed16077533ccd21f59f59d73fdb3cdf5"
     },
     {
       "exhibit": "PC02.1",
@@ -72,7 +72,7 @@
       "asset": "run/polynesian-integration/datapack/data/kithkyn/structure/house_polynesian_coast_1.nbt",
       "asset_sha256": "92c3f6ac52790b46c5e28fa5013676b16cc921531a0ef9640d4ac4c8be2add2a",
       "definition": "run/polynesian-integration/datapack/data/kithkyn/kithkyn/buildings/house_polynesian_coast_1.json",
-      "definition_sha256": "e6b0e078d367de407e18bda3fffb08553849015cb273aaeceded52135b2e557a"
+      "definition_sha256": "c995c984d6deb0b1ff4151b4d0b83c1de0a59a0c29c1188ba414e6279d2d2fa1"
     },
     {
       "exhibit": "PC02.2",
@@ -91,7 +91,7 @@
       "asset": "run/polynesian-integration/datapack/data/kithkyn/structure/house_polynesian_coast_1__two_single.nbt",
       "asset_sha256": "f4b3a0020eb28f6ab2aaa095d5d8c19247e061a3d95c2e343d912ff09524db62",
       "definition": "run/polynesian-integration/datapack/data/kithkyn/kithkyn/buildings/house_polynesian_coast_1__two_single.json",
-      "definition_sha256": "ace03377ae70883c7e35e5bc266519d2b3961229f95b265e96049b209959ae42"
+      "definition_sha256": "18810aa35d7f6ded17b06aed9f17a9a90d2c57ebd6c375da5063a4aab5ff29f6"
     },
     {
       "exhibit": "PC02.4",
@@ -110,7 +110,7 @@
       "asset": "run/polynesian-integration/datapack/data/kithkyn/structure/house_polynesian_coast_1__stilted.nbt",
       "asset_sha256": "298e73d4911d5da854014b9efddb6a223b0033fb35b5d4d291b14eb400fe62b0",
       "definition": "run/polynesian-integration/datapack/data/kithkyn/kithkyn/buildings/house_polynesian_coast_1__stilted.json",
-      "definition_sha256": "56947b666dd9b21c07e0a96ced5b84cba77dbfbe1bd7ae9039392ec1175684ab"
+      "definition_sha256": "f78bdb51a146063353d7ffa755684e8a40083497febd264d26007f497a1e3a9a"
     },
     {
       "exhibit": "PC02.6",
@@ -129,7 +129,7 @@
       "asset": "run/polynesian-integration/datapack/data/kithkyn/structure/house_polynesian_coast_1__three_single.nbt",
       "asset_sha256": "cb1d608c2f97198f3fd7230e54cb06e87d76a29effe7906701436ccf571fc298",
       "definition": "run/polynesian-integration/datapack/data/kithkyn/kithkyn/buildings/house_polynesian_coast_1__three_single.json",
-      "definition_sha256": "5d20c62d32749ce5460a8418241e6bdfe55b75a5dd6e4cc012473cbb00baea44"
+      "definition_sha256": "35ce9b816d3e0c67c0ff39df8e3b1f4758cdec4a24baf1b09ac3c5047acd2354"
     },
     {
       "exhibit": "PC02.7",
@@ -148,7 +148,7 @@
       "asset": "run/polynesian-integration/datapack/data/kithkyn/structure/house_polynesian_coast_1__couple_room.nbt",
       "asset_sha256": "45920390425993f8d0e4d378b69f2247bc06ae212a3a3c553c4cef003445ee3e",
       "definition": "run/polynesian-integration/datapack/data/kithkyn/kithkyn/buildings/house_polynesian_coast_1__couple_room.json",
-      "definition_sha256": "d41f854e1bbbab76feb2f623ee8cc3112fa8b1e408830365295cdb84ad5ca363"
+      "definition_sha256": "cefc9d2dfe4cee23dbdfd837abf0cbcb9dac9d34c9835d475cf37d714695261a"
     },
     {
       "exhibit": "PC02.5",
@@ -167,7 +167,7 @@
       "asset": "run/polynesian-integration/datapack/data/kithkyn/structure/couple_cottage_polynesian_coast_1.nbt",
       "asset_sha256": "aa74449d2a3dba782d32a6ac0221f90f90a0bb383615e95f8cd3edb0351df524",
       "definition": "run/polynesian-integration/datapack/data/kithkyn/kithkyn/buildings/couple_cottage_polynesian_coast_1.json",
-      "definition_sha256": "a98deae31788b36148633786dabca2a4c048078742a3fb0f66b9b6c280ca7480"
+      "definition_sha256": "2582042bd6c5b05b927f92b3b66ca27e7bea09741ab75c28d9c9430e802c5680"
     },
     {
       "exhibit": "PC02.3",
@@ -186,7 +186,7 @@
       "asset": "run/polynesian-integration/datapack/data/kithkyn/structure/storehouse_polynesian_coast_1.nbt",
       "asset_sha256": "0742f76e59ce5639cd22f77cafd18d4d029d6031006574b21056113a6bab478d",
       "definition": "run/polynesian-integration/datapack/data/kithkyn/kithkyn/buildings/storehouse_polynesian_coast_1.json",
-      "definition_sha256": "666fccbe25499fb7749497909b0161a5a5e1e0c1bdcb9ea9143f18d0cdba8564"
+      "definition_sha256": "f908bf49bfe548277c2de3e3a55ad5a1ce24dc9e584b97fb1217fa937b9970fb"
     },
     {
       "exhibit": "PC02.8",
@@ -205,7 +205,7 @@
       "asset": "run/polynesian-integration/datapack/data/kithkyn/structure/bakery_polynesian_coast_1.nbt",
       "asset_sha256": "c418c2f4f5a5ebd128a92d955a53125f4045e27cd29ffa3ff06da68be62cb09c",
       "definition": "run/polynesian-integration/datapack/data/kithkyn/kithkyn/buildings/bakery_polynesian_coast_1.json",
-      "definition_sha256": "327142b6a62f3ecb7b0b3da193c6a0c01bc2cd12bcf216d14a9970223f3b1052"
+      "definition_sha256": "4af6d15842c84c31780f7e428a5ff4e9b86a60ceca47db99080a0b031878f2a3"
     },
     {
       "exhibit": "PC03.1",
@@ -224,7 +224,7 @@
       "asset": "run/polynesian-integration/datapack/data/kithkyn/structure/stoneworks_polynesian_coast_1.nbt",
       "asset_sha256": "af259439362220ad8c6259a6cb4c151f1d7435af972dafb27159ab4761a88028",
       "definition": "run/polynesian-integration/datapack/data/kithkyn/kithkyn/buildings/stoneworks_polynesian_coast_1.json",
-      "definition_sha256": "b81d7852093134d3554e65e90367ff6875e788b8ddaccd5ffdf25146d0860a71"
+      "definition_sha256": "db61a6d958540815f7c5f99cc10b4c707c312cafe2ee84832434c7f44c1796bd"
     },
     {
       "exhibit": "PC03.2",
@@ -243,7 +243,7 @@
       "asset": "run/polynesian-integration/datapack/data/kithkyn/structure/blacksmith_polynesian_coast_1.nbt",
       "asset_sha256": "e3df93350de4419fb56e0ab55b9aa25aee22f93307f20a838b8488a6e39a98c1",
       "definition": "run/polynesian-integration/datapack/data/kithkyn/kithkyn/buildings/blacksmith_polynesian_coast_1.json",
-      "definition_sha256": "36ca5b42b9d485f6d478fb4406ef0a311606f6309768c3e47ac3ec308312e838"
+      "definition_sha256": "d6c2aa8db40ec93e46f353175eff71accb275f8f1007537d7425c159beedc764"
     },
     {
       "exhibit": "PC03.4",
@@ -262,7 +262,7 @@
       "asset": "run/polynesian-integration/datapack/data/kithkyn/structure/well_polynesian_coast_1.nbt",
       "asset_sha256": "f9e2ffc12f4df49a877465baed44a303e5b4a6f93cded4095087edc91d632e4a",
       "definition": "run/polynesian-integration/datapack/data/kithkyn/kithkyn/buildings/well_polynesian_coast_1.json",
-      "definition_sha256": "ca01d19fc26ee2c0e75bbe45f50d429684c2e2f89da3902c98ce7942e5055353"
+      "definition_sha256": "a2c8d512e91158dcd1df2af136d5c2e32d49397d7bf8cdeb1f3816c9eedde6e4"
     },
     {
       "exhibit": "PC03.5",
@@ -281,7 +281,7 @@
       "asset": "run/polynesian-integration/datapack/data/kithkyn/structure/butchery_polynesian_coast_1.nbt",
       "asset_sha256": "76f80cf9be97ef5efb77fa550e66b0e619dc380a4e6b12662280f60c73fb9b90",
       "definition": "run/polynesian-integration/datapack/data/kithkyn/kithkyn/buildings/butchery_polynesian_coast_1.json",
-      "definition_sha256": "d0355b4f30d5db1fef9a0d281155f51d8a24d448678654d8893f287f5ebd9883"
+      "definition_sha256": "1056f383cff3eb83f720381845e11b13d328fc4709c3ed148f34f0797ded3d2c"
     },
     {
       "exhibit": "PC03.6",
@@ -300,7 +300,7 @@
       "asset": "run/polynesian-integration/datapack/data/kithkyn/structure/fishery_polynesian_coast_1.nbt",
       "asset_sha256": "f8e02e68f64a7de77f97cd3cf2b93811b6ef9e8ee857656ff5622794f617d13a",
       "definition": "run/polynesian-integration/datapack/data/kithkyn/kithkyn/buildings/fishery_polynesian_coast_1.json",
-      "definition_sha256": "f7b291878b9ee18f358f0e7a5a75dbf2caad32c591a9612133e55e411837056b"
+      "definition_sha256": "8cf92a61c79ae8b03e6aef6fb54d71dbc4d727a895b98e8abb5df134bab6a9bf"
     },
     {
       "exhibit": "PC03.7",
@@ -319,7 +319,7 @@
       "asset": "run/polynesian-integration/datapack/data/kithkyn/structure/farm_polynesian_coast_1.nbt",
       "asset_sha256": "69ae7facab7a8b485f3e76827a64a51dc9b5ccbf855d4443c3052b89dc86f88b",
       "definition": "run/polynesian-integration/datapack/data/kithkyn/kithkyn/buildings/farm_polynesian_coast_1.json",
-      "definition_sha256": "6121eb5558c8b390b38228394b3ba357c1a56949f45916bb8dc4c924359d13fc"
+      "definition_sha256": "58385e8889a0299501497d0234800f4fda908bae12d6392e9c591e91d1b47596"
     },
     {
       "exhibit": "PC03.8",
@@ -338,7 +338,7 @@
       "asset": "run/polynesian-integration/datapack/data/kithkyn/structure/farm_polynesian_coast_2.nbt",
       "asset_sha256": "63fa78e33f9c4542ac3cba1831884d5a7e2a7382525003388301e63cb9c7dafd",
       "definition": "run/polynesian-integration/datapack/data/kithkyn/kithkyn/buildings/farm_polynesian_coast_2.json",
-      "definition_sha256": "ff138985329345e2f8d2c979d27b8731489e620011ceb494d4889a4c935afcd9"
+      "definition_sha256": "0b89534d695d5d948355489c8c048600d8045668b7f913ec9b49d43bcecd65ed"
     },
     {
       "exhibit": "PC04.4",
@@ -357,7 +357,7 @@
       "asset": "run/polynesian-integration/datapack/data/kithkyn/structure/mine_polynesian_coast_1.nbt",
       "asset_sha256": "aff204778e07189b73cc6861af21b013fec7f72cb75cbd0015b451d1477ef686",
       "definition": "run/polynesian-integration/datapack/data/kithkyn/kithkyn/buildings/mine_polynesian_coast_1.json",
-      "definition_sha256": "ad6eae81df6cff5455b7e734ecb6a1c26d8cd7d418407f77248a7c7229c9fbb3"
+      "definition_sha256": "43980c1d7f216492fe1e78cb16cb64c4b8cc3183ee9febf44c443e9e1fb53ec4"
     },
     {
       "exhibit": "PC05.3",
@@ -376,7 +376,7 @@
       "asset": "run/polynesian-integration/datapack/data/kithkyn/structure/tavern_polynesian_coast_1.nbt",
       "asset_sha256": "0bf6b37e046ffc8b9c597f2f7e20e44395e2f9111eb21c3ef6cbe78f09cbada4",
       "definition": "run/polynesian-integration/datapack/data/kithkyn/kithkyn/buildings/tavern_polynesian_coast_1.json",
-      "definition_sha256": "ae6c98964850cc79c0ef18349c1d761c08a8a9c3c083dddeb47efced518cdcba"
+      "definition_sha256": "2f0b7ff20d8bc3368fee2a7335b09693691049a4ba2605524ef3a6ecf3265e5b"
     },
     {
       "exhibit": "PC06.1",
@@ -395,7 +395,7 @@
       "asset": "run/polynesian-integration/datapack/data/kithkyn/structure/watchtower_polynesian_coast_1.nbt",
       "asset_sha256": "6e2f8c33612a606cd7537bccbde9ed8b4a16af83462d7c0ae7f5b7ee4c9a4dcc",
       "definition": "run/polynesian-integration/datapack/data/kithkyn/kithkyn/buildings/watchtower_polynesian_coast_1.json",
-      "definition_sha256": "6aae8d24c75687664ab82b9f9235730467f49062c517a4af2cd78218db17b055"
+      "definition_sha256": "bed9483adbb02dcd2094d6db5f139446ec9d727f536975a854a3ce04784b8669"
     },
     {
       "exhibit": "PC08.3",
@@ -414,7 +414,7 @@
       "asset": "run/polynesian-integration/datapack/data/kithkyn/structure/church_polynesian_coast_1.nbt",
       "asset_sha256": "15a1214644443435d6e6a9323f834239c4bcc91bd7cb8a1576e47cba8acc04b0",
       "definition": "run/polynesian-integration/datapack/data/kithkyn/kithkyn/buildings/church_polynesian_coast_1.json",
-      "definition_sha256": "e1fe71f20af5447d71aba6e6b32fe4333d57dc24139e497193759943b63a5906"
+      "definition_sha256": "5587602f103cf32c8052306839f7a2ea615809b5936ca302e45a4c6db2968311"
     },
     {
       "exhibit": "LJ.1",
@@ -433,7 +433,7 @@
       "asset": "run/polynesian-integration/datapack/data/kithkyn/structure/lumberjack_polynesian_coast_1.nbt",
       "asset_sha256": "b02796247a2471b8eea5d8e5880439959040f82629777cbde4ffc0255e4d4331",
       "definition": "run/polynesian-integration/datapack/data/kithkyn/kithkyn/buildings/lumberjack_polynesian_coast_1.json",
-      "definition_sha256": "60a95ea8ff72fae17b52e4e69bac8dd99a35f91bd1a3652af1055561ddbb9523"
+      "definition_sha256": "8a9d87147244dbd2da440dd3cbaf5f1b8256ed7c541aa34733ea562b0b6fe623"
     },
     {
       "exhibit": "PC10.1",
@@ -452,7 +452,7 @@
       "asset": "run/polynesian-integration/datapack/data/kithkyn/structure/market_polynesian_coast_1.nbt",
       "asset_sha256": "1160a272d3b5fbed911d3a8415b6af762452738dadc48af9ccad4afb0159b3a5",
       "definition": "run/polynesian-integration/datapack/data/kithkyn/kithkyn/buildings/market_polynesian_coast_1.json",
-      "definition_sha256": "de213a0c66ca2739c2eb256375473e66b4225eadfdce849668e16075f28f0fb8"
+      "definition_sha256": "915e182402b88210ece67561ce2133e2c4fea8f3e60eb05467093ad87cdb2a64"
     },
     {
       "exhibit": "PC10.2",
@@ -471,7 +471,7 @@
       "asset": "run/polynesian-integration/datapack/data/kithkyn/structure/market_polynesian_coast_2.nbt",
       "asset_sha256": "e1dd4abf6beec583bcbff6654460cb2fd9a9991206fc79d350f44f9bc2ea123f",
       "definition": "run/polynesian-integration/datapack/data/kithkyn/kithkyn/buildings/market_polynesian_coast_2.json",
-      "definition_sha256": "775917503a8d5e82318df42a91d058f477bc5c0565d292285ca24672ffc69437"
+      "definition_sha256": "ca4927b968abdd06a3a40e9128268d7f0a31d2439a82d19f1bd3a459da46726a"
     },
     {
       "exhibit": "PC10.3",
@@ -490,7 +490,7 @@
       "asset": "run/polynesian-integration/datapack/data/kithkyn/structure/market_polynesian_coast_3.nbt",
       "asset_sha256": "e8ae7b9cad488b4217e48a4afe50c98abda49faceb4ce979e4aef8d3c594c87b",
       "definition": "run/polynesian-integration/datapack/data/kithkyn/kithkyn/buildings/market_polynesian_coast_3.json",
-      "definition_sha256": "1ac64b9fa8772a63149fcca73891669e2e41f87418b3450d6c11a2d9d22603c7"
+      "definition_sha256": "8c0d9e215cebc2ef818f69d483d49c9e1929b60af23a1904193eafa53262bc3a"
     }
   ],
   "verification": {
@@ -504,6 +504,12 @@
     "routes-birch-mine-entry": "PASS: [birch-verify] RESULT PASS: excavated mine exit and re-entry in all four rotations (8 actual walks), legacy repair=false",
     "routes-gate-access-polynesian": "PASS: [gate-access-verify] RESULT PASS: POLYNESIAN_COAST all 8 guards/workers ascended and descended",
     "static_audit": "PASS 24 templates: no barrier states, out-of-bounds blocks, or malformed market entrances"
+  },
+  "costContract": {
+    "added": "2026-09-13",
+    "rule": "the live tree's authored-cost contract (docs/research/building-cost-rebalance-2026-09-12.md): every definition carries its own cost and the grants its category, rooms, storage and local jobs imply",
+    "source": "run/polynesian-integration/prepare.py CONTRACT, priced by analogy with the Jungle catalog",
+    "verification": "the native verifications above ran before the costs and grants were added; geometry, stations, beds and containers are unchanged, and the live reload is the check that the pack loads"
   },
   "wall": {
     "record": "tools/structure/polynesian-coast-walls-20260912.json",
