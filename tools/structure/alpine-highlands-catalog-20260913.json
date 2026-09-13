@@ -370,7 +370,7 @@
       "beds": 0,
       "entities": 0,
       "asset": "run/alpine-integration/datapack/data/kithkyn/structure/mine_alpine_highlands_1.nbt",
-      "asset_sha256": "8f78583ad9a19940551da50e6a65de79a270477124c464d059f06113fb5d78d4",
+      "asset_sha256": "5b2667de8d57f87bd8ddf37e5c19ded99c1e5e70fe5f5d76b4eca6f7b5937b36",
       "definition": "run/alpine-integration/datapack/data/kithkyn/kithkyn/buildings/mine_alpine_highlands_1.json",
       "definition_sha256": "8ae4773472bcf6d768289b8807f7dc64b33f94fe3ad0891e937ba27427b6fdbb"
     },
@@ -503,7 +503,7 @@
   ],
   "verification": {
     "catalog_audit": "PASS: 22 definitions, corrected elevations, fixed markets, sapling/barrel lumberjack, approved AD02.6 mine",
-    "template_audit": "PASS: 22 templates; no barriers, out-of-bounds cells, terrain-clearing air, malformed markets or missing livestock",
+    "template_audit": "PASS: 22 templates; no barriers, out-of-bounds cells, terrain-clearing air, malformed markets or missing livestock; approved mine omissions preserved",
     "placement": "PASS: 176 real-template placements; both paths, four rotations, colors, frames, entities, reloads and upgrades",
     "founding": "PASS: 22 templates, 5 housing alternatives, 8 upgrade fits, four rotations/reloads, 5 beds and 5 positions",
     "center_access": "PASS: 4 rotations, 20 workstation walks and 4 shared-container transfers",

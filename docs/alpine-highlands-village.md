@@ -82,8 +82,9 @@ scales. These movement rules leave every approved structure block intact.
 `run/alpine-integration/prepare.py` promotes the 22 approved captures through
 `tools/structure/VillageTemplateExport.java`. It preserves authored geometry, clears only
 gallery structure voids, neutralizes identity slots, empties containers and removes the
-butchery animals' gallery-only tag. Third-party-derived structures and definitions stay in the
-local private datapack. Their source and output hashes are recorded in
+butchery animals' gallery-only tag. The compact mine also preserves omitted source cells instead
+of exporting them as explicit air, so placing it does not clear surrounding terrain. Third-party-derived
+structures and definitions stay in the local private datapack. Their source and output hashes are recorded in
 `tools/structure/alpine-highlands-catalog-20260913.json`.
 
 The catalog audit checks all 22 structures for barriers, out-of-bounds cells, terrain-clearing
