@@ -109,9 +109,24 @@ village banners; every other banner stays white decoration. Candles are plain: t
 magenta candles are replaced at export, while the gallery copy keeps them. Market fabric keeps
 the fixed Birch trade colours.
 
-The wall is Aaron's study A (PC11.1 to PC11.5): a stripped spruce palisade with spruce fence tips
-and oak-slab walks on dead-coral footings. The gatehouse banners are village banners. Study B,
-in bamboo, was rejected.
+The wall is Aaron's study A (PC11.1 to PC11.5), a stripped spruce palisade on a footing of dead
+coral. Study B, in bamboo, was rejected.
+
+The wall keeps the Birch wall's shape:
+
+- fence-tipped runs with torches
+- corner watchtowers with an oak slab platform
+- gatehouses with an oak slab roof walk, a campfire, spruce rails and two banners on each face in
+  the village's colours
+
+The coral is a single course that follows the ground under every run, tower and gate, while the
+palisade above it stays spruce. Where the wall crosses water, it rises from a coral course on the
+seabed.
+
+The five pieces are bundled under `data/kithkyn/structure/wall/polynesian_coast/`, byte for byte
+the study A gallery files. The loader reads the stripped spruce as wall body, and the coral as a
+footing piece that the wall places at each column's ground. The details and the terrain checks are
+in `tools/structure/polynesian-coast-walls-20260912.json` and [walls.md](walls.md).
 
 ## Authoring and installation
 
@@ -172,6 +187,9 @@ The native verifications ran on one build in disposable sparse-jungle worlds:
   personal-container deposits, 72 station walks, 80 shared deposits and eight walks into the mine.
 - **Custody:** arrest by melee and by arrow into the hall's cell, private minute notices, saved
   expiry, evidence capacity, escape, damaged-cell release and the full-cell fallback.
-- **Route regressions:** the gate-access and Birch mine-entry walks, run after the gate-goal change.
+- **Route regressions:** these ran after the gate-goal change. All eight guards and workers
+  climbed to and from every wall post, in a Birch wall and in the Polynesian wall. The Birch
+  mine-entry walk left and re-entered the shaft in all four rotations.
 
-The static template audit passed for all 24 templates.
+The static template audit passed for all 24 templates. All 580 unit tests ran and none failed;
+8 are skipped.
