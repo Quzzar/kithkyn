@@ -39,7 +39,7 @@ class VillageStyleTest {
   void bundledBirchLeadsTheEnumAndIsWhatUnknownSavedStylesReadAs() {
     assertEquals(List.of(VillageStyle.BIRCH_FOREST, VillageStyle.DESERT, VillageStyle.BADLANDS,
         VillageStyle.FLOODPLAIN, VillageStyle.JUNGLE, VillageStyle.SWAMP, VillageStyle.MEDITERRANEAN,
-        VillageStyle.TUNDRA),
+        VillageStyle.TUNDRA, VillageStyle.POLYNESIAN_COAST),
         List.of(VillageStyle.values()));
     assertEquals(VillageStyle.BIRCH_FOREST, VillageStyle.DEFAULT);
     assertEquals(VillageStyle.BIRCH_FOREST, VillageStyle.fromId(""));

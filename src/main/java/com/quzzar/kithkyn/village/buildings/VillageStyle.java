@@ -25,10 +25,11 @@ import net.neoforged.neoforge.common.Tags;
  * Every style is a strict catalog: a village raises only what its own family
  * authored and never borrows another family's building to fill a gap. Birch
  * Forest is the one bundled catalog and so the default; Desert, Badlands,
- * Floodplain, Jungle, Swamp, Mediterranean and Tundra arrive through private datapacks
- * (docs/desert-village.md, docs/badlands-village.md, docs/floodplain-village.md,
- * docs/jungle-village.md, docs/swamp-village.md, docs/mediterranean-village.md,
- * docs/tundra-village.md), so they
+ * Floodplain, Jungle, Swamp, Mediterranean, Tundra and Polynesian Coast arrive through
+ * private datapacks (docs/desert-village.md, docs/badlands-village.md,
+ * docs/floodplain-village.md, docs/jungle-village.md, docs/swamp-village.md,
+ * docs/mediterranean-village.md, docs/tundra-village.md,
+ * docs/polynesian-coast-village.md), so they
  * are only automatic candidates while their founding sets are loaded.
  *
  * Explicit datapack style tags take precedence over conventional biome families.
@@ -36,7 +37,7 @@ import net.neoforged.neoforge.common.Tags;
  * the world seed and founding site, not the world's mutable random stream.
  */
 public enum VillageStyle {
-  BIRCH_FOREST, DESERT, BADLANDS, FLOODPLAIN, JUNGLE, SWAMP, MEDITERRANEAN, TUNDRA;
+  BIRCH_FOREST, DESERT, BADLANDS, FLOODPLAIN, JUNGLE, SWAMP, MEDITERRANEAN, TUNDRA, POLYNESIAN_COAST;
 
   /**
    * What a blank or unknown saved style reads as, the answer for every climate

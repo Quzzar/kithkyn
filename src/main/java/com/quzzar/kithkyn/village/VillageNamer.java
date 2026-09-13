@@ -177,6 +177,14 @@ public final class VillageNamer {
               + " Clear, sturdy invented names with a wintry old-world sound.",
           List.of("Frostmere", "Skelwick", "Eirhavn", "Winterholt"),
           List.of("Eir", "Skel", "Frost", "Winter", "Rime", "Hail", "Sven", "Bryn"));
+      case POLYNESIAN_COAST -> new NamingProfile(
+          "An open island village on a warm coast: stilted huts of stripped spruce under oak roofs,"
+              + " a king's hall with a barred cell beside the village fire, tiki torches, fishing ponds,"
+              + " an open-air shrine ringed by logs and a palisade of stripped logs on coral footings."
+              + " Bright, flowing invented names with an open-vowel island sound.",
+          List.of("Vaelu", "Tenora", "Olamiri", "Kaelua"),
+          List.of("Vae", "Teno", "Ola", "Kae", "Mori", "Lua", "Rua", "Nali"),
+          List.of("lu", "ora", "miri", "lua", "ani", "eva", "oa", "ina"));
     };
   }
 
