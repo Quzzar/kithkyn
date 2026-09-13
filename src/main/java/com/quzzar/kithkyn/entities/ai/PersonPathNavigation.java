@@ -379,10 +379,11 @@ public final class PersonPathNavigation extends GroundPathNavigation {
   @Override
   public void tick() {
     boolean crouchedStair = this.path != null && !this.isDone() && isRisingFromStair();
-    if (crouchedStair && this.mob.getPose() == Pose.STANDING) {
+    boolean coveredStep = this.path != null && !this.isDone() && isRisingOntoPathSurface();
+    if ((crouchedStair || coveredStep) && this.mob.getPose() == Pose.STANDING) {
       this.mob.setPose(Pose.CROUCHING);
       this.navigationCrouching = true;
-    } else if (!crouchedStair && this.navigationCrouching
+    } else if (!crouchedStair && !coveredStep && this.navigationCrouching
         && this.level.noCollision(this.mob,
             this.mob.getDimensions(Pose.STANDING).makeBoundingBox(this.mob.position()))) {
       this.mob.setPose(Pose.STANDING);
@@ -547,6 +548,22 @@ public final class PersonPathNavigation extends GroundPathNavigation {
     int dx = Integer.signum(next.x - previous.x);
     int dz = Integer.signum(next.z - previous.z);
     return dx != 0 || dz != 0;
+  }
+
+  /**
+   * The next integer node stands on a fractional surface above the current
+   * feet. Crouching before the move lets the trailing half of a two-block body
+   * clear a two-block doorway while stepping onto carpet just inside it.
+   */
+  private boolean isRisingOntoPathSurface() {
+    if (this.path == null || this.path.isDone()) return false;
+    Vec3 standing = WorkerFooting.standingPosition(this.mob, this.path.getNextNodePos());
+    if (standing == null) return false;
+    double rise = standing.y - this.mob.getY();
+    if (rise <= 0.01D || rise > this.mob.maxUpStep()) return false;
+    BlockPos ceiling = this.mob.blockPosition().above(Mth.ceil(this.mob.getBbHeight()));
+    return this.mob.getBbHeight() + rise > Mth.ceil(this.mob.getBbHeight())
+        && !this.level.getBlockState(ceiling).getCollisionShape(this.level, ceiling).isEmpty();
   }
 
   private boolean isDescendingIntoStairCorner() {

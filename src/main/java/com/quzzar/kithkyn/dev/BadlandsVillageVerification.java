@@ -49,7 +49,7 @@ import net.neoforged.neoforge.event.tick.ServerTickEvent;
  * Shared private-catalog checks for the reviewed regional villages. Opt in with
  * the legacy Badlands flag or {@code -Dkithkyn.reviewedVillage.style=<style>}
  * for Desert, Floodplain, Jungle, Swamp, Mediterranean, Tundra, Polynesian Coast,
- * Romanian or Alpine Highlands;
+ * Romanian, Alpine Highlands or Japanese Cherry Grove;
  * each catalog's authored numbers live in its
  * {@link Catalog} record so the checks read facts rather than guess them.
  */
@@ -65,33 +65,34 @@ public final class BadlandsVillageVerification {
    * its disposable world must carry. A null bell means the centre has none.
    */
   private record Catalog(String prefix, int templates, int homes, int houseBeds, int[] houseTiers,
-      Map<String, Integer> coupleRooms, List<String> marriedWorkplaces, boolean tavern, String[][] upgrades,
+      Map<String, Integer> coupleRooms, List<String> marriedWorkplaces, int tavernBeds,
+      int tavernWorkerBeds, String[][] upgrades,
       int foundingBuildings, int foundingBeds, int foundingJobs, int guards, int centerJobs, int centerRooms,
       int roomsWithoutStorage, BlockPos plaza, @Nullable BlockPos bell, int campfires,
       ResourceKey<Biome> biome) { }
 
   private static final Catalog CATALOG = switch (STYLE) {
-    case DESERT -> new Catalog("[desert-verify]", 28, 9, 15, new int[] {6, 2, 1}, Map.of(), List.of(), true,
+    case DESERT -> new Catalog("[desert-verify]", 28, 9, 15, new int[] {6, 2, 1}, Map.of(), List.of(), 2, 1,
         new String[][] {{id("storehouse", 1), id("storehouse", 2)}, {id("market", 1), id("market", 2)},
             {id("market", 2), id("market", 3)}},
         3, 5, 4, 1, 3, 4, 0, new BlockPos(8, 1, 5), new BlockPos(8, 4, 7), 1, Biomes.DESERT);
     case BADLANDS -> new Catalog("[badlands-verify]", 30, 12, 25, new int[] {6, 4, 2},
         Map.of("house_badlands_1__small_house_3", 1, "house_badlands_3", 1, "house_badlands_3__large_house_3", 2),
-        List.of("farm_badlands_1", "butchery_badlands_1"), true,
+        List.of("farm_badlands_1", "butchery_badlands_1"), 2, 1,
         new String[][] {{id("storehouse", 1), id("storehouse", 2)}, {id("market", 1), id("market", 2)},
             {id("market", 2), id("market", 3)}},
         3, 10, 8, 5, 7, 10, 3, new BlockPos(12, 1, 17), new BlockPos(13, 2, 17), 2, Biomes.BADLANDS);
     // The floodplain centre has no beds, so its founding set adds three homes; its
     // one storehouse level and its two markets and farms are the only upgrades.
-    case FLOODPLAIN -> new Catalog("[floodplain-verify]", 20, 2, 3, new int[] {1, 1, 0}, Map.of(), List.of(), false,
+    case FLOODPLAIN -> new Catalog("[floodplain-verify]", 20, 2, 3, new int[] {1, 1, 0}, Map.of(), List.of(), 0, 0,
         new String[][] {{id("market", 1), id("market", 2)}, {id("market", 2), id("market", 3)},
             {id("farm", 1), id("farm", 2)}},
         6, 5, 4, 1, 3, 0, 0, new BlockPos(4, 1, 2), null, 1, Biomes.MANGROVE_SWAMP);
-    case JUNGLE -> new Catalog("[jungle-verify]", 22, 4, 6, new int[] {2, 2, 0}, Map.of(), List.of(), false,
+    case JUNGLE -> new Catalog("[jungle-verify]", 22, 4, 6, new int[] {2, 2, 0}, Map.of(), List.of(), 0, 0,
         new String[][] {{id("market", 1), id("market", 2)}, {id("market", 2), id("market", 3)}},
         7, 4, 4, 1, 4, 0, 0, new BlockPos(3, 1, 5), new BlockPos(2, 2, 5), 1, Biomes.JUNGLE);
     case SWAMP -> new Catalog("[swamp-verify]", 27, 2, 3, new int[] {2, 0, 0}, Map.of(),
-        List.of("church_swamp_1__cleric_couple_home"), false,
+        List.of("church_swamp_1__cleric_couple_home"), 0, 0,
         new String[][] {{id("market", 1), id("market", 2)}, {id("market", 2), id("market", 3)},
             {id("farm", 1), id("farm", 2)}},
         7, 4, 4, 1, 4, 0, 0, new BlockPos(12, 4, 13), new BlockPos(14, 6, 11), 2, Biomes.SWAMP);
@@ -100,11 +101,11 @@ public final class BadlandsVillageVerification {
     // founding bed are the mine's; the founding homes are three one-bed houses and the
     // two-bed house.
     case MEDITERRANEAN -> new Catalog("[mediterranean-verify]", 24, 6, 10, new int[] {6, 0, 0},
-        Map.of("house_mediterranean_1__couple_room", 1), List.of(), false,
+        Map.of("house_mediterranean_1__couple_room", 1), List.of(), 0, 0,
         new String[][] {{id("market", 1), id("market", 2)}, {id("market", 2), id("market", 3)},
             {id("farm", 1), id("farm", 2)}},
         7, 6, 5, 1, 4, 0, 0, new BlockPos(7, 1, 2), new BlockPos(7, 3, 3), 1, Biomes.PLAINS);
-    case TUNDRA -> new Catalog("[tundra-verify]", 23, 3, 6, new int[] {3, 0, 0}, Map.of(), List.of(), false,
+    case TUNDRA -> new Catalog("[tundra-verify]", 23, 3, 6, new int[] {3, 0, 0}, Map.of(), List.of(), 0, 0,
         new String[][] {{id("market", 1), id("market", 2)}, {id("market", 2), id("market", 3)},
             {id("farm", 1), id("farm", 2)}},
         3, 4, 4, 1, 4, 4, 0, new BlockPos(8, 1, 7), new BlockPos(8, 2, 8), 0, Biomes.SNOWY_PLAINS);
@@ -113,18 +114,24 @@ public final class BadlandsVillageVerification {
     // founding jobs. The hall has no beds; its three founding homes hold six single beds and
     // one couple room.
     case POLYNESIAN_COAST -> new Catalog("[polynesian-verify]", 24, 5, 10, new int[] {5, 0, 0},
-        Map.of("house_polynesian_coast_1__couple_room", 1), List.of(), false,
+        Map.of("house_polynesian_coast_1__couple_room", 1), List.of(), 0, 0,
         new String[][] {{id("market", 1), id("market", 2)}, {id("market", 2), id("market", 3)},
             {id("farm", 1), id("farm", 2)}},
         6, 8, 6, 2, 6, 0, 0, new BlockPos(6, 1, 17), new BlockPos(7, 2, 18), 1, Biomes.SPARSE_JUNGLE);
     case ROMANIAN -> new Catalog("[romanian-verify]", 24, 4, 8, new int[] {4, 0, 0},
-        Map.of(), List.of(), true,
+        Map.of(), List.of(), 3, 1,
         new String[][] {{id("market", 1), id("market", 2)}, {id("market", 2), id("market", 3)}},
         3, 4, 5, 1, 5, 0, 0, new BlockPos(12, 2, 27), new BlockPos(12, 2, 27), 1, Biomes.DARK_FOREST);
     case ALPINE_HIGHLANDS -> new Catalog("[alpine-verify]", 22, 5, 17, new int[] {5, 0, 0},
-        Map.of("house_alpine_highlands_1__family_house", 1), List.of(), false,
+        Map.of("house_alpine_highlands_1__family_house", 1), List.of(), 0, 0,
         new String[][] {{id("market", 1), id("market", 2)}, {id("market", 2), id("market", 3)}},
         5, 5, 5, 1, 5, 0, 0, new BlockPos(8, 1, 10), new BlockPos(10, 3, 10), 1, Biomes.MEADOW);
+    case JAPANESE_CHERRY_GROVE -> new Catalog("[japanese-verify]", 20, 2, 6, new int[] {2, 0, 0},
+        Map.of(), List.of(), 5, 2,
+        new String[][] {{id("market", 1), id("market", 2)}, {id("market", 2), id("market", 3)},
+            {id("farm", 1), id("farm", 2)}},
+        5, 6, 4, 1, 4, 0, 0, new BlockPos(9, 2, 10), new BlockPos(9, 3, 9), 1,
+        Biomes.CHERRY_GROVE);
     case BIRCH_FOREST -> null;
   };
   /** Centre jobs beyond the founding four that a catalog's centre also opens at founding. */
@@ -213,6 +220,11 @@ public final class BadlandsVillageVerification {
         == VillageStyle.POLYNESIAN_COAST, "Sparse jungle must select the Polynesian Coast");
     check(VillageStyle.fromBiome(registry.getHolderOrThrow(Biomes.DARK_FOREST), 0L, BlockPos.ZERO, everything)
         == VillageStyle.ROMANIAN, "Dark Forest must select Romanian");
+    for (var biome : List.of(Biomes.CHERRY_GROVE, Biomes.FLOWER_FOREST)) {
+      check(VillageStyle.fromBiome(registry.getHolderOrThrow(biome), 0L, BlockPos.ZERO, everything)
+          == VillageStyle.JAPANESE_CHERRY_GROVE,
+          "Japanese Cherry Grove coverage missing " + biome.location());
+    }
     for (var biome : List.of(Biomes.PLAINS, Biomes.SUNFLOWER_PLAINS)) {
       check(VillageStyle.fromBiome(registry.getHolderOrThrow(biome), 0L, BlockPos.ZERO, everything)
           == VillageStyle.MEDITERRANEAN, "Mediterranean coverage missing " + biome.location());
@@ -222,7 +234,9 @@ public final class BadlandsVillageVerification {
       check(VillageStyle.fromBiome(registry.getHolderOrThrow(biome), 0L, BlockPos.ZERO, everything)
           == VillageStyle.TUNDRA, "Tundra coverage missing " + biome.location());
     }
-    Kithkyn.LOGGER.info("{} BIOMES PASS: Pueblo, Desert, Birch, Floodplain, Swamp, both Plains, the dense Jungle biomes, the sparse jungle's Polynesian Coast, Romanian Dark Forest and exposed frozen lowlands", PREFIX);
+    Kithkyn.LOGGER.info("{} BIOMES PASS: Pueblo, Desert, Birch, Floodplain, Swamp, both Plains, "
+        + "the dense Jungle biomes, the sparse jungle's Polynesian Coast, Romanian Dark Forest, "
+        + "Japanese flowering forests and exposed frozen lowlands", PREFIX);
   }
 
   private static void verifyCatalogue(ServerLevel level) {
@@ -303,11 +317,11 @@ public final class BadlandsVillageVerification {
     for (BuildingInfo home : homes) {
       check(home.getBedContainers() != null, "Lost explicit room storage " + home.getName());
     }
-    if (CATALOG.tavern()) {
+    if (CATALOG.tavernBeds() > 0) {
       BuildingInfo tavern = info(id("tavern", 1));
-      int beds = STYLE == VillageStyle.ROMANIAN ? 3 : 2;
-      check(tavern.getBedLocations().size() == beds && tavern.getWorkerSingleBedCount() == 1,
-          "Tavern must keep one staff bed and its approved general beds");
+      check(tavern.getBedLocations().size() == CATALOG.tavernBeds()
+          && tavern.getWorkerSingleBedCount() == CATALOG.tavernWorkerBeds(),
+          "Tavern lost its approved staff and general beds");
     }
     Kithkyn.LOGGER.info("{} CATALOGUE PASS: {} actual templates and all {} authored housing choices", PREFIX,
         CATALOG.templates(), CATALOG.homes());
@@ -456,7 +470,8 @@ public final class BadlandsVillageVerification {
         "Founding workers did not receive distinct beds");
     if (STYLE == VillageStyle.JUNGLE || STYLE == VillageStyle.SWAMP
         || STYLE == VillageStyle.MEDITERRANEAN || STYLE == VillageStyle.TUNDRA
-        || STYLE == VillageStyle.POLYNESIAN_COAST || STYLE == VillageStyle.ROMANIAN) {
+        || STYLE == VillageStyle.POLYNESIAN_COAST || STYLE == VillageStyle.ROMANIAN
+        || STYLE == VillageStyle.JAPANESE_CHERRY_GROVE) {
       if (STYLE != VillageStyle.MEDITERRANEAN) {
         verifyRoutedWorksite(village, residents, Occupation.MINER, "mine");
       }

@@ -47,6 +47,9 @@ record WallPalette(Block post, Block deck, Block stairs, Block slab,
       case ALPINE_HIGHLANDS -> new WallPalette(
           Blocks.BRICKS, Blocks.BRICKS, Blocks.BRICK_STAIRS,
           Blocks.BRICK_SLAB, Blocks.BRICK_WALL, Blocks.SPRUCE_TRAPDOOR);
+      case JAPANESE_CHERRY_GROVE -> new WallPalette(
+          Blocks.STRIPPED_SPRUCE_LOG, Blocks.STRIPPED_SPRUCE_LOG, Blocks.SPRUCE_STAIRS,
+          Blocks.DEEPSLATE_TILE_SLAB, Blocks.SPRUCE_FENCE, Blocks.CHERRY_TRAPDOOR);
     };
   }
 
@@ -56,12 +59,14 @@ record WallPalette(Block post, Block deck, Block stairs, Block slab,
    * families author no foliage, so their pair is never placed.
    */
   Block leaves() {
+    if (this.post == Blocks.STRIPPED_SPRUCE_LOG) return Blocks.CHERRY_LEAVES;
     if (this.post == Blocks.QUARTZ_BRICKS) return Blocks.JUNGLE_LEAVES;
     if (this.post == Blocks.BRICKS) return Blocks.MANGROVE_LEAVES;
     return Blocks.OAK_LEAVES;
   }
 
   Block leavesDark() {
+    if (this.post == Blocks.STRIPPED_SPRUCE_LOG) return Blocks.FLOWERING_AZALEA_LEAVES;
     return Blocks.DARK_OAK_LEAVES;
   }
 

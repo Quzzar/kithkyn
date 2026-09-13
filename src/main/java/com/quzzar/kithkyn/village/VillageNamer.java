@@ -199,6 +199,13 @@ public final class VillageNamer {
           List.of("Valdora", "Monteluz", "Bravena", "Cerrosa"),
           List.of("Val", "Monte", "Bra", "Cerro", "Luma", "Sierra", "Ald", "Vera"),
           List.of("dora", "luz", "vena", "rosa", "alta", "era", "ona", "iel"));
+      case JAPANESE_CHERRY_GROVE -> new NamingProfile(
+          "A garden settlement among flowering cherry trees: spruce-framed homes, dark tiled roofs,"
+              + " ponds, compact farms, lanterns and carefully planted paths around a civic bell."
+              + " Calm, concise invented names with a soft woodland sound.",
+          List.of("Hanamori", "Kasayuki", "Mizuhana", "Sorakawa"),
+          List.of("Hana", "Mizu", "Sora", "Kasa", "Aki", "Yama", "Mori", "Tsuki"),
+          List.of("mori", "kawa", "hana", "yuki", "sato", "nami", "tani", "no"));
     };
   }
 

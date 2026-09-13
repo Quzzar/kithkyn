@@ -27,12 +27,13 @@ import net.neoforged.neoforge.common.Tags;
  * Every style is a strict catalog: a village raises only what its own family
  * authored and never borrows another family's building to fill a gap. Birch
  * Forest is the one bundled catalog and so the default; Desert, Badlands,
- * Floodplain, Jungle, Swamp, Mediterranean, Tundra, Polynesian Coast, Romanian and Alpine Highlands arrive through
+ * Floodplain, Jungle, Swamp, Mediterranean, Tundra, Polynesian Coast,
+ * Romanian, Alpine Highlands and Japanese Cherry Grove arrive through
  * private datapacks (docs/desert-village.md, docs/badlands-village.md,
  * docs/floodplain-village.md, docs/jungle-village.md, docs/swamp-village.md,
  * docs/mediterranean-village.md, docs/tundra-village.md,
  * docs/polynesian-coast-village.md, docs/romanian-village.md,
- * docs/alpine-highlands-village.md), so they
+ * docs/alpine-highlands-village.md, docs/japanese-cherry-grove-village.md), so they
  * are only automatic candidates while their founding sets are loaded.
  *
  * Explicit datapack style tags take precedence over conventional biome families.
@@ -43,7 +44,7 @@ import net.neoforged.neoforge.common.Tags;
  */
 public enum VillageStyle {
   BIRCH_FOREST, DESERT, BADLANDS, FLOODPLAIN, JUNGLE, SWAMP, MEDITERRANEAN, TUNDRA,
-  POLYNESIAN_COAST, ROMANIAN, ALPINE_HIGHLANDS;
+  POLYNESIAN_COAST, ROMANIAN, ALPINE_HIGHLANDS, JAPANESE_CHERRY_GROVE;
 
   /**
    * What a blank or unknown saved style reads as, the answer for every climate
@@ -210,6 +211,10 @@ public enum VillageStyle {
     // recognizable, while an explicit style tag above can correct an exception.
     if (tagged.test(Tags.Biomes.IS_BIRCH_FOREST) || path.contains("birch")) {
       return BIRCH_FOREST;
+    }
+    if (path.contains("cherry_grove") || path.contains("flower_forest")
+        || path.contains("cherry") || path.contains("sakura")) {
+      return JAPANESE_CHERRY_GROVE;
     }
     // Pueblo covers the mesa and savanna families until more specific catalogs
     // are authored. Explicit style tags can narrow that coverage later.
