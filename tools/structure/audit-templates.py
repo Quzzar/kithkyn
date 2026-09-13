@@ -2,6 +2,7 @@
 """Reject production structure templates containing invalid authored geometry."""
 
 from collections import Counter
+import json
 from pathlib import Path
 import re
 import sys
@@ -11,6 +12,7 @@ from nbt import read
 
 MARKET_NAME = re.compile(r"^.*market(?:_.+)?_(\d+)\.nbt$")
 AIR = {"minecraft:air", "minecraft:cave_air", "minecraft:void_air"}
+LIVESTOCK = {"minecraft:chicken", "minecraft:cow", "minecraft:pig", "minecraft:sheep"}
 MARKET_COLORS = ("red", "cyan", "orange")
 MARKET_PART_COUNTS = {
     "wool": 12,
@@ -47,6 +49,25 @@ def problems(path):
         tuple(block["pos"]): palette[block["state"]]
         for block in root["blocks"]
     }
+
+    definition_path = path.parent.parent / "kithkyn" / "buildings" / f"{path.stem}.json"
+    if definition_path.is_file():
+        definition = json.loads(definition_path.read_text())
+        if definition.get("category") != "mine":
+            terrain_layer = definition.get("sink", 0)
+            for position, state in blocks.items():
+                is_horizontal_corner = (
+                    position[0] in (0, size[0] - 1)
+                    and position[2] in (0, size[2] - 1)
+                )
+                if (position[1] == terrain_layer
+                        and is_horizontal_corner
+                        and state["Name"] in AIR):
+                    failures.append((
+                        position,
+                        state["Name"],
+                        "explicit corner air clears terrain at the seated surface; omit the cell",
+                    ))
     for block in root["blocks"]:
         position = tuple(block["pos"])
         name = palette[block["state"]]["Name"]
@@ -59,10 +80,35 @@ def problems(path):
         if reasons:
             failures.append((position, name, "; ".join(reasons)))
 
+    if path.stem.startswith("butchery_"):
+        opened = [
+            position
+            for position, state in blocks.items()
+            if (state["Name"].endswith("_fence_gate")
+                or (state["Name"].endswith("_door")
+                    and not state["Name"].endswith("_trapdoor")))
+            and state.get("Properties", {}).get("open") == "true"
+        ]
+        for position in opened:
+            failures.append((position, blocks[position]["Name"], "butchery door or gate starts open"))
+        inhabitants = {
+            entity.get("nbt", {}).get("id")
+            for entity in root.get("entities", [])
+        }
+        if not inhabitants.intersection(LIVESTOCK):
+            failures.append(("initial entities", "livestock", "butchery has no authored livestock"))
+
     market = MARKET_NAME.match(path.name)
     if market is not None:
         expected = int(market.group(1))
         counts = Counter(state["Name"] for state in blocks.values())
+        bottom_air = [
+            position
+            for position, state in blocks.items()
+            if position[1] == 0 and state["Name"] in AIR
+        ]
+        for position in bottom_air:
+            failures.append((position, blocks[position]["Name"], "market bottom air clears the terrain"))
         expected_colors = MARKET_COLORS[:expected]
         for color in expected_colors:
             for suffix, per_stall in MARKET_PART_COUNTS.items():
@@ -157,6 +203,7 @@ def main(arguments):
         return 1
     print(
         f"PASS {len(paths)} templates: no barrier states, out-of-bounds blocks, "
+        "terrain-clearing corner air, open or empty butcheries, malformed market floors, "
         "or malformed market entrances"
     )
     return 0

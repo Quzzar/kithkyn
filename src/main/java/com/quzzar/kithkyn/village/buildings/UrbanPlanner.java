@@ -522,8 +522,7 @@ public class UrbanPlanner {
   /** Whether any standing building already produces food. */
   private static boolean producesFood(Village village) {
     return village.getBuildings().stream().anyMatch(building -> building.getInfo() != null
-        && (building.getInfo().getGrants().contains("GRAIN")
-            || building.getInfo().getGrants().contains("MEAT")));
+        && building.getInfo().getGrants().contains("FOOD"));
   }
 
   /**
@@ -595,20 +594,24 @@ public class UrbanPlanner {
         return new Candidate(choice, BuildingUpgrade.describe(village, standing, choice.info()));
       }
     }
-    return new Candidate(choice, describeFresh(village, choice.info()));
+    return new Candidate(choice, describeFresh(village, choice));
   }
 
-  /** A plain-language option line with general housing distinct from live-in workplace beds. */
-  private static String describeFresh(Village village, BuildingInfo info) {
+  /** A complete option line: effective cost, grants, and exact concrete capacity. */
+  private static String describeFresh(Village village, ConstructionChoice choice) {
+    BuildingInfo info = choice.info();
     String name = info.displayLabel();
     String subject = info.hasWellFormedId() && info.getLevel() > 1
         ? "a new level " + info.getLevel() + " " + name + " on a separate site"
         : "a " + name;
     String jobs = info.getWorkLocations().values().stream().distinct().sorted()
         .map(occupation -> occupation.name().toLowerCase()).collect(java.util.stream.Collectors.joining(", "));
-    return subject + " (adds " + BuildingImpact.capacity(village, info).describe(false)
+    String cost = ConstructionQuote.capture(choice, Map.of()).describeRequired();
+    return subject + " (cost: " + cost
+        + "; grants: " + BuildingImpact.describeGrantContract(info)
+        + "; adds " + BuildingImpact.capacity(village, info).describe(false)
         + (jobs.isEmpty() ? "" : "; jobs: " + jobs)
-        + "; provides " + BuildingImpact.describeServices(info.getGrants()) + ")"
+        + ")"
         + ("mine".equals(info.getCategory())
             ? ", opens a new shaft on a separate site instead of reusing an existing blocked or exhausted shaft" : "")
         + unlockNote(info);

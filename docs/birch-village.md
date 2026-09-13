@@ -31,10 +31,13 @@ These decisions supersede the older candidate-gallery choices and generic counts
 This is 23 concrete building templates plus five authored wall pieces. Missing tiers and
 categories are intentional: no catalog borrows another family's building, and Birch is the
 only catalog bundled in the jar.
-Costs retain the existing per-category/per-tier recipes. Higher tiers elsewhere are unaffected.
-Amenities come from the actual selected definition, not a global bed or chest count for its tier.
+Every template owns an explicit price and grant set, balanced for its actual housing, jobs,
+storage, outcomes, and progression role. Amenities come from the selected definition, not a
+global tier default. The current values are in the
+[locked balance map](research/building-cost-rebalance-2026-09-12.md).
 
-The bakery grants BREAD and employs the baker. The separate tavern grants WANDERERS and
+The bakery grants FOOD and BAKED_GOODS and employs the baker. The separate tavern grants
+HOSPITALITY and WANDERERS and
 employs the innkeeper. Its back-room bed is the only assigned housing slot; the other three
 authored beds remain furnishings and follow the village's secondary color.
 This integration does not add a new physical innkeeper food-service loop or new hospitality bonuses.

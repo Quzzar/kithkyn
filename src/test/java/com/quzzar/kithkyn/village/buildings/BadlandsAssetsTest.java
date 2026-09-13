@@ -176,16 +176,16 @@ class BadlandsAssetsTest {
   }
 
   @Test
-  void pricesFollowExistingCapacityTiersAndOnlyAuthoredChainsUpgrade() throws Exception {
+  void everyVariantOwnsItsPriceAndOnlyAuthoredChainsUpgrade() throws Exception {
     Map<Integer, Integer> houseCounts = new HashMap<>();
     List<String> upgrades = new ArrayList<>();
     try (var files = Files.list(data().resolve("kithkyn/buildings"))) {
       for (Path file : files.filter(p -> p.getFileName().toString().contains("_badlands_")).toList()) {
         JsonObject json = JsonParser.parseString(Files.readString(file)).getAsJsonObject();
         BuildingInfo info = BuildingInfo.CODEC.parse(JsonOps.INSTANCE, json).getOrThrow();
-        assertFalse(json.has("cost"), "Approved Badlands buildings use the shared default prices");
-        assertNotNull(BadlandsAssetsTest.class.getResource("/data/kithkyn/" + BuildingRecipe.DIRECTORY
-            + "/" + BuildingRecipe.idFor(info).getPath() + ".json"), info.getName());
+        assertTrue(BuildingRecipe.CODEC.parse(JsonOps.INSTANCE, json).result().isPresent(), info.getName());
+        assertFalse(info.getGrants().isEmpty(), info.getName());
+        assertTrue(BuildingGrantContract.missing(info).isEmpty(), info.getName());
         if (info.getCategory().equals("house")) {
           houseCounts.merge(info.getLevel(), 1, Integer::sum);
           assertFalse(json.has("upgrades_from"), "House alternatives have no authored replacement chain");

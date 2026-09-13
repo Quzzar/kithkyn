@@ -8,14 +8,12 @@ the `tavern`; and `brewery` and `library` were cut); see the "The cut" section o
 The reasoning below still explains WHY the categories exist and how they group, which is
 why it is kept, but where it lists a category the spec has cut, the spec wins.
 
-**Proposed, not yet decided, and largely unbuilt.** Nine building definitions exist against
-the catalogue below; capabilities, need-routing, production chains and the ~19 new
-occupations are all absent from code. [building-spec.md](building-spec.md) supersedes this
-document wherever they differ. This is the full pipeline of what a village can build, laid
-out so the shape is visible before any of it ships. It extends the two building axes named
-in [village-tiers.md](village-tiers.md) (`category` and `upgrades_from`) into a concrete
-list. Nothing here gates on village tier: a camp may build a cathedral if it somehow
-affords one.
+**Historical design reasoning, not an authoring source.** The current definitions, recipes, and
+grant vocabulary live in the [locked balance map](research/building-cost-rebalance-2026-09-12.md)
+and [building-spec.md](building-spec.md). The catalogue below preserves earlier reasoning about
+categories and production chains, including buildings that were cut. New definitions must be
+balanced from current functional peers rather than copying a recipe or grant label from this
+historical catalogue.
 
 Read [village-tiers.md](village-tiers.md) first. It owns the rules this catalog fills in.
 
@@ -129,21 +127,19 @@ category. The village brain wants `FOOD`. Several categories satisfy `FOOD`, and
 are legal depends on what is actually around the village:
 
 ```
-need: FOOD  <-  farm | pasture | hunting_lodge | fishery | mushroom_cellar
-need: WOOD  <-  lumberjack | (trade via market)
-need: STONE <-  quarry | mine
-need: FUEL  <-  mine (coal) | charcoal_burner (logs)
+need: FOOD      <-  farm | butchery | hunting_lodge | fishery
+need: WOOD      <-  lumberjack | (trade via market)
+need: MATERIALS <-  mine | stoneworks | lumberjack
 ```
 
-This is what the existing `Benefit` enum already almost is — though note that enum is
-currently **inert**: it parses from JSON, ships in 8 of 9 building files, and has zero
-readers in code. It should be split in two, since
-it is currently doing both jobs:
+The current grant contract keeps broad planning outcomes beside specific ones. The brain can see
+that a farm helps `FOOD` and specifically supplies `CROPS`, while exact field capacity remains a
+separate fact. A grant describes why the village might build something; it never spawns items.
 
 | Kind | Meaning | Examples |
 | --- | --- | --- |
-| **Output** | A resource this building puts into village containers | `GRAIN`, `MEAT`, `LOGS`, `PLANKS`, `STONE`, `ORES`, `FUEL`, `LEATHER`, `CLOTH`, `BRICK`, `GLASS`, `BREAD`, `ALE`, `ARROWS`, `ARMOR` |
-| **Service** | A capability the building gives the village, with nothing in a chest | `WATER`, `STORAGE`, `FOOD_STORAGE`, `PROTECTION`, `SMELTING`, `REPAIR`, `HEALING`, `ENCHANTING`, `LEARNING`, `TRADE`, `MORALE` |
+| **Outcome** | A material or food result represented by the building | `FOOD`, `CROPS`, `BAKED_GOODS`, `MEAT`, `LOGS`, `PLANKS`, `STONE`, `ORES`, `MINERALS`, `LEATHER`, `WOOL` |
+| **Service** | A non-item value the building gives the village | `HOUSING`, `WATER`, `STORAGE`, `PROTECTION`, `SMELTING`, `REPAIR`, `HEALING`, `TRADE`, `HOSPITALITY` |
 
 A desert village and a taiga village run the same brain. They just resolve `FOOD` to
 different categories, and reach for different variants of the categories they share.
@@ -194,7 +190,7 @@ is the whole biome story.
 
 | Category | Worker | Output | Wants | Levels | Phase |
 | --- | --- | --- | --- | --- | --- |
-| `farm` | FARMER | `GRAIN`, vegetables | tillable land, water | 3 | 1 |
+| `farm` | FARMER | `FOOD`, `CROPS` | tillable land, water | 3 | 1 |
 | `butchery` pen | HERDER | `CLOTH` (wool), herd breeding up to twelve a kind | its own fenced stock | with `butchery` | 2 |
 | `hunting_lodge` | HUNTER | `MEAT`, `LEATHER` | trees, wildlife | 2 | 1 |
 | `fishery` | FISHER | `MEAT` (fish) | adjacent water | 2 | 1 |
@@ -209,10 +205,10 @@ actually moves attractiveness.
 
 | Category | Worker | Converts | Levels | Phase |
 | --- | --- | --- | --- | --- |
-| `mill` | MILLER | `GRAIN` to flour | 2 | 2 |
-| `bakery` | BAKER | flour to `BREAD` | 3 | 2 |
+| `mill` | MILLER | crops to flour | 2 | 2 |
+| `bakery` | BAKER | flour to `BAKED_GOODS` | 3 | 2 |
 | `butchery` | BUTCHER | the pen kept at six a kind; raw `MEAT` to cooked, preserved | 2 | 2 |
-| `brewery` | BREWER | `GRAIN`, honey to `ALE` | 2 | 3 |
+| `brewery` | BREWER | crops and honey to ale | 2 | 3 |
 
 `mill` is the clearest case of variants doing real work: a **windmill** (open, windy biomes)
 and a **watermill** (adjacent flowing water) are different structures satisfying the same
@@ -224,13 +220,13 @@ need, chosen by what the site offers.
 | --- | --- | --- | --- | --- | --- |
 | `lumberjack` | LUMBERJACK | `LOGS`, `PLANKS` (L2) | trees | 3 | 1 |
 | `quarry` | MASON | `STONE` | exposed stone | 3 | 1 |
-| `mine` | MINER | `ORES`, `FUEL` (coal) | stone, depth | 3 | 1 |
-| `charcoal_burner` | COLLIER | `FUEL` from `LOGS` | trees | 2 | 3 |
+| `mine` | MINER | `STONE`, `ORES`, `MINERALS` | stone, depth | 3 | 1 |
+| `charcoal_burner` | COLLIER | charcoal items from `LOGS` | trees | 2 | 3 |
 | `pottery` | POTTER | `BRICK`, pots | clay, sand | 2 | 3 |
-| `glassworks` | GLASSBLOWER | `GLASS` | sand, `FUEL` | 2 | 3 |
+| `glassworks` | GLASSBLOWER | glass items | sand, furnace fuel items | 2 | 3 |
 
 `charcoal_burner` is the coal-poor answer: a forest village with no ore body still gets
-`FUEL`, at the cost of the logs it would rather build with. `pottery` and `glassworks` turn
+charcoal items, at the cost of the logs it would rather build with. `pottery` and `glassworks` turn
 the two "worthless" biome resources (clay, sand) into building material, which is how a
 desert or river village stops being materially poor.
 
@@ -238,7 +234,7 @@ desert or river village stops being materially poor.
 
 | Category | Worker | Output | Consumes | Levels | Phase |
 | --- | --- | --- | --- | --- | --- |
-| `blacksmith` | BLACKSMITH | tools, `SMELTING`, `REPAIR` | `ORES`, `FUEL` | 3 | 2 |
+| `blacksmith` | BLACKSMITH | tools, `SMELTING`, `REPAIR` | ores and furnace fuel items | 3 | 2 |
 | `tannery` | TANNER | worked `LEATHER` | `LEATHER` | 2 | 3 |
 | `weaver` | WEAVER | `CLOTH`, beds | wool | 2 | 3 |
 | `fletcher` | FLETCHER | `ARROWS`, bows | `LOGS`, feathers | 2 | 4 |
@@ -272,14 +268,14 @@ consuming one village output and producing another.
 ```
 trees ---> lumberjack ---> LOGS ---> lumberjack L2 ---> PLANKS ---> (construction)
                              \
-                              '---> charcoal_burner ---> FUEL
+                              '---> charcoal_burner ---> charcoal items
 stone ---> quarry ---------> STONE --------------------> (construction)
         \
          '-> mine ---------> ORES ---> blacksmith ---> tools, REPAIR
                     \                       \
-                     '-----> FUEL -----------'------> armoury ---> ARMOR
+                     '-----> coal item -------'------> armoury ---> ARMOR
 
-land ----> farm -----------> GRAIN --> mill --> flour --> bakery --> BREAD --> granary
+land ----> farm -----------> CROPS --> mill --> flour --> bakery --> BAKED_GOODS --> granary
                                  \
                                   '-> brewery --> ALE --> inn --> MORALE
 animals -> pasture --------> MEAT --> butchery --> preserved food --> granary
@@ -293,8 +289,8 @@ clay ----> pottery --------> BRICK --> (construction)
 sand ----> glassworks -----> GLASS --> (construction, church L3)
 ```
 
-Two loops close on themselves and are the interesting ones: **FUEL** (mine or
-charcoal_burner, consumed by blacksmith, glassworks, butchery) and **beds** (pasture to
+Two loops close on themselves and are the interesting ones: **furnace fuel items** (coal or
+charcoal, consumed by blacksmith, glassworks, butchery) and **beds** (pasture to
 weaver to housing cap to more people to more pasture).
 
 ## Village-biome variants
@@ -363,18 +359,22 @@ CTOV fortified plains is a defense or development state of `plains`, while Chris
 Halloween are possible seasonal treatments. This keeps biome, progression, and event state from
 becoming one overloaded axis.
 
-### Current runtime selection: 2026-09-12
+### Current runtime selection: 2026-09-13
 
-Nine styles exist today, in this stable order: `birch_forest`, `desert`, `badlands`,
-`floodplain`, `jungle`, `swamp`, `mediterranean`, `tundra`, `polynesian_coast`. Birch Forest is the only catalog bundled in the jar and so the default: a blank
+Eleven styles exist today, in this stable order: `birch_forest`, `desert`, `badlands`,
+`floodplain`, `jungle`, `swamp`, `mediterranean`, `tundra`, `polynesian_coast`, `romanian`,
+`alpine_highlands`.
+Birch Forest is the only catalog bundled in the jar and so the default: a blank
 or unknown saved style reads as Birch. Desert ([desert-village.md](desert-village.md)),
 Badlands ([badlands-village.md](badlands-village.md)) and Floodplain
 ([floodplain-village.md](floodplain-village.md)), Jungle
 ([jungle-village.md](jungle-village.md)), Swamp
 ([swamp-village.md](swamp-village.md)) and Mediterranean
 ([mediterranean-village.md](mediterranean-village.md)), Tundra
-([tundra-village.md](tundra-village.md)) and Polynesian Coast
-([polynesian-coast-village.md](polynesian-coast-village.md)) are installed as private datapacks that
+([tundra-village.md](tundra-village.md)), Polynesian Coast
+([polynesian-coast-village.md](polynesian-coast-village.md)) and Romanian
+([romanian-village.md](romanian-village.md)) and Alpine Highlands
+([alpine-highlands-village.md](alpine-highlands-village.md)) are installed as private datapacks that
 supply their own definitions and templates under the ids the code resolves; without its pack
 a style has no founding set and is never selected automatically. The old Village Life families
 (plains, taiga, snowy, savanna and the bundled desert set) were removed on 2026-09-10; see
@@ -392,7 +392,7 @@ reroll an existing village. An explicit style argument on the command still over
 Selection first honors `kithkyn:village_style/<style>` biome tags, so a datapack can map a
 vanilla or modded biome precisely without a second mapping format. If a biome has several
 explicit tags, the stable order is Birch Forest, Desert, Badlands, Floodplain, Jungle, Swamp,
-Mediterranean, Tundra, Polynesian Coast. Sparse Jungle carries the Polynesian Coast tag and no
+Mediterranean, Tundra, Polynesian Coast, Romanian, Alpine Highlands. Sparse Jungle carries the Polynesian Coast tag and no
 longer the Jungle one, so Jungle keeps Jungle and Bamboo Jungle.
 Only styles whose own center, mine, and storehouse definitions are loaded are automatic candidates.
 
@@ -414,8 +414,10 @@ catalog exists:
 | Mangrove: vanilla mangrove swamp through the `kithkyn:village_style/floodplain` tag, and untagged registry paths containing `mangrove` | Floodplain |
 | Jungle, including conventional Jungle tags and registry paths containing `jungle` | Jungle |
 | Ordinary swamp, including the broad conventional Swamp tag and registry paths containing `swamp` after mangrove is excluded | Swamp |
+| Mountain, including the conventional Mountain tag and paths containing `mountain`, `meadow`, `grove`, `peak`, `windswept` or `alpine` | Alpine Highlands |
 | Snowy or icy lowlands, including their conventional tags and registry paths containing snow, ice, frozen or frost | Tundra |
 | Temperate plains: the conventional Plains tag and registry paths ending in `plains`, unless the biome is also snowy, icy or named for snow, ice or frost | Mediterranean |
+| Dark Forest and registry paths named `dark_forest`, `darkforest`, `forested_highland` or `wooded_valley` | Romanian |
 | Every other conventional family (forest, taiga and the rest) | No conventional mapping; the climate cluster below decides |
 
 Birch wins before broader family tags; an explicit style tag can override even a birch-named
@@ -537,7 +539,7 @@ the player, with a caravan, or abstract is an open question below.
 | | Count |
 | --- | --- |
 | Categories | 37 |
-| Implemented village biomes | 8 (Birch Forest bundled; seven private datapack catalogs) |
+| Implemented village biomes | 10 (Birch Forest bundled; nine private datapack catalogs) |
 | Towns and Towers Overworld village-biome floor | 26 |
 | Additional village biomes already justified by reviewed families | 6 |
 | Existing structure-plan estimate, based on five village biomes | ~130 |

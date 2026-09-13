@@ -47,7 +47,18 @@
     ]
   ],
   "grants": [
+    "LOGISTICS",
     "STORAGE"
+  ],
+  "cost": [
+    {
+      "item": "minecraft:oak_log",
+      "count": 20
+    },
+    {
+      "item": "minecraft:cobblestone",
+      "count": 24
+    }
   ],
   "sink": -1,
   "entrance_facing": "west",

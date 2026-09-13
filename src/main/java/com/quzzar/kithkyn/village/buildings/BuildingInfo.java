@@ -508,7 +508,9 @@ public class BuildingInfo {
     }
     java.util.Set<BlockPos> pairedBeds = new java.util.HashSet<>();
     if (workerBeds != null) {
-      if (!workerBeds.isEmpty() && workLocs.isEmpty()) return "worker_beds requires a workplace";
+      if (!workerBeds.isEmpty() && workLocs.isEmpty() && worksiteLocs.isEmpty()) {
+        return "worker_beds requires a workplace or routed worksite";
+      }
       if (new java.util.HashSet<>(workerBeds).size() != workerBeds.size()) return "worker_beds repeats a bed";
       if (workerBeds.stream().anyMatch(bed -> !bedLocs.contains(bed.asLong()))) {
         return "worker_beds names an undeclared bed";
@@ -529,6 +531,41 @@ public class BuildingInfo {
       }
     }
     return null;
+  }
+
+  /**
+   * The complete datapack contract, checked after the loader attaches the
+   * definition's own validated cost. Structural tests may use {@link #validate}
+   * without inventing economic metadata; published definitions may not.
+   */
+  @javax.annotation.Nullable
+  public String validateAuthoredContract() {
+    String structural = validate();
+    if (structural != null) return structural;
+    if (materialCost.isEmpty()) return "building requires its own nonempty cost";
+    if (grants.isEmpty()) return "building requires at least one grant";
+    java.util.Set<String> seen = new java.util.HashSet<>();
+    for (String grant : grants) {
+      if (!grant.matches("[A-Z][A-Z0-9_]*")) return "grant names must use SCREAMING_SNAKE_CASE: " + grant;
+      if (!seen.add(grant)) return "building repeats grant " + grant;
+      if (BuildingGrantContract.isRetired(grant)) return "building uses retired grant " + grant;
+    }
+    for (Grant grant : conditionalGrants) {
+      if (!grant.capability().matches("[A-Z][A-Z0-9_]*")) {
+        return "grant names must use SCREAMING_SNAKE_CASE: " + grant.capability();
+      }
+      if (!seen.add(grant.capability())) return "building repeats grant " + grant.capability();
+      if (BuildingGrantContract.isRetired(grant.capability())) {
+        return "building uses retired conditional grant " + grant.capability();
+      }
+      for (String requirement : grant.requiresCapability()) {
+        if (BuildingGrantContract.isRetired(requirement)) {
+          return "conditional grant " + grant.capability() + " requires retired grant " + requirement;
+        }
+      }
+    }
+    List<String> missing = BuildingGrantContract.missing(this);
+    return missing.isEmpty() ? null : String.join("; ", missing);
   }
 
   /** Omitted metadata preserves the original two-bed cottage; ordinary homes infer no pairs. */
@@ -722,7 +759,7 @@ public class BuildingInfo {
     return bedLocs.stream().map(BlockPos::of).toList();
   }
 
-  /** The authored posts, in station order; package-visible so StationGrants can read each post's worksite routing. */
+  /** The authored posts, in station order; package-visible so the grant contract can inspect worksite routing. */
   List<WorkStation> workStations() {
     return workLocs.entrySet().stream()
         .map(entry -> new WorkStation(BlockPos.of(entry.getKey()), entry.getValue(),

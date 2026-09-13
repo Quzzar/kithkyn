@@ -131,7 +131,7 @@ public final class AllayQuartermasterBehavior extends Behavior<Allay> {
     }
     BlockPos delivery = carrying ? storehouseChest(level, village, pack) : null;
     if (carrying && delivery == null) {
-      village.setStorageStrained(true);
+      village.reportStorageStrain(allay.getUUID(), true);
       return inspectionChest(level, village, now);
     }
     BlockPos source = carrying || this.returningToShelf ? null : sourceChest(level, allay, village);
@@ -143,7 +143,7 @@ public final class AllayQuartermasterBehavior extends Behavior<Allay> {
       this.phase = Phase.DELIVER;
       return delivery;
     }
-    village.setStorageStrained(false);
+    village.reportStorageStrain(allay.getUUID(), false);
     return inspectionChest(level, village, now);
   }
 
@@ -172,7 +172,7 @@ public final class AllayQuartermasterBehavior extends Behavior<Allay> {
             allay.getName().getString(), moved, this.target.toShortString());
       }
       if (pack.isEmpty()) {
-        village.setStorageStrained(false);
+        village.reportStorageStrain(allay.getUUID(), false);
       }
       return moved > 0 && ++this.moves < MOVES_PER_VISIT && !pack.isEmpty();
     }

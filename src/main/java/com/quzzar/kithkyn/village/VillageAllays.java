@@ -257,6 +257,7 @@ public final class VillageAllays {
     }
     KEEPING.remove(allay);
     villageId(allay).map(id -> VillageManager.get(level).getVillage(id)).ifPresent(village -> {
+      village.reportStorageStrain(allay.getUUID(), false);
       village.getAllays().remove(allay.getUUID());
       VillageManager.get(level).setDirty();
     });

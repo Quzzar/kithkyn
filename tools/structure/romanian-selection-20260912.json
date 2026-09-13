@@ -1,0 +1,412 @@
+{
+  "schemaVersion": 1,
+  "status": "locked_and_verified",
+  "variant": "romanian",
+  "biomeDirection": [
+    "minecraft:dark_forest",
+    "forested highlands",
+    "wooded valleys"
+  ],
+  "galleryEntry": [
+    12401.5,
+    230.0,
+    1004.5
+  ],
+  "latestCapture": "run/romanian-full-profile/selection-capture-20260912-171757/capture-manifest.json",
+  "latestReviewCapture": "run/romanian-full-profile/review-capture-20260912-172552/capture-manifest.json",
+  "identity": {
+    "roof": "Steep pale birch shingles with dark-oak framing",
+    "masonry": "Cobblestone and dark woodland stonework",
+    "accent": "Purple village-color textiles and banners",
+    "iberianTiles": "Retained by the Mediterranean catalog; they are not part of the Romanian palette"
+  },
+  "dynamicIdentity": {
+    "beds": "Every production bed resolves to the village primary or secondary color; both halves of a couple bed use the same color",
+    "banners": "Every authored banner resolves to the village banner",
+    "captureBedColors": "Gallery colors are positional references and are not fixed production colors"
+  },
+  "selected": [
+    {
+      "exhibit": "R01.1",
+      "role": "village_center_and_church",
+      "details": [
+        "Cleric station in the back room",
+        "User-added lit campfire at local 17,1,30",
+        "Bell remains the central meeting point",
+        "Four user-added banner positions resolve to the village banner"
+      ]
+    },
+    {
+      "exhibit": "R02.1",
+      "role": "house",
+      "beds": {
+        "single": 2,
+        "couple": 0
+      }
+    },
+    {
+      "exhibit": "R02.2",
+      "role": "house",
+      "beds": {
+        "single": 1,
+        "couple": 0
+      },
+      "personalContainers": 1
+    },
+    {
+      "exhibit": "R02.3",
+      "role": "house",
+      "beds": {
+        "single": 1,
+        "couple": 0
+      },
+      "personalContainers": 1
+    },
+    {
+      "exhibit": "R02.4",
+      "role": "couple_cottage",
+      "beds": {
+        "single": 0,
+        "couple": 1
+      },
+      "personalContainers": 1
+    },
+    {
+      "exhibit": "R02.6",
+      "role": "storehouse",
+      "level": 1,
+      "founding": false,
+      "villageStorage": {
+        "barrels": 3,
+        "chests": 2
+      }
+    },
+    {
+      "exhibit": "R03.1",
+      "role": "founding_storehouse_and_house",
+      "founding": true,
+      "beds": {
+        "single": 3,
+        "couple": 0
+      },
+      "quartermasterStation": "Ground floor",
+      "villageStorage": {
+        "barrels": 3,
+        "chests": 1
+      },
+      "personalContainers": 2
+    },
+    {
+      "exhibit": "R03.2",
+      "role": "butchery_and_house",
+      "beds": {
+        "single": 2,
+        "couple": 0
+      },
+      "personalContainers": 1,
+      "livestock": {
+        "minecraft:cow": 3,
+        "minecraft:pig": 3
+      }
+    },
+    {
+      "exhibit": "R03.3",
+      "role": "house",
+      "beds": {
+        "single": 4,
+        "couple": 0
+      },
+      "personalContainers": 2,
+      "details": [
+        "Two beds and one shared chest on each floor"
+      ]
+    },
+    {
+      "exhibit": "R04.1",
+      "role": "blacksmith",
+      "level": 1
+    },
+    {
+      "exhibit": "R04.2",
+      "role": "butchery_and_house",
+      "beds": {
+        "single": 1,
+        "couple": 0
+      },
+      "personalContainers": 1,
+      "livestock": {
+        "minecraft:sheep": 3,
+        "minecraft:chicken": 3
+      }
+    },
+    {
+      "exhibit": "R04.3",
+      "role": "bakery",
+      "level": 1,
+      "galleryRevision": "User-cleared production and counter areas with smoker, chest and cake details"
+    },
+    {
+      "exhibit": "R04.4",
+      "role": "fishery",
+      "level": 1,
+      "galleryRevision": "All 37 dark-oak roof slabs replaced by birch slabs with their top/bottom state preserved"
+    },
+    {
+      "exhibit": "R05.1",
+      "role": "hunting_lodge",
+      "level": 1
+    },
+    {
+      "exhibit": "R05.2",
+      "role": "stoneworks",
+      "level": 1
+    },
+    {
+      "exhibit": "R05.3",
+      "role": "mine",
+      "level": 1,
+      "beds": {
+        "single": 1,
+        "couple": 0
+      },
+      "personalContainers": 1,
+      "materialContainers": 1
+    },
+    {
+      "exhibit": "LUMBERJACK",
+      "role": "lumberjack",
+      "level": 1,
+      "beds": {
+        "single": 1,
+        "couple": 0
+      },
+      "personalContainers": 1,
+      "materialContainers": 1,
+      "saplingStation": [
+        10,
+        1,
+        3
+      ],
+      "source": "run/romanian-full-profile/lumberjack-capture-20260912-180158/captures/romanian_lumberjack.nbt",
+      "sourceSha256": "1a36eda2e733fd3a772b361695b74c305b48cc90f022e93202c6f7270b038230",
+      "review": "User-authored final edit, captured without barriers and promoted to production"
+    },
+    {
+      "exhibit": "R05.4",
+      "role": "farm",
+      "level": 1
+    },
+    {
+      "exhibit": "R06.1",
+      "role": "tavern",
+      "level": 1,
+      "galleryRevision": "Romanian palette study: complete birch roof, white-concrete upper masonry, cobbled-deepslate base and retained dark-oak frame",
+      "review": "User approved and promoted. Three accessible beds are registered: one innkeeper bed and two general beds. A fourth bed in the barred upper display cell remains physically authored and dynamically recolored, but is not assigned because it has no supported sleep stance.",
+      "beds": {
+        "single": 3,
+        "couple": 0
+      },
+      "physicalBeds": 4
+    },
+    {
+      "exhibit": "R06.2",
+      "role": "watchtower",
+      "level": 1,
+      "galleryRevision": "Romanian palette study: birch roofs, white-concrete lower enclosure, cobbled-deepslate wall details and retained dark-oak tower frame",
+      "review": "User approved and promoted. Its authored upper trapdoor exports open so the ladder remains usable."
+    },
+    {
+      "exhibit": "R06.3",
+      "role": "well",
+      "level": 1
+    },
+    {
+      "exhibit": "R08.M1-R08.M3",
+      "role": "market",
+      "levels": [
+        1,
+        2,
+        3
+      ],
+      "galleryRevision": "Repaired canonical market geometry with dark-oak frames and cobbled-deepslate foundations; fixed red, cyan, orange and white trading textiles retained. The user moved each stall barrel farther back and extended its foundation by one block, consistently across all three tiers.",
+      "review": "User approved, captured with zero barriers, and promoted to the three production Romanian market assets"
+    },
+    {
+      "exhibit": "R08.W1-R08.W5",
+      "role": "wall_family",
+      "level": 1,
+      "modules": [
+        "straight",
+        "diagonal",
+        "corner tower",
+        "gatehouse",
+        "terrace"
+      ],
+      "galleryRevision": "Original modular geometry with cobbled-deepslate foundations and posts, white-concrete walls, birch caps and dark-oak access trapdoors",
+      "review": "Rejected after direct comparison because its broad white wall body was too bright for the Romanian dark-forest direction; retained only as gallery provenance"
+    },
+    {
+      "exhibit": "R08.WB1-R08.WB5",
+      "role": "wall_family_alternative",
+      "level": 1,
+      "modules": [
+        "straight",
+        "diagonal",
+        "corner tower",
+        "gatehouse",
+        "terrace"
+      ],
+      "galleryRevision": "Geometry-identical comparison replacing every white-concrete wall body block with vertically stripped dark-oak wood",
+      "review": "User approved and promoted as the production Romanian wall family"
+    }
+  ],
+  "deferredExhibits": [
+    {
+      "exhibit": "R02.5",
+      "note": "Good compact shell; no role selected yet"
+    },
+    {
+      "exhibit": "R05.5",
+      "note": "Second smith shell retained for later repurposing"
+    }
+  ],
+  "openRequiredSlots": [],
+  "optionalOpenSlot": "castle",
+  "leadingCandidates": {
+    "castle": "R07.6 Stone Keep Study if Romanian later receives an optional castle"
+  },
+  "lumberjackDraft": {
+    "status": "captured_approved_and_promoted",
+    "sourceExhibit": "R05.3",
+    "sourcePreserved": true,
+    "copyOrigin": [
+      12490,
+      230,
+      1186
+    ],
+    "copySize": [
+      14,
+      7,
+      7
+    ],
+    "entry": [
+      12497.5,
+      230.0,
+      1183.5
+    ],
+    "capture": "run/romanian-full-profile/lumberjack-capture-20260912-180158/captures/romanian_lumberjack.nbt",
+    "captureSha256": "1a36eda2e733fd3a772b361695b74c305b48cc90f022e93202c6f7270b038230",
+    "exactBlockCloneVerified": true,
+    "barrierBlocks": 0,
+    "rotationAccessVerification": {
+      "result": "passed",
+      "rotations": 4,
+      "routes": 8,
+      "sleeps": 4,
+      "personalDeposits": 4,
+      "stationWalks": 4,
+      "sharedDeposits": 4,
+      "failed": 0
+    }
+  },
+  "verification": {
+    "capturedStructures": 24,
+    "barrierBlocks": 0,
+    "fisherBirchSlabs": 37,
+    "fisherDarkOakSlabs": 0,
+    "restyledTavernBlocks": 821,
+    "restyledWatchtowerBlocks": 104,
+    "marketGeometryPreserved": true,
+    "marketUserRevisionCells": 18,
+    "marketReviewTiers": 3,
+    "wallReviewModules": 5,
+    "timberWallComparisonModules": 5,
+    "timberWallGeometryPreserved": true,
+    "templateAudit": {
+      "result": "passed",
+      "templates": 24,
+      "barriers": 0,
+      "outOfBounds": 0,
+      "malformedMarketEntrances": 0
+    },
+    "placement": {
+      "result": "passed",
+      "placements": 192,
+      "constructionPaths": [
+        "instant",
+        "incremental/reload"
+      ],
+      "rotations": 4
+    },
+    "restart": {
+      "result": "passed",
+      "savedBuildings": 192,
+      "originalEntities": 104
+    },
+    "founding": {
+      "result": "passed",
+      "strictTemplates": 24,
+      "housingAlternatives": 4,
+      "upgradeFits": 8,
+      "rotations": 4,
+      "foundingBuildings": 3,
+      "beds": 4,
+      "jobs": 5
+    },
+    "centerAccess": {
+      "result": "passed",
+      "rotatedStructures": 4,
+      "routes": 20,
+      "stationWalks": 20,
+      "sharedDeposits": 4,
+      "failed": 0
+    },
+    "catalogAccess": {
+      "result": "passed",
+      "rotatedStructures": 92,
+      "routes": 156,
+      "sleeps": 88,
+      "personalDeposits": 76,
+      "sharedDeposits": 108,
+      "stationWalks": 68,
+      "mineWalks": 8,
+      "failed": 0
+    },
+    "visualReview": "passed through the user's in-game review and final authored lumberjack edit"
+  },
+  "productionAssets": {
+    "markets": {
+      "src/main/resources/data/kithkyn/structure/market_romanian_1.nbt": "428b6ec6c295afbe0ad66de1e64d8a53600a0788279b0f7b12948aba5df6cac9",
+      "src/main/resources/data/kithkyn/structure/market_romanian_2.nbt": "cd1f98e39fee4f86ff7a74a5789dc1bb03724e97ec4c4e4d51c1cc724e461d0e",
+      "src/main/resources/data/kithkyn/structure/market_romanian_3.nbt": "9885e05b1378b5afb91fd8eccaade5ebe4ebac2dc4c08055552fdefac5e7a2ac"
+    },
+    "walls": {
+      "src/main/resources/data/kithkyn/structure/wall/romanian/straight.nbt": "5394353a3fbbef606cd510fcf530af839514f76180de002fceea3c848e73d32a",
+      "src/main/resources/data/kithkyn/structure/wall/romanian/diagonal.nbt": "9c6ed69e8489a62c93455d5373acd9f0420af0a1e3814e2d633d19e1c0ec71bf",
+      "src/main/resources/data/kithkyn/structure/wall/romanian/corner_tower.nbt": "aac851f02f6c62eb8a43c8f49d5c246fa8bbf182457c229a30d98e1ca66d0977",
+      "src/main/resources/data/kithkyn/structure/wall/romanian/gatehouse.nbt": "595aebec96019116161d2112554a65e2d0f8779378e9b06d652ebe8d755ff8e4",
+      "src/main/resources/data/kithkyn/structure/wall/romanian/terrace.nbt": "b6501b39ce5f1d81cecb5164e433478350ecb091b8acdeabf6213b7a86d95750"
+    },
+    "validation": "Structure audit passed for all eight assets; Gradle processResources passed"
+  },
+  "reviewGallery": {
+    "entry": [
+      12401.5,
+      230.0,
+      1314.5
+    ],
+    "status": "markets_and_timber_walls_approved",
+    "timberWallComparisonEntry": [
+      12578.5,
+      230.0,
+      1314.5
+    ],
+    "screenshots": [
+      "run/romanian-full-profile/review-render-final/client/screenshots/romanian-tavern-watchtower-final.png",
+      "run/romanian-full-profile/review-render/client/screenshots/romanian-market-tiers.png",
+      "run/romanian-full-profile/review-render/client/screenshots/romanian-wall-modules.png",
+      "run/romanian-full-profile/wall-comparison-render/client/screenshots/romanian-wall-a-white.png",
+      "run/romanian-full-profile/wall-comparison-render/client/screenshots/romanian-wall-b-stripped-dark-oak.png"
+    ]
+  }
+}

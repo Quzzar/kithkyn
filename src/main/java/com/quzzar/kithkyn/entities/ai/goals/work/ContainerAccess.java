@@ -1,8 +1,9 @@
 package com.quzzar.kithkyn.entities.ai.goals.work;
 
 import java.util.ArrayList;
-import java.util.Comparator;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Predicate;
 
 import javax.annotation.Nullable;
@@ -25,9 +26,16 @@ import net.minecraft.world.phys.Vec3;
 
 /** Shared standing positions and unobstructed hand access for containers, beds, and other activity blocks. */
 public final class ContainerAccess {
-  private static final int PATHS_PER_SCAN = 12;
   private static final double DOORWAY_BODY_WIDTH = 13.0D / 16.0D - 2.0D * 0.01D;
   private record Approach(BlockPos node, Vec3 feet) { }
+
+  /** Places on a block a player can actually point at, including the exposed lower face of stacked storage. */
+  private static final double[][] TARGET_POINTS = {
+      {0.5D, 0.5D, 0.5D},
+      {0.001D, 0.25D, 0.5D}, {0.999D, 0.25D, 0.5D},
+      {0.5D, 0.25D, 0.001D}, {0.5D, 0.25D, 0.999D},
+      {0.5D, 0.999D, 0.5D}, {0.5D, 0.001D, 0.5D}
+  };
 
   private ContainerAccess() { }
 
@@ -48,48 +56,26 @@ public final class ContainerAccess {
     double centerY = target.getY() + 0.5D;
     int bottom = Mth.ceil(centerY - eyeHeight - reach);
     int top = Mth.ceil(centerY - eyeHeight + reach);
-    List<Approach> candidates = new ArrayList<>();
+    Map<BlockPos, Approach> candidates = new LinkedHashMap<>();
     for (BlockPos pos : BlockPos.betweenClosed(
         new BlockPos(target.getX() - radius, bottom, target.getZ() - radius),
         new BlockPos(target.getX() + radius, top, target.getZ() + radius))) {
       Vec3 feet = WorkerFooting.standingPosition(person, pos);
       if (feet != null && allowedStanding.test(BlockPos.containing(feet))
           && canReach(person, feet.add(0.0D, eyeHeight, 0.0D), target, reachSqr)) {
-        candidates.add(new Approach(pos.immutable(), feet));
+        BlockPos node = pos.immutable();
+        candidates.put(node, new Approach(node, feet));
       }
     }
-    candidates.sort(Comparator.<Approach>comparingInt(candidate ->
-        Math.abs(candidate.feet().y - candidate.node().getY()) < 0.01D ? 0 : 1)
-        .thenComparingDouble(candidate ->
-            candidate.feet().add(0.0D, eyeHeight, 0.0D).distanceToSqr(Vec3.atCenterOf(target)))
-        .thenComparingDouble(candidate -> candidate.feet().distanceToSqr(person.position())));
-    Approach best = null;
-    int fewestBedSteps = Integer.MAX_VALUE;
-    for (Approach candidate : candidates.stream().limit(PATHS_PER_SCAN).toList()) {
-      Path path = person.getNavigation().createPath(candidate.node(), 0);
-      if (path != null && path.canReach() && path.getEndNode() != null
-          && path.getEndNode().asBlockPos().equals(candidate.node())) {
-        int bedSteps = bedSteps(person, path);
-        if (bedSteps < fewestBedSteps) {
-          best = candidate;
-          fewestBedSteps = bedSteps;
-        }
-        if (bedSteps == 0) return candidate.node();
-      }
+    // Ask one multi-target search. Planning each candidate separately consumed
+    // the server-wide long-route budget inside one tick and could reject a
+    // reachable stacked barrel merely because another shelf was checked first.
+    Path path = candidates.isEmpty() ? null : person.getNavigation().createPath(candidates.keySet(), 0);
+    if (path != null && path.canReach() && path.getEndNode() != null) {
+      BlockPos end = path.getEndNode().asBlockPos();
+      if (candidates.containsKey(end)) return end;
     }
-    if (best != null) return best.node();
     return closedClosetDoor(person, target, reachSqr, allowedStanding);
-  }
-
-  /** Beds are valid low surfaces, but mobs can catch on their edge while trying to cross them diagonally. */
-  private static int bedSteps(RealPerson person, Path path) {
-    int count = 0;
-    for (int index = 0; index < path.getNodeCount(); index++) {
-      if (person.level().getBlockState(path.getNode(index).asBlockPos().below()).getBlock() instanceof BedBlock) {
-        count++;
-      }
-    }
-    return count;
   }
 
   /** A one-cell closet has no inside stance until the ordinary door goal opens its wooden door. */
@@ -134,12 +120,16 @@ public final class ContainerAccess {
     return replacement == null ? currentApproach : replacement;
   }
 
-  /** A target block must be within reach of the eyes without a wall or floor blocking the hand's route. */
+  /** A visible point on the target must be within reach of the eyes without another block in the way. */
   public static boolean canReach(RealPerson person, Vec3 eye, BlockPos target, double reachSqr) {
-    Vec3 center = Vec3.atCenterOf(target);
-    if (!person.level().hasChunkAt(target) || eye.distanceToSqr(center) > reachSqr) return false;
-    var hit = person.level().clip(new ClipContext(eye, center,
-        ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, person));
-    return hit.getType() == HitResult.Type.MISS || hit.getBlockPos().equals(target);
+    if (!person.level().hasChunkAt(target)) return false;
+    for (double[] offset : TARGET_POINTS) {
+      Vec3 point = new Vec3(target.getX() + offset[0], target.getY() + offset[1], target.getZ() + offset[2]);
+      if (eye.distanceToSqr(point) > reachSqr) continue;
+      var hit = person.level().clip(new ClipContext(eye, point,
+          ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, person));
+      if (hit.getType() == HitResult.Type.MISS || hit.getBlockPos().equals(target)) return true;
+    }
+    return false;
   }
 }

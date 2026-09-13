@@ -25,7 +25,7 @@ class LaborPlannerTest {
 
     JobAssignment selected = LaborPlanner.openProjectProducerPost(
         List.of(new ItemStack(Items.OAK_LOG, 2)), List.of(farmer, lumberjack),
-        building -> Map.of(lumberyard, List.of("LOGS", "PLANKS"), field, List.of("GRAIN"))
+        building -> Map.of(lumberyard, List.of("LOGS", "PLANKS"), field, List.of("FOOD", "CROPS"))
             .getOrDefault(building, List.of()));
 
     assertEquals(lumberjack, selected);
@@ -36,7 +36,7 @@ class LaborPlannerTest {
     JobAssignment farmer = new JobAssignment(null, Occupation.FARMER, UUID.randomUUID(), 0);
 
     assertNull(LaborPlanner.openProjectProducerPost(
-        List.of(new ItemStack(Items.IRON_INGOT, 2)), List.of(farmer), ignored -> List.of("GRAIN")));
+        List.of(new ItemStack(Items.IRON_INGOT, 2)), List.of(farmer), ignored -> List.of("FOOD", "CROPS")));
   }
 
   @Test

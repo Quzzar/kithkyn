@@ -9,7 +9,13 @@
   "grants": [
     "WATER"
   ],
-  "sink": 0,
+  "cost": [
+    {
+      "item": "minecraft:cobblestone",
+      "count": 16
+    }
+  ],
+  "sink": 7,
   "village_identity": {
     "primary_blocks": [],
     "secondary_blocks": [],

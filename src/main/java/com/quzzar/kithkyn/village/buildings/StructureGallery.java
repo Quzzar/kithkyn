@@ -9,7 +9,6 @@ import java.util.Random;
 import com.quzzar.kithkyn.Kithkyn;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Vec3i;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
@@ -17,13 +16,14 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.entity.SignBlockEntity;
 import net.minecraft.world.level.block.entity.SignText;
+import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
 
 /**
- * Places every loaded building definition side by side on labelled plinths, so a
- * whole catalogue can be walked end to end and compared. Built for reviewing
- * candidate structures (docs/structure-sourcing.md) and for checking a content
- * pass, not for anything the simulation uses.
+ * Places every loaded building definition side by side on one grass datum, so a
+ * whole catalogue can be walked end to end and compared at production seating
+ * height. Built for reviewing candidate structures (docs/structure-sourcing.md)
+ * and for checking a content pass, not for anything the simulation uses.
  *
  * <p>Buildings are grouped by category and then by level, so a category's
  * progression reads left to right and unrelated categories never interleave.
@@ -36,8 +36,22 @@ public class StructureGallery {
   /** Plinths per row before the gallery wraps to a new one. */
   private static final int PER_ROW = 6;
 
+  /** Dirt below the visible grass, deep enough for the deepest authored sink. */
+  private static final int GROUND_DEPTH = 7;
+
   /** One entry in the layout: a definition and the footprint it needs. */
-  private record Plot(BuildingInfo info, StructureTemplate template, int sizeX, int sizeZ) {}
+  private record Plot(BuildingInfo info, StructureTemplate template, BoundingBox bounds) {
+    int sizeX() {
+      return bounds.getXSpan();
+    }
+
+    int sizeZ() {
+      return bounds.getZSpan();
+    }
+  }
+
+  /** One plot's north-west surface corner within the complete gallery. */
+  private record Placement(Plot plot, int x, int z) {}
 
   /**
    * Builds the gallery with its north-west corner at {@code origin}.
@@ -50,7 +64,28 @@ public class StructureGallery {
       return -1;
     }
 
+    List<Placement> placements = layout(plots);
+    int width = placements.stream().mapToInt(plot -> plot.x() + plot.plot().sizeX()).max().orElse(0);
+    int depth = placements.stream().mapToInt(plot -> plot.z() + plot.plot().sizeZ()).max().orElse(0);
+    prepareGround(level, origin, width, depth);
+
     int placed = 0;
+    for (Placement placement : placements) {
+      Plot plot = placement.plot();
+      BlockPos footprintCorner = origin.offset(placement.x(), 0, placement.z());
+      BlockPos templateOrigin = footprintCorner.offset(-plot.bounds().minX(), 0, -plot.bounds().minZ());
+      placeLabel(level, footprintCorner.offset(0, 1, -2), plot.info());
+      if (place(level, plot.info(), templateOrigin, random)) {
+        placed++;
+      }
+    }
+
+    return placed;
+  }
+
+  /** Keeps layout independent of world writes so the complete grass extent is known first. */
+  private static List<Placement> layout(List<Plot> plots) {
+    List<Placement> placements = new ArrayList<>();
     int cursorX = 0;
     int cursorZ = 0;
     int rowDepth = 0;
@@ -64,20 +99,12 @@ public class StructureGallery {
         inRow = 0;
       }
 
-      BlockPos corner = origin.offset(cursorX, 0, cursorZ);
-      layPlinth(level, corner, plot.sizeX(), plot.sizeZ());
-      placeLabel(level, corner.offset(0, 1, -2), plot.info());
-
-      if (place(level, plot.info(), corner, plot.sizeX(), plot.sizeZ(), random)) {
-        placed++;
-      }
-
+      placements.add(new Placement(plot, cursorX, cursorZ));
       cursorX += plot.sizeX() + AISLE;
       rowDepth = Math.max(rowDepth, plot.sizeZ());
       inRow++;
     }
-
-    return placed;
+    return placements;
   }
 
   /** Loads every definition's template, dropping any whose structure file is missing. */
@@ -90,22 +117,25 @@ public class StructureGallery {
         Kithkyn.LOGGER.warn("Gallery: no structure file for {}, skipping", info.getName());
         continue;
       }
-      Vec3i size = template.getSize();
-      plots.add(new Plot(info, template, size.getX(), size.getZ()));
+      plots.add(new Plot(info, template, BuildingFootprint.bounds(template, Rotation.NONE)));
     }
 
     plots.sort(Comparator.comparing((Plot p) -> p.info().getCategory())
         .thenComparing(p -> p.info().getVariant())
-        .thenComparingInt(p -> p.info().getLevel()));
+        .thenComparingInt(p -> p.info().getLevel())
+        .thenComparing(p -> p.info().getName()));
     return plots;
   }
 
-  /** A one-block stone slab under the footprint, so builds sit level regardless of terrain. */
-  private static void layPlinth(ServerLevel level, BlockPos corner, int sizeX, int sizeZ) {
-    for (int x = -1; x <= sizeX; x++) {
-      for (int z = -1; z <= sizeZ; z++) {
-        level.setBlock(corner.offset(x, -1, z), Blocks.SMOOTH_STONE.defaultBlockState(), 2);
-        level.setBlock(corner.offset(x, 0, z), Blocks.AIR.defaultBlockState(), 2);
+  /** A continuous grass surface whose top block is the same ground plane production placement scores. */
+  private static void prepareGround(ServerLevel level, BlockPos origin, int width, int depth) {
+    for (int x = -3; x <= width + 2; x++) {
+      for (int z = -3; z <= depth + 2; z++) {
+        BlockPos surface = origin.offset(x, 0, z);
+        level.setBlock(surface, Blocks.GRASS_BLOCK.defaultBlockState(), 2);
+        for (int below = 1; below < GROUND_DEPTH; below++) {
+          level.setBlock(surface.below(below), Blocks.DIRT.defaultBlockState(), 2);
+        }
       }
     }
   }
@@ -115,25 +145,29 @@ public class StructureGallery {
     level.setBlock(pos.below(), Blocks.SMOOTH_STONE.defaultBlockState(), 2);
     level.setBlock(pos, Blocks.OAK_SIGN.defaultBlockState(), 3);
     if (level.getBlockEntity(pos) instanceof SignBlockEntity sign) {
+      String design = info.getName().contains("__")
+          ? info.getName().substring(info.getName().indexOf("__") + 2) : "canonical";
       SignText text = sign.getFrontText()
           .setMessage(0, Component.literal(info.getCategory()))
           .setMessage(1, Component.literal(info.getVariant()))
-          .setMessage(2, Component.literal("level " + info.getLevel()))
-          .setMessage(3, Component.literal(info.getBedLocations().size() + " bed, "
-              + info.getWorkLocations().size() + " job"));
+          .setMessage(2, Component.literal("level " + info.getLevel() + " sink " + info.getSink()))
+          .setMessage(3, Component.literal(design));
       sign.setText(text, true);
       sign.setChanged();
     }
   }
 
   /** Places one definition through the normal instant-build path. */
-  private static boolean place(ServerLevel level, BuildingInfo info, BlockPos corner,
-      int sizeX, int sizeZ, Random random) {
-    Building building = new Building(corner, info.getName(), Rotation.NONE);
-    BlockPos center = corner.offset(sizeX / 2, 0, sizeZ / 2);
-    InstantBuildStructure structure =
-        new InstantBuildStructure(building, random, level).setOriginLocation(center, new HashSet<>());
+  private static boolean place(ServerLevel level, BuildingInfo info, BlockPos templateOrigin, Random random) {
+    Building building = new Building(templateOrigin, info.getName(), Rotation.NONE);
+    InstantBuildStructure structure = new InstantBuildStructure(building, random, level)
+        .seatAtOrigin(seatedOrigin(templateOrigin, info), new HashSet<>());
     return structure.buildInstantly();
+  }
+
+  /** Applies the same authored sink as ordinary founding, growth, and exact dev placement. */
+  static BlockPos seatedOrigin(BlockPos surfaceOrigin, BuildingInfo info) {
+    return surfaceOrigin.below(info.getSink());
   }
 
 }

@@ -22,11 +22,22 @@
     ]
   ],
   "grants": [
+    "STORAGE",
     "REPAIR",
     "SMELTING",
     "TOOLS_IRON",
     "ARMOR_IRON",
     "SHIELDS"
+  ],
+  "cost": [
+    {
+      "item": "minecraft:oak_log",
+      "count": 24
+    },
+    {
+      "item": "minecraft:cobblestone",
+      "count": 40
+    }
   ],
   "sink": 0,
   "village_identity": {

@@ -328,12 +328,11 @@ public class Village {
   private transient List<WallPost> cachedWallPosts = List.of();
 
   /**
-   * Set when the quartermaster cannot fit a haul into the storehouse, read by
-   * the planner as a reason to want more storage. Transient on purpose: it is a
-   * live symptom, not saved state, and the quartermaster re-raises it on the
-   * next overflow, so it need not survive a reload.
+   * Holders currently carrying goods the storehouse rejected. Each holder owns
+   * its report so an idle keeper cannot clear another's. Transient on purpose:
+   * holders re-report their live packs after a reload.
    */
-  private transient boolean storageStrained;
+  private transient Set<UUID> storageStrainReporters = new HashSet<>();
 
   /** Consecutive project checks the current build has spent gathering; abandons past the cap. */
   private transient int gatheringChecks;
@@ -1093,7 +1092,6 @@ public class Village {
     List<ItemStack> combined = new ArrayList<>(pendingVillageItems());
     combined.addAll(items);
     savePendingVillageItems(combined);
-    storageStrained = true;
   }
 
   public List<ItemStack> pendingVillageItems() {
@@ -1882,12 +1880,18 @@ public class Village {
    * (docs/village-loading.md).
    */
   public Set<Long> desiredLoadedChunks(ServerLevel level) {
-    com.quzzar.kithkyn.configuration.VillageLoadingMode mode =
-        com.quzzar.kithkyn.configuration.KithkynConfig.VillageLoading;
-    if (mode == com.quzzar.kithkyn.configuration.VillageLoadingMode.OFF || getTownCenter() == null) {
+    var villages = VillageManager.get(level);
+    boolean auditIsolation = villages.isAuditIsolationActive();
+    if (auditIsolation && !villages.isVillageAudited(id)) {
       return Set.of();
     }
-    if (mode == com.quzzar.kithkyn.configuration.VillageLoadingMode.HYBRID
+    com.quzzar.kithkyn.configuration.VillageLoadingMode mode =
+        com.quzzar.kithkyn.configuration.KithkynConfig.VillageLoading;
+    if ((!auditIsolation && mode == com.quzzar.kithkyn.configuration.VillageLoadingMode.OFF)
+        || getTownCenter() == null) {
+      return Set.of();
+    }
+    if (!auditIsolation && mode == com.quzzar.kithkyn.configuration.VillageLoadingMode.HYBRID
         && level.getGameTime() - lastVisitedTick > VillageChunkLoader.HYBRID_GRACE_TICKS) {
       return Set.of();
     }
@@ -2690,7 +2694,32 @@ public class Village {
 
   private boolean worksAt(UUID resident, UUID building) {
     JobAssignment job = jobAssignments.get(resident);
-    return job != null && job.getBuildingUUID().equals(building);
+    Building workplace = housingWorkplace(job);
+    return workplace != null && workplace.getUUID().equals(building);
+  }
+
+  /** A center post may route to a separate mine or storehouse; its live-in bed belongs there. */
+  @Nullable
+  private Building housingWorkplace(@Nullable JobAssignment job) {
+    if (job == null || job.isWallPost()) return null;
+    Building owner = getBuilding(job.getBuildingUUID());
+    if (owner == null || owner.getInfo() == null || isBeingRebuilt(owner.getUUID())) return null;
+    int stationIndex = 0;
+    for (Map.Entry<Long, Occupation> station : owner.getInfo().getWorkLocations().entrySet()) {
+      if (stationIndex++ != job.getStationIndex()) continue;
+      String category = owner.getInfo().getWorksiteCategory(station.getKey());
+      if (category == null) return owner;
+      return getBuildings().stream()
+          .filter(candidate -> candidate.getInfo() != null && !isBeingRebuilt(candidate.getUUID()))
+          .filter(candidate -> category.equals(candidate.getInfo().getCategory()))
+          .filter(candidate -> candidate.getInfo().getWorksiteLocations().containsValue(job.getOccupation()))
+          .min(java.util.Comparator
+              .comparingDouble((Building candidate) -> BlockPos.of(candidate.getCenterLocation())
+                  .distSqr(BlockPos.of(owner.getCenterLocation())))
+              .thenComparing(candidate -> candidate.getUUID().toString()))
+          .orElse(null);
+    }
+    return null;
   }
 
   @Nullable
@@ -2707,8 +2736,9 @@ public class Village {
     BuildingInfo.RoomReservation room = building == null || building.getInfo() == null
         ? null : building.getInfo().getRoomReservation(bed.getBedIndex());
     if (room != null) return roleRoomAllows(resident, building, room, job);
+    Building workplace = housingWorkplace(job);
     if (HousingPolicy.bedCanHouseJob(bed.getBuildingUUID(), isReservedWorkplaceBed(bed),
-        job == null ? null : job.getBuildingUUID())) return true;
+        workplace == null ? null : workplace.getUUID())) return true;
     UUID spouse = isReservedCoupleBed(bed) ? residentSpouse(resident) : null;
     return spouse != null && worksAt(spouse, bed.getBuildingUUID());
   }
@@ -2961,7 +2991,8 @@ public class Village {
     if (person != null && hasDependentHome(person)) {
       return; // a working teenager remains in the parents' home and consumes no bed
     }
-    preferWorkplaceBed(personId, job.getBuildingUUID());
+    Building workplace = housingWorkplace(job);
+    preferWorkplaceBed(personId, workplace == null ? job.getBuildingUUID() : workplace.getUUID());
     if (!bedAssignments.containsKey(personId)) {
       // An adult worker is never bedless: a workplace with no live-in bed leaves them
       // to general housing, taken here. Claiming only seats an adult the village
@@ -3056,7 +3087,9 @@ public class Village {
       if (person != null && person.getLifeStage().isDependentlyHoused()) {
         continue;
       }
-      preferWorkplaceBed(entry.getKey(), entry.getValue().getBuildingUUID());
+      Building workplace = housingWorkplace(entry.getValue());
+      preferWorkplaceBed(entry.getKey(), workplace == null
+          ? entry.getValue().getBuildingUUID() : workplace.getUUID());
     }
 
     // Residents displaced by the active project reclaim newly available homes before new arrivals.
@@ -3203,7 +3236,9 @@ public class Village {
 
   /** Admission uses the exact post so a smith or sentry cannot claim the royal bedroom. */
   public boolean canHouseForJob(UUID personId, JobAssignment targetJob) {
-    UUID targetBuildingUUID = targetJob.getBuildingUUID();
+    Building routedWorkplace = housingWorkplace(targetJob);
+    UUID targetBuildingUUID = routedWorkplace == null
+        ? targetJob.getBuildingUUID() : routedWorkplace.getUUID();
     BedAssignment current = bedAssignments.get(personId);
     UUID spouse = residentSpouse(personId);
     boolean currentMatchesTarget = false;
@@ -3296,18 +3331,22 @@ public class Village {
     return sleepsInReservedBedAt(personId, buildingUUID) && !isReservedCoupleBed(bedAssignments.get(personId));
   }
 
-  /** The quartermaster raises this when the storehouse overflows; the planner reads it. */
-  public void setStorageStrained(boolean strained) {
-    this.storageStrained = strained;
+  /** Record or clear one holder's rejected pack without overwriting anyone else's report. */
+  public void reportStorageStrain(UUID sourceId, boolean strained) {
+    if (strained) {
+      this.storageStrainReporters.add(sourceId);
+    } else {
+      this.storageStrainReporters.remove(sourceId);
+    }
   }
 
   public boolean isStorageStrained() {
-    return this.storageStrained;
+    return !this.storageStrainReporters.isEmpty();
   }
 
   /** One canonical signal for storage that is rejecting or still holding displaced goods. */
   public boolean isStorageBackedUp() {
-    return storageStrained || hasPendingStorageOverflow();
+    return isStorageStrained() || hasPendingStorageOverflow();
   }
 
   public String getID() {
@@ -3430,6 +3469,7 @@ public class Village {
   }
 
   public void removePerson(UUID personUUID) {
+    reportStorageStrain(personUUID, false);
     this.brain.removePerson(personUUID, people, bedAssignments, jobAssignments, unassignedBeds, unassignedJobs);
   }
 

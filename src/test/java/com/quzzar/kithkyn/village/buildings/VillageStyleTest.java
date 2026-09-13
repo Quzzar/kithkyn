@@ -41,7 +41,8 @@ class VillageStyleTest {
   void bundledBirchLeadsTheEnumAndIsWhatUnknownSavedStylesReadAs() {
     assertEquals(List.of(VillageStyle.BIRCH_FOREST, VillageStyle.DESERT, VillageStyle.BADLANDS,
         VillageStyle.FLOODPLAIN, VillageStyle.JUNGLE, VillageStyle.SWAMP, VillageStyle.MEDITERRANEAN,
-        VillageStyle.TUNDRA, VillageStyle.POLYNESIAN_COAST),
+        VillageStyle.TUNDRA, VillageStyle.POLYNESIAN_COAST, VillageStyle.ROMANIAN,
+        VillageStyle.ALPINE_HIGHLANDS),
         List.of(VillageStyle.values()));
     assertEquals(VillageStyle.BIRCH_FOREST, VillageStyle.DEFAULT);
     assertEquals(VillageStyle.BIRCH_FOREST, VillageStyle.fromId(""));
@@ -56,6 +57,17 @@ class VillageStyleTest {
     Set<TagKey<Biome>> tags = Set.of(VillageStyle.DESERT.biomeTag(), Tags.Biomes.IS_BIRCH_FOREST);
     assertEquals(VillageStyle.DESERT,
         VillageStyle.select(tags::contains, "birch_hills", 0.6F, true, 0.6F, 7L, ALL_STYLES));
+  }
+
+  @Test
+  void darkForestAndNamedWoodlandHighlandsUseRomanianWhenItsCatalogIsLoaded() {
+    for (String path : List.of("dark_forest", "ancient_darkforest", "forested_highlands", "wooded_valley")) {
+      assertEquals(VillageStyle.ROMANIAN,
+          VillageStyle.select(NO_TAGS, path, 0.7F, true, 0.8F, 7L, ALL_STYLES));
+      assertEquals(VillageStyle.BIRCH_FOREST,
+          VillageStyle.select(NO_TAGS, path, 0.7F, true, 0.8F, 7L,
+              style -> style != VillageStyle.ROMANIAN));
+    }
   }
 
   @Test
@@ -112,7 +124,7 @@ class VillageStyleTest {
   void unfinishedConventionalFamiliesBuildBirchRatherThanARemovedCatalog() {
     List<TagKey<Biome>> unfinished = List.of(Tags.Biomes.IS_FOREST,
         Tags.Biomes.IS_DECIDUOUS_TREE, Tags.Biomes.IS_TAIGA,
-        Tags.Biomes.IS_CONIFEROUS_TREE, Tags.Biomes.IS_MOUNTAIN);
+        Tags.Biomes.IS_CONIFEROUS_TREE);
     for (long seed = 0; seed < 20; seed++) {
       for (TagKey<Biome> tag : unfinished) {
         assertFamily(tag, VillageStyle.BIRCH_FOREST, seed);
@@ -128,6 +140,24 @@ class VillageStyleTest {
               style -> style == VillageStyle.BIRCH_FOREST),
           "without the Tundra pack, snowy biomes fall back to the bundled catalog");
     }
+  }
+
+  @Test
+  void mountainFamiliesUseAlpineWhileFrozenLowlandsRemainTundra() {
+    for (String path : List.of("meadow", "grove", "jagged_peaks", "frozen_peaks",
+        "stony_peaks", "windswept_hills", "alpine_valley")) {
+      assertEquals(VillageStyle.ALPINE_HIGHLANDS,
+          VillageStyle.select(NO_TAGS, path, 0.2F, true, 0.7F, 11L, ALL_STYLES));
+    }
+    assertEquals(VillageStyle.ALPINE_HIGHLANDS,
+        VillageStyle.select(Tags.Biomes.IS_MOUNTAIN::equals, "snowy_slopes", 0.0F, true, 0.8F,
+            11L, ALL_STYLES));
+    assertEquals(VillageStyle.TUNDRA,
+        VillageStyle.select(Tags.Biomes.IS_SNOWY::equals, "snowy_plains", 0.0F, true, 0.5F,
+            11L, ALL_STYLES));
+    assertEquals(VillageStyle.BIRCH_FOREST,
+        VillageStyle.select(Tags.Biomes.IS_MOUNTAIN::equals, "meadow", 0.5F, true, 0.7F,
+            11L, style -> style != VillageStyle.ALPINE_HIGHLANDS));
   }
 
   @Test

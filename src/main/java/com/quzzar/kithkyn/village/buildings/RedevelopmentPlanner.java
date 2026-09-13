@@ -385,6 +385,7 @@ public final class RedevelopmentPlanner {
         + ". Net after completion: " + impact.net().describe(true) + ". " + impact.services().describe()
         + " During work: " + impact.displacedResidents() + " residents displaced, " + impact.affectedWorkplaces()
         + " workplaces affected; " + impact.staffedFoodRemaining() + " staffed food buildings remain (yield unknown)."
+        + " Target grants: " + BuildingImpact.describeGrantContract(target) + "."
         + " Recover 50% paid investment: " + MaterialAmount.describe(plan.salvage()) + ". Still pay: "
         + MaterialAmount.describe(plan.netRequired()) + ". Removal/ground work: " + work(plan) + " blocks.";
   }

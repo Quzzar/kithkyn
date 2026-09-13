@@ -1,0 +1,562 @@
+{
+  "schemaVersion": 1,
+  "recorded": "2026-09-12",
+  "status": "verified_playable",
+  "style": "romanian",
+  "description": "Approved Romanian Dark Forest village catalog; no castle is included.",
+  "founding": {
+    "center": "village_center_romanian_1",
+    "center_beds": 0,
+    "starting_buildings": [
+      "mine_romanian_1",
+      "storehouse_romanian_1"
+    ],
+    "starting_beds": 4,
+    "jobs": [
+      "guard captain",
+      "builder",
+      "quartermaster",
+      "miner",
+      "cleric"
+    ]
+  },
+  "identity": {
+    "beds": "primary or secondary village color; couple halves share one color",
+    "banners": "generated village banner",
+    "market_fabrics": "fixed red, cyan, orange and white trade colors"
+  },
+  "wall": {
+    "implementation": "authored stripped-dark-oak body, cobbled-deepslate foundation and rails, birch caps, dark-oak access and torches",
+    "levels": 1
+  },
+  "castle": null,
+  "buildings": [
+    {
+      "exhibit": "R01.1",
+      "structure": "village_center_romanian_1",
+      "category": "village_center",
+      "level": 1,
+      "size": [
+        21,
+        30,
+        34
+      ],
+      "source": "run/romanian-full-profile/selection-capture-20260912-171757/captures/R01.1.nbt",
+      "source_sha256": "7587cc5b428c18e95a24891e89e623f2d3be395f9bc4e9bef2d77f77887fdc6e",
+      "barriers": 0,
+      "beds": 0,
+      "asset": "run/romanian-integration/datapack/data/kithkyn/structure/village_center_romanian_1.nbt",
+      "asset_sha256": "d155bdae7e8003bae29c2f5643d290ca2a7322df165e30e8a92a226e496d8b5a",
+      "definition": "run/romanian-integration/datapack/data/kithkyn/kithkyn/buildings/village_center_romanian_1.json",
+      "definition_sha256": "b2c14fd904166ed70e44f681e24a59a429a9a12db98a1f8ad9ea3c4adac4f244"
+    },
+    {
+      "exhibit": "R02.1",
+      "structure": "house_romanian_1__two_single",
+      "category": "house",
+      "level": 1,
+      "size": [
+        7,
+        11,
+        7
+      ],
+      "source": "run/romanian-full-profile/selection-capture-20260912-171757/captures/R02.1.nbt",
+      "source_sha256": "e7a8ddf877c718623832bb13d1d5a78d00acdfaca934edcf64648f0b1b957bd9",
+      "barriers": 0,
+      "beds": 2,
+      "asset": "run/romanian-integration/datapack/data/kithkyn/structure/house_romanian_1__two_single.nbt",
+      "asset_sha256": "eb817b2fb09367113ba8f5d2ef77b4b8838ef95b2724330ee1549557f48374df",
+      "definition": "run/romanian-integration/datapack/data/kithkyn/kithkyn/buildings/house_romanian_1__two_single.json",
+      "definition_sha256": "0ad25312e2736e80132d55eebb3f658cac08b0375fbfdc6f35cc051b559985af"
+    },
+    {
+      "exhibit": "R02.2",
+      "structure": "house_romanian_1",
+      "category": "house",
+      "level": 1,
+      "size": [
+        7,
+        7,
+        7
+      ],
+      "source": "run/romanian-full-profile/selection-capture-20260912-171757/captures/R02.2.nbt",
+      "source_sha256": "3b10c88a116540d321d8fe2a782a2d35ffae3e98ea85846b4d9c520c5f2aec15",
+      "barriers": 0,
+      "beds": 1,
+      "asset": "run/romanian-integration/datapack/data/kithkyn/structure/house_romanian_1.nbt",
+      "asset_sha256": "276825d9b9f1a22d548eec16fc98d4f9bd8ffeadfd6429e55c9d2dfba36515fe",
+      "definition": "run/romanian-integration/datapack/data/kithkyn/kithkyn/buildings/house_romanian_1.json",
+      "definition_sha256": "61560ab36687253335f31bc68f724b0c455a0e998b7a8c2039a7e047e7271bd0"
+    },
+    {
+      "exhibit": "R02.3",
+      "structure": "house_romanian_1__small_three",
+      "category": "house",
+      "level": 1,
+      "size": [
+        7,
+        7,
+        7
+      ],
+      "source": "run/romanian-full-profile/selection-capture-20260912-171757/captures/R02.3.nbt",
+      "source_sha256": "504f69e502042c8d7975b4f85a13e44901b2e676e97e083961fd8de38e997500",
+      "barriers": 0,
+      "beds": 1,
+      "asset": "run/romanian-integration/datapack/data/kithkyn/structure/house_romanian_1__small_three.nbt",
+      "asset_sha256": "5acd39569b60640f483972a25640a71d51b4f5e681fd73bc9285abd808d5917d",
+      "definition": "run/romanian-integration/datapack/data/kithkyn/kithkyn/buildings/house_romanian_1__small_three.json",
+      "definition_sha256": "446354af9026e1ae481268289e6b4aec3a0acb64d19348356384f5718f3b3c2a"
+    },
+    {
+      "exhibit": "R02.4",
+      "structure": "couple_cottage_romanian_1",
+      "category": "couple_cottage",
+      "level": 1,
+      "size": [
+        7,
+        9,
+        7
+      ],
+      "source": "run/romanian-full-profile/selection-capture-20260912-171757/captures/R02.4.nbt",
+      "source_sha256": "84a7360e8db8439d29339dadc224b62df9ad4201693d770d4929ef3691cebab7",
+      "barriers": 0,
+      "beds": 2,
+      "asset": "run/romanian-integration/datapack/data/kithkyn/structure/couple_cottage_romanian_1.nbt",
+      "asset_sha256": "a346435b659028edc43a995cfe5403ef6ead6ba4a7cbd3a96365518eaff7308c",
+      "definition": "run/romanian-integration/datapack/data/kithkyn/kithkyn/buildings/couple_cottage_romanian_1.json",
+      "definition_sha256": "62c1408bd8450e65d56eede65f5ca1b82b4aee34e21b5ba8395742bc3d3e5c2d"
+    },
+    {
+      "exhibit": "R02.6",
+      "structure": "storehouse_romanian_1__compact",
+      "category": "storehouse",
+      "level": 1,
+      "size": [
+        7,
+        7,
+        7
+      ],
+      "source": "run/romanian-full-profile/selection-capture-20260912-171757/captures/R02.6.nbt",
+      "source_sha256": "b4f992a7eb28c3941c6d172282b33710cc1853a02ecc0e24dc2980494af7ec99",
+      "barriers": 0,
+      "beds": 0,
+      "asset": "run/romanian-integration/datapack/data/kithkyn/structure/storehouse_romanian_1__compact.nbt",
+      "asset_sha256": "5a0303a85cd6663bafca31eea5b1c4b1018f50040d1114829a131136a29ca884",
+      "definition": "run/romanian-integration/datapack/data/kithkyn/kithkyn/buildings/storehouse_romanian_1__compact.json",
+      "definition_sha256": "4d36cd0f62c32eaee3cf020b47ec8d325236a2ed5de1a02f23e48808fa69c39c"
+    },
+    {
+      "exhibit": "R03.1",
+      "structure": "storehouse_romanian_1",
+      "category": "storehouse",
+      "level": 1,
+      "size": [
+        15,
+        10,
+        9
+      ],
+      "source": "run/romanian-full-profile/selection-capture-20260912-171757/captures/R03.1.nbt",
+      "source_sha256": "bf063f4ea32a39c9ed74868c642d76342e0d27f235cbd9e31a13d07f13286ca4",
+      "barriers": 0,
+      "beds": 3,
+      "asset": "run/romanian-integration/datapack/data/kithkyn/structure/storehouse_romanian_1.nbt",
+      "asset_sha256": "bea3dd0e74d95fb1695af41173287e7df145b848d1cb83d8848fac8f6db523a1",
+      "definition": "run/romanian-integration/datapack/data/kithkyn/kithkyn/buildings/storehouse_romanian_1.json",
+      "definition_sha256": "fcc8eaf283418b0d140e099cbbe8706d23079f09f05d92dd704c0cfb72139601"
+    },
+    {
+      "exhibit": "R03.2",
+      "structure": "butchery_romanian_1__herder_home",
+      "category": "butchery",
+      "level": 1,
+      "size": [
+        14,
+        10,
+        8
+      ],
+      "source": "run/romanian-full-profile/selection-capture-20260912-171757/captures/R03.2.nbt",
+      "source_sha256": "3c5dfe434786f446d06eda6a6e0216bc4797b97086eccafcfd73c8f950dcbb20",
+      "barriers": 0,
+      "beds": 2,
+      "asset": "run/romanian-integration/datapack/data/kithkyn/structure/butchery_romanian_1__herder_home.nbt",
+      "asset_sha256": "6a7ec708d270911498766370ff2f6c45783845e8bba6f3759d5a96698bf967bd",
+      "definition": "run/romanian-integration/datapack/data/kithkyn/kithkyn/buildings/butchery_romanian_1__herder_home.json",
+      "definition_sha256": "faada41cd7ecb9ac3d0e1255755ae432c362d68d7435fb2bee42d9c46c209463"
+    },
+    {
+      "exhibit": "R03.3",
+      "structure": "house_romanian_1__four_single",
+      "category": "house",
+      "level": 1,
+      "size": [
+        13,
+        11,
+        10
+      ],
+      "source": "run/romanian-full-profile/selection-capture-20260912-171757/captures/R03.3.nbt",
+      "source_sha256": "1a90e62ff5dedc05668d8a3d94954b40d6f88b5fd8749d6921b76519ec857253",
+      "barriers": 0,
+      "beds": 4,
+      "asset": "run/romanian-integration/datapack/data/kithkyn/structure/house_romanian_1__four_single.nbt",
+      "asset_sha256": "aa57036e5cddad3a903eee2d09ac6ff70391993cd357df70a033e4b775ae0250",
+      "definition": "run/romanian-integration/datapack/data/kithkyn/kithkyn/buildings/house_romanian_1__four_single.json",
+      "definition_sha256": "6e239dbeaf21e72ccd6371cbbef9e8b9f2eccded34abc6552c3f45a1463b81cd"
+    },
+    {
+      "exhibit": "R04.1",
+      "structure": "blacksmith_romanian_1",
+      "category": "blacksmith",
+      "level": 1,
+      "size": [
+        15,
+        9,
+        7
+      ],
+      "source": "run/romanian-full-profile/selection-capture-20260912-171757/captures/R04.1.nbt",
+      "source_sha256": "6274bc0ba89a1d21131f5ad722445d1ad1cdc11c002bb0d26f38f1ab7a28b9e1",
+      "barriers": 0,
+      "beds": 0,
+      "asset": "run/romanian-integration/datapack/data/kithkyn/structure/blacksmith_romanian_1.nbt",
+      "asset_sha256": "f5a6bd4f1b1afa1ac6310ca1db3f15e500e033346f6640f4bc2fe909284ffe51",
+      "definition": "run/romanian-integration/datapack/data/kithkyn/kithkyn/buildings/blacksmith_romanian_1.json",
+      "definition_sha256": "9ffa43c9997f089199ab16bc21aefa6d5c75f7cf6be015c180cc1de386fcc28c"
+    },
+    {
+      "exhibit": "R04.2",
+      "structure": "butchery_romanian_1",
+      "category": "butchery",
+      "level": 1,
+      "size": [
+        17,
+        9,
+        9
+      ],
+      "source": "run/romanian-full-profile/selection-capture-20260912-171757/captures/R04.2.nbt",
+      "source_sha256": "d3b2160688de7468b36da91332f8a57c2ee48a84ddcbc2a956b2508312e27f82",
+      "barriers": 0,
+      "beds": 1,
+      "asset": "run/romanian-integration/datapack/data/kithkyn/structure/butchery_romanian_1.nbt",
+      "asset_sha256": "531df98fe99095d5beeebfa2cf4814c6ef087acf0b3437383e8e2b5551f6a2b8",
+      "definition": "run/romanian-integration/datapack/data/kithkyn/kithkyn/buildings/butchery_romanian_1.json",
+      "definition_sha256": "3c198a8ec3f25b5c02dfaac780da1639bdbfbaa5ffef889e6d7bc598799c2dcf"
+    },
+    {
+      "exhibit": "R04.3",
+      "structure": "bakery_romanian_1",
+      "category": "bakery",
+      "level": 1,
+      "size": [
+        17,
+        13,
+        9
+      ],
+      "source": "run/romanian-full-profile/selection-capture-20260912-171757/captures/R04.3.nbt",
+      "source_sha256": "4144f9cbfaf50af55951637120bdf8868ce31c142092e5ce2af3ebefa4002100",
+      "barriers": 0,
+      "beds": 0,
+      "asset": "run/romanian-integration/datapack/data/kithkyn/structure/bakery_romanian_1.nbt",
+      "asset_sha256": "f4038a6962ce12ea6106b0ef4a3a093428466f11e6def7441b5d124248481f76",
+      "definition": "run/romanian-integration/datapack/data/kithkyn/kithkyn/buildings/bakery_romanian_1.json",
+      "definition_sha256": "8278517e101ec91fd57fc077653f22f97c4ec20bb43ee0baec855089ef7d3db7"
+    },
+    {
+      "exhibit": "R04.4",
+      "structure": "fishery_romanian_1",
+      "category": "fishery",
+      "level": 1,
+      "size": [
+        7,
+        6,
+        9
+      ],
+      "source": "run/romanian-full-profile/selection-capture-20260912-171757/captures/R04.4.nbt",
+      "source_sha256": "fe72e65b75f8c9126737f90f7082f22be021b846dcf24b8a5f08cc0b3ef4fcf2",
+      "barriers": 0,
+      "beds": 0,
+      "asset": "run/romanian-integration/datapack/data/kithkyn/structure/fishery_romanian_1.nbt",
+      "asset_sha256": "e3a1135fa929180766516f8996793b4542bc5de23c4767449c5d5db2769f553b",
+      "definition": "run/romanian-integration/datapack/data/kithkyn/kithkyn/buildings/fishery_romanian_1.json",
+      "definition_sha256": "c765eeae7b9b486ae96ce729ead4154bbc72ced828e91a8e993d1ed877bde145"
+    },
+    {
+      "exhibit": "R05.1",
+      "structure": "hunting_lodge_romanian_1",
+      "category": "hunting_lodge",
+      "level": 1,
+      "size": [
+        7,
+        5,
+        7
+      ],
+      "source": "run/romanian-full-profile/selection-capture-20260912-171757/captures/R05.1.nbt",
+      "source_sha256": "6a0a4c4f679a77c268339fc838cae6da545ce190c6352dcc8ff76844a2f98f5b",
+      "barriers": 0,
+      "beds": 0,
+      "asset": "run/romanian-integration/datapack/data/kithkyn/structure/hunting_lodge_romanian_1.nbt",
+      "asset_sha256": "69bd07929e5c60f1933d867a00117072423df0127902298e61bff1bece84593b",
+      "definition": "run/romanian-integration/datapack/data/kithkyn/kithkyn/buildings/hunting_lodge_romanian_1.json",
+      "definition_sha256": "405afeed21e7478e5243a1b80d3b906526da5f53de96afa953d9a9a6fe127a33"
+    },
+    {
+      "exhibit": "R05.2",
+      "structure": "stoneworks_romanian_1",
+      "category": "stoneworks",
+      "level": 1,
+      "size": [
+        7,
+        5,
+        7
+      ],
+      "source": "run/romanian-full-profile/selection-capture-20260912-171757/captures/R05.2.nbt",
+      "source_sha256": "195c1ba781543d013e331692869b3c74801034563302da4eda5e2a13da2f3255",
+      "barriers": 0,
+      "beds": 0,
+      "asset": "run/romanian-integration/datapack/data/kithkyn/structure/stoneworks_romanian_1.nbt",
+      "asset_sha256": "e2c1147f2c14185266396703495bc8076f0917efc6b4ed2b41d8fe0b85bae1b7",
+      "definition": "run/romanian-integration/datapack/data/kithkyn/kithkyn/buildings/stoneworks_romanian_1.json",
+      "definition_sha256": "c907e0e4a305e85996e82ae603f8b54f1be968ea2f0284f16b965b80af9d293f"
+    },
+    {
+      "exhibit": "R05.3",
+      "structure": "mine_romanian_1",
+      "category": "mine",
+      "level": 1,
+      "size": [
+        14,
+        7,
+        7
+      ],
+      "source": "run/romanian-full-profile/selection-capture-20260912-171757/captures/R05.3.nbt",
+      "source_sha256": "2c626d67418f55b1d42964a8664605075d56fb96ef1f92bd7307411ecb537a5b",
+      "barriers": 0,
+      "beds": 1,
+      "asset": "run/romanian-integration/datapack/data/kithkyn/structure/mine_romanian_1.nbt",
+      "asset_sha256": "24bd4b74c16e99e4bfc8b3d1a2219eb52ce693a26757f4adc7febc44ff64e64b",
+      "definition": "run/romanian-integration/datapack/data/kithkyn/kithkyn/buildings/mine_romanian_1.json",
+      "definition_sha256": "320a2b8630c9e21d43dc40ae14c89133e63244434dd1cd2310338ad12c7b9ae9"
+    },
+    {
+      "exhibit": "R05.4",
+      "structure": "farm_romanian_1",
+      "category": "farm",
+      "level": 1,
+      "size": [
+        9,
+        4,
+        9
+      ],
+      "source": "run/romanian-full-profile/selection-capture-20260912-171757/captures/R05.4.nbt",
+      "source_sha256": "88bea638664d9a2e9a48b61c6963d25f51b417a895291bd0de570817c0b79489",
+      "barriers": 0,
+      "beds": 0,
+      "asset": "run/romanian-integration/datapack/data/kithkyn/structure/farm_romanian_1.nbt",
+      "asset_sha256": "1582027bea1d989d32e40765beb555a1eaeb54fbc9120a22e298978d7a216e66",
+      "definition": "run/romanian-integration/datapack/data/kithkyn/kithkyn/buildings/farm_romanian_1.json",
+      "definition_sha256": "6a320dd88f2af63998d280528408de0d1b62b54c5638f50c4628c415aa5772ea"
+    },
+    {
+      "exhibit": "R06.1",
+      "structure": "tavern_romanian_1",
+      "category": "tavern",
+      "level": 1,
+      "size": [
+        17,
+        13,
+        19
+      ],
+      "source": "run/romanian-full-profile/selection-capture-20260912-171757/captures/R06.1.nbt",
+      "source_sha256": "be1bda54a968677a879df82d18d621a71cfafbfdbaf0622e0f0f106b58aa94b9",
+      "barriers": 0,
+      "beds": 3,
+      "asset": "run/romanian-integration/datapack/data/kithkyn/structure/tavern_romanian_1.nbt",
+      "asset_sha256": "d5ef08a53424d7f6f56e68bd44b03df59a23188b5284b9e580f504821f60beef",
+      "definition": "run/romanian-integration/datapack/data/kithkyn/kithkyn/buildings/tavern_romanian_1.json",
+      "definition_sha256": "6dae57ea3497a63d952444a8591c1b6ece7db905a942aa78d2f77b87b1f9fb9a"
+    },
+    {
+      "exhibit": "R06.2",
+      "structure": "watchtower_romanian_1",
+      "category": "watchtower",
+      "level": 1,
+      "size": [
+        9,
+        18,
+        9
+      ],
+      "source": "run/romanian-full-profile/selection-capture-20260912-171757/captures/R06.2.nbt",
+      "source_sha256": "59ee66edd6282c164ccf84a302346488cc82dda2ccfd73d128a59ef0cb05d473",
+      "barriers": 0,
+      "beds": 1,
+      "asset": "run/romanian-integration/datapack/data/kithkyn/structure/watchtower_romanian_1.nbt",
+      "asset_sha256": "6e4ff89c1e9b9ec0ee9092f8cc62252914176f0aeddcb397d011712e2cf21dc2",
+      "definition": "run/romanian-integration/datapack/data/kithkyn/kithkyn/buildings/watchtower_romanian_1.json",
+      "definition_sha256": "3609223605dfa51f607d79aaf8a432653e116e234841138fc031ff21d46fa919"
+    },
+    {
+      "exhibit": "R06.3",
+      "structure": "well_romanian_1",
+      "category": "well",
+      "level": 1,
+      "size": [
+        3,
+        12,
+        3
+      ],
+      "source": "run/romanian-full-profile/selection-capture-20260912-171757/captures/R06.3.nbt",
+      "source_sha256": "8337a893ae08530ad15fab1d47f8ce14fb5a26bdabf8a66b782a86b9464caede",
+      "barriers": 0,
+      "beds": 0,
+      "asset": "run/romanian-integration/datapack/data/kithkyn/structure/well_romanian_1.nbt",
+      "asset_sha256": "1285b8335c5dfddfaa91df011f72bbde0da2c9e4aafc38844bc69644f0a73bfc",
+      "definition": "run/romanian-integration/datapack/data/kithkyn/kithkyn/buildings/well_romanian_1.json",
+      "definition_sha256": "343527bedf43a39fe1dcff09904abb155f4e7689e8551ed0e69915d1cd1d16db"
+    },
+    {
+      "exhibit": "LUMBERJACK",
+      "structure": "lumberjack_romanian_1",
+      "category": "lumberjack",
+      "level": 1,
+      "size": [
+        14,
+        7,
+        7
+      ],
+      "source": "run/romanian-full-profile/lumberjack-capture-20260912-180158/captures/romanian_lumberjack.nbt",
+      "source_sha256": "1a36eda2e733fd3a772b361695b74c305b48cc90f022e93202c6f7270b038230",
+      "barriers": 0,
+      "beds": 1,
+      "asset": "run/romanian-integration/datapack/data/kithkyn/structure/lumberjack_romanian_1.nbt",
+      "asset_sha256": "5050097244d568e246f0e641de9335ff235cfefcc0be18d9147c9dfc670b117b",
+      "definition": "run/romanian-integration/datapack/data/kithkyn/kithkyn/buildings/lumberjack_romanian_1.json",
+      "definition_sha256": "0cb1b00479d2e35278fdfd2f0c7a442b9b1d309ecf9897f6e5ca07973c76bc56"
+    },
+    {
+      "exhibit": "R08.M1",
+      "structure": "market_romanian_1",
+      "category": "market",
+      "level": 1,
+      "size": [
+        16,
+        6,
+        17
+      ],
+      "source": "src/main/resources/data/kithkyn/structure/market_romanian_1.nbt",
+      "source_sha256": "428b6ec6c295afbe0ad66de1e64d8a53600a0788279b0f7b12948aba5df6cac9",
+      "barriers": 0,
+      "beds": 0,
+      "asset": "run/romanian-integration/datapack/data/kithkyn/structure/market_romanian_1.nbt",
+      "asset_sha256": "683d573de4f82567e82d02c4e6f46759c536ed491f569792888079ff6139cd26",
+      "definition": "run/romanian-integration/datapack/data/kithkyn/kithkyn/buildings/market_romanian_1.json",
+      "definition_sha256": "cbe7d030b4730fbf0d7cfd737872fb38938be073fd631086412d931fb5f4d2f3"
+    },
+    {
+      "exhibit": "R08.M2",
+      "structure": "market_romanian_2",
+      "category": "market",
+      "level": 2,
+      "size": [
+        23,
+        6,
+        17
+      ],
+      "source": "src/main/resources/data/kithkyn/structure/market_romanian_2.nbt",
+      "source_sha256": "cd1f98e39fee4f86ff7a74a5789dc1bb03724e97ec4c4e4d51c1cc724e461d0e",
+      "barriers": 0,
+      "beds": 0,
+      "asset": "run/romanian-integration/datapack/data/kithkyn/structure/market_romanian_2.nbt",
+      "asset_sha256": "55b8c7ee3c4b7b5f6e702c7f0ca83e1df53cf52d3d427a2241b56af6998a972b",
+      "definition": "run/romanian-integration/datapack/data/kithkyn/kithkyn/buildings/market_romanian_2.json",
+      "definition_sha256": "97f62dd01a2aa0f8a475891aa9c4037079923d6f0f64dda843191fd19138701b"
+    },
+    {
+      "exhibit": "R08.M3",
+      "structure": "market_romanian_3",
+      "category": "market",
+      "level": 3,
+      "size": [
+        23,
+        6,
+        25
+      ],
+      "source": "src/main/resources/data/kithkyn/structure/market_romanian_3.nbt",
+      "source_sha256": "9885e05b1378b5afb91fd8eccaade5ebe4ebac2dc4c08055552fdefac5e7a2ac",
+      "barriers": 0,
+      "beds": 0,
+      "asset": "run/romanian-integration/datapack/data/kithkyn/structure/market_romanian_3.nbt",
+      "asset_sha256": "5d87f88080ccd6d22266e3187d9ffec4e744051dff025b536ba2ddf17afdc3ce",
+      "definition": "run/romanian-integration/datapack/data/kithkyn/kithkyn/buildings/market_romanian_3.json",
+      "definition_sha256": "ecce7d1fa8dd9d188be7543eab3b3711f401fda71e1a43e9c57b996b4bec116b"
+    }
+  ],
+  "verification": {
+    "gradle_build": "passed",
+    "template_audit": {
+      "result": "passed",
+      "templates": 24,
+      "barriers": 0,
+      "out_of_bounds": 0,
+      "malformed_market_entrances": 0
+    },
+    "placement": {
+      "result": "passed",
+      "placements": 192,
+      "construction_paths": [
+        "instant",
+        "incremental/reload"
+      ],
+      "rotations": 4,
+      "log": "run/romanian-integration/placement/latest-verification.log"
+    },
+    "restart": {
+      "result": "passed",
+      "saved_buildings": 192,
+      "original_entities": 104,
+      "log": "run/romanian-integration/placement/latest-verification.log"
+    },
+    "founding": {
+      "result": "passed",
+      "strict_templates": 24,
+      "housing_alternatives": 4,
+      "upgrade_fits": 8,
+      "rotations": 4,
+      "founding_buildings": 3,
+      "beds": 4,
+      "jobs": 5,
+      "log": "run/romanian-integration/founding/latest-verification.log"
+    },
+    "center_access": {
+      "result": "passed",
+      "rotated_structures": 4,
+      "routes": 20,
+      "station_walks": 20,
+      "shared_deposits": 4,
+      "failed": 0,
+      "log": "run/romanian-integration/center/latest-verification.log"
+    },
+    "catalog_access": {
+      "result": "passed",
+      "rotated_structures": 92,
+      "routes": 156,
+      "sleeps": 88,
+      "personal_deposits": 76,
+      "shared_deposits": 108,
+      "station_walks": 68,
+      "mine_walks": 8,
+      "failed": 0,
+      "log": "run/romanian-integration/access/latest-verification.log",
+      "note": "The latest access log was subsequently replaced by the narrower four-rotation lumberjack verification; these catalog totals are the recorded result of the preceding full run."
+    },
+    "lumberjack_access": {
+      "result": "passed",
+      "rotated_structures": 4,
+      "routes": 8,
+      "sleeps": 4,
+      "personal_deposits": 4,
+      "shared_deposits": 4,
+      "station_walks": 4,
+      "failed": 0,
+      "log": "run/romanian-integration/access/latest-verification.log"
+    },
+    "visual_review": "passed through the user's in-game review and final authored lumberjack edit"
+  }
+}

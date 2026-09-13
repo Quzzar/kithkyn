@@ -22,7 +22,18 @@
     ]
   ],
   "grants": [
+    "STORAGE",
     "CUT_STONE"
+  ],
+  "cost": [
+    {
+      "item": "minecraft:oak_log",
+      "count": 12
+    },
+    {
+      "item": "minecraft:cobblestone",
+      "count": 24
+    }
   ],
   "sink": 0,
   "village_identity": {

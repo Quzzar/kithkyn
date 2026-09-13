@@ -42,8 +42,23 @@
     ]
   ],
   "grants": [
+    "HOUSING",
+    "STORAGE",
+    "FOOD",
     "MEAT",
-    "LEATHER"
+    "LIVESTOCK",
+    "LEATHER",
+    "WOOL"
+  ],
+  "cost": [
+    {
+      "item": "minecraft:oak_log",
+      "count": 32
+    },
+    {
+      "item": "minecraft:cobblestone",
+      "count": 32
+    }
   ],
   "sink": 0,
   "village_identity": {

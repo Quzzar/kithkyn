@@ -34,7 +34,20 @@
     ]
   ],
   "grants": [
-    "WANDERERS"
+    "HOUSING",
+    "HOSPITALITY",
+    "WANDERERS",
+    "STORAGE"
+  ],
+  "cost": [
+    {
+      "item": "minecraft:oak_log",
+      "count": 28
+    },
+    {
+      "item": "minecraft:cobblestone",
+      "count": 24
+    }
   ],
   "sink": 0,
   "entrance_facing": "west",

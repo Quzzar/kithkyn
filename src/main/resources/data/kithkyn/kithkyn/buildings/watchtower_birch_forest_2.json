@@ -39,10 +39,51 @@
       9
     ]
   ],
+  "bed_containers": [
+    {
+      "bed": [
+        7,
+        1,
+        6
+      ],
+      "containers": [
+        [
+          10,
+          1,
+          9
+        ]
+      ]
+    },
+    {
+      "bed": [
+        7,
+        5,
+        8
+      ],
+      "containers": [
+        [
+          10,
+          1,
+          9
+        ]
+      ]
+    }
+  ],
   "containers": [],
   "grants": [
+    "HOUSING",
     "PROTECTION",
     "RANGED_GUARD_POSTS"
+  ],
+  "cost": [
+    {
+      "item": "minecraft:oak_log",
+      "count": 24
+    },
+    {
+      "item": "minecraft:cobblestone",
+      "count": 36
+    }
   ],
   "sink": -1,
   "village_identity": {

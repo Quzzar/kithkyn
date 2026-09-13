@@ -1,16 +1,17 @@
 # Village loading: keeping a village awake when no player is near
 
-**Decided, and NOT implemented.** Nothing in this document exists in code yet. Today a
-village does no physical work unless a player is standing in it; this design lets a village
-keep building, mining, farming, and defending itself while unattended. Treat every
-present-tense sentence below as intent.
+**Implemented.** A village can keep building, mining, farming, and defending itself while
+unattended. The developer audit allowlist described in
+[village-auditing.md](village-auditing.md) can temporarily override the normal world mode for a
+selected set of villages.
 
 ## The two-speed village today
 
 A village runs at two speeds, and only one of them survives the player walking away.
 
 Every second, [`VillageManagerSaveData.tick`](../src/main/java/com/quzzar/kithkyn/savedata/VillageManagerSaveData.java)
-calls `Village.update` for every village in the world, loaded or not. That call does the
+ordinarily calls `Village.update` for every village in the world, loaded or not. The developer
+audit allowlist narrows that pass to its monitored villages while active. The update call does the
 village's **bookkeeping**: attractiveness, relationship drift, reflection, the marriage and
 labor verdicts, tiering, the population math. All of it is cheap in-memory work that never
 touches a block, and it runs whether or not the village's chunks are resident. This is the
@@ -99,6 +100,15 @@ Hybrid's window already does gradually and without surprising a player mid-build
 All contradicts the one thing All promises. Hybrid self-limits, All is the opt-in cost, Off is
 the escape hatch.
 
+## Developer audit override
+
+When developer commands are enabled and the saved audit allowlist is nonempty, monitored villages
+stay loaded regardless of the configured mode. Other villages release their Kithkyn tickets and
+their once-per-second village simulation is suspended. This is narrower than `All`: it exists for
+long-running variant audits where keeping every discovered village active would waste server and
+LLM capacity. The override is inert when developer commands are disabled. See
+[village-auditing.md](village-auditing.md) for commands and failure reporting.
+
 ## What it changes, named honestly
 
 **Villages develop while you are away.** This is the point. You return to buildings that went
@@ -149,3 +159,7 @@ grow unattended and is accepted.
 - **What stays.** Off mode keeps the current transient page-in loads for at-range actions
   unchanged; the bubble replaces them only while a village is loaded. Dormant villages keep
   running the same bookkeeping they run today.
+- **Audit selection.** `VillageManagerSaveData` persists the monitored village IDs. While the
+  developer-only selection is active, its tick loop updates only those villages and pauses natural
+  founding. `Village.desiredLoadedChunks` treats monitored villages as loaded independently of the
+  normal setting.

@@ -32,6 +32,8 @@ public interface WallSegmentCatalog {
       case SWAMP -> BuiltInWallSegmentCatalog.SWAMP;
       case MEDITERRANEAN -> BuiltInWallSegmentCatalog.MEDITERRANEAN;
       case POLYNESIAN_COAST -> BuiltInWallSegmentCatalog.POLYNESIAN_COAST;
+      case ROMANIAN -> BuiltInWallSegmentCatalog.ROMANIAN;
+      case ALPINE_HIGHLANDS -> BuiltInWallSegmentCatalog.ALPINE_HIGHLANDS;
     };
   }
 }

@@ -40,13 +40,13 @@ class RedevelopmentDemandTest {
 
   @Test
   void additionalFoodPostsNeedLowFoodAndNoExistingVacancy() {
-    var change = new RedevelopmentDemand.Change(0, 0, Map.of(Occupation.FARMER, 1), Set.of("GRAIN"));
+    var change = new RedevelopmentDemand.Change(0, 0, Map.of(Occupation.FARMER, 1), Set.of("FOOD", "CROPS"));
     assertTrue(RedevelopmentDemand.reason(new RedevelopmentDemand.Needs(0, false, false, 2,
-        Set.of(), Set.of("GRAIN")), change).isEmpty());
+        Set.of(), Set.of("FOOD", "CROPS")), change).isEmpty());
     assertTrue(RedevelopmentDemand.reason(new RedevelopmentDemand.Needs(0, false, true, 2,
-        Set.of(Occupation.FARMER), Set.of("GRAIN")), change).isEmpty());
+        Set.of(Occupation.FARMER), Set.of("FOOD", "CROPS")), change).isEmpty());
     assertFalse(RedevelopmentDemand.reason(new RedevelopmentDemand.Needs(0, false, true, 2,
-        Set.of(), Set.of("GRAIN")), change).isEmpty());
+        Set.of(), Set.of("FOOD", "CROPS")), change).isEmpty());
   }
 
   @Test
@@ -59,10 +59,10 @@ class RedevelopmentDemandTest {
   }
   @Test
   void moreCropAreaCanMeetLowFoodEvenWithoutAddingFarmerPosts() {
-    var change = new RedevelopmentDemand.Change(0, 0, Map.of(Occupation.FARMER, 0), Set.of("GRAIN"), 40);
+    var change = new RedevelopmentDemand.Change(0, 0, Map.of(Occupation.FARMER, 0), Set.of("FOOD", "CROPS"), 40);
     assertFalse(RedevelopmentDemand.reason(new RedevelopmentDemand.Needs(0, false, true, 0,
-        Set.of(), Set.of("GRAIN")), change).isEmpty());
+        Set.of(), Set.of("FOOD", "CROPS")), change).isEmpty());
     assertTrue(RedevelopmentDemand.reason(new RedevelopmentDemand.Needs(0, false, false, 0,
-        Set.of(), Set.of("GRAIN")), change).isEmpty());
+        Set.of(), Set.of("FOOD", "CROPS")), change).isEmpty());
   }
 }

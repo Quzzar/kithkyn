@@ -41,6 +41,18 @@ class PhysicalWorksiteTest {
   }
 
   @Test
+  void aRoutedWorksiteMayReserveItsOwnLiveInBedWithoutCreatingAnotherVacancy() {
+    BuildingInfo mine = definition("""
+        {"structure":"mine_romanian_1","beds":[[2,1,2]],"worker_beds":[[2,1,2]],
+         "worksites":[{"pos":[7,1,3],"occupation":"MINER"}]}
+        """);
+
+    assertEquals(null, mine.validate());
+    assertTrue(mine.isWorkerBed(0));
+    assertTrue(mine.getWorkLocations().isEmpty(), "The routed worksite must not add a second miner vacancy");
+  }
+
+  @Test
   void aPhysicalMineWorksiteOwnsTheSameShaftFrameAsAnOrdinaryMinePost() {
     BuildingInfo mine = definition("""
         {"structure":"mine_jungle_1","worksites":[

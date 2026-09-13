@@ -95,6 +95,12 @@ in it, and update it in the same change that moves what it describes.
   catalog: the king's hall centre that seats the ruler and keeps the village jail, three founding
   homes, stilted spruce-and-oak huts, the pond fishery, the open-air shrine, and its Sparse Jungle
   and warm-beach founding.
+- [romanian-village.md](romanian-village.md): the approved playable Romanian Dark Forest catalog:
+  its combined center and church, founding mine and storehouse housing, enclosed livestock,
+  steep birch roofs, timber-and-deepslate wall and deliberate absence of a castle.
+- [alpine-highlands-village.md](alpine-highlands-village.md): the approved Iberian-inspired
+  Alpine catalog: its bedless berry-growing center, naturally placed founding housing and work,
+  dense shared homes, brick-and-spruce services, selected IF01.4 fishery and brushed brick wall.
 - [appearance.md](appearance.md): why villagers use the player model and not the vanilla
   villager model, the wide/slim model split by gender, and the client-side runtime skin
   compositor that bakes a villager's look from inherited skin, hair, and eye structures,
@@ -143,11 +149,21 @@ in it, and update it in the same change that moves what it describes.
   village keeps resident (building chunks, a 2-chunk perimeter, the pending build site, a bubble
   per member), the three modes (off, all, hybrid default with a six-day grace window), and why
   there is no loaded-village cap.
+- [village-auditing.md](village-auditing.md): the developer workflow for persistently monitoring
+  selected village variants, suspending the others, batch time-lapsing real ticks, inspecting
+  planner and resident state, and surfacing prolonged blockers without repairing them.
 
 ## Research
 
 Findings gathered against primary sources, kept as read at the time. The topic files above
 carry the decisions; these carry the evidence behind them.
+
+- [research/building-cost-rebalance-2026-09-12.md](research/building-cost-rebalance-2026-09-12.md):
+  locked first-pass construction prices and grants for all 224 current definitions, with the
+  functional-value vocabulary, future authoring contract, and audit signals used for recalibration.
+- [research/building-seating-audit-2026-09-12.md](research/building-seating-audit-2026-09-12.md):
+  the live all-variant grass gallery, its production-height placement contract, verification
+  receipt, and the mechanically prioritized list for the final visual height pass.
 
 - [research/automatone.md](research/automatone.md): Automatone, the server-side Baritone fork that
   gives non-player entities terrain-modifying pathfinding. Why it is read-not-ship (Fabric-locked,
