@@ -243,6 +243,9 @@ public final class WallRaiser {
       }
     } else if (block.piece() == WallBlockPlan.Piece.POST
         || block.piece() == WallBlockPlan.Piece.GATE_FRAME_POST
+        // A footing is seated on the saved ground; a hollow found at build time
+        // fills with the same coral, as a post leg fills it with its log.
+        || block.piece() == WallBlockPlan.Piece.CORAL_FOOTING
         || block.role() == WallCellRole.FOUNDATION) {
       extendFoundationToGround(level, pos, state);
     } else if (isStructuralFoundationPiece(block.piece())) {
@@ -501,7 +504,8 @@ public final class WallRaiser {
         || piece == WallBlockPlan.Piece.COBBLE_POST
         || piece == WallBlockPlan.Piece.MOSSY_POST
         || piece == WallBlockPlan.Piece.BEAM_NORTH_SOUTH
-        || piece == WallBlockPlan.Piece.BEAM_EAST_WEST;
+        || piece == WallBlockPlan.Piece.BEAM_EAST_WEST
+        || piece == WallBlockPlan.Piece.CORAL_FOOTING;
   }
 
   private static void markVillagePlaced(Level level, BlockPos pos) {

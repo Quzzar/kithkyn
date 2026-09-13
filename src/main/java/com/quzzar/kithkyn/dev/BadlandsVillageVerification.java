@@ -106,11 +106,21 @@ public final class BadlandsVillageVerification {
         new String[][] {{id("market", 1), id("market", 2)}, {id("market", 2), id("market", 3)},
             {id("farm", 1), id("farm", 2)}},
         3, 4, 4, 1, 4, 4, 0, new BlockPos(8, 1, 7), new BlockPos(8, 2, 8), 0, Biomes.SNOWY_PLAINS);
+    // The Polynesian Coast centre is the king's hall: quartermaster, builder, captain and
+    // miner, plus the king on the throne and a jailer beside the cell, so two guards and six
+    // founding jobs. The hall has no beds; its three founding homes hold six single beds and
+    // one couple room.
+    case POLYNESIAN_COAST -> new Catalog("[polynesian-verify]", 24, 5, 10, new int[] {5, 0, 0},
+        Map.of("house_polynesian_coast_1__couple_room", 1), List.of(), false,
+        new String[][] {{id("market", 1), id("market", 2)}, {id("market", 2), id("market", 3)},
+            {id("farm", 1), id("farm", 2)}},
+        6, 8, 6, 2, 6, 0, 0, new BlockPos(6, 1, 17), new BlockPos(7, 2, 18), 1, Biomes.SPARSE_JUNGLE);
     case BIRCH_FOREST -> null;
   };
   /** Centre jobs beyond the founding four that a catalog's centre also opens at founding. */
   private static final Map<Occupation, Long> EXTRA_CENTER_JOBS = STYLE == VillageStyle.MEDITERRANEAN
-      ? Map.of(Occupation.CLERIC, 1L) : Map.of();
+      ? Map.of(Occupation.CLERIC, 1L)
+      : STYLE == VillageStyle.POLYNESIAN_COAST ? Map.of(Occupation.LEADER, 1L) : Map.of();
   private static final String PREFIX = CATALOG == null ? "[reviewed-village-verify]" : CATALOG.prefix();
   private static int ticks;
   private static int upgrades;
@@ -183,10 +193,12 @@ public final class BadlandsVillageVerification {
         == VillageStyle.FLOODPLAIN, "Mangrove swamp must select Floodplain");
     check(VillageStyle.fromBiome(registry.getHolderOrThrow(Biomes.SWAMP), 0L, BlockPos.ZERO, everything)
         == VillageStyle.SWAMP, "Plain swamp must select the ordinary Swamp catalog");
-    for (var biome : List.of(Biomes.JUNGLE, Biomes.BAMBOO_JUNGLE, Biomes.SPARSE_JUNGLE)) {
+    for (var biome : List.of(Biomes.JUNGLE, Biomes.BAMBOO_JUNGLE)) {
       check(VillageStyle.fromBiome(registry.getHolderOrThrow(biome), 0L, BlockPos.ZERO, everything)
           == VillageStyle.JUNGLE, "Jungle coverage missing " + biome.location());
     }
+    check(VillageStyle.fromBiome(registry.getHolderOrThrow(Biomes.SPARSE_JUNGLE), 0L, BlockPos.ZERO, everything)
+        == VillageStyle.POLYNESIAN_COAST, "Sparse jungle must select the Polynesian Coast");
     for (var biome : List.of(Biomes.PLAINS, Biomes.SUNFLOWER_PLAINS)) {
       check(VillageStyle.fromBiome(registry.getHolderOrThrow(biome), 0L, BlockPos.ZERO, everything)
           == VillageStyle.MEDITERRANEAN, "Mediterranean coverage missing " + biome.location());
@@ -196,7 +208,7 @@ public final class BadlandsVillageVerification {
       check(VillageStyle.fromBiome(registry.getHolderOrThrow(biome), 0L, BlockPos.ZERO, everything)
           == VillageStyle.TUNDRA, "Tundra coverage missing " + biome.location());
     }
-    Kithkyn.LOGGER.info("{} BIOMES PASS: Pueblo, Desert, Birch, Floodplain, Swamp, both Plains, all three Jungle biomes and exposed frozen lowlands", PREFIX);
+    Kithkyn.LOGGER.info("{} BIOMES PASS: Pueblo, Desert, Birch, Floodplain, Swamp, both Plains, the dense Jungle biomes, the sparse jungle's Polynesian Coast and exposed frozen lowlands", PREFIX);
   }
 
   private static void verifyCatalogue(ServerLevel level) {
@@ -428,7 +440,8 @@ public final class BadlandsVillageVerification {
         && village.getUnassignedBeds().size() == CATALOG.foundingBeds() - CATALOG.foundingJobs(),
         "Founding workers did not receive distinct beds");
     if (STYLE == VillageStyle.JUNGLE || STYLE == VillageStyle.SWAMP
-        || STYLE == VillageStyle.MEDITERRANEAN || STYLE == VillageStyle.TUNDRA) {
+        || STYLE == VillageStyle.MEDITERRANEAN || STYLE == VillageStyle.TUNDRA
+        || STYLE == VillageStyle.POLYNESIAN_COAST) {
       if (STYLE != VillageStyle.MEDITERRANEAN) {
         verifyRoutedWorksite(village, residents, Occupation.MINER, "mine");
       }

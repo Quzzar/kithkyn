@@ -16,7 +16,8 @@ import org.junit.jupiter.api.Test;
 class WallFoundationTest {
   @Test
   void gatePassagesStayOpenInEveryOrientationOnFlatAndRaisedDecks() {
-    for (VillageStyle style : List.of(VillageStyle.BIRCH_FOREST, VillageStyle.DESERT)) {
+    for (VillageStyle style : List.of(VillageStyle.BIRCH_FOREST, VillageStyle.DESERT,
+        VillageStyle.POLYNESIAN_COAST)) {
       for (int deckY : List.of(66, 70)) {
         List<Long> ring = WallRoute.aroundBox(0, 64, 0, 64);
         Set<Long> gates = WallPreview.cardinalGates(ring, 0, 64, 0, 64);

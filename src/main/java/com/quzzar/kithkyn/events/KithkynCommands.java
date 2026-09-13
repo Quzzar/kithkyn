@@ -582,7 +582,8 @@ public class KithkynCommands {
         int centerX = (from.getX() + to.getX()) / 2;
         int centerZ = (from.getZ() + to.getZ()) / 2;
         VillageStyle style = styleName == null
-                ? VillageStyle.fromBiome(source.getLevel().getBiome(new BlockPos(centerX, from.getY(), centerZ)))
+                ? VillageStyle.atSite(source.getLevel(), new BlockPos(centerX, from.getY(), centerZ),
+                        source.getLevel().getSeed())
                 : VillageStyle.parse(styleName);
         if (style == null) {
             source.sendFailure(Component.literal("No such village style: " + styleName));

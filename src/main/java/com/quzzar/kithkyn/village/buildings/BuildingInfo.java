@@ -470,7 +470,9 @@ public class BuildingInfo {
       if (!mappedContainers.containsAll(personalContainerLocs)) return "personal container has no bed_containers mapping";
     }
     if (castleLayout != null) {
-      if (!"castle".equals(getCategory())) return "castle amenities require the castle category";
+      if (!CastleLayout.allowedIn(getCategory())) {
+        return "castle amenities require the castle or village_center category";
+      }
       if (castleLayout.evidenceContainers().size() != 2
           || new java.util.HashSet<>(castleLayout.evidenceContainers()).size() != 2) {
         return "castle requires two distinct evidence_containers";

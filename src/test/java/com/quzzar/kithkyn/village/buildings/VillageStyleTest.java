@@ -1,7 +1,9 @@
 package com.quzzar.kithkyn.village.buildings;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.EnumSet;
 import java.util.HashSet;
@@ -39,7 +41,7 @@ class VillageStyleTest {
   void bundledBirchLeadsTheEnumAndIsWhatUnknownSavedStylesReadAs() {
     assertEquals(List.of(VillageStyle.BIRCH_FOREST, VillageStyle.DESERT, VillageStyle.BADLANDS,
         VillageStyle.FLOODPLAIN, VillageStyle.JUNGLE, VillageStyle.SWAMP, VillageStyle.MEDITERRANEAN,
-        VillageStyle.TUNDRA),
+        VillageStyle.TUNDRA, VillageStyle.POLYNESIAN_COAST),
         List.of(VillageStyle.values()));
     assertEquals(VillageStyle.BIRCH_FOREST, VillageStyle.DEFAULT);
     assertEquals(VillageStyle.BIRCH_FOREST, VillageStyle.fromId(""));
@@ -156,6 +158,47 @@ class VillageStyleTest {
     assertEquals(VillageStyle.FLOODPLAIN,
         VillageStyle.select(Tags.Biomes.IS_JUNGLE::equals, "jungle", 0.95F, true, 0.9F, 7L,
             style -> style == VillageStyle.FLOODPLAIN));
+  }
+
+  @Test
+  void sparseJungleIsThePolynesianCoastWhenItsCatalogIsLoaded() {
+    Predicate<TagKey<Biome>> sparse = VillageStyle.POLYNESIAN_COAST.biomeTag()::equals;
+    assertEquals(VillageStyle.POLYNESIAN_COAST,
+        VillageStyle.select(sparse, "sparse_jungle", 0.95F, true, 0.8F, 7L, ALL_STYLES));
+    assertEquals(VillageStyle.JUNGLE,
+        VillageStyle.select(sparse, "sparse_jungle", 0.95F, true, 0.8F, 7L,
+            style -> style != VillageStyle.POLYNESIAN_COAST),
+        "without the Polynesian pack a sparse jungle stays a Jungle village by name");
+  }
+
+  @Test
+  void aSandyBeachOnWarmWaterIsThePolynesianCoast() {
+    Set<TagKey<Biome>> beach = Set.of(Tags.Biomes.IS_BEACH, Tags.Biomes.IS_SANDY);
+    assertEquals(VillageStyle.POLYNESIAN_COAST,
+        VillageStyle.select(beach::contains, "beach", 0.8F, true, 0.4F, true, 7L, ALL_STYLES));
+    assertEquals(VillageStyle.DESERT,
+        VillageStyle.select(beach::contains, "beach", 0.8F, true, 0.4F, false, 7L, ALL_STYLES),
+        "a beach on temperate or cold water keeps its current answer");
+    Set<TagKey<Biome>> claimed = Set.of(Tags.Biomes.IS_BEACH, VillageStyle.SWAMP.biomeTag());
+    assertEquals(VillageStyle.SWAMP,
+        VillageStyle.select(claimed::contains, "beach", 0.8F, true, 0.4F, true, 7L, ALL_STYLES),
+        "an explicit style tag still wins");
+    assertEquals(VillageStyle.BIRCH_FOREST,
+        VillageStyle.select(NO_TAGS, "beach", 0.8F, true, 0.4F, true, 7L,
+            style -> style != VillageStyle.POLYNESIAN_COAST),
+        "without the Polynesian pack a warm beach falls through as before");
+    assertTrue(VillageStyle.isOpenBeach(beach::contains));
+    assertFalse(VillageStyle.isOpenBeach(Set.of(Tags.Biomes.IS_BEACH, Tags.Biomes.IS_SNOWY)::contains));
+    assertFalse(VillageStyle.isOpenBeach(NO_TAGS));
+  }
+
+  @Test
+  void theWarmWaterCheckReadsEightBearingsAtThreeDistances() {
+    List<BlockPos> samples = VillageStyle.coastSamples(new BlockPos(100, 64, -40));
+    assertEquals(24, samples.size());
+    assertTrue(samples.contains(new BlockPos(148, 64, -40)));
+    assertTrue(samples.contains(new BlockPos(100, 64, -24)));
+    assertTrue(samples.stream().allMatch(sample -> sample.getY() == 64));
   }
 
   @Test

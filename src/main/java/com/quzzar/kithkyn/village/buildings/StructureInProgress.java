@@ -635,18 +635,36 @@ public class StructureInProgress {
      * that spill was waterlogged by the keep-liquids rule and became a source of
      * its own: the well leaked from its rim, and left source blocks around it.
      * Placed last, a liquid only ever meets the blocks that were meant to hold it.
-     * The order is a stable partition, so a saved build index still means the
-     * same block after a restart.
+     * The plants that stand only on water or beside it follow the liquids: a lily
+     * pad or sugar cane laid before its pond broke at the first neighbour update
+     * and dropped as an item (the Polynesian Coast fishery, 2026-09-12). The order
+     * is a stable partition, so a saved build index still means the same block
+     * after a restart for every template without such plants.
      */
-    private static List<StructureTemplate.StructureBlockInfo> liquidsLast(
+    static List<StructureTemplate.StructureBlockInfo> liquidsLast(
             List<StructureTemplate.StructureBlockInfo> infos) {
         List<StructureTemplate.StructureBlockInfo> ordered = new java.util.ArrayList<>(infos.size());
         List<StructureTemplate.StructureBlockInfo> liquids = new java.util.ArrayList<>();
+        List<StructureTemplate.StructureBlockInfo> waterPlants = new java.util.ArrayList<>();
         for (StructureTemplate.StructureBlockInfo info : infos) {
-            (info.state().getFluidState().isEmpty() ? ordered : liquids).add(info);
+            if (!info.state().getFluidState().isEmpty()) {
+                liquids.add(info);
+            } else if (needsWater(info.state())) {
+                waterPlants.add(info);
+            } else {
+                ordered.add(info);
+            }
         }
         ordered.addAll(liquids);
+        ordered.addAll(waterPlants);
         return ordered;
+    }
+
+    /** Plants that survive only on water or beside it: lily pads, sugar cane and frogspawn. */
+    static boolean needsWater(BlockState state) {
+        return state.getBlock() instanceof net.minecraft.world.level.block.WaterlilyBlock
+                || state.getBlock() instanceof net.minecraft.world.level.block.SugarCaneBlock
+                || state.getBlock() instanceof net.minecraft.world.level.block.FrogspawnBlock;
     }
 
     private void progressMiddlePhase(StructureTemplate.StructureBlockInfo structBlockInfo) {

@@ -49,7 +49,13 @@ public record WallBlockPlan(long position, Piece piece, WallCellRole role) {
     // Append only: saved section signatures include these ordinals.
     BANNER_NORTH, BANNER_EAST, BANNER_SOUTH, BANNER_WEST,
     GATE_FRAME_POST, GATE_FRAME_BEAM,
-    LEAVES, LEAVES_DARK;
+    LEAVES, LEAVES_DARK,
+    /**
+     * The Polynesian Coast footing course (study A, 2026-09-12): literal dead
+     * bubble coral whatever the palette, the way Birch masonry is literal
+     * cobblestone. The catalog seats it on each column's own ground.
+     */
+    CORAL_FOOTING;
   }
 
   public BlockPos pos() {
@@ -105,6 +111,7 @@ public record WallBlockPlan(long position, Piece piece, WallCellRole role) {
       case BANNER_WEST -> wallBanner(Direction.WEST);
       case LEAVES -> leaves(palette.leaves());
       case LEAVES_DARK -> leaves(palette.leavesDark());
+      case CORAL_FOOTING -> Blocks.DEAD_BUBBLE_CORAL_BLOCK.defaultBlockState();
     };
   }
 
