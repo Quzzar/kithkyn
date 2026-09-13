@@ -34,13 +34,20 @@ public class BuildingDefinitionLoader extends SimpleJsonResourceReloadListener {
 
     @Override
     protected void apply(Map<ResourceLocation, JsonElement> jsons, ResourceManager resourceManager, ProfilerFiller profiler) {
-        Map<String, BuildingInfo> loaded = resolve(jsons);
+        Map<String, BuildingInfo> loaded = resolve(jsons, name -> resourceManager.getResource(
+            ResourceLocation.fromNamespaceAndPath(Kithkyn.MODID, "structure/" + name + ".nbt")).isPresent());
         Buildings.reload(loaded);
         Kithkyn.LOGGER.info("Loaded {} village building definitions", loaded.size());
     }
 
     /** Resolves complete, independently priced definitions before publishing a reload. */
     static Map<String, BuildingInfo> resolve(Map<ResourceLocation, JsonElement> jsons) {
+        return resolve(jsons, ignored -> true);
+    }
+
+    /** Testable seam for the matching structure resource required by every definition. */
+    static Map<String, BuildingInfo> resolve(Map<ResourceLocation, JsonElement> jsons,
+            java.util.function.Predicate<String> structureExists) {
         Map<String, BuildingInfo> loaded = new java.util.HashMap<>();
         jsons.forEach((id, json) -> {
             BuildingInfo.CODEC.parse(JsonOps.INSTANCE, json)
@@ -58,12 +65,25 @@ public class BuildingDefinitionLoader extends SimpleJsonResourceReloadListener {
                         Kithkyn.LOGGER.error("Rejected building definition {} ({})", id, problem);
                         return;
                     }
+                    if (!structureExists.test(info.getName())) {
+                        Kithkyn.LOGGER.error("Rejected building definition {} (missing structure template {})",
+                            id, info.getName());
+                        return;
+                    }
                     BuildingInfo previous = loaded.put(info.getName(), info);
                     if (previous != null) {
                         Kithkyn.LOGGER.warn("Duplicate building definition for '{}' (from {})", info.getName(), id);
                     }
                 });
         });
+        Map<String, java.util.List<String>> catalogProblems;
+        do {
+            catalogProblems = BuildingCatalogContract.problems(loaded);
+            catalogProblems.forEach((name, problems) -> {
+                Kithkyn.LOGGER.error("Rejected building definition {} ({})", name, String.join("; ", problems));
+                loaded.remove(name);
+            });
+        } while (!catalogProblems.isEmpty());
         return Map.copyOf(loaded);
     }
 

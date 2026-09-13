@@ -40,6 +40,28 @@ class LaborPlannerTest {
   }
 
   @Test
+  void anActiveProjectSelectsItsVacantBuilderPostBeforeOtherLaborNeeds() {
+    UUID center = UUID.randomUUID();
+    JobAssignment farmer = new JobAssignment(null, Occupation.FARMER, UUID.randomUUID(), 0);
+    JobAssignment builder = new JobAssignment(null, Occupation.BUILDER, center, 1);
+
+    assertEquals(builder, LaborPlanner.openConstructionPost(
+        true, List.of(farmer, builder), center::equals));
+    assertNull(LaborPlanner.openConstructionPost(
+        false, List.of(farmer, builder), center::equals));
+  }
+
+  @Test
+  void aMissingBuilderMayBorrowOneOfSeveralFoodWorkersButNeverTheLast() {
+    assertFalse(LaborPlanner.mustKeepForNeed(
+        Occupation.FARMER, 2, 3, true, false, Occupation.BUILDER));
+    assertTrue(LaborPlanner.mustKeepForNeed(
+        Occupation.FARMER, 1, 1, true, false, Occupation.BUILDER));
+    assertTrue(LaborPlanner.mustKeepForNeed(
+        Occupation.FARMER, 2, 3, true, false, Occupation.LUMBERJACK));
+  }
+
+  @Test
   void aHungryVillageNeverMovesAnActiveFoodProducerToMaterials() {
     assertTrue(LaborPlanner.mustKeep(Occupation.FARMER, 2, true, false));
     assertTrue(LaborPlanner.mustKeep(Occupation.MINER, 1, false, false));
