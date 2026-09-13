@@ -1,0 +1,906 @@
+{
+  "schemaVersion": 1,
+  "recorded": "2026-09-12T16:12:20.098983-04:00",
+  "purpose": "Complete Romanian core and dark-forest donor gallery for selecting the production village catalog.",
+  "entry": [
+    12401.5,
+    230.0,
+    1004.5
+  ],
+  "bounds": [
+    12398,
+    220,
+    1000,
+    12527,
+    276,
+    1300
+  ],
+  "selectionRule": "All 22 standalone Romanian structures plus a separate, labeled set of dark-forest service and castle candidates; street and terminator pieces are omitted.",
+  "counts": {
+    "romanianCore": 22,
+    "donors": 13,
+    "total": 35,
+    "rows": 7
+  },
+  "rows": [
+    {
+      "id": "R01",
+      "title": "ROMANIAN \u2014 CENTER + DETAILS",
+      "origin": [
+        12408,
+        230,
+        1010
+      ],
+      "bounds": [
+        12398,
+        220,
+        1001,
+        12458,
+        276,
+        1047
+      ],
+      "entries": [
+        {
+          "id": "R01.1",
+          "label": "Town Center 1",
+          "role": "center",
+          "sourceMod": "Towns & Towers",
+          "source": "data/kaisyn/structure/village/birch_forest_romanian/town_centers/birch_forest_meeting_point_1.nbt",
+          "sourceSha256": "4cb6dbe83446d8c6834870ca6050527d6bb29c82638e1e750611919719605fe2",
+          "preparedSha256": "75e92dc00ba7e144642423fd2a4ecdefe447e3cd8930b3dd5d1e0c16eeb48cb7",
+          "size": [
+            21,
+            30,
+            34
+          ],
+          "origin": [
+            12408,
+            230,
+            1010
+          ],
+          "privateTemplate": "kithkyn_romanian_profile:r01_01_birch_forest_meeting_point_1"
+        },
+        {
+          "id": "R01.2",
+          "label": "Village Detail 1",
+          "role": "detail",
+          "sourceMod": "Towns & Towers",
+          "source": "data/kaisyn/structure/village/birch_forest_romanian/birch_forest_decor_1.nbt",
+          "sourceSha256": "212638cce041ee68451eb77aec5d51625f74273d7b2a5075f73be8f9d60a2159",
+          "preparedSha256": "fd0abd7926d626e1893ca333b69b762d59a01eb08bcd23fc85fe85aba865fa2c",
+          "size": [
+            3,
+            6,
+            3
+          ],
+          "origin": [
+            12435,
+            230,
+            1010
+          ],
+          "privateTemplate": "kithkyn_romanian_profile:r01_02_birch_forest_decor_1"
+        },
+        {
+          "id": "R01.3",
+          "label": "Village Detail 2",
+          "role": "detail",
+          "sourceMod": "Towns & Towers",
+          "source": "data/kaisyn/structure/village/birch_forest_romanian/birch_forest_decor_2.nbt",
+          "sourceSha256": "70ab5b33d31e349618e46bc4a97e228ab6c66dd83c415e193031dcdf84f85b81",
+          "preparedSha256": "e53a88464ba6f556cfcd7c9b8797b7feff0066891a76946c62b93dcaad53c7be",
+          "size": [
+            3,
+            5,
+            3
+          ],
+          "origin": [
+            12444,
+            230,
+            1010
+          ],
+          "privateTemplate": "kithkyn_romanian_profile:r01_03_birch_forest_decor_2"
+        },
+        {
+          "id": "R01.4",
+          "label": "Village Detail 3",
+          "role": "detail",
+          "sourceMod": "Towns & Towers",
+          "source": "data/kaisyn/structure/village/birch_forest_romanian/birch_forest_decor_3.nbt",
+          "sourceSha256": "793c86e11bd10650fe9877a9f6d5ffe3907a26ea97f1012b2978e693ed67a98f",
+          "preparedSha256": "52dd5b67f20ce59441904e039cf47ae7031e24b30b1676c2c689eae8b6a7f473",
+          "size": [
+            3,
+            4,
+            3
+          ],
+          "origin": [
+            12453,
+            230,
+            1010
+          ],
+          "privateTemplate": "kithkyn_romanian_profile:r01_04_birch_forest_decor_3"
+        }
+      ]
+    },
+    {
+      "id": "R02",
+      "title": "ROMANIAN \u2014 SMALL HOMES",
+      "origin": [
+        12408,
+        230,
+        1054
+      ],
+      "bounds": [
+        12398,
+        220,
+        1045,
+        12482,
+        276,
+        1064
+      ],
+      "entries": [
+        {
+          "id": "R02.1",
+          "label": "Small House 1",
+          "role": "house",
+          "sourceMod": "Towns & Towers",
+          "source": "data/kaisyn/structure/village/birch_forest_romanian/houses/birch_forest_small_house_1.nbt",
+          "sourceSha256": "64448e259ee7304d8d1f8667eace15d4537dc41ac596e5928aff991468f2a002",
+          "preparedSha256": "c01017befaf18457a9f0d6ade3b962eb7c93473c11d9238f051b49e40b98182a",
+          "size": [
+            7,
+            11,
+            7
+          ],
+          "origin": [
+            12408,
+            230,
+            1054
+          ],
+          "privateTemplate": "kithkyn_romanian_profile:r02_01_birch_forest_small_house_1"
+        },
+        {
+          "id": "R02.2",
+          "label": "Small House 2",
+          "role": "house",
+          "sourceMod": "Towns & Towers",
+          "source": "data/kaisyn/structure/village/birch_forest_romanian/houses/birch_forest_small_house_2.nbt",
+          "sourceSha256": "301c972489f46fc45b995cd04e6ff882ae06ea04fcc6e74dce9f349dbedafa51",
+          "preparedSha256": "4b84c939a6678282393a8434adca85e64351ce6c7f7316ee6988232e5e7c108e",
+          "size": [
+            7,
+            7,
+            7
+          ],
+          "origin": [
+            12421,
+            230,
+            1054
+          ],
+          "privateTemplate": "kithkyn_romanian_profile:r02_02_birch_forest_small_house_2"
+        },
+        {
+          "id": "R02.3",
+          "label": "Small House 3",
+          "role": "house",
+          "sourceMod": "Towns & Towers",
+          "source": "data/kaisyn/structure/village/birch_forest_romanian/houses/birch_forest_small_house_3.nbt",
+          "sourceSha256": "81e55807e1716d05e35034603cf57a7fddacfeb88e88fe5063f27a7762a8ab02",
+          "preparedSha256": "d30cbbf5c45a8c486172e0c6aea548c104461fa400de08502e33537ee569bc79",
+          "size": [
+            7,
+            7,
+            7
+          ],
+          "origin": [
+            12434,
+            230,
+            1054
+          ],
+          "privateTemplate": "kithkyn_romanian_profile:r02_03_birch_forest_small_house_3"
+        },
+        {
+          "id": "R02.4",
+          "label": "Small House 4",
+          "role": "house",
+          "sourceMod": "Towns & Towers",
+          "source": "data/kaisyn/structure/village/birch_forest_romanian/houses/birch_forest_small_house_4.nbt",
+          "sourceSha256": "0018df0c8ba0d7d6159ea70d3912f5b4a703324d48d598e9a8112def249cc99a",
+          "preparedSha256": "eb292dff03b48c7e77500c385c7c4deb1f70365d95b613d8e34c93e131727cdf",
+          "size": [
+            7,
+            9,
+            7
+          ],
+          "origin": [
+            12447,
+            230,
+            1054
+          ],
+          "privateTemplate": "kithkyn_romanian_profile:r02_04_birch_forest_small_house_4"
+        },
+        {
+          "id": "R02.5",
+          "label": "Small House 5",
+          "role": "house",
+          "sourceMod": "Towns & Towers",
+          "source": "data/kaisyn/structure/village/birch_forest_romanian/houses/birch_forest_small_house_5.nbt",
+          "sourceSha256": "3f2a9132fe9a3227911f280782f87ac99aa6ba27b60c615deeb2d84bf9d34aa4",
+          "preparedSha256": "d777e28681216af209af4cb9ff73bdcac913e5496b3738193676aebae2dcc458",
+          "size": [
+            7,
+            7,
+            7
+          ],
+          "origin": [
+            12460,
+            230,
+            1054
+          ],
+          "privateTemplate": "kithkyn_romanian_profile:r02_05_birch_forest_small_house_5"
+        },
+        {
+          "id": "R02.6",
+          "label": "Small House 6",
+          "role": "house",
+          "sourceMod": "Towns & Towers",
+          "source": "data/kaisyn/structure/village/birch_forest_romanian/houses/birch_forest_small_house_6.nbt",
+          "sourceSha256": "eca7794d3f8d34011f4eecd6653688fd099587659c7a71d3a503963a9fb6f765",
+          "preparedSha256": "11a5a828e59a33f37dddce190bcdc824b5ac2a933065f6d6beac9bdaa16c6ecf",
+          "size": [
+            7,
+            7,
+            7
+          ],
+          "origin": [
+            12473,
+            230,
+            1054
+          ],
+          "privateTemplate": "kithkyn_romanian_profile:r02_06_birch_forest_small_house_6"
+        }
+      ]
+    },
+    {
+      "id": "R03",
+      "title": "ROMANIAN \u2014 LARGER HOMES",
+      "origin": [
+        12408,
+        230,
+        1098
+      ],
+      "bounds": [
+        12398,
+        220,
+        1089,
+        12464,
+        276,
+        1111
+      ],
+      "entries": [
+        {
+          "id": "R03.1",
+          "label": "Medium House 1",
+          "role": "house",
+          "sourceMod": "Towns & Towers",
+          "source": "data/kaisyn/structure/village/birch_forest_romanian/houses/birch_forest_medium_house_1.nbt",
+          "sourceSha256": "7d5ceecd808ef8c36dff0d701dfa44505edf3b2005498dbb561f01e12957b487",
+          "preparedSha256": "8ee1de426f0f0d9da33f5a85edb4d9918617851fc674ef0e47e3fee40e4f2d60",
+          "size": [
+            15,
+            10,
+            9
+          ],
+          "origin": [
+            12408,
+            230,
+            1098
+          ],
+          "privateTemplate": "kithkyn_romanian_profile:r03_01_birch_forest_medium_house_1"
+        },
+        {
+          "id": "R03.2",
+          "label": "Medium House 2",
+          "role": "house",
+          "sourceMod": "Towns & Towers",
+          "source": "data/kaisyn/structure/village/birch_forest_romanian/houses/birch_forest_medium_house_2.nbt",
+          "sourceSha256": "a7b5dcfdffbe0cde2eec159df708825fe54e52fd7fd4bcddafe85a09ce16a84b",
+          "preparedSha256": "9212a54b28340989f7b249f833ef344bb7d087eeeff0a97dd28b2b334ab01f36",
+          "size": [
+            14,
+            10,
+            8
+          ],
+          "origin": [
+            12429,
+            230,
+            1098
+          ],
+          "privateTemplate": "kithkyn_romanian_profile:r03_02_birch_forest_medium_house_2"
+        },
+        {
+          "id": "R03.3",
+          "label": "Large House 1",
+          "role": "house",
+          "sourceMod": "Towns & Towers",
+          "source": "data/kaisyn/structure/village/birch_forest_romanian/houses/birch_forest_large_house_1.nbt",
+          "sourceSha256": "c21286e26a2a93151132ad543e55da511ce83b65c9064ecd89e21524fc7bcca9",
+          "preparedSha256": "1ac64cea81c7e5ee73d707450fee14d035dd80823e3181971310d62d93bed3e7",
+          "size": [
+            13,
+            11,
+            10
+          ],
+          "origin": [
+            12449,
+            230,
+            1098
+          ],
+          "privateTemplate": "kithkyn_romanian_profile:r03_03_birch_forest_large_house_1"
+        }
+      ]
+    },
+    {
+      "id": "R04",
+      "title": "ROMANIAN \u2014 LARGE WORKPLACES",
+      "origin": [
+        12408,
+        230,
+        1142
+      ],
+      "bounds": [
+        12398,
+        220,
+        1133,
+        12484,
+        276,
+        1154
+      ],
+      "entries": [
+        {
+          "id": "R04.1",
+          "label": "Armorer + Toolsmith",
+          "role": "work",
+          "sourceMod": "Towns & Towers",
+          "source": "data/kaisyn/structure/village/birch_forest_romanian/houses/birch_forest_armorer_and_toolsmith_1.nbt",
+          "sourceSha256": "2f4d9047e64adf9e4b955c2f4f4c1676d2afdb9eb12fd063f5cf6cd5c879a149",
+          "preparedSha256": "ae14c9beac69abc33bb0898f5a2fe2fc5390ed286b629c33ae39169342c3f771",
+          "size": [
+            15,
+            9,
+            7
+          ],
+          "origin": [
+            12408,
+            230,
+            1142
+          ],
+          "privateTemplate": "kithkyn_romanian_profile:r04_01_birch_forest_armorer_and_toolsmith_1"
+        },
+        {
+          "id": "R04.2",
+          "label": "Butcher + Leatherworker",
+          "role": "food",
+          "sourceMod": "Towns & Towers",
+          "source": "data/kaisyn/structure/village/birch_forest_romanian/houses/birch_forest_butcher_and_leatherworker_1.nbt",
+          "sourceSha256": "7c8272886186043c04ec1dc1dbb11436c592ab5252ff7729044afdff8e711968",
+          "preparedSha256": "734aac2350661699c82af337dd82bb688006afa2025a10fedea26aa6891fd50d",
+          "size": [
+            17,
+            9,
+            9
+          ],
+          "origin": [
+            12429,
+            230,
+            1142
+          ],
+          "privateTemplate": "kithkyn_romanian_profile:r04_02_birch_forest_butcher_and_leatherworker_1"
+        },
+        {
+          "id": "R04.3",
+          "label": "Cartographer + Library",
+          "role": "civic",
+          "sourceMod": "Towns & Towers",
+          "source": "data/kaisyn/structure/village/birch_forest_romanian/houses/birch_forest_cartographer_and_library_1.nbt",
+          "sourceSha256": "f5b21b2802a841e61fe2aaf4f4c7fac5789c1697d75e9854656189137f586187",
+          "preparedSha256": "0040c5cd201e5f1d3de5cf7c4613c0d64d64475c7df34f30e1724cf1459c21c8",
+          "size": [
+            17,
+            13,
+            9
+          ],
+          "origin": [
+            12452,
+            230,
+            1142
+          ],
+          "privateTemplate": "kithkyn_romanian_profile:r04_03_birch_forest_cartographer_and_library_1"
+        },
+        {
+          "id": "R04.4",
+          "label": "Fisher",
+          "role": "food",
+          "sourceMod": "Towns & Towers",
+          "source": "data/kaisyn/structure/village/birch_forest_romanian/houses/birch_forest_fisher_1.nbt",
+          "sourceSha256": "a806bb0b8cc356331891151fc20287759483a89b7db1133e3d889b5e86c40ae7",
+          "preparedSha256": "9d2f289ae55a3d24338799c2fff425ebbd515164e282cc04061075b13d41cef9",
+          "size": [
+            7,
+            6,
+            9
+          ],
+          "origin": [
+            12475,
+            230,
+            1142
+          ],
+          "privateTemplate": "kithkyn_romanian_profile:r04_04_birch_forest_fisher_1"
+        }
+      ]
+    },
+    {
+      "id": "R05",
+      "title": "ROMANIAN \u2014 SMALL WORKPLACES",
+      "origin": [
+        12408,
+        230,
+        1186
+      ],
+      "bounds": [
+        12398,
+        220,
+        1177,
+        12486,
+        276,
+        1198
+      ],
+      "entries": [
+        {
+          "id": "R05.1",
+          "label": "Fletcher",
+          "role": "work",
+          "sourceMod": "Towns & Towers",
+          "source": "data/kaisyn/structure/village/birch_forest_romanian/houses/birch_forest_fletcher_1.nbt",
+          "sourceSha256": "c75d2e31c4fcbb989941969507ff8d5e8fad9b444656391b0c161fb72a708606",
+          "preparedSha256": "90ba990f9171fa7a452e28d309b084bb7da66a496c6e53afc8ec331c4eedec86",
+          "size": [
+            7,
+            5,
+            7
+          ],
+          "origin": [
+            12408,
+            230,
+            1186
+          ],
+          "privateTemplate": "kithkyn_romanian_profile:r05_01_birch_forest_fletcher_1"
+        },
+        {
+          "id": "R05.2",
+          "label": "Mason",
+          "role": "work",
+          "sourceMod": "Towns & Towers",
+          "source": "data/kaisyn/structure/village/birch_forest_romanian/houses/birch_forest_mason_1.nbt",
+          "sourceSha256": "025e335683e279d1cf3d98445752a93e6a05c9de6a5118627110235323aeb29b",
+          "preparedSha256": "0782e3f81d459df0ed584952d2e22268086d17856fbbb0c4d9a23bf9a45380c7",
+          "size": [
+            7,
+            5,
+            7
+          ],
+          "origin": [
+            12421,
+            230,
+            1186
+          ],
+          "privateTemplate": "kithkyn_romanian_profile:r05_02_birch_forest_mason_1"
+        },
+        {
+          "id": "R05.3",
+          "label": "Shepherd",
+          "role": "food",
+          "sourceMod": "Towns & Towers",
+          "source": "data/kaisyn/structure/village/birch_forest_romanian/houses/birch_forest_shepherd_1.nbt",
+          "sourceSha256": "b160e127c5e64a8b4c7d56df32fbf6086f1db7b328566eb02eeb369ab270bdef",
+          "preparedSha256": "3be4dfb9c5ddae672109da109e70f5f23c5f7194bd4e05c839b7e2fea64eeea6",
+          "size": [
+            14,
+            7,
+            7
+          ],
+          "origin": [
+            12434,
+            230,
+            1186
+          ],
+          "privateTemplate": "kithkyn_romanian_profile:r05_03_birch_forest_shepherd_1"
+        },
+        {
+          "id": "R05.4",
+          "label": "Small Farm",
+          "role": "food",
+          "sourceMod": "Towns & Towers",
+          "source": "data/kaisyn/structure/village/birch_forest_romanian/houses/birch_forest_small_farm_1.nbt",
+          "sourceSha256": "59bba744f05510a052ebd2da47be059d9a5b4734534a7b76538339b63c39a0a2",
+          "preparedSha256": "c4af54228922f2356a3bd4ff58cf9525f9fd6c37d16e52c631a2a49f30a18fec",
+          "size": [
+            9,
+            4,
+            9
+          ],
+          "origin": [
+            12454,
+            230,
+            1186
+          ],
+          "privateTemplate": "kithkyn_romanian_profile:r05_04_birch_forest_small_farm_1"
+        },
+        {
+          "id": "R05.5",
+          "label": "Weaponsmith",
+          "role": "work",
+          "sourceMod": "Towns & Towers",
+          "source": "data/kaisyn/structure/village/birch_forest_romanian/houses/birch_forest_weaponsmith_1.nbt",
+          "sourceSha256": "34cb294d57b7e91e33ceed10698b42fba28eff78c4e386fe6fb7956e9e01790c",
+          "preparedSha256": "fdb08c4a85580998c88ff03e9d95a88d2932952bceac3a0b50ef9c9d94ee7a88",
+          "size": [
+            15,
+            7,
+            7
+          ],
+          "origin": [
+            12469,
+            230,
+            1186
+          ],
+          "privateTemplate": "kithkyn_romanian_profile:r05_05_birch_forest_weaponsmith_1"
+        }
+      ]
+    },
+    {
+      "id": "R06",
+      "title": "DARK FOREST \u2014 MISSING SERVICES",
+      "origin": [
+        12408,
+        230,
+        1230
+      ],
+      "bounds": [
+        12398,
+        220,
+        1221,
+        12514,
+        276,
+        1252
+      ],
+      "entries": [
+        {
+          "id": "R06.1",
+          "label": "Dark Oak Tavern",
+          "role": "tavern",
+          "sourceMod": "Dungeons & Taverns",
+          "source": "data/nova_structures/structure/tavern/tavern_house_dark_oak.nbt",
+          "sourceSha256": "fbab556c0db75e5cb57ef07d5decfb07b076ae1d508b79647cc7e9fd15ab0745",
+          "preparedSha256": "860a93e214453cc06c9c7bbe29ee770b9dbe488ad3a3bc20012fc2f68dc7ef61",
+          "size": [
+            17,
+            14,
+            19
+          ],
+          "origin": [
+            12408,
+            230,
+            1230
+          ],
+          "privateTemplate": "kithkyn_romanian_profile:r06_01_tavern_house_dark_oak"
+        },
+        {
+          "id": "R06.2",
+          "label": "Dark Oak Firewatch",
+          "role": "tower",
+          "sourceMod": "Dungeons & Taverns",
+          "source": "data/nova_structures/structure/firewatch_tower/firewatch_dark_oak.nbt",
+          "sourceSha256": "75d8ab1191faaf7d7a9ba5fee78a93b2e7e32a2ce00e341a7905ffcc2b8a269d",
+          "preparedSha256": "15aaf4725803d06b9193d89420a180d7d38c716b97c5b15f88f9024ed937b0f2",
+          "size": [
+            9,
+            19,
+            9
+          ],
+          "origin": [
+            12431,
+            230,
+            1230
+          ],
+          "privateTemplate": "kithkyn_romanian_profile:r06_02_firewatch_dark_oak"
+        },
+        {
+          "id": "R06.3",
+          "label": "Dark Oak Well",
+          "role": "well",
+          "sourceMod": "Dungeons & Taverns",
+          "source": "data/nova_structures/structure/well/well_dark_oak.nbt",
+          "sourceSha256": "130141f469be2d0e11507d763e791bc1efdcc5c1353a67dc5d7f488f47e2242c",
+          "preparedSha256": "eef642a276e57bcbec07a49e9e95730dcb71bd5e7d7cf484342e1b518fc791ff",
+          "size": [
+            3,
+            12,
+            3
+          ],
+          "origin": [
+            12446,
+            230,
+            1230
+          ],
+          "privateTemplate": "kithkyn_romanian_profile:r06_03_well_dark_oak"
+        },
+        {
+          "id": "R06.4",
+          "label": "Dark Forest Tower",
+          "role": "tower",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/pillager_outpost/dark_forest/tower.nbt",
+          "sourceSha256": "bcadba21d998f8637e98b42b5cf1bb3f23c9b59f4427e0ac503513a422fa8198",
+          "preparedSha256": "7764525c61f8d951a3545dc6574bf2857500bafab073ab695c163f96512a7ed2",
+          "size": [
+            13,
+            26,
+            13
+          ],
+          "origin": [
+            12455,
+            230,
+            1230
+          ],
+          "privateTemplate": "kithkyn_romanian_profile:r06_04_tower"
+        },
+        {
+          "id": "R06.5",
+          "label": "Halloween Well",
+          "role": "well",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/halloween/decos/well.nbt",
+          "sourceSha256": "3f948be27740c85e81bada1eb8d0b19517681db3b0f790d9d9cf5bb3b4359b7d",
+          "preparedSha256": "4e51b7c24e1c6428dd78404ac762b39c15601e8acfdc22b01be68412a21456ab",
+          "size": [
+            7,
+            9,
+            7
+          ],
+          "origin": [
+            12474,
+            230,
+            1230
+          ],
+          "privateTemplate": "kithkyn_romanian_profile:r06_05_well"
+        },
+        {
+          "id": "R06.6",
+          "label": "Halloween Fishing Hut",
+          "role": "food",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/halloween/jobsite/fishing_hut.nbt",
+          "sourceSha256": "ead33f1a200772d9037f6e4854d79f92055a546a77dc8b93d3c9acd1a8c8a20b",
+          "preparedSha256": "0d0fa43f5818586086e860c62eab046693cff94ceb15783140a0986711d2bfd3",
+          "size": [
+            11,
+            11,
+            11
+          ],
+          "origin": [
+            12487,
+            230,
+            1230
+          ],
+          "privateTemplate": "kithkyn_romanian_profile:r06_06_fishing_hut"
+        },
+        {
+          "id": "R06.7",
+          "label": "Tudor Temple",
+          "role": "church",
+          "sourceMod": "Towns & Towers",
+          "source": "data/kaisyn/structure/village/exclusives/tudor/houses/tudor_temple_1.nbt",
+          "sourceSha256": "a63403fef891e3ac3f50ff639f84e0317bfa763434b1b07156b87c45a2adfe97",
+          "preparedSha256": "28aa4452fbfef1819c4888a569bfaa344a9c89ea046a9777b1453381f21199e9",
+          "size": [
+            8,
+            13,
+            14
+          ],
+          "origin": [
+            12504,
+            230,
+            1230
+          ],
+          "privateTemplate": "kithkyn_romanian_profile:r06_07_tudor_temple_1"
+        }
+      ]
+    },
+    {
+      "id": "R07",
+      "title": "DARK WOODLAND \u2014 CIVIC + CASTLE",
+      "origin": [
+        12408,
+        230,
+        1274
+      ],
+      "bounds": [
+        12398,
+        220,
+        1265,
+        12527,
+        276,
+        1300
+      ],
+      "entries": [
+        {
+          "id": "R07.1",
+          "label": "Halloween Town Center",
+          "role": "center",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/halloween/town_center.nbt",
+          "sourceSha256": "85d1047b113a055e381f2cb2354d3a363df442378f8c571cfacd0848b200a9af",
+          "preparedSha256": "892a9d47b4f8646770562b22c33732b2df18d2ecdd8b8e4f2614bbcb7141b44d",
+          "size": [
+            17,
+            13,
+            17
+          ],
+          "origin": [
+            12408,
+            230,
+            1274
+          ],
+          "privateTemplate": "kithkyn_romanian_profile:r07_01_town_center"
+        },
+        {
+          "id": "R07.2",
+          "label": "Halloween Small House",
+          "role": "house",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/halloween/house/small_1.nbt",
+          "sourceSha256": "931b09ebad4038fb4b03505cefe4fb5719c1c10df29a1e50c5fbe1abf909c4e1",
+          "preparedSha256": "16f7b8bf71fbc2e37cbfaa068684608d2e77ce936e8582974303a3b98a49a339",
+          "size": [
+            9,
+            10,
+            8
+          ],
+          "origin": [
+            12431,
+            230,
+            1274
+          ],
+          "privateTemplate": "kithkyn_romanian_profile:r07_02_small_1"
+        },
+        {
+          "id": "R07.3",
+          "label": "Halloween Large House",
+          "role": "house",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/halloween/house/big_1.nbt",
+          "sourceSha256": "b5891bb437e1128d9453a5dbe1bf4354762002ef632879e182c8aa3f5b95da2d",
+          "preparedSha256": "8d372388a0afe51ed22e0a1a025bbf279ce9f00c1805cbc620d4a57250711520",
+          "size": [
+            15,
+            15,
+            7
+          ],
+          "origin": [
+            12446,
+            230,
+            1274
+          ],
+          "privateTemplate": "kithkyn_romanian_profile:r07_03_big_1"
+        },
+        {
+          "id": "R07.4",
+          "label": "Halloween Farm",
+          "role": "food",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/halloween/jobsite/farm.nbt",
+          "sourceSha256": "82b030c67df6b807d65c9811023dd4ddf4c97bfd301211c886552acfd3f8c0bd",
+          "preparedSha256": "3f249e5cf3960cf95b1496bb7fdbc43e44387b505cccbd8142713efef94ecbfb",
+          "size": [
+            11,
+            4,
+            11
+          ],
+          "origin": [
+            12467,
+            230,
+            1274
+          ],
+          "privateTemplate": "kithkyn_romanian_profile:r07_04_farm"
+        },
+        {
+          "id": "R07.5",
+          "label": "Halloween Smithy",
+          "role": "work",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/halloween/jobsite/smith.nbt",
+          "sourceSha256": "fc897e8941f4d9edebe3fc48f79a2e2b2081a952c9575c23b4ec9675896cce6a",
+          "preparedSha256": "1165cd408554e1cb30b1d60c4e20110e7f2aa3fb3681cb115ac9c2ad6bfee3f8",
+          "size": [
+            12,
+            10,
+            12
+          ],
+          "origin": [
+            12484,
+            230,
+            1274
+          ],
+          "privateTemplate": "kithkyn_romanian_profile:r07_05_smith"
+        },
+        {
+          "id": "R07.6",
+          "label": "Stone Keep Study",
+          "role": "castle",
+          "sourceMod": "Kithkyn study",
+          "source": "run/market-all-variants-20260912/keep-output/t17_keep_stone.nbt",
+          "sourceSha256": "26aadb17b821f6226b39029a0f3c77f6797333f98840733e4d8424de03e4ac1b",
+          "preparedSha256": "157f7e6a4308cfbd14f1a86961baa48ea1f54297cf3384fec0bf91ffae0f7062",
+          "size": [
+            23,
+            38,
+            23
+          ],
+          "origin": [
+            12502,
+            230,
+            1274
+          ],
+          "privateTemplate": "kithkyn_romanian_profile:r07_06_t17_keep_stone"
+        }
+      ]
+    }
+  ],
+  "status": "placed_and_visually_verified",
+  "identity": {
+    "villageBiome": "romanian",
+    "foundingEnvironments": [
+      "minecraft:dark_forest",
+      "compatible forested highlands",
+      "compatible wooded valleys"
+    ],
+    "coreSource": "Towns & Towers birch_forest_romanian family",
+    "separationFromBirch": "The source family remains provenance only. Romanian is a distinct Dark Forest catalog; final palette, role assignments, and captures will not alias the playable Birch catalog."
+  },
+  "review": {
+    "coreRows": [
+      "R01",
+      "R02",
+      "R03",
+      "R04",
+      "R05"
+    ],
+    "donorRows": [
+      "R06",
+      "R07"
+    ],
+    "authoredGeometry": "No source structure geometry was altered for this gallery.",
+    "visualReview": "passed",
+    "screenshots": [
+      "run/romanian-full-profile/render-op/client/screenshots/romanian-center-and-small-homes.png",
+      "run/romanian-full-profile/render-op/client/screenshots/romanian-homes-and-workplaces.png",
+      "run/romanian-full-profile/render-op/client/screenshots/romanian-dark-forest-services.png",
+      "run/romanian-full-profile/render-op/client/screenshots/romanian-civic-and-keep.png"
+    ]
+  },
+  "verification": {
+    "preparedTemplates": 35,
+    "placedTemplates": 35,
+    "allPlacementResponsesConfirmed": true,
+    "worldSaved": true,
+    "worldBackup": "/Users/quzzar/Projects/kithkyn/run/backups/before-romanian-gallery-20260912-161246",
+    "templateAudit": {
+      "result": "passed",
+      "templates": 35,
+      "barrierStates": 0,
+      "outOfBoundsBlocks": 0,
+      "malformedMarketEntrances": 0
+    }
+  }
+}

@@ -43,6 +43,7 @@ final class AuthoredWoodWallSegments {
    * frame cells and drops its roof lanterns, and this geometry has neither.
    */
   static final AuthoredWoodWallSegments POLYNESIAN_COAST = loadBundled("polynesian_coast");
+  static final AuthoredWoodWallSegments ROMANIAN = loadBundled("romanian");
 
   private static final String RESOURCE_ROOT =
       "data/kithkyn/structure/wall/";
@@ -522,8 +523,10 @@ final class AuthoredWoodWallSegments {
     }
     return switch (name) {
       case "minecraft:cobblestone" -> WallBlockPlan.Piece.COBBLE_POST;
+      case "minecraft:cobbled_deepslate" -> WallBlockPlan.Piece.COBBLE_POST;
       case "minecraft:mossy_cobblestone" -> WallBlockPlan.Piece.MOSSY_POST;
       case "minecraft:cobblestone_wall" -> WallBlockPlan.Piece.COBBLE_WALL;
+      case "minecraft:cobbled_deepslate_wall" -> WallBlockPlan.Piece.COBBLE_WALL;
       case "minecraft:mossy_cobblestone_wall" -> WallBlockPlan.Piece.MOSSY_WALL;
       case "minecraft:cobblestone_slab" -> switch (properties.getString("type")) {
         case "bottom" -> WallBlockPlan.Piece.COBBLE_SLAB_BOTTOM;
@@ -537,14 +540,19 @@ final class AuthoredWoodWallSegments {
         case "z" -> WallBlockPlan.Piece.BEAM_NORTH_SOUTH;
         default -> WallBlockPlan.Piece.POST;
       };
+      case "minecraft:stripped_dark_oak_wood" -> switch (properties.getString("axis")) {
+        case "x" -> WallBlockPlan.Piece.BEAM_EAST_WEST;
+        case "z" -> WallBlockPlan.Piece.BEAM_NORTH_SOUTH;
+        default -> WallBlockPlan.Piece.POST;
+      };
       case "minecraft:oak_log" -> switch (properties.getString("axis")) {
         case "x" -> WallBlockPlan.Piece.BEAM_EAST_WEST;
         case "z" -> WallBlockPlan.Piece.BEAM_NORTH_SOUTH;
         default -> WallBlockPlan.Piece.POST;
       };
       case "minecraft:oak_fence", "minecraft:spruce_fence" -> WallBlockPlan.Piece.PARAPET;
-      case "minecraft:oak_slab", "minecraft:spruce_slab" -> WallBlockPlan.Piece.SLAB;
-      case "minecraft:oak_trapdoor", "minecraft:spruce_trapdoor" -> WallBlockPlan.trapdoorPiece(
+      case "minecraft:oak_slab", "minecraft:spruce_slab", "minecraft:birch_slab" -> WallBlockPlan.Piece.SLAB;
+      case "minecraft:oak_trapdoor", "minecraft:spruce_trapdoor", "minecraft:dark_oak_trapdoor" -> WallBlockPlan.trapdoorPiece(
           horizontal(properties.getString("facing")));
       case "minecraft:ladder" -> WallBlockPlan.ladderPiece(
           horizontal(properties.getString("facing")));

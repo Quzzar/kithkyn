@@ -508,7 +508,9 @@ public class BuildingInfo {
     }
     java.util.Set<BlockPos> pairedBeds = new java.util.HashSet<>();
     if (workerBeds != null) {
-      if (!workerBeds.isEmpty() && workLocs.isEmpty()) return "worker_beds requires a workplace";
+      if (!workerBeds.isEmpty() && workLocs.isEmpty() && worksiteLocs.isEmpty()) {
+        return "worker_beds requires a workplace or routed worksite";
+      }
       if (new java.util.HashSet<>(workerBeds).size() != workerBeds.size()) return "worker_beds repeats a bed";
       if (workerBeds.stream().anyMatch(bed -> !bedLocs.contains(bed.asLong()))) {
         return "worker_beds names an undeclared bed";

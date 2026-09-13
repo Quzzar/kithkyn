@@ -41,7 +41,7 @@ class VillageStyleTest {
   void bundledBirchLeadsTheEnumAndIsWhatUnknownSavedStylesReadAs() {
     assertEquals(List.of(VillageStyle.BIRCH_FOREST, VillageStyle.DESERT, VillageStyle.BADLANDS,
         VillageStyle.FLOODPLAIN, VillageStyle.JUNGLE, VillageStyle.SWAMP, VillageStyle.MEDITERRANEAN,
-        VillageStyle.TUNDRA, VillageStyle.POLYNESIAN_COAST),
+        VillageStyle.TUNDRA, VillageStyle.POLYNESIAN_COAST, VillageStyle.ROMANIAN),
         List.of(VillageStyle.values()));
     assertEquals(VillageStyle.BIRCH_FOREST, VillageStyle.DEFAULT);
     assertEquals(VillageStyle.BIRCH_FOREST, VillageStyle.fromId(""));
@@ -56,6 +56,17 @@ class VillageStyleTest {
     Set<TagKey<Biome>> tags = Set.of(VillageStyle.DESERT.biomeTag(), Tags.Biomes.IS_BIRCH_FOREST);
     assertEquals(VillageStyle.DESERT,
         VillageStyle.select(tags::contains, "birch_hills", 0.6F, true, 0.6F, 7L, ALL_STYLES));
+  }
+
+  @Test
+  void darkForestAndNamedWoodlandHighlandsUseRomanianWhenItsCatalogIsLoaded() {
+    for (String path : List.of("dark_forest", "ancient_darkforest", "forested_highlands", "wooded_valley")) {
+      assertEquals(VillageStyle.ROMANIAN,
+          VillageStyle.select(NO_TAGS, path, 0.7F, true, 0.8F, 7L, ALL_STYLES));
+      assertEquals(VillageStyle.BIRCH_FOREST,
+          VillageStyle.select(NO_TAGS, path, 0.7F, true, 0.8F, 7L,
+              style -> style != VillageStyle.ROMANIAN));
+    }
   }
 
   @Test

@@ -2694,7 +2694,32 @@ public class Village {
 
   private boolean worksAt(UUID resident, UUID building) {
     JobAssignment job = jobAssignments.get(resident);
-    return job != null && job.getBuildingUUID().equals(building);
+    Building workplace = housingWorkplace(job);
+    return workplace != null && workplace.getUUID().equals(building);
+  }
+
+  /** A center post may route to a separate mine or storehouse; its live-in bed belongs there. */
+  @Nullable
+  private Building housingWorkplace(@Nullable JobAssignment job) {
+    if (job == null || job.isWallPost()) return null;
+    Building owner = getBuilding(job.getBuildingUUID());
+    if (owner == null || owner.getInfo() == null || isBeingRebuilt(owner.getUUID())) return null;
+    int stationIndex = 0;
+    for (Map.Entry<Long, Occupation> station : owner.getInfo().getWorkLocations().entrySet()) {
+      if (stationIndex++ != job.getStationIndex()) continue;
+      String category = owner.getInfo().getWorksiteCategory(station.getKey());
+      if (category == null) return owner;
+      return getBuildings().stream()
+          .filter(candidate -> candidate.getInfo() != null && !isBeingRebuilt(candidate.getUUID()))
+          .filter(candidate -> category.equals(candidate.getInfo().getCategory()))
+          .filter(candidate -> candidate.getInfo().getWorksiteLocations().containsValue(job.getOccupation()))
+          .min(java.util.Comparator
+              .comparingDouble((Building candidate) -> BlockPos.of(candidate.getCenterLocation())
+                  .distSqr(BlockPos.of(owner.getCenterLocation())))
+              .thenComparing(candidate -> candidate.getUUID().toString()))
+          .orElse(null);
+    }
+    return null;
   }
 
   @Nullable
@@ -2711,8 +2736,9 @@ public class Village {
     BuildingInfo.RoomReservation room = building == null || building.getInfo() == null
         ? null : building.getInfo().getRoomReservation(bed.getBedIndex());
     if (room != null) return roleRoomAllows(resident, building, room, job);
+    Building workplace = housingWorkplace(job);
     if (HousingPolicy.bedCanHouseJob(bed.getBuildingUUID(), isReservedWorkplaceBed(bed),
-        job == null ? null : job.getBuildingUUID())) return true;
+        workplace == null ? null : workplace.getUUID())) return true;
     UUID spouse = isReservedCoupleBed(bed) ? residentSpouse(resident) : null;
     return spouse != null && worksAt(spouse, bed.getBuildingUUID());
   }
@@ -2965,7 +2991,8 @@ public class Village {
     if (person != null && hasDependentHome(person)) {
       return; // a working teenager remains in the parents' home and consumes no bed
     }
-    preferWorkplaceBed(personId, job.getBuildingUUID());
+    Building workplace = housingWorkplace(job);
+    preferWorkplaceBed(personId, workplace == null ? job.getBuildingUUID() : workplace.getUUID());
     if (!bedAssignments.containsKey(personId)) {
       // An adult worker is never bedless: a workplace with no live-in bed leaves them
       // to general housing, taken here. Claiming only seats an adult the village
@@ -3060,7 +3087,9 @@ public class Village {
       if (person != null && person.getLifeStage().isDependentlyHoused()) {
         continue;
       }
-      preferWorkplaceBed(entry.getKey(), entry.getValue().getBuildingUUID());
+      Building workplace = housingWorkplace(entry.getValue());
+      preferWorkplaceBed(entry.getKey(), workplace == null
+          ? entry.getValue().getBuildingUUID() : workplace.getUUID());
     }
 
     // Residents displaced by the active project reclaim newly available homes before new arrivals.
@@ -3207,7 +3236,9 @@ public class Village {
 
   /** Admission uses the exact post so a smith or sentry cannot claim the royal bedroom. */
   public boolean canHouseForJob(UUID personId, JobAssignment targetJob) {
-    UUID targetBuildingUUID = targetJob.getBuildingUUID();
+    Building routedWorkplace = housingWorkplace(targetJob);
+    UUID targetBuildingUUID = routedWorkplace == null
+        ? targetJob.getBuildingUUID() : routedWorkplace.getUUID();
     BedAssignment current = bedAssignments.get(personId);
     UUID spouse = residentSpouse(personId);
     boolean currentMatchesTarget = false;

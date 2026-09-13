@@ -48,7 +48,8 @@ import net.neoforged.neoforge.event.tick.ServerTickEvent;
 /**
  * Shared private-catalog checks for the reviewed regional villages. Opt in with
  * the legacy Badlands flag or {@code -Dkithkyn.reviewedVillage.style=<style>}
- * for Desert, Floodplain, Jungle, Swamp, Mediterranean or Tundra; each catalog's authored numbers live in its
+ * for Desert, Floodplain, Jungle, Swamp, Mediterranean, Tundra, Polynesian Coast or Romanian;
+ * each catalog's authored numbers live in its
  * {@link Catalog} record so the checks read facts rather than guess them.
  */
 @EventBusSubscriber(modid = Kithkyn.MODID)
@@ -115,10 +116,15 @@ public final class BadlandsVillageVerification {
         new String[][] {{id("market", 1), id("market", 2)}, {id("market", 2), id("market", 3)},
             {id("farm", 1), id("farm", 2)}},
         6, 8, 6, 2, 6, 0, 0, new BlockPos(6, 1, 17), new BlockPos(7, 2, 18), 1, Biomes.SPARSE_JUNGLE);
+    case ROMANIAN -> new Catalog("[romanian-verify]", 24, 4, 8, new int[] {4, 0, 0},
+        Map.of(), List.of(), true,
+        new String[][] {{id("market", 1), id("market", 2)}, {id("market", 2), id("market", 3)}},
+        3, 4, 5, 1, 5, 0, 0, new BlockPos(12, 2, 27), new BlockPos(12, 2, 27), 1, Biomes.DARK_FOREST);
     case BIRCH_FOREST -> null;
   };
   /** Centre jobs beyond the founding four that a catalog's centre also opens at founding. */
   private static final Map<Occupation, Long> EXTRA_CENTER_JOBS = STYLE == VillageStyle.MEDITERRANEAN
+      || STYLE == VillageStyle.ROMANIAN
       ? Map.of(Occupation.CLERIC, 1L)
       : STYLE == VillageStyle.POLYNESIAN_COAST ? Map.of(Occupation.LEADER, 1L) : Map.of();
   private static final String PREFIX = CATALOG == null ? "[reviewed-village-verify]" : CATALOG.prefix();
@@ -199,6 +205,8 @@ public final class BadlandsVillageVerification {
     }
     check(VillageStyle.fromBiome(registry.getHolderOrThrow(Biomes.SPARSE_JUNGLE), 0L, BlockPos.ZERO, everything)
         == VillageStyle.POLYNESIAN_COAST, "Sparse jungle must select the Polynesian Coast");
+    check(VillageStyle.fromBiome(registry.getHolderOrThrow(Biomes.DARK_FOREST), 0L, BlockPos.ZERO, everything)
+        == VillageStyle.ROMANIAN, "Dark Forest must select Romanian");
     for (var biome : List.of(Biomes.PLAINS, Biomes.SUNFLOWER_PLAINS)) {
       check(VillageStyle.fromBiome(registry.getHolderOrThrow(biome), 0L, BlockPos.ZERO, everything)
           == VillageStyle.MEDITERRANEAN, "Mediterranean coverage missing " + biome.location());
@@ -208,7 +216,7 @@ public final class BadlandsVillageVerification {
       check(VillageStyle.fromBiome(registry.getHolderOrThrow(biome), 0L, BlockPos.ZERO, everything)
           == VillageStyle.TUNDRA, "Tundra coverage missing " + biome.location());
     }
-    Kithkyn.LOGGER.info("{} BIOMES PASS: Pueblo, Desert, Birch, Floodplain, Swamp, both Plains, the dense Jungle biomes, the sparse jungle's Polynesian Coast and exposed frozen lowlands", PREFIX);
+    Kithkyn.LOGGER.info("{} BIOMES PASS: Pueblo, Desert, Birch, Floodplain, Swamp, both Plains, the dense Jungle biomes, the sparse jungle's Polynesian Coast, Romanian Dark Forest and exposed frozen lowlands", PREFIX);
   }
 
   private static void verifyCatalogue(ServerLevel level) {
@@ -291,8 +299,9 @@ public final class BadlandsVillageVerification {
     }
     if (CATALOG.tavern()) {
       BuildingInfo tavern = info(id("tavern", 1));
-      check(tavern.getBedLocations().size() == 2 && tavern.getWorkerSingleBedCount() == 1,
-          "Tavern must keep one staff bed and one general bed");
+      int beds = STYLE == VillageStyle.ROMANIAN ? 3 : 2;
+      check(tavern.getBedLocations().size() == beds && tavern.getWorkerSingleBedCount() == 1,
+          "Tavern must keep one staff bed and its approved general beds");
     }
     Kithkyn.LOGGER.info("{} CATALOGUE PASS: {} actual templates and all {} authored housing choices", PREFIX,
         CATALOG.templates(), CATALOG.homes());
@@ -441,7 +450,7 @@ public final class BadlandsVillageVerification {
         "Founding workers did not receive distinct beds");
     if (STYLE == VillageStyle.JUNGLE || STYLE == VillageStyle.SWAMP
         || STYLE == VillageStyle.MEDITERRANEAN || STYLE == VillageStyle.TUNDRA
-        || STYLE == VillageStyle.POLYNESIAN_COAST) {
+        || STYLE == VillageStyle.POLYNESIAN_COAST || STYLE == VillageStyle.ROMANIAN) {
       if (STYLE != VillageStyle.MEDITERRANEAN) {
         verifyRoutedWorksite(village, residents, Occupation.MINER, "mine");
       }

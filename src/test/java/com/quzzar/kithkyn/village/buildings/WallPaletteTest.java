@@ -266,4 +266,25 @@ class WallPaletteTest {
     assertEquals(16, banners, "four gatehouse banners at every gate; the village identity dyes them when placed");
     assertEquals(Items.SPRUCE_LOG, WallTier.WOOD.material(style));
   }
+
+  @Test
+  void romanianWallsUseTheApprovedDarkTimberDeepslateBirchAndTorchDesign() {
+    var ring = WallRoute.aroundBox(0, 48, 0, 48);
+    var gates = Set.of(BlockPos.asLong(24, 0, 0), BlockPos.asLong(48, 0, 24),
+        BlockPos.asLong(24, 0, 48), BlockPos.asLong(0, 0, 24));
+    var style = VillageStyle.ROMANIAN;
+    var wall = new WallProject(ring, gates, Collections.nCopies(ring.size(), 64), WallTier.WOOD, style);
+    int timber = 0, deepslate = 0, birch = 0, torches = 0, trapdoors = 0;
+    for (var cell : wall.plannedBlocks()) {
+      var state = cell.desiredState(wall.getTier(), style);
+      if (state.is(Blocks.STRIPPED_DARK_OAK_WOOD)) timber++;
+      if (state.is(Blocks.COBBLED_DEEPSLATE) || state.is(Blocks.COBBLED_DEEPSLATE_WALL)) deepslate++;
+      if (state.is(Blocks.BIRCH_SLAB) || state.is(Blocks.BIRCH_STAIRS)) birch++;
+      if (state.is(Blocks.TORCH) || state.is(Blocks.WALL_TORCH)) torches++;
+      if (state.is(Blocks.DARK_OAK_TRAPDOOR)) trapdoors++;
+      assertFalse(state.is(Blocks.WHITE_CONCRETE) || state.is(Blocks.LANTERN));
+    }
+    assertTrue(timber > 0 && deepslate > 0 && birch > 0 && torches > 0 && trapdoors > 0);
+    assertEquals(Items.DARK_OAK_LOG, WallTier.WOOD.material(style));
+  }
 }

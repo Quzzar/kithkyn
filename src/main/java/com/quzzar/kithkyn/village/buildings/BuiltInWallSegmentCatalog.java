@@ -21,6 +21,8 @@ final class BuiltInWallSegmentCatalog implements WallSegmentCatalog {
   /** The Polynesian Coast palisade: study A, with its coral footing seated on the ground. */
   static final BuiltInWallSegmentCatalog POLYNESIAN_COAST =
       new BuiltInWallSegmentCatalog(AuthoredWoodWallSegments.POLYNESIAN_COAST);
+  static final BuiltInWallSegmentCatalog ROMANIAN =
+      new BuiltInWallSegmentCatalog(AuthoredWoodWallSegments.ROMANIAN);
   private final AuthoredWoodWallSegments authored;
   private final boolean hedged;
 

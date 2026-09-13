@@ -603,7 +603,7 @@ public final class PersonPathNavigation extends GroundPathNavigation {
       if (type == PathType.OPEN && isLadder(state)) {
         return PathType.WALKABLE; // a rung is somewhere the feet can be
       }
-      if (type == PathType.OPEN && isLadderTransition(context, new BlockPos(x, y, z))) {
+      if (isLadderTransition(context, new BlockPos(x, y, z))) {
         return PathType.WALKABLE;
       }
       return type;
@@ -703,7 +703,8 @@ public final class PersonPathNavigation extends GroundPathNavigation {
 
     /** The open cell immediately above a ladder's top rung, where a climber crosses onto its landing. */
     private boolean isLadderTransition(PathfindingContext context, BlockPos pos) {
-      return context.getBlockState(pos).getCollisionShape(context.level(), pos).isEmpty()
+      BlockState state = context.getBlockState(pos);
+      return (state.getCollisionShape(context.level(), pos).isEmpty() || isOpenPanel(state))
           && context.getBlockState(pos.below()).getBlock() instanceof LadderBlock;
     }
 

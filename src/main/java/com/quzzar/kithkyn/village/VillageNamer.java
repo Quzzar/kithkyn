@@ -185,6 +185,13 @@ public final class VillageNamer {
           List.of("Vaelu", "Tenora", "Olamiri", "Kaelua"),
           List.of("Vae", "Teno", "Ola", "Kae", "Mori", "Lua", "Rua", "Nali"),
           List.of("lu", "ora", "miri", "lua", "ani", "eva", "oa", "ina"));
+      case ROMANIAN -> new NamingProfile(
+          "A sheltered Dark Forest settlement of steep pale roofs, dark-oak frames, enclosed yards,"
+              + " substantial woodland houses, torchlit timber walls and a tall church around its bell."
+              + " Warm, lyrical invented names with an eastern woodland sound.",
+          List.of("Codrenia", "Valea Lunii", "Branovia", "Miercana"),
+          List.of("Cod", "Vale", "Bran", "Mier", "Lun", "Sor", "Dra", "Veli"),
+          List.of("enia", "ovia", "ana", "esti", "ora", "eni", "ava", "ina"));
     };
   }
 

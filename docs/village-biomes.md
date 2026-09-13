@@ -22,6 +22,7 @@ These catalogs are integrated, selectable, and verified as complete founding vil
 | Mediterranean | Plains and Sunflower Plains | White stone and plaster town core with tile roofs, courts, orchards, gardens, and open agriculture |
 | Tundra | Snowy Plains, Ice Spikes, snowy beaches, frozen rivers, and compatible exposed frozen lowlands | Compact snowbound buildings, packed-ice accents, spruce details, enclosed cold-weather farming, and four founding snow golems |
 | Polynesian Coast | Sparse Jungle, and beaches beside warm or lukewarm ocean | Stilted stripped-spruce huts under oak roofs, a king's hall that keeps the village jail, tiki torches, a pond fishery, an open-air shrine, and a stripped-log palisade on coral footings |
+| Romanian | Dark Forest, forested highlands, and wooded valleys | Steep birch roofs, heavy dark-oak frames, enclosed yards, substantial woodland homes, and timber-and-deepslate walls |
 
 ## Locked directions
 
@@ -32,7 +33,6 @@ its production catalog and founding behavior are verified.
 | Village biome | Founding environments | Direction |
 | --- | --- | --- |
 | Rustic Woodland | Forest and compatible ordinary oak woodland biomes | Familiar timber woodland settlement with a restrained rustic character |
-| Romanian | Dark Forest, forested highlands, and wooded valleys | Heavy timber roofs, enclosed yards, and substantial woodland buildings |
 | Japanese | Cherry Grove, Flower Forest, and compatible Sakura biomes | Garden settlement shaped around flowering woodland and deliberate landscape details |
 | Taiga | Taiga, Old Growth Pine Taiga, Old Growth Spruce Taiga, and compatible cold forests | Cold forest settlement; its final visual language is deliberately deferred between the ornate Polish family and the grittier T&T Viking family |
 | Alpine | Meadow, Grove, Snowy Slopes, and compatible mountain valleys and peaks | Swiss-inspired mountain settlement with steep roofs and slope-conscious buildings |
@@ -40,7 +40,7 @@ its production catalog and founding behavior are verified.
 | Savanna Tent | Savanna, Savanna Plateau, Windswept Savanna, and compatible dry grasslands | African-inspired tent and grassland settlement with portable-looking structures and a coherent warm-climate material palette |
 | Mushroom | Mushroom Fields and compatible fungal biomes | Fantasy mushroom settlement drawn from the complete mushroom reference families |
 
-Jungle, ordinary Swamp, Mediterranean, Tundra and Polynesian Coast are complete private
+Jungle, ordinary Swamp, Mediterranean, Tundra, Polynesian Coast and Romanian are complete private
 production catalogs. Swamp remains separate from the mud-brick Floodplain catalog used by
 mangroves. Tundra starts from a four-bed centre with a naturally placed mine and storehouse and
 deliberately has no castle. The Polynesian Coast centre is the king's hall, which seats the ruler
@@ -59,9 +59,9 @@ to Floodplain when site selection can classify them reliably.
 
 ## Next authoring shortlist
 
-Tundra and Polynesian Coast are complete. Taiga remains intentionally parked until the ornate
+Tundra, Polynesian Coast and Romanian are complete. Taiga remains intentionally parked until the ornate
 Polish and grittier Viking directions can be judged after more village catalogs are complete.
-Alpine, Romanian, Japanese, Savanna Tent and Mushroom remain available as the next catalog pass,
+Alpine, Japanese, Savanna Tent and Mushroom remain available as the next catalog pass,
 and Nautical Coast already has one reserved piece: the Polynesian gallery's PC07.4 beach camp.
 
 The three walk-through courts begin at **9913.5, 230, 986.5** in the live showcase world. The
