@@ -103,6 +103,25 @@ class BuildingIdTest {
     assertNull(canonical.getDesign());
   }
 
+  @Test
+  void duplicateStationCoordinatesAreRejectedInsteadOfSilentlyDroppingAJob() {
+    BuildingInfo duplicateJobs = decode("""
+        {"structure":"village_center_birch_forest_1", "work_stations":[
+          {"pos":[2,1,2], "occupation":"BUILDER"},
+          {"pos":[2,1,2], "occupation":"GUARD"}
+        ]}
+        """);
+    BuildingInfo duplicateWorksites = decode("""
+        {"structure":"mine_birch_forest_1", "worksites":[
+          {"pos":[3,1,3], "occupation":"MINER"},
+          {"pos":[3,1,3], "occupation":"MINER"}
+        ]}
+        """);
+
+    assertTrue(duplicateJobs.validate().contains("repeats a work station position"));
+    assertTrue(duplicateWorksites.validate().contains("repeats a physical worksite position"));
+  }
+
   private static BuildingInfo decode(String json) {
     return BuildingInfo.CODEC.parse(JsonOps.INSTANCE, JsonParser.parseString(json)).getOrThrow();
   }

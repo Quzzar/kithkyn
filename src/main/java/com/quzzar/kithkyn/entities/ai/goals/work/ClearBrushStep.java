@@ -39,6 +39,11 @@ public final class ClearBrushStep implements BlockWorkStep {
   /** How far from the station the brush is the farmer's business. */
   private static final int WORK_RADIUS = 12;
 
+  /** A bad ledge must not become the farmer's only choice forever. */
+  private static final int SHUN_TICKS = 2_400;
+
+  private final FailedTargetMemory failedTargets = new FailedTargetMemory(SHUN_TICKS);
+
   @Override
   @Nullable
   public BlockPos select(RealPerson person) {
@@ -71,6 +76,11 @@ public final class ClearBrushStep implements BlockWorkStep {
     person.level().removeBlock(target, false);
     person.addItems(Arrays.asList(new ItemStack(block.asItem())));
     return false; // one plant per approach; select finds the next
+  }
+
+  @Override
+  public void unreachable(RealPerson person, BlockPos target) {
+    failedTargets.reject(target, person.tickCount);
   }
 
   @Override
@@ -136,7 +146,8 @@ public final class ClearBrushStep implements BlockWorkStep {
       for (int y = -4; y <= 4; ++y) {
         for (int z = -WORK_RADIUS; z <= WORK_RADIUS; ++z) {
           cursor.setWithOffset(around, x, y, z);
-          if (!brush(person.level().getBlockState(cursor))) {
+          if (failedTargets.contains(cursor, person.tickCount)
+              || !brush(person.level().getBlockState(cursor))) {
             continue;
           }
           if (person.level().random.nextInt(++seen) == 0) {

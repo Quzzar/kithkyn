@@ -69,6 +69,14 @@ class BuildingRecipeTest {
   }
 
   @Test
+  void aDefinitionWithoutItsStructureTemplateIsRejected() {
+    Map<ResourceLocation, JsonElement> definitions = Map.of(
+        id("house_desert_1"), house("house_desert_1", 20));
+
+    assertTrue(BuildingDefinitionLoader.resolve(definitions, ignored -> false).isEmpty());
+  }
+
+  @Test
   void missingEmptyDuplicateAndRetiredGrantsRejectBuildings() {
     for (String grants : new String[] {"", ",\"grants\":[]", ",\"grants\":[\"HOUSING\",\"HOUSING\"]",
         ",\"grants\":[\"HOUSING\",\"PRIVATE_STORAGE\"]",
@@ -125,11 +133,13 @@ class BuildingRecipeTest {
     Map<ResourceLocation, JsonElement> definitions = Map.of(
         id("watchtower_birch_forest_1"), json("""
             {"structure":"watchtower_birch_forest_1","grants":["PROTECTION","RANGED_GUARD_POSTS"],
+             "work_stations":[{"pos":[1,1,1],"occupation":"GUARD"}],
              "cost":[{"item":"minecraft:oak_log","count":16},{"item":"minecraft:cobblestone","count":24}]}
             """),
         id("watchtower_birch_forest_2"), json("""
             {"structure":"watchtower_birch_forest_2","upgrades_from":"watchtower_birch_forest_1",
              "grants":["PROTECTION","RANGED_GUARD_POSTS"],
+             "work_stations":[{"pos":[1,1,1],"occupation":"GUARD"}],
              "cost":[{"item":"minecraft:oak_log","count":24},{"item":"minecraft:cobblestone","count":36}]}
             """));
     Buildings.reload(BuildingDefinitionLoader.resolve(definitions));

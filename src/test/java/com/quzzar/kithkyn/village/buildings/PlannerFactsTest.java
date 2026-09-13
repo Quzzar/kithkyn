@@ -27,6 +27,8 @@ class PlannerFactsTest {
     assertEquals("Already standing: farm x1, fishery x2. ",
         PlannerFacts.existingBuildings(buildings));
     assertEquals("Open work: farmer x1, fisher x2. ", PlannerFacts.openPosts(posts));
+    assertEquals("Open wall guard posts: gate crossbow x2. ",
+        PlannerFacts.openWallPosts(Map.of("gate crossbow", 2)));
   }
 
   @Test

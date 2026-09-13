@@ -28,8 +28,6 @@ import net.minecraft.world.level.block.state.BlockState;
  */
 public final class BuildStep implements BlockWorkStep {
 
-  /** A builder counts as on site once inside the building's radius, plus a little. */
-  private static final double RADIUS_SLACK = 1.1D;
   private String demolitionBlocker = "";
 
   @Override
@@ -45,8 +43,7 @@ public final class BuildStep implements BlockWorkStep {
     if (project.getProgress() == BuildProgress.GATHERING) {
       return null;
     }
-    return project.getRedevelopment() == null ? BlockPos.of(project.getBuilding().getCenterLocation())
-        : project.constructionAccess().select(person, project);
+    return project.constructionAccess().select(person, project);
   }
 
   @Override
@@ -63,7 +60,7 @@ public final class BuildStep implements BlockWorkStep {
     if (project == null || project.getProgress() == BuildProgress.COMPLETE) {
       return false;
     }
-    if (project.getRedevelopment() != null && !project.constructionAccess().safe(person, target)) {
+    if (!project.constructionAccess().safe(person, target)) {
       project.constructionAccess().unreachable(person, target);
       return false;
     }
@@ -118,15 +115,13 @@ public final class BuildStep implements BlockWorkStep {
   @Override
   public boolean inReach(RealPerson person, BlockPos target) {
     StructureInProgress project = project(person);
-    return project != null && project.getRedevelopment() != null
-        ? project.constructionAccess().inReach(person, target)
-        : BlockWorkStep.super.inReach(person, target);
+    return project != null && project.constructionAccess().inReach(person, target);
   }
 
   @Override
   public void unreachable(RealPerson person, BlockPos target) {
     StructureInProgress project = project(person);
-    if (project != null && project.getRedevelopment() != null) {
+    if (project != null) {
       project.constructionAccess().unreachable(person, target);
     }
   }
@@ -145,25 +140,6 @@ public final class BuildStep implements BlockWorkStep {
   @Override
   public int actEveryTicks() {
     return 10;
-  }
-
-  /**
-   * Not a fixed distance: a site is as big as what is being raised on it, so
-   * the builder is there once inside the building's own radius.
-   */
-  @Override
-  public double reachSqr(RealPerson person) {
-    StructureInProgress project = project(person);
-    if (project == null) {
-      return 9.0D;
-    }
-    return siteReachSqr(project);
-  }
-
-  /** Gathering and construction attend the same site, including terrain awaiting grading. */
-  static double siteReachSqr(StructureInProgress project) {
-    double radius = project.getBuilding().getRadius();
-    return radius * radius * RADIUS_SLACK;
   }
 
   /**

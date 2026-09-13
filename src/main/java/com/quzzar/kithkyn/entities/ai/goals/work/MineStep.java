@@ -35,6 +35,7 @@ import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.WallTorchBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
+import net.minecraft.world.level.material.Fluids;
 
 import net.neoforged.neoforge.common.Tags;
 
@@ -1505,7 +1506,7 @@ public final class MineStep implements BlockWorkStep {
     while (!frontier.isEmpty() && seen.size() <= BAIL_CAP) {
       BlockPos local = frontier.poll();
       BlockPos world = mouth.offset(local.rotate(rotation));
-      if (!isDugSpace(local) || !level.getBlockState(world).is(Blocks.WATER)) {
+      if (!isDugSpace(local) || !isWater(level.getBlockState(world))) {
         continue;
       }
       if (!toBail) {
@@ -1520,7 +1521,7 @@ public final class MineStep implements BlockWorkStep {
       for (Direction direction : Direction.values()) {
         BlockPos next = local.relative(direction);
         BlockPos nextWorld = mouth.offset(next.rotate(rotation));
-        if (isDugSpace(next) && isLiquid(level, nextWorld) && seen.add(next)) {
+        if (isDugSpace(next) && isWater(level.getBlockState(nextWorld)) && seen.add(next)) {
           frontier.add(next);
         }
       }
@@ -1773,13 +1774,13 @@ public final class MineStep implements BlockWorkStep {
     while (!frontier.isEmpty() && water.size() < BAIL_CAP) {
       BlockPos local = frontier.poll();
       BlockPos world = mouth.offset(local.rotate(rotation));
-      if (!isLiquid(level, world)) {
+      if (!isWater(level.getBlockState(world))) {
         continue;
       }
       for (Direction d : Direction.values()) {
         BlockPos next = local.relative(d);
         BlockPos nextWorld = mouth.offset(next.rotate(rotation));
-        if (isDugSpace(next) && isLiquid(level, nextWorld) && seen.add(next)) {
+        if (isDugSpace(next) && isWater(level.getBlockState(nextWorld)) && seen.add(next)) {
           frontier.add(next);
         }
       }
@@ -1860,7 +1861,7 @@ public final class MineStep implements BlockWorkStep {
   private BlockPos wetInteriorNeighbour(Level level, BlockPos mouth, Rotation rotation, BlockPos local) {
     for (Direction direction : Direction.values()) {
       BlockPos next = local.relative(direction);
-      if (isDugSpace(next) && level.getBlockState(mouth.offset(next.rotate(rotation))).is(Blocks.WATER)) {
+      if (isDugSpace(next) && isWater(level.getBlockState(mouth.offset(next.rotate(rotation))))) {
         return next;
       }
     }
@@ -1870,6 +1871,11 @@ public final class MineStep implements BlockWorkStep {
   /** Any fluid occupying the cell, flowing or still. */
   private static boolean isLiquid(Level level, BlockPos pos) {
     return !level.getBlockState(pos).getFluidState().isEmpty();
+  }
+
+  /** Water includes waterlogged solid cells, which still have to be bailed or plugged. */
+  static boolean isWater(BlockState state) {
+    return state.getFluidState().getType().isSame(Fluids.WATER);
   }
 
   /** Air or fluid at the shaft boundary needs a solid support block. */
