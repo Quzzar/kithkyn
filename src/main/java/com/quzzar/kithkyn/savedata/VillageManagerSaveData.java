@@ -179,7 +179,7 @@ public class VillageManagerSaveData extends SavedData {
 
     /**
      * Founds a village at the site in the given style, or, with none given, in
-     * the style the biome there calls for ({@link com.quzzar.kithkyn.village.buildings.VillageStyle#fromBiome}).
+     * the style the site calls for ({@link com.quzzar.kithkyn.village.buildings.VillageStyle#atSite}).
      */
     public boolean registerVillage(ServerLevelAccessor levelAccess, BlockPos location,
             @javax.annotation.Nullable com.quzzar.kithkyn.village.buildings.VillageStyle style) {
@@ -230,8 +230,8 @@ public class VillageManagerSaveData extends SavedData {
         }
         ServerLevel serverLevel = level != null ? level : levelAccess.getLevel();
         var selectedStyle = style != null ? style
-                : com.quzzar.kithkyn.village.buildings.VillageStyle.fromBiome(
-                        serverLevel.getBiome(location), serverLevel.getSeed(), location);
+                : com.quzzar.kithkyn.village.buildings.VillageStyle.atSite(
+                        serverLevel, location, serverLevel.getSeed());
         com.quzzar.kithkyn.village.VillageNamer.requestFoundingName(serverLevel, selectedStyle, name -> {
             try {
                 var identity = com.quzzar.kithkyn.village.VillageIdentity.generate(name, serverLevel.getRandom());

@@ -46,12 +46,26 @@ public record CastleLayout(BlockPos custodyCell, BlockPos releasePoint, Map<Guar
     return role == null ? List.of() : patrolRoutes.getOrDefault(role, List.of());
   }
 
-  /** One standing or commissioned castle supplies the settlement's single ruling position. */
+  /**
+   * Where these amenities may stand: a castle, or a village centre that is itself the ruler's hall
+   * and keeps the village jail (the Polynesian Coast centre, docs/polynesian-coast-village.md).
+   */
+  public static boolean allowedIn(String category) {
+    return "castle".equals(category) || Buildings.VILLAGE_CENTER_CATEGORY.equals(category);
+  }
+
+  /**
+   * One standing or commissioned castle supplies the settlement's single ruling position. A centre
+   * that keeps the jail is not a castle: it neither counts against a castle here nor is refused by it.
+   */
   public static boolean canStart(Village village, BuildingInfo info) {
-    if (info.getCastleLayout() == null) return true;
-    if (village.getBuildings().stream().anyMatch(building -> building.getInfo() != null && building.getInfo().getCastleLayout() != null)) return false;
+    if (!isCastle(info)) return true;
+    if (village.getBuildings().stream().anyMatch(building -> isCastle(building.getInfo()))) return false;
     var project = village.getCurrentProject();
-    return project == null || project.getBuilding().getInfo() == null
-        || project.getBuilding().getInfo().getCastleLayout() == null;
+    return project == null || !isCastle(project.getBuilding().getInfo());
+  }
+
+  private static boolean isCastle(@javax.annotation.Nullable BuildingInfo info) {
+    return info != null && info.getCastleLayout() != null && "castle".equals(info.getCategory());
   }
 }

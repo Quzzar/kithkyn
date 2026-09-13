@@ -235,4 +235,35 @@ class WallPaletteTest {
     assertEquals(16, hanging);
     assertEquals(Items.COBBLESTONE, WallTier.WOOD.material(style));
   }
+
+  @Test
+  void polynesianCoastWallsAreStrippedSpruceOnDeadCoralWithOakSlabWalksAndGateBanners() {
+    var ring = WallRoute.aroundBox(0, 48, 0, 48);
+    var gates = Set.of(BlockPos.asLong(24, 0, 0), BlockPos.asLong(48, 0, 24),
+        BlockPos.asLong(24, 0, 48), BlockPos.asLong(0, 0, 24));
+    var style = VillageStyle.POLYNESIAN_COAST;
+    var wall = new WallProject(ring, gates, Collections.nCopies(ring.size(), 64), WallTier.WOOD, style);
+    int coral = 0, spruce = 0, fences = 0, slabs = 0, trapdoors = 0, banners = 0, torches = 0;
+    for (var cell : wall.plannedBlocks()) {
+      var state = cell.desiredState(wall.getTier(), style);
+      assertFalse(state.is(Blocks.COBBLESTONE) || state.is(Blocks.MOSSY_COBBLESTONE)
+          || state.is(Blocks.COBBLESTONE_WALL) || state.is(Blocks.MOSSY_COBBLESTONE_WALL)
+          || state.is(Blocks.COBBLESTONE_SLAB) || state.is(Blocks.COBBLESTONE_STAIRS),
+          () -> "Birch masonry leaked into the Polynesian wall at " + cell.pos() + ": " + state);
+      if (state.is(Blocks.DEAD_BUBBLE_CORAL_BLOCK)) coral++;
+      if (state.is(Blocks.STRIPPED_SPRUCE_WOOD)) spruce++;
+      if (state.is(Blocks.SPRUCE_FENCE)) fences++;
+      if (state.is(Blocks.OAK_SLAB)) {
+        assertEquals(net.minecraft.world.level.block.state.properties.SlabType.TOP,
+            state.getValue(net.minecraft.world.level.block.SlabBlock.TYPE), "study A walks on top slabs");
+        slabs++;
+      }
+      if (state.is(Blocks.SPRUCE_TRAPDOOR)) trapdoors++;
+      if (state.is(Blocks.WHITE_WALL_BANNER)) banners++;
+      if (state.is(Blocks.TORCH) || state.is(Blocks.WALL_TORCH)) torches++;
+    }
+    assertTrue(coral > 0 && spruce > coral && fences > 0 && slabs > 0 && trapdoors > 0 && torches > 0);
+    assertEquals(16, banners, "four gatehouse banners at every gate; the village identity dyes them when placed");
+    assertEquals(Items.SPRUCE_LOG, WallTier.WOOD.material(style));
+  }
 }

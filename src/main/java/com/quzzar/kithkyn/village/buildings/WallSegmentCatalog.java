@@ -31,6 +31,7 @@ public interface WallSegmentCatalog {
       case DESERT, BADLANDS, FLOODPLAIN, JUNGLE, TUNDRA -> BuiltInWallSegmentCatalog.ARID;
       case SWAMP -> BuiltInWallSegmentCatalog.SWAMP;
       case MEDITERRANEAN -> BuiltInWallSegmentCatalog.MEDITERRANEAN;
+      case POLYNESIAN_COAST -> BuiltInWallSegmentCatalog.POLYNESIAN_COAST;
     };
   }
 }

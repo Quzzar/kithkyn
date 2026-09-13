@@ -1,5 +1,6 @@
 package com.quzzar.kithkyn.village.buildings;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.function.Predicate;
@@ -12,6 +13,7 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.levelgen.RandomSupport;
 import net.neoforged.neoforge.common.Tags;
@@ -25,18 +27,21 @@ import net.neoforged.neoforge.common.Tags;
  * Every style is a strict catalog: a village raises only what its own family
  * authored and never borrows another family's building to fill a gap. Birch
  * Forest is the one bundled catalog and so the default; Desert, Badlands,
- * Floodplain, Jungle, Swamp, Mediterranean and Tundra arrive through private datapacks
- * (docs/desert-village.md, docs/badlands-village.md, docs/floodplain-village.md,
- * docs/jungle-village.md, docs/swamp-village.md, docs/mediterranean-village.md,
- * docs/tundra-village.md), so they
+ * Floodplain, Jungle, Swamp, Mediterranean, Tundra and Polynesian Coast arrive through
+ * private datapacks (docs/desert-village.md, docs/badlands-village.md,
+ * docs/floodplain-village.md, docs/jungle-village.md, docs/swamp-village.md,
+ * docs/mediterranean-village.md, docs/tundra-village.md,
+ * docs/polynesian-coast-village.md), so they
  * are only automatic candidates while their founding sets are loaded.
  *
  * Explicit datapack style tags take precedence over conventional biome families.
+ * A beach on warm or lukewarm water ({@link #WARM_OCEAN}) is the Polynesian Coast,
+ * which is the one rule that reads the site's surroundings rather than one biome.
  * An unfamiliar family chooses among climate-compatible loaded catalogs using
  * the world seed and founding site, not the world's mutable random stream.
  */
 public enum VillageStyle {
-  BIRCH_FOREST, DESERT, BADLANDS, FLOODPLAIN, JUNGLE, SWAMP, MEDITERRANEAN, TUNDRA;
+  BIRCH_FOREST, DESERT, BADLANDS, FLOODPLAIN, JUNGLE, SWAMP, MEDITERRANEAN, TUNDRA, POLYNESIAN_COAST;
 
   /**
    * What a blank or unknown saved style reads as, the answer for every climate
@@ -80,12 +85,31 @@ public enum VillageStyle {
     return style != null ? style : DEFAULT;
   }
 
-  /** Biome-only selection for previews that have no founding seed or position. */
-  public static VillageStyle fromBiome(Holder<Biome> biome) {
-    return fromBiome(biome, 0L, BlockPos.ZERO);
+  /**
+   * Oceans warm enough that a beach beside one belongs to the Polynesian Coast
+   * (docs/village-biomes.md); a datapack can add its own warm seas to the tag.
+   */
+  public static final TagKey<Biome> WARM_OCEAN = TagKey.create(Registries.BIOME,
+      ResourceLocation.fromNamespaceAndPath("kithkyn", "warm_ocean"));
+
+  /** How far from a beach site the warm-water check reads the biome, and on how many bearings. */
+  private static final int[] COAST_RADII = {16, 32, 48};
+  private static final int COAST_BEARINGS = 8;
+
+  /**
+   * The one selector for a real site, used by manual and naturally generated
+   * founding and by the wall preview: the biome there, and whether the site is a
+   * beach on warm water. Reading the neighbouring biomes never loads a chunk; an
+   * unloaded one answers from the generator's noise.
+   */
+  public static VillageStyle atSite(LevelReader level, BlockPos site, long worldSeed) {
+    Holder<Biome> biome = level.getBiome(site);
+    boolean warmCoast = isOpenBeach(biome::is)
+        && coastSamples(site).stream().anyMatch(sample -> level.getBiome(sample).is(WARM_OCEAN));
+    return fromBiome(biome, worldSeed, site, warmCoast, Buildings::hasFoundingSet);
   }
 
-  /** The one selector used by both manual and naturally generated village founding. */
+  /** The biome-only selection at a known site, for checks with no level to read the coast from. */
   public static VillageStyle fromBiome(Holder<Biome> biome, long worldSeed, BlockPos site) {
     return fromBiome(biome, worldSeed, site, Buildings::hasFoundingSet);
   }
@@ -96,25 +120,60 @@ public enum VillageStyle {
    */
   public static VillageStyle fromBiome(Holder<Biome> biome, long worldSeed, BlockPos site,
       Predicate<VillageStyle> available) {
+    return fromBiome(biome, worldSeed, site, false, available);
+  }
+
+  private static VillageStyle fromBiome(Holder<Biome> biome, long worldSeed, BlockPos site, boolean warmCoast,
+      Predicate<VillageStyle> available) {
     long biomeSeed = biome.unwrapKey().map(key -> (long) key.location().toString().hashCode()).orElse(0L);
     Biome climate = biome.value();
     String biomePath = biome.unwrapKey().map(key -> key.location().getPath()).orElse("");
     return select(biome::is, biomePath, climate.getBaseTemperature(), climate.hasPrecipitation(),
-        climate.getModifiedClimateSettings().downfall(), worldSeed ^ site.asLong() ^ biomeSeed, available);
+        climate.getModifiedClimateSettings().downfall(), warmCoast, worldSeed ^ site.asLong() ^ biomeSeed,
+        available);
+  }
+
+  /** A beach a coast village can stand on: sandy shore, not a snowy beach. */
+  static boolean isOpenBeach(Predicate<TagKey<Biome>> tagged) {
+    return tagged.test(Tags.Biomes.IS_BEACH) && !tagged.test(Tags.Biomes.IS_SNOWY);
+  }
+
+  /** Where the warm-water check reads the biome: eight bearings at three distances, on the site's level. */
+  static List<BlockPos> coastSamples(BlockPos site) {
+    List<BlockPos> samples = new ArrayList<>();
+    for (int radius : COAST_RADII) {
+      for (int bearing = 0; bearing < COAST_BEARINGS; bearing++) {
+        double angle = Math.PI * 2 * bearing / COAST_BEARINGS;
+        samples.add(site.offset((int) Math.round(Math.cos(angle) * radius), 0,
+            (int) Math.round(Math.sin(angle) * radius)));
+      }
+    }
+    return samples;
+  }
+
+  /** The selector for a site that is not a beach on warm water, as every biome-only caller asks it. */
+  static VillageStyle select(Predicate<TagKey<Biome>> tagged, String biomePath, float temperature,
+      boolean precipitation, float downfall, long siteSeed, Predicate<VillageStyle> available) {
+    return select(tagged, biomePath, temperature, precipitation, downfall, false, siteSeed, available);
   }
 
   /**
-   * Pure selector seam: explicit style tags first, then the conventional
-   * families that have a finished catalog, then a climate cluster, then the
-   * first loaded founding set in enum order. Only styles whose founding set is
-   * loaded are ever chosen automatically.
+   * Pure selector seam: explicit style tags first, then a beach on warm water
+   * (the Polynesian Coast), then the conventional families that have a finished
+   * catalog, then a climate cluster, then the first loaded founding set in enum
+   * order. Only styles whose founding set is loaded are ever chosen automatically.
    */
   static VillageStyle select(Predicate<TagKey<Biome>> tagged, String biomePath, float temperature,
-      boolean precipitation, float downfall, long siteSeed, Predicate<VillageStyle> available) {
+      boolean precipitation, float downfall, boolean warmCoast, long siteSeed,
+      Predicate<VillageStyle> available) {
     for (VillageStyle style : values()) {
       if (tagged.test(style.biomeTag()) && available.test(style)) {
         return style;
       }
+    }
+    // Ahead of the conventional families: NeoForge counts a beach as sandy, which reads as Desert.
+    if (warmCoast && available.test(POLYNESIAN_COAST)) {
+      return POLYNESIAN_COAST;
     }
     VillageStyle known = conventionalStyle(tagged, biomePath);
     if (known != null && available.test(known)) {

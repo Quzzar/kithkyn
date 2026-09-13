@@ -36,6 +36,13 @@ final class AuthoredWoodWallSegments {
   static final AuthoredWoodWallSegments ARID = loadBundled("wood", true);
   static final AuthoredWoodWallSegments SWAMP = loadBundled("swamp");
   static final AuthoredWoodWallSegments MEDITERRANEAN = loadBundled("mediterranean");
+  /**
+   * Study A of the Polynesian Coast walls (2026-09-12): the Birch geometry in
+   * stripped spruce with spruce fence tips and oak slab walks on a dead coral
+   * footing. Not the arid variant: that flag re-trims the wood gatehouse's Mesa
+   * frame cells and drops its roof lanterns, and this geometry has neither.
+   */
+  static final AuthoredWoodWallSegments POLYNESIAN_COAST = loadBundled("polynesian_coast");
 
   private static final String RESOURCE_ROOT =
       "data/kithkyn/structure/wall/";
@@ -47,10 +54,24 @@ final class AuthoredWoodWallSegments {
 
   private final Map<WallSectionKind, Template> templates;
   private final boolean arid;
+  /** Whether any template authors a {@link WallBlockPlan.Piece#CORAL_FOOTING} course. */
+  private final boolean footed;
 
   private AuthoredWoodWallSegments(Map<WallSectionKind, Template> templates, boolean arid) {
     this.templates = Map.copyOf(templates);
     this.arid = arid;
+    this.footed = templates.values().stream().flatMap(template -> template.cells().stream())
+        .anyMatch(cell -> cell.piece() == WallBlockPlan.Piece.CORAL_FOOTING);
+  }
+
+  /**
+   * Whether this family authors a footing course. The catalog seats that
+   * course on every column's own ground, because the route slides tall run
+   * columns down and lifts terraced ones, which would bury or raise a course
+   * pinned to the template's local y 0.
+   */
+  boolean hasFooting() {
+    return this.footed;
   }
 
   /** Adds the authored cells belonging to one classified route section. */
@@ -331,7 +352,11 @@ final class AuthoredWoodWallSegments {
     };
   }
 
-  private static int nearestGround(List<Long> ring, List<Integer> ground, int x, int z) {
+  /**
+   * The saved natural ground of the route column nearest to a cell: exact on
+   * the route, and the sample an off-route leg or footing is extended down to.
+   */
+  static int nearestGround(List<Long> ring, List<Integer> ground, int x, int z) {
     int nearest = 0;
     long bestDistance = Long.MAX_VALUE;
     for (int index = 0; index < ring.size(); index++) {
@@ -346,10 +371,12 @@ final class AuthoredWoodWallSegments {
     return ground.get(nearest);
   }
 
+  /** Ground-contact legs. The coral footing is one, as Birch cobblestone is. */
   private static boolean isPost(WallBlockPlan.Piece piece) {
     return piece == WallBlockPlan.Piece.POST || piece == WallBlockPlan.Piece.GATE_FRAME_POST
         || piece == WallBlockPlan.Piece.COBBLE_POST
-        || piece == WallBlockPlan.Piece.MOSSY_POST;
+        || piece == WallBlockPlan.Piece.MOSSY_POST
+        || piece == WallBlockPlan.Piece.CORAL_FOOTING;
   }
 
   private static AuthoredWoodWallSegments loadBundled(String family) {
@@ -467,7 +494,8 @@ final class AuthoredWoodWallSegments {
 
   private static int supportPriority(WallBlockPlan.Piece piece) {
     return switch (piece) {
-      case POST, GATE_FRAME_POST, GATE_FRAME_BEAM, COBBLE_POST, MOSSY_POST, BEAM_NORTH_SOUTH, BEAM_EAST_WEST, BODY, WALKWAY -> 0;
+      case POST, GATE_FRAME_POST, GATE_FRAME_BEAM, COBBLE_POST, MOSSY_POST, BEAM_NORTH_SOUTH, BEAM_EAST_WEST, BODY, WALKWAY,
+          CORAL_FOOTING -> 0;
       case SLAB, PARAPET, STEP_NORTH, STEP_EAST, STEP_SOUTH, STEP_WEST -> 1;
       default -> 2;
     };
@@ -532,6 +560,12 @@ final class AuthoredWoodWallSegments {
           : WallBlockPlan.step(horizontal(properties.getString("facing")));
       case "minecraft:oak_leaves" -> WallBlockPlan.Piece.LEAVES;
       case "minecraft:dark_oak_leaves" -> WallBlockPlan.Piece.LEAVES_DARK;
+      // The Polynesian Coast capture (study A) names its own materials. Its
+      // stripped spruce is palisade body, placed like Birch masonry: a post
+      // would grow down through the gate passage under the roof edges. Its
+      // coral course is the literal footing.
+      case "minecraft:stripped_spruce_wood" -> WallBlockPlan.Piece.BODY;
+      case "minecraft:dead_bubble_coral_block" -> WallBlockPlan.Piece.CORAL_FOOTING;
       default -> null;
     };
   }

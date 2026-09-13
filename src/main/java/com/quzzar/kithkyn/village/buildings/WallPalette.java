@@ -36,6 +36,11 @@ record WallPalette(Block post, Block deck, Block stairs, Block slab,
       case TUNDRA -> new WallPalette(
           Blocks.SNOW_BLOCK, Blocks.SNOW_BLOCK, Blocks.STONE_BRICK_STAIRS,
           Blocks.STONE_BRICK_SLAB, Blocks.SPRUCE_FENCE, Blocks.SPRUCE_TRAPDOOR);
+      // Study A (2026-09-12): stripped spruce body, oak slab walks, spruce fence
+      // tips and hatches. Its dead coral footing is a literal piece, not a slot.
+      case POLYNESIAN_COAST -> new WallPalette(
+          Blocks.STRIPPED_SPRUCE_WOOD, Blocks.STRIPPED_SPRUCE_WOOD, Blocks.OAK_STAIRS,
+          Blocks.OAK_SLAB, Blocks.SPRUCE_FENCE, Blocks.SPRUCE_TRAPDOOR);
     };
   }
 

@@ -940,6 +940,13 @@ vanilla one tests for the door class and looks a block up for a top half a gate 
 The gate swings away from the opener and closes twenty ticks later whether or not they are
 through, the door's rule, because a pen gate left open is an empty pen by evening.
 
+On 2026-09-12 the goal learned to handle a row of gates. A route through the Polynesian Coast
+mine's three gates, or through a pen's double gate, can step from one gate cell into the next.
+The goal used to take the first gate on the path, and that was the open one they stood in. The
+closed gate beside it never opened, and the open one shut on them twenty ticks later. Now the goal
+opens the closed gate they are pressed against, including the next one in a row. No gate closes
+while a body is still inside it, for up to five seconds.
+
 **Authored-home access, 2026-09-09.** An open door still occupies three pixels along the
 side of its block. The widest adults clip that leaf when vanilla aims at the block center,
 even though they fit through the remaining opening. Navigation now steers those bodies

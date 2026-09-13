@@ -1,0 +1,2590 @@
+{
+  "schemaVersion": 1,
+  "recorded": "2026-09-12T18:54:42.930988-04:00",
+  "purpose": "Complete Polynesian core and tropical-coast donor gallery for selecting the Polynesian Coast production catalog.",
+  "world": "trio-20260912",
+  "worldNote": "Placed in the trio test world at Aaron's request; the gallery world was not being served.",
+  "entry": [
+    609.5,
+    230.0,
+    10.5
+  ],
+  "bounds": [
+    606,
+    220,
+    4,
+    774,
+    276,
+    466
+  ],
+  "selectionRule": "All 18 standalone Towns & Towers Polynesian structures plus a separate, labeled set of tropical-coast donors for missing services; street, terminator and villager templates are omitted.",
+  "counts": {
+    "polynesianCore": 18,
+    "donors": 16,
+    "total": 65,
+    "rows": 11,
+    "candidates": 18,
+    "workshop": 13
+  },
+  "rows": [
+    {
+      "id": "PC01",
+      "title": "POLYNESIAN \u2014 CENTRE + TORCH",
+      "origin": [
+        616,
+        230,
+        16
+      ],
+      "bounds": [
+        606,
+        220,
+        7,
+        640,
+        276,
+        39
+      ],
+      "entries": [
+        {
+          "id": "PC01.1",
+          "label": "Town Centre 1",
+          "role": "center",
+          "sourceMod": "Towns & Towers",
+          "source": "data/kaisyn/structure/village/sparse_jungle_polynesian/town_centers/sparse_jungle_meeting_point_1.nbt",
+          "sourceSha256": "54e84818ecd0cfcdff20ae07c06a3e7f8a2dacd2f660a13bac1a59a74ea8d6be",
+          "preparedSha256": "36e83fb60698ca2bcc5fd9b1c1e939321fe4200ff572732f6dd95638c884f052",
+          "size": [
+            15,
+            10,
+            20
+          ],
+          "origin": [
+            616,
+            230,
+            16
+          ],
+          "privateTemplate": "kithkyn_polynesian_profile:pc01_01_sparse_jungle_meeting_point_1"
+        },
+        {
+          "id": "PC01.2",
+          "label": "Tiki Torch",
+          "role": "detail",
+          "sourceMod": "Towns & Towers",
+          "source": "data/kaisyn/structure/village/sparse_jungle_polynesian/sparse_jungle_tiki_torch_1.nbt",
+          "sourceSha256": "1780b483f6374055e911f9fded9ad3261051bd0be3a389373de7be596242ae2c",
+          "preparedSha256": "bc8ca43df3a6e9ad2d1c2dad9f48de902f395807cad8bdaad5c2d6d793de5f47",
+          "size": [
+            1,
+            3,
+            1
+          ],
+          "origin": [
+            637,
+            230,
+            16
+          ],
+          "privateTemplate": "kithkyn_polynesian_profile:pc01_02_sparse_jungle_tiki_torch_1"
+        }
+      ]
+    },
+    {
+      "id": "PC02",
+      "title": "POLYNESIAN \u2014 HOMES",
+      "origin": [
+        616,
+        230,
+        60
+      ],
+      "bounds": [
+        606,
+        220,
+        51,
+        735,
+        276,
+        76
+      ],
+      "entries": [
+        {
+          "id": "PC02.1",
+          "label": "Small House 1",
+          "role": "house",
+          "sourceMod": "Towns & Towers",
+          "source": "data/kaisyn/structure/village/sparse_jungle_polynesian/houses/sparse_jungle_small_house_1.nbt",
+          "sourceSha256": "d05d8abd20d996a07aa8a7569c847cb13d74a33f15e5cd1a97cab11efb4794ae",
+          "preparedSha256": "59037ac526946b19bb92b26ac56e25fee33c432b02860eea7893455f3d950201",
+          "size": [
+            7,
+            6,
+            7
+          ],
+          "origin": [
+            616,
+            230,
+            60
+          ],
+          "privateTemplate": "kithkyn_polynesian_profile:pc02_01_sparse_jungle_small_house_1"
+        },
+        {
+          "id": "PC02.2",
+          "label": "Small House 2",
+          "role": "house",
+          "sourceMod": "Towns & Towers",
+          "source": "data/kaisyn/structure/village/sparse_jungle_polynesian/houses/sparse_jungle_small_house_2.nbt",
+          "sourceSha256": "4022d36b4e97ccd1641ca532e419b6c8ab0c18a4fc7234fc11aebaf3cfdf0dfb",
+          "preparedSha256": "5f19e4ae2cc8b8a419cd90f2e0cf4268f48cb5daaecfb7d1697dcda702c029f8",
+          "size": [
+            8,
+            6,
+            8
+          ],
+          "origin": [
+            629,
+            230,
+            60
+          ],
+          "privateTemplate": "kithkyn_polynesian_profile:pc02_02_sparse_jungle_small_house_2"
+        },
+        {
+          "id": "PC02.3",
+          "label": "Small House 3",
+          "role": "house",
+          "sourceMod": "Towns & Towers",
+          "source": "data/kaisyn/structure/village/sparse_jungle_polynesian/houses/sparse_jungle_small_house_3.nbt",
+          "sourceSha256": "b54fbc418f31e7373bc9909d25b075673dc4461a69c6c9aa5c08e2438986277a",
+          "preparedSha256": "b080c4f635e2912ca5258df3d0f7e343753f166d61b8b25697f0f4807a2bb09a",
+          "size": [
+            7,
+            7,
+            7
+          ],
+          "origin": [
+            643,
+            230,
+            60
+          ],
+          "privateTemplate": "kithkyn_polynesian_profile:pc02_03_sparse_jungle_small_house_3"
+        },
+        {
+          "id": "PC02.4",
+          "label": "Small House 4",
+          "role": "house",
+          "sourceMod": "Towns & Towers",
+          "source": "data/kaisyn/structure/village/sparse_jungle_polynesian/houses/sparse_jungle_small_house_4.nbt",
+          "sourceSha256": "f8bf7cf8ca5418260be087789471a52cb5f247e0ed5f263f002df98f0eee1880",
+          "preparedSha256": "315d9dfdcf31a7101cf67b0830956120309cf1ab59f265e7244d6a071bfa8d14",
+          "size": [
+            7,
+            7,
+            7
+          ],
+          "origin": [
+            656,
+            230,
+            60
+          ],
+          "privateTemplate": "kithkyn_polynesian_profile:pc02_04_sparse_jungle_small_house_4"
+        },
+        {
+          "id": "PC02.5",
+          "label": "Medium House 1",
+          "role": "house",
+          "sourceMod": "Towns & Towers",
+          "source": "data/kaisyn/structure/village/sparse_jungle_polynesian/houses/sparse_jungle_medium_house_1.nbt",
+          "sourceSha256": "44b13907f7f3ef370184a56e53e39b5b2cb842fef48a70656f40f6f555140e01",
+          "preparedSha256": "3e1284a40df74658211da20e331914a6a70e2b7516c4ea259fd0e825653ce2d9",
+          "size": [
+            7,
+            10,
+            13
+          ],
+          "origin": [
+            669,
+            230,
+            60
+          ],
+          "privateTemplate": "kithkyn_polynesian_profile:pc02_05_sparse_jungle_medium_house_1"
+        },
+        {
+          "id": "PC02.6",
+          "label": "Medium House 2",
+          "role": "house",
+          "sourceMod": "Towns & Towers",
+          "source": "data/kaisyn/structure/village/sparse_jungle_polynesian/houses/sparse_jungle_medium_house_2.nbt",
+          "sourceSha256": "917feb647b15615c1285ee8490745a50adead6daf0b8158787d540191dd0b6df",
+          "preparedSha256": "cd9a9871dd032b415c2157123f93d51cae8d42c91fde4d9f05ed99ff8e628636",
+          "size": [
+            13,
+            9,
+            9
+          ],
+          "origin": [
+            682,
+            230,
+            60
+          ],
+          "privateTemplate": "kithkyn_polynesian_profile:pc02_06_sparse_jungle_medium_house_2"
+        },
+        {
+          "id": "PC02.7",
+          "label": "Medium House 3",
+          "role": "house",
+          "sourceMod": "Towns & Towers",
+          "source": "data/kaisyn/structure/village/sparse_jungle_polynesian/houses/sparse_jungle_medium_house_3.nbt",
+          "sourceSha256": "f8cd7b0fa74d474dd41a61bbba80072e513f09a0a84f1d9a0c8b2f85a94d0cf2",
+          "preparedSha256": "3dfd259ed2838fc84d04f8560f0b8d0bcea72466328048f82ca193053e4b3cd6",
+          "size": [
+            13,
+            9,
+            10
+          ],
+          "origin": [
+            701,
+            230,
+            60
+          ],
+          "privateTemplate": "kithkyn_polynesian_profile:pc02_07_sparse_jungle_medium_house_3"
+        },
+        {
+          "id": "PC02.8",
+          "label": "Large House 1",
+          "role": "house",
+          "sourceMod": "Towns & Towers",
+          "source": "data/kaisyn/structure/village/sparse_jungle_polynesian/houses/sparse_jungle_large_house_1.nbt",
+          "sourceSha256": "39a7030a949ed44d6a94fec847343cdaf9fc814e3a62bd8f2c099e6573a68140",
+          "preparedSha256": "b3b2bf0fb8a2752c7e73107ab0294f485b2daef69ac7a2f11ab2f5ab2cfc175c",
+          "size": [
+            13,
+            10,
+            13
+          ],
+          "origin": [
+            720,
+            230,
+            60
+          ],
+          "privateTemplate": "kithkyn_polynesian_profile:pc02_08_sparse_jungle_large_house_1"
+        }
+      ]
+    },
+    {
+      "id": "PC03",
+      "title": "POLYNESIAN \u2014 WORKPLACES + FARMS",
+      "origin": [
+        616,
+        230,
+        104
+      ],
+      "bounds": [
+        606,
+        220,
+        95,
+        726,
+        276,
+        118
+      ],
+      "entries": [
+        {
+          "id": "PC03.1",
+          "label": "Armorer + Mason",
+          "role": "work",
+          "sourceMod": "Towns & Towers",
+          "source": "data/kaisyn/structure/village/sparse_jungle_polynesian/houses/sparse_jungle_armorer_and_mason_1.nbt",
+          "sourceSha256": "91cb427e973f4c54aa6c35d85ef3a1d6913284b0bc93e59600595809d971b57c",
+          "preparedSha256": "1c86983fb0b730cb908d26c323206b60c5e1db0374d76b2b73904c0ae574866a",
+          "size": [
+            8,
+            6,
+            8
+          ],
+          "origin": [
+            616,
+            230,
+            104
+          ],
+          "privateTemplate": "kithkyn_polynesian_profile:pc03_01_sparse_jungle_armorer_and_mason_1"
+        },
+        {
+          "id": "PC03.2",
+          "label": "Toolsmith + Weaponsmith",
+          "role": "work",
+          "sourceMod": "Towns & Towers",
+          "source": "data/kaisyn/structure/village/sparse_jungle_polynesian/houses/sparse_jungle_toolsmith_and_weaponsmith_1.nbt",
+          "sourceSha256": "4cbddd7addc4f96d1cfb9095afbc727d80c0554d871e1924b1a53a20c92ece6d",
+          "preparedSha256": "324706d0d6ff1fa5cad196cfb7ae1df82b37ded8514675a1c6c8f87b886160b0",
+          "size": [
+            8,
+            8,
+            8
+          ],
+          "origin": [
+            630,
+            230,
+            104
+          ],
+          "privateTemplate": "kithkyn_polynesian_profile:pc03_02_sparse_jungle_toolsmith_and_weaponsmith_1"
+        },
+        {
+          "id": "PC03.3",
+          "label": "Cartographer + Library",
+          "role": "civic",
+          "sourceMod": "Towns & Towers",
+          "source": "data/kaisyn/structure/village/sparse_jungle_polynesian/houses/sparse_jungle_cartographer_and_library_1.nbt",
+          "sourceSha256": "1b45937b71377968b1870c51081fc6b7abd4ec816eb7934b3513ad875c25505a",
+          "preparedSha256": "fb1ad91dee63b01e7449074740b6919d1481f6b761cc477ba90f16795954ab55",
+          "size": [
+            11,
+            6,
+            7
+          ],
+          "origin": [
+            644,
+            230,
+            104
+          ],
+          "privateTemplate": "kithkyn_polynesian_profile:pc03_03_sparse_jungle_cartographer_and_library_1"
+        },
+        {
+          "id": "PC03.4",
+          "label": "Leatherworker",
+          "role": "work",
+          "sourceMod": "Towns & Towers",
+          "source": "data/kaisyn/structure/village/sparse_jungle_polynesian/houses/sparse_jungle_leatherworker_1.nbt",
+          "sourceSha256": "540994973e4067cb27349951181741de85a317ecf2efdcd78843e6bb9e38337f",
+          "preparedSha256": "26226139944b6e241c2067a15214f75aebfd0eec8743f9f8d34ecf174ba01ed4",
+          "size": [
+            5,
+            5,
+            5
+          ],
+          "origin": [
+            661,
+            230,
+            104
+          ],
+          "privateTemplate": "kithkyn_polynesian_profile:pc03_04_sparse_jungle_leatherworker_1"
+        },
+        {
+          "id": "PC03.5",
+          "label": "Butcher + Shepherd",
+          "role": "food",
+          "sourceMod": "Towns & Towers",
+          "source": "data/kaisyn/structure/village/sparse_jungle_polynesian/houses/sparse_jungle_butcher_and_shepherd_1.nbt",
+          "sourceSha256": "cea44a5fa821878e42d5f5900dc8c41081bfb44cea221e3ecb215e89e3fcc5db",
+          "preparedSha256": "d5c6a654186340d59dddeb0f86bb6dcb76069dcbb0363dc55f8edb9e942f4c98",
+          "size": [
+            8,
+            8,
+            8
+          ],
+          "origin": [
+            672,
+            230,
+            104
+          ],
+          "privateTemplate": "kithkyn_polynesian_profile:pc03_05_sparse_jungle_butcher_and_shepherd_1"
+        },
+        {
+          "id": "PC03.6",
+          "label": "Fisher + Fletcher",
+          "role": "food",
+          "sourceMod": "Towns & Towers",
+          "source": "data/kaisyn/structure/village/sparse_jungle_polynesian/houses/sparse_jungle_fisher_and_fletcher_1.nbt",
+          "sourceSha256": "ef7f2214384eaecc3a53d1f1783cfdf6f8473b1049abc7b7e509018bd6e5ddd9",
+          "preparedSha256": "163f6a928a1ccdf657272e14205221eaa7a8f630223c3be5126d59e2ae24844c",
+          "size": [
+            7,
+            7,
+            7
+          ],
+          "origin": [
+            686,
+            230,
+            104
+          ],
+          "privateTemplate": "kithkyn_polynesian_profile:pc03_06_sparse_jungle_fisher_and_fletcher_1",
+          "containment": {
+            "kind": "barrier ring",
+            "box": [
+              684,
+              230,
+              102,
+              694,
+              230,
+              112
+            ]
+          }
+        },
+        {
+          "id": "PC03.7",
+          "label": "Small Farm",
+          "role": "food",
+          "sourceMod": "Towns & Towers",
+          "source": "data/kaisyn/structure/village/sparse_jungle_polynesian/houses/sparse_jungle_small_farm_1.nbt",
+          "sourceSha256": "084e1024b62cb2bf96f5283e96c5b271919b5fd4bcd141e371661aa7d1dc1337",
+          "preparedSha256": "a86625d36747f3ab3ecdf202c8370716f7fc2930b5b5dffd46d38c1baec01030",
+          "size": [
+            6,
+            7,
+            7
+          ],
+          "origin": [
+            699,
+            230,
+            104
+          ],
+          "privateTemplate": "kithkyn_polynesian_profile:pc03_07_sparse_jungle_small_farm_1",
+          "containment": {
+            "kind": "barrier ring",
+            "box": [
+              697,
+              230,
+              102,
+              706,
+              230,
+              112
+            ]
+          }
+        },
+        {
+          "id": "PC03.8",
+          "label": "Large Farm",
+          "role": "food",
+          "sourceMod": "Towns & Towers",
+          "source": "data/kaisyn/structure/village/sparse_jungle_polynesian/houses/sparse_jungle_large_farm_1.nbt",
+          "sourceSha256": "f9a706859ab60737f7e07d095d8b702cba2ca8e5742d9e93984f88df59e35946",
+          "preparedSha256": "ee00f6ba9ec3b6b137c8708f7237783a908b2266873867bf4c93cd9ecb45dae9",
+          "size": [
+            13,
+            5,
+            11
+          ],
+          "origin": [
+            711,
+            230,
+            104
+          ],
+          "privateTemplate": "kithkyn_polynesian_profile:pc03_08_sparse_jungle_large_farm_1",
+          "containment": {
+            "kind": "barrier ring",
+            "box": [
+              709,
+              230,
+              102,
+              725,
+              230,
+              116
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "PC04",
+      "title": "TROPICAL COAST \u2014 MISSING SERVICES",
+      "origin": [
+        616,
+        230,
+        148
+      ],
+      "bounds": [
+        606,
+        220,
+        139,
+        698,
+        276,
+        160
+      ],
+      "entries": [
+        {
+          "id": "PC04.1",
+          "label": "Beach Bakery",
+          "role": "bakery",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/beach/jobsite/bakery.nbt",
+          "sourceSha256": "259d52050659fb48ab84e1f3582310e28393b520daf2f93f85c429e6d4c018ac",
+          "preparedSha256": "54cc5748a28c0668ba74476e10b517e7e496b7575edceb082fb445e61f85ac6a",
+          "size": [
+            7,
+            10,
+            8
+          ],
+          "origin": [
+            616,
+            230,
+            148
+          ],
+          "privateTemplate": "kithkyn_polynesian_profile:pc04_01_bakery_standin",
+          "standIns": [
+            {
+              "pos": [
+                4,
+                2,
+                6
+              ],
+              "from": {
+                "Properties": {
+                  "lit": "false",
+                  "facing": "north"
+                },
+                "Name": "jmc:cake_oven"
+              },
+              "to": {
+                "Properties": {
+                  "facing": "north",
+                  "lit": "false"
+                },
+                "Name": "minecraft:smoker"
+              }
+            },
+            {
+              "pos": [
+                5,
+                3,
+                4
+              ],
+              "from": {
+                "Properties": {
+                  "bites": "0"
+                },
+                "Name": "jmc:beetroot_cake"
+              },
+              "to": {
+                "Properties": {
+                  "bites": "0"
+                },
+                "Name": "minecraft:cake"
+              }
+            },
+            {
+              "pos": [
+                5,
+                3,
+                6
+              ],
+              "from": {
+                "Properties": {
+                  "bites": "0"
+                },
+                "Name": "jmc:cupcake"
+              },
+              "to": {
+                "Properties": {
+                  "bites": "0"
+                },
+                "Name": "minecraft:cake"
+              }
+            }
+          ]
+        },
+        {
+          "id": "PC04.2",
+          "label": "Beach Warehouse",
+          "role": "storehouse",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/beach/jobsite/warehouse.nbt",
+          "sourceSha256": "ef2d53696402649e447f86a2d8b5628b92e50c7a97040f04cd3cad1c9403daef",
+          "preparedSha256": "975bdf2fc0f1f978394f265c0e86eab42461ed611565242f94a9d00fecc2cc52",
+          "size": [
+            9,
+            7,
+            9
+          ],
+          "origin": [
+            629,
+            230,
+            148
+          ],
+          "privateTemplate": "kithkyn_polynesian_profile:pc04_02_warehouse_standin",
+          "standIns": [
+            {
+              "pos": [
+                2,
+                3,
+                4
+              ],
+              "from": {
+                "Properties": {
+                  "boxes": "1",
+                  "axis": "x"
+                },
+                "Name": "wares:cardboard_box"
+              },
+              "to": {
+                "Properties": {
+                  "facing": "up",
+                  "open": "false"
+                },
+                "Name": "minecraft:barrel"
+              }
+            },
+            {
+              "pos": [
+                2,
+                3,
+                5
+              ],
+              "from": {
+                "Properties": {
+                  "boxes": "1",
+                  "axis": "z"
+                },
+                "Name": "wares:cardboard_box"
+              },
+              "to": {
+                "Properties": {
+                  "facing": "up",
+                  "open": "false"
+                },
+                "Name": "minecraft:barrel"
+              }
+            },
+            {
+              "pos": [
+                2,
+                3,
+                6
+              ],
+              "from": {
+                "Properties": {
+                  "boxes": "1",
+                  "axis": "z"
+                },
+                "Name": "wares:cardboard_box"
+              },
+              "to": {
+                "Properties": {
+                  "facing": "up",
+                  "open": "false"
+                },
+                "Name": "minecraft:barrel"
+              }
+            },
+            {
+              "pos": [
+                4,
+                3,
+                4
+              ],
+              "from": {
+                "Properties": {
+                  "boxes": "1",
+                  "axis": "z"
+                },
+                "Name": "wares:cardboard_box"
+              },
+              "to": {
+                "Properties": {
+                  "facing": "up",
+                  "open": "false"
+                },
+                "Name": "minecraft:barrel"
+              }
+            },
+            {
+              "pos": [
+                3,
+                2,
+                4
+              ],
+              "from": {
+                "Properties": {
+                  "agreement": "none",
+                  "facing": "south"
+                },
+                "Name": "wares:delivery_table"
+              },
+              "to": {
+                "Name": "minecraft:crafting_table"
+              }
+            }
+          ]
+        },
+        {
+          "id": "PC04.3",
+          "label": "Beach Vault",
+          "role": "storehouse",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/beach/jobsite/vault.nbt",
+          "sourceSha256": "2e768462551c1056a3be54a72da76d6d4ffcb15f070394f5d6da457085bd2921",
+          "preparedSha256": "b9684b0e1244e94d12c06679e64f46cb067cd5bd6a5b4c506e56b7e7bc29c312",
+          "size": [
+            9,
+            12,
+            9
+          ],
+          "origin": [
+            644,
+            230,
+            148
+          ],
+          "privateTemplate": "kithkyn_polynesian_profile:pc04_03_vault"
+        },
+        {
+          "id": "PC04.4",
+          "label": "Beach Sawmill",
+          "role": "lumberjack",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/beach/jobsite/sawmill.nbt",
+          "sourceSha256": "bc663acb95e35c70ac8bccc22935276befffcf3713c9a05f56d46dabf51a885b",
+          "preparedSha256": "c2b6a98223d53e5a029534e0d793884039a6415775b9b9335550f04e77f339d3",
+          "size": [
+            9,
+            10,
+            9
+          ],
+          "origin": [
+            659,
+            230,
+            148
+          ],
+          "privateTemplate": "kithkyn_polynesian_profile:pc04_04_sawmill_standin",
+          "standIns": [
+            {
+              "pos": [
+                4,
+                2,
+                4
+              ],
+              "from": {
+                "Properties": {
+                  "waterlogged": "false",
+                  "bottom": "true",
+                  "facing": "north"
+                },
+                "Name": "sawmill:sawmill"
+              },
+              "to": {
+                "Properties": {
+                  "facing": "north"
+                },
+                "Name": "minecraft:stonecutter"
+              }
+            }
+          ],
+          "restyles": [
+            {
+              "recorded": "2026-09-12T20:27:31.741409-04:00",
+              "method": "setblock in place, verified from the saved world",
+              "rule": "Polynesian palette: oak roof, stripped spruce sides",
+              "swaps": {
+                "minecraft:sand -> minecraft:grass_block": 81,
+                "minecraft:jungle_log -> minecraft:stripped_spruce_wood": 30,
+                "minecraft:stripped_jungle_log -> minecraft:stripped_spruce_wood": 22,
+                "minecraft:spruce_planks -> minecraft:oak_planks": 45,
+                "minecraft:jungle_fence -> minecraft:spruce_fence": 16,
+                "minecraft:spruce_slab -> minecraft:oak_slab": 49
+              }
+            }
+          ]
+        },
+        {
+          "id": "PC04.5",
+          "label": "Beach Woodworker",
+          "role": "lumberjack",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/beach/jobsite/woodworker.nbt",
+          "sourceSha256": "6d3a8dee986a02fec0ba6019e2cff6f47b50e87f590f7d4458f893872a472b79",
+          "preparedSha256": "ef767c469c44bd75e42bee6d20e3f4708f9b2d6695ff45ec9cf095262379d732",
+          "size": [
+            9,
+            5,
+            7
+          ],
+          "origin": [
+            674,
+            230,
+            148
+          ],
+          "privateTemplate": "kithkyn_polynesian_profile:pc04_05_woodworker_standin",
+          "standIns": [
+            {
+              "pos": [
+                4,
+                1,
+                4
+              ],
+              "from": {
+                "Name": "morevillagers:woodworking_table"
+              },
+              "to": {
+                "Name": "minecraft:crafting_table"
+              }
+            }
+          ]
+        },
+        {
+          "id": "PC04.6",
+          "label": "Beach Hunter",
+          "role": "hunter",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/beach/jobsite/hunter.nbt",
+          "sourceSha256": "6e9a6e09cba460d81421d9a4c5abde5e329e92b082244a842448722a4d8fac51",
+          "preparedSha256": "ca2fec998d8520f1548892dd3fbcb9c1253b9835e174c4dd3fcc96e86ffed0de",
+          "size": [
+            7,
+            5,
+            7
+          ],
+          "origin": [
+            689,
+            230,
+            148
+          ],
+          "privateTemplate": "kithkyn_polynesian_profile:pc04_06_hunter_standin",
+          "standIns": [
+            {
+              "pos": [
+                3,
+                1,
+                4
+              ],
+              "from": {
+                "Name": "morevillagers:hunting_post"
+              },
+              "to": {
+                "Name": "minecraft:fletching_table"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "PC05",
+      "title": "TROPICAL COAST \u2014 TAVERNS + TOWERS",
+      "origin": [
+        616,
+        230,
+        192
+      ],
+      "bounds": [
+        606,
+        220,
+        183,
+        710,
+        276,
+        214
+      ],
+      "entries": [
+        {
+          "id": "PC05.1",
+          "label": "Beach Tavern",
+          "role": "tavern",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/beach/jobsite/tavern.nbt",
+          "sourceSha256": "a7001c17597372d6bde83841f8a87f17739decb295b793e208baaba1ad2b2fc1",
+          "preparedSha256": "70506390d017e3b378428e743f94d9297a324121662f553d872bb251d1e2ba54",
+          "size": [
+            13,
+            15,
+            13
+          ],
+          "origin": [
+            616,
+            230,
+            192
+          ],
+          "privateTemplate": "kithkyn_polynesian_profile:pc05_01_tavern"
+        },
+        {
+          "id": "PC05.2",
+          "label": "Acacia Tavern",
+          "role": "tavern",
+          "sourceMod": "Dungeons & Taverns",
+          "source": "data/nova_structures/structure/tavern/tavern_house_acacia.nbt",
+          "sourceSha256": "978bb6982081fe142a8d4556a3d72b7e0d50f1dcae8e248ed79e092dcca33d4e",
+          "preparedSha256": "e112105b69883385f0d55cbbe9a6a5b5c29e00bfd5c2a69b69deb7baad9400ec",
+          "size": [
+            17,
+            15,
+            19
+          ],
+          "origin": [
+            635,
+            230,
+            192
+          ],
+          "privateTemplate": "kithkyn_polynesian_profile:pc05_02_tavern_house_acacia"
+        },
+        {
+          "id": "PC05.3",
+          "label": "Mangrove Tavern",
+          "role": "tavern",
+          "sourceMod": "Dungeons & Taverns",
+          "source": "data/nova_structures/structure/tavern/tavern_house_mangrove.nbt",
+          "sourceSha256": "f93c750d1be99e57012b63524f10a2df2434b9ce14e95ab5c571655a55897de0",
+          "preparedSha256": "c469f8209c1f8de8e2ca415d05a55fdc0d2462db0a4b48dddcd7ad7758d8db46",
+          "size": [
+            17,
+            14,
+            19
+          ],
+          "origin": [
+            658,
+            230,
+            192
+          ],
+          "privateTemplate": "kithkyn_polynesian_profile:pc05_03_tavern_house_mangrove_polynesian",
+          "restyles": [
+            {
+              "recorded": "2026-09-12T20:27:31.741409-04:00",
+              "method": "display template edited and re-placed",
+              "rule": "Polynesian palette: oak roof, stripped spruce sides",
+              "cells": 959,
+              "swaps": {
+                "minecraft:mangrove_planks -> minecraft:spruce_planks": 253,
+                "minecraft:mangrove_log -> minecraft:stripped_spruce_wood": 201,
+                "minecraft:stripped_mangrove_log -> minecraft:stripped_spruce_wood": 6,
+                "minecraft:mangrove_planks -> minecraft:oak_planks": 49,
+                "minecraft:mangrove_stairs -> minecraft:oak_stairs": 191,
+                "minecraft:mangrove_fence -> minecraft:spruce_fence": 129,
+                "minecraft:mangrove_door -> minecraft:jungle_door": 12,
+                "minecraft:mangrove_slab -> minecraft:oak_slab": 118
+              }
+            }
+          ]
+        },
+        {
+          "id": "PC05.4",
+          "label": "Mangrove Firewatch",
+          "role": "tower",
+          "sourceMod": "Dungeons & Taverns",
+          "source": "data/nova_structures/structure/firewatch_tower/firewatch_mangrove.nbt",
+          "sourceSha256": "ca7a968b8f18a7ef0e4fbcdff389336345b50882fcf7b33623047310bec29087",
+          "preparedSha256": "0f336e18391f3b925a239fc368ace7dcd762215b081c89cc24bc9f8d06b6934c",
+          "size": [
+            9,
+            31,
+            9
+          ],
+          "origin": [
+            681,
+            230,
+            192
+          ],
+          "privateTemplate": "kithkyn_polynesian_profile:pc05_04_firewatch_mangrove"
+        },
+        {
+          "id": "PC05.5",
+          "label": "Beach Barracks",
+          "role": "castle",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/beach/jobsite/barracks.nbt",
+          "sourceSha256": "a55007320490f1f247f87f436cd1f4f49718b4c142d237a247d3790ccddc7ec6",
+          "preparedSha256": "8f109f6cdfa062356637086438a517e0af7ae980e157abd141058af056418bcf",
+          "size": [
+            12,
+            20,
+            12
+          ],
+          "origin": [
+            696,
+            230,
+            192
+          ],
+          "privateTemplate": "kithkyn_polynesian_profile:pc05_05_barracks"
+        }
+      ]
+    },
+    {
+      "id": "PC06",
+      "title": "TROPICAL COAST \u2014 CHURCH + WELLS",
+      "origin": [
+        616,
+        230,
+        236
+      ],
+      "bounds": [
+        606,
+        220,
+        227,
+        674,
+        276,
+        250
+      ],
+      "entries": [
+        {
+          "id": "PC06.1",
+          "label": "Priest Tower",
+          "role": "church",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/beach/jobsite/priest_tower.nbt",
+          "sourceSha256": "1a402c4f131c910a31897529bbcbf2d68947d13c2b00513db7ad340870607184",
+          "preparedSha256": "93f9f109a79770faecbb07a986db82677aab1afd20023fa84e1576144fc352bd",
+          "size": [
+            9,
+            15,
+            9
+          ],
+          "origin": [
+            616,
+            230,
+            236
+          ],
+          "privateTemplate": "kithkyn_polynesian_profile:pc06_01_priest_tower_standin",
+          "standIns": [
+            {
+              "pos": [
+                5,
+                2,
+                2
+              ],
+              "from": {
+                "Properties": {
+                  "facing": "south",
+                  "type": "left"
+                },
+                "Name": "irons_spellbooks:inscription_table"
+              },
+              "to": {
+                "Properties": {
+                  "powered": "false",
+                  "facing": "south",
+                  "has_book": "false"
+                },
+                "Name": "minecraft:lectern"
+              }
+            },
+            {
+              "pos": [
+                6,
+                2,
+                2
+              ],
+              "from": {
+                "Properties": {
+                  "facing": "south",
+                  "type": "right"
+                },
+                "Name": "irons_spellbooks:inscription_table"
+              },
+              "to": {
+                "Properties": {
+                  "powered": "false",
+                  "facing": "south",
+                  "has_book": "false"
+                },
+                "Name": "minecraft:lectern"
+              }
+            }
+          ],
+          "restyles": [
+            {
+              "recorded": "2026-09-12T20:27:31.741409-04:00",
+              "method": "setblock in place, verified from the saved world",
+              "rule": "Polynesian palette: oak roof, stripped spruce sides",
+              "swaps": {
+                "minecraft:sand -> minecraft:grass_block": 52,
+                "minecraft:jungle_log -> minecraft:stripped_spruce_wood": 71,
+                "minecraft:lime_glazed_terracotta -> minecraft:spruce_planks": 25,
+                "minecraft:terracotta -> minecraft:stripped_spruce_wood": 84,
+                "minecraft:jungle_planks -> minecraft:spruce_planks": 1,
+                "minecraft:jungle_planks -> minecraft:oak_planks": 33,
+                "minecraft:jungle_slab -> minecraft:oak_slab": 16,
+                "minecraft:jungle_fence -> minecraft:spruce_fence": 38,
+                "minecraft:jungle_stairs -> minecraft:oak_stairs": 40,
+                "minecraft:campfire -> minecraft:oak_slab": 48
+              }
+            }
+          ]
+        },
+        {
+          "id": "PC06.2",
+          "label": "Beach Sanctuary",
+          "role": "church",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/beach/jobsite/sanctuary.nbt",
+          "sourceSha256": "640197a4c2010efd02f625351f94bdd74b6c96737b6963ec146a380cb82c661a",
+          "preparedSha256": "c95b745f40ad591ae1eb3a7b893b1b506dc082ebce05598ffd480b9285812a3b",
+          "size": [
+            12,
+            11,
+            11
+          ],
+          "origin": [
+            631,
+            230,
+            236
+          ],
+          "privateTemplate": "kithkyn_polynesian_profile:pc06_02_sanctuary"
+        },
+        {
+          "id": "PC06.3",
+          "label": "Goddess Statue",
+          "role": "shrine",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/beach/deco/goddess_statue.nbt",
+          "sourceSha256": "aaaf683ca0c6c7992584459c62d07e5303c734b58bb0641d1360108fb86e41ef",
+          "preparedSha256": "bb14a4e65898592463af910fcb6dbd97441d28f5983903870db1eeb36cf70e62",
+          "size": [
+            3,
+            5,
+            4
+          ],
+          "origin": [
+            649,
+            230,
+            236
+          ],
+          "privateTemplate": "kithkyn_polynesian_profile:pc06_03_goddess_statue"
+        },
+        {
+          "id": "PC06.4",
+          "label": "Beach Well",
+          "role": "well",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/beach/deco/well.nbt",
+          "sourceSha256": "bc712966bd61a769af8dfaedd623542e8f324b35a35886b010c053806198a2e9",
+          "preparedSha256": "d2d114f11c4817b00fea6b26049ec46b77ee168dda281beb5c1af48d323cd216",
+          "size": [
+            5,
+            7,
+            5
+          ],
+          "origin": [
+            658,
+            230,
+            236
+          ],
+          "privateTemplate": "kithkyn_polynesian_profile:pc06_04_well",
+          "containment": {
+            "kind": "barrier ring",
+            "box": [
+              656,
+              230,
+              234,
+              664,
+              230,
+              242
+            ]
+          }
+        },
+        {
+          "id": "PC06.5",
+          "label": "Jungle Well",
+          "role": "well",
+          "sourceMod": "Dungeons & Taverns",
+          "source": "data/nova_structures/structure/well/well_jungle.nbt",
+          "sourceSha256": "26ef4a9633796bb26720ac00fcb369a67a77bcbfd5a174bf26c6a93caa48ed50",
+          "preparedSha256": "314f4e955a6c08ffbfb2a6768a3e528e0c69cdad999bcf8a5bbbb3a095b006e5",
+          "size": [
+            3,
+            12,
+            3
+          ],
+          "origin": [
+            669,
+            222,
+            236
+          ],
+          "privateTemplate": "kithkyn_polynesian_profile:pc06_05_well_jungle",
+          "containment": {
+            "kind": "floor",
+            "box": [
+              669,
+              221,
+              236,
+              671,
+              221,
+              238
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "PC07",
+      "title": "FORT CANDIDATES \u2014 TRIBAL WOOD",
+      "origin": [
+        616,
+        230,
+        280
+      ],
+      "bounds": [
+        606,
+        220,
+        271,
+        728,
+        276,
+        311
+      ],
+      "entries": [
+        {
+          "id": "PC07.1",
+          "label": "Jungle Outpost Tower",
+          "role": "fort",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/pillager_outpost/jungle/tower.nbt",
+          "sourceSha256": "1db19fbf2ba2301a15c3287dcd13b1afe7e86aac10663ae7e670872e71ec09df",
+          "preparedSha256": "29cd338a0bd670438c5e7f16d96c6997facdc81b61a260f14ffd47df654f55b4",
+          "size": [
+            13,
+            26,
+            13
+          ],
+          "origin": [
+            616,
+            230,
+            280
+          ],
+          "privateTemplate": "kithkyn_polynesian_profile:pc07_01_tower"
+        },
+        {
+          "id": "PC07.2",
+          "label": "Beach Outpost Tower",
+          "role": "fort",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/pillager_outpost/beach/tower.nbt",
+          "sourceSha256": "7e9c45956edc5c7bbf3b8372eb1dfadd9465bacd7b58eb1ade0c024920db6582",
+          "preparedSha256": "c44a9f195f39e0e672313c5e116a2bb79b97626c0c6fa81b1d67778c34bc27b4",
+          "size": [
+            11,
+            27,
+            11
+          ],
+          "origin": [
+            635,
+            230,
+            280
+          ],
+          "privateTemplate": "kithkyn_polynesian_profile:pc07_02_tower"
+        },
+        {
+          "id": "PC07.3",
+          "label": "Savanna Outpost Tower",
+          "role": "fort",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/pillager_outpost/savanna/tower.nbt",
+          "sourceSha256": "73a6c629305fedd8335ce64c95eb5384d0831210b4a91b28490ecd775c3c18f5",
+          "preparedSha256": "18cf502e5a62eee4f03fa7c43c00316855202cda5b3a5c3dca935a172d18fd58",
+          "size": [
+            13,
+            25,
+            13
+          ],
+          "origin": [
+            652,
+            230,
+            280
+          ],
+          "privateTemplate": "kithkyn_polynesian_profile:pc07_03_tower"
+        },
+        {
+          "id": "PC07.4",
+          "label": "Beach Camp",
+          "role": "fort",
+          "sourceMod": "Towns & Towers",
+          "source": "data/kaisyn/structure/outpost/camps/beach/base_plate.nbt",
+          "sourceSha256": "357f9b9f09f7572003910eec9b39f2dd6fe8f14bb78a8456ecac949bdc3dbf0d",
+          "preparedSha256": "8395851344cce074a389482771f29543b717d2b5366952977dc7ef0916462e9d",
+          "size": [
+            14,
+            12,
+            28
+          ],
+          "origin": [
+            671,
+            230,
+            280
+          ],
+          "privateTemplate": "kithkyn_polynesian_profile:pc07_04_base_plate"
+        },
+        {
+          "id": "PC07.5",
+          "label": "Jungle Camp Kitchen",
+          "role": "fort",
+          "sourceMod": "Towns & Towers",
+          "source": "data/kaisyn/structure/outpost/camps/sparse_jungle/side/kitchen.nbt",
+          "sourceSha256": "87da80363402266e5779d0bd3de6f68aa60f8a186e6f6d717fce726425608c2e",
+          "preparedSha256": "ed9bf9ef265037ae38e1bcefc96e0f31dddb1117f77f908b4237edede779dbf6",
+          "size": [
+            9,
+            9,
+            15
+          ],
+          "origin": [
+            691,
+            230,
+            280
+          ],
+          "privateTemplate": "kithkyn_polynesian_profile:pc07_05_kitchen"
+        },
+        {
+          "id": "PC07.6",
+          "label": "Jungle Camp Workshop",
+          "role": "fort",
+          "sourceMod": "Towns & Towers",
+          "source": "data/kaisyn/structure/outpost/camps/sparse_jungle/side/workshop.nbt",
+          "sourceSha256": "d1e60cdbbc7902f0a152226f8b12d30a184b9a8635bff180bca1b70cb40fb074",
+          "preparedSha256": "0c39c9f28dcef9030fba3765a3a98f13665170c93de9800345437c477fdfd7b5",
+          "size": [
+            9,
+            8,
+            15
+          ],
+          "origin": [
+            706,
+            230,
+            280
+          ],
+          "privateTemplate": "kithkyn_polynesian_profile:pc07_06_workshop"
+        },
+        {
+          "id": "PC07.7",
+          "label": "Jungle Camp Tent",
+          "role": "fort",
+          "sourceMod": "Towns & Towers",
+          "source": "data/kaisyn/structure/outpost/camps/sparse_jungle/side/tent_sparse_jungle.nbt",
+          "sourceSha256": "6f2e89cb760cfbcac5f3cb17e939416bd233bdb4c570e5098b5a7e3666eec5e0",
+          "preparedSha256": "0f1e2f1f4f81d75033604efb39bb0ebd7f71fe1369b013cca1da7db19e2d8ea9",
+          "size": [
+            5,
+            5,
+            7
+          ],
+          "origin": [
+            721,
+            230,
+            280
+          ],
+          "privateTemplate": "kithkyn_polynesian_profile:pc07_07_tent_sparse_jungle"
+        }
+      ]
+    },
+    {
+      "id": "PC08",
+      "title": "RITUAL CIRCLES + SHRINES",
+      "origin": [
+        616,
+        230,
+        324
+      ],
+      "bounds": [
+        606,
+        220,
+        315,
+        701,
+        276,
+        336
+      ],
+      "entries": [
+        {
+          "id": "PC08.1",
+          "label": "Witch Circle",
+          "role": "church",
+          "sourceMod": "YUNG's Witch Huts",
+          "source": "data/betterwitchhuts/structure/witch_circle.nbt",
+          "sourceSha256": "d2cdfeee0c9149886ed5764e5cfedb2603f9bcba0cf7ff689e6379ea1e0cb948",
+          "preparedSha256": "c42a84262264b4716ec4fef40ae1a482aa839eee2fdc472405d27028b861238e",
+          "size": [
+            9,
+            5,
+            9
+          ],
+          "origin": [
+            616,
+            230,
+            324
+          ],
+          "privateTemplate": "kithkyn_polynesian_profile:pc08_01_witch_circle"
+        },
+        {
+          "id": "PC08.2",
+          "label": "Poppy Circle",
+          "role": "church",
+          "sourceMod": "Terralith",
+          "source": "data/terralith/structure/small_decoration/poppy_circle.nbt",
+          "sourceSha256": "4264151483daec7c29143eb384f5cfc9adf2d3d7a603c06a97b5930fbf6dae7d",
+          "preparedSha256": "60e20fde7fd8c7e0cc329474c9f791ba5c8321cffe9dace7b2a5c5dc2063fe1d",
+          "size": [
+            8,
+            3,
+            8
+          ],
+          "origin": [
+            631,
+            230,
+            324
+          ],
+          "privateTemplate": "kithkyn_polynesian_profile:pc08_02_poppy_circle"
+        },
+        {
+          "id": "PC08.3",
+          "label": "Outdoor Ritual Shrine",
+          "role": "church",
+          "sourceMod": "Towns & Towers",
+          "source": "data/kaisyn/structure/village/exclusives/nilotic/houses/nilotic_temple_1.nbt",
+          "sourceSha256": "8adba962307430e988cead90a285ab6032cc7ea2b8725587fa78347728fbd167",
+          "preparedSha256": "fa915e391662e0f79e7549a9db90449bef54726532d0cfa8fcd725bf2fe9d6c6",
+          "size": [
+            7,
+            5,
+            7
+          ],
+          "origin": [
+            645,
+            230,
+            324
+          ],
+          "privateTemplate": "kithkyn_polynesian_profile:pc08_03_nilotic_temple_1"
+        },
+        {
+          "id": "PC08.4",
+          "label": "Villayan Ruin (Big)",
+          "role": "church",
+          "sourceMod": "Dungeons & Taverns",
+          "source": "data/nova_structures/structure/jungle_ruin/jungle_ruins_villayan_big.nbt",
+          "sourceSha256": "2104d8931548b147193d6781c5f9577e1724c17a183c8df98f81c8213bdc760c",
+          "preparedSha256": "6e7a79d698941f5d020d793d04e99d6118ce4867363a04c74c5321fecb8e2b64",
+          "size": [
+            9,
+            18,
+            9
+          ],
+          "origin": [
+            658,
+            230,
+            324
+          ],
+          "privateTemplate": "kithkyn_polynesian_profile:pc08_04_jungle_ruins_villayan_big"
+        },
+        {
+          "id": "PC08.5",
+          "label": "Villayan Ruin",
+          "role": "shrine",
+          "sourceMod": "Dungeons & Taverns",
+          "source": "data/nova_structures/structure/jungle_ruin/jungle_ruins_villayan.nbt",
+          "sourceSha256": "6a31e1bedbc8f9919dd6ddafa984798966aeda96a2456316c9bc19e45a2a2e7f",
+          "preparedSha256": "9e209cfa97a5891cf3b493f2d670a56056fe07943d9a749de9a090ac794b3afb",
+          "size": [
+            5,
+            13,
+            5
+          ],
+          "origin": [
+            673,
+            230,
+            324
+          ],
+          "privateTemplate": "kithkyn_polynesian_profile:pc08_05_jungle_ruins_villayan"
+        },
+        {
+          "id": "PC08.6",
+          "label": "Bamboo Statue",
+          "role": "shrine",
+          "sourceMod": "YUNG's Jungle Temples",
+          "source": "data/betterjungletemples/structure/challenge_room/statue/challenge_statue_bamboo.nbt",
+          "sourceSha256": "21f2c783efa70c070c26b60a73dc026e5c2828015059cbc0460d61e9b3570f49",
+          "preparedSha256": "76878b47d19efd2fe5b1445d16e93a267fa2dce40ce9d8b1faad3ce0db5788e9",
+          "size": [
+            5,
+            7,
+            5
+          ],
+          "origin": [
+            684,
+            230,
+            324
+          ],
+          "privateTemplate": "kithkyn_polynesian_profile:pc08_06_challenge_statue_bamboo"
+        },
+        {
+          "id": "PC08.7",
+          "label": "Desert Obelisk",
+          "role": "shrine",
+          "sourceMod": "YUNG's Extras",
+          "source": "data/yungsextras/structure/desert/obelisk/obelisk.nbt",
+          "sourceSha256": "f122cc68fd10d1b6b33c1f58cecb6e85dfefb0bd7d8737d00ed934a2daebb844",
+          "preparedSha256": "c799fa4d92af7787bb4440af4c5ff9e8086fa78f8dbaa4d6becf9d67aef7825a",
+          "size": [
+            4,
+            11,
+            4
+          ],
+          "origin": [
+            695,
+            230,
+            324
+          ],
+          "privateTemplate": "kithkyn_polynesian_profile:pc08_07_obelisk"
+        }
+      ]
+    },
+    {
+      "id": "PC09",
+      "title": "JUNGLE TEMPLE CANDIDATES",
+      "origin": [
+        616,
+        230,
+        368
+      ],
+      "bounds": [
+        606,
+        220,
+        359,
+        709,
+        276,
+        386
+      ],
+      "entries": [
+        {
+          "id": "PC09.1",
+          "label": "Jungle Ruin Temple 1",
+          "role": "church",
+          "sourceMod": "Dungeons & Taverns",
+          "source": "data/nova_structures/structure/jungle_ruin/jungle_ruins_temple1.nbt",
+          "sourceSha256": "ad30c64de5646a89ff7abeca501d306cd9a4e59b10b4f8f40bf45a2d0e106362",
+          "preparedSha256": "9a2dbd1c83a7ac6e230893b1eeaf667cba425f179bb4b66f8ce177dfffcf014f",
+          "size": [
+            17,
+            12,
+            11
+          ],
+          "origin": [
+            616,
+            230,
+            368
+          ],
+          "privateTemplate": "kithkyn_polynesian_profile:pc09_01_jungle_ruins_temple1",
+          "containment": {
+            "kind": "barrier ring",
+            "box": [
+              614,
+              230,
+              366,
+              634,
+              230,
+              380
+            ]
+          }
+        },
+        {
+          "id": "PC09.2",
+          "label": "Jungle Ruin Temple 2",
+          "role": "church",
+          "sourceMod": "Dungeons & Taverns",
+          "source": "data/nova_structures/structure/jungle_ruin/jungle_ruins_temple2.nbt",
+          "sourceSha256": "e7cddfecc36ad572c73ba1641d7142e2a1fcb3408f822c8ca0d663351c3b4989",
+          "preparedSha256": "319967f0fb79964c61bc68424d8432209f5d83a8f61f2c854c99ffbb1184ca9e",
+          "size": [
+            15,
+            14,
+            15
+          ],
+          "origin": [
+            639,
+            230,
+            368
+          ],
+          "privateTemplate": "kithkyn_polynesian_profile:pc09_02_jungle_ruins_temple2"
+        },
+        {
+          "id": "PC09.3",
+          "label": "Jungle Ruin Temple 3",
+          "role": "church",
+          "sourceMod": "Dungeons & Taverns",
+          "source": "data/nova_structures/structure/jungle_ruin/jungle_ruins_temple3.nbt",
+          "sourceSha256": "c8aa2569af35635fc86c763644e0a24f0129c41d78a099ff1511bba4d77920eb",
+          "preparedSha256": "a66ec1fd808ee4c4d5c43676dc6eeef59bc31424ef39d5539daeaf39ced6ae39",
+          "size": [
+            19,
+            14,
+            13
+          ],
+          "origin": [
+            660,
+            230,
+            368
+          ],
+          "privateTemplate": "kithkyn_polynesian_profile:pc09_03_jungle_ruins_temple3"
+        },
+        {
+          "id": "PC09.4",
+          "label": "Jungle Temple Entrance",
+          "role": "church",
+          "sourceMod": "YUNG's Jungle Temples",
+          "source": "data/betterjungletemples/structure/entrance/entrance_0.nbt",
+          "sourceSha256": "997aeaeba308536448872ab930ac72eae534cb5243cde9d391ee1519c1b49812",
+          "preparedSha256": "0d283a7323a3c0108d44b62afd55dfe6e5d1ef5a7a85b4879e8a497dedc79a4a",
+          "size": [
+            22,
+            11,
+            13
+          ],
+          "origin": [
+            685,
+            230,
+            368
+          ],
+          "privateTemplate": "kithkyn_polynesian_profile:pc09_04_entrance_0"
+        }
+      ]
+    },
+    {
+      "id": "PC10",
+      "title": "POLYNESIAN MARKET \u2014 TIERS 1 TO 3",
+      "origin": [
+        616,
+        230,
+        412
+      ],
+      "bounds": [
+        606,
+        220,
+        403,
+        692,
+        276,
+        440
+      ],
+      "entries": [
+        {
+          "id": "PC10.1",
+          "label": "Market Tier 1",
+          "role": "market",
+          "sourceMod": "Kithkyn market study",
+          "source": "src/main/resources/data/kithkyn/structure/market_birch_forest_1.nbt",
+          "sourceSha256": "f7f316565d76f967cdf2585966878fba86163405e1b2fc8e074462dec4248e98",
+          "preparedSha256": "a0df2eb8e4583fbc48871173ddf8c679d9aadca8c670438ec90db205ee2a05e5",
+          "size": [
+            16,
+            6,
+            17
+          ],
+          "origin": [
+            616,
+            230,
+            412
+          ],
+          "privateTemplate": "kithkyn_polynesian_profile:pc10_01_market_tier_1",
+          "swaps": {
+            "minecraft:cobblestone -> minecraft:spruce_planks": 15,
+            "minecraft:birch_trapdoor -> minecraft:spruce_trapdoor": 50,
+            "minecraft:birch_log -> minecraft:stripped_spruce_wood": 4,
+            "minecraft:birch_fence -> minecraft:spruce_fence": 14
+          }
+        },
+        {
+          "id": "PC10.2",
+          "label": "Market Tier 2",
+          "role": "market",
+          "sourceMod": "Kithkyn market study",
+          "source": "src/main/resources/data/kithkyn/structure/market_birch_forest_2.nbt",
+          "sourceSha256": "8a273920e519cc6f0b403e3484559b8f600497433303237e55b328119fea5fca",
+          "preparedSha256": "0fa4a2f83ec1b36fd07f6e3ebe84f128b2bb6d35a3df3a7fb2de58d03294581f",
+          "size": [
+            23,
+            6,
+            17
+          ],
+          "origin": [
+            638,
+            230,
+            412
+          ],
+          "privateTemplate": "kithkyn_polynesian_profile:pc10_02_market_tier_2",
+          "swaps": {
+            "minecraft:cobblestone -> minecraft:spruce_planks": 55,
+            "minecraft:birch_trapdoor -> minecraft:spruce_trapdoor": 100,
+            "minecraft:birch_log -> minecraft:stripped_spruce_wood": 8,
+            "minecraft:birch_fence -> minecraft:spruce_fence": 28
+          }
+        },
+        {
+          "id": "PC10.3",
+          "label": "Market Tier 3",
+          "role": "market",
+          "sourceMod": "Kithkyn market study",
+          "source": "src/main/resources/data/kithkyn/structure/market_birch_forest_3.nbt",
+          "sourceSha256": "54955d90f637ddf848e0929ddcf156b287efc55c20055f9f0cf01243106f5729",
+          "preparedSha256": "7cf8d7f9efcc93eafc350a507578bc93822b0dd49804a5198fda07d7b18a8206",
+          "size": [
+            23,
+            6,
+            25
+          ],
+          "origin": [
+            667,
+            230,
+            412
+          ],
+          "privateTemplate": "kithkyn_polynesian_profile:pc10_03_market_tier_3",
+          "swaps": {
+            "minecraft:cobblestone -> minecraft:spruce_planks": 75,
+            "minecraft:birch_trapdoor -> minecraft:spruce_trapdoor": 150,
+            "minecraft:birch_log -> minecraft:stripped_spruce_wood": 12,
+            "minecraft:birch_fence -> minecraft:spruce_fence": 42
+          }
+        }
+      ]
+    },
+    {
+      "id": "PC11",
+      "title": "POLYNESIAN WALLS \u2014 A SPRUCE, B BAMBOO",
+      "origin": [
+        616,
+        230,
+        456
+      ],
+      "bounds": [
+        606,
+        220,
+        447,
+        774,
+        276,
+        466
+      ],
+      "entries": [
+        {
+          "id": "PC11.1",
+          "label": "Wall A Straight",
+          "role": "wall",
+          "sourceMod": "Kithkyn wall study",
+          "source": "src/main/resources/data/kithkyn/structure/wall/birch_forest/straight.nbt",
+          "sourceSha256": "417c3fa956b8b016be23d1a9fdb090b8d155466b75060234831a0a118cf90b85",
+          "preparedSha256": "e5581e6c96359828ada31fac6b7dbac7d243bd28dbfa63474e27af9c57dc754e",
+          "size": [
+            7,
+            8,
+            1
+          ],
+          "origin": [
+            616,
+            230,
+            456
+          ],
+          "privateTemplate": "kithkyn_polynesian_profile:pc11_01_wall_a_straight",
+          "swaps": {
+            "minecraft:mossy_cobblestone -> minecraft:dead_bubble_coral_block": 5,
+            "minecraft:cobblestone -> minecraft:dead_bubble_coral_block": 2,
+            "minecraft:mossy_cobblestone -> minecraft:stripped_spruce_wood": 6,
+            "minecraft:cobblestone -> minecraft:stripped_spruce_wood": 18,
+            "minecraft:cobblestone_wall -> minecraft:spruce_fence": 3,
+            "minecraft:mossy_cobblestone_wall -> minecraft:spruce_fence": 1
+          }
+        },
+        {
+          "id": "PC11.2",
+          "label": "Wall A Diagonal",
+          "role": "wall",
+          "sourceMod": "Kithkyn wall study",
+          "source": "src/main/resources/data/kithkyn/structure/wall/birch_forest/diagonal.nbt",
+          "sourceSha256": "641d8f0285db2aadcc581e4b4a60082a70d29824668fb8b3bff2be357073ca71",
+          "preparedSha256": "c6930b7971dbd8eca124781da26aef923bee4aef1e90c263ad165105f50c9771",
+          "size": [
+            7,
+            8,
+            7
+          ],
+          "origin": [
+            629,
+            230,
+            456
+          ],
+          "privateTemplate": "kithkyn_polynesian_profile:pc11_02_wall_a_diagonal",
+          "swaps": {
+            "minecraft:mossy_cobblestone -> minecraft:dead_bubble_coral_block": 3,
+            "minecraft:cobblestone -> minecraft:dead_bubble_coral_block": 4,
+            "minecraft:mossy_cobblestone -> minecraft:stripped_spruce_wood": 8,
+            "minecraft:cobblestone -> minecraft:stripped_spruce_wood": 16,
+            "minecraft:cobblestone_wall -> minecraft:spruce_fence": 4,
+            "minecraft:mossy_cobblestone_wall -> minecraft:spruce_fence": 2
+          }
+        },
+        {
+          "id": "PC11.3",
+          "label": "Wall A Corner Tower",
+          "role": "wall",
+          "sourceMod": "Kithkyn wall study",
+          "source": "src/main/resources/data/kithkyn/structure/wall/birch_forest/corner_tower.nbt",
+          "sourceSha256": "38b6df41ffe999e9ef9027a2b6b05e8af76f622cbd27d7cd0d5918124a1e84ea",
+          "preparedSha256": "581563bd31d3389e1cd4a6bfc92824903a650790885f299ec81ef41b76ffb76f",
+          "size": [
+            12,
+            8,
+            6
+          ],
+          "origin": [
+            642,
+            230,
+            456
+          ],
+          "privateTemplate": "kithkyn_polynesian_profile:pc11_03_wall_a_corner_tower",
+          "swaps": {
+            "minecraft:mossy_cobblestone -> minecraft:dead_bubble_coral_block": 7,
+            "minecraft:cobblestone -> minecraft:dead_bubble_coral_block": 7,
+            "minecraft:oak_trapdoor -> minecraft:spruce_trapdoor": 4,
+            "minecraft:mossy_cobblestone -> minecraft:stripped_spruce_wood": 11,
+            "minecraft:cobblestone -> minecraft:stripped_spruce_wood": 40,
+            "minecraft:mossy_cobblestone_wall -> minecraft:spruce_fence": 8,
+            "minecraft:cobblestone_wall -> minecraft:spruce_fence": 11,
+            "minecraft:cobblestone_slab -> minecraft:oak_slab": 1
+          }
+        },
+        {
+          "id": "PC11.4",
+          "label": "Wall A Gatehouse",
+          "role": "wall",
+          "sourceMod": "Kithkyn wall study",
+          "source": "src/main/resources/data/kithkyn/structure/wall/birch_forest/gatehouse.nbt",
+          "sourceSha256": "6b18ae5516320898e1ad6b89393a2e6ab9ba34a2afc8bd4b733d4944d9cdfcf1",
+          "preparedSha256": "aba4e3a81ae9c744489fa875d69a6e26a60e280ab19d2e012350e22fd62c7ad5",
+          "size": [
+            17,
+            8,
+            7
+          ],
+          "origin": [
+            660,
+            230,
+            456
+          ],
+          "privateTemplate": "kithkyn_polynesian_profile:pc11_04_wall_a_gatehouse",
+          "swaps": {
+            "minecraft:mossy_cobblestone -> minecraft:dead_bubble_coral_block": 8,
+            "minecraft:cobblestone -> minecraft:dead_bubble_coral_block": 10,
+            "minecraft:cobblestone -> minecraft:stripped_spruce_wood": 52,
+            "minecraft:mossy_cobblestone -> minecraft:stripped_spruce_wood": 30,
+            "minecraft:cobblestone_wall -> minecraft:spruce_fence": 20,
+            "minecraft:mossy_cobblestone_wall -> minecraft:spruce_fence": 11,
+            "minecraft:cobblestone_slab -> minecraft:oak_slab": 9
+          }
+        },
+        {
+          "id": "PC11.5",
+          "label": "Wall A Terrace",
+          "role": "wall",
+          "sourceMod": "Kithkyn wall study",
+          "source": "src/main/resources/data/kithkyn/structure/wall/birch_forest/terrace.nbt",
+          "sourceSha256": "df728d8b1ed1fe0372acc52a4faf7057eefc5c24f2f1a0605a234613a3404056",
+          "preparedSha256": "fa9a55aa380c0adb5aabf526f8bac22d5565c5db48da96196b2b77906b3e1bdf",
+          "size": [
+            8,
+            9,
+            1
+          ],
+          "origin": [
+            683,
+            230,
+            456
+          ],
+          "privateTemplate": "kithkyn_polynesian_profile:pc11_05_wall_a_terrace",
+          "swaps": {
+            "minecraft:mossy_cobblestone -> minecraft:dead_bubble_coral_block": 3,
+            "minecraft:cobblestone -> minecraft:dead_bubble_coral_block": 1,
+            "minecraft:mossy_cobblestone -> minecraft:stripped_spruce_wood": 12,
+            "minecraft:cobblestone -> minecraft:stripped_spruce_wood": 22,
+            "minecraft:cobblestone_wall -> minecraft:spruce_fence": 4,
+            "minecraft:mossy_cobblestone_wall -> minecraft:spruce_fence": 1
+          }
+        },
+        {
+          "id": "PC11.6",
+          "label": "Wall B Straight",
+          "role": "wall",
+          "sourceMod": "Kithkyn wall study",
+          "source": "src/main/resources/data/kithkyn/structure/wall/birch_forest/straight.nbt",
+          "sourceSha256": "417c3fa956b8b016be23d1a9fdb090b8d155466b75060234831a0a118cf90b85",
+          "preparedSha256": "4c0113d1de711aa7dd83a62e193945f12911a3f174d12139f565b6d4f1411b2a",
+          "size": [
+            7,
+            8,
+            1
+          ],
+          "origin": [
+            697,
+            230,
+            456
+          ],
+          "privateTemplate": "kithkyn_polynesian_profile:pc11_06_wall_b_straight",
+          "swaps": {
+            "minecraft:mossy_cobblestone -> minecraft:dead_bubble_coral_block": 5,
+            "minecraft:cobblestone -> minecraft:dead_bubble_coral_block": 2,
+            "minecraft:mossy_cobblestone -> minecraft:bamboo_block": 6,
+            "minecraft:cobblestone -> minecraft:bamboo_block": 18,
+            "minecraft:cobblestone_wall -> minecraft:bamboo_fence": 3,
+            "minecraft:mossy_cobblestone_wall -> minecraft:bamboo_fence": 1
+          }
+        },
+        {
+          "id": "PC11.7",
+          "label": "Wall B Diagonal",
+          "role": "wall",
+          "sourceMod": "Kithkyn wall study",
+          "source": "src/main/resources/data/kithkyn/structure/wall/birch_forest/diagonal.nbt",
+          "sourceSha256": "641d8f0285db2aadcc581e4b4a60082a70d29824668fb8b3bff2be357073ca71",
+          "preparedSha256": "167ccb00dfa402aed5f7a0df0c48c920ad5082fe93db8a9c8b204bc8c9747fa3",
+          "size": [
+            7,
+            8,
+            7
+          ],
+          "origin": [
+            710,
+            230,
+            456
+          ],
+          "privateTemplate": "kithkyn_polynesian_profile:pc11_07_wall_b_diagonal",
+          "swaps": {
+            "minecraft:mossy_cobblestone -> minecraft:dead_bubble_coral_block": 3,
+            "minecraft:cobblestone -> minecraft:dead_bubble_coral_block": 4,
+            "minecraft:mossy_cobblestone -> minecraft:bamboo_block": 8,
+            "minecraft:cobblestone -> minecraft:bamboo_block": 16,
+            "minecraft:cobblestone_wall -> minecraft:bamboo_fence": 4,
+            "minecraft:mossy_cobblestone_wall -> minecraft:bamboo_fence": 2
+          }
+        },
+        {
+          "id": "PC11.8",
+          "label": "Wall B Corner Tower",
+          "role": "wall",
+          "sourceMod": "Kithkyn wall study",
+          "source": "src/main/resources/data/kithkyn/structure/wall/birch_forest/corner_tower.nbt",
+          "sourceSha256": "38b6df41ffe999e9ef9027a2b6b05e8af76f622cbd27d7cd0d5918124a1e84ea",
+          "preparedSha256": "128f0a6e52ea06047bb7fc3a5647c8dee2fe66be8156164e6c80f20b7a5ab3e7",
+          "size": [
+            12,
+            8,
+            6
+          ],
+          "origin": [
+            723,
+            230,
+            456
+          ],
+          "privateTemplate": "kithkyn_polynesian_profile:pc11_08_wall_b_corner_tower",
+          "swaps": {
+            "minecraft:mossy_cobblestone -> minecraft:dead_bubble_coral_block": 7,
+            "minecraft:cobblestone -> minecraft:dead_bubble_coral_block": 7,
+            "minecraft:oak_trapdoor -> minecraft:bamboo_trapdoor": 4,
+            "minecraft:mossy_cobblestone -> minecraft:bamboo_block": 11,
+            "minecraft:cobblestone -> minecraft:bamboo_block": 40,
+            "minecraft:mossy_cobblestone_wall -> minecraft:bamboo_fence": 8,
+            "minecraft:cobblestone_wall -> minecraft:bamboo_fence": 11,
+            "minecraft:cobblestone_slab -> minecraft:bamboo_slab": 1
+          }
+        },
+        {
+          "id": "PC11.9",
+          "label": "Wall B Gatehouse",
+          "role": "wall",
+          "sourceMod": "Kithkyn wall study",
+          "source": "src/main/resources/data/kithkyn/structure/wall/birch_forest/gatehouse.nbt",
+          "sourceSha256": "6b18ae5516320898e1ad6b89393a2e6ab9ba34a2afc8bd4b733d4944d9cdfcf1",
+          "preparedSha256": "d3d88b0d8b87ba861a1f48971bb5ab9959be575393526ca28d03e3105e68190e",
+          "size": [
+            17,
+            8,
+            7
+          ],
+          "origin": [
+            741,
+            230,
+            456
+          ],
+          "privateTemplate": "kithkyn_polynesian_profile:pc11_09_wall_b_gatehouse",
+          "swaps": {
+            "minecraft:mossy_cobblestone -> minecraft:dead_bubble_coral_block": 8,
+            "minecraft:cobblestone -> minecraft:dead_bubble_coral_block": 10,
+            "minecraft:cobblestone -> minecraft:bamboo_block": 52,
+            "minecraft:mossy_cobblestone -> minecraft:bamboo_block": 30,
+            "minecraft:cobblestone_wall -> minecraft:bamboo_fence": 20,
+            "minecraft:mossy_cobblestone_wall -> minecraft:bamboo_fence": 11,
+            "minecraft:cobblestone_slab -> minecraft:bamboo_slab": 9
+          }
+        },
+        {
+          "id": "PC11.10",
+          "label": "Wall B Terrace",
+          "role": "wall",
+          "sourceMod": "Kithkyn wall study",
+          "source": "src/main/resources/data/kithkyn/structure/wall/birch_forest/terrace.nbt",
+          "sourceSha256": "df728d8b1ed1fe0372acc52a4faf7057eefc5c24f2f1a0605a234613a3404056",
+          "preparedSha256": "75e7ae8fc8b8b4b8087cbd0caedbab6cbf33bf7c0adcb8fb3f655ee34ac0f732",
+          "size": [
+            8,
+            9,
+            1
+          ],
+          "origin": [
+            764,
+            230,
+            456
+          ],
+          "privateTemplate": "kithkyn_polynesian_profile:pc11_10_wall_b_terrace",
+          "swaps": {
+            "minecraft:mossy_cobblestone -> minecraft:dead_bubble_coral_block": 3,
+            "minecraft:cobblestone -> minecraft:dead_bubble_coral_block": 1,
+            "minecraft:mossy_cobblestone -> minecraft:bamboo_block": 12,
+            "minecraft:cobblestone -> minecraft:bamboo_block": 22,
+            "minecraft:cobblestone_wall -> minecraft:bamboo_fence": 4,
+            "minecraft:mossy_cobblestone_wall -> minecraft:bamboo_fence": 1
+          }
+        }
+      ]
+    }
+  ],
+  "status": "placed_and_visually_verified",
+  "identity": {
+    "villageBiome": "polynesian_coast",
+    "foundingEnvironments": [
+      "minecraft:sparse_jungle",
+      "beaches (c:is_beach, not snowy) within 48 blocks of kithkyn:warm_ocean: warm, lukewarm and deep lukewarm ocean"
+    ],
+    "coreSource": "Towns & Towers sparse_jungle_polynesian family",
+    "decisions": [
+      "Polynesian Coast founds in Sparse Jungle, taken from Jungle (which keeps Jungle and Bamboo Jungle), and on beaches beside warm or lukewarm ocean; Nautical Coast keeps temperate and cold coasts (Aaron, 2026-09-12).",
+      "The two Polynesian farms are this catalog's farm tiers; the Floodplain catalog keeps its own copies of them."
+    ]
+  },
+  "selection": {
+    "schemaVersion": 1,
+    "status": "selected",
+    "variant": "polynesian_coast",
+    "world": "trio-20260912",
+    "galleryEntry": [
+      609.5,
+      230.0,
+      10.5
+    ],
+    "recorded": "2026-09-12",
+    "identity": {
+      "palette": "Polynesian roofs use oak (slabs and stairs) and the sides use stripped spruce wood; restyled donors follow the same logic.",
+      "villageBanners": "PC01.1 carries three village banners: two outside and one inside. Every other banner in the selected pieces, including the white banners in PC02.5 and PC02.8, is decoration and stays white. The PC11 gatehouse banners are village banners.",
+      "beds": "Beds alternate between the village primary and secondary colors; a couple bed is one unit and takes one color. This includes the tavern's beds.",
+      "candles": "Candles are plain, not dyed."
+    },
+    "selected": [
+      {
+        "exhibit": "PC01.1",
+        "role": "village_center",
+        "notes": [
+          "King (ruler) station on the throne in the throne room.",
+          "Jailer station on the opposite side, beside the campfire and the two barrels.",
+          "The campfire beside the jailer is the town-center campfire.",
+          "The two barrels are the evidence containers for a jailed person's items.",
+          "The iron-bar cell is the custody cell.",
+          "No beds: the founding homes are PC02.2, PC02.6 and PC02.7."
+        ]
+      },
+      {
+        "exhibit": "PC02.1",
+        "role": "house",
+        "beds": {
+          "single": 1,
+          "couple": 0
+        }
+      },
+      {
+        "exhibit": "PC02.2",
+        "role": "house",
+        "founding": true,
+        "beds": {
+          "single": 2,
+          "couple": 0
+        },
+        "personalContainers": 1,
+        "notes": [
+          "One shared personal container."
+        ]
+      },
+      {
+        "exhibit": "PC02.3",
+        "role": "storehouse",
+        "level": 1,
+        "villageStorage": {
+          "barrels": 3
+        },
+        "notes": [
+          "Aaron's three barrels make it the tier-one storehouse."
+        ]
+      },
+      {
+        "exhibit": "PC02.4",
+        "role": "house",
+        "beds": {
+          "single": 1,
+          "couple": 0
+        },
+        "personalContainers": 1,
+        "notes": [
+          "Aaron added a barrel as the personal container."
+        ]
+      },
+      {
+        "exhibit": "PC02.5",
+        "role": "couple_cottage",
+        "beds": {
+          "single": 0,
+          "couple": 1
+        },
+        "notes": [
+          "The couple cottage. Aaron (2026-09-12): the king may sleep in any bed; no reserved royal bed and no rule change.",
+          "Its white banners are decoration."
+        ]
+      },
+      {
+        "exhibit": "PC02.6",
+        "role": "house",
+        "founding": true,
+        "beds": {
+          "single": 3,
+          "couple": 0
+        },
+        "notes": [
+          "Aaron is making it three single beds."
+        ]
+      },
+      {
+        "exhibit": "PC02.7",
+        "role": "house",
+        "founding": true,
+        "beds": {
+          "single": 1,
+          "couple": 1
+        },
+        "personalContainers": 1,
+        "notes": [
+          "One personal chest shared by the couple and the single."
+        ]
+      },
+      {
+        "exhibit": "PC02.8",
+        "role": "house_and_bakery",
+        "beds": {
+          "single": 4,
+          "couple": 0
+        },
+        "notes": [
+          "One of the four beds is the baker's; the baker station is the smoker area, with a barrel beside the smokers for the baker.",
+          "Inside white banners are decoration."
+        ]
+      },
+      {
+        "exhibit": "PC03.1",
+        "role": "stoneworks"
+      },
+      {
+        "exhibit": "PC03.2",
+        "role": "house_and_blacksmith",
+        "beds": {
+          "single": 2,
+          "couple": 0
+        },
+        "notes": [
+          "Blacksmith station on the floor below the two beds."
+        ]
+      },
+      {
+        "exhibit": "PC03.4",
+        "role": "well",
+        "notes": [
+          "The leatherworker hut becomes the well."
+        ]
+      },
+      {
+        "exhibit": "PC03.5",
+        "role": "butchery",
+        "beds": {
+          "single": 1,
+          "couple": 0
+        },
+        "livestock": {
+          "minecraft:pig": 3,
+          "minecraft:chicken": 3
+        },
+        "notes": [
+          "Animals and a barrel below; the butcher's bed above."
+        ]
+      },
+      {
+        "exhibit": "PC03.6",
+        "role": "fishery_and_hunting_lodge",
+        "notes": [
+          "Fisher's barrel on the bottom floor, hunter's chest on the top floor."
+        ]
+      },
+      {
+        "exhibit": "PC03.7",
+        "role": "farm",
+        "level": 1,
+        "notes": [
+          "Small farm with barrels."
+        ]
+      },
+      {
+        "exhibit": "PC03.8",
+        "role": "farm",
+        "level": 2,
+        "notes": [
+          "Large farm with barrels."
+        ]
+      },
+      {
+        "exhibit": "PC04.4",
+        "role": "mine",
+        "notes": [
+          "Restyled to the Polynesian palette, then converted into the mine by Aaron in the gallery."
+        ]
+      },
+      {
+        "exhibit": "PC05.3",
+        "role": "tavern",
+        "notes": [
+          "Mangrove tavern restyled to spruce and oak; the mud walls stay.",
+          "Plain candles replace the magenta ones in the catalog build (Aaron, 2026-09-12); the gallery copy keeps its magenta candles because the 21:33 redeploy left the server without a command pipe.",
+          "The beds take the village primary and secondary colors.",
+          "Aaron added personal storage to every room; the bed up the stairs is the tavern keeper's."
+        ]
+      },
+      {
+        "exhibit": "PC06.1",
+        "role": "watchtower",
+        "notes": [
+          "Restyled to the Polynesian palette, then converted into the watchtower by Aaron in the gallery."
+        ]
+      },
+      {
+        "exhibit": "PC08.3",
+        "role": "church",
+        "notes": [
+          "The Towns & Towers outdoor ritual shrine is the cleric's spot: jungle logs around a lit central campfire, brown candles, and a brewing stand already on the east log.",
+          "Aaron adds a barrel set into the ground in the gallery.",
+          "The shrine has no bed, so the cleric sleeps in ordinary housing."
+        ]
+      },
+      {
+        "exhibit": "PC10.1",
+        "role": "market",
+        "level": 1,
+        "notes": [
+          "Approved: Birch market geometry in spruce on a spruce-plank deck; trade colors untouched."
+        ]
+      },
+      {
+        "exhibit": "PC10.2",
+        "role": "market",
+        "level": 2,
+        "notes": [
+          "Approved."
+        ]
+      },
+      {
+        "exhibit": "PC10.3",
+        "role": "market",
+        "level": 3,
+        "notes": [
+          "Approved."
+        ]
+      },
+      {
+        "exhibit": "PC11.1 to PC11.5",
+        "role": "wall_family",
+        "notes": [
+          "Study A, locked: stripped spruce palisade with spruce fence tips and oak-slab walks on dead-coral footings, gatehouse banners included.",
+          "Study B (bamboo, PC11.6 to PC11.10) is rejected."
+        ]
+      },
+      {
+        "exhibit": "LJ.1",
+        "role": "lumberjack",
+        "notes": [
+          "Aaron's copy of the PC03.4 well, cloned to 660, 229, 123 and converted into a fenced plot around a jungle sapling, with a barrel under the gate (captured at 661, 230, 124)."
+        ]
+      }
+    ],
+    "reservedForOtherVariants": [
+      {
+        "exhibit": "PC07.4",
+        "variant": "nautical_coast",
+        "note": "The Towns & Towers beach camp (the sideways boat); Aaron wants it for the Nautical Coast village."
+      }
+    ],
+    "forts": "None of the PC07 candidates fits a Polynesian castle; the castle stays open for later.",
+    "deferredExhibits": [
+      {
+        "exhibit": "PC03.3",
+        "note": "Cartographer and library; not used yet, worth keeping an eye on."
+      }
+    ],
+    "optionalOpenSlot": "castle",
+    "founding": {
+      "homes": [
+        "PC02.2",
+        "PC02.6",
+        "PC02.7"
+      ],
+      "beds": {
+        "single": 6,
+        "couple": 1,
+        "people": 8
+      },
+      "startingWorkers": [
+        "quartermaster",
+        "builder",
+        "guard captain",
+        "miner",
+        "king",
+        "jailer"
+      ],
+      "note": "Chosen by Aaron 2026-09-12; the set also places the PC04.4 mine and the PC02.3 storehouse."
+    },
+    "openChoices": {
+      "biome": "Decided 2026-09-12: Polynesian Coast founds in Sparse Jungle (taken from Jungle, which keeps Jungle and Bamboo Jungle) and on beaches beside warm or lukewarm ocean; Nautical Coast keeps temperate and cold coasts. Needs the jungle style tag and a warm-beach site check at integration.",
+      "centerPosts": "The quartermaster (routed to the storehouse), builder, guard captain and miner (routed to the mine) stand in the forecourt by the bell."
+    },
+    "codeNotes": [
+      "Castle amenities are allowed on a castle or a village centre (CastleLayout.allowedIn); custody accepts the centre.",
+      "The ruling incumbent is the LEADER at a castle or at the centre (VillageRuler).",
+      "A centre with a jail is not a castle for guard duty or for CastleLayout.canStart.",
+      "The king sleeps in any bed; the rule that a bed is reserved only inside the employing building stays.",
+      "Sparse Jungle moved from the Jungle style tag to Polynesian Coast; a beach within 48 blocks of kithkyn:warm_ocean selects Polynesian Coast.",
+      "Block-by-block construction places lily pads, sugar cane and frogspawn after the liquids they stand on."
+    ],
+    "catalog": "tools/structure/polynesian-coast-catalog-20260912.json"
+  },
+  "review": {
+    "coreRows": [
+      "PC01",
+      "PC02",
+      "PC03"
+    ],
+    "donorRows": [
+      "PC04",
+      "PC05",
+      "PC06"
+    ],
+    "candidateRows": [
+      "PC07",
+      "PC08",
+      "PC09"
+    ],
+    "workshopRows": [
+      "PC10",
+      "PC11"
+    ],
+    "authoredGeometry": "Gallery pieces were placed as sourced. Three donors were restyled in place to oak roofs over stripped spruce (restyles on PC04.4, PC06.1 and PC05.3), the workshop rows swap materials on the bundled Birch geometry (swaps), and Aaron's live edits are captured by the catalog, not here.",
+    "fluidContainment": "Pieces holding water or waterlogged blocks stand inside a one-block barrier ring two cells out, placed before the template; the sunk jungle well stands on a floor one block below its shaft.",
+    "standIns": {
+      "rule": "CTOV compatibility work blocks from mods the server lacks are replaced by vanilla stand-ins in the private display copies only; the source hashes and templates are untouched.",
+      "pieces": [
+        "PC04.1",
+        "PC04.2",
+        "PC04.4",
+        "PC04.5",
+        "PC04.6",
+        "PC06.1"
+      ],
+      "cells": 13
+    },
+    "visualReview": "passed",
+    "visualMethod": "Offline render of the saved trio world's region files: a top-down map and a front elevation of every row. A windowed capture client received a macOS Quit AppleEvent within seconds of opening on three attempts, so no in-game screenshots were taken.",
+    "screenshots": [
+      "run/polynesian-full-profile/offline-render.png"
+    ]
+  },
+  "verification": {
+    "preparedTemplates": 34,
+    "placedTemplates": 34,
+    "allPlacementResponsesConfirmed": true,
+    "chunksGenerated": 144,
+    "worldSaved": true,
+    "worldBackup": "/Users/quzzar/Projects/kithkyn/run/backups/before-polynesian-gallery-20260912-185627",
+    "templateAudit": {
+      "result": "passed",
+      "templates": 34,
+      "tool": "tools/structure/audit-templates.py",
+      "problems": []
+    },
+    "footprintCheck": {
+      "footprints": 65,
+      "exact": 52,
+      "short": [
+        {
+          "id": "PC03.4",
+          "label": "Leatherworker",
+          "expected": 64,
+          "placed": 60,
+          "ratio": 0.938
+        }
+      ],
+      "rule": "non-air blocks in each placed footprint of the saved world against the prepared template",
+      "deviations": {
+        "PC01.1": {
+          "label": "Town Centre 1",
+          "missing": {
+            "minecraft:chest": 1,
+            "minecraft:white_wall_banner": 2
+          },
+          "extra": {
+            "minecraft:campfire": 1,
+            "minecraft:iron_bars": 14,
+            "minecraft:white_wall_banner": 2,
+            "minecraft:cobblestone_slab": 7
+          },
+          "changed": {
+            "minecraft:grass_block -> minecraft:cobblestone": 19,
+            "minecraft:coarse_dirt -> minecraft:barrel": 1,
+            "minecraft:coarse_dirt -> minecraft:cobblestone": 1,
+            "minecraft:rooted_dirt -> minecraft:barrel": 1,
+            "minecraft:spruce_planks -> minecraft:cobblestone": 3,
+            "minecraft:raw_iron_block -> minecraft:iron_ore": 1,
+            "minecraft:stripped_spruce_wood -> minecraft:cobblestone": 3,
+            "minecraft:stripped_spruce_wood -> minecraft:iron_bars": 2,
+            "minecraft:raw_gold_block -> minecraft:gold_ore": 1,
+            "minecraft:short_grass -> minecraft:spruce_fence": 6,
+            "minecraft:short_grass -> minecraft:cobblestone": 3,
+            "minecraft:spruce_fence -> minecraft:iron_bars": 3,
+            "minecraft:oak_stairs -> minecraft:cobblestone": 2,
+            "minecraft:oak_trapdoor -> minecraft:cobblestone": 1,
+            "minecraft:oak_stairs -> minecraft:cobblestone_stairs": 2,
+            "minecraft:brewing_stand -> minecraft:candle": 1,
+            "minecraft:hopper -> minecraft:iron_bars": 2,
+            "minecraft:blast_furnace -> minecraft:cobblestone_slab": 1,
+            "minecraft:red_wall_banner -> minecraft:white_wall_banner": 1
+          }
+        },
+        "PC02.4": {
+          "label": "Small House 4",
+          "missing": {},
+          "extra": {
+            "minecraft:lantern": 1
+          },
+          "changed": {
+            "minecraft:lantern -> minecraft:barrel": 1
+          }
+        },
+        "PC02.5": {
+          "label": "Medium House 1",
+          "missing": {
+            "minecraft:green_bed": 1
+          },
+          "extra": {
+            "minecraft:green_bed": 1,
+            "minecraft:chest": 1
+          },
+          "changed": {
+            "minecraft:chest -> minecraft:green_bed": 1,
+            "minecraft:green_bed -> minecraft:lantern": 1
+          }
+        },
+        "PC02.7": {
+          "label": "Medium House 3",
+          "missing": {
+            "minecraft:dark_oak_stairs": 1,
+            "minecraft:dark_oak_wall_sign": 1
+          },
+          "extra": {
+            "minecraft:green_bed": 2,
+            "minecraft:dark_oak_stairs": 1,
+            "minecraft:dark_oak_wall_sign": 1
+          },
+          "changed": {}
+        },
+        "PC02.8": {
+          "label": "Large House 1",
+          "missing": {},
+          "extra": {
+            "minecraft:stone_pressure_plate": 1
+          },
+          "changed": {
+            "minecraft:andesite_slab -> minecraft:barrel": 1,
+            "minecraft:furnace -> minecraft:smoker": 1
+          }
+        },
+        "PC03.1": {
+          "label": "Armorer + Mason",
+          "missing": {
+            "minecraft:chest": 1
+          },
+          "extra": {},
+          "changed": {}
+        },
+        "PC03.4": {
+          "label": "Leatherworker",
+          "missing": {
+            "minecraft:chest": 1,
+            "minecraft:white_wall_banner": 3
+          },
+          "extra": {},
+          "changed": {}
+        },
+        "PC03.6": {
+          "label": "Fisher + Fletcher",
+          "missing": {},
+          "extra": {
+            "minecraft:sugar_cane": 6
+          },
+          "changed": {}
+        },
+        "PC05.2": {
+          "label": "Acacia Tavern",
+          "missing": {},
+          "extra": {
+            "minecraft:structure_void": 3
+          },
+          "changed": {}
+        },
+        "PC05.3": {
+          "label": "Mangrove Tavern",
+          "missing": {},
+          "extra": {
+            "minecraft:structure_void": 2
+          },
+          "changed": {}
+        },
+        "PC06.1": {
+          "label": "Priest Tower",
+          "missing": {},
+          "extra": {
+            "minecraft:structure_void": 1
+          },
+          "changed": {
+            "minecraft:sand -> minecraft:grass_block": 52,
+            "minecraft:jungle_log -> minecraft:stripped_spruce_wood": 71,
+            "minecraft:lime_glazed_terracotta -> minecraft:spruce_planks": 25,
+            "minecraft:terracotta -> minecraft:stripped_spruce_wood": 84,
+            "minecraft:jungle_planks -> minecraft:spruce_planks": 1,
+            "minecraft:jungle_planks -> minecraft:oak_planks": 33,
+            "minecraft:jungle_slab -> minecraft:oak_slab": 16,
+            "minecraft:jungle_fence -> minecraft:spruce_fence": 38,
+            "minecraft:jungle_stairs -> minecraft:oak_stairs": 40,
+            "minecraft:campfire -> minecraft:oak_slab": 48
+          }
+        },
+        "PC08.2": {
+          "label": "Poppy Circle",
+          "missing": {
+            "minecraft:red_mushroom": 1
+          },
+          "extra": {},
+          "changed": {}
+        },
+        "PC08.6": {
+          "label": "Bamboo Statue",
+          "missing": {
+            "minecraft:bamboo_sapling": 1
+          },
+          "extra": {},
+          "changed": {}
+        }
+      },
+      "deviationCause": "Extra cells are structure-void markers left by jigsaw final states. CTOV compatibility work blocks from mods the server lacks are replaced by vanilla stand-ins (standIns), so no block is missing."
+    },
+    "waterCheck": {
+      "samples": [
+        {
+          "row": "PC03",
+          "samples": 24,
+          "water": "{}"
+        },
+        {
+          "row": "PC06",
+          "samples": 17,
+          "water": "{}"
+        }
+      ],
+      "forceloadsAfter": [
+        "No force loaded chunks were found in Overworld"
+      ]
+    }
+  }
+}

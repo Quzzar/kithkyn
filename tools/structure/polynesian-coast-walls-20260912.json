@@ -1,0 +1,377 @@
+{
+  "schemaVersion": 1,
+  "recorded": "2026-09-12T23:55:00-04:00",
+  "status": "bundled; unit-tested; built on real terrain in a throwaway world and reviewed offline; ladders walked by the gate access harness",
+  "description": "The Polynesian Coast wall family: study A of the 2026-09-12 Polynesian gallery, the bundled Birch wall pieces with their masonry turned to stripped spruce wood on a course of dead bubble coral, their stone walls to spruce fence tips, their top cobblestone slabs to oak slab walks and their oak hatches to spruce. The five templates are the gallery's own files byte for byte; the loader maps the two new block names and the catalog seats the coral on each column's own ground.",
+  "decision": "Aaron reviewed row PC11 of the Polynesian gallery on 2026-09-12 and locked study A: a stripped spruce palisade with spruce fence tips and oak-slab walks on dead-coral footings, gatehouse banners included. Study B (bamboo block, bamboo fence, bamboo slab and trapdoor) was rejected.",
+  "gallery": {
+    "row": "PC11 'POLYNESIAN WALLS, A SPRUCE, B BAMBOO' in run/polynesian-full-profile/manifest.json, origin 616, 230, 456 above the trio-20260912 test world",
+    "workshop": "run/polynesian-full-profile/workshop.py wall_swap(\"A\"), applied with tools/structure/ReplaceTemplateBlocks.java to the Birch pieces at origin/main",
+    "prepared": "run/polynesian-full-profile/prepared/pc11_01_wall_a_straight.nbt through pc11_05_wall_a_terrace.nbt"
+  },
+  "swap": {
+    "minecraft:cobblestone and minecraft:mossy_cobblestone at local y 0": "minecraft:dead_bubble_coral_block",
+    "minecraft:cobblestone and minecraft:mossy_cobblestone above local y 0": "minecraft:stripped_spruce_wood (default axis y)",
+    "minecraft:cobblestone_wall and minecraft:mossy_cobblestone_wall": "minecraft:spruce_fence, properties cleared",
+    "minecraft:cobblestone_slab": "minecraft:oak_slab, type kept: all ten are top slabs, one on the tower and nine on the gate roof",
+    "minecraft:oak_trapdoor": "minecraft:spruce_trapdoor, properties kept",
+    "kept": "minecraft:torch, minecraft:wall_torch, minecraft:ladder, minecraft:campfire, minecraft:white_wall_banner"
+  },
+  "vocabulary": {
+    "minecraft:stripped_spruce_wood": "BODY (new mapping): the palette post at axis y, placed like Birch cobblestone. Not POST: WallRaiser grows every POST down to the live ground when it places it, which under the gatehouse roof edges would fill the passage.",
+    "minecraft:dead_bubble_coral_block": "CORAL_FOOTING (new piece, appended after LEAVES_DARK so saved section signatures keep their ordinals): literal dead bubble coral under any palette, a ground-contact leg in the loader, a structural foundation in WallRaiser, and extended into a hollow on placement like a post leg.",
+    "minecraft:spruce_fence": "PARAPET (existing mapping), the palette railing",
+    "minecraft:oak_slab": "SLAB (existing mapping), always placed as a top slab, which is what study A has",
+    "minecraft:spruce_trapdoor": "TRAPDOOR_* (existing mapping), placed open and top half",
+    "minecraft:torch, wall_torch, ladder, campfire, white_wall_banner": "TORCH, TORCH_*, LADDER_*, CAMPFIRE_*, BANNER_* (existing mappings)"
+  },
+  "palette": {
+    "post": "minecraft:stripped_spruce_wood",
+    "deck": "minecraft:stripped_spruce_wood",
+    "stairs": "minecraft:oak_stairs (unused: the Birch geometry has no steps)",
+    "slab": "minecraft:oak_slab",
+    "railing": "minecraft:spruce_fence",
+    "trapdoor": "minecraft:spruce_trapdoor",
+    "footing": "minecraft:dead_bubble_coral_block, the literal CORAL_FOOTING piece rather than a palette slot: it is this family's signature, like Birch's literal cobblestone, and a slot would need a value or a post-block guess for eight styles that never place one",
+    "material": "minecraft:spruce_log (WallTier, one log per ten cells)"
+  },
+  "footing": "BuiltInWallSegmentCatalog.seatFooting runs for a family whose templates author CORAL_FOOTING, which only this one does. Every body course (BODY, POST or CORAL_FOOTING) at or below its column's saved natural ground becomes CORAL_FOOTING, and any CORAL_FOOTING above that ground becomes BODY. A route column reads its own ground and an off-route column the nearest route column's, the same sample rigid legs are extended to. Why: the capture's coral sits at local y 0, but the loader slides a run column taller than four courses down by up to three (three of seven straight columns on flat ground), which buries it, and a terrace lifts the whole slice up to five blocks, which floats it on a spruce stilt. Seated, one coral course follows the terrain under runs, towers and gates, and the footing cells below it are buried and only fill hollows. On flat ground the towers and gates keep study A's coral ring exactly.",
+  "procedural_parts": "The palisade fill (BODY from the seam floor to the deck on every route column) is spruce above the ground and coral at or below it. Rigid legs repeat their y 0 coral down to the sampled ground, then seat like everything else. Climb shafts repeat ladders and hatches, unchanged. The catalog emits no WALKWAY cell today: a run's walk is the top of its spruce body, and the oak slabs walk the gate roof and the tower. Run toppers under a rigid feature solidify into BODY, so spruce. At build time a coral footing cell extends into a hollow like a post leg, and an exposed soil course under a column takes that column's base block, which is the coral.",
+  "loader_variant": "loadBundled(\"polynesian_coast\"), not the arid variant. The arid flag turns the wood gatehouse's forty Mesa trim cells into GATE_FRAME pieces and drops its roof lanterns; the Birch geometry has neither post trim cells there nor lanterns, so the flag would change nothing and misdescribe the family.",
+  "banners": "Each gatehouse keeps study A's four white wall banners, two on each face hung on spruce fence rails, turned with the gate and built after their support. WallRaiser dyes and patterns them with the owning village's identity when it places them, as for Birch; a village-less dev preview leaves them white.",
+  "guard_posts": "WallPosts reads a Polynesian gate or tower from the Polynesian footprint (the Birch geometry) instead of the wood one. Crossbow posts stand on the oak slab walks, at exactly the cells a Birch wall uses.",
+  "known_normalizations": "Shared with Birch because they come from the loader's semantic pieces: fences reconnect to their neighbours when placed; every hatch is placed open and top half, so study A's one open bottom-half hatch in the tower shows its texture flipped (open hatches share one shape); and runs keep at most two courses above their deck, so tall capture columns are slid down into the ground.",
+  "tool": "tools/structure/ReplaceTemplateBlocks.java with a plan built from the swap above over every cell of birch_forest/<piece>.nbt (fence entries carry an empty properties object), run as java -cp <build/moddev minecraft jar plus serverLegacyClasspath.txt> tools/structure/ReplaceTemplateBlocks.java plan.json. That is how workshop.py made the gallery templates, and its output equals the bundled files byte for byte.",
+  "pieces": [
+    {
+      "kind": "straight",
+      "source": "src/main/resources/data/kithkyn/structure/wall/birch_forest/straight.nbt",
+      "source_sha256": "417c3fa956b8b016be23d1a9fdb090b8d155466b75060234831a0a118cf90b85",
+      "study_a": "run/polynesian-full-profile/prepared/pc11_01_wall_a_straight.nbt (gallery template kithkyn_polynesian_profile:pc11_01_wall_a_straight)",
+      "study_a_sha256": "e5581e6c96359828ada31fac6b7dbac7d243bd28dbfa63474e27af9c57dc754e",
+      "output": "src/main/resources/data/kithkyn/structure/wall/polynesian_coast/straight.nbt",
+      "output_sha256": "e5581e6c96359828ada31fac6b7dbac7d243bd28dbfa63474e27af9c57dc754e",
+      "reproduced_byte_for_byte": true,
+      "size": [
+        7,
+        8,
+        1
+      ],
+      "cells": 37,
+      "palette": [
+        "minecraft:dead_bubble_coral_block",
+        "minecraft:spruce_fence",
+        "minecraft:stripped_spruce_wood",
+        "minecraft:torch"
+      ],
+      "swaps": {
+        "minecraft:mossy_cobblestone -> minecraft:dead_bubble_coral_block": 5,
+        "minecraft:cobblestone -> minecraft:dead_bubble_coral_block": 2,
+        "minecraft:mossy_cobblestone -> minecraft:stripped_spruce_wood": 6,
+        "minecraft:cobblestone -> minecraft:stripped_spruce_wood": 18,
+        "minecraft:cobblestone_wall -> minecraft:spruce_fence": 3,
+        "minecraft:mossy_cobblestone_wall -> minecraft:spruce_fence": 1
+      }
+    },
+    {
+      "kind": "diagonal",
+      "source": "src/main/resources/data/kithkyn/structure/wall/birch_forest/diagonal.nbt",
+      "source_sha256": "641d8f0285db2aadcc581e4b4a60082a70d29824668fb8b3bff2be357073ca71",
+      "study_a": "run/polynesian-full-profile/prepared/pc11_02_wall_a_diagonal.nbt (gallery template kithkyn_polynesian_profile:pc11_02_wall_a_diagonal)",
+      "study_a_sha256": "c6930b7971dbd8eca124781da26aef923bee4aef1e90c263ad165105f50c9771",
+      "output": "src/main/resources/data/kithkyn/structure/wall/polynesian_coast/diagonal.nbt",
+      "output_sha256": "c6930b7971dbd8eca124781da26aef923bee4aef1e90c263ad165105f50c9771",
+      "reproduced_byte_for_byte": true,
+      "size": [
+        7,
+        8,
+        7
+      ],
+      "cells": 40,
+      "palette": [
+        "minecraft:dead_bubble_coral_block",
+        "minecraft:spruce_fence",
+        "minecraft:stripped_spruce_wood",
+        "minecraft:torch"
+      ],
+      "swaps": {
+        "minecraft:mossy_cobblestone -> minecraft:dead_bubble_coral_block": 3,
+        "minecraft:cobblestone -> minecraft:dead_bubble_coral_block": 4,
+        "minecraft:mossy_cobblestone -> minecraft:stripped_spruce_wood": 8,
+        "minecraft:cobblestone -> minecraft:stripped_spruce_wood": 16,
+        "minecraft:cobblestone_wall -> minecraft:spruce_fence": 4,
+        "minecraft:mossy_cobblestone_wall -> minecraft:spruce_fence": 2
+      }
+    },
+    {
+      "kind": "corner_tower",
+      "source": "src/main/resources/data/kithkyn/structure/wall/birch_forest/corner_tower.nbt",
+      "source_sha256": "38b6df41ffe999e9ef9027a2b6b05e8af76f622cbd27d7cd0d5918124a1e84ea",
+      "study_a": "run/polynesian-full-profile/prepared/pc11_03_wall_a_corner_tower.nbt (gallery template kithkyn_polynesian_profile:pc11_03_wall_a_corner_tower)",
+      "study_a_sha256": "581563bd31d3389e1cd4a6bfc92824903a650790885f299ec81ef41b76ffb76f",
+      "output": "src/main/resources/data/kithkyn/structure/wall/polynesian_coast/corner_tower.nbt",
+      "output_sha256": "581563bd31d3389e1cd4a6bfc92824903a650790885f299ec81ef41b76ffb76f",
+      "reproduced_byte_for_byte": true,
+      "size": [
+        12,
+        8,
+        6
+      ],
+      "cells": 100,
+      "palette": [
+        "minecraft:dead_bubble_coral_block",
+        "minecraft:ladder",
+        "minecraft:oak_slab",
+        "minecraft:spruce_fence",
+        "minecraft:spruce_trapdoor",
+        "minecraft:stripped_spruce_wood",
+        "minecraft:torch"
+      ],
+      "swaps": {
+        "minecraft:mossy_cobblestone -> minecraft:dead_bubble_coral_block": 7,
+        "minecraft:cobblestone -> minecraft:dead_bubble_coral_block": 7,
+        "minecraft:oak_trapdoor -> minecraft:spruce_trapdoor": 4,
+        "minecraft:mossy_cobblestone -> minecraft:stripped_spruce_wood": 11,
+        "minecraft:cobblestone -> minecraft:stripped_spruce_wood": 40,
+        "minecraft:mossy_cobblestone_wall -> minecraft:spruce_fence": 8,
+        "minecraft:cobblestone_wall -> minecraft:spruce_fence": 11,
+        "minecraft:cobblestone_slab -> minecraft:oak_slab": 1
+      }
+    },
+    {
+      "kind": "gatehouse",
+      "source": "src/main/resources/data/kithkyn/structure/wall/birch_forest/gatehouse.nbt",
+      "source_sha256": "6b18ae5516320898e1ad6b89393a2e6ab9ba34a2afc8bd4b733d4944d9cdfcf1",
+      "study_a": "run/polynesian-full-profile/prepared/pc11_04_wall_a_gatehouse.nbt (gallery template kithkyn_polynesian_profile:pc11_04_wall_a_gatehouse)",
+      "study_a_sha256": "aba4e3a81ae9c744489fa875d69a6e26a60e280ab19d2e012350e22fd62c7ad5",
+      "output": "src/main/resources/data/kithkyn/structure/wall/polynesian_coast/gatehouse.nbt",
+      "output_sha256": "aba4e3a81ae9c744489fa875d69a6e26a60e280ab19d2e012350e22fd62c7ad5",
+      "reproduced_byte_for_byte": true,
+      "size": [
+        17,
+        8,
+        7
+      ],
+      "cells": 163,
+      "palette": [
+        "minecraft:campfire",
+        "minecraft:dead_bubble_coral_block",
+        "minecraft:ladder",
+        "minecraft:oak_slab",
+        "minecraft:spruce_fence",
+        "minecraft:stripped_spruce_wood",
+        "minecraft:torch",
+        "minecraft:wall_torch",
+        "minecraft:white_wall_banner"
+      ],
+      "swaps": {
+        "minecraft:mossy_cobblestone -> minecraft:dead_bubble_coral_block": 8,
+        "minecraft:cobblestone -> minecraft:dead_bubble_coral_block": 10,
+        "minecraft:cobblestone -> minecraft:stripped_spruce_wood": 52,
+        "minecraft:mossy_cobblestone -> minecraft:stripped_spruce_wood": 30,
+        "minecraft:cobblestone_wall -> minecraft:spruce_fence": 20,
+        "minecraft:mossy_cobblestone_wall -> minecraft:spruce_fence": 11,
+        "minecraft:cobblestone_slab -> minecraft:oak_slab": 9
+      }
+    },
+    {
+      "kind": "terrace",
+      "source": "src/main/resources/data/kithkyn/structure/wall/birch_forest/terrace.nbt",
+      "source_sha256": "df728d8b1ed1fe0372acc52a4faf7057eefc5c24f2f1a0605a234613a3404056",
+      "study_a": "run/polynesian-full-profile/prepared/pc11_05_wall_a_terrace.nbt (gallery template kithkyn_polynesian_profile:pc11_05_wall_a_terrace)",
+      "study_a_sha256": "fa9a55aa380c0adb5aabf526f8bac22d5565c5db48da96196b2b77906b3e1bdf",
+      "output": "src/main/resources/data/kithkyn/structure/wall/polynesian_coast/terrace.nbt",
+      "output_sha256": "fa9a55aa380c0adb5aabf526f8bac22d5565c5db48da96196b2b77906b3e1bdf",
+      "reproduced_byte_for_byte": true,
+      "size": [
+        8,
+        9,
+        1
+      ],
+      "cells": 45,
+      "palette": [
+        "minecraft:dead_bubble_coral_block",
+        "minecraft:spruce_fence",
+        "minecraft:stripped_spruce_wood",
+        "minecraft:torch"
+      ],
+      "swaps": {
+        "minecraft:mossy_cobblestone -> minecraft:dead_bubble_coral_block": 3,
+        "minecraft:cobblestone -> minecraft:dead_bubble_coral_block": 1,
+        "minecraft:mossy_cobblestone -> minecraft:stripped_spruce_wood": 12,
+        "minecraft:cobblestone -> minecraft:stripped_spruce_wood": 22,
+        "minecraft:cobblestone_wall -> minecraft:spruce_fence": 4,
+        "minecraft:mossy_cobblestone_wall -> minecraft:spruce_fence": 1
+      }
+    }
+  ],
+  "verification": {
+    "reproduction": "The swap re-run on this worktree's Birch pieces with ReplaceTemplateBlocks.java gives the five bundled files byte for byte, and both equal the gallery's prepared templates; the Birch hashes match the gallery manifest's source hashes.",
+    "unit_tests": "PolynesianCoastWallTest: only this family authors a footing; all 163 study A gatehouse cells are reproduced at every gate on flat ground, with facings turned and flags and torches built after their support; on flat, rolling and sawtooth ground every run column stands on coral at its own ground, no coral sits above any column's ground and the body above it is spruce; crossbow posts stand on the oak slab walks, identical to Birch's; codec round trip. Also WallPaletteTest.polynesianCoastWallsAreStrippedSpruceOnDeadCoralWithOakSlabWalksAndGateBanners and WallFoundationTest's gate passage and leg check over the Polynesian gatehouse. taskpolicy -b ./gradlew test --tests '*Wall*': 69 tests in the thirteen wall classes, none failed.",
+    "gate_access": {
+      "harness": "GateAccessVerification with -Dkithkyn.gateAccess.style=polynesian_coast on a disposable flat world (own port 25642, watchdog off, background QoS): a completed wall on a platform at y 150, one resident walked up the authored ladders to every crossbow post and back down.",
+      "result": "RESULT PASS: POLYNESIAN_COAST all 8 guards/workers ascended and descended"
+    },
+    "terrain_preview": {
+      "harness": "A throwaway normal world (seed kithkyn-polynesian, own port 25641, watchdog off, background QoS) on this worktree's classes: /locate biome, forceload, /kkdev village wall-area <box> polynesian_coast from the console, save-all flush, then the blocks read back from the saved region files and rendered offline as isometric views from two sides and the four straight wall lines cut open along the route. No client and no live server.",
+      "counts": "Read back per site after save-all flush. Every column holding coral or spruce is counted by its lowest such block (coral_feet, spruce_feet); the spruce feet are gate roof edges over the passages, tower overhangs, the rails under the banners and the few off-route legs listed. route is the exact 264-column ring: its passages, and what the lowest coral of every other route column stands on.",
+      "sites": [
+        {
+          "tag": "beach",
+          "box": [
+            -4,
+            -1412,
+            68,
+            -1340
+          ],
+          "feedback": "Built polynesian_coast wall preview: 74 sections, 4 gates, 1984 blocks placed across 264 route columns.",
+          "wall_columns_read_back": 320,
+          "coral_feet": 268,
+          "spruce_feet": 52,
+          "columns_with_coral_above_spruce": 0,
+          "feet_over_air_or_water": 30,
+          "route": {
+            "route_columns": 264,
+            "passage_columns_open": 12,
+            "footed_on_coral": 252,
+            "coral_foot_on": {
+              "clay": 1,
+              "coarse_dirt": 6,
+              "dirt": 32,
+              "grass_block": 84,
+              "gravel": 3,
+              "mossy_cobblestone": 13,
+              "podzol": 33,
+              "sand": 80
+            },
+            "footed_on_spruce": 0,
+            "off_route_spruce_feet_on_ground": [
+              [
+                30,
+                -1411,
+                65,
+                "mossy_cobblestone"
+              ],
+              [
+                30,
+                -1339,
+                66,
+                "grass_block"
+              ]
+            ]
+          }
+        },
+        {
+          "tag": "jungle",
+          "box": [
+            1916,
+            -1732,
+            1988,
+            -1660
+          ],
+          "feedback": "Built polynesian_coast wall preview: 104 sections, 4 gates, 2110 blocks placed across 264 route columns.",
+          "wall_columns_read_back": 332,
+          "coral_feet": 267,
+          "spruce_feet": 65,
+          "columns_with_coral_above_spruce": 0,
+          "feet_over_air_or_water": 36,
+          "route": {
+            "route_columns": 264,
+            "passage_columns_open": 12,
+            "footed_on_coral": 252,
+            "coral_foot_on": {
+              "dirt": 65,
+              "grass_block": 187
+            },
+            "footed_on_spruce": 0,
+            "off_route_spruce_feet_on_ground": [
+              [
+                1917,
+                -1698,
+                67,
+                "dirt"
+              ],
+              [
+                1917,
+                -1694,
+                65,
+                "dirt"
+              ],
+              [
+                1920,
+                -1660,
+                65,
+                "dirt"
+              ],
+              [
+                1954,
+                -1731,
+                82,
+                "dirt"
+              ],
+              [
+                1954,
+                -1659,
+                70,
+                "dirt"
+              ]
+            ]
+          }
+        },
+        {
+          "tag": "hills",
+          "box": [
+            -1988,
+            508,
+            -1916,
+            580
+          ],
+          "feedback": "Built polynesian_coast wall preview: 80 sections, 4 gates, 2708 blocks placed across 264 route columns.",
+          "wall_columns_read_back": 326,
+          "coral_feet": 269,
+          "spruce_feet": 57,
+          "columns_with_coral_above_spruce": 0,
+          "feet_over_air_or_water": 50,
+          "route": {
+            "route_columns": 264,
+            "passage_columns_open": 12,
+            "footed_on_coral": 252,
+            "coral_foot_on": {
+              "air": 1,
+              "clay": 1,
+              "dirt": 55,
+              "grass_block": 35,
+              "gravel": 25,
+              "ice": 85,
+              "sand": 15,
+              "stone": 19,
+              "water": 16
+            },
+            "footed_on_spruce": 0,
+            "off_route_spruce_feet_on_ground": [
+              [
+                -1987,
+                537,
+                70,
+                "grass_block"
+              ],
+              [
+                -1954,
+                507,
+                81,
+                "dirt"
+              ]
+            ]
+          }
+        }
+      ],
+      "reviewed": "Looked at offline on 2026-09-12 (isometric views, close looks at every gate and a tower, and each straight wall line in false colour). Flat, rolling and beach runs read as study A: a stripped spruce palisade with fence tips and torches on one coral course that steps with the ground and sinks one course into a bank at a step; gatehouses keep their oak slab roof walk, campfire, fence rails and two white banners a face, towers their slab platform and rails. Read back from the region files: at the beach and the sparse jungle all 252 route columns outside the passages stand on coral on real ground, the 12 passage columns are open, and no column at any site has coral above spruce. Through water the palisade rises in spruce from a coral course on the seabed. On the windswept hills the planner takes lake ice as ground, so the course sits on the ice and the seam fill under it is coral; where the north run crosses a floating stone arch, the seam fill at both ends drops to the lake-side ground and stands as a coral pier up to the arch top (a Birch wall builds the same piers in cobblestone); 17 hills route columns have their lowest coral over water or air for those reasons. Nine off-route gatehouse side-bay legs (2, 5 and 2 of about 330 wall columns a site) show spruce at the foot where their own ground is a course above the route sample, with the coral buried under them."
+    },
+    "full_suite": "taskpolicy -b ./gradlew test, the whole suite once at the end: 123 test classes, 573 tests, 8 skipped, none failed."
+  },
+  "open_questions": [
+    "Footing height on terraces: the coral is one course at the natural ground and the palisade above it stays spruce, even where a terrace lifts the deck up to five blocks, which keeps study A's proportions. The alternative is a coral plinth up to the authored base, taller on downhill runs. Aaron to confirm.",
+    "Piers under an overhang: everything below a column's ground line is footing, so where a run crosses an arch or cave its end columns stand as coral piers down to the lower ground. The alternative is a spruce post with a coral foot. Aaron to confirm which reads better.",
+    "Off-route legs read the nearest route column's ground, as every family's leg extension does, so a leg whose own ground is a course higher shows spruce at its foot (nine in the preview). Seating those on live terrain would need a build-time material choice that the saved plan and its signatures do not carry; left as is."
+  ]
+}
