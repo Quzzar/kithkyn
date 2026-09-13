@@ -121,6 +121,11 @@ public record WallBlockPlan(long position, Piece piece, WallCellRole role) {
           ? Blocks.COBBLED_DEEPSLATE_WALL
           : Blocks.COBBLED_DEEPSLATE).defaultBlockState();
     }
+    if (palette.post() == Blocks.BRICKS) {
+      return (fallback == Blocks.COBBLESTONE_WALL
+          ? Blocks.BRICK_WALL
+          : Blocks.BRICKS).defaultBlockState();
+    }
     return fallback.defaultBlockState();
   }
 

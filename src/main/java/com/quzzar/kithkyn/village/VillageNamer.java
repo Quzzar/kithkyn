@@ -192,6 +192,13 @@ public final class VillageNamer {
           List.of("Codrenia", "Valea Lunii", "Branovia", "Miercana"),
           List.of("Cod", "Vale", "Bran", "Mier", "Lun", "Sor", "Dra", "Veli"),
           List.of("enia", "ovia", "ana", "esti", "ora", "eni", "ava", "ina"));
+      case ALPINE_HIGHLANDS -> new NamingProfile(
+          "A close mountain settlement of brick walls, steep spruce roofs, berry gardens,"
+              + " deep wells and large shared houses gathered in high meadows and windy passes."
+              + " Warm, resonant invented names with an Iberian highland sound.",
+          List.of("Valdora", "Monteluz", "Bravena", "Cerrosa"),
+          List.of("Val", "Monte", "Bra", "Cerro", "Luma", "Sierra", "Ald", "Vera"),
+          List.of("dora", "luz", "vena", "rosa", "alta", "era", "ona", "iel"));
     };
   }
 

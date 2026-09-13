@@ -48,7 +48,8 @@ import net.neoforged.neoforge.event.tick.ServerTickEvent;
 /**
  * Shared private-catalog checks for the reviewed regional villages. Opt in with
  * the legacy Badlands flag or {@code -Dkithkyn.reviewedVillage.style=<style>}
- * for Desert, Floodplain, Jungle, Swamp, Mediterranean, Tundra, Polynesian Coast or Romanian;
+ * for Desert, Floodplain, Jungle, Swamp, Mediterranean, Tundra, Polynesian Coast,
+ * Romanian or Alpine Highlands;
  * each catalog's authored numbers live in its
  * {@link Catalog} record so the checks read facts rather than guess them.
  */
@@ -120,12 +121,17 @@ public final class BadlandsVillageVerification {
         Map.of(), List.of(), true,
         new String[][] {{id("market", 1), id("market", 2)}, {id("market", 2), id("market", 3)}},
         3, 4, 5, 1, 5, 0, 0, new BlockPos(12, 2, 27), new BlockPos(12, 2, 27), 1, Biomes.DARK_FOREST);
+    case ALPINE_HIGHLANDS -> new Catalog("[alpine-verify]", 22, 5, 17, new int[] {5, 0, 0},
+        Map.of("house_alpine_highlands_1__family_house", 1), List.of(), false,
+        new String[][] {{id("market", 1), id("market", 2)}, {id("market", 2), id("market", 3)}},
+        5, 5, 5, 1, 5, 0, 0, new BlockPos(8, 1, 10), new BlockPos(10, 3, 10), 1, Biomes.MEADOW);
     case BIRCH_FOREST -> null;
   };
   /** Centre jobs beyond the founding four that a catalog's centre also opens at founding. */
   private static final Map<Occupation, Long> EXTRA_CENTER_JOBS = STYLE == VillageStyle.MEDITERRANEAN
       || STYLE == VillageStyle.ROMANIAN
       ? Map.of(Occupation.CLERIC, 1L)
+      : STYLE == VillageStyle.ALPINE_HIGHLANDS ? Map.of(Occupation.FARMER, 1L)
       : STYLE == VillageStyle.POLYNESIAN_COAST ? Map.of(Occupation.LEADER, 1L) : Map.of();
   private static final String PREFIX = CATALOG == null ? "[reviewed-village-verify]" : CATALOG.prefix();
   private static int ticks;

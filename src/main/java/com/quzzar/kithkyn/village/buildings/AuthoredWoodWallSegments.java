@@ -44,6 +44,7 @@ final class AuthoredWoodWallSegments {
    */
   static final AuthoredWoodWallSegments POLYNESIAN_COAST = loadBundled("polynesian_coast");
   static final AuthoredWoodWallSegments ROMANIAN = loadBundled("romanian");
+  static final AuthoredWoodWallSegments ALPINE_HIGHLANDS = loadBundled("alpine_highlands");
 
   private static final String RESOURCE_ROOT =
       "data/kithkyn/structure/wall/";
@@ -528,6 +529,9 @@ final class AuthoredWoodWallSegments {
       case "minecraft:cobblestone_wall" -> WallBlockPlan.Piece.COBBLE_WALL;
       case "minecraft:cobbled_deepslate_wall" -> WallBlockPlan.Piece.COBBLE_WALL;
       case "minecraft:mossy_cobblestone_wall" -> WallBlockPlan.Piece.MOSSY_WALL;
+      case "minecraft:bricks" -> WallBlockPlan.Piece.BODY;
+      case "minecraft:brick_wall" -> WallBlockPlan.Piece.PARAPET;
+      case "minecraft:brick_slab" -> WallBlockPlan.Piece.SLAB;
       case "minecraft:cobblestone_slab" -> switch (properties.getString("type")) {
         case "bottom" -> WallBlockPlan.Piece.COBBLE_SLAB_BOTTOM;
         case "double" -> WallBlockPlan.Piece.COBBLE_POST;
@@ -566,7 +570,10 @@ final class AuthoredWoodWallSegments {
       case "minecraft:oak_stairs" -> "top".equals(properties.getString("half"))
           ? null
           : WallBlockPlan.step(horizontal(properties.getString("facing")));
-      case "minecraft:oak_leaves" -> WallBlockPlan.Piece.LEAVES;
+      case "minecraft:brick_stairs" -> "top".equals(properties.getString("half"))
+          ? null
+          : WallBlockPlan.step(horizontal(properties.getString("facing")));
+      case "minecraft:oak_leaves", "minecraft:mangrove_leaves" -> WallBlockPlan.Piece.LEAVES;
       case "minecraft:dark_oak_leaves" -> WallBlockPlan.Piece.LEAVES_DARK;
       // The Polynesian Coast capture (study A) names its own materials. Its
       // stripped spruce is palisade body, placed like Birch masonry: a post

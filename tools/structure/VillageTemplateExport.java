@@ -217,6 +217,11 @@ public final class VillageTemplateExport {
       for (Tag value : root.getList("entities", Tag.TAG_COMPOUND)) {
         CompoundTag entity = ((CompoundTag)value).getCompound("nbt");
         for (String key : List.of("UUID", "Leash", "AngryAt", "NeoForgeData")) entity.remove(key);
+        if (entity.contains("Tags", Tag.TAG_LIST)) {
+          ListTag tags = entity.getList("Tags", Tag.TAG_STRING);
+          tags.removeIf(tag -> ((StringTag)tag).getAsString().equals("kithkyn_iberian_selection_animal"));
+          if (tags.isEmpty()) entity.remove("Tags");
+        }
         entity.put("Motion", doubles(0,0,0));
         entity.putShort("Fire", (short)-1);
         entity.putShort("HurtTime", (short)0);

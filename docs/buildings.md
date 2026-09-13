@@ -359,10 +359,11 @@ CTOV fortified plains is a defense or development state of `plains`, while Chris
 Halloween are possible seasonal treatments. This keeps biome, progression, and event state from
 becoming one overloaded axis.
 
-### Current runtime selection: 2026-09-12
+### Current runtime selection: 2026-09-13
 
-Ten styles exist today, in this stable order: `birch_forest`, `desert`, `badlands`,
-`floodplain`, `jungle`, `swamp`, `mediterranean`, `tundra`, `polynesian_coast`, `romanian`.
+Eleven styles exist today, in this stable order: `birch_forest`, `desert`, `badlands`,
+`floodplain`, `jungle`, `swamp`, `mediterranean`, `tundra`, `polynesian_coast`, `romanian`,
+`alpine_highlands`.
 Birch Forest is the only catalog bundled in the jar and so the default: a blank
 or unknown saved style reads as Birch. Desert ([desert-village.md](desert-village.md)),
 Badlands ([badlands-village.md](badlands-village.md)) and Floodplain
@@ -372,7 +373,8 @@ Badlands ([badlands-village.md](badlands-village.md)) and Floodplain
 ([mediterranean-village.md](mediterranean-village.md)), Tundra
 ([tundra-village.md](tundra-village.md)), Polynesian Coast
 ([polynesian-coast-village.md](polynesian-coast-village.md)) and Romanian
-([romanian-village.md](romanian-village.md)) are installed as private datapacks that
+([romanian-village.md](romanian-village.md)) and Alpine Highlands
+([alpine-highlands-village.md](alpine-highlands-village.md)) are installed as private datapacks that
 supply their own definitions and templates under the ids the code resolves; without its pack
 a style has no founding set and is never selected automatically. The old Village Life families
 (plains, taiga, snowy, savanna and the bundled desert set) were removed on 2026-09-10; see
@@ -390,7 +392,7 @@ reroll an existing village. An explicit style argument on the command still over
 Selection first honors `kithkyn:village_style/<style>` biome tags, so a datapack can map a
 vanilla or modded biome precisely without a second mapping format. If a biome has several
 explicit tags, the stable order is Birch Forest, Desert, Badlands, Floodplain, Jungle, Swamp,
-Mediterranean, Tundra, Polynesian Coast, Romanian. Sparse Jungle carries the Polynesian Coast tag and no
+Mediterranean, Tundra, Polynesian Coast, Romanian, Alpine Highlands. Sparse Jungle carries the Polynesian Coast tag and no
 longer the Jungle one, so Jungle keeps Jungle and Bamboo Jungle.
 Only styles whose own center, mine, and storehouse definitions are loaded are automatic candidates.
 
@@ -412,6 +414,7 @@ catalog exists:
 | Mangrove: vanilla mangrove swamp through the `kithkyn:village_style/floodplain` tag, and untagged registry paths containing `mangrove` | Floodplain |
 | Jungle, including conventional Jungle tags and registry paths containing `jungle` | Jungle |
 | Ordinary swamp, including the broad conventional Swamp tag and registry paths containing `swamp` after mangrove is excluded | Swamp |
+| Mountain, including the conventional Mountain tag and paths containing `mountain`, `meadow`, `grove`, `peak`, `windswept` or `alpine` | Alpine Highlands |
 | Snowy or icy lowlands, including their conventional tags and registry paths containing snow, ice, frozen or frost | Tundra |
 | Temperate plains: the conventional Plains tag and registry paths ending in `plains`, unless the biome is also snowy, icy or named for snow, ice or frost | Mediterranean |
 | Dark Forest and registry paths named `dark_forest`, `darkforest`, `forested_highland` or `wooded_valley` | Romanian |

@@ -23,6 +23,7 @@ import net.minecraft.world.level.block.FenceGateBlock;
 import net.minecraft.world.level.block.LadderBlock;
 import net.minecraft.world.level.block.CandleBlock;
 import net.minecraft.world.level.block.LanternBlock;
+import net.minecraft.world.level.block.StairBlock;
 import net.minecraft.world.level.block.TrapDoorBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
@@ -328,6 +329,16 @@ public final class PersonPathNavigation extends GroundPathNavigation {
   @Override
   protected void followThePath() {
     if (this.path != null && !this.path.isDone()
+        && this.path.getNextNodeIndex() < this.path.getNodeCount() - 1
+        && isDescendingIntoStairCorner()
+        && this.mob.blockPosition().equals(this.path.getNextNodePos())) {
+      // A descending body can occupy the corner cell while one edge still
+      // rests on the preceding half stair. Waiting for the exact node center
+      // wedges it between that stair and the opposite wall. Continue toward
+      // the following open cell; that movement clears the lip and lets it land.
+      this.path.advance();
+    }
+    if (this.path != null && !this.path.isDone()
         && isLadder(this.level.getBlockState(this.path.getNextNodePos()))) {
       Vec3 next = this.path.getNextEntityPos(this.mob);
       if (!descendingTowards(next)) next = ladderApproach(next,
@@ -368,6 +379,12 @@ public final class PersonPathNavigation extends GroundPathNavigation {
       return;
     }
     Vec3 next = this.path.getNextEntityPos(this.mob);
+    Vec3 stairCorner = stairCornerApproach(next);
+    if (!stairCorner.equals(next)) {
+      this.mob.getMoveControl().setWantedPosition(
+          stairCorner.x, getGroundY(stairCorner), stairCorner.z, this.speedModifier);
+      return;
+    }
     Vec3 doorway = openPanelApproach(next);
     if (!doorway.equals(next)) {
       this.mob.getMoveControl().setWantedPosition(
@@ -475,6 +492,44 @@ public final class PersonPathNavigation extends GroundPathNavigation {
   private static boolean isOpenPanel(BlockState state) {
     return state.getBlock() instanceof DoorBlock && state.getValue(DoorBlock.OPEN)
         || state.getBlock() instanceof TrapDoorBlock && state.getValue(TrapDoorBlock.OPEN);
+  }
+
+  /**
+   * Descending through the empty inside corner of two stairs needs a point
+   * clear of both stair lips. The path node remains the authored cell; only
+   * the body's movement point shifts toward its open quadrant.
+   */
+  private Vec3 stairCornerApproach(Vec3 target) {
+    if (!isDescendingIntoStairCorner()) return target;
+    BlockPos position = this.path.getNextNodePos();
+    Direction alongX = null;
+    Direction alongZ = null;
+    for (Direction direction : Direction.Plane.HORIZONTAL) {
+      if (!(this.level.getBlockState(position.relative(direction)).getBlock() instanceof StairBlock)) continue;
+      if (direction.getAxis() == Direction.Axis.X) alongX = direction;
+      else alongZ = direction;
+    }
+    if (alongX == null || alongZ == null) return target;
+    double offset = Math.min(0.2D, Math.max(0.0D, (1.0D - this.mob.getBbWidth()) / 2.0D - 0.025D));
+    return target.add(-alongX.getStepX() * offset, 0.0D, -alongZ.getStepZ() * offset);
+  }
+
+  private boolean isDescendingIntoStairCorner() {
+    int index = this.path.getNextNodeIndex();
+    return index > 0
+        && this.path.getNode(index - 1).y > this.path.getNode(index).y
+        && isInsideStairCorner(this.path.getNextNodePos());
+  }
+
+  private boolean isInsideStairCorner(BlockPos position) {
+    boolean alongX = false;
+    boolean alongZ = false;
+    for (Direction direction : Direction.Plane.HORIZONTAL) {
+      if (!(this.level.getBlockState(position.relative(direction)).getBlock() instanceof StairBlock)) continue;
+      if (direction.getAxis() == Direction.Axis.X) alongX = true;
+      else alongZ = true;
+    }
+    return alongX && alongZ;
   }
 
   private Vec3 ladderApproach(Vec3 target, BlockState state) {

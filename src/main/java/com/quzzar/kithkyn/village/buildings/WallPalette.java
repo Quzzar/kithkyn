@@ -44,6 +44,9 @@ record WallPalette(Block post, Block deck, Block stairs, Block slab,
       case ROMANIAN -> new WallPalette(
           Blocks.STRIPPED_DARK_OAK_WOOD, Blocks.STRIPPED_DARK_OAK_WOOD, Blocks.BIRCH_STAIRS,
           Blocks.BIRCH_SLAB, Blocks.COBBLED_DEEPSLATE_WALL, Blocks.DARK_OAK_TRAPDOOR);
+      case ALPINE_HIGHLANDS -> new WallPalette(
+          Blocks.BRICKS, Blocks.BRICKS, Blocks.BRICK_STAIRS,
+          Blocks.BRICK_SLAB, Blocks.BRICK_WALL, Blocks.SPRUCE_TRAPDOOR);
     };
   }
 
@@ -53,7 +56,9 @@ record WallPalette(Block post, Block deck, Block stairs, Block slab,
    * families author no foliage, so their pair is never placed.
    */
   Block leaves() {
-    return this.post == Blocks.QUARTZ_BRICKS ? Blocks.JUNGLE_LEAVES : Blocks.OAK_LEAVES;
+    if (this.post == Blocks.QUARTZ_BRICKS) return Blocks.JUNGLE_LEAVES;
+    if (this.post == Blocks.BRICKS) return Blocks.MANGROVE_LEAVES;
+    return Blocks.OAK_LEAVES;
   }
 
   Block leavesDark() {

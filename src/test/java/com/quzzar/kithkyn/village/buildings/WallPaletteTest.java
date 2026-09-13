@@ -287,4 +287,23 @@ class WallPaletteTest {
     assertTrue(timber > 0 && deepslate > 0 && birch > 0 && torches > 0 && trapdoors > 0);
     assertEquals(Items.DARK_OAK_LOG, WallTier.WOOD.material(style));
   }
+
+  @Test
+  void alpineWallsKeepTheApprovedBrickBodyAndPersistentBrush() {
+    var ring = WallRoute.aroundBox(0, 48, 0, 48);
+    var gates = Set.of(BlockPos.asLong(24, 0, 0), BlockPos.asLong(48, 0, 24),
+        BlockPos.asLong(24, 0, 48), BlockPos.asLong(0, 0, 24));
+    var style = VillageStyle.ALPINE_HIGHLANDS;
+    var wall = new WallProject(ring, gates, Collections.nCopies(ring.size(), 64), WallTier.WOOD, style);
+    int brick = 0, brush = 0, trapdoors = 0;
+    for (var cell : wall.plannedBlocks()) {
+      var state = cell.desiredState(wall.getTier(), style);
+      if (state.is(Blocks.BRICKS) || state.is(Blocks.BRICK_WALL)
+          || state.is(Blocks.BRICK_SLAB) || state.is(Blocks.BRICK_STAIRS)) brick++;
+      if (state.is(Blocks.MANGROVE_LEAVES)) brush++;
+      if (state.is(Blocks.SPRUCE_TRAPDOOR)) trapdoors++;
+    }
+    assertTrue(brick > 0 && brush > 0 && trapdoors > 0);
+    assertEquals(Items.BRICK, WallTier.WOOD.material(style));
+  }
 }
