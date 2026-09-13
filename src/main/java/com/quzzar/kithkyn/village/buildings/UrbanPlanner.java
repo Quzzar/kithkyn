@@ -185,34 +185,34 @@ public class UrbanPlanner {
 
     String goal = VillageGoal.current(village);
     if (goal != null) {
-      if (VillageGoal.hasExpired(village, village.getVillageTime())) {
-        // A goal that expires with its shortfall exactly as it was when named
-        // proved something the reachability test could not: nobody here can get
-        // what it needs. Sit it out, or the village re-names it forever.
-        BuildingInfo expired = Buildings.getByName(goal);
-        String before = VillageGoal.shortfallAtSet(village);
-        ConstructionChoice expiredChoice = expired == null ? null : goalChoice(village, expired);
-        String now = expiredChoice == null ? "" : shortfall(village, expiredChoice, stock);
-        VillageGoal.clear(village, "waited too long");
-        if (expired != null && !before.isEmpty() && before.equals(now)) {
-          VillageGoal.markStalled(village, goal, village.getVillageTime());
-        }
+      BuildingInfo wanted = Buildings.getByName(goal);
+      if (wanted == null) {
+        VillageGoal.clear(village, "the definition is gone");
       } else {
-        BuildingInfo wanted = Buildings.getByName(goal);
-        if (wanted == null) {
-          VillageGoal.clear(village, "the definition is gone");
-        } else {
-          ConstructionChoice wantedChoice = goalChoice(village, wanted);
-          if (wantedChoice == null) {
-            VillageGoal.clear(village, "the chosen construction path is no longer legal");
-          } else if (hasMaterialsToConstruct(stock, wantedChoice)) {
-            VillageGoal.clear(village, "affordable at last");
-            Kithkyn.LOGGER.info("Village '{}' saved up and is building {}",
-                village.getName(), wanted.getName());
-            return CompletableFuture.completedFuture(wantedChoice);
-          } else {
+        ConstructionChoice wantedChoice = goalChoice(village, wanted);
+        if (wantedChoice == null) {
+          VillageGoal.clear(village, "the chosen construction path is no longer legal");
+        } else if (hasMaterialsToConstruct(stock, wantedChoice)) {
+          VillageGoal.clear(village, "affordable at last");
+          Kithkyn.LOGGER.info("Village '{}' saved up and is building {}",
+              village.getName(), wanted.getName());
+          return CompletableFuture.completedFuture(wantedChoice);
+        } else if (VillageGoal.hasExpired(village, village.getVillageTime())) {
+          // A goal whose shortfall did not move for its whole lifetime proved
+          // something the reachability test could not: nobody here can get what
+          // it needs. A goal that did move is working and keeps its place.
+          String before = VillageGoal.shortfallAtSet(village);
+          String now = shortfall(village, wantedChoice, stock);
+          if (!before.isEmpty() && !before.equals(now)) {
+            VillageGoal.renewAfterProgress(village, now, village.getVillageTime());
             return CompletableFuture.completedFuture(null);
           }
+          VillageGoal.clear(village, "waited too long");
+          if (!before.isEmpty() && before.equals(now)) {
+            VillageGoal.markStalled(village, goal, village.getVillageTime());
+          }
+        } else {
+          return CompletableFuture.completedFuture(null);
         }
       }
     }

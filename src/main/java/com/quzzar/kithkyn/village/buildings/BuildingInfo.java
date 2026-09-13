@@ -155,7 +155,7 @@ public class BuildingInfo {
     info.workerBeds = workerBeds.orElse(null);
     info.standalone = standalone;
     info.startingBuildings = List.copyOf(startingBuildings);
-    worksites.forEach(worksite -> info.worksiteLocs.put(worksite.pos().asLong(), worksite.occupation()));
+    worksites.forEach(info::addWorksite);
     info.roomReservations = List.copyOf(rooms);
     info.castleLayout = castle.orElse(null);
     return info;
@@ -194,10 +194,12 @@ public class BuildingInfo {
   private ArrayList<Long> bedLocs;
   // Insertion-ordered: JobAssignment station indexes rely on a stable iteration order.
   private LinkedHashMap<Long, Occupation> workLocs;
+  private boolean duplicateWorkStationPosition;
   private final Map<Long, GuardRole> guardRoles = new LinkedHashMap<>();
   private final Map<Long, List<BlockPos>> guardPatrolRoutes = new LinkedHashMap<>();
   private final Map<Long, String> worksiteCategories = new LinkedHashMap<>();
   private final LinkedHashMap<Long, Occupation> worksiteLocs = new LinkedHashMap<>();
+  private boolean duplicateWorksitePosition;
   @javax.annotation.Nullable
   private List<BedContainers> bedContainers;
   @javax.annotation.Nullable
@@ -395,6 +397,12 @@ public class BuildingInfo {
   public String validate() {
     if (!hasWellFormedId()) {
       return "id '" + path + "' does not match <category>_<variant>_<level>[__<design>]";
+    }
+    if (duplicateWorkStationPosition) {
+      return "work_stations repeats a work station position; each job requires a distinct coordinate";
+    }
+    if (duplicateWorksitePosition) {
+      return "worksites repeats a physical worksite position";
     }
     if (getEntranceFacing().getAxis().isVertical() || mineEntrance.facing().getAxis().isVertical()) {
       return "building and mine entrances must face horizontally";
@@ -701,8 +709,20 @@ public class BuildingInfo {
   }
 
   public BuildingInfo addWorkLocation(int x, int y, int z, Occupation occupation) {
-    workLocs.put(BlockPos.asLong(x, y, z), occupation);
+    long position = BlockPos.asLong(x, y, z);
+    if (workLocs.containsKey(position)) {
+      duplicateWorkStationPosition = true;
+    }
+    workLocs.put(position, occupation);
     return this;
+  }
+
+  private void addWorksite(Worksite worksite) {
+    long position = worksite.pos().asLong();
+    if (worksiteLocs.containsKey(position)) {
+      duplicateWorksitePosition = true;
+    }
+    worksiteLocs.put(position, worksite.occupation());
   }
 
   public BuildingInfo addContainerLocation(int x, int y, int z) {

@@ -902,6 +902,15 @@ public class Person extends PathfinderMob implements CrossbowAttackMob, NeutralM
     }
   }
 
+  /** A new occupation cannot inherit unresolved work from the previous one. */
+  public void clearOperationalBlockers() {
+    PersonalLogData log = getData(KithkynAttachments.PERSONAL_LOG.get());
+    PersonalLogData updated = log.withoutBlockers();
+    if (updated != log) {
+      setData(KithkynAttachments.PERSONAL_LOG.get(), updated);
+    }
+  }
+
   @Override
   public void setItemSlot(EquipmentSlot slotIn, ItemStack stack) {
     super.setItemSlot(slotIn, stack);

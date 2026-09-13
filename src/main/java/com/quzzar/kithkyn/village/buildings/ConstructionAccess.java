@@ -19,8 +19,8 @@ import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraft.world.level.pathfinder.Path;
 
 /**
- * Worker-specific approaches to a redevelopment site. Positions stay outside both
- * the replacement and the buildings being removed, including their ground work.
+ * Worker-specific approaches to a construction site. Positions stay outside the
+ * new footprint and, for redevelopment, every building being removed, including ground work.
  * Routes are transient: reloads and replacement builders find their own way in.
  */
 public final class ConstructionAccess {
@@ -28,7 +28,7 @@ public final class ConstructionAccess {
   private static final long RETRY_TICKS = 200;
   /** Longer than the shared work loop's 600-tick stand-down after physical failure. */
   private static final long STALLED_RETRY_TICKS = 1200;
-  private static final String BLOCKER = "I cannot reach a clear position outside the redevelopment site.";
+  private static final String BLOCKER = "I cannot reach a clear position outside the construction site.";
 
   private final Map<UUID, Approach> approaches = new HashMap<>();
   private List<BoundingBox> footprints;
@@ -127,10 +127,12 @@ public final class ConstructionAccess {
       return true;
     }
     var village = person.getVillage();
-    if (village == null || project.getRedevelopment() == null) {
+    if (village == null) {
       return false;
     }
-    List<Building> affected = new ArrayList<>(project.getRedevelopment().plan().removed());
+    List<Building> affected = project.getRedevelopment() == null
+        ? new ArrayList<>()
+        : new ArrayList<>(project.getRedevelopment().plan().removed());
     affected.add(project.getBuilding());
     List<BoundingBox> boxes = new ArrayList<>();
     for (Building building : affected) {
@@ -141,8 +143,7 @@ public final class ConstructionAccess {
       boxes.add(bounds);
     }
     Set<Long> columns = new java.util.HashSet<>();
-    var plan = project.getRedevelopment().plan();
-    for (long packed : java.util.stream.Stream.concat(plan.prepBreak().stream(), plan.prepFill().stream()).toList()) {
+    for (long packed : project.prepWorkPositions()) {
       BlockPos at = BlockPos.of(packed);
       columns.add(new BlockPos(at.getX(), 0, at.getZ()).asLong());
     }
@@ -154,7 +155,7 @@ public final class ConstructionAccess {
   /** Nearby ground heights, without assuming the surface is the roof of an old building. */
   private List<BlockPos> candidates(RealPerson person, StructureInProgress project) {
     Set<BlockPos> candidates = new LinkedHashSet<>();
-    int ground = BlockPos.of(project.getRedevelopment().plan().ground()).getY();
+    int ground = groundLevel(project);
     for (BlockPos column : perimeter(footprints)) {
       for (int y = ground + 3; y >= ground - 4; y--) {
         BlockPos at = new BlockPos(column.getX(), y, column.getZ());
@@ -164,6 +165,16 @@ public final class ConstructionAccess {
       }
     }
     return candidates.stream().sorted(Comparator.comparingDouble(at -> at.distSqr(person.blockPosition()))).toList();
+  }
+
+  /** The seated surface, independent of whether the project replaces anything. */
+  static int groundLevel(StructureInProgress project) {
+    if (project.getRedevelopment() != null) {
+      return BlockPos.of(project.getRedevelopment().plan().ground()).getY();
+    }
+    Building building = project.getBuilding();
+    BuildingInfo info = building.getInfo();
+    return BlockPos.of(building.getOriginLocation()).getY() + (info == null ? 0 : info.getSink());
   }
 
   /** Columns beside each footprint, excluding overlapping footprints even for wide workers. */

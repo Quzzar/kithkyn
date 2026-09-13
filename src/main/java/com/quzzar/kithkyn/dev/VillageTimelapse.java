@@ -285,11 +285,18 @@ public final class VillageTimelapse {
   }
 
   private static Village firstWaitingVillage(Session session) {
-    return session.targets.keySet().stream().map(id -> findVillage(session, id))
+    return session.targets.values().stream()
+        .filter(target -> needsMoreBuilds(target.completedBuilds, session.requestedBuilds))
+        .map(target -> findVillage(session, target.villageId))
         .filter(java.util.Objects::nonNull)
         .filter(Village::hasPendingBrainDecision)
         .findFirst()
         .orElse(null);
+  }
+
+  /** A target that already met its milestone cannot pause the unfinished targets. */
+  static boolean needsMoreBuilds(int completedBuilds, int requestedBuilds) {
+    return completedBuilds < requestedBuilds;
   }
 
   private static Village findVillage(Session session, String villageId) {

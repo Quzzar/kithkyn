@@ -7,6 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
@@ -67,6 +68,40 @@ class BuildingAlternativesTest {
   }
 
   @Test
+  void anExpiredGoalThatMadeMaterialProgressKeepsSavingInsteadOfAskingForAReplacement() {
+    BuildingInfo chosen = house("house_birch_forest_1__couple_room", 0, 1);
+    chosen.setMaterialCost(List.of(new ItemStack(Items.OAK_LOG, 10)));
+    load(List.of(chosen));
+    Map<net.minecraft.world.item.Item, Integer> stock = new HashMap<>();
+    Village village = villageWithStock(stock);
+    String initialShortfall = UrbanPlanner.shortfallFor(village, chosen);
+    VillageGoal.set(village, chosen.getName(), "room for a couple", initialShortfall,
+        -VillageGoal.GOAL_LIFETIME_SECONDS - 1);
+
+    stock.put(Items.OAK_LOG, 5);
+    assertNull(UrbanPlanner.chooseNextProject(village).join());
+    assertEquals(chosen.getName(), VillageGoal.current(village));
+    assertEquals(UrbanPlanner.shortfallFor(village, chosen), VillageGoal.shortfallAtSet(village));
+    assertFalse(VillageGoal.hasExpired(village, village.getVillageTime()));
+  }
+
+  @Test
+  void anExpiredGoalThatBecameAffordableStartsImmediately() {
+    BuildingInfo chosen = house("house_birch_forest_1__couple_room", 0, 1);
+    chosen.setMaterialCost(List.of(new ItemStack(Items.OAK_LOG, 10)));
+    load(List.of(chosen));
+    Map<net.minecraft.world.item.Item, Integer> stock = new HashMap<>();
+    Village village = villageWithStock(stock);
+    VillageGoal.set(village, chosen.getName(), "room for a couple",
+        UrbanPlanner.shortfallFor(village, chosen), -VillageGoal.GOAL_LIFETIME_SECONDS - 1);
+
+    stock.put(Items.OAK_LOG, 10);
+    ConstructionChoice project = UrbanPlanner.chooseNextProject(village).join();
+    assertSame(chosen, project.info());
+    assertNull(VillageGoal.current(village));
+  }
+
+  @Test
   void singleGoalsSkipCoupleOnlyOrStalledLayoutsAndMarriageRetainsLegacyCottages() {
     BuildingInfo couple = house("house_birch_forest_1", 0, 1);
     BuildingInfo single = house("house_birch_forest_1__single", 1, 0);
@@ -104,6 +139,17 @@ class BuildingAlternativesTest {
 
   private static Village village() {
     Village village = new Village("Layout test");
+    village.setStyle(VillageStyle.BIRCH_FOREST);
+    return village;
+  }
+
+  private static Village villageWithStock(Map<net.minecraft.world.item.Item, Integer> stock) {
+    Village village = new Village("Layout test") {
+      @Override
+      public Map<net.minecraft.world.item.Item, Integer> stockTally() {
+        return Map.copyOf(stock);
+      }
+    };
     village.setStyle(VillageStyle.BIRCH_FOREST);
     return village;
   }

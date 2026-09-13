@@ -1,8 +1,13 @@
 package com.quzzar.kithkyn.entities.ai.goals.work;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
+
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 
 class MineFluidPolicyTest {
 
@@ -30,5 +35,13 @@ class MineFluidPolicyTest {
   void aClosedPocketWithNeitherBucketNorLiningStillBlocks() {
     assertEquals(MineFluidPolicy.Action.BLOCKED, MineFluidPolicy.next(false, true, false, false));
     assertEquals(MineFluidPolicy.Action.BLOCKED, MineFluidPolicy.next(false, false, false, true));
+  }
+
+  @Test
+  void waterloggedSolidsRemainActionableWater() {
+    assertTrue(MineStep.isWater(Blocks.OAK_FENCE.defaultBlockState()
+        .setValue(BlockStateProperties.WATERLOGGED, true)));
+    assertFalse(MineStep.isWater(Blocks.OAK_FENCE.defaultBlockState()));
+    assertFalse(MineStep.isWater(Blocks.LAVA.defaultBlockState()));
   }
 }

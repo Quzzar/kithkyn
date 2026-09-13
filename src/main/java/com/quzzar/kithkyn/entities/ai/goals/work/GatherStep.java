@@ -59,9 +59,7 @@ public final class GatherStep implements BlockWorkStep {
     // The whole recipe is in the pack: go to the site and commit it.
     if (!PackLogistics.packShort(person, recipe)) {
       deliveryProject = project;
-      deliveryPosition = project.getRedevelopment() == null
-          ? BlockPos.of(project.getBuilding().getCenterLocation())
-          : project.constructionAccess().select(person, project);
+      deliveryPosition = project.constructionAccess().select(person, project);
       return deliveryPosition;
     }
     // Otherwise fetch the next chest that holds something still wanted. None
@@ -81,7 +79,7 @@ public final class GatherStep implements BlockWorkStep {
       return false; // committed or abandoned out from under us
     }
     if (deliveryProject == project && target.equals(deliveryPosition)) {
-      if (project.getRedevelopment() != null && !project.constructionAccess().safe(person, target)) {
+      if (!project.constructionAccess().safe(person, target)) {
         project.constructionAccess().unreachable(person, target);
         return false;
       }
@@ -100,16 +98,14 @@ public final class GatherStep implements BlockWorkStep {
 
   @Override
   public boolean inReach(RealPerson person, BlockPos target) {
-    return deliveryProject != null && deliveryProject.getRedevelopment() != null
-        && target.equals(deliveryPosition)
+    return deliveryProject != null && target.equals(deliveryPosition)
         ? deliveryProject.constructionAccess().inReach(person, target)
         : BlockWorkStep.super.inReach(person, target);
   }
 
   @Override
   public void unreachable(RealPerson person, BlockPos target) {
-    if (deliveryProject != null && deliveryProject.getRedevelopment() != null
-        && target.equals(deliveryPosition)) {
+    if (deliveryProject != null && target.equals(deliveryPosition)) {
       deliveryProject.constructionAccess().unreachable(person, target);
     }
   }
@@ -126,8 +122,7 @@ public final class GatherStep implements BlockWorkStep {
 
   @Override
   public double reachSqr(RealPerson person) {
-    return deliveryProject != null && deliveryProject.getRedevelopment() == null
-        ? BuildStep.siteReachSqr(deliveryProject) : 6.0D;
+    return 6.0D;
   }
 
   /** The stable recipe owed by this project's chosen construction mode. */

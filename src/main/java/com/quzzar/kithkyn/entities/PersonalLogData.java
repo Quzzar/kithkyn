@@ -119,6 +119,15 @@ public record PersonalLogData(List<Entry> entries, long reflectedThrough, long r
         : new PersonalLogData(updated, reflectedThrough, reflectedThroughGameTime);
   }
 
+  /** Resolves every operational blocker while leaving the person's history intact. */
+  public PersonalLogData withoutBlockers() {
+    List<Entry> updated = entries.stream()
+        .filter(entry -> !KIND_BLOCKER.equals(entry.kind()))
+        .toList();
+    return updated.size() == entries.size() ? this
+        : new PersonalLogData(updated, reflectedThrough, reflectedThroughGameTime);
+  }
+
   /**
    * Entries the person has not yet made up their mind about, involving someone
    * else. Reflection reads these; everything older has already been felt.
