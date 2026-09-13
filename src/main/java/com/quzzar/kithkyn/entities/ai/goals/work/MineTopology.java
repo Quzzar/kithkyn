@@ -96,6 +96,10 @@ final class MineTopology {
       candidates.add(floorCell.relative(direction));
       candidates.add(floorCell.above().relative(direction));
     }
+    int previousZ = floorCell.getZ() - 1;
+    int previousY = floorY(previousZ);
+    candidates.add(new BlockPos(floorCell.getX() - 1, previousY, previousZ));
+    candidates.add(new BlockPos(floorCell.getX() + 1, previousY, previousZ));
     return candidates.stream()
         .filter(this::isRamp)
         .filter(candidate -> candidate.getZ() <= floorCell.getZ())

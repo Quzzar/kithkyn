@@ -13,6 +13,11 @@ import net.minecraft.core.BlockPos;
 class ChopScanBoundsTest {
 
   @Test
+  void choppingUsesTheExactFootholdItsTreeScanVerified() {
+    assertTrue(new ChopStep().requiresExactArrival());
+  }
+
+  @Test
   void aVillageWideBoxIsCutDownToWhatOnePathSearchCanReach() {
     // Claim centre at the origin, 64 each way; a lumberjack at the lodge 70 blocks east.
     ChopStep.ScanBounds bounds = ChopStep.ScanBounds.within(new BlockPos(0, 64, 0), 64,

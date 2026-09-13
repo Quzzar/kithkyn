@@ -14,6 +14,7 @@ import com.quzzar.kithkyn.village.buildings.Building;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.PathfinderMob;
+import net.minecraft.world.level.pathfinder.Path;
 import net.minecraft.world.phys.Vec3;
 
 /**
@@ -107,7 +108,7 @@ public class GuardPatrolGoal extends Goal {
   @Override
   public void start() {
     legTicks = 0;
-    walkTo(current());
+    advanceToReachableLeg();
   }
 
   @Override
@@ -126,9 +127,10 @@ public class GuardPatrolGoal extends Goal {
         : target.distSqr(guard.blockPosition()) <= ARRIVED_SQR) || legTicks >= legTimeout) {
       nextLeg();
     } else if (guard.getNavigation().isDone()) {
-      // A path that finished short of a ring point (a doorway, a fence) is
-      // nudged on once; the per-leg timeout skips one it truly cannot reach.
-      walkTo(target);
+      // Never keep following a pathfinder's closest partial result. At an open
+      // cave beside Brasken, that result was below the requested surface point,
+      // so every new patrol leg walked guards and an adopted golem farther down.
+      nextLeg();
     }
   }
 
@@ -149,6 +151,15 @@ public class GuardPatrolGoal extends Goal {
     return Math.abs(position.y - target.getY()) <= 0.6D && x * x + z * z <= 0.6D * 0.6D;
   }
 
+  /**
+   * A patrol route must finish at the requested floor. Ordinary outdoor rounds
+   * retain their loose arrival radius, while authored castle routes still need
+   * their exact rung or landing. A partial path into a cave is not progress.
+   */
+  static boolean acceptsPatrolEndpoint(BlockPos target, BlockPos endpoint, boolean castle) {
+    return castle ? endpoint.equals(target) : endpoint.distSqr(target) <= ARRIVED_SQR;
+  }
+
   private BlockPos current() {
     return legIndex < lap.size() ? lap.get(legIndex) : null;
   }
@@ -156,20 +167,28 @@ public class GuardPatrolGoal extends Goal {
   private void nextLeg() {
     legIndex++;
     legTicks = 0;
+    advanceToReachableLeg();
+  }
+
+  /** Skip blocked ring points immediately rather than walking a harmful partial path. */
+  private void advanceToReachableLeg() {
     BlockPos target = current();
-    if (target != null) {
-      walkTo(target);
+    while (target != null && !walkTo(target)) {
+      legIndex++;
+      legTicks = 0;
+      target = current();
     }
   }
 
-  private void walkTo(BlockPos target) {
-    if (target != null) {
-      if (castleLap) {
-        guard.getNavigation().moveTo(guard.getNavigation().createPath(target, 0), speedModifier);
-      } else {
-        guard.getNavigation().moveTo(target.getX() + 0.5D, target.getY(), target.getZ() + 0.5D, speedModifier);
-      }
+  private boolean walkTo(BlockPos target) {
+    Path path = guard.getNavigation().createPath(target, 0);
+    if (path == null || path.getEndNode() == null
+        || !acceptsPatrolEndpoint(target, path.getEndNode().asBlockPos(), castleLap)
+        || !GuardRouteSafety.staysNearSurface(guard.blockPosition(), target, path)) {
+      guard.getNavigation().stop();
+      return false;
     }
+    return guard.getNavigation().moveTo(path, speedModifier);
   }
 
   /**

@@ -158,6 +158,7 @@ public final class PersonPathNavigation extends GroundPathNavigation {
   @Override
   @Nullable
   protected Path createPath(Set<BlockPos> targets, int regionOffset, boolean offsetUpward, int accuracy) {
+    restrictVillageDepth(targets);
     float range = searchRange(this.mob);
     Path route = super.createPath(targets, regionOffset, offsetUpward, accuracy, range);
     // Reaching a watch platform can take more than 48 blocks of walking even
@@ -207,6 +208,9 @@ public final class PersonPathNavigation extends GroundPathNavigation {
   @Override
   @Nullable
   public Path createPath(BlockPos pos, int accuracy) {
+    // The door and mine branches below sometimes call a superclass overload
+    // directly, so establish the search bound before taking either branch.
+    restrictVillageDepth(Set.of(pos));
     if (this.mob instanceof RealPerson person && person.getVillage() != null) {
       if (MineShaft.belowExcavation(person.getVillage(), this.mob.blockPosition())) {
         Kithkyn.LOGGER.info(
@@ -273,6 +277,18 @@ public final class PersonPathNavigation extends GroundPathNavigation {
       return createPath(java.util.Set.of(pos), 8, false, accuracy);
     }
     return super.createPath(pos, accuracy);
+  }
+
+  /** Villageless people traverse ordinary terrain; residents keep surface trips out of deep caves. */
+  private void restrictVillageDepth(Iterable<BlockPos> targets) {
+    if (!(this.nodeEvaluator instanceof PersonNodeEvaluator evaluator)) return;
+    if (!(this.mob instanceof RealPerson person) || person.getVillage() == null) {
+      evaluator.minimumRouteY(Integer.MIN_VALUE);
+      return;
+    }
+    BlockPos center = person.getVillage().centerPosition();
+    evaluator.minimumRouteY(center == null ? Integer.MIN_VALUE
+        : VillageRouteDepth.minimumY(center, this.mob.blockPosition(), targets));
   }
 
   /** Whether feet and head at {@code cell} are clear: a dug shaft cell rather than planned rock. */
@@ -649,6 +665,11 @@ public final class PersonPathNavigation extends GroundPathNavigation {
   private static final class PersonNodeEvaluator extends WalkNodeEvaluator {
 
     private int expandedNodeCount;
+    private int minimumRouteY = Integer.MIN_VALUE;
+
+    private void minimumRouteY(int value) {
+      this.minimumRouteY = value;
+    }
 
     @Override
     public void prepare(PathNavigationRegion level, Mob mob) {
@@ -785,7 +806,7 @@ public final class PersonPathNavigation extends GroundPathNavigation {
       if (isLadderTransition(this.currentContext, nodePos)) {
         Node rung = rung(node.x, node.y - 1, node.z);
         if (this.isNeighborValid(rung, node)) outputArray[count++] = rung;
-        return count;
+        return keepVillageDepth(outputArray, count);
       }
       if (isLadder(this.currentContext.getBlockState(nodePos))) {
         // Vanilla may offer a fall to the ground beside a high rung. Taking that
@@ -803,9 +824,18 @@ public final class PersonPathNavigation extends GroundPathNavigation {
             outputArray[count++] = rung;
           }
         }
-        return count;
+        return keepVillageDepth(outputArray, count);
       }
-      return count;
+      return keepVillageDepth(outputArray, count);
+    }
+
+    /** A surface-to-surface search may find another route, but it may not use a deep cave as a shortcut. */
+    private int keepVillageDepth(Node[] nodes, int count) {
+      int kept = 0;
+      for (int index = 0; index < count; index++) {
+        if (nodes[index].y >= this.minimumRouteY) nodes[kept++] = nodes[index];
+      }
+      return kept;
     }
 
     /** The open cell immediately above a ladder's top rung, where a climber crosses onto its landing. */

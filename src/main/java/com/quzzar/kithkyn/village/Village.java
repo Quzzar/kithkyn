@@ -1773,6 +1773,10 @@ public class Village {
 
     long tj = VillageProfile.start();
     JobClaiming.tick(this, level);
+    // Building definitions are reloadable and may gain or reclassify a chest.
+    // Reconcile beside jobs so an existing village picks up that repair too.
+    this.brain.reconcileContainers(this.buildings.values().stream()
+        .filter(building -> !isBeingRebuilt(building.getUUID())).toList());
     VillageProfile.end("jobs", tj);
 
     // A working teenager may stay in the parents' household, but that exception
@@ -1839,6 +1843,18 @@ public class Village {
     long tl = VillageProfile.start();
     tickLoading(level);
     VillageProfile.end("loading", tl);
+
+    // A completed wall still owns its functional cells. Repair them independently
+    // of builder priorities, because an active building project can otherwise keep
+    // WallStep dormant while a guard waits below a popped tower ladder.
+    if (wallProject != null && wallProject.isComplete()
+        && (time + Math.floorMod(id.hashCode(), 60)) % 60 == 0) {
+      int repaired = WallRaiser.repairOwnedCells(level, wallProject);
+      if (repaired > 0) {
+        WallRaiser.settleConnections(level, wallProject);
+        Kithkyn.LOGGER.info("Village '{}' restored {} owned wall cell(s)", name, repaired);
+      }
+    }
 
     // Old in-progress walls and newly loaded routes receive the same preparation before workers resume.
     if (wallProject != null && !wallProject.isComplete() && !wallProject.isSiteCleared()) {
@@ -3346,7 +3362,8 @@ public class Village {
 
   /** One canonical signal for storage that is rejecting or still holding displaced goods. */
   public boolean isStorageBackedUp() {
-    return isStorageStrained() || hasPendingStorageOverflow();
+    return isStorageStrained() || hasPendingStorageOverflow()
+        || level != null && brain.allStorehouseSlotsOccupied(level, getBuildings());
   }
 
   public String getID() {
@@ -3588,6 +3605,11 @@ public class Village {
     return positions;
   }
 
+  /** Shared village stores only, excluding the personal chests that workers must not draw from. */
+  public java.util.Set<BlockPos> getSharedContainerPositions() {
+    return this.brain.containerPositions();
+  }
+
   public ItemStack gatherItemStackFromVillage(ItemStack itemStack) {
     return gatherItemStackFromVillage(itemStack, null);
   }
@@ -3713,6 +3735,11 @@ public class Village {
     return attractiveness;
   }
 
+  /** Records a village-wide shortage no more often than the configured cooldown. */
+  public void logShortage(ItemStack missing) {
+    maybeLogShortage(missing);
+  }
+
   /** Logs a resource-shortage event, rate-limited so a poor village complains steadily, not constantly. */
   private void maybeLogShortage(ItemStack missing) {
     if (missing == null || level == null) {
@@ -3720,12 +3747,16 @@ public class Village {
     }
     long now = level.getGameTime();
     long cooldownTicks = com.quzzar.kithkyn.configuration.KithkynConfig.ShortageEventCooldownSeconds * 20L;
-    if (now - lastShortageLogTime < cooldownTicks) {
+    if (!shortageCooldownElapsed(now, lastShortageLogTime, cooldownTicks)) {
       return;
     }
     lastShortageLogTime = now;
     logEvent(new com.quzzar.kithkyn.village.bookkeeping.NoResourceBookkeepingEvent(missing.getItem(), missing.getCount()));
     Kithkyn.LOGGER.debug("Village '{}' is short on {} x{}", name, missing.getItem(), missing.getCount());
+  }
+
+  static boolean shortageCooldownElapsed(long now, long last, long cooldownTicks) {
+    return now - last >= cooldownTicks;
   }
 
   /**

@@ -56,7 +56,8 @@ public final class GuardPostGoal extends Goal {
       // node before exhausting its budget without setting canReach; that is
       // still a complete route, unlike a partial route into a basement below it.
       if (path != null && path.getEndNode() != null
-          && path.getEndNode().asBlockPos().equals(station)) {
+          && path.getEndNode().asBlockPos().equals(station)
+          && GuardRouteSafety.staysNearSurface(guard.blockPosition(), station, path)) {
         guard.getNavigation().moveTo(path, SPEED);
       } else {
         guard.getNavigation().stop();

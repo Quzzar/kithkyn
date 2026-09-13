@@ -66,4 +66,14 @@ class PlannerFactsTest {
         Set.of(Occupation.QUARTERMASTER), List.of("STORAGE"),
         Set.of(Occupation.QUARTERMASTER), capability -> true));
   }
+
+  @Test
+  void storedWheatExplainsTheMissingBakeryLinkInsteadOfCallingForAnotherField() {
+    String fact = UrbanPlanner.wheatFoodFact(192, false, false);
+
+    assertTrue(fact.contains("192 wheat"));
+    assertTrue(fact.contains("not edible food"));
+    assertTrue(fact.contains("bakery"));
+    assertTrue(fact.contains("another wheat field will not solve hunger"));
+  }
 }

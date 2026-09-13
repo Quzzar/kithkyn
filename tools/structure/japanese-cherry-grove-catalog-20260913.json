@@ -145,7 +145,7 @@
       "source_sha256": "63760e65941c5f515ac5cd594dad3d328717a155d657fcb3df2ace3cc2b5a39b",
       "entities": 6,
       "asset": "run/japanese-integration/datapack/data/kithkyn/structure/butchery_japanese_cherry_grove_1.nbt",
-      "asset_sha256": "4e8c54fa0cdd37c0748e3577f5487d024d4d4b432c628993f993934771a46fd0",
+      "asset_sha256": "3125b02cca07aff401962ad05327c7c1e0169f24c45f50fd49faf4f2a80af348",
       "definition": "run/japanese-integration/datapack/data/kithkyn/kithkyn/buildings/butchery_japanese_cherry_grove_1.json",
       "definition_sha256": "c8d566ea42414a1a2ba7872044bbe6ae3d7f46c397cd2eb9d46bf78a65f86dd9"
     },

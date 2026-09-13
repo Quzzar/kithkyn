@@ -6,6 +6,7 @@ import com.quzzar.kithkyn.entities.RealPerson;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.ai.goal.Goal;
+import net.minecraft.world.level.pathfinder.Path;
 
 /**
  * Walks the person toward a village-directed travel target: an arriving
@@ -31,7 +32,11 @@ public class VillageTravelGoal extends Goal {
     /** Ticks of a finished navigation before the walk is over, one way or another. */
     private static final int SETTLED_TICKS = 60;
 
+    /** A failed route is reconsidered once a second, not once per server tick. */
+    private static final int PATH_RETRY_TICKS = 20;
+
     private int settledTicks = 0;
+    private int nextPathAttempt;
 
     private final RealPerson person;
 
@@ -54,6 +59,7 @@ public class VillageTravelGoal extends Goal {
     @Override
     public void start() {
         settledTicks = 0;
+        nextPathAttempt = person.tickCount;
     }
 
     @Override
@@ -75,12 +81,31 @@ public class VillageTravelGoal extends Goal {
                 person.setTravelTarget(null);
                 return;
             }
-            person.getNavigation().moveTo(target.getX(), target.getY(), target.getZ(), SPEED);
+            tryPath(target);
             return;
         }
         settledTicks = 0;
-        if (person.tickCount % 40 == 0) {
-            person.getNavigation().moveTo(target.getX(), target.getY(), target.getZ(), SPEED);
+        if (person.tickCount >= nextPathAttempt) {
+            tryPath(target);
+        }
+    }
+
+    /** A travel target tolerates its two-block arrival radius, never a distant cave endpoint. */
+    static boolean acceptsTravelEndpoint(BlockPos target, BlockPos endpoint) {
+        return endpoint.distSqr(target) <= ARRIVED_DISTANCE_SQR;
+    }
+
+    private void tryPath(BlockPos target) {
+        if (person.tickCount < nextPathAttempt) {
+            return;
+        }
+        nextPathAttempt = person.tickCount + PATH_RETRY_TICKS;
+        Path path = person.getNavigation().createPath(target, 0);
+        if (path != null && path.getEndNode() != null
+                && acceptsTravelEndpoint(target, path.getEndNode().asBlockPos())) {
+            person.getNavigation().moveTo(path, SPEED);
+        } else {
+            person.getNavigation().stop();
         }
     }
 

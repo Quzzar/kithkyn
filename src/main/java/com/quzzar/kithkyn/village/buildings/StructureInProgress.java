@@ -407,8 +407,8 @@ public class StructureInProgress {
      * One swing of ground work: take away a block that is in the way, or raise
      * a column that sits below the build plane. Cleared blocks go into village
      * storage rather than the ground, because clearing a wooded site is a
-     * lumber harvest that happens to also make room. Returns false when the
-     * village cannot pay for fill, so the caller can complain rather than spin.
+     * lumber harvest that happens to also make room. Levelling costs the
+     * builder's time, not an extra material hidden outside the authored recipe.
      */
     public boolean prepareStep(com.quzzar.kithkyn.village.Village village,
             net.minecraft.world.entity.Entity worker) {
@@ -434,13 +434,6 @@ public class StructureInProgress {
         }
         if (!prepFill.isEmpty()) {
             BlockPos pos = BlockPos.of(prepFill.get(prepFill.size() - 1));
-            net.minecraft.world.item.ItemStack paid = redevelopment != null
-                    ? new net.minecraft.world.item.ItemStack(net.minecraft.world.item.Items.DIRT, 1)
-                    : village.gatherItemStackFromVillage(
-                    new net.minecraft.world.item.ItemStack(net.minecraft.world.item.Items.DIRT, 1));
-            if (paid.isEmpty()) {
-                return false;
-            }
             prepFill.remove(prepFill.size() - 1);
             level.setBlock(pos, net.minecraft.world.level.block.Blocks.DIRT.defaultBlockState(), 3);
             return true;

@@ -308,7 +308,7 @@
       "asset": "run/mediterranean-integration/datapack/data/kithkyn/structure/bakery_mediterranean_1.nbt",
       "asset_sha256": "d3b95f39a237851418a5b7bf7587c949c7318abc9daed1bdba884fff40bb6ce7",
       "definition": "run/mediterranean-integration/datapack/data/kithkyn/kithkyn/buildings/bakery_mediterranean_1.json",
-      "definition_sha256": "394c05bebc2ce6242c6edda0ae9922de12be36a7ddd8ba32511f0842cec67a72"
+      "definition_sha256": "eda5e6399f79d21116b572c2e8321b00882967fc8e7b63c9528295795b21dab4"
     },
     {
       "exhibit": "M07.8",
@@ -328,7 +328,7 @@
       "asset": "run/mediterranean-integration/datapack/data/kithkyn/structure/mine_mediterranean_1.nbt",
       "asset_sha256": "20c081fe702024b764e3b6e956f74befedb5ea437b44fac141ca671ccb096548",
       "definition": "run/mediterranean-integration/datapack/data/kithkyn/kithkyn/buildings/mine_mediterranean_1.json",
-      "definition_sha256": "9e741110fcdbceca3afaca446ed3a77f11dd1a5e69a4b001a693b9d4aa6f7646"
+      "definition_sha256": "810a110e2280ea740360e2eec94a97c86dc022fda58219ad3c519d6ea8908d63"
     },
     {
       "exhibit": "M08.1",
@@ -348,7 +348,7 @@
       "asset": "run/mediterranean-integration/datapack/data/kithkyn/structure/castle_mediterranean_1.nbt",
       "asset_sha256": "3a75502c236268ed47ed4aef4ad9bbc56b2c702a245cf90d7e60825b2c8d67dc",
       "definition": "run/mediterranean-integration/datapack/data/kithkyn/kithkyn/buildings/castle_mediterranean_1.json",
-      "definition_sha256": "3f12dbeed80340b5603bfdbae432231511c0cbaa0b01f63830e140ef36e9222a"
+      "definition_sha256": "2a67280e2448214e5042453b73167303eae258fc447b1362d47e416d7f403d3a"
     },
     {
       "exhibit": "M05.3",
@@ -366,7 +366,7 @@
       "entities": 0,
       "carpets_cleared_under_stations": [],
       "asset": "run/mediterranean-integration/datapack/data/kithkyn/structure/farm_mediterranean_1.nbt",
-      "asset_sha256": "c001a7f42a57bbc460fe708ccda8f2ddb20e69280784dd3fc2f810e5c929b1fa",
+      "asset_sha256": "77871f691f14a0fb274feefe4be435706e945639d28f1d2e2330b111bbfa3e52",
       "definition": "run/mediterranean-integration/datapack/data/kithkyn/kithkyn/buildings/farm_mediterranean_1.json",
       "definition_sha256": "067c5d47c08fd780f98696fedc80c66116804a50a0ac69a9709d0db38cb64640"
     },
@@ -408,7 +408,7 @@
       "asset": "run/mediterranean-integration/datapack/data/kithkyn/structure/lumberjack_mediterranean_1.nbt",
       "asset_sha256": "a7d4b4c540bb66aa3ba31771ca6275e99c30b54838b3776577195e47b1c68662",
       "definition": "run/mediterranean-integration/datapack/data/kithkyn/kithkyn/buildings/lumberjack_mediterranean_1.json",
-      "definition_sha256": "cc8e5c4ab16eee4f21a64db5348f655364e639cb86ec4063039b48ef70405d31"
+      "definition_sha256": "68534f5a9f66424dce658390bb1d3a653d344c79bc7e0adf72522c39530ae3b1"
     },
     {
       "exhibit": "M08.6",
@@ -528,6 +528,19 @@
       "building": "castle_mediterranean_1",
       "exhibit": "M08.1",
       "change": "BREAD and REPAIR grants for the castle's baker and blacksmith stations, added to the installed pack at 12:04 outside this export; carried into the export so a reinstall keeps them"
+    },
+    {
+      "date": "2026-09-13",
+      "building": "mine_mediterranean_1",
+      "exhibit": "M07.8",
+      "change": "Avenzola review widened the authored shaft from three columns to the full four-column opening available in the sunken room"
+    },
+    {
+      "date": "2026-09-13",
+      "building": "farm_mediterranean_1",
+      "exhibit": "M05.3",
+      "change": "Avenzola review changed nine of 47 mature wheat plants to six carrots and three potatoes, giving a founding village directly edible crops before it has a bakery",
+      "plan": "tools/structure/mediterranean-avenzola-crops-20260913.json"
     }
   ],
   "verification": {

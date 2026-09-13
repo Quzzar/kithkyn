@@ -36,6 +36,20 @@ class BuildingIdTest {
   }
 
   @Test
+  void explicitMetadataDisambiguatesNewMultiwordDatapackVariants() {
+    for (String variant : new String[] {"alpine_highlands", "polynesian_coast"}) {
+      BuildingInfo info = decode("""
+          {"structure":"village_center_%s_1", "category":"village_center", "variant":"%s"}
+          """.formatted(variant, variant));
+
+      assertTrue(info.hasWellFormedId());
+      assertEquals("village_center", info.getCategory());
+      assertEquals(variant, info.getVariant());
+      assertNull(info.validate());
+    }
+  }
+
+  @Test
   void explicitBirchMetadataAndUpgradeChainValidate() {
     BuildingInfo info = decode("""
         {"structure":"house_birch_forest_2", "category":"house", "variant":"birch_forest",

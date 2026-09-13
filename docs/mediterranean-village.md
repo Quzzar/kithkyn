@@ -17,7 +17,7 @@ The private datapack contains 24 definitions:
 | Id | Use |
 | --- | --- |
 | `village_center_mediterranean_1` | M06.1 church; no beds; quartermaster, builder and guard captain vacancies plus a cleric at the altar's brewing stand; the meeting point and one campfire on the forecourt |
-| `mine_mediterranean_1` | M07.8 library turned mine: it employs the miner at the station barrel under the bookshelf, digs a three-wide shaft south from the sunken room, and houses the miner in the bed with its barrel upstairs |
+| `mine_mediterranean_1` | M07.8 library turned mine: it employs the miner beside the decorative station barrel under the bookshelf, digs a four-wide shaft south from the sunken room, and houses the miner in the bed with its personal barrel upstairs |
 | `storehouse_mediterranean_1` | M07.5 fisher's house converted to four village containers with the quartermaster's physical worksite |
 | `house_mediterranean_1` | M06.5 one-bed home with a barrel set into the floor |
 | `house_mediterranean_1__two_bed` | M06.3 two single beds on two floors, a barrel and a chest |
@@ -30,16 +30,18 @@ The private datapack contains 24 definitions:
 | `stoneworks_mediterranean_1` | M07.4 mason and farmer under one roof: stonecutter, composter, five berry bushes, two beds, two personal containers and two shared |
 | `hunting_lodge_mediterranean_1` | M07.6 hunter and smith: fletching and smithing tables downstairs, two beds sharing one chest upstairs |
 | `bakery_mediterranean_1` | M07.7 bakery with the baker's room and barrel, three village chests and a quartermaster's worksite: the second storehouse the village can build |
-| `farm_mediterranean_1` | M05.3 CTOV small farm as Aaron edited it, with its field barrel |
+| `farm_mediterranean_1` | M05.3 CTOV small farm as Aaron edited it, with wheat plus a small ready crop of carrots and potatoes and its field barrel |
 | `farm_mediterranean_2` | M08.2 large sweet-berry field, the small farm's upgrade |
 | `butchery_mediterranean_1` | M04.2 farm and pasture: a farmer picking glow berries from the trellised cave vines, and a butcher who works the pen whole (breeding, shearing and slaughter above six of a kind) with three cows and three sheep, one barrel each |
-| `lumberjack_mediterranean_1` | M08.3 timber yard: an oak sapling replaces the dead-bush tree marker; one barrel is the lumberjack's station, the two hook-trimmed barrels are decoration, and the other four are village storage with a quartermaster's worksite |
+| `lumberjack_mediterranean_1` | M08.3 timber yard: an oak sapling replaces the dead-bush marker and is the lumberjack's renewable stand; three reachable barrels are shared storage, while the station prop, blocked lower barrel and two hook-trimmed barrels are explicit decoration |
 | `well_mediterranean_1` | M08.6 planter rebuilt by Aaron as a small well |
 | `market_mediterranean_1`, `_2`, `_3` | The shared market geometry in quartz bricks and pillars, spruce rails and plain candles, keeping the stripe-matched awning stairs and the authored fabric colours |
 | `castle_mediterranean_1` | M08.1 fort: ruler's double bed, baker and blacksmith with a shared chest, jail cell with two evidence chests upstairs, a jailer post, and four sword guards patrolling the gates and the yard; it has no stall, so the castle merchant systems do not apply |
 
-The two farms and the stoneworks all grant grain: the Mediterranean village is mainly a berry
-village, and its farmers pick sweet berries and glow berries alike (docs/worker-loops.md).
+The two farms and the stoneworks all grant food and crops. The small field is mostly wheat with
+six carrots and three potatoes so a new village has some directly edible produce before it builds
+a bakery; the larger field and stoneworks retain the region's berry supply, and its farmers pick
+sweet berries and glow berries alike (docs/worker-loops.md).
 
 ## Founding and village identity
 

@@ -58,9 +58,10 @@ campfire for ten seconds of Regeneration I, at most once per minute. Food remain
 recovery: a carried meal is eaten first, and someone without one tries the village stores before
 the fire. The cooldown belongs to the person and survives saving and job changes.
 
-Idle hands also tend the fire. An idle resident who finds raw food in the village stores takes
-it to the campfire, cooks anything a campfire can cook (read from the vanilla recipe set, so
-modded food joins in for free), and returns the cooked food to storage. It is the campfire twin
+Idle hands also tend the fire. An idle resident who finds food that benefits from cooking in the
+village stores takes it to the campfire, cooks it from the live campfire recipe set, and returns
+the prepared food to storage. That includes potatoes into baked potatoes, all vanilla meats and
+fish, kelp, and modded campfire recipes whose result is food. It is the campfire twin
 of the farmer's idle composter chain: a light, early-camp source of prepared food that needs no
 building, and one that quietly matters less once a butchery exists to cook at scale
 (`entities/ai/goals/work/CookStep`). It is the lowest-priority thing an idle person does, so
@@ -218,7 +219,9 @@ Mechanism notes:
 - Shortage events carry the missing item and count. They are emitted when the planner
   can't afford any project (rate-limited by a config cooldown so a poor village complains
   steadily, not constantly), when paying for a building comes up short, and when a guard
-  turns in for the night with no rations.
+  turns in for the night with no rations. At most three live memories of the same missing
+  item are retained. This preserves sustained pressure while preventing one repeated worker
+  symptom or an old malformed save from overwhelming every other attractiveness signal.
 - **Wrongdoing is witnessed, or it did not happen** (decided on
   [#64](https://github.com/Quzzar/kithkyn/issues/64)). Theft, assault and murder all
   work the same way: a villager must actually see it — awake, within roughly sixteen
@@ -320,8 +323,9 @@ until a village takes them in. They walk a heading every day: the day they leave
 away from the village; every dawn after, a fresh one, aimless by design, leg by leg and
 turning when the ground blocks them (`RoamGoal`). Nobody sleeps rough, but a wanderer carrying three
 logs camps for the night: at dusk a fire of their own goes down beside them, out of the pack
-(three logs, sticks and coal waived like every road recipe), whatever they carry raw is roasted
-on it through the same tending the idle camper uses at the village fire (`CampfireRoast`), and
+(three logs, sticks and coal waived like every road recipe), whatever campfire-cookable food they
+carry is roasted on it through the same tending the idle camper uses at the village fire
+(`CampfireRoast`), and
 they sit beside it until dawn, when the fire is put out and left where it stood, nothing of it
 back in the pack, and the walk goes on (`CampStep`). One with fewer logs walks the night
 through. They still eat from the pack when hurt, and scatter from monsters like anyone else. They live off the land as they go, at the work loops' priority so a find outranks the
@@ -397,7 +401,11 @@ A workplace building finishing construction registers its work stations as open
   moves them to one it cannot. So a village that raised a farm but never grew a farmer starves
   beside it, and the starving is itself what stops it drawing the newcomer who would farm: a
   deadlock it cannot break from inside. The same cycle occurs when a saved farm is two logs short
-  while a built lumberjack post stands vacant. During the midnight window, then, a village that is
+  while a built lumberjack post stands vacant. An active construction project whose builder post
+  has become vacant is the first priority: the brain chooses which eligible worker takes over, but
+  cannot leave the project unstaffed. If the village is hungry, one of several food producers may
+  cover construction, but the last food producer remains protected. During the midnight window,
+  then, a village that is
   **short of food** (stored food below the per-capita target that `VillageAttractiveness` reads) with a
   **food post open** (farmer, fisher, or hunter), its building standing, and **no one idle**
   to take it handles food first. Otherwise, a current saved project may name a vacancy whose
@@ -405,7 +413,7 @@ A workplace building finishing construction registers its work stations as open
   the same shared material-source facts used by `UrbanPlanner`, not a second occupation table. A
   saved-project shortage runs on the ordinary labor cadence rather than waiting for midnight,
   because a saved goal may expire before the next midnight window. The brain
-  chooses who moves or may leave the crew as it is. Candidates are ordered by aptitude, and the
+  chooses who moves or may leave the crew as it is for non-construction shortages. Candidates are ordered by aptitude, and the
   aptitude best acts when the model is absent, fails, or returns an unusable answer. Food
   reprioritization is gated to the midnight window; material and backed-up-storage vacancies use
   the ordinary labor cadence so the village can recover before a saved goal expires. A valid
@@ -416,12 +424,13 @@ A workplace building finishing construction registers its work stations as open
   (`Village.laborDecisionPending`), and a brain that leaves the crew as it is sits the question
   out a while before it is asked again. If every otherwise-valid worker is inside the normal
   job-swap cooldown, an urgent shortage gets one pass that may break that cooldown because the
-  cooldown lasts longer than a saved goal. The last builder and miner are always protected. Every
-  staffed farmer, fisher, or hunter is protected while the village is hungry, and the only
-  quartermaster is protected while goods are backed up. If a disruption already left that
-  strained village with an open quartermaster post, the urgent labor pass may fill it. A second
-  builder, miner, or quartermaster may still move when its corresponding protection applies; food
-  workers remain on food until the shortage clears.
+  cooldown lasts longer than a saved goal. The last builder and miner are always protected. The
+  last active food producer is protected while the village is hungry, but an excess food worker
+  may be offered to an urgent builder, quartermaster, or material-producing vacancy when that move
+  is the way out of the shortage. The only quartermaster is protected while goods are backed up.
+  If a disruption already left that strained village with an open quartermaster post, the urgent
+  labor pass may fill it. A second builder, miner, or quartermaster may still move when its
+  corresponding protection applies.
 - The person walks from the meeting point to the workplace, takes on the `Occupation` of the
   station, and holds it until the job stops existing. Taking the job is the one moment a
   bare starting kit appears from nothing: the mark of the trade, a stone axe, sword, pickaxe or

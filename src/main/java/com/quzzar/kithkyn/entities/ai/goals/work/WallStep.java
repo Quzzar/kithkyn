@@ -11,7 +11,6 @@ import javax.annotation.Nullable;
 import com.quzzar.kithkyn.Kithkyn;
 import com.quzzar.kithkyn.entities.RealPerson;
 import com.quzzar.kithkyn.village.Village;
-import com.quzzar.kithkyn.village.bookkeeping.NoResourceBookkeepingEvent;
 import com.quzzar.kithkyn.village.buildings.Materials;
 import com.quzzar.kithkyn.village.buildings.WallProject;
 import com.quzzar.kithkyn.village.buildings.WallRaiser;
@@ -162,7 +161,7 @@ public final class WallStep implements BlockWorkStep {
     }
     if (PackLogistics.carried(person, tier.material(village.getStyle())) < 1) {
       if (Materials.counted(village.stockTally(), tier.material(village.getStyle())) == 0) {
-        village.logEvent(new NoResourceBookkeepingEvent(tier.material(village.getStyle()), 1));
+        village.logShortage(new ItemStack(tier.material(village.getStyle()), 1));
         person.logBlocker("we are short of materials to raise the village wall");
       }
       return false;

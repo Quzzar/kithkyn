@@ -657,13 +657,18 @@ than a workplace. An idle person who finds raw food in the village stores cooks 
 nearest reachable lit campfire with a free slot and returns it (`CookStep`, a `BlockWorkStep`): the raw item really
 roasts on the fire via `CampfireBlockEntity.placeFood`, and the step owns the timing so the
 cooked food is lifted straight into storage rather than dropped on the ground when the block's
-own cook tick would finish it. What counts as cookable is read from the vanilla
-`CampfireCookingRecipe` set, so it is broader than the butcher's six hand-listed meats and
-modded food comes along for free. The roasting itself is one helper, `CampfireRoast`
+own cook tick would finish it. What counts as cookable is read from the live
+`CampfireCookingRecipe` set and requires a food result. It includes potatoes into baked
+potatoes, all vanilla meats and fish, kelp, and modded food recipes without another
+hand-maintained list. The roasting itself is one helper, `CampfireRoast`
 (2026-09-02), shared with the roaming wanderer's camp on the road (`CampStep`,
 [population-and-labor.md](population-and-labor.md)) and the fisher cooking their own catch
 (`FishCookStep`): where the raw food comes from before the pack and where the cooked food goes
 after it is each step's business; how a campfire roasts it is written once.
+
+`./gradlew runCampfireVerification` runs the native fixture in its own disposable world. It
+checks every vanilla campfire-food input and walks an idle resident through a real pantry fetch,
+potato roast, baked-potato deposit, and interruption without changing the monitored village world.
 
 The civic meeting point and usable fire blocks are separate authored amenities. `CampfireAccess`
 provides the same reachable-fire and free-slot selection for the camper and fisher, and reachable
@@ -753,9 +758,11 @@ ends a ramp for good.
 Mine supports are a family, not exact cobblestone. Any placeable dirt-family block, natural stone,
 cobbled stone, or sandstone can pay for a floor, wall, ceiling, or vein plug, and the actual block
 consumed is the one placed. When the shaft opens into a cave the miner does not stand down at the
-mouth: it completes the shaft's missing floor under each ramp cell that opens into air or liquid,
-laid standing on the floor already there, edge by edge, and drives the shaft on into the stone
-beyond. The pack is the budget, and the bedtime restock refills it: the miner carries up to
+mouth: it completes the shaft's missing floor under each ramp cell without a sturdy top, including
+air, liquid, and narrow cave features such as pointed dripstone. The support is laid from the floor
+already there, including the adjacent lane of the preceding stair when the same lane has no safe
+footing, edge by edge, and the shaft drives on into the stone beyond. The pack is the budget, and
+the bedtime restock refills it: the miner carries up to
 thirty-two mixed support blocks from bed alongside the torches and bucket (`RealPerson.goToBed`),
 rather than a fetch trip mid-shaft. Ember Hill showed why it must be bedtime, not a trip: the founding
 storehouse there was a barrel the mine shaft could not walk to at all, so a physical fetch stranded
@@ -765,7 +772,10 @@ the stores empty too logs it and stands down, so a cavern too large for the vill
 shaft, not one too large for a pack. (The sweep used to skip the hole when the pack was empty and
 aim at a face across the void that nothing could stand at, then fall back to the mouth as the target
 and dig that face from the doorstep; a floorless cell is now the work whatever the pack holds, and
-no footing means no pick.) Torches are hung the way a player hangs them: at head height on the shaft wall,
+no footing means no pick.) Torches are a required work supply rather than an optional preference:
+the bedtime restock tops up from finished torches or presses coal/charcoal, and a miner who spends
+the last one by day walks to a registered chest with torches or fuel (`FetchMineLightStep`) before
+the next pick. Torches are hung the way a player hangs them: at head height on the shaft wall,
 wherever the sweep finds an open cell on the ramp's edge reading dim (about every twelve blocks of
 ramp), and only once the shaft is deep enough to be dark. Lighting is sweep work like flooring and
 bailing, not a side effect of breaking a block (2026-09-02): the sweep walks the shaft from the
@@ -800,7 +810,9 @@ personal blocker for inaccessible excavation, missing supports, an obstruction w
 side work, exhausted shafts, or a survey with no usable work. It reports the final outcome after
 trying the existing frontier and side-shaft recovery. These reports survive saving and clear
 after physical digging, support placement or draining succeeds, not merely when a destination
-is selected. They carry through the shared village snapshot to planning and conversation.
+is selected. A failed daytime support-fetch route clears by the same rule after excavation resumes,
+including when bedtime restocked the pack without using that route. They carry through the shared
+village snapshot to planning and conversation.
 
 A fresh mine remains an ordinary construction option even when another staffed mine stands.
 Its description explicitly says it opens a separate shaft. A miner's current report prompts

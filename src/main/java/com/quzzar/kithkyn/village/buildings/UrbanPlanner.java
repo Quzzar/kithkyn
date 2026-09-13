@@ -11,6 +11,7 @@ import com.quzzar.kithkyn.llm.LlmDecision;
 import com.quzzar.kithkyn.llm.LlmService;
 import com.quzzar.kithkyn.village.Occupation;
 import com.quzzar.kithkyn.village.Village;
+import com.quzzar.kithkyn.village.VillageAttractiveness;
 import com.quzzar.kithkyn.village.VillageRequests;
 
 import java.util.concurrent.CompletableFuture;
@@ -19,6 +20,7 @@ import javax.annotation.Nullable;
 
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 
 /**
  * Decides what a village builds next.
@@ -101,6 +103,7 @@ public class UrbanPlanner {
     }
     if (!info.getBedLocations().isEmpty()
         || !info.getWorkLocations().isEmpty()
+        || !info.getWorksiteLocations().isEmpty()
         || !info.getContainerLocations().isEmpty()
         || !info.getConditionalGrants().isEmpty()) {
       return false;
@@ -493,6 +496,7 @@ public class UrbanPlanner {
     StringBuilder situation = new StringBuilder(
         com.quzzar.kithkyn.village.VillageRuler.context(village))
         .append(VillageContextSnapshot.capture(village, stock).plannerBriefing());
+    appendFoodConversionFacts(village, stock, situation);
     if (!producesFood(village)) {
       situation.append("No building grows or gathers food yet. ");
     }
@@ -517,6 +521,47 @@ public class UrbanPlanner {
     }
     situation.append("Choose what to build next.");
     return situation.toString();
+  }
+
+  /**
+   * Names the missing conversion link when fields have filled the stores with
+   * wheat but the village still has nothing edible. Without this fact the
+   * brain repeatedly saw zero food and chose another farm, even though that
+   * only made the same inedible stockpile larger (Avenzola, 2026-09-13).
+   */
+  private static void appendFoodConversionFacts(Village village, Map<Item, Integer> stock,
+      StringBuilder situation) {
+    int wheat = stock.getOrDefault(Items.WHEAT, 0);
+    VillageAttractiveness attractiveness = village.getAttractiveness();
+    if (wheat < 3 || attractiveness == null
+        || attractiveness.foodCount() >= attractiveness.population()
+            * com.quzzar.kithkyn.configuration.KithkynConfig.AttractivenessFoodTargetPerCapita) {
+      return;
+    }
+    boolean bakeryStanding = village.getBuildings().stream().anyMatch(building ->
+        building.getInfo() != null && "bakery".equals(building.getInfo().getCategory()));
+    if (!bakeryStanding && Buildings.resolve("bakery", 1, village.getStyle()) == null) {
+      return;
+    }
+    boolean bakerVacant = village.claimableJobs().stream()
+        .anyMatch(post -> post.getOccupation() == Occupation.BAKER);
+    situation.append(wheatFoodFact(wheat, bakeryStanding, bakerVacant));
+  }
+
+  /** Pure wording seam for the planner regression. */
+  static String wheatFoodFact(int wheat, boolean bakeryStanding, boolean bakerVacant) {
+    StringBuilder fact = new StringBuilder("There are ").append(wheat)
+        .append(" wheat stored, but wheat is not edible food. ");
+    if (!bakeryStanding) {
+      fact.append("A bakery and baker can turn every 3 wheat into 1 bread; "
+          + "another wheat field will not solve hunger. ");
+    } else if (bakerVacant) {
+      fact.append("The bakery's baker post is open; staffing it will turn every 3 wheat into 1 bread, "
+          + "while another wheat field will not solve hunger. ");
+    } else {
+      fact.append("The baker can turn every 3 wheat into 1 bread; another wheat field will not solve hunger. ");
+    }
+    return fact.toString();
   }
 
   /** Whether any standing building already produces food. */

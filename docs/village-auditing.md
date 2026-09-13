@@ -73,3 +73,9 @@ These findings are leads, not automatic repairs. The harness never gives a villa
 teleports a worker, changes a job, or chooses a project. The report names the missing material or
 resident blocker so a developer can inspect the autonomous failure before deciding whether the
 simulation or the test world needs intervention.
+
+Ordinary building vacancies and wall defense are reported separately. `Open work` names only
+stations from standing building definitions; `Open wall guard posts` groups derived wall posts by
+duty. Use `/kkdev village wall-posts [pos]` when exact planned, filled, and open defensive totals
+are needed. This distinction keeps a center's one open guard post visible even when a completed
+wall contributes many more legitimate guard jobs.

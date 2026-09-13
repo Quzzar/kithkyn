@@ -540,7 +540,7 @@ the player, with a caravan, or abstract is an open question below.
 | | Count |
 | --- | --- |
 | Categories | 37 |
-| Implemented village biomes | 10 (Birch Forest bundled; nine private datapack catalogs) |
+| Implemented village biomes | 12 (Birch Forest bundled; eleven private datapack catalogs) |
 | Towns and Towers Overworld village-biome floor | 26 |
 | Additional village biomes already justified by reviewed families | 6 |
 | Existing structure-plan estimate, based on five village biomes | ~130 |

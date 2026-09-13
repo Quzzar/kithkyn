@@ -5,16 +5,28 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Set;
+import java.util.stream.IntStream;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.junit.jupiter.api.Test;
 
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.entity.HopperBlockEntity;
 
 class PackLogisticsTest {
+
+  @Test
+  void searchesPastTwelveNearbyContainersForTheFirstMatchingStock() {
+    var containers = IntStream.rangeClosed(1, 13)
+        .mapToObj(x -> new BlockPos(x, 64, 0))
+        .toList();
+
+    assertEquals(new BlockPos(13, 64, 0), PackLogistics.nearestMatchingPosition(
+        new BlockPos(0, 64, 0), containers, pos -> pos.getX() == 13));
+  }
 
   @Test
   void bedtimeStowRetainsAnythingSharedStorageRejects() {

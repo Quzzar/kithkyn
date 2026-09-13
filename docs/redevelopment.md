@@ -205,8 +205,8 @@ whose resident parent was displaced. Removed workplaces still release their jobs
 Displaced residents have priority for replacement beds, and ordinary employment housing rules
 resume when the project finishes. This is temporary homelessness, not simulated shelter.
 Affected services are removed at commitment. A persisted `DEMOLISHING` phase advances one block per builder
-swing, then enters ordinary preparation and construction. Removed parcels are restored with
-paid dirt. Claims remain during removal and are rebuilt afterward. Ownership, jobs, beds,
+swing, then enters ordinary preparation and construction. Restoring removed parcels is ground-preparation
+labor covered by the committed project; it does not add a hidden dirt bill. Claims remain during removal and are rebuilt afterward. Ownership, jobs, beds,
 containers, food records, capabilities and site memory are reconciled.
 
 Salvage used by the recipe stays within the committed project. Surplus becomes a persisted

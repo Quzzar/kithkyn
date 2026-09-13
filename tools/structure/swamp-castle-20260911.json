@@ -486,7 +486,7 @@
     "definition": "run/swamp-integration/castle/castle_swamp_1.json",
     "template": "run/swamp-integration/castle/castle_swamp_1.nbt",
     "template_sha256": "5e1c3ebe75c056d5f72e0465aad11432502732dc235033b588f42b50958ccc88",
-    "definition_sha256": "e8931db161b0b8bdd7fa218f3ef69d6fa386bdf7f4f2738bcc013ffb067108f2"
+    "definition_sha256": "0ab43629a87778f03b601a32599152706030e5fc5c3479deaea9d024d835c243"
   },
   "verification": {
     "barrier_audit": "passed: no barrier or structure-void states",

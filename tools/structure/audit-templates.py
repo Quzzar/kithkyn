@@ -13,6 +13,7 @@ from nbt import read
 MARKET_NAME = re.compile(r"^.*market(?:_.+)?_(\d+)\.nbt$")
 AIR = {"minecraft:air", "minecraft:cave_air", "minecraft:void_air"}
 LIVESTOCK = {"minecraft:chicken", "minecraft:cow", "minecraft:pig", "minecraft:sheep"}
+CONTAINER_BLOCKS = {"minecraft:chest", "minecraft:trapped_chest", "minecraft:barrel"}
 MARKET_COLORS = ("red", "cyan", "orange")
 MARKET_PART_COUNTS = {
     "wool": 12,
@@ -53,6 +54,75 @@ def problems(path):
     definition_path = path.parent.parent / "kithkyn" / "buildings" / f"{path.stem}.json"
     if definition_path.is_file():
         definition = json.loads(definition_path.read_text())
+        container_roles = {
+            "containers": {tuple(position) for position in definition.get("containers", [])},
+            "personal_containers": {
+                tuple(position) for position in definition.get("personal_containers", [])
+            },
+            "evidence_containers": {
+                tuple(position)
+                for position in definition.get("castle", {}).get("evidence_containers", [])
+            },
+            "decorative_containers": {
+                tuple(position) for position in definition.get("decorative_containers", [])
+            },
+        }
+        physical_containers = {
+            position for position, state in blocks.items()
+            if state["Name"] in CONTAINER_BLOCKS
+        }
+        classified_containers = set().union(*container_roles.values())
+        for position in sorted(physical_containers - classified_containers):
+            failures.append((
+                position,
+                blocks[position]["Name"],
+                "physical container has no shared, personal, evidence, or decorative definition",
+            ))
+        for role, positions in container_roles.items():
+            for position in sorted(positions - physical_containers):
+                failures.append((
+                    position,
+                    role,
+                    "definition does not point at a chest, trapped chest, or barrel in the template",
+                ))
+        for position in sorted(classified_containers):
+            roles = [role for role, positions in container_roles.items() if position in positions]
+            if len(roles) > 1:
+                failures.append((
+                    position,
+                    blocks.get(position, {}).get("Name", "minecraft:air"),
+                    f"container has conflicting definitions: {', '.join(roles)}",
+                ))
+        station_positions = {}
+        for field in ("work_stations", "worksites"):
+            for index, station in enumerate(definition.get(field, [])):
+                position = tuple(station["pos"])
+                previous = station_positions.get(position)
+                if previous is not None:
+                    failures.append((
+                        position,
+                        field,
+                        f"repeats the position already used by {previous}; duplicate positions collapse during decoding",
+                    ))
+                else:
+                    station_positions[position] = f"{field}[{index}]"
+                if any(coordinate < 0 or coordinate >= size[axis]
+                       for axis, coordinate in enumerate(position)):
+                    failures.append((
+                        position,
+                        field,
+                        f"authored station lies outside declared template size {tuple(size)}",
+                    ))
+                if (definition.get("category") == "lumberjack"
+                        and station.get("occupation") == "LUMBERJACK"):
+                    station_block = blocks.get(position, {}).get("Name", "minecraft:air")
+                    if not (station_block.endswith("_sapling")
+                            or station_block == "minecraft:mangrove_propagule"):
+                        failures.append((
+                            position,
+                            station_block,
+                            "lumberjack station must point at the template's renewable sapling",
+                        ))
         if definition.get("category") != "mine":
             terrain_layer = definition.get("sink", 0)
             for position, state in blocks.items():
@@ -148,12 +218,12 @@ def problems(path):
                 "stairs",
                 f"expected {expected * 7} alternating awning stairs, found {awning_stairs}",
             ))
-        neutral_stairs = counts["minecraft:birch_stairs"]
+        neutral_stairs = awning_stairs - sum(counts[MARKET_ACCENT_STAIRS[color]] for color in expected_colors)
         if neutral_stairs != expected * 3:
             failures.append((
                 "market stair trim",
-                "minecraft:birch_stairs",
-                f"expected {expected * 3} white-stripe awning stairs, found {neutral_stairs}",
+                "neutral stairs",
+                f"expected {expected * 3} neutral-stripe awning stairs, found {neutral_stairs}",
             ))
 
         entrances = sorted(
@@ -203,8 +273,8 @@ def main(arguments):
         return 1
     print(
         f"PASS {len(paths)} templates: no barrier states, out-of-bounds blocks, "
-        "terrain-clearing corner air, open or empty butcheries, malformed market floors, "
-        "or malformed market entrances"
+        "invalid or duplicate station coordinates, invalid lumberjack stands, terrain-clearing corner air, "
+        "unclassified containers, open or empty butcheries, malformed market floors, or malformed market entrances"
     )
     return 0
 

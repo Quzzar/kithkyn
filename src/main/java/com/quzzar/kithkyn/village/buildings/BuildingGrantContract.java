@@ -71,6 +71,9 @@ public final class BuildingGrantContract {
     List<String> problems = new ArrayList<>();
     Set<String> reported = new HashSet<>();
     require(problems, reported, info, "category " + info.getCategory(), CATEGORY_GRANTS.get(info.getCategory()));
+    if (info.getCastleLayout() != null) {
+      require(problems, reported, info, "castle amenities", CATEGORY_GRANTS.get("castle"));
+    }
     if (!info.getBedLocations().isEmpty()) require(problems, reported, info, "beds", List.of("HOUSING"));
     if (!info.getCoupleBeds().isEmpty()) {
       require(problems, reported, info, "couple rooms", List.of("FAMILY_HOUSING"));

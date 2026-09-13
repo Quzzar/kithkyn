@@ -35,6 +35,11 @@ with a few logs it has no way to add to). `VillageGoal` marks such a goal stalle
 two goal lifetimes; the brain is told so in its situation ("nothing came in for it the whole
 time, so it is off the table for now") rather than quietly losing an option. Without this a camp
 re-named its lumberjack lodge ten times over four hours, nine logs short throughout.
+When the shortfall has decreased, the same goal instead records the new checkpoint and receives
+another lifetime; genuine material progress must not send a nearly funded project back through
+model selection. An affordable saved goal starts immediately even when its lifetime has just
+elapsed. This distinction was tightened on 2026-09-13 after Avenzola repeatedly abandoned a farm
+only three logs short and replaced it with successively more expensive food projects.
 
 The same holds for room (2026-09-01). A building whose footprint found no site lately is kept
 out of the options, and the situation says why, as facts from `SiteMemory` through
@@ -88,18 +93,13 @@ the canonical final growth gate; these details explain why its state is what it 
 
 Further consumers follow the same shape. `VillageTrading.consider` proposes every legal,
 beneficial bank trade plus an explicit "trade nothing", and the best deal stands in for a
-silent model. And the miner's bedtime torch press is the first *personal* decision: the
-nightly restock (`RealPerson.goToBed`) tops a miner's pack up to sixteen torches from the
-miner's own chest at home first and then village stores, and when both are out of torches but
-the stores hold coal or charcoal, the rules size a
-top-up (one lump makes four torches; sticks are deliberately waived so shaft lighting never
-waits on the forest) and offer the miner, in their own persona, the press or leaving the coal.
-An explicit refusal is honored and logged with its reason; silence crafts anyway, so the
-shaft never goes dark over a mute model. The ask itself lives in the shared `CraftOffer`
-helper (`entities/`): a job's trigger sizes a `Press` (spend items, product, yield per unit)
-and writes the situation prose over `CraftOffer.identityLead`, and the helper carries the
-options, the answer, and the hands, so any occupation can put its own press to its own brain
-the same way. The farmer's bedtime bone grind is the second personal press: when the restock
+silent model. Mine lighting is deliberately below that decision boundary: the nightly restock
+(`RealPerson.goToBed`) tops a miner's pack up to sixteen torches from the miner's own chest at
+home first and then village stores, and when those are out of finished torches it presses coal
+or charcoal into a top-up (one lump makes four; sticks are waived so shaft safety never waits
+on the forest). An empty torch pack also activates a physical daytime fetch to a registered
+chest holding torches or fuel before the next pick. The farmer's bedtime bone grind is a
+personal press: when the restock
 leaves the pack short of its sixteen bone meal and the stores hold bones, the same helper asks
 whether to grind them (one bone makes three), with the same semantics, and the meal joins the
 farm's fertiliser shelf described in [worker-loops.md](worker-loops.md). The third personal

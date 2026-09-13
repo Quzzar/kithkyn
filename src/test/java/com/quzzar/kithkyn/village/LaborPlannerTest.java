@@ -52,18 +52,24 @@ class LaborPlannerTest {
   }
 
   @Test
-  void aMissingBuilderMayBorrowOneOfSeveralFoodWorkersButNeverTheLast() {
+  void anUrgentVacancyMayBorrowOneOfSeveralFoodWorkersButNeverTheLast() {
     assertFalse(LaborPlanner.mustKeepForNeed(
         Occupation.FARMER, 2, 3, true, false, Occupation.BUILDER));
+    assertFalse(LaborPlanner.mustKeepForNeed(
+        Occupation.FARMER, 2, 3, true, false, Occupation.LUMBERJACK));
+    assertFalse(LaborPlanner.mustKeepForNeed(
+        Occupation.FISHER, 1, 3, true, true, Occupation.QUARTERMASTER));
     assertTrue(LaborPlanner.mustKeepForNeed(
         Occupation.FARMER, 1, 1, true, false, Occupation.BUILDER));
     assertTrue(LaborPlanner.mustKeepForNeed(
-        Occupation.FARMER, 2, 3, true, false, Occupation.LUMBERJACK));
+        Occupation.FARMER, 1, 1, true, false, Occupation.LUMBERJACK));
   }
 
   @Test
   void aHungryVillageNeverMovesAnActiveFoodProducerToMaterials() {
     assertTrue(LaborPlanner.mustKeep(Occupation.FARMER, 2, true, false));
+    assertTrue(LaborPlanner.mustKeep(Occupation.BAKER, 1, true, false));
+    assertTrue(LaborPlanner.mustKeep(Occupation.BUTCHER, 1, true, false));
     assertTrue(LaborPlanner.mustKeep(Occupation.MINER, 1, false, false));
     assertTrue(LaborPlanner.mustKeep(Occupation.QUARTERMASTER, 1, false, true));
     assertTrue(LaborPlanner.mustKeep(Occupation.FARMER, 1, true, false));

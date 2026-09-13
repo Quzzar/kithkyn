@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.util.Map;
 import java.util.Set;
 
 import org.junit.jupiter.api.Test;
@@ -12,6 +13,11 @@ import org.junit.jupiter.api.Test;
 import com.quzzar.kithkyn.village.buildings.MineShaft;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.FluidState;
 
 class MineTopologyTest {
 
@@ -138,6 +144,27 @@ class MineTopologyTest {
   }
 
   @Test
+  void twoWideBridgeCanBeLaidFromTheOtherLaneOfThePreviousStair() {
+    MineTopology twoWide = new MineTopology(-1, 0);
+    BlockPos drevelinGap = new BlockPos(-1, MineTopology.floorY(74), 74);
+
+    assertTrue(twoWide.floorStandCandidates(drevelinGap).contains(
+        new BlockPos(0, MineTopology.floorY(73), 73)),
+        "the supported opposite lane at depth 73 is within reach of the gap at depth 74");
+  }
+
+  @Test
+  void nonSturdyCaveFeaturesNeedARealMineFloor() {
+    BlockPos floor = new BlockPos(0, -77, 74);
+
+    assertTrue(MineStep.needsFloorSupport(new Ground(Map.of()), floor));
+    assertTrue(MineStep.needsFloorSupport(new Ground(Map.of(
+        floor, Blocks.POINTED_DRIPSTONE.defaultBlockState())), floor));
+    assertFalse(MineStep.needsFloorSupport(new Ground(Map.of(
+        floor, Blocks.DEEPSLATE.defaultBlockState())), floor));
+  }
+
+  @Test
   void routeAuditCanAnchorPastADecorativeEntranceStep() {
     var candidates = topology.entranceStandCandidates();
 
@@ -228,6 +255,35 @@ class MineTopologyTest {
     assertEquals(new BlockPos(-3, -10, 8), topology.ribDoorway(floodedRibEnd));
     assertFalse(topology.isRamp(topology.ribDoorway(floodedRibEnd)));
     assertNull(topology.ribDoorway(new BlockPos(-2, -10, 8)));
+  }
+
+  /** Real block support shapes over a minimal deterministic mine column. */
+  private record Ground(Map<BlockPos, BlockState> blocks) implements BlockGetter {
+
+    @Override
+    public BlockState getBlockState(BlockPos pos) {
+      return blocks.getOrDefault(pos, Blocks.AIR.defaultBlockState());
+    }
+
+    @Override
+    public BlockEntity getBlockEntity(BlockPos pos) {
+      return null;
+    }
+
+    @Override
+    public FluidState getFluidState(BlockPos pos) {
+      return getBlockState(pos).getFluidState();
+    }
+
+    @Override
+    public int getHeight() {
+      return 384;
+    }
+
+    @Override
+    public int getMinBuildHeight() {
+      return -64;
+    }
   }
 
 }
