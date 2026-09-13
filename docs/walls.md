@@ -109,10 +109,10 @@ tower or its access hanging above the ground. Ordinary authored runs keep no
 more than two courses of decorative silhouette above their local deck, which
 preserves uneven posts without allowing one terrain step to become a tall mast.
 
-Structural foundations, including Birch cobblestone and mossy cobblestone posts,
-embed exposed soil during placement. Built sections are checked when wall work resumes
-and after each section finishes, so a distant unfinished water section cannot delay
-the cleanup. When a natural dirt course has a side exposed to
+Structural foundations, including Birch cobblestone and mossy cobblestone posts and the
+Polynesian coral footing, embed exposed soil during placement. Built sections are checked
+when wall work resumes and after each section finishes, so a distant unfinished water
+section cannot delay the cleanup. When a natural dirt course has a side exposed to
 air, the foundation replaces that one course. Buried dirt and player-owned or
 village-owned ground remain untouched. This makes an edge wall read as sunk
 into the bank instead of balanced on its visible dirt face.
@@ -333,6 +333,28 @@ in front of the gatehouse ladder were dropped); linear runs grow it procedurally
 one to three leaves by a stable position hash with gaps, none within two columns of a gate and
 never on a route column or inside a feature's clearance. The derivation is reproducible with
 `tools/structure/EditTemplateBlocks.java` from `tools/structure/mediterranean-walls-20260912.json`.
+
+The Polynesian Coast family (`data/kithkyn/structure/wall/polynesian_coast/`, 2026-09-12) is
+study A, the wall Aaron locked in the Polynesian gallery: the Birch geometry with its masonry
+turned to stripped spruce wood, its stone walls to spruce fence tips, its top cobblestone slabs to
+oak slab walks and its oak hatches to spruce, on a course of dead bubble coral. The five templates
+are the gallery's own files byte for byte, reproducible from the Birch captures with
+`tools/structure/ReplaceTemplateBlocks.java` (`tools/structure/polynesian-coast-walls-20260912.json`).
+The loader reads `stripped_spruce_wood` as palisade `BODY`, which places like Birch cobblestone:
+a `POST` would grow down to the ground on placement and fill the gate passage under the roof
+edges. It reads `dead_bubble_coral_block` as the literal `CORAL_FOOTING` piece, a ground-contact
+leg like Birch cobblestone that also fills a hollow found at build time. The capture carries
+the coral at local y 0, but runs slide their tall columns into the ground and terraces lift
+whole slices, so a course pinned there would be buried in three of every seven straight columns
+even on flat ground. The catalog seats the footing instead: every body course at or below its
+column's natural ground is coral and any coral left above it is spruce. One coral course
+therefore follows the terrain under runs, towers and gates, and the buried footing below it only
+shows where the ground has a hollow: seam fill under lake ice, or a coral pier where a run crosses
+an overhang and its end columns drop to a lower neighbour's ground. An off-route column reads its
+nearest route column's ground, the sample its legs are extended to, so a gatehouse leg standing a
+course higher shows spruce at its foot. Guard posts are read from the Birch footprint and stand on
+the oak slab walks, where the Birch posts stand. The white gatehouse banners take the village
+identity like every gatehouse flag.
 
 ## Planning and developer preview
 

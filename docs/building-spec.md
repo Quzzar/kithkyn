@@ -693,7 +693,9 @@ with vanilla's keep-liquids rule, which let a pond beside a site soak into one r
 then round the whole ring. Now the builder places every liquid-bearing block of a structure
 last, and both placement paths ignore waterlogging, so a block set into water replaces it. A
 rim placed before its water stays dry: verified on a bare platform, rim first and water last,
-not one trapdoor or fence waterlogged. The pool was briefly moved a layer down into the base
+not one trapdoor or fence waterlogged. The plants that stand only on water or beside it (lily
+pads, sugar cane, frogspawn) follow the liquids. One laid before its water broke at the first
+neighbour update and dropped as an item, as the Polynesian Coast fishery showed on 2026-09-12. The pool was briefly moved a layer down into the base
 on a wrong reading of the flow rules; Aaron restored the authored layout.
 
 #### `storehouse`  (founding building)

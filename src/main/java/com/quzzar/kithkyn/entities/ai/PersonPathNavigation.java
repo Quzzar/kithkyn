@@ -14,6 +14,7 @@ import net.minecraft.util.Mth;
 import net.minecraft.core.Direction;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.navigation.GroundPathNavigation;
 import net.minecraft.world.level.Level;
@@ -23,6 +24,7 @@ import net.minecraft.world.level.block.FenceGateBlock;
 import net.minecraft.world.level.block.LadderBlock;
 import net.minecraft.world.level.block.CandleBlock;
 import net.minecraft.world.level.block.LanternBlock;
+import net.minecraft.world.level.block.StairBlock;
 import net.minecraft.world.level.block.TrapDoorBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
@@ -121,6 +123,9 @@ public final class PersonPathNavigation extends GroundPathNavigation {
 
   /** The long retries that failed lately, so a stuck walker is not charged for them on every re-plan. */
   private final LongRetryMemo longRetry = new LongRetryMemo();
+
+  /** Whether navigation, rather than a work or combat goal, put this person into a crouch. */
+  private boolean navigationCrouching;
 
   public PersonPathNavigation(Mob mob, Level level) {
     super(mob, level);
@@ -344,6 +349,16 @@ public final class PersonPathNavigation extends GroundPathNavigation {
   @Override
   protected void followThePath() {
     if (this.path != null && !this.path.isDone()
+        && this.path.getNextNodeIndex() < this.path.getNodeCount() - 1
+        && isDescendingIntoStairCorner()
+        && this.mob.blockPosition().equals(this.path.getNextNodePos())) {
+      // A descending body can occupy the corner cell while one edge still
+      // rests on the preceding half stair. Waiting for the exact node center
+      // wedges it between that stair and the opposite wall. Continue toward
+      // the following open cell; that movement clears the lip and lets it land.
+      this.path.advance();
+    }
+    if (this.path != null && !this.path.isDone()
         && isLadder(this.level.getBlockState(this.path.getNextNodePos()))) {
       Vec3 next = this.path.getNextEntityPos(this.mob);
       if (!descendingTowards(next)) next = ladderApproach(next,
@@ -379,11 +394,35 @@ public final class PersonPathNavigation extends GroundPathNavigation {
 
   @Override
   public void tick() {
+    boolean crouchedStair = this.path != null && !this.isDone() && isRisingFromStair();
+    boolean coveredStep = this.path != null && !this.isDone() && isRisingOntoPathSurface();
+    if ((crouchedStair || coveredStep) && this.mob.getPose() == Pose.STANDING) {
+      this.mob.setPose(Pose.CROUCHING);
+      this.navigationCrouching = true;
+    } else if (!crouchedStair && !coveredStep && this.navigationCrouching
+        && this.level.noCollision(this.mob,
+            this.mob.getDimensions(Pose.STANDING).makeBoundingBox(this.mob.position()))) {
+      this.mob.setPose(Pose.STANDING);
+      this.navigationCrouching = false;
+    }
     super.tick();
     if (this.path == null || this.isDone()) {
       return;
     }
+    if (crouchedStair && this.mob.horizontalCollision) {
+      // The path node is one block higher, but a half stair can stop the
+      // body's centre just short of vanilla MoveControl's jump threshold.
+      // Crouching clears the authored overhead trim; this is the ordinary mob
+      // jump needed to cross the stair's raised half.
+      this.mob.getJumpControl().jump();
+    }
     Vec3 next = this.path.getNextEntityPos(this.mob);
+    Vec3 stairCorner = stairCornerApproach(next);
+    if (!stairCorner.equals(next)) {
+      this.mob.getMoveControl().setWantedPosition(
+          stairCorner.x, getGroundY(stairCorner), stairCorner.z, this.speedModifier);
+      return;
+    }
     Vec3 doorway = openPanelApproach(next);
     if (!doorway.equals(next)) {
       this.mob.getMoveControl().setWantedPosition(
@@ -491,6 +530,74 @@ public final class PersonPathNavigation extends GroundPathNavigation {
   private static boolean isOpenPanel(BlockState state) {
     return state.getBlock() instanceof DoorBlock && state.getValue(DoorBlock.OPEN)
         || state.getBlock() instanceof TrapDoorBlock && state.getValue(TrapDoorBlock.OPEN);
+  }
+
+  /**
+   * Descending through the empty inside corner of two stairs needs a point
+   * clear of both stair lips. The path node remains the authored cell; only
+   * the body's movement point shifts toward its open quadrant.
+   */
+  private Vec3 stairCornerApproach(Vec3 target) {
+    if (!isDescendingIntoStairCorner()) return target;
+    BlockPos position = this.path.getNextNodePos();
+    Direction alongX = null;
+    Direction alongZ = null;
+    for (Direction direction : Direction.Plane.HORIZONTAL) {
+      if (!(this.level.getBlockState(position.relative(direction)).getBlock() instanceof StairBlock)) continue;
+      if (direction.getAxis() == Direction.Axis.X) alongX = direction;
+      else alongZ = direction;
+    }
+    if (alongX == null || alongZ == null) return target;
+    double offset = Math.min(0.2D, Math.max(0.0D, (1.0D - this.mob.getBbWidth()) / 2.0D - 0.025D));
+    return target.add(-alongX.getStepX() * offset, 0.0D, -alongZ.getStepZ() * offset);
+  }
+
+  /** A half stair immediately before a full-block rise, where low trim can require crouching. */
+  private boolean isRisingFromStair() {
+    int index = this.path.getNextNodeIndex();
+    if (index <= 0) return false;
+    Node previous = this.path.getNode(index - 1);
+    Node next = this.path.getNode(index);
+    if (next.y <= previous.y) return false;
+    BlockPos support = new BlockPos(previous.x, previous.y - 1, previous.z);
+    if (!(this.level.getBlockState(support).getBlock() instanceof StairBlock)) return false;
+    int dx = Integer.signum(next.x - previous.x);
+    int dz = Integer.signum(next.z - previous.z);
+    return dx != 0 || dz != 0;
+  }
+
+  /**
+   * The next integer node stands on a fractional surface above the current
+   * feet. Crouching before the move lets the trailing half of a two-block body
+   * clear a two-block doorway while stepping onto carpet just inside it.
+   */
+  private boolean isRisingOntoPathSurface() {
+    if (this.path == null || this.path.isDone()) return false;
+    Vec3 standing = WorkerFooting.standingPosition(this.mob, this.path.getNextNodePos());
+    if (standing == null) return false;
+    double rise = standing.y - this.mob.getY();
+    if (rise <= 0.01D || rise > this.mob.maxUpStep()) return false;
+    BlockPos ceiling = this.mob.blockPosition().above(Mth.ceil(this.mob.getBbHeight()));
+    return this.mob.getBbHeight() + rise > Mth.ceil(this.mob.getBbHeight())
+        && !this.level.getBlockState(ceiling).getCollisionShape(this.level, ceiling).isEmpty();
+  }
+
+  private boolean isDescendingIntoStairCorner() {
+    int index = this.path.getNextNodeIndex();
+    return index > 0
+        && this.path.getNode(index - 1).y > this.path.getNode(index).y
+        && isInsideStairCorner(this.path.getNextNodePos());
+  }
+
+  private boolean isInsideStairCorner(BlockPos position) {
+    boolean alongX = false;
+    boolean alongZ = false;
+    for (Direction direction : Direction.Plane.HORIZONTAL) {
+      if (!(this.level.getBlockState(position.relative(direction)).getBlock() instanceof StairBlock)) continue;
+      if (direction.getAxis() == Direction.Axis.X) alongX = true;
+      else alongZ = true;
+    }
+    return alongX && alongZ;
   }
 
   private Vec3 ladderApproach(Vec3 target, BlockState state) {
@@ -624,7 +731,7 @@ public final class PersonPathNavigation extends GroundPathNavigation {
       if (type == PathType.OPEN && isLadder(state)) {
         return PathType.WALKABLE; // a rung is somewhere the feet can be
       }
-      if (type == PathType.OPEN && isLadderTransition(context, new BlockPos(x, y, z))) {
+      if (isLadderTransition(context, new BlockPos(x, y, z))) {
         return PathType.WALKABLE;
       }
       return type;
@@ -733,7 +840,8 @@ public final class PersonPathNavigation extends GroundPathNavigation {
 
     /** The open cell immediately above a ladder's top rung, where a climber crosses onto its landing. */
     private boolean isLadderTransition(PathfindingContext context, BlockPos pos) {
-      return context.getBlockState(pos).getCollisionShape(context.level(), pos).isEmpty()
+      BlockState state = context.getBlockState(pos);
+      return (state.getCollisionShape(context.level(), pos).isEmpty() || isOpenPanel(state))
           && context.getBlockState(pos.below()).getBlock() instanceof LadderBlock;
     }
 

@@ -18,6 +18,15 @@ final class BuiltInWallSegmentCatalog implements WallSegmentCatalog {
   static final BuiltInWallSegmentCatalog SWAMP = new BuiltInWallSegmentCatalog(AuthoredWoodWallSegments.SWAMP);
   static final BuiltInWallSegmentCatalog MEDITERRANEAN =
       new BuiltInWallSegmentCatalog(AuthoredWoodWallSegments.MEDITERRANEAN, true);
+  /** The Polynesian Coast palisade: study A, with its coral footing seated on the ground. */
+  static final BuiltInWallSegmentCatalog POLYNESIAN_COAST =
+      new BuiltInWallSegmentCatalog(AuthoredWoodWallSegments.POLYNESIAN_COAST);
+  static final BuiltInWallSegmentCatalog ROMANIAN =
+      new BuiltInWallSegmentCatalog(AuthoredWoodWallSegments.ROMANIAN);
+  static final BuiltInWallSegmentCatalog ALPINE_HIGHLANDS =
+      new BuiltInWallSegmentCatalog(AuthoredWoodWallSegments.ALPINE_HIGHLANDS);
+  static final BuiltInWallSegmentCatalog JAPANESE_CHERRY_GROVE =
+      new BuiltInWallSegmentCatalog(AuthoredWoodWallSegments.JAPANESE_CHERRY_GROVE);
   private final AuthoredWoodWallSegments authored;
   private final boolean hedged;
 
@@ -264,7 +273,49 @@ final class BuiltInWallSegmentCatalog implements WallSegmentCatalog {
     if (this.hedged && isLinear(sectionKind)) {
       addHedge(blocks, ring, gates, ground, from, to);
     }
+    if (this.authored.hasFooting()) {
+      seatFooting(blocks, ring, ground);
+    }
     return List.copyOf(blocks.values());
+  }
+
+  /**
+   * Seats an authored footing course on the ground it stands on: the
+   * Polynesian dead coral of study A (2026-09-12). The capture carries the
+   * course at each template's local y 0, but the route slides a tall run
+   * column down into the terrain and a terrace lifts a whole slice above it,
+   * so a course pinned to y 0 would land buried or halfway up the wall. Here
+   * every body course at or below its column's natural ground becomes footing,
+   * and a footing cell left above that ground becomes palisade body. One coral
+   * course then follows the terrain under runs, towers and gates alike; the
+   * footing cells below it stay buried unless the ground has a hollow to fill.
+   * An off-route column reads the ground of its nearest route column, the same
+   * sample a rigid feature's legs are extended down to.
+   */
+  private static void seatFooting(Map<Long, WallBlockPlan> blocks, List<Long> ring,
+      List<Integer> ground) {
+    Map<Long, Integer> columnGround = new java.util.HashMap<>();
+    for (Map.Entry<Long, WallBlockPlan> entry : blocks.entrySet()) {
+      WallBlockPlan cell = entry.getValue();
+      if (cell.role() == WallCellRole.CLEARANCE || !isBodyCourse(cell.piece())) {
+        continue;
+      }
+      BlockPos pos = cell.pos();
+      int groundY = columnGround.computeIfAbsent(BlockPos.asLong(pos.getX(), 0, pos.getZ()),
+          column -> AuthoredWoodWallSegments.nearestGround(ring, ground, pos.getX(), pos.getZ()));
+      WallBlockPlan.Piece piece = pos.getY() <= groundY
+          ? WallBlockPlan.Piece.CORAL_FOOTING
+          : cell.piece() == WallBlockPlan.Piece.CORAL_FOOTING ? WallBlockPlan.Piece.BODY : cell.piece();
+      if (piece != cell.piece()) {
+        entry.setValue(new WallBlockPlan(cell.position(), piece, cell.role()));
+      }
+    }
+  }
+
+  /** The palisade's own courses: the procedural body, authored posts and the footing itself. */
+  private static boolean isBodyCourse(WallBlockPlan.Piece piece) {
+    return piece == WallBlockPlan.Piece.BODY || piece == WallBlockPlan.Piece.POST
+        || piece == WallBlockPlan.Piece.CORAL_FOOTING;
   }
 
   /**

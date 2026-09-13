@@ -17,10 +17,14 @@ These catalogs are integrated, selectable, and verified as complete founding vil
 | Desert Oasis | Desert and sandy desert families | Smooth sandstone, shaded courts, wells, oasis planting, candles, and the optional castle |
 | Pueblo | Badlands, Eroded Badlands, Wooded Badlands, and compatible mesa families | Dense adobe and terracotta housing, roof terraces, courtyards, and red sandstone walls |
 | Floodplain | Mangrove Swamp and compatible tropical floodplain biomes | Mud brick, mangrove details, raised earth, and water-oriented sites |
-| Jungle Tribal | Jungle, Bamboo Jungle, and Sparse Jungle | Jungle timber, stripped bamboo roofs, compact huts, treehouses, three markets, the timber wall, and the Firewatch tower |
+| Jungle Tribal | Jungle and Bamboo Jungle | Jungle timber, stripped bamboo roofs, compact huts, treehouses, three markets, the timber wall, and the Firewatch tower |
 | Swamp | Swamp, Orchid Swamp, and compatible ordinary wetlands | Mossy ruins, oak-and-spruce wetland buildings, two campfires, candlelit timber walls, and the configured SC01.2 castle |
 | Mediterranean | Plains and Sunflower Plains | White stone and plaster town core with tile roofs, courts, orchards, gardens, and open agriculture |
 | Tundra | Snowy Plains, Ice Spikes, snowy beaches, frozen rivers, and compatible exposed frozen lowlands | Compact snowbound buildings, packed-ice accents, spruce details, enclosed cold-weather farming, and four founding snow golems |
+| Polynesian Coast | Sparse Jungle, and beaches beside warm or lukewarm ocean | Stilted stripped-spruce huts under oak roofs, a king's hall that keeps the village jail, tiki torches, a pond fishery, an open-air shrine, and a stripped-log palisade on coral footings |
+| Romanian | Dark Forest, forested highlands, and wooded valleys | Steep birch roofs, heavy dark-oak frames, enclosed yards, substantial woodland homes, and timber-and-deepslate walls |
+| Alpine Highlands | Meadow, Grove, Snowy Slopes, mountain peaks, and Windswept mountain families | Iberian-inspired brick and spruce settlement with berry plots, dense shared homes, deep wells, and brushed brick walls |
+| Japanese Cherry Grove | Cherry Grove, Flower Forest, and compatible Sakura biomes | Flowering garden settlement with spruce frames, ponds, compact farms and cherry-leaf walls |
 
 ## Locked directions
 
@@ -31,25 +35,24 @@ its production catalog and founding behavior are verified.
 | Village biome | Founding environments | Direction |
 | --- | --- | --- |
 | Rustic Woodland | Forest and compatible ordinary oak woodland biomes | Familiar timber woodland settlement with a restrained rustic character |
-| Romanian | Dark Forest, forested highlands, and wooded valleys | Heavy timber roofs, enclosed yards, and substantial woodland buildings |
-| Japanese | Cherry Grove, Flower Forest, and compatible Sakura biomes | Garden settlement shaped around flowering woodland and deliberate landscape details |
 | Taiga | Taiga, Old Growth Pine Taiga, Old Growth Spruce Taiga, and compatible cold forests | Cold forest settlement; its final visual language is deliberately deferred between the ornate Polish family and the grittier T&T Viking family |
-| Alpine | Meadow, Grove, Snowy Slopes, and compatible mountain valleys and peaks | Swiss-inspired mountain settlement with steep roofs and slope-conscious buildings |
-| Polynesian Coast | Sparse Jungle, tropical beaches, warm-ocean islands, and compatible tropical coasts | Open, warm-climate coastal buildings based on the Polynesian reference family |
 | Nautical Coast | Beach, Stony Shore, and compatible temperate or cold coasts | Fishing town, docks, shoreline buildings, and lighthouse landmarks |
 | Savanna Tent | Savanna, Savanna Plateau, Windswept Savanna, and compatible dry grasslands | African-inspired tent and grassland settlement with portable-looking structures and a coherent warm-climate material palette |
 | Mushroom | Mushroom Fields and compatible fungal biomes | Fantasy mushroom settlement drawn from the complete mushroom reference families |
 
-Jungle, ordinary Swamp, Mediterranean and Tundra are complete private production catalogs.
-Swamp remains separate from the mud-brick Floodplain catalog used by mangroves. Tundra starts
-from a four-bed centre with a naturally placed mine and storehouse and deliberately has no castle.
+Jungle, ordinary Swamp, Mediterranean, Tundra, Polynesian Coast, Romanian, Alpine Highlands and
+Japanese Cherry Grove are complete private
+production catalogs. Swamp remains separate from the mud-brick Floodplain catalog used by
+mangroves. Tundra starts from a four-bed centre with a naturally placed mine and storehouse and
+deliberately has no castle. The Polynesian Coast centre is the king's hall, which seats the ruler
+and keeps the village jail; that catalog has no castle yet.
 
 Swedish and Polish are source languages in the current review rather than settled biome
 assignments. The Swedish temple and tower remain a useful candidate church progression for a
 future Taiga catalog. The complete Polish family remains the ornate Taiga option, while the T&T
-Viking family remains the grittier option with a stronger identity of its own. Swiss remains the
-primary direction for Alpine because mountain terrain needs architecture distinct from forested
-Taiga and exposed Tundra.
+Viking family remains the grittier option with a stronger identity of its own. The Alpine review
+moved away from the cyan-concrete Swiss set and locked the Iberian family in brick and spruce. It
+remains distinct from forested Taiga and exposed Tundra.
 
 Rivers do not receive a separate village biome. An ordinary land village resolves from the
 surrounding environment rather than a narrow river strip. Tropical riverbanks and deltas belong
@@ -57,9 +60,11 @@ to Floodplain when site selection can classify them reliably.
 
 ## Next authoring shortlist
 
-Tundra is complete. Taiga remains intentionally parked until the ornate Polish and grittier
-Viking directions can be judged after more village catalogs are complete. Alpine, Romanian,
-Japanese, Savanna Tent, Polynesian Coast and Mushroom remain available as the next catalog pass.
+Tundra, Polynesian Coast, Romanian, Alpine Highlands and Japanese Cherry Grove are complete.
+Taiga remains intentionally parked until the ornate
+Polish and grittier Viking directions can be judged after more village catalogs are complete.
+Savanna Tent and Mushroom remain available as the next catalog pass, and Nautical Coast already
+has one reserved piece: the Polynesian gallery's PC07.4 beach camp.
 
 The three walk-through courts begin at **9913.5, 230, 986.5** in the live showcase world. The
 individual entrances are Swamp at **9929.5, 230, 1004.5**, Viking at
@@ -98,6 +103,23 @@ The current review status is:
   The court, the seven-row annex at **10473.5, 230, 1224.5** and the workshop row of restyled
   markets and the hedged wall at **10473.5, 230, 1532.5** remain as provenance and comparison
   galleries.
+- **Polynesian Coast:** the production catalog is selected and verified
+  ([polynesian-coast-village.md](polynesian-coast-village.md)). The selection gallery stands in
+  the sky above the **trio-20260912** test world, not the showcase world: Aaron chose it while the
+  showcase world was not being served. It begins at **609.5, 230, 10.5**, about 600 blocks east of
+  that world's spawn. The rows are:
+  - PC01 to PC03: all 18 standalone Towns & Towers Polynesian structures.
+  - PC04 to PC06: 16 tropical-coast donors for the roles the family lacks.
+  - PC07 to PC09: the fort, stone-circle and ritual-site candidates he asked for.
+  - PC10 and PC11: the market and wall workshop.
+
+  Aaron restyled the CTOV sawmill, the priest tower and the mangrove tavern to oak roofs over
+  stripped spruce, and converted the sawmill into the mine and the priest tower into the
+  watchtower. He also edited his selection live, including the lumberjack plot he made from a copy
+  of the well. CTOV Beach work blocks from mods the server lacks are replaced by vanilla stand-ins,
+  in the private display copies only. The sources, hashes, restyles, placements and selection are
+  in `tools/structure/polynesian-full-profile-20260912.json`, and the catalog is in
+  `tools/structure/polynesian-coast-catalog-20260912.json`.
 
 The Viking annex contains all 43 standalone structures: 22 Viking and 21 Polish. Road pieces
 and terminators are omitted because they are layout internals rather than building candidates.

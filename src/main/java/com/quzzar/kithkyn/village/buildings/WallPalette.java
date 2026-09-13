@@ -36,6 +36,20 @@ record WallPalette(Block post, Block deck, Block stairs, Block slab,
       case TUNDRA -> new WallPalette(
           Blocks.SNOW_BLOCK, Blocks.SNOW_BLOCK, Blocks.STONE_BRICK_STAIRS,
           Blocks.STONE_BRICK_SLAB, Blocks.SPRUCE_FENCE, Blocks.SPRUCE_TRAPDOOR);
+      // Study A (2026-09-12): stripped spruce body, oak slab walks, spruce fence
+      // tips and hatches. Its dead coral footing is a literal piece, not a slot.
+      case POLYNESIAN_COAST -> new WallPalette(
+          Blocks.STRIPPED_SPRUCE_WOOD, Blocks.STRIPPED_SPRUCE_WOOD, Blocks.OAK_STAIRS,
+          Blocks.OAK_SLAB, Blocks.SPRUCE_FENCE, Blocks.SPRUCE_TRAPDOOR);
+      case ROMANIAN -> new WallPalette(
+          Blocks.STRIPPED_DARK_OAK_WOOD, Blocks.STRIPPED_DARK_OAK_WOOD, Blocks.BIRCH_STAIRS,
+          Blocks.BIRCH_SLAB, Blocks.COBBLED_DEEPSLATE_WALL, Blocks.DARK_OAK_TRAPDOOR);
+      case ALPINE_HIGHLANDS -> new WallPalette(
+          Blocks.BRICKS, Blocks.BRICKS, Blocks.BRICK_STAIRS,
+          Blocks.BRICK_SLAB, Blocks.BRICK_WALL, Blocks.SPRUCE_TRAPDOOR);
+      case JAPANESE_CHERRY_GROVE -> new WallPalette(
+          Blocks.STRIPPED_SPRUCE_LOG, Blocks.STRIPPED_SPRUCE_LOG, Blocks.SPRUCE_STAIRS,
+          Blocks.DEEPSLATE_TILE_SLAB, Blocks.SPRUCE_FENCE, Blocks.CHERRY_TRAPDOOR);
     };
   }
 
@@ -45,10 +59,14 @@ record WallPalette(Block post, Block deck, Block stairs, Block slab,
    * families author no foliage, so their pair is never placed.
    */
   Block leaves() {
-    return this.post == Blocks.QUARTZ_BRICKS ? Blocks.JUNGLE_LEAVES : Blocks.OAK_LEAVES;
+    if (this.post == Blocks.STRIPPED_SPRUCE_LOG) return Blocks.CHERRY_LEAVES;
+    if (this.post == Blocks.QUARTZ_BRICKS) return Blocks.JUNGLE_LEAVES;
+    if (this.post == Blocks.BRICKS) return Blocks.MANGROVE_LEAVES;
+    return Blocks.OAK_LEAVES;
   }
 
   Block leavesDark() {
+    if (this.post == Blocks.STRIPPED_SPRUCE_LOG) return Blocks.FLOWERING_AZALEA_LEAVES;
     return Blocks.DARK_OAK_LEAVES;
   }
 
@@ -67,6 +85,7 @@ record WallPalette(Block post, Block deck, Block stairs, Block slab,
     if (this.post == Blocks.MUD_BRICKS) return Blocks.MUDDY_MANGROVE_ROOTS;
     if (this.post == Blocks.JUNGLE_PLANKS) return Blocks.STRIPPED_JUNGLE_WOOD;
     if (this.post == Blocks.SNOW_BLOCK) return Blocks.PACKED_ICE;
+    if (this.post == Blocks.STRIPPED_DARK_OAK_WOOD) return Blocks.COBBLED_DEEPSLATE;
     return this.post;
   }
 
@@ -77,7 +96,9 @@ record WallPalette(Block post, Block deck, Block stairs, Block slab,
         : this.post == Blocks.MUD_BRICKS ? Blocks.BROWN_CANDLE
         : this.post == Blocks.OAK_LOG ? Blocks.CANDLE
         : this.post == Blocks.SNOW_BLOCK ? Blocks.BROWN_CANDLE : null;
-    if (this.post == Blocks.JUNGLE_PLANKS) return Blocks.TORCH.defaultBlockState();
+    if (this.post == Blocks.JUNGLE_PLANKS || this.post == Blocks.STRIPPED_DARK_OAK_WOOD) {
+      return Blocks.TORCH.defaultBlockState();
+    }
     if (candle == null) return Blocks.LANTERN.defaultBlockState();
     if (this.post == Blocks.OAK_LOG || this.post == Blocks.SNOW_BLOCK) {
       return candle.defaultBlockState().setValue(CandleBlock.CANDLES, 1)

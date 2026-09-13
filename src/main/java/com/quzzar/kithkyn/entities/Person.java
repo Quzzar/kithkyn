@@ -157,6 +157,9 @@ public class Person extends PathfinderMob implements CrossbowAttackMob, NeutralM
       .put(Pose.CROUCHING, EntityDimensions.scalable(0.6F, 1.75F).withEyeHeight(1.40F))
       .put(Pose.DYING, EntityDimensions.fixed(0.2F, 0.2F).withEyeHeight(1.62F)).build();
 
+  /** Genetics may make a person wider while crouched, but never too tall for crouch-height trim. */
+  private static final float CROUCHING_COLLISION_HEIGHT_LIMIT = 1.75F;
+
   public SimpleContainer personEquipInv = new SimpleContainer(6);
   public SimpleContainer personMainInv = new SimpleContainer(9 * 4);
 
@@ -556,7 +559,9 @@ public class Person extends PathfinderMob implements CrossbowAttackMob, NeutralM
     EntityDimensions dimensions = SIZE_BY_POSE.getOrDefault(poseIn, SIZE_BY_POSE.get(Pose.STANDING))
         .scale(this.getAgeScale());
     float scale = this.getScale();
-    float limit = this.getLifeStage().collisionHeightLimit();
+    float limit = poseIn == Pose.CROUCHING
+        ? Math.min(this.getLifeStage().collisionHeightLimit(), CROUCHING_COLLISION_HEIGHT_LIMIT)
+        : this.getLifeStage().collisionHeightLimit();
     if (dimensions.fixed() || dimensions.height() * scale <= limit) return dimensions;
 
     // LivingEntity applies genetic SCALE after this method. Compensate here so
@@ -1097,6 +1102,7 @@ public class Person extends PathfinderMob implements CrossbowAttackMob, NeutralM
     // them.
     return Mob.createMobAttributes().add(Attributes.MAX_HEALTH, 40.0D).add(Attributes.MOVEMENT_SPEED, 0.5D)
         .add(Attributes.ATTACK_DAMAGE, 1.0D).add(Attributes.FOLLOW_RANGE, 20.0D)
+        .add(Attributes.STEP_HEIGHT, 1.0D)
         .add(Attributes.ATTACK_KNOCKBACK, 0.0D).add(Attributes.ATTACK_SPEED, 4.0D);
   }
 

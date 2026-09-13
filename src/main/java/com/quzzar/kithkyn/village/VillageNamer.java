@@ -177,6 +177,35 @@ public final class VillageNamer {
               + " Clear, sturdy invented names with a wintry old-world sound.",
           List.of("Frostmere", "Skelwick", "Eirhavn", "Winterholt"),
           List.of("Eir", "Skel", "Frost", "Winter", "Rime", "Hail", "Sven", "Bryn"));
+      case POLYNESIAN_COAST -> new NamingProfile(
+          "An open island village on a warm coast: stilted huts of stripped spruce under oak roofs,"
+              + " a king's hall with a barred cell beside the village fire, tiki torches, fishing ponds,"
+              + " an open-air shrine ringed by logs and a palisade of stripped logs on coral footings."
+              + " Bright, flowing invented names with an open-vowel island sound.",
+          List.of("Vaelu", "Tenora", "Olamiri", "Kaelua"),
+          List.of("Vae", "Teno", "Ola", "Kae", "Mori", "Lua", "Rua", "Nali"),
+          List.of("lu", "ora", "miri", "lua", "ani", "eva", "oa", "ina"));
+      case ROMANIAN -> new NamingProfile(
+          "A sheltered Dark Forest settlement of steep pale roofs, dark-oak frames, enclosed yards,"
+              + " substantial woodland houses, torchlit timber walls and a tall church around its bell."
+              + " Warm, lyrical invented names with an eastern woodland sound.",
+          List.of("Codrenia", "Valea Lunii", "Branovia", "Miercana"),
+          List.of("Cod", "Vale", "Bran", "Mier", "Lun", "Sor", "Dra", "Veli"),
+          List.of("enia", "ovia", "ana", "esti", "ora", "eni", "ava", "ina"));
+      case ALPINE_HIGHLANDS -> new NamingProfile(
+          "A close mountain settlement of brick walls, steep spruce roofs, berry gardens,"
+              + " deep wells and large shared houses gathered in high meadows and windy passes."
+              + " Warm, resonant invented names with an Iberian highland sound.",
+          List.of("Valdora", "Monteluz", "Bravena", "Cerrosa"),
+          List.of("Val", "Monte", "Bra", "Cerro", "Luma", "Sierra", "Ald", "Vera"),
+          List.of("dora", "luz", "vena", "rosa", "alta", "era", "ona", "iel"));
+      case JAPANESE_CHERRY_GROVE -> new NamingProfile(
+          "A garden settlement among flowering cherry trees: spruce-framed homes, dark tiled roofs,"
+              + " ponds, compact farms, lanterns and carefully planted paths around a civic bell."
+              + " Calm, concise invented names with a soft woodland sound.",
+          List.of("Hanamori", "Kasayuki", "Mizuhana", "Sorakawa"),
+          List.of("Hana", "Mizu", "Sora", "Kasa", "Aki", "Yama", "Mori", "Tsuki"),
+          List.of("mori", "kawa", "hana", "yuki", "sato", "nami", "tani", "no"));
     };
   }
 

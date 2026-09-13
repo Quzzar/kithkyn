@@ -122,6 +122,23 @@ north gate, the south gate and the two halves of the yard. It has no merchant st
 lives in whichever containers a castle layout names: barrels in the Desert and Swamp castles,
 chests here.
 
+## Polynesian Coast king's hall
+
+The Polynesian Coast has no castle. Its village centre is the king's hall
+([polynesian-coast-village.md](polynesian-coast-village.md)), and it carries the castle
+amenities itself:
+
+- The king is a LEADER station on the throne.
+- A jailer holds the post beside the fire.
+- The custody cell is a barred cell against the hall's north wall.
+- The two evidence barrels are set into the ground.
+
+Castle amenities are therefore allowed on a castle or a village centre and nowhere else. Custody
+and the ruler's incumbent read either kind of building. A centre with a jail is still not a
+castle: its guards keep ordinary duty, since sentry routes and shields belong to castles, and it
+never counts as the settlement's castle. If a Polynesian castle is authored later, it must decide
+which building holds the single ruling position.
+
 ## Ruler decisions
 
 The existing LEADER occupation supplies the ruler. Its title is King, Queen or Sovereign,
