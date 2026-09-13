@@ -91,6 +91,10 @@ in it, and update it in the same change that moves what it describes.
 - [tundra-village.md](tundra-village.md): the approved playable Tundra catalog: its four-bed
   snow-golem centre, naturally placed mine and storehouse, cold-weather farms, fixed-colour
   markets, packed-ice wall and deliberate absence of a castle.
+- [polynesian-coast-village.md](polynesian-coast-village.md): the approved Polynesian Coast
+  catalog: the king's hall centre that seats the ruler and keeps the village jail, three founding
+  homes, stilted spruce-and-oak huts, the pond fishery, the open-air shrine, and its Sparse Jungle
+  and warm-beach founding.
 - [appearance.md](appearance.md): why villagers use the player model and not the vanilla
   villager model, the wide/slim model split by gender, and the client-side runtime skin
   compositor that bakes a villager's look from inherited skin, hair, and eye structures,

@@ -14,8 +14,13 @@ import com.quzzar.kithkyn.entities.Virtue;
 import com.quzzar.kithkyn.persona.PersonaData;
 import com.quzzar.kithkyn.village.buildings.Building;
 import com.quzzar.kithkyn.village.buildings.BuildingInfo;
+import com.quzzar.kithkyn.village.buildings.Buildings;
 
-/** The castle's incumbent speaks through the existing village decision pipelines. */
+/**
+ * The ruler's incumbent speaks through the existing village decision pipelines. The ruling seat
+ * is a castle's LEADER station, or the centre's where the centre is itself the king's hall
+ * (the Polynesian Coast, docs/polynesian-coast-village.md).
+ */
 public final class VillageRuler {
   private VillageRuler() {}
 
@@ -45,7 +50,12 @@ public final class VillageRuler {
         .ifPresent(person -> person.logMemory(event, Optional.empty()));
   }
 
-  /** Only a loaded resident at a still-valid castle station can currently deliberate. Never loads chunks. */
+  /** A castle, or a centre that is itself the king's hall. */
+  private static boolean isRulingSeat(BuildingInfo info) {
+    return "castle".equals(info.getCategory()) || Buildings.VILLAGE_CENTER_CATEGORY.equals(info.getCategory());
+  }
+
+  /** Only a loaded resident at a still-valid ruling-seat station can currently deliberate. Never loads chunks. */
   public static Optional<RealPerson> incumbent(Village village) {
     if (village == null || village.getLevel() == null) return Optional.empty();
     for (Map.Entry<UUID, JobAssignment> entry : village.getJobAssignmentsView().entrySet()) {
@@ -53,7 +63,7 @@ public final class VillageRuler {
       if (job.getOccupation() != Occupation.LEADER) continue;
       Building building = village.getBuilding(job.getBuildingUUID());
       BuildingInfo info = building == null ? null : building.getInfo();
-      if (info == null || !"castle".equals(info.getCategory())) continue;
+      if (info == null || !isRulingSeat(info)) continue;
       List<Occupation> stations = List.copyOf(info.getWorkLocations().values());
       if (job.getStationIndex() < 0 || job.getStationIndex() >= stations.size()
           || stations.get(job.getStationIndex()) != Occupation.LEADER) continue;

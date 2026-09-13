@@ -17,10 +17,11 @@ These catalogs are integrated, selectable, and verified as complete founding vil
 | Desert Oasis | Desert and sandy desert families | Smooth sandstone, shaded courts, wells, oasis planting, candles, and the optional castle |
 | Pueblo | Badlands, Eroded Badlands, Wooded Badlands, and compatible mesa families | Dense adobe and terracotta housing, roof terraces, courtyards, and red sandstone walls |
 | Floodplain | Mangrove Swamp and compatible tropical floodplain biomes | Mud brick, mangrove details, raised earth, and water-oriented sites |
-| Jungle Tribal | Jungle, Bamboo Jungle, and Sparse Jungle | Jungle timber, stripped bamboo roofs, compact huts, treehouses, three markets, the timber wall, and the Firewatch tower |
+| Jungle Tribal | Jungle and Bamboo Jungle | Jungle timber, stripped bamboo roofs, compact huts, treehouses, three markets, the timber wall, and the Firewatch tower |
 | Swamp | Swamp, Orchid Swamp, and compatible ordinary wetlands | Mossy ruins, oak-and-spruce wetland buildings, two campfires, candlelit timber walls, and the configured SC01.2 castle |
 | Mediterranean | Plains and Sunflower Plains | White stone and plaster town core with tile roofs, courts, orchards, gardens, and open agriculture |
 | Tundra | Snowy Plains, Ice Spikes, snowy beaches, frozen rivers, and compatible exposed frozen lowlands | Compact snowbound buildings, packed-ice accents, spruce details, enclosed cold-weather farming, and four founding snow golems |
+| Polynesian Coast | Sparse Jungle, and beaches beside warm or lukewarm ocean | Stilted stripped-spruce huts under oak roofs, a king's hall that keeps the village jail, tiki torches, a pond fishery, an open-air shrine, and a stripped-log palisade on coral footings |
 
 ## Locked directions
 
@@ -35,14 +36,15 @@ its production catalog and founding behavior are verified.
 | Japanese | Cherry Grove, Flower Forest, and compatible Sakura biomes | Garden settlement shaped around flowering woodland and deliberate landscape details |
 | Taiga | Taiga, Old Growth Pine Taiga, Old Growth Spruce Taiga, and compatible cold forests | Cold forest settlement; its final visual language is deliberately deferred between the ornate Polish family and the grittier T&T Viking family |
 | Alpine | Meadow, Grove, Snowy Slopes, and compatible mountain valleys and peaks | Swiss-inspired mountain settlement with steep roofs and slope-conscious buildings |
-| Polynesian Coast | Sparse Jungle, tropical beaches, warm-ocean islands, and compatible tropical coasts | Open, warm-climate coastal buildings based on the Polynesian reference family |
 | Nautical Coast | Beach, Stony Shore, and compatible temperate or cold coasts | Fishing town, docks, shoreline buildings, and lighthouse landmarks |
 | Savanna Tent | Savanna, Savanna Plateau, Windswept Savanna, and compatible dry grasslands | African-inspired tent and grassland settlement with portable-looking structures and a coherent warm-climate material palette |
 | Mushroom | Mushroom Fields and compatible fungal biomes | Fantasy mushroom settlement drawn from the complete mushroom reference families |
 
-Jungle, ordinary Swamp, Mediterranean and Tundra are complete private production catalogs.
-Swamp remains separate from the mud-brick Floodplain catalog used by mangroves. Tundra starts
-from a four-bed centre with a naturally placed mine and storehouse and deliberately has no castle.
+Jungle, ordinary Swamp, Mediterranean, Tundra and Polynesian Coast are complete private
+production catalogs. Swamp remains separate from the mud-brick Floodplain catalog used by
+mangroves. Tundra starts from a four-bed centre with a naturally placed mine and storehouse and
+deliberately has no castle. The Polynesian Coast centre is the king's hall, which seats the ruler
+and keeps the village jail; that catalog has no castle yet.
 
 Swedish and Polish are source languages in the current review rather than settled biome
 assignments. The Swedish temple and tower remain a useful candidate church progression for a
@@ -57,10 +59,10 @@ to Floodplain when site selection can classify them reliably.
 
 ## Next authoring shortlist
 
-Tundra is complete. Taiga remains intentionally parked until the ornate Polish and grittier
-Viking directions can be judged after more village catalogs are complete. Polynesian Coast is in
-its selection pass (below). Alpine, Romanian, Japanese, Savanna Tent and Mushroom remain available
-as the next catalog pass.
+Tundra and Polynesian Coast are complete. Taiga remains intentionally parked until the ornate
+Polish and grittier Viking directions can be judged after more village catalogs are complete.
+Alpine, Romanian, Japanese, Savanna Tent and Mushroom remain available as the next catalog pass,
+and Nautical Coast already has one reserved piece: the Polynesian gallery's PC07.4 beach camp.
 
 The three walk-through courts begin at **9913.5, 230, 986.5** in the live showcase world. The
 individual entrances are Swamp at **9929.5, 230, 1004.5**, Viking at
@@ -99,20 +101,23 @@ The current review status is:
   The court, the seven-row annex at **10473.5, 230, 1224.5** and the workshop row of restyled
   markets and the hedged wall at **10473.5, 230, 1532.5** remain as provenance and comparison
   galleries.
-- **Polynesian Coast:** the selection gallery stands in the sky above the **trio-20260912** test
-  world, not the showcase world: Aaron chose it while the showcase world was not being served.
-  It begins at **609.5, 230, 10.5**, about 600 blocks east of that world's spawn. Rows PC01 to
-  PC03 hold all 18 standalone Towns & Towers Polynesian structures: the town center, the tiki
-  torch, eight homes, and eight workplaces and farms. Rows PC04 to PC06 keep 16 tropical-coast
-  donors apart for the roles the family lacks: the CTOV Beach bakery, warehouse, vault, sawmill,
-  woodworker, hunter, tavern, barracks, priest tower, sanctuary, goddess statue and well, and the
-  Dungeons & Taverns acacia and mangrove taverns, mangrove firewatch and jungle well. Pieces
-  holding water stand inside one-block barrier rings, and the deep jungle well hangs its shaft
-  below the platform on a floor. The CTOV Beach work blocks that belong to mods the server lacks
-  are replaced by vanilla stand-ins in the private display copies only. No roles are selected yet. Two questions stay open: both
-  Polynesian farms already serve the Floodplain catalog, and Sparse Jungle currently founds
-  Jungle villages, so which catalog keeps that biome is undecided. The exact sources, hashes and
-  placements are recorded in `tools/structure/polynesian-full-profile-20260912.json`.
+- **Polynesian Coast:** the production catalog is selected and verified
+  ([polynesian-coast-village.md](polynesian-coast-village.md)). The selection gallery stands in
+  the sky above the **trio-20260912** test world, not the showcase world: Aaron chose it while the
+  showcase world was not being served. It begins at **609.5, 230, 10.5**, about 600 blocks east of
+  that world's spawn. The rows are:
+  - PC01 to PC03: all 18 standalone Towns & Towers Polynesian structures.
+  - PC04 to PC06: 16 tropical-coast donors for the roles the family lacks.
+  - PC07 to PC09: the fort, stone-circle and ritual-site candidates he asked for.
+  - PC10 and PC11: the market and wall workshop.
+
+  Aaron restyled the CTOV sawmill, the priest tower and the mangrove tavern to oak roofs over
+  stripped spruce, and converted the sawmill into the mine and the priest tower into the
+  watchtower. He also edited his selection live, including the lumberjack plot he made from a copy
+  of the well. CTOV Beach work blocks from mods the server lacks are replaced by vanilla stand-ins,
+  in the private display copies only. The sources, hashes, restyles, placements and selection are
+  in `tools/structure/polynesian-full-profile-20260912.json`, and the catalog is in
+  `tools/structure/polynesian-coast-catalog-20260912.json`.
 
 The Viking annex contains all 43 standalone structures: 22 Viking and 21 Polish. Road pieces
 and terminators are omitted because they are layout internals rather than building candidates.

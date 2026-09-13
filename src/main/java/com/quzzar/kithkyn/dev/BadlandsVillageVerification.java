@@ -193,10 +193,12 @@ public final class BadlandsVillageVerification {
         == VillageStyle.FLOODPLAIN, "Mangrove swamp must select Floodplain");
     check(VillageStyle.fromBiome(registry.getHolderOrThrow(Biomes.SWAMP), 0L, BlockPos.ZERO, everything)
         == VillageStyle.SWAMP, "Plain swamp must select the ordinary Swamp catalog");
-    for (var biome : List.of(Biomes.JUNGLE, Biomes.BAMBOO_JUNGLE, Biomes.SPARSE_JUNGLE)) {
+    for (var biome : List.of(Biomes.JUNGLE, Biomes.BAMBOO_JUNGLE)) {
       check(VillageStyle.fromBiome(registry.getHolderOrThrow(biome), 0L, BlockPos.ZERO, everything)
           == VillageStyle.JUNGLE, "Jungle coverage missing " + biome.location());
     }
+    check(VillageStyle.fromBiome(registry.getHolderOrThrow(Biomes.SPARSE_JUNGLE), 0L, BlockPos.ZERO, everything)
+        == VillageStyle.POLYNESIAN_COAST, "Sparse jungle must select the Polynesian Coast");
     for (var biome : List.of(Biomes.PLAINS, Biomes.SUNFLOWER_PLAINS)) {
       check(VillageStyle.fromBiome(registry.getHolderOrThrow(biome), 0L, BlockPos.ZERO, everything)
           == VillageStyle.MEDITERRANEAN, "Mediterranean coverage missing " + biome.location());
@@ -206,7 +208,7 @@ public final class BadlandsVillageVerification {
       check(VillageStyle.fromBiome(registry.getHolderOrThrow(biome), 0L, BlockPos.ZERO, everything)
           == VillageStyle.TUNDRA, "Tundra coverage missing " + biome.location());
     }
-    Kithkyn.LOGGER.info("{} BIOMES PASS: Pueblo, Desert, Birch, Floodplain, Swamp, both Plains, all three Jungle biomes and exposed frozen lowlands", PREFIX);
+    Kithkyn.LOGGER.info("{} BIOMES PASS: Pueblo, Desert, Birch, Floodplain, Swamp, both Plains, the dense Jungle biomes, the sparse jungle's Polynesian Coast and exposed frozen lowlands", PREFIX);
   }
 
   private static void verifyCatalogue(ServerLevel level) {
@@ -438,7 +440,8 @@ public final class BadlandsVillageVerification {
         && village.getUnassignedBeds().size() == CATALOG.foundingBeds() - CATALOG.foundingJobs(),
         "Founding workers did not receive distinct beds");
     if (STYLE == VillageStyle.JUNGLE || STYLE == VillageStyle.SWAMP
-        || STYLE == VillageStyle.MEDITERRANEAN || STYLE == VillageStyle.TUNDRA) {
+        || STYLE == VillageStyle.MEDITERRANEAN || STYLE == VillageStyle.TUNDRA
+        || STYLE == VillageStyle.POLYNESIAN_COAST) {
       if (STYLE != VillageStyle.MEDITERRANEAN) {
         verifyRoutedWorksite(village, residents, Occupation.MINER, "mine");
       }
