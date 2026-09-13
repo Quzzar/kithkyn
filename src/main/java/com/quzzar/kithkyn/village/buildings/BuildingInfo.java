@@ -50,17 +50,17 @@ public class BuildingInfo {
     }
 
     public MineEntrance {
-      if (width != 2 && width != 3 && width != 5) {
-        throw new IllegalArgumentException("Mine width must be 2, 3 or 5");
+      if (width < 2 || width > 5) {
+        throw new IllegalArgumentException("Mine width must be between 2 and 5");
       }
     }
 
     public static final Codec<MineEntrance> CODEC = RecordCodecBuilder.create(inst -> inst.group(
         Direction.CODEC.optionalFieldOf("facing", Direction.SOUTH).forGetter(MineEntrance::facing),
         BlockPos.CODEC.optionalFieldOf("offset", BlockPos.ZERO).forGetter(MineEntrance::offset),
-        Codec.INT.validate(width -> width == 2 || width == 3 || width == 5
+        Codec.INT.validate(width -> width >= 2 && width <= 5
             ? com.mojang.serialization.DataResult.success(width)
-            : com.mojang.serialization.DataResult.error(() -> "Mine width must be 2, 3 or 5"))
+            : com.mojang.serialization.DataResult.error(() -> "Mine width must be between 2 and 5"))
             .optionalFieldOf("width", 5).forGetter(MineEntrance::width)
     ).apply(inst, MineEntrance::new));
   }
@@ -155,7 +155,7 @@ public class BuildingInfo {
     info.workerBeds = workerBeds.orElse(null);
     info.standalone = standalone;
     info.startingBuildings = List.copyOf(startingBuildings);
-    worksites.forEach(worksite -> info.worksiteLocs.put(worksite.pos().asLong(), worksite.occupation()));
+    worksites.forEach(info::addWorksite);
     info.roomReservations = List.copyOf(rooms);
     info.castleLayout = castle.orElse(null);
     return info;
@@ -194,10 +194,12 @@ public class BuildingInfo {
   private ArrayList<Long> bedLocs;
   // Insertion-ordered: JobAssignment station indexes rely on a stable iteration order.
   private LinkedHashMap<Long, Occupation> workLocs;
+  private boolean duplicateWorkStationPosition;
   private final Map<Long, GuardRole> guardRoles = new LinkedHashMap<>();
   private final Map<Long, List<BlockPos>> guardPatrolRoutes = new LinkedHashMap<>();
   private final Map<Long, String> worksiteCategories = new LinkedHashMap<>();
   private final LinkedHashMap<Long, Occupation> worksiteLocs = new LinkedHashMap<>();
+  private boolean duplicateWorksitePosition;
   @javax.annotation.Nullable
   private List<BedContainers> bedContainers;
   @javax.annotation.Nullable
@@ -297,6 +299,16 @@ public class BuildingInfo {
     }
     String stem = base.substring(0, levelSeparator);
     String variant = null;
+    // A newly installed datapack may introduce a multi-word family before the
+    // Java style enum knows about it. When it authors both halves explicitly,
+    // their exact concatenation is unambiguous and remains independently
+    // checked by validate(). Without this, alpine_highlands was misread as
+    // category "house_alpine" plus variant "highlands" and the whole catalog
+    // was rejected on load.
+    if (explicitCategory != null && explicitVariant != null
+        && stem.equals(explicitCategory + "_" + explicitVariant)) {
+      return new ParsedId(explicitCategory, explicitVariant, level, design);
+    }
     for (VillageStyle style : VillageStyle.values()) {
       String candidate = style.id();
       if (stem.endsWith("_" + candidate) && stem.length() > candidate.length() + 1
@@ -396,6 +408,12 @@ public class BuildingInfo {
     if (!hasWellFormedId()) {
       return "id '" + path + "' does not match <category>_<variant>_<level>[__<design>]";
     }
+    if (duplicateWorkStationPosition) {
+      return "work_stations repeats a work station position; each job requires a distinct coordinate";
+    }
+    if (duplicateWorksitePosition) {
+      return "worksites repeats a physical worksite position";
+    }
     if (getEntranceFacing().getAxis().isVertical() || mineEntrance.facing().getAxis().isVertical()) {
       return "building and mine entrances must face horizontally";
     }
@@ -470,7 +488,9 @@ public class BuildingInfo {
       if (!mappedContainers.containsAll(personalContainerLocs)) return "personal container has no bed_containers mapping";
     }
     if (castleLayout != null) {
-      if (!"castle".equals(getCategory())) return "castle amenities require the castle category";
+      if (!"castle".equals(getCategory()) && !Buildings.VILLAGE_CENTER_CATEGORY.equals(getCategory())) {
+        return "castle amenities require the castle or village_center category";
+      }
       if (castleLayout.evidenceContainers().size() != 2
           || new java.util.HashSet<>(castleLayout.evidenceContainers()).size() != 2) {
         return "castle requires two distinct evidence_containers";
@@ -527,6 +547,41 @@ public class BuildingInfo {
       }
     }
     return null;
+  }
+
+  /**
+   * The complete datapack contract, checked after the loader attaches the
+   * definition's own validated cost. Structural tests may use {@link #validate}
+   * without inventing economic metadata; published definitions may not.
+   */
+  @javax.annotation.Nullable
+  public String validateAuthoredContract() {
+    String structural = validate();
+    if (structural != null) return structural;
+    if (materialCost.isEmpty()) return "building requires its own nonempty cost";
+    if (grants.isEmpty()) return "building requires at least one grant";
+    java.util.Set<String> seen = new java.util.HashSet<>();
+    for (String grant : grants) {
+      if (!grant.matches("[A-Z][A-Z0-9_]*")) return "grant names must use SCREAMING_SNAKE_CASE: " + grant;
+      if (!seen.add(grant)) return "building repeats grant " + grant;
+      if (BuildingGrantContract.isRetired(grant)) return "building uses retired grant " + grant;
+    }
+    for (Grant grant : conditionalGrants) {
+      if (!grant.capability().matches("[A-Z][A-Z0-9_]*")) {
+        return "grant names must use SCREAMING_SNAKE_CASE: " + grant.capability();
+      }
+      if (!seen.add(grant.capability())) return "building repeats grant " + grant.capability();
+      if (BuildingGrantContract.isRetired(grant.capability())) {
+        return "building uses retired conditional grant " + grant.capability();
+      }
+      for (String requirement : grant.requiresCapability()) {
+        if (BuildingGrantContract.isRetired(requirement)) {
+          return "conditional grant " + grant.capability() + " requires retired grant " + requirement;
+        }
+      }
+    }
+    List<String> missing = BuildingGrantContract.missing(this);
+    return missing.isEmpty() ? null : String.join("; ", missing);
   }
 
   /** Omitted metadata preserves the original two-bed cottage; ordinary homes infer no pairs. */
@@ -662,8 +717,20 @@ public class BuildingInfo {
   }
 
   public BuildingInfo addWorkLocation(int x, int y, int z, Occupation occupation) {
-    workLocs.put(BlockPos.asLong(x, y, z), occupation);
+    long position = BlockPos.asLong(x, y, z);
+    if (workLocs.containsKey(position)) {
+      duplicateWorkStationPosition = true;
+    }
+    workLocs.put(position, occupation);
     return this;
+  }
+
+  private void addWorksite(Worksite worksite) {
+    long position = worksite.pos().asLong();
+    if (worksiteLocs.containsKey(position)) {
+      duplicateWorksitePosition = true;
+    }
+    worksiteLocs.put(position, worksite.occupation());
   }
 
   public BuildingInfo addContainerLocation(int x, int y, int z) {
@@ -720,7 +787,7 @@ public class BuildingInfo {
     return bedLocs.stream().map(BlockPos::of).toList();
   }
 
-  /** The authored posts, in station order; package-visible so StationGrants can read each post's worksite routing. */
+  /** The authored posts, in station order; package-visible so the grant contract can inspect worksite routing. */
   List<WorkStation> workStations() {
     return workLocs.entrySet().stream()
         .map(entry -> new WorkStation(BlockPos.of(entry.getKey()), entry.getValue(),

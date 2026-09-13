@@ -169,7 +169,9 @@ Construction cells have semantic roles:
   defensive shell.
 - **Exact:** the catalog prefers its stair, parapet, or decorative state. An unrelated
   collidable block is still preserved, because closing the defensive shell is
-  more important than forcing a palette over player or terrain construction.
+  more important than forcing a palette over player or terrain construction. Functional
+  attachments such as ladders, trapdoors, lights, banners and campfires are the exception:
+  their authored state is required or the feature would stop working.
 - **Foundation:** an exact authored state that repeats down to the live terrain
   in its own column, used by off-route posts and watchtower access shafts.
 - **Clearance:** an internal planning cell removes lower-priority generated
@@ -254,6 +256,9 @@ rungs vertically rather than taking a sideways drop that can catch on a rail.
 Wall placement computes connection arms against existing neighbors. Maintenance
 also reconnects old village-owned masonry/fences, preserving player-owned edits
 and the existing block material instead of repainting the gate.
+It also restores mismatched planned cells that retain their village-ownership marker.
+This repairs attachments that popped during construction while leaving player breaks alone,
+because an ordinary player break clears the ownership marker.
 
 Ground mobs are stopped by the continuous shell outside its open gates. The authored
 silhouette includes overhangs, while spider-proof behavior remains a
@@ -359,5 +364,5 @@ standing lamps become lit candle clusters; all four hanging gate lamps stay. The
 wood geometry still supplies the route, access shafts, and silhouette. Arid trim uses
 separate post and beam pieces so foundations extend under legs without filling the
 passage beneath roof beams. The live workshop copies have been updated and photographed;
-the matching generator was deployed on September 10 with the shared-recipe update. Captures and exact block comparisons
+the matching generator was deployed on September 10 with the then-current building-cost update. Captures and exact block comparisons
 are recorded in `tools/structure/arid-wall-workshop-20260909.json`.

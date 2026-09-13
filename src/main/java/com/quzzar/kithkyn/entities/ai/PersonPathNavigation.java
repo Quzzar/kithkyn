@@ -54,7 +54,7 @@ import net.minecraft.world.phys.Vec3;
  * against a ladder goes up - but never plan to: the search only ever looks
  * sideways, one step up, and down a drop, so a ladder shaft is invisible to it
  * and a watchtower's bed at the top of one was a bed nobody could reach. Here
- * a rung (anything in the climbable tag) is a node the feet can stand in, its
+ * a ladder rung is a node the feet can stand in, its
  * floor is its own height rather than whatever lies under the ladder, and it
  * is joined to the rungs above and below it. Reaching the top is vanilla's
  * step-up onto the landing. The open cell immediately above a top rung is a
@@ -164,7 +164,7 @@ public final class PersonPathNavigation extends GroundPathNavigation {
     long now = this.level.getGameTime();
     if (accuracy == 0 && range < EXACT_SEARCH_RANGE && (route == null || !route.canReach())
         && this.longRetry.worthRetrying(targets, this.mob.blockPosition(), now)) {
-      if (!LONG_RETRY_BUDGET.admits(now)) {
+      if (!LONG_RETRY_BUDGET.admits(now, this.mob.getUUID())) {
         if (Kithkyn.LOGGER.isDebugEnabled()) {
           Kithkyn.LOGGER.debug("[path-budget] {} at {} to {}: long retry deferred",
               this.mob.getName().getString(), this.mob.blockPosition(), targets);
@@ -321,14 +321,14 @@ public final class PersonPathNavigation extends GroundPathNavigation {
   @Override
   protected boolean canUpdatePath() {
     return super.canUpdatePath() || this.mob.onClimbable()
-        || isClimbable(this.level.getBlockState(this.mob.blockPosition().below()));
+        || isLadder(this.level.getBlockState(this.mob.blockPosition().below()));
   }
 
   /** A vertical rung must actually be reached, never skipped by ground corner-cutting. */
   @Override
   protected void followThePath() {
     if (this.path != null && !this.path.isDone()
-        && isClimbable(this.level.getBlockState(this.path.getNextNodePos()))) {
+        && isLadder(this.level.getBlockState(this.path.getNextNodePos()))) {
       Vec3 next = this.path.getNextEntityPos(this.mob);
       if (!descendingTowards(next)) next = ladderApproach(next,
           this.level.getBlockState(this.path.getNextNodePos()));
@@ -358,7 +358,7 @@ public final class PersonPathNavigation extends GroundPathNavigation {
   /** On a rung the feet go at the rung, not on the floor beneath the ladder. */
   @Override
   protected double getGroundY(Vec3 vec) {
-    return isClimbable(this.level.getBlockState(BlockPos.containing(vec))) ? vec.y : super.getGroundY(vec);
+    return isLadder(this.level.getBlockState(BlockPos.containing(vec))) ? vec.y : super.getGroundY(vec);
   }
 
   @Override
@@ -374,11 +374,11 @@ public final class PersonPathNavigation extends GroundPathNavigation {
           doorway.x, getGroundY(doorway), doorway.z, this.speedModifier);
       return;
     }
-    boolean onLadder = this.mob.onClimbable();
+    boolean onLadder = isLadder(this.level.getBlockState(this.mob.blockPosition()));
     boolean descending = descendingTowards(next);
     BlockPos rungPos = this.path.getNextNodePos();
     if (descending && onLadder && next.y < this.mob.getY() - 0.5D
-        && isClimbable(this.level.getBlockState(this.mob.blockPosition().below()))) {
+        && isLadder(this.level.getBlockState(this.mob.blockPosition().below()))) {
       // Do not step sideways toward the ground exit while still several rungs up.
       rungPos = this.mob.blockPosition();
       next = new Vec3(rungPos.getX() + 0.5D, next.y, rungPos.getZ() + 0.5D);
@@ -401,7 +401,7 @@ public final class PersonPathNavigation extends GroundPathNavigation {
       }
       return; // leaving the ladder sideways is the move control's ordinary walk
     }
-    if (!onLadder && !isClimbable(this.level.getBlockState(this.path.getNextNodePos()))) {
+    if (!onLadder && !isLadder(this.level.getBlockState(this.path.getNextNodePos()))) {
       return;
     }
     // A rung straight above or below: hold the walk still and let the ladder
@@ -428,8 +428,8 @@ public final class PersonPathNavigation extends GroundPathNavigation {
     // Downward needs nothing: a body on a ladder slides at the ladder's own rate.
   }
 
-  private static boolean isClimbable(BlockState state) {
-    return state.is(BlockTags.CLIMBABLE);
+  private static boolean isLadder(BlockState state) {
+    return state.getBlock() instanceof LadderBlock;
   }
 
   /** Keep a wide body inside the opening until its trailing edge clears an open door or trapdoor. */
@@ -438,20 +438,23 @@ public final class PersonPathNavigation extends GroundPathNavigation {
     // The path advances before the whole body leaves a doorway. Retain its clearance
     // for recent nodes too, or the next centered step steers back into the leaf.
     for (int i = Math.max(0, nextIndex - 2); i <= nextIndex; i++) {
-      BlockPos pos = this.path.getNodePos(i);
-      BlockState state = this.level.getBlockState(pos);
-      boolean door = state.getBlock() instanceof DoorBlock && state.getValue(DoorBlock.OPEN);
-      boolean trapdoor = state.getBlock() instanceof TrapDoorBlock && state.getValue(TrapDoorBlock.OPEN);
-      if (!door && !trapdoor) continue;
-      if (door && state.getValue(DoorBlock.HALF) == DoubleBlockHalf.UPPER) pos = pos.below();
-      if (i != nextIndex && !this.mob.getBoundingBox().inflate(0.05D, 0.0D, 0.05D)
-          .intersects(new AABB(pos).expandTowards(0.0D, door ? 1.0D : 0.0D, 0.0D))) continue;
-      var shape = state.getCollisionShape(this.level, pos);
-      if (shape.isEmpty()) continue;
-      Vec3 offset = openPanelOffset(shape.bounds(), this.mob.getBbWidth());
-      if (offset.equals(Vec3.ZERO)) continue;
-      return offset.x != 0.0D ? new Vec3(pos.getX() + 0.5D + offset.x, target.y, target.z)
-          : new Vec3(target.x, target.y, pos.getZ() + 0.5D + offset.z);
+      BlockPos feet = this.path.getNodePos(i);
+      for (int bodyY = 0; bodyY < Mth.ceil(this.mob.getBbHeight()); bodyY++) {
+        BlockPos pos = feet.above(bodyY);
+        BlockState state = this.level.getBlockState(pos);
+        boolean door = state.getBlock() instanceof DoorBlock && state.getValue(DoorBlock.OPEN);
+        boolean trapdoor = state.getBlock() instanceof TrapDoorBlock && state.getValue(TrapDoorBlock.OPEN);
+        if (!door && !trapdoor) continue;
+        if (door && state.getValue(DoorBlock.HALF) == DoubleBlockHalf.UPPER) pos = pos.below();
+        if (i != nextIndex && !this.mob.getBoundingBox().inflate(0.05D, 0.0D, 0.05D)
+            .intersects(new AABB(pos).expandTowards(0.0D, door ? 1.0D : 0.0D, 0.0D))) continue;
+        var shape = state.getCollisionShape(this.level, pos);
+        if (shape.isEmpty()) continue;
+        Vec3 offset = openPanelOffset(shape.bounds(), this.mob.getBbWidth());
+        if (offset.equals(Vec3.ZERO)) continue;
+        return offset.x != 0.0D ? new Vec3(pos.getX() + 0.5D + offset.x, target.y, target.z)
+            : new Vec3(target.x, target.y, pos.getZ() + 0.5D + offset.z);
+      }
     }
     return target;
   }
@@ -568,10 +571,10 @@ public final class PersonPathNavigation extends GroundPathNavigation {
       // rung counts too: that is where a person stands for a tick between the
       // landing and the ladder.
       BlockPos feet = this.mob.blockPosition();
-      if (this.mob.onClimbable()) {
+      if (isLadder(this.currentContext.getBlockState(feet))) {
         return this.getStartNode(feet);
       }
-      if (isLadderTransition(feet)) {
+      if (isLadderTransition(this.currentContext, feet)) {
         return this.getStartNode(feet);
       }
       return super.getStart();
@@ -597,10 +600,10 @@ public final class PersonPathNavigation extends GroundPathNavigation {
       if (type == PathType.FENCE && state.getBlock() instanceof FenceGateBlock) {
         return PathType.DOOR_WOOD_CLOSED;
       }
-      if (type == PathType.OPEN && isClimbable(state)) {
+      if (type == PathType.OPEN && isLadder(state)) {
         return PathType.WALKABLE; // a rung is somewhere the feet can be
       }
-      if (type == PathType.OPEN && isLadderTransition(new BlockPos(x, y, z))) {
+      if (type == PathType.OPEN && isLadderTransition(context, new BlockPos(x, y, z))) {
         return PathType.WALKABLE;
       }
       return type;
@@ -656,7 +659,8 @@ public final class PersonPathNavigation extends GroundPathNavigation {
     /** A rung's floor is the rung, not whatever is under the ladder. */
     @Override
     protected double getFloorLevel(BlockPos pos) {
-      return isClimbable(this.currentContext.getBlockState(pos)) || isLadderTransition(pos)
+      return isLadder(this.currentContext.getBlockState(pos))
+          || isLadderTransition(this.currentContext, pos)
           ? pos.getY() : super.getFloorLevel(pos);
     }
 
@@ -671,12 +675,12 @@ public final class PersonPathNavigation extends GroundPathNavigation {
       }
       count = clearCount;
       BlockPos nodePos = new BlockPos(node.x, node.y, node.z);
-      if (isLadderTransition(nodePos)) {
+      if (isLadderTransition(this.currentContext, nodePos)) {
         Node rung = rung(node.x, node.y - 1, node.z);
         if (this.isNeighborValid(rung, node)) outputArray[count++] = rung;
         return count;
       }
-      if (isClimbable(this.currentContext.getBlockState(nodePos))) {
+      if (isLadder(this.currentContext.getBlockState(nodePos))) {
         // Vanilla may offer a fall to the ground beside a high rung. Taking that
         // edge leaves the ladder early and can strand the body on a nearby rail.
         // Descend the rungs first; ordinary same-height and one-step exits remain.
@@ -698,30 +702,40 @@ public final class PersonPathNavigation extends GroundPathNavigation {
     }
 
     /** The open cell immediately above a ladder's top rung, where a climber crosses onto its landing. */
-    private boolean isLadderTransition(BlockPos pos) {
-      return this.currentContext.getBlockState(pos).getCollisionShape(
-          this.currentContext.level(), pos).isEmpty()
-          && this.currentContext.getBlockState(pos.below()).getBlock() instanceof LadderBlock;
+    private boolean isLadderTransition(PathfindingContext context, BlockPos pos) {
+      return context.getBlockState(pos).getCollisionShape(context.level(), pos).isEmpty()
+          && context.getBlockState(pos.below()).getBlock() instanceof LadderBlock;
     }
 
     /** An open leaf is passable along its aperture, but still blocks transverse approaches. */
     private boolean crossesOpenPanel(Node from, Node to) {
       BlockPos start = from.asBlockPos();
       BlockPos end = to.asBlockPos();
-      BlockState startState = this.currentContext.getBlockState(start);
-      BlockState endState = this.currentContext.getBlockState(end);
-      if (!isOpenPanel(startState) && !isOpenPanel(endState)) return false;
-      Vec3 startCenter = panelNodeCenter(start, startState);
-      Vec3 endCenter = panelNodeCenter(end, endState);
-      return intersectsPanel(startCenter, endCenter, start, startState)
-          || intersectsPanel(startCenter, endCenter, end, endState);
+      Vec3 startCenter = panelNodeCenter(start);
+      Vec3 endCenter = panelNodeCenter(end);
+      return intersectsBodyPanel(startCenter, endCenter, start)
+          || intersectsBodyPanel(startCenter, endCenter, end);
     }
 
-    private Vec3 panelNodeCenter(BlockPos position, BlockState state) {
+    private Vec3 panelNodeCenter(BlockPos position) {
       Vec3 center = new Vec3(position.getX() + 0.5D, getFloorLevel(position), position.getZ() + 0.5D);
-      if (!isOpenPanel(state)) return center;
-      var shape = state.getCollisionShape(this.currentContext.level(), position);
-      return shape.isEmpty() ? center : center.add(openPanelOffset(shape.bounds(), this.mob.getBbWidth()));
+      for (int bodyY = 0; bodyY < this.entityHeight; bodyY++) {
+        BlockPos body = position.above(bodyY);
+        BlockState state = this.currentContext.getBlockState(body);
+        if (!isOpenPanel(state)) continue;
+        var shape = state.getCollisionShape(this.currentContext.level(), body);
+        if (!shape.isEmpty()) return center.add(openPanelOffset(shape.bounds(), this.mob.getBbWidth()));
+      }
+      return center;
+    }
+
+    private boolean intersectsBodyPanel(Vec3 start, Vec3 end, BlockPos feet) {
+      for (int bodyY = 0; bodyY < this.entityHeight; bodyY++) {
+        BlockPos body = feet.above(bodyY);
+        BlockState state = this.currentContext.getBlockState(body);
+        if (intersectsPanel(start, end, body, state)) return true;
+      }
+      return false;
     }
 
     private boolean intersectsPanel(Vec3 start, Vec3 end, BlockPos position, BlockState state) {
@@ -745,7 +759,7 @@ public final class PersonPathNavigation extends GroundPathNavigation {
     @Nullable
     private Node rung(int x, int y, int z) {
       BlockPos pos = new BlockPos(x, y, z);
-      if (!isClimbable(this.currentContext.getBlockState(pos))) {
+      if (!isLadder(this.currentContext.getBlockState(pos))) {
         return null;
       }
       // A closed trapdoor over the top rung is a lid, not a hatch; the mob

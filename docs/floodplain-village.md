@@ -22,13 +22,13 @@ definitions, all new ids, so the pack needs no filter:
 | `village_center_floodplain_1` | Nilotic cartographer house with four white banners and the green carpet cross | 0 | quartermaster, builder, guard captain |
 | `mine_floodplain_1` | Nilotic armorer house with the authored pit floor, four columns long with an open doorway | 0 | miner at the pit's west column; the ramp mouth is one column in, so three columns of descent stay inside the pit before it leaves east under the wall |
 | `storehouse_floodplain_1` | small house draft with barrels, a note block, an open doorway and two authored allays | 0 | none; the quartermaster keeps the centre post |
-| `church_floodplain_1` | Nilotic temple | 0 | cleric |
+| `church_floodplain_1` | Nilotic temple with a shared barrel | 0 | cleric |
 | `lumberjack_floodplain_1` | Nilotic farmer house | 1 | lumberjack on the jungle sapling |
 | `hunting_lodge_floodplain_1` | Nilotic fletcher house | 1 | hunter |
 | `butchery_floodplain_1` | Nilotic leatherworker house with three cows and three pigs in the pen | 1 | butcher |
 | `stoneworks_floodplain_1` | Nilotic mason house | 1 | mason |
 | `blacksmith_floodplain_1` | Nilotic toolsmith | 0 | blacksmith |
-| `fishery_floodplain_1` | desert oasis pool draft with a barrel and a lantern | 0 | fisher on the pool rim |
+| `fishery_floodplain_1` | desert oasis pool draft with a barrel and a lantern, sunk one block | 0 | fisher on the pool rim |
 | `well_floodplain_1` | mangrove tavern well draft, sunk one block so its rim sits flush with the ground | 0 | none |
 | `watchtower_floodplain_1` | firewatch tower draft with four white banners | 1 | crossbow post |
 | `house_floodplain_1` | Nilotic small house 2 | 1 | none |

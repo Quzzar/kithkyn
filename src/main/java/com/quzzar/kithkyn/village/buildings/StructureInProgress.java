@@ -398,6 +398,11 @@ public class StructureInProgress {
         return prepBreak.size() + prepFill.size();
     }
 
+    /** Ground columns an outside construction approach must not stand on. */
+    List<Long> prepWorkPositions() {
+        return java.util.stream.Stream.concat(prepBreak.stream(), prepFill.stream()).toList();
+    }
+
     /**
      * One swing of ground work: take away a block that is in the way, or raise
      * a column that sits below the build plane. Cleared blocks go into village
@@ -445,6 +450,11 @@ public class StructureInProgress {
 
     public BuildProgress getProgress(){
         return this.progress;
+    }
+
+    /** Persisted structure-cell cursor, exposed for development progress audits. */
+    public int getBuildCursor() {
+        return this.index;
     }
 
     public Rotation getRotation(){

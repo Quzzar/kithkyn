@@ -1,6 +1,5 @@
 package com.quzzar.kithkyn.village.buildings;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import com.google.gson.Gson;
@@ -35,59 +34,56 @@ public class BuildingDefinitionLoader extends SimpleJsonResourceReloadListener {
 
     @Override
     protected void apply(Map<ResourceLocation, JsonElement> jsons, ResourceManager resourceManager, ProfilerFiller profiler) {
-        Map<ResourceLocation, JsonElement> recipes = new HashMap<>();
-        scanDirectory(resourceManager, BuildingRecipe.DIRECTORY, new Gson(), recipes);
-        Map<String, BuildingInfo> loaded = resolve(jsons, recipes);
+        Map<String, BuildingInfo> loaded = resolve(jsons, name -> resourceManager.getResource(
+            ResourceLocation.fromNamespaceAndPath(Kithkyn.MODID, "structure/" + name + ".nbt")).isPresent());
         Buildings.reload(loaded);
         Kithkyn.LOGGER.info("Loaded {} village building definitions", loaded.size());
     }
 
-    /** Resolve both collections before publishing, independent of other resource reload listeners. */
+    /** Resolves complete, independently priced definitions before publishing a reload. */
+    static Map<String, BuildingInfo> resolve(Map<ResourceLocation, JsonElement> jsons) {
+        return resolve(jsons, ignored -> true);
+    }
+
+    /** Testable seam for the matching structure resource required by every definition. */
     static Map<String, BuildingInfo> resolve(Map<ResourceLocation, JsonElement> jsons,
-            Map<ResourceLocation, JsonElement> recipeJsons) {
-        Map<ResourceLocation, BuildingRecipe> recipes = new HashMap<>();
-        recipeJsons.forEach((id, json) -> BuildingRecipe.CODEC.parse(JsonOps.INSTANCE, json)
-                .ifError(error -> Kithkyn.LOGGER.error("Invalid construction recipe {}: {}", id, error.message()))
-                .result()
-                .ifPresent(recipe -> recipes.put(id, recipe)));
-        Map<String, BuildingInfo> loaded = new HashMap<>();
+            java.util.function.Predicate<String> structureExists) {
+        Map<String, BuildingInfo> loaded = new java.util.HashMap<>();
         jsons.forEach((id, json) -> {
             BuildingInfo.CODEC.parse(JsonOps.INSTANCE, json)
                 .resultOrPartial(error -> Kithkyn.LOGGER.error("Invalid building definition {}: {}", id, error))
                 .ifPresent(info -> {
-                    String problem = info.validate();
+                    BuildingRecipe recipe = BuildingRecipe.CODEC.parse(JsonOps.INSTANCE, json)
+                        .ifError(error -> Kithkyn.LOGGER.error(
+                            "Rejected building definition {}: missing or invalid authored cost: {}", id, error.message()))
+                        .result()
+                        .orElse(null);
+                    if (recipe == null) return;
+                    info.setMaterialCost(recipe.materials());
+                    String problem = info.validateAuthoredContract();
                     if (problem != null) {
                         Kithkyn.LOGGER.error("Rejected building definition {} ({})", id, problem);
                         return;
                     }
-                    // A warning, not a rejection: the building still stands and
-                    // staffs its post, but the planner cannot see what the post
-                    // gives, so the author is told (StationGrants).
-                    for (String missing : StationGrants.missing(info)) {
-                        Kithkyn.LOGGER.warn("Building definition {}: {}", id, missing);
+                    if (!structureExists.test(info.getName())) {
+                        Kithkyn.LOGGER.error("Rejected building definition {} (missing structure template {})",
+                            id, info.getName());
+                        return;
                     }
-                    ResourceLocation recipeId = BuildingRecipe.idFor(info);
-                    BuildingRecipe recipe;
-                    if (json.getAsJsonObject().has("cost")) {
-                        recipe = BuildingRecipe.CODEC.parse(JsonOps.INSTANCE, json)
-                            .ifError(error -> Kithkyn.LOGGER.error("Rejected building definition {}: invalid cost override: {}", id, error.message()))
-                            .result()
-                            .orElse(null);
-                        if (recipe == null) return;
-                    } else {
-                        recipe = recipes.get(recipeId);
-                        if (recipe == null) {
-                            Kithkyn.LOGGER.error("Rejected building definition {}: missing valid construction recipe {}", id, recipeId);
-                            return;
-                        }
-                    }
-                    info.setMaterialCost(recipe.materials());
                     BuildingInfo previous = loaded.put(info.getName(), info);
                     if (previous != null) {
                         Kithkyn.LOGGER.warn("Duplicate building definition for '{}' (from {})", info.getName(), id);
                     }
                 });
         });
+        Map<String, java.util.List<String>> catalogProblems;
+        do {
+            catalogProblems = BuildingCatalogContract.problems(loaded);
+            catalogProblems.forEach((name, problems) -> {
+                Kithkyn.LOGGER.error("Rejected building definition {} ({})", name, String.join("; ", problems));
+                loaded.remove(name);
+            });
+        } while (!catalogProblems.isEmpty());
         return Map.copyOf(loaded);
     }
 

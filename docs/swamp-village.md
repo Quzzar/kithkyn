@@ -21,20 +21,20 @@ The private datapack contains 27 definitions:
 | `house_swamp_1__two_bed` | NE03.8 two-bed home |
 | `couple_cottage_swamp_1` | NE03.6 couple home; both bed slots share one village color |
 | `church_swamp_1` | NF04.1 station-only cleric circle |
-| `church_swamp_1__cleric_home` | NF04.4 one-bed cleric home |
+| `church_swamp_1__cleric_home` | NF04.4 one-bed cleric home with separate personal and shared cleric chests |
 | `church_swamp_1__cleric_couple_home` | NF04.3 cleric home with a couple room |
 | `church_swamp_1__cleric_mixed_home` | NF04.2 two-room cleric home with one staff bed and one general bed |
 | `blacksmith_swamp_1` | NE04.4 smithing yard |
 | `well_swamp_1` | NE06.9 wetland well |
 | `lumberjack_swamp_1` | NE01.5 timber yard; its marker becomes an oak sapling; the buried decorative barrel is not village storage |
-| `bakery_swamp_1` | NE04.5 bakery |
-| `butchery_swamp_1` | NE04.3 butcher home and pen with three black sheep and three pigs |
+| `bakery_swamp_1` | NE04.5 bakery with two added standing lanterns |
+| `butchery_swamp_1` | NE04.3 raised butcher home and pen with closed doors, three black sheep and three pigs |
 | `tavern_swamp_1` | NE06.10 five-bed tavern; the cartography-room bed belongs to the innkeeper; one obstructing upstairs trapdoor is omitted from the walking lane |
 | `watchtower_swamp_1`, `_2` | NE01.8 and NE05.1 guard tower tiers |
 | `stoneworks_swamp_1` | NF02.5 mason yard |
 | `farm_swamp_1`, `_2` | NF02.7 and NF01.8 farm progression |
 | `hunting_lodge_swamp_1` | NF01.7 hunter station |
-| `fishery_swamp_1` | NE02.9 bank-seated fishery |
+| `fishery_swamp_1` | NE02.9 bank-seated fishery with its ground-reaching side vines trimmed |
 | `market_swamp_1`, `_2`, `_3` | Repaired shared market geometry in oak and spruce, retaining the established multicolor fabrics |
 | `castle_swamp_1` | SC01.2 ruler, jail, baker, merchant, blacksmith, housing, and seven guard posts |
 

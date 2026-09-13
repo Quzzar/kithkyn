@@ -27,6 +27,8 @@ class PlannerFactsTest {
     assertEquals("Already standing: farm x1, fishery x2. ",
         PlannerFacts.existingBuildings(buildings));
     assertEquals("Open work: farmer x1, fisher x2. ", PlannerFacts.openPosts(posts));
+    assertEquals("Open wall guard posts: gate crossbow x2. ",
+        PlannerFacts.openWallPosts(Map.of("gate crossbow", 2)));
   }
 
   @Test
@@ -53,7 +55,7 @@ class PlannerFactsTest {
         Set.of(Occupation.LUMBERJACK), List.of("LOGS", "PLANKS"), open,
         capability -> Set.of("LOGS", "PLANKS").contains(capability)));
     assertFalse(WorkplaceDemand.duplicatesVacantProduction(
-        Set.of(Occupation.FARMER), List.of("GRAIN"), open,
+        Set.of(Occupation.FARMER), List.of("FOOD", "CROPS"), open,
         capability -> Set.of("LOGS", "PLANKS").contains(capability)));
     assertFalse(WorkplaceDemand.duplicatesVacantProduction(
         Set.of(Occupation.LUMBERJACK), List.of("LOGS", "CHARCOAL"), open,
@@ -63,5 +65,15 @@ class PlannerFactsTest {
     assertFalse(WorkplaceDemand.duplicatesVacantProduction(
         Set.of(Occupation.QUARTERMASTER), List.of("STORAGE"),
         Set.of(Occupation.QUARTERMASTER), capability -> true));
+  }
+
+  @Test
+  void storedWheatExplainsTheMissingBakeryLinkInsteadOfCallingForAnotherField() {
+    String fact = UrbanPlanner.wheatFoodFact(192, false, false);
+
+    assertTrue(fact.contains("192 wheat"));
+    assertTrue(fact.contains("not edible food"));
+    assertTrue(fact.contains("bakery"));
+    assertTrue(fact.contains("another wheat field will not solve hunger"));
   }
 }

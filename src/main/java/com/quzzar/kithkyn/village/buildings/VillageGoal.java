@@ -123,6 +123,23 @@ public final class VillageGoal {
     village.getBrain().getStrategy().putString(KEY_MODE, mode.name());
   }
 
+  /**
+   * Gives a productive goal another lifetime from its latest material
+   * checkpoint. Reconsidering a goal that nobody can advance is useful;
+   * reconsidering one the village is actively funding makes it discard real
+   * progress and lets a new decision replace a nearly affordable project.
+   */
+  public static void renewAfterProgress(Village village, String shortfall, int villageTime) {
+    CompoundTag strategy = village.getBrain().getStrategy();
+    if (strategy.getString(KEY_BUILDING).isEmpty()) {
+      return;
+    }
+    strategy.putString(KEY_SHORT_AT_SET, shortfall == null ? "" : shortfall);
+    strategy.putInt(KEY_SET_AT, villageTime);
+    Kithkyn.LOGGER.info("Village '{}' keeps saving for {} after making material progress: {}",
+        village.getName(), strategy.getString(KEY_BUILDING), shortfall);
+  }
+
   public static void clear(Village village, String why) {
     CompoundTag strategy = village.getBrain().getStrategy();
     if (!strategy.getString(KEY_BUILDING).isEmpty()) {

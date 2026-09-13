@@ -1,0 +1,44 @@
+[
+  {
+    "path": "run/mediterranean-integration/datapack/data/kithkyn/structure/farm_mediterranean_1.nbt",
+    "replace": [
+      {"pos": [1, 1, 1], "name": "minecraft:carrots", "properties": {"age": "7"}},
+      {"pos": [2, 1, 1], "name": "minecraft:carrots", "properties": {"age": "7"}},
+      {"pos": [3, 1, 1], "name": "minecraft:carrots", "properties": {"age": "7"}},
+      {"pos": [1, 1, 2], "name": "minecraft:carrots", "properties": {"age": "7"}},
+      {"pos": [2, 1, 2], "name": "minecraft:carrots", "properties": {"age": "7"}},
+      {"pos": [3, 1, 2], "name": "minecraft:carrots", "properties": {"age": "7"}},
+      {"pos": [5, 1, 1], "name": "minecraft:potatoes", "properties": {"age": "7"}},
+      {"pos": [6, 1, 1], "name": "minecraft:potatoes", "properties": {"age": "7"}},
+      {"pos": [7, 1, 1], "name": "minecraft:potatoes", "properties": {"age": "7"}}
+    ]
+  },
+  {
+    "path": "run/trio-20260912/datapacks/kithkyn-mediterranean/data/kithkyn/structure/farm_mediterranean_1.nbt",
+    "replace": [
+      {"pos": [1, 1, 1], "name": "minecraft:carrots", "properties": {"age": "7"}},
+      {"pos": [2, 1, 1], "name": "minecraft:carrots", "properties": {"age": "7"}},
+      {"pos": [3, 1, 1], "name": "minecraft:carrots", "properties": {"age": "7"}},
+      {"pos": [1, 1, 2], "name": "minecraft:carrots", "properties": {"age": "7"}},
+      {"pos": [2, 1, 2], "name": "minecraft:carrots", "properties": {"age": "7"}},
+      {"pos": [3, 1, 2], "name": "minecraft:carrots", "properties": {"age": "7"}},
+      {"pos": [5, 1, 1], "name": "minecraft:potatoes", "properties": {"age": "7"}},
+      {"pos": [6, 1, 1], "name": "minecraft:potatoes", "properties": {"age": "7"}},
+      {"pos": [7, 1, 1], "name": "minecraft:potatoes", "properties": {"age": "7"}}
+    ]
+  },
+  {
+    "path": "run/world/datapacks/kithkyn-mediterranean/data/kithkyn/structure/farm_mediterranean_1.nbt",
+    "replace": [
+      {"pos": [1, 1, 1], "name": "minecraft:carrots", "properties": {"age": "7"}},
+      {"pos": [2, 1, 1], "name": "minecraft:carrots", "properties": {"age": "7"}},
+      {"pos": [3, 1, 1], "name": "minecraft:carrots", "properties": {"age": "7"}},
+      {"pos": [1, 1, 2], "name": "minecraft:carrots", "properties": {"age": "7"}},
+      {"pos": [2, 1, 2], "name": "minecraft:carrots", "properties": {"age": "7"}},
+      {"pos": [3, 1, 2], "name": "minecraft:carrots", "properties": {"age": "7"}},
+      {"pos": [5, 1, 1], "name": "minecraft:potatoes", "properties": {"age": "7"}},
+      {"pos": [6, 1, 1], "name": "minecraft:potatoes", "properties": {"age": "7"}},
+      {"pos": [7, 1, 1], "name": "minecraft:potatoes", "properties": {"age": "7"}}
+    ]
+  }
+]

@@ -657,13 +657,18 @@ than a workplace. An idle person who finds raw food in the village stores cooks 
 nearest reachable lit campfire with a free slot and returns it (`CookStep`, a `BlockWorkStep`): the raw item really
 roasts on the fire via `CampfireBlockEntity.placeFood`, and the step owns the timing so the
 cooked food is lifted straight into storage rather than dropped on the ground when the block's
-own cook tick would finish it. What counts as cookable is read from the vanilla
-`CampfireCookingRecipe` set, so it is broader than the butcher's six hand-listed meats and
-modded food comes along for free. The roasting itself is one helper, `CampfireRoast`
+own cook tick would finish it. What counts as cookable is read from the live
+`CampfireCookingRecipe` set and requires a food result. It includes potatoes into baked
+potatoes, all vanilla meats and fish, kelp, and modded food recipes without another
+hand-maintained list. The roasting itself is one helper, `CampfireRoast`
 (2026-09-02), shared with the roaming wanderer's camp on the road (`CampStep`,
 [population-and-labor.md](population-and-labor.md)) and the fisher cooking their own catch
 (`FishCookStep`): where the raw food comes from before the pack and where the cooked food goes
 after it is each step's business; how a campfire roasts it is written once.
+
+`./gradlew runCampfireVerification` runs the native fixture in its own disposable world. It
+checks every vanilla campfire-food input and walks an idle resident through a real pantry fetch,
+potato roast, baked-potato deposit, and interruption without changing the monitored village world.
 
 The civic meeting point and usable fire blocks are separate authored amenities. `CampfireAccess`
 provides the same reachable-fire and free-slot selection for the camper and fisher, and reachable
@@ -753,9 +758,11 @@ ends a ramp for good.
 Mine supports are a family, not exact cobblestone. Any placeable dirt-family block, natural stone,
 cobbled stone, or sandstone can pay for a floor, wall, ceiling, or vein plug, and the actual block
 consumed is the one placed. When the shaft opens into a cave the miner does not stand down at the
-mouth: it completes the shaft's missing floor under each ramp cell that opens into air or liquid,
-laid standing on the floor already there, edge by edge, and drives the shaft on into the stone
-beyond. The pack is the budget, and the bedtime restock refills it: the miner carries up to
+mouth: it completes the shaft's missing floor under each ramp cell without a sturdy top, including
+air, liquid, and narrow cave features such as pointed dripstone. The support is laid from the floor
+already there, including the adjacent lane of the preceding stair when the same lane has no safe
+footing, edge by edge, and the shaft drives on into the stone beyond. The pack is the budget, and
+the bedtime restock refills it: the miner carries up to
 thirty-two mixed support blocks from bed alongside the torches and bucket (`RealPerson.goToBed`),
 rather than a fetch trip mid-shaft. Ember Hill showed why it must be bedtime, not a trip: the founding
 storehouse there was a barrel the mine shaft could not walk to at all, so a physical fetch stranded
@@ -800,7 +807,9 @@ personal blocker for inaccessible excavation, missing supports, an obstruction w
 side work, exhausted shafts, or a survey with no usable work. It reports the final outcome after
 trying the existing frontier and side-shaft recovery. These reports survive saving and clear
 after physical digging, support placement or draining succeeds, not merely when a destination
-is selected. They carry through the shared village snapshot to planning and conversation.
+is selected. A failed daytime support-fetch route clears by the same rule after excavation resumes,
+including when bedtime restocked the pack without using that route. They carry through the shared
+village snapshot to planning and conversation.
 
 A fresh mine remains an ordinary construction option even when another staffed mine stands.
 Its description explicitly says it opens a separate shaft. A miner's current report prompts
@@ -953,7 +962,7 @@ lying down through an exterior wall. Distant travel retains the existing mine wa
 **Built, 2026-09-02: villagers climb ladders.** Vanilla mobs can climb, a zombie pressed against
 a ladder goes up, but they never plan to: the path search looks sideways, one step up and down a
 drop, so a ladder shaft is invisible to it and the watchtower's bed at the top of one was a bed
-nobody could reach. In the same evaluator a rung (anything in the climbable tag) is now a node
+nobody could reach. In the same evaluator an actual ladder rung is now a node
 the feet can stand in, its floor is its own height rather than the ground under the ladder, and
 it is joined to the rungs above and below it; a closed trapdoor over the top rung is a lid and
 ends the ladder. Reaching a landing is vanilla's step up, and leaving from one is vanilla's
@@ -962,6 +971,15 @@ body pressing into the wall, so while the next node is straight up the navigatio
 still and supplies vanilla's climbing speed; on the way down it holds still and lets the ladder's
 own slide do it. Where the person re-plans mid-climb the route starts from the rung they are on,
 not from the floor beneath, which is where vanilla would have started them.
+
+**Corrected, 2026-09-12: a rung is an actual ladder, not every climbable block.** Minecraft's
+climbable tag also contains ordinary vines, cave vines, twisting and weeping vines, and
+scaffolding. Giving all of them the ladder's vertical edges made a patrol plan a reachable route
+up decorative vines and then become stranded in them. Those blocks retain vanilla's ordinary
+walking behavior, including a villager being able to cross a vine at ground level; only a ladder
+gets the authored ascent and descent behavior above. Local footing checks from the move control
+also use the pathfinding context supplied by vanilla rather than the temporary context of a
+finished path search, so strafing after a search cannot crash the server.
 
 **Built, 2026-08-31: lumberjacks and guards clear nearby woodland; whole trees, and never the
 village's own.** The lumberjack's planted stand remains its reliable, renewable source of work,
@@ -1311,9 +1329,11 @@ the rewrite, because the ranking it encodes is the same ranking `SELECT` will wa
 
 ## Reviewing what gets built
 
-`/kkdev village gallery [pos]` places every loaded building definition on labelled plinths, grouped
-by category and level, so a whole catalog can be walked end to end. Built for reviewing candidate
-structures ([structure-sourcing.md](structure-sourcing.md)) and checking content passes.
+`/kkdev village gallery [pos]` places every loaded building definition on a continuous grass
+surface, grouped by category and level, so a whole catalog can be walked end to end. Each template
+uses the same ground plane and authored sink as production placement, and its sign states that sink.
+Built for reviewing candidate structures ([structure-sourcing.md](structure-sourcing.md)), seating
+height, and content passes.
 
 Builders delivering a complete recipe count as on site at the same distance used by
 construction. They can hand over materials from the surface before grading lowers the

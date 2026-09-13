@@ -328,7 +328,7 @@
       "asset": "run/mediterranean-integration/datapack/data/kithkyn/structure/mine_mediterranean_1.nbt",
       "asset_sha256": "20c081fe702024b764e3b6e956f74befedb5ea437b44fac141ca671ccb096548",
       "definition": "run/mediterranean-integration/datapack/data/kithkyn/kithkyn/buildings/mine_mediterranean_1.json",
-      "definition_sha256": "9e741110fcdbceca3afaca446ed3a77f11dd1a5e69a4b001a693b9d4aa6f7646"
+      "definition_sha256": "505819d2f002cc2a735ad1f00d349ef79730730b2e7733d6a8992f258adb8132"
     },
     {
       "exhibit": "M08.1",
@@ -366,7 +366,7 @@
       "entities": 0,
       "carpets_cleared_under_stations": [],
       "asset": "run/mediterranean-integration/datapack/data/kithkyn/structure/farm_mediterranean_1.nbt",
-      "asset_sha256": "c001a7f42a57bbc460fe708ccda8f2ddb20e69280784dd3fc2f810e5c929b1fa",
+      "asset_sha256": "77871f691f14a0fb274feefe4be435706e945639d28f1d2e2330b111bbfa3e52",
       "definition": "run/mediterranean-integration/datapack/data/kithkyn/kithkyn/buildings/farm_mediterranean_1.json",
       "definition_sha256": "067c5d47c08fd780f98696fedc80c66116804a50a0ac69a9709d0db38cb64640"
     },
@@ -528,6 +528,19 @@
       "building": "castle_mediterranean_1",
       "exhibit": "M08.1",
       "change": "BREAD and REPAIR grants for the castle's baker and blacksmith stations, added to the installed pack at 12:04 outside this export; carried into the export so a reinstall keeps them"
+    },
+    {
+      "date": "2026-09-13",
+      "building": "mine_mediterranean_1",
+      "exhibit": "M07.8",
+      "change": "Avenzola review widened the authored shaft from three columns to the full four-column opening available in the sunken room"
+    },
+    {
+      "date": "2026-09-13",
+      "building": "farm_mediterranean_1",
+      "exhibit": "M05.3",
+      "change": "Avenzola review changed nine of 47 mature wheat plants to six carrots and three potatoes, giving a founding village directly edible crops before it has a bakery",
+      "plan": "tools/structure/mediterranean-avenzola-crops-20260913.json"
     }
   ],
   "verification": {

@@ -13,6 +13,24 @@ import org.junit.jupiter.api.Test;
 
 class WallPaletteTest {
   @Test
+  void functionalAttachmentsRequireTheirAuthoredState() {
+    assertTrue(new WallBlockPlan(BlockPos.ZERO.asLong(),
+        WallBlockPlan.Piece.LADDER_NORTH, WallCellRole.FOUNDATION).requiresExactState());
+    assertTrue(new WallBlockPlan(BlockPos.ZERO.asLong(),
+        WallBlockPlan.Piece.TRAPDOOR_NORTH, WallCellRole.FOUNDATION).requiresExactState());
+    assertFalse(new WallBlockPlan(BlockPos.ZERO.asLong(),
+        WallBlockPlan.Piece.BODY, WallCellRole.EXACT).requiresExactState());
+  }
+
+  @Test
+  void maintenanceRepairsOnlyCellsTheVillageStillOwns() {
+    assertTrue(WallRaiser.shouldRepairOwnedCell(false, true, false));
+    assertFalse(WallRaiser.shouldRepairOwnedCell(true, true, false));
+    assertFalse(WallRaiser.shouldRepairOwnedCell(false, false, false));
+    assertFalse(WallRaiser.shouldRepairOwnedCell(false, true, true));
+  }
+
+  @Test
   void aridWallsUseRegionalMasonryAndKeepOakLadderAccess() {
     var ring = WallRoute.aroundBox(0, 48, 0, 48);
     var gates = Set.of(BlockPos.asLong(24, 0, 0), BlockPos.asLong(48, 0, 24),

@@ -328,12 +328,11 @@ public class Village {
   private transient List<WallPost> cachedWallPosts = List.of();
 
   /**
-   * Set when the quartermaster cannot fit a haul into the storehouse, read by
-   * the planner as a reason to want more storage. Transient on purpose: it is a
-   * live symptom, not saved state, and the quartermaster re-raises it on the
-   * next overflow, so it need not survive a reload.
+   * Holders currently carrying goods the storehouse rejected. Each holder owns
+   * its report so an idle keeper cannot clear another's. Transient on purpose:
+   * holders re-report their live packs after a reload.
    */
-  private transient boolean storageStrained;
+  private transient Set<UUID> storageStrainReporters = new HashSet<>();
 
   /** Consecutive project checks the current build has spent gathering; abandons past the cap. */
   private transient int gatheringChecks;
@@ -1093,7 +1092,6 @@ public class Village {
     List<ItemStack> combined = new ArrayList<>(pendingVillageItems());
     combined.addAll(items);
     savePendingVillageItems(combined);
-    storageStrained = true;
   }
 
   public List<ItemStack> pendingVillageItems() {
@@ -1842,6 +1840,18 @@ public class Village {
     tickLoading(level);
     VillageProfile.end("loading", tl);
 
+    // A completed wall still owns its functional cells. Repair them independently
+    // of builder priorities, because an active building project can otherwise keep
+    // WallStep dormant while a guard waits below a popped tower ladder.
+    if (wallProject != null && wallProject.isComplete()
+        && (time + Math.floorMod(id.hashCode(), 60)) % 60 == 0) {
+      int repaired = WallRaiser.repairOwnedCells(level, wallProject);
+      if (repaired > 0) {
+        WallRaiser.settleConnections(level, wallProject);
+        Kithkyn.LOGGER.info("Village '{}' restored {} owned wall cell(s)", name, repaired);
+      }
+    }
+
     // Old in-progress walls and newly loaded routes receive the same preparation before workers resume.
     if (wallProject != null && !wallProject.isComplete() && !wallProject.isSiteCleared()) {
       WallRaiser.prepareWall(level, wallProject);
@@ -1882,12 +1892,18 @@ public class Village {
    * (docs/village-loading.md).
    */
   public Set<Long> desiredLoadedChunks(ServerLevel level) {
-    com.quzzar.kithkyn.configuration.VillageLoadingMode mode =
-        com.quzzar.kithkyn.configuration.KithkynConfig.VillageLoading;
-    if (mode == com.quzzar.kithkyn.configuration.VillageLoadingMode.OFF || getTownCenter() == null) {
+    var villages = VillageManager.get(level);
+    boolean auditIsolation = villages.isAuditIsolationActive();
+    if (auditIsolation && !villages.isVillageAudited(id)) {
       return Set.of();
     }
-    if (mode == com.quzzar.kithkyn.configuration.VillageLoadingMode.HYBRID
+    com.quzzar.kithkyn.configuration.VillageLoadingMode mode =
+        com.quzzar.kithkyn.configuration.KithkynConfig.VillageLoading;
+    if ((!auditIsolation && mode == com.quzzar.kithkyn.configuration.VillageLoadingMode.OFF)
+        || getTownCenter() == null) {
+      return Set.of();
+    }
+    if (!auditIsolation && mode == com.quzzar.kithkyn.configuration.VillageLoadingMode.HYBRID
         && level.getGameTime() - lastVisitedTick > VillageChunkLoader.HYBRID_GRACE_TICKS) {
       return Set.of();
     }
@@ -3296,18 +3312,23 @@ public class Village {
     return sleepsInReservedBedAt(personId, buildingUUID) && !isReservedCoupleBed(bedAssignments.get(personId));
   }
 
-  /** The quartermaster raises this when the storehouse overflows; the planner reads it. */
-  public void setStorageStrained(boolean strained) {
-    this.storageStrained = strained;
+  /** Record or clear one holder's rejected pack without overwriting anyone else's report. */
+  public void reportStorageStrain(UUID sourceId, boolean strained) {
+    if (strained) {
+      this.storageStrainReporters.add(sourceId);
+    } else {
+      this.storageStrainReporters.remove(sourceId);
+    }
   }
 
   public boolean isStorageStrained() {
-    return this.storageStrained;
+    return !this.storageStrainReporters.isEmpty();
   }
 
   /** One canonical signal for storage that is rejecting or still holding displaced goods. */
   public boolean isStorageBackedUp() {
-    return storageStrained || hasPendingStorageOverflow();
+    return isStorageStrained() || hasPendingStorageOverflow()
+        || level != null && brain.allStorehouseSlotsOccupied(level, getBuildings());
   }
 
   public String getID() {
@@ -3430,6 +3451,7 @@ public class Village {
   }
 
   public void removePerson(UUID personUUID) {
+    reportStorageStrain(personUUID, false);
     this.brain.removePerson(personUUID, people, bedAssignments, jobAssignments, unassignedBeds, unassignedJobs);
   }
 
@@ -3546,6 +3568,11 @@ public class Village {
     java.util.Set<BlockPos> positions = this.brain.containerPositions();
     positions.addAll(PersonalChest.allChests(this));
     return positions;
+  }
+
+  /** Shared village stores only, excluding the personal chests that workers must not draw from. */
+  public java.util.Set<BlockPos> getSharedContainerPositions() {
+    return this.brain.containerPositions();
   }
 
   public ItemStack gatherItemStackFromVillage(ItemStack itemStack) {
@@ -3673,6 +3700,11 @@ public class Village {
     return attractiveness;
   }
 
+  /** Records a village-wide shortage no more often than the configured cooldown. */
+  public void logShortage(ItemStack missing) {
+    maybeLogShortage(missing);
+  }
+
   /** Logs a resource-shortage event, rate-limited so a poor village complains steadily, not constantly. */
   private void maybeLogShortage(ItemStack missing) {
     if (missing == null || level == null) {
@@ -3680,12 +3712,16 @@ public class Village {
     }
     long now = level.getGameTime();
     long cooldownTicks = com.quzzar.kithkyn.configuration.KithkynConfig.ShortageEventCooldownSeconds * 20L;
-    if (now - lastShortageLogTime < cooldownTicks) {
+    if (!shortageCooldownElapsed(now, lastShortageLogTime, cooldownTicks)) {
       return;
     }
     lastShortageLogTime = now;
     logEvent(new com.quzzar.kithkyn.village.bookkeeping.NoResourceBookkeepingEvent(missing.getItem(), missing.getCount()));
     Kithkyn.LOGGER.debug("Village '{}' is short on {} x{}", name, missing.getItem(), missing.getCount());
+  }
+
+  static boolean shortageCooldownElapsed(long now, long last, long cooldownTicks) {
+    return now - last >= cooldownTicks;
   }
 
   /**

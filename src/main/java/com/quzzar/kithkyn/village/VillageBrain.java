@@ -1,6 +1,7 @@
 package com.quzzar.kithkyn.village;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.List;
@@ -17,6 +18,7 @@ import com.quzzar.kithkyn.village.bookkeeping.BookkeepingEvent;
 import com.quzzar.kithkyn.village.bookkeeping.InternalBookkeeper;
 import com.quzzar.kithkyn.village.buildings.Building;
 import com.quzzar.kithkyn.village.buildings.BuildingInfo;
+import com.quzzar.kithkyn.village.buildings.Buildings;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -366,6 +368,50 @@ public class VillageBrain {
    */
   public boolean hasReadStores() {
     return containerLocs.isEmpty() || !foodLedger.isEmpty();
+  }
+
+  /**
+   * Whether the settlement's standing storehouses have no empty shelf slots.
+   * Workplace chests are intentionally excluded: spare room at a farm or
+   * lumberjack does not replace central storage or make a visibly packed
+   * storehouse healthy. An unseen storehouse makes the answer unknown rather
+   * than full, so this never pages an unwatched village in from disk.
+   */
+  public boolean allStorehouseSlotsOccupied(ServerLevelAccessor levelAccess, Collection<Building> buildings) {
+    List<Container> observed = new ArrayList<>();
+    for (Building building : buildings) {
+      BuildingInfo info = building.getInfo();
+      if (info == null || !Buildings.FOUNDING_STOREHOUSE_CATEGORY.equals(info.getCategory())) {
+        continue;
+      }
+      BlockPos origin = BlockPos.of(building.getOriginLocation());
+      for (Long offset : info.getContainerLocations()) {
+        BlockPos pos = origin.offset(BlockPos.of(offset).rotate(building.getRotation()));
+        if (!levelAccess.getLevel().hasChunkAt(pos)) {
+          return false;
+        }
+        Container container = containerAt(levelAccess, pos.asLong());
+        if (container != null) {
+          observed.add(container);
+        }
+      }
+    }
+    return allObservedStorageSlotsOccupied(observed);
+  }
+
+  /** Pure slot check shared with the focused storage regression. */
+  static boolean allObservedStorageSlotsOccupied(List<? extends Container> containers) {
+    if (containers.isEmpty()) {
+      return false;
+    }
+    for (Container container : containers) {
+      for (int slot = 0; slot < container.getContainerSize(); slot++) {
+        if (container.getItem(slot).isEmpty()) {
+          return false;
+        }
+      }
+    }
+    return true;
   }
 
   public float totalImpact(Class<? extends BookkeepingEvent> type) {

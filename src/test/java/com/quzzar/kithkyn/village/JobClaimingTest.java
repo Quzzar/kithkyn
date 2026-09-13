@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.lang.reflect.Method;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -89,5 +90,99 @@ class JobClaimingTest {
     assertEquals(assignments, restored.getBedAssignmentsView());
     assertTrue(restored.getUnassignedBeds().isEmpty());
     assertEquals(2, restored.getTotalBeds());
+  }
+
+  @Test
+  void stationReconciliationDropsStaleAndDuplicateOpenJobsBeforeAddingMissingOnes() {
+    BuildingInfo workshop = new BuildingInfo("blacksmith_birch_forest_1")
+        .addWorkLocation(2, 1, 2, Occupation.BLACKSMITH)
+        .addWorkLocation(4, 1, 2, Occupation.CLERIC);
+    Buildings.reload(Map.of(workshop.getName(), workshop));
+    Building building = new Building(workshop.getName(), Rotation.NONE);
+
+    JsonObject saved = Village.CODEC.encodeStart(JsonOps.INSTANCE, new Village("Forgechapel"))
+        .getOrThrow().getAsJsonObject();
+    saved.getAsJsonArray("buildings").add(
+        Building.CODEC.encodeStart(JsonOps.INSTANCE, building).getOrThrow());
+    for (JobAssignment job : List.of(
+        new JobAssignment(null, Occupation.BLACKSMITH, building.getUUID(), 0),
+        new JobAssignment(null, Occupation.BLACKSMITH, building.getUUID(), 0),
+        new JobAssignment(null, Occupation.GUARD, building.getUUID(), 1),
+        new JobAssignment(null, Occupation.CLERIC, building.getUUID(), 2),
+        new JobAssignment(null, Occupation.CLERIC, UUID.randomUUID(), 0))) {
+      saved.getAsJsonArray("unassigned_jobs").add(
+          JobAssignment.CODEC.encodeStart(JsonOps.INSTANCE, job).getOrThrow());
+    }
+    Village restored = Village.CODEC.parse(JsonOps.INSTANCE, saved).getOrThrow();
+
+    JobClaiming.registerMissingStations(restored);
+
+    assertEquals(List.of(
+        "BLACKSMITH:" + building.getUUID() + ":0",
+        "CLERIC:" + building.getUUID() + ":1"),
+        restored.getUnassignedJobs().stream()
+            .map(job -> job.getOccupation() + ":" + job.getBuildingUUID() + ":" + job.getStationIndex())
+            .toList());
+  }
+
+  @Test
+  void stationReconciliationSurvivesAStandingBuildingWhoseDefinitionWasRemoved() {
+    BuildingInfo retainedInfo = new BuildingInfo("blacksmith_birch_forest_1")
+        .addWorkLocation(2, 1, 2, Occupation.BLACKSMITH);
+    BuildingInfo removedInfo = new BuildingInfo("bakery_birch_forest_1")
+        .addWorkLocation(3, 1, 3, Occupation.BAKER);
+    Buildings.reload(Map.of(
+        retainedInfo.getName(), retainedInfo,
+        removedInfo.getName(), removedInfo));
+    Building retained = new Building(retainedInfo.getName(), Rotation.NONE);
+    Building removed = new Building(removedInfo.getName(), Rotation.NONE);
+
+    JsonObject saved = Village.CODEC.encodeStart(JsonOps.INSTANCE, new Village("Oldcatalog"))
+        .getOrThrow().getAsJsonObject();
+    for (Building building : List.of(retained, removed)) {
+      saved.getAsJsonArray("buildings").add(
+          Building.CODEC.encodeStart(JsonOps.INSTANCE, building).getOrThrow());
+    }
+    saved.getAsJsonArray("unassigned_jobs").add(JobAssignment.CODEC.encodeStart(
+        JsonOps.INSTANCE, new JobAssignment(null, Occupation.BAKER, removed.getUUID(), 0)).getOrThrow());
+    Village restored = Village.CODEC.parse(JsonOps.INSTANCE, saved).getOrThrow();
+    Buildings.reload(Map.of(retainedInfo.getName(), retainedInfo));
+
+    JobClaiming.registerMissingStations(restored);
+
+    assertEquals(1, restored.getUnassignedJobs().size());
+    JobAssignment remaining = restored.getUnassignedJobs().getFirst();
+    assertEquals(retained.getUUID(), remaining.getBuildingUUID());
+    assertEquals(Occupation.BLACKSMITH, remaining.getOccupation());
+  }
+
+  @Test
+  void assignmentReconciliationReleasesASecondWorkerBookedIntoTheSameStation() throws Exception {
+    BuildingInfo workshop = new BuildingInfo("blacksmith_birch_forest_1")
+        .addWorkLocation(2, 1, 2, Occupation.BLACKSMITH);
+    Buildings.reload(Map.of(workshop.getName(), workshop));
+    Building building = new Building(workshop.getName(), Rotation.NONE);
+    UUID first = UUID.randomUUID();
+    UUID second = UUID.randomUUID();
+
+    JsonObject saved = Village.CODEC.encodeStart(JsonOps.INSTANCE, new Village("TwoSmiths"))
+        .getOrThrow().getAsJsonObject();
+    saved.getAsJsonArray("buildings").add(
+        Building.CODEC.encodeStart(JsonOps.INSTANCE, building).getOrThrow());
+    for (UUID resident : List.of(first, second)) {
+      saved.getAsJsonArray("people").add(UUIDUtil.CODEC.encodeStart(JsonOps.INSTANCE, resident).getOrThrow());
+      saved.getAsJsonObject("job_assignments").add(resident.toString(), JobAssignment.CODEC.encodeStart(
+          JsonOps.INSTANCE,
+          new JobAssignment(resident, Occupation.BLACKSMITH, building.getUUID(), 0)).getOrThrow());
+    }
+    Village restored = Village.CODEC.parse(JsonOps.INSTANCE, saved).getOrThrow();
+
+    Method reconcile = JobClaiming.class.getDeclaredMethod(
+        "releaseInvalidAssignments", Village.class, net.minecraft.server.level.ServerLevel.class);
+    reconcile.setAccessible(true);
+    reconcile.invoke(null, restored, null);
+
+    assertEquals(1, restored.getJobAssignmentsView().size());
+    assertTrue(restored.getUnassignedJobs().isEmpty());
   }
 }

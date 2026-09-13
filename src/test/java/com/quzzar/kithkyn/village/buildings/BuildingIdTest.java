@@ -36,6 +36,20 @@ class BuildingIdTest {
   }
 
   @Test
+  void explicitMetadataDisambiguatesNewMultiwordDatapackVariants() {
+    for (String variant : new String[] {"alpine_highlands", "polynesian_coast"}) {
+      BuildingInfo info = decode("""
+          {"structure":"village_center_%s_1", "category":"village_center", "variant":"%s"}
+          """.formatted(variant, variant));
+
+      assertTrue(info.hasWellFormedId());
+      assertEquals("village_center", info.getCategory());
+      assertEquals(variant, info.getVariant());
+      assertNull(info.validate());
+    }
+  }
+
+  @Test
   void explicitBirchMetadataAndUpgradeChainValidate() {
     BuildingInfo info = decode("""
         {"structure":"house_birch_forest_2", "category":"house", "variant":"birch_forest",
@@ -101,6 +115,25 @@ class BuildingIdTest {
         """);
     assertNull(canonical.validate());
     assertNull(canonical.getDesign());
+  }
+
+  @Test
+  void duplicateStationCoordinatesAreRejectedInsteadOfSilentlyDroppingAJob() {
+    BuildingInfo duplicateJobs = decode("""
+        {"structure":"village_center_birch_forest_1", "work_stations":[
+          {"pos":[2,1,2], "occupation":"BUILDER"},
+          {"pos":[2,1,2], "occupation":"GUARD"}
+        ]}
+        """);
+    BuildingInfo duplicateWorksites = decode("""
+        {"structure":"mine_birch_forest_1", "worksites":[
+          {"pos":[3,1,3], "occupation":"MINER"},
+          {"pos":[3,1,3], "occupation":"MINER"}
+        ]}
+        """);
+
+    assertTrue(duplicateJobs.validate().contains("repeats a work station position"));
+    assertTrue(duplicateWorksites.validate().contains("repeats a physical worksite position"));
   }
 
   private static BuildingInfo decode(String json) {

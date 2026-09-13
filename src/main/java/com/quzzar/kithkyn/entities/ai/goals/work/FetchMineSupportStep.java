@@ -34,16 +34,26 @@ public final class FetchMineSupportStep implements BlockWorkStep {
 
   /** Same helping as the bedtime restock takes; the pack is not a warehouse. */
   private static final int PACK_TARGET = 32;
+  private static final String WORK_DESCRIPTION = "dirt, stone or sand for the shaft's lining";
+  private static final String APPROACH_BLOCKER = "I cannot get to " + WORK_DESCRIPTION + ".";
 
   @Override
   @Nullable
   public BlockPos select(RealPerson person) {
     Village village = person.getVillage();
-    if (village == null || person.isInventoryFull()
-        || MineSupportMaterials.held(person.personMainInv) > 0) {
+    if (MineSupportMaterials.held(person.personMainInv) > 0) {
+      clearObsoleteApproachBlocker(person);
+      return null;
+    }
+    if (village == null || person.isInventoryFull()) {
       return null;
     }
     return PackLogistics.chestHolding(person, village, wanted());
+  }
+
+  /** A bedtime restock can satisfy this carry while its earlier failed route is still recorded. */
+  static void clearObsoleteApproachBlocker(RealPerson person) {
+    person.clearBlocker(APPROACH_BLOCKER);
   }
 
   @Override
@@ -70,7 +80,7 @@ public final class FetchMineSupportStep implements BlockWorkStep {
 
   @Override
   public String describe() {
-    return "dirt, stone or sand for the shaft's lining";
+    return WORK_DESCRIPTION;
   }
 
   @Override

@@ -25,7 +25,7 @@ class LaborPlannerTest {
 
     JobAssignment selected = LaborPlanner.openProjectProducerPost(
         List.of(new ItemStack(Items.OAK_LOG, 2)), List.of(farmer, lumberjack),
-        building -> Map.of(lumberyard, List.of("LOGS", "PLANKS"), field, List.of("GRAIN"))
+        building -> Map.of(lumberyard, List.of("LOGS", "PLANKS"), field, List.of("FOOD", "CROPS"))
             .getOrDefault(building, List.of()));
 
     assertEquals(lumberjack, selected);
@@ -36,12 +36,40 @@ class LaborPlannerTest {
     JobAssignment farmer = new JobAssignment(null, Occupation.FARMER, UUID.randomUUID(), 0);
 
     assertNull(LaborPlanner.openProjectProducerPost(
-        List.of(new ItemStack(Items.IRON_INGOT, 2)), List.of(farmer), ignored -> List.of("GRAIN")));
+        List.of(new ItemStack(Items.IRON_INGOT, 2)), List.of(farmer), ignored -> List.of("FOOD", "CROPS")));
+  }
+
+  @Test
+  void anActiveProjectSelectsItsVacantBuilderPostBeforeOtherLaborNeeds() {
+    UUID center = UUID.randomUUID();
+    JobAssignment farmer = new JobAssignment(null, Occupation.FARMER, UUID.randomUUID(), 0);
+    JobAssignment builder = new JobAssignment(null, Occupation.BUILDER, center, 1);
+
+    assertEquals(builder, LaborPlanner.openConstructionPost(
+        true, List.of(farmer, builder), center::equals));
+    assertNull(LaborPlanner.openConstructionPost(
+        false, List.of(farmer, builder), center::equals));
+  }
+
+  @Test
+  void anUrgentVacancyMayBorrowOneOfSeveralFoodWorkersButNeverTheLast() {
+    assertFalse(LaborPlanner.mustKeepForNeed(
+        Occupation.FARMER, 2, 3, true, false, Occupation.BUILDER));
+    assertFalse(LaborPlanner.mustKeepForNeed(
+        Occupation.FARMER, 2, 3, true, false, Occupation.LUMBERJACK));
+    assertFalse(LaborPlanner.mustKeepForNeed(
+        Occupation.FISHER, 1, 3, true, true, Occupation.QUARTERMASTER));
+    assertTrue(LaborPlanner.mustKeepForNeed(
+        Occupation.FARMER, 1, 1, true, false, Occupation.BUILDER));
+    assertTrue(LaborPlanner.mustKeepForNeed(
+        Occupation.FARMER, 1, 1, true, false, Occupation.LUMBERJACK));
   }
 
   @Test
   void aHungryVillageNeverMovesAnActiveFoodProducerToMaterials() {
     assertTrue(LaborPlanner.mustKeep(Occupation.FARMER, 2, true, false));
+    assertTrue(LaborPlanner.mustKeep(Occupation.BAKER, 1, true, false));
+    assertTrue(LaborPlanner.mustKeep(Occupation.BUTCHER, 1, true, false));
     assertTrue(LaborPlanner.mustKeep(Occupation.MINER, 1, false, false));
     assertTrue(LaborPlanner.mustKeep(Occupation.QUARTERMASTER, 1, false, true));
     assertTrue(LaborPlanner.mustKeep(Occupation.FARMER, 1, true, false));

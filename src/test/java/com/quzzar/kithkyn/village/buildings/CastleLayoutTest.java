@@ -1,6 +1,7 @@
 package com.quzzar.kithkyn.village.buildings;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.google.gson.JsonParser;
@@ -41,5 +42,23 @@ class CastleLayoutTest {
           """.formatted(routes)));
       assertTrue(result.error().isPresent(), routes);
     }
+  }
+
+  @Test
+  void aFortifiedVillageCenterMayOwnCustodyAmenities() {
+    BuildingInfo center = BuildingInfo.CODEC.parse(JsonOps.INSTANCE, JsonParser.parseString("""
+        {"structure":"village_center_polynesian_coast_1",
+         "category":"village_center","variant":"polynesian_coast",
+         "castle":{"custody_cell":[6,2,8],"release_point":[6,2,11],
+           "evidence_containers":[[7,2,9],[8,2,9]]}}
+        """)).getOrThrow();
+    assertNull(center.validate());
+
+    BuildingInfo house = BuildingInfo.CODEC.parse(JsonOps.INSTANCE, JsonParser.parseString("""
+        {"structure":"house_polynesian_coast_1","category":"house","variant":"polynesian_coast",
+         "castle":{"custody_cell":[6,2,8],"release_point":[6,2,11],
+           "evidence_containers":[[7,2,9],[8,2,9]]}}
+        """)).getOrThrow();
+    assertEquals("castle amenities require the castle or village_center category", house.validate());
   }
 }

@@ -284,6 +284,15 @@ final class AuthoredWoodWallSegments {
       BlockPos position = bottom.position();
       put(blocks, position, bottom.piece(), WallCellRole.FOUNDATION);
       int terrainY = nearestGround(ring, ground, position.getX(), position.getZ());
+      if (isClimbPiece(bottom.piece())) {
+        for (long climbColumn : climbColumns) {
+          if (Math.abs(BlockPos.getX(climbColumn) - position.getX()) <= 1
+              && Math.abs(BlockPos.getZ(climbColumn) - position.getZ()) <= 1) {
+            terrainY = Math.min(terrainY, nearestGround(ring, ground,
+                BlockPos.getX(climbColumn), BlockPos.getZ(climbColumn)));
+          }
+        }
+      }
       for (int y = terrainY; y < position.getY(); y++) {
         put(blocks, new BlockPos(position.getX(), y, position.getZ()),
             bottom.piece(), WallCellRole.FOUNDATION);
@@ -469,7 +478,8 @@ final class AuthoredWoodWallSegments {
     return switch (piece) {
       case POST, GATE_FRAME_POST, GATE_FRAME_BEAM, COBBLE_POST, MOSSY_POST, BEAM_NORTH_SOUTH, BEAM_EAST_WEST, BODY, WALKWAY -> 0;
       case SLAB, PARAPET, STEP_NORTH, STEP_EAST, STEP_SOUTH, STEP_WEST -> 1;
-      default -> 2;
+      case TRAPDOOR_NORTH, TRAPDOOR_EAST, TRAPDOOR_SOUTH, TRAPDOOR_WEST -> 2;
+      default -> 3;
     };
   }
 

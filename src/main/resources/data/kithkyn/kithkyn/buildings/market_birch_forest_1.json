@@ -18,11 +18,22 @@
     [
       8,
       0,
-      6
+      9
     ]
   ],
   "grants": [
+    "STORAGE",
     "TRADE"
+  ],
+  "cost": [
+    {
+      "item": "minecraft:oak_log",
+      "count": 16
+    },
+    {
+      "item": "minecraft:cobblestone",
+      "count": 20
+    }
   ],
   "sink": 0,
   "village_identity": {

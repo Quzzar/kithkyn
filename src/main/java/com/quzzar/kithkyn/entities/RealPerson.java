@@ -1221,7 +1221,11 @@ public class RealPerson extends Person {
   }
 
   public void setOccupation(Occupation occupation) {
+    Occupation previous = getOccupation();
     this.entityData.set(OCCUPATION, occupation.name());
+    if (!this.level().isClientSide && previous != occupation) {
+      clearOperationalBlockers();
+    }
   }
 
   /** Whether this person is a wandering merchant (config "Wandering merchant"). */
@@ -1577,11 +1581,9 @@ public class RealPerson extends Person {
     }
     boolean storedAll = GuardWeapons.stowUnkept(this, keeping,
         stack -> this.getVillage().storeAwayFrom(stack, List.of(), preferredStorage));
-    if (!storedAll) {
-      // Not a NoResourceBookkeepingEvent: that reports a shortage, while a
-      // surplus the village cannot shelve is the opposite problem.
-      this.getVillage().setStorageStrained(true);
-    }
+    // Not a NoResourceBookkeepingEvent: that reports a shortage, while a
+    // surplus the village cannot shelve is the opposite problem.
+    this.getVillage().reportStorageStrain(this.getUUID(), !storedAll);
 
     // Re-gear for the job, from real stock only. Set down first whatever is in
     // hand that is not a tool of THIS job's kind: a guard's old sword, or the
@@ -3101,8 +3103,8 @@ public class RealPerson extends Person {
           SoundEvents.SMITHING_TABLE_USE)));
     }
     if (getOccupation() == Occupation.BAKER) {
-      // The bakery absorbed the mill, so the baker grinds their own grain into bread
-      // (building-spec.md:449; farm -> GRAIN -> bakery -> BREAD).
+      // The bakery absorbed the mill, so the baker turns the farm's crop supply
+      // into baked goods (building-spec.md; farm -> CROPS -> bakery -> BAKED_GOODS).
       this.goalSelector.addGoal(3, new WorkLoopGoal<>(this, new HaulStep()));
       this.goalSelector.addGoal(8, new WorkLoopGoal<>(this, new CraftStep(
           new ItemStack(Items.WHEAT, 3),

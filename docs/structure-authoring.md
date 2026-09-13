@@ -40,19 +40,32 @@ was built with.
    on the definition and structure file. Keep the unsuffixed canonical layout at each tier.
    If a higher-tier layout has no compatible in-place predecessor, set `"standalone": true`
    and omit `upgrades_from`; its cost is the complete fresh building recipe.
-   Construction prices default to the shared `kithkyn/construction_recipes/<category>_<level>.json`
-   resource. Omit `cost` when creating a regional variant so it inherits that price automatically.
-   A deliberate building-specific exception may supply a complete `cost` array; exporters preserve
-   it and the same recipe validator applies. Prefer a shared recipe for a new economic category or
-   level. See [building-spec.md](building-spec.md).
+   Every definition must include a complete, nonempty `cost` and at least one `grants` entry.
+   Category and level never supply defaults. Compare the building with its nearest functional peers
+   in the [locked balance map](research/building-cost-rebalance-2026-09-12.md), including beds,
+   jobs, routed worksites, grants, shared and personal storage, throughput, and progression role.
+   Price that complete package rather than its block count. The loader rejects missing costs,
+   missing grants, retired grant names, and grants that fail the building's authored-value contract.
+   Productive categories must also declare their core occupation as either a local
+   `work_stations` vacancy or a routed `worksites` destination. Never reuse a coordinate for two
+   stations: the loader rejects it, and `tools/structure/audit-templates.py` also checks every
+   station against the template bounds.
+   See [building-spec.md](building-spec.md).
    Markets retain their original tent, decorative banner, rug and candle colors. Regional
    materials may change, but these fabrics must not become village identity slots; see
    [village-identity.md](village-identity.md).
    Preserve complete counter trapdoor patterns and supported carpet trim. Do not remove
    decorative rails to compensate for pathfinding through closed trapdoors; verify the
    actual entrance with native worker walks instead.
-6. **Look at it**: `/kkdev village gallery <pos>` places every loaded definition on labelled
-   plinths. `/reload` picks up JSON edits without a restart; a new `.nbt` needs a restart.
+6. **Look at it**: `/kkdev village gallery <pos>` places every loaded definition on one labelled
+   grass gallery. The command treats the supplied Y as the grass surface and applies each
+   definition's authored `sink` through the same seating path as an ordinary village. Every sign
+   states the sink so a swallowed step or floating foundation can be traced directly to its JSON.
+   The gallery enumerates the live `Buildings` catalog rather than a fixed variant list, so every
+   definition added by a future variant appears automatically after its datapack reloads.
+   Build the gallery high above unused ground because it creates a continuous seven-block-deep
+   platform across the complete catalog. `/reload` picks up JSON edits without a restart; a new
+   `.nbt` needs a restart.
 7. **Verify the palette**, always, before shipping. The decompressed NBT contains every
    block id as plain text, so a raw string search answers "did this block actually make
    it in" without an NBT library:
@@ -105,7 +118,7 @@ fixture as well: catalog checks alone do not prove that a villager can walk to a
   of each pair. Other beds remain single housing; the building need not be a dedicated
   couple cottage. Assign both sides to the same primary or secondary identity color.
   Bind both to their room's chest through `bed_containers`, and use an empty container
-  list for beds with no private storage. Verify actual sleeping and chest access on each
+  list for beds with no personal container. Verify actual sleeping and chest access on each
   floor in all four rotations, especially where ladders or adjoining beds restrict approach.
 - **No block entities in the footprint of anything the site scorer must accept**: a chest
   or sign in the way makes a site impossible rather than clearable
@@ -124,6 +137,11 @@ The approved Birch center starts with one ordinary iron golem. It is not pre-ado
 can later adopt it through the normal mechanic. The butchery starts with three cows and three
 chickens, marked as farmed before joining the world; nearby wildlife is not marked as a side
 effect of construction. The bakery retains its two decorative item frames.
+
+Every butchery must carry deliberate livestock in its template, even when its regional species
+mix differs from Birch. Ordinary doors and pen gates start closed so animals do not leave before
+the first worker arrives. Decorative trapdoors keep their authored state. The production template
+audit enforces the livestock and ordinary-door rules.
 
 Each building saves which initial entity entries were placed, plus a completion flag. A normal
 save/reload, repeat completion, or upgrade retains those receipts and does not replenish dead
@@ -169,6 +187,11 @@ Air must stay inside the authored building envelope, never fill an empty capture
 template palettes. Capture dimensions and local coordinates can remain unchanged: this preserves
 amenity offsets while giving planning, ground preparation and claims zero capture padding.
 
+Vines must never occupy the seated terrain layer or anything below it. A vine there replaces dirt
+or grass and leaves a hole when it breaks. `seating-check.py` compares vine Y coordinates with each
+definition's `sink` and reports this independently of its stair heuristic. Keep only supported
+vines above the terrain course, and omit removed cells rather than replacing them with air.
+
 A tree a worker is meant to cut is authored as a sapling, never as a grown tree (the lumberjack
 lodge, 2026-09-02): the sapling sits on a block of dirt in the ground layer, since the world's
 own top block may be sand or, on a slope, air, and the sapling is the work station. The first
@@ -176,7 +199,9 @@ tree then grows on Minecraft's schedule and its canopy is a natural one. A templ
 wrong either way: persistent leaves never decay, so the lodge's original tree left its whole
 crown floating after the first felling (seen live); natural leaves placed one block per swing
 by the builder can decay before their trunk lands. Decorative trees a structure carries, such
-as the church's, stay persistent on purpose.
+as the church's, stay persistent on purpose. `audit-templates.py` rejects a lumberjack definition
+whose `LUMBERJACK` station points anywhere except its authored sapling, because an air station can
+be reached but can never regrow wood.
 
 Seating is checked offline rather than by eye: a door's lower half should sit one layer above
 the ground layer, beds and work stations likewise. Fisheries and level-1 watchtowers carried an

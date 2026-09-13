@@ -105,7 +105,7 @@ public final class VillageCustody extends SavedData {
     for (Building castle : village.getBuildings()) {
       var info = castle.getInfo();
       var layout = info == null ? null : info.getCastleLayout();
-      if (layout == null || !info.getCategory().equals("castle") || village.isBeingRebuilt(castle.getUUID())) continue;
+      if (layout == null || village.isBeingRebuilt(castle.getUUID())) continue;
       BlockPos cell = world(castle, layout.custodyCell());
       if (!validCell(level, cell) || ledger.sentences.values().stream()
           .anyMatch(sentence -> sentence.occupies(village.getID(), castle.getUUID().toString(), now))) continue;

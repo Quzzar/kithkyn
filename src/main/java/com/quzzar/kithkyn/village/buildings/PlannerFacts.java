@@ -16,6 +16,10 @@ final class PlannerFacts {
     return countedLine("Open work", counts);
   }
 
+  static String openWallPosts(Map<String, Integer> counts) {
+    return countedLine("Open wall guard posts", counts);
+  }
+
   private static String countedLine(String heading, Map<String, Integer> counts) {
     if (counts.isEmpty()) {
       return "";

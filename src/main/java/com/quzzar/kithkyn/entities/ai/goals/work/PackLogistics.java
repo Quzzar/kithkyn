@@ -1,8 +1,10 @@
 package com.quzzar.kithkyn.entities.ai.goals.work;
 
-import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
+import java.util.function.Predicate;
 import java.util.function.UnaryOperator;
 
 import javax.annotation.Nullable;
@@ -42,9 +44,6 @@ import net.minecraft.world.item.ItemStack;
  * own things down at home (StashAtHomeGoal) shelves them the same way.
  */
 public final class PackLogistics {
-
-  /** Dead container positions to step past before giving up on a search. */
-  private static final int MAX_STALE_CHESTS = 12;
 
   private PackLogistics() {
   }
@@ -278,18 +277,20 @@ public final class PackLogistics {
     if (!(person.level() instanceof ServerLevel level)) {
       return null;
     }
-    List<BlockPos> skip = new ArrayList<>();
-    for (int attempt = 0; attempt < MAX_STALE_CHESTS; attempt++) {
-      BlockPos found = village.getNearestContainer(person.blockPosition(), skip);
-      if (found.equals(BlockPos.ZERO)) {
-        return null;
-      }
-      if (level.getBlockEntity(found) instanceof Container chest && test.test(chest)) {
-        return found;
-      }
-      skip.add(found);
-    }
-    return null;
+    return nearestMatchingPosition(person.blockPosition(), village.getSharedContainerPositions(),
+        found -> level.getBlockEntity(found) instanceof Container chest && test.test(chest));
+  }
+
+  /** Searches every registered store in distance order; a large village has no arbitrary blind tail. */
+  @Nullable
+  static BlockPos nearestMatchingPosition(BlockPos origin, Collection<BlockPos> positions,
+      Predicate<BlockPos> matches) {
+    return positions.stream()
+        .sorted(Comparator.comparingDouble((BlockPos pos) -> origin.distSqr(pos))
+            .thenComparingLong(BlockPos::asLong))
+        .filter(matches)
+        .findFirst()
+        .orElse(null);
   }
 
   /** How many items of any kind in the tag the pack holds. */

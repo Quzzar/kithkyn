@@ -1,0 +1,161 @@
+[
+  {
+    "source": "run/swamp-integration/datapack/data/kithkyn/structure/bakery_swamp_1.nbt",
+    "output": "run/gallery-review-repairs-20260912/staged/bakery_swamp_1.nbt",
+    "size": [9, 9, 9],
+    "set": [
+      {
+        "pos": [2, 3, 2],
+        "name": "minecraft:lantern",
+        "properties": {"hanging": "false", "waterlogged": "false"}
+      },
+      {
+        "pos": [6, 3, 6],
+        "name": "minecraft:lantern",
+        "properties": {"hanging": "false", "waterlogged": "false"}
+      }
+    ]
+  },
+  {
+    "source": "run/badlands-integration/datapack/data/kithkyn/structure/butchery_badlands_1.nbt",
+    "output": "run/gallery-review-repairs-20260912/staged/butchery_badlands_1.nbt",
+    "size": [17, 8, 13],
+    "remove": [
+      [10, 0, 7], [11, 0, 7], [12, 0, 7], [9, 0, 8],
+      [10, 0, 8], [11, 0, 8], [12, 0, 8], [13, 0, 8],
+      [10, 0, 9], [11, 0, 9], [12, 0, 9]
+    ],
+    "set": [
+      {
+        "pos": [9, 1, 7],
+        "name": "minecraft:water_cauldron",
+        "properties": {"level": "3"}
+      }
+    ],
+    "close_doors": true
+  },
+  {
+    "source": "run/floodplain-integration/datapack/data/kithkyn/structure/church_floodplain_1.nbt",
+    "output": "run/gallery-review-repairs-20260912/staged/church_floodplain_1.nbt",
+    "size": [7, 3, 7],
+    "set": [
+      {
+        "pos": [1, 0, 5],
+        "name": "minecraft:barrel",
+        "properties": {"facing": "south", "open": "false"}
+      }
+    ]
+  },
+  {
+    "source": "run/swamp-integration/datapack/data/kithkyn/structure/church_swamp_1__cleric_home.nbt",
+    "output": "run/gallery-review-repairs-20260912/staged/church_swamp_1__cleric_home.nbt",
+    "size": [7, 8, 9],
+    "set": [
+      {
+        "pos": [4, 4, 4],
+        "name": "minecraft:chest",
+        "properties": {"facing": "west", "type": "single", "waterlogged": "false"}
+      }
+    ]
+  },
+  {
+    "source": "run/swamp-integration/datapack/data/kithkyn/structure/fishery_swamp_1.nbt",
+    "output": "run/gallery-review-repairs-20260912/staged/fishery_swamp_1.nbt",
+    "size": [7, 9, 10],
+    "remove": [
+      [6, 0, 0], [0, 0, 2], [0, 0, 3], [6, 0, 3], [0, 0, 4], [6, 0, 4],
+      [6, 1, 0], [0, 1, 2], [0, 1, 3], [6, 1, 3], [0, 1, 4], [6, 1, 4],
+      [0, 2, 2], [0, 2, 3], [6, 2, 3], [0, 3, 3]
+    ]
+  },
+  {
+    "source": "run/jungle-integration/datapack/data/kithkyn/structure/house_jungle_2.nbt",
+    "output": "run/gallery-review-repairs-20260912/staged/house_jungle_2.nbt",
+    "size": [14, 22, 12],
+    "remove": [
+      [5, 0, 4], [6, 0, 4], [7, 0, 5], [4, 0, 6], [7, 0, 6], [5, 0, 7],
+      [6, 0, 7], [7, 0, 7], [0, 7, 4], [0, 8, 4], [0, 9, 4], [7, 9, 11],
+      [0, 10, 4], [7, 10, 11], [9, 11, 1], [0, 11, 4], [7, 11, 11],
+      [0, 12, 3], [0, 12, 4], [7, 12, 11], [8, 12, 11], [0, 13, 3],
+      [0, 13, 4], [7, 13, 11], [8, 13, 11], [0, 14, 3], [0, 14, 4],
+      [7, 14, 11], [8, 14, 11], [0, 15, 3], [0, 15, 4], [7, 15, 11],
+      [8, 15, 11], [0, 16, 3], [0, 16, 4], [7, 16, 11], [8, 16, 11],
+      [0, 17, 3], [0, 17, 4], [7, 17, 11], [8, 17, 11], [0, 18, 4],
+      [7, 18, 11], [8, 18, 11]
+    ]
+  },
+  {
+    "source": "run/jungle-integration/datapack/data/kithkyn/structure/couple_cottage_jungle_1.nbt",
+    "output": "run/gallery-review-repairs-20260912/staged/couple_cottage_jungle_1.nbt",
+    "size": [11, 17, 12],
+    "remove": [
+      [4, 0, 5], [7, 0, 5], [5, 0, 7], [6, 0, 7]
+    ]
+  },
+  {
+    "source": "run/mediterranean-integration/datapack/data/kithkyn/structure/lumberjack_mediterranean_1.nbt",
+    "output": "run/gallery-review-repairs-20260912/staged/lumberjack_mediterranean_1.nbt",
+    "size": [13, 5, 18],
+    "set": [
+      {
+        "pos": [9, 1, 7],
+        "name": "minecraft:oak_sapling",
+        "properties": {"stage": "0"}
+      }
+    ]
+  },
+  {
+    "source": "src/main/resources/data/kithkyn/structure/butchery_birch_forest_1.nbt",
+    "output": "run/gallery-review-repairs-20260912/staged/butchery_birch_forest_1.nbt",
+    "size": [21, 7, 19],
+    "close_doors": true
+  },
+  {
+    "source": "run/desert-integration/datapack/data/kithkyn/structure/butchery_desert_1.nbt",
+    "output": "run/gallery-review-repairs-20260912/staged-doors/butchery_desert_1.nbt",
+    "size": [14, 7, 13],
+    "close_doors": true
+  },
+  {
+    "source": "run/jungle-integration/datapack/data/kithkyn/structure/butchery_jungle_1.nbt",
+    "output": "run/gallery-review-repairs-20260912/staged-doors/butchery_jungle_1.nbt",
+    "size": [8, 6, 11],
+    "close_doors": true
+  },
+  {
+    "source": "run/romanian-integration/datapack/data/kithkyn/structure/butchery_romanian_1.nbt",
+    "output": "run/gallery-review-repairs-20260912/staged/butchery_romanian_1.nbt",
+    "size": [17, 9, 9],
+    "close_doors": true
+  },
+  {
+    "source": "run/swamp-integration/datapack/data/kithkyn/structure/butchery_swamp_1.nbt",
+    "output": "run/gallery-review-repairs-20260912/staged/butchery_swamp_1.nbt",
+    "size": [9, 6, 10],
+    "close_doors": true
+  },
+  {
+    "source": "run/tundra-integration/datapack/data/kithkyn/structure/butchery_tundra_1.nbt",
+    "output": "run/gallery-review-repairs-20260912/staged/butchery_tundra_1.nbt",
+    "size": [6, 7, 9],
+    "close_doors": true
+  },
+  {
+    "source": "src/main/resources/data/kithkyn/structure/market_birch_forest_1.nbt",
+    "output": "run/gallery-review-repairs-20260912/staged/market_birch_forest_1.nbt",
+    "size": [16, 6, 17],
+    "remove_bottom_air": true
+  },
+  {
+    "source": "src/main/resources/data/kithkyn/structure/market_birch_forest_2.nbt",
+    "output": "run/gallery-review-repairs-20260912/staged/market_birch_forest_2.nbt",
+    "size": [23, 6, 17],
+    "remove_bottom_air": true
+  },
+  {
+    "source": "src/main/resources/data/kithkyn/structure/market_birch_forest_3.nbt",
+    "output": "run/gallery-review-repairs-20260912/staged/market_birch_forest_3.nbt",
+    "size": [23, 6, 25],
+    "remove_bottom_air": true
+  }
+]

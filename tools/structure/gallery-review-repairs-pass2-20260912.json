@@ -1,0 +1,94 @@
+[
+  {
+    "source": "run/desert-integration/datapack/data/kithkyn/structure/mine_desert_1.nbt",
+    "output": "run/gallery-review-pass2-repairs-20260912/generated/mine_desert_1.nbt",
+    "size": [13, 6, 13],
+    "shift": [0, 1, 0],
+    "set": [
+      {"pos": [3, 0, 5], "name": "minecraft:air"},
+      {"pos": [4, 0, 5], "name": "minecraft:air"},
+      {"pos": [5, 0, 5], "name": "minecraft:air"},
+      {"pos": [3, 0, 6], "name": "minecraft:air"},
+      {"pos": [4, 0, 6], "name": "minecraft:air"},
+      {"pos": [5, 0, 6], "name": "minecraft:air"},
+      {"pos": [3, 0, 7], "name": "minecraft:air"},
+      {"pos": [4, 0, 7], "name": "minecraft:air"},
+      {"pos": [5, 0, 7], "name": "minecraft:air"},
+      {"pos": [3, 0, 8], "name": "minecraft:air"},
+      {"pos": [4, 0, 8], "name": "minecraft:air"},
+      {"pos": [5, 0, 8], "name": "minecraft:air"},
+      {"pos": [3, 0, 9], "name": "minecraft:air"},
+      {"pos": [4, 0, 9], "name": "minecraft:air"},
+      {"pos": [5, 0, 9], "name": "minecraft:air"}
+    ]
+  },
+  {
+    "source": "run/romanian-integration/datapack/data/kithkyn/structure/mine_romanian_1.nbt",
+    "output": "run/gallery-review-pass2-repairs-20260912/generated/mine_romanian_1.nbt",
+    "size": [14, 7, 7],
+    "set": [
+      {"pos": [8, 0, 2], "name": "minecraft:air"},
+      {"pos": [9, 0, 2], "name": "minecraft:air"},
+      {"pos": [10, 0, 2], "name": "minecraft:air"},
+      {"pos": [11, 0, 2], "name": "minecraft:air"},
+      {"pos": [12, 0, 2], "name": "minecraft:air"},
+      {"pos": [8, 0, 3], "name": "minecraft:air"},
+      {"pos": [9, 0, 3], "name": "minecraft:air"},
+      {"pos": [10, 0, 3], "name": "minecraft:air"},
+      {"pos": [11, 0, 3], "name": "minecraft:air"},
+      {"pos": [12, 0, 3], "name": "minecraft:air"},
+      {"pos": [8, 0, 4], "name": "minecraft:air"},
+      {"pos": [9, 0, 4], "name": "minecraft:air"},
+      {"pos": [10, 0, 4], "name": "minecraft:air"},
+      {"pos": [11, 0, 4], "name": "minecraft:air"},
+      {"pos": [12, 0, 4], "name": "minecraft:air"}
+    ]
+  },
+  {
+    "source": "run/tundra-integration/datapack/data/kithkyn/structure/mine_tundra_1.nbt",
+    "output": "run/gallery-review-pass2-repairs-20260912/generated/mine_tundra_1.nbt",
+    "size": [9, 7, 10],
+    "set": [
+      {"pos": [3, 0, 4], "name": "minecraft:air"},
+      {"pos": [4, 0, 4], "name": "minecraft:air"},
+      {"pos": [5, 0, 4], "name": "minecraft:air"},
+      {"pos": [3, 0, 5], "name": "minecraft:air"},
+      {"pos": [4, 0, 5], "name": "minecraft:air"},
+      {"pos": [5, 0, 5], "name": "minecraft:air"},
+      {"pos": [3, 0, 6], "name": "minecraft:air"},
+      {"pos": [4, 0, 6], "name": "minecraft:air"},
+      {"pos": [5, 0, 6], "name": "minecraft:air"},
+      {"pos": [3, 0, 7], "name": "minecraft:air"},
+      {"pos": [4, 0, 7], "name": "minecraft:air"},
+      {"pos": [5, 0, 7], "name": "minecraft:air"},
+      {"pos": [3, 0, 8], "name": "minecraft:air"},
+      {"pos": [4, 0, 8], "name": "minecraft:air"},
+      {"pos": [5, 0, 8], "name": "minecraft:air"}
+    ]
+  },
+  {
+    "source": "run/romanian-integration/datapack/data/kithkyn/structure/watchtower_romanian_1.nbt",
+    "output": "run/gallery-review-pass2-repairs-20260912/generated/watchtower_romanian_1.nbt",
+    "size": [9, 18, 9],
+    "set": [
+      {"pos": [4, 3, 4], "name": "minecraft:lantern", "properties": {"hanging": "true", "waterlogged": "false"}},
+      {"pos": [3, 5, 5], "name": "minecraft:lantern", "properties": {"hanging": "false", "waterlogged": "false"}},
+      {"pos": [4, 11, 4], "name": "minecraft:lantern", "properties": {"hanging": "true", "waterlogged": "false"}},
+      {"pos": [4, 16, 4], "name": "minecraft:lantern", "properties": {"hanging": "true", "waterlogged": "false"}}
+    ]
+  },
+  {
+    "source": "run/swamp-integration/datapack/data/kithkyn/structure/watchtower_swamp_1.nbt",
+    "output": "run/gallery-review-pass2-repairs-20260912/generated/watchtower_swamp_1.nbt",
+    "size": [11, 13, 7],
+    "set": [
+      {"pos": [2, 5, 3], "name": "minecraft:lantern", "properties": {"hanging": "true", "waterlogged": "false"}}
+    ]
+  },
+  {
+    "source": "run/floodplain-integration/datapack/data/kithkyn/structure/fishery_floodplain_1.nbt",
+    "output": "run/gallery-review-pass2-repairs-20260912/generated/fishery_floodplain_1.nbt",
+    "size": [6, 3, 6],
+    "remove": [[0, 1, 0], [0, 1, 5], [5, 1, 0], [5, 1, 5]]
+  }
+]

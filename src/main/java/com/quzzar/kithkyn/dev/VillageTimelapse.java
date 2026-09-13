@@ -1,5 +1,9 @@
 package com.quzzar.kithkyn.dev;
 
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+
 import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.quzzar.kithkyn.Kithkyn;
@@ -26,9 +30,10 @@ import net.neoforged.neoforge.event.tick.ServerTickEvent;
  *
  * <p>This owns no simulated building, path, grading, movement, or resource
  * logic. It asks Minecraft to sprint ordinary logical ticks, watches the
- * village's normal completion record, and pauses whenever a village brain is
- * waiting on a wall-clock answer. The result is the same progression the world
- * would have produced slowly, including the builder's maintenance cooldowns.
+ * villages' normal completion records, and pauses whenever a target village
+ * brain is waiting on a wall-clock answer. The result is the same progression
+ * the world would have produced slowly, including the builder's maintenance
+ * cooldowns.
  */
 @EventBusSubscriber(modid = Kithkyn.MODID)
 public final class VillageTimelapse {
@@ -44,9 +49,23 @@ public final class VillageTimelapse {
   private VillageTimelapse() {
   }
 
+  /** Whether this server currently owns the one runtime-only tick sprint session. */
+  public static boolean isRunning(MinecraftServer server) {
+    return active != null && active.server == server;
+  }
+
   /** Command branch mounted at {@code /kkdev village timelapse}. */
   public static LiteralArgumentBuilder<CommandSourceStack> branch() {
     return Commands.literal("timelapse")
+        .then(Commands.literal("monitored")
+            .then(Commands.argument("builds-each", IntegerArgumentType.integer(1, 64))
+                .executes(ctx -> startMonitored(ctx.getSource(),
+                    IntegerArgumentType.getInteger(ctx, "builds-each"),
+                    defaultMaxDays(IntegerArgumentType.getInteger(ctx, "builds-each"))))
+                .then(Commands.argument("max-days", IntegerArgumentType.integer(1, MAX_DAYS))
+                    .executes(ctx -> startMonitored(ctx.getSource(),
+                        IntegerArgumentType.getInteger(ctx, "builds-each"),
+                        IntegerArgumentType.getInteger(ctx, "max-days"))))))
         .then(Commands.literal("start")
             .then(Commands.argument("builds", IntegerArgumentType.integer(1, 64))
                 .executes(ctx -> start(ctx.getSource(),
@@ -78,10 +97,14 @@ public final class VillageTimelapse {
     }
     if (active != null) {
       source.sendFailure(Component.literal("A village timelapse is already running: "
-          + describe(active, findVillage(active))));
+          + describe(active)));
       return 0;
     }
     MinecraftServer server = source.getServer();
+    if (VillageCleanup.isRunning(server)) {
+      source.sendFailure(Component.literal("Stop village cleanup before starting a village timelapse."));
+      return 0;
+    }
     if (server.tickRateManager().isSprinting()) {
       source.sendFailure(Component.literal(
           "Minecraft is already tick-sprinting. Stop that sprint before starting a village timelapse."));
@@ -91,6 +114,12 @@ public final class VillageTimelapse {
     Village village = VillageManager.get(level).getNearestVillage(near);
     if (village == null) {
       source.sendFailure(Component.literal("No villages exist yet."));
+      return 0;
+    }
+    var manager = VillageManager.get(level);
+    if (manager.isAuditIsolationActive() && !manager.isVillageAudited(village.getID())) {
+      source.sendFailure(Component.literal("'" + village.getName()
+          + "' is suspended by audit isolation. Monitor it before starting its timelapse."));
       return 0;
     }
     if (village.getTownCenter() == null) {
@@ -104,8 +133,8 @@ public final class VillageTimelapse {
       return 0;
     }
 
-    active = new Session(server, village.getID(), village.getName(), builds,
-        (long) maxDays * TICKS_PER_DAY, level.getGameTime(), village.getLastBuildCompletedTime());
+    active = new Session(server, List.of(village), builds,
+        (long) maxDays * TICKS_PER_DAY, level.getGameTime());
     int villages = VillageManager.get(level).getVillages().size();
     source.sendSuccess(() -> Component.literal("Timelapsing '" + village.getName() + "' until " + builds
         + (builds == 1 ? " building completes" : " buildings complete") + " or " + maxDays
@@ -116,13 +145,64 @@ public final class VillageTimelapse {
     return 1;
   }
 
+  private static int startMonitored(CommandSourceStack source, int builds, int maxDays) {
+    if (source.getLevel().dimension() != Level.OVERWORLD) {
+      source.sendFailure(Component.literal("Village timelapse must be started in the Overworld."));
+      return 0;
+    }
+    if (active != null) {
+      source.sendFailure(Component.literal("A village timelapse is already running: " + describe(active)));
+      return 0;
+    }
+    MinecraftServer server = source.getServer();
+    if (VillageCleanup.isRunning(server)) {
+      source.sendFailure(Component.literal("Stop village cleanup before starting a village timelapse."));
+      return 0;
+    }
+    if (server.tickRateManager().isSprinting()) {
+      source.sendFailure(Component.literal(
+          "Minecraft is already tick-sprinting. Stop that sprint before starting a village timelapse."));
+      return 0;
+    }
+    ServerLevel level = server.overworld();
+    var manager = VillageManager.get(level);
+    if (!manager.isAuditIsolationActive()) {
+      source.sendFailure(Component.literal(
+          "No monitored-village allowlist is active. Use '/kkdev village audit monitor' at each target first."));
+      return 0;
+    }
+    List<Village> targets = manager.getAuditedVillageIds().stream().map(manager::getVillage)
+        .filter(java.util.Objects::nonNull)
+        .sorted(java.util.Comparator.comparing(Village::getName, String.CASE_INSENSITIVE_ORDER))
+        .toList();
+    if (targets.isEmpty()) {
+      source.sendFailure(Component.literal("No monitored villages still exist."));
+      return 0;
+    }
+    for (Village village : targets) {
+      if (village.getTownCenter() == null) {
+        source.sendFailure(Component.literal("'" + village.getName()
+            + "' has no completed village center yet."));
+        return 0;
+      }
+      com.quzzar.kithkyn.village.VillageChunkLoader.reconcile(level, village);
+    }
+
+    active = new Session(server, targets, builds, (long) maxDays * TICKS_PER_DAY, level.getGameTime());
+    source.sendSuccess(() -> Component.literal("Timelapsing " + targets.size() + " monitored village(s) until each "
+        + "completes " + builds + (builds == 1 ? " building" : " buildings") + " or " + maxDays
+        + " game days pass. Other villages remain suspended; use '/kkdev village timelapse stop' to stop early."), true);
+    advance(active);
+    return 1;
+  }
+
   private static int status(CommandSourceStack source) {
     Session session = active;
     if (session == null) {
       source.sendSuccess(() -> Component.literal("No village timelapse is running."), false);
       return 1;
     }
-    source.sendSuccess(() -> Component.literal(describe(session, findVillage(session))), false);
+    source.sendSuccess(() -> Component.literal(describe(session)), false);
     return 1;
   }
 
@@ -159,22 +239,25 @@ public final class VillageTimelapse {
   }
 
   private static void advance(Session session) {
-    Village village = findVillage(session);
-    if (village == null) {
-      finish(session, "target village no longer exists");
-      return;
-    }
     long now = session.server.overworld().getGameTime();
-    long completedAt = village.getLastBuildCompletedTime();
-    if (completedAt > session.lastCompletionTime) {
-      session.completedBuilds++;
-      session.lastCompletionTime = completedAt;
-      String milestone = "Village timelapse: '" + village.getName() + "' completed build "
-          + session.completedBuilds + "/" + session.requestedBuilds + " after "
-          + formatDays(now - session.startedAt) + " game days.";
-      session.server.createCommandSourceStack().sendSuccess(() -> Component.literal(milestone), true);
+    for (Target target : session.targets.values()) {
+      Village village = findVillage(session, target.villageId);
+      if (village == null) {
+        finish(session, "target village '" + target.villageName + "' no longer exists");
+        return;
+      }
+      long completedAt = village.getLastBuildCompletedTime();
+      if (target.completedBuilds < session.requestedBuilds && completedAt > target.lastCompletionTime) {
+        target.completedBuilds++;
+        target.lastCompletionTime = completedAt;
+        String milestone = "Village timelapse: '" + village.getName() + "' completed build "
+            + target.completedBuilds + "/" + session.requestedBuilds + " after "
+            + formatDays(now - session.startedAt) + " game days.";
+        session.server.createCommandSourceStack().sendSuccess(() -> Component.literal(milestone), true);
+      }
     }
-    if (session.completedBuilds >= session.requestedBuilds) {
+    if (session.targets.values().stream()
+        .allMatch(target -> target.completedBuilds >= session.requestedBuilds)) {
       finish(session, "requested builds completed");
       return;
     }
@@ -188,7 +271,7 @@ public final class VillageTimelapse {
       return;
     }
 
-    Village waiting = firstWaitingVillage(session.server.overworld());
+    Village waiting = firstWaitingVillage(session);
     if (waiting != null) {
       session.waitingOnVillage = waiting.getName();
       session.server.tickRateManager().stopSprinting();
@@ -201,16 +284,24 @@ public final class VillageTimelapse {
     }
   }
 
-  private static Village firstWaitingVillage(ServerLevel level) {
-    return VillageManager.get(level).getVillages().values().stream()
+  private static Village firstWaitingVillage(Session session) {
+    return session.targets.values().stream()
+        .filter(target -> needsMoreBuilds(target.completedBuilds, session.requestedBuilds))
+        .map(target -> findVillage(session, target.villageId))
+        .filter(java.util.Objects::nonNull)
         .filter(Village::hasPendingBrainDecision)
         .findFirst()
         .orElse(null);
   }
 
-  private static Village findVillage(Session session) {
+  /** A target that already met its milestone cannot pause the unfinished targets. */
+  static boolean needsMoreBuilds(int completedBuilds, int requestedBuilds) {
+    return completedBuilds < requestedBuilds;
+  }
+
+  private static Village findVillage(Session session, String villageId) {
     return VillageManager.get(session.server.overworld()).getVillages().values().stream()
-        .filter(village -> village.getID().equals(session.villageId))
+        .filter(village -> village.getID().equals(villageId))
         .findFirst()
         .orElse(null);
   }
@@ -221,24 +312,35 @@ public final class VillageTimelapse {
     }
     active = null;
     session.server.tickRateManager().stopSprinting();
-    Village village = findVillage(session);
     long elapsed = session.server.overworld().getGameTime() - session.startedAt;
-    String message = "Village timelapse finished for '" + session.villageName + "': "
-        + session.completedBuilds + "/" + session.requestedBuilds + " builds in "
+    int completed = session.targets.values().stream().mapToInt(target -> target.completedBuilds).sum();
+    int requested = session.requestedBuilds * session.targets.size();
+    String message = "Village timelapse finished: " + completed + "/" + requested
+        + " target builds across " + session.targets.size() + " village(s) in "
         + formatDays(Math.max(0L, elapsed)) + " game days (" + reason + ")."
-        + (village == null ? "" : " " + phase(village, session.server.overworld()));
+        + targetPhases(session);
     session.server.createCommandSourceStack().sendSuccess(() -> Component.literal(message), true);
   }
 
-  private static String describe(Session session, Village village) {
+  private static String describe(Session session) {
     long elapsed = session.server.overworld().getGameTime() - session.startedAt;
-    String phase = village == null ? "Target village no longer exists."
-        : session.waitingOnVillage == null
-            ? phase(village, session.server.overworld())
-            : "Waiting for the brain of '" + session.waitingOnVillage + "'.";
-    return "Village timelapse '" + session.villageName + "': " + session.completedBuilds + "/"
-        + session.requestedBuilds + " builds, " + formatDays(Math.max(0L, elapsed)) + "/"
-        + formatDays(session.maxTicks) + " game days. " + phase;
+    String waiting = session.waitingOnVillage == null ? ""
+        : " Waiting for the brain of '" + session.waitingOnVillage + "'.";
+    return "Village timelapse: " + session.targets.size() + " target(s), "
+        + formatDays(Math.max(0L, elapsed)) + "/" + formatDays(session.maxTicks)
+        + " game days." + waiting + targetPhases(session);
+  }
+
+  private static String targetPhases(Session session) {
+    StringBuilder report = new StringBuilder();
+    for (Target target : session.targets.values()) {
+      Village village = findVillage(session, target.villageId);
+      report.append("\n  ").append(target.villageName).append(": ")
+          .append(target.completedBuilds).append('/').append(session.requestedBuilds).append(" builds. ")
+          .append(village == null ? "Target village no longer exists."
+              : phase(village, session.server.overworld()));
+    }
+    return report.toString();
   }
 
   private static String phase(Village village, ServerLevel level) {
@@ -268,23 +370,35 @@ public final class VillageTimelapse {
 
   private static final class Session {
     private final MinecraftServer server;
-    private final String villageId;
-    private final String villageName;
+    private final Map<String, Target> targets;
     private final int requestedBuilds;
     private final long maxTicks;
     private final long startedAt;
-    private long lastCompletionTime;
-    private int completedBuilds;
     private String waitingOnVillage;
 
-    private Session(MinecraftServer server, String villageId, String villageName,
-        int requestedBuilds, long maxTicks, long startedAt, long lastCompletionTime) {
+    private Session(MinecraftServer server, List<Village> villages,
+        int requestedBuilds, long maxTicks, long startedAt) {
       this.server = server;
-      this.villageId = villageId;
-      this.villageName = villageName;
+      this.targets = new LinkedHashMap<>();
+      for (Village village : villages) {
+        this.targets.put(village.getID(),
+            new Target(village.getID(), village.getName(), village.getLastBuildCompletedTime()));
+      }
       this.requestedBuilds = requestedBuilds;
       this.maxTicks = maxTicks;
       this.startedAt = startedAt;
+    }
+  }
+
+  private static final class Target {
+    private final String villageId;
+    private final String villageName;
+    private long lastCompletionTime;
+    private int completedBuilds;
+
+    private Target(String villageId, String villageName, long lastCompletionTime) {
+      this.villageId = villageId;
+      this.villageName = villageName;
       this.lastCompletionTime = lastCompletionTime;
     }
   }

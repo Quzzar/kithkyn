@@ -326,6 +326,12 @@ public final class ChopStep implements WorkStep<ChopStep.Cut> {
     return axeReachesFrom(person.blockPosition(), person.getEyePosition(), cut.log());
   }
 
+  /** The scan verified this exact foothold; one-block arrival slack can put the trunk out of axe reach. */
+  @Override
+  public boolean requiresExactArrival() {
+    return true;
+  }
+
   /**
    * Whether an axe swung from these eyes, over these feet, reaches the log.
    * Reach is to the log's nearest face, as a player's is, not to its centre:

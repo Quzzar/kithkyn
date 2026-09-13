@@ -53,7 +53,7 @@ public final class VillageRuler {
       if (job.getOccupation() != Occupation.LEADER) continue;
       Building building = village.getBuilding(job.getBuildingUUID());
       BuildingInfo info = building == null ? null : building.getInfo();
-      if (info == null || !"castle".equals(info.getCategory())) continue;
+      if (!isRulerSeat(info)) continue;
       List<Occupation> stations = List.copyOf(info.getWorkLocations().values());
       if (job.getStationIndex() < 0 || job.getStationIndex() >= stations.size()
           || stations.get(job.getStationIndex()) != Occupation.LEADER) continue;
@@ -62,6 +62,11 @@ public final class VillageRuler {
           && village.getPopulation().contains(entry.getKey())) return Optional.of(person);
     }
     return Optional.empty();
+  }
+
+  /** A fortified center can hold the same single ruling office as a standalone castle. */
+  static boolean isRulerSeat(BuildingInfo info) {
+    return info != null && info.getCastleLayout() != null;
   }
 
   /** Snapshot on the server thread before dispatching an asynchronous model call. */

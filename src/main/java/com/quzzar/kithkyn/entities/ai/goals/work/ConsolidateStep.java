@@ -69,7 +69,7 @@ public final class ConsolidateStep implements BlockWorkStep {
     BlockPos delivery = used == 0 ? null : storehouseChest(person);
     BlockPos deliveryApproach = this.approach;
     if (used > 0 && delivery == null) {
-      village.setStorageStrained(true);
+      village.reportStorageStrain(person.getUUID(), true);
       return inspectionChest(person);
     }
     BlockPos source = used >= SLOTS_BEFORE_TRIP || this.returningToShelf ? null : sourceChest(person, village);
@@ -82,7 +82,7 @@ public final class ConsolidateStep implements BlockWorkStep {
       this.approach = deliveryApproach;
       return delivery;
     }
-    village.setStorageStrained(false);
+    village.reportStorageStrain(person.getUUID(), false);
     return inspectionChest(person);
   }
 
@@ -112,7 +112,7 @@ public final class ConsolidateStep implements BlockWorkStep {
         Kithkyn.LOGGER.debug("[resource-flow] {} (QUARTERMASTER) shelved {} item(s) at {}",
             person.getName().getString(), moved, target.toShortString());
       }
-      if (person.personMainInv.isEmpty()) person.getVillage().setStorageStrained(false);
+      if (person.personMainInv.isEmpty()) person.getVillage().reportStorageStrain(person.getUUID(), false);
       return moved > 0 && ++this.moves < MOVES_PER_VISIT && !person.personMainInv.isEmpty();
     }
     if (this.moves++ == 0) {

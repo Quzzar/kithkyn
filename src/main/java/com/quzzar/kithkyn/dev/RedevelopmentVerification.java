@@ -142,7 +142,7 @@ public final class RedevelopmentVerification {
     check(!damagedPlan.salvage().equals(plan.salvage()), "damaged building still refunded its full investment");
     level.setBlock(damaged, farmBlock.state(), 2 | 16 | 32);
     PlacedBlockStore.get(level).markVillagePlaced(damaged);
-    village.setStorageStrained(true);
+    village.reportStorageStrain(source.getUUID(), true);
     // Birch bundles no second storehouse tier, so the fresh replacement that strained
     // storage justifies is a second level-1 storehouse over the house and both farms.
     var fresh = RedevelopmentPlanner.assess(village, Buildings.getByName("storehouse_birch_forest_1"), null,

@@ -4,7 +4,7 @@
 approved catalog for `birch_forest`. Its 23 templates and exact amenities supersede this
 document's older generic tier counts, founding contents and candidate choices for that family.
 In particular it has no tier-3 house/farm or higher center/storehouse/mine/church. The bakery
-and tavern are separate buildings, each with one worker bed and private storage. The approved
+and tavern are separate buildings, each with one worker bed and a personal container. The approved
 private catalogs for Desert, Badlands, Floodplain and Jungle are documented separately; Jungle's
 22-template catalog and four-home start are specified in [jungle-village.md](jungle-village.md).
 
@@ -12,7 +12,7 @@ private catalogs for Desert, Badlands, Floodplain and Jungle are documented sepa
 this document count the full map of the possible, not the shipping set — see
 [The cut](#the-cut) for which categories stand and why the rest went.
 
-**Proposed, not yet decided.** Reality check before reading: the jar bundles one family, the
+**Current contract, with a historical catalog below.** Reality check before reading: the jar bundles one family, the
 23-template Birch Forest catalog of [birch-village.md](birch-village.md), and that is the whole
 shipped set. It covers every founding and phase 1 category at level 1 (`house` and `farm` also
 at level 2, `watchtower` at level 2, `market` at levels 1 to 3), with real MASON, HUNTER,
@@ -50,9 +50,6 @@ saved on the `Building`; their dug progress remains world geometry. It is not au
 `tools/structure/mine-level-2.py`
 derives all five families from their level-1 files, so re-run it after touching any of them
 ([structure-authoring.md](structure-authoring.md)).
-
-**No house or farm has a `cost` yet**, so nothing gates building one. The recipes, and the
-sprawl-versus-upgrade pricing the section below argues about, are still unset.
 
 **Crop variety is not a capability, and must not become one.** A farmer plants whatever
 seeds the village holds (`TillSoilGoal.PLANTABLES` covers wheat, beetroot, pumpkin, melon,
@@ -180,22 +177,23 @@ remain ordinary construction choices.
 
 These are two separate questions and the spec keeps them separate.
 
-**Cost is a shared recipe.** One datapack file per category and level under
-`data/kithkyn/kithkyn/construction_recipes/<category>_<level>.json` contains a `cost` array
-of item IDs and positive counts. For example, `watchtower_1.json` contains
-`{"cost":[{"item":"minecraft:oak_log","count":24},{"item":"minecraft:cobblestone","count":40}]}`.
-A building definition normally omits `cost`; its category and level select the default recipe
-for all named designs and regional styles. Override this shared recipe once in a datapack to
-change every building that uses the default. Geometry, beds, workstations and identity remain regional.
-A deliberate per-building exception may include its own `cost` array in the building JSON. This
-replaces the complete recipe; it does not add to or merge with the default. It uses exactly the same
-validation and construction payment path. An explicit override can price a category with no default.
-All shipped definitions currently use the shared defaults.
-The loader resolves buildings and recipes together before publishing a reload. A missing default
-rejects a building that has no override. An invalid explicit override rejects the building instead
-of falling back to the default or becoming free. Recipe lists must be nonempty and cannot contain
-air, unknown items, repeated items, or nonpositive counts.
-There are no points or derived currency.
+**Cost belongs to the exact building definition.** Every building JSON carries a complete,
+nonempty `cost` array of item IDs and positive counts. Category and level are comparison labels,
+not lookup keys. There is no shared recipe directory, fallback, inherited price, or free default.
+Missing, invalid, or duplicate cost entries reject the definition during reload. There are no
+points or derived currency.
+
+The recipe prices the complete gameplay package: housing, jobs, grants, storage, throughput,
+upgrade behavior, and place in progression. Structure block count is only a final sanity check.
+A mixed-use home with blacksmith and cleric posts is priced as that exact combination. Two variants
+may deliberately have equal recipes when their value is equivalent, but each definition owns that
+decision independently.
+
+For the locked first-pass prices and the comparison rubric used for all 224 current definitions,
+see [building-cost rebalance](research/building-cost-rebalance-2026-09-12.md). A new building starts
+from its nearest functional peers in that map, then adjusts for its complete package and the
+resources available before it can be built. Audit results recalibrate the individual recipe rather
+than changing every building in its category.
 
 **Each recipe describes its completed structure.** Reusing the exact building named by
 `upgrades_from` pays only the positive material increase from predecessor to target. Constructing
@@ -207,12 +205,8 @@ blindly from the target.
 
 Standalone definitions have no predecessor chain, so their fresh cost is exactly their own recipe.
 
-**Every building is priced.** The tables below are historical design sketches; the 29 shared
-recipe files provide the shipped defaults. The 2026-09-10 consolidation preserved all quantities and changed
-the church, bakery and tavern's stone-brick demands to generic cobblestone. Their decorative
-masonry no longer requires a stoneworks to build, and changing a regional template never changes
-its price. Stoneworks production and ordinary crafting recipes are unaffected. Three rules keep
-construction reachable:
+**Every building is priced.** The tables below are historical design sketches; the exact building
+JSON is authoritative. Three rules keep construction reachable:
 
 - **Only name what a worker puts into storage.** The miner (stone pickaxe) yields
   cobblestone, sand, sandstone and iron; the lumberjack yields logs and oak
@@ -235,10 +229,9 @@ construction reachable:
   only founded, and so has only a miner, must be able to build it. The stoneworks
   costs 9 logs and 12 cobblestone in every variant, including a sandstone one built from
   the very blocks it exists to make. It needs no cut stone of its own.
-- **Share the default recipe across families.** Variants of a category and level normally
-  resolve one recipe in generic wood and stone. A deliberate authored exception may replace
-  that price for an individual building; regional exports must preserve that explicit choice.
-  Do not copy default recipes into every building, because those copies would stop following tuning.
+- **Price the actual package.** A variant's recipe follows its authored housing, jobs, grants,
+  storage, and progression role. Regional material availability can change the mix. Similar peers
+  keep the numbers coherent, while explicit ownership lets one unusual mixed-use building differ.
 
 Which gives the bootstrap order a village actually follows: found (centre, mine,
 storehouse, free) → miner digs cobblestone → **lumberjack**, in cobblestone alone
@@ -247,25 +240,22 @@ cut-stone production. Basic construction no longer depends on its decorative sto
 A desert mine cuts through sand and sandstone before it reaches stone, and sandstone pays a stone cost like any
 cobblestone, so a desert camp bootstraps on the same schedule.
 
-**Upgrading costs more than sprawling**, by construction. Two level-1 houses come
-to 94 units for two beds where one level-2 costs 120; four level-1s cost 188
-where a level-3 costs 253. Building wide stays the cheaper move, which is what
-[village-tiers.md](village-tiers.md) asks for.
+**Upgrading versus sprawling is tuned, not hard-coded.** The planner sees the effective price and
+capacity of both choices. The author compares each upgrade with equivalent new construction and
+chooses the relationship that makes sense for that building.
 
 **Space is a fit check.** How much room a building needs comes from its own dimensions, not from
 any number in this file. Whether a site can take those dimensions, and what it would cost to clear
 one that nearly can, is [site-selection.md](site-selection.md).
 
-### Variants are a look, not a recipe
+### The biome chooses the variant; the definition owns the recipe
 
-**A variant is a family's shape of the same building** (decided 2026-09-01, superseding
-[#50](https://github.com/Quzzar/kithkyn/issues/50), which had made variants competing
-recipes). Variants of a category and level use the shared construction recipe by default
-in generic wood and stone, with deliberate per-building price exceptions allowed. Which variant a village raises is settled once, at founding, by the
+**A variant is a family's authored version of a building.** Which variant a village raises is
+settled once, at founding, by the
 biome it stands in ([buildings.md](buildings.md), "Regional variants and biomes"), and kept
 for its life, so a village reads as one place. The planner never chooses between variants: it
-sees one building per category, the village's own family only, with the shared default price
-unless an explicit exception is authored.
+sees the village's own family only. The selected definition still owns its exact recipe because
+its layout and gameplay package can differ from another family's building in the same category.
 
 Two things follow:
 
@@ -273,7 +263,7 @@ Two things follow:
   by "wood is wood": the guard's woodland chop pays a log cost with any wood, and logs pay a
   plank cost without a saw. A desert camp mines sandstone, and sandstone is stone.
 - **The named specials stay variants.** A watermill or an igloo is a family's shape for its
-  category, priced like the category. If a site cannot host one, that is site selection's
+  category, priced for its own package. If a site cannot host one, that is site selection's
   business, not the variant system's.
 
 What does still change with the family is what the building is made of, because the
@@ -281,12 +271,6 @@ structure file does: sandstone in a Desert house, birch and cobblestone in a Bir
 That is the template's business, not the recipe's. Making the built blocks follow the wood
 actually paid, so a Birch village given spruce raises spruce houses, is a separate piece of
 work that this rule leaves room for.
-
-The upgrade to level 2 is priced at 1.5x the level-1 recipe, and level 3 at 3x. That means
-upgrading always costs more than putting up a second level-1 building of the same category, which
-is worth knowing but is **not a rule anyone implements**. Nothing tells the brain to prefer
-sprawl. A village with land finds the cheaper option in its list and takes it; a village hemmed in
-by a ravine never sees that option, because site-finding found nowhere to put it.
 
 ### Upgrade prices are never derived from the structure
 
@@ -315,19 +299,21 @@ Pricing upgrades off the level-1 recipe instead:
 Four beds by sprawling costs 612. By upgrading, 842, **38% more**. The invariant holds against
 real geometry rather than assumed geometry.
 
-So: **a level-1 recipe may be derived from its structure's block count. An upgrade price may
-not.**
+So: **neither a fresh recipe nor an upgrade price is derived from structure block count.** Price
+the gameplay package, compare it with its nearest peers, and use geometry only as a sanity check.
 
 ## Capabilities
 
 What a village can do is the union of what its finished buildings grant. Capability comes from
 construction, never from population or village tier.
 
-### A building grants permission, not product
+### A building grants planning value, not free product
 
-**A blacksmith does not produce iron tools. It makes iron tools possible.** The village still
-needs real iron, dug by a real miner, sitting in a real chest, before a single tool exists.
-Nothing in this system spawns items.
+**A grant tells the brain what value a building provides.** Broad outcomes and specific outcomes
+can coexist: a farm grants `FOOD` and `CROPS`, while a bakery grants `FOOD` and `BAKED_GOODS`.
+Exact capacity remains separate metadata, so a one-bed and a five-bed building both grant
+`HOUSING` while still presenting different bed counts. A grant does not spawn items. A blacksmith
+still needs real iron in a real chest before it can make an iron tool.
 
 Every capability below is gated twice: once by a building standing, and once by the materials
 being present. That is what keeps the simulation legible in ordinary Minecraft terms. A village
@@ -447,6 +433,13 @@ stations, count what is represented across booked and open assignments, and regi
 missing ones. Run it after any upgrade and after any datapack reload, which fixes the same
 bug in its other guise: an author editing a definition on a live world.
 
+**A productive category must declare its core work.** The complete-catalog validator rejects a
+bakery without a BAKER position, a church without a CLERIC position, a center without both a
+BUILDER and GUARD, and the equivalent core occupations for the other productive categories.
+That position may be a local `work_stations` vacancy or a routed `worksites` destination; the
+catalog-level route check still requires the other half of a routed pair. Duplicate station or
+worksite coordinates are rejected because station indexes cannot represent two jobs at one key.
+
 **Redevelopment can remove specific blocking buildings as part of a named construction project.**
 The game calculates the placement, consequences and salvage, then the model chooses. Net
 materials and a viable transition must be secured before removal. The saved demolition phase
@@ -468,10 +461,10 @@ unconditional, then re-evaluate the conditional grants until nothing new appears
 buildings that each require the other's capability simply never grant, which is the correct
 quiet failure rather than a crash.
 
-**Capabilities gate what the village can MAKE, never what it can build.** No blacksmith
-means no iron tools; no church means no healing. Construction is gated by materials and
-space alone, so a village can always build its way toward a capability it lacks and can
-never lock itself out.
+**Grants describe outcomes and gate the work that needs them, never construction itself.** No
+blacksmith means no iron tools; no church means no healing; no house means no housing capacity.
+Construction is gated by materials and space, so a village can build its way toward a grant it
+lacks and cannot lock itself out.
 
 **Production is opportunistic, decided by the worker.** Nobody schedules it. A blacksmith
 standing at their station looks at what the village is short of and makes it from the shared
@@ -480,19 +473,20 @@ There is deliberately no request queue: a miner with a worn pickaxe does not fil
 the smith simply notices the village is short of pickaxes. If that proves too vague in play,
 a demand signal is a later addition, not a prerequisite.
 
-**The brain is never told what it cannot do.** Capability filtering happens before the model
-sees anything, exactly as building options are filtered by affordability, so it chooses among
-legal moves only and cannot fixate on an unreachable ambition.
+**The brain sees the complete building proposition.** Every build, upgrade, and redevelopment
+option includes its effective cost, unconditional and conditional grants, and exact capacity such
+as beds, jobs, crop plots, and shared containers. Deterministic rules still filter illegal choices
+before the model sees them.
 
 | Group | Capabilities |
 | --- | --- |
-| Tools | `TOOLS_STONE` (baseline), `TOOLS_IRON`, `TOOLS_DIAMOND` |
-| Armor | `ARMOR_LEATHER`, `ARMOR_IRON`, `ARMOR_DIAMOND`, `SHIELDS` |
-| Smithing | `REPAIR`, `SMELTING` |
-| Food | `GRAIN`, `MEAT`, `FOOD_COOKED`, `FOOD_PRESERVED`, `FOOD_BAKED`, `ALE` |
-| Materials | `LOGS`, `PLANKS`, `STONE`, `CUT_STONE`, `ORES`, `FUEL`, `BRICK`, `GLASS`, `STAINED_GLASS`, `CLOTH`, `DYED_CLOTH` |
-| Military | `PROTECTION`, `SOLDIERS`, `VETERANS`, `ARROWS` |
-| Services | `WATER`, `HEALING`, `ENCHANTING`, `LEARNING`, `POTIONS`, `TRADE` |
+| Settlement | `CIVIC_CENTER`, `GOVERNANCE`, `CONSTRUCTION`, `LOGISTICS` |
+| Accommodation | `HOUSING`, `FAMILY_HOUSING`, `HOSPITALITY`, `WANDERERS`, `STORAGE`, `WATER` |
+| Care and security | `HEALING`, `PROTECTION`, `RANGED_GUARD_POSTS`, `CUSTODY` |
+| Food | `FOOD`, `CROPS`, `BAKED_GOODS`, `FISH`, `MEAT`, `LIVESTOCK`, `LEATHER`, `WOOL` |
+| Materials | `LOGS`, `PLANKS`, `STONE`, `CUT_STONE`, `ORES`, `MINERALS` |
+| Craft | `REPAIR`, `SMELTING`, `TOOLS_IRON`, `ARMOR_IRON`, `SHIELDS` |
+| Trade | `TRADE`, `TRADE_INITIATIVE` |
 
 `ATTRACTIVENESS` is deliberately not in that list, because it is not a capability. It is the
 village's existing 0-to-100 score from [population-and-labor.md](population-and-labor.md), the
@@ -500,8 +494,10 @@ thing that already governs whether anyone moves in. Buildings that "raise morale
 and the brain reads it directly: people are unhappy, can we do something about it. There is no
 second happiness stat.
 
-Beds and containers are not capabilities either. They are beds and containers, counted by looking
-at them.
+Beds, jobs, crop plots, and containers are also counted as exact capacity. That does not make their
+broad grant redundant. A house grants `HOUSING` and reports its bed count; a storehouse grants
+`STORAGE` and reports its shared-container count. Personal containers remain capacity metadata and
+never create a `PRIVATE_STORAGE` grant.
 
 Three capabilities need more than one building:
 
@@ -545,18 +541,13 @@ library variant the village built, or whether a future datapack adds a third way
 | `requires_capability` | When the village's capability set is recomputed, on a building finishing or being lost | Static. Either the village has `LEARNING` or it does not. |
 | `requires_supply` | On the brain's slow tick, against real container contents | Dynamic. An inn with no ale grants nothing this tick and grants again when the brewery catches up. |
 
-**A station declares its grant.** A definition that adds a work station also carries the
-grant that post stands for: a cleric station comes with `HEALING`, a blacksmith station with
-`REPAIR`, and a building with both carries both (Aaron, 2026-09-12: "the planner knows what
-buildings will do what"). The table lives in `StationGrants`. The loader warns about every
-station whose grant is missing rather than rejecting the building, so a private datapack still
-loads and its author sees the gap in the log; a test holds the bundled catalog to zero
-warnings. Guard, builder and leader stations are exempt: the watchtower's guards grant
-`PROTECTION` while the centre's captain does not, and that is a planning choice. So is a
-station with a `worksite_category`: the centre's miner post works at the mine, and the mine
-carries `ORES`. The quartermaster is exempt outright: `STORAGE` means shelves, the storehouse
-that holds them grants it, and the desert and floodplain centres keep their quartermaster at a
-centre with no chest by design.
+**A station declares its value on the building where the work happens.** A local cleric post
+requires `HEALING`; a local blacksmith post requires `REPAIR`, `SMELTING`, `TOOLS_IRON`,
+`ARMOR_IRON`, and `SHIELDS`. Civic roles similarly require `CONSTRUCTION`, `GOVERNANCE`, or
+`LOGISTICS`. A post routed through `worksite_category` does not duplicate its destination's
+outputs. `BuildingGrantContract` rejects a definition when a required grant is missing, when a
+grant is duplicated, or when it uses retired names such as `GRAIN`, `BREAD`, `FUEL`, or
+`PRIVATE_STORAGE`.
 
 Capability resolution is a fixed point: grant everything unconditional, then re-evaluate
 `grants_if` until nothing new appears. Two buildings that each require the other's capability
@@ -605,36 +596,25 @@ and are probably not `Building`s at all.
 categories. It needs regenerating against the 21 (it still enumerates the cut `kiln`,
 `pottery`, and `glassworks`, along with every other cut category).
 
-## Beds belong to houses
+## Beds are authored capacity
 
-Decided on [#61](https://github.com/Quzzar/kithkyn/issues/61). **A workplace never
-contains a bed.** Blacksmiths smith; houses house. The one exception is `village_center`,
-because a camp is people sleeping around a fire before there are any houses, so the centre
-carries the starting beds and nobody minds that a station shares the building.
+Each exact building may contain housing, work, or both. A variant-specific home can also contain
+blacksmith and cleric posts; a bakery or watchtower can include a live-in bed. That combination is
+part of the building's value and recipe rather than a reason to split it into universal categories.
 
-This settles an incoherence that had gone unnoticed: `population-and-labor.md` assigns beds
-on arrival independently of employment, so a bed inside the blacksmith went to whichever
-newcomer arrived next rather than to the blacksmith. With workplaces bedless, arrival-order
-assignment is simply correct, and no employment-aware bed logic is needed. Villagers keep
-the first free bed they are given and do not move house when their job changes, so a
-villager may well walk across town to work.
-
-It also makes housing the real growth lever: beds are the population cap, houses are the
-only source of beds, so a village that wants to grow must build houses. And it makes both
-halves of the vanilla template library usable — the 51 bed-only templates as houses, the 87
-station-only ones as workplaces — where pairing them made most of vanilla useless to us.
-
-**The catalog's bed columns below predate this rule** and still list beds on workplaces.
-They are wrong wherever they do; the shipped definitions have already had those beds
-removed.
+Every definition with a bed grants `HOUSING`, and a couple-ready room also grants
+`FAMILY_HOUSING`. The room metadata reports exact capacity and ownership. Personal containers stay
+attached to the residents or workers who use them, but do not create a separate planning grant.
+Arrival and room assignment continue to follow [population-and-labor.md](population-and-labor.md).
 
 ## The catalog
 
 The "Variants" line under each category names what the jar bundles today, which is the Birch
 Forest catalog alone ([birch-village.md](birch-village.md)); the private Desert and Badlands
 packs enumerate their own buildings in [desert-village.md](desert-village.md) and
-[badlands-village.md](badlands-village.md). Recipes are per category and level, never per
-variant, so each table's recipe column applies to every family.
+[badlands-village.md](badlands-village.md). The catalog below is historical. Current recipes and
+grants are owned by each exact definition and recorded in the
+[locked balance map](research/building-cost-rebalance-2026-09-12.md).
 
 ### Core and civic
 
@@ -674,9 +654,9 @@ The housing cap, the most numerous building in any village, and where regional i
 
 Every house level also has one chest, listed as `personal_containers`: the residents' own, not
 the village's (see "A home's own chest" under
-[A building grants permission, not product](#a-building-grants-permission-not-product)). The
-grants column names beds alone because beds are what a house gives the village; the chest is
-what it gives the people who live in it.
+[A building grants planning value, not free product](#a-building-grants-planning-value-not-free-product)).
+The house grants `HOUSING`; its bed count states how much housing it provides. The chest is
+capacity for the residents rather than a separate planning grant.
 
 #### `well`
 
@@ -789,9 +769,9 @@ Worker: **FARMER**  ·  Phase 1  ·  Variants: `birch_forest` (levels 1 and 2)
 
 | Level | Name | Footprint | Recipe | Grants |
 | --- | --- | --- | --- | --- |
-| 1 | croft | 11x11 | 16 oak log, 28 oak planks, 28 cobblestone, 4 glass, 4 wool | GRAIN |
-| 2 (upgrade) | farm | 15x15 | 28 oak log, 40 oak planks, 40 cobblestone, 8 glass, 4 wool | GRAIN more, vegetables |
-| 3 (upgrade) | estate farm | 21x21 | 52 oak log, 80 oak planks, 84 cobblestone, 16 glass, 8 wool, 8 iron ingot | GRAIN most, irrigation works poor soil |
+| 1 | croft | 11x11 | 16 oak log, 28 oak planks, 28 cobblestone, 4 glass, 4 wool | FOOD, CROPS |
+| 2 (upgrade) | farm | 15x15 | 28 oak log, 40 oak planks, 40 cobblestone, 8 glass, 4 wool | FOOD, CROPS; more field capacity |
+| 3 (upgrade) | estate farm | 21x21 | 52 oak log, 80 oak planks, 84 cobblestone, 16 glass, 8 wool, 8 iron ingot | FOOD, CROPS; most field capacity and irrigation |
 
 The desert variant is terraced and irrigated: it costs more for the same yield, which is exactly what farming a desert should feel like.
 
@@ -887,7 +867,8 @@ Worker: **BUTCHER**  ·  Phase 2  ·  Variants: `birch_forest`
 | 1 | smokehouse | 7x7 | 12 oak log, 20 oak planks, 20 cobblestone, 4 glass, 2 wool | FOOD_COOKED |
 | 2 (upgrade) | butchery | 11x11 | 20 oak log, 28 oak planks, 32 cobblestone, 6 glass, 4 wool | FOOD_PRESERVED: keeps through winter |
 
-Consumes FUEL, which is what ties the food chain to the mine or the charcoal burner.
+Consumes real furnace fuel items when its worker loop calls for them. Fuel is inventory, not a
+building grant.
 
 #### `brewery`
 
@@ -941,9 +922,9 @@ Worker: **MINER**  ·  Phase 1  ·  Variants: `birch_forest`
 
 | Level | Name | Footprint | Recipe | Grants |
 | --- | --- | --- | --- | --- |
-| 1 | mine shaft | 7x7 | 16 oak log, 20 oak planks, 24 cobblestone, 4 glass, 2 wool | ORES: coal and iron. FUEL |
-| 2 (upgrade) | twin headframe | 13x7 | 16 oak log, 20 cobblestone | a second MINER station and shaft, a second chest; ORES and FUEL as level 1 |
-| 3 (upgrade) | deep mine | 15x15 | 44 oak log, 64 oak planks, 68 cobblestone, 12 glass, 8 wool, 12 iron ingot | ORES: diamond |
+| 1 | mine shaft | 7x7 | 16 oak log, 20 oak planks, 24 cobblestone, 4 glass, 2 wool | STONE, ORES, MINERALS |
+| 2 (upgrade) | twin headframe | 13x7 | 16 oak log, 20 cobblestone | STONE, ORES, MINERALS; a second MINER station, shaft, and chest |
+| 3 (upgrade) | deep mine | 15x15 | 44 oak log, 64 oak planks, 68 cobblestone, 12 glass, 8 wool, 12 iron ingot | STONE, ORES, MINERALS; access to deeper ores |
 
 Founding building, placed free, and the only job a new camp has besides its builder. Two upgrades for one capability: DIAMOND at L3 is what makes blacksmith L3 mean anything, and the pairing is deliberate. The deepest mine and the greatest forge are a village's endgame together.
 

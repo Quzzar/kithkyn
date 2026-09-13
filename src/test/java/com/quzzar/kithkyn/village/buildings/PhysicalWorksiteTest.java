@@ -1,6 +1,7 @@
 package com.quzzar.kithkyn.village.buildings;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.google.gson.JsonParser;
@@ -85,6 +86,90 @@ class PhysicalWorksiteTest {
         """);
     assertEquals("a position cannot be both a job vacancy and a physical worksite",
         duplicatePosition.validate());
+  }
+
+  @Test
+  void everyPhysicalWorksiteRequiresAMatchingRoutedVacancy() {
+    BuildingInfo center = definition("""
+        {"structure":"village_center_swamp_1","work_stations":[
+          {"pos":[4,1,4],"occupation":"MINER","worksite_category":"mine"},
+          {"pos":[5,1,4],"occupation":"BUILDER"},
+          {"pos":[6,1,4],"occupation":"GUARD"}
+        ]}
+        """);
+    BuildingInfo mine = definition("""
+        {"structure":"mine_swamp_1","worksites":[
+          {"pos":[2,0,4],"occupation":"MINER"}
+        ]}
+        """);
+    BuildingInfo lumberjack = definition("""
+        {"structure":"lumberjack_swamp_1","worksites":[
+          {"pos":[2,1,6],"occupation":"LUMBERJACK"}
+        ]}
+        """);
+
+    Map<String, java.util.List<String>> problems = BuildingCatalogContract.problems(
+        Map.of(center.getName(), center, mine.getName(), mine, lumberjack.getName(), lumberjack));
+
+    assertFalse(problems.containsKey(center.getName()), problems.toString());
+    assertFalse(problems.containsKey(mine.getName()), problems.toString());
+    assertEquals(java.util.List.of(
+        "LUMBERJACK worksite has no routed vacancy for swamp/lumberjack"),
+        problems.get(lumberjack.getName()));
+  }
+
+  @Test
+  void everyRoutedVacancyRequiresAMatchingPhysicalWorksite() {
+    BuildingInfo center = definition("""
+        {"structure":"village_center_jungle_1","work_stations":[
+          {"pos":[4,1,4],"occupation":"MINER","worksite_category":"mine"},
+          {"pos":[5,1,4],"occupation":"BUILDER"},
+          {"pos":[6,1,4],"occupation":"GUARD"}
+        ]}
+        """);
+
+    assertEquals(Map.of(center.getName(), java.util.List.of(
+        "MINER vacancy routes to missing jungle/mine worksite")),
+        BuildingCatalogContract.problems(Map.of(center.getName(), center)));
+  }
+
+  @Test
+  void authoredBuildingReferencesMustResolveInsideTheCatalog() {
+    BuildingInfo center = definition("""
+        {"structure":"village_center_desert_1","starting_buildings":["mine_desert_1"],
+         "work_stations":[
+          {"pos":[1,1,1],"occupation":"BUILDER"},
+          {"pos":[2,1,1],"occupation":"GUARD"}
+         ]}
+        """);
+    BuildingInfo tower = definition("""
+        {"structure":"watchtower_desert_2","upgrades_from":"watchtower_desert_1",
+         "work_stations":[{"pos":[1,1,1],"occupation":"GUARD"}]}
+        """);
+
+    assertEquals(Map.of(
+        center.getName(), java.util.List.of("starting building mine_desert_1 is missing"),
+        tower.getName(), java.util.List.of("upgrade predecessor watchtower_desert_1 is missing")),
+        BuildingCatalogContract.problems(Map.of(center.getName(), center, tower.getName(), tower)));
+  }
+
+  @Test
+  void productiveBuildingCategoriesCannotSilentlyOmitTheirCoreWork() {
+    BuildingInfo bakery = definition("""
+        {"structure":"bakery_desert_1"}
+        """);
+    BuildingInfo center = definition("""
+        {"structure":"village_center_desert_1","work_stations":[
+          {"pos":[1,1,1],"occupation":"BUILDER"}
+        ]}
+        """);
+
+    assertEquals(Map.of(
+        bakery.getName(), java.util.List.of(
+            "bakery requires a BAKER work station or physical worksite"),
+        center.getName(), java.util.List.of(
+            "village_center requires a GUARD work station or physical worksite")),
+        BuildingCatalogContract.problems(Map.of(bakery.getName(), bakery, center.getName(), center)));
   }
 
   private static BuildingInfo definition(String json) {

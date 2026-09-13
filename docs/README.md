@@ -139,11 +139,21 @@ in it, and update it in the same change that moves what it describes.
   village keeps resident (building chunks, a 2-chunk perimeter, the pending build site, a bubble
   per member), the three modes (off, all, hybrid default with a six-day grace window), and why
   there is no loaded-village cap.
+- [village-auditing.md](village-auditing.md): the developer workflow for persistently monitoring
+  selected village variants, suspending the others, batch time-lapsing real ticks, inspecting
+  planner and resident state, and surfacing prolonged blockers without repairing them.
 
 ## Research
 
 Findings gathered against primary sources, kept as read at the time. The topic files above
 carry the decisions; these carry the evidence behind them.
+
+- [research/building-cost-rebalance-2026-09-12.md](research/building-cost-rebalance-2026-09-12.md):
+  locked first-pass construction prices and grants for all 224 current definitions, with the
+  functional-value vocabulary, future authoring contract, and audit signals used for recalibration.
+- [research/building-seating-audit-2026-09-12.md](research/building-seating-audit-2026-09-12.md):
+  the live all-variant grass gallery, its production-height placement contract, verification
+  receipt, and the mechanically prioritized list for the final visual height pass.
 
 - [research/automatone.md](research/automatone.md): Automatone, the server-side Baritone fork that
   gives non-player entities terrain-modifying pathfinding. Why it is read-not-ship (Fabric-locked,

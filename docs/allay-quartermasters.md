@@ -34,7 +34,8 @@ of scale: its single inventory slot is its pack, so a trip moves one stack.
   storehouse shelves and the market's treasury, and takes one stack, thirty ticks a move.
 - **Deliver.** It carries the stack to the shelf the village's shelving plan assigns to that item,
   and only when no owning shelf can take it, to an overflow shelf. A full storehouse raises the
-  village's storage strain; an emptied pack clears it, the same signal the human loop uses.
+  village's storage strain under that keeper's identity; an emptied pack clears that keeper's
+  report without erasing another holder's backlog. The human loop uses the same shared ledger.
 - **Inspect.** With nothing to carry it visits the shelves in rotation, tidies the one in reach
   with the shared layout algorithm, and carries a misfiled stack to its own shelf when that shelf
   can take it.
@@ -85,14 +86,16 @@ flag on a review or play world: it creates its own fixture and stops the server 
 
 ## Getting around
 
-A keeper plans its flights with its own evaluator (`entities/ai/AllayPathNavigation`).
-Vanilla flight admits every trapdoor cell whether the panel is open or closed, so a keeper
-whose route crossed a closed hatch flew into it and pressed there; nobody in this mod opens
-trapdoors, people included, so a closed trapdoor is a wall to a keeper and its route goes
-round. Wooden doors are different: a keeper's route may pass through one, and the keeper
-opens the door it is brushing past itself, since allays have no door behaviour of their own.
-Buildings should therefore leave keepers an open panel or a door into every room they
-serve; the floodplain storehouse exports its doorway trapdoor open for exactly this reason.
+A keeper plans its flights with its own evaluator (`entities/ai/AllayPathNavigation`). Vanilla
+flight reduces a trapdoor's whole cell to open or closed, but either state is a partial collision:
+an open trapdoor is an upright panel, while a closed one is a low floor or ceiling. For every
+route edge near a trapdoor, the keeper therefore sweeps its actual body between the two flight
+nodes and rejects the edge when it intersects the panel. This preserves real clearances, such
+as flying parallel to an upright panel or beneath a top-half closed hatch, without planning
+through the wood itself. Wooden doors are different: a keeper's route may pass through one,
+and the keeper opens the door it is brushing past itself, since allays have no door behaviour
+of their own. Buildings must still provide a physically open route or a door into every room
+keepers serve.
 
 ## Naming
 

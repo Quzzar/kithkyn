@@ -201,9 +201,16 @@ public final class WallRaiser {
     PlacedBlockStore placed = level instanceof ServerLevel serverLevel
         ? PlacedBlockStore.get(serverLevel)
         : null;
+    if (placed != null && placed.isPlayerPlaced(pos)) {
+      return true;
+    }
+    if (block.requiresExactState()) {
+      return false;
+    }
     // A revised solid join may replace our own old battlement, never a player's edit.
     if (placed != null && placed.isVillagePlaced(pos) && !placed.isPlayerPlaced(pos)
         && isStructuralFoundationPiece(block.piece())
+        && !state.is(desired.getBlock())
         && (state.getBlock() instanceof net.minecraft.world.level.block.WallBlock
             || state.getBlock() instanceof net.minecraft.world.level.block.FenceBlock
             || state.getBlock() instanceof net.minecraft.world.level.block.SlabBlock)) return false;
@@ -435,6 +442,7 @@ public final class WallRaiser {
    * first post was placed, then became exposed later in the build.
    */
   public static void settleFoundations(Level level, WallProject wall) {
+    repairOwnedCells(level, wall);
     settleConnections(level, wall);
     java.util.Map<Long, BlockPos> bases = new java.util.HashMap<>();
     java.util.Map<Long, Integer> plannedFeet = new java.util.HashMap<>();
@@ -470,6 +478,31 @@ public final class WallRaiser {
       level.setBlock(soil, level.getBlockState(base), 3);
       markVillagePlaced(level, soil);
     }
+  }
+
+  /**
+   * Restores cells that failed after placement while retaining their village
+   * ownership marker. A player break clears that marker, so edits stay put.
+   */
+  public static int repairOwnedCells(Level level, WallProject wall) {
+    if (!(level instanceof ServerLevel serverLevel)) return 0;
+    PlacedBlockStore owned = PlacedBlockStore.get(serverLevel);
+    int repaired = 0;
+    for (WallBlockPlan cell : wall.plannedBlocks()) {
+      BlockPos pos = cell.pos();
+      if (!level.hasChunkAt(pos)) continue;
+      BlockState desired = desiredState(cell, wall.getTier(), wall.getStyle(), wall.getIdentity());
+      if (!shouldRepairOwnedCell(owned.isPlayerPlaced(pos), owned.isVillagePlaced(pos),
+          isSatisfied(level, cell, wall)) || !desired.canSurvive(level, pos)) continue;
+      place(level, cell, wall);
+      repaired++;
+    }
+    return repaired;
+  }
+
+  static boolean shouldRepairOwnedCell(boolean playerOwned, boolean villageOwned,
+      boolean satisfied) {
+    return !playerOwned && villageOwned && !satisfied;
   }
 
   /** Reconnect old village-owned masonry/fences without repainting player edits. */

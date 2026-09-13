@@ -9,6 +9,7 @@ import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;
+import java.util.function.Predicate;
 
 import com.quzzar.kithkyn.Kithkyn;
 import com.quzzar.kithkyn.configuration.KithkynConfig;
@@ -37,10 +38,13 @@ import net.minecraft.world.item.ItemStack;
  * newcomer who would farm (docs/population-and-labor.md): a deadlock a hungry
  * village cannot break on its own.
  *
- * <p>Food reprioritization remains a midnight decision. A saved project blocked
- * on a vacant material producer may be handled on the ordinary labor cadence,
- * because a saved goal can expire before another midnight window. The brain is
- * shown the shortage and the crew and picks who moves, or that no one should.
+ * <p>An active project with no builder is handled first and must receive one,
+ * because leaving that vacancy open would make every other planning decision
+ * irrelevant. Food reprioritization remains a midnight decision. A saved project
+ * blocked on a vacant material producer may be handled on the ordinary labor
+ * cadence, because a saved goal can expire before another midnight window. For
+ * non-construction shortages, the brain is shown the shortage and the crew and
+ * picks who moves, or that no one should.
  * Candidates are ordered by aptitude so the same safe fallback used by ordinary
  * job claiming can act when the model is unavailable. Only loaded workers can be moved,
  * since a reassignment awakens them, brings them to the campfire, and rebuilds
@@ -58,7 +62,8 @@ public final class LaborPlanner {
 
   /** The jobs that put food in the stores. */
   private static final Set<Occupation> FOOD_PRODUCERS =
-      EnumSet.of(Occupation.FARMER, Occupation.FISHER, Occupation.HUNTER);
+      EnumSet.of(Occupation.FARMER, Occupation.FISHER, Occupation.HUNTER,
+          Occupation.BAKER, Occupation.BUTCHER);
 
   /**
    * The trades a village always keeps at least one of: its miner (no miner, no
@@ -160,9 +165,19 @@ public final class LaborPlanner {
     return null;
   }
 
-  /** Food first, then backed-up storage, then the saved project's material producer. */
+  /** Active construction first, then food, storage, and the saved project's material producer. */
   @javax.annotation.Nullable
   private static LaborNeed currentNeed(Village village, boolean allowFoodReprioritization) {
+    JobAssignment builder = openConstructionPost(village.getCurrentProject() != null,
+        village.claimableJobs(), buildingId -> village.getBuilding(buildingId) != null);
+    if (builder != null) {
+      String project = village.getCurrentProject().getBuilding().getName();
+      String situation = village.getName() + " has an active " + project
+          + " construction project, but its builder post stands open and no one is idle to take it. "
+          + "The village cannot make any construction progress until one current worker becomes its builder.";
+      return new LaborNeed(builder, situation, "the active construction project had no builder");
+    }
+
     JobAssignment food = allowFoodReprioritization && isHungry(village) ? openFoodPost(village) : null;
     if (food != null) {
       VillageAttractiveness report = village.getAttractiveness();
@@ -223,11 +238,27 @@ public final class LaborPlanner {
     return null;
   }
 
+  /** The first usable builder vacancy when construction is already under way. */
+  @javax.annotation.Nullable
+  static JobAssignment openConstructionPost(boolean activeProject,
+      List<JobAssignment> openPosts, Predicate<UUID> buildingExists) {
+    if (!activeProject) {
+      return null;
+    }
+    for (JobAssignment post : openPosts) {
+      if (post.getOccupation() == Occupation.BUILDER
+          && buildingExists.test(post.getBuildingUUID())) {
+        return post;
+      }
+    }
+    return null;
+  }
+
   /**
    * Loaded workers a reassignment could actually move onto the field. Three are
    * held back: whoever already does the wanted job; the last miner and the last
    * builder, the trades a village must always keep ({@link #ALWAYS_STAFFED});
-   * every active food producer while the village is hungry;
+   * the last active food producer while the village is hungry;
    * and anyone still inside their job-swap cooldown, so a person just placed or
    * moved is left to settle rather than yanked straight onto the field
    * (the same per-person cooldown the aptitude swap pass respects,
@@ -238,13 +269,15 @@ public final class LaborPlanner {
     long now = level.getGameTime();
     boolean hungry = isHungry(village);
     boolean storageBackedUp = village.isStorageBackedUp();
+    int foodProducerCount = countOf(village, FOOD_PRODUCERS);
     List<RealPerson> crew = new ArrayList<>();
     for (var entry : village.getJobAssignmentsView().entrySet()) {
       Occupation occupation = entry.getValue().getOccupation();
       if (occupation == vacancy.getOccupation()) {
         continue;
       }
-      if (mustKeep(occupation, countOf(village, occupation), hungry, storageBackedUp)) {
+      if (mustKeepForNeed(occupation, countOf(village, occupation), foodProducerCount,
+          hungry, storageBackedUp, vacancy.getOccupation())) {
         continue;
       }
       if (!ignoreCooldown && JobClaiming.isOnCooldown(village, entry.getKey(), now)) {
@@ -301,6 +334,21 @@ public final class LaborPlanner {
     return occupation == Occupation.QUARTERMASTER && storageBackedUp && sameOccupationCount <= 1;
   }
 
+  /**
+   * Applies the ordinary protection rules to a specific urgent vacancy. A
+   * strained village may borrow an excess food worker to unblock construction,
+   * storage, or a saved project's material chain, but never its last food producer.
+   */
+  static boolean mustKeepForNeed(Occupation occupation, int sameOccupationCount,
+      int foodProducerCount, boolean hungry, boolean storageBackedUp,
+      Occupation neededOccupation) {
+    boolean mayCoverUrgentNeed = neededOccupation != occupation
+        && FOOD_PRODUCERS.contains(occupation)
+        && foodProducerCount > 1;
+    return mustKeep(occupation, sameOccupationCount,
+        hungry && !mayCoverUrgentNeed, storageBackedUp);
+  }
+
   private static void ask(Village village, ServerLevel level, LaborNeed need, List<RealPerson> crew) {
     String field = need.vacancy().getOccupation().name().toLowerCase();
     List<String> options = new ArrayList<>();
@@ -308,7 +356,9 @@ public final class LaborPlanner {
       options.add("Move " + worker.getFullName() + " off " + worker.getOccupation().name().toLowerCase()
           + " to work as the " + field);
     }
-    options.add(LEAVE_AS_IS);
+    if (need.vacancy().getOccupation() != Occupation.BUILDER) {
+      options.add(LEAVE_AS_IS);
+    }
 
     List<UUID> crewIds = crew.stream().map(RealPerson::getUUID).toList();
     String situation = VillageRuler.context(village) + situationOf(need, crew);
@@ -355,12 +405,13 @@ public final class LaborPlanner {
       return;
     }
     LlmDecision decision = result.get();
-    if (decision.choiceIndex() == crewIds.size()) {
+    boolean mandatory = need.vacancy().getOccupation() == Occupation.BUILDER;
+    if (!mandatory && decision.choiceIndex() == crewIds.size()) {
       quietUntil.put(village.getID(), village.getVillageTime() + QUIET_SECONDS);
       Kithkyn.LOGGER.info("[labor] '{}' leaves its crew as it is: {}", village.getName(), decision.reason());
       return;
     }
-    int selected = decision.choiceIndex() < 0 || decision.choiceIndex() > crewIds.size()
+    int selected = decision.choiceIndex() < 0 || decision.choiceIndex() >= crewIds.size()
         ? 0 : decision.choiceIndex();
     if (reassign(village, level, crewIds.get(selected), need, decision.reason())) {
       RealPerson worker = village.getPerson(level, crewIds.get(selected));
@@ -381,8 +432,8 @@ public final class LaborPlanner {
       return false;
     }
     Occupation from = worker.getOccupation();
-    if (mustKeep(from, countOf(village, from), isHungry(village),
-        village.isStorageBackedUp())) {
+    if (mustKeepForNeed(from, countOf(village, from), countOf(village, FOOD_PRODUCERS),
+        isHungry(village), village.isStorageBackedUp(), post.getOccupation())) {
       // The model may answer after the crew changes. Never apply a stale choice
       // that would now remove the last essential worker.
       return false;

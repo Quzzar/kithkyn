@@ -11,8 +11,8 @@ options cap). The first real consumer is the urban planner: `UrbanPlanner.afford
 filters the whole catalogue down to buildings this village can legally and affordably start,
 and `outOfReach` to those it could save toward. Neither is ranked: the rules do not score one
 need above another, because that judgement is the model's. `decide()` offers the model the
-WHOLE vetted field, every option labelled with what it would give (beds, jobs, stores, and
-effects like "defends the village" or "cuts stone") and, crucially, the dependency facts that
+WHOLE vetted field, every option labelled with its effective cost, complete grants, exact capacity
+(beds, jobs, crop plots, and shared stores), and, crucially, the dependency facts that
 let the model reason a step ahead: a producer's line notes it makes a material other buildings
 need ("provides the oak log that other buildings are built from"), and a save-for goal names
 what it is short of and which building would make it ("still needs 2 oak log (a lumberjack
@@ -35,6 +35,11 @@ with a few logs it has no way to add to). `VillageGoal` marks such a goal stalle
 two goal lifetimes; the brain is told so in its situation ("nothing came in for it the whole
 time, so it is off the table for now") rather than quietly losing an option. Without this a camp
 re-named its lumberjack lodge ten times over four hours, nine logs short throughout.
+When the shortfall has decreased, the same goal instead records the new checkpoint and receives
+another lifetime; genuine material progress must not send a nearly funded project back through
+model selection. An affordable saved goal starts immediately even when its lifetime has just
+elapsed. This distinction was tightened on 2026-09-13 after Avenzola repeatedly abandoned a farm
+only three logs short and replaced it with successively more expensive food projects.
 
 The same holds for room (2026-09-01). A building whose footprint found no site lately is kept
 out of the options, and the situation says why, as facts from `SiteMemory` through

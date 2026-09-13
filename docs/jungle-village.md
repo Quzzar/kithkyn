@@ -24,7 +24,7 @@ catalog and immutable output hashes are recorded in
 | `fishery_jungle_1` | JA01.8 fisher | Fisher, one staff bed and one shared barrel; seated one block into the wet bank |
 | `hunting_lodge_jungle_1` | JA02.1 fletcher | Hunter and one shared chest |
 | `stoneworks_jungle_1` | JA02.5 mason | Mason and one shared chest |
-| `butchery_jungle_1` | JA02.6 shepherd | Butcher, one staff bed and its personal chest |
+| `butchery_jungle_1` | JA02.6 shepherd | Butcher, one staff bed, its personal chest, three cows and three chickens |
 | `farm_jungle_1` | JA02.7 small farm | Farmer and one shared barrel |
 | `bakery_jungle_1` | JA02.8 edited small house | Baker and one shared barrel |
 | `church_jungle_1` | JA03.3 temple | Cleric and one shared chest |
@@ -32,7 +32,7 @@ catalog and immutable output hashes are recorded in
 | `watchtower_jungle_1` | NH06.5 Firewatch | Crossbow post, one guard bed and its personal chest |
 | `house_jungle_1` | JA02.9 small house 2 | One bed and personal chest |
 | `house_jungle_1__small_house_4` | JA03.2 small house 4 | One bed |
-| `house_jungle_2` | JA01.7 treehouse, standalone | Two single rooms with personal chests |
+| `house_jungle_2` | JA01.7 treehouse, standalone, with the overlong exterior vines trimmed | Two single rooms with personal chests |
 | `house_jungle_2__large_house_1` | JA02.2 large house, standalone | Two single rooms with personal chests |
 | `couple_cottage_jungle_1` | JA02.3 leatherworker | One two-person couple room and personal chest |
 | `market_jungle_1`, `_2`, `_3` | repaired Jungle market tiers | One to three merchants and matching shared containers |

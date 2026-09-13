@@ -1291,7 +1291,7 @@ The service selections are now complete: JA03.1 is the only storehouse tier, JA0
 bedless lumberjack station, and JA02.8 is the bedless bakery. JA02.4 Library 1 and JA03.4
 Toolsmith 1 remain unused candidates. Three Jungle market tiers and one Jungle wall ring
 are placed as editable previews of the reviewed shared layouts. The current fishery has the workplace
-barrel but no personal chest; do not silently relabel that barrel as private storage.
+barrel but no personal chest; do not silently relabel that barrel as a personal container.
 
 Aaron approved stripped bamboo with each original hay block's orientation preserved. All 831
 hay blocks across the 16 affected selected exhibits have been replaced and captured; the other

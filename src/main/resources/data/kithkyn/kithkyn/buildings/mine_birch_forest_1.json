@@ -22,10 +22,22 @@
     ]
   ],
   "grants": [
+    "STORAGE",
+    "STONE",
     "ORES",
-    "FUEL"
+    "MINERALS"
   ],
-  "sink": -1,
+  "cost": [
+    {
+      "item": "minecraft:oak_log",
+      "count": 20
+    },
+    {
+      "item": "minecraft:cobblestone",
+      "count": 24
+    }
+  ],
+  "sink": 0,
   "entrance_facing": "west",
   "mine_entrance": {
     "facing": "east",

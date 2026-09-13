@@ -7,18 +7,14 @@ import java.util.Set;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import com.quzzar.kithkyn.Kithkyn;
 
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 
-/** Validated construction price used by category-level defaults and explicit building overrides. */
+/** The validated construction price authored directly on one building definition. */
 public record BuildingRecipe(List<BuildingRecipe.Material> cost) {
-  public static final String DIRECTORY = "kithkyn/construction_recipes";
-
   /** Quantities are not inventory stacks; a recipe may require more than one stack of an item. */
   public record Material(Item item, int count) {
     private static final Codec<Material> CODEC = RecordCodecBuilder.create(instance -> instance.group(
@@ -43,11 +39,6 @@ public record BuildingRecipe(List<BuildingRecipe.Material> cost) {
       }
     }
     return DataResult.success(new BuildingRecipe(cost));
-  }
-
-  /** Regional names select an economic category and level without depending on another building. */
-  public static ResourceLocation idFor(BuildingInfo info) {
-    return ResourceLocation.fromNamespaceAndPath(Kithkyn.MODID, info.getCategory() + "_" + info.getLevel());
   }
 
   /** Each definition receives independent stacks so mutating one cannot reprice another. */

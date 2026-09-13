@@ -11,6 +11,7 @@ import com.quzzar.kithkyn.llm.LlmDecision;
 import com.quzzar.kithkyn.llm.LlmService;
 import com.quzzar.kithkyn.village.Occupation;
 import com.quzzar.kithkyn.village.Village;
+import com.quzzar.kithkyn.village.VillageAttractiveness;
 import com.quzzar.kithkyn.village.VillageRequests;
 
 import java.util.concurrent.CompletableFuture;
@@ -19,6 +20,7 @@ import javax.annotation.Nullable;
 
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 
 /**
  * Decides what a village builds next.
@@ -101,6 +103,7 @@ public class UrbanPlanner {
     }
     if (!info.getBedLocations().isEmpty()
         || !info.getWorkLocations().isEmpty()
+        || !info.getWorksiteLocations().isEmpty()
         || !info.getContainerLocations().isEmpty()
         || !info.getConditionalGrants().isEmpty()) {
       return false;
@@ -185,34 +188,34 @@ public class UrbanPlanner {
 
     String goal = VillageGoal.current(village);
     if (goal != null) {
-      if (VillageGoal.hasExpired(village, village.getVillageTime())) {
-        // A goal that expires with its shortfall exactly as it was when named
-        // proved something the reachability test could not: nobody here can get
-        // what it needs. Sit it out, or the village re-names it forever.
-        BuildingInfo expired = Buildings.getByName(goal);
-        String before = VillageGoal.shortfallAtSet(village);
-        ConstructionChoice expiredChoice = expired == null ? null : goalChoice(village, expired);
-        String now = expiredChoice == null ? "" : shortfall(village, expiredChoice, stock);
-        VillageGoal.clear(village, "waited too long");
-        if (expired != null && !before.isEmpty() && before.equals(now)) {
-          VillageGoal.markStalled(village, goal, village.getVillageTime());
-        }
+      BuildingInfo wanted = Buildings.getByName(goal);
+      if (wanted == null) {
+        VillageGoal.clear(village, "the definition is gone");
       } else {
-        BuildingInfo wanted = Buildings.getByName(goal);
-        if (wanted == null) {
-          VillageGoal.clear(village, "the definition is gone");
-        } else {
-          ConstructionChoice wantedChoice = goalChoice(village, wanted);
-          if (wantedChoice == null) {
-            VillageGoal.clear(village, "the chosen construction path is no longer legal");
-          } else if (hasMaterialsToConstruct(stock, wantedChoice)) {
-            VillageGoal.clear(village, "affordable at last");
-            Kithkyn.LOGGER.info("Village '{}' saved up and is building {}",
-                village.getName(), wanted.getName());
-            return CompletableFuture.completedFuture(wantedChoice);
-          } else {
+        ConstructionChoice wantedChoice = goalChoice(village, wanted);
+        if (wantedChoice == null) {
+          VillageGoal.clear(village, "the chosen construction path is no longer legal");
+        } else if (hasMaterialsToConstruct(stock, wantedChoice)) {
+          VillageGoal.clear(village, "affordable at last");
+          Kithkyn.LOGGER.info("Village '{}' saved up and is building {}",
+              village.getName(), wanted.getName());
+          return CompletableFuture.completedFuture(wantedChoice);
+        } else if (VillageGoal.hasExpired(village, village.getVillageTime())) {
+          // A goal whose shortfall did not move for its whole lifetime proved
+          // something the reachability test could not: nobody here can get what
+          // it needs. A goal that did move is working and keeps its place.
+          String before = VillageGoal.shortfallAtSet(village);
+          String now = shortfall(village, wantedChoice, stock);
+          if (!before.isEmpty() && !before.equals(now)) {
+            VillageGoal.renewAfterProgress(village, now, village.getVillageTime());
             return CompletableFuture.completedFuture(null);
           }
+          VillageGoal.clear(village, "waited too long");
+          if (!before.isEmpty() && before.equals(now)) {
+            VillageGoal.markStalled(village, goal, village.getVillageTime());
+          }
+        } else {
+          return CompletableFuture.completedFuture(null);
         }
       }
     }
@@ -493,6 +496,7 @@ public class UrbanPlanner {
     StringBuilder situation = new StringBuilder(
         com.quzzar.kithkyn.village.VillageRuler.context(village))
         .append(VillageContextSnapshot.capture(village, stock).plannerBriefing());
+    appendFoodConversionFacts(village, stock, situation);
     if (!producesFood(village)) {
       situation.append("No building grows or gathers food yet. ");
     }
@@ -519,11 +523,51 @@ public class UrbanPlanner {
     return situation.toString();
   }
 
+  /**
+   * Names the missing conversion link when fields have filled the stores with
+   * wheat but the village still has nothing edible. Without this fact the
+   * brain repeatedly saw zero food and chose another farm, even though that
+   * only made the same inedible stockpile larger (Avenzola, 2026-09-13).
+   */
+  private static void appendFoodConversionFacts(Village village, Map<Item, Integer> stock,
+      StringBuilder situation) {
+    int wheat = stock.getOrDefault(Items.WHEAT, 0);
+    VillageAttractiveness attractiveness = village.getAttractiveness();
+    if (wheat < 3 || attractiveness == null
+        || attractiveness.foodCount() >= attractiveness.population()
+            * com.quzzar.kithkyn.configuration.KithkynConfig.AttractivenessFoodTargetPerCapita) {
+      return;
+    }
+    boolean bakeryStanding = village.getBuildings().stream().anyMatch(building ->
+        building.getInfo() != null && "bakery".equals(building.getInfo().getCategory()));
+    if (!bakeryStanding && Buildings.resolve("bakery", 1, village.getStyle()) == null) {
+      return;
+    }
+    boolean bakerVacant = village.claimableJobs().stream()
+        .anyMatch(post -> post.getOccupation() == Occupation.BAKER);
+    situation.append(wheatFoodFact(wheat, bakeryStanding, bakerVacant));
+  }
+
+  /** Pure wording seam for the planner regression. */
+  static String wheatFoodFact(int wheat, boolean bakeryStanding, boolean bakerVacant) {
+    StringBuilder fact = new StringBuilder("There are ").append(wheat)
+        .append(" wheat stored, but wheat is not edible food. ");
+    if (!bakeryStanding) {
+      fact.append("A bakery and baker can turn every 3 wheat into 1 bread; "
+          + "another wheat field will not solve hunger. ");
+    } else if (bakerVacant) {
+      fact.append("The bakery's baker post is open; staffing it will turn every 3 wheat into 1 bread, "
+          + "while another wheat field will not solve hunger. ");
+    } else {
+      fact.append("The baker can turn every 3 wheat into 1 bread; another wheat field will not solve hunger. ");
+    }
+    return fact.toString();
+  }
+
   /** Whether any standing building already produces food. */
   private static boolean producesFood(Village village) {
     return village.getBuildings().stream().anyMatch(building -> building.getInfo() != null
-        && (building.getInfo().getGrants().contains("GRAIN")
-            || building.getInfo().getGrants().contains("MEAT")));
+        && building.getInfo().getGrants().contains("FOOD"));
   }
 
   /**
@@ -595,20 +639,24 @@ public class UrbanPlanner {
         return new Candidate(choice, BuildingUpgrade.describe(village, standing, choice.info()));
       }
     }
-    return new Candidate(choice, describeFresh(village, choice.info()));
+    return new Candidate(choice, describeFresh(village, choice));
   }
 
-  /** A plain-language option line with general housing distinct from live-in workplace beds. */
-  private static String describeFresh(Village village, BuildingInfo info) {
+  /** A complete option line: effective cost, grants, and exact concrete capacity. */
+  private static String describeFresh(Village village, ConstructionChoice choice) {
+    BuildingInfo info = choice.info();
     String name = info.displayLabel();
     String subject = info.hasWellFormedId() && info.getLevel() > 1
         ? "a new level " + info.getLevel() + " " + name + " on a separate site"
         : "a " + name;
     String jobs = info.getWorkLocations().values().stream().distinct().sorted()
         .map(occupation -> occupation.name().toLowerCase()).collect(java.util.stream.Collectors.joining(", "));
-    return subject + " (adds " + BuildingImpact.capacity(village, info).describe(false)
+    String cost = ConstructionQuote.capture(choice, Map.of()).describeRequired();
+    return subject + " (cost: " + cost
+        + "; grants: " + BuildingImpact.describeGrantContract(info)
+        + "; adds " + BuildingImpact.capacity(village, info).describe(false)
         + (jobs.isEmpty() ? "" : "; jobs: " + jobs)
-        + "; provides " + BuildingImpact.describeServices(info.getGrants()) + ")"
+        + ")"
         + ("mine".equals(info.getCategory())
             ? ", opens a new shaft on a separate site instead of reusing an existing blocked or exhausted shaft" : "")
         + unlockNote(info);

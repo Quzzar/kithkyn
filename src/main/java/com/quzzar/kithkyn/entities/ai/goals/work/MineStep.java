@@ -28,6 +28,7 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -35,6 +36,7 @@ import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.WallTorchBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
+import net.minecraft.world.level.material.Fluids;
 
 import net.neoforged.neoforge.common.Tags;
 
@@ -555,6 +557,7 @@ public final class MineStep implements BlockWorkStep {
   /** Choosing a target is not proof it is reachable; only physical work clears the report. */
   private void worked(RealPerson person) {
     for (NoWork reason : NoWork.values()) person.clearBlocker(reason.text);
+    FetchMineSupportStep.clearObsoleteApproachBlocker(person);
   }
 
   @Nullable
@@ -710,7 +713,7 @@ public final class MineStep implements BlockWorkStep {
       // face has no footing, advance the earliest reachable floor edge first.
       // Otherwise the miner sees valid stone but rejects it forever while the
       // missing bridge work sits later in the cursor order.
-      if (columnBottom(local) && needsSeal(level, world.below())
+      if (columnBottom(local) && needsFloorSupport(level, world.below())
           && MineSupportMaterials.held(person.personMainInv) > 0) {
         BlockPos floorStand = standToLayFloor(person, mouth, rotation, local);
         if (floorStand != null) {
@@ -1191,7 +1194,7 @@ public final class MineStep implements BlockWorkStep {
     BlockPos floor = face.below();
     Level level = person.level();
     person.getLookControl().setLookAt(floor.getX(), floor.getY(), floor.getZ(), 30.0F, 30.0F);
-    if (!needsSeal(level, floor)) {
+    if (!needsFloorSupport(level, floor)) {
       return; // floored in the meantime (water sealed it, another pass laid it)
     }
     if (!placeSupport(person, floor, "I ran out of dirt or stone to floor the cave in my mine")) {
@@ -1505,7 +1508,7 @@ public final class MineStep implements BlockWorkStep {
     while (!frontier.isEmpty() && seen.size() <= BAIL_CAP) {
       BlockPos local = frontier.poll();
       BlockPos world = mouth.offset(local.rotate(rotation));
-      if (!isDugSpace(local) || !level.getBlockState(world).is(Blocks.WATER)) {
+      if (!isDugSpace(local) || !isWater(level.getBlockState(world))) {
         continue;
       }
       if (!toBail) {
@@ -1520,7 +1523,7 @@ public final class MineStep implements BlockWorkStep {
       for (Direction direction : Direction.values()) {
         BlockPos next = local.relative(direction);
         BlockPos nextWorld = mouth.offset(next.rotate(rotation));
-        if (isDugSpace(next) && isLiquid(level, nextWorld) && seen.add(next)) {
+        if (isDugSpace(next) && isWater(level.getBlockState(nextWorld)) && seen.add(next)) {
           frontier.add(next);
         }
       }
@@ -1597,7 +1600,7 @@ public final class MineStep implements BlockWorkStep {
   @Nullable
   private BlockPos openBoundary(Level level, BlockPos mouth, Rotation rotation,
       BlockPos worldCell, BlockPos local) {
-    if (columnBottom(local) && needsSeal(level, worldCell.below())) {
+    if (columnBottom(local) && needsFloorSupport(level, worldCell.below())) {
       return worldCell.below();
     }
     return openLining(level, mouth, rotation, worldCell, local);
@@ -1773,13 +1776,13 @@ public final class MineStep implements BlockWorkStep {
     while (!frontier.isEmpty() && water.size() < BAIL_CAP) {
       BlockPos local = frontier.poll();
       BlockPos world = mouth.offset(local.rotate(rotation));
-      if (!isLiquid(level, world)) {
+      if (!isWater(level.getBlockState(world))) {
         continue;
       }
       for (Direction d : Direction.values()) {
         BlockPos next = local.relative(d);
         BlockPos nextWorld = mouth.offset(next.rotate(rotation));
-        if (isDugSpace(next) && isLiquid(level, nextWorld) && seen.add(next)) {
+        if (isDugSpace(next) && isWater(level.getBlockState(nextWorld)) && seen.add(next)) {
           frontier.add(next);
         }
       }
@@ -1860,7 +1863,7 @@ public final class MineStep implements BlockWorkStep {
   private BlockPos wetInteriorNeighbour(Level level, BlockPos mouth, Rotation rotation, BlockPos local) {
     for (Direction direction : Direction.values()) {
       BlockPos next = local.relative(direction);
-      if (isDugSpace(next) && level.getBlockState(mouth.offset(next.rotate(rotation))).is(Blocks.WATER)) {
+      if (isDugSpace(next) && isWater(level.getBlockState(mouth.offset(next.rotate(rotation))))) {
         return next;
       }
     }
@@ -1872,10 +1875,20 @@ public final class MineStep implements BlockWorkStep {
     return !level.getBlockState(pos).getFluidState().isEmpty();
   }
 
+  /** Water includes waterlogged solid cells, which still have to be bailed or plugged. */
+  static boolean isWater(BlockState state) {
+    return state.getFluidState().getType().isSame(Fluids.WATER);
+  }
+
   /** Air or fluid at the shaft boundary needs a solid support block. */
   private static boolean needsSeal(Level level, BlockPos pos) {
     BlockState state = level.getBlockState(pos);
     return state.isAir() || !state.getFluidState().isEmpty();
+  }
+
+  /** A ramp floor must expose a sturdy top, not merely contain a non-air block. */
+  static boolean needsFloorSupport(BlockGetter level, BlockPos pos) {
+    return !level.getBlockState(pos).isFaceSturdy(level, pos, Direction.UP);
   }
 
   /**
@@ -2001,7 +2014,7 @@ public final class MineStep implements BlockWorkStep {
       // across the void that nothing could stand at, which from outside was a
       // miner who had simply stopped flooring.
       if (columnBottom(this.offset)
-          && needsSeal(person.level(), facePos.below())) {
+          && needsFloorSupport(person.level(), facePos.below())) {
         this.placeFloor = true;
         return RampScan.WORK;
       }

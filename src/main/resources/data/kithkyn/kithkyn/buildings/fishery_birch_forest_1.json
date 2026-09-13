@@ -22,8 +22,19 @@
     ]
   ],
   "grants": [
-    "MEAT",
-    "WATER"
+    "STORAGE",
+    "FOOD",
+    "FISH"
+  ],
+  "cost": [
+    {
+      "item": "minecraft:oak_log",
+      "count": 20
+    },
+    {
+      "item": "minecraft:cobblestone",
+      "count": 20
+    }
   ],
   "sink": 0,
   "village_identity": {
