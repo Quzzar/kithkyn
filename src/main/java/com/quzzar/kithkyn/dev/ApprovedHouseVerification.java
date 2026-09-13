@@ -19,6 +19,7 @@ import com.quzzar.kithkyn.entities.RealPerson;
 import com.quzzar.kithkyn.entities.ai.GuardNightRoutine;
 import com.quzzar.kithkyn.entities.ai.goals.SleepAtNightGoal;
 import com.quzzar.kithkyn.entities.ai.goals.StashAtHomeGoal;
+import com.quzzar.kithkyn.entities.ai.goals.OpenFenceGateGoal;
 import com.quzzar.kithkyn.entities.ai.goals.work.ContainerAccess;
 import com.quzzar.kithkyn.entities.ai.goals.work.ConsolidateStep;
 import com.quzzar.kithkyn.entities.ai.goals.work.PackLogistics;
@@ -772,18 +773,25 @@ public final class ApprovedHouseVerification {
     if (path != null) {
       for (int i = Math.max(0, path.getNextNodeIndex() - 1);
           i < Math.min(path.getNodeCount(), path.getNextNodeIndex() + 4); i++) {
-        nodes.add(i + ":" + path.getNode(i).asBlockPos().subtract(ORIGIN));
+        BlockPos node = path.getNode(i).asBlockPos();
+        nodes.add(i + ":" + node.subtract(ORIGIN) + "=" + walker.level().getBlockState(node));
       }
     }
     var doors = walker.goalSelector.getAvailableGoals().stream()
         .filter(goal -> goal.getGoal() instanceof OpenDoorGoal)
         .map(goal -> "running=" + goal.isRunning() + ",canUse=" + goal.getGoal().canUse()).toList();
+    var gates = walker.goalSelector.getAvailableGoals().stream()
+        .filter(goal -> goal.getGoal() instanceof OpenFenceGateGoal)
+        .map(goal -> "running=" + goal.isRunning() + ",canUse=" + goal.getGoal().canUse()).toList();
     BlockPos feet = walker.blockPosition();
-    return "collision=" + walker.horizontalCollision + ",onClimbable=" + walker.onClimbable()
+    return "collision=" + walker.horizontalCollision + ",onGround=" + walker.onGround()
+        + ",pose=" + walker.getPose() + ",body=" + walker.getBbHeight()
+        + ",onClimbable=" + walker.onClimbable()
         + ",feet=" + feet.subtract(ORIGIN) + ",feetState=" + walker.level().getBlockState(feet)
         + ",belowState=" + walker.level().getBlockState(feet.below()) + ",motion=" + walker.getDeltaMovement()
         + ",canOpenDoors="
         + ((GroundPathNavigation) walker.getNavigation()).canOpenDoors() + ",doorGoals=" + doors
+        + ",gateGoals=" + gates
         + ",pathDone=" + walker.getNavigation().isDone() + ",nextNode="
         + (path == null ? "none" : path.getNextNodeIndex()) + ",nearbyNodes=" + nodes;
   }

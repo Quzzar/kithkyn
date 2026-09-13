@@ -92,8 +92,10 @@ public final class LowPassageVerification {
           EntityDimensions natural = EntityDimensions.scalable(0.6F, baseHeight)
               .scale(stage.dimensionsScale()).scale(sample.getScale());
           EntityDimensions actual = sample.getDimensions(pose);
-          float expectedHeight = Math.min(natural.height(), stage.collisionHeightLimit());
-          check(actual.height() <= stage.collisionHeightLimit(), "scaled height exceeded " + stage);
+          float poseLimit = pose == Pose.CROUCHING
+              ? Math.min(stage.collisionHeightLimit(), 1.75F) : stage.collisionHeightLimit();
+          float expectedHeight = Math.min(natural.height(), poseLimit);
+          check(actual.height() <= poseLimit, "scaled height exceeded " + stage + " " + pose);
           check(Math.abs(actual.height() - expectedHeight) < 0.000001F, "smaller body was enlarged");
           check(actual.width() == natural.width(), "collision width changed");
           check(actual.eyeHeight() < actual.height(), "eyes exceeded the collision ceiling");

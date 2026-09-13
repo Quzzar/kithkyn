@@ -17,6 +17,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.block.DoorBlock;
+import net.minecraft.world.level.block.FenceGateBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
@@ -257,7 +258,7 @@ public class LocationManager {
 
     /**
      * Where to walk to get into a building: the cell just outside its lowest
-     * door nearest the authored front. A path aimed straight at something indoors stalls against the
+     * door or fence gate nearest the authored front. A path aimed straight at something indoors stalls against the
      * nearest outside wall when the door is on the far side, because the
      * pathfinder's budget runs out on the open ground before it finds the way
      * round (the level-3 house at Wildflower Downs, whose door faced away from
@@ -284,18 +285,20 @@ public class LocationManager {
 
         Direction approachFront = building.getInfo() == null ? Direction.NORTH
                 : building.getRotation().rotate(building.getInfo().getEntranceFacing());
-        BlockPos door = null;
+        BlockPos panel = null;
         for(BlockPos pos : BlockPos.betweenClosed(bounds.minX(), bounds.minY(), bounds.minZ(),
                 bounds.maxX(), bounds.maxY(), bounds.maxZ())) {
             BlockState state = level.getBlockState(pos);
-            if(state.getBlock() instanceof DoorBlock && state.getValue(DoorBlock.HALF) == DoubleBlockHalf.LOWER
-                    && (door == null || pos.getY() < door.getY()
-                    || (pos.getY() == door.getY()
-                        && frontCoordinate(pos, approachFront) > frontCoordinate(door, approachFront)))){
-                door = pos.immutable();
+            boolean entrancePanel = state.getBlock() instanceof FenceGateBlock
+                    || state.getBlock() instanceof DoorBlock
+                    && state.getValue(DoorBlock.HALF) == DoubleBlockHalf.LOWER;
+            if(entrancePanel && (panel == null || pos.getY() < panel.getY()
+                    || (pos.getY() == panel.getY()
+                        && frontCoordinate(pos, approachFront) > frontCoordinate(panel, approachFront)))){
+                panel = pos.immutable();
             }
         }
-        if(door == null){
+        if(panel == null){
             if(building.getInfo() == null) return null;
             Direction front = building.getRotation().rotate(building.getInfo().getEntranceFacing());
             int floor = origin.getY() + building.getPlacedSink();
@@ -328,12 +331,15 @@ public class LocationManager {
             return null;
         }
 
-        // A door sits in a wall; of its two neighbours the one farther from the
+        // An entrance panel sits in a wall; of its two neighbours the one farther from the
         // building's middle is the outside.
         BlockPos centre = bounds.getCenter();
-        Direction facing = level.getBlockState(door).getValue(DoorBlock.FACING);
-        BlockPos front = door.relative(facing);
-        BlockPos back = door.relative(facing.getOpposite());
+        BlockState panelState = level.getBlockState(panel);
+        Direction facing = panelState.getBlock() instanceof FenceGateBlock
+                ? panelState.getValue(FenceGateBlock.FACING)
+                : panelState.getValue(DoorBlock.FACING);
+        BlockPos front = panel.relative(facing);
+        BlockPos back = panel.relative(facing.getOpposite());
         return new Entrance(front.distSqr(centre) >= back.distSqr(centre) ? front : back, bounds);
 
     }
