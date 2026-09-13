@@ -14,10 +14,27 @@ import com.quzzar.kithkyn.village.PopulationOutlook;
 class VillageContextSnapshotTest {
 
   @Test
+  void reportsOrdinaryVacanciesSeparatelyFromWallDefense() {
+    VillageContextSnapshot snapshot = new VillageContextSnapshot(
+        "Rampart", "town", 12, 8, 4, 0, 0, 0, 0,
+        16, 4, 0, 0, Map.of("village center", 1), Map.of("guard", 1),
+        Map.of("gate crossbow", 3, "watchtower crossbow", 4), PopulationOutlook.CAN_GROW,
+        new VillageContextSnapshot.RecruitmentStatus(60, 50, 8, 8, 0, 0, 0, 0),
+        false, false, false, false, List.of(), Optional.empty(), Optional.empty(), List.of(),
+        List.of(), Optional.empty(), 0, 0, 0, 0);
+
+    for (String briefing : List.of(snapshot.plannerBriefing(), snapshot.chatBriefing())) {
+      assertTrue(briefing.contains("Open work: guard x1"));
+      assertTrue(briefing.contains("Open wall guard posts: gate crossbow x3, watchtower crossbow x4"));
+      assertFalse(briefing.contains("Open work: guard x8"));
+    }
+  }
+
+  @Test
   void bothBrainsDistinguishFreeCoupleRoomsFromSingleAndWorkplaceBeds() {
     VillageContextSnapshot snapshot = new VillageContextSnapshot(
         "Mesa", "hamlet", 8, 6, 2, 0, 0, 0, 0,
-        14, 2, 0, 0, Map.of("house", 4), Map.of(), PopulationOutlook.CAN_GROW,
+        14, 2, 0, 0, Map.of("house", 4), Map.of(), Map.of(), PopulationOutlook.CAN_GROW,
         new VillageContextSnapshot.RecruitmentStatus(60, 50, 8, 8, 0, 0, 0, 0),
         false, false, false, false, List.of(), Optional.empty(), Optional.empty(), List.of(),
         List.of(), Optional.empty(), 3, 1, 2, 1);
@@ -34,7 +51,7 @@ class VillageContextSnapshotTest {
     VillageContextSnapshot snapshot = new VillageContextSnapshot(
         "Meadowmere", "hamlet", 4, 4, 0,
         0, 0, 0, 0, 4, 0, 0, 0,
-        Map.of("mine", 1), Map.of(), PopulationOutlook.HOLDING,
+        Map.of("mine", 1), Map.of(), Map.of(), PopulationOutlook.HOLDING,
         new VillageContextSnapshot.RecruitmentStatus(50, 50, 8, 8, 0, 0, 0, 0),
         false, false, false, false, List.of(), Optional.empty(), Optional.empty(), List.of(),
         List.of(new VillageContextSnapshot.WorkerBlocker("miner", "Aaron",
@@ -54,7 +71,7 @@ class VillageContextSnapshotTest {
         "Emberhollow", "hamlet", 11, 6, 2,
         4, 0, 4, 0,
         6, 0, 0, 1,
-        Map.of("fishery", 3, "house", 1), Map.of("fisher", 2),
+        Map.of("fishery", 3, "house", 1), Map.of("fisher", 2), Map.of(),
         PopulationOutlook.CAN_GROW,
         new VillageContextSnapshot.RecruitmentStatus(61.0D, 50.0D, 5.5D, 8.0D,
             0.0D, 0.0D, 0.0D, 0.0D),
@@ -80,7 +97,7 @@ class VillageContextSnapshotTest {
         "Emberhollow", "hamlet", 3, 2, 0,
         1, 1, 0, 0,
         2, 0, 0, 0,
-        Map.of("house", 1), Map.of(), PopulationOutlook.HOLDING,
+        Map.of("house", 1), Map.of(), Map.of(), PopulationOutlook.HOLDING,
         new VillageContextSnapshot.RecruitmentStatus(45.0D, 50.0D, 4.0D, 8.0D,
             0.0D, 0.0D, 0.0D, 0.0D),
         false, false, false, false, List.of(),
@@ -97,7 +114,7 @@ class VillageContextSnapshotTest {
         "Meadowmere", "hamlet", 4, 4, 0,
         0, 0, 0, 0,
         8, 0, 4, 0,
-        Map.of("lumberjack", 4, "storehouse", 1), Map.of("lumberjack", 4),
+        Map.of("lumberjack", 4, "storehouse", 1), Map.of("lumberjack", 4), Map.of(),
         PopulationOutlook.HELD_AT_FLOOR,
         new VillageContextSnapshot.RecruitmentStatus(20.0D, 50.0D, 0.0D, 8.0D,
             0.0D, 0.0D, -4.0D, 0.0D),
@@ -115,7 +132,7 @@ class VillageContextSnapshotTest {
         "Meadowmere", "hamlet", 4, 4, 0,
         0, 0, 0, 0,
         4, 0, 1, 0,
-        Map.of("lumberjack", 1), Map.of("lumberjack", 1),
+        Map.of("lumberjack", 1), Map.of("lumberjack", 1), Map.of(),
         PopulationOutlook.HOLDING,
         new VillageContextSnapshot.RecruitmentStatus(41.0D, 50.0D, 2.5D, 8.0D,
             0.0D, 0.0D, -3.0D, 0.0D),

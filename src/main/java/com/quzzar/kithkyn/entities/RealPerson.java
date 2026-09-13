@@ -1221,7 +1221,11 @@ public class RealPerson extends Person {
   }
 
   public void setOccupation(Occupation occupation) {
+    Occupation previous = getOccupation();
     this.entityData.set(OCCUPATION, occupation.name());
+    if (!this.level().isClientSide && previous != occupation) {
+      clearOperationalBlockers();
+    }
   }
 
   /** Whether this person is a wandering merchant (config "Wandering merchant"). */

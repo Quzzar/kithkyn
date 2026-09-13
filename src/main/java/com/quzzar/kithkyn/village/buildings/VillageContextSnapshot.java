@@ -46,6 +46,7 @@ public record VillageContextSnapshot(
     int unhousedAdults,
     Map<String, Integer> buildings,
     Map<String, Integer> openPosts,
+    Map<String, Integer> openWallPosts,
     PopulationOutlook populationOutlook,
     RecruitmentStatus recruitment,
     boolean storageStrained,
@@ -114,6 +115,7 @@ public record VillageContextSnapshot(
   public VillageContextSnapshot {
     buildings = Collections.unmodifiableMap(new TreeMap<>(buildings));
     openPosts = Collections.unmodifiableMap(new TreeMap<>(openPosts));
+    openWallPosts = Collections.unmodifiableMap(new TreeMap<>(openWallPosts));
     currentProject = currentProject == null ? Optional.empty() : currentProject;
     savedGoal = savedGoal == null ? Optional.empty() : savedGoal;
     workplaceStatuses = List.copyOf(workplaceStatuses);
@@ -139,8 +141,16 @@ public record VillageContextSnapshot(
     }
 
     Map<String, Integer> openings = new TreeMap<>();
+    Map<String, Integer> wallOpenings = new TreeMap<>();
     for (JobAssignment job : village.claimableJobs()) {
-      openings.merge(job.getOccupation().name().toLowerCase(), 1, Integer::sum);
+      if (job.isWallPost()) {
+        WallPost post = village.getWallPost(job);
+        if (post != null) {
+          wallOpenings.merge(post.duty().name().toLowerCase().replace('_', ' '), 1, Integer::sum);
+        }
+      } else {
+        openings.merge(job.getOccupation().name().toLowerCase(), 1, Integer::sum);
+      }
     }
 
     Optional<ConstructionPlan> project = Optional.empty();
@@ -176,7 +186,7 @@ public record VillageContextSnapshot(
         village.getPreAdultResidentCount(), village.getDependentlyHousedResidentCount(),
         village.getDependentWithoutResidentParentCount(), village.getPendingArrivalCount(),
         village.getTotalBeds(), village.getFreeGeneralBedCount(), freeReserved,
-        village.getUnhousedAdultResidentCount(), standing, openings,
+        village.getUnhousedAdultResidentCount(), standing, openings, wallOpenings,
         village.getPopulationOutlook(), RecruitmentStatus.capture(attractiveness),
         village.isStorageBackedUp(),
         attractiveness.deathImpact() > 0.5F,
@@ -193,9 +203,11 @@ public record VillageContextSnapshot(
         .append(populationFacts()).append(' ')
         .append(housingFacts()).append(' ')
         .append(PlannerFacts.housingConstraint(unhousedAdults, freeGeneralBeds,
-            openPosts.values().stream().mapToInt(Integer::intValue).sum()))
+            openPosts.values().stream().mapToInt(Integer::intValue).sum()
+                + openWallPosts.values().stream().mapToInt(Integer::intValue).sum()))
         .append(PlannerFacts.existingBuildings(buildings))
         .append(PlannerFacts.openPosts(openPosts))
+        .append(PlannerFacts.openWallPosts(openWallPosts))
         .append(outlookFacts()).append(' ');
     appendRecruitment(text);
     appendWorkplaceStatuses(text);
@@ -226,6 +238,8 @@ public record VillageContextSnapshot(
         : existing.replace("Already standing", "Standing buildings") + "\n");
     String work = PlannerFacts.openPosts(openPosts);
     text.append(work.isEmpty() ? "Open work: none.\n" : work + "\n");
+    String wallWork = PlannerFacts.openWallPosts(openWallPosts);
+    text.append(wallWork.isEmpty() ? "Open wall guard posts: none.\n" : wallWork + "\n");
     text.append("Population outlook: ").append(outlookFacts()).append('\n');
     appendRecruitment(text);
     text.append('\n');

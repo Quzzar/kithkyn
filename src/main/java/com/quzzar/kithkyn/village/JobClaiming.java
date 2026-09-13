@@ -4,10 +4,13 @@ import javax.annotation.Nullable;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 import java.util.UUID;
 
 import com.quzzar.kithkyn.Kithkyn;
@@ -78,6 +81,13 @@ public final class JobClaiming {
   private record Applicant(RealPerson person, double score) {
   }
 
+  /** Stable identity of one authored or wall-derived station. */
+  private record StationSlot(UUID workplaceId, int stationIndex) {
+    static StationSlot of(JobAssignment job) {
+      return new StationSlot(job.getBuildingUUID(), job.getStationIndex());
+    }
+  }
+
   /** One reconciliation-and-claiming pass every second; swaps on the slow tick. */
   public static void tick(Village village, ServerLevel level) {
     releaseInvalidAssignments(village, level);
@@ -131,18 +141,27 @@ public final class JobClaiming {
    * and gets claimed by whatever is genuinely open.
    */
   private static void releaseInvalidAssignments(Village village, ServerLevel level) {
-    for (Map.Entry<UUID, JobAssignment> entry : village.getJobAssignmentsView().entrySet()) {
+    Set<StationSlot> booked = new HashSet<>();
+    List<Map.Entry<UUID, JobAssignment>> assignments = new ArrayList<>(
+        village.getJobAssignmentsView().entrySet());
+    assignments.sort(Map.Entry.comparingByKey());
+    for (Map.Entry<UUID, JobAssignment> entry : assignments) {
       JobAssignment job = entry.getValue();
-      if (isStationValid(village, job)) {
+      boolean valid = isStationValid(village, job);
+      boolean duplicate = valid && !booked.add(StationSlot.of(job));
+      if (valid && !duplicate) {
         continue;
       }
       village.releaseJob(entry.getKey()); // dropped, never re-queued: the station is gone
-      RealPerson person = village.getPerson(level, entry.getKey());
+      RealPerson person = level == null ? null : village.getPerson(level, entry.getKey());
       Kithkyn.LOGGER.warn(
-          "Released {}'s {} assignment in '{}': its station no longer matches the building definition",
-          person != null ? person.getFullName() : entry.getKey(), job.getOccupation(), village.getName());
+          "Released {}'s {} assignment in '{}': {}",
+          person != null ? person.getFullName() : entry.getKey(), job.getOccupation(), village.getName(),
+          duplicate ? "another worker already holds that station"
+              : "its station no longer matches the building definition");
       // The orphan pass this same tick returns them to idle.
     }
+    reconcileOpenStations(village);
   }
 
   /**
@@ -153,18 +172,22 @@ public final class JobClaiming {
    * would leave real work nobody could claim.
    *
    * Every station in the current definition must be represented exactly once,
-   * either by a booked assignment or by an open one; whatever is missing is
-   * registered as open. Additive only: shrink and reorder belong to
-   * {@link #releaseInvalidAssignments}, so between them a definition change
-   * self-heals in any direction.
+   * either by a booked assignment or by an open one. Invalid and duplicate open
+   * records are removed before whatever is genuinely missing is registered. This
+   * makes the method safe to call directly as well as after
+   * {@link #releaseInvalidAssignments}.
    */
   public static void registerMissingStations(Village village) {
     List<JobAssignment> open = village.getUnassignedJobs();
+    Set<StationSlot> represented = reconcileOpenStations(village);
     for (Building building : village.getBuildings()) {
+      if (building.getInfo() == null) {
+        continue;
+      }
       UUID buildingId = building.getUUID();
       int index = 0;
       for (Occupation occupation : building.getInfo().getWorkLocations().values()) {
-        if (!isStationRepresented(village, open, buildingId, index)) {
+        if (represented.add(new StationSlot(buildingId, index))) {
           open.add(new JobAssignment(null, occupation, buildingId, index));
           Kithkyn.LOGGER.info("Registered a new {} station in '{}': the building definition grew",
               occupation, village.getName());
@@ -173,12 +196,45 @@ public final class JobClaiming {
       }
     }
     for (int index = 0; index < village.getWallPosts().size(); index++) {
-      if (!isStationRepresented(village, open, JobAssignment.WALL_WORKPLACE_ID, index)) {
+      if (represented.add(new StationSlot(JobAssignment.WALL_WORKPLACE_ID, index))) {
         open.add(JobAssignment.wallPost(index));
         Kithkyn.LOGGER.info("Registered wall guard post {} in '{}'",
             index, village.getName());
       }
     }
+  }
+
+  /**
+   * Keeps only one valid open record for each station, with booked stations
+   * winning. Old saves may retain an open slot after its definition disappears,
+   * shrinks, or changes occupation; without this pass that ghost job can be
+   * claimed again immediately after an invalid worker is released.
+   */
+  private static Set<StationSlot> reconcileOpenStations(Village village) {
+    Set<StationSlot> represented = new HashSet<>();
+    for (JobAssignment assigned : village.getJobAssignmentsView().values()) {
+      if (isStationValid(village, assigned)) {
+        represented.add(StationSlot.of(assigned));
+      }
+    }
+
+    int invalid = 0;
+    int duplicate = 0;
+    for (Iterator<JobAssignment> iterator = village.getUnassignedJobs().iterator(); iterator.hasNext();) {
+      JobAssignment job = iterator.next();
+      if (!isStationValid(village, job)) {
+        iterator.remove();
+        invalid++;
+      } else if (!represented.add(StationSlot.of(job))) {
+        iterator.remove();
+        duplicate++;
+      }
+    }
+    if (invalid > 0 || duplicate > 0) {
+      Kithkyn.LOGGER.warn("Removed {} stale and {} duplicate open station records in '{}'",
+          invalid, duplicate, village.getName());
+    }
+    return represented;
   }
 
   /**
@@ -246,22 +302,6 @@ public final class JobClaiming {
     return false;
   }
 
-  /** True when this station is already booked by someone or already on the open list. */
-  private static boolean isStationRepresented(Village village, List<JobAssignment> open, UUID buildingId,
-      int stationIndex) {
-    for (JobAssignment job : village.getJobAssignmentsView().values()) {
-      if (job.getStationIndex() == stationIndex && buildingId.equals(job.getBuildingUUID())) {
-        return true;
-      }
-    }
-    for (JobAssignment job : open) {
-      if (job.getStationIndex() == stationIndex && buildingId.equals(job.getBuildingUUID())) {
-        return true;
-      }
-    }
-    return false;
-  }
-
   /** True when the assignment's station index still exists and still carries its occupation. */
   private static boolean isStationValid(Village village, JobAssignment job) {
     if (job.isWallPost()) {
@@ -269,7 +309,7 @@ public final class JobClaiming {
       return post != null && job.getOccupation() == Occupation.GUARD;
     }
     Building building = village.getBuilding(job.getBuildingUUID());
-    if (building == null) {
+    if (building == null || building.getInfo() == null) {
       return false;
     }
     int index = 0;
