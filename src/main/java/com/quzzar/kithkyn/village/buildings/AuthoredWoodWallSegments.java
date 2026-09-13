@@ -45,6 +45,12 @@ final class AuthoredWoodWallSegments {
   static final AuthoredWoodWallSegments POLYNESIAN_COAST = loadBundled("polynesian_coast");
   static final AuthoredWoodWallSegments ROMANIAN = loadBundled("romanian");
   static final AuthoredWoodWallSegments ALPINE_HIGHLANDS = loadBundled("alpine_highlands");
+  /**
+   * Study C of the Nautical Coast walls (2026-09-13): the Birch geometry as a
+   * sandstone seawall, smooth sandstone where Birch has mossy cobblestone, with
+   * sandstone wall tips and jungle slab walks on a stripped jungle wood footing.
+   */
+  static final AuthoredWoodWallSegments NAUTICAL_COAST = loadBundled("nautical_coast");
 
   private static final String RESOURCE_ROOT =
       "data/kithkyn/structure/wall/";
@@ -56,14 +62,14 @@ final class AuthoredWoodWallSegments {
 
   private final Map<WallSectionKind, Template> templates;
   private final boolean arid;
-  /** Whether any template authors a {@link WallBlockPlan.Piece#CORAL_FOOTING} course. */
+  /** Whether any template authors a {@link WallBlockPlan.Piece#FOOTING} course. */
   private final boolean footed;
 
   private AuthoredWoodWallSegments(Map<WallSectionKind, Template> templates, boolean arid) {
     this.templates = Map.copyOf(templates);
     this.arid = arid;
     this.footed = templates.values().stream().flatMap(template -> template.cells().stream())
-        .anyMatch(cell -> cell.piece() == WallBlockPlan.Piece.CORAL_FOOTING);
+        .anyMatch(cell -> cell.piece() == WallBlockPlan.Piece.FOOTING);
   }
 
   /**
@@ -373,12 +379,12 @@ final class AuthoredWoodWallSegments {
     return ground.get(nearest);
   }
 
-  /** Ground-contact legs. The coral footing is one, as Birch cobblestone is. */
+  /** Ground-contact legs. A footing is one, as Birch cobblestone is. */
   private static boolean isPost(WallBlockPlan.Piece piece) {
     return piece == WallBlockPlan.Piece.POST || piece == WallBlockPlan.Piece.GATE_FRAME_POST
         || piece == WallBlockPlan.Piece.COBBLE_POST
         || piece == WallBlockPlan.Piece.MOSSY_POST
-        || piece == WallBlockPlan.Piece.CORAL_FOOTING;
+        || piece == WallBlockPlan.Piece.FOOTING;
   }
 
   private static AuthoredWoodWallSegments loadBundled(String family) {
@@ -497,7 +503,7 @@ final class AuthoredWoodWallSegments {
   private static int supportPriority(WallBlockPlan.Piece piece) {
     return switch (piece) {
       case POST, GATE_FRAME_POST, GATE_FRAME_BEAM, COBBLE_POST, MOSSY_POST, BEAM_NORTH_SOUTH, BEAM_EAST_WEST, BODY, WALKWAY,
-          CORAL_FOOTING -> 0;
+          FOOTING, BODY_ACCENT -> 0;
       case SLAB, PARAPET, STEP_NORTH, STEP_EAST, STEP_SOUTH, STEP_WEST -> 1;
       default -> 2;
     };
@@ -530,7 +536,7 @@ final class AuthoredWoodWallSegments {
       case "minecraft:cobbled_deepslate_wall" -> WallBlockPlan.Piece.COBBLE_WALL;
       case "minecraft:mossy_cobblestone_wall" -> WallBlockPlan.Piece.MOSSY_WALL;
       case "minecraft:bricks" -> WallBlockPlan.Piece.BODY;
-      case "minecraft:brick_wall" -> WallBlockPlan.Piece.PARAPET;
+      case "minecraft:brick_wall", "minecraft:sandstone_wall" -> WallBlockPlan.Piece.PARAPET;
       case "minecraft:brick_slab" -> WallBlockPlan.Piece.SLAB;
       case "minecraft:cobblestone_slab" -> switch (properties.getString("type")) {
         case "bottom" -> WallBlockPlan.Piece.COBBLE_SLAB_BOTTOM;
@@ -555,9 +561,10 @@ final class AuthoredWoodWallSegments {
         default -> WallBlockPlan.Piece.POST;
       };
       case "minecraft:oak_fence", "minecraft:spruce_fence" -> WallBlockPlan.Piece.PARAPET;
-      case "minecraft:oak_slab", "minecraft:spruce_slab", "minecraft:birch_slab" -> WallBlockPlan.Piece.SLAB;
-      case "minecraft:oak_trapdoor", "minecraft:spruce_trapdoor", "minecraft:dark_oak_trapdoor" -> WallBlockPlan.trapdoorPiece(
-          horizontal(properties.getString("facing")));
+      case "minecraft:oak_slab", "minecraft:spruce_slab", "minecraft:birch_slab",
+          "minecraft:jungle_slab" -> WallBlockPlan.Piece.SLAB;
+      case "minecraft:oak_trapdoor", "minecraft:spruce_trapdoor", "minecraft:dark_oak_trapdoor",
+          "minecraft:jungle_trapdoor" -> WallBlockPlan.trapdoorPiece(horizontal(properties.getString("facing")));
       case "minecraft:ladder" -> WallBlockPlan.ladderPiece(
           horizontal(properties.getString("facing")));
       case "minecraft:lantern" -> "true".equals(properties.getString("hanging"))
@@ -578,9 +585,15 @@ final class AuthoredWoodWallSegments {
       // The Polynesian Coast capture (study A) names its own materials. Its
       // stripped spruce is palisade body, placed like Birch masonry: a post
       // would grow down through the gate passage under the roof edges. Its
-      // coral course is the literal footing.
+      // coral course is the footing.
       case "minecraft:stripped_spruce_wood" -> WallBlockPlan.Piece.BODY;
-      case "minecraft:dead_bubble_coral_block" -> WallBlockPlan.Piece.CORAL_FOOTING;
+      case "minecraft:dead_bubble_coral_block" -> WallBlockPlan.Piece.FOOTING;
+      // The Nautical Coast capture (study C) is body the same way: sandstone,
+      // and smooth sandstone where Birch has mossy cobblestone, on a footing of
+      // stripped jungle wood.
+      case "minecraft:sandstone" -> WallBlockPlan.Piece.BODY;
+      case "minecraft:smooth_sandstone" -> WallBlockPlan.Piece.BODY_ACCENT;
+      case "minecraft:stripped_jungle_wood" -> WallBlockPlan.Piece.FOOTING;
       default -> null;
     };
   }

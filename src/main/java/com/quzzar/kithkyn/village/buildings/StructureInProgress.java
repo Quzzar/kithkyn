@@ -688,7 +688,10 @@ public class StructureInProgress {
                 levelAccess.setBlock(blockpos, Blocks.BARRIER.defaultBlockState(), 20);
             }
 
-            if (levelAccess.setBlock(blockpos, blockstate, magicInt)) {
+            // As the instant build: a block laid before the support under it (the loader lists
+            // blocks with block entities last) must not be knocked off by the next block laid
+            // beside it. Every shape settles in the last phase, once the template stands.
+            if (levelAccess.setBlock(blockpos, blockstate, magicInt | Block.UPDATE_KNOWN_SHAPE)) {
                 // The laid block is the village's (docs/block-ownership.md), recorded
                 // here as the instant path records its stamp. First forget what the
                 // replaced block used to be, including an old upgrade wall turned to

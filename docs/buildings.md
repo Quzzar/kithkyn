@@ -361,9 +361,9 @@ becoming one overloaded axis.
 
 ### Current runtime selection: 2026-09-13
 
-Eleven styles exist today, in this stable order: `birch_forest`, `desert`, `badlands`,
+Twelve styles exist today, in this stable order: `birch_forest`, `desert`, `badlands`,
 `floodplain`, `jungle`, `swamp`, `mediterranean`, `tundra`, `polynesian_coast`, `romanian`,
-`alpine_highlands`.
+`alpine_highlands`, `nautical_coast`.
 Birch Forest is the only catalog bundled in the jar and so the default: a blank
 or unknown saved style reads as Birch. Desert ([desert-village.md](desert-village.md)),
 Badlands ([badlands-village.md](badlands-village.md)) and Floodplain
@@ -373,8 +373,9 @@ Badlands ([badlands-village.md](badlands-village.md)) and Floodplain
 ([mediterranean-village.md](mediterranean-village.md)), Tundra
 ([tundra-village.md](tundra-village.md)), Polynesian Coast
 ([polynesian-coast-village.md](polynesian-coast-village.md)) and Romanian
-([romanian-village.md](romanian-village.md)) and Alpine Highlands
-([alpine-highlands-village.md](alpine-highlands-village.md)) are installed as private datapacks that
+([romanian-village.md](romanian-village.md)), Alpine Highlands
+([alpine-highlands-village.md](alpine-highlands-village.md)) and Nautical Coast
+([nautical-coast-village.md](nautical-coast-village.md)) are installed as private datapacks that
 supply their own definitions and templates under the ids the code resolves; without its pack
 a style has no founding set and is never selected automatically. The old Village Life families
 (plains, taiga, snowy, savanna and the bundled desert set) were removed on 2026-09-10; see
@@ -392,16 +393,17 @@ reroll an existing village. An explicit style argument on the command still over
 Selection first honors `kithkyn:village_style/<style>` biome tags, so a datapack can map a
 vanilla or modded biome precisely without a second mapping format. If a biome has several
 explicit tags, the stable order is Birch Forest, Desert, Badlands, Floodplain, Jungle, Swamp,
-Mediterranean, Tundra, Polynesian Coast, Romanian, Alpine Highlands. Sparse Jungle carries the Polynesian Coast tag and no
+Mediterranean, Tundra, Polynesian Coast, Romanian, Alpine Highlands, Nautical Coast. Sparse Jungle carries the Polynesian Coast tag and no
 longer the Jungle one, so Jungle keeps Jungle and Bamboo Jungle.
 Only styles whose own center, mine, and storehouse definitions are loaded are automatic candidates.
 
 One rule reads the site rather than a single biome, and it comes right after the explicit tags.
 A beach (`c:is_beach`, not snowy) with warm or lukewarm ocean
 (`kithkyn:warm_ocean`) within 48 blocks is the Polynesian Coast. The check samples eight bearings
-at 16, 32 and 48 blocks without loading chunks. It runs ahead of the conventional families because
-NeoForge counts a beach as sandy, which would otherwise read as Desert. A beach on temperate or
-cold water keeps its current answer until the Nautical Coast catalog exists.
+at 16, 32 and 48 blocks without loading chunks. Every other such beach, on temperate or cold
+water, and a stony shore (`c:is_stony_shores`) are the Nautical Coast. Both rules run ahead of the
+conventional families because NeoForge counts a beach as sandy, which would otherwise read as
+Desert. A snowy beach is not an open beach, so it stays Tundra.
 
 Conventional families then retain deterministic assignments, but only where a finished
 catalog exists:

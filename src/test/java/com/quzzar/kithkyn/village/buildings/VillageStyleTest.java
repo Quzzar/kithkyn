@@ -42,7 +42,7 @@ class VillageStyleTest {
     assertEquals(List.of(VillageStyle.BIRCH_FOREST, VillageStyle.DESERT, VillageStyle.BADLANDS,
         VillageStyle.FLOODPLAIN, VillageStyle.JUNGLE, VillageStyle.SWAMP, VillageStyle.MEDITERRANEAN,
         VillageStyle.TUNDRA, VillageStyle.POLYNESIAN_COAST, VillageStyle.ROMANIAN,
-        VillageStyle.ALPINE_HIGHLANDS),
+        VillageStyle.ALPINE_HIGHLANDS, VillageStyle.NAUTICAL_COAST),
         List.of(VillageStyle.values()));
     assertEquals(VillageStyle.BIRCH_FOREST, VillageStyle.DEFAULT);
     assertEquals(VillageStyle.BIRCH_FOREST, VillageStyle.fromId(""));
@@ -206,9 +206,9 @@ class VillageStyleTest {
     Set<TagKey<Biome>> beach = Set.of(Tags.Biomes.IS_BEACH, Tags.Biomes.IS_SANDY);
     assertEquals(VillageStyle.POLYNESIAN_COAST,
         VillageStyle.select(beach::contains, "beach", 0.8F, true, 0.4F, true, 7L, ALL_STYLES));
-    assertEquals(VillageStyle.DESERT,
+    assertEquals(VillageStyle.NAUTICAL_COAST,
         VillageStyle.select(beach::contains, "beach", 0.8F, true, 0.4F, false, 7L, ALL_STYLES),
-        "a beach on temperate or cold water keeps its current answer");
+        "a beach on temperate or cold water is the Nautical Coast");
     Set<TagKey<Biome>> claimed = Set.of(Tags.Biomes.IS_BEACH, VillageStyle.SWAMP.biomeTag());
     assertEquals(VillageStyle.SWAMP,
         VillageStyle.select(claimed::contains, "beach", 0.8F, true, 0.4F, true, 7L, ALL_STYLES),
@@ -220,6 +220,27 @@ class VillageStyleTest {
     assertTrue(VillageStyle.isOpenBeach(beach::contains));
     assertFalse(VillageStyle.isOpenBeach(Set.of(Tags.Biomes.IS_BEACH, Tags.Biomes.IS_SNOWY)::contains));
     assertFalse(VillageStyle.isOpenBeach(NO_TAGS));
+  }
+
+  @Test
+  void otherOpenBeachesAndStonyShoresAreTheNauticalCoastWhenItsCatalogIsLoaded() {
+    Set<TagKey<Biome>> beach = Set.of(Tags.Biomes.IS_BEACH, Tags.Biomes.IS_SANDY);
+    assertEquals(VillageStyle.NAUTICAL_COAST,
+        VillageStyle.select(beach::contains, "beach", 0.8F, true, 0.4F, false, 7L, ALL_STYLES));
+    assertEquals(VillageStyle.NAUTICAL_COAST,
+        VillageStyle.select(Tags.Biomes.IS_STONY_SHORES::equals, "stony_shore", 0.2F, true, 0.3F, 7L, ALL_STYLES));
+    assertEquals(VillageStyle.NAUTICAL_COAST,
+        VillageStyle.select(beach::contains, "beach", 0.8F, true, 0.4F, true, 7L,
+            style -> style != VillageStyle.POLYNESIAN_COAST),
+        "without the Polynesian pack a warm beach is still a coast village");
+    Set<TagKey<Biome>> snowy = Set.of(Tags.Biomes.IS_BEACH, Tags.Biomes.IS_SNOWY);
+    assertEquals(VillageStyle.TUNDRA,
+        VillageStyle.select(snowy::contains, "snowy_beach", 0.05F, true, 0.3F, false, 7L, ALL_STYLES),
+        "a snowy beach stays Tundra country");
+    assertEquals(VillageStyle.DESERT,
+        VillageStyle.select(beach::contains, "beach", 0.8F, true, 0.4F, false, 7L,
+            style -> style != VillageStyle.NAUTICAL_COAST),
+        "without the Nautical pack a temperate beach keeps its sandy answer");
   }
 
   @Test

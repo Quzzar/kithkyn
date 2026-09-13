@@ -135,6 +135,26 @@ castle: its guards keep ordinary duty, since sentry routes and shields belong to
 never counts as the settlement's castle. If a Polynesian castle is authored later, it must decide
 which building holds the single ruling position.
 
+## Nautical Coast castle
+
+The Nautical Coast castle is the Towns & Towers beach camp's turnover ship, exhibit NC05.5 of the
+Nautical gallery ([nautical-coast-village.md](nautical-coast-village.md)), captured with Aaron's
+edits on 2026-09-13. It is the settlement's ruling seat: the king's LEADER post is on the carpet of
+his quarters beside the double bed, which is reserved for him, and the deck chest there is his.
+
+- The seven barrels beside the water cauldrons are castle storage, worked by a quartermaster.
+- The baker works the campfire and smoker, with a barrel beside them.
+- The blacksmith works the smithing table and grindstone, with a chest beside them.
+- The jail is the fenced pen by the hull. The custody cell is its middle, the release point is
+  just outside it on one side and the jailer's post on the other, and the two barrels set into the
+  ground beside it are the evidence barrels.
+- Four crew beds sleep the jailer, the baker, the blacksmith and the quartermaster: two on the
+  ground sharing a chest and two on the deck sharing a barrel.
+- Its seven banners are village banners.
+
+It has no sword posts or patrol routes. Its one guard is the jailer, and the town's captain keeps
+ordinary duty.
+
 ## Ruler decisions
 
 The existing LEADER occupation supplies the ruler. Its title is King, Queen or Sovereign,

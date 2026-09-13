@@ -199,6 +199,14 @@ public final class VillageNamer {
           List.of("Valdora", "Monteluz", "Bravena", "Cerrosa"),
           List.of("Val", "Monte", "Bra", "Cerro", "Luma", "Sierra", "Ald", "Vera"),
           List.of("dora", "luz", "vena", "rosa", "alta", "era", "ona", "iel"));
+      case NAUTICAL_COAST -> new NamingProfile(
+          "A working fishing town on a temperate shore: a lighthouse over the town fire, thatched"
+              + " sandstone and jungle-timber cottages on the sand, a jetty fishery, a turnover ship"
+              + " for its lord and a sandstone seawall on timber footings."
+              + " Brisk, weathered invented names with a salt-harbour sound.",
+          List.of("Saltmere", "Gullhaven", "Kelmouth", "Tidewick"),
+          List.of("Salt", "Gull", "Kel", "Tide", "Brine", "Wrack", "Shel", "Skerry"),
+          List.of("mere", "haven", "mouth", "wick", "cove", "ness", "holm", "strand"));
     };
   }
 

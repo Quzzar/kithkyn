@@ -197,7 +197,12 @@ public class InstantBuildStructure {
                             levelAccess.setBlock(blockpos, Blocks.BARRIER.defaultBlockState(), 20);
                         }
 
-                        if (levelAccess.setBlock(blockpos, blockstate, magicInt)) {
+                        // The template loader lists full blocks, then partial shapes, then blocks with
+                        // block entities, so a sea pickle goes down before the barrel under it and a
+                        // flower pot set beside it would knock it off (the Nautical lighthouse,
+                        // 2026-09-13). No block is judged against its neighbours until every block
+                        // stands: the pass below settles every shape once the template is complete.
+                        if (levelAccess.setBlock(blockpos, blockstate, magicInt | Block.UPDATE_KNOWN_SHAPE)) {
                             // The stamped block is the village's; record it so a
                             // building's timber never reads as a fellable tree. A
                             // plant the template carries (the lumberjack lodge's

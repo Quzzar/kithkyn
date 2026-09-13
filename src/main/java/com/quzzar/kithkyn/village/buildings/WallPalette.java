@@ -47,7 +47,33 @@ record WallPalette(Block post, Block deck, Block stairs, Block slab,
       case ALPINE_HIGHLANDS -> new WallPalette(
           Blocks.BRICKS, Blocks.BRICKS, Blocks.BRICK_STAIRS,
           Blocks.BRICK_SLAB, Blocks.BRICK_WALL, Blocks.SPRUCE_TRAPDOOR);
+      // Study C (2026-09-13): a sandstone seawall with sandstone wall tips and
+      // jungle slab walks. Its smooth sandstone accents and stripped jungle wood
+      // footing resolve through accent() and footing().
+      case NAUTICAL_COAST -> new WallPalette(
+          Blocks.SANDSTONE, Blocks.SANDSTONE, Blocks.JUNGLE_STAIRS,
+          Blocks.JUNGLE_SLAB, Blocks.SANDSTONE_WALL, Blocks.JUNGLE_TRAPDOOR);
     };
+  }
+
+  /**
+   * The course a footed family seats on the ground (docs/walls.md): dead coral
+   * under the Polynesian palisade, stripped jungle wood under the Nautical
+   * seawall. Families without a footing never place one.
+   */
+  Block footing() {
+    if (this.post == Blocks.STRIPPED_SPRUCE_WOOD) return Blocks.DEAD_BUBBLE_CORAL_BLOCK;
+    if (this.post == Blocks.SANDSTONE) return Blocks.STRIPPED_JUNGLE_WOOD;
+    return this.post;
+  }
+
+  /**
+   * A body course in the family's second masonry: the Nautical smooth
+   * sandstone, where the Birch geometry has mossy cobblestone. Other families
+   * author none.
+   */
+  Block accent() {
+    return this.post == Blocks.SANDSTONE ? Blocks.SMOOTH_SANDSTONE : this.post;
   }
 
   /**
