@@ -66,7 +66,22 @@
     ]
   ],
   "containers": [],
-  "grants": [],
+  "grants": [
+    "CIVIC_CENTER",
+    "CONSTRUCTION",
+    "HOUSING",
+    "PROTECTION"
+  ],
+  "cost": [
+    {
+      "item": "minecraft:oak_log",
+      "count": 52
+    },
+    {
+      "item": "minecraft:cobblestone",
+      "count": 56
+    }
+  ],
   "sink": 4,
   "village_identity": {
     "primary_blocks": [

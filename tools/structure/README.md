@@ -26,14 +26,14 @@ themselves — they only transform files you point them at.
 | `flatten.py` | Map pre-1.13 numeric block ids to modern blockstates |
 | `split_scene.py` | Crop the separate buildings out of one multi-building `.schematic` (flood-fill footprints; rejects trees by composition) |
 | `validate.py` | Flag blocks that would drop on placement — bed and door halves, wall torches, gravity-affected stacks, carpet on nothing |
-| `audit-templates.py` | Reject production templates containing barrier states, coordinates outside their declared size, or malformed leveled-market entrances |
+| `audit-templates.py` | Reject production templates containing barrier states, coordinates outside their declared size, open or empty butcheries, terrain-clearing market floors, or malformed leveled-market entrances |
 | `navcheck.py` | Score how walkable a finished structure is for a villager |
 | `roof.py` | Fix roof-stair facing |
-| `seating-check.py` | Flag catalog buildings seated one block low: a bottom-half stair in the layer that meets the ground is a doorstep swallowed by the terrain |
+| `seating-check.py` | Flag catalog buildings seated one block low and vines at or below the terrain layer |
 | `export-birch.py` | Derive the approved Birch assets from the immutable capture manifest, rebase amenities, and print new definitions as an apply_patch patch |
 | `RemoveTemplateBlocks.java` | Drop listed cells from structure templates with Minecraft's typed NBT reader and writer (plan: `[{"path", "remove": [[x,y,z], ...]}]`); the September 12 market floor-mat repair, `market-mat-repair-20260912.json`, is its record |
 | `ReplaceTemplateBlocks.java` | Swap the block at listed cells of structure templates for another state, keeping facing/half/shape unless the plan gives properties, with the typed NBT reader and writer; the September 12 market stripe-stair restoration, `market-stripe-repair-20260912.json`, is its record |
-| `EditTemplateBlocks.java` | Derive one structure template from another with the typed NBT reader and writer: shift, resize, remove cells and set cells from a JSON plan; the Mediterranean wall family, `mediterranean-walls-20260912.json`, is its record |
+| `EditTemplateBlocks.java` | Derive one structure template from another with the typed NBT reader and writer: shift, resize, remove or set cells, close ordinary doors, and omit terrain-clearing bottom air from a JSON plan; the Mediterranean wall family and September 12 gallery repair use it |
 | `VillageTemplateExport.java` | Native Minecraft NBT export preserving typed entity data, clearing gameplay inventories, neutralizing explicit identity slots, and carving declared air | An optional `entities` plan key adds authored livestock or allays to a template.
 
 Each script's `__main__` is an example driver; point the glob at your own

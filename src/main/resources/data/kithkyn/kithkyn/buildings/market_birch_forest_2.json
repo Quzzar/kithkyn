@@ -26,17 +26,32 @@
     [
       7,
       0,
-      6
+      9
     ],
     [
       15,
       0,
-      6
+      9
     ]
   ],
   "grants": [
+    "STORAGE",
     "TRADE",
     "TRADE_INITIATIVE"
+  ],
+  "cost": [
+    {
+      "item": "minecraft:oak_log",
+      "count": 28
+    },
+    {
+      "item": "minecraft:cobblestone",
+      "count": 32
+    },
+    {
+      "item": "minecraft:white_wool",
+      "count": 8
+    }
   ],
   "sink": 0,
   "village_identity": {

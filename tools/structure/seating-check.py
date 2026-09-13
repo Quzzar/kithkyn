@@ -1,4 +1,4 @@
-"""Flag catalog buildings that are probably seated one block too low.
+"""Flag catalog seating and ground-clearing hazards.
 
 A template's layer 0 replaces the terrain's top block; ``sink`` buries that many
 more layers and ``-1`` lifts layer 0 onto the ground (BuildingInfo.getSink).
@@ -8,6 +8,9 @@ step leads nowhere. This reads every definition of the given packs (a datapack
 root or the bundled resources) and lists the buildings whose seated layer holds
 such stairs, with what else that layer is made of, so a person can tell an
 entrance step from a farm's edging.
+
+A vine at or below the seated layer replaces dirt or grass with a fragile plant.
+The same pass reports those cells because they become holes when the vine breaks.
 
 Usage: seating-check.py <data-root> [<data-root> ...]
   where a data root is the directory holding kithkyn/buildings and structure,
@@ -48,19 +51,28 @@ def check(root):
         if not template.exists():
             continue
         sink = info.get('sink', 0)
-        layer = seated_layer(read(template), sink)
+        structure = read(template)
+        layer = seated_layer(structure, sink)
         stairs = [pos for pos, state in layer if state['Name'].endswith('_stairs')
                   and state.get('Properties', {}).get('half') == 'bottom']
-        if not stairs:
+        palette = structure['palette']
+        vines = [block['pos'] for block in structure['blocks']
+                 if block['pos'][1] <= sink
+                 and palette[block['state']]['Name'] == 'minecraft:vine']
+        if not stairs and not vines:
             continue
         makeup = Counter(state['Name'].split(':')[1] for _, state in layer).most_common(3)
-        findings.append((info['structure'], sink, len(stairs), len(layer), looks_like_ground(layer), makeup))
+        findings.append((info['structure'], sink, len(stairs), len(layer),
+                         looks_like_ground(layer), makeup, vines))
     return findings
 
 
 if __name__ == '__main__':
     for root in sys.argv[1:]:
         print('==', root)
-        for structure, sink, steps, size, ground, makeup in check(root):
-            verdict = 'ground course with edging; judge by eye' if ground else 'STEPS BURIED: probably one block too low'
-            print(f'  {structure:<36} sink {sink:>2}  {steps:>2} buried stair(s) in a layer of {size:>3}  {makeup}  -> {verdict}')
+        for structure, sink, steps, size, ground, makeup, vines in check(root):
+            if steps:
+                verdict = 'ground course with edging; judge by eye' if ground else 'STEPS BURIED: probably one block too low'
+                print(f'  {structure:<36} sink {sink:>2}  {steps:>2} buried stair(s) in a layer of {size:>3}  {makeup}  -> {verdict}')
+            if vines:
+                print(f'  {structure:<36} sink {sink:>2}  GROUND VINES at {vines}')

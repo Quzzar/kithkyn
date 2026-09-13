@@ -13,9 +13,13 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.ChunkPos;
+import net.minecraft.world.level.Level;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.common.world.chunk.RegisterTicketControllersEvent;
 import net.neoforged.neoforge.common.world.chunk.TicketController;
 import net.neoforged.neoforge.common.world.chunk.TicketHelper;
+import net.neoforged.neoforge.event.server.ServerStoppingEvent;
 
 /**
  * Keeps a village's chunks loaded and ticking when no player is near, so it
@@ -34,6 +38,7 @@ import net.neoforged.neoforge.common.world.chunk.TicketHelper;
  * reconcile rebuilds from scratch, so a village that no longer qualifies (the
  * mode changed, or a hybrid village's grace ran out) holds nothing.
  */
+@EventBusSubscriber(modid = Kithkyn.MODID)
 public final class VillageChunkLoader {
 
   /** Chunks of perimeter held around the village's own footprint. */
@@ -71,12 +76,21 @@ public final class VillageChunkLoader {
    * active mode actually wants within a second of the village's first tick.
    */
   private static void validateTickets(ServerLevel level, TicketHelper helper) {
+    if (level.dimension() == Level.OVERWORLD) {
+      held.clear();
+    }
     for (UUID owner : new ArrayList<>(helper.getEntityTickets().keySet())) {
       helper.removeAllTickets(owner);
     }
     for (BlockPos owner : new ArrayList<>(helper.getBlockTickets().keySet())) {
       helper.removeAllTickets(owner);
     }
+  }
+
+  /** An integrated server can restart inside the same JVM; its derived ticket ledger cannot. */
+  @SubscribeEvent
+  public static void onServerStopping(ServerStoppingEvent event) {
+    held.clear();
   }
 
   /**

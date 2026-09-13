@@ -447,6 +447,11 @@ public class StructureInProgress {
         return this.progress;
     }
 
+    /** Persisted structure-cell cursor, exposed for development progress audits. */
+    public int getBuildCursor() {
+        return this.index;
+    }
+
     public Rotation getRotation(){
         return this.rotation;
     }

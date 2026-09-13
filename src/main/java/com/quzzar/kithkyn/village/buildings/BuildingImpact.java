@@ -21,19 +21,27 @@ import net.minecraft.world.item.ItemStack;
 
 /** Calculated construction facts shared by demand checks and every planner option. */
 public final class BuildingImpact {
-  private static final Set<String> FOOD_GRANTS = Set.of("GRAIN", "MEAT", "BREAD");
+  private static final Set<String> FOOD_GRANTS = Set.of("FOOD", "CROPS", "BAKED_GOODS", "FISH", "MEAT");
   private static final Map<String, String> SERVICE_NAMES = Map.ofEntries(
-      Map.entry("WATER", "fresh water"), Map.entry("ORES", "ore extraction"),
-      Map.entry("FUEL", "fuel production"), Map.entry("PROTECTION", "village defense"),
-      Map.entry("GRAIN", "grain production"), Map.entry("TRADE", "trade"),
-      Map.entry("TRADE_INITIATIVE", "trade outreach"), Map.entry("REPAIR", "gear repair"),
-      Map.entry("SMELTING", "metal smelting"), Map.entry("CUT_STONE", "stone cutting"),
+      Map.entry("CIVIC_CENTER", "a civic center"), Map.entry("GOVERNANCE", "governance"),
+      Map.entry("CONSTRUCTION", "construction labor"), Map.entry("LOGISTICS", "village logistics"),
+      Map.entry("HOUSING", "housing"), Map.entry("FAMILY_HOUSING", "family housing"),
+      Map.entry("HOSPITALITY", "hospitality"), Map.entry("WANDERERS", "newcomer attraction"),
+      Map.entry("PROTECTION", "village defense"),
+      Map.entry("RANGED_GUARD_POSTS", "ranged guard posts"), Map.entry("CUSTODY", "custody"),
+      Map.entry("STORAGE", "shared storage"), Map.entry("WATER", "fresh water"),
+      Map.entry("FOOD", "food supply"), Map.entry("CROPS", "crop production"),
+      Map.entry("BAKED_GOODS", "baked goods"), Map.entry("FISH", "fish"),
+      Map.entry("MEAT", "meat production"), Map.entry("LIVESTOCK", "livestock"),
+      Map.entry("LEATHER", "leather production"), Map.entry("WOOL", "wool production"),
+      Map.entry("LOGS", "logging"), Map.entry("PLANKS", "plank production"),
+      Map.entry("STONE", "stone extraction"), Map.entry("CUT_STONE", "stone cutting"),
+      Map.entry("ORES", "ore extraction"), Map.entry("MINERALS", "mineral extraction"),
+      Map.entry("REPAIR", "gear repair"), Map.entry("SMELTING", "metal smelting"),
       Map.entry("TOOLS_IRON", "iron tools, swords and buckets"),
       Map.entry("ARMOR_IRON", "iron armor"), Map.entry("SHIELDS", "shield production"),
-      Map.entry("LOGS", "logging"), Map.entry("PLANKS", "plank production"),
-      Map.entry("MEAT", "meat production"), Map.entry("BREAD", "bread production"),
-      Map.entry("LEATHER", "leather production"), Map.entry("WOOL", "wool production"),
-      Map.entry("HEALING", "healing"), Map.entry("WANDERERS", "newcomer attraction"));
+      Map.entry("HEALING", "healing"), Map.entry("TRADE", "trade"),
+      Map.entry("TRADE_INITIATIVE", "trade outreach"));
 
   private BuildingImpact() {
   }
@@ -176,15 +184,40 @@ public final class BuildingImpact {
   }
 
   public static String describeServices(Collection<String> services) {
-    List<String> names = services.stream().filter(service -> !service.equals("STORAGE"))
-        .sorted().map(service -> SERVICE_NAMES.getOrDefault(service, service.toLowerCase().replace('_', ' '))).toList();
+    List<String> names = services.stream().sorted().map(BuildingImpact::serviceName).toList();
     return names.isEmpty() ? "none" : String.join(", ", names);
+  }
+
+  /** Every unconditional and conditional planning outcome authored on one candidate. */
+  public static String describeGrantContract(BuildingInfo info) {
+    List<String> descriptions = new ArrayList<>(info.getGrants().stream().sorted()
+        .map(BuildingImpact::serviceName).toList());
+    for (Grant grant : info.getConditionalGrants().stream()
+        .sorted(java.util.Comparator.comparing(Grant::capability)).toList()) {
+      if (grant.isUnconditional()) {
+        descriptions.add(serviceName(grant.capability()));
+        continue;
+      }
+      List<String> conditions = new ArrayList<>();
+      if (!grant.requiresCapability().isEmpty()) {
+        conditions.add("the village has " + describeServices(grant.requiresCapability()));
+      }
+      if (!grant.requiresSupply().isEmpty()) {
+        conditions.add("storage contains " + grant.requiresSupply().stream()
+            .map(Materials::describe).sorted().collect(java.util.stream.Collectors.joining(", ")));
+      }
+      descriptions.add(serviceName(grant.capability()) + " when " + String.join(" and ", conditions));
+    }
+    return descriptions.isEmpty() ? "none" : String.join(", ", descriptions);
+  }
+
+  private static String serviceName(String service) {
+    return SERVICE_NAMES.getOrDefault(service, service.toLowerCase().replace('_', ' '));
   }
 
   private static Set<String> difference(Set<String> first, Set<String> second) {
     Set<String> difference = new HashSet<>(first);
     difference.removeAll(second);
-    difference.remove("STORAGE");
     return difference;
   }
 

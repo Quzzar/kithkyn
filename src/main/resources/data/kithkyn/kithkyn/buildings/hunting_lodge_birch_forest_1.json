@@ -28,8 +28,20 @@
   ],
   "containers": [],
   "grants": [
+    "HOUSING",
+    "FOOD",
     "MEAT",
     "LEATHER"
+  ],
+  "cost": [
+    {
+      "item": "minecraft:oak_log",
+      "count": 24
+    },
+    {
+      "item": "minecraft:cobblestone",
+      "count": 24
+    }
   ],
   "sink": 0,
   "village_identity": {

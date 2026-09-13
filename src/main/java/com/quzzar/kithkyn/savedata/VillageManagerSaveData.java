@@ -15,7 +15,9 @@ import com.quzzar.kithkyn.village.WandererPool;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.NbtOps;
+import net.minecraft.nbt.StringTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.ServerLevelAccessor;
@@ -38,6 +40,12 @@ public class VillageManagerSaveData extends SavedData {
 
     private final Map<String, Village> villages = new HashMap<>();
 
+    /**
+     * Developer audit allowlist. When developer commands are enabled and this
+     * is nonempty, only these villages run and hold persistent chunk tickets.
+     */
+    private final Set<String> auditedVillages = new HashSet<>();
+
     /** Everyone on the road beyond the horizon: one list for the whole server (docs/population-and-labor.md). */
     private final WandererPool wanderers = new WandererPool(this::setDirty);
     private final Graveyard graveyard = new Graveyard(this::setDirty);
@@ -54,6 +62,9 @@ public class VillageManagerSaveData extends SavedData {
 
     /** Natural search state is scoped to this world and shared across its players. */
     public void generateVillages(ServerLevel level) {
+        if (isAuditIsolationActive()) {
+            return;
+        }
         generation.tick(level);
     }
 
@@ -138,6 +149,10 @@ public class VillageManagerSaveData extends SavedData {
                     .resultOrPartial(error -> Kithkyn.LOGGER.error("Failed to load the register of the dead: {}", error))
                     .ifPresent(data.graveyard::load);
         }
+        ListTag audited = tag.getList("AuditedVillages", Tag.TAG_STRING);
+        for (int index = 0; index < audited.size(); index++) {
+            data.auditedVillages.add(audited.getString(index));
+        }
         return data;
     }
 
@@ -161,6 +176,11 @@ public class VillageManagerSaveData extends SavedData {
                 .orElse(null);
         if (dead != null) {
             tag.put("TheDead", dead);
+        }
+        if (!auditedVillages.isEmpty()) {
+            ListTag audited = new ListTag();
+            auditedVillages.stream().sorted().map(StringTag::valueOf).forEach(audited::add);
+            tag.put("AuditedVillages", audited);
         }
         return tag;
     }
@@ -253,8 +273,23 @@ public class VillageManagerSaveData extends SavedData {
     /** Runs every second, driven by the overworld tick handler. */
     public void tick(ServerLevel level) {
         attach(level);
-        villages.values().forEach(village -> village.update(level));
-        com.quzzar.kithkyn.raids.UndeadRaids.scanGrudges(level, villages.values());
+        if (auditedVillages.removeIf(id -> !villages.containsKey(id))) {
+            setDirty();
+        }
+        java.util.Collection<Village> activeVillages = villages.values();
+        if (isAuditIsolationActive()) {
+            activeVillages = auditedVillages.stream().map(villages::get)
+                    .filter(java.util.Objects::nonNull).toList();
+            for (Village village : villages.values()) {
+                if (!auditedVillages.contains(village.getID())) {
+                    com.quzzar.kithkyn.village.VillageChunkLoader.release(level, village.getID());
+                }
+            }
+        }
+        for (Village village : activeVillages) {
+            village.update(level);
+        }
+        com.quzzar.kithkyn.raids.UndeadRaids.scanGrudges(level, activeVillages);
         if (!villages.isEmpty()) {
             setDirty();
         }
@@ -272,8 +307,47 @@ public class VillageManagerSaveData extends SavedData {
         Village.Removal removal = village.demolish(level);
         com.quzzar.kithkyn.village.VillageChunkLoader.release(level, village.getID());
         villages.remove(village.getID());
+        auditedVillages.remove(village.getID());
         setDirty();
         return removal;
+    }
+
+    /** Adds or removes a village from the persisted developer audit allowlist. */
+    public boolean setVillageAudited(String villageId, boolean audited) {
+        boolean changed = audited ? auditedVillages.add(villageId) : auditedVillages.remove(villageId);
+        if (changed) {
+            setDirty();
+        }
+        return changed;
+    }
+
+    /** Stops audit isolation and returns how many villages were being monitored. */
+    public int clearAuditedVillages() {
+        int removed = auditedVillages.size();
+        if (removed > 0) {
+            auditedVillages.clear();
+            setDirty();
+        }
+        return removed;
+    }
+
+    /** Stable snapshot of the persisted audit allowlist. */
+    public Set<String> getAuditedVillageIds() {
+        return Set.copyOf(auditedVillages);
+    }
+
+    /** Whether this exact village is on the persisted audit allowlist. */
+    public boolean isVillageAudited(String villageId) {
+        return auditedVillages.contains(villageId);
+    }
+
+    /**
+     * Audit isolation is inert when developer commands are disabled, so a
+     * development save cannot silently suspend a normal server.
+     */
+    public boolean isAuditIsolationActive() {
+        return com.quzzar.kithkyn.configuration.KithkynConfig.DeveloperCommands
+                && !auditedVillages.isEmpty();
     }
 
     /** The village whose town center is closest to the given position, or null if none exist. */

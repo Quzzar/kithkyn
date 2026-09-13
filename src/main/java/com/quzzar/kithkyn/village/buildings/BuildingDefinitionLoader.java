@@ -1,6 +1,5 @@
 package com.quzzar.kithkyn.village.buildings;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import com.google.gson.Gson;
@@ -35,53 +34,30 @@ public class BuildingDefinitionLoader extends SimpleJsonResourceReloadListener {
 
     @Override
     protected void apply(Map<ResourceLocation, JsonElement> jsons, ResourceManager resourceManager, ProfilerFiller profiler) {
-        Map<ResourceLocation, JsonElement> recipes = new HashMap<>();
-        scanDirectory(resourceManager, BuildingRecipe.DIRECTORY, new Gson(), recipes);
-        Map<String, BuildingInfo> loaded = resolve(jsons, recipes);
+        Map<String, BuildingInfo> loaded = resolve(jsons);
         Buildings.reload(loaded);
         Kithkyn.LOGGER.info("Loaded {} village building definitions", loaded.size());
     }
 
-    /** Resolve both collections before publishing, independent of other resource reload listeners. */
-    static Map<String, BuildingInfo> resolve(Map<ResourceLocation, JsonElement> jsons,
-            Map<ResourceLocation, JsonElement> recipeJsons) {
-        Map<ResourceLocation, BuildingRecipe> recipes = new HashMap<>();
-        recipeJsons.forEach((id, json) -> BuildingRecipe.CODEC.parse(JsonOps.INSTANCE, json)
-                .ifError(error -> Kithkyn.LOGGER.error("Invalid construction recipe {}: {}", id, error.message()))
-                .result()
-                .ifPresent(recipe -> recipes.put(id, recipe)));
-        Map<String, BuildingInfo> loaded = new HashMap<>();
+    /** Resolves complete, independently priced definitions before publishing a reload. */
+    static Map<String, BuildingInfo> resolve(Map<ResourceLocation, JsonElement> jsons) {
+        Map<String, BuildingInfo> loaded = new java.util.HashMap<>();
         jsons.forEach((id, json) -> {
             BuildingInfo.CODEC.parse(JsonOps.INSTANCE, json)
                 .resultOrPartial(error -> Kithkyn.LOGGER.error("Invalid building definition {}: {}", id, error))
                 .ifPresent(info -> {
-                    String problem = info.validate();
+                    BuildingRecipe recipe = BuildingRecipe.CODEC.parse(JsonOps.INSTANCE, json)
+                        .ifError(error -> Kithkyn.LOGGER.error(
+                            "Rejected building definition {}: missing or invalid authored cost: {}", id, error.message()))
+                        .result()
+                        .orElse(null);
+                    if (recipe == null) return;
+                    info.setMaterialCost(recipe.materials());
+                    String problem = info.validateAuthoredContract();
                     if (problem != null) {
                         Kithkyn.LOGGER.error("Rejected building definition {} ({})", id, problem);
                         return;
                     }
-                    // A warning, not a rejection: the building still stands and
-                    // staffs its post, but the planner cannot see what the post
-                    // gives, so the author is told (StationGrants).
-                    for (String missing : StationGrants.missing(info)) {
-                        Kithkyn.LOGGER.warn("Building definition {}: {}", id, missing);
-                    }
-                    ResourceLocation recipeId = BuildingRecipe.idFor(info);
-                    BuildingRecipe recipe;
-                    if (json.getAsJsonObject().has("cost")) {
-                        recipe = BuildingRecipe.CODEC.parse(JsonOps.INSTANCE, json)
-                            .ifError(error -> Kithkyn.LOGGER.error("Rejected building definition {}: invalid cost override: {}", id, error.message()))
-                            .result()
-                            .orElse(null);
-                        if (recipe == null) return;
-                    } else {
-                        recipe = recipes.get(recipeId);
-                        if (recipe == null) {
-                            Kithkyn.LOGGER.error("Rejected building definition {}: missing valid construction recipe {}", id, recipeId);
-                            return;
-                        }
-                    }
-                    info.setMaterialCost(recipe.materials());
                     BuildingInfo previous = loaded.put(info.getName(), info);
                     if (previous != null) {
                         Kithkyn.LOGGER.warn("Duplicate building definition for '{}' (from {})", info.getName(), id);

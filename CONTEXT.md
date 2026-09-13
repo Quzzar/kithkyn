@@ -13,15 +13,23 @@ An environmental property, such as Cold, Wet, Arid, Coastal, or Wooded, inferred
 _Avoid_: Village biome, culture
 
 **Building category**:
-The functional role shared by structures that answer the same village need, such as house, fishery, church, or watchtower.
+The primary planning classification under which authored buildings are compared, such as house, fishery, church, or watchtower. A category does not exhaust a mixed-use building's jobs or capabilities and does not determine its construction price.
 _Avoid_: Building type
+
+**Building grant**:
+A qualitative outcome one completed building supplies to its village, such as Housing, Crops, Stone, or Protection. Every building variant has at least one grant; quantities and specialized capacity remain separate facts about that grant.
+_Avoid_: Benefit, literal output item
 
 **Building level**:
 The development stage of one building category within one village biome. Building levels are independent of the village’s camp-to-city progression.
 _Avoid_: Building tier
 
+**Building recipe**:
+The authored material price of one building variant, balanced around its complete package of housing, jobs, capabilities, storage, and progression value. It is neither a bill of the blocks in the structure nor a price inherited from the building category.
+_Avoid_: Block count, category price
+
 **Building variant**:
-The authored structure that realizes a building category for one village biome. It may have a different footprint and shape, not merely a substituted block palette.
+The specific authored building definition that realizes a building category for one village biome. It may combine housing, several jobs, capabilities, and storage, carries its own building recipe, and may have a different footprint and shape rather than merely a substituted block palette.
 _Avoid_: Material swap
 
 **Dependent housing**:

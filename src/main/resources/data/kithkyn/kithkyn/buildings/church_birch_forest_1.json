@@ -22,7 +22,18 @@
     ]
   ],
   "grants": [
+    "STORAGE",
     "HEALING"
+  ],
+  "cost": [
+    {
+      "item": "minecraft:oak_log",
+      "count": 16
+    },
+    {
+      "item": "minecraft:cobblestone",
+      "count": 28
+    }
   ],
   "sink": 0,
   "village_identity": {

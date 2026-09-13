@@ -16,6 +16,10 @@ The private catalog contains 30 selected building definitions:
 | Services | T02.9 tavern (one innkeeper bed and four general beds), R01.8 temple, two watchtower tiers, and retained D04.12 well |
 | Trade | Three market tiers with one, two, and three merchant stations |
 
+The Desert butchery's two ordinary doors start closed, and its pen starts with three cows and
+three sheep. The church is raised one block (`sink -1`) so its base remains visible. The oasis
+fishery is lowered two blocks (`sink 2`) so its water and rim meet the surrounding terrain.
+
 The mine supplies the fourth founding job and fifth founding bed. Storehouse I
 does not duplicate the center's quartermaster job. The bell plaza is the meeting
 point; the campfire remains a separate cooking and gathering location.
@@ -89,12 +93,11 @@ sleeps, eight personal deposits and eight communal deposits. The upgrade fits in
 four rotations. The selection and immutable capture hashes are in
 `tools/structure/desert-temple-tower-adoption-20260910.json`.
 
-Construction prices default to shared recipes by building category and level across styles.
-The current regional definitions inherit those defaults; deliberate per-building `cost` overrides
-are supported when needed. The temple, bakery and tavern use basic
-masonry instead of finished stone bricks; quantities remain unchanged. A small tower
-costs 24 timber and 40 stone; upgrading it costs 20 additional stone. Building the
-larger tower fresh costs 24 timber and 60 stone. See [building-spec.md](building-spec.md).
+Every Desert definition owns its explicit construction price and grants. The prices are balanced
+against the building's complete housing, jobs, storage, outcomes, and progression role, with the
+structure palette serving only as a sanity check. The current values are recorded in the
+[locked balance map](research/building-cost-rebalance-2026-09-12.md). See
+[building-spec.md](building-spec.md) for the authoring contract.
 
 The edited R07.2 fort is available as one optional `castle_desert_1` per village. Its
 eight beds include a royal couple suite, accommodation for the existing center captain,
@@ -103,7 +106,7 @@ wooden stall, two sword posts, two crossbow posts and a jailer. The merchant use
 village's existing staffed market and treasury. Two stacked evidence barrels beside the
 rooftop cell are excluded from village storage and theft rules. See [castles.md](castles.md) for custody, inventory handling
 and ruler decisions. All four rotations passed physical access and role-allocation
-checks; the live private catalog now loads 201 total building definitions.
+checks; the live private catalogs plus bundled Birch now contain 200 building definitions.
 
 ## Mining in sand
 

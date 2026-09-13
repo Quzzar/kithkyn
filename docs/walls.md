@@ -359,5 +359,5 @@ standing lamps become lit candle clusters; all four hanging gate lamps stay. The
 wood geometry still supplies the route, access shafts, and silhouette. Arid trim uses
 separate post and beam pieces so foundations extend under legs without filling the
 passage beneath roof beams. The live workshop copies have been updated and photographed;
-the matching generator was deployed on September 10 with the shared-recipe update. Captures and exact block comparisons
+the matching generator was deployed on September 10 with the then-current building-cost update. Captures and exact block comparisons
 are recorded in `tools/structure/arid-wall-workshop-20260909.json`.

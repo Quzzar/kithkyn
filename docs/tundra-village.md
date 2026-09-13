@@ -34,8 +34,8 @@ The private datapack contains 23 definitions:
 | `house_tundra_1__two_single` | T01.3 two single beds with separate personal storage |
 | `house_tundra_1__three_single` | T01.6 three single beds with shared storage |
 | `couple_cottage_tundra_1` | T01.2 couple home with shared personal storage |
-| `butchery_tundra_1` | T02.1 butcher station and three persistent sheep in the enclosure |
-| `fishery_tundra_1` | T02.3 fisher's hut with its worker bed and storage |
+| `butchery_tundra_1` | T02.1 butcher station, closed doors and three persistent sheep in the enclosure |
+| `fishery_tundra_1` | T02.3 fisher's hut, sunk one block, with its worker bed and storage |
 | `lumberjack_tundra_1` | T02.4 lumber yard with a worker bed, personal and shared storage, and a spruce planting site |
 | `watchtower_tundra_1` | T03.1 sole tower level; crossbow post, guard bed and personal chest; the authored fence, lantern and six-rung ladder remain unchanged |
 | `church_tundra_1` | T03.2 cleric station with a worker bed and personal chest |

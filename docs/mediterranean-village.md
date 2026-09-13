@@ -33,7 +33,7 @@ The private datapack contains 24 definitions:
 | `farm_mediterranean_1` | M05.3 CTOV small farm as Aaron edited it, with its field barrel |
 | `farm_mediterranean_2` | M08.2 large sweet-berry field, the small farm's upgrade |
 | `butchery_mediterranean_1` | M04.2 farm and pasture: a farmer picking glow berries from the trellised cave vines, and a butcher who works the pen whole (breeding, shearing and slaughter above six of a kind) with three cows and three sheep, one barrel each |
-| `lumberjack_mediterranean_1` | M08.3 timber yard: one barrel is the lumberjack's station, the two hook-trimmed barrels are decoration, the other four are village storage with a quartermaster's worksite |
+| `lumberjack_mediterranean_1` | M08.3 timber yard: an oak sapling replaces the dead-bush tree marker; one barrel is the lumberjack's station, the two hook-trimmed barrels are decoration, and the other four are village storage with a quartermaster's worksite |
 | `well_mediterranean_1` | M08.6 planter rebuilt by Aaron as a small well |
 | `market_mediterranean_1`, `_2`, `_3` | The shared market geometry in quartz bricks and pillars, spruce rails and plain candles, keeping the stripe-matched awning stairs and the authored fabric colours |
 | `castle_mediterranean_1` | M08.1 fort: ruler's double bed, baker and blacksmith with a shared chest, jail cell with two evidence chests upstairs, a jailer post, and four sword guards patrolling the gates and the yard; it has no stall, so the castle merchant systems do not apply |

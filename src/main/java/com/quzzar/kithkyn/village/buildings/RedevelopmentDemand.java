@@ -12,7 +12,7 @@ import com.quzzar.kithkyn.village.Village;
 /** Current demand is a precondition for destructive development, independent of model persuasion. */
 public final class RedevelopmentDemand {
   private static final Set<Occupation> FOOD_JOBS = Set.of(Occupation.FARMER, Occupation.FISHER, Occupation.HUNTER);
-  private static final Set<String> FOOD_GRANTS = Set.of("GRAIN", "MEAT", "BREAD");
+  private static final Set<String> FOOD_GRANTS = Set.of("FOOD", "CROPS", "BAKED_GOODS", "FISH", "MEAT");
 
   private RedevelopmentDemand() {
   }

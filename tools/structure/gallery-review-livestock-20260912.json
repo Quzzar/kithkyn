@@ -1,0 +1,32 @@
+[
+  {
+    "source": "run/gallery-review-repairs-20260912/staged-doors/butchery_desert_1.nbt",
+    "output": "run/gallery-review-repairs-20260912/staged/butchery_desert_1.nbt",
+    "size": [14, 7, 13],
+    "white": [],
+    "air": [],
+    "entities": [
+      {"pos": [8.5, 1.0, 4.5], "nbt": "{id:\"minecraft:cow\",Age:0,InLove:0,PersistenceRequired:1b,Health:10.0f}"},
+      {"pos": [9.5, 1.0, 5.5], "nbt": "{id:\"minecraft:cow\",Age:0,InLove:0,PersistenceRequired:1b,Health:10.0f}"},
+      {"pos": [10.5, 1.0, 6.5], "nbt": "{id:\"minecraft:cow\",Age:0,InLove:0,PersistenceRequired:1b,Health:10.0f}"},
+      {"pos": [8.5, 1.0, 7.5], "nbt": "{id:\"minecraft:sheep\",Age:0,InLove:0,PersistenceRequired:1b,Health:8.0f,Color:0b,Sheared:0b}"},
+      {"pos": [9.5, 1.0, 8.5], "nbt": "{id:\"minecraft:sheep\",Age:0,InLove:0,PersistenceRequired:1b,Health:8.0f,Color:0b,Sheared:0b}"},
+      {"pos": [10.5, 1.0, 7.5], "nbt": "{id:\"minecraft:sheep\",Age:0,InLove:0,PersistenceRequired:1b,Health:8.0f,Color:0b,Sheared:0b}"}
+    ]
+  },
+  {
+    "source": "run/gallery-review-repairs-20260912/staged-doors/butchery_jungle_1.nbt",
+    "output": "run/gallery-review-repairs-20260912/staged/butchery_jungle_1.nbt",
+    "size": [8, 6, 11],
+    "white": [],
+    "air": [],
+    "entities": [
+      {"pos": [1.5, 1.0, 6.5], "nbt": "{id:\"minecraft:cow\",Age:0,InLove:0,PersistenceRequired:1b,Health:10.0f}"},
+      {"pos": [3.5, 1.0, 6.5], "nbt": "{id:\"minecraft:cow\",Age:0,InLove:0,PersistenceRequired:1b,Health:10.0f}"},
+      {"pos": [5.5, 1.0, 6.5], "nbt": "{id:\"minecraft:cow\",Age:0,InLove:0,PersistenceRequired:1b,Health:10.0f}"},
+      {"pos": [1.5, 1.0, 8.5], "nbt": "{id:\"minecraft:chicken\",Age:0,InLove:0,PersistenceRequired:1b,Health:4.0f}"},
+      {"pos": [3.5, 1.0, 8.5], "nbt": "{id:\"minecraft:chicken\",Age:0,InLove:0,PersistenceRequired:1b,Health:4.0f}"},
+      {"pos": [5.5, 1.0, 8.5], "nbt": "{id:\"minecraft:chicken\",Age:0,InLove:0,PersistenceRequired:1b,Health:4.0f}"}
+    ]
+  }
+]

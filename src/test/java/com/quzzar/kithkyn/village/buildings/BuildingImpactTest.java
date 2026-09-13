@@ -55,6 +55,23 @@ class BuildingImpactTest {
   }
 
   @Test
+  void grantDescriptionsExposeBroadSpecificAndConditionalValue() {
+    BuildingInfo tavern = definition("tavern_birch_forest_1",
+        "\"grants\":[\"HOSPITALITY\",\"FOOD\"],"
+            + "\"grants_if\":[{\"capability\":\"WANDERERS\",\"requires_supply\":[\"minecraft:bread\"]}]");
+    assertEquals("food supply, hospitality, newcomer attraction when storage contains bread",
+        BuildingImpact.describeGrantContract(tavern));
+  }
+
+  @Test
+  void storageRemainsVisibleAsBothGrantAndExactCapacity() {
+    BuildingInfo storehouse = definition("storehouse_birch_forest_1", "\"grants\":[\"STORAGE\"]");
+    var gained = BuildingImpact.services(List.of(), List.of(), storehouse, item -> true);
+    assertEquals(Set.of("STORAGE"), gained.gained());
+    assertEquals("shared storage", BuildingImpact.describeServices(gained.gained()));
+  }
+
+  @Test
   void removedHousingAndWorkerBedsAreSubtractedSeparately() {
     var net = BuildingImpact.net(new BuildingImpact.Capacity(5, 0, 1, Map.of(), 0, 0, 0), List.of(
         new BuildingImpact.Capacity(3, 0, 1, Map.of(), 0, 0, 0),
@@ -67,7 +84,7 @@ class BuildingImpactTest {
   @Test
   void losingBothWellsExplicitlyLosesLastWaterSourceButRemovingOneDoesNot() {
     BuildingInfo well = definition("well_birch_forest_1", "\"grants\":[\"WATER\"]");
-    BuildingInfo farm = definition("farm_birch_forest_2", "\"grants\":[\"GRAIN\"]");
+    BuildingInfo farm = definition("farm_birch_forest_2", "\"grants\":[\"FOOD\",\"CROPS\"]");
     var one = BuildingImpact.services(List.of(well, well, farm), List.of(well), farm, item -> true);
     var both = BuildingImpact.services(List.of(well, well, farm), List.of(), farm, item -> true);
     assertTrue(one.lostAfter().isEmpty());
@@ -78,21 +95,21 @@ class BuildingImpactTest {
 
   @Test
   void replacingOnlyFoodBuildingReportsTemporaryRatherThanPermanentServiceLoss() {
-    BuildingInfo farm = definition("farm_birch_forest_1", "\"grants\":[\"GRAIN\"]");
+    BuildingInfo farm = definition("farm_birch_forest_1", "\"grants\":[\"FOOD\",\"CROPS\"]");
     var effects = BuildingImpact.services(List.of(farm), List.of(), farm, item -> true);
-    assertEquals(Set.of("GRAIN"), effects.lostDuring());
+    assertEquals(Set.of("FOOD", "CROPS"), effects.lostDuring());
     assertTrue(effects.lostAfter().isEmpty());
-    assertTrue(effects.describe().contains("unavailable only during work: grain production"));
+    assertTrue(effects.describe().contains("unavailable only during work: crop production, food supply"));
   }
 
   @Test
   void removingAPrerequisiteAlsoReportsItsDependentService() {
     BuildingInfo well = definition("well_birch_forest_1", "\"grants\":[\"WATER\"]");
     BuildingInfo producer = definition("farm_birch_forest_1",
-        "\"grants_if\":[{\"capability\":\"GRAIN\",\"requires_capability\":[\"WATER\"]}]");
+        "\"grants_if\":[{\"capability\":\"CROPS\",\"requires_capability\":[\"WATER\"]}]");
     BuildingInfo house = definition("house_birch_forest_1", "\"grants\":[]");
     var effects = BuildingImpact.services(List.of(well, producer), List.of(producer), house, item -> true);
-    assertEquals(Set.of("WATER", "GRAIN"), effects.lostAfter());
+    assertEquals(Set.of("WATER", "CROPS"), effects.lostAfter());
   }
 
   @Test

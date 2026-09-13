@@ -328,12 +328,11 @@ public class Village {
   private transient List<WallPost> cachedWallPosts = List.of();
 
   /**
-   * Set when the quartermaster cannot fit a haul into the storehouse, read by
-   * the planner as a reason to want more storage. Transient on purpose: it is a
-   * live symptom, not saved state, and the quartermaster re-raises it on the
-   * next overflow, so it need not survive a reload.
+   * Holders currently carrying goods the storehouse rejected. Each holder owns
+   * its report so an idle keeper cannot clear another's. Transient on purpose:
+   * holders re-report their live packs after a reload.
    */
-  private transient boolean storageStrained;
+  private transient Set<UUID> storageStrainReporters = new HashSet<>();
 
   /** Consecutive project checks the current build has spent gathering; abandons past the cap. */
   private transient int gatheringChecks;
@@ -1093,7 +1092,6 @@ public class Village {
     List<ItemStack> combined = new ArrayList<>(pendingVillageItems());
     combined.addAll(items);
     savePendingVillageItems(combined);
-    storageStrained = true;
   }
 
   public List<ItemStack> pendingVillageItems() {
@@ -1882,12 +1880,18 @@ public class Village {
    * (docs/village-loading.md).
    */
   public Set<Long> desiredLoadedChunks(ServerLevel level) {
-    com.quzzar.kithkyn.configuration.VillageLoadingMode mode =
-        com.quzzar.kithkyn.configuration.KithkynConfig.VillageLoading;
-    if (mode == com.quzzar.kithkyn.configuration.VillageLoadingMode.OFF || getTownCenter() == null) {
+    var villages = VillageManager.get(level);
+    boolean auditIsolation = villages.isAuditIsolationActive();
+    if (auditIsolation && !villages.isVillageAudited(id)) {
       return Set.of();
     }
-    if (mode == com.quzzar.kithkyn.configuration.VillageLoadingMode.HYBRID
+    com.quzzar.kithkyn.configuration.VillageLoadingMode mode =
+        com.quzzar.kithkyn.configuration.KithkynConfig.VillageLoading;
+    if ((!auditIsolation && mode == com.quzzar.kithkyn.configuration.VillageLoadingMode.OFF)
+        || getTownCenter() == null) {
+      return Set.of();
+    }
+    if (!auditIsolation && mode == com.quzzar.kithkyn.configuration.VillageLoadingMode.HYBRID
         && level.getGameTime() - lastVisitedTick > VillageChunkLoader.HYBRID_GRACE_TICKS) {
       return Set.of();
     }
@@ -3296,18 +3300,22 @@ public class Village {
     return sleepsInReservedBedAt(personId, buildingUUID) && !isReservedCoupleBed(bedAssignments.get(personId));
   }
 
-  /** The quartermaster raises this when the storehouse overflows; the planner reads it. */
-  public void setStorageStrained(boolean strained) {
-    this.storageStrained = strained;
+  /** Record or clear one holder's rejected pack without overwriting anyone else's report. */
+  public void reportStorageStrain(UUID sourceId, boolean strained) {
+    if (strained) {
+      this.storageStrainReporters.add(sourceId);
+    } else {
+      this.storageStrainReporters.remove(sourceId);
+    }
   }
 
   public boolean isStorageStrained() {
-    return this.storageStrained;
+    return !this.storageStrainReporters.isEmpty();
   }
 
   /** One canonical signal for storage that is rejecting or still holding displaced goods. */
   public boolean isStorageBackedUp() {
-    return storageStrained || hasPendingStorageOverflow();
+    return isStorageStrained() || hasPendingStorageOverflow();
   }
 
   public String getID() {
@@ -3430,6 +3438,7 @@ public class Village {
   }
 
   public void removePerson(UUID personUUID) {
+    reportStorageStrain(personUUID, false);
     this.brain.removePerson(personUUID, people, bedAssignments, jobAssignments, unassignedBeds, unassignedJobs);
   }
 

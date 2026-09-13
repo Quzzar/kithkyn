@@ -22,7 +22,9 @@ import net.minecraft.server.Bootstrap;
  * Plan: a JSON array of {"source": ..., "output": ..., "size": [x,y,z], "shift": [dx,dy,dz],
  * "remove": [[x,y,z], ...], "set": [{"pos": [x,y,z], "name": ..., "properties": {...}}, ...]}.
  * The shift applies to every source cell first; removals and sets are in output coordinates, and a
- * set replaces whatever is at its cell or adds a new cell. Every cell must land inside the size.
+ * set replaces whatever is at its cell or adds a new cell. {@code close_doors} closes ordinary
+ * doors and fence gates while preserving decorative trapdoors. {@code remove_bottom_air} omits air from layer zero
+ * so a structure leaves the terrain there unchanged. Every cell must land inside the size.
  * Run like the other tools here: java -cp <moddev classpath> tools/structure/EditTemplateBlocks.java plan.json
  */
 public final class EditTemplateBlocks {
@@ -49,6 +51,18 @@ public final class EditTemplateBlocks {
         cells.put(key(moved), block);
       }
       int removed = 0;
+      if (spec.has("remove_bottom_air") && spec.get("remove_bottom_air").getAsBoolean()) {
+        var iterator = cells.values().iterator();
+        while (iterator.hasNext()) {
+          CompoundTag block = iterator.next();
+          ListTag pos = block.getList("pos", Tag.TAG_INT);
+          CompoundTag state = palette.getCompound(block.getInt("state"));
+          if (pos.getInt(1) == 0 && state.getString("Name").equals("minecraft:air")) {
+            iterator.remove();
+            removed++;
+          }
+        }
+      }
       if (spec.has("remove")) {
         for (JsonElement cell : spec.getAsJsonArray("remove")) {
           if (cells.remove(key(ints(cell.getAsJsonArray()))) == null) throw new IllegalStateException(source + ": nothing to remove at " + cell);
@@ -75,6 +89,24 @@ public final class EditTemplateBlocks {
           block.putInt("state", state);
           cells.put(key(pos), block);
           set++;
+        }
+      }
+      int closed = 0;
+      if (spec.has("close_doors") && spec.get("close_doors").getAsBoolean()) {
+        for (CompoundTag block : cells.values()) {
+          CompoundTag current = palette.getCompound(block.getInt("state"));
+          String name = current.getString("Name");
+          boolean closeable = name.endsWith("_fence_gate")
+              || (name.endsWith("_door") && !name.endsWith("_trapdoor"));
+          if (!closeable) continue;
+          CompoundTag properties = current.getCompound("Properties");
+          if (!properties.getString("open").equals("true")) continue;
+          CompoundTag desired = current.copy();
+          desired.getCompound("Properties").putString("open", "false");
+          int state = palette.indexOf(desired);
+          if (state < 0) { palette.add(desired); state = palette.size() - 1; }
+          block.putInt("state", state);
+          closed++;
         }
       }
       List<CompoundTag> ordered = new ArrayList<>(cells.values());
@@ -124,7 +156,9 @@ public final class EditTemplateBlocks {
       Files.createDirectories(output.getParent());
       NbtIo.writeCompressed(root, output);
       if (!NbtIo.readCompressed(output, NbtAccounter.unlimitedHeap()).equals(root)) throw new IllegalStateException("round-trip mismatch for " + output);
-      System.out.println(output + ": " + blocks.size() + " cells (" + removed + " removed, " + set + " set), size " + java.util.Arrays.toString(size) + ", palette " + compact.size());
+      System.out.println(output + ": " + blocks.size() + " cells (" + removed + " removed, " + set
+          + " set, " + closed + " door cells closed), size " + java.util.Arrays.toString(size)
+          + ", palette " + compact.size());
     }
   }
 

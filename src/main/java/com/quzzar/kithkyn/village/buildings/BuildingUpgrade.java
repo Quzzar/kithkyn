@@ -319,8 +319,11 @@ public final class BuildingUpgrade {
       return "an on-site " + target + " upgrade";
     }
     BuildingImpact.Capacity net = BuildingImpact.net(village, to, List.of(from));
-    return "an on-site " + target + " upgrade (net " + net.describe(true)
-        + "; provides " + BuildingImpact.describeServices(to.getGrants()) + ")";
+    String cost = ConstructionQuote.capture(new ConstructionChoice(to, ConstructionMode.UPGRADE), Map.of())
+        .describeRequired();
+    return "an on-site " + target + " upgrade (cost: " + cost
+        + "; grants: " + BuildingImpact.describeGrantContract(to)
+        + "; net " + net.describe(true) + ")";
   }
 
   /** The footprint a standing building actually occupies, in its own frame. */

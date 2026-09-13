@@ -53,7 +53,7 @@ class PlannerFactsTest {
         Set.of(Occupation.LUMBERJACK), List.of("LOGS", "PLANKS"), open,
         capability -> Set.of("LOGS", "PLANKS").contains(capability)));
     assertFalse(WorkplaceDemand.duplicatesVacantProduction(
-        Set.of(Occupation.FARMER), List.of("GRAIN"), open,
+        Set.of(Occupation.FARMER), List.of("FOOD", "CROPS"), open,
         capability -> Set.of("LOGS", "PLANKS").contains(capability)));
     assertFalse(WorkplaceDemand.duplicatesVacantProduction(
         Set.of(Occupation.LUMBERJACK), List.of("LOGS", "CHARCOAL"), open,

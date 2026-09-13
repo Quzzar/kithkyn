@@ -22,8 +22,15 @@
     ]
   ],
   "grants": [
+    "STORAGE",
     "LOGS",
     "PLANKS"
+  ],
+  "cost": [
+    {
+      "item": "minecraft:cobblestone",
+      "count": 28
+    }
   ],
   "sink": 0,
   "village_identity": {
