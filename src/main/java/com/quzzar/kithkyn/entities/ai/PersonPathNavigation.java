@@ -14,6 +14,7 @@ import net.minecraft.util.Mth;
 import net.minecraft.core.Direction;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.navigation.GroundPathNavigation;
 import net.minecraft.world.level.Level;
@@ -122,6 +123,9 @@ public final class PersonPathNavigation extends GroundPathNavigation {
 
   /** The long retries that failed lately, so a stuck walker is not charged for them on every re-plan. */
   private final LongRetryMemo longRetry = new LongRetryMemo();
+
+  /** Whether navigation, rather than a work or combat goal, put this person into a crouch. */
+  private boolean navigationCrouching;
 
   public PersonPathNavigation(Mob mob, Level level) {
     super(mob, level);
@@ -374,9 +378,26 @@ public final class PersonPathNavigation extends GroundPathNavigation {
 
   @Override
   public void tick() {
+    boolean crouchedStair = this.path != null && !this.isDone() && isRisingFromStair();
+    if (crouchedStair && this.mob.getPose() == Pose.STANDING) {
+      this.mob.setPose(Pose.CROUCHING);
+      this.navigationCrouching = true;
+    } else if (!crouchedStair && this.navigationCrouching
+        && this.level.noCollision(this.mob,
+            this.mob.getDimensions(Pose.STANDING).makeBoundingBox(this.mob.position()))) {
+      this.mob.setPose(Pose.STANDING);
+      this.navigationCrouching = false;
+    }
     super.tick();
     if (this.path == null || this.isDone()) {
       return;
+    }
+    if (crouchedStair && this.mob.horizontalCollision) {
+      // The path node is one block higher, but a half stair can stop the
+      // body's centre just short of vanilla MoveControl's jump threshold.
+      // Crouching clears the authored overhead trim; this is the ordinary mob
+      // jump needed to cross the stair's raised half.
+      this.mob.getJumpControl().jump();
     }
     Vec3 next = this.path.getNextEntityPos(this.mob);
     Vec3 stairCorner = stairCornerApproach(next);
@@ -512,6 +533,20 @@ public final class PersonPathNavigation extends GroundPathNavigation {
     if (alongX == null || alongZ == null) return target;
     double offset = Math.min(0.2D, Math.max(0.0D, (1.0D - this.mob.getBbWidth()) / 2.0D - 0.025D));
     return target.add(-alongX.getStepX() * offset, 0.0D, -alongZ.getStepZ() * offset);
+  }
+
+  /** A half stair immediately before a full-block rise, where low trim can require crouching. */
+  private boolean isRisingFromStair() {
+    int index = this.path.getNextNodeIndex();
+    if (index <= 0) return false;
+    Node previous = this.path.getNode(index - 1);
+    Node next = this.path.getNode(index);
+    if (next.y <= previous.y) return false;
+    BlockPos support = new BlockPos(previous.x, previous.y - 1, previous.z);
+    if (!(this.level.getBlockState(support).getBlock() instanceof StairBlock)) return false;
+    int dx = Integer.signum(next.x - previous.x);
+    int dz = Integer.signum(next.z - previous.z);
+    return dx != 0 || dz != 0;
   }
 
   private boolean isDescendingIntoStairCorner() {

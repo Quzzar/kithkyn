@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "recorded": "2026-09-13",
-  "status": "verified",
+  "status": "prepared",
   "style": "alpine_highlands",
   "description": "Approved Iberian-inspired Alpine catalog in brick and spruce; no tavern, watchtower or castle.",
   "founding": {
@@ -78,7 +78,7 @@
       "asset": "run/alpine-integration/datapack/data/kithkyn/structure/church_alpine_highlands_1.nbt",
       "asset_sha256": "0a0a76e1cc295d70bfe028b8483828fac9674f40506432e8f19c0500f8dce813",
       "definition": "run/alpine-integration/datapack/data/kithkyn/kithkyn/buildings/church_alpine_highlands_1.json",
-      "definition_sha256": "113dd07b1aa15f7f37267d90362b048cca994d75e866db243c5d094f4ff2ded7"
+      "definition_sha256": "b0106a507083c593d9714d956bd42ada768b01f5d5dce73fb8b79c61c26e929a"
     },
     {
       "exhibit": "AL09.3",
@@ -120,7 +120,7 @@
       "asset": "run/alpine-integration/datapack/data/kithkyn/structure/house_alpine_highlands_1__family_house.nbt",
       "asset_sha256": "bbd173d429a9c88c6accb5e46819677c0983744c225e61bd80c654a59d4564c6",
       "definition": "run/alpine-integration/datapack/data/kithkyn/kithkyn/buildings/house_alpine_highlands_1__family_house.json",
-      "definition_sha256": "85c92ed15088a530fcb15819dedccbaed00a22862e8e8ad6572306bceb5ddc96"
+      "definition_sha256": "e7a35ba423829aa43712fd95b7b56591d3f609998261370694313f98958c5387"
     },
     {
       "exhibit": "AL10.2",
@@ -141,7 +141,7 @@
       "asset": "run/alpine-integration/datapack/data/kithkyn/structure/house_alpine_highlands_1__five_bed.nbt",
       "asset_sha256": "e9969a69d7e7a3df31c369a88b5835ff1dacc73d94cf4911c3b200d0b4aded77",
       "definition": "run/alpine-integration/datapack/data/kithkyn/kithkyn/buildings/house_alpine_highlands_1__five_bed.json",
-      "definition_sha256": "bfaf8abfa6a8e235d0253e6c8ad2f50be0e95f45498beade41d981c6e74a9ed2"
+      "definition_sha256": "8e740a05783266ab2340a2e9f419c7065bf2c6117d831a98f57ea7c5c3ae0079"
     },
     {
       "exhibit": "AL10.3",
@@ -162,7 +162,7 @@
       "asset": "run/alpine-integration/datapack/data/kithkyn/structure/house_alpine_highlands_1__three_bed.nbt",
       "asset_sha256": "1d3ba4bf3b1972b9f65bdf5386a87ff871c64edfb4ec47f2c4927ede91d4924c",
       "definition": "run/alpine-integration/datapack/data/kithkyn/kithkyn/buildings/house_alpine_highlands_1__three_bed.json",
-      "definition_sha256": "04177533c14f2ef6aca20b4691fd4002aef7b86f9c380a79e8e9b563185b1b97"
+      "definition_sha256": "3105292e369817db422a527f2212febb7436c7791e72537348a80e33d3a280a3"
     },
     {
       "exhibit": "AL10.4",
@@ -183,7 +183,7 @@
       "asset": "run/alpine-integration/datapack/data/kithkyn/structure/blacksmith_alpine_highlands_1.nbt",
       "asset_sha256": "4dcaa66760f60ba13edcf27061797973b1a6f103a5b11b862f47bd9f934646ad",
       "definition": "run/alpine-integration/datapack/data/kithkyn/kithkyn/buildings/blacksmith_alpine_highlands_1.json",
-      "definition_sha256": "ea3b9ec26ffdbfafed312b6d261c5d5b50a05c0bd62e297736b6a4f1a93b5a59"
+      "definition_sha256": "fdd5da0e96526e4cd3219a0d4bbb0586aee834a9a0864155bc3da969b822a473"
     },
     {
       "exhibit": "AL10.5",
@@ -204,7 +204,7 @@
       "asset": "run/alpine-integration/datapack/data/kithkyn/structure/bakery_alpine_highlands_1.nbt",
       "asset_sha256": "566ea8a105273586f3fa2f47ac2e1931454a5a87c487c423586ea65620359e64",
       "definition": "run/alpine-integration/datapack/data/kithkyn/kithkyn/buildings/bakery_alpine_highlands_1.json",
-      "definition_sha256": "6be4529646ad9f839be93637d3962437b5d65674c51644708a51487f2b2d4715"
+      "definition_sha256": "b2119714368cc6a4728e5036e8e4df07605f58d8199126b7a3f225c4bb772477"
     },
     {
       "exhibit": "AL10.7",
@@ -225,7 +225,7 @@
       "asset": "run/alpine-integration/datapack/data/kithkyn/structure/hunting_lodge_alpine_highlands_1.nbt",
       "asset_sha256": "9c37acfd6c87cb40f788d2006575eb1f8364635b49bd4fa240a193b77d4e871b",
       "definition": "run/alpine-integration/datapack/data/kithkyn/kithkyn/buildings/hunting_lodge_alpine_highlands_1.json",
-      "definition_sha256": "f76926f877faaa67c84897bfad4179a159bf3cb229f59c9074bf964a2bb684ac"
+      "definition_sha256": "1089d35ff6c2f148993c389cf4e4a8fc8294994f57d30b5cd31c6ab4f817ca24"
     },
     {
       "exhibit": "AL10.8",
@@ -246,7 +246,7 @@
       "asset": "run/alpine-integration/datapack/data/kithkyn/structure/storehouse_alpine_highlands_1.nbt",
       "asset_sha256": "541f75f391b248d0cd9506aa354e62a4e309fcef369eb97d156abbfbdc436420",
       "definition": "run/alpine-integration/datapack/data/kithkyn/kithkyn/buildings/storehouse_alpine_highlands_1.json",
-      "definition_sha256": "b15ef24e503e4c69e4e1f191363dca522ef868e4240c56f215ff4b5f5e70f660"
+      "definition_sha256": "436948ffe338dbd6f71cf6b5ce3e6797d1575ef2ea0469b395d8a76e31e0e021"
     },
     {
       "exhibit": "AL10.9",
@@ -267,7 +267,7 @@
       "asset": "run/alpine-integration/datapack/data/kithkyn/structure/house_alpine_highlands_1__two_bed.nbt",
       "asset_sha256": "4f3de511dd6696a7d2dd291e18ceb5376204365272a9bec0dcf86c03ae64872b",
       "definition": "run/alpine-integration/datapack/data/kithkyn/kithkyn/buildings/house_alpine_highlands_1__two_bed.json",
-      "definition_sha256": "b4ebe456be5404da478ad38acb29b39f96f5b272da8f9c2cbcc0eeb669f7bd2d"
+      "definition_sha256": "83367344dc72056e9ce19d9b05b85c8c605e11cac243283b4b5ac52957096749"
     },
     {
       "exhibit": "AL10.10",
@@ -288,7 +288,7 @@
       "asset": "run/alpine-integration/datapack/data/kithkyn/structure/bakery_alpine_highlands_1__baker_home.nbt",
       "asset_sha256": "8456dbea6c43a295cdb1f31aafba11684d2f6968d700e44ba9bf4497942a8c0d",
       "definition": "run/alpine-integration/datapack/data/kithkyn/kithkyn/buildings/bakery_alpine_highlands_1__baker_home.json",
-      "definition_sha256": "234dd412dd0129fe097cc88d789571ed32658620daf2e7fb36ade85308b3e9db"
+      "definition_sha256": "ccda051f3766f68b61a3fdd205a450b09ce8b2f743ebe546735bb91b533d6319"
     },
     {
       "exhibit": "AL10.11",
@@ -309,7 +309,7 @@
       "asset": "run/alpine-integration/datapack/data/kithkyn/structure/house_alpine_highlands_1.nbt",
       "asset_sha256": "c4ac5ba2d12cb0982cf97d8dbddcb6e7c9be06e459ec252f891f5b4518bce9cd",
       "definition": "run/alpine-integration/datapack/data/kithkyn/kithkyn/buildings/house_alpine_highlands_1.json",
-      "definition_sha256": "7298f4c0d52bb877c6bae467399eedba7450625c149f6646a382f38cec929cd1"
+      "definition_sha256": "78018dcbec5f3e429c5ea1b75b059109c40d18c7d81a88b2001594f88f20ea7a"
     },
     {
       "exhibit": "AL10.12",
@@ -330,7 +330,7 @@
       "asset": "run/alpine-integration/datapack/data/kithkyn/structure/storehouse_alpine_highlands_1__compact.nbt",
       "asset_sha256": "0ec32ef03295b6d4f2dbe36f5087a34f8d34f1022b21ca1e9abdb96613dbcf46",
       "definition": "run/alpine-integration/datapack/data/kithkyn/kithkyn/buildings/storehouse_alpine_highlands_1__compact.json",
-      "definition_sha256": "8a1f0517eb0b8008ad6a02f254fcba075f071b02760ba7c3cbeaf7a7ff7681a8"
+      "definition_sha256": "ff759dfbc10e04e2f44832b14a274b1da9d135fd663c0130ceb062ee587de0ef"
     },
     {
       "exhibit": "AD03.1",
@@ -342,37 +342,37 @@
         6,
         11
       ],
-      "source": "run/alpine-selected-board/prepared/ad03_1_live_20260912-224928.nbt",
-      "source_sha256": "f56f8dcc598344855514a5ddb65cd3d2a12cee6ed36ce29167d44d46d2e7cca8",
+      "source": "run/alpine-selected-board/prepared/ad03_1_sapling_barrel_20260913.nbt",
+      "source_sha256": "49106d1bba25563e60cc1cda3273c0c65552cdea332c3bb520b97dcd689995f2",
       "barriers": 0,
       "structure_void": 0,
       "beds": 0,
       "entities": 0,
       "asset": "run/alpine-integration/datapack/data/kithkyn/structure/lumberjack_alpine_highlands_1.nbt",
-      "asset_sha256": "4902197978840ea30c31c63b4cd3ac2453a61d8b8a7919c9f5968cff3116ff36",
+      "asset_sha256": "49106d1bba25563e60cc1cda3273c0c65552cdea332c3bb520b97dcd689995f2",
       "definition": "run/alpine-integration/datapack/data/kithkyn/kithkyn/buildings/lumberjack_alpine_highlands_1.json",
-      "definition_sha256": "1bf1703ea8a2e711ae549d9ebcf5eed0a60608257747b34a7ceace8a1d00442e"
+      "definition_sha256": "217173e48a3f050abb91515136fe9ae4dc8246f8fff68fd5e3bdc746a02b6ea7"
     },
     {
-      "exhibit": "AD03.6",
+      "exhibit": "AD02.6",
       "structure": "mine_alpine_highlands_1",
       "category": "mine",
       "level": 1,
       "size": [
-        5,
-        48,
-        5
+        7,
+        3,
+        6
       ],
-      "source": "run/alpine-selected-board/prepared/ad03_6_live_20260912-224928.nbt",
-      "source_sha256": "0fcbfec239dde1199033cb9a69ddc41dcfb13304434022b0d468a4bf241cb4fa",
+      "source": "run/alpine-donor-yard/prepared/ad02_6_iberian_20260912-223535.nbt",
+      "source_sha256": "5b2667de8d57f87bd8ddf37e5c19ded99c1e5e70fe5f5d76b4eca6f7b5937b36",
       "barriers": 0,
-      "structure_void": 4,
+      "structure_void": 0,
       "beds": 0,
       "entities": 0,
       "asset": "run/alpine-integration/datapack/data/kithkyn/structure/mine_alpine_highlands_1.nbt",
-      "asset_sha256": "235b34971c3823b8acc8cf38b1bfa7d55b1ec75d1b3aec7f953fcca017bbcf4c",
+      "asset_sha256": "8f78583ad9a19940551da50e6a65de79a270477124c464d059f06113fb5d78d4",
       "definition": "run/alpine-integration/datapack/data/kithkyn/kithkyn/buildings/mine_alpine_highlands_1.json",
-      "definition_sha256": "f9ef50ee7410e5d4e17817f67886f6b30e268610a67b2fdef62a57b76574bd31"
+      "definition_sha256": "8ae4773472bcf6d768289b8807f7dc64b33f94fe3ad0891e937ba27427b6fdbb"
     },
     {
       "exhibit": "AD03.8",
@@ -384,16 +384,16 @@
         12,
         3
       ],
-      "source": "run/alpine-selected-board/prepared/ad03_8_brick_well_20260912-230325.nbt",
-      "source_sha256": "55ed8a50fbeaba5a665150c167b1691b5ef6f7b380295432cbf589e7ca40f1df",
+      "source": "run/alpine-selected-board/prepared/ad03_8_height_gallery_20260913.nbt",
+      "source_sha256": "28d47cc6757c38efabba04c9ccf020c8f49ece044e642c842e6ccd7d0428cd79",
       "barriers": 0,
       "structure_void": 0,
       "beds": 0,
       "entities": 0,
       "asset": "run/alpine-integration/datapack/data/kithkyn/structure/well_alpine_highlands_1.nbt",
-      "asset_sha256": "ff6daaa6d66c575870fcda85de6c23218acf297cbf9ce9d6e2389ae402a854aa",
+      "asset_sha256": "790eaadaaee9a89d1602d975f311ec1dd14b6c982089a7d8388696bb9c78e33c",
       "definition": "run/alpine-integration/datapack/data/kithkyn/kithkyn/buildings/well_alpine_highlands_1.json",
-      "definition_sha256": "447fb939596be5ed09c35503d358c2b5be29751ed5c1e5a4f68e170cf9ab7014"
+      "definition_sha256": "39eefe601cb824a6c3b22581e0285a37d18160c391c28476185f9d6a73e05a18"
     },
     {
       "exhibit": "AD02.5",
@@ -405,14 +405,14 @@
         8,
         10
       ],
-      "source": "run/alpine-selected-board/prepared/ad02_5_brick_body_spruce_roof_20260912-230325.nbt",
-      "source_sha256": "7d30650c5a5c169bb0ea6f8f2f3c3625f4f8c76fb75c6cb2aa2a946b0281f0a0",
+      "source": "run/alpine-selected-board/prepared/ad02_5_height_gallery_20260913.nbt",
+      "source_sha256": "227c708a4eddfea45c4688b237a761947429d32b898383ddde902963cdd0ebce",
       "barriers": 0,
       "structure_void": 0,
       "beds": 0,
-      "entities": 6,
+      "entities": 0,
       "asset": "run/alpine-integration/datapack/data/kithkyn/structure/butchery_alpine_highlands_1.nbt",
-      "asset_sha256": "1ceb20f31a5ce4cbafae6fd47ec5f8ad68398cc5a0bcc2efd3735fab3635780c",
+      "asset_sha256": "91c14b49c03f5384f949b97320839db8087baccd3aade24a1e8a410e6e588853",
       "definition": "run/alpine-integration/datapack/data/kithkyn/kithkyn/buildings/butchery_alpine_highlands_1.json",
       "definition_sha256": "34068f21ef3ff2e48986d3637ad4fec18aca7f1d17e6c1ed4dde144fb63a185e"
     },
@@ -433,9 +433,9 @@
       "beds": 0,
       "entities": 0,
       "asset": "run/alpine-integration/datapack/data/kithkyn/structure/market_alpine_highlands_1.nbt",
-      "asset_sha256": "8948bb9e8f0033df7096bf9d8a57de5437b0f9e35ab13257d4f9d3bdf7e13976",
+      "asset_sha256": "78bba325614bce3934c582398caa0f4a3971be23b48ae3045f29c5f97ef1e7eb",
       "definition": "run/alpine-integration/datapack/data/kithkyn/kithkyn/buildings/market_alpine_highlands_1.json",
-      "definition_sha256": "c09f835c91f6505df78078a8bf480844a63bf3c3309fa48d931ffe82541b4236"
+      "definition_sha256": "82509fc3ee55a29b52e562a95194b212b74871aa5b7a3bf05e0bf7ced7ead257"
     },
     {
       "exhibit": "AD05.2",
@@ -454,9 +454,9 @@
       "beds": 0,
       "entities": 0,
       "asset": "run/alpine-integration/datapack/data/kithkyn/structure/market_alpine_highlands_2.nbt",
-      "asset_sha256": "b20808e1c0dbe0bbc4ddb9c59348baa895b078d0520c55a5383e9a343a006b59",
+      "asset_sha256": "58bcf39fca859a68ba4eb71cf8ad32d1887a19f03fe8f385a62b72e5f5748bf9",
       "definition": "run/alpine-integration/datapack/data/kithkyn/kithkyn/buildings/market_alpine_highlands_2.json",
-      "definition_sha256": "1ebd4cf6d0f525c10f50cb7fcb766891c69455f2a9dccc1c965ad101654a528f"
+      "definition_sha256": "57aeebcfb6e30a702e8d5956ed9191418912269510c16fa4c6ecb2252989242b"
     },
     {
       "exhibit": "AD05.3",
@@ -475,9 +475,9 @@
       "beds": 0,
       "entities": 0,
       "asset": "run/alpine-integration/datapack/data/kithkyn/structure/market_alpine_highlands_3.nbt",
-      "asset_sha256": "38d5a577a638a6c0dcac7f1cfa6cf68712715becea6127e70f7db303d1b50e12",
+      "asset_sha256": "045bdb3c7334f886313bd2d99817bd79ba18b21a74b51c1d6376a7a74bf99739",
       "definition": "run/alpine-integration/datapack/data/kithkyn/kithkyn/buildings/market_alpine_highlands_3.json",
-      "definition_sha256": "7d7985d1c1c18bd94ea726128292d8832a6a49731025101bb2e31a4a2ac45c14"
+      "definition_sha256": "7ea66a6f31e9f95a90c578b60ff49c72fdd68776f8580e57c30aead320681135"
     },
     {
       "exhibit": "IF01.4",
@@ -502,13 +502,13 @@
     }
   ],
   "verification": {
-    "static_audit": "22 definitions and templates; no barriers, structure voids, out-of-bounds metadata, or gallery entity tags",
-    "placement": "176 real-template placements across both paths and four rotations; colors, frames, entities, restart receipts, and upgrades preserved",
-    "founding": "22 strict templates, 5 housing alternatives, 8 upgrade fits, four rotations and codec reloads, natural biome selection, 5 beds and 5 founding positions",
-    "center_access": "4 rotations, 20 station walks, and 4 shared-container deposits",
-    "full_access": "84 rotations, 180 routes, 116 physical bed walks, 88 personal-container deposits, 64 station walks, 76 shared deposits, and 8 mine walks; zero failures",
-    "gradle_test": "passed",
-    "jar_sha256": "fbfe3b36abae04756339742c4030e0775c420aefb7d4063757c4f0355ddb7b47"
-  },
-  "fishery": "IF01.4"
+    "catalog_audit": "PASS: 22 definitions, corrected elevations, fixed markets, sapling/barrel lumberjack, approved AD02.6 mine",
+    "template_audit": "PASS: 22 templates; no barriers, out-of-bounds cells, terrain-clearing air, malformed markets or missing livestock",
+    "placement": "PASS: 176 real-template placements; both paths, four rotations, colors, frames, entities, reloads and upgrades",
+    "founding": "PASS: 22 templates, 5 housing alternatives, 8 upgrade fits, four rotations/reloads, 5 beds and 5 positions",
+    "center_access": "PASS: 4 rotations, 20 workstation walks and 4 shared-container transfers",
+    "physical_access": "PASS: 84 rotations, 180 routes, 116 bed walks, 88 personal deposits, 64 station walks, 84 shared deposits and 8 mine walks",
+    "body_height": "PASS: all ages and genetic scales; child one-block and working-age two-block openings",
+    "gradle_build": "PASS: unit tests and 61-template repository audit"
+  }
 }
