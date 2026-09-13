@@ -25,6 +25,8 @@ final class BuiltInWallSegmentCatalog implements WallSegmentCatalog {
       new BuiltInWallSegmentCatalog(AuthoredWoodWallSegments.ROMANIAN);
   static final BuiltInWallSegmentCatalog ALPINE_HIGHLANDS =
       new BuiltInWallSegmentCatalog(AuthoredWoodWallSegments.ALPINE_HIGHLANDS);
+  static final BuiltInWallSegmentCatalog JAPANESE_CHERRY_GROVE =
+      new BuiltInWallSegmentCatalog(AuthoredWoodWallSegments.JAPANESE_CHERRY_GROVE);
   private final AuthoredWoodWallSegments authored;
   private final boolean hedged;
 

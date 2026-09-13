@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import com.google.gson.JsonParser;
 import com.mojang.serialization.JsonOps;
+import com.quzzar.kithkyn.village.LocationManager;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.Map;
@@ -11,6 +12,7 @@ import java.util.Objects;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.block.Rotation;
+import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
@@ -104,6 +106,22 @@ class BuildingEntranceTest {
     assertEquals(-1, Building.CODEC.parse(JsonOps.INSTANCE, saved).getOrThrow().getPlacedSink());
     saved.remove("placed_sink");
     assertEquals(0, Building.CODEC.parse(JsonOps.INSTANCE, saved).getOrThrow().getPlacedSink());
+  }
+
+  @Test
+  void evenWidthDoorlessEntranceKeepsItsAuthoredMiddleThroughRotation() {
+    BoundingBox original = new BoundingBox(0, 0, 0, 7, 4, 5);
+    Direction front = Direction.WEST;
+    BlockPos authored = LocationManager.openFront(original, front, 64);
+    assertEquals(new BlockPos(-1, 64, 3), authored);
+
+    for (Rotation rotation : Rotation.values()) {
+      BoundingBox rotated = BoundingBox.fromCorners(
+          new BlockPos(original.minX(), original.minY(), original.minZ()).rotate(rotation),
+          new BlockPos(original.maxX(), original.maxY(), original.maxZ()).rotate(rotation));
+      assertEquals(authored.rotate(rotation),
+          LocationManager.openFront(rotated, rotation.rotate(front), 64), rotation.toString());
+    }
   }
 
   private static BuildingInfo definition(String name) throws Exception {

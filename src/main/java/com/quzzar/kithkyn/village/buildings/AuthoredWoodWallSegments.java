@@ -45,6 +45,7 @@ final class AuthoredWoodWallSegments {
   static final AuthoredWoodWallSegments POLYNESIAN_COAST = loadBundled("polynesian_coast");
   static final AuthoredWoodWallSegments ROMANIAN = loadBundled("romanian");
   static final AuthoredWoodWallSegments ALPINE_HIGHLANDS = loadBundled("alpine_highlands");
+  static final AuthoredWoodWallSegments JAPANESE_CHERRY_GROVE = loadBundled("japanese_cherry_grove");
 
   private static final String RESOURCE_ROOT =
       "data/kithkyn/structure/wall/";
@@ -556,7 +557,7 @@ final class AuthoredWoodWallSegments {
       };
       case "minecraft:oak_fence", "minecraft:spruce_fence" -> WallBlockPlan.Piece.PARAPET;
       case "minecraft:oak_slab", "minecraft:spruce_slab", "minecraft:birch_slab" -> WallBlockPlan.Piece.SLAB;
-      case "minecraft:oak_trapdoor", "minecraft:spruce_trapdoor", "minecraft:dark_oak_trapdoor" -> WallBlockPlan.trapdoorPiece(
+      case "minecraft:oak_trapdoor", "minecraft:spruce_trapdoor", "minecraft:dark_oak_trapdoor", "minecraft:cherry_trapdoor" -> WallBlockPlan.trapdoorPiece(
           horizontal(properties.getString("facing")));
       case "minecraft:ladder" -> WallBlockPlan.ladderPiece(
           horizontal(properties.getString("facing")));
@@ -567,19 +568,25 @@ final class AuthoredWoodWallSegments {
       case "minecraft:campfire" -> WallBlockPlan.campfirePiece(
           horizontal(properties.getString("facing")));
       // Authored coping stairs (the Mediterranean parapet) resolve through the palette's stair.
-      case "minecraft:oak_stairs" -> "top".equals(properties.getString("half"))
+      case "minecraft:oak_stairs", "minecraft:spruce_stairs" -> "top".equals(properties.getString("half"))
           ? null
           : WallBlockPlan.step(horizontal(properties.getString("facing")));
       case "minecraft:brick_stairs" -> "top".equals(properties.getString("half"))
           ? null
           : WallBlockPlan.step(horizontal(properties.getString("facing")));
-      case "minecraft:oak_leaves", "minecraft:mangrove_leaves" -> WallBlockPlan.Piece.LEAVES;
-      case "minecraft:dark_oak_leaves" -> WallBlockPlan.Piece.LEAVES_DARK;
+      case "minecraft:oak_leaves", "minecraft:mangrove_leaves", "minecraft:cherry_leaves" -> WallBlockPlan.Piece.LEAVES;
+      case "minecraft:dark_oak_leaves", "minecraft:flowering_azalea_leaves" -> WallBlockPlan.Piece.LEAVES_DARK;
       // The Polynesian Coast capture (study A) names its own materials. Its
       // stripped spruce is palisade body, placed like Birch masonry: a post
       // would grow down through the gate passage under the roof edges. Its
       // coral course is the literal footing.
       case "minecraft:stripped_spruce_wood" -> WallBlockPlan.Piece.BODY;
+      case "minecraft:stripped_spruce_log" -> switch (properties.getString("axis")) {
+        case "x" -> WallBlockPlan.Piece.BEAM_EAST_WEST;
+        case "z" -> WallBlockPlan.Piece.BEAM_NORTH_SOUTH;
+        default -> WallBlockPlan.Piece.POST;
+      };
+      case "minecraft:deepslate_tile_slab" -> WallBlockPlan.Piece.SLAB;
       case "minecraft:dead_bubble_coral_block" -> WallBlockPlan.Piece.CORAL_FOOTING;
       default -> null;
     };
