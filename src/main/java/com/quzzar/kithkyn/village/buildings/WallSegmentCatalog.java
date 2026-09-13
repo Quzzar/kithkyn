@@ -28,9 +28,10 @@ public interface WallSegmentCatalog {
   static WallSegmentCatalog forStyle(VillageStyle style) {
     return switch (style) {
       case BIRCH_FOREST -> BuiltInWallSegmentCatalog.BIRCH_FOREST;
-      case DESERT, BADLANDS, FLOODPLAIN, JUNGLE, TUNDRA, POLYNESIAN_COAST -> BuiltInWallSegmentCatalog.ARID;
+      case DESERT, BADLANDS, FLOODPLAIN, JUNGLE, TUNDRA -> BuiltInWallSegmentCatalog.ARID;
       case SWAMP -> BuiltInWallSegmentCatalog.SWAMP;
       case MEDITERRANEAN -> BuiltInWallSegmentCatalog.MEDITERRANEAN;
+      case POLYNESIAN_COAST -> BuiltInWallSegmentCatalog.POLYNESIAN_COAST;
     };
   }
 }
