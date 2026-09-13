@@ -26,7 +26,7 @@ themselves — they only transform files you point them at.
 | `flatten.py` | Map pre-1.13 numeric block ids to modern blockstates |
 | `split_scene.py` | Crop the separate buildings out of one multi-building `.schematic` (flood-fill footprints; rejects trees by composition) |
 | `validate.py` | Flag blocks that would drop on placement — bed and door halves, wall torches, gravity-affected stacks, carpet on nothing |
-| `audit-templates.py` | Reject production templates containing barrier states, coordinates outside their declared size, open or empty butcheries, terrain-clearing market floors, or malformed leveled-market entrances |
+| `audit-templates.py` | Reject production templates containing barrier states, coordinates outside their declared size, unclassified physical containers, open or empty butcheries, terrain-clearing market floors, or malformed leveled-market entrances |
 | `navcheck.py` | Score how walkable a finished structure is for a villager |
 | `roof.py` | Fix roof-stair facing |
 | `seating-check.py` | Flag catalog buildings seated one block low and vines at or below the terrain layer |
@@ -44,6 +44,12 @@ public or private catalog before deployment. Gallery containment barriers, inclu
 palette entries, are review fixtures, never building content. Blocks outside an explicit crop
 are invalid for the same reason. The native exporter enforces both invariants while writing a
 template. `./gradlew check` runs the audit over the public catalog automatically.
+
+Every physical chest, trapped chest, and barrel must be classified by its sibling building JSON
+as `containers`, `personal_containers`, castle `evidence_containers`, or
+`decorative_containers`. The last field is authoring-only metadata ignored by the runtime; it
+makes intentional props and inaccessible cabinets explicit so a newly added working barrel
+cannot silently miss village registration.
 
 A navigation failure is evidence about pathfinding or an authored route; it is not permission to
 edit the build. Do not add, remove or replace authored structure cells merely to make `navcheck` or

@@ -189,6 +189,13 @@ A mixed-use home with blacksmith and cleric posts is priced as that exact combin
 may deliberately have equal recipes when their value is equivalent, but each definition owns that
 decision independently.
 
+Every physical chest, trapped chest, and barrel in the paired structure must also have an explicit
+role. Working village storage belongs in `containers`, resident storage in `personal_containers`,
+and castle evidence storage in `evidence_containers`. Intentionally unusable props belong in the
+authoring-only `decorative_containers` list. The runtime ignores that last list, while the catalog
+audit rejects any physical container left unclassified. This keeps decorative cabinets out of the
+quartermaster route without allowing a real shelf to disappear from village bookkeeping.
+
 For the locked first-pass prices and the comparison rubric used for all 224 current definitions,
 see [building-cost rebalance](research/building-cost-rebalance-2026-09-12.md). A new building starts
 from its nearest functional peers in that map, then adjusts for its complete package and the
@@ -334,9 +341,11 @@ and moving them is a trip someone makes.
 
 The consequences that follow, and which the implementation owes:
 
-- **The storehouse is capacity, not a special inventory.** Every building's chest counts
-  toward the same pool; a storehouse is simply the building whose job is holding a lot. It
-  stays in the founding set because a camp needs somewhere to put things.
+- **Every shared chest is capacity; a storehouse is the central shelf.** Every building's
+  shared chest counts toward affordability and accepts nearby worker output. Quartermasters
+  collect from workplace chests and deliver into every standing building whose category is
+  `storehouse`; the broad `STORAGE` grant does not turn a mine chest into a central shelf. A
+  storehouse stays in the founding set because a camp needs somewhere to consolidate goods.
 - **A home's own chest is not in the pool** (built 2026-09-01). A definition may list a
   container under `personal_containers` instead of `containers`: every house does, and so does
   the bedside chest of a workplace with a live-in bed and more than one chest (the church, the
@@ -355,10 +364,11 @@ The consequences that follow, and which the implementation owes:
 - **A fetch can fail even when the pool says yes** — the chest holding it is unloaded, or
   unreachable. That emits the ordinary shortage event and a personal-log entry, and the
   worker gives up rather than spinning.
-- **A full chest is a storage shortage.** A worker with nowhere to deposit carries to the
+- **A blocked storage route is a storage shortage.** A worker with nowhere to deposit carries to the
   next container with room; when none has room, that is an event, and it is what should make
   a village decide to build another storehouse. The collective planning context states that
-  shared storage is full and that more shared storage is urgent. The worker keeps any rejected
+  shared storage is backed up and that restoring access or adding central storage is urgent;
+  this covers both truly full shelves and shelves a worker cannot currently reach. The worker keeps any rejected
   bedtime deposit in their pack. Storehouse containers add capacity even when their attached
   quartermaster job is open, so duplicate-vacancy filtering never hides a storehouse or its
   upgrade during the shortage.

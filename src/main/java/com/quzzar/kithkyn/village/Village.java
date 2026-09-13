@@ -1773,6 +1773,10 @@ public class Village {
 
     long tj = VillageProfile.start();
     JobClaiming.tick(this, level);
+    // Building definitions are reloadable and may gain or reclassify a chest.
+    // Reconcile beside jobs so an existing village picks up that repair too.
+    this.brain.reconcileContainers(this.buildings.values().stream()
+        .filter(building -> !isBeingRebuilt(building.getUUID())).toList());
     VillageProfile.end("jobs", tj);
 
     // A working teenager may stay in the parents' household, but that exception

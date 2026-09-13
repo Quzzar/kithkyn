@@ -31,17 +31,20 @@ public final class Storehouse {
   }
 
   /**
-   * World positions of the quartermaster's storehouse containers, in the
-   * building's own container order. Empty when they have no workplace yet.
+   * World positions of every central storehouse container in the village. A
+   * quartermaster post may live in one storehouse, but its keeper serves all of
+   * them; the job assignment is not an ownership boundary for the shelves.
    */
   public static List<BlockPos> chests(RealPerson quartermaster) {
+    Village village = quartermaster.getVillage();
+    return village == null ? List.of() : chests(village);
+  }
+
+  /** Every central storehouse shelf, in stable building and authored-container order. */
+  public static List<BlockPos> chests(Village village) {
     List<BlockPos> out = new ArrayList<>();
-    Building building = LocationManager.getJobBuilding(quartermaster);
-    if (building != null && building.getInfo() != null) {
-      BlockPos origin = BlockPos.of(building.getOriginLocation());
-      for (Long local : building.getInfo().getContainerLocations()) {
-        out.add(origin.offset(BlockPos.of(local).rotate(building.getRotation())));
-      }
+    for (Building building : buildings(village)) {
+      out.addAll(chests(building));
     }
     return out;
   }
@@ -74,14 +77,22 @@ public final class Storehouse {
     return out;
   }
 
-  /** Every standing building that grants STORAGE: the shelves an adopted allay may draw on. */
+  /**
+   * Every standing central storehouse. STORAGE is also a capability of workplace
+   * chests; it must not turn a mine or farm into a delivery shelf.
+   */
   public static List<Building> buildings(Village village) {
     List<Building> out = new ArrayList<>();
     for (Building building : village.getBuildings()) {
-      if (building.getInfo() != null && building.getInfo().getGrants().contains("STORAGE")) {
+      if (!village.isBeingRebuilt(building.getUUID())
+          && building.getInfo() != null
+          && com.quzzar.kithkyn.village.buildings.Buildings.FOUNDING_STOREHOUSE_CATEGORY
+              .equals(building.getInfo().getCategory())) {
         out.add(building);
       }
     }
+    out.sort(Comparator.comparingLong(Building::getOriginLocation)
+        .thenComparing(building -> building.getUUID().toString()));
     return out;
   }
 

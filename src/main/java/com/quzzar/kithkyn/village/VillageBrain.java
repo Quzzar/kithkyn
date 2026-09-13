@@ -136,9 +136,8 @@ public class VillageBrain {
   /**
    * Registers any container the definition has that this building's ground does
    * not already have registered. Called when a building is rebuilt at a new
-   * level: its old container positions stay in the list, which costs nothing —
-   * a position that is no longer a container is skipped by every reader — while
-   * the ones the new level added become part of village storage.
+   * level so its new shelves are usable immediately; the periodic reconciliation
+   * pass then removes positions the older level no longer owns.
    */
   public void registerNewContainers(Building building) {
     for (long offset : building.getInfo() == null ? List.<Long>of() : building.getInfo().getContainerLocations()) {
@@ -148,6 +147,35 @@ public class VillageBrain {
         containerLocs.add(location.asLong());
       }
     }
+  }
+
+  /**
+   * Brings persisted storage registration back in line with the standing
+   * definitions. Datapacks can correct a missing or misclassified barrel after a
+   * village already exists; without this pass the old save's coordinate list
+   * would keep that correction invisible forever.
+   */
+  public boolean reconcileContainers(java.util.Collection<Building> buildings) {
+    java.util.LinkedHashSet<Long> expected = new java.util.LinkedHashSet<>();
+    buildings.stream()
+        .sorted(java.util.Comparator.comparingLong(Building::getOriginLocation)
+            .thenComparing(building -> building.getUUID().toString()))
+        .forEach(building -> {
+          BuildingInfo info = building.getInfo();
+          if (info == null) {
+            return;
+          }
+          for (long offset : info.getContainerLocations()) {
+            expected.add(BlockPos.of(building.getOriginLocation())
+                .offset(BlockPos.of(offset).rotate(building.getRotation())).asLong());
+          }
+        });
+    if (containerLocs.equals(new ArrayList<>(expected))) {
+      return false;
+    }
+    containerLocs = new ArrayList<>(expected);
+    foodLedger.keySet().retainAll(expected);
+    return true;
   }
 
   /** Removes evacuated storage from both live routing and the unloaded-food cache. */

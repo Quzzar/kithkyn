@@ -253,7 +253,7 @@ public final class RedevelopmentVerification {
         String blocker = project.demolishStep(village);
         check(blocker.isEmpty(), blocker);
       } else if (project.getProgress() == BuildProgress.PREPARING) {
-        check(project.prepareStep(village, null), "paid ground work requested more resources");
+        check(project.prepareStep(village, null), "ground preparation stopped before the site was level");
         project.startBuilding();
       } else {
         project.startBuilding();

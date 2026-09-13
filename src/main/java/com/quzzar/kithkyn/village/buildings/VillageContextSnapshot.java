@@ -213,8 +213,8 @@ public record VillageContextSnapshot(
     appendWorkplaceStatuses(text);
     appendStaffingDecisions(text);
     if (storageStrained) {
-      text.append("Shared storage is full: workers are carrying goods that its containers cannot accept. "
-          + "More shared storage is urgent. ");
+      text.append("Shared storage is backed up: workers are carrying goods its containers cannot currently accept or reach. "
+          + "Restoring shelf access or adding central storage is urgent. ");
     }
     if (recentDeaths) {
       text.append("There have been deaths recently. ");
@@ -252,8 +252,8 @@ public record VillageContextSnapshot(
       text.append('\n');
     }
     if (storageStrained) {
-      text.append("Shared storage: full; workers are carrying goods that its containers cannot accept, "
-          + "so more shared storage is urgent.\n");
+      text.append("Shared storage: backed up; workers are carrying goods its containers cannot currently accept or reach, "
+          + "so restoring shelf access or adding central storage is urgent.\n");
     }
     appendConstruction(text);
     if (!recentBuilds.isEmpty()) {

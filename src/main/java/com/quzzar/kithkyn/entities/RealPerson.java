@@ -87,6 +87,8 @@ import com.quzzar.kithkyn.entities.ai.goals.work.ClearBrushStep;
 import com.quzzar.kithkyn.entities.ai.goals.work.CompostStep;
 import com.quzzar.kithkyn.entities.ai.goals.work.FetchBonemealStep;
 import com.quzzar.kithkyn.entities.ai.goals.work.FetchMineSupportStep;
+import com.quzzar.kithkyn.entities.ai.goals.work.FetchMineLightStep;
+import com.quzzar.kithkyn.entities.ai.goals.work.MineLightSupplies;
 import com.quzzar.kithkyn.entities.ai.goals.work.PlantStep;
 import com.quzzar.kithkyn.entities.ai.goals.work.StashBonemealStep;
 import com.quzzar.kithkyn.entities.ai.goals.ArmorerRepairPersonArmorGoal;
@@ -262,9 +264,6 @@ public class RealPerson extends Person {
 
   public void setGuardChopping(boolean active) { this.guardChopping = active; }
 
-  /** Torches the miner's bedtime restock tops the pack up to; MineStep spends them lighting the shaft. */
-  private static final int TORCH_PACK_TARGET = 16;
-
   /**
    * Dirt or stone the bedtime restock tops the miner's pack up to: floor and
    * lining for a cave, plus plugs for the veins it pulls. The bedtime stow returns
@@ -275,12 +274,6 @@ public class RealPerson extends Person {
 
   // Bites a guard carries on watch: rations are topped up to this, best food first.
   private static final int RATION_TARGET = 6;
-
-  /**
-   * Torches one lump of coal or charcoal presses into at bedtime. Sticks are
-   * deliberately not asked for: shaft lighting should not wait on the forest.
-   */
-  private static final int TORCHES_PER_COAL = 4;
 
   /**
    * Bone meal the farmer's bedtime restock tops the pack up to; BonemealStep
@@ -336,12 +329,6 @@ public class RealPerson extends Person {
    * who is not a wandering merchant.
    */
   private com.quzzar.kithkyn.economy.EconomySnapshot wanderingStock = null;
-
-  // Game day of the last bedtime torch-craft offer. goToBed refires every 100
-  // ticks until sleep takes, so without this one night would put the same
-  // question to the brain over and over. Not persisted: a reload mid-night at
-  // worst asks once more.
-  private transient long torchOfferDay = -1;
 
   // Same guard for the farmer's bedtime bone-grind offer.
   private transient long bonemealOfferDay = -1;
@@ -1641,7 +1628,7 @@ public class RealPerson extends Person {
     // bucket to spare rather than a dead end. One is all it needs - the bucket
     // is a tool it never fills or spends.
     if (getOccupation() == Occupation.MINER) {
-      ItemStack torches = gatherForWork(new ItemStack(Items.TORCH, TORCH_PACK_TARGET), depositToLoc);
+      ItemStack torches = gatherForWork(new ItemStack(Items.TORCH, MineLightSupplies.PACK_TARGET), depositToLoc);
       this.addItems(Arrays.asList(torches));
       ItemStack buckets = gatherForWork(new ItemStack(Items.BUCKET, 1), depositToLoc);
       this.addItems(Arrays.asList(buckets));
@@ -1651,7 +1638,7 @@ public class RealPerson extends Person {
       // walk to; carrying the day's worth from bed avoids a fetch trip that a
       // cut-off storehouse would strand. A part-load keeps what it has.
       restockMineSupports(depositToLoc);
-      maybeCraftTorchesFromCoal(depositToLoc);
+      craftTorchesFromCoal(depositToLoc);
     }
 
     // Grab bonemeal
@@ -1981,39 +1968,30 @@ public class RealPerson extends Person {
   }
 
   /**
-   * Offers the miner's brain a bedtime torch craft when the restock above left
-   * the pack short and the stores hold coal or charcoal. The rules decide the
-   * legal move and its size (a pack top-up, nothing more); CraftOffer carries
-   * the ask, and the model only takes it or leaves it, in character
-   * (docs/llm-brain.md). Once per night: goToBed refires until sleep takes.
+   * Makes shaft lighting an operational safety supply rather than an optional
+   * personal choice. Sticks remain waived so a mine does not go dark because a
+   * lumberjack post is vacant.
    */
-  private void maybeCraftTorchesFromCoal(BlockPos depositToLoc) {
-    long day = this.level().getDayTime() / 24000L;
-    if (this.torchOfferDay == day) {
-      return;
-    }
+  private void craftTorchesFromCoal(BlockPos depositToLoc) {
     int torchesHeld = this.personMainInv.countItem(Items.TORCH);
-    int torchesWanted = TORCH_PACK_TARGET - torchesHeld;
-    if (torchesWanted <= 0) {
+    int fuelWanted = MineLightSupplies.fuelNeeded(torchesHeld);
+    if (fuelWanted <= 0) {
       return;
     }
-    int coalHeld = com.quzzar.kithkyn.economy.VillagePricing.countHeld(this.getVillage(), Items.COAL)
-        + com.quzzar.kithkyn.economy.VillagePricing.countHeld(this.getVillage(), Items.CHARCOAL);
-    if (coalHeld <= 0) {
-      return;
+    int spent = 0;
+    for (Item fuel : List.of(Items.COAL, Items.CHARCOAL)) {
+      if (spent >= fuelWanted) {
+        break;
+      }
+      spent += this.getVillage().gatherItemStackFromVillage(
+          new ItemStack(fuel, fuelWanted - spent), depositToLoc).getCount();
     }
-    this.torchOfferDay = day;
-
-    int coalToSpend = Math.min(coalHeld, Math.ceilDiv(torchesWanted, TORCHES_PER_COAL));
-    CraftOffer.Press press = new CraftOffer.Press(List.of(Items.COAL, Items.CHARCOAL), Items.TORCH,
-        TORCHES_PER_COAL);
-    String situation = CraftOffer.identityLead(this)
-        + "You are turning in for the night carrying " + torchesHeld + " of the " + TORCH_PACK_TARGET
-        + " torches you like to take down the shaft. The village stores hold " + coalHeld
-        + " coal, and a lump presses into " + TORCHES_PER_COAL
-        + " torches. Decide whether to spend " + coalToSpend
-        + " coal on light for tomorrow's dig, and give your reason in a few words.";
-    CraftOffer.offer(this, depositToLoc, press, coalToSpend, situation);
+    if (spent > 0) {
+      int made = spent * MineLightSupplies.TORCHES_PER_FUEL;
+      this.addItems(List.of(new ItemStack(Items.TORCH, made)));
+      Kithkyn.LOGGER.info("[resource-flow] '{}' pressed {} mine fuel into {} torches",
+          this.getFullName(), spent, made);
+    }
   }
 
   /**
@@ -2944,6 +2922,9 @@ public class RealPerson extends Person {
     if (getOccupation() == Occupation.MINER) {
       // Ahead of the work goal: a full pack is worth a trip before more digging.
       this.goalSelector.addGoal(3, new WorkLoopGoal<>(this, new HaulStep()));
+      // Light is a safety supply: when the last torch is spent, walk to a
+      // registered chest with torches or fuel and replenish before another pick.
+      this.goalSelector.addGoal(3, new WorkLoopGoal<>(this, new FetchMineLightStep()));
       this.goalSelector.addGoal(4, new WorkLoopGoal<>(this, new MineStep()));
       // Behind it: a shaft standing down for want of lining sends the miner to
       // the stores for dirt, stone or sand rather than waiting on bedtime.

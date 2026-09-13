@@ -159,7 +159,7 @@
       "asset": "run/swamp-integration/datapack/data/kithkyn/structure/church_swamp_1__cleric_mixed_home.nbt",
       "asset_sha256": "c92d5db699c8f3bf6d7cac963ae6fba445658d0e66706502bce0461a9d7a47d5",
       "definition": "run/swamp-integration/datapack/data/kithkyn/kithkyn/buildings/church_swamp_1__cleric_mixed_home.json",
-      "definition_sha256": "57c43630b1e747742023d9b44cf940cab6f6b8894ae138483a99cb8908c0b7ce"
+      "definition_sha256": "032cad5be60546bd255de3ddb309d4bb1fe59b001ceb1c58aad7ec7bf5683064"
     },
     {
       "exhibit": "NF04.1",
@@ -227,7 +227,7 @@
       "asset": "run/swamp-integration/datapack/data/kithkyn/structure/lumberjack_swamp_1.nbt",
       "asset_sha256": "fe00c4fc7ee1fa683a2affde4d5e4122b7e1695f73eb43be5b9d9d3ebdb261e4",
       "definition": "run/swamp-integration/datapack/data/kithkyn/kithkyn/buildings/lumberjack_swamp_1.json",
-      "definition_sha256": "3ed540d29adb5f31a2a2788bcd9eb536435e7c816ebb1fae48393ffa622a3a57"
+      "definition_sha256": "cd0a2d2f5ca23a656b1d2be181126a0a52caa62d02d7764d91f7da950a6c8e84"
     },
     {
       "exhibit": "NE04.5",
@@ -499,7 +499,7 @@
       "asset": "run/swamp-integration/datapack/data/kithkyn/structure/castle_swamp_1.nbt",
       "asset_sha256": "5e1c3ebe75c056d5f72e0465aad11432502732dc235033b588f42b50958ccc88",
       "definition": "run/swamp-integration/datapack/data/kithkyn/kithkyn/buildings/castle_swamp_1.json",
-      "definition_sha256": "e8931db161b0b8bdd7fa218f3ef69d6fa386bdf7f4f2738bcc013ffb067108f2"
+      "definition_sha256": "a6c162b1f7378facebeafa714ba83da3f95db9cd59464abc00d8e4563daa12b3"
     }
   ],
   "verification": {

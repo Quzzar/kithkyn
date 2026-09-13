@@ -121,9 +121,9 @@ class VillageContextSnapshotTest {
         true, false, false, false, List.of(),
         Optional.empty(), Optional.empty(), List.of(), List.of(), Optional.empty(), 0, 0, 0, 0);
 
-    assertTrue(snapshot.plannerBriefing().contains("Shared storage is full"));
-    assertTrue(snapshot.plannerBriefing().contains("More shared storage is urgent"));
-    assertTrue(snapshot.chatBriefing().contains("Shared storage: full"));
+    assertTrue(snapshot.plannerBriefing().contains("Shared storage is backed up"));
+    assertTrue(snapshot.plannerBriefing().contains("Restoring shelf access or adding central storage is urgent"));
+    assertTrue(snapshot.chatBriefing().contains("Shared storage: backed up"));
   }
 
   @Test

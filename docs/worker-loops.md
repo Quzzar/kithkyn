@@ -772,7 +772,10 @@ the stores empty too logs it and stands down, so a cavern too large for the vill
 shaft, not one too large for a pack. (The sweep used to skip the hole when the pack was empty and
 aim at a face across the void that nothing could stand at, then fall back to the mouth as the target
 and dig that face from the doorstep; a floorless cell is now the work whatever the pack holds, and
-no footing means no pick.) Torches are hung the way a player hangs them: at head height on the shaft wall,
+no footing means no pick.) Torches are a required work supply rather than an optional preference:
+the bedtime restock tops up from finished torches or presses coal/charcoal, and a miner who spends
+the last one by day walks to a registered chest with torches or fuel (`FetchMineLightStep`) before
+the next pick. Torches are hung the way a player hangs them: at head height on the shaft wall,
 wherever the sweep finds an open cell on the ramp's edge reading dim (about every twelve blocks of
 ramp), and only once the shaft is deep enough to be dark. Lighting is sweep work like flooring and
 bailing, not a side effect of breaking a block (2026-09-02): the sweep walks the shaft from the
