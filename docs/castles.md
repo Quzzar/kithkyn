@@ -149,7 +149,8 @@ his quarters beside the double bed, which is reserved for him, and the deck ches
   just outside it on one side and the jailer's post on the other, and the two barrels set into the
   ground beside it are the evidence barrels.
 - Four crew beds sleep the jailer, the baker, the blacksmith and the quartermaster: two on the
-  ground sharing a chest and two on the deck sharing a barrel.
+  ground sharing a chest and two on the deck sharing a barrel. A fifth bed by the hull, with its
+  own barrel, is general housing.
 - Its seven banners are village banners.
 
 It has no sword posts or patrol routes. Its one guard is the jailer, and the town's captain keeps

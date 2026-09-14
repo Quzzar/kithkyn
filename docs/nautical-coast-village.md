@@ -39,6 +39,8 @@ Polynesian gallery showed as PC07.4. It is the settlement's ruling seat ([castle
 - The jail is the fenced pen by the hull, with the jailer's post beside it and two evidence
   barrels set into the ground.
 - Four crew beds sleep the jailer, the baker, the blacksmith and the quartermaster.
+- A fifth bed by the hull, with a barrel of its own, is general housing. Aaron set it where the
+  camp had bedroll carpets, on his height walk.
 - Its seven banners are village banners.
 
 ## Selected buildings
@@ -48,7 +50,7 @@ The private datapack contains 24 definitions:
 | Id | Exhibit | Use |
 | --- | --- | --- |
 | `village_center_nautical_coast_1` | NC05.1 | The lighthouse: four founding jobs and the four beds for them, the town's ten barrels, the meeting point by the bell, the village fire and four banners |
-| `castle_nautical_coast_1` | NC05.5 | The turnover ship: the king, a quartermaster, a baker, a blacksmith and a jailer, the jail, four crew beds and seven banners |
+| `castle_nautical_coast_1` | NC05.5 | The turnover ship: the king, a quartermaster, a baker, a blacksmith and a jailer, the jail, four crew beds, a general bed and seven banners |
 | `couple_cottage_nautical_coast_1` | NC05.2 | The Towns & Towers main house on its gravel base: the couple bed, with the ceiling chest and eleven ground-floor barrels as the couple's storage |
 | `storehouse_nautical_coast_1` | NC05.3 | The outdoor shack's six barrels, extra town storage |
 | `church_nautical_coast_1` | NC05.4 | The giant cross, with Aaron's barrel and a brewing stand at the cleric's post. It has no bed, so the cleric sleeps in ordinary housing |
@@ -59,7 +61,7 @@ The private datapack contains 24 definitions:
 | `watchtower_nautical_coast_1` | NC09.8 | The CTOV archery range as hunter and watchtower in one: the crossbow post on the top deck and the hunter by the barrel in the yard. The hunter's bed is downstairs and the guard's upstairs, each with its own storage |
 | `farm_nautical_coast_1` | NC09.9 | The beach farm and its barrel |
 | `lumberjack_nautical_coast_1` | NC09.10 | The CTOV orchard. The lumberjack's post is the oak sapling where Aaron's dead bush stood, and the double chest is the workplace store |
-| `mine_nautical_coast_1` | NC09.11 | The CTOV pen Aaron made into the mine: a log-curbed yard inside a fence, the miner's post at its north end, and a three-wide shaft that runs south and passes under the curb below its course |
+| `mine_nautical_coast_1` | NC09.11 | The CTOV pen Aaron made into the mine: a log-curbed yard dug one block deep inside a fence, the miner's post at its north end, and a three-wide shaft whose mouth is two cells south of him, running south under the curb below its course |
 | `house_nautical_coast_1` | NC10.6 | One bed and a chest |
 | `house_nautical_coast_1__two_single` | NC10.7 | Two beds sharing a chest |
 | `house_nautical_coast_1__two_loft` | NC10.8 | Two beds upstairs sharing the chest below |
@@ -94,6 +96,16 @@ A few definitions differ from the gallery copies:
   always stands. Its bread cannot be taken.
 - **Butchery and shack.** Every door and gate where livestock lives starts closed, and the
   storehouse shack's entrance is its open south side.
+- **Castle, after the height walk.** The camp's four vines at ground level replaced the beach
+  under them and left holes; Aaron filled them on the strip, and those cells are terrain now. He
+  also replaced the bedroll carpets by the hull with a bed and set a barrel beside it, the castle's
+  general bed.
+- **Mine, after the height walk.** The gallery showed the yard as a pit inside its log curb, and
+  the flat strip lost that, so Aaron carved the yard one block deep inside its sand strips. The
+  template carries that pit as authored air on the ground course (the one place the export keeps
+  air there), the miner stands in it, and the shaft's mouth is two cells south of him: the ramp's
+  entry column, one behind the mouth, is dug one below its walk cell, so a post at the entry column
+  would lose its floor.
 - **Markets.** Since the village audit, the Birch market counters on main set each stall barrel into
   the deck with open air above it, where a worker reaches it. The Nautical markets keep the barrels
   where the study has them, with the Birch container positions.
@@ -143,7 +155,9 @@ for the barrel Aaron set beside it.
 
 `run/nautical-integration/height-gallery.py` places the catalog on the height gallery's Nautical
 strip (x 15997 to 16097, z 520 to 623, grass at y 220), which joins the Alpine strip, so Aaron could
-walk the seating of every building before the catalog was locked.
+walk the seating of every building before the catalog was locked. He approved every seat; his
+edits there, the castle's bed and filled vines and the mine's pit, were read back from the saved
+strip and folded into the definitions.
 
 Source and output hashes and the verification verdicts are in
 `tools/structure/nautical-coast-catalog-20260913.json`. The gallery itself is recorded in
@@ -188,7 +202,8 @@ founding on a temperate beach or a stony shore uses the same selector and foundi
 
 ## Verification
 
-The native verifications ran on one build in disposable beach worlds:
+The native verifications ran on one build in disposable beach worlds, on the catalog as it stands
+after Aaron's height walk:
 
 - **Placement:** 192 real-template placements, covering all 24 templates on both build paths in
   four rotations, with colours, frames, entity and save receipts, and upgrade preservation. A
@@ -198,9 +213,9 @@ The native verifications ran on one build in disposable beach worlds:
   and fire locations.
 - **Lighthouse:** 32 access routes across four rotations, with 16 room walks and assigned-bed
   sleeps, 16 personal-container deposits, 16 station walks and 40 shared deposits.
-- **Access:** 92 rotated structures, with 204 access routes, 116 room walks and assigned-bed
-  sleeps, 116 personal-container deposits, 88 station walks, 132 shared deposits and eight walks
-  into the mine.
+- **Access:** 92 rotated structures, with 208 access routes, 120 room walks and assigned-bed
+  sleeps, 120 personal-container deposits, 88 station walks, 132 shared deposits and eight walks
+  into the mine's pit and shaft.
 - **Custody:** arrest by melee and by arrow into the castle's cell, private minute notices, saved
   expiry, evidence capacity, escape, damaged-cell release and the full-cell fallback.
 - **Walls:** all eight guards and workers climbed to and from every post, in the Nautical wall

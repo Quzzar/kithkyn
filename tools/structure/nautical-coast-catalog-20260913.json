@@ -128,9 +128,9 @@
       "entities": 0,
       "frames_fixed": false,
       "asset": "run/nautical-integration/datapack/data/kithkyn/structure/castle_nautical_coast_1.nbt",
-      "asset_sha256": "770b4aaa502cde949375431c6f4688318a8c511bd88e370a3e3517599a20d79a",
+      "asset_sha256": "718779edb0839cba2adaf2f976e55106320c4a496054e5bae3f35aeaaed71b5f",
       "definition": "run/nautical-integration/datapack/data/kithkyn/kithkyn/buildings/castle_nautical_coast_1.json",
-      "definition_sha256": "3ddcf426a71d4174a3224969973f953fb0f4c3795cf8b583a86c9dc893b690d3"
+      "definition_sha256": "4fc1cbeb21d73f8b70646dd8502d7fcf8920ff67c039e5af9806ae6b20fa44c0"
     },
     {
       "exhibit": "NC06.8",
@@ -288,9 +288,9 @@
       "entities": 0,
       "frames_fixed": false,
       "asset": "run/nautical-integration/datapack/data/kithkyn/structure/mine_nautical_coast_1.nbt",
-      "asset_sha256": "dcf0622dd36ece4139c10077b4e061ac82b129adc876edac70bf01fc735e50fb",
+      "asset_sha256": "87ad6eeb25bf295e85d6f88a78a3364a7d5b7ff443878e0cc57d5155d7a9183c",
       "definition": "run/nautical-integration/datapack/data/kithkyn/kithkyn/buildings/mine_nautical_coast_1.json",
-      "definition_sha256": "fe39457705f5da385680d590c5f870414b62dfaeb70fcbc144aa326da125f816"
+      "definition_sha256": "a25c7a858d0d287044b42196a61bc052c417823a45d32c809c6367a763399d1d"
     },
     {
       "exhibit": "NC10.6",
@@ -515,10 +515,10 @@
     "restart": "PASS: [building-placement-verify] RESTART PASS: 192 saved buildings and 56 original entities survived real server shutdown/restart without replenishment",
     "founding": "PASS: [nautical-verify] RESULT PASS: 24 strict native templates, 5 housing alternatives, 8 upgrade fits, four founding rotations and codec reloads, natural biome selection, 4 beds, 4 positions, distinct meeting/fire locations and village identity",
     "center": "PASS: [approved-house-verify] RESULT PASS: 4 rotated structures, 32 access routes, 16 physical room walks and assigned-bed sleeps, 16 physical personal-container deposits, 0 failed placements; probe size=18; station walks=16, shared deposits=40, mine walks=0, review walks=0",
-    "access": "PASS: [approved-house-verify] RESULT PASS: 92 rotated structures, 204 access routes, 116 physical room walks and assigned-bed sleeps, 116 physical personal-container deposits, 0 failed placements; probe size=18; station walks=88, shared deposits=132, mine walks=8, review walks=0",
+    "access": "PASS: [approved-house-verify] RESULT PASS: 92 rotated structures, 208 access routes, 120 physical room walks and assigned-bed sleeps, 120 physical personal-container deposits, 0 failed placements; probe size=18; station walks=88, shared deposits=132, mine walks=8, review walks=0",
     "custody": "PASS: [custody-verify] RESULT PASS: real melee/arrow arrest, private minute notices, saved expiry, inventory capacity and identity, escape and damaged-cell release, full-cell fallback and village-only grace",
     "routes-gate-access-nautical": "PASS: [gate-access-verify] RESULT PASS: NAUTICAL_COAST all 8 guards/workers ascended and descended",
     "routes-gate-access-polynesian": "PASS: [gate-access-verify] RESULT PASS: POLYNESIAN_COAST all 8 guards/workers ascended and descended",
-    "static_audit": "PASS 24 templates: no barrier states, out-of-bounds blocks, terrain-clearing corner air, open or empty butcheries, malformed market floors, or malformed market entrances (tools/structure/audit-templates.py, 2026-09-13)"
+    "static_audit": "PASS 24 templates: no barrier states, out-of-bounds blocks, terrain-clearing corner air, open or empty butcheries, malformed market floors, or malformed market entrances (tools/structure/audit-templates.py, 2026-09-13, after the height walk's edits)"
   }
 }
