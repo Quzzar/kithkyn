@@ -25,6 +25,7 @@ These catalogs are integrated, selectable, and verified as complete founding vil
 | Romanian | Dark Forest, forested highlands, and wooded valleys | Steep birch roofs, heavy dark-oak frames, enclosed yards, substantial woodland homes, and timber-and-deepslate walls |
 | Alpine Highlands | Meadow, Grove, Snowy Slopes, mountain peaks, and Windswept mountain families | Iberian-inspired brick and spruce settlement with berry plots, dense shared homes, deep wells, and brushed brick walls |
 | Japanese Cherry Grove | Cherry Grove, Flower Forest, and compatible Sakura biomes | Flowering garden settlement with spruce frames, ponds, compact farms and cherry-leaf walls |
+| Nautical Coast | Beaches on temperate or cold water, Stony Shore, and compatible coasts | A fishing town around a lighthouse: thatched sandstone-and-jungle-timber beach cottages, a jetty fishery on its own water, a turnover-ship castle, and a sandstone seawall on stripped jungle wood |
 
 ## Locked directions
 
@@ -36,16 +37,16 @@ its production catalog and founding behavior are verified.
 | --- | --- | --- |
 | Rustic Woodland | Forest and compatible ordinary oak woodland biomes | Familiar timber woodland settlement with a restrained rustic character |
 | Taiga | Taiga, Old Growth Pine Taiga, Old Growth Spruce Taiga, and compatible cold forests | Cold forest settlement; its final visual language is deliberately deferred between the ornate Polish family and the grittier T&T Viking family |
-| Nautical Coast | Beach, Stony Shore, and compatible temperate or cold coasts | Fishing town, docks, shoreline buildings, and lighthouse landmarks |
 | Savanna Tent | Savanna, Savanna Plateau, Windswept Savanna, and compatible dry grasslands | African-inspired tent and grassland settlement with portable-looking structures and a coherent warm-climate material palette |
 | Mushroom | Mushroom Fields and compatible fungal biomes | Fantasy mushroom settlement drawn from the complete mushroom reference families |
 
-Jungle, ordinary Swamp, Mediterranean, Tundra, Polynesian Coast, Romanian, Alpine Highlands and
-Japanese Cherry Grove are complete private
-production catalogs. Swamp remains separate from the mud-brick Floodplain catalog used by
-mangroves. Tundra starts from a four-bed centre with a naturally placed mine and storehouse and
-deliberately has no castle. The Polynesian Coast centre is the king's hall, which seats the ruler
-and keeps the village jail; that catalog has no castle yet.
+Jungle, ordinary Swamp, Mediterranean, Tundra, Polynesian Coast, Romanian, Alpine Highlands,
+Japanese Cherry Grove and Nautical Coast are complete private production catalogs. Swamp remains
+separate from the mud-brick Floodplain catalog used by mangroves. Tundra starts from a four-bed
+centre with a naturally placed mine and storehouse and deliberately has no castle. The Polynesian
+Coast centre is the king's hall, which seats the ruler and keeps the village jail; that catalog has
+no castle yet. The Nautical Coast centre is a lighthouse whose four beds sleep the founding workers,
+and its castle is the Towns & Towers beach camp's turnover ship.
 
 Swedish and Polish are source languages in the current review rather than settled biome
 assignments. The Swedish temple and tower remain a useful candidate church progression for a
@@ -60,11 +61,10 @@ to Floodplain when site selection can classify them reliably.
 
 ## Next authoring shortlist
 
-Tundra, Polynesian Coast, Romanian, Alpine Highlands and Japanese Cherry Grove are complete.
-Taiga remains intentionally parked until the ornate
-Polish and grittier Viking directions can be judged after more village catalogs are complete.
-Savanna Tent and Mushroom remain available as the next catalog pass, and Nautical Coast already
-has one reserved piece: the Polynesian gallery's PC07.4 beach camp.
+Tundra, Polynesian Coast, Romanian, Alpine Highlands, Japanese Cherry Grove and Nautical Coast are
+complete. Taiga remains intentionally parked until the ornate Polish and grittier Viking directions
+can be judged after more village catalogs are complete. Savanna Tent and Mushroom remain available
+as the next catalog pass.
 
 The three walk-through courts begin at **9913.5, 230, 986.5** in the live showcase world. The
 individual entrances are Swamp at **9929.5, 230, 1004.5**, Viking at
@@ -120,6 +120,21 @@ The current review status is:
   in the private display copies only. The sources, hashes, restyles, placements and selection are
   in `tools/structure/polynesian-full-profile-20260912.json`, and the catalog is in
   `tools/structure/polynesian-coast-catalog-20260912.json`.
+- **Nautical Coast:** the production catalog is selected and verified
+  ([nautical-coast-village.md](nautical-coast-village.md)). Its selection gallery also stands in the
+  sky above the **trio-20260912** world, beginning at **1463.5, 230, 10.5**. Its 20 rows hold 157
+  pieces:
+  - NC01 to NC04: the 30-piece Unstructured Ocean Village.
+  - NC05 to NC08: the Towns & Towers beach lighthouse and camps, temperate and cold fisheries,
+    taverns and wells, and moored boats.
+  - NC09 to NC16: the CTOV beach village, which with three beach pieces in the rows before it shows
+    all 81 of its templates.
+  - NC17 to NC20: the market tiers and the three wall studies.
+
+  Blocks from mods the server lacks are replaced by vanilla stand-ins in the private display copies
+  only. The sources, hashes, placements and selection are in
+  `tools/structure/nautical-full-profile-20260913.json`, and the catalog is in
+  `tools/structure/nautical-coast-catalog-20260913.json`.
 
 The Viking annex contains all 43 standalone structures: 22 Viking and 21 Polish. Road pieces
 and terminators are omitted because they are layout internals rather than building candidates.
@@ -141,9 +156,9 @@ the source hashes and original templates untouched. T17.3, the Snowy Plains towe
 a strong general castle donor for a future village variant; it is not assigned to Tundra merely
 because it appears in the Tundra gallery.
 
-Unstructured was included in the source audit. Its strongest coherent settlement is the Ocean
-Village family, which belongs in the later Nautical Coast pass rather than one of these three
-courts.
+Unstructured was included in the source audit. Its strongest coherent settlement, the Ocean
+Village family, was shown in full in the Nautical Coast gallery (NC01 to NC04); Aaron chose the
+CTOV beach village and the Towns & Towers lighthouse instead.
 
 ## Future systems
 

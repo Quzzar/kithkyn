@@ -1,0 +1,6068 @@
+{
+  "schemaVersion": 1,
+  "recorded": "2026-09-13T13:37:53.020288-04:00",
+  "purpose": "The complete Unstructured Ocean Village and the complete CTOV beach village, with the T&T lighthouse set, coastal donors and Nautical market and wall studies, for selecting the Nautical Coast catalog.",
+  "status": "placed",
+  "world": "trio-20260912",
+  "worldNote": "Placed in the trio test world beside the Polynesian and Alpine galleries.",
+  "entry": [
+    1463.5,
+    230.0,
+    10.5
+  ],
+  "bounds": [
+    1460,
+    220,
+    4,
+    1689,
+    276,
+    862
+  ],
+  "returnPosition": [
+    1492.59,
+    233.89,
+    798.51
+  ],
+  "selectionRule": "Every Ocean Village building, lamp and pier piece; every standalone CTOV beach piece, roads omitted, with other mods' blocks shown as neutral vanilla markers; the T&T beach lighthouse set and both T&T beach camps; vanilla-block donors for missing roles; and the shared Birch market and wall geometry in the beach picks' materials.",
+  "counts": {
+    "oceanVillage": 30,
+    "ctovBeach": 81,
+    "studies": 18,
+    "otherDonors": 28,
+    "standInPieces": 49,
+    "total": 157,
+    "rows": 20
+  },
+  "rows": [
+    {
+      "id": "NC01",
+      "title": "OCEAN VILLAGE \u2014 CENTRE + CIVIC",
+      "origin": [
+        1470,
+        230,
+        16
+      ],
+      "bounds": [
+        1460,
+        220,
+        7,
+        1578,
+        276,
+        40
+      ],
+      "entries": [
+        {
+          "id": "NC01.1",
+          "label": "Meeting Point",
+          "role": "center",
+          "sourceMod": "Unstructured",
+          "source": "data/unstructured/structures/villages/ocean/houses/meeting_point.nbt",
+          "sourceSha256": "43c94186384f747935cb70a6fe8783eb79f2c12f53e098371307f3667ecc529a",
+          "preparedSha256": "911b8b2633f96f742a34808b8825768b380d38513489cb8ebd506890984767cd",
+          "size": [
+            15,
+            7,
+            21
+          ],
+          "origin": [
+            1470,
+            230,
+            16
+          ],
+          "privateTemplate": "kithkyn_nautical_profile:nc01_01_meeting_point",
+          "waterCells": 0,
+          "containment": null,
+          "displayCopy": "run/unstructured-showcase/prepared/UA01.1.nbt",
+          "showcaseExhibit": "UA01.1",
+          "standIns": 0
+        },
+        {
+          "id": "NC01.2",
+          "label": "Town Center",
+          "role": "center",
+          "sourceMod": "Unstructured",
+          "source": "data/unstructured/structures/villages/ocean/start/town_center.nbt",
+          "sourceSha256": "b63defc461c444d6a2c73ffc4b73ced7a1d9ed4632a8f84849a52256a870ca1c",
+          "preparedSha256": "e331b4cc6ee5050970a083e685922e26677ddf604384ffe9d2cf0b8d7d4af584",
+          "size": [
+            13,
+            8,
+            13
+          ],
+          "origin": [
+            1491,
+            230,
+            16
+          ],
+          "privateTemplate": "kithkyn_nautical_profile:nc01_02_town_center",
+          "waterCells": 0,
+          "containment": null,
+          "displayCopy": "run/unstructured-showcase/prepared/UA01.2.nbt",
+          "showcaseExhibit": "UA01.2",
+          "standIns": 0
+        },
+        {
+          "id": "NC01.3",
+          "label": "Temple",
+          "role": "church",
+          "sourceMod": "Unstructured",
+          "source": "data/unstructured/structures/villages/ocean/houses/temple.nbt",
+          "sourceSha256": "f0149ac5372fc3d3b374fb85bffafa6abc2afdea54822e86e7300f188c921266",
+          "preparedSha256": "75607e717152a0b0442be581fe9ffce32e13ef6b5eb58c18748e160e6f441c62",
+          "size": [
+            11,
+            10,
+            7
+          ],
+          "origin": [
+            1510,
+            230,
+            16
+          ],
+          "privateTemplate": "kithkyn_nautical_profile:nc01_03_temple",
+          "waterCells": 0,
+          "containment": null,
+          "displayCopy": "run/unstructured-showcase/prepared/UA02.6.nbt",
+          "showcaseExhibit": "UA02.6",
+          "standIns": 0
+        },
+        {
+          "id": "NC01.4",
+          "label": "Library",
+          "role": "civic",
+          "sourceMod": "Unstructured",
+          "source": "data/unstructured/structures/villages/ocean/houses/library_1.nbt",
+          "sourceSha256": "a1eb398767073548f30c596c166a23ba38ca11d7cecfbe7bb48bb894630d2acf",
+          "preparedSha256": "79fbe4bc66de1c9ee934e760ef5b2d544171dc1a72bdb4842f5976eddfe4620d",
+          "size": [
+            11,
+            9,
+            9
+          ],
+          "origin": [
+            1527,
+            230,
+            16
+          ],
+          "privateTemplate": "kithkyn_nautical_profile:nc01_04_library_1",
+          "waterCells": 0,
+          "containment": null,
+          "displayCopy": "run/unstructured-showcase/prepared/UA01.7.nbt",
+          "showcaseExhibit": "UA01.7",
+          "standIns": 0
+        },
+        {
+          "id": "NC01.5",
+          "label": "Cartographer",
+          "role": "civic",
+          "sourceMod": "Unstructured",
+          "source": "data/unstructured/structures/villages/ocean/houses/cartographer.nbt",
+          "sourceSha256": "877903df38180712a9ea482739a2df6140295ce3f7b0aeada7d42528b0204dc5",
+          "preparedSha256": "bb04e9b62fa27389b291be5327e20b9eb3e553eac47faa08f8f486201d6ab486",
+          "size": [
+            7,
+            11,
+            9
+          ],
+          "origin": [
+            1544,
+            230,
+            16
+          ],
+          "privateTemplate": "kithkyn_nautical_profile:nc01_05_cartographer",
+          "waterCells": 0,
+          "containment": null,
+          "displayCopy": "run/unstructured-showcase/prepared/UA01.4.nbt",
+          "showcaseExhibit": "UA01.4",
+          "standIns": 0
+        },
+        {
+          "id": "NC01.6",
+          "label": "Lamp 01",
+          "role": "detail",
+          "sourceMod": "Unstructured",
+          "source": "data/unstructured/structures/villages/ocean/decor/lamp_01.nbt",
+          "sourceSha256": "1597f333d6f71b613795f78bc865d1ea566be521305de0dfa0c55839f4b1f912",
+          "preparedSha256": "334e3b5c163ea968804519bcf9c52386dde69f3e63c53d27219363d65c21cbee",
+          "size": [
+            1,
+            4,
+            1
+          ],
+          "origin": [
+            1557,
+            230,
+            16
+          ],
+          "privateTemplate": "kithkyn_nautical_profile:nc01_06_lamp_01",
+          "waterCells": 0,
+          "containment": null,
+          "displayCopy": "run/unstructured-showcase/prepared/UA03.1.nbt",
+          "showcaseExhibit": "UA03.1",
+          "standIns": 0
+        },
+        {
+          "id": "NC01.7",
+          "label": "Lamp 02",
+          "role": "detail",
+          "sourceMod": "Unstructured",
+          "source": "data/unstructured/structures/villages/ocean/decor/lamp_02.nbt",
+          "sourceSha256": "9e5e3012514f98618415b49df038b4a355abe54b8a191da8ab51bccda2ac89fc",
+          "preparedSha256": "cac5e73015a853ec164239509516619b171b2663a0be9f7621d42bc840ce54d8",
+          "size": [
+            3,
+            4,
+            3
+          ],
+          "origin": [
+            1564,
+            230,
+            16
+          ],
+          "privateTemplate": "kithkyn_nautical_profile:nc01_07_lamp_02",
+          "waterCells": 0,
+          "containment": null,
+          "displayCopy": "run/unstructured-showcase/prepared/UA03.2.nbt",
+          "showcaseExhibit": "UA03.2",
+          "standIns": 0
+        },
+        {
+          "id": "NC01.8",
+          "label": "Lamp 03",
+          "role": "detail",
+          "sourceMod": "Unstructured",
+          "source": "data/unstructured/structures/villages/ocean/decor/lamp_03.nbt",
+          "sourceSha256": "2b30da730be9166e09c652ee57cbb0a8bd10459449acc4863fc7ed7f29d0c76c",
+          "preparedSha256": "b4224fd2eb6907c7c9193f30c5845d828c3d5e8a74570d8b35c14a2a810ec464",
+          "size": [
+            3,
+            4,
+            3
+          ],
+          "origin": [
+            1573,
+            230,
+            16
+          ],
+          "privateTemplate": "kithkyn_nautical_profile:nc01_08_lamp_03",
+          "waterCells": 0,
+          "containment": null,
+          "displayCopy": "run/unstructured-showcase/prepared/UA03.3.nbt",
+          "showcaseExhibit": "UA03.3",
+          "standIns": 0
+        }
+      ]
+    },
+    {
+      "id": "NC02",
+      "title": "OCEAN VILLAGE \u2014 HOMES + SMITHS",
+      "origin": [
+        1470,
+        230,
+        60
+      ],
+      "bounds": [
+        1460,
+        220,
+        51,
+        1557,
+        276,
+        74
+      ],
+      "entries": [
+        {
+          "id": "NC02.1",
+          "label": "Small House 1",
+          "role": "house",
+          "sourceMod": "Unstructured",
+          "source": "data/unstructured/structures/villages/ocean/houses/small_house_1.nbt",
+          "sourceSha256": "357d5f951e3da9f7acd0c845cf6e4c8607ba7ca548f3c328c409381f83e086c8",
+          "preparedSha256": "974a0d039d4ab638f0b944b8201c4baede71312b6841317175ddef63fcd9cff8",
+          "size": [
+            7,
+            8,
+            7
+          ],
+          "origin": [
+            1470,
+            230,
+            60
+          ],
+          "privateTemplate": "kithkyn_nautical_profile:nc02_01_small_house_1",
+          "waterCells": 0,
+          "containment": null,
+          "displayCopy": "run/unstructured-showcase/prepared/UA02.4.nbt",
+          "showcaseExhibit": "UA02.4",
+          "standIns": 0
+        },
+        {
+          "id": "NC02.2",
+          "label": "Small House 2",
+          "role": "house",
+          "sourceMod": "Unstructured",
+          "source": "data/unstructured/structures/villages/ocean/houses/small_house_2.nbt",
+          "sourceSha256": "f73a6253ef5b13b0c7f2b8a01f869ad44670119bfd0bd2fc7c979c4334ab3af6",
+          "preparedSha256": "0d306e3cad1444e62b97654b15f60eb215a6ff112a0e99ddb63736c2d7e8da15",
+          "size": [
+            7,
+            10,
+            7
+          ],
+          "origin": [
+            1483,
+            230,
+            60
+          ],
+          "privateTemplate": "kithkyn_nautical_profile:nc02_02_small_house_2",
+          "waterCells": 0,
+          "containment": null,
+          "displayCopy": "run/unstructured-showcase/prepared/UA02.5.nbt",
+          "showcaseExhibit": "UA02.5",
+          "standIns": 0
+        },
+        {
+          "id": "NC02.3",
+          "label": "Medium House 1",
+          "role": "house",
+          "sourceMod": "Unstructured",
+          "source": "data/unstructured/structures/villages/ocean/houses/medium_house_1.nbt",
+          "sourceSha256": "0e830164ab0dd55df06c84fb07988901943b457f61e5057a1f573c5449c125ff",
+          "preparedSha256": "104c923469c5265a1bc01f944f114dfbd7e8ceb971a95e9a27f86f7eb07379ca",
+          "size": [
+            9,
+            9,
+            7
+          ],
+          "origin": [
+            1496,
+            230,
+            60
+          ],
+          "privateTemplate": "kithkyn_nautical_profile:nc02_03_medium_house_1",
+          "waterCells": 0,
+          "containment": null,
+          "displayCopy": "run/unstructured-showcase/prepared/UA01.8.nbt",
+          "showcaseExhibit": "UA01.8",
+          "standIns": 0
+        },
+        {
+          "id": "NC02.4",
+          "label": "Medium House 2",
+          "role": "house",
+          "sourceMod": "Unstructured",
+          "source": "data/unstructured/structures/villages/ocean/houses/medium_house_2.nbt",
+          "sourceSha256": "3a9fd6375561d523b4feb0805bf08508983071b1edc45d7dc8a72c1adfb977ed",
+          "preparedSha256": "59e06ed432ff0cad74e3c106f9fd828037de11db55ab84e92bd9d5025deece65",
+          "size": [
+            11,
+            13,
+            11
+          ],
+          "origin": [
+            1511,
+            230,
+            60
+          ],
+          "privateTemplate": "kithkyn_nautical_profile:nc02_04_medium_house_2",
+          "waterCells": 0,
+          "containment": null,
+          "displayCopy": "run/unstructured-showcase/prepared/UA02.1.nbt",
+          "showcaseExhibit": "UA02.1",
+          "standIns": 0
+        },
+        {
+          "id": "NC02.5",
+          "label": "Armorer",
+          "role": "work",
+          "sourceMod": "Unstructured",
+          "source": "data/unstructured/structures/villages/ocean/houses/armorer.nbt",
+          "sourceSha256": "244e719d736afa1d7104b4d182c6b100001418a82220f4408f8cf4ca9a79340f",
+          "preparedSha256": "7a28b9887ab4cc6b77f3e5e617bf287d90c20034378a83b51be3b22514578d3d",
+          "size": [
+            10,
+            9,
+            8
+          ],
+          "origin": [
+            1528,
+            230,
+            60
+          ],
+          "privateTemplate": "kithkyn_nautical_profile:nc02_05_armorer",
+          "waterCells": 0,
+          "containment": null,
+          "displayCopy": "run/unstructured-showcase/prepared/UA01.3.nbt",
+          "showcaseExhibit": "UA01.3",
+          "standIns": 0
+        },
+        {
+          "id": "NC02.6",
+          "label": "Weaponsmith",
+          "role": "work",
+          "sourceMod": "Unstructured",
+          "source": "data/unstructured/structures/villages/ocean/houses/weapon_smith.nbt",
+          "sourceSha256": "996f093bfe7297c6f2b93b525e177e1f8344938bfe465f2e86052c385e6f6f3f",
+          "preparedSha256": "eff06850a3fdd41c4d39002ddd26821349d76fa762c736dd646a6fb880c2789b",
+          "size": [
+            11,
+            10,
+            7
+          ],
+          "origin": [
+            1544,
+            230,
+            60
+          ],
+          "privateTemplate": "kithkyn_nautical_profile:nc02_06_weapon_smith",
+          "waterCells": 0,
+          "containment": null,
+          "displayCopy": "run/unstructured-showcase/prepared/UA02.7.nbt",
+          "showcaseExhibit": "UA02.7",
+          "standIns": 0
+        }
+      ]
+    },
+    {
+      "id": "NC03",
+      "title": "OCEAN VILLAGE \u2014 FOOD + WATERFRONT",
+      "origin": [
+        1470,
+        230,
+        104
+      ],
+      "bounds": [
+        1460,
+        220,
+        95,
+        1520,
+        276,
+        123
+      ],
+      "entries": [
+        {
+          "id": "NC03.1",
+          "label": "Fisher",
+          "role": "fishery",
+          "sourceMod": "Unstructured",
+          "source": "data/unstructured/structures/villages/ocean/houses/fisher.nbt",
+          "sourceSha256": "2bd9f79a8093ab7ce4c963c42dcfbf7b187c1698eecc380228999ec1191c18b9",
+          "preparedSha256": "524ecc97451b5bb44445c8382b7537031798f22d78ce7e58323a0f0a854cc078",
+          "size": [
+            7,
+            10,
+            13
+          ],
+          "origin": [
+            1470,
+            230,
+            104
+          ],
+          "privateTemplate": "kithkyn_nautical_profile:nc03_01_fisher",
+          "waterCells": 0,
+          "containment": null,
+          "displayCopy": "run/unstructured-showcase/prepared/UA01.5.nbt",
+          "showcaseExhibit": "UA01.5",
+          "standIns": 0
+        },
+        {
+          "id": "NC03.2",
+          "label": "Jetty",
+          "role": "pier",
+          "sourceMod": "Unstructured",
+          "source": "data/unstructured/structures/villages/ocean/houses/jetty.nbt",
+          "sourceSha256": "4428ec73c753c6e1756788a8ac00180b4151081a09647ea90a7bf7a9915fe8ba",
+          "preparedSha256": "563e88654711cda44b64f56a416ee13ad1c04030d77896c57e71f60ec6d08a0b",
+          "size": [
+            5,
+            4,
+            16
+          ],
+          "origin": [
+            1483,
+            230,
+            104
+          ],
+          "privateTemplate": "kithkyn_nautical_profile:nc03_02_jetty",
+          "waterCells": 0,
+          "containment": null,
+          "displayCopy": "run/unstructured-showcase/prepared/UA01.6.nbt",
+          "showcaseExhibit": "UA01.6",
+          "standIns": 0
+        },
+        {
+          "id": "NC03.3",
+          "label": "Animal Pen",
+          "role": "food",
+          "sourceMod": "Unstructured",
+          "source": "data/unstructured/structures/villages/ocean/houses/ocean_animal_pen_1.nbt",
+          "sourceSha256": "f571c136ce71f320fdc3e9f50c9718f170f5158874b30a7be8e7073dd9200ad9",
+          "preparedSha256": "da82378fe9af9fafb76f0039e522df5bfedd943d1d6739d6eca840576c4997b1",
+          "size": [
+            9,
+            7,
+            9
+          ],
+          "origin": [
+            1494,
+            230,
+            104
+          ],
+          "privateTemplate": "kithkyn_nautical_profile:nc03_03_ocean_animal_pen_1",
+          "waterCells": 27,
+          "containment": {
+            "kind": "barrier ring",
+            "box": [
+              1492,
+              230,
+              102,
+              1504,
+              230,
+              114
+            ]
+          },
+          "displayCopy": "run/unstructured-showcase/prepared/UA02.2.nbt",
+          "showcaseExhibit": "UA02.2",
+          "standIns": 0
+        },
+        {
+          "id": "NC03.4",
+          "label": "Large Farm",
+          "role": "food",
+          "sourceMod": "Unstructured",
+          "source": "data/unstructured/structures/villages/ocean/houses/ocean_large_farm_1.nbt",
+          "sourceSha256": "81e86068efa11dfb1ce1adaec921658ddee761264ca18d270077e5ca25f1eedc",
+          "preparedSha256": "18c9af3e585de14e2e0f260d2435d0c7cd4b6227d2e398a1c6a1df6ead097dd1",
+          "size": [
+            9,
+            7,
+            9
+          ],
+          "origin": [
+            1509,
+            230,
+            104
+          ],
+          "privateTemplate": "kithkyn_nautical_profile:nc03_04_ocean_large_farm_1",
+          "waterCells": 5,
+          "containment": {
+            "kind": "barrier ring",
+            "box": [
+              1507,
+              230,
+              102,
+              1519,
+              230,
+              114
+            ]
+          },
+          "displayCopy": "run/unstructured-showcase/prepared/UA02.3.nbt",
+          "showcaseExhibit": "UA02.3",
+          "standIns": 0
+        }
+      ]
+    },
+    {
+      "id": "NC04",
+      "title": "OCEAN VILLAGE \u2014 PIERS",
+      "origin": [
+        1470,
+        230,
+        148
+      ],
+      "bounds": [
+        1460,
+        220,
+        139,
+        1689,
+        276,
+        172
+      ],
+      "entries": [
+        {
+          "id": "NC04.1",
+          "label": "Corner 01",
+          "role": "pier",
+          "sourceMod": "Unstructured",
+          "source": "data/unstructured/structures/villages/ocean/streets/corner_01.nbt",
+          "sourceSha256": "8f460ced6751f15a431bba1c03e9564f7ebf4930a1c43922a72b9cc6a230fe0a",
+          "preparedSha256": "430b0b3d004c6e7df701536efbe4b061014b95bf0f26e1aa79c58b0d7441ac1a",
+          "size": [
+            7,
+            33,
+            15
+          ],
+          "origin": [
+            1470,
+            230,
+            148
+          ],
+          "privateTemplate": "kithkyn_nautical_profile:nc04_01_corner_01",
+          "waterCells": 0,
+          "containment": null,
+          "displayCopy": "run/unstructured-showcase/prepared/UF03.1.nbt",
+          "showcaseExhibit": "UF03.1",
+          "standIns": 0
+        },
+        {
+          "id": "NC04.2",
+          "label": "Corner 02",
+          "role": "pier",
+          "sourceMod": "Unstructured",
+          "source": "data/unstructured/structures/villages/ocean/streets/corner_02.nbt",
+          "sourceSha256": "5f415a24142d09c261aa7f1611a8f427c183e305aca4417d3048f9f73d809330",
+          "preparedSha256": "cfdcf2cd2507d2dadc44a549c46c34fe4673039f0421663f16189bd006022df7",
+          "size": [
+            6,
+            31,
+            6
+          ],
+          "origin": [
+            1483,
+            230,
+            148
+          ],
+          "privateTemplate": "kithkyn_nautical_profile:nc04_02_corner_02",
+          "waterCells": 0,
+          "containment": null,
+          "displayCopy": "run/unstructured-showcase/prepared/UF03.2.nbt",
+          "showcaseExhibit": "UF03.2",
+          "standIns": 0
+        },
+        {
+          "id": "NC04.3",
+          "label": "Corner 03",
+          "role": "pier",
+          "sourceMod": "Unstructured",
+          "source": "data/unstructured/structures/villages/ocean/streets/corner_03.nbt",
+          "sourceSha256": "4ba6584f045b6c9bc65747c319d2ea981818b2e92d3dde50d32d2e842cf089f7",
+          "preparedSha256": "b59170aba5bf73918b2346b41f5757d4d44b77af6b6bae668b9993e18c4a187f",
+          "size": [
+            4,
+            32,
+            4
+          ],
+          "origin": [
+            1495,
+            230,
+            148
+          ],
+          "privateTemplate": "kithkyn_nautical_profile:nc04_03_corner_03",
+          "waterCells": 0,
+          "containment": null,
+          "displayCopy": "run/unstructured-showcase/prepared/UF03.3.nbt",
+          "showcaseExhibit": "UF03.3",
+          "standIns": 0
+        },
+        {
+          "id": "NC04.4",
+          "label": "Crossroad 01",
+          "role": "pier",
+          "sourceMod": "Unstructured",
+          "source": "data/unstructured/structures/villages/ocean/streets/crossroad_01.nbt",
+          "sourceSha256": "c53524c4a4ec19606bf7ea74850f8b33c20074b417bba4764ccd12fe5426d500",
+          "preparedSha256": "1fb19e22c0b86adfb7c13ae3e1346e86b1734fc531b6c94396ff3a5edb3b9136",
+          "size": [
+            19,
+            33,
+            16
+          ],
+          "origin": [
+            1505,
+            230,
+            148
+          ],
+          "privateTemplate": "kithkyn_nautical_profile:nc04_04_crossroad_01",
+          "waterCells": 0,
+          "containment": null,
+          "displayCopy": "run/unstructured-showcase/prepared/UF03.4.nbt",
+          "showcaseExhibit": "UF03.4",
+          "standIns": 0
+        },
+        {
+          "id": "NC04.5",
+          "label": "Crossroad 02",
+          "role": "pier",
+          "sourceMod": "Unstructured",
+          "source": "data/unstructured/structures/villages/ocean/streets/crossroad_02.nbt",
+          "sourceSha256": "4fe3df60027f693e81941da759ea27915693a72d201027310637628a8134a8d6",
+          "preparedSha256": "048d3bfb73082183acbd9bfcd13910c226a6c06e57c1449a4a7bddc76af3afd9",
+          "size": [
+            11,
+            34,
+            11
+          ],
+          "origin": [
+            1530,
+            230,
+            148
+          ],
+          "privateTemplate": "kithkyn_nautical_profile:nc04_05_crossroad_02",
+          "waterCells": 0,
+          "containment": null,
+          "displayCopy": "run/unstructured-showcase/prepared/UF03.5.nbt",
+          "showcaseExhibit": "UF03.5",
+          "standIns": 0
+        },
+        {
+          "id": "NC04.6",
+          "label": "Crossroad 03",
+          "role": "pier",
+          "sourceMod": "Unstructured",
+          "source": "data/unstructured/structures/villages/ocean/streets/crossroad_03.nbt",
+          "sourceSha256": "8656996b441b841e674f383c233944d9d943aaf91f652509c02b3930ae92381d",
+          "preparedSha256": "dc5c967e014879445c68f0ceee1eec3589dc62d04c54fe878052794d2eec426d",
+          "size": [
+            5,
+            33,
+            5
+          ],
+          "origin": [
+            1547,
+            230,
+            148
+          ],
+          "privateTemplate": "kithkyn_nautical_profile:nc04_06_crossroad_03",
+          "waterCells": 0,
+          "containment": null,
+          "displayCopy": "run/unstructured-showcase/prepared/UF03.6.nbt",
+          "showcaseExhibit": "UF03.6",
+          "standIns": 0
+        },
+        {
+          "id": "NC04.7",
+          "label": "Square 01",
+          "role": "pier",
+          "sourceMod": "Unstructured",
+          "source": "data/unstructured/structures/villages/ocean/streets/square_01.nbt",
+          "sourceSha256": "ccf3de78c1d4eab01d25952992fb79f562fc2f277a4f1b071ac34e7940779fa2",
+          "preparedSha256": "7f26d8b939d811263d96ece1df529e38eeaa8dd08e8b6e287de84110b5c687fe",
+          "size": [
+            13,
+            32,
+            16
+          ],
+          "origin": [
+            1558,
+            230,
+            148
+          ],
+          "privateTemplate": "kithkyn_nautical_profile:nc04_07_square_01",
+          "waterCells": 0,
+          "containment": null,
+          "displayCopy": "run/unstructured-showcase/prepared/UF03.7.nbt",
+          "showcaseExhibit": "UF03.7",
+          "standIns": 0
+        },
+        {
+          "id": "NC04.8",
+          "label": "Square 02",
+          "role": "pier",
+          "sourceMod": "Unstructured",
+          "source": "data/unstructured/structures/villages/ocean/streets/square_02.nbt",
+          "sourceSha256": "e480b50226fa098ba6ad19de464b8412ce2fc11ce0e230be99c103e84ef5ac25",
+          "preparedSha256": "cfdfb88b8727effd736922958455e5516e69629a6ceda6bc1b6f02a528520910",
+          "size": [
+            16,
+            33,
+            19
+          ],
+          "origin": [
+            1577,
+            230,
+            148
+          ],
+          "privateTemplate": "kithkyn_nautical_profile:nc04_08_square_02",
+          "waterCells": 0,
+          "containment": null,
+          "displayCopy": "run/unstructured-showcase/prepared/UF03.8.nbt",
+          "showcaseExhibit": "UF03.8",
+          "standIns": 0
+        },
+        {
+          "id": "NC04.9",
+          "label": "Straight 01",
+          "role": "pier",
+          "sourceMod": "Unstructured",
+          "source": "data/unstructured/structures/villages/ocean/streets/straight_01.nbt",
+          "sourceSha256": "6a694e637143476add60b6e0f21a4e672acef0343346e5af2aa27ea6a6dc70a6",
+          "preparedSha256": "5a5ec725fbbc2e45dc3caa9c464d72042ab934161b4cb28891b92da2e239e76a",
+          "size": [
+            15,
+            32,
+            3
+          ],
+          "origin": [
+            1599,
+            230,
+            148
+          ],
+          "privateTemplate": "kithkyn_nautical_profile:nc04_09_straight_01",
+          "waterCells": 0,
+          "containment": null,
+          "displayCopy": "run/unstructured-showcase/prepared/UF04.1.nbt",
+          "showcaseExhibit": "UF04.1",
+          "standIns": 0
+        },
+        {
+          "id": "NC04.10",
+          "label": "Straight 02",
+          "role": "pier",
+          "sourceMod": "Unstructured",
+          "source": "data/unstructured/structures/villages/ocean/streets/straight_02.nbt",
+          "sourceSha256": "85930b4e1bb2504ea94408cfa9debf915d223324e6310941df8bbe3027259be0",
+          "preparedSha256": "731352da111779218d0999b25a63fe143fd532a50910e06ec98eba6703ed497b",
+          "size": [
+            15,
+            33,
+            19
+          ],
+          "origin": [
+            1620,
+            230,
+            148
+          ],
+          "privateTemplate": "kithkyn_nautical_profile:nc04_10_straight_02",
+          "waterCells": 0,
+          "containment": null,
+          "displayCopy": "run/unstructured-showcase/prepared/UF04.2.nbt",
+          "showcaseExhibit": "UF04.2",
+          "standIns": 0
+        },
+        {
+          "id": "NC04.11",
+          "label": "Straight 03",
+          "role": "pier",
+          "sourceMod": "Unstructured",
+          "source": "data/unstructured/structures/villages/ocean/streets/straight_03.nbt",
+          "sourceSha256": "b27ba450d62e6b9aaa2d0c70e633c39e6ff22d52fba776290b2781fb1e7523d0",
+          "preparedSha256": "b49055081345bd510b184f640747d584de80b17c4d8cbb73f3c125b6990fc882",
+          "size": [
+            4,
+            32,
+            3
+          ],
+          "origin": [
+            1641,
+            230,
+            148
+          ],
+          "privateTemplate": "kithkyn_nautical_profile:nc04_11_straight_03",
+          "waterCells": 0,
+          "containment": null,
+          "displayCopy": "run/unstructured-showcase/prepared/UF04.3.nbt",
+          "showcaseExhibit": "UF04.3",
+          "standIns": 0
+        },
+        {
+          "id": "NC04.12",
+          "label": "Straight 04",
+          "role": "pier",
+          "sourceMod": "Unstructured",
+          "source": "data/unstructured/structures/villages/ocean/streets/straight_04.nbt",
+          "sourceSha256": "4314453b4374e2dffd78c97f87a9ea78dc14bade894d5566751e6d7fdb038105",
+          "preparedSha256": "f9c748053b3fbcc069f233e47bc5774abfc10919cb4480741e4dbbfc38868c23",
+          "size": [
+            36,
+            34,
+            21
+          ],
+          "origin": [
+            1651,
+            230,
+            148
+          ],
+          "privateTemplate": "kithkyn_nautical_profile:nc04_12_straight_04",
+          "waterCells": 0,
+          "containment": null,
+          "displayCopy": "run/unstructured-showcase/prepared/UF04.4.nbt",
+          "showcaseExhibit": "UF04.4",
+          "standIns": 0
+        }
+      ]
+    },
+    {
+      "id": "NC05",
+      "title": "T&T BEACH LIGHTHOUSE + CAMPS",
+      "origin": [
+        1470,
+        230,
+        192
+      ],
+      "bounds": [
+        1460,
+        220,
+        183,
+        1574,
+        276,
+        224
+      ],
+      "entries": [
+        {
+          "id": "NC05.1",
+          "label": "Lighthouse",
+          "role": "landmark",
+          "sourceMod": "Towns & Towers",
+          "source": "data/kaisyn/structure/village/beach_lighthouse/town_centers/beach_meeting_point_1.nbt",
+          "sourceSha256": "6ed912c55f5e4fa7fa5de79745b3b49da7015fa7df641be6c0be66634dac5648",
+          "preparedSha256": "35f818fff7470dd3fe7f074b617e95fa3787b8512256b7dae5c7b35bf2b827e2",
+          "size": [
+            25,
+            35,
+            29
+          ],
+          "origin": [
+            1470,
+            230,
+            192
+          ],
+          "privateTemplate": "kithkyn_nautical_profile:nc05_01_beach_meeting_point_1",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0
+        },
+        {
+          "id": "NC05.2",
+          "label": "Main House",
+          "role": "house",
+          "sourceMod": "Towns & Towers",
+          "source": "data/kaisyn/structure/village/beach_lighthouse/side/beach_main_house_1.nbt",
+          "sourceSha256": "d7e5ccc004d09673379df3896ebdbacb96ec9820d245bd789764b9fb45331f98",
+          "preparedSha256": "759f7532d29968315942181a2162c354f32c0d9b805125a6b04359ba8f564379",
+          "size": [
+            9,
+            10,
+            14
+          ],
+          "origin": [
+            1501,
+            230,
+            192
+          ],
+          "privateTemplate": "kithkyn_nautical_profile:nc05_02_beach_main_house_1",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0
+        },
+        {
+          "id": "NC05.3",
+          "label": "Outdoor Shack",
+          "role": "work",
+          "sourceMod": "Towns & Towers",
+          "source": "data/kaisyn/structure/village/beach_lighthouse/side/beach_outdoor_shack_1.nbt",
+          "sourceSha256": "02b406e3c7547d698f32f5ca8f6072ca01b8698f5fde1efc60b04098f169e61a",
+          "preparedSha256": "2d13847f87e26139493ef2cfae94e2c194985bba303ad80656864d806eaf3a1e",
+          "size": [
+            7,
+            5,
+            9
+          ],
+          "origin": [
+            1516,
+            230,
+            192
+          ],
+          "privateTemplate": "kithkyn_nautical_profile:nc05_03_beach_outdoor_shack_1",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0
+        },
+        {
+          "id": "NC05.4",
+          "label": "Giant Cross",
+          "role": "detail",
+          "sourceMod": "Towns & Towers",
+          "source": "data/kaisyn/structure/village/beach_lighthouse/side/beach_giant_cross_1.nbt",
+          "sourceSha256": "7659c15779e9dbc736b66b8b26c8faecb8e65395aba11ab073779f777fa2d1bc",
+          "preparedSha256": "83fb4b7efe86859d856b3645a6bdb3f0f6597adf0c1f3f8097632c1b3683e985",
+          "size": [
+            3,
+            12,
+            4
+          ],
+          "origin": [
+            1529,
+            230,
+            192
+          ],
+          "privateTemplate": "kithkyn_nautical_profile:nc05_04_beach_giant_cross_1",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0
+        },
+        {
+          "id": "NC05.5",
+          "label": "Beach Camp (PC07.4)",
+          "role": "camp",
+          "sourceMod": "Towns & Towers",
+          "source": "data/kaisyn/structure/outpost/camps/beach/base_plate.nbt",
+          "sourceSha256": "357f9b9f09f7572003910eec9b39f2dd6fe8f14bb78a8456ecac949bdc3dbf0d",
+          "preparedSha256": "8395851344cce074a389482771f29543b717d2b5366952977dc7ef0916462e9d",
+          "size": [
+            14,
+            12,
+            28
+          ],
+          "origin": [
+            1538,
+            230,
+            192
+          ],
+          "privateTemplate": "kithkyn_nautical_profile:nc05_05_base_plate",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0
+        },
+        {
+          "id": "NC05.6",
+          "label": "Snowy Beach Camp",
+          "role": "camp",
+          "sourceMod": "Towns & Towers",
+          "source": "data/kaisyn/structure/outpost/camps/snowy_beach/base_plate.nbt",
+          "sourceSha256": "7b77276cff1797451c7c370797d60a2394d47af163a4e445a228920df7cee0c7",
+          "preparedSha256": "92008e1196571edaa7b670d7ec40828149833c142bdbc4316820e98c2eafc279",
+          "size": [
+            14,
+            12,
+            28
+          ],
+          "origin": [
+            1558,
+            230,
+            192
+          ],
+          "privateTemplate": "kithkyn_nautical_profile:nc05_06_base_plate",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0
+        }
+      ]
+    },
+    {
+      "id": "NC06",
+      "title": "FISHERIES \u2014 TEMPERATE + COLD",
+      "origin": [
+        1470,
+        230,
+        236
+      ],
+      "bounds": [
+        1460,
+        220,
+        227,
+        1623,
+        276,
+        254
+      ],
+      "entries": [
+        {
+          "id": "NC06.1",
+          "label": "Plains Fishing Hut",
+          "role": "fishery",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/plains/jobsite/fishing_hut.nbt",
+          "sourceSha256": "9e897ba81a1ab7ab98ad211644d2cfc8bcac10a7c00609c901b60209adb10add",
+          "preparedSha256": "70a13fd4ecc402ab6125d85e614a2b40d1becf38f36e23fa687153c3f210c288",
+          "size": [
+            11,
+            10,
+            11
+          ],
+          "origin": [
+            1470,
+            230,
+            236
+          ],
+          "privateTemplate": "kithkyn_nautical_profile:nc06_01_fishing_hut",
+          "waterCells": 127,
+          "containment": {
+            "kind": "barrier ring",
+            "box": [
+              1468,
+              230,
+              234,
+              1482,
+              230,
+              248
+            ]
+          },
+          "standIns": 0
+        },
+        {
+          "id": "NC06.2",
+          "label": "Fortified Plains Hut",
+          "role": "fishery",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/plains_fortified/jobsite/fishing_hut.nbt",
+          "sourceSha256": "42835da515f60d8d9fe16f8d29460df0da435dfe5788052cfd03579c32433dc9",
+          "preparedSha256": "80fa1fb12b16655e3c2cdd64b7a526f603c84fe7a5c3bae6bfeba56e9a60c18f",
+          "size": [
+            11,
+            13,
+            9
+          ],
+          "origin": [
+            1487,
+            230,
+            236
+          ],
+          "privateTemplate": "kithkyn_nautical_profile:nc06_02_fishing_hut",
+          "waterCells": 145,
+          "containment": {
+            "kind": "barrier ring",
+            "box": [
+              1485,
+              230,
+              234,
+              1499,
+              230,
+              246
+            ]
+          },
+          "standIns": 0
+        },
+        {
+          "id": "NC06.3",
+          "label": "Taiga Fishing Hut",
+          "role": "fishery",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/taiga/jobsite/fishing_hut.nbt",
+          "sourceSha256": "9ff61f1f9763a06667c64bb3fbda6fa93efffc20cdaf24cda90d9b9b0af485f7",
+          "preparedSha256": "db856b0040abc14452a9350752ee5dafdf53764ea625e4a9306cbad79a3afa78",
+          "size": [
+            11,
+            11,
+            12
+          ],
+          "origin": [
+            1504,
+            230,
+            236
+          ],
+          "privateTemplate": "kithkyn_nautical_profile:nc06_03_fishing_hut",
+          "waterCells": 151,
+          "containment": {
+            "kind": "barrier ring",
+            "box": [
+              1502,
+              230,
+              234,
+              1516,
+              230,
+              249
+            ]
+          },
+          "standIns": 0
+        },
+        {
+          "id": "NC06.4",
+          "label": "Fortified Taiga Hut",
+          "role": "fishery",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/taiga_fortified/jobsite/fishing_hut.nbt",
+          "sourceSha256": "afa0d4946168d34052b876e18c9c3a350141db8e9cfe0a7d07aaec2750f0bd0c",
+          "preparedSha256": "f564a72fd34dcdac597dbad04872cc99421f479e0b57a66352ff74692a9de29f",
+          "size": [
+            9,
+            9,
+            9
+          ],
+          "origin": [
+            1521,
+            230,
+            236
+          ],
+          "privateTemplate": "kithkyn_nautical_profile:nc06_04_fishing_hut",
+          "waterCells": 68,
+          "containment": {
+            "kind": "barrier ring",
+            "box": [
+              1519,
+              230,
+              234,
+              1531,
+              230,
+              246
+            ]
+          },
+          "standIns": 0
+        },
+        {
+          "id": "NC06.5",
+          "label": "Alpine Fishing Hut",
+          "role": "fishery",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/mountain_alpine/jobsite/fishing_hut.nbt",
+          "sourceSha256": "cd334dda88ee963e176a872d9ce32776a10c96175a2fc9579309a7389d7edfc7",
+          "preparedSha256": "cd334dda88ee963e176a872d9ce32776a10c96175a2fc9579309a7389d7edfc7",
+          "size": [
+            9,
+            9,
+            9
+          ],
+          "origin": [
+            1536,
+            230,
+            236
+          ],
+          "privateTemplate": "kithkyn_nautical_profile:nc06_05_fishing_hut",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0
+        },
+        {
+          "id": "NC06.6",
+          "label": "Igloo Fishing Hut",
+          "role": "fishery",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/snowy_igloo/jobsite/fishing_hut.nbt",
+          "sourceSha256": "982a1192822b98d8ff96260c87635b5249423a8ce1685401a6839f8f1335e29c",
+          "preparedSha256": "d3a05e2dacedd8c612a7b9e48511697dce3af21e7e9ee36996cf4adce1258324",
+          "size": [
+            9,
+            9,
+            5
+          ],
+          "origin": [
+            1551,
+            230,
+            236
+          ],
+          "privateTemplate": "kithkyn_nautical_profile:nc06_06_fishing_hut",
+          "waterCells": 6,
+          "containment": {
+            "kind": "barrier ring",
+            "box": [
+              1549,
+              230,
+              234,
+              1561,
+              230,
+              242
+            ]
+          },
+          "standIns": 0
+        },
+        {
+          "id": "NC06.7",
+          "label": "Christmas Fishing Hut",
+          "role": "fishery",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/christmas/jobsite/fishing_hut.nbt",
+          "sourceSha256": "184c210dd29f3bbbaed38d819e9870617fd9bac95327c0af854ea440d4dc5cc4",
+          "preparedSha256": "4872ab3d3636f0e29bc2f76fb80a0f1d366f77f3bc26400057954b8ed65c4618",
+          "size": [
+            9,
+            12,
+            10
+          ],
+          "origin": [
+            1566,
+            230,
+            236
+          ],
+          "privateTemplate": "kithkyn_nautical_profile:nc06_07_fishing_hut",
+          "waterCells": 83,
+          "containment": {
+            "kind": "barrier ring",
+            "box": [
+              1564,
+              230,
+              234,
+              1576,
+              230,
+              247
+            ]
+          },
+          "standIns": 0
+        },
+        {
+          "id": "NC06.8",
+          "label": "Beach Fishing Hut",
+          "role": "fishery",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/beach/jobsite/fishing_hut.nbt",
+          "sourceSha256": "c5e470ea7cce8a906aa342e0b0e53b5447fc60f84cf21d47a582031bb218e386",
+          "preparedSha256": "fd45324a0ef7fbf2e4ac47867d6e87e9d9cb1a746b7863b10c17fd0180044bd1",
+          "size": [
+            9,
+            9,
+            9
+          ],
+          "origin": [
+            1581,
+            230,
+            236
+          ],
+          "privateTemplate": "kithkyn_nautical_profile:nc06_08_fishing_hut",
+          "waterCells": 23,
+          "containment": {
+            "kind": "barrier ring",
+            "box": [
+              1579,
+              230,
+              234,
+              1591,
+              230,
+              246
+            ]
+          },
+          "standIns": 0
+        },
+        {
+          "id": "NC06.9",
+          "label": "Mountain Fisherman",
+          "role": "fishery",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/mountain/jobsite/fisherman.nbt",
+          "sourceSha256": "8d5030a8299f043a23bf04e7db5ef6f12252d66050dc1bb950b36a01108cee7e",
+          "preparedSha256": "cd595b469cf9f00bf6eae39daa202185e8cd98c7f638b1b7dfdf9500d10d1e62",
+          "size": [
+            9,
+            8,
+            14
+          ],
+          "origin": [
+            1596,
+            230,
+            236
+          ],
+          "privateTemplate": "kithkyn_nautical_profile:nc06_09_fisherman",
+          "waterCells": 20,
+          "containment": {
+            "kind": "barrier ring",
+            "box": [
+              1594,
+              230,
+              234,
+              1606,
+              230,
+              251
+            ]
+          },
+          "standIns": 0
+        },
+        {
+          "id": "NC06.10",
+          "label": "Fortified Fisherman",
+          "role": "fishery",
+          "sourceMod": "Terralith",
+          "source": "data/terralith/structure/village/fortified/houses/fisherman.nbt",
+          "sourceSha256": "aa1b45f1def0a973820a0abae2c3752d00be0cee78587e65b7086d57a0d214ee",
+          "preparedSha256": "80780ec76f57e2603b04ef1487d4b08c4d91611a25578c4c26fc47975f1b69ba",
+          "size": [
+            10,
+            40,
+            15
+          ],
+          "origin": [
+            1611,
+            230,
+            236
+          ],
+          "privateTemplate": "kithkyn_nautical_profile:nc06_10_fisherman",
+          "waterCells": 1,
+          "containment": {
+            "kind": "barrier ring",
+            "box": [
+              1609,
+              230,
+              234,
+              1622,
+              230,
+              252
+            ]
+          },
+          "standIns": 0
+        }
+      ]
+    },
+    {
+      "id": "NC07",
+      "title": "TAVERNS + WELLS",
+      "origin": [
+        1470,
+        230,
+        280
+      ],
+      "bounds": [
+        1460,
+        220,
+        271,
+        1629,
+        276,
+        303
+      ],
+      "entries": [
+        {
+          "id": "NC07.1",
+          "label": "Oak Tavern",
+          "role": "tavern",
+          "sourceMod": "Dungeons & Taverns",
+          "source": "data/nova_structures/structure/tavern/tavern_house_oak.nbt",
+          "sourceSha256": "ba3dca8d43239df057ba67061024291342989e4428ced0e23e75599834f404c1",
+          "preparedSha256": "f24ddb7f540be70752868dcac2129fe61031336f65ff993e0903cd8436efa3c2",
+          "size": [
+            18,
+            13,
+            20
+          ],
+          "origin": [
+            1470,
+            230,
+            280
+          ],
+          "privateTemplate": "kithkyn_nautical_profile:nc07_01_tavern_house_oak",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0
+        },
+        {
+          "id": "NC07.2",
+          "label": "Spruce Tavern",
+          "role": "tavern",
+          "sourceMod": "Dungeons & Taverns",
+          "source": "data/nova_structures/structure/tavern/tavern_house_spruce.nbt",
+          "sourceSha256": "f0a87398cce58a19c2acaa2a8fc0118941552f1aa107a462c878cd56207ebfe9",
+          "preparedSha256": "b064a033a2688f7e43c2390c1ea2cc2c587970e72da907837d3eaec530da443d",
+          "size": [
+            17,
+            14,
+            19
+          ],
+          "origin": [
+            1494,
+            230,
+            280
+          ],
+          "privateTemplate": "kithkyn_nautical_profile:nc07_02_tavern_house_spruce",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0
+        },
+        {
+          "id": "NC07.3",
+          "label": "Birch Tavern",
+          "role": "tavern",
+          "sourceMod": "Dungeons & Taverns",
+          "source": "data/nova_structures/structure/tavern/tavern_house_birch.nbt",
+          "sourceSha256": "d1ec5e863013655b83615092f854771cbbf90f703ac2dbaabeefea925a9ae751",
+          "preparedSha256": "896fedae0455abbb09d00303fa9feab6dfb3a3a5efd0ec4e952ddd324e65e157",
+          "size": [
+            17,
+            13,
+            19
+          ],
+          "origin": [
+            1517,
+            230,
+            280
+          ],
+          "privateTemplate": "kithkyn_nautical_profile:nc07_03_tavern_house_birch",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0
+        },
+        {
+          "id": "NC07.4",
+          "label": "Dark Oak Tavern",
+          "role": "tavern",
+          "sourceMod": "Dungeons & Taverns",
+          "source": "data/nova_structures/structure/tavern/tavern_house_dark_oak.nbt",
+          "sourceSha256": "fbab556c0db75e5cb57ef07d5decfb07b076ae1d508b79647cc7e9fd15ab0745",
+          "preparedSha256": "860a93e214453cc06c9c7bbe29ee770b9dbe488ad3a3bc20012fc2f68dc7ef61",
+          "size": [
+            17,
+            14,
+            19
+          ],
+          "origin": [
+            1540,
+            230,
+            280
+          ],
+          "privateTemplate": "kithkyn_nautical_profile:nc07_04_tavern_house_dark_oak",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0
+        },
+        {
+          "id": "NC07.5",
+          "label": "Snowy Tavern",
+          "role": "tavern",
+          "sourceMod": "Dungeons & Taverns",
+          "source": "data/nova_structures/structure/tavern/tavern_house_snowy.nbt",
+          "sourceSha256": "7074400c9f5bc04ff160523fcc5f5ce1eedb4e90f6b5ad6a04e5790941c11141",
+          "preparedSha256": "f21f145835d1241c70fe7ed09dbc4cb945f13d40a1e315a3466ae7e2c8624b65",
+          "size": [
+            17,
+            13,
+            19
+          ],
+          "origin": [
+            1563,
+            230,
+            280
+          ],
+          "privateTemplate": "kithkyn_nautical_profile:nc07_05_tavern_house_snowy",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0
+        },
+        {
+          "id": "NC07.6",
+          "label": "Oak Well",
+          "role": "well",
+          "sourceMod": "Dungeons & Taverns",
+          "source": "data/nova_structures/structure/well/well_oak.nbt",
+          "sourceSha256": "b79b25b6abebc59c2ac2e9b3fafc7e1b596723a08caaabac08b086b100c62f65",
+          "preparedSha256": "e0884a983ad1202c83c94ff12740fbc5382cbfd6de93af56c17f7fc1ecbc1902",
+          "size": [
+            3,
+            11,
+            3
+          ],
+          "origin": [
+            1586,
+            223,
+            280
+          ],
+          "privateTemplate": "kithkyn_nautical_profile:nc07_06_well_oak",
+          "waterCells": 12,
+          "containment": {
+            "kind": "floor",
+            "box": [
+              1586,
+              222,
+              280,
+              1588,
+              222,
+              282
+            ]
+          },
+          "standIns": 0
+        },
+        {
+          "id": "NC07.7",
+          "label": "Spruce Well",
+          "role": "well",
+          "sourceMod": "Dungeons & Taverns",
+          "source": "data/nova_structures/structure/well/well_spruce.nbt",
+          "sourceSha256": "4a255b4ad9933b681324838c7d32010bd5478ad7f7fbb5da7213b413a1db8674",
+          "preparedSha256": "6d7f413f8a8049a8f914d3ed2670db00efbf951823ffe9ab3034a2efd3ba96d2",
+          "size": [
+            3,
+            12,
+            3
+          ],
+          "origin": [
+            1595,
+            222,
+            280
+          ],
+          "privateTemplate": "kithkyn_nautical_profile:nc07_07_well_spruce",
+          "waterCells": 12,
+          "containment": {
+            "kind": "floor",
+            "box": [
+              1595,
+              221,
+              280,
+              1597,
+              221,
+              282
+            ]
+          },
+          "standIns": 0
+        },
+        {
+          "id": "NC07.8",
+          "label": "Birch Well",
+          "role": "well",
+          "sourceMod": "Dungeons & Taverns",
+          "source": "data/nova_structures/structure/well/well_birch.nbt",
+          "sourceSha256": "7f58f29a22a1e2e83233aef8f2c8629b315746e84a901425268dd41ce72fb521",
+          "preparedSha256": "4c77c38dd58611d438df4ae81d6f988ae3de7e2553d0a9be9fba8acdf31490d7",
+          "size": [
+            3,
+            11,
+            3
+          ],
+          "origin": [
+            1604,
+            223,
+            280
+          ],
+          "privateTemplate": "kithkyn_nautical_profile:nc07_08_well_birch",
+          "waterCells": 12,
+          "containment": {
+            "kind": "floor",
+            "box": [
+              1604,
+              222,
+              280,
+              1606,
+              222,
+              282
+            ]
+          },
+          "standIns": 0
+        },
+        {
+          "id": "NC07.9",
+          "label": "Dark Oak Well",
+          "role": "well",
+          "sourceMod": "Dungeons & Taverns",
+          "source": "data/nova_structures/structure/well/well_dark_oak.nbt",
+          "sourceSha256": "130141f469be2d0e11507d763e791bc1efdcc5c1353a67dc5d7f488f47e2242c",
+          "preparedSha256": "eef642a276e57bcbec07a49e9e95730dcb71bd5e7d7cf484342e1b518fc791ff",
+          "size": [
+            3,
+            12,
+            3
+          ],
+          "origin": [
+            1613,
+            222,
+            280
+          ],
+          "privateTemplate": "kithkyn_nautical_profile:nc07_09_well_dark_oak",
+          "waterCells": 12,
+          "containment": {
+            "kind": "floor",
+            "box": [
+              1613,
+              221,
+              280,
+              1615,
+              221,
+              282
+            ]
+          },
+          "standIns": 0
+        },
+        {
+          "id": "NC07.10",
+          "label": "Beach Well",
+          "role": "well",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/beach/deco/well.nbt",
+          "sourceSha256": "bc712966bd61a769af8dfaedd623542e8f324b35a35886b010c053806198a2e9",
+          "preparedSha256": "d2d114f11c4817b00fea6b26049ec46b77ee168dda281beb5c1af48d323cd216",
+          "size": [
+            5,
+            7,
+            5
+          ],
+          "origin": [
+            1622,
+            230,
+            280
+          ],
+          "privateTemplate": "kithkyn_nautical_profile:nc07_10_well",
+          "waterCells": 18,
+          "containment": {
+            "kind": "barrier ring",
+            "box": [
+              1620,
+              230,
+              278,
+              1628,
+              230,
+              286
+            ]
+          },
+          "standIns": 0
+        }
+      ]
+    },
+    {
+      "id": "NC08",
+      "title": "MOORED BOATS",
+      "origin": [
+        1470,
+        230,
+        324
+      ],
+      "bounds": [
+        1460,
+        220,
+        315,
+        1526,
+        276,
+        346
+      ],
+      "entries": [
+        {
+          "id": "NC08.1",
+          "label": "Small Ship 1",
+          "role": "boat",
+          "sourceMod": "Towns & Towers",
+          "source": "data/kaisyn/structure/ships/village_ocean/pieces/small_ship/small_ship_1.nbt",
+          "sourceSha256": "48edaddad1b0f9de8639d608e57ada8a8a296612efe559dbd70f80cefb7d6730",
+          "preparedSha256": "d2073806b5d4d9bd09ec61afaa445371a0fd128135917458001b6cb34ec25fd9",
+          "size": [
+            6,
+            10,
+            10
+          ],
+          "origin": [
+            1470,
+            230,
+            324
+          ],
+          "privateTemplate": "kithkyn_nautical_profile:nc08_01_small_ship_1",
+          "waterCells": 1,
+          "containment": {
+            "kind": "barrier ring",
+            "box": [
+              1468,
+              230,
+              322,
+              1477,
+              230,
+              335
+            ]
+          },
+          "standIns": 0
+        },
+        {
+          "id": "NC08.2",
+          "label": "Small Ship 2",
+          "role": "boat",
+          "sourceMod": "Towns & Towers",
+          "source": "data/kaisyn/structure/ships/village_ocean/pieces/small_ship/small_ship_2.nbt",
+          "sourceSha256": "3521d3668ed00c34f3fea8ebd1bd3e8fe04018c87823a95ca6d650bc06d7481d",
+          "preparedSha256": "0f983bd961a8459f093dd16ce6336f963160f6d799501a3249f94e1184bb71db",
+          "size": [
+            3,
+            6,
+            7
+          ],
+          "origin": [
+            1482,
+            230,
+            324
+          ],
+          "privateTemplate": "kithkyn_nautical_profile:nc08_02_small_ship_2",
+          "waterCells": 1,
+          "containment": {
+            "kind": "barrier ring",
+            "box": [
+              1480,
+              230,
+              322,
+              1486,
+              230,
+              332
+            ]
+          },
+          "standIns": 0
+        },
+        {
+          "id": "NC08.3",
+          "label": "Small Ship 3",
+          "role": "boat",
+          "sourceMod": "Towns & Towers",
+          "source": "data/kaisyn/structure/ships/village_ocean/pieces/small_ship/small_ship_3.nbt",
+          "sourceSha256": "6692c575a2b9ba2c92bbff5bc7369eec926a40a07964fc66a51356cdc8b45a9f",
+          "preparedSha256": "df5d0ba36d5ea0134e1826d3079cde8cd9a5d5ffac584f2bbd25c940dbe1c2c9",
+          "size": [
+            6,
+            13,
+            15
+          ],
+          "origin": [
+            1491,
+            230,
+            324
+          ],
+          "privateTemplate": "kithkyn_nautical_profile:nc08_03_small_ship_3",
+          "waterCells": 1,
+          "containment": {
+            "kind": "barrier ring",
+            "box": [
+              1489,
+              230,
+              322,
+              1498,
+              230,
+              340
+            ]
+          },
+          "standIns": 0
+        },
+        {
+          "id": "NC08.4",
+          "label": "Small Ship 4",
+          "role": "boat",
+          "sourceMod": "Towns & Towers",
+          "source": "data/kaisyn/structure/ships/village_ocean/pieces/small_ship/small_ship_4.nbt",
+          "sourceSha256": "759d55e217acefe0acfa0f67cae9fc89140340c94843ba90e573345313651ee6",
+          "preparedSha256": "fe4d245d77db90c5475aedcf1bbdc42b106655b5c1e8c1802c72b3736909c2c2",
+          "size": [
+            7,
+            22,
+            19
+          ],
+          "origin": [
+            1503,
+            230,
+            324
+          ],
+          "privateTemplate": "kithkyn_nautical_profile:nc08_04_small_ship_4",
+          "waterCells": 1,
+          "containment": {
+            "kind": "barrier ring",
+            "box": [
+              1501,
+              230,
+              322,
+              1511,
+              230,
+              344
+            ]
+          },
+          "standIns": 0
+        },
+        {
+          "id": "NC08.5",
+          "label": "Beach Boat",
+          "role": "boat",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/beach/deco/boat.nbt",
+          "sourceSha256": "a475f8b3428820533ff9b1d2139ddb66c3f8096d6caeaeff87036e4110346f0b",
+          "preparedSha256": "f1eb79cdd4c2ac0a5bce766d1d0a94b874a0f8726335b1a29223bccd085a7832",
+          "size": [
+            8,
+            5,
+            3
+          ],
+          "origin": [
+            1516,
+            230,
+            324
+          ],
+          "privateTemplate": "kithkyn_nautical_profile:nc08_05_boat",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0
+        }
+      ]
+    },
+    {
+      "id": "NC09",
+      "title": "CTOV BEACH \u2014 SERVICES",
+      "origin": [
+        1470,
+        230,
+        368
+      ],
+      "bounds": [
+        1460,
+        220,
+        359,
+        1647,
+        276,
+        383
+      ],
+      "entries": [
+        {
+          "id": "NC09.1",
+          "label": "Vault",
+          "role": "storehouse",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/beach/jobsite/vault.nbt",
+          "sourceSha256": "2e768462551c1056a3be54a72da76d6d4ffcb15f070394f5d6da457085bd2921",
+          "preparedSha256": "b9684b0e1244e94d12c06679e64f46cb067cd5bd6a5b4c506e56b7e7bc29c312",
+          "size": [
+            9,
+            12,
+            9
+          ],
+          "origin": [
+            1470,
+            230,
+            368
+          ],
+          "privateTemplate": "kithkyn_nautical_profile:nc09_01_vault",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0
+        },
+        {
+          "id": "NC09.2",
+          "label": "Smith",
+          "role": "blacksmith",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/beach/jobsite/smith.nbt",
+          "sourceSha256": "d1463e6309f6ae48cd4f44d9c6e4b6781e03347ff6ccaa9a87b97b1c966b49fd",
+          "preparedSha256": "8c4271d752375e951a42b56b5ce829bf2da52b01acd92226d9a241cfe10553e3",
+          "size": [
+            9,
+            10,
+            9
+          ],
+          "origin": [
+            1485,
+            230,
+            368
+          ],
+          "privateTemplate": "kithkyn_nautical_profile:nc09_02_smith",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0
+        },
+        {
+          "id": "NC09.3",
+          "label": "Mason",
+          "role": "stoneworks",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/beach/jobsite/mason.nbt",
+          "sourceSha256": "06698c2a6a11ec6c761944de7095b1589cd4cf13429fa742834e1b72170a7068",
+          "preparedSha256": "808de1e9dd5bcaa0606af8d5cb29bdd18c1853307ce95fc47681807545f1a3bc",
+          "size": [
+            9,
+            8,
+            7
+          ],
+          "origin": [
+            1500,
+            230,
+            368
+          ],
+          "privateTemplate": "kithkyn_nautical_profile:nc09_03_mason",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0
+        },
+        {
+          "id": "NC09.4",
+          "label": "Butcher",
+          "role": "butchery",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/beach/jobsite/butcher.nbt",
+          "sourceSha256": "da81ee2c4e7635eb9d74d6878a68f815c6c39a79b0638146f17911034cb94653",
+          "preparedSha256": "1427f4c6b525374bf487926c8f13a3dc6e6990316f271e7e4cbfa4e040d27958",
+          "size": [
+            7,
+            7,
+            11
+          ],
+          "origin": [
+            1515,
+            230,
+            368
+          ],
+          "privateTemplate": "kithkyn_nautical_profile:nc09_04_butcher",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0
+        },
+        {
+          "id": "NC09.5",
+          "label": "Library",
+          "role": "civic",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/beach/jobsite/library.nbt",
+          "sourceSha256": "f3acdc7ad983501bf9540caef951bdba0466af8bd4d21cafceed7a83c7880ca7",
+          "preparedSha256": "898488797c6b578fd1529e05d5cba10653d25e6e2e00adb124af65ef13d43798",
+          "size": [
+            9,
+            16,
+            9
+          ],
+          "origin": [
+            1528,
+            230,
+            368
+          ],
+          "privateTemplate": "kithkyn_nautical_profile:nc09_05_library",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0
+        },
+        {
+          "id": "NC09.6",
+          "label": "Cartographer",
+          "role": "civic",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/beach/jobsite/cartographer.nbt",
+          "sourceSha256": "6250735ea55390860c506554fa6a22f18c6420ae8f65bae3fb000cc88230b5b9",
+          "preparedSha256": "f2982e86290e398be13fd4dee4b72c9879cf1fbcecad49a7b575506f6c2c167f",
+          "size": [
+            7,
+            15,
+            7
+          ],
+          "origin": [
+            1543,
+            230,
+            368
+          ],
+          "privateTemplate": "kithkyn_nautical_profile:nc09_06_cartographer",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0
+        },
+        {
+          "id": "NC09.7",
+          "label": "Chemist",
+          "role": "work",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/beach/jobsite/chemist.nbt",
+          "sourceSha256": "d6135e79b62b7e4b2c614757303eeaa3f47f1c1287308b1b187ebf4526510951",
+          "preparedSha256": "21d31cd9234e2432efea9c9f474dc990394c6421803009bf450f182c9c6333ef",
+          "size": [
+            9,
+            12,
+            9
+          ],
+          "origin": [
+            1556,
+            230,
+            368
+          ],
+          "privateTemplate": "kithkyn_nautical_profile:nc09_07_chemist",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0
+        },
+        {
+          "id": "NC09.8",
+          "label": "Archery Range",
+          "role": "tower",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/beach/jobsite/archery_range.nbt",
+          "sourceSha256": "667aba33188a3bfbed7ca1e531086dd7668659c88fafbba5fb8a7667a4a8c3ef",
+          "preparedSha256": "486152102ccf1c2da535ccd1003d6d2663705ec22146f51bda9af83bfa0ecf1c",
+          "size": [
+            11,
+            20,
+            12
+          ],
+          "origin": [
+            1571,
+            230,
+            368
+          ],
+          "privateTemplate": "kithkyn_nautical_profile:nc09_08_archery_range",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0
+        },
+        {
+          "id": "NC09.9",
+          "label": "Farm",
+          "role": "farm",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/beach/jobsite/farm.nbt",
+          "sourceSha256": "5b027cd186e0b1c3a8944efdf47e705033efa25d8088376df7a5bef8f6a7fcd0",
+          "preparedSha256": "dd6890404ab8c27d30c7811298a27c5d9f11d43f127eccc3c4956118e7c23efe",
+          "size": [
+            11,
+            6,
+            11
+          ],
+          "origin": [
+            1588,
+            230,
+            368
+          ],
+          "privateTemplate": "kithkyn_nautical_profile:nc09_09_farm",
+          "waterCells": 5,
+          "containment": {
+            "kind": "barrier ring",
+            "box": [
+              1586,
+              230,
+              366,
+              1600,
+              230,
+              380
+            ]
+          },
+          "standIns": 0
+        },
+        {
+          "id": "NC09.10",
+          "label": "Orchard",
+          "role": "farm",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/beach/jobsite/orchard.nbt",
+          "sourceSha256": "38665f089e1775ee8dfade6a3f860485fdf4c4388e707d07f6f5a4a10cbd5ccb",
+          "preparedSha256": "580aabc23f786ed5d8713a5f59027835e7f8ec1888e9b06c654eb028f4861cf5",
+          "size": [
+            11,
+            6,
+            11
+          ],
+          "origin": [
+            1605,
+            230,
+            368
+          ],
+          "privateTemplate": "kithkyn_nautical_profile:nc09_10_orchard",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0
+        },
+        {
+          "id": "NC09.11",
+          "label": "Pen",
+          "role": "food",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/beach/jobsite/pen.nbt",
+          "sourceSha256": "a9b13ca7021f666158a4d77ec0399ef54c0f5ac4110beb97a6bf93364e001d5a",
+          "preparedSha256": "994881e0f5034f310184019bc90036b4067c829ccf0a4125446348c8ffbfbcbd",
+          "size": [
+            7,
+            4,
+            7
+          ],
+          "origin": [
+            1622,
+            230,
+            368
+          ],
+          "privateTemplate": "kithkyn_nautical_profile:nc09_11_pen",
+          "waterCells": 5,
+          "containment": {
+            "kind": "barrier ring",
+            "box": [
+              1620,
+              230,
+              366,
+              1630,
+              230,
+              376
+            ]
+          },
+          "standIns": 0
+        },
+        {
+          "id": "NC09.12",
+          "label": "Shepherd",
+          "role": "food",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/beach/jobsite/shepherd.nbt",
+          "sourceSha256": "3072143951902f2669f3bba80b7a772a504e31ce6017bd970740c731bf259b6f",
+          "preparedSha256": "65fc52966570bb6e7e681ba6c271e16853972ad98b49cb4377ec475350b757db",
+          "size": [
+            10,
+            9,
+            7
+          ],
+          "origin": [
+            1635,
+            230,
+            368
+          ],
+          "privateTemplate": "kithkyn_nautical_profile:nc09_12_shepherd",
+          "waterCells": 1,
+          "containment": {
+            "kind": "barrier ring",
+            "box": [
+              1633,
+              230,
+              366,
+              1646,
+              230,
+              376
+            ]
+          },
+          "standIns": 0
+        }
+      ]
+    },
+    {
+      "id": "NC10",
+      "title": "CTOV BEACH \u2014 HOMES",
+      "origin": [
+        1470,
+        230,
+        412
+      ],
+      "bounds": [
+        1460,
+        220,
+        403,
+        1604,
+        276,
+        424
+      ],
+      "entries": [
+        {
+          "id": "NC10.1",
+          "label": "Big House 1",
+          "role": "house",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/beach/house/big_1.nbt",
+          "sourceSha256": "3c663e351348868fc499af42ea99b395fa6efd02125fb52cb8074782babd8a4d",
+          "preparedSha256": "f557fb7041076ca52cf0b0387b4314e2d6b152e3842010c13bb85f6795e56f12",
+          "size": [
+            11,
+            9,
+            7
+          ],
+          "origin": [
+            1470,
+            230,
+            412
+          ],
+          "privateTemplate": "kithkyn_nautical_profile:nc10_01_big_1",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0
+        },
+        {
+          "id": "NC10.2",
+          "label": "Big House 2",
+          "role": "house",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/beach/house/big_2.nbt",
+          "sourceSha256": "908ee942c265f44a9189e809838b3b73d5408d21151fc1d7004b04dfa3e154ae",
+          "preparedSha256": "86c097bedc8641a32385a7aa698d2d356d1c220f3ceec086807e1fba0b8bedb8",
+          "size": [
+            11,
+            5,
+            7
+          ],
+          "origin": [
+            1487,
+            230,
+            412
+          ],
+          "privateTemplate": "kithkyn_nautical_profile:nc10_02_big_2",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0
+        },
+        {
+          "id": "NC10.3",
+          "label": "Big House 3",
+          "role": "house",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/beach/house/big_3.nbt",
+          "sourceSha256": "80c5853c58a99ea7bf4d973629104f941015e25f9e4c681a324686f1c03a3a8a",
+          "preparedSha256": "035007dd388ef89bb6155b7e6a6bc64e220f6f1a75f5e0ebad9f64fb779ed127",
+          "size": [
+            9,
+            9,
+            9
+          ],
+          "origin": [
+            1504,
+            230,
+            412
+          ],
+          "privateTemplate": "kithkyn_nautical_profile:nc10_03_big_3",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0
+        },
+        {
+          "id": "NC10.4",
+          "label": "Mid House 1",
+          "role": "house",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/beach/house/mid_1.nbt",
+          "sourceSha256": "5a9572bd51355918bfe4061dfa51cd240a1c82514d723314c414ad29a1a843b6",
+          "preparedSha256": "663c9f437d2d44304b187c66641732f8f0373494e4aaab9049e7152808696827",
+          "size": [
+            9,
+            5,
+            9
+          ],
+          "origin": [
+            1519,
+            230,
+            412
+          ],
+          "privateTemplate": "kithkyn_nautical_profile:nc10_04_mid_1",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0
+        },
+        {
+          "id": "NC10.5",
+          "label": "Mid House 2",
+          "role": "house",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/beach/house/mid_2.nbt",
+          "sourceSha256": "970169706aba8f3e97644dcb7049b95c17b043f15dc4aaf6db69b87bb738ad32",
+          "preparedSha256": "0dbe4659aa5b03541a01230e35923d5d11736fb3e0a8cec86ab2abf74719fbf6",
+          "size": [
+            10,
+            9,
+            8
+          ],
+          "origin": [
+            1534,
+            230,
+            412
+          ],
+          "privateTemplate": "kithkyn_nautical_profile:nc10_05_mid_2",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0
+        },
+        {
+          "id": "NC10.6",
+          "label": "Small House 1",
+          "role": "house",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/beach/house/small_1.nbt",
+          "sourceSha256": "530fbe4fc1856fe7806067c47b2967d1f59d2d223ab87deb5e9c7e05ec8aec6b",
+          "preparedSha256": "29bef28db8964eadb46739ad9c87c47cda794199b27124b238fd88962b6ed2f8",
+          "size": [
+            7,
+            5,
+            7
+          ],
+          "origin": [
+            1550,
+            230,
+            412
+          ],
+          "privateTemplate": "kithkyn_nautical_profile:nc10_06_small_1",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0
+        },
+        {
+          "id": "NC10.7",
+          "label": "Small House 2",
+          "role": "house",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/beach/house/small_2.nbt",
+          "sourceSha256": "84b5c48b59824f337d2d197dbc45a3f7a1d34fb9dfc9dbe2d2031345275a98f3",
+          "preparedSha256": "99b04cfea3320f9350fd60cab20213c8835a17ee2a7b11e85c9709db61e0c576",
+          "size": [
+            9,
+            5,
+            7
+          ],
+          "origin": [
+            1563,
+            230,
+            412
+          ],
+          "privateTemplate": "kithkyn_nautical_profile:nc10_07_small_2",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0
+        },
+        {
+          "id": "NC10.8",
+          "label": "Small House 3",
+          "role": "house",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/beach/house/small_3.nbt",
+          "sourceSha256": "877641db5b13a5404e364c94b343db6964ba21e4db2007ac0f31b66deaa04289",
+          "preparedSha256": "cd4e35c7646b6c970f80c5b544561cc2ef7af0ffe10269267aec438e192eb828",
+          "size": [
+            8,
+            9,
+            8
+          ],
+          "origin": [
+            1578,
+            230,
+            412
+          ],
+          "privateTemplate": "kithkyn_nautical_profile:nc10_08_small_3",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0
+        },
+        {
+          "id": "NC10.9",
+          "label": "Small House 4",
+          "role": "house",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/beach/house/small_4.nbt",
+          "sourceSha256": "0c73a298925f250c805b88f2f5415680030c18dc6671fafcfafa0fa0e9d367e1",
+          "preparedSha256": "91f555964cdc72a0f4fc69c482ecfdd435d327f8d0b2cb7d2bb878ebb47f6e0d",
+          "size": [
+            10,
+            5,
+            7
+          ],
+          "origin": [
+            1592,
+            230,
+            412
+          ],
+          "privateTemplate": "kithkyn_nautical_profile:nc10_09_small_4",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0
+        }
+      ]
+    },
+    {
+      "id": "NC11",
+      "title": "CTOV BEACH \u2014 CENTRE, TAVERN + CHURCH",
+      "origin": [
+        1470,
+        230,
+        456
+      ],
+      "bounds": [
+        1460,
+        220,
+        447,
+        1570,
+        276,
+        474
+      ],
+      "entries": [
+        {
+          "id": "NC11.1",
+          "label": "Town Centre",
+          "role": "center",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/beach/town_center.nbt",
+          "sourceSha256": "531ebe2b36d05ccb56b8b087491329426c9e18680d56d20caa093b5597698377",
+          "preparedSha256": "255695d2d8a916eeb6e50b8a6080ff43c45c7fa28ae914546c0e80817b5fe715",
+          "size": [
+            15,
+            8,
+            15
+          ],
+          "origin": [
+            1470,
+            230,
+            456
+          ],
+          "privateTemplate": "kithkyn_nautical_profile:nc11_01_town_center",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0
+        },
+        {
+          "id": "NC11.2",
+          "label": "Tavern",
+          "role": "tavern",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/beach/jobsite/tavern.nbt",
+          "sourceSha256": "a7001c17597372d6bde83841f8a87f17739decb295b793e208baaba1ad2b2fc1",
+          "preparedSha256": "f6fc6007e2be6956e3fa7116fd6a3bfcacc5c5c237a3de023120f5bb4b20e80a",
+          "size": [
+            13,
+            15,
+            13
+          ],
+          "origin": [
+            1491,
+            230,
+            456
+          ],
+          "privateTemplate": "kithkyn_nautical_profile:nc11_02_tavern",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 1
+        },
+        {
+          "id": "NC11.3",
+          "label": "Sanctuary",
+          "role": "church",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/beach/jobsite/sanctuary.nbt",
+          "sourceSha256": "640197a4c2010efd02f625351f94bdd74b6c96737b6963ec146a380cb82c661a",
+          "preparedSha256": "8ab956f604aff97c22dd3f22eb33c2aa7c5f95044bda5c364b95db36d97716aa",
+          "size": [
+            12,
+            11,
+            11
+          ],
+          "origin": [
+            1510,
+            230,
+            456
+          ],
+          "privateTemplate": "kithkyn_nautical_profile:nc11_03_sanctuary",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 1
+        },
+        {
+          "id": "NC11.4",
+          "label": "Priest Tower",
+          "role": "church",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/beach/jobsite/priest_tower.nbt",
+          "sourceSha256": "1a402c4f131c910a31897529bbcbf2d68947d13c2b00513db7ad340870607184",
+          "preparedSha256": "07e67879ffb55023c41714030ba2d29014dd9c87512554a999e1dedc5d046a07",
+          "size": [
+            9,
+            15,
+            9
+          ],
+          "origin": [
+            1528,
+            230,
+            456
+          ],
+          "privateTemplate": "kithkyn_nautical_profile:nc11_04_priest_tower",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 2
+        },
+        {
+          "id": "NC11.5",
+          "label": "Barracks",
+          "role": "castle",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/beach/jobsite/barracks.nbt",
+          "sourceSha256": "a55007320490f1f247f87f436cd1f4f49718b4c142d237a247d3790ccddc7ec6",
+          "preparedSha256": "64be4ec5365fac62699f4fcc59b24d9195ac746fe9b118cdf62ec0eb87da55cd",
+          "size": [
+            12,
+            20,
+            12
+          ],
+          "origin": [
+            1543,
+            230,
+            456
+          ],
+          "privateTemplate": "kithkyn_nautical_profile:nc11_05_barracks",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 1
+        },
+        {
+          "id": "NC11.6",
+          "label": "Gazebo",
+          "role": "detail",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/beach/jobsite/gazebo.nbt",
+          "sourceSha256": "4dc3a93d8bac9d47f49822c2760e3c8ebaaa936bdaf43e3d6c8fb5863641887e",
+          "preparedSha256": "b929d635aadc31db436ced45282c5b2ca8581c12c62720d5d25aa329b1738d87",
+          "size": [
+            7,
+            9,
+            7
+          ],
+          "origin": [
+            1561,
+            230,
+            456
+          ],
+          "privateTemplate": "kithkyn_nautical_profile:nc11_06_gazebo",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 1
+        }
+      ]
+    },
+    {
+      "id": "NC12",
+      "title": "CTOV BEACH \u2014 FOOD + GARDENS",
+      "origin": [
+        1470,
+        230,
+        500
+      ],
+      "bounds": [
+        1460,
+        220,
+        491,
+        1616,
+        276,
+        514
+      ],
+      "entries": [
+        {
+          "id": "NC12.1",
+          "label": "Bakery",
+          "role": "bakery",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/beach/jobsite/bakery.nbt",
+          "sourceSha256": "259d52050659fb48ab84e1f3582310e28393b520daf2f93f85c429e6d4c018ac",
+          "preparedSha256": "3100d27e733e21768439d7bedf812146beffb42820664a273c53a116c84114ff",
+          "size": [
+            7,
+            10,
+            8
+          ],
+          "origin": [
+            1470,
+            230,
+            500
+          ],
+          "privateTemplate": "kithkyn_nautical_profile:nc12_01_bakery",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 3
+        },
+        {
+          "id": "NC12.2",
+          "label": "Restaurant",
+          "role": "food",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/beach/jobsite/restaurant.nbt",
+          "sourceSha256": "154be5a5ddeb53d2cc103c2ccef02612a970c3d7baa065ac77cad10d22fa5235",
+          "preparedSha256": "14c6982149ee6bf4b41232237f7fcc8e458ebfc281c099f5507f8dd617c3f0b2",
+          "size": [
+            9,
+            8,
+            9
+          ],
+          "origin": [
+            1483,
+            230,
+            500
+          ],
+          "privateTemplate": "kithkyn_nautical_profile:nc12_02_restaurant",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 65
+        },
+        {
+          "id": "NC12.3",
+          "label": "Chicken Coop",
+          "role": "food",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/beach/jobsite/chicken_coop.nbt",
+          "sourceSha256": "110cbb9e038555cc63b0c884018b8609902e7224670782dc32a92b78db9da3f4",
+          "preparedSha256": "cc8f4c4f1fad9fdfe34e85d965cd7f8f40f24b0099d407b85a2796c1155e1c08",
+          "size": [
+            7,
+            6,
+            6
+          ],
+          "origin": [
+            1498,
+            230,
+            500
+          ],
+          "privateTemplate": "kithkyn_nautical_profile:nc12_03_chicken_coop",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 1
+        },
+        {
+          "id": "NC12.4",
+          "label": "Farmer's Delight Farm",
+          "role": "farm",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/beach/jobsite/fd_farm.nbt",
+          "sourceSha256": "10eb6f6ddbb69dbefa6297932fb2940363d9c786c6f749cdb1ffd0c1d73aac01",
+          "preparedSha256": "3d7d2aceae6538837d49350942ff46b66aa37c60597cab55907566f8595a425d",
+          "size": [
+            11,
+            7,
+            11
+          ],
+          "origin": [
+            1511,
+            230,
+            500
+          ],
+          "privateTemplate": "kithkyn_nautical_profile:nc12_04_fd_farm",
+          "waterCells": 9,
+          "containment": {
+            "kind": "barrier ring",
+            "box": [
+              1509,
+              230,
+              498,
+              1523,
+              230,
+              512
+            ]
+          },
+          "standIns": 98
+        },
+        {
+          "id": "NC12.5",
+          "label": "Flower Farm",
+          "role": "farm",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/beach/jobsite/flower_farm.nbt",
+          "sourceSha256": "467383a106c85dafadd2ce263747be2f6c8bf1e99230ed6e179bee26a0d78831",
+          "preparedSha256": "726f5673f8527ba33df3f59c08ea56ac2f7d72c822b2de7de80175ee899aceed",
+          "size": [
+            7,
+            7,
+            7
+          ],
+          "origin": [
+            1528,
+            230,
+            500
+          ],
+          "privateTemplate": "kithkyn_nautical_profile:nc12_05_flower_farm",
+          "waterCells": 4,
+          "containment": {
+            "kind": "barrier ring",
+            "box": [
+              1526,
+              230,
+              498,
+              1536,
+              230,
+              508
+            ]
+          },
+          "standIns": 16
+        },
+        {
+          "id": "NC12.6",
+          "label": "Garden",
+          "role": "farm",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/beach/jobsite/garden.nbt",
+          "sourceSha256": "f64857ba044ae5cc041e040a33a010174185dfaef9d4bfa53bdf158d8bd76690",
+          "preparedSha256": "d0d3f9e3e55c3608059601b8dbe343b955bcb4ceab7c77d9f9827620e86ba826",
+          "size": [
+            7,
+            6,
+            8
+          ],
+          "origin": [
+            1541,
+            230,
+            500
+          ],
+          "privateTemplate": "kithkyn_nautical_profile:nc12_06_garden",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 1
+        },
+        {
+          "id": "NC12.7",
+          "label": "Vineyard",
+          "role": "farm",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/beach/jobsite/vineyard.nbt",
+          "sourceSha256": "6b737c9f618a3e7484c9b865179eda61f92e56f39854908fe0a2c4d1bbfa69cb",
+          "preparedSha256": "a7886c3b98605a1e60ede215c5d6b9038079d52c854b059359ba1048c8c0a65f",
+          "size": [
+            11,
+            15,
+            11
+          ],
+          "origin": [
+            1554,
+            230,
+            500
+          ],
+          "privateTemplate": "kithkyn_nautical_profile:nc12_07_vineyard",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 61
+        },
+        {
+          "id": "NC12.8",
+          "label": "Forager",
+          "role": "food",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/beach/jobsite/forager.nbt",
+          "sourceSha256": "f661285bb6ed22ad5b443126dcb2af6d361db0f7de71a6ca092838bf5364ca3e",
+          "preparedSha256": "c19b4778d982a6767e9d9758653e5f613a4d0b26f7113890dcd6667dc36c645e",
+          "size": [
+            11,
+            9,
+            9
+          ],
+          "origin": [
+            1571,
+            230,
+            500
+          ],
+          "privateTemplate": "kithkyn_nautical_profile:nc12_08_forager",
+          "waterCells": 8,
+          "containment": {
+            "kind": "barrier ring",
+            "box": [
+              1569,
+              230,
+              498,
+              1583,
+              230,
+              510
+            ]
+          },
+          "standIns": 13
+        },
+        {
+          "id": "NC12.9",
+          "label": "Horticulturist",
+          "role": "farm",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/beach/jobsite/horticulturist.nbt",
+          "sourceSha256": "1f0f2624169d4cdafeedd531a5d1f1d2f5aa877ca2f4ed7ce75dde363d7d4483",
+          "preparedSha256": "8b29b2a0f34675ad8534d2f970db8189f0ed4e937e476d22f5b24d82dc4c033f",
+          "size": [
+            9,
+            9,
+            11
+          ],
+          "origin": [
+            1588,
+            230,
+            500
+          ],
+          "privateTemplate": "kithkyn_nautical_profile:nc12_09_horticulturist",
+          "waterCells": 1,
+          "containment": {
+            "kind": "barrier ring",
+            "box": [
+              1586,
+              230,
+              498,
+              1598,
+              230,
+              512
+            ]
+          },
+          "standIns": 1
+        },
+        {
+          "id": "NC12.10",
+          "label": "Botanist",
+          "role": "farm",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/beach/jobsite/botanist.nbt",
+          "sourceSha256": "0fd8a92db6a1a241757a2f32464347474f7db519e2b7d79fa1d0e7d90dc9c8fd",
+          "preparedSha256": "16b9c8715324a8430c72e36b2797c0263113f4743916df5396639f6302585be0",
+          "size": [
+            11,
+            6,
+            11
+          ],
+          "origin": [
+            1603,
+            230,
+            500
+          ],
+          "privateTemplate": "kithkyn_nautical_profile:nc12_10_botanist",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 39
+        }
+      ]
+    },
+    {
+      "id": "NC13",
+      "title": "CTOV BEACH \u2014 CRAFT + WATERFRONT",
+      "origin": [
+        1470,
+        230,
+        544
+      ],
+      "bounds": [
+        1460,
+        220,
+        535,
+        1614,
+        276,
+        558
+      ],
+      "entries": [
+        {
+          "id": "NC13.1",
+          "label": "Warehouse",
+          "role": "storehouse",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/beach/jobsite/warehouse.nbt",
+          "sourceSha256": "ef2d53696402649e447f86a2d8b5628b92e50c7a97040f04cd3cad1c9403daef",
+          "preparedSha256": "765f832f53140eb24947d7fa997872f97d340b9159410c781f57984fe445ea02",
+          "size": [
+            9,
+            7,
+            9
+          ],
+          "origin": [
+            1470,
+            230,
+            544
+          ],
+          "privateTemplate": "kithkyn_nautical_profile:nc13_01_warehouse",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 5
+        },
+        {
+          "id": "NC13.2",
+          "label": "Sawmill",
+          "role": "lumberjack",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/beach/jobsite/sawmill.nbt",
+          "sourceSha256": "bc663acb95e35c70ac8bccc22935276befffcf3713c9a05f56d46dabf51a885b",
+          "preparedSha256": "e20a0630511785b02d86d27d0544e1f8f33595a84538c5bdfaa6b7ac6bbe4c84",
+          "size": [
+            9,
+            10,
+            9
+          ],
+          "origin": [
+            1485,
+            230,
+            544
+          ],
+          "privateTemplate": "kithkyn_nautical_profile:nc13_02_sawmill",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 1
+        },
+        {
+          "id": "NC13.3",
+          "label": "Woodworker",
+          "role": "lumberjack",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/beach/jobsite/woodworker.nbt",
+          "sourceSha256": "6d3a8dee986a02fec0ba6019e2cff6f47b50e87f590f7d4458f893872a472b79",
+          "preparedSha256": "c2cad5914da42f2364cc6633a5d8cb7ce49d144e64d30e1d7b0f4ecf00a916fb",
+          "size": [
+            9,
+            5,
+            7
+          ],
+          "origin": [
+            1500,
+            230,
+            544
+          ],
+          "privateTemplate": "kithkyn_nautical_profile:nc13_03_woodworker",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 1
+        },
+        {
+          "id": "NC13.4",
+          "label": "Hunter",
+          "role": "hunter",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/beach/jobsite/hunter.nbt",
+          "sourceSha256": "6e9a6e09cba460d81421d9a4c5abde5e329e92b082244a842448722a4d8fac51",
+          "preparedSha256": "2767381a15aac263d72022de593bf2dbeacb6ceb2e59cebe4f5ce83509bef723",
+          "size": [
+            7,
+            5,
+            7
+          ],
+          "origin": [
+            1515,
+            230,
+            544
+          ],
+          "privateTemplate": "kithkyn_nautical_profile:nc13_04_hunter",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 1
+        },
+        {
+          "id": "NC13.5",
+          "label": "Hunter Trainer",
+          "role": "hunter",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/beach/jobsite/hunter_trainer.nbt",
+          "sourceSha256": "eed93c8c1d51cef79c72c7df38530c0a0c0e62aed49d2624130949e39d4b9a1b",
+          "preparedSha256": "8952a0363cdb77c955565e50c1dcff5c988d9e255ae654d196295222ce9536f5",
+          "size": [
+            9,
+            5,
+            9
+          ],
+          "origin": [
+            1528,
+            230,
+            544
+          ],
+          "privateTemplate": "kithkyn_nautical_profile:nc13_05_hunter_trainer",
+          "waterCells": 1,
+          "containment": {
+            "kind": "barrier ring",
+            "box": [
+              1526,
+              230,
+              542,
+              1538,
+              230,
+              554
+            ]
+          },
+          "standIns": 6
+        },
+        {
+          "id": "NC13.6",
+          "label": "Water Mill",
+          "role": "work",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/beach/jobsite/water_mill.nbt",
+          "sourceSha256": "1aa620f6bea0950bea854170e85a9d16487bd729d4c11b7c95ec13b9328f1eb8",
+          "preparedSha256": "05c33b10777e30581ea4b082d7605bd409a0ae2f68172b9c1dae7543459c7324",
+          "size": [
+            7,
+            7,
+            10
+          ],
+          "origin": [
+            1543,
+            230,
+            544
+          ],
+          "privateTemplate": "kithkyn_nautical_profile:nc13_06_water_mill",
+          "waterCells": 1,
+          "containment": {
+            "kind": "barrier ring",
+            "box": [
+              1541,
+              230,
+              542,
+              1551,
+              230,
+              555
+            ]
+          },
+          "standIns": 25
+        },
+        {
+          "id": "NC13.7",
+          "label": "Aquarium",
+          "role": "fishery",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/beach/jobsite/aquarium.nbt",
+          "sourceSha256": "d679ea66b2c7b9fa90bf4c5a589a53fcfe7cecd145218ab47f7ed76017cecff2",
+          "preparedSha256": "0ce747a4536571847cb29107f2d1cacd318c7166acd88371513506e7559ce402",
+          "size": [
+            9,
+            9,
+            11
+          ],
+          "origin": [
+            1556,
+            230,
+            544
+          ],
+          "privateTemplate": "kithkyn_nautical_profile:nc13_07_aquarium",
+          "waterCells": 36,
+          "containment": {
+            "kind": "barrier ring",
+            "box": [
+              1554,
+              230,
+              542,
+              1566,
+              230,
+              556
+            ]
+          },
+          "standIns": 1
+        },
+        {
+          "id": "NC13.8",
+          "label": "Oceanographer",
+          "role": "fishery",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/beach/jobsite/oceanographer.nbt",
+          "sourceSha256": "3dd18c11f1f301609d76b6de33a97b243cf93186a8679cf83f8b707004e11409",
+          "preparedSha256": "7b97c29a1237e33aadf571aedf9dc07a1157286572e9b22fafc293bc31c957da",
+          "size": [
+            9,
+            5,
+            9
+          ],
+          "origin": [
+            1571,
+            230,
+            544
+          ],
+          "privateTemplate": "kithkyn_nautical_profile:nc13_08_oceanographer",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 1
+        },
+        {
+          "id": "NC13.9",
+          "label": "Alchemist",
+          "role": "work",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/beach/jobsite/alchemist.nbt",
+          "sourceSha256": "588f0ea9e08684250c27394afcf099b1c46e66a4528a4ecdfba3bed7331c2acb",
+          "preparedSha256": "dd5f804314205ea71dd60279618a334499ffae347789694a8aeecd9100829154",
+          "size": [
+            9,
+            7,
+            9
+          ],
+          "origin": [
+            1586,
+            230,
+            544
+          ],
+          "privateTemplate": "kithkyn_nautical_profile:nc13_09_alchemist",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 1
+        },
+        {
+          "id": "NC13.10",
+          "label": "Artist Studio",
+          "role": "work",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/beach/jobsite/artist_studio.nbt",
+          "sourceSha256": "dda8a9561040e33b829e6cbd1f12545b36e7f4dbc43bba3cd8278d127d36d850",
+          "preparedSha256": "09c8da385843cea4fe962cee764bda28ae0c40f75a25e6bcf026cfc7d30a15b4",
+          "size": [
+            11,
+            10,
+            9
+          ],
+          "origin": [
+            1601,
+            230,
+            544
+          ],
+          "privateTemplate": "kithkyn_nautical_profile:nc13_10_artist_studio",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 1
+        }
+      ]
+    },
+    {
+      "id": "NC14",
+      "title": "CTOV BEACH \u2014 SHOPS + STUDIOS",
+      "origin": [
+        1470,
+        230,
+        588
+      ],
+      "bounds": [
+        1460,
+        220,
+        579,
+        1582,
+        276,
+        603
+      ],
+      "entries": [
+        {
+          "id": "NC14.1",
+          "label": "Jewelry Shop",
+          "role": "market",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/beach/jobsite/jewelry_shop.nbt",
+          "sourceSha256": "45d130506d0d69c0e531cf01b47b560f7d339b9fc72c8ceffc6a78acec7cf8e3",
+          "preparedSha256": "278622e695152f69a8a7ae6dccd87457bcc28efb859e33da3bb608240b5e923b",
+          "size": [
+            9,
+            15,
+            9
+          ],
+          "origin": [
+            1470,
+            230,
+            588
+          ],
+          "privateTemplate": "kithkyn_nautical_profile:nc14_01_jewelry_shop",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 1
+        },
+        {
+          "id": "NC14.2",
+          "label": "Iron Jewelry",
+          "role": "market",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/beach/jobsite/iron_jewelry.nbt",
+          "sourceSha256": "728c7371c46a0900a2a86009920e739517fe55732aef2184b5ef490f5777f944",
+          "preparedSha256": "eef1c3d603da3b8ac74760b92b8b3a31782b7b734fca66e4f95c1132ed7bf35c",
+          "size": [
+            9,
+            15,
+            9
+          ],
+          "origin": [
+            1485,
+            230,
+            588
+          ],
+          "privateTemplate": "kithkyn_nautical_profile:nc14_02_iron_jewelry",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 1
+        },
+        {
+          "id": "NC14.3",
+          "label": "Scriber",
+          "role": "civic",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/beach/jobsite/scriber.nbt",
+          "sourceSha256": "d167153e7ecfb3fa0ee4fa740a328ef39a1e192f4e64a0c33d2c8f240df46d93",
+          "preparedSha256": "1edc35a69cb4f73dbfe328e5f321c62789de7f98db8150d5dc7ce5b6fb6965ab",
+          "size": [
+            9,
+            17,
+            9
+          ],
+          "origin": [
+            1500,
+            230,
+            588
+          ],
+          "privateTemplate": "kithkyn_nautical_profile:nc14_03_scriber",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 10
+        },
+        {
+          "id": "NC14.4",
+          "label": "Occultist",
+          "role": "work",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/beach/jobsite/occultist.nbt",
+          "sourceSha256": "5457f646f7be6272d3d176dcceee2ec4e109d9b4d4f88407b748cb100f6775c0",
+          "preparedSha256": "f01da40509cf8f1b48aa6c3030c12418406ea52b4fdfcb2ea8c8f5cae5983ea8",
+          "size": [
+            9,
+            9,
+            12
+          ],
+          "origin": [
+            1515,
+            230,
+            588
+          ],
+          "privateTemplate": "kithkyn_nautical_profile:nc14_04_occultist",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 1
+        },
+        {
+          "id": "NC14.5",
+          "label": "Wizard Tower",
+          "role": "tower",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/beach/jobsite/wizard_tower.nbt",
+          "sourceSha256": "326b4f1bc44bd174d9d919307b66462dd0cfc132645c20721d1796e26a1bf3b7",
+          "preparedSha256": "0134128daa2b380d62f0109a68f3dcea55616b2ed9d3e91542cc0b0fcab7cbe6",
+          "size": [
+            9,
+            15,
+            9
+          ],
+          "origin": [
+            1530,
+            230,
+            588
+          ],
+          "privateTemplate": "kithkyn_nautical_profile:nc14_05_wizard_tower",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 2
+        },
+        {
+          "id": "NC14.6",
+          "label": "Pet Shop",
+          "role": "market",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/beach/jobsite/petshop.nbt",
+          "sourceSha256": "0989afd3062edc962bba07004090b48d583572260e9152555aedc3f14b255391",
+          "preparedSha256": "c970cff5ab8bd3c3e41f7a6400291dc47502cc7f33fbbfa1f2ace243002de664",
+          "size": [
+            9,
+            12,
+            9
+          ],
+          "origin": [
+            1545,
+            230,
+            588
+          ],
+          "privateTemplate": "kithkyn_nautical_profile:nc14_06_petshop",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 6
+        },
+        {
+          "id": "NC14.7",
+          "label": "Balloon Stand",
+          "role": "detail",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/beach/jobsite/balloon_stand.nbt",
+          "sourceSha256": "7997b95d1b98505017033160397ddfe3bfd4ba2e045cec099722790820906921",
+          "preparedSha256": "805b08940a82f0120e3edc13bdc216c82db98052a43c7db4b129100b85e15881",
+          "size": [
+            5,
+            7,
+            5
+          ],
+          "origin": [
+            1560,
+            230,
+            588
+          ],
+          "privateTemplate": "kithkyn_nautical_profile:nc14_07_balloon_stand",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 1
+        },
+        {
+          "id": "NC14.8",
+          "label": "Engineer",
+          "role": "work",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/beach/jobsite/engineer.nbt",
+          "sourceSha256": "3ca8e53118979464680a42dc3a80b3ab0b5a1a6f3a96d29cbf48434288c8100e",
+          "preparedSha256": "8253e403cbe98b7d450c2c2f9f4f3eec779957dc536c0ec8f50e09e3af384971",
+          "size": [
+            9,
+            5,
+            9
+          ],
+          "origin": [
+            1571,
+            230,
+            588
+          ],
+          "privateTemplate": "kithkyn_nautical_profile:nc14_08_engineer",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 1
+        }
+      ]
+    },
+    {
+      "id": "NC15",
+      "title": "CTOV BEACH \u2014 OTHER MODS' JOBS",
+      "origin": [
+        1470,
+        230,
+        632
+      ],
+      "bounds": [
+        1460,
+        220,
+        623,
+        1583,
+        276,
+        650
+      ],
+      "entries": [
+        {
+          "id": "NC15.1",
+          "label": "Factory",
+          "role": "work",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/beach/jobsite/factory.nbt",
+          "sourceSha256": "69630f03811770bc84cca2f507e49b6f2bd289d88253bf3c0912f3cf40ca9add",
+          "preparedSha256": "2b4022658100b45954cdddfcd6e4df9cedd79c9b4475f2b0b4b540ba2cbf3408",
+          "size": [
+            15,
+            10,
+            15
+          ],
+          "origin": [
+            1470,
+            230,
+            632
+          ],
+          "privateTemplate": "kithkyn_nautical_profile:nc15_01_factory",
+          "waterCells": 20,
+          "containment": {
+            "kind": "barrier ring",
+            "box": [
+              1468,
+              230,
+              630,
+              1486,
+              230,
+              648
+            ]
+          },
+          "standIns": 189
+        },
+        {
+          "id": "NC15.2",
+          "label": "Mechanic",
+          "role": "work",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/beach/jobsite/mechanic.nbt",
+          "sourceSha256": "acd52c7bc66d81236fbd4c30c1ee705e828e5edca9d4d9a7ef234dc578dfbd3e",
+          "preparedSha256": "92e2ce50a247cb6f2c024d1adb7c047bba4fa8c15e7a43c6f3bdb3717710fe2c",
+          "size": [
+            9,
+            6,
+            9
+          ],
+          "origin": [
+            1491,
+            230,
+            632
+          ],
+          "privateTemplate": "kithkyn_nautical_profile:nc15_02_mechanic",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 37
+        },
+        {
+          "id": "NC15.3",
+          "label": "Immersive Engineer",
+          "role": "work",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/beach/jobsite/imengineer.nbt",
+          "sourceSha256": "1e6ee7122dbb64c138538bc8c4e1b5aeacf460bc611881889ebb0a1915b489bd",
+          "preparedSha256": "0ba15824b0d05d9b18ebdf84f34263f3bc701dde4fd56bb3ac45b8c31d269362",
+          "size": [
+            9,
+            5,
+            9
+          ],
+          "origin": [
+            1506,
+            230,
+            632
+          ],
+          "privateTemplate": "kithkyn_nautical_profile:nc15_03_imengineer",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 11
+        },
+        {
+          "id": "NC15.4",
+          "label": "Computer Lab",
+          "role": "work",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/beach/jobsite/computer_lab.nbt",
+          "sourceSha256": "f6c0af6b8e67b5005380cce4809dbdaa9228ed0c5cc535ce4ca2aabbf9a389dc",
+          "preparedSha256": "d499c75b4db9f5998b02d6b88e496f40c89483d52e17fad1353f390810bcaab3",
+          "size": [
+            9,
+            12,
+            9
+          ],
+          "origin": [
+            1521,
+            230,
+            632
+          ],
+          "privateTemplate": "kithkyn_nautical_profile:nc15_04_computer_lab",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 12
+        },
+        {
+          "id": "NC15.5",
+          "label": "Gunsmith",
+          "role": "work",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/beach/jobsite/gunsmith.nbt",
+          "sourceSha256": "176a314cbb6cad3066d943512f2c947a894b5c58d285025aa5ee60889a270c79",
+          "preparedSha256": "93dca4f7220499e86e2027ebfa60bea8983ffa695954b26d4eaee399c454ff8a",
+          "size": [
+            9,
+            10,
+            9
+          ],
+          "origin": [
+            1536,
+            230,
+            632
+          ],
+          "privateTemplate": "kithkyn_nautical_profile:nc15_05_gunsmith",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 4
+        },
+        {
+          "id": "NC15.6",
+          "label": "Krusty Krab",
+          "role": "food",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/beach/jobsite/krusty_krab.nbt",
+          "sourceSha256": "69b20beaa7602dc595fa8b1c97ee866ad4ce8520b26eed6986689f7507c12cee",
+          "preparedSha256": "400de7ce7027b6e2ab0405e50c8b30750eb4e35c51648666da4d59e56c765e19",
+          "size": [
+            9,
+            8,
+            9
+          ],
+          "origin": [
+            1551,
+            230,
+            632
+          ],
+          "privateTemplate": "kithkyn_nautical_profile:nc15_06_krusty_krab",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 1
+        },
+        {
+          "id": "NC15.7",
+          "label": "Poke Center",
+          "role": "civic",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/beach/jobsite/pokecenter.nbt",
+          "sourceSha256": "9fe86c94a584fa31adb1ae2016f1159f9ec7d0ba4405612c22f5a71eb8a263c7",
+          "preparedSha256": "d48591879cdce52b9f254ca98497ee174420c2092546f24d761d8269b3e0a33e",
+          "size": [
+            15,
+            10,
+            15
+          ],
+          "origin": [
+            1566,
+            230,
+            632
+          ],
+          "privateTemplate": "kithkyn_nautical_profile:nc15_07_pokecenter",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 4
+        }
+      ]
+    },
+    {
+      "id": "NC16",
+      "title": "CTOV BEACH \u2014 DETAILS",
+      "origin": [
+        1470,
+        230,
+        676
+      ],
+      "bounds": [
+        1460,
+        220,
+        667,
+        1624,
+        276,
+        686
+      ],
+      "entries": [
+        {
+          "id": "NC16.1",
+          "label": "Archeology Tent",
+          "role": "detail",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/beach/deco/archeology_tent.nbt",
+          "sourceSha256": "a40a06284021fdbe4a5ebc97d9163927628cc617b27fc91e92555ecdc4e555fc",
+          "preparedSha256": "c391e3ec5c986a9d4182a09b89e06466aedf49ecf6b83bd1f6b447c09402f0cf",
+          "size": [
+            5,
+            7,
+            5
+          ],
+          "origin": [
+            1470,
+            230,
+            676
+          ],
+          "privateTemplate": "kithkyn_nautical_profile:nc16_01_archeology_tent",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 2
+        },
+        {
+          "id": "NC16.2",
+          "label": "Bard House",
+          "role": "detail",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/beach/deco/bard_house.nbt",
+          "sourceSha256": "6fccb0feb22acef31ff18cdd45591702d30f4bd35aa282200d802dfa8c41c73e",
+          "preparedSha256": "914b87cb0aee57e198e8a427b7b4d2eb18c8c5169e89ce639c51c8d18dcbc3ef",
+          "size": [
+            7,
+            6,
+            7
+          ],
+          "origin": [
+            1481,
+            230,
+            676
+          ],
+          "privateTemplate": "kithkyn_nautical_profile:nc16_02_bard_house",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 3
+        },
+        {
+          "id": "NC16.3",
+          "label": "Beekeeper",
+          "role": "detail",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/beach/deco/beekeeper.nbt",
+          "sourceSha256": "11bbb8d810c94a0865f7d3afe42c8b05596a2a9d2dc789ac3ee0fec3e382315c",
+          "preparedSha256": "6f818986965122999746e7379a87ec5e8e062aa1afc52fe9d0fe529da40f47fe",
+          "size": [
+            3,
+            3,
+            3
+          ],
+          "origin": [
+            1494,
+            230,
+            676
+          ],
+          "privateTemplate": "kithkyn_nautical_profile:nc16_03_beekeeper",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 1
+        },
+        {
+          "id": "NC16.4",
+          "label": "Bench",
+          "role": "detail",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/beach/deco/bench.nbt",
+          "sourceSha256": "77b1acdf7224c860b91230af0d85eb413c00395a5f2825d2ab2e088d897b0210",
+          "preparedSha256": "94af279d04d0ea3aac8732f0775079caab299703036729913ed9148fdc8b7303",
+          "size": [
+            1,
+            1,
+            2
+          ],
+          "origin": [
+            1503,
+            230,
+            676
+          ],
+          "privateTemplate": "kithkyn_nautical_profile:nc16_04_bench",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0
+        },
+        {
+          "id": "NC16.5",
+          "label": "Climatologist",
+          "role": "detail",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/beach/deco/climatologist.nbt",
+          "sourceSha256": "790ff4b55699f2eabe4b4ea23e4d388934213752af4e1dfce62ef3a2adc46319",
+          "preparedSha256": "1c1f3ffcee779617f983049c1cf4e3d2cfcf2b9833b2b580bf43828262ea3744",
+          "size": [
+            7,
+            7,
+            7
+          ],
+          "origin": [
+            1510,
+            230,
+            676
+          ],
+          "privateTemplate": "kithkyn_nautical_profile:nc16_05_climatologist",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 1
+        },
+        {
+          "id": "NC16.6",
+          "label": "Copper Golem",
+          "role": "detail",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/beach/deco/copper_golem.nbt",
+          "sourceSha256": "6129b9abb526177b3816a6e9f35a90d35f3b738094d86fb3808a40f3d06f25b1",
+          "preparedSha256": "52b858e70bb6c8a494b2561dae8cc1fa85ccdf1e41df5aed5b1fb0121146c25e",
+          "size": [
+            7,
+            5,
+            6
+          ],
+          "origin": [
+            1523,
+            230,
+            676
+          ],
+          "privateTemplate": "kithkyn_nautical_profile:nc16_06_copper_golem",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 3
+        },
+        {
+          "id": "NC16.7",
+          "label": "Garbage Heaps",
+          "role": "detail",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/beach/deco/garbage_heaps.nbt",
+          "sourceSha256": "40757eea7eb6f74cb8f7a9d0e59feb52d975735fb104b70ef062ba26506730ac",
+          "preparedSha256": "ba2582461467ab245c9728a7c365712ad7fbac795a69c8041bf4e4f1e04bdaba",
+          "size": [
+            7,
+            5,
+            7
+          ],
+          "origin": [
+            1536,
+            230,
+            676
+          ],
+          "privateTemplate": "kithkyn_nautical_profile:nc16_07_garbage_heaps",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 44
+        },
+        {
+          "id": "NC16.8",
+          "label": "Goddess Statue",
+          "role": "detail",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/beach/deco/goddess_statue.nbt",
+          "sourceSha256": "aaaf683ca0c6c7992584459c62d07e5303c734b58bb0641d1360108fb86e41ef",
+          "preparedSha256": "9512d6d719cf4b68efc9f8ac33baf0db8bbeedb67ee6fd6944bad92cb67b601d",
+          "size": [
+            3,
+            5,
+            4
+          ],
+          "origin": [
+            1549,
+            230,
+            676
+          ],
+          "privateTemplate": "kithkyn_nautical_profile:nc16_08_goddess_statue",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 1
+        },
+        {
+          "id": "NC16.9",
+          "label": "Lamp 0",
+          "role": "detail",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/beach/deco/lamp_0.nbt",
+          "sourceSha256": "77b21f5ca14537315fbb8633b54cd3268e8a17996a05f7f3bb4e17310f516b40",
+          "preparedSha256": "9590469e8f8c03b40c9b264fdf47b6445a47ac286d9048a9d018e54176f26bfa",
+          "size": [
+            1,
+            3,
+            2
+          ],
+          "origin": [
+            1558,
+            230,
+            676
+          ],
+          "privateTemplate": "kithkyn_nautical_profile:nc16_09_lamp_0",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0
+        },
+        {
+          "id": "NC16.10",
+          "label": "Lamp 1",
+          "role": "detail",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/beach/deco/lamp_1.nbt",
+          "sourceSha256": "50c3faafaf05b8e8bdd1b577dd70393aa37ab970379cd96c6c3257033b639994",
+          "preparedSha256": "5ac0432ed88810210b3f9d7e9976139867a004926a770b1c4abc9e34d1a4d8f8",
+          "size": [
+            1,
+            5,
+            2
+          ],
+          "origin": [
+            1565,
+            230,
+            676
+          ],
+          "privateTemplate": "kithkyn_nautical_profile:nc16_10_lamp_1",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0
+        },
+        {
+          "id": "NC16.11",
+          "label": "Lamp 2",
+          "role": "detail",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/beach/deco/lamp_2.nbt",
+          "sourceSha256": "42bf4d1c94a2f46ff72f785ac439b18e541179c08896c5e365a1038b37c2c918",
+          "preparedSha256": "0ba11cc316c2470c563577e000daf382d10fe7eb4e10ee71718d5b6266f3af8c",
+          "size": [
+            3,
+            5,
+            2
+          ],
+          "origin": [
+            1572,
+            230,
+            676
+          ],
+          "privateTemplate": "kithkyn_nautical_profile:nc16_11_lamp_2",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0
+        },
+        {
+          "id": "NC16.12",
+          "label": "Lamp 3",
+          "role": "detail",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/beach/deco/lamp_3.nbt",
+          "sourceSha256": "bd9768b8ebd85dc9765b360b17c518a9aaebcfd7c422388faafd49d0a1d02751",
+          "preparedSha256": "7342cd8899425870e56884591be3c7003e60290a97dd2727b0b7cb1a000d551a",
+          "size": [
+            3,
+            5,
+            2
+          ],
+          "origin": [
+            1581,
+            230,
+            676
+          ],
+          "privateTemplate": "kithkyn_nautical_profile:nc16_12_lamp_3",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0
+        },
+        {
+          "id": "NC16.13",
+          "label": "Lamp 4",
+          "role": "detail",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/beach/deco/lamp_4.nbt",
+          "sourceSha256": "2728b7b97aa2e4cf67f35351a6997e17d938375355e6b94066529d995cfb31e8",
+          "preparedSha256": "408ace033e712c9db73bcba3452fac1f198700122653eb7580f0a74cb8472c11",
+          "size": [
+            3,
+            5,
+            3
+          ],
+          "origin": [
+            1590,
+            230,
+            676
+          ],
+          "privateTemplate": "kithkyn_nautical_profile:nc16_13_lamp_4",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0
+        },
+        {
+          "id": "NC16.14",
+          "label": "Lamp 5",
+          "role": "detail",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/beach/deco/lamp_5.nbt",
+          "sourceSha256": "1dc8f0d7ee016beb251b0d3a06d339be240e46fdb10aff4de5c71cd6879f1698",
+          "preparedSha256": "5009d6df4f043e566246b2bd529c379f419f6b49368a95bf0fd057e85e96b691",
+          "size": [
+            3,
+            3,
+            3
+          ],
+          "origin": [
+            1599,
+            230,
+            676
+          ],
+          "privateTemplate": "kithkyn_nautical_profile:nc16_14_lamp_5",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0
+        },
+        {
+          "id": "NC16.15",
+          "label": "Picnic Mat",
+          "role": "detail",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/beach/deco/picnic_mat.nbt",
+          "sourceSha256": "d0b34866c66ef50dbcb85d8746b17c1607f3b9a562ce1e2c17895bc5c6f85c9c",
+          "preparedSha256": "56f799f864ebe5994811b5fa3324f5ba54daa7f84f4766b8c22b6eecf1743bfe",
+          "size": [
+            5,
+            7,
+            5
+          ],
+          "origin": [
+            1608,
+            230,
+            676
+          ],
+          "privateTemplate": "kithkyn_nautical_profile:nc16_15_picnic_mat",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 1
+        },
+        {
+          "id": "NC16.16",
+          "label": "Vending Machine",
+          "role": "detail",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/beach/deco/vm.nbt",
+          "sourceSha256": "a5a50136873d39a511f087f1e81b7d0c7e416f15e9012497d17e1d7e286ffd55",
+          "preparedSha256": "f6b79aa919f702d5a3585530f36f7def35bd484c0dc3bb18f3945b8d1e79ed91",
+          "size": [
+            3,
+            5,
+            4
+          ],
+          "origin": [
+            1619,
+            230,
+            676
+          ],
+          "privateTemplate": "kithkyn_nautical_profile:nc16_16_vm",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 2
+        }
+      ]
+    },
+    {
+      "id": "NC17",
+      "title": "NAUTICAL MARKET \u2014 TIERS 1 TO 3",
+      "origin": [
+        1470,
+        230,
+        720
+      ],
+      "bounds": [
+        1460,
+        220,
+        711,
+        1546,
+        276,
+        748
+      ],
+      "entries": [
+        {
+          "id": "NC17.1",
+          "label": "Market Tier 1",
+          "role": "market",
+          "sourceMod": "Kithkyn study",
+          "source": "src/main/resources/data/kithkyn/structure/market_birch_forest_1.nbt",
+          "sourceSha256": "ba62598d3dc7ecbffc4d7e1c0542a37a4f7990c356f7613a38534a93f4ef72d1",
+          "preparedSha256": "50fcad5eb4eb4ddcedb7d633eeb87fb89613e0e6f2b2126fea8742d2133faf46",
+          "size": [
+            16,
+            6,
+            17
+          ],
+          "origin": [
+            1470,
+            230,
+            720
+          ],
+          "privateTemplate": "kithkyn_nautical_profile:nc17_01_market_birch_forest_1",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0,
+          "study": "run/nautical-full-profile/studies/market_1.nbt",
+          "swaps": {
+            "cobblestone -> jungle_planks": 16,
+            "birch_trapdoor -> jungle_trapdoor": 50,
+            "birch_log -> stripped_jungle_log": 4,
+            "birch_fence -> jungle_fence": 14
+          }
+        },
+        {
+          "id": "NC17.2",
+          "label": "Market Tier 2",
+          "role": "market",
+          "sourceMod": "Kithkyn study",
+          "source": "src/main/resources/data/kithkyn/structure/market_birch_forest_2.nbt",
+          "sourceSha256": "63f3a3fcfaecefd4dc4807d5a01b28d3e263bad1cddd5a5c12bab754c45c9a9f",
+          "preparedSha256": "8e3034eba936a701044706cd364010fb6c171b105a6899355660fbf515bdea07",
+          "size": [
+            23,
+            6,
+            17
+          ],
+          "origin": [
+            1492,
+            230,
+            720
+          ],
+          "privateTemplate": "kithkyn_nautical_profile:nc17_02_market_birch_forest_2",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0,
+          "study": "run/nautical-full-profile/studies/market_2.nbt",
+          "swaps": {
+            "cobblestone -> jungle_planks": 57,
+            "birch_trapdoor -> jungle_trapdoor": 100,
+            "birch_log -> stripped_jungle_log": 8,
+            "birch_fence -> jungle_fence": 28
+          }
+        },
+        {
+          "id": "NC17.3",
+          "label": "Market Tier 3",
+          "role": "market",
+          "sourceMod": "Kithkyn study",
+          "source": "src/main/resources/data/kithkyn/structure/market_birch_forest_3.nbt",
+          "sourceSha256": "9b2a4c0903bb9cdd26e954fcc45a8f556ea853b2fe7def140a5d0cc088c7cfab",
+          "preparedSha256": "4714948f0ee99c80100714eb429b40933dc50c5554c71c746045156fd59125a7",
+          "size": [
+            23,
+            6,
+            25
+          ],
+          "origin": [
+            1521,
+            230,
+            720
+          ],
+          "privateTemplate": "kithkyn_nautical_profile:nc17_03_market_birch_forest_3",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0,
+          "study": "run/nautical-full-profile/studies/market_3.nbt",
+          "swaps": {
+            "cobblestone -> jungle_planks": 78,
+            "birch_trapdoor -> jungle_trapdoor": 150,
+            "birch_log -> stripped_jungle_log": 12,
+            "birch_fence -> jungle_fence": 42
+          }
+        }
+      ]
+    },
+    {
+      "id": "NC18",
+      "title": "NAUTICAL WALL A \u2014 JUNGLE PALISADE",
+      "origin": [
+        1470,
+        230,
+        764
+      ],
+      "bounds": [
+        1460,
+        220,
+        755,
+        1547,
+        276,
+        774
+      ],
+      "entries": [
+        {
+          "id": "NC18.1",
+          "label": "Wall A Straight",
+          "role": "wall",
+          "sourceMod": "Kithkyn study",
+          "source": "src/main/resources/data/kithkyn/structure/wall/birch_forest/straight.nbt",
+          "sourceSha256": "417c3fa956b8b016be23d1a9fdb090b8d155466b75060234831a0a118cf90b85",
+          "preparedSha256": "095e95de90c82993fb09c6fc100bbc6f2524fed4bdd7f477e0998ea258fd8710",
+          "size": [
+            7,
+            8,
+            1
+          ],
+          "origin": [
+            1470,
+            230,
+            764
+          ],
+          "privateTemplate": "kithkyn_nautical_profile:nc18_01_straight",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0,
+          "study": "run/nautical-full-profile/studies/wall_a_straight.nbt",
+          "swaps": {
+            "mossy_cobblestone -> sandstone": 5,
+            "cobblestone -> sandstone": 2,
+            "mossy_cobblestone -> stripped_jungle_wood": 6,
+            "cobblestone -> stripped_jungle_wood": 18,
+            "cobblestone_wall -> jungle_fence": 3,
+            "mossy_cobblestone_wall -> jungle_fence": 1
+          }
+        },
+        {
+          "id": "NC18.2",
+          "label": "Wall A Diagonal",
+          "role": "wall",
+          "sourceMod": "Kithkyn study",
+          "source": "src/main/resources/data/kithkyn/structure/wall/birch_forest/diagonal.nbt",
+          "sourceSha256": "641d8f0285db2aadcc581e4b4a60082a70d29824668fb8b3bff2be357073ca71",
+          "preparedSha256": "baece2f1ef61557751be911c1fb48f45f2f01318a40c0bb2910f9f76f8414fdd",
+          "size": [
+            7,
+            8,
+            7
+          ],
+          "origin": [
+            1483,
+            230,
+            764
+          ],
+          "privateTemplate": "kithkyn_nautical_profile:nc18_02_diagonal",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0,
+          "study": "run/nautical-full-profile/studies/wall_a_diagonal.nbt",
+          "swaps": {
+            "mossy_cobblestone -> sandstone": 3,
+            "cobblestone -> sandstone": 4,
+            "mossy_cobblestone -> stripped_jungle_wood": 8,
+            "cobblestone -> stripped_jungle_wood": 16,
+            "cobblestone_wall -> jungle_fence": 4,
+            "mossy_cobblestone_wall -> jungle_fence": 2
+          }
+        },
+        {
+          "id": "NC18.3",
+          "label": "Wall A Corner Tower",
+          "role": "wall",
+          "sourceMod": "Kithkyn study",
+          "source": "src/main/resources/data/kithkyn/structure/wall/birch_forest/corner_tower.nbt",
+          "sourceSha256": "38b6df41ffe999e9ef9027a2b6b05e8af76f622cbd27d7cd0d5918124a1e84ea",
+          "preparedSha256": "77162eeaaac8343c42a362923c2e21586819f152b835a06f66778743c4c2f57a",
+          "size": [
+            12,
+            8,
+            6
+          ],
+          "origin": [
+            1496,
+            230,
+            764
+          ],
+          "privateTemplate": "kithkyn_nautical_profile:nc18_03_corner_tower",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0,
+          "study": "run/nautical-full-profile/studies/wall_a_corner_tower.nbt",
+          "swaps": {
+            "mossy_cobblestone -> sandstone": 7,
+            "cobblestone -> sandstone": 7,
+            "oak_trapdoor -> jungle_trapdoor": 4,
+            "mossy_cobblestone -> stripped_jungle_wood": 11,
+            "cobblestone -> stripped_jungle_wood": 40,
+            "mossy_cobblestone_wall -> jungle_fence": 8,
+            "cobblestone_wall -> jungle_fence": 11,
+            "cobblestone_slab -> jungle_slab": 1
+          }
+        },
+        {
+          "id": "NC18.4",
+          "label": "Wall A Gatehouse",
+          "role": "wall",
+          "sourceMod": "Kithkyn study",
+          "source": "src/main/resources/data/kithkyn/structure/wall/birch_forest/gatehouse.nbt",
+          "sourceSha256": "6b18ae5516320898e1ad6b89393a2e6ab9ba34a2afc8bd4b733d4944d9cdfcf1",
+          "preparedSha256": "364d1dddd10bd8d69be2c93f19df152107e7634b51fd9d4980628f5c5d2caaef",
+          "size": [
+            17,
+            8,
+            7
+          ],
+          "origin": [
+            1514,
+            230,
+            764
+          ],
+          "privateTemplate": "kithkyn_nautical_profile:nc18_04_gatehouse",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0,
+          "study": "run/nautical-full-profile/studies/wall_a_gatehouse.nbt",
+          "swaps": {
+            "mossy_cobblestone -> sandstone": 8,
+            "cobblestone -> sandstone": 10,
+            "cobblestone -> stripped_jungle_wood": 52,
+            "mossy_cobblestone -> stripped_jungle_wood": 30,
+            "cobblestone_wall -> jungle_fence": 20,
+            "mossy_cobblestone_wall -> jungle_fence": 11,
+            "cobblestone_slab -> jungle_slab": 9
+          }
+        },
+        {
+          "id": "NC18.5",
+          "label": "Wall A Terrace",
+          "role": "wall",
+          "sourceMod": "Kithkyn study",
+          "source": "src/main/resources/data/kithkyn/structure/wall/birch_forest/terrace.nbt",
+          "sourceSha256": "df728d8b1ed1fe0372acc52a4faf7057eefc5c24f2f1a0605a234613a3404056",
+          "preparedSha256": "b5811910bb13fbfa1faaacf6348aba261fbb363afe2eb3ba83dc91fe540a1c28",
+          "size": [
+            8,
+            9,
+            1
+          ],
+          "origin": [
+            1537,
+            230,
+            764
+          ],
+          "privateTemplate": "kithkyn_nautical_profile:nc18_05_terrace",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0,
+          "study": "run/nautical-full-profile/studies/wall_a_terrace.nbt",
+          "swaps": {
+            "mossy_cobblestone -> sandstone": 3,
+            "cobblestone -> sandstone": 1,
+            "mossy_cobblestone -> stripped_jungle_wood": 12,
+            "cobblestone -> stripped_jungle_wood": 22,
+            "cobblestone_wall -> jungle_fence": 4,
+            "mossy_cobblestone_wall -> jungle_fence": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": "NC19",
+      "title": "NAUTICAL WALL B \u2014 SANDSTONE SEAWALL",
+      "origin": [
+        1470,
+        230,
+        808
+      ],
+      "bounds": [
+        1460,
+        220,
+        799,
+        1547,
+        276,
+        818
+      ],
+      "entries": [
+        {
+          "id": "NC19.1",
+          "label": "Wall B Straight",
+          "role": "wall",
+          "sourceMod": "Kithkyn study",
+          "source": "src/main/resources/data/kithkyn/structure/wall/birch_forest/straight.nbt",
+          "sourceSha256": "417c3fa956b8b016be23d1a9fdb090b8d155466b75060234831a0a118cf90b85",
+          "preparedSha256": "fd9d612c51f554879dbcb2ee3fe2992da4e6588d7214c410a951025abe1f7701",
+          "size": [
+            7,
+            8,
+            1
+          ],
+          "origin": [
+            1470,
+            230,
+            808
+          ],
+          "privateTemplate": "kithkyn_nautical_profile:nc19_01_straight",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0,
+          "study": "run/nautical-full-profile/studies/wall_b_straight.nbt",
+          "swaps": {
+            "mossy_cobblestone -> terracotta": 5,
+            "cobblestone -> terracotta": 2,
+            "mossy_cobblestone -> smooth_sandstone": 6,
+            "cobblestone -> sandstone": 18,
+            "cobblestone_wall -> sandstone_wall": 3,
+            "mossy_cobblestone_wall -> sandstone_wall": 1
+          }
+        },
+        {
+          "id": "NC19.2",
+          "label": "Wall B Diagonal",
+          "role": "wall",
+          "sourceMod": "Kithkyn study",
+          "source": "src/main/resources/data/kithkyn/structure/wall/birch_forest/diagonal.nbt",
+          "sourceSha256": "641d8f0285db2aadcc581e4b4a60082a70d29824668fb8b3bff2be357073ca71",
+          "preparedSha256": "8139fa5de9fcda5e87797b5babf6349add70ab0cab2c34a5949214dca2ea2577",
+          "size": [
+            7,
+            8,
+            7
+          ],
+          "origin": [
+            1483,
+            230,
+            808
+          ],
+          "privateTemplate": "kithkyn_nautical_profile:nc19_02_diagonal",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0,
+          "study": "run/nautical-full-profile/studies/wall_b_diagonal.nbt",
+          "swaps": {
+            "mossy_cobblestone -> terracotta": 3,
+            "cobblestone -> terracotta": 4,
+            "mossy_cobblestone -> smooth_sandstone": 8,
+            "cobblestone -> sandstone": 16,
+            "cobblestone_wall -> sandstone_wall": 4,
+            "mossy_cobblestone_wall -> sandstone_wall": 2
+          }
+        },
+        {
+          "id": "NC19.3",
+          "label": "Wall B Corner Tower",
+          "role": "wall",
+          "sourceMod": "Kithkyn study",
+          "source": "src/main/resources/data/kithkyn/structure/wall/birch_forest/corner_tower.nbt",
+          "sourceSha256": "38b6df41ffe999e9ef9027a2b6b05e8af76f622cbd27d7cd0d5918124a1e84ea",
+          "preparedSha256": "2c39f3581765c35421de9613cf7c3b5a8f364d83d2dec7bd7dac85560a6daef9",
+          "size": [
+            12,
+            8,
+            6
+          ],
+          "origin": [
+            1496,
+            230,
+            808
+          ],
+          "privateTemplate": "kithkyn_nautical_profile:nc19_03_corner_tower",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0,
+          "study": "run/nautical-full-profile/studies/wall_b_corner_tower.nbt",
+          "swaps": {
+            "mossy_cobblestone -> terracotta": 7,
+            "cobblestone -> terracotta": 7,
+            "oak_trapdoor -> jungle_trapdoor": 4,
+            "mossy_cobblestone -> smooth_sandstone": 11,
+            "cobblestone -> sandstone": 40,
+            "mossy_cobblestone_wall -> sandstone_wall": 8,
+            "cobblestone_wall -> sandstone_wall": 11,
+            "cobblestone_slab -> jungle_slab": 1
+          }
+        },
+        {
+          "id": "NC19.4",
+          "label": "Wall B Gatehouse",
+          "role": "wall",
+          "sourceMod": "Kithkyn study",
+          "source": "src/main/resources/data/kithkyn/structure/wall/birch_forest/gatehouse.nbt",
+          "sourceSha256": "6b18ae5516320898e1ad6b89393a2e6ab9ba34a2afc8bd4b733d4944d9cdfcf1",
+          "preparedSha256": "5bde1484533acf70673da403e09d4d8cb518bc5b338769779014be5e00315320",
+          "size": [
+            17,
+            8,
+            7
+          ],
+          "origin": [
+            1514,
+            230,
+            808
+          ],
+          "privateTemplate": "kithkyn_nautical_profile:nc19_04_gatehouse",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0,
+          "study": "run/nautical-full-profile/studies/wall_b_gatehouse.nbt",
+          "swaps": {
+            "mossy_cobblestone -> terracotta": 8,
+            "cobblestone -> terracotta": 10,
+            "cobblestone -> sandstone": 52,
+            "mossy_cobblestone -> smooth_sandstone": 30,
+            "cobblestone_wall -> sandstone_wall": 20,
+            "mossy_cobblestone_wall -> sandstone_wall": 11,
+            "cobblestone_slab -> jungle_slab": 9
+          }
+        },
+        {
+          "id": "NC19.5",
+          "label": "Wall B Terrace",
+          "role": "wall",
+          "sourceMod": "Kithkyn study",
+          "source": "src/main/resources/data/kithkyn/structure/wall/birch_forest/terrace.nbt",
+          "sourceSha256": "df728d8b1ed1fe0372acc52a4faf7057eefc5c24f2f1a0605a234613a3404056",
+          "preparedSha256": "c2615a92edc5f7dc21dad03956f9b4b3d40aa7f4bfe079df9efb3b8f920ad67d",
+          "size": [
+            8,
+            9,
+            1
+          ],
+          "origin": [
+            1537,
+            230,
+            808
+          ],
+          "privateTemplate": "kithkyn_nautical_profile:nc19_05_terrace",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0,
+          "study": "run/nautical-full-profile/studies/wall_b_terrace.nbt",
+          "swaps": {
+            "mossy_cobblestone -> terracotta": 3,
+            "cobblestone -> terracotta": 1,
+            "mossy_cobblestone -> smooth_sandstone": 12,
+            "cobblestone -> sandstone": 22,
+            "cobblestone_wall -> sandstone_wall": 4,
+            "mossy_cobblestone_wall -> sandstone_wall": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": "NC20",
+      "title": "NAUTICAL WALL C \u2014 SANDSTONE ON JUNGLE",
+      "origin": [
+        1470,
+        230,
+        852
+      ],
+      "bounds": [
+        1460,
+        220,
+        843,
+        1547,
+        276,
+        862
+      ],
+      "entries": [
+        {
+          "id": "NC20.1",
+          "label": "Wall C Straight",
+          "role": "wall",
+          "sourceMod": "Kithkyn study",
+          "source": "src/main/resources/data/kithkyn/structure/wall/birch_forest/straight.nbt",
+          "sourceSha256": "417c3fa956b8b016be23d1a9fdb090b8d155466b75060234831a0a118cf90b85",
+          "preparedSha256": "3fd2c9b87f87bca0b74e0be710034ea5e822c82c813614a91af5f60eb856c3a9",
+          "size": [
+            7,
+            8,
+            1
+          ],
+          "origin": [
+            1470,
+            230,
+            852
+          ],
+          "privateTemplate": "kithkyn_nautical_profile:nc20_01_straight",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0,
+          "study": "run/nautical-full-profile/studies/wall_c_straight.nbt",
+          "swaps": {
+            "mossy_cobblestone -> stripped_jungle_wood": 5,
+            "cobblestone -> stripped_jungle_wood": 2,
+            "mossy_cobblestone -> smooth_sandstone": 6,
+            "cobblestone -> sandstone": 18,
+            "cobblestone_wall -> sandstone_wall": 3,
+            "mossy_cobblestone_wall -> sandstone_wall": 1
+          }
+        },
+        {
+          "id": "NC20.2",
+          "label": "Wall C Diagonal",
+          "role": "wall",
+          "sourceMod": "Kithkyn study",
+          "source": "src/main/resources/data/kithkyn/structure/wall/birch_forest/diagonal.nbt",
+          "sourceSha256": "641d8f0285db2aadcc581e4b4a60082a70d29824668fb8b3bff2be357073ca71",
+          "preparedSha256": "87f0078ab82c41daf56e698783acfd81994209b25824410910aa219ba75f91bf",
+          "size": [
+            7,
+            8,
+            7
+          ],
+          "origin": [
+            1483,
+            230,
+            852
+          ],
+          "privateTemplate": "kithkyn_nautical_profile:nc20_02_diagonal",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0,
+          "study": "run/nautical-full-profile/studies/wall_c_diagonal.nbt",
+          "swaps": {
+            "mossy_cobblestone -> stripped_jungle_wood": 3,
+            "cobblestone -> stripped_jungle_wood": 4,
+            "mossy_cobblestone -> smooth_sandstone": 8,
+            "cobblestone -> sandstone": 16,
+            "cobblestone_wall -> sandstone_wall": 4,
+            "mossy_cobblestone_wall -> sandstone_wall": 2
+          }
+        },
+        {
+          "id": "NC20.3",
+          "label": "Wall C Corner Tower",
+          "role": "wall",
+          "sourceMod": "Kithkyn study",
+          "source": "src/main/resources/data/kithkyn/structure/wall/birch_forest/corner_tower.nbt",
+          "sourceSha256": "38b6df41ffe999e9ef9027a2b6b05e8af76f622cbd27d7cd0d5918124a1e84ea",
+          "preparedSha256": "e47811d2fa2f892a9b44ac0a6ee330940b95c7243c4368d63df401a978152a62",
+          "size": [
+            12,
+            8,
+            6
+          ],
+          "origin": [
+            1496,
+            230,
+            852
+          ],
+          "privateTemplate": "kithkyn_nautical_profile:nc20_03_corner_tower",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0,
+          "study": "run/nautical-full-profile/studies/wall_c_corner_tower.nbt",
+          "swaps": {
+            "mossy_cobblestone -> stripped_jungle_wood": 7,
+            "cobblestone -> stripped_jungle_wood": 7,
+            "oak_trapdoor -> jungle_trapdoor": 4,
+            "mossy_cobblestone -> smooth_sandstone": 11,
+            "cobblestone -> sandstone": 40,
+            "mossy_cobblestone_wall -> sandstone_wall": 8,
+            "cobblestone_wall -> sandstone_wall": 11,
+            "cobblestone_slab -> jungle_slab": 1
+          }
+        },
+        {
+          "id": "NC20.4",
+          "label": "Wall C Gatehouse",
+          "role": "wall",
+          "sourceMod": "Kithkyn study",
+          "source": "src/main/resources/data/kithkyn/structure/wall/birch_forest/gatehouse.nbt",
+          "sourceSha256": "6b18ae5516320898e1ad6b89393a2e6ab9ba34a2afc8bd4b733d4944d9cdfcf1",
+          "preparedSha256": "3742a57b455eb199e3e0900ffeefef4e07b9410d2215c5b43733fd0b9ff02abe",
+          "size": [
+            17,
+            8,
+            7
+          ],
+          "origin": [
+            1514,
+            230,
+            852
+          ],
+          "privateTemplate": "kithkyn_nautical_profile:nc20_04_gatehouse",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0,
+          "study": "run/nautical-full-profile/studies/wall_c_gatehouse.nbt",
+          "swaps": {
+            "mossy_cobblestone -> stripped_jungle_wood": 8,
+            "cobblestone -> stripped_jungle_wood": 10,
+            "cobblestone -> sandstone": 52,
+            "mossy_cobblestone -> smooth_sandstone": 30,
+            "cobblestone_wall -> sandstone_wall": 20,
+            "mossy_cobblestone_wall -> sandstone_wall": 11,
+            "cobblestone_slab -> jungle_slab": 9
+          }
+        },
+        {
+          "id": "NC20.5",
+          "label": "Wall C Terrace",
+          "role": "wall",
+          "sourceMod": "Kithkyn study",
+          "source": "src/main/resources/data/kithkyn/structure/wall/birch_forest/terrace.nbt",
+          "sourceSha256": "df728d8b1ed1fe0372acc52a4faf7057eefc5c24f2f1a0605a234613a3404056",
+          "preparedSha256": "7b8988fb2c7863b96f249411565de90787aaa1281f41a2a9cf0265a11a1e3239",
+          "size": [
+            8,
+            9,
+            1
+          ],
+          "origin": [
+            1537,
+            230,
+            852
+          ],
+          "privateTemplate": "kithkyn_nautical_profile:nc20_05_terrace",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0,
+          "study": "run/nautical-full-profile/studies/wall_c_terrace.nbt",
+          "swaps": {
+            "mossy_cobblestone -> stripped_jungle_wood": 3,
+            "cobblestone -> stripped_jungle_wood": 1,
+            "mossy_cobblestone -> smooth_sandstone": 12,
+            "cobblestone -> sandstone": 22,
+            "cobblestone_wall -> sandstone_wall": 4,
+            "mossy_cobblestone_wall -> sandstone_wall": 1
+          }
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "checkedAt": "2026-09-13T12:56:25-04:00",
+    "footprintsChecked": 139,
+    "short": 0,
+    "lowestRatio": 0.995,
+    "waterOutsideRings": 0,
+    "renderedView": "run/nautical-full-profile/offline-render.png",
+    "note": "Read from the saved world after Aaron's NC05 edits. Below 1.0: his NC05.2 edits, NC06.10's two jigsaw cells that resolve to air, and one popped plant each in NC12.7 and NC12.8."
+  },
+  "licensing": "Unstructured, CTOV and Towns & Towers are CC BY-NC-ND 4.0: their display copies stay private under run/, as for every gallery. See docs/structure-sourcing.md.",
+  "placement": {
+    "method": "In-game datapack (datapack.py): the live server's console was a private pipe this session could not reach.",
+    "batches": [
+      {
+        "rows": "NC01-NC10",
+        "ranBy": "Aaron",
+        "reloadedAt": "2026-09-13T12:14:26",
+        "savedAt": "2026-09-13T12:15:54"
+      },
+      {
+        "rows": "NC11-NC16",
+        "ranBy": "Aaron",
+        "note": "added after Aaron asked for the CTOV beach set"
+      },
+      {
+        "rows": "NC17-NC19",
+        "ranBy": "Aaron",
+        "note": "market tiers and wall studies A and B"
+      }
+    ],
+    "packRetired": "Moved out of the world once both batches were in the save.",
+    "pendingRows": [
+      "NC20"
+    ]
+  },
+  "studies": {
+    "recorded": "2026-09-13T13:37:28-04:00",
+    "rule": "Bundled Birch market and wall geometry from main with the Nautical picks' materials; trade colours, torches, ladders and the gatehouse campfire and banners untouched.",
+    "rows": [
+      {
+        "id": "NC17",
+        "title": "NAUTICAL MARKET \u2014 TIERS 1 TO 3"
+      },
+      {
+        "id": "NC18",
+        "title": "NAUTICAL WALL A \u2014 JUNGLE PALISADE"
+      },
+      {
+        "id": "NC19",
+        "title": "NAUTICAL WALL B \u2014 SANDSTONE SEAWALL"
+      },
+      {
+        "id": "NC20",
+        "title": "NAUTICAL WALL C \u2014 SANDSTONE ON JUNGLE"
+      }
+    ],
+    "studies": [
+      {
+        "row": "NC17",
+        "stem": "market_1",
+        "label": "Market Tier 1",
+        "role": "market",
+        "source": "src/main/resources/data/kithkyn/structure/market_birch_forest_1.nbt",
+        "sourceSha256": "ba62598d3dc7ecbffc4d7e1c0542a37a4f7990c356f7613a38534a93f4ef72d1",
+        "swaps": {
+          "cobblestone -> jungle_planks": 16,
+          "birch_trapdoor -> jungle_trapdoor": 50,
+          "birch_log -> stripped_jungle_log": 4,
+          "birch_fence -> jungle_fence": 14
+        },
+        "size": [
+          16,
+          6,
+          17
+        ],
+        "sha256": "5c82bd0e0fe1e63c06659fe65b6296572dd88cc0ed2a71432ceb46ab32d50202"
+      },
+      {
+        "row": "NC17",
+        "stem": "market_2",
+        "label": "Market Tier 2",
+        "role": "market",
+        "source": "src/main/resources/data/kithkyn/structure/market_birch_forest_2.nbt",
+        "sourceSha256": "63f3a3fcfaecefd4dc4807d5a01b28d3e263bad1cddd5a5c12bab754c45c9a9f",
+        "swaps": {
+          "cobblestone -> jungle_planks": 57,
+          "birch_trapdoor -> jungle_trapdoor": 100,
+          "birch_log -> stripped_jungle_log": 8,
+          "birch_fence -> jungle_fence": 28
+        },
+        "size": [
+          23,
+          6,
+          17
+        ],
+        "sha256": "31eb86a1e4ca78b4118fe6888f6b3613622c716e53c8ad876d8530a065d352c7"
+      },
+      {
+        "row": "NC17",
+        "stem": "market_3",
+        "label": "Market Tier 3",
+        "role": "market",
+        "source": "src/main/resources/data/kithkyn/structure/market_birch_forest_3.nbt",
+        "sourceSha256": "9b2a4c0903bb9cdd26e954fcc45a8f556ea853b2fe7def140a5d0cc088c7cfab",
+        "swaps": {
+          "cobblestone -> jungle_planks": 78,
+          "birch_trapdoor -> jungle_trapdoor": 150,
+          "birch_log -> stripped_jungle_log": 12,
+          "birch_fence -> jungle_fence": 42
+        },
+        "size": [
+          23,
+          6,
+          25
+        ],
+        "sha256": "0e3888633999fb48a5d765f1322478b8af93864d83c28d66f1c0e260ea0977a4"
+      },
+      {
+        "row": "NC18",
+        "stem": "wall_a_straight",
+        "label": "Wall A Straight",
+        "role": "wall",
+        "source": "src/main/resources/data/kithkyn/structure/wall/birch_forest/straight.nbt",
+        "sourceSha256": "417c3fa956b8b016be23d1a9fdb090b8d155466b75060234831a0a118cf90b85",
+        "swaps": {
+          "mossy_cobblestone -> sandstone": 5,
+          "cobblestone -> sandstone": 2,
+          "mossy_cobblestone -> stripped_jungle_wood": 6,
+          "cobblestone -> stripped_jungle_wood": 18,
+          "cobblestone_wall -> jungle_fence": 3,
+          "mossy_cobblestone_wall -> jungle_fence": 1
+        },
+        "size": [
+          7,
+          8,
+          1
+        ],
+        "sha256": "095e95de90c82993fb09c6fc100bbc6f2524fed4bdd7f477e0998ea258fd8710"
+      },
+      {
+        "row": "NC18",
+        "stem": "wall_a_diagonal",
+        "label": "Wall A Diagonal",
+        "role": "wall",
+        "source": "src/main/resources/data/kithkyn/structure/wall/birch_forest/diagonal.nbt",
+        "sourceSha256": "641d8f0285db2aadcc581e4b4a60082a70d29824668fb8b3bff2be357073ca71",
+        "swaps": {
+          "mossy_cobblestone -> sandstone": 3,
+          "cobblestone -> sandstone": 4,
+          "mossy_cobblestone -> stripped_jungle_wood": 8,
+          "cobblestone -> stripped_jungle_wood": 16,
+          "cobblestone_wall -> jungle_fence": 4,
+          "mossy_cobblestone_wall -> jungle_fence": 2
+        },
+        "size": [
+          7,
+          8,
+          7
+        ],
+        "sha256": "baece2f1ef61557751be911c1fb48f45f2f01318a40c0bb2910f9f76f8414fdd"
+      },
+      {
+        "row": "NC18",
+        "stem": "wall_a_corner_tower",
+        "label": "Wall A Corner Tower",
+        "role": "wall",
+        "source": "src/main/resources/data/kithkyn/structure/wall/birch_forest/corner_tower.nbt",
+        "sourceSha256": "38b6df41ffe999e9ef9027a2b6b05e8af76f622cbd27d7cd0d5918124a1e84ea",
+        "swaps": {
+          "mossy_cobblestone -> sandstone": 7,
+          "cobblestone -> sandstone": 7,
+          "oak_trapdoor -> jungle_trapdoor": 4,
+          "mossy_cobblestone -> stripped_jungle_wood": 11,
+          "cobblestone -> stripped_jungle_wood": 40,
+          "mossy_cobblestone_wall -> jungle_fence": 8,
+          "cobblestone_wall -> jungle_fence": 11,
+          "cobblestone_slab -> jungle_slab": 1
+        },
+        "size": [
+          12,
+          8,
+          6
+        ],
+        "sha256": "00e68863a4a068a4af0374bf7f8c0cb653b168725b7f39d217dcce3d7ea78e28"
+      },
+      {
+        "row": "NC18",
+        "stem": "wall_a_gatehouse",
+        "label": "Wall A Gatehouse",
+        "role": "wall",
+        "source": "src/main/resources/data/kithkyn/structure/wall/birch_forest/gatehouse.nbt",
+        "sourceSha256": "6b18ae5516320898e1ad6b89393a2e6ab9ba34a2afc8bd4b733d4944d9cdfcf1",
+        "swaps": {
+          "mossy_cobblestone -> sandstone": 8,
+          "cobblestone -> sandstone": 10,
+          "cobblestone -> stripped_jungle_wood": 52,
+          "mossy_cobblestone -> stripped_jungle_wood": 30,
+          "cobblestone_wall -> jungle_fence": 20,
+          "mossy_cobblestone_wall -> jungle_fence": 11,
+          "cobblestone_slab -> jungle_slab": 9
+        },
+        "size": [
+          17,
+          8,
+          7
+        ],
+        "sha256": "f794428c1d6e341d9f2c4f77337337a5f764e57e28d391faa7071fd524ffa7c1"
+      },
+      {
+        "row": "NC18",
+        "stem": "wall_a_terrace",
+        "label": "Wall A Terrace",
+        "role": "wall",
+        "source": "src/main/resources/data/kithkyn/structure/wall/birch_forest/terrace.nbt",
+        "sourceSha256": "df728d8b1ed1fe0372acc52a4faf7057eefc5c24f2f1a0605a234613a3404056",
+        "swaps": {
+          "mossy_cobblestone -> sandstone": 3,
+          "cobblestone -> sandstone": 1,
+          "mossy_cobblestone -> stripped_jungle_wood": 12,
+          "cobblestone -> stripped_jungle_wood": 22,
+          "cobblestone_wall -> jungle_fence": 4,
+          "mossy_cobblestone_wall -> jungle_fence": 1
+        },
+        "size": [
+          8,
+          9,
+          1
+        ],
+        "sha256": "b5811910bb13fbfa1faaacf6348aba261fbb363afe2eb3ba83dc91fe540a1c28"
+      },
+      {
+        "row": "NC19",
+        "stem": "wall_b_straight",
+        "label": "Wall B Straight",
+        "role": "wall",
+        "source": "src/main/resources/data/kithkyn/structure/wall/birch_forest/straight.nbt",
+        "sourceSha256": "417c3fa956b8b016be23d1a9fdb090b8d155466b75060234831a0a118cf90b85",
+        "swaps": {
+          "mossy_cobblestone -> terracotta": 5,
+          "cobblestone -> terracotta": 2,
+          "mossy_cobblestone -> smooth_sandstone": 6,
+          "cobblestone -> sandstone": 18,
+          "cobblestone_wall -> sandstone_wall": 3,
+          "mossy_cobblestone_wall -> sandstone_wall": 1
+        },
+        "size": [
+          7,
+          8,
+          1
+        ],
+        "sha256": "bd729d1843ca1f2c61872c2432db143591d9364d687749e397aad0cd43357c60"
+      },
+      {
+        "row": "NC19",
+        "stem": "wall_b_diagonal",
+        "label": "Wall B Diagonal",
+        "role": "wall",
+        "source": "src/main/resources/data/kithkyn/structure/wall/birch_forest/diagonal.nbt",
+        "sourceSha256": "641d8f0285db2aadcc581e4b4a60082a70d29824668fb8b3bff2be357073ca71",
+        "swaps": {
+          "mossy_cobblestone -> terracotta": 3,
+          "cobblestone -> terracotta": 4,
+          "mossy_cobblestone -> smooth_sandstone": 8,
+          "cobblestone -> sandstone": 16,
+          "cobblestone_wall -> sandstone_wall": 4,
+          "mossy_cobblestone_wall -> sandstone_wall": 2
+        },
+        "size": [
+          7,
+          8,
+          7
+        ],
+        "sha256": "10599f24351b1ed0c1775e5a66092f836e297e8b851b1f64bc7ee893f312c87d"
+      },
+      {
+        "row": "NC19",
+        "stem": "wall_b_corner_tower",
+        "label": "Wall B Corner Tower",
+        "role": "wall",
+        "source": "src/main/resources/data/kithkyn/structure/wall/birch_forest/corner_tower.nbt",
+        "sourceSha256": "38b6df41ffe999e9ef9027a2b6b05e8af76f622cbd27d7cd0d5918124a1e84ea",
+        "swaps": {
+          "mossy_cobblestone -> terracotta": 7,
+          "cobblestone -> terracotta": 7,
+          "oak_trapdoor -> jungle_trapdoor": 4,
+          "mossy_cobblestone -> smooth_sandstone": 11,
+          "cobblestone -> sandstone": 40,
+          "mossy_cobblestone_wall -> sandstone_wall": 8,
+          "cobblestone_wall -> sandstone_wall": 11,
+          "cobblestone_slab -> jungle_slab": 1
+        },
+        "size": [
+          12,
+          8,
+          6
+        ],
+        "sha256": "fc1fffd9a998488dc096324e2fb5c6b21bc6970839d52252c1064c263529f3fe"
+      },
+      {
+        "row": "NC19",
+        "stem": "wall_b_gatehouse",
+        "label": "Wall B Gatehouse",
+        "role": "wall",
+        "source": "src/main/resources/data/kithkyn/structure/wall/birch_forest/gatehouse.nbt",
+        "sourceSha256": "6b18ae5516320898e1ad6b89393a2e6ab9ba34a2afc8bd4b733d4944d9cdfcf1",
+        "swaps": {
+          "mossy_cobblestone -> terracotta": 8,
+          "cobblestone -> terracotta": 10,
+          "cobblestone -> sandstone": 52,
+          "mossy_cobblestone -> smooth_sandstone": 30,
+          "cobblestone_wall -> sandstone_wall": 20,
+          "mossy_cobblestone_wall -> sandstone_wall": 11,
+          "cobblestone_slab -> jungle_slab": 9
+        },
+        "size": [
+          17,
+          8,
+          7
+        ],
+        "sha256": "c83b49c7e7ff9162e772de40ddfebe27c9e974ed890aa69a766c4a34cf34d249"
+      },
+      {
+        "row": "NC19",
+        "stem": "wall_b_terrace",
+        "label": "Wall B Terrace",
+        "role": "wall",
+        "source": "src/main/resources/data/kithkyn/structure/wall/birch_forest/terrace.nbt",
+        "sourceSha256": "df728d8b1ed1fe0372acc52a4faf7057eefc5c24f2f1a0605a234613a3404056",
+        "swaps": {
+          "mossy_cobblestone -> terracotta": 3,
+          "cobblestone -> terracotta": 1,
+          "mossy_cobblestone -> smooth_sandstone": 12,
+          "cobblestone -> sandstone": 22,
+          "cobblestone_wall -> sandstone_wall": 4,
+          "mossy_cobblestone_wall -> sandstone_wall": 1
+        },
+        "size": [
+          8,
+          9,
+          1
+        ],
+        "sha256": "a384eb1614700c471206499457b3557dc3dcc693493551ce92f914a6d602edbd"
+      },
+      {
+        "row": "NC20",
+        "stem": "wall_c_straight",
+        "label": "Wall C Straight",
+        "role": "wall",
+        "source": "src/main/resources/data/kithkyn/structure/wall/birch_forest/straight.nbt",
+        "sourceSha256": "417c3fa956b8b016be23d1a9fdb090b8d155466b75060234831a0a118cf90b85",
+        "swaps": {
+          "mossy_cobblestone -> stripped_jungle_wood": 5,
+          "cobblestone -> stripped_jungle_wood": 2,
+          "mossy_cobblestone -> smooth_sandstone": 6,
+          "cobblestone -> sandstone": 18,
+          "cobblestone_wall -> sandstone_wall": 3,
+          "mossy_cobblestone_wall -> sandstone_wall": 1
+        },
+        "size": [
+          7,
+          8,
+          1
+        ],
+        "sha256": "6aeca8c8cd3be659c6981244e7e64bed684353cfaff2d52511816c14ed9fa237"
+      },
+      {
+        "row": "NC20",
+        "stem": "wall_c_diagonal",
+        "label": "Wall C Diagonal",
+        "role": "wall",
+        "source": "src/main/resources/data/kithkyn/structure/wall/birch_forest/diagonal.nbt",
+        "sourceSha256": "641d8f0285db2aadcc581e4b4a60082a70d29824668fb8b3bff2be357073ca71",
+        "swaps": {
+          "mossy_cobblestone -> stripped_jungle_wood": 3,
+          "cobblestone -> stripped_jungle_wood": 4,
+          "mossy_cobblestone -> smooth_sandstone": 8,
+          "cobblestone -> sandstone": 16,
+          "cobblestone_wall -> sandstone_wall": 4,
+          "mossy_cobblestone_wall -> sandstone_wall": 2
+        },
+        "size": [
+          7,
+          8,
+          7
+        ],
+        "sha256": "2d6566a51241e2ba4ce063123bedf7b75d0f0fde4d9c9389d47abb9ee9fa351f"
+      },
+      {
+        "row": "NC20",
+        "stem": "wall_c_corner_tower",
+        "label": "Wall C Corner Tower",
+        "role": "wall",
+        "source": "src/main/resources/data/kithkyn/structure/wall/birch_forest/corner_tower.nbt",
+        "sourceSha256": "38b6df41ffe999e9ef9027a2b6b05e8af76f622cbd27d7cd0d5918124a1e84ea",
+        "swaps": {
+          "mossy_cobblestone -> stripped_jungle_wood": 7,
+          "cobblestone -> stripped_jungle_wood": 7,
+          "oak_trapdoor -> jungle_trapdoor": 4,
+          "mossy_cobblestone -> smooth_sandstone": 11,
+          "cobblestone -> sandstone": 40,
+          "mossy_cobblestone_wall -> sandstone_wall": 8,
+          "cobblestone_wall -> sandstone_wall": 11,
+          "cobblestone_slab -> jungle_slab": 1
+        },
+        "size": [
+          12,
+          8,
+          6
+        ],
+        "sha256": "a65d57dff16b01cde487967fbf03d48077b3e58dfd84c60b46d0d4ae00ecb416"
+      },
+      {
+        "row": "NC20",
+        "stem": "wall_c_gatehouse",
+        "label": "Wall C Gatehouse",
+        "role": "wall",
+        "source": "src/main/resources/data/kithkyn/structure/wall/birch_forest/gatehouse.nbt",
+        "sourceSha256": "6b18ae5516320898e1ad6b89393a2e6ab9ba34a2afc8bd4b733d4944d9cdfcf1",
+        "swaps": {
+          "mossy_cobblestone -> stripped_jungle_wood": 8,
+          "cobblestone -> stripped_jungle_wood": 10,
+          "cobblestone -> sandstone": 52,
+          "mossy_cobblestone -> smooth_sandstone": 30,
+          "cobblestone_wall -> sandstone_wall": 20,
+          "mossy_cobblestone_wall -> sandstone_wall": 11,
+          "cobblestone_slab -> jungle_slab": 9
+        },
+        "size": [
+          17,
+          8,
+          7
+        ],
+        "sha256": "2488843bc411058b0d9422640630ec2c3ab330211d4738c248debfbdc0c43f36"
+      },
+      {
+        "row": "NC20",
+        "stem": "wall_c_terrace",
+        "label": "Wall C Terrace",
+        "role": "wall",
+        "source": "src/main/resources/data/kithkyn/structure/wall/birch_forest/terrace.nbt",
+        "sourceSha256": "df728d8b1ed1fe0372acc52a4faf7057eefc5c24f2f1a0605a234613a3404056",
+        "swaps": {
+          "mossy_cobblestone -> stripped_jungle_wood": 3,
+          "cobblestone -> stripped_jungle_wood": 1,
+          "mossy_cobblestone -> smooth_sandstone": 12,
+          "cobblestone -> sandstone": 22,
+          "cobblestone_wall -> sandstone_wall": 4,
+          "mossy_cobblestone_wall -> sandstone_wall": 1
+        },
+        "size": [
+          8,
+          9,
+          1
+        ],
+        "sha256": "4df03d08d180fb920e0e663071768815a15a94d218d2133b3bfee246c6893e3e"
+      }
+    ]
+  },
+  "selection": {
+    "schemaVersion": 1,
+    "status": "selection_locked",
+    "variant": "nautical_coast",
+    "world": "trio-20260912",
+    "galleryEntry": [
+      1463.5,
+      230.0,
+      10.5
+    ],
+    "gallery": "run/nautical-full-profile/manifest.json",
+    "recorded": "2026-09-13",
+    "coordinates": "Positions are template-local [x, y, z] from each exhibit's gallery origin, read from the saved world after Aaron's edits (run/nautical-full-profile/survey.py).",
+    "identity": {
+      "villageBanners": "NC05.1's four white wall banners, which Aaron added, are village banners. NC05.5's seven banners become village banners."
+    },
+    "selected": [
+      {
+        "exhibit": "NC05.1",
+        "label": "T&T beach lighthouse",
+        "role": "village_center",
+        "villageFire": {
+          "campfire": [
+            2,
+            1,
+            10
+          ],
+          "note": "Placed by Aaron."
+        },
+        "villageBanners": [
+          [
+            6,
+            5,
+            11
+          ],
+          [
+            11,
+            4,
+            12
+          ],
+          [
+            11,
+            5,
+            6
+          ],
+          [
+            16,
+            5,
+            11
+          ]
+        ],
+        "villageStorage": {
+          "barrels": [
+            [
+              5,
+              1,
+              11
+            ],
+            [
+              6,
+              1,
+              11
+            ],
+            [
+              6,
+              1,
+              12
+            ],
+            [
+              6,
+              1,
+              13
+            ],
+            [
+              6,
+              2,
+              12
+            ],
+            [
+              7,
+              1,
+              9
+            ],
+            [
+              11,
+              1,
+              6
+            ],
+            [
+              12,
+              1,
+              6
+            ],
+            [
+              13,
+              1,
+              7
+            ],
+            [
+              13,
+              2,
+              7
+            ]
+          ],
+          "note": "The ten barrels outside the tower are the town's storage and the quartermaster's station."
+        },
+        "beds": [
+          {
+            "bed": [
+              11,
+              2,
+              8
+            ],
+            "container": [
+              10,
+              2,
+              8
+            ],
+            "floor": "ground",
+            "note": "Aaron's bed and barrel, in place of a water cauldron."
+          },
+          {
+            "bed": [
+              8,
+              8,
+              12
+            ],
+            "container": [
+              8,
+              8,
+              10
+            ],
+            "floor": "top"
+          },
+          {
+            "bed": [
+              10,
+              8,
+              8
+            ],
+            "container": [
+              12,
+              8,
+              8
+            ],
+            "floor": "top"
+          },
+          {
+            "bed": [
+              11,
+              8,
+              14
+            ],
+            "container": [
+              12,
+              8,
+              14
+            ],
+            "floor": "top",
+            "note": "Aaron's bed and barrel, in place of a composter."
+          }
+        ],
+        "notes": [
+          "The four beds sleep the four founding workers: quartermaster, miner, builder and guard. Containers are paired to beds by proximity.",
+          "The quartermaster works the outside barrels. The builder's and guard's posts are authored at close-out; the miner works at the mine.",
+          "Aaron removed a grindstone at [12, 3, 8] and rearranged the outside barrels."
+        ]
+      },
+      {
+        "exhibit": "NC05.2",
+        "label": "T&T beach main house",
+        "role": "couple_cottage",
+        "coupleBed": [
+          [
+            5,
+            4,
+            11
+          ],
+          [
+            6,
+            4,
+            11
+          ]
+        ],
+        "personalContainer": {
+          "chest": [
+            4,
+            7,
+            11
+          ],
+          "note": "In the ceiling, the couple's private storage."
+        }
+      },
+      {
+        "exhibit": "NC05.3",
+        "label": "T&T beach outdoor shack",
+        "role": "storehouse",
+        "villageStorage": {
+          "barrels": [
+            [
+              3,
+              1,
+              5
+            ],
+            [
+              4,
+              1,
+              4
+            ],
+            [
+              4,
+              1,
+              6
+            ],
+            [
+              4,
+              2,
+              5
+            ],
+            [
+              5,
+              1,
+              5
+            ],
+            [
+              5,
+              2,
+              5
+            ]
+          ]
+        },
+        "notes": [
+          "Another storehouse the town can build when it needs more storage.",
+          "Aaron removed the middle barrel at [4, 1, 5] and a brewing stand at [2, 2, 3]."
+        ]
+      },
+      {
+        "exhibit": "NC05.4",
+        "label": "T&T beach giant cross",
+        "role": "church",
+        "station": {
+          "occupation": "cleric",
+          "brewingStand": [
+            1,
+            1,
+            0
+          ],
+          "container": [
+            -1,
+            1,
+            2
+          ]
+        },
+        "notes": [
+          "A small cleric station; Aaron added the brewing stand and the barrel.",
+          "The barrel stands one block west of the template's box, so the capture box widens by one to the west."
+        ]
+      },
+      {
+        "exhibit": "NC05.5",
+        "label": "T&T beach camp (the turnover ship, reserved from the Polynesian gallery as PC07.4)",
+        "role": "castle",
+        "villageBanners": {
+          "banners": [
+            [
+              2,
+              5,
+              0
+            ],
+            [
+              3,
+              4,
+              27
+            ],
+            [
+              3,
+              7,
+              12
+            ],
+            [
+              3,
+              7,
+              16
+            ],
+            [
+              4,
+              5,
+              24
+            ],
+            [
+              10,
+              5,
+              12
+            ],
+            [
+              10,
+              5,
+              16
+            ]
+          ],
+          "note": "Replace the camp's banners with village banners."
+        },
+        "castleStorage": {
+          "barrels": [
+            [
+              4,
+              1,
+              1
+            ],
+            [
+              4,
+              1,
+              2
+            ],
+            [
+              5,
+              1,
+              1
+            ],
+            [
+              5,
+              1,
+              3
+            ],
+            [
+              5,
+              2,
+              1
+            ],
+            [
+              5,
+              2,
+              2
+            ],
+            [
+              6,
+              1,
+              2
+            ]
+          ],
+          "waterCauldrons": [
+            [
+              5,
+              1,
+              4
+            ],
+            [
+              6,
+              1,
+              1
+            ]
+          ],
+          "note": "The barrel cluster by the water cauldrons is storage with a quartermaster station. Aaron counted six; seven barrel blocks stand there, two of them stacked."
+        },
+        "beds": [
+          {
+            "beds": [
+              [
+                7,
+                1,
+                17
+              ],
+              [
+                7,
+                1,
+                19
+              ]
+            ],
+            "sharedContainer": [
+              10,
+              1,
+              19
+            ],
+            "where": "outside on the ground"
+          },
+          {
+            "beds": [
+              [
+                6,
+                4,
+                17
+              ],
+              [
+                7,
+                4,
+                19
+              ]
+            ],
+            "sharedContainer": [
+              6,
+              4,
+              19
+            ],
+            "where": "inside, on the deck; Aaron's barrel between them"
+          },
+          {
+            "coupleBed": [
+              [
+                3,
+                3,
+                24
+              ],
+              [
+                4,
+                3,
+                24
+              ]
+            ],
+            "candle": [
+              5,
+              4,
+              24
+            ],
+            "where": "the far side",
+            "note": "The king's bed. Aaron described a chest beside it; none is within three blocks in the latest save."
+          }
+        ],
+        "stations": [
+          {
+            "occupation": "baker",
+            "campfire": [
+              11,
+              1,
+              25
+            ],
+            "smoker": [
+              13,
+              1,
+              25
+            ],
+            "container": [
+              13,
+              2,
+              24
+            ]
+          },
+          {
+            "occupation": "blacksmith",
+            "smithingTable": [
+              7,
+              4,
+              10
+            ],
+            "grindstone": [
+              6,
+              4,
+              8
+            ],
+            "container": [
+              7,
+              5,
+              11
+            ]
+          },
+          {
+            "occupation": "leader",
+            "note": "The king; the double bed is his."
+          }
+        ],
+        "custody": {
+          "cell": "the fenced enclosure beside the two barrels",
+          "evidenceContainers": [
+            [
+              12,
+              0,
+              6
+            ],
+            [
+              12,
+              0,
+              7
+            ]
+          ]
+        },
+        "notes": [
+          "Aaron placed the six beds, the deck barrel, one storage barrel and the two evidence barrels.",
+          "Aaron removed the camp's only ladder (x 7, z 16, y 4 to 6), a chest at [11, 0, 25] under the campfire, a chest at [3, 3, 25] behind the king's bed, two storage barrels and a white banner at [6, 2, 2].",
+          "The chest at [5, 4, 20] on the deck has no owner yet."
+        ]
+      },
+      {
+        "exhibit": "NC09.2",
+        "label": "CTOV beach smith",
+        "role": "blacksmith",
+        "station": {
+          "occupation": "blacksmith",
+          "smithingTable": [
+            6,
+            2,
+            6
+          ],
+          "anvil": [
+            4,
+            2,
+            6
+          ],
+          "container": [
+            5,
+            2,
+            6
+          ]
+        },
+        "beds": [
+          {
+            "bed": [
+              4,
+              2,
+              2
+            ],
+            "container": [
+              6,
+              2,
+              4
+            ],
+            "note": "Aaron's bed, in place of a fletching table, with his barrel as personal storage."
+          }
+        ],
+        "notes": [
+          "The chest at [5, 2, 6] is the blacksmith station's.",
+          "Aaron moved the anvil to [4, 2, 6], where a chest stood; the grindstone and two blast furnaces stay."
+        ]
+      },
+      {
+        "exhibit": "NC09.3",
+        "label": "CTOV beach mason",
+        "role": "stoneworks",
+        "station": {
+          "occupation": "mason",
+          "stonecutter": [
+            4,
+            2,
+            4
+          ],
+          "container": [
+            2,
+            2,
+            2
+          ]
+        },
+        "beds": [
+          {
+            "bed": [
+              6,
+              2,
+              4
+            ],
+            "container": [
+              5,
+              2,
+              4
+            ]
+          }
+        ],
+        "notes": [
+          "Aaron's barrel at [2, 2, 2] is the workstation's; the chest at [5, 2, 4] is the mason's personal storage.",
+          "Aaron's bed replaced a chest at [6, 2, 4]."
+        ]
+      },
+      {
+        "exhibit": "NC09.4",
+        "label": "CTOV beach butcher",
+        "role": "butchery",
+        "station": {
+          "occupation": "butcher",
+          "smoker": [
+            4,
+            2,
+            4
+          ],
+          "container": [
+            2,
+            2,
+            2
+          ]
+        },
+        "livestock": {
+          "minecraft:pig": 3,
+          "minecraft:chicken": 3,
+          "where": "the back pen, behind the gates at [0, 2, 7] and [6, 2, 7]"
+        },
+        "notes": [
+          "No bed: the butcher sleeps in ordinary housing.",
+          "The animals are baked into the template at export, as the Polynesian butchery's were."
+        ]
+      },
+      {
+        "exhibit": "NC09.8",
+        "label": "CTOV beach archery range",
+        "role": "hunting_lodge_and_watchtower",
+        "stations": [
+          {
+            "occupation": "hunter",
+            "container": [
+              1,
+              1,
+              3
+            ],
+            "note": "Aaron's barrel outside, verified in the 12:58 save."
+          },
+          {
+            "occupation": "guard",
+            "note": "The watchtower post; its position is authored at close-out."
+          }
+        ],
+        "beds": [
+          {
+            "bed": [
+              9,
+              1,
+              9
+            ],
+            "container": [
+              6,
+              1,
+              10
+            ],
+            "floor": "ground",
+            "for": "hunter"
+          },
+          {
+            "bed": [
+              8,
+              5,
+              9
+            ],
+            "container": [
+              8,
+              5,
+              7
+            ],
+            "floor": "second",
+            "for": "watchtower guard",
+            "note": "Aaron described a chest; the 12:58 save has his barrel here."
+          }
+        ],
+        "notes": [
+          "One building for the hunter and the watchtower; Aaron dropped the separate watchtower (NC09.6).",
+          "A ladder climbs from [6, 1, 7]. Aaron removed a chest at [8, 9, 9]."
+        ]
+      },
+      {
+        "exhibit": "NC09.9",
+        "label": "CTOV beach farm",
+        "role": "farm",
+        "level": 1,
+        "container": [
+          5,
+          0,
+          1
+        ],
+        "notes": [
+          "Aaron's barrel is sunk into the ground course."
+        ]
+      },
+      {
+        "exhibit": "NC09.10",
+        "label": "CTOV beach orchard",
+        "role": "lumberjack",
+        "station": {
+          "occupation": "lumberjack",
+          "sapling": [
+            8,
+            1,
+            8
+          ],
+          "placeholder": "minecraft:dead_bush",
+          "species": "oak"
+        },
+        "notes": [
+          "Aaron replaced the orchard's seven oak saplings with one dead bush marking where the lumberjack's sapling goes.",
+          "Species: Aaron leans to oak ('oak probably is correct'), with jungle and acacia as the alternatives; the orchard's own saplings were oak.",
+          "Aaron added a composter at [9, 1, 1]; the hut keeps a double chest at [2, 2, 4] and [3, 2, 4], a composter and a furnace."
+        ]
+      },
+      {
+        "exhibit": "NC09.11",
+        "label": "CTOV beach pen",
+        "role": "mine",
+        "status": "recorded",
+        "container": [
+          5,
+          0,
+          1
+        ],
+        "notes": [
+          "Aaron finished converting the pen into the mine by the 13:10 save: the hay bales and the gate at [3, 1, 0] are gone, his barrel is sunk at [5, 0, 1], and 26 other blocks changed.",
+          "The miner's worksite and the shaft's direction are read from the capture's layer maps at close-out."
+        ]
+      },
+      {
+        "exhibit": "NC10.3",
+        "label": "CTOV beach big house 3",
+        "role": "house",
+        "beds": {
+          "single": 4,
+          "positions": [
+            [
+              2,
+              1,
+              2
+            ],
+            [
+              2,
+              5,
+              2
+            ],
+            [
+              4,
+              5,
+              2
+            ],
+            [
+              6,
+              5,
+              2
+            ]
+          ]
+        },
+        "personalContainers": [
+          [
+            6,
+            1,
+            2
+          ],
+          [
+            6,
+            5,
+            5
+          ]
+        ],
+        "notes": [
+          "Four singles; two beds share each chest (Aaron).",
+          "Aaron's ground-floor bed replaced a furnace and two chests; his two chests replaced a crafting table and filled the upper floor."
+        ]
+      },
+      {
+        "exhibit": "NC10.4",
+        "label": "CTOV beach mid house 1",
+        "role": "house",
+        "beds": {
+          "single": 3,
+          "positions": [
+            [
+              2,
+              1,
+              2
+            ],
+            [
+              4,
+              1,
+              6
+            ],
+            [
+              6,
+              1,
+              6
+            ]
+          ]
+        },
+        "personalContainers": [
+          [
+            6,
+            1,
+            2
+          ]
+        ],
+        "notes": [
+          "Three singles sharing Aaron's chest; his bed replaced two chests, and he added a candle at [4, 2, 2]."
+        ]
+      },
+      {
+        "exhibit": "NC10.6",
+        "label": "CTOV beach small house 1",
+        "role": "house",
+        "beds": {
+          "single": 1,
+          "positions": [
+            [
+              2,
+              1,
+              4
+            ]
+          ]
+        },
+        "personalContainers": [
+          [
+            2,
+            1,
+            2
+          ]
+        ]
+      },
+      {
+        "exhibit": "NC10.7",
+        "label": "CTOV beach small house 2",
+        "role": "house",
+        "beds": {
+          "single": 2,
+          "positions": [
+            [
+              6,
+              1,
+              2
+            ],
+            [
+              6,
+              1,
+              4
+            ]
+          ]
+        },
+        "personalContainers": [
+          [
+            2,
+            1,
+            4
+          ]
+        ],
+        "notes": [
+          "Aaron removed a second chest at [2, 1, 3]."
+        ]
+      },
+      {
+        "exhibit": "NC10.8",
+        "label": "CTOV beach small house 3",
+        "role": "house",
+        "beds": {
+          "single": 2,
+          "positions": [
+            [
+              3,
+              5,
+              2
+            ],
+            [
+              5,
+              5,
+              2
+            ]
+          ]
+        },
+        "personalContainers": [
+          [
+            4,
+            1,
+            4
+          ]
+        ],
+        "notes": [
+          "Both beds upstairs; the storage is downstairs. Aaron removed a second chest at [3, 1, 4]."
+        ]
+      },
+      {
+        "exhibit": "NC11.2",
+        "label": "CTOV beach tavern",
+        "role": "tavern",
+        "coupleBeds": [
+          [
+            [
+              3,
+              5,
+              5
+            ],
+            [
+              4,
+              5,
+              5
+            ]
+          ],
+          [
+            [
+              10,
+              5,
+              5
+            ],
+            [
+              10,
+              5,
+              6
+            ]
+          ]
+        ],
+        "containers": [
+          [
+            2,
+            5,
+            7
+          ],
+          [
+            6,
+            5,
+            6
+          ]
+        ],
+        "notes": [
+          "Two couple beds upstairs; the tavern keeper lives in one of them and the other is the guest room.",
+          "The keeper's station is authored at close-out. One block is a stand-in for another mod's tavern block."
+        ]
+      },
+      {
+        "exhibit": "NC12.1",
+        "label": "CTOV beach bakery",
+        "role": "bakery",
+        "station": {
+          "occupation": "baker",
+          "smoker": [
+            4,
+            2,
+            6
+          ],
+          "container": [
+            3,
+            2,
+            6
+          ]
+        },
+        "notes": [
+          "The smoker is the stand-in for the source's cake oven; Aaron added the barrel. No bed.",
+          "Two more stand-in markers replace a cupcake and a beetroot cake; pick vanilla stand-ins (cakes) at close-out."
+        ]
+      },
+      {
+        "exhibit": "NC16.8",
+        "label": "CTOV beach goddess statue",
+        "role": "well",
+        "water": {
+          "cauldron": [
+            1,
+            1,
+            2
+          ]
+        },
+        "notes": [
+          "Aaron made the shrine the well with a water cauldron.",
+          "The statue itself is a stand-in marker for another mod's block; pick a vanilla stand-in at close-out."
+        ]
+      },
+      {
+        "exhibit": "NC06.8",
+        "label": "CTOV beach fishing hut",
+        "role": "fishery",
+        "beds": [
+          {
+            "bed": [
+              3,
+              1,
+              5
+            ],
+            "container": [
+              5,
+              1,
+              5
+            ]
+          }
+        ],
+        "station": {
+          "occupation": "fisher",
+          "container": [
+            3,
+            0,
+            3
+          ]
+        },
+        "water": {
+          "template": "A one-block water ring at layer 0 around the hut's 5x5 base; the jungle-plank dock runs north from the door at x 4 to the template's edge, two blocks out.",
+          "trim": "Aaron (2026-09-13): keep the water as a two-block ring, out to the end of the dock: fill the template's outer course with water at export. The third ring in the gallery is spill that flowed out to the barrier ring."
+        },
+        "notes": [
+          "Aaron's pick for the fishery (2026-09-13), from the same CTOV beach family; all vanilla blocks.",
+          "Aaron put in a bed with a barrel for personal storage and another barrel for the hut; by position the barrel beside the bed at [5, 1, 5] is personal and the one set into the floor at [3, 0, 3] is the hut's. His bed replaced a barrel at [3, 1, 5].",
+          "Test the pond on real terrain with the height checks at close-out."
+        ]
+      },
+      {
+        "exhibit": "NC17.1 to NC17.3",
+        "label": "Nautical market tiers (study)",
+        "role": "market",
+        "levels": [
+          1,
+          2,
+          3
+        ],
+        "notes": [
+          "Approved (2026-09-13): the shared Birch market geometry in jungle wood (fences, trapdoors, stripped jungle log posts) on a jungle-plank boardwalk; trade colours untouched."
+        ]
+      }
+    ],
+    "wallFamily": {
+      "status": "locked",
+      "selected": "C",
+      "studies": {
+        "A": "NC18: stripped jungle palisade on a sandstone footing",
+        "B": "NC19: sandstone seawall on a terracotta footing",
+        "C": "NC20: the B seawall on a stripped jungle wood footing, Aaron's variant"
+      },
+      "notes": [
+        "Aaron (2026-09-13): A looked cool, but he leaned to B's sandstone and asked for C, then locked in C: sandstone and smooth sandstone with sandstone wall tips, jungle slab walks and jungle trapdoors, on a stripped jungle wood footing.",
+        "Rows NC18 (A) and NC19 (B) stay in the gallery as rejected studies."
+      ]
+    },
+    "dropped": [
+      {
+        "exhibit": "NC09.6",
+        "note": "Briefly the watchtower; dropped when NC09.8 took both the hunter and the watchtower. Aaron's two beds in it stay in the gallery only."
+      }
+    ],
+    "deferred": [
+      {
+        "exhibit": "NC09.12",
+        "note": "Shepherd: much like the butchery's back pen; on the back burner."
+      }
+    ],
+    "missingRoles": [],
+    "startingBuildings": {
+      "set": [
+        "mine (NC09.11)"
+      ],
+      "note": "The centre's outside barrels are the town's storage, and Aaron called the NC05.3 shack another storehouse the town builds when it needs more storage, so a new town starts with the centre and the mine."
+    },
+    "optionalRoles": [
+      "farm tier 2 (an upgrade from NC09.9)",
+      "church tier 2 (after the NC05.4 cross)"
+    ],
+    "founding": {
+      "center": "NC05.1",
+      "note": "The lighthouse sleeps the four founding workers (quartermaster, miner, builder, guard), one bed and container each; the quartermaster works its outside barrels. The mine is NC09.11."
+    },
+    "openQuestions": [],
+    "decisions": [
+      "NC05.5: the deck chest at [5, 4, 20] is the king's personal chest (Aaron, 2026-09-13).",
+      "NC05.2: the 11 ground-floor barrels join the ceiling chest as the couple's personal storage (Aaron, 2026-09-13); the blast furnace is decoration.",
+      "NC05.5: all seven barrels in the bow cluster are castle storage.",
+      "NC09.8: the second-floor bed keeps the barrel at [8, 5, 7].",
+      "NC09.8: the watchtower guard stands on the tower's highest floor.",
+      "NC09.10: the lumberjack uses the hut's double chest at [2, 2, 4] and [3, 2, 4]; the sapling is oak.",
+      "Every container in a catalog building is personal, shared or castle evidence storage (prepare.py's rule), so none is left as decoration."
+    ],
+    "closeOutNotes": [
+      "The castle is the ruling seat (the king's LEADER post); the centre has none. A castle also needs guard posts and a jailer post by the prison (BuildingCatalogContract requires LEADER and GUARD work for a castle).",
+      "The castle's baker and blacksmith stations need the matching grants in the live cost contract, as the Mediterranean castle has.",
+      "The centre carries town storage itself; NC05.3 supplies the storehouse definition the style needs to be selectable.",
+      "Check access on the camp's upper levels after the ladder removal; only lanterns stand above the deck.",
+      "Several CTOV beach roofs are made of campfires; they stay decoration, not village fires.",
+      "Beds share personal containers by reach at authoring: NC10.3 pairs two beds per chest; the tavern keeper's couple bed is chosen then."
+    ]
+  }
+}

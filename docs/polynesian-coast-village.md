@@ -7,8 +7,8 @@ and edited live above the trio-20260912 test world on 2026-09-12. The style toke
 `polynesian_coast`.
 
 It founds in Sparse Jungle and on beaches beside warm or lukewarm ocean. Sparse Jungle was taken
-from Jungle, which keeps Jungle and Bamboo Jungle. Temperate and cold coasts stay reserved for
-the future Nautical Coast village.
+from Jungle, which keeps Jungle and Bamboo Jungle. Temperate and cold coasts and stony shores are
+the Nautical Coast ([nautical-coast-village.md](nautical-coast-village.md)).
 
 The catalog has no castle yet. None of the gallery's forts fit, so the castle slot stays open.
 The centre itself is the ruler's seat and keeps the jail.
@@ -89,8 +89,8 @@ The private datapack contains 24 definitions:
 | `lumberjack_polynesian_coast_1` | LJ.1 | Aaron's copy of the PC03.4 well, converted to a fenced jungle-sapling plot. The lumberjack's post is the sapling, and the barrel sits under the gate |
 | `market_polynesian_coast_1`, `_2`, `_3` | PC10.1 to PC10.3 | The Birch market geometry in spruce on a spruce-plank deck, with the fixed trade colours. Each stall barrel stands on the counter |
 
-The PC07.4 beach camp is reserved for Nautical Coast. The PC03.3 cartographer and library is not
-used yet.
+The PC07.4 beach camp, the same Towns & Towers piece as NC05.5, became the Nautical Coast castle.
+The PC03.3 cartographer and library is not used yet.
 
 A few definitions differ from the gallery copies:
 

@@ -2663,8 +2663,13 @@ public class Village {
     RelationshipPair marriage = getRelationship(a, b);
     if (building == null || isBeingRebuilt(buildingUUID) || marriage == null || !marriage.married()) return false;
     if (sharesCoupleHome(a, b) && bedAssignments.get(a).getBuildingUUID().equals(buildingUUID)) return true;
-    return CoupleHousing.assign(a, b, building, bedAssignments, unassignedBeds,
-        pair -> coupleRoomAllows(building, pair, a, b));
+    // A couple entitled to the building's reserved room takes it before a general pair there, so
+    // the keeper's household does not fill the tavern's guest room (the Nautical tavern, 2026-09-13).
+    java.util.function.Predicate<BuildingInfo.CoupleBeds> allowed = pair -> coupleRoomAllows(building, pair, a, b);
+    java.util.function.Predicate<BuildingInfo.CoupleBeds> reserved = pair -> building.getInfo().isWorkerBed(
+        building.getInfo().getBedLocations().indexOf(pair.first().asLong()));
+    return CoupleHousing.assign(a, b, building, bedAssignments, unassignedBeds, allowed.and(reserved))
+        || CoupleHousing.assign(a, b, building, bedAssignments, unassignedBeds, allowed);
   }
 
   /** A completed couple room requires the two specific paired beds, not merely the same building. */
@@ -2714,7 +2719,11 @@ public class Village {
     return workplace != null && workplace.getUUID().equals(building);
   }
 
-  /** A center post may route to a separate mine or storehouse; its live-in bed belongs there. */
+  /**
+   * A center post may route to a separate mine or storehouse. Its live-in bed belongs there when
+   * that building sleeps its own worker (the Romanian mine); a routed building with no beds leaves
+   * the bed at the post's own building, as the Tundra and Nautical centres house their miner.
+   */
   @Nullable
   private Building housingWorkplace(@Nullable JobAssignment job) {
     if (job == null || job.isWallPost()) return null;
@@ -2725,7 +2734,7 @@ public class Village {
       if (stationIndex++ != job.getStationIndex()) continue;
       String category = owner.getInfo().getWorksiteCategory(station.getKey());
       if (category == null) return owner;
-      return getBuildings().stream()
+      Building routed = getBuildings().stream()
           .filter(candidate -> candidate.getInfo() != null && !isBeingRebuilt(candidate.getUUID()))
           .filter(candidate -> category.equals(candidate.getInfo().getCategory()))
           .filter(candidate -> candidate.getInfo().getWorksiteLocations().containsValue(job.getOccupation()))
@@ -2734,6 +2743,7 @@ public class Village {
                   .distSqr(BlockPos.of(owner.getCenterLocation())))
               .thenComparing(candidate -> candidate.getUUID().toString()))
           .orElse(null);
+      return routed != null && !routed.getInfo().getBedLocations().isEmpty() ? routed : owner;
     }
     return null;
   }

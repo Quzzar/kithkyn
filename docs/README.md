@@ -104,6 +104,11 @@ in it, and update it in the same change that moves what it describes.
 - [japanese-cherry-grove-village.md](japanese-cherry-grove-village.md): the approved Japanese
   Cherry Grove catalog: its bedless bell center, naturally placed six-bed founding housing,
   ponds and gardens, two farm levels, fixed-color markets and flowering spruce wall.
+- [nautical-coast-village.md](nautical-coast-village.md): the approved Nautical Coast catalog:
+  its lighthouse centre that sleeps the four founding workers and keeps the town's storage, the
+  turnover-ship castle and its jail, the CTOV beach homes and services, the jetty fishery on its
+  own water, the sandstone seawall on stripped jungle wood, and its temperate-beach and
+  stony-shore founding.
 - [appearance.md](appearance.md): why villagers use the player model and not the vanilla
   villager model, the wide/slim model split by gender, and the client-side runtime skin
   compositor that bakes a villager's look from inherited skin, hair, and eye structures,

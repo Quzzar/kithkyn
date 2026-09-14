@@ -132,6 +132,14 @@ public final class BadlandsVillageVerification {
             {id("farm", 1), id("farm", 2)}},
         5, 6, 4, 1, 4, 0, 0, new BlockPos(9, 2, 10), new BlockPos(9, 3, 9), 1,
         Biomes.CHERRY_GROVE);
+    // The Nautical Coast centre is the lighthouse: its four beds sleep the founding quartermaster,
+    // builder, captain and miner, and its outside barrels are the town's storage, so the founding
+    // set is the lighthouse and the mine. The tavern's two couple rooms hold the keeper's household
+    // and guests, so it has no staff single bed.
+    case NAUTICAL_COAST -> new Catalog("[nautical-verify]", 24, 5, 12, new int[] {5, 0, 0},
+        Map.of(), List.of("tavern_nautical_coast_1"), 4, 0,
+        new String[][] {{id("market", 1), id("market", 2)}, {id("market", 2), id("market", 3)}},
+        2, 4, 4, 1, 4, 4, 0, new BlockPos(13, 1, 21), new BlockPos(15, 2, 20), 1, Biomes.BEACH);
     case BIRCH_FOREST -> null;
   };
   /** Centre jobs beyond the founding four that a catalog's centre also opens at founding. */
@@ -218,6 +226,10 @@ public final class BadlandsVillageVerification {
     }
     check(VillageStyle.fromBiome(registry.getHolderOrThrow(Biomes.SPARSE_JUNGLE), 0L, BlockPos.ZERO, everything)
         == VillageStyle.POLYNESIAN_COAST, "Sparse jungle must select the Polynesian Coast");
+    for (var biome : List.of(Biomes.BEACH, Biomes.STONY_SHORE)) {
+      check(VillageStyle.fromBiome(registry.getHolderOrThrow(biome), 0L, BlockPos.ZERO, everything)
+          == VillageStyle.NAUTICAL_COAST, "Nautical Coast coverage missing " + biome.location());
+    }
     check(VillageStyle.fromBiome(registry.getHolderOrThrow(Biomes.DARK_FOREST), 0L, BlockPos.ZERO, everything)
         == VillageStyle.ROMANIAN, "Dark Forest must select Romanian");
     for (var biome : List.of(Biomes.CHERRY_GROVE, Biomes.FLOWER_FOREST)) {
@@ -235,7 +247,7 @@ public final class BadlandsVillageVerification {
           == VillageStyle.TUNDRA, "Tundra coverage missing " + biome.location());
     }
     Kithkyn.LOGGER.info("{} BIOMES PASS: Pueblo, Desert, Birch, Floodplain, Swamp, both Plains, "
-        + "the dense Jungle biomes, the sparse jungle's Polynesian Coast, Romanian Dark Forest, "
+        + "the dense Jungle biomes, the sparse jungle's Polynesian Coast, the Nautical beaches and stony shores, Romanian Dark Forest, "
         + "Japanese flowering forests and exposed frozen lowlands", PREFIX);
   }
 
@@ -471,17 +483,23 @@ public final class BadlandsVillageVerification {
     if (STYLE == VillageStyle.JUNGLE || STYLE == VillageStyle.SWAMP
         || STYLE == VillageStyle.MEDITERRANEAN || STYLE == VillageStyle.TUNDRA
         || STYLE == VillageStyle.POLYNESIAN_COAST || STYLE == VillageStyle.ROMANIAN
-        || STYLE == VillageStyle.JAPANESE_CHERRY_GROVE) {
+        || STYLE == VillageStyle.JAPANESE_CHERRY_GROVE
+        || STYLE == VillageStyle.NAUTICAL_COAST) {
       if (STYLE != VillageStyle.MEDITERRANEAN) {
         verifyRoutedWorksite(village, residents, Occupation.MINER, "mine");
       }
-      verifyRoutedWorksite(village, residents, Occupation.QUARTERMASTER, "storehouse");
+      // The Nautical quartermaster works the lighthouse's own barrels; its storehouse comes later.
+      if (STYLE != VillageStyle.NAUTICAL_COAST) {
+        verifyRoutedWorksite(village, residents, Occupation.QUARTERMASTER, "storehouse");
+      }
       Building mine = village.getBuildings().stream()
           .filter(building -> building.getInfo().getCategory().equals("mine")).findFirst().orElseThrow();
       check(MineShaft.of(mine).size() == 1, "Jungle physical mine lost its one shaft frame");
     }
-    Building store = village.getBuildings().stream().filter(building -> building.getName().equals(id("storehouse", 1)))
-        .findFirst().orElseThrow();
+    // The Nautical lighthouse holds the town's storage in its own outside barrels.
+    Building store = STYLE == VillageStyle.NAUTICAL_COAST ? village.getTownCenter()
+        : village.getBuildings().stream().filter(building -> building.getName().equals(id("storehouse", 1)))
+            .findFirst().orElseThrow();
     BlockPos storage = world(store, BlockPos.of(store.getInfo().getContainerLocations().getFirst()));
     Container chest = (Container) level.getBlockEntity(storage);
     chest.setItem(0, new ItemStack(Items.COPPER_INGOT, 13));

@@ -296,6 +296,30 @@ class CoupleHousingTest {
   }
 
   @Test
+  void aWorkersCoupleTakesTheReservedPairBeforeTheGuestRoomListedAheadOfIt() throws Exception {
+    BuildingInfo info = decode("""
+        {"structure":"tavern_birch_forest_1","beds":[[3,5,5],[4,5,5],[10,5,5],[10,5,6]],
+         "couple_beds":[[[3,5,5],[4,5,5]],[[10,5,5],[10,5,6]]],"worker_beds":[[10,5,5],[10,5,6]],
+         "work_stations":[{"pos":[8,1,7],"occupation":"INNKEEPER"}]}
+        """);
+    assertEquals(null, info.validate());
+    Buildings.reload(Map.of(info.getName(), info));
+    Building tavern = new Building(info.getName(), Rotation.NONE);
+    Village village = savedVillage(List.of(tavern), Map.of(), List.of(A, B, C, D));
+    assertTrue(village.canHouseForJob(A, tavern.getUUID()));
+    village.assignJob(A, new JobAssignment(null, Occupation.INNKEEPER, tavern.getUUID(), 0));
+    assertTrue(village.sharesCoupleHome(A, B));
+    assertEquals(2, village.getBedAssignment(A).getBedIndex(), "the keeper's household has the reserved room");
+    assertEquals(3, village.getBedAssignment(B).getBedIndex());
+    assertTrue(village.houseCouple(C, D, tavern.getUUID()));
+    assertEquals(0, village.getBedAssignment(C).getBedIndex(), "the guests have the general room");
+    assertEquals(1, village.getBedAssignment(D).getBedIndex());
+    reconcile(village);
+    assertEquals(2, village.getBedAssignment(A).getBedIndex());
+    assertEquals(0, village.getBedAssignment(C).getBedIndex());
+  }
+
+  @Test
   void aStyleWithMixedHousingCanSaveForItWithoutADedicatedCottage() {
     Building home = mixedHome();
     Village village = new Village("Rooms");

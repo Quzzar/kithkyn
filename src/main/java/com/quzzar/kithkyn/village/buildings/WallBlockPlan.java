@@ -51,11 +51,13 @@ public record WallBlockPlan(long position, Piece piece, WallCellRole role) {
     GATE_FRAME_POST, GATE_FRAME_BEAM,
     LEAVES, LEAVES_DARK,
     /**
-     * The Polynesian Coast footing course (study A, 2026-09-12): literal dead
-     * bubble coral whatever the palette, the way Birch masonry is literal
-     * cobblestone. The catalog seats it on each column's own ground.
+     * A footed family's ground course, seated by the catalog on each column's
+     * own ground: the Polynesian dead coral (study A, 2026-09-12) and the
+     * Nautical stripped jungle wood (study C, 2026-09-13), from the palette.
      */
-    CORAL_FOOTING;
+    FOOTING,
+    /** A body course in the family's second masonry: the Nautical smooth sandstone. */
+    BODY_ACCENT;
   }
 
   public BlockPos pos() {
@@ -111,7 +113,8 @@ public record WallBlockPlan(long position, Piece piece, WallCellRole role) {
       case BANNER_WEST -> wallBanner(Direction.WEST);
       case LEAVES -> leaves(palette.leaves());
       case LEAVES_DARK -> leaves(palette.leavesDark());
-      case CORAL_FOOTING -> Blocks.DEAD_BUBBLE_CORAL_BLOCK.defaultBlockState();
+      case FOOTING -> palette.footing().defaultBlockState();
+      case BODY_ACCENT -> palette.accent().defaultBlockState();
     };
   }
 

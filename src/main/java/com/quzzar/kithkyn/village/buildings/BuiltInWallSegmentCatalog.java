@@ -27,6 +27,9 @@ final class BuiltInWallSegmentCatalog implements WallSegmentCatalog {
       new BuiltInWallSegmentCatalog(AuthoredWoodWallSegments.ALPINE_HIGHLANDS);
   static final BuiltInWallSegmentCatalog JAPANESE_CHERRY_GROVE =
       new BuiltInWallSegmentCatalog(AuthoredWoodWallSegments.JAPANESE_CHERRY_GROVE);
+  /** The Nautical Coast seawall: study C, with its stripped jungle wood footing seated on the ground. */
+  static final BuiltInWallSegmentCatalog NAUTICAL_COAST =
+      new BuiltInWallSegmentCatalog(AuthoredWoodWallSegments.NAUTICAL_COAST);
   private final AuthoredWoodWallSegments authored;
   private final boolean hedged;
 
@@ -281,12 +284,13 @@ final class BuiltInWallSegmentCatalog implements WallSegmentCatalog {
 
   /**
    * Seats an authored footing course on the ground it stands on: the
-   * Polynesian dead coral of study A (2026-09-12). The capture carries the
+   * Polynesian dead coral of study A (2026-09-12) and the Nautical stripped
+   * jungle wood of study C (2026-09-13). The capture carries the
    * course at each template's local y 0, but the route slides a tall run
    * column down into the terrain and a terrace lifts a whole slice above it,
    * so a course pinned to y 0 would land buried or halfway up the wall. Here
    * every body course at or below its column's natural ground becomes footing,
-   * and a footing cell left above that ground becomes palisade body. One coral
+   * and a footing cell left above that ground becomes wall body. One footing
    * course then follows the terrain under runs, towers and gates alike; the
    * footing cells below it stay buried unless the ground has a hollow to fill.
    * An off-route column reads the ground of its nearest route column, the same
@@ -304,18 +308,18 @@ final class BuiltInWallSegmentCatalog implements WallSegmentCatalog {
       int groundY = columnGround.computeIfAbsent(BlockPos.asLong(pos.getX(), 0, pos.getZ()),
           column -> AuthoredWoodWallSegments.nearestGround(ring, ground, pos.getX(), pos.getZ()));
       WallBlockPlan.Piece piece = pos.getY() <= groundY
-          ? WallBlockPlan.Piece.CORAL_FOOTING
-          : cell.piece() == WallBlockPlan.Piece.CORAL_FOOTING ? WallBlockPlan.Piece.BODY : cell.piece();
+          ? WallBlockPlan.Piece.FOOTING
+          : cell.piece() == WallBlockPlan.Piece.FOOTING ? WallBlockPlan.Piece.BODY : cell.piece();
       if (piece != cell.piece()) {
         entry.setValue(new WallBlockPlan(cell.position(), piece, cell.role()));
       }
     }
   }
 
-  /** The palisade's own courses: the procedural body, authored posts and the footing itself. */
+  /** The wall's own courses: the procedural body, authored posts and accents, and the footing itself. */
   private static boolean isBodyCourse(WallBlockPlan.Piece piece) {
-    return piece == WallBlockPlan.Piece.BODY || piece == WallBlockPlan.Piece.POST
-        || piece == WallBlockPlan.Piece.CORAL_FOOTING;
+    return piece == WallBlockPlan.Piece.BODY || piece == WallBlockPlan.Piece.BODY_ACCENT
+        || piece == WallBlockPlan.Piece.POST || piece == WallBlockPlan.Piece.FOOTING;
   }
 
   /**

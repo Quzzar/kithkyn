@@ -28,23 +28,25 @@ import net.neoforged.neoforge.common.Tags;
  * authored and never borrows another family's building to fill a gap. Birch
  * Forest is the one bundled catalog and so the default; Desert, Badlands,
  * Floodplain, Jungle, Swamp, Mediterranean, Tundra, Polynesian Coast,
- * Romanian, Alpine Highlands and Japanese Cherry Grove arrive through
- * private datapacks (docs/desert-village.md, docs/badlands-village.md,
+ * Romanian, Alpine Highlands, Japanese Cherry Grove and Nautical Coast arrive
+ * through private datapacks (docs/desert-village.md, docs/badlands-village.md,
  * docs/floodplain-village.md, docs/jungle-village.md, docs/swamp-village.md,
  * docs/mediterranean-village.md, docs/tundra-village.md,
  * docs/polynesian-coast-village.md, docs/romanian-village.md,
- * docs/alpine-highlands-village.md, docs/japanese-cherry-grove-village.md), so they
+ * docs/alpine-highlands-village.md, docs/japanese-cherry-grove-village.md,
+ * docs/nautical-coast-village.md), so they
  * are only automatic candidates while their founding sets are loaded.
  *
  * Explicit datapack style tags take precedence over conventional biome families.
  * A beach on warm or lukewarm water ({@link #WARM_OCEAN}) is the Polynesian Coast,
- * which is the one rule that reads the site's surroundings rather than one biome.
+ * which is the one rule that reads the site's surroundings rather than one biome;
+ * every other open beach, and a stony shore, is the Nautical Coast.
  * An unfamiliar family chooses among climate-compatible loaded catalogs using
  * the world seed and founding site, not the world's mutable random stream.
  */
 public enum VillageStyle {
   BIRCH_FOREST, DESERT, BADLANDS, FLOODPLAIN, JUNGLE, SWAMP, MEDITERRANEAN, TUNDRA,
-  POLYNESIAN_COAST, ROMANIAN, ALPINE_HIGHLANDS, JAPANESE_CHERRY_GROVE;
+  POLYNESIAN_COAST, ROMANIAN, ALPINE_HIGHLANDS, JAPANESE_CHERRY_GROVE, NAUTICAL_COAST;
 
   /**
    * What a blank or unknown saved style reads as, the answer for every climate
@@ -162,7 +164,8 @@ public enum VillageStyle {
 
   /**
    * Pure selector seam: explicit style tags first, then a beach on warm water
-   * (the Polynesian Coast), then the conventional families that have a finished
+   * (the Polynesian Coast), then any other open beach or a stony shore (the
+   * Nautical Coast), then the conventional families that have a finished
    * catalog, then a climate cluster, then the first loaded founding set in enum
    * order. Only styles whose founding set is loaded are ever chosen automatically.
    */
@@ -177,6 +180,10 @@ public enum VillageStyle {
     // Ahead of the conventional families: NeoForge counts a beach as sandy, which reads as Desert.
     if (warmCoast && available.test(POLYNESIAN_COAST)) {
       return POLYNESIAN_COAST;
+    }
+    // Every other sandy beach, on temperate or cold water, and a stony shore are the fishing coast.
+    if ((isOpenBeach(tagged) || tagged.test(Tags.Biomes.IS_STONY_SHORES)) && available.test(NAUTICAL_COAST)) {
+      return NAUTICAL_COAST;
     }
     VillageStyle known = conventionalStyle(tagged, biomePath);
     if (known != null && available.test(known)) {

@@ -169,6 +169,14 @@ public final class VillageTemplateExport {
         });
       }
       compactPalette(palette, blocks);
+      // Vanilla writes a template floor by floor; a capture keeps its scan order and the appended
+      // air and overrides land last. Restore the floor order, stable within a floor, so the file
+      // reads as a vanilla one. Placement order is the loader's own (full blocks, partial shapes,
+      // then blocks with block entities), which the builders allow for themselves.
+      List<Tag> ordered = new ArrayList<>(blocks);
+      ordered.sort(Comparator.comparingInt(tag -> ((CompoundTag)tag).getList("pos", Tag.TAG_INT).getInt(1)));
+      blocks.clear();
+      blocks.addAll(ordered);
       // A block outside the declared size is never intended: it stretches the building's
       // footprint in the world (a gallery sign captured four cells in front of a mine
       // pushed the whole mine back), so the export fails instead of shipping it.

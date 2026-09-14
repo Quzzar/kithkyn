@@ -80,12 +80,17 @@ apart: if you add a variant above, the totals below are what change.
 Every village starts with its center, mine and storehouse, placed free. A center can also
 provide an ordered `starting_buildings` list of exact building ids, including its mine,
 storehouse and any starting homes. Repeat a home id to request several copies. Omission
-uses that style's mine and storehouse. Every named definition must be loaded and belong
-to the village's regional catalog; a missing home refuses the complete founding set.
+uses that style's mine and storehouse. A center that keeps the town's storage in its own
+shared containers, like the Nautical Coast lighthouse, may list its mine without a storehouse;
+the style still needs a storehouse definition to build one later. Every named definition must
+be loaded and belong to the village's regional catalog; a missing home refuses the complete
+founding set.
 
 Starting beds and jobs come from those authored buildings. A bedless Jungle center uses
 four separate one-person huts for its four founding workers. Centers with accommodation
-can keep it inside the center. Normal bed registration, job assignment and campfire arrivals
+can keep it inside the center, including for a post routed to a separate mine or storehouse:
+the routed worker sleeps at that worksite only when it declares beds of its own, and otherwise
+in the center's staff beds. Normal bed registration, job assignment and campfire arrivals
 apply; founding does not spawn a separate crew or simulate paid construction projects.
 
 A founding job may belong to the center while its physical workplace sits in another starting

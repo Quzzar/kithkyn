@@ -21,7 +21,10 @@ import javax.annotation.Nullable;
  */
 public class Buildings {
 
-  /** Founding always includes the center, mine and storehouse, plus authored starting homes. */
+  /**
+   * Founding always includes the center and mine, plus authored starting homes, and a storehouse
+   * unless the center keeps the town's storage in its own shared containers (the Nautical lighthouse).
+   */
   public static final String VILLAGE_CENTER_CATEGORY = "village_center";
   public static final String FOUNDING_MINE_CATEGORY = "mine";
   public static final String FOUNDING_STOREHOUSE_CATEGORY = "storehouse";
@@ -102,8 +105,10 @@ public class Buildings {
           || !isRegionalChoice(info, style)) return java.util.Optional.empty();
       result.add(info);
     }
+    // One mine, and one storehouse unless the center keeps the town's storage itself.
+    long storehouses = result.stream().filter(info -> info.getCategory().equals(FOUNDING_STOREHOUSE_CATEGORY)).count();
     if (result.stream().filter(info -> info.getCategory().equals(FOUNDING_MINE_CATEGORY)).count() != 1
-        || result.stream().filter(info -> info.getCategory().equals(FOUNDING_STOREHOUSE_CATEGORY)).count() != 1) {
+        || storehouses > 1 || storehouses == 0 && center.getContainerLocations().isEmpty()) {
       return java.util.Optional.empty();
     }
     return java.util.Optional.of(List.copyOf(result));

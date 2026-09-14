@@ -35,6 +35,7 @@ public interface WallSegmentCatalog {
       case ROMANIAN -> BuiltInWallSegmentCatalog.ROMANIAN;
       case ALPINE_HIGHLANDS -> BuiltInWallSegmentCatalog.ALPINE_HIGHLANDS;
       case JAPANESE_CHERRY_GROVE -> BuiltInWallSegmentCatalog.JAPANESE_CHERRY_GROVE;
+      case NAUTICAL_COAST -> BuiltInWallSegmentCatalog.NAUTICAL_COAST;
     };
   }
 }

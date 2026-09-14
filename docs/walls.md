@@ -110,7 +110,7 @@ more than two courses of decorative silhouette above their local deck, which
 preserves uneven posts without allowing one terrain step to become a tall mast.
 
 Structural foundations, including Birch cobblestone and mossy cobblestone posts and the
-Polynesian coral footing, embed exposed soil during placement. Built sections are checked
+Polynesian and Nautical footings, embed exposed soil during placement. Built sections are checked
 when wall work resumes and after each section finishes, so a distant unfinished water
 section cannot delay the cleanup. When a natural dirt course has a side exposed to
 air, the foundation replaces that one course. Buried dirt and player-owned or
@@ -342,8 +342,8 @@ are the gallery's own files byte for byte, reproducible from the Birch captures 
 `tools/structure/ReplaceTemplateBlocks.java` (`tools/structure/polynesian-coast-walls-20260912.json`).
 The loader reads `stripped_spruce_wood` as palisade `BODY`, which places like Birch cobblestone:
 a `POST` would grow down to the ground on placement and fill the gate passage under the roof
-edges. It reads `dead_bubble_coral_block` as the literal `CORAL_FOOTING` piece, a ground-contact
-leg like Birch cobblestone that also fills a hollow found at build time. The capture carries
+edges. It reads `dead_bubble_coral_block` as the `FOOTING` piece, a ground-contact leg like
+Birch cobblestone that also fills a hollow found at build time. The capture carries
 the coral at local y 0, but runs slide their tall columns into the ground and terraces lift
 whole slices, so a course pinned there would be buried in three of every seven straight columns
 even on flat ground. The catalog seats the footing instead: every body course at or below its
@@ -355,6 +355,20 @@ nearest route column's ground, the sample its legs are extended to, so a gatehou
 course higher shows spruce at its foot. Guard posts are read from the Birch footprint and stand on
 the oak slab walks, where the Birch posts stand. The white gatehouse banners take the village
 identity like every gatehouse flag.
+
+The Nautical Coast family (`data/kithkyn/structure/wall/nautical_coast/`, 2026-09-13) is study C,
+Aaron's variant of the gallery's sandstone seawall: the Birch geometry with its cobblestone turned
+to sandstone and its mossy cobblestone to smooth sandstone, its stone walls to sandstone wall tips,
+its top cobblestone slabs to jungle slab walks and its oak hatches to jungle, on a course of
+stripped jungle wood where study B had terracotta. The five templates are the gallery's own files
+byte for byte (`tools/structure/nautical-coast-walls-20260913.json`). The loader reads `sandstone`
+as `BODY`, like the Polynesian spruce, and `smooth_sandstone` as `BODY_ACCENT`, a body course that
+resolves through the palette's `accent()`, so the two-tone masonry Aaron approved survives. It
+reads `stripped_jungle_wood` as `FOOTING`. That piece began as the Polynesian coral; it now resolves
+through the palette's `footing()`, dead coral for the Polynesian family and stripped jungle wood
+for the Nautical one, and the catalog seats either on each column's own ground by the same rule.
+Its ordinal did not move, so saved section signatures are unchanged. Guard posts are read from the
+Birch footprint and stand on the jungle slab walks.
 
 ## Planning and developer preview
 
