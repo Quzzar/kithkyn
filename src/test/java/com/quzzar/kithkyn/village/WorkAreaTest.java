@@ -26,4 +26,15 @@ class WorkAreaTest {
     assertEquals(new WorkArea.Position(-6, 63, -7), farm.firstInSquare(-7, 63, -7, 2,
         position -> position.x() == -6 && position.z() == -7));
   }
+
+  @Test
+  void wholeFootprintScanReachesFarRowsWithoutCrossingTheFarmEdge() {
+    WorkArea farm = new WorkArea(0, 63, 0, 8, 64, 8);
+
+    assertEquals(new WorkArea.Position(8, 63, 8), farm.nearestOnPlane(1, 63, 0,
+        position -> position.x() == 8 && position.z() == 8));
+    assertNull(farm.nearestOnPlane(1, 63, 0,
+        position -> position.x() == 9 && position.z() == 8));
+    assertNull(farm.nearestOnPlane(1, 62, 0, position -> true));
+  }
 }

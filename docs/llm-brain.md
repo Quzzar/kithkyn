@@ -82,6 +82,15 @@ build-now and save-for lists; upgrades, housing, storage, and genuinely new capa
 eligible. Storage is capacity in its own right, so a storehouse is never mistaken for a duplicate
 producer merely because its quartermaster post is vacant.
 
+Central shelf pressure is stated before failure as an exact occupied-slot count once it reaches
+85 percent. At complete saturation, or when a worker is already carrying rejected overflow,
+ordinary expansion is preempted whenever a viable storehouse build or save-for option exists.
+An older saved goal for ordinary expansion is released at that point, so a running village can
+heal rather than finishing another producer that has nowhere to put its output. Active
+construction is not cancelled. A fresh producer goal is likewise released when the same
+capability already exists behind a vacant post; an upgrade remains eligible because it can add
+materially different capacity or services.
+
 The snapshot keeps the causal links as well as the totals. Every workplace is reported by its
 current building age, staffed and claimable-open posts, and free live-in beds. It also states
 whether anyone is actually arriving, whether staffing or reassignment is currently being decided,

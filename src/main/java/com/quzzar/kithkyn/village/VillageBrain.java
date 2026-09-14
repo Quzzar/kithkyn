@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.Map.Entry;
 
@@ -406,40 +407,64 @@ public class VillageBrain {
    * than full, so this never pages an unwatched village in from disk.
    */
   public boolean allStorehouseSlotsOccupied(ServerLevelAccessor levelAccess, Collection<Building> buildings) {
+    return storehouseOccupancy(levelAccess, buildings)
+        .map(StorageOccupancy::full).orElse(false);
+  }
+
+  /** Visible central shelf use, or empty when any declared storehouse is out of sight or broken. */
+  public Optional<StorageOccupancy> storehouseOccupancy(ServerLevelAccessor levelAccess,
+      Collection<Building> buildings) {
     List<Container> observed = new ArrayList<>();
+    boolean hasStorehouse = false;
     for (Building building : buildings) {
       BuildingInfo info = building.getInfo();
       if (info == null || !Buildings.FOUNDING_STOREHOUSE_CATEGORY.equals(info.getCategory())) {
         continue;
       }
+      hasStorehouse = true;
       BlockPos origin = BlockPos.of(building.getOriginLocation());
       for (Long offset : info.getContainerLocations()) {
         BlockPos pos = origin.offset(BlockPos.of(offset).rotate(building.getRotation()));
         if (!levelAccess.getLevel().hasChunkAt(pos)) {
-          return false;
+          return Optional.empty();
         }
         Container container = containerAt(levelAccess, pos.asLong());
-        if (container != null) {
-          observed.add(container);
+        if (container == null) {
+          return Optional.empty();
         }
+        observed.add(container);
       }
     }
-    return allObservedStorageSlotsOccupied(observed);
+    return hasStorehouse && !observed.isEmpty()
+        ? Optional.of(StorageOccupancy.capture(observed)) : Optional.empty();
+  }
+
+  /** Exact visible slot pressure for planner and audit reporting. */
+  public record StorageOccupancy(int occupiedSlots, int totalSlots) {
+    static StorageOccupancy capture(List<? extends Container> containers) {
+      int occupied = 0;
+      int total = 0;
+      for (Container container : containers) {
+        total += container.getContainerSize();
+        for (int slot = 0; slot < container.getContainerSize(); slot++) {
+          if (!container.getItem(slot).isEmpty()) occupied++;
+        }
+      }
+      return new StorageOccupancy(occupied, total);
+    }
+
+    public boolean full() {
+      return totalSlots > 0 && occupiedSlots >= totalSlots;
+    }
+
+    public double fraction() {
+      return totalSlots == 0 ? 0.0D : (double) occupiedSlots / totalSlots;
+    }
   }
 
   /** Pure slot check shared with the focused storage regression. */
   static boolean allObservedStorageSlotsOccupied(List<? extends Container> containers) {
-    if (containers.isEmpty()) {
-      return false;
-    }
-    for (Container container : containers) {
-      for (int slot = 0; slot < container.getContainerSize(); slot++) {
-        if (container.getItem(slot).isEmpty()) {
-          return false;
-        }
-      }
-    }
-    return true;
+    return !containers.isEmpty() && StorageOccupancy.capture(containers).full();
   }
 
   public float totalImpact(Class<? extends BookkeepingEvent> type) {

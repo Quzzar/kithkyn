@@ -109,13 +109,18 @@ public final class LaborPlanner {
     if (centre == null || !level.hasChunkAt(BlockPos.of(centre.getCenterLocation()))) {
       return;
     }
-    // An idle hand is claimed by the ordinary claiming pass; only step in when
-    // the village has no one spare and would otherwise leave the field empty.
-    if (!village.idlePeople().isEmpty()) {
-      return;
-    }
     LaborNeed need = currentNeed(village, midnight);
     if (need == null) {
+      return;
+    }
+    // An idle resident only postpones reassignment when that person can
+    // actually take this post. A bedless camper cannot fill a bedless bakery
+    // or lumberjack opening, and must not hide the deadlock from this pass.
+    if (anyIdleCanTake(village.idlePeople(), id -> {
+      RealPerson person = village.getPerson(level, id);
+      return person != null && person.getLifeStage().canWork()
+          && village.canHouseForJob(person, need.vacancy());
+    })) {
       return;
     }
     List<RealPerson> crew = movableWorkers(village, level, need.vacancy(), false);
@@ -142,6 +147,11 @@ public final class LaborPlanner {
     VillageAttractiveness report = village.getAttractiveness();
     return report != null
         && report.foodCount() < report.population() * KithkynConfig.AttractivenessFoodTargetPerCapita;
+  }
+
+  /** Pure gate: only a genuinely eligible idle resident can defer reassignment. */
+  static boolean anyIdleCanTake(List<UUID> idlePeople, Predicate<UUID> canTake) {
+    return idlePeople.stream().anyMatch(canTake);
   }
 
   /** The first open food post whose building actually stands, or null when none is going wanting. */

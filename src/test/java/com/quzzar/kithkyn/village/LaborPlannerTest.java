@@ -76,4 +76,13 @@ class LaborPlannerTest {
     assertFalse(LaborPlanner.mustKeep(Occupation.FARMER, 1, false, false));
     assertFalse(LaborPlanner.mustKeep(Occupation.GUARD, 1, true, true));
   }
+
+  @Test
+  void aBedlessIdleResidentDoesNotHideAnUrgentVacancy() {
+    UUID bedless = UUID.randomUUID();
+
+    assertFalse(LaborPlanner.anyIdleCanTake(List.of(bedless), id -> false));
+    assertTrue(LaborPlanner.anyIdleCanTake(List.of(bedless), bedless::equals));
+    assertFalse(LaborPlanner.anyIdleCanTake(List.of(), id -> true));
+  }
 }

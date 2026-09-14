@@ -25,6 +25,12 @@ state to distinguish ordinary waiting from a stalled settlement. It is available
 6. Run `/kkdev village audit unmonitor [pos]` to remove one target, or
    `/kkdev village audit clear` to end isolation and return to the configured village-loading mode.
 
+The resident listing also calls out standing job types that have no implemented behavior. This
+is deliberately different from a worker who is merely between useful tasks: an innkeeper post,
+for example, can currently be staffed but has no physical hospitality loop, while a baker has a
+real conversion loop that may simply be waiting for wheat. The monitor treats the former as an
+implementation gap so a silent role cannot make a village look healthy.
+
 The monitored set is saved with the world. It resumes after a server restart as long as developer
 commands remain enabled. A time-lapse session is deliberately runtime-only: a stopped server has
 no tick sprint to resume.
@@ -59,6 +65,7 @@ and wall work, and the current construction-material shortfall.
 It broadcasts a `NEEDS ATTENTION` finding when:
 
 - a villager has continuously reported the same operational blocker for at least one game day;
+- a standing building advertises a job whose behavior is not implemented;
 - a persisted resident remains unloaded for several game minutes after monitoring begins;
 - an active build, wall, or saved construction goal makes no observable progress for two game
   days; or

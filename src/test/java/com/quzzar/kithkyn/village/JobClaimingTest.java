@@ -185,4 +185,15 @@ class JobClaimingTest {
     assertEquals(1, restored.getJobAssignmentsView().size());
     assertTrue(restored.getUnassignedJobs().isEmpty());
   }
+
+  @Test
+  void anUnfillableEarlierPostDoesNotHideALaterClaimableOne() {
+    Village village = new Village("Openings");
+    JobAssignment guard = new JobAssignment(null, Occupation.GUARD, UUID.randomUUID(), 0);
+    JobAssignment baker = new JobAssignment(null, Occupation.BAKER, UUID.randomUUID(), 0);
+    village.getUnassignedJobs().add(guard);
+    village.getUnassignedJobs().add(baker);
+
+    assertEquals(baker, JobClaiming.nextOpening(village, baker::equals));
+  }
 }
