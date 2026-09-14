@@ -20,7 +20,7 @@ class VillageContextSnapshotTest {
         16, 4, 0, 0, Map.of("village center", 1), Map.of("guard", 1),
         Map.of("gate crossbow", 3, "watchtower crossbow", 4), PopulationOutlook.CAN_GROW,
         new VillageContextSnapshot.RecruitmentStatus(60, 50, 8, 8, 0, 0, 0, 0),
-        false, false, false, false, List.of(), Optional.empty(), Optional.empty(), List.of(),
+        false, Optional.empty(), false, false, false, List.of(), Optional.empty(), Optional.empty(), List.of(),
         List.of(), Optional.empty(), 0, 0, 0, 0);
 
     for (String briefing : List.of(snapshot.plannerBriefing(), snapshot.chatBriefing())) {
@@ -36,7 +36,7 @@ class VillageContextSnapshotTest {
         "Mesa", "hamlet", 8, 6, 2, 0, 0, 0, 0,
         14, 2, 0, 0, Map.of("house", 4), Map.of(), Map.of(), PopulationOutlook.CAN_GROW,
         new VillageContextSnapshot.RecruitmentStatus(60, 50, 8, 8, 0, 0, 0, 0),
-        false, false, false, false, List.of(), Optional.empty(), Optional.empty(), List.of(),
+        false, Optional.empty(), false, false, false, List.of(), Optional.empty(), Optional.empty(), List.of(),
         List.of(), Optional.empty(), 3, 1, 2, 1);
     for (String briefing : List.of(snapshot.plannerBriefing(), snapshot.chatBriefing())) {
       assertTrue(briefing.contains("2 general beds free"));
@@ -53,7 +53,7 @@ class VillageContextSnapshotTest {
         0, 0, 0, 0, 4, 0, 0, 0,
         Map.of("mine", 1), Map.of(), Map.of(), PopulationOutlook.HOLDING,
         new VillageContextSnapshot.RecruitmentStatus(50, 50, 8, 8, 0, 0, 0, 0),
-        false, false, false, false, List.of(), Optional.empty(), Optional.empty(), List.of(),
+        false, Optional.empty(), false, false, false, List.of(), Optional.empty(), Optional.empty(), List.of(),
         List.of(new VillageContextSnapshot.WorkerBlocker("miner", "Aaron",
             "I cannot get through the mine entrance to reach the work below.", 48000)), Optional.empty(), 0, 0, 0, 0);
 
@@ -75,7 +75,7 @@ class VillageContextSnapshotTest {
         PopulationOutlook.CAN_GROW,
         new VillageContextSnapshot.RecruitmentStatus(61.0D, 50.0D, 5.5D, 8.0D,
             0.0D, 0.0D, 0.0D, 0.0D),
-        false, false, false, false, List.of(),
+        false, Optional.empty(), false, false, false, List.of(),
         Optional.empty(), Optional.empty(), List.of(), List.of(), Optional.empty(), 0, 0, 0, 0);
 
     String chat = snapshot.chatBriefing();
@@ -100,7 +100,7 @@ class VillageContextSnapshotTest {
         Map.of("house", 1), Map.of(), Map.of(), PopulationOutlook.HOLDING,
         new VillageContextSnapshot.RecruitmentStatus(45.0D, 50.0D, 4.0D, 8.0D,
             0.0D, 0.0D, 0.0D, 0.0D),
-        false, false, false, false, List.of(),
+        false, Optional.empty(), false, false, false, List.of(),
         Optional.empty(), Optional.empty(), List.of(), List.of(), Optional.empty(), 0, 0, 0, 0);
 
     String chat = snapshot.chatBriefing();
@@ -118,7 +118,8 @@ class VillageContextSnapshotTest {
         PopulationOutlook.HELD_AT_FLOOR,
         new VillageContextSnapshot.RecruitmentStatus(20.0D, 50.0D, 0.0D, 8.0D,
             0.0D, 0.0D, -4.0D, 0.0D),
-        true, false, false, false, List.of(),
+        true, Optional.of(new com.quzzar.kithkyn.village.VillageBrain.StorageOccupancy(162, 162)),
+        false, false, false, List.of(),
         Optional.empty(), Optional.empty(), List.of(), List.of(), Optional.empty(), 0, 0, 0, 0);
 
     assertTrue(snapshot.plannerBriefing().contains("Shared storage is backed up"));
@@ -136,7 +137,7 @@ class VillageContextSnapshotTest {
         PopulationOutlook.HOLDING,
         new VillageContextSnapshot.RecruitmentStatus(41.0D, 50.0D, 2.5D, 8.0D,
             0.0D, 0.0D, -3.0D, 0.0D),
-        false, false, true, false,
+        false, Optional.empty(), false, true, false,
         List.of(new VillageContextSnapshot.WorkplaceStatus(
             "lumberjack", 0L, Map.of(), Map.of("lumberjack", 1), 1)),
         Optional.empty(), Optional.empty(), List.of(), List.of(), Optional.empty(), 0, 0, 0, 0);
@@ -149,5 +150,19 @@ class VillageContextSnapshotTest {
     assertTrue(planner.contains("lumberjack: 0 staffed, 1 open"));
     assertTrue(planner.contains("1 free live-in bed"));
     assertTrue(planner.contains("A staffing decision is currently in progress"));
+  }
+
+  @Test
+  void warnsTheBrainBeforeCentralShelvesBecomeCompletelyFull() {
+    VillageContextSnapshot snapshot = new VillageContextSnapshot(
+        "Shelfwatch", "town", 10, 9, 1, 0, 0, 0, 0,
+        12, 1, 1, 0, Map.of("storehouse", 1), Map.of(), Map.of(), PopulationOutlook.HOLDING,
+        new VillageContextSnapshot.RecruitmentStatus(50, 50, 4, 8, 0, 0, 0, 0),
+        false, Optional.of(new com.quzzar.kithkyn.village.VillageBrain.StorageOccupancy(47, 54)),
+        false, false, false, List.of(), Optional.empty(), Optional.empty(), List.of(),
+        List.of(), Optional.empty(), 0, 0, 0, 0);
+
+    assertTrue(snapshot.plannerBriefing().contains("87% occupied (47 of 54 slots)"));
+    assertTrue(snapshot.chatBriefing().contains("adding storage deserves strong consideration"));
   }
 }

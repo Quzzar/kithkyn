@@ -603,6 +603,11 @@ another farm's crops or a player's nearby composter. A missing footprint fails c
 pass below is the deliberate exception: it is village groundskeeping around the farm rather than
 work on the field itself, so its twelve-block exterior reach remains part of the loop.
 
+Tilling searches that whole footprint, nearest eligible cell to the station first. The earlier
+five-by-five station square left most of a nine-by-nine Mediterranean field permanently as grass
+after trampling or damage, even while its farmer carried a hoe and seeds. The footprint itself is
+the safety boundary, so repairing the far row does not widen the job into roads or adjacent farms.
+
 Harvesting picks rather than breaks whatever regrows on its own: a sweet berry bush is wound
 back to a young bush, and a glow berry is taken off its cave vine while the vine keeps hanging
 (the Mediterranean pasture trains glow berries on a trellis, docs/mediterranean-village.md).

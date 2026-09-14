@@ -25,13 +25,11 @@ import net.minecraft.world.level.block.Blocks;
  * Breaking ground and sowing it: a PLACE step, which puts a block down and pays
  * for it out of what the worker is carrying.
  *
- * The search radius stays at two, as it was. It is small - a five-by-five patch
- * around the station - but tilling REPLACES blocks, so widening it would have a
- * farmer turning paths and other people's ground into farmland. That is a
- * tuning decision for the job definitions to carry, not something to change
- * quietly inside a port. The square is clipped to the assigned building's
- * rotated template footprint, so even a station authored at the field's edge
- * cannot turn neighbouring ground into an extension of the farm.
+ * A station-backed farmer searches the whole assigned farm footprint. Tilling
+ * replaces blocks, so the exact rotated work area is the safety boundary: a
+ * station authored at the field's edge can repair the far rows without turning
+ * neighbouring paths or player ground into an extension of the farm. The
+ * station-less fallback retains its small local search.
  */
 public final class TillStep implements BlockWorkStep {
 
@@ -51,7 +49,7 @@ public final class TillStep implements BlockWorkStep {
       Items.POTATO, Blocks.POTATOES,
       Items.SWEET_BERRIES, Blocks.SWEET_BERRY_BUSH));
 
-  private static final int SEARCH_RADIUS = 2;
+  private static final int LOCAL_SEARCH_RADIUS = 2;
 
   private final boolean useStation;
 
@@ -138,13 +136,13 @@ public final class TillStep implements BlockWorkStep {
   @Nullable
   private BlockPos findUntilled(RealPerson person, BlockPos around, @Nullable WorkArea area) {
     if (area != null) {
-      WorkArea.Position found = area.firstInSquare(around.getX(), around.getY() - 1,
-          around.getZ(), SEARCH_RADIUS, position -> workable(person,
+      WorkArea.Position found = area.nearestOnPlane(around.getX(), around.getY() - 1,
+          around.getZ(), position -> workable(person,
               new BlockPos(position.x(), position.y(), position.z())));
       return found == null ? null : new BlockPos(found.x(), found.y(), found.z());
     }
-    for (int x = -SEARCH_RADIUS; x <= SEARCH_RADIUS; ++x) {
-      for (int z = -SEARCH_RADIUS; z <= SEARCH_RADIUS; ++z) {
+    for (int x = -LOCAL_SEARCH_RADIUS; x <= LOCAL_SEARCH_RADIUS; ++x) {
+      for (int z = -LOCAL_SEARCH_RADIUS; z <= LOCAL_SEARCH_RADIUS; ++z) {
         BlockPos candidate = around.offset(x, -1, z);
         if (workable(person, candidate)) {
           return candidate;

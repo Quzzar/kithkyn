@@ -3335,6 +3335,11 @@ public class Village {
         || level != null && brain.allStorehouseSlotsOccupied(level, getBuildings());
   }
 
+  /** Exact central shelf use when every declared storehouse container is currently visible. */
+  public Optional<VillageBrain.StorageOccupancy> getStorehouseOccupancy() {
+    return level == null ? Optional.empty() : brain.storehouseOccupancy(level, getBuildings());
+  }
+
   public String getID() {
     return id;
   }

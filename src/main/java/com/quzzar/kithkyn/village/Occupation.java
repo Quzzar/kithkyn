@@ -48,4 +48,9 @@ public enum Occupation {
         return this == WANDERER;
     }
 
+    /** A staffed post of this kind currently has no job behavior to execute. */
+    public boolean lacksImplementedJobBehavior() {
+        return this == LIBRARIAN || this == BREWER || this == INNKEEPER;
+    }
+
 }

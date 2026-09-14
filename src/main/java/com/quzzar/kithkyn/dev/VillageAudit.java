@@ -20,6 +20,7 @@ import com.quzzar.kithkyn.savedata.VillageManagerSaveData;
 import com.quzzar.kithkyn.village.Village;
 import com.quzzar.kithkyn.village.VillageChunkLoader;
 import com.quzzar.kithkyn.village.VillageManager;
+import com.quzzar.kithkyn.village.Occupation;
 import com.quzzar.kithkyn.village.buildings.Buildings;
 import com.quzzar.kithkyn.village.buildings.StructureInProgress;
 import com.quzzar.kithkyn.village.buildings.UrbanPlanner;
@@ -232,6 +233,13 @@ public final class VillageAudit {
     for (PersonReport resident : reports) {
       text.append("\n  ").append(resident.text());
     }
+    Set<Occupation> gaps = unsupportedRoles(village);
+    if (!gaps.isEmpty()) {
+      text.append("\n  IMPLEMENTATION GAP: standing posts for ")
+          .append(gaps.stream().map(role -> role.name().toLowerCase(Locale.ROOT))
+              .sorted().collect(java.util.stream.Collectors.joining(", ")))
+          .append(" have no job behavior yet; staffing them cannot produce activity.");
+    }
     source.sendSuccess(() -> Component.literal(text.toString()), false);
     return 1;
   }
@@ -388,6 +396,13 @@ public final class VillageAudit {
           + " resident(s) remain unloaded after " + formatTicks(observedFor)
           + "; their member chunk tickets may not be waking them");
     }
+    Set<Occupation> unsupported = unsupportedRoles(village);
+    if (!unsupported.isEmpty()) {
+      return new Assessment(AuditState.ATTENTION, "standing "
+          + unsupported.stream().map(role -> role.name().toLowerCase(Locale.ROOT))
+              .sorted().collect(java.util.stream.Collectors.joining(", "))
+          + " post(s) have no implemented job behavior; staffing them cannot produce activity");
+    }
     if (village.hasPendingBrainDecision()) {
       return new Assessment(AuditState.WAITING, "waiting for a wall-clock village brain decision");
     }
@@ -437,6 +452,16 @@ public final class VillageAudit {
   private static boolean planningCooldownComplete(Village village) {
     long end = village.getLastBuildCompletedTime() + (long) (KithkynConfig.BuildCooldownDays * 24_000L);
     return village.getLevel().getGameTime() >= end;
+  }
+
+  /** Roles advertised by standing buildings that cannot currently do job work. */
+  static Set<Occupation> unsupportedRoles(Village village) {
+    return village.getBuildings().stream()
+        .filter(building -> building.getInfo() != null)
+        .flatMap(building -> building.getInfo().getWorkLocations().values().stream())
+        .filter(Occupation::lacksImplementedJobBehavior)
+        .collect(java.util.stream.Collectors.toCollection(
+            () -> java.util.EnumSet.noneOf(Occupation.class)));
   }
 
   private static void announce(MinecraftServer server, String message) {
