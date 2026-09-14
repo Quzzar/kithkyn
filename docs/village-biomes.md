@@ -137,7 +137,7 @@ The current review status is:
   `tools/structure/nautical-coast-catalog-20260913.json`.
 
 - **Savanna Tent:** the selection gallery stands in the sky above the **trio-20260912** world,
-  beginning at **1723.5, 230, 10.5**, east of the Nautical gallery. Its 27 rows hold 270 pieces:
+  beginning at **1723.5, 230, 10.5**, east of the Nautical gallery. Its 28 rows hold 280 pieces:
   - ST01 to ST06: every standalone Towns & Towers savanna and tent piece: the ramshackled savanna
     plateau village with the showcase's assembled tower village and the fourteen storeys its towers
     are stacked from, the savanna plateau camp, the wooded badlands tipi village and camp, the
@@ -147,6 +147,9 @@ The current review status is:
   - ST25 and ST26: the Dungeons & Taverns acacia tavern modules and its savanna well.
   - ST27: the Towns & Towers Nilotic houses, for comparison only; that family is the Floodplain
     catalog.
+  - ST28: Kithkyn's own original tents, recovered from git at Aaron's request: the five Village Life
+    centre tents and five founding storehouse tents that the old catalogs removed on 2026-09-10
+    founded villages with.
 
   The rows' sky is filled with the savanna biome, which has no precipitation, so lightning cannot
   reach the wool tents. Blocks from mods the server lacks are replaced by vanilla stand-ins in the
