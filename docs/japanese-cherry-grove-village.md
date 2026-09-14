@@ -31,18 +31,18 @@ The private datapack contains 20 definitions:
 | `watchtower_japanese_cherry_grove_1` | JP01.3 | Crossbow post with a guard bed and personal chest |
 | `house_japanese_cherry_grove_1__four_bed` | JP02.1 | Four-bed founding home with shared storage on both floors |
 | `house_japanese_cherry_grove_1` | JP02.2 | Two-bed founding home with one personal chest per resident |
-| `butchery_japanese_cherry_grove_1` | JP03.4 | Butcher station, work chest, three cows and three chickens |
+| `butchery_japanese_cherry_grove_1` | JP03.4 | Butcher station, work chest, three cows and three chickens; seats one block above the datum |
 | `fishery_japanese_cherry_grove_1` | JP03.5 | Pond fishery and work barrel |
 | `farm_japanese_cherry_grove_1`, `_2` | JP03.8 and JP03.7 | Small and large farm progression, each with a work barrel |
-| `mine_japanese_cherry_grove_1` | JP03.9 | Two-wide south-running mine ramp, miner worksite and storage chest |
+| `mine_japanese_cherry_grove_1` | JP03.9 | Two-wide south-running mine ramp, miner worksite and storage chest; nine authored air cells clear the descending mouth |
 | `blacksmith_japanese_cherry_grove_1` | JP04.1 | Forge and work chest |
 | `church_japanese_cherry_grove_1` | JP04.7 | Cleric station and work chest |
 | `tavern_japanese_cherry_grove_1` | JP05.7 | Five-bed tavern; two upstairs worker beds for its two innkeepers and three general beds |
 | `bakery_japanese_cherry_grove_1` | JP06.2 | Bakery and work chest |
-| `hunting_lodge_japanese_cherry_grove_1` | JP06.5 | Hunter station and work chest |
-| `lumberjack_japanese_cherry_grove_1` | JP07.1 | Lumberjack yard, work barrel and cherry sapling site |
+| `hunting_lodge_japanese_cherry_grove_1` | JP06.5 | Hunter station and work chest; seats one block above the datum |
+| `lumberjack_japanese_cherry_grove_1` | JP07.1 | Lumberjack yard, work barrel and cherry sapling site; seats one block above the datum |
 | `stoneworks_japanese_cherry_grove_1` | JP07.3 | Mason station and work chest |
-| `storehouse_japanese_cherry_grove_1` | JP07.6 | Founding quartermaster worksite with four village chests |
+| `storehouse_japanese_cherry_grove_1` | JP07.6 | Founding quartermaster worksite with four village chests; seats one block above the datum |
 | `market_japanese_cherry_grove_1`, `_2`, `_3` | JM01 to JM03 | One, two and three merchant stalls in the approved Japanese frames |
 
 ## Identity, markets and wall
@@ -68,9 +68,14 @@ butchery livestock. Third-party-derived buildings and definitions remain in the 
 datapack; source and output hashes are recorded in
 `tools/structure/japanese-cherry-grove-catalog-20260913.json`.
 
+The production-height pass seats the butchery, hunting lodge, lumberjack and storehouse one block
+above the site datum. The mine stays on the datum and includes the nine ground-level air cells
+carved in the approved gallery plot, so placement clears its two-wide descending mouth.
+
 The catalog audit checks all 20 structures for barriers, structure voids, out-of-bounds cells,
-identity slots, containers, livestock and the exact mine frame. Native placement and founding
-verification cover all four rotations, the farm and market upgrades, dynamic colors, job and bed
-allocation, routed mine and storehouse work, and save/reload behavior. Manual testing can create
-the village with `/kithkyn create-village ~ ~ ~ japanese_cherry_grove`; natural founding in a
-mapped flowering woodland uses the same selection and founding path.
+identity slots, containers, livestock, the four approved sinks and the exact mine frame and air
+cells. Native placement and founding verification cover all four rotations, the farm and market
+upgrades, dynamic colors, job and bed allocation, routed mine and storehouse work, and save/reload
+behavior. Manual testing can create the village with
+`/kithkyn create-village ~ ~ ~ japanese_cherry_grove`; natural founding in a mapped flowering
+woodland uses the same selection and founding path.
