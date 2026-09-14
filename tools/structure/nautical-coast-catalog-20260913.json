@@ -519,6 +519,6 @@
     "custody": "PASS: [custody-verify] RESULT PASS: real melee/arrow arrest, private minute notices, saved expiry, inventory capacity and identity, escape and damaged-cell release, full-cell fallback and village-only grace",
     "routes-gate-access-nautical": "PASS: [gate-access-verify] RESULT PASS: NAUTICAL_COAST all 8 guards/workers ascended and descended",
     "routes-gate-access-polynesian": "PASS: [gate-access-verify] RESULT PASS: POLYNESIAN_COAST all 8 guards/workers ascended and descended",
-    "static_audit": "PASS 24 templates: no barrier states, out-of-bounds blocks, terrain-clearing corner air, open or empty butcheries, malformed market floors, or malformed market entrances (tools/structure/audit-templates.py, 2026-09-13, after the height walk's edits)"
+    "static_audit": "PASS 24 templates (main's audit of 2026-09-13: no barrier states, out-of-bounds blocks, invalid or duplicate station coordinates, invalid lumberjack stands, terrain-clearing corner air, unclassified containers, open or empty butcheries, malformed market floors, or malformed market entrances), after the height walk's edits"
   }
 }
