@@ -2,7 +2,9 @@ package com.quzzar.kithkyn.dev;
 
 import com.quzzar.kithkyn.Kithkyn;
 import com.quzzar.kithkyn.entities.AgeStage;
+import com.quzzar.kithkyn.entities.ai.GuardNightRoutine;
 import com.quzzar.kithkyn.entities.ai.goals.GuardPatrolGoal;
+import com.quzzar.kithkyn.entities.ai.goals.GuardPostGoal;
 import com.quzzar.kithkyn.village.GuardDuty;
 import com.quzzar.kithkyn.village.GuardRole;
 import com.quzzar.kithkyn.village.Occupation;
@@ -28,6 +30,7 @@ import net.neoforged.neoforge.event.tick.ServerTickEvent;
 public final class CastleOperationsVerification {
   private static final String PREFIX = "[castle-operations-verify]";
   private static final List<Patrol> patrols = new ArrayList<>();
+  private static final List<JailerPost> jailers = new ArrayList<>();
   private static int ticks;
   private static int started;
   private static int rotation;
@@ -59,17 +62,31 @@ public final class CastleOperationsVerification {
               "Sentry left authored patrol floor: " + patrol.person.position());
         }
       }
+      for (JailerPost jailer : jailers) {
+        if (jailer.person.distanceToSqr(jailer.station.getX() + .5D, jailer.station.getY(),
+            jailer.station.getZ() + .5D) <= .36D) {
+          jailer.arrived = true;
+          jailer.ticksAtPost++;
+        } else if (jailer.arrived) {
+          throw new AssertionError("Jailer left the authored cell post: " + jailer.person.position());
+        }
+      }
       if (ticks - started > 3200) throw new AssertionError("Patrol stalled " + patrols.stream().map(p ->
-          p.person.position() + " visited=" + p.visited + " expected=" + p.route).toList());
-      if (patrols.stream().allMatch(p -> p.visited.size() == p.route.size())) {
+          p.person.position() + " visited=" + p.visited + " expected=" + p.route).toList()
+          + "; jailers=" + jailers.stream().map(j -> j.person.position() + " at " + j.station
+              + " held=" + j.ticksAtPost).toList());
+      if (patrols.stream().allMatch(p -> p.visited.size() == p.route.size())
+          && jailers.stream().allMatch(jailer -> jailer.ticksAtPost >= 100)) {
         completedSentries += patrols.size();
-        Kithkyn.LOGGER.info("{} ROTATION PASS {}: all {} actual guard goals visited every authored waypoint",
-            PREFIX, Rotation.values()[rotation], patrols.size());
+        Kithkyn.LOGGER.info("{} ROTATION PASS {}: all {} sentries visited every waypoint and {} jailers walked to and held their cell posts",
+            PREFIX, Rotation.values()[rotation], patrols.size(), jailers.size());
         patrols.forEach(p -> p.person.discard());
+        jailers.forEach(j -> j.person.discard());
         patrols.clear();
+        jailers.clear();
         if (++rotation == 4) {
           finished = true;
-          Kithkyn.LOGGER.info("{} RESULT PASS: {} real sentries visited all authored patrol levels in four rotations and retained loadouts",
+          Kithkyn.LOGGER.info("{} RESULT PASS: {} real sentries visited all authored patrol levels and real jailers walked to and held their cell posts in four rotations",
               PREFIX, completedSentries);
           event.getServer().halt(false);
         }
@@ -100,8 +117,15 @@ public final class CastleOperationsVerification {
       var route = GuardDuty.patrolRoute(person);
       if (GuardDuty.isJailer(person)) {
         check(route.isEmpty(), "Jailer inherited a sentry route");
-        check(person.guardRoutine() == com.quzzar.kithkyn.entities.ai.GuardNightRoutine.POST, "Jailer leaves cell during daytime");
-        person.discard();
+        check(person.guardRoutine() == GuardNightRoutine.POST, "Jailer leaves cell during daytime");
+        GuardDuty duty = GuardDuty.of(person);
+        check(duty != null && !duty.ranged(), "Jailer did not resolve a fixed sword post");
+        ApprovedStructureAccess.enableWalking(person);
+        person.goalSelector.addGoal(2, new GuardPostGoal(person));
+        BlockPos start = duty.position().offset(new BlockPos(8, 0, 0).rotate(castle.getRotation()));
+        ApprovedStructureAccess.moveTo(person, start);
+        check(level.addFreshEntity(person), "Could not spawn jailer");
+        jailers.add(new JailerPost(person, duty.position()));
         continue;
       }
       check(!route.isEmpty(), "Sentry has no floor route");
@@ -130,5 +154,16 @@ public final class CastleOperationsVerification {
   }
 
   private record Patrol(ApprovedStructureAccess.Person person, List<BlockPos> route, Set<BlockPos> visited) { }
+  private static final class JailerPost {
+    private final ApprovedStructureAccess.Person person;
+    private final BlockPos station;
+    private boolean arrived;
+    private int ticksAtPost;
+
+    private JailerPost(ApprovedStructureAccess.Person person, BlockPos station) {
+      this.person = person;
+      this.station = station;
+    }
+  }
   private static void check(boolean value, String message) { if (!value) throw new AssertionError(message); }
 }
