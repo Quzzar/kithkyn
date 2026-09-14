@@ -53,7 +53,7 @@
       "asset": "run/polynesian-integration/datapack/data/kithkyn/structure/village_center_polynesian_coast_1.nbt",
       "asset_sha256": "6b82a8fc987739077072ce621243d12432431ca881dd6781ce425a1a1f6cd644",
       "definition": "run/polynesian-integration/datapack/data/kithkyn/kithkyn/buildings/village_center_polynesian_coast_1.json",
-      "definition_sha256": "d5803d4425eca9cf17207d19c588c3a2ed16077533ccd21f59f59d73fdb3cdf5"
+      "definition_sha256": "5aa0ddbe968c6ab0db460b0291af03e52901860c21a7ca10aa57f428c3369969"
     },
     {
       "exhibit": "PC02.1",
@@ -186,7 +186,7 @@
       "asset": "run/polynesian-integration/datapack/data/kithkyn/structure/storehouse_polynesian_coast_1.nbt",
       "asset_sha256": "0742f76e59ce5639cd22f77cafd18d4d029d6031006574b21056113a6bab478d",
       "definition": "run/polynesian-integration/datapack/data/kithkyn/kithkyn/buildings/storehouse_polynesian_coast_1.json",
-      "definition_sha256": "f908bf49bfe548277c2de3e3a55ad5a1ce24dc9e584b97fb1217fa937b9970fb"
+      "definition_sha256": "b9537209bf0fd18e15b19255b59dcd64eaa2d79ee8d510964daf263e2df5768d"
     },
     {
       "exhibit": "PC02.8",
@@ -357,7 +357,7 @@
       "asset": "run/polynesian-integration/datapack/data/kithkyn/structure/mine_polynesian_coast_1.nbt",
       "asset_sha256": "aff204778e07189b73cc6861af21b013fec7f72cb75cbd0015b451d1477ef686",
       "definition": "run/polynesian-integration/datapack/data/kithkyn/kithkyn/buildings/mine_polynesian_coast_1.json",
-      "definition_sha256": "43980c1d7f216492fe1e78cb16cb64c4b8cc3183ee9febf44c443e9e1fb53ec4"
+      "definition_sha256": "cebf47a30fbe42e33a1a58c5e25f939d9a387eb7d46ae53d14d66de08a29856d"
     },
     {
       "exhibit": "PC05.3",
@@ -514,5 +514,18 @@
   "wall": {
     "record": "tools/structure/polynesian-coast-walls-20260912.json",
     "direction": "Aaron's study A (PC11.1 to PC11.5): a stripped spruce palisade with spruce fence tips and oak-slab walks on dead-coral footings; gatehouse banners are village banners"
+  },
+  "center_labor_contract": {
+    "recorded": "2026-09-14",
+    "builder_posts_per_center": 5,
+    "builder_unlock_populations": [
+      0,
+      12,
+      24,
+      48,
+      96
+    ],
+    "captain_posts_per_center": 1,
+    "routing": "Each mine and storehouse owns its worker vacancy; centers own civic and physically local roles."
   }
 }

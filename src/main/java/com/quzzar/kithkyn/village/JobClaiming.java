@@ -92,6 +92,7 @@ public final class JobClaiming {
   /** One reconciliation-and-claiming pass every second; swaps on the slow tick. */
   public static void tick(Village village, ServerLevel level) {
     releaseInvalidAssignments(village, level);
+    releaseLockedBuilderAssignments(village, level);
     if (isSlowTick(village, level)) {
       registerMissingStations(village);
       registerMissingBeds(village);
@@ -101,6 +102,34 @@ public final class JobClaiming {
     releaseUnhousedWorkers(village, level);
     claimOpenJobs(village, level);
     maybeRunSwapPass(village, level);
+  }
+
+  /**
+   * Population-gated builder posts close again when a settlement shrinks. The
+   * released duty remains registered but unclaimable until its threshold is
+   * reached again, and the former builder returns to the ordinary idle pool.
+   */
+  static void releaseLockedBuilderAssignments(Village village, ServerLevel level) {
+    for (Map.Entry<UUID, JobAssignment> entry : village.getJobAssignmentsView().entrySet()) {
+      JobAssignment job = entry.getValue();
+      if (job.getOccupation() != Occupation.BUILDER || village.isPostUnlocked(job)) {
+        continue;
+      }
+      JobAssignment released = village.releaseJob(entry.getKey());
+      if (released == null) {
+        continue;
+      }
+      village.getUnassignedJobs().add(released);
+      RealPerson person = level == null ? null : village.getPerson(level, entry.getKey());
+      if (person != null) {
+        person.setOccupation(Occupation.WANDERER);
+        person.setTravelTarget(null);
+        person.reloadState();
+      }
+      Kithkyn.LOGGER.info("{} stood down from builder duty in '{}': population now supports {} builder(s)",
+          person != null ? person.getFullName() : entry.getKey(), village.getName(),
+          village.builderPostsUnlocked());
+    }
   }
 
   /**
@@ -425,11 +454,11 @@ public final class JobClaiming {
    * The next post to fill, or null when only posts the village has not grown
    * into remain: the first open post for a trade nobody in the village holds
    * yet, else simply the first. Posts are otherwise filled in registration
-   * order, and the town centre registers three BUILDER posts at founding
-   * (docs/worker-loops.md). The second and third open with population
+   * order, and the town centre registers five BUILDER duty anchors at founding
+   * (docs/worker-loops.md). The later posts open with population
    * ({@link Village#isPostUnlocked}), and every trade is staffed once before
    * any is doubled, so a camp's first hires are its miner and quartermaster
-   * and never three builders: a camp with no miner never gets its stone.
+   * before additional builders: a camp with no miner never gets its stone.
    */
   @Nullable
   static JobAssignment nextOpening(Village village, Predicate<JobAssignment> claimable) {

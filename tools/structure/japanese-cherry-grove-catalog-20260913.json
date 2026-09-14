@@ -128,7 +128,7 @@
       "asset": "run/japanese-integration/datapack/data/kithkyn/structure/village_center_japanese_cherry_grove_1.nbt",
       "asset_sha256": "77fcfe09ba618712f47dba6f219ab5efe2432db71569f603d45b01e5fe329365",
       "definition": "run/japanese-integration/datapack/data/kithkyn/kithkyn/buildings/village_center_japanese_cherry_grove_1.json",
-      "definition_sha256": "37795228d22f09054577811bc6c138da548dd6bf450e95a97d5bb7d262cee510"
+      "definition_sha256": "6f8784d9ede65eb911b5ce5f2b6c2b9a14230783b4dfa3018b95a7e27b39d292"
     },
     {
       "exhibit": "JP01.3",
@@ -280,7 +280,7 @@
       "asset": "run/japanese-integration/datapack/data/kithkyn/structure/mine_japanese_cherry_grove_1.nbt",
       "asset_sha256": "47b6d20be488cbd64c7d69498a5b6f1f1addf27ba404bb7a5b4d86e86018aeb4",
       "definition": "run/japanese-integration/datapack/data/kithkyn/kithkyn/buildings/mine_japanese_cherry_grove_1.json",
-      "definition_sha256": "d77b9827a62b6a8fc3a7158a6feffe0b174da159196f1040bfd4a90af25eaffd"
+      "definition_sha256": "8ef6fff0716753750e5133c3d8c9275cec0677fd7d03b436558bb8d02364b873"
     },
     {
       "exhibit": "JP04.1",
@@ -432,7 +432,7 @@
       "asset": "run/japanese-integration/datapack/data/kithkyn/structure/storehouse_japanese_cherry_grove_1.nbt",
       "asset_sha256": "460618f317372ce725f04760dc95c9100eaf4ecb1df5affb02c3154793675608",
       "definition": "run/japanese-integration/datapack/data/kithkyn/kithkyn/buildings/storehouse_japanese_cherry_grove_1.json",
-      "definition_sha256": "a4855c7396417b9327d43e6f956dca5f2799a4da300ffb8c654cc70688a55827"
+      "definition_sha256": "b2f5c82770c80a2e0dcf941e1f4f140c872e6b84d043687332fe606efba49691"
     },
     {
       "exhibit": "JM01",
@@ -488,5 +488,18 @@
       "definition": "run/japanese-integration/datapack/data/kithkyn/kithkyn/buildings/market_japanese_cherry_grove_3.json",
       "definition_sha256": "15a4f5c9f815bfdcb435a90ee2beeed6ad9dda9ba2e94faafc93a405ff052338"
     }
-  ]
+  ],
+  "center_labor_contract": {
+    "recorded": "2026-09-14",
+    "builder_posts_per_center": 5,
+    "builder_unlock_populations": [
+      0,
+      12,
+      24,
+      48,
+      96
+    ],
+    "captain_posts_per_center": 1,
+    "routing": "Each mine and storehouse owns its worker vacancy; centers own civic and physically local roles."
+  }
 }

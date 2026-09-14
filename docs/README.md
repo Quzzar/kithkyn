@@ -80,7 +80,7 @@ in it, and update it in the same change that moves what it describes.
   catalog from the Nilotic selection: roles, founding set, identity rules, the mud brick wall
   palette, authoring pipeline and verification.
 - [jungle-village.md](jungle-village.md): the approved playable Jungle catalog, including its
-  bedless center, four-home founding sprawl, routed mine and storehouse worksites, bamboo roofs,
+  bedless center, four-home founding sprawl, locally owned mine and storehouse jobs, bamboo roofs,
   repaired markets, Firewatch tower and timber perimeter.
 - [swamp-village.md](swamp-village.md): the approved ordinary Swamp catalog, its four-home
   founding sprawl, two campfires, mossy oak-and-spruce walls, tiered towers, and the castle's

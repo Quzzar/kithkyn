@@ -43,11 +43,11 @@ was built with.
    Every definition must include a complete, nonempty `cost` and at least one `grants` entry.
    Category and level never supply defaults. Compare the building with its nearest functional peers
    in the [locked balance map](research/building-cost-rebalance-2026-09-12.md), including beds,
-   jobs, routed worksites, grants, shared and personal storage, throughput, and progression role.
+   jobs, grants, shared and personal storage, throughput, and progression role.
    Price that complete package rather than its block count. The loader rejects missing costs,
    missing grants, retired grant names, and grants that fail the building's authored-value contract.
-   Productive categories must also declare their core occupation as either a local
-   `work_stations` vacancy or a routed `worksites` destination. Never reuse a coordinate for two
+   Productive categories must declare their core occupation as a local `work_stations` vacancy.
+   Mines and storehouses each declare exactly one matching vacancy. Never reuse a coordinate for two
    stations: the loader rejects it, and `tools/structure/audit-templates.py` also checks every
    station against the template bounds.
    See [building-spec.md](building-spec.md).

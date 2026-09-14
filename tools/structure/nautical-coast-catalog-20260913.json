@@ -50,7 +50,7 @@
       "asset": "run/nautical-integration/datapack/data/kithkyn/structure/village_center_nautical_coast_1.nbt",
       "asset_sha256": "513be40581f2e758bf3270ac48f64838e1585550109414233bff7464fe98e4f2",
       "definition": "run/nautical-integration/datapack/data/kithkyn/kithkyn/buildings/village_center_nautical_coast_1.json",
-      "definition_sha256": "cec4b0ae94d5cf732a355b8052705e3137df0814aebc0f9c3bd6a4b581c1026d"
+      "definition_sha256": "ee939acb62300cec220534f0db847abb89f9f7c6aa0442daf554d5cbc2351392"
     },
     {
       "exhibit": "NC05.2",
@@ -90,7 +90,7 @@
       "asset": "run/nautical-integration/datapack/data/kithkyn/structure/storehouse_nautical_coast_1.nbt",
       "asset_sha256": "30bfc958876c2623294ead78f5e16b518d568cd74c233890e45fa872b0a74b4c",
       "definition": "run/nautical-integration/datapack/data/kithkyn/kithkyn/buildings/storehouse_nautical_coast_1.json",
-      "definition_sha256": "12ee830f15d03ab55b25ca5db5c9b06a448b5bd9952a27f7515a8c4fcc1d8f43"
+      "definition_sha256": "40fb9dc862337a54b355616b44e51ded9c061768c9b915e93f67a69a41f629aa"
     },
     {
       "exhibit": "NC05.4",
@@ -290,7 +290,7 @@
       "asset": "run/nautical-integration/datapack/data/kithkyn/structure/mine_nautical_coast_1.nbt",
       "asset_sha256": "87ad6eeb25bf295e85d6f88a78a3364a7d5b7ff443878e0cc57d5155d7a9183c",
       "definition": "run/nautical-integration/datapack/data/kithkyn/kithkyn/buildings/mine_nautical_coast_1.json",
-      "definition_sha256": "a25c7a858d0d287044b42196a61bc052c417823a45d32c809c6367a763399d1d"
+      "definition_sha256": "812421396ced7b36804427d0768b125ee1f7bc85e829a121c7be15a8c8ede2af"
     },
     {
       "exhibit": "NC10.6",
@@ -520,5 +520,18 @@
     "routes-gate-access-nautical": "PASS: [gate-access-verify] RESULT PASS: NAUTICAL_COAST all 8 guards/workers ascended and descended",
     "routes-gate-access-polynesian": "PASS: [gate-access-verify] RESULT PASS: POLYNESIAN_COAST all 8 guards/workers ascended and descended",
     "static_audit": "PASS 24 templates (main's audit of 2026-09-13: no barrier states, out-of-bounds blocks, invalid or duplicate station coordinates, invalid lumberjack stands, terrain-clearing corner air, unclassified containers, open or empty butcheries, malformed market floors, or malformed market entrances), after the height walk's edits"
+  },
+  "center_labor_contract": {
+    "recorded": "2026-09-14",
+    "builder_posts_per_center": 5,
+    "builder_unlock_populations": [
+      0,
+      12,
+      24,
+      48,
+      96
+    ],
+    "captain_posts_per_center": 1,
+    "routing": "Each mine and storehouse owns its worker vacancy; centers own civic and physically local roles."
   }
 }

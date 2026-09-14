@@ -75,74 +75,74 @@ public final class BadlandsVillageVerification {
     case DESERT -> new Catalog("[desert-verify]", 28, 9, 15, new int[] {6, 2, 1}, Map.of(), List.of(), 2, 1,
         new String[][] {{id("storehouse", 1), id("storehouse", 2)}, {id("market", 1), id("market", 2)},
             {id("market", 2), id("market", 3)}},
-        3, 5, 4, 1, 3, 4, 0, new BlockPos(8, 1, 5), new BlockPos(8, 4, 7), 1, Biomes.DESERT);
+        3, 5, 4, 1, 6, 4, 0, new BlockPos(8, 1, 5), new BlockPos(8, 4, 7), 1, Biomes.DESERT);
     case BADLANDS -> new Catalog("[badlands-verify]", 30, 12, 25, new int[] {6, 4, 2},
         Map.of("house_badlands_1__small_house_3", 1, "house_badlands_3", 1, "house_badlands_3__large_house_3", 2),
         List.of("farm_badlands_1", "butchery_badlands_1"), 2, 1,
         new String[][] {{id("storehouse", 1), id("storehouse", 2)}, {id("market", 1), id("market", 2)},
             {id("market", 2), id("market", 3)}},
-        3, 10, 8, 5, 7, 10, 3, new BlockPos(12, 1, 17), new BlockPos(13, 2, 17), 2, Biomes.BADLANDS);
+        3, 10, 8, 5, 10, 10, 3, new BlockPos(12, 1, 17), new BlockPos(13, 2, 17), 2, Biomes.BADLANDS);
     // The floodplain centre has no beds, so its founding set adds three homes; its
     // one storehouse level and its two markets and farms are the only upgrades.
     case FLOODPLAIN -> new Catalog("[floodplain-verify]", 20, 2, 3, new int[] {1, 1, 0}, Map.of(), List.of(), 0, 0,
         new String[][] {{id("market", 1), id("market", 2)}, {id("market", 2), id("market", 3)},
             {id("farm", 1), id("farm", 2)}},
-        6, 5, 4, 1, 3, 0, 0, new BlockPos(4, 1, 2), null, 1, Biomes.MANGROVE_SWAMP);
+        6, 5, 4, 1, 6, 0, 0, new BlockPos(4, 1, 2), null, 1, Biomes.MANGROVE_SWAMP);
     case JUNGLE -> new Catalog("[jungle-verify]", 22, 4, 6, new int[] {2, 2, 0}, Map.of(), List.of(), 0, 0,
         new String[][] {{id("market", 1), id("market", 2)}, {id("market", 2), id("market", 3)}},
-        7, 4, 4, 1, 4, 0, 0, new BlockPos(3, 1, 5), new BlockPos(2, 2, 5), 1, Biomes.JUNGLE);
+        7, 4, 4, 1, 6, 0, 0, new BlockPos(3, 1, 5), new BlockPos(2, 2, 5), 1, Biomes.JUNGLE);
     case SWAMP -> new Catalog("[swamp-verify]", 27, 2, 3, new int[] {2, 0, 0}, Map.of(),
         List.of("church_swamp_1__cleric_couple_home"), 0, 0,
         new String[][] {{id("market", 1), id("market", 2)}, {id("market", 2), id("market", 3)},
             {id("farm", 1), id("farm", 2)}},
-        7, 4, 4, 1, 4, 0, 0, new BlockPos(12, 4, 13), new BlockPos(14, 6, 11), 2, Biomes.SWAMP);
-    // The Mediterranean centre is the church: quartermaster, builder, captain and a cleric.
-    // The mine employs and houses its own miner, so the fifth founding job and the sixth
+        7, 4, 4, 1, 6, 0, 0, new BlockPos(12, 4, 13), new BlockPos(14, 6, 11), 2, Biomes.SWAMP);
+    // The Mediterranean centre is the church: builders, captain and a cleric.
+    // The mine and storehouse employ their own workers, so the founding jobs and sixth
     // founding bed are the mine's; the founding homes are three one-bed houses and the
     // two-bed house.
     case MEDITERRANEAN -> new Catalog("[mediterranean-verify]", 24, 6, 10, new int[] {6, 0, 0},
         Map.of("house_mediterranean_1__couple_room", 1), List.of(), 0, 0,
         new String[][] {{id("market", 1), id("market", 2)}, {id("market", 2), id("market", 3)},
             {id("farm", 1), id("farm", 2)}},
-        7, 6, 5, 1, 4, 0, 0, new BlockPos(7, 1, 2), new BlockPos(7, 3, 3), 1, Biomes.PLAINS);
+        7, 6, 5, 1, 7, 0, 0, new BlockPos(7, 1, 2), new BlockPos(7, 3, 3), 1, Biomes.PLAINS);
     case TUNDRA -> new Catalog("[tundra-verify]", 23, 3, 6, new int[] {3, 0, 0}, Map.of(), List.of(), 0, 0,
         new String[][] {{id("market", 1), id("market", 2)}, {id("market", 2), id("market", 3)},
             {id("farm", 1), id("farm", 2)}},
-        3, 4, 4, 1, 4, 4, 0, new BlockPos(8, 1, 7), new BlockPos(8, 2, 8), 0, Biomes.SNOWY_PLAINS);
-    // The Polynesian Coast centre is the king's hall: quartermaster, builder, captain and
-    // miner, plus the king on the throne and a jailer beside the cell, so two guards and six
+        3, 4, 4, 1, 6, 4, 0, new BlockPos(8, 1, 7), new BlockPos(8, 2, 8), 0, Biomes.SNOWY_PLAINS);
+    // The Polynesian Coast centre is the king's hall: builders and captain,
+    // plus the king on the throne and a jailer beside the cell, so two guards and six
     // founding jobs. The hall has no beds; its three founding homes hold six single beds and
     // one couple room.
     case POLYNESIAN_COAST -> new Catalog("[polynesian-verify]", 24, 5, 10, new int[] {5, 0, 0},
         Map.of("house_polynesian_coast_1__couple_room", 1), List.of(), 0, 0,
         new String[][] {{id("market", 1), id("market", 2)}, {id("market", 2), id("market", 3)},
             {id("farm", 1), id("farm", 2)}},
-        6, 8, 6, 2, 6, 0, 0, new BlockPos(6, 1, 17), new BlockPos(7, 2, 18), 1, Biomes.SPARSE_JUNGLE);
+        6, 8, 6, 2, 8, 0, 0, new BlockPos(6, 1, 17), new BlockPos(7, 2, 18), 1, Biomes.SPARSE_JUNGLE);
     case ROMANIAN -> new Catalog("[romanian-verify]", 24, 4, 8, new int[] {4, 0, 0},
         Map.of(), List.of(), 3, 1,
         new String[][] {{id("market", 1), id("market", 2)}, {id("market", 2), id("market", 3)}},
-        3, 4, 5, 1, 5, 0, 0, new BlockPos(12, 2, 27), new BlockPos(12, 2, 27), 1, Biomes.DARK_FOREST);
+        3, 4, 5, 1, 7, 0, 0, new BlockPos(12, 2, 27), new BlockPos(12, 2, 27), 1, Biomes.DARK_FOREST);
     case ALPINE_HIGHLANDS -> new Catalog("[alpine-verify]", 22, 5, 17, new int[] {5, 0, 0},
         Map.of("house_alpine_highlands_1__family_house", 1), List.of(), 0, 0,
         new String[][] {{id("market", 1), id("market", 2)}, {id("market", 2), id("market", 3)}},
-        5, 5, 5, 1, 5, 0, 0, new BlockPos(8, 1, 10), new BlockPos(10, 3, 10), 1, Biomes.MEADOW);
+        5, 5, 5, 1, 7, 0, 0, new BlockPos(8, 1, 10), new BlockPos(10, 3, 10), 1, Biomes.MEADOW);
     case JAPANESE_CHERRY_GROVE -> new Catalog("[japanese-verify]", 20, 2, 6, new int[] {2, 0, 0},
         Map.of(), List.of(), 5, 2,
         new String[][] {{id("market", 1), id("market", 2)}, {id("market", 2), id("market", 3)},
             {id("farm", 1), id("farm", 2)}},
-        5, 6, 4, 1, 4, 0, 0, new BlockPos(9, 2, 10), new BlockPos(9, 3, 9), 1,
+        5, 6, 4, 1, 6, 0, 0, new BlockPos(9, 2, 10), new BlockPos(9, 3, 9), 1,
         Biomes.CHERRY_GROVE);
-    // The Nautical Coast centre is the lighthouse: its four beds sleep the founding quartermaster,
-    // builder, captain and miner, and its outside barrels are the town's storage, so the founding
-    // set is the lighthouse and the mine. The tavern's two couple rooms hold the keeper's household
+    // The Nautical Coast centre is the lighthouse. Its outside barrels are general storage, but a
+    // quartermaster arrives only after a storehouse is built; the founding set is the lighthouse and
+    // the mine. The tavern's two couple rooms hold the keeper's household
     // and guests, so it has no staff single bed.
     case NAUTICAL_COAST -> new Catalog("[nautical-verify]", 24, 5, 12, new int[] {5, 0, 0},
         Map.of(), List.of("tavern_nautical_coast_1"), 4, 0,
         new String[][] {{id("market", 1), id("market", 2)}, {id("market", 2), id("market", 3)}},
-        2, 4, 4, 1, 4, 4, 0, new BlockPos(13, 1, 21), new BlockPos(15, 2, 20), 1, Biomes.BEACH);
+        2, 4, 3, 1, 6, 4, 0, new BlockPos(13, 1, 21), new BlockPos(15, 2, 20), 1, Biomes.BEACH);
     case BIRCH_FOREST -> null;
   };
-  /** Centre jobs beyond the founding four that a catalog's centre also opens at founding. */
+  /** Extra local jobs a catalog's center also opens at founding. */
   private static final Map<Occupation, Long> EXTRA_CENTER_JOBS = STYLE == VillageStyle.MEDITERRANEAN
       || STYLE == VillageStyle.ROMANIAN
       ? Map.of(Occupation.CLERIC, 1L)
@@ -393,23 +393,38 @@ public final class BadlandsVillageVerification {
     Building center = village.getTownCenter();
     check(center != null && center.getName().equals(id("village_center", 1)), "Wrong town center");
     check(center.getInfo().getWorkLocations().size() == CATALOG.centerJobs(), "Wrong center starting jobs");
+    check(center.getInfo().getWorkLocations().values().stream()
+        .filter(occupation -> occupation == Occupation.BUILDER).count() == Village.MAX_BUILDER_POSTS,
+        "Center must author all five population-scaled builder posts");
     List<Occupation> jobs = new ArrayList<>();
-    village.getUnassignedJobs().forEach(job -> jobs.add(job.getOccupation()));
+    village.claimableJobs().forEach(job -> jobs.add(job.getOccupation()));
     village.getJobAssignmentsView().values().forEach(job -> jobs.add(job.getOccupation()));
     Map<Occupation, Long> counts = jobs.stream().collect(java.util.stream.Collectors.groupingBy(
         occupation -> occupation, () -> new EnumMap<>(Occupation.class), java.util.stream.Collectors.counting()));
     Map<Occupation, Long> expectedJobs = new EnumMap<>(Occupation.class);
-    expectedJobs.putAll(Map.of(Occupation.GUARD, (long) CATALOG.guards(),
-        Occupation.BUILDER, 1L, Occupation.QUARTERMASTER, 1L, Occupation.MINER, 1L));
+    expectedJobs.put(Occupation.GUARD, (long) CATALOG.guards());
+    expectedJobs.put(Occupation.BUILDER, 1L);
+    if (village.getBuildings().stream().anyMatch(building -> building.getInfo().getCategory().equals("mine"))) {
+      expectedJobs.put(Occupation.MINER, 1L);
+    }
+    if (village.getBuildings().stream().anyMatch(building -> building.getInfo().getCategory().equals("storehouse"))) {
+      expectedJobs.put(Occupation.QUARTERMASTER, 1L);
+    }
     expectedJobs.putAll(EXTRA_CENTER_JOBS);
     check(jobs.size() == CATALOG.foundingJobs() && counts.equals(expectedJobs),
         "Wrong starting job positions " + counts);
-    check(center.getInfo().getGuardRole(2) == GuardRole.CAPTAIN, "Lost center captain duty");
+    long captains = 0;
+    long crossbowPosts = 0;
+    long patrols = 0;
+    for (int station = 0; station < center.getInfo().getWorkLocations().size(); station++) {
+      GuardRole role = center.getInfo().getGuardRole(station);
+      if (role == GuardRole.CAPTAIN) captains++;
+      if (role == GuardRole.CROSSBOW_POST) crossbowPosts++;
+      if (role == GuardRole.PATROL) patrols++;
+    }
+    check(captains == 1, "Center must author exactly one captain duty");
     if (STYLE == VillageStyle.BADLANDS) {
-      check(center.getInfo().getGuardRole(3) == GuardRole.CROSSBOW_POST
-          && center.getInfo().getGuardRole(4) == GuardRole.CROSSBOW_POST
-          && center.getInfo().getGuardRole(5) == GuardRole.PATROL
-          && center.getInfo().getGuardRole(6) == GuardRole.PATROL, "Lost mixed center guard duties");
+      check(crossbowPosts == 2 && patrols == 2, "Lost mixed center guard duties");
     }
     check(center.getInfo().getBedContainers() != null && center.getInfo().getBedContainers().size() == CATALOG.centerRooms()
         && center.getInfo().getBedContainers().stream().filter(room -> room.containers().isEmpty()).count()
@@ -463,39 +478,38 @@ public final class BadlandsVillageVerification {
 
   private static void verifyReload(ServerLevel level, Village village) throws ReflectiveOperationException {
     List<ApprovedStructureAccess.Person> residents = new ArrayList<>();
-    for (var job : List.copyOf(village.getUnassignedJobs())) {
+    var openings = new ArrayList<>(village.claimableJobs());
+    openings.sort(java.util.Comparator.comparingInt(job ->
+        job.getOccupation() == Occupation.MINER || job.getOccupation() == Occupation.QUARTERMASTER ? 0 : 1));
+    for (var job : openings) {
       var person = new ApprovedStructureAccess.Person(level, village);
       person.setLifeStage(AgeStage.ADULT);
       person.setNoAi(true);
       ApprovedStructureAccess.moveTo(person, village.getGatheringPoint());
       village.getPopulation().add(person.getUUID());
       check(level.addFreshEntity(person), "Could not create allocation probe");
-      check(village.canHouseForJob(person.getUUID(), job.getBuildingUUID()), "Starting job cannot be housed");
+      if (!village.canHouseForJob(person.getUUID(), job.getBuildingUUID())) {
+        village.getPopulation().remove(person.getUUID());
+        person.discard();
+        continue; // the vacancy correctly waits for later housing
+      }
       village.assignJob(person.getUUID(), job);
       person.setOccupation(job.getOccupation());
       residents.add(person);
     }
     ApprovedStructureAccess.reconcileBeds(village);
-    check(village.getJobAssignmentsView().size() == CATALOG.foundingJobs()
-        && village.getBedAssignmentsView().size() == CATALOG.foundingJobs()
-        && village.getUnassignedBeds().size() == CATALOG.foundingBeds() - CATALOG.foundingJobs(),
+    int housedFoundingJobs = Math.min(CATALOG.foundingJobs(), CATALOG.foundingBeds());
+    check(village.getJobAssignmentsView().size() == housedFoundingJobs
+        && village.getBedAssignmentsView().size() == housedFoundingJobs
+        && village.getUnassignedBeds().size() == CATALOG.foundingBeds() - housedFoundingJobs,
         "Founding workers did not receive distinct beds");
-    if (STYLE == VillageStyle.JUNGLE || STYLE == VillageStyle.SWAMP
-        || STYLE == VillageStyle.MEDITERRANEAN || STYLE == VillageStyle.TUNDRA
-        || STYLE == VillageStyle.POLYNESIAN_COAST || STYLE == VillageStyle.ROMANIAN
-        || STYLE == VillageStyle.JAPANESE_CHERRY_GROVE
-        || STYLE == VillageStyle.NAUTICAL_COAST) {
-      if (STYLE != VillageStyle.MEDITERRANEAN) {
-        verifyRoutedWorksite(village, residents, Occupation.MINER, "mine");
-      }
-      // The Nautical quartermaster works the lighthouse's own barrels; its storehouse comes later.
-      if (STYLE != VillageStyle.NAUTICAL_COAST) {
-        verifyRoutedWorksite(village, residents, Occupation.QUARTERMASTER, "storehouse");
-      }
-      Building mine = village.getBuildings().stream()
-          .filter(building -> building.getInfo().getCategory().equals("mine")).findFirst().orElseThrow();
-      check(MineShaft.of(mine).size() == 1, "Jungle physical mine lost its one shaft frame");
-    }
+    village.getBuildings().stream().filter(building -> building.getInfo().getCategory().equals("mine")).findFirst()
+        .ifPresent(mine -> {
+          verifyLocalWorkplace(village, residents, Occupation.MINER, "mine");
+          check(MineShaft.of(mine).size() == 1, "Physical mine lost its one shaft frame");
+        });
+    village.getBuildings().stream().filter(building -> building.getInfo().getCategory().equals("storehouse")).findFirst()
+        .ifPresent(storehouse -> verifyLocalWorkplace(village, residents, Occupation.QUARTERMASTER, "storehouse"));
     // The Nautical lighthouse holds the town's storage in its own outside barrels.
     Building store = STYLE == VillageStyle.NAUTICAL_COAST ? village.getTownCenter()
         : village.getBuildings().stream().filter(building -> building.getName().equals(id("storehouse", 1)))
@@ -536,17 +550,18 @@ public final class BadlandsVillageVerification {
     residents.forEach(net.minecraft.world.entity.Entity::discard);
   }
 
-  private static void verifyRoutedWorksite(Village village, List<ApprovedStructureAccess.Person> residents,
+  private static void verifyLocalWorkplace(Village village, List<ApprovedStructureAccess.Person> residents,
       Occupation occupation, String category) {
     ApprovedStructureAccess.Person worker = residents.stream()
         .filter(person -> person.getOccupation() == occupation).findFirst().orElseThrow();
     Building owner = village.getBuilding(village.getJobAssignment(worker.getUUID()).getBuildingUUID());
     Building physical = com.quzzar.kithkyn.village.LocationManager.getJobBuilding(worker);
-    check(owner != null && owner.equals(village.getTownCenter()), occupation + " vacancy left the Jungle center");
-    check(physical != null && physical.getInfo().getCategory().equals(category),
-        occupation + " did not route to its physical " + category);
+    check(owner != null && owner.getInfo().getCategory().equals(category),
+        occupation + " job is not owned by its " + category);
+    check(physical != null && physical.getUUID().equals(owner.getUUID()),
+        occupation + " did not resolve to its owning " + category);
     check(!com.quzzar.kithkyn.village.LocationManager.getJobLocation(worker).equals(BlockPos.ZERO),
-        occupation + " physical station did not resolve");
+        occupation + " station did not resolve");
   }
 
   private static void verifyBedIdentity(ServerLevel level, Village village, Building building, BlockPos local) {

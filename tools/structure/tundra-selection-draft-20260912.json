@@ -31,7 +31,7 @@
       "category": "village_center",
       "level": 1,
       "exhibit": "T01.1",
-      "notes": "Four worker beds in diagonal primary/secondary pairs; eight village-banner slots; four personal barrels; exact quartermaster, builder, captain and miner stations; four captured snow golems. The quartermaster and miner route to the naturally placed storehouse and mine."
+      "notes": "Four worker beds in diagonal primary/secondary pairs; eight village-banner slots; four personal barrels; five population-scaled builder duties and one captain duty; four captured snow golems. The naturally placed mine owns its miner vacancy and the storehouse owns its quartermaster vacancy."
     },
     {
       "category": "couple_cottage",

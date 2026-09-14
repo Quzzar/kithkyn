@@ -2936,9 +2936,9 @@ public class RealPerson extends Person {
       // wall, then between builds the ground graded to walkable slopes before
       // the paths across it are worn in. With more than one builder the posts
       // divide the duties (docs/worker-loops.md): the lead builds, the second
-      // wears paths, the third grades, each taking the others' work only when
-      // its own is done. Without this a village's one builder never reached
-      // the paths, because grading a hillside does not end.
+      // wears paths, the third grades, and the two late-growth builders help
+      // construction. Without this a village's one builder never reached the
+      // paths, because grading a hillside does not end.
       int rank = getVillage() == null ? 0 : getVillage().builderRank(getUUID());
       int[] order = switch (rank) { // gather, build, wall, grade, path
         case 1 -> new int[] {7, 7, 4, 8, 4};

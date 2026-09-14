@@ -9,7 +9,7 @@ These decisions supersede the older candidate-gallery choices and generic counts
 
 | Building | Available tiers | Birch-specific contents |
 | --- | --- | --- |
-| Village center | 1 | Approved center with the custom basement, four beds, shared personal chest, three builder stations, guard station, and one initially unadopted golem |
+| Village center | 1 | Approved center with the custom basement, four beds, shared personal chest, five logical builder duties, guard captain post, and one initially unadopted golem |
 | House | 1, 2 | One bed; two beds. No four-bed or tier-3 home |
 | Couple's cottage | 1 | Adjacent double-bed arrangement, both primary color |
 | Well | 1 | Narrow tall well |

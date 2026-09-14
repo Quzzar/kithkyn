@@ -196,4 +196,47 @@ class JobClaimingTest {
 
     assertEquals(baker, JobClaiming.nextOpening(village, baker::equals));
   }
+
+  @Test
+  void builderStaffingUnlocksAtTheFivePopulationTiers() {
+    assertEquals(1, Village.builderPostsForPopulation(0));
+    assertEquals(1, Village.builderPostsForPopulation(11));
+    assertEquals(2, Village.builderPostsForPopulation(12));
+    assertEquals(2, Village.builderPostsForPopulation(23));
+    assertEquals(3, Village.builderPostsForPopulation(24));
+    assertEquals(3, Village.builderPostsForPopulation(47));
+    assertEquals(4, Village.builderPostsForPopulation(48));
+    assertEquals(4, Village.builderPostsForPopulation(95));
+    assertEquals(5, Village.builderPostsForPopulation(96));
+    assertEquals(5, Village.builderPostsForPopulation(192));
+  }
+
+  @Test
+  void aBuilderAboveTheCurrentPopulationTierReturnsToTheIdlePool() {
+    BuildingInfo centerInfo = new BuildingInfo("village_center_birch_forest_1")
+        .addWorkLocation(1, 1, 1, Occupation.BUILDER)
+        .addWorkLocation(2, 1, 1, Occupation.BUILDER)
+        .addWorkLocation(3, 1, 1, Occupation.BUILDER)
+        .addWorkLocation(4, 1, 1, Occupation.BUILDER)
+        .addWorkLocation(5, 1, 1, Occupation.BUILDER);
+    Buildings.reload(Map.of(centerInfo.getName(), centerInfo));
+    Building center = new Building(centerInfo.getName(), Rotation.NONE);
+    Village village = new Village("Smallstead");
+    village.addBuilding(center);
+    UUID secondBuilder = UUID.randomUUID();
+    village.getPopulation().add(secondBuilder);
+    for (int index = 1; index < 12; index++) {
+      village.getPopulation().add(UUID.randomUUID());
+    }
+    JobAssignment secondPost = village.getUnassignedJobs().get(1);
+    assertTrue(village.isPostUnlocked(secondPost));
+    village.assignJob(secondBuilder, secondPost);
+
+    village.getPopulation().removeLast();
+    JobClaiming.releaseLockedBuilderAssignments(village, null);
+
+    assertFalse(village.getJobAssignmentsView().containsKey(secondBuilder));
+    assertTrue(village.getUnassignedJobs().contains(secondPost));
+    assertFalse(village.isPostUnlocked(secondPost));
+  }
 }

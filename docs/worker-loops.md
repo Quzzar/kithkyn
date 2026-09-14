@@ -480,17 +480,20 @@ buildings sit closer, and the spokes to each door are worn in, which is what mak
 walkable. Safety walls are exempt, being a need rather than a choice ([walls.md](walls.md)).
 The cooldown is Aaron's, against villages that overbuild whenever they can afford to.
 
-**Built, 2026-09-02: a village can have three builders, and they divide the duties.** The town
-centre registers three BUILDER posts at founding, but the second opens only at six people and
-the third at twelve (`Village.PEOPLE_PER_BUILDER`; a locked post is not open, and the planner
-does not count it as a job nobody has taken), and posts are filled each trade once before any
-trade is doubled (`JobClaiming.nextOpening`). So a camp's first hires are its guard, miner and
-quartermaster, never three builders, and the extra builders come as the village grows. A builder's rank is the order of its post in the definition
+**Built, 2026-09-02; rebalanced 2026-09-14: a village can grow to five builders, and they divide
+the duties.** The town centre registers five logical BUILDER duty anchors at founding; no
+workstation block is required. One is open immediately and the others open at populations 12,
+24, 48 and 96 (`Village.builderPostsForPopulation`; a locked post is not open, and the planner
+does not count it as a job nobody has taken). If population falls below a threshold, that builder
+stands down into the idle pool until the duty opens again. Posts are filled each trade once before
+any trade is doubled (`JobClaiming.nextOpening`). So a camp's first hires include its guard, miner
+and quartermaster, and the extra builders come only as the village grows. A builder's rank is the order of its post in the definition
 (`Village.builderRank`): the lead (rank 0) builds, gathers and raises the wall, then grades and
 wears paths between builds, exactly as a lone builder always did; the second (rank 1) wears
 paths first and helps build only when there is no path to wear; the third (rank 2) grades
-first. Only the lead is owned by a building project: the others keep to their duty while it
-runs. This exists because Wildflower Downs never got a path in a day: its one builder, whenever
+first. The fourth and fifth are late-growth construction helpers, using the lead's general work
+order while the original lead remains the builder whose maintenance work yields to an active
+project. This exists because Wildflower Downs never got a path in a day: its one builder, whenever
 it was idle, read over a thousand columns of hillside to grade, and grading a hillside does not
 end. A dedicated builder can grade forever without costing the village its paths.
 

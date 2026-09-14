@@ -368,13 +368,14 @@ A workplace building finishing construction registers its work stations as open
 
 - Open posts are filled each trade once before any trade is doubled: the first open post for
   an occupation nobody holds goes first, else the first in registration order
-  (`JobClaiming.nextOpening`). The town centre registers three builder posts at founding
-  (worker-loops.md), but the second and third open only with population, one more per six
-  people (`Village.PEOPLE_PER_BUILDER`); a locked post is not claimable and is not counted as
+  (`JobClaiming.nextOpening`). The town centre registers five logical builder posts at founding
+  (worker-loops.md). These are accessible duty anchors in the center definition, not crafting
+  tables or other workstation blocks. One is open immediately; the others open at populations
+  12, 24, 48 and 96. A locked post is not claimable and is not counted as
   open. A post no loaded idle resident can actually claim is skipped for this pass rather than
   blocking every later opening. This matters when a bedless camper cannot use a wall post but
   can move into a bakery's or lumberjack's free live-in bed. Without both rules a camp's first
-  hires would be three builders, and without the skip one unhousable opening could freeze the
+  hires could all be builders, and without the skip one unhousable opening could freeze the
   whole hiring queue.
 - An open job claims a **housed** idle person from the campfire pool automatically (the
   employment-requires-housing rule above; a bedless camper is not claimable). Aptitude is a
@@ -448,8 +449,9 @@ A workplace building finishing construction registers its work stations as open
 - **Vacancy refills**: a worker dying or the building being removed puts the
   `JobAssignment` back in `unassignedJobs`, and the next idle person claims it. A building
   with no available worker just sits unstaffed until someone new arrives.
-- **Guard Captain** belongs to the center's explicit `CAPTAIN` guard duty; old centers
-  without duty metadata retain their first guard assignment as captain. It is not another
+- **Guard Captain** belongs to the center's one explicit `CAPTAIN` guard duty. Its authored
+  position is an accessible standing square in the bell meeting area, since the bell block itself
+  may occupy the exact coordinate. It is not another
   occupation or a permanent promotion attached to the founding person. Its holder patrols
   whenever awake, retains an axe for woodcutting, and prefers a sword from village stock.
   Reassignment removes the display role; the next holder inherits it. Ordinary `PATROL`

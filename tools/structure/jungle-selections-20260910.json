@@ -39,7 +39,7 @@
     "proposal_reason": "Two copies of each selected single-person hut house four founding workers; the separate couple home stays reserved for couples.",
     "required_runtime_work": [
       "Generalize the existing founding layout beyond its fixed mine and storehouse companions, preserving shared clearance, facing and ownership checks.",
-      "Bind the center-owned miner job to the separate mine site. Current mining code derives shaft position from the job building and would otherwise dig under the center.",
+      "Give the separate mine its own miner vacancy so mining derives its shaft from that physical building.",
       "Use the existing arrival and job-assignment flow with beds in starting homes; do not add a second founding population mechanism."
     ],
     "starting_home_count": 4
@@ -262,7 +262,7 @@
       },
       "notes": [
         "Confirmed existing mine with two shared material barrels.",
-        "Center owns the single miner vacancy; this separate building is its physical worksite."
+        "The mine owns its single miner vacancy and shaft."
       ],
       "previous_source_capture": "run/jungle-showcase/selection-20260910-services/captures/JA01.5.nbt",
       "previous_source_capture_sha256": "ba473ece4305b9a82350f8e2d134fa789f9ff655980934b6025ea0044644e171",

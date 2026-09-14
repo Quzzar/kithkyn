@@ -57,7 +57,7 @@
       "asset": "run/alpine-integration/datapack/data/kithkyn/structure/village_center_alpine_highlands_1.nbt",
       "asset_sha256": "6b83350f16276f07a46e4c8711bede3c9b8f84004b46016e3b55f15ad698da2b",
       "definition": "run/alpine-integration/datapack/data/kithkyn/kithkyn/buildings/village_center_alpine_highlands_1.json",
-      "definition_sha256": "1d1c24288c2b033220e3f12fd78ba0d69e95a04a4d0ee1d43e44f3d0baa6027a"
+      "definition_sha256": "32e66a93d1def56f746de56251cbb425c536d05bfa2004c84a08599c4c6f34d8"
     },
     {
       "exhibit": "AL09.2",
@@ -246,7 +246,7 @@
       "asset": "run/alpine-integration/datapack/data/kithkyn/structure/storehouse_alpine_highlands_1.nbt",
       "asset_sha256": "541f75f391b248d0cd9506aa354e62a4e309fcef369eb97d156abbfbdc436420",
       "definition": "run/alpine-integration/datapack/data/kithkyn/kithkyn/buildings/storehouse_alpine_highlands_1.json",
-      "definition_sha256": "436948ffe338dbd6f71cf6b5ce3e6797d1575ef2ea0469b395d8a76e31e0e021"
+      "definition_sha256": "07c98d52ce10444a9cbd616b5512045200127dfced1520f1a2a830dc44124095"
     },
     {
       "exhibit": "AL10.9",
@@ -330,7 +330,7 @@
       "asset": "run/alpine-integration/datapack/data/kithkyn/structure/storehouse_alpine_highlands_1__compact.nbt",
       "asset_sha256": "0ec32ef03295b6d4f2dbe36f5087a34f8d34f1022b21ca1e9abdb96613dbcf46",
       "definition": "run/alpine-integration/datapack/data/kithkyn/kithkyn/buildings/storehouse_alpine_highlands_1__compact.json",
-      "definition_sha256": "ff759dfbc10e04e2f44832b14a274b1da9d135fd663c0130ceb062ee587de0ef"
+      "definition_sha256": "6a7418205960b50879fc054679cda095695f75983661b09b74825623b48caa2b"
     },
     {
       "exhibit": "AD03.1",
@@ -372,7 +372,7 @@
       "asset": "run/alpine-integration/datapack/data/kithkyn/structure/mine_alpine_highlands_1.nbt",
       "asset_sha256": "5b2667de8d57f87bd8ddf37e5c19ded99c1e5e70fe5f5d76b4eca6f7b5937b36",
       "definition": "run/alpine-integration/datapack/data/kithkyn/kithkyn/buildings/mine_alpine_highlands_1.json",
-      "definition_sha256": "8ae4773472bcf6d768289b8807f7dc64b33f94fe3ad0891e937ba27427b6fdbb"
+      "definition_sha256": "725eff8c45ee478939e7c68f653595e4db89169d38b02f906e2e7c0a9944fdec"
     },
     {
       "exhibit": "AD03.8",
@@ -510,5 +510,18 @@
     "physical_access": "PASS: 84 rotations, 180 routes, 116 bed walks, 88 personal deposits, 64 station walks, 84 shared deposits and 8 mine walks",
     "body_height": "PASS: all ages and genetic scales; child one-block and working-age two-block openings",
     "gradle_build": "PASS: unit tests and 61-template repository audit"
+  },
+  "center_labor_contract": {
+    "recorded": "2026-09-14",
+    "builder_posts_per_center": 5,
+    "builder_unlock_populations": [
+      0,
+      12,
+      24,
+      48,
+      96
+    ],
+    "captain_posts_per_center": 1,
+    "routing": "Each mine and storehouse owns its worker vacancy; centers own civic and physically local roles."
   }
 }
