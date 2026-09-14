@@ -36,20 +36,20 @@ The private datapack contains 18 definitions:
 
 | Id | Exhibit | Use |
 | --- | --- | --- |
-| `village_center_savanna_tent_1` | ST28.1 | The original savanna tent: five builder anchors, the captain by the fire, four beds and their barrel, the meeting point by the campfire, the bell on the ridge |
-| `house_savanna_tent_1` | ST04.5 | The Towns & Towers large blue tipi: two beds sharing a chest. Its blue canvas is the village's primary colour |
-| `couple_cottage_savanna_tent_1` | ST05.2 | The small blue tipi: the couple bed, with its chest. Its canvas and its beds take the secondary colour |
-| `storehouse_savanna_tent_1` | ST06.5 | The trader's blue tent: Aaron's four barrels are the town's storage and the quartermaster stands among them. Its banner is the village banner; its blue canvas is primary, its yellow canvas and carpets secondary |
+| `village_center_savanna_tent_1` | ST28.1 | The original savanna tent: five builder anchors, the captain by the fire, four beds and their barrel, the meeting point by the campfire, the bell on the ridge, and the two village banners Aaron hung on its gables |
+| `house_savanna_tent_1` | ST04.5 | The Towns & Towers large blue tipi on the ground: two beds sharing a chest. Its blue canvas and banner take the village's secondary colour; its timber is acacia |
+| `couple_cottage_savanna_tent_1` | ST05.2 | The small blue tipi: the couple bed, with its chest. Its blue canvas and banner take the primary colour, its white canvas and its bed the secondary; its timber is acacia |
+| `storehouse_savanna_tent_1` | ST06.5 | The trader's blue tent in acacia: Aaron's four barrels are the town's storage and the quartermaster stands among them. Its banner is the village banner; its blue canvas is primary, its yellow canvas and carpets secondary |
 | `mine_savanna_tent_1` | ST29.1 | The original savanna mine hut: the miner inside, the shaft's mouth two cells south of him under the south steps, and the chest by the north steps as the store |
-| `blacksmith_savanna_tent_1` | ST05.9 | The badlands camp workshop: the smith between the smithing table and the grindstone, the chest as the store. It has no bed |
-| `hunting_lodge_savanna_tent_1` | ST05.10 | The camp tent: the hunter by the fletching table, his bed with its chest, and the barrel as the store |
-| `butchery_savanna_tent_1` | ST06.2 | The trader camp's llama pen with three cows in it; the butcher inside by the barrel |
-| `bakery_savanna_tent_1` | ST07.6 | The CTOV Native Savanna cartographer's tower with a smoker where its table stood and a chest. Its brown terracotta is primary |
-| `fishery_savanna_tent_1` | ST09.4 | The CTOV priest tower over its pool: the fisher on the rim, the barrel by the water as the store, and the fisher's bed with its own barrel |
-| `farm_savanna_tent_1` | ST34.2 | Vanilla's savanna large farm, with Aaron's barrel |
+| `blacksmith_savanna_tent_1` | ST05.9 | The badlands camp workshop in acacia and white canvas, its banners taken down: the smith between the smithing table and the grindstone, the chest as the store. It has no bed |
+| `hunting_lodge_savanna_tent_1` | ST05.10 | The camp tent in acacia, its banners taken down: the hunter by the fletching table, his bed with its chest, and the barrel as the store. Its dark gray canvas and carpet take the secondary colour, its light gray ones are white |
+| `butchery_savanna_tent_1` | ST06.2 | The trader camp's llama pen in acacia with three cows in it; the butcher inside by the barrel |
+| `bakery_savanna_tent_1` | ST07.6 | The CTOV Native Savanna cartographer's tower with a smoker where its table stood and a chest. Its brown terracotta is primary, its white canvas stays white, its timber is acacia |
+| `fishery_savanna_tent_1` | ST09.4 | The CTOV priest tower over its pool, in acacia: the fisher on the rim, the barrel by the water as the store, and the fisher's bed with its own barrel. Its brown terracotta is primary and its brown canvas secondary |
+| `farm_savanna_tent_1` | ST34.2 | Vanilla's savanna large farm, with Aaron's barrel, sunk one layer so its farmland is flush with the ground |
 | `well_savanna_tent_1` | ST25.4 | The Dungeons & Taverns savanna well, sunk seven layers so its rim stands on the ground |
 | `stoneworks_savanna_tent_1` | ST29.8 | The original savanna stoneworks: the mason at the stonecutter, the barrel as the store, entered by its open west side |
-| `church_savanna_tent_1` | ST32.1 | Vanilla's savanna temple: the cleric on the floor before the altar step, Aaron's barrel as the store. It has no bed |
+| `church_savanna_tent_1` | ST32.1 | Vanilla's savanna temple: the cleric on the floor before the altar step, Aaron's barrel as the store, its two wall banners village banners. It has no bed |
 | `lumberjack_savanna_tent_1` | ST20.7 | The CTOV balloon stand: the lumberjack's post is the acacia sapling where Aaron's dead bush stood, the barrel is the store |
 | `market_savanna_tent_1`, `_2`, `_3` | ST40.1 to ST40.3 | The shared market geometry in acacia on a coarse-dirt camp floor, with the fixed trade colours |
 
@@ -68,11 +68,18 @@ A few definitions differ from the gallery copies:
   column, one behind the mouth, is dug one below its walk cell, so it is the hut's own floor.
 - **Fishery frame.** The tower's item frame is exported fixed, as the Nautical couple cottage's was,
   so the native placement check never rejects it as unsupported.
-- **Tents on the ground.** The tipis, the camp workshop and tent, the llama pen and the trader tent
-  keep the gallery's look and stand on the ground (sink -1): their canvas floors and pegs sit on
-  the grass. The original tent's paving, the mine ring, the stoneworks floor, the tower bases, the
-  farm and the balloon stand's base are ground courses and sit flush (sink 0). The well sits seven
-  layers down.
+- **Materials, after the height walk.** Every spruce, oak and jungle piece outside the markets is
+  acacia: the camp workshop and tent, the tipis, the llama pen, the trader tent, the bakery's
+  hatch and the fishery's fences. Light gray canvas and carpet are white. The blacksmith's and
+  the hunting lodge's banners are gone, as Aaron took them down; the two he hung on the centre's
+  gables and the temple's two are village banners.
+- **Seating, after the height walk.** The large tipi stands with its floor flush with the ground
+  (sink 0) and the farm one layer down (sink 1), so its farmland is flush and its edge water
+  meets the ground beside it instead of spilling over the grass. The small tipi, the camp
+  workshop and tent, the llama pen and the trader tent keep the gallery's look and stand on the
+  ground (sink -1). The original tent's paving, the mine ring, the stoneworks floor, the tower
+  bases and the balloon stand's base are ground courses and sit flush (sink 0). The well sits
+  seven layers down.
 - **Stoneworks and temple, after the access checks.** The stoneworks' south face is a porch post
   between two steps: a walker climbs the steps onto the wall top and cannot come down into the
   door, so the hut's open west side is its entrance. The temple's altar step is a full block up,
@@ -84,11 +91,14 @@ A few definitions differ from the gallery copies:
 ## Identity and wall
 
 Beds alternate between the village's primary and secondary colours, floor by floor; a couple bed
-counts as one unit, and the couple cottage's unit is secondary at Aaron's word. The blue canvas of
-the house and the storehouse is primary, the couple cottage's blue canvas secondary, the
-storehouse's yellow canvas and carpets secondary, and the bakery's brown terracotta primary
-([village-identity.md](village-identity.md)). The storehouse's banner is the village banner; every
-other banner stays decoration. Market fabric keeps the fixed Birch trade colours.
+counts as one unit, and the couple cottage's unit is secondary at Aaron's word. Canvas, carpet and
+terracotta wear the village's colours ([village-identity.md](village-identity.md)): primary on the
+storehouse's blue canvas, the couple cottage's blue canvas and banner, and the brown terracotta of
+the bakery and the fishery; secondary on the house's blue canvas and banner, the couple cottage's
+white canvas, the storehouse's yellow canvas and carpets, the fishery's brown canvas, and the
+hunting lodge's dark gray canvas and carpet. White canvas elsewhere stays white. The centre's two
+gable banners, the storehouse's banner and the temple's two are village banners. Market fabric
+keeps the fixed Birch trade colours.
 
 The wall is Aaron's study A (ST41.1 to ST41.5), the acacia palisade: the Birch geometry in stripped
 acacia wood with acacia fence tips, acacia slab walks and acacia hatches, on a course of
