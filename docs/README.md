@@ -191,3 +191,5 @@ carry the decisions; these carry the evidence behind them.
 - [research/villager-work-loops.md](research/villager-work-loops.md): how MineColonies,
   Millenaire, Minecraft Comes Alive, and Ancient Warfare drive villager work, and which of their
   mechanisms survive the trip to NeoForge 1.21.1.
+- [release.md](release.md): how a release is cut (versioning, tags, GitHub Releases, Modrinth
+  and CurseForge), the decisions already made, and the v1.0.0 checklist by phase and owner.
