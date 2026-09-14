@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "recorded": "2026-09-14T10:11:19.974878-04:00",
+  "recorded": "2026-09-14T12:25:05.069816-04:00",
   "purpose": "Every standalone Towns & Towers savanna, tipi and trader-camp piece, both complete CTOV savanna villages with the savanna outpost, and the Dungeons & Taverns acacia tavern set, for selecting the Savanna Tent catalog. The T&T Nilotic houses stand in the last row for comparison; they are the Floodplain catalog.",
   "status": "placed_and_visually_verified",
   "world": "trio-20260912",
@@ -16,7 +16,7 @@
     4,
     1949,
     276,
-    1172
+    1227
   ],
   "selectionRule": "Every standalone piece of the T&T savanna plateau village and camp, the wooded badlands tipi village and camp, the wandering trader camp and the savanna outpost tower; every standalone CTOV savanna and Native American savanna piece plus the savanna outpost, roads omitted and entities stripped, with other mods' blocks shown as neutral vanilla markers; every non-villager D&T acacia tavern module and the savanna well; the showcase's assembled ramshackled tower village; and the T&T Nilotic houses for comparison. Street, terminator and villager templates are omitted.",
   "counts": {
@@ -24,9 +24,10 @@
     "ctov": 169,
     "dungeonsAndTaverns": 24,
     "composites": 1,
+    "kithkynOriginals": 10,
     "standInPieces": 100,
-    "total": 270,
-    "rows": 27
+    "total": 280,
+    "rows": 28
   },
   "rows": [
     {
@@ -7159,20 +7160,293 @@
           "standIns": 0
         }
       ]
+    },
+    {
+      "id": "ST28",
+      "title": "KITHKYN ORIGINAL TENTS \u2014 VILLAGE LIFE CENTRES + STOREHOUSES",
+      "origin": [
+        1730,
+        230,
+        1204
+      ],
+      "bounds": [
+        1720,
+        220,
+        1195,
+        1856,
+        276,
+        1227
+      ],
+      "entries": [
+        {
+          "id": "ST28.1",
+          "label": "Savanna Centre Tent",
+          "role": "center",
+          "sourceMod": "Kithkyn original",
+          "source": "src/main/resources/data/kithkyn/structure/village_center_savanna_1.nbt",
+          "sourceSha256": "17b4dc16f473fdee107bf83d7a4b6c64bfc18c45cd051e39b85abe1913131393",
+          "preparedSha256": "b6217c10cc9abd565bcd61cfdfc9fcfd93df56436662b3b922cea49ae372d148",
+          "size": [
+            9,
+            10,
+            20
+          ],
+          "origin": [
+            1730,
+            230,
+            1204
+          ],
+          "privateTemplate": "kithkyn_savanna_profile:st28_01_village_center_savanna_1",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0,
+          "sourceCommit": "2a55bb2^",
+          "sourceNote": "Village Life catalog piece, removed by 2a55bb2 (Remove the old Village Life catalogs, 2026-09-10)"
+        },
+        {
+          "id": "ST28.2",
+          "label": "Plains Centre Tent",
+          "role": "center",
+          "sourceMod": "Kithkyn original",
+          "source": "src/main/resources/data/kithkyn/structure/village_center_plains_1.nbt",
+          "sourceSha256": "4ebcebbefd85a22993a44274a1d6a02137290426f9a0a6e75c2a751b775a48d9",
+          "preparedSha256": "7ef5f5f13358e36c1f7d3390ed089956edbd861b908231e52c4189de17f317e7",
+          "size": [
+            9,
+            10,
+            20
+          ],
+          "origin": [
+            1745,
+            230,
+            1204
+          ],
+          "privateTemplate": "kithkyn_savanna_profile:st28_02_village_center_plains_1",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0,
+          "sourceCommit": "2a55bb2^",
+          "sourceNote": "Village Life catalog piece, removed by 2a55bb2 (Remove the old Village Life catalogs, 2026-09-10)"
+        },
+        {
+          "id": "ST28.3",
+          "label": "Desert Centre Tent",
+          "role": "center",
+          "sourceMod": "Kithkyn original",
+          "source": "src/main/resources/data/kithkyn/structure/village_center_desert_1.nbt",
+          "sourceSha256": "ef1029ccf6974e64f594dad47e425060c3c10e68ec58dde3a9607b19078470c7",
+          "preparedSha256": "c236c15b1a16a9eff7a511d23a674adebe8c3c7217b171d36103c33455c9d270",
+          "size": [
+            9,
+            10,
+            20
+          ],
+          "origin": [
+            1760,
+            230,
+            1204
+          ],
+          "privateTemplate": "kithkyn_savanna_profile:st28_03_village_center_desert_1",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0,
+          "sourceCommit": "2a55bb2^",
+          "sourceNote": "Village Life catalog piece, removed by 2a55bb2 (Remove the old Village Life catalogs, 2026-09-10)"
+        },
+        {
+          "id": "ST28.4",
+          "label": "Snowy Centre Tent",
+          "role": "center",
+          "sourceMod": "Kithkyn original",
+          "source": "src/main/resources/data/kithkyn/structure/village_center_snowy_1.nbt",
+          "sourceSha256": "025c7497bf374d877873bbcf107c3f3988bc6b4dab43db822d794f4a92d4d25b",
+          "preparedSha256": "f25768259e44427d319e9eb88d93b747606004d2d643aac0826e63824bf4c2c4",
+          "size": [
+            9,
+            10,
+            20
+          ],
+          "origin": [
+            1775,
+            230,
+            1204
+          ],
+          "privateTemplate": "kithkyn_savanna_profile:st28_04_village_center_snowy_1",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0,
+          "sourceCommit": "2a55bb2^",
+          "sourceNote": "Village Life catalog piece, removed by 2a55bb2 (Remove the old Village Life catalogs, 2026-09-10)"
+        },
+        {
+          "id": "ST28.5",
+          "label": "Taiga Centre Tent",
+          "role": "center",
+          "sourceMod": "Kithkyn original",
+          "source": "src/main/resources/data/kithkyn/structure/village_center_taiga_1.nbt",
+          "sourceSha256": "5308d213e5ec74de5c49489badb184dc388e29740e6d1c9cdb4736ca0506fbbf",
+          "preparedSha256": "516036c5caf496e02efa9c1bd211969a30d2731f1f6a47872b18cea1dd4a93d0",
+          "size": [
+            9,
+            10,
+            20
+          ],
+          "origin": [
+            1790,
+            230,
+            1204
+          ],
+          "privateTemplate": "kithkyn_savanna_profile:st28_05_village_center_taiga_1",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0,
+          "sourceCommit": "2a55bb2^",
+          "sourceNote": "Village Life catalog piece, removed by 2a55bb2 (Remove the old Village Life catalogs, 2026-09-10)"
+        },
+        {
+          "id": "ST28.6",
+          "label": "Savanna Storehouse Tent",
+          "role": "storehouse",
+          "sourceMod": "Kithkyn original",
+          "source": "src/main/resources/data/kithkyn/structure/storehouse_savanna_1.nbt",
+          "sourceSha256": "c97d3af43dbcb80b1dcce8fc9c6cdef5b95aec8d0dd5c20f8447b52429997ded",
+          "preparedSha256": "7dfd9d185bbfdcd9d3c6bb0dd716af8b1852c53b486af070b1b33d8c3dd103d4",
+          "size": [
+            5,
+            7,
+            7
+          ],
+          "origin": [
+            1805,
+            230,
+            1204
+          ],
+          "privateTemplate": "kithkyn_savanna_profile:st28_06_storehouse_savanna_1",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0,
+          "sourceCommit": "2a55bb2^",
+          "sourceNote": "Village Life catalog piece, removed by 2a55bb2 (Remove the old Village Life catalogs, 2026-09-10)"
+        },
+        {
+          "id": "ST28.7",
+          "label": "Plains Storehouse Tent",
+          "role": "storehouse",
+          "sourceMod": "Kithkyn original",
+          "source": "src/main/resources/data/kithkyn/structure/storehouse_plains_1.nbt",
+          "sourceSha256": "dbd405211642c063d37da897987a99b1e36b26f2b219f674306f43bd2762be3e",
+          "preparedSha256": "81b7b46d2622d042c73290a6e4c3f92d92e62547fa0ba5b2f1d9734272145afe",
+          "size": [
+            5,
+            7,
+            7
+          ],
+          "origin": [
+            1816,
+            230,
+            1204
+          ],
+          "privateTemplate": "kithkyn_savanna_profile:st28_07_storehouse_plains_1",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0,
+          "sourceCommit": "2a55bb2^",
+          "sourceNote": "Village Life catalog piece, removed by 2a55bb2 (Remove the old Village Life catalogs, 2026-09-10)"
+        },
+        {
+          "id": "ST28.8",
+          "label": "Desert Storehouse Tent",
+          "role": "storehouse",
+          "sourceMod": "Kithkyn original",
+          "source": "src/main/resources/data/kithkyn/structure/storehouse_desert_1.nbt",
+          "sourceSha256": "02daffa8f9d93479ff993dba962a697e5ede599fa6a054083ec79b63beceed56",
+          "preparedSha256": "4f3b230bab299852b2e5cc17290d0cec2340a4d9ac271c2be22ab51ac77e7e72",
+          "size": [
+            5,
+            7,
+            7
+          ],
+          "origin": [
+            1827,
+            230,
+            1204
+          ],
+          "privateTemplate": "kithkyn_savanna_profile:st28_08_storehouse_desert_1",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0,
+          "sourceCommit": "2a55bb2^",
+          "sourceNote": "Village Life catalog piece, removed by 2a55bb2 (Remove the old Village Life catalogs, 2026-09-10)"
+        },
+        {
+          "id": "ST28.9",
+          "label": "Snowy Storehouse Tent",
+          "role": "storehouse",
+          "sourceMod": "Kithkyn original",
+          "source": "src/main/resources/data/kithkyn/structure/storehouse_snowy_1.nbt",
+          "sourceSha256": "f1d2cb4edc741f5adc9f2ec6305df4383942b0e2de0066ed9e2961c587e8baba",
+          "preparedSha256": "9542b85b542ebf45fafdba83dd622ecbe24205b72fb1e0d07575a4ee8cf9d0b8",
+          "size": [
+            5,
+            7,
+            7
+          ],
+          "origin": [
+            1838,
+            230,
+            1204
+          ],
+          "privateTemplate": "kithkyn_savanna_profile:st28_09_storehouse_snowy_1",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0,
+          "sourceCommit": "2a55bb2^",
+          "sourceNote": "Village Life catalog piece, removed by 2a55bb2 (Remove the old Village Life catalogs, 2026-09-10)"
+        },
+        {
+          "id": "ST28.10",
+          "label": "Taiga Storehouse Tent",
+          "role": "storehouse",
+          "sourceMod": "Kithkyn original",
+          "source": "src/main/resources/data/kithkyn/structure/storehouse_taiga_1.nbt",
+          "sourceSha256": "5d3834e0f268df9a1d1fdd182cf5a81416395c5b7ac895ddcf58531430200287",
+          "preparedSha256": "a5b3f4f3accf85e4c74d46ce2f250c5a7d823bfa2913f600f5fc2a60c3c1489e",
+          "size": [
+            5,
+            7,
+            7
+          ],
+          "origin": [
+            1849,
+            230,
+            1204
+          ],
+          "privateTemplate": "kithkyn_savanna_profile:st28_10_storehouse_taiga_1",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0,
+          "sourceCommit": "2a55bb2^",
+          "sourceNote": "Village Life catalog piece, removed by 2a55bb2 (Remove the old Village Life catalogs, 2026-09-10)"
+        }
+      ]
     }
   ],
   "verification": {
-    "preparedTemplates": 270,
-    "placedTemplates": 270,
+    "preparedTemplates": 280,
+    "placedTemplates": 280,
     "allPlacementResponsesConfirmed": true,
     "chunksGenerated": 64,
     "worldSaved": true,
-    "worldBackup": "/Users/quzzar/Projects/kithkyn/run/backups/before-savanna-gallery-20260914-101649",
-    "console": "screen session 13033.kithkyn-village-audit",
-    "offlineRender": "run/savanna-full-profile/offline-render.png, 270 footprints checked against their prepared templates, 0 short",
+    "worldBackup": "/Users/quzzar/Projects/kithkyn/run/backups/before-savanna-gallery-20260914-122518",
+    "console": "screen session 4515.kithkyn-center-labor",
+    "addedRows": [
+      "ST28"
+    ],
+    "offlineRender": "run/savanna-full-profile/offline-render.png, 280 footprints checked against their prepared templates, 0 short",
     "waterOutsideRings": 0,
     "biomeFill": "saved chunk sections y 224-271 under the rows read minecraft:savanna (checked at x1750 z20, x1900 z1116, x1724 z5)",
-    "forceLoadsLeft": 0
+    "forceLoadsLeft": 0,
+    "firstPlacement": "27 rows, 270 pieces, 2026-09-14 10:16-10:27, screen session 13033.kithkyn-village-audit, backup before-savanna-gallery-20260914-101649"
   },
   "biome": {
     "filled": "minecraft:savanna",
@@ -7183,6 +7457,6 @@
     "short": [],
     "waterOutsideRings": [],
     "waterOutsideRingsCount": 0,
-    "footprintsChecked": 270
+    "footprintsChecked": 280
   }
 }
