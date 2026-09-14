@@ -48,8 +48,8 @@ The private datapack contains 18 definitions:
 | `fishery_savanna_tent_1` | ST09.4 | The CTOV priest tower over its pool: the fisher on the rim, the barrel by the water as the store, and the fisher's bed with its own barrel |
 | `farm_savanna_tent_1` | ST34.2 | Vanilla's savanna large farm, with Aaron's barrel |
 | `well_savanna_tent_1` | ST25.4 | The Dungeons & Taverns savanna well, sunk seven layers so its rim stands on the ground |
-| `stoneworks_savanna_tent_1` | ST29.8 | The original savanna stoneworks: the mason at the stonecutter, the barrel as the store |
-| `church_savanna_tent_1` | ST32.1 | Vanilla's savanna temple: the cleric by the brewing stand, Aaron's barrel as the store. It has no bed |
+| `stoneworks_savanna_tent_1` | ST29.8 | The original savanna stoneworks: the mason at the stonecutter, the barrel as the store, entered by its open west side |
+| `church_savanna_tent_1` | ST32.1 | Vanilla's savanna temple: the cleric on the floor before the altar step, Aaron's barrel as the store. It has no bed |
 | `lumberjack_savanna_tent_1` | ST20.7 | The CTOV balloon stand: the lumberjack's post is the acacia sapling where Aaron's dead bush stood, the barrel is the store |
 | `market_savanna_tent_1`, `_2`, `_3` | ST40.1 to ST40.3 | The shared market geometry in acacia on a coarse-dirt camp floor, with the fixed trade colours |
 
@@ -73,6 +73,11 @@ A few definitions differ from the gallery copies:
   the grass. The original tent's paving, the mine ring, the stoneworks floor, the tower bases, the
   farm and the balloon stand's base are ground courses and sit flush (sink 0). The well sits seven
   layers down.
+- **Stoneworks and temple, after the access checks.** The stoneworks' south face is a porch post
+  between two steps: a walker climbs the steps onto the wall top and cannot come down into the
+  door, so the hut's open west side is its entrance. The temple's altar step is a full block up,
+  which a walker cannot hop, so the cleric's post is on the floor before it rather than beside
+  the brewing stand.
 - **Markets.** The Birch market counters set each stall barrel into the deck with open air above it;
   the Savanna markets keep the barrels where the study has them.
 
