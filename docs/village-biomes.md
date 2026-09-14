@@ -63,8 +63,8 @@ to Floodplain when site selection can classify them reliably.
 
 Tundra, Polynesian Coast, Romanian, Alpine Highlands, Japanese Cherry Grove and Nautical Coast are
 complete. Taiga remains intentionally parked until the ornate Polish and grittier Viking directions
-can be judged after more village catalogs are complete. Savanna Tent and Mushroom remain available
-as the next catalog pass.
+can be judged after more village catalogs are complete. Savanna Tent is in selection: its gallery stands in the
+trio world (below). Mushroom remains available as the next catalog pass.
 
 The three walk-through courts begin at **9913.5, 230, 986.5** in the live showcase world. The
 individual entrances are Swamp at **9929.5, 230, 1004.5**, Viking at
@@ -135,6 +135,23 @@ The current review status is:
   only. The sources, hashes, placements and selection are in
   `tools/structure/nautical-full-profile-20260913.json`, and the catalog is in
   `tools/structure/nautical-coast-catalog-20260913.json`.
+
+- **Savanna Tent:** the selection gallery stands in the sky above the **trio-20260912** world,
+  beginning at **1723.5, 230, 10.5**, east of the Nautical gallery. Its 27 rows hold 270 pieces:
+  - ST01 to ST06: every standalone Towns & Towers savanna and tent piece: the ramshackled savanna
+    plateau village with the showcase's assembled tower village and the fourteen storeys its towers
+    are stacked from, the savanna plateau camp, the wooded badlands tipi village and camp, the
+    wandering trader camp and the savanna outpost tower.
+  - ST07 to ST22: both complete CTOV savanna villages, the Native American one first, roads omitted.
+  - ST23 and ST24: the CTOV savanna outpost, entities stripped.
+  - ST25 and ST26: the Dungeons & Taverns acacia tavern modules and its savanna well.
+  - ST27: the Towns & Towers Nilotic houses, for comparison only; that family is the Floodplain
+    catalog.
+
+  The rows' sky is filled with the savanna biome, which has no precipitation, so lightning cannot
+  reach the wool tents. Blocks from mods the server lacks are replaced by vanilla stand-ins in the
+  private display copies only. The sources, hashes, placements and the offline check are recorded in
+  `tools/structure/savanna-full-profile-20260914.json`.
 
 The Viking annex contains all 43 standalone structures: 22 Viking and 21 Polish. Road pieces
 and terminators are omitted because they are layout internals rather than building candidates.
