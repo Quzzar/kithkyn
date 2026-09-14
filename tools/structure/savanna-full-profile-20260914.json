@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "recorded": "2026-09-14T12:25:05.069816-04:00",
+  "recorded": "2026-09-14T13:53:51.104062-04:00",
   "purpose": "Every standalone Towns & Towers savanna, tipi and trader-camp piece, both complete CTOV savanna villages with the savanna outpost, and the Dungeons & Taverns acacia tavern set, for selecting the Savanna Tent catalog. The T&T Nilotic houses stand in the last row for comparison; they are the Floodplain catalog.",
   "status": "placed_and_visually_verified",
   "world": "trio-20260912",
@@ -14,20 +14,23 @@
     1720,
     220,
     4,
-    1949,
+    1984,
     276,
-    1227
+    1705
   ],
   "selectionRule": "Every standalone piece of the T&T savanna plateau village and camp, the wooded badlands tipi village and camp, the wandering trader camp and the savanna outpost tower; every standalone CTOV savanna and Native American savanna piece plus the savanna outpost, roads omitted and entities stripped, with other mods' blocks shown as neutral vanilla markers; every non-villager D&T acacia tavern module and the savanna well; the showcase's assembled ramshackled tower village; and the T&T Nilotic houses for comparison. Street, terminator and villager templates are omitted.",
   "counts": {
-    "townsAndTowers": 76,
-    "ctov": 169,
-    "dungeonsAndTaverns": 24,
-    "composites": 1,
-    "kithkynOriginals": 10,
-    "standInPieces": 100,
-    "total": 280,
-    "rows": 28
+    "townsAndTowers": 87,
+    "ctov": 200,
+    "dungeonsAndTaverns": 29,
+    "composites": 2,
+    "kithkynOriginals": 37,
+    "minecraft": 20,
+    "terralith": 4,
+    "yungsExtras": 13,
+    "standInPieces": 115,
+    "total": 392,
+    "rows": 39
   },
   "rows": [
     {
@@ -7429,24 +7432,3389 @@
           "sourceNote": "Village Life catalog piece, removed by 2a55bb2 (Remove the old Village Life catalogs, 2026-09-10)"
         }
       ]
+    },
+    {
+      "id": "ST29",
+      "title": "KITHKYN ORIGINAL SAVANNA \u2014 MINES, FARMS, WELL + WORKS",
+      "origin": [
+        1730,
+        230,
+        1248
+      ],
+      "bounds": [
+        1720,
+        220,
+        1239,
+        1928,
+        276,
+        1268
+      ],
+      "entries": [
+        {
+          "id": "ST29.1",
+          "label": "Mine 1",
+          "role": "mine",
+          "sourceMod": "Kithkyn original",
+          "source": "src/main/resources/data/kithkyn/structure/mine_savanna_1.nbt",
+          "sourceSha256": "2640df6c6db43513425f965cfd8c25b00ec7746a935db3ae7e3564ef2bc74368",
+          "preparedSha256": "4f55cd05eac6440d07b3a010f72f602fe84d04830c40329df7b93e9705956a82",
+          "size": [
+            7,
+            6,
+            7
+          ],
+          "origin": [
+            1730,
+            230,
+            1248
+          ],
+          "privateTemplate": "kithkyn_savanna_profile:st29_01_mine_savanna_1",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0,
+          "sourceCommit": "2a55bb2^",
+          "sourceNote": "Village Life catalog piece, removed by 2a55bb2 (Remove the old Village Life catalogs, 2026-09-10)"
+        },
+        {
+          "id": "ST29.2",
+          "label": "Mine 2",
+          "role": "mine",
+          "sourceMod": "Kithkyn original",
+          "source": "src/main/resources/data/kithkyn/structure/mine_savanna_2.nbt",
+          "sourceSha256": "a30223ea4b14f332cfeafd63b173a146670754f1e5740de51721f080efdb50e3",
+          "preparedSha256": "9cac0a718819161dc7088093aaff75e84c64127480267c80c73e138c6868073f",
+          "size": [
+            13,
+            6,
+            7
+          ],
+          "origin": [
+            1743,
+            230,
+            1248
+          ],
+          "privateTemplate": "kithkyn_savanna_profile:st29_02_mine_savanna_2",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0,
+          "sourceCommit": "2a55bb2^",
+          "sourceNote": "Village Life catalog piece, removed by 2a55bb2 (Remove the old Village Life catalogs, 2026-09-10)"
+        },
+        {
+          "id": "ST29.3",
+          "label": "Farm 1",
+          "role": "farm",
+          "sourceMod": "Kithkyn original",
+          "source": "src/main/resources/data/kithkyn/structure/farm_savanna_1.nbt",
+          "sourceSha256": "08a4b3813b71d3035aac28e3e561d111fe5819baf1fceadf125506400a7daf76",
+          "preparedSha256": "8415ab490da9e01ef0275c01cf05db8627b9563c166998f13abac2a81b50c36f",
+          "size": [
+            7,
+            2,
+            9
+          ],
+          "origin": [
+            1762,
+            230,
+            1248
+          ],
+          "privateTemplate": "kithkyn_savanna_profile:st29_03_farm_savanna_1",
+          "waterCells": 7,
+          "containment": {
+            "kind": "barrier ring",
+            "box": [
+              1760,
+              230,
+              1246,
+              1770,
+              230,
+              1258
+            ]
+          },
+          "standIns": 0,
+          "sourceCommit": "2a55bb2^",
+          "sourceNote": "Village Life catalog piece, removed by 2a55bb2 (Remove the old Village Life catalogs, 2026-09-10)"
+        },
+        {
+          "id": "ST29.4",
+          "label": "Farm 2",
+          "role": "farm",
+          "sourceMod": "Kithkyn original",
+          "source": "src/main/resources/data/kithkyn/structure/farm_savanna_2.nbt",
+          "sourceSha256": "5e3bfc5e4af40c4cb1b379494358c0166408013a90c501c372a0ad8d25098dc9",
+          "preparedSha256": "205455609f4e13c05d96e9b2076d213cd73bba190c3f0a7057ce1a77d625752f",
+          "size": [
+            13,
+            2,
+            9
+          ],
+          "origin": [
+            1775,
+            230,
+            1248
+          ],
+          "privateTemplate": "kithkyn_savanna_profile:st29_04_farm_savanna_2",
+          "waterCells": 14,
+          "containment": {
+            "kind": "barrier ring",
+            "box": [
+              1773,
+              230,
+              1246,
+              1789,
+              230,
+              1258
+            ]
+          },
+          "standIns": 0,
+          "sourceCommit": "2a55bb2^",
+          "sourceNote": "Village Life catalog piece, removed by 2a55bb2 (Remove the old Village Life catalogs, 2026-09-10)"
+        },
+        {
+          "id": "ST29.5",
+          "label": "Farm 3",
+          "role": "farm",
+          "sourceMod": "Kithkyn original",
+          "source": "src/main/resources/data/kithkyn/structure/farm_savanna_3.nbt",
+          "sourceSha256": "cc8e071f1ffef3e6798a1a39ff5ce73dd132e6bb4eed2efa94ed42fcc8a7727c",
+          "preparedSha256": "be4fef42fbd07190c1c67141988d557a6b2cad1ce9506ebec503bca15231c235",
+          "size": [
+            13,
+            6,
+            17
+          ],
+          "origin": [
+            1794,
+            230,
+            1248
+          ],
+          "privateTemplate": "kithkyn_savanna_profile:st29_05_farm_savanna_3",
+          "waterCells": 21,
+          "containment": {
+            "kind": "barrier ring",
+            "box": [
+              1792,
+              230,
+              1246,
+              1808,
+              230,
+              1266
+            ]
+          },
+          "standIns": 0,
+          "sourceCommit": "2a55bb2^",
+          "sourceNote": "Village Life catalog piece, removed by 2a55bb2 (Remove the old Village Life catalogs, 2026-09-10)"
+        },
+        {
+          "id": "ST29.6",
+          "label": "Well",
+          "role": "well",
+          "sourceMod": "Kithkyn original",
+          "source": "src/main/resources/data/kithkyn/structure/well_savanna_1.nbt",
+          "sourceSha256": "7217a87ce09815b2b2a52d0a4bdef8822497de29bf04803bb81e0b0577fb6f58",
+          "preparedSha256": "6cbdcef867428c62719c96e8e0db353dbd8026b16af535eaf2add17926472196",
+          "size": [
+            4,
+            5,
+            4
+          ],
+          "origin": [
+            1813,
+            230,
+            1248
+          ],
+          "privateTemplate": "kithkyn_savanna_profile:st29_06_well_savanna_1",
+          "waterCells": 4,
+          "containment": {
+            "kind": "barrier ring",
+            "box": [
+              1811,
+              230,
+              1246,
+              1818,
+              230,
+              1253
+            ]
+          },
+          "standIns": 0,
+          "sourceCommit": "2a55bb2^",
+          "sourceNote": "Village Life catalog piece, removed by 2a55bb2 (Remove the old Village Life catalogs, 2026-09-10)"
+        },
+        {
+          "id": "ST29.7",
+          "label": "Lumberjack",
+          "role": "lumberjack",
+          "sourceMod": "Kithkyn original",
+          "source": "src/main/resources/data/kithkyn/structure/lumberjack_savanna_1.nbt",
+          "sourceSha256": "1582b432e34761917a819c057cd0657deb101084795f99d71ae53993dbe92dde",
+          "preparedSha256": "f500ffe0f23125bedec0edf014cb517383e33e3042a7571c558724778fd84abd",
+          "size": [
+            20,
+            8,
+            16
+          ],
+          "origin": [
+            1823,
+            230,
+            1248
+          ],
+          "privateTemplate": "kithkyn_savanna_profile:st29_07_lumberjack_savanna_1",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0,
+          "sourceCommit": "2a55bb2^",
+          "sourceNote": "Village Life catalog piece, removed by 2a55bb2 (Remove the old Village Life catalogs, 2026-09-10)"
+        },
+        {
+          "id": "ST29.8",
+          "label": "Stoneworks",
+          "role": "stoneworks",
+          "sourceMod": "Kithkyn original",
+          "source": "src/main/resources/data/kithkyn/structure/stoneworks_savanna_1.nbt",
+          "sourceSha256": "57c3c202284d9670d437cb5c0f2aefaaa2afc3f3d54c31dff2b00c02174148e9",
+          "preparedSha256": "fb82553c1cc6521eff759b60e4e92bd037b645802b745b0a64e1493e0f771ea3",
+          "size": [
+            7,
+            6,
+            7
+          ],
+          "origin": [
+            1849,
+            230,
+            1248
+          ],
+          "privateTemplate": "kithkyn_savanna_profile:st29_08_stoneworks_savanna_1",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0,
+          "sourceCommit": "2a55bb2^",
+          "sourceNote": "Village Life catalog piece, removed by 2a55bb2 (Remove the old Village Life catalogs, 2026-09-10)"
+        },
+        {
+          "id": "ST29.9",
+          "label": "Fishery",
+          "role": "fishery",
+          "sourceMod": "Kithkyn original",
+          "source": "src/main/resources/data/kithkyn/structure/fishery_savanna_1.nbt",
+          "sourceSha256": "9483efad94561385f2096e7ab366dca0bc6cdd2f4ba085c6196823e6a435214f",
+          "preparedSha256": "948a0167f42f774ce8f9e600ae79ca0e420db45b39f47f2180aacca75ef16d33",
+          "size": [
+            9,
+            8,
+            7
+          ],
+          "origin": [
+            1862,
+            230,
+            1248
+          ],
+          "privateTemplate": "kithkyn_savanna_profile:st29_09_fishery_savanna_1",
+          "waterCells": 4,
+          "containment": {
+            "kind": "barrier ring",
+            "box": [
+              1860,
+              230,
+              1246,
+              1872,
+              230,
+              1256
+            ]
+          },
+          "standIns": 0,
+          "sourceCommit": "2a55bb2^",
+          "sourceNote": "Village Life catalog piece, removed by 2a55bb2 (Remove the old Village Life catalogs, 2026-09-10)"
+        },
+        {
+          "id": "ST29.10",
+          "label": "Hunting Lodge",
+          "role": "hunting_lodge",
+          "sourceMod": "Kithkyn original",
+          "source": "src/main/resources/data/kithkyn/structure/hunting_lodge_savanna_1.nbt",
+          "sourceSha256": "6288c6615ee6f591ea49856f6711d09302183b68b4c17a9f774e193503e3e7af",
+          "preparedSha256": "ec328350a1bdb04d86637dde6a89b21ce560ea9c357680fd4911e9bb06c71d57",
+          "size": [
+            7,
+            4,
+            7
+          ],
+          "origin": [
+            1877,
+            230,
+            1248
+          ],
+          "privateTemplate": "kithkyn_savanna_profile:st29_10_hunting_lodge_savanna_1",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0,
+          "sourceCommit": "2a55bb2^",
+          "sourceNote": "Village Life catalog piece, removed by 2a55bb2 (Remove the old Village Life catalogs, 2026-09-10)"
+        },
+        {
+          "id": "ST29.11",
+          "label": "Butchery",
+          "role": "butchery",
+          "sourceMod": "Kithkyn original",
+          "source": "src/main/resources/data/kithkyn/structure/butchery_savanna_1.nbt",
+          "sourceSha256": "545c76cb20e7cd3d2212d272ebf281c45d33a3c4d538696471047c9505e398b0",
+          "preparedSha256": "403bb6fe26c022aac60a574da1642c7c7d3593fbe8243d94b30f5b40cb4a9428",
+          "size": [
+            15,
+            12,
+            7
+          ],
+          "origin": [
+            1890,
+            230,
+            1248
+          ],
+          "privateTemplate": "kithkyn_savanna_profile:st29_11_butchery_savanna_1",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0,
+          "sourceCommit": "2a55bb2^",
+          "sourceNote": "Village Life catalog piece, removed by 2a55bb2 (Remove the old Village Life catalogs, 2026-09-10)"
+        },
+        {
+          "id": "ST29.12",
+          "label": "Bakery",
+          "role": "bakery",
+          "sourceMod": "Kithkyn original",
+          "source": "src/main/resources/data/kithkyn/structure/bakery_savanna_1.nbt",
+          "sourceSha256": "92debeb4afff634091ba04edb14ee9e724d3d181f46ff639a2795f288ca28dca",
+          "preparedSha256": "e4ac8cb3efa5879628765fb87c3a87f0ac4eda7e0badf663a69e8e6dd8c520a3",
+          "size": [
+            15,
+            9,
+            10
+          ],
+          "origin": [
+            1911,
+            230,
+            1248
+          ],
+          "privateTemplate": "kithkyn_savanna_profile:st29_12_bakery_savanna_1",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0,
+          "sourceCommit": "2a55bb2^",
+          "sourceNote": "Village Life catalog piece, removed by 2a55bb2 (Remove the old Village Life catalogs, 2026-09-10)"
+        }
+      ]
+    },
+    {
+      "id": "ST30",
+      "title": "KITHKYN ORIGINAL SAVANNA \u2014 CHURCH, HOMES, SMITHS + TOWERS",
+      "origin": [
+        1730,
+        230,
+        1292
+      ],
+      "bounds": [
+        1720,
+        220,
+        1283,
+        1918,
+        276,
+        1313
+      ],
+      "entries": [
+        {
+          "id": "ST30.1",
+          "label": "Church",
+          "role": "church",
+          "sourceMod": "Kithkyn original",
+          "source": "src/main/resources/data/kithkyn/structure/church_savanna_1.nbt",
+          "sourceSha256": "f044a1e297a89558476082ef01c2fd48f2bf4102914df0f02bed086b6da37548",
+          "preparedSha256": "cd758a88ec217fd8a4ef83de605dbde4131eca2e1d1c90ca9e94af8a16286274",
+          "size": [
+            32,
+            29,
+            17
+          ],
+          "origin": [
+            1730,
+            230,
+            1292
+          ],
+          "privateTemplate": "kithkyn_savanna_profile:st30_01_church_savanna_1",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0,
+          "sourceCommit": "2a55bb2^",
+          "sourceNote": "Village Life catalog piece, removed by 2a55bb2 (Remove the old Village Life catalogs, 2026-09-10)"
+        },
+        {
+          "id": "ST30.2",
+          "label": "House 1",
+          "role": "house",
+          "sourceMod": "Kithkyn original",
+          "source": "src/main/resources/data/kithkyn/structure/house_savanna_1.nbt",
+          "sourceSha256": "bc05308f64f82cc1412a744fc0611fc0595ee97110a75861464858939d9fda8a",
+          "preparedSha256": "ee2bca0b99557d1aa5cce0eacf1a5ac3dc02ef1aafe73014e9ac2243663f2aae",
+          "size": [
+            7,
+            7,
+            7
+          ],
+          "origin": [
+            1768,
+            230,
+            1292
+          ],
+          "privateTemplate": "kithkyn_savanna_profile:st30_02_house_savanna_1",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0,
+          "sourceCommit": "2a55bb2^",
+          "sourceNote": "Village Life catalog piece, removed by 2a55bb2 (Remove the old Village Life catalogs, 2026-09-10)"
+        },
+        {
+          "id": "ST30.3",
+          "label": "House 2",
+          "role": "house",
+          "sourceMod": "Kithkyn original",
+          "source": "src/main/resources/data/kithkyn/structure/house_savanna_2.nbt",
+          "sourceSha256": "6f04543595ebb587a5c0bc03feb0c8fbf48b777b47e2b13e4ecc8c11e832bcda",
+          "preparedSha256": "799a2191b7165d9f4a4de8848051a3c62cdbc2638b6afabfafdcd91111167e08",
+          "size": [
+            7,
+            8,
+            11
+          ],
+          "origin": [
+            1781,
+            230,
+            1292
+          ],
+          "privateTemplate": "kithkyn_savanna_profile:st30_03_house_savanna_2",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0,
+          "sourceCommit": "2a55bb2^",
+          "sourceNote": "Village Life catalog piece, removed by 2a55bb2 (Remove the old Village Life catalogs, 2026-09-10)"
+        },
+        {
+          "id": "ST30.4",
+          "label": "House 3",
+          "role": "house",
+          "sourceMod": "Kithkyn original",
+          "source": "src/main/resources/data/kithkyn/structure/house_savanna_3.nbt",
+          "sourceSha256": "838beb67f894e35288a572e6da1e5729c66ad0b92776f60bed3fcb1bca70c80a",
+          "preparedSha256": "7c4b841c9ac49edf8c47f477c1dbfc5d0ce3b956b971a88026784b8d533e2861",
+          "size": [
+            7,
+            11,
+            11
+          ],
+          "origin": [
+            1794,
+            230,
+            1292
+          ],
+          "privateTemplate": "kithkyn_savanna_profile:st30_04_house_savanna_3",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0,
+          "sourceCommit": "2a55bb2^",
+          "sourceNote": "Village Life catalog piece, removed by 2a55bb2 (Remove the old Village Life catalogs, 2026-09-10)"
+        },
+        {
+          "id": "ST30.5",
+          "label": "Couple Cottage",
+          "role": "couple_cottage",
+          "sourceMod": "Kithkyn original",
+          "source": "src/main/resources/data/kithkyn/structure/couple_cottage_savanna_1.nbt",
+          "sourceSha256": "1d53dd130a889ea052a7538e7a9159bcec2986e89efcdde92281af0f4e970ad4",
+          "preparedSha256": "62d6d6f2b284dbbb12e2a50201f571ab70898478f82ca679a04bbdd052da18a6",
+          "size": [
+            9,
+            7,
+            11
+          ],
+          "origin": [
+            1807,
+            230,
+            1292
+          ],
+          "privateTemplate": "kithkyn_savanna_profile:st30_05_couple_cottage_savanna_1",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0,
+          "sourceCommit": "2a55bb2^",
+          "sourceNote": "Village Life catalog piece, removed by 2a55bb2 (Remove the old Village Life catalogs, 2026-09-10)"
+        },
+        {
+          "id": "ST30.6",
+          "label": "Blacksmith 1",
+          "role": "blacksmith",
+          "sourceMod": "Kithkyn original",
+          "source": "src/main/resources/data/kithkyn/structure/blacksmith_savanna_1.nbt",
+          "sourceSha256": "70419139cc5b940da52e49b1bd1851db852b0642d7174da475fd797b78db05c1",
+          "preparedSha256": "b3a9e77bcf385e64821ef1bac0065a9012ef8631fe70647bf974d39549adea66",
+          "size": [
+            12,
+            10,
+            17
+          ],
+          "origin": [
+            1822,
+            230,
+            1292
+          ],
+          "privateTemplate": "kithkyn_savanna_profile:st30_06_blacksmith_savanna_1",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0,
+          "sourceCommit": "2a55bb2^",
+          "sourceNote": "Village Life catalog piece, removed by 2a55bb2 (Remove the old Village Life catalogs, 2026-09-10)"
+        },
+        {
+          "id": "ST30.7",
+          "label": "Blacksmith 2",
+          "role": "blacksmith",
+          "sourceMod": "Kithkyn original",
+          "source": "src/main/resources/data/kithkyn/structure/blacksmith_savanna_2.nbt",
+          "sourceSha256": "e632f5837cf3f7ed89e1de9e33bed70c10a108b05053506d6fbb678b2cc14df2",
+          "preparedSha256": "b28d2df28d109ac0e970315b5af6fbdd94ca0a68bedf8254c74fd4b5d5a457e0",
+          "size": [
+            17,
+            13,
+            18
+          ],
+          "origin": [
+            1840,
+            230,
+            1292
+          ],
+          "privateTemplate": "kithkyn_savanna_profile:st30_07_blacksmith_savanna_2",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0,
+          "sourceCommit": "2a55bb2^",
+          "sourceNote": "Village Life catalog piece, removed by 2a55bb2 (Remove the old Village Life catalogs, 2026-09-10)"
+        },
+        {
+          "id": "ST30.8",
+          "label": "Watchtower 1",
+          "role": "watchtower",
+          "sourceMod": "Kithkyn original",
+          "source": "src/main/resources/data/kithkyn/structure/watchtower_savanna_1.nbt",
+          "sourceSha256": "09926d88d3dd3bb2d81a5993fe8c424b48c052b89fb232e17037a99499a524a5",
+          "preparedSha256": "5160cd322bd46b4de14b7b9b46fc815684af14fc4f05f8aff48d6838753a8f00",
+          "size": [
+            9,
+            21,
+            9
+          ],
+          "origin": [
+            1863,
+            230,
+            1292
+          ],
+          "privateTemplate": "kithkyn_savanna_profile:st30_08_watchtower_savanna_1",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0,
+          "sourceCommit": "2a55bb2^",
+          "sourceNote": "Village Life catalog piece, removed by 2a55bb2 (Remove the old Village Life catalogs, 2026-09-10)"
+        },
+        {
+          "id": "ST30.9",
+          "label": "Watchtower 2",
+          "role": "watchtower",
+          "sourceMod": "Kithkyn original",
+          "source": "src/main/resources/data/kithkyn/structure/watchtower_savanna_2.nbt",
+          "sourceSha256": "6000cd24f222590992d32a4b3070c1d3fbd84aac8ab0430605b56a57db53d3b1",
+          "preparedSha256": "8346a2075369c9e055fdc4f4c6c149519494cedbb1c26ccbdb6ebbe89a3284ad",
+          "size": [
+            15,
+            31,
+            13
+          ],
+          "origin": [
+            1878,
+            230,
+            1292
+          ],
+          "privateTemplate": "kithkyn_savanna_profile:st30_09_watchtower_savanna_2",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0,
+          "sourceCommit": "2a55bb2^",
+          "sourceNote": "Village Life catalog piece, removed by 2a55bb2 (Remove the old Village Life catalogs, 2026-09-10)"
+        },
+        {
+          "id": "ST30.10",
+          "label": "Tavern",
+          "role": "tavern",
+          "sourceMod": "Kithkyn original",
+          "source": "src/main/resources/data/kithkyn/structure/tavern_savanna_1.nbt",
+          "sourceSha256": "8583c05dc4bc89fbb60928e150a188d48a016c93815a86ac1c8c2c8580007897",
+          "preparedSha256": "e39a844ebb76b6783bc3bf9fd9c9aa8856a4f22739b513248c2efccbf6a66e7d",
+          "size": [
+            17,
+            12,
+            14
+          ],
+          "origin": [
+            1899,
+            230,
+            1292
+          ],
+          "privateTemplate": "kithkyn_savanna_profile:st30_10_tavern_savanna_1",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0,
+          "sourceCommit": "2a55bb2^",
+          "sourceNote": "Village Life catalog piece, removed by 2a55bb2 (Remove the old Village Life catalogs, 2026-09-10)"
+        }
+      ]
+    },
+    {
+      "id": "ST31",
+      "title": "KITHKYN ORIGINAL SAVANNA \u2014 MARKETS + STOREHOUSES",
+      "origin": [
+        1730,
+        230,
+        1336
+      ],
+      "bounds": [
+        1720,
+        220,
+        1327,
+        1832,
+        276,
+        1356
+      ],
+      "entries": [
+        {
+          "id": "ST31.1",
+          "label": "Market 1",
+          "role": "market",
+          "sourceMod": "Kithkyn original",
+          "source": "src/main/resources/data/kithkyn/structure/market_savanna_1.nbt",
+          "sourceSha256": "f52d6cc0c3675242430230d558b5896ac50aa8da9e41ff433c0f4b8e0439d5dd",
+          "preparedSha256": "06a8821d41cbfe2726761c11771cfc29445fa589b9afade14067bf4cfb0f4bb8",
+          "size": [
+            8,
+            6,
+            9
+          ],
+          "origin": [
+            1730,
+            230,
+            1336
+          ],
+          "privateTemplate": "kithkyn_savanna_profile:st31_01_market_savanna_1",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0,
+          "sourceCommit": "2a55bb2^",
+          "sourceNote": "Village Life catalog piece, removed by 2a55bb2 (Remove the old Village Life catalogs, 2026-09-10)"
+        },
+        {
+          "id": "ST31.2",
+          "label": "Market 2",
+          "role": "market",
+          "sourceMod": "Kithkyn original",
+          "source": "src/main/resources/data/kithkyn/structure/market_savanna_2.nbt",
+          "sourceSha256": "d4212210249efbd8db713f67aff7445f32660685e360ed0ffc3c5fea63435ddc",
+          "preparedSha256": "c357214e55ffca53273ba4ce0d7a7f30a6a9dfca1347ccb26d920ba4c950b128",
+          "size": [
+            15,
+            6,
+            9
+          ],
+          "origin": [
+            1744,
+            230,
+            1336
+          ],
+          "privateTemplate": "kithkyn_savanna_profile:st31_02_market_savanna_2",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0,
+          "sourceCommit": "2a55bb2^",
+          "sourceNote": "Village Life catalog piece, removed by 2a55bb2 (Remove the old Village Life catalogs, 2026-09-10)"
+        },
+        {
+          "id": "ST31.3",
+          "label": "Market 3",
+          "role": "market",
+          "sourceMod": "Kithkyn original",
+          "source": "src/main/resources/data/kithkyn/structure/market_savanna_3.nbt",
+          "sourceSha256": "b419d63679140f68551390a22589bca73b7dbb45b36a7dbcfa6f49547cb1a271",
+          "preparedSha256": "5ab41826b94fc8703f808369a84b7ac0a8ce75899a55a8f331c171950ee87662",
+          "size": [
+            15,
+            6,
+            17
+          ],
+          "origin": [
+            1765,
+            230,
+            1336
+          ],
+          "privateTemplate": "kithkyn_savanna_profile:st31_03_market_savanna_3",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0,
+          "sourceCommit": "2a55bb2^",
+          "sourceNote": "Village Life catalog piece, removed by 2a55bb2 (Remove the old Village Life catalogs, 2026-09-10)"
+        },
+        {
+          "id": "ST31.4",
+          "label": "Storehouse 2",
+          "role": "storehouse",
+          "sourceMod": "Kithkyn original",
+          "source": "src/main/resources/data/kithkyn/structure/storehouse_savanna_2.nbt",
+          "sourceSha256": "894d4480037e32b63dee5b43071941f87049c3c905e96f1792996cf8cdcd1a9c",
+          "preparedSha256": "115b0fb85764d7d093bf2ff13d6eb046e362b97ab08afac67d50082a4c773a49",
+          "size": [
+            19,
+            10,
+            15
+          ],
+          "origin": [
+            1786,
+            230,
+            1336
+          ],
+          "privateTemplate": "kithkyn_savanna_profile:st31_04_storehouse_savanna_2",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0,
+          "sourceCommit": "2a55bb2^",
+          "sourceNote": "Village Life catalog piece, removed by 2a55bb2 (Remove the old Village Life catalogs, 2026-09-10)"
+        },
+        {
+          "id": "ST31.5",
+          "label": "Storehouse 3",
+          "role": "storehouse",
+          "sourceMod": "Kithkyn original",
+          "source": "src/main/resources/data/kithkyn/structure/storehouse_savanna_3.nbt",
+          "sourceSha256": "a773bc76cd36e383cd0af6059d49c7302aa79bf6c8a45d45c0032c584065d3b6",
+          "preparedSha256": "6b3875094572507d012e2ae3449cf5d6c8e1a3ebe5f6dbfe0d0b09c730ba9f8b",
+          "size": [
+            19,
+            10,
+            17
+          ],
+          "origin": [
+            1811,
+            230,
+            1336
+          ],
+          "privateTemplate": "kithkyn_savanna_profile:st31_05_storehouse_savanna_3",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0,
+          "sourceCommit": "2a55bb2^",
+          "sourceNote": "Village Life catalog piece, removed by 2a55bb2 (Remove the old Village Life catalogs, 2026-09-10)"
+        }
+      ]
+    },
+    {
+      "id": "ST32",
+      "title": "DONORS \u2014 TEMPLES + CHURCHES",
+      "origin": [
+        1730,
+        230,
+        1380
+      ],
+      "bounds": [
+        1720,
+        220,
+        1371,
+        1935,
+        276,
+        1400
+      ],
+      "entries": [
+        {
+          "id": "ST32.1",
+          "label": "Savanna Temple 1",
+          "role": "church",
+          "sourceMod": "Minecraft",
+          "source": "data/minecraft/structure/village/savanna/houses/savanna_temple_1.nbt",
+          "sourceSha256": "78b164cbdcd1aca715abbf923581e904c3cf57107e52dfbf420e2b041536ae0f",
+          "preparedSha256": "c2a2ecd81420f176c2320da22f1021789024a283f083ed8ce2f48ab88dddde4d",
+          "size": [
+            13,
+            8,
+            9
+          ],
+          "origin": [
+            1730,
+            230,
+            1380
+          ],
+          "privateTemplate": "kithkyn_savanna_profile:st32_01_savanna_temple_1",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0
+        },
+        {
+          "id": "ST32.2",
+          "label": "Savanna Temple 2",
+          "role": "church",
+          "sourceMod": "Minecraft",
+          "source": "data/minecraft/structure/village/savanna/houses/savanna_temple_2.nbt",
+          "sourceSha256": "f0ddf8c5eb56206a2e03fb4582243e33b1781957b90970bb6fb67b73eaf4d5a3",
+          "preparedSha256": "9c3bfd1f7effcb60425c9656334c44403e6a73df94e9ba0514cdd588290d1248",
+          "size": [
+            7,
+            7,
+            9
+          ],
+          "origin": [
+            1749,
+            230,
+            1380
+          ],
+          "privateTemplate": "kithkyn_savanna_profile:st32_02_savanna_temple_2",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0
+        },
+        {
+          "id": "ST32.3",
+          "label": "Desert Temple 1",
+          "role": "church",
+          "sourceMod": "Minecraft",
+          "source": "data/minecraft/structure/village/desert/houses/desert_temple_1.nbt",
+          "sourceSha256": "4c5919f9d59876895259fc7a31d57495020761c7d66e9edfd88ae452d0f22729",
+          "preparedSha256": "45c98daef574dbc3f0dd53c077ff01e05aa6506d60b9c31c59e3bd9b47a4e534",
+          "size": [
+            11,
+            7,
+            10
+          ],
+          "origin": [
+            1762,
+            230,
+            1380
+          ],
+          "privateTemplate": "kithkyn_savanna_profile:st32_03_desert_temple_1",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0
+        },
+        {
+          "id": "ST32.4",
+          "label": "Desert Temple 2",
+          "role": "church",
+          "sourceMod": "Minecraft",
+          "source": "data/minecraft/structure/village/desert/houses/desert_temple_2.nbt",
+          "sourceSha256": "e63e3433eea9acd9b6310c69b0906dcf4eea50745644591aca763be646367620",
+          "preparedSha256": "ca11df243adc4731b9e75ef3166d336967b83bfd9cb2bc889fa3ab1c515ce233",
+          "size": [
+            10,
+            6,
+            12
+          ],
+          "origin": [
+            1779,
+            230,
+            1380
+          ],
+          "privateTemplate": "kithkyn_savanna_profile:st32_04_desert_temple_2",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0
+        },
+        {
+          "id": "ST32.5",
+          "label": "Badlands Temple",
+          "role": "church",
+          "sourceMod": "Towns & Towers",
+          "source": "data/kaisyn/structure/village/badlands_pueblo/houses/badlands_temple_1.nbt",
+          "sourceSha256": "7b4f9ab6a1cefd8859e45cd5db84678e60a8e7f2b487d39f7752a09dbe9c6072",
+          "preparedSha256": "8e5b7e2aa69f54c396152d261ee47b5f21bbcfc0ca5ee7f3b1bebd0af7508df3",
+          "size": [
+            9,
+            16,
+            9
+          ],
+          "origin": [
+            1795,
+            230,
+            1380
+          ],
+          "privateTemplate": "kithkyn_savanna_profile:st32_05_badlands_temple_1",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0
+        },
+        {
+          "id": "ST32.6",
+          "label": "Rustic Temple",
+          "role": "church",
+          "sourceMod": "Towns & Towers",
+          "source": "data/kaisyn/structure/village/exclusives/rustic/houses/rustic_temple_1.nbt",
+          "sourceSha256": "c543c776fe8ac99a93c60ab19227c5f07238fb02f5a578d3f0b7b2f7ab857a24",
+          "preparedSha256": "ed5ee088bb29aacd52285a918ec4e66b942ccc72eb60252dd86c71f1c09f192c",
+          "size": [
+            9,
+            14,
+            8
+          ],
+          "origin": [
+            1810,
+            230,
+            1380
+          ],
+          "privateTemplate": "kithkyn_savanna_profile:st32_06_rustic_temple_1",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0
+        },
+        {
+          "id": "ST32.7",
+          "label": "Classic Church",
+          "role": "church",
+          "sourceMod": "Towns & Towers",
+          "source": "data/kaisyn/structure/village/exclusives/classic/houses/classic_church_1.nbt",
+          "sourceSha256": "2bf8cbf119a5321817e4b67d7cbb5d0ca87148c29d3c2bb161085b7a31440027",
+          "preparedSha256": "516e54e066eb798d4026a84e4abf1c5e500ebe8ed5a5a842ee050d97196ab7b8",
+          "size": [
+            10,
+            12,
+            7
+          ],
+          "origin": [
+            1825,
+            230,
+            1380
+          ],
+          "privateTemplate": "kithkyn_savanna_profile:st32_07_classic_church_1",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0
+        },
+        {
+          "id": "ST32.8",
+          "label": "Oasis Temple",
+          "role": "church",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/desert_oasis/jobsite/temple.nbt",
+          "sourceSha256": "189ea94dd44d566d18cb086ed44487c462d522c4a1d5e83c960b9f7430810433",
+          "preparedSha256": "79bcfad88b488cb3bfeb4a968c17c12ee284acf82888db7c24d73fdf631f0255",
+          "size": [
+            13,
+            14,
+            13
+          ],
+          "origin": [
+            1841,
+            230,
+            1380
+          ],
+          "privateTemplate": "kithkyn_savanna_profile:st32_08_temple",
+          "waterCells": 1,
+          "containment": {
+            "kind": "barrier ring",
+            "box": [
+              1839,
+              230,
+              1378,
+              1855,
+              230,
+              1394
+            ]
+          },
+          "standIns": 0
+        },
+        {
+          "id": "ST32.9",
+          "label": "Mesa Church",
+          "role": "church",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/mesa/jobsite/church.nbt",
+          "sourceSha256": "a1e283ea4eee26824216b9ce7612012d77f1c77658a5d4a72e73c362f26cddfd",
+          "preparedSha256": "0a046d4dca121565d64986890d5afe64126c397d38366e81c88e9509bdbce758",
+          "size": [
+            7,
+            11,
+            11
+          ],
+          "origin": [
+            1860,
+            230,
+            1380
+          ],
+          "privateTemplate": "kithkyn_savanna_profile:st32_09_church",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0
+        },
+        {
+          "id": "ST32.10",
+          "label": "Desert Sanctuary",
+          "role": "church",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/desert/jobsite/sanctuary.nbt",
+          "sourceSha256": "59654845a6af28f32732ec619a1e3bccc634da4426b55910e216510e0277f264",
+          "preparedSha256": "7e8de290122a8790f6c79df71687284017d7417648e50a6f58cd1dbdc06cae03",
+          "size": [
+            12,
+            12,
+            11
+          ],
+          "origin": [
+            1873,
+            230,
+            1380
+          ],
+          "privateTemplate": "kithkyn_savanna_profile:st32_10_sanctuary",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 1
+        },
+        {
+          "id": "ST32.11",
+          "label": "Desert Chapel",
+          "role": "church",
+          "sourceMod": "Terralith",
+          "source": "data/terralith/structure/village/desert/houses/chapel1.nbt",
+          "sourceSha256": "59ced20d339a075b001b623c55e1b0e77b08d329bdd923dede1a5f77de70a03a",
+          "preparedSha256": "ba18766957b4f9941848679c37f86c0998d497f3e50e2443af6aed0706b68e1b",
+          "size": [
+            26,
+            22,
+            17
+          ],
+          "origin": [
+            1891,
+            230,
+            1380
+          ],
+          "privateTemplate": "kithkyn_savanna_profile:st32_11_chapel1",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0
+        },
+        {
+          "id": "ST32.12",
+          "label": "Classic Ruin Church",
+          "role": "church",
+          "sourceMod": "Dungeons & Taverns",
+          "source": "data/nova_structures/structure/remnant/classic_village/church_1.nbt",
+          "sourceSha256": "e653a1d0be75b23d2957ef7147d19e170dc601b984b95eab4ab78872efafb37c",
+          "preparedSha256": "47e8e06b635446c7eed859878f62325bcdcc1e97b9cae89724c910af1baa3c68",
+          "size": [
+            10,
+            14,
+            5
+          ],
+          "origin": [
+            1923,
+            230,
+            1380
+          ],
+          "privateTemplate": "kithkyn_savanna_profile:st32_12_church_1",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0
+        }
+      ]
+    },
+    {
+      "id": "ST33",
+      "title": "DONORS \u2014 STATUES + OBELISKS",
+      "origin": [
+        1730,
+        230,
+        1424
+      ],
+      "bounds": [
+        1720,
+        220,
+        1415,
+        1811,
+        276,
+        1433
+      ],
+      "entries": [
+        {
+          "id": "ST33.1",
+          "label": "Desert Obelisk",
+          "role": "detail",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/desert/deco/obelisk.nbt",
+          "sourceSha256": "bda01f189c43d5c9b31bea8a5074e891f42994b5152707a40c8821f56be39d08",
+          "preparedSha256": "7e056b559f74c5225e2f08f3f9d4f2fefacca3ac4ca27a659518e00009549c8c",
+          "size": [
+            3,
+            8,
+            3
+          ],
+          "origin": [
+            1730,
+            230,
+            1424
+          ],
+          "privateTemplate": "kithkyn_savanna_profile:st33_01_obelisk",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0
+        },
+        {
+          "id": "ST33.2",
+          "label": "Mesa Statue",
+          "role": "detail",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/mesa_fortified/deco/statue.nbt",
+          "sourceSha256": "45976d65f55bb6c43d9d0e20429cd2946ad8e9636dcb5725251f17d16a02f9c0",
+          "preparedSha256": "c7f335b4f528d1da4daa3becf6dbc87193c8258e430a72ebcfa137f84ce38c2d",
+          "size": [
+            3,
+            4,
+            6
+          ],
+          "origin": [
+            1739,
+            230,
+            1424
+          ],
+          "privateTemplate": "kithkyn_savanna_profile:st33_02_statue",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0
+        },
+        {
+          "id": "ST33.3",
+          "label": "Desert Goddess",
+          "role": "detail",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/desert/deco/goddess_statue.nbt",
+          "sourceSha256": "4c5fe1e61256227cbfdf025fb5d4a4533c87d96938e05b09262bd3564108bddd",
+          "preparedSha256": "c6dc07e562e17ba322ddffcacc4052ad0752ebaed067ca1507fe741b11703657",
+          "size": [
+            3,
+            5,
+            4
+          ],
+          "origin": [
+            1748,
+            230,
+            1424
+          ],
+          "privateTemplate": "kithkyn_savanna_profile:st33_03_goddess_statue",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 1
+        },
+        {
+          "id": "ST33.4",
+          "label": "Mesa Goddess",
+          "role": "detail",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/mesa/deco/goddess_statue.nbt",
+          "sourceSha256": "943f3581f1a728a1742982e7be4bae8a416e361d0fb6c5f68abde5a8850c4ba3",
+          "preparedSha256": "61b1415927ca97b8500e1a256a5fc4d267fd1a76b04c7e2bfe6bfdb067ebff49",
+          "size": [
+            3,
+            6,
+            4
+          ],
+          "origin": [
+            1757,
+            230,
+            1424
+          ],
+          "privateTemplate": "kithkyn_savanna_profile:st33_04_goddess_statue",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 1
+        },
+        {
+          "id": "ST33.5",
+          "label": "Obelisk",
+          "role": "detail",
+          "sourceMod": "YUNG's Extras",
+          "source": "data/yungsextras/structure/desert/obelisk/obelisk.nbt",
+          "sourceSha256": "f122cc68fd10d1b6b33c1f58cecb6e85dfefb0bd7d8737d00ed934a2daebb844",
+          "preparedSha256": "c799fa4d92af7787bb4440af4c5ff9e8086fa78f8dbaa4d6becf9d67aef7825a",
+          "size": [
+            4,
+            11,
+            4
+          ],
+          "origin": [
+            1766,
+            230,
+            1424
+          ],
+          "privateTemplate": "kithkyn_savanna_profile:st33_05_obelisk",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0
+        },
+        {
+          "id": "ST33.6",
+          "label": "Obelisk Creeper",
+          "role": "detail",
+          "sourceMod": "YUNG's Extras",
+          "source": "data/yungsextras/structure/desert/obelisk/obelisk_creeper.nbt",
+          "sourceSha256": "995c16acaa8f72abef674189ad6f18d70eeeaa8b8c32d5988fc24f77e84e4ea2",
+          "preparedSha256": "4ef75d0e24a8dd592bd84bc623581fa03ce97a3615190b92ad5513a0228bcf3c",
+          "size": [
+            4,
+            11,
+            4
+          ],
+          "origin": [
+            1776,
+            230,
+            1424
+          ],
+          "privateTemplate": "kithkyn_savanna_profile:st33_06_obelisk_creeper",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0
+        },
+        {
+          "id": "ST33.7",
+          "label": "Obelisk Rare",
+          "role": "detail",
+          "sourceMod": "YUNG's Extras",
+          "source": "data/yungsextras/structure/desert/obelisk/obelisk_rare.nbt",
+          "sourceSha256": "e1218f321c3928dafb79e952cafda8580afec5ca15592e63dfccd5ce0c82f76b",
+          "preparedSha256": "8289dda5fb0250e15460ee4ebbacae7db2f7f87080cad470c825cf2d49c8fe81",
+          "size": [
+            4,
+            11,
+            4
+          ],
+          "origin": [
+            1786,
+            230,
+            1424
+          ],
+          "privateTemplate": "kithkyn_savanna_profile:st33_07_obelisk_rare",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0
+        },
+        {
+          "id": "ST33.8",
+          "label": "Obelisk Ruined",
+          "role": "detail",
+          "sourceMod": "YUNG's Extras",
+          "source": "data/yungsextras/structure/desert/obelisk/obelisk_ruined.nbt",
+          "sourceSha256": "7500ce7040876ffe5f71abdd3413bd382d932907461876cd87e41ba711293e9d",
+          "preparedSha256": "9d51d16678260d37b35e0e7274858b66593e4f1d257a1614c83ec1967e045bbc",
+          "size": [
+            4,
+            9,
+            4
+          ],
+          "origin": [
+            1796,
+            230,
+            1424
+          ],
+          "privateTemplate": "kithkyn_savanna_profile:st33_08_obelisk_ruined",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0
+        },
+        {
+          "id": "ST33.9",
+          "label": "Giant Cross",
+          "role": "detail",
+          "sourceMod": "Towns & Towers",
+          "source": "data/kaisyn/structure/village/beach_lighthouse/side/beach_giant_cross_1.nbt",
+          "sourceSha256": "7659c15779e9dbc736b66b8b26c8faecb8e65395aba11ab073779f777fa2d1bc",
+          "preparedSha256": "83fb4b7efe86859d856b3645a6bdb3f0f6597adf0c1f3f8097632c1b3683e985",
+          "size": [
+            3,
+            12,
+            4
+          ],
+          "origin": [
+            1806,
+            230,
+            1424
+          ],
+          "privateTemplate": "kithkyn_savanna_profile:st33_09_beach_giant_cross_1",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0
+        }
+      ]
+    },
+    {
+      "id": "ST34",
+      "title": "DONORS \u2014 FARMS: VANILLA + T&T",
+      "origin": [
+        1730,
+        230,
+        1468
+      ],
+      "bounds": [
+        1720,
+        220,
+        1459,
+        1984,
+        276,
+        1487
+      ],
+      "entries": [
+        {
+          "id": "ST34.1",
+          "label": "Savanna Large Farm 1",
+          "role": "farm",
+          "sourceMod": "Minecraft",
+          "source": "data/minecraft/structure/village/savanna/houses/savanna_large_farm_1.nbt",
+          "sourceSha256": "4760bbcf3acca433aaf8fc967a698f89f7289b31cccdd27e2881cb19950d4f3c",
+          "preparedSha256": "f8b64480674f66e58edbafc4de8e02681848d028731bcee256b8079533c0c0ff",
+          "size": [
+            9,
+            6,
+            9
+          ],
+          "origin": [
+            1730,
+            230,
+            1468
+          ],
+          "privateTemplate": "kithkyn_savanna_profile:st34_01_savanna_large_farm_1",
+          "waterCells": 4,
+          "containment": {
+            "kind": "barrier ring",
+            "box": [
+              1728,
+              230,
+              1466,
+              1740,
+              230,
+              1478
+            ]
+          },
+          "standIns": 0
+        },
+        {
+          "id": "ST34.2",
+          "label": "Savanna Large Farm 2",
+          "role": "farm",
+          "sourceMod": "Minecraft",
+          "source": "data/minecraft/structure/village/savanna/houses/savanna_large_farm_2.nbt",
+          "sourceSha256": "c763b3299052af62b7dba24617d7c603b834285362cbe3f0bf99344392eff3d1",
+          "preparedSha256": "da437d60330ec5b90599ad98542bec0ffbbeb78280a9122f1baefddb39596903",
+          "size": [
+            10,
+            7,
+            8
+          ],
+          "origin": [
+            1745,
+            230,
+            1468
+          ],
+          "privateTemplate": "kithkyn_savanna_profile:st34_02_savanna_large_farm_2",
+          "waterCells": 6,
+          "containment": {
+            "kind": "barrier ring",
+            "box": [
+              1743,
+              230,
+              1466,
+              1756,
+              230,
+              1477
+            ]
+          },
+          "standIns": 0
+        },
+        {
+          "id": "ST34.3",
+          "label": "Savanna Small Farm",
+          "role": "farm",
+          "sourceMod": "Minecraft",
+          "source": "data/minecraft/structure/village/savanna/houses/savanna_small_farm.nbt",
+          "sourceSha256": "da37095b70942f7db6a8829101e1410d5c8c6bdb27ef98ae863a346312a94a76",
+          "preparedSha256": "d406d8524fc9ec7b31b598e0c27356a794ffe60f7c31d2e14279c396f6610266",
+          "size": [
+            6,
+            7,
+            9
+          ],
+          "origin": [
+            1761,
+            230,
+            1468
+          ],
+          "privateTemplate": "kithkyn_savanna_profile:st34_03_savanna_small_farm",
+          "waterCells": 3,
+          "containment": {
+            "kind": "barrier ring",
+            "box": [
+              1759,
+              230,
+              1466,
+              1768,
+              230,
+              1478
+            ]
+          },
+          "standIns": 0
+        },
+        {
+          "id": "ST34.4",
+          "label": "Savanna Animal Pen 1",
+          "role": "food",
+          "sourceMod": "Minecraft",
+          "source": "data/minecraft/structure/village/savanna/houses/savanna_animal_pen_1.nbt",
+          "sourceSha256": "3d2f0d010ae4983c17d90f2fb0aba22de212422b1a2c39f8e59bd682633fa0f7",
+          "preparedSha256": "70a16fed168c47b664ec25b5748738aeedd5647665f9f739c9b610da51c46b48",
+          "size": [
+            9,
+            5,
+            9
+          ],
+          "origin": [
+            1773,
+            230,
+            1468
+          ],
+          "privateTemplate": "kithkyn_savanna_profile:st34_04_savanna_animal_pen_1",
+          "waterCells": 3,
+          "containment": {
+            "kind": "barrier ring",
+            "box": [
+              1771,
+              230,
+              1466,
+              1783,
+              230,
+              1478
+            ]
+          },
+          "standIns": 0
+        },
+        {
+          "id": "ST34.5",
+          "label": "Savanna Animal Pen 2",
+          "role": "food",
+          "sourceMod": "Minecraft",
+          "source": "data/minecraft/structure/village/savanna/houses/savanna_animal_pen_2.nbt",
+          "sourceSha256": "8c2aa65e5ca18a02107a44af3cd17e41ffc20175c5fac2528fb89e9db1b8fa10",
+          "preparedSha256": "377ade4fb89ba11d9eb1e648ee7dcedc1d8d35894ae25e76c35f09bcdb70d61b",
+          "size": [
+            13,
+            7,
+            12
+          ],
+          "origin": [
+            1788,
+            230,
+            1468
+          ],
+          "privateTemplate": "kithkyn_savanna_profile:st34_05_savanna_animal_pen_2",
+          "waterCells": 3,
+          "containment": {
+            "kind": "barrier ring",
+            "box": [
+              1786,
+              230,
+              1466,
+              1802,
+              230,
+              1481
+            ]
+          },
+          "standIns": 0
+        },
+        {
+          "id": "ST34.6",
+          "label": "Savanna Animal Pen 3",
+          "role": "food",
+          "sourceMod": "Minecraft",
+          "source": "data/minecraft/structure/village/savanna/houses/savanna_animal_pen_3.nbt",
+          "sourceSha256": "63093b21fd982493bedd3651e5bd8eba7fb903f9024abc107720b2cd131c3961",
+          "preparedSha256": "28b4300e1162e95dcfcc624929f1835c5e68b16023a3908b014b6d668c4d7416",
+          "size": [
+            8,
+            5,
+            9
+          ],
+          "origin": [
+            1807,
+            230,
+            1468
+          ],
+          "privateTemplate": "kithkyn_savanna_profile:st34_06_savanna_animal_pen_3",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0
+        },
+        {
+          "id": "ST34.7",
+          "label": "Desert Farm 1",
+          "role": "farm",
+          "sourceMod": "Minecraft",
+          "source": "data/minecraft/structure/village/desert/houses/desert_farm_1.nbt",
+          "sourceSha256": "47d5e70524c19d0f7abb85ddd0bec31548589aad7e1127447ce4f2ca107e1ea4",
+          "preparedSha256": "313e1a481a5f7c0fdc391efab026d60305fe73f1c9cea0aaf3157ed7948925d0",
+          "size": [
+            5,
+            6,
+            7
+          ],
+          "origin": [
+            1821,
+            230,
+            1468
+          ],
+          "privateTemplate": "kithkyn_savanna_profile:st34_07_desert_farm_1",
+          "waterCells": 6,
+          "containment": {
+            "kind": "barrier ring",
+            "box": [
+              1819,
+              230,
+              1466,
+              1827,
+              230,
+              1476
+            ]
+          },
+          "standIns": 0
+        },
+        {
+          "id": "ST34.8",
+          "label": "Desert Farm 2",
+          "role": "farm",
+          "sourceMod": "Minecraft",
+          "source": "data/minecraft/structure/village/desert/houses/desert_farm_2.nbt",
+          "sourceSha256": "e4e7926cd68ec8f354eb05b1538b4664eadc1c307e6a3f122797c79de80b5e02",
+          "preparedSha256": "f7c4f07ef92037b5656c46d1ea99741bf89eb3aee84a876e0da2b10f7f8047d7",
+          "size": [
+            7,
+            7,
+            10
+          ],
+          "origin": [
+            1832,
+            230,
+            1468
+          ],
+          "privateTemplate": "kithkyn_savanna_profile:st34_08_desert_farm_2",
+          "waterCells": 1,
+          "containment": {
+            "kind": "barrier ring",
+            "box": [
+              1830,
+              230,
+              1466,
+              1840,
+              230,
+              1479
+            ]
+          },
+          "standIns": 0
+        },
+        {
+          "id": "ST34.9",
+          "label": "Desert Large Farm",
+          "role": "farm",
+          "sourceMod": "Minecraft",
+          "source": "data/minecraft/structure/village/desert/houses/desert_large_farm_1.nbt",
+          "sourceSha256": "95707e99946ded972d02d7dbbf7f84b2a134a7a9a2481b585cf99eb40cd4b783",
+          "preparedSha256": "60394708d2b8be1e1c90f896f03a1abc20594820267d50820d26092f52e9bebd",
+          "size": [
+            11,
+            7,
+            13
+          ],
+          "origin": [
+            1845,
+            230,
+            1468
+          ],
+          "privateTemplate": "kithkyn_savanna_profile:st34_09_desert_large_farm_1",
+          "waterCells": 5,
+          "containment": {
+            "kind": "barrier ring",
+            "box": [
+              1843,
+              230,
+              1466,
+              1857,
+              230,
+              1482
+            ]
+          },
+          "standIns": 0
+        },
+        {
+          "id": "ST34.10",
+          "label": "Classic Large Farm",
+          "role": "farm",
+          "sourceMod": "Towns & Towers",
+          "source": "data/kaisyn/structure/village/exclusives/classic/houses/classic_large_farm_1.nbt",
+          "sourceSha256": "b5f2b08fe46fd249feda4407533bc3ac2887d106ce5eaf5ba865da8ecf724eb6",
+          "preparedSha256": "f695919ee64f41987b61b52e7c99a006d7a47cba1feba38b410d8208b4147ddb",
+          "size": [
+            9,
+            5,
+            15
+          ],
+          "origin": [
+            1862,
+            230,
+            1468
+          ],
+          "privateTemplate": "kithkyn_savanna_profile:st34_10_classic_large_farm_1",
+          "waterCells": 14,
+          "containment": {
+            "kind": "barrier ring",
+            "box": [
+              1860,
+              230,
+              1466,
+              1872,
+              230,
+              1484
+            ]
+          },
+          "standIns": 0
+        },
+        {
+          "id": "ST34.11",
+          "label": "Classic Small Farm",
+          "role": "farm",
+          "sourceMod": "Towns & Towers",
+          "source": "data/kaisyn/structure/village/exclusives/classic/houses/classic_small_farm_1.nbt",
+          "sourceSha256": "a058c45934161ce311d6b3f77c7cada1e0a1302d869687623fe23301bccabb3d",
+          "preparedSha256": "03e4f097928dd8a94fe4c10d6051a8a00eb1a137f5278f1478bd6435d04ed620",
+          "size": [
+            10,
+            5,
+            9
+          ],
+          "origin": [
+            1877,
+            230,
+            1468
+          ],
+          "privateTemplate": "kithkyn_savanna_profile:st34_11_classic_small_farm_1",
+          "waterCells": 7,
+          "containment": {
+            "kind": "barrier ring",
+            "box": [
+              1875,
+              230,
+              1466,
+              1888,
+              230,
+              1478
+            ]
+          },
+          "standIns": 0
+        },
+        {
+          "id": "ST34.12",
+          "label": "Badlands Farmer",
+          "role": "farm",
+          "sourceMod": "Towns & Towers",
+          "source": "data/kaisyn/structure/village/badlands_pueblo/professions_misc/badlands_farmer_1.nbt",
+          "sourceSha256": "d62e7bb8cdd866ae4bcb48d2809fe0992a412cf805300915dbc364621474e5b3",
+          "preparedSha256": "2488b6e7dc3379c47b70db79c000ad90b3c4a4d05c460c309df43cd7e5a0be9b",
+          "size": [
+            3,
+            2,
+            3
+          ],
+          "origin": [
+            1893,
+            230,
+            1468
+          ],
+          "privateTemplate": "kithkyn_savanna_profile:st34_12_badlands_farmer_1",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0
+        },
+        {
+          "id": "ST34.13",
+          "label": "Rustic Farmer",
+          "role": "farm",
+          "sourceMod": "Towns & Towers",
+          "source": "data/kaisyn/structure/village/exclusives/rustic/professions_misc/rustic_farmer_1.nbt",
+          "sourceSha256": "13fe9ceaeaedca062ae8c47ce4774a0b42ce03fef2e01058c5b56b0f4837d4bd",
+          "preparedSha256": "8e5e96c1d8949ac85049ac0f36a589b01c35956dc2fb6bbb5625a0d51e81eb8c",
+          "size": [
+            5,
+            12,
+            5
+          ],
+          "origin": [
+            1902,
+            230,
+            1468
+          ],
+          "privateTemplate": "kithkyn_savanna_profile:st34_13_rustic_farmer_1",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0
+        },
+        {
+          "id": "ST34.14",
+          "label": "Sunflower Beetroot Field",
+          "role": "farm",
+          "sourceMod": "Towns & Towers",
+          "source": "data/kaisyn/structure/village/sunflower_plains_farm/side/sunflower_plains_farm_beetroot_1.nbt",
+          "sourceSha256": "614e128be5a1594efd59a0490c932e7e1e3b833d95c7b6931b79f8b5a346e779",
+          "preparedSha256": "e7e2e546e3450c46154489da33ba7e0804b8db6d488da7a26015855673eda77a",
+          "size": [
+            18,
+            5,
+            16
+          ],
+          "origin": [
+            1913,
+            230,
+            1468
+          ],
+          "privateTemplate": "kithkyn_savanna_profile:st34_14_sunflower_plains_farm_beetroot_1",
+          "waterCells": 3,
+          "containment": {
+            "kind": "barrier ring",
+            "box": [
+              1911,
+              230,
+              1466,
+              1932,
+              230,
+              1485
+            ]
+          },
+          "standIns": 0
+        },
+        {
+          "id": "ST34.15",
+          "label": "Sunflower Pumpkin Field",
+          "role": "farm",
+          "sourceMod": "Towns & Towers",
+          "source": "data/kaisyn/structure/village/sunflower_plains_farm/side/sunflower_plains_farm_pumpkin_1.nbt",
+          "sourceSha256": "278c26ab06a78704edb7ab6bc54bb8f86085ed3609cb2edbb8744b565c6a649a",
+          "preparedSha256": "ebae830f87ddff65467271ee3bacc25779017ee5c097674516a35fa1978d42a4",
+          "size": [
+            21,
+            5,
+            16
+          ],
+          "origin": [
+            1937,
+            230,
+            1468
+          ],
+          "privateTemplate": "kithkyn_savanna_profile:st34_15_sunflower_plains_farm_pumpkin_1",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0
+        },
+        {
+          "id": "ST34.16",
+          "label": "Sunflower Wheat Field",
+          "role": "farm",
+          "sourceMod": "Towns & Towers",
+          "source": "data/kaisyn/structure/village/sunflower_plains_farm/side/sunflower_plains_farm_wheat_1.nbt",
+          "sourceSha256": "1770f26cff5b0121acc4e2c860426f58fea0f9f182f0717bd64d645c1a2f07f6",
+          "preparedSha256": "043a72f1c09eeb570016316e4934472d8874a2db8f7cadb2ea50c4cdac94835e",
+          "size": [
+            18,
+            5,
+            16
+          ],
+          "origin": [
+            1964,
+            230,
+            1468
+          ],
+          "privateTemplate": "kithkyn_savanna_profile:st34_16_sunflower_plains_farm_wheat_1",
+          "waterCells": 3,
+          "containment": {
+            "kind": "barrier ring",
+            "box": [
+              1962,
+              230,
+              1466,
+              1983,
+              230,
+              1485
+            ]
+          },
+          "standIns": 0
+        }
+      ]
+    },
+    {
+      "id": "ST35",
+      "title": "DONORS \u2014 FARMS: CTOV DRY VILLAGES, TERRALITH + D&T",
+      "origin": [
+        1730,
+        230,
+        1512
+      ],
+      "bounds": [
+        1720,
+        220,
+        1503,
+        1900,
+        276,
+        1530
+      ],
+      "entries": [
+        {
+          "id": "ST35.1",
+          "label": "Desert Farm",
+          "role": "farm",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/desert/jobsite/farm.nbt",
+          "sourceSha256": "e497bd9518540f22091167de8c15b185312a7f4687d04231800cb158728f7958",
+          "preparedSha256": "61612ebbbc310f86a2e4e2c8e5520a76d2f6493da6244fcde4c56c3f241c670f",
+          "size": [
+            9,
+            7,
+            11
+          ],
+          "origin": [
+            1730,
+            230,
+            1512
+          ],
+          "privateTemplate": "kithkyn_savanna_profile:st35_01_farm",
+          "waterCells": 1,
+          "containment": {
+            "kind": "barrier ring",
+            "box": [
+              1728,
+              230,
+              1510,
+              1740,
+              230,
+              1524
+            ]
+          },
+          "standIns": 0
+        },
+        {
+          "id": "ST35.2",
+          "label": "Desert Orchard",
+          "role": "farm",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/desert/jobsite/orchard.nbt",
+          "sourceSha256": "f48c980ba2eed307d1c95539ddb3e29adad95cd0118f81f3ee8d23dc932082a2",
+          "preparedSha256": "af7936c350cd02542df0915aca767e1a7d48e793ad977f65b10ad21cf09d6add",
+          "size": [
+            13,
+            7,
+            13
+          ],
+          "origin": [
+            1745,
+            230,
+            1512
+          ],
+          "privateTemplate": "kithkyn_savanna_profile:st35_02_orchard",
+          "waterCells": 1,
+          "containment": {
+            "kind": "barrier ring",
+            "box": [
+              1743,
+              230,
+              1510,
+              1759,
+              230,
+              1526
+            ]
+          },
+          "standIns": 0
+        },
+        {
+          "id": "ST35.3",
+          "label": "Desert Animal Pen",
+          "role": "food",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/desert/jobsite/animal_pen.nbt",
+          "sourceSha256": "2d9cf6dc4217362f3592b2ff30829a3680c9069f693cbff5222ca53420b159a5",
+          "preparedSha256": "451ba94aa13a13a46216768c1f9a1af072b6cc551223bff05e9c059876460345",
+          "size": [
+            8,
+            10,
+            10
+          ],
+          "origin": [
+            1764,
+            230,
+            1512
+          ],
+          "privateTemplate": "kithkyn_savanna_profile:st35_03_animal_pen",
+          "waterCells": 2,
+          "containment": {
+            "kind": "barrier ring",
+            "box": [
+              1762,
+              230,
+              1510,
+              1773,
+              230,
+              1523
+            ]
+          },
+          "standIns": 0
+        },
+        {
+          "id": "ST35.4",
+          "label": "Oasis Garden",
+          "role": "farm",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/desert_oasis/jobsite/garden.nbt",
+          "sourceSha256": "391f2a9e1e28415542c2e612e3ebe2bc5b7e3a50f9450d09dcb7d5990535aed2",
+          "preparedSha256": "36a03762bc6c6c23dafec7ff416a45809283d614511287bde9cc742048aa37de",
+          "size": [
+            7,
+            6,
+            7
+          ],
+          "origin": [
+            1778,
+            230,
+            1512
+          ],
+          "privateTemplate": "kithkyn_savanna_profile:st35_04_garden",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 1
+        },
+        {
+          "id": "ST35.5",
+          "label": "Oasis Pen",
+          "role": "food",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/desert_oasis/jobsite/pen.nbt",
+          "sourceSha256": "9c26668b4da32dd68d1bea58af1e38d27eefffc851373729ab117129ab138ccb",
+          "preparedSha256": "8d6e366cd035c4561b4be4f34c9dd7bddad8d2019570fc8aa371e8decb5103e8",
+          "size": [
+            9,
+            5,
+            9
+          ],
+          "origin": [
+            1791,
+            230,
+            1512
+          ],
+          "privateTemplate": "kithkyn_savanna_profile:st35_05_pen",
+          "waterCells": 1,
+          "containment": {
+            "kind": "barrier ring",
+            "box": [
+              1789,
+              230,
+              1510,
+              1801,
+              230,
+              1522
+            ]
+          },
+          "standIns": 0
+        },
+        {
+          "id": "ST35.6",
+          "label": "Mesa Farm",
+          "role": "farm",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/mesa/jobsite/farm.nbt",
+          "sourceSha256": "267c56f3e6a305fbf9e7fbd91054bc57013f69da6c3d89f112698d16480838ab",
+          "preparedSha256": "371c2c26e385b447426f3c598c3800502655b070ace6c51d91df12d279740080",
+          "size": [
+            9,
+            8,
+            13
+          ],
+          "origin": [
+            1806,
+            230,
+            1512
+          ],
+          "privateTemplate": "kithkyn_savanna_profile:st35_06_farm",
+          "waterCells": 1,
+          "containment": {
+            "kind": "barrier ring",
+            "box": [
+              1804,
+              230,
+              1510,
+              1816,
+              230,
+              1526
+            ]
+          },
+          "standIns": 0
+        },
+        {
+          "id": "ST35.7",
+          "label": "Mesa Animal Shop",
+          "role": "food",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/mesa/jobsite/animal_shop.nbt",
+          "sourceSha256": "d583a578cdb8d8a900cf2055612bbb270c63bdbb52a5b3b24656adb0a35f6b7c",
+          "preparedSha256": "0f9b2813a7b631c96205547a07d3b416ac9f472b9957c98dc911881eadccfda6",
+          "size": [
+            7,
+            8,
+            7
+          ],
+          "origin": [
+            1821,
+            230,
+            1512
+          ],
+          "privateTemplate": "kithkyn_savanna_profile:st35_07_animal_shop",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0
+        },
+        {
+          "id": "ST35.8",
+          "label": "Terralith Desert Farm",
+          "role": "farm",
+          "sourceMod": "Terralith",
+          "source": "data/terralith/structure/village/desert/houses/farm1.nbt",
+          "sourceSha256": "31ab738a6d19cae30163492e6d7256297742be38e15ace0f35233050d763d148",
+          "preparedSha256": "fba3d69ecd6382e987d2bd42921f91783ced312f89808b7ac36d25ce8179faa8",
+          "size": [
+            34,
+            12,
+            15
+          ],
+          "origin": [
+            1834,
+            230,
+            1512
+          ],
+          "privateTemplate": "kithkyn_savanna_profile:st35_08_farm1",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0
+        },
+        {
+          "id": "ST35.9",
+          "label": "Classic Ruin Big Farm",
+          "role": "farm",
+          "sourceMod": "Dungeons & Taverns",
+          "source": "data/nova_structures/structure/remnant/classic_village/big_farm.nbt",
+          "sourceSha256": "4268b26baacd03f0088ec92faad2e49bec4e6eec9dcf79f685bc90d7eea7d99c",
+          "preparedSha256": "7328530340ae2727f1839bd397ce3e50fa4b1725907d8a7c46f53a630bed20da",
+          "size": [
+            9,
+            9,
+            13
+          ],
+          "origin": [
+            1874,
+            230,
+            1512
+          ],
+          "privateTemplate": "kithkyn_savanna_profile:st35_09_big_farm",
+          "waterCells": 14,
+          "containment": {
+            "kind": "barrier ring",
+            "box": [
+              1872,
+              230,
+              1510,
+              1884,
+              230,
+              1526
+            ]
+          },
+          "standIns": 0
+        },
+        {
+          "id": "ST35.10",
+          "label": "Classic Ruin Small Farm",
+          "role": "farm",
+          "sourceMod": "Dungeons & Taverns",
+          "source": "data/nova_structures/structure/remnant/classic_village/small_farm.nbt",
+          "sourceSha256": "6b682a361328a5ccc06906ebd083952d918d7d73f2f974267a1c416d20ad1d88",
+          "preparedSha256": "9bea813fa7dcc6bf778cf921496e3a724fa253c92ebada285287792fdb5cdd34",
+          "size": [
+            9,
+            9,
+            7
+          ],
+          "origin": [
+            1889,
+            230,
+            1512
+          ],
+          "privateTemplate": "kithkyn_savanna_profile:st35_10_small_farm",
+          "waterCells": 7,
+          "containment": {
+            "kind": "barrier ring",
+            "box": [
+              1887,
+              230,
+              1510,
+              1899,
+              230,
+              1520
+            ]
+          },
+          "standIns": 0
+        }
+      ]
+    },
+    {
+      "id": "ST36",
+      "title": "DONORS \u2014 LUMBER YARDS: CTOV DRY VILLAGES + PLAINS",
+      "origin": [
+        1730,
+        230,
+        1556
+      ],
+      "bounds": [
+        1720,
+        220,
+        1547,
+        1872,
+        276,
+        1572
+      ],
+      "entries": [
+        {
+          "id": "ST36.1",
+          "label": "Desert Sawmill",
+          "role": "lumberjack",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/desert/jobsite/sawmill.nbt",
+          "sourceSha256": "aa70e948d0c866417943794de0cabf428a6298a4028b8d8402c394220df8fcc7",
+          "preparedSha256": "13ba462d9cc8ca8d61d5897f263165a3bb8f6cd705c9884d52bd6ed31f02b4ac",
+          "size": [
+            9,
+            10,
+            9
+          ],
+          "origin": [
+            1730,
+            230,
+            1556
+          ],
+          "privateTemplate": "kithkyn_savanna_profile:st36_01_sawmill",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 1
+        },
+        {
+          "id": "ST36.2",
+          "label": "Desert Woodworker",
+          "role": "lumberjack",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/desert/jobsite/woodworker.nbt",
+          "sourceSha256": "38c9430df1e6b8c4cc0caf43789649d8ff40719ebe4dd6f937f853404d4b2fbc",
+          "preparedSha256": "c913435bf9955ac1eff707a0669edc581cdaad38a514f5ee57042be7c4be28c5",
+          "size": [
+            9,
+            9,
+            9
+          ],
+          "origin": [
+            1745,
+            230,
+            1556
+          ],
+          "privateTemplate": "kithkyn_savanna_profile:st36_02_woodworker",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 1
+        },
+        {
+          "id": "ST36.3",
+          "label": "Desert Oasis Sawmill",
+          "role": "lumberjack",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/desert_oasis/jobsite/sawmill.nbt",
+          "sourceSha256": "2d9359beba208f824c93393e254af577a75d3754bdb806e14af8b988bf1db596",
+          "preparedSha256": "c039b34a021282c1d6f4c83167be94269b5e1c4f39e5a9e99002e58c1a862a3b",
+          "size": [
+            9,
+            10,
+            9
+          ],
+          "origin": [
+            1760,
+            230,
+            1556
+          ],
+          "privateTemplate": "kithkyn_savanna_profile:st36_03_sawmill",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 1
+        },
+        {
+          "id": "ST36.4",
+          "label": "Desert Oasis Woodworker",
+          "role": "lumberjack",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/desert_oasis/jobsite/woodworker.nbt",
+          "sourceSha256": "7ec632c6eecd230c07c7a50f50b5eed6de8f39f06718619cad7ee8a40cfb66f4",
+          "preparedSha256": "a6db7f14bcbde54e6877043d9cdcb77679db2360fd6618790146f6e18dff46e0",
+          "size": [
+            10,
+            6,
+            9
+          ],
+          "origin": [
+            1775,
+            230,
+            1556
+          ],
+          "privateTemplate": "kithkyn_savanna_profile:st36_04_woodworker",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 1
+        },
+        {
+          "id": "ST36.5",
+          "label": "Mesa Sawmill",
+          "role": "lumberjack",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/mesa/jobsite/sawmill.nbt",
+          "sourceSha256": "4974d4b86a24d3f8b63c1869df1bf2f4b32d6224e2c3f13071d5b8f1da2385ab",
+          "preparedSha256": "648647d3341cbad0290aad554cf5a1b2f896fefbec2e7a1be97226e3c1e100cd",
+          "size": [
+            9,
+            10,
+            9
+          ],
+          "origin": [
+            1791,
+            230,
+            1556
+          ],
+          "privateTemplate": "kithkyn_savanna_profile:st36_05_sawmill",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 1
+        },
+        {
+          "id": "ST36.6",
+          "label": "Mesa Woodworker",
+          "role": "lumberjack",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/mesa/jobsite/woodworker.nbt",
+          "sourceSha256": "cd6426eb0985503f58bfd645404cb644c1df2ec60a89a1d37b4897b8bad731d3",
+          "preparedSha256": "46986b46cbe238b671916079da480c049740bbc247e2a4bf91f2dc38d0e2ef04",
+          "size": [
+            6,
+            7,
+            8
+          ],
+          "origin": [
+            1806,
+            230,
+            1556
+          ],
+          "privateTemplate": "kithkyn_savanna_profile:st36_06_woodworker",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 1
+        },
+        {
+          "id": "ST36.7",
+          "label": "Mesa Fortified Sawmill",
+          "role": "lumberjack",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/mesa_fortified/jobsite/sawmill.nbt",
+          "sourceSha256": "48168f25787bddc64556de6f7f30ebee63a6c803e49c272fa15426039fa12762",
+          "preparedSha256": "467ad7f9ffe8c8736bbc09fcfafe10514e8fc249408680a7f9dfb1cc3b2e5456",
+          "size": [
+            9,
+            10,
+            9
+          ],
+          "origin": [
+            1818,
+            230,
+            1556
+          ],
+          "privateTemplate": "kithkyn_savanna_profile:st36_07_sawmill",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 1
+        },
+        {
+          "id": "ST36.8",
+          "label": "Mesa Fortified Woodworker",
+          "role": "lumberjack",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/mesa_fortified/jobsite/woodworker.nbt",
+          "sourceSha256": "1c99df3e3a892cc9af25edd62c76fbc74d42b402eba2ca6efab28e04c4349e6f",
+          "preparedSha256": "dd8585b0b16e69c6a846507f88d3c038d2dcbdf7cbbf0543e961e75890b86cde",
+          "size": [
+            7,
+            7,
+            13
+          ],
+          "origin": [
+            1833,
+            230,
+            1556
+          ],
+          "privateTemplate": "kithkyn_savanna_profile:st36_08_woodworker",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 1
+        },
+        {
+          "id": "ST36.9",
+          "label": "Plains Sawmill",
+          "role": "lumberjack",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/plains/jobsite/sawmill.nbt",
+          "sourceSha256": "7d73d52f1b00a09cf5752bee67c6227ed5590ec7aa48b261e673f8073a2079e7",
+          "preparedSha256": "fd6f48ceb8aac1b1cb23640f93b353ec2f37af4146a601f50dc95bf8fb51192c",
+          "size": [
+            9,
+            15,
+            9
+          ],
+          "origin": [
+            1846,
+            230,
+            1556
+          ],
+          "privateTemplate": "kithkyn_savanna_profile:st36_09_sawmill",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 1
+        },
+        {
+          "id": "ST36.10",
+          "label": "Plains Woodworker",
+          "role": "lumberjack",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/plains/jobsite/woodworker.nbt",
+          "sourceSha256": "98aa40a1f3bbd3ac07a45311962448ec3475d1bace57fb4cab0350c6c03d5a81",
+          "preparedSha256": "fccb929bea975b563b82ddf20c70c7cc5a46913a27a212e7f5c542126fa85fc3",
+          "size": [
+            9,
+            9,
+            8
+          ],
+          "origin": [
+            1861,
+            230,
+            1556
+          ],
+          "privateTemplate": "kithkyn_savanna_profile:st36_10_woodworker",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 1
+        }
+      ]
+    },
+    {
+      "id": "ST37",
+      "title": "DONORS \u2014 MINES: D&T BADLANDS MINER OUTPOST",
+      "origin": [
+        1730,
+        230,
+        1600
+      ],
+      "bounds": [
+        1720,
+        220,
+        1591,
+        1769,
+        276,
+        1640
+      ],
+      "entries": [
+        {
+          "id": "ST37.1",
+          "label": "Miner Outpost Compound",
+          "role": "mine",
+          "sourceMod": "Dungeons & Taverns",
+          "source": "data/nova_structures/structure/badlands_miner_outpost/badlands_miner_outpost_tower.nbt",
+          "sourceSha256": "7238da87e53d402fc11bc8ec268f97cbae0c7d3cd61062cc0f4a34ba150cca2a",
+          "preparedSha256": "52fcf45ac54d54e9587e055d1717a0f8e61054c87cdbc65210f7961a0706ddc7",
+          "size": [
+            37,
+            26,
+            37
+          ],
+          "origin": [
+            1730,
+            230,
+            1600
+          ],
+          "privateTemplate": "kithkyn_savanna_profile:st37_01_badlands_miner_outpost_tower",
+          "waterCells": 6,
+          "containment": {
+            "kind": "barrier ring",
+            "box": [
+              1728,
+              230,
+              1598,
+              1768,
+              230,
+              1638
+            ]
+          },
+          "standIns": 0
+        }
+      ]
+    },
+    {
+      "id": "ST38",
+      "title": "DONORS \u2014 WELLS: VANILLA MEETING POINTS + CTOV",
+      "origin": [
+        1730,
+        230,
+        1651
+      ],
+      "bounds": [
+        1720,
+        220,
+        1642,
+        1944,
+        276,
+        1670
+      ],
+      "entries": [
+        {
+          "id": "ST38.1",
+          "label": "Savanna Meeting Point 1",
+          "role": "center",
+          "sourceMod": "Minecraft",
+          "source": "data/minecraft/structure/village/savanna/town_centers/savanna_meeting_point_1.nbt",
+          "sourceSha256": "38fe378a87da4cdd16ae5eeea6d78879467cfff1b70e7d091f8219faca7434a2",
+          "preparedSha256": "f42e47ce2543d39cc58f3caa5a4f9f0f787ac0615405a3de1ca8a430dda92995",
+          "size": [
+            14,
+            5,
+            12
+          ],
+          "origin": [
+            1730,
+            230,
+            1651
+          ],
+          "privateTemplate": "kithkyn_savanna_profile:st38_01_savanna_meeting_point_1",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0
+        },
+        {
+          "id": "ST38.2",
+          "label": "Savanna Meeting Point 2",
+          "role": "center",
+          "sourceMod": "Minecraft",
+          "source": "data/minecraft/structure/village/savanna/town_centers/savanna_meeting_point_2.nbt",
+          "sourceSha256": "0b0c489527f4ed57887a26d184aee19c85f23f7bb489aeda20718ac3dfc4d637",
+          "preparedSha256": "5795e57d4ef19afaf6513b9c77b816a9bfaa691884929023ed6e6e6c281db1ed",
+          "size": [
+            11,
+            6,
+            11
+          ],
+          "origin": [
+            1750,
+            230,
+            1651
+          ],
+          "privateTemplate": "kithkyn_savanna_profile:st38_02_savanna_meeting_point_2",
+          "waterCells": 8,
+          "containment": {
+            "kind": "barrier ring",
+            "box": [
+              1748,
+              230,
+              1649,
+              1762,
+              230,
+              1663
+            ]
+          },
+          "standIns": 0
+        },
+        {
+          "id": "ST38.3",
+          "label": "Savanna Meeting Point 3",
+          "role": "center",
+          "sourceMod": "Minecraft",
+          "source": "data/minecraft/structure/village/savanna/town_centers/savanna_meeting_point_3.nbt",
+          "sourceSha256": "2517e025f607fcee60868a9df1e64f08bef518c4816aefdd139256c4bba9cf19",
+          "preparedSha256": "3bdb83366d358b8d943368d938668bfb430365e6af1d98cabc48466d324f7c2f",
+          "size": [
+            9,
+            6,
+            11
+          ],
+          "origin": [
+            1767,
+            230,
+            1651
+          ],
+          "privateTemplate": "kithkyn_savanna_profile:st38_03_savanna_meeting_point_3",
+          "waterCells": 2,
+          "containment": {
+            "kind": "barrier ring",
+            "box": [
+              1765,
+              230,
+              1649,
+              1777,
+              230,
+              1663
+            ]
+          },
+          "standIns": 0
+        },
+        {
+          "id": "ST38.4",
+          "label": "Savanna Meeting Point 4",
+          "role": "center",
+          "sourceMod": "Minecraft",
+          "source": "data/minecraft/structure/village/savanna/town_centers/savanna_meeting_point_4.nbt",
+          "sourceSha256": "412b044abe04f46c5241a1988d405780fad873266f2a732197ae5c8ef9177e63",
+          "preparedSha256": "e10e052f8a0efc00918cb1735f4018114332fc907e6fc460f6589993378bfa5c",
+          "size": [
+            9,
+            6,
+            9
+          ],
+          "origin": [
+            1782,
+            230,
+            1651
+          ],
+          "privateTemplate": "kithkyn_savanna_profile:st38_04_savanna_meeting_point_4",
+          "waterCells": 5,
+          "containment": {
+            "kind": "barrier ring",
+            "box": [
+              1780,
+              230,
+              1649,
+              1792,
+              230,
+              1661
+            ]
+          },
+          "standIns": 0
+        },
+        {
+          "id": "ST38.5",
+          "label": "Desert Meeting Point 1",
+          "role": "center",
+          "sourceMod": "Minecraft",
+          "source": "data/minecraft/structure/village/desert/town_centers/desert_meeting_point_1.nbt",
+          "sourceSha256": "52050f2b855ed6692c4bd890c3df3d01124736729da035829eeac5ae5faf62ed",
+          "preparedSha256": "b879ef5036f1e8f6f3d01146e0989147b54a84813abb75a272de91f2cb50906d",
+          "size": [
+            17,
+            6,
+            9
+          ],
+          "origin": [
+            1797,
+            230,
+            1651
+          ],
+          "privateTemplate": "kithkyn_savanna_profile:st38_05_desert_meeting_point_1",
+          "waterCells": 8,
+          "containment": {
+            "kind": "barrier ring",
+            "box": [
+              1795,
+              230,
+              1649,
+              1815,
+              230,
+              1661
+            ]
+          },
+          "standIns": 0
+        },
+        {
+          "id": "ST38.6",
+          "label": "Desert Meeting Point 2",
+          "role": "center",
+          "sourceMod": "Minecraft",
+          "source": "data/minecraft/structure/village/desert/town_centers/desert_meeting_point_2.nbt",
+          "sourceSha256": "6e03d146fd3b24d72a269b8209b4c7a43c690950718af40bcc5e86bf4a6e46fb",
+          "preparedSha256": "3dbe7238c47a10dcd6d6f50ec80e35626d36452a597581c77342a0984f37532d",
+          "size": [
+            12,
+            6,
+            12
+          ],
+          "origin": [
+            1820,
+            230,
+            1651
+          ],
+          "privateTemplate": "kithkyn_savanna_profile:st38_06_desert_meeting_point_2",
+          "waterCells": 12,
+          "containment": {
+            "kind": "barrier ring",
+            "box": [
+              1818,
+              230,
+              1649,
+              1833,
+              230,
+              1664
+            ]
+          },
+          "standIns": 0
+        },
+        {
+          "id": "ST38.7",
+          "label": "Desert Meeting Point 3",
+          "role": "center",
+          "sourceMod": "Minecraft",
+          "source": "data/minecraft/structure/village/desert/town_centers/desert_meeting_point_3.nbt",
+          "sourceSha256": "5e6aea37657945bb15c8f204cc493c74a7fdd39cb8b271bc1af8e59dc95218ba",
+          "preparedSha256": "e4c0a2ccf940c493ac843e8f5aaefbdac62bceec69a9a832cfb935a44d5f8c39",
+          "size": [
+            15,
+            6,
+            15
+          ],
+          "origin": [
+            1838,
+            230,
+            1651
+          ],
+          "privateTemplate": "kithkyn_savanna_profile:st38_07_desert_meeting_point_3",
+          "waterCells": 4,
+          "containment": {
+            "kind": "barrier ring",
+            "box": [
+              1836,
+              230,
+              1649,
+              1854,
+              230,
+              1667
+            ]
+          },
+          "standIns": 0
+        },
+        {
+          "id": "ST38.8",
+          "label": "Desert Well",
+          "role": "well",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/desert/deco/well.nbt",
+          "sourceSha256": "bcade0782437f99bf3fc5065ef80f8c58981f25a2c1027e48666328dfec4cd56",
+          "preparedSha256": "817fe3c86877bfac75ae9753c253c8ab67b387e9f49904f10fcc2cde14f80b6a",
+          "size": [
+            4,
+            5,
+            3
+          ],
+          "origin": [
+            1859,
+            230,
+            1651
+          ],
+          "privateTemplate": "kithkyn_savanna_profile:st38_08_well",
+          "waterCells": 2,
+          "containment": {
+            "kind": "barrier ring",
+            "box": [
+              1857,
+              230,
+              1649,
+              1864,
+              230,
+              1655
+            ]
+          },
+          "standIns": 0
+        },
+        {
+          "id": "ST38.9",
+          "label": "Oasis Well",
+          "role": "well",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/desert_oasis/deco/well.nbt",
+          "sourceSha256": "3b4aef25b6539e7332a9c3e540c48bd84956befb396943e5f9253a6eba1eb97b",
+          "preparedSha256": "a394dd29d049d9625cf1bbba4e57411417e480a744645ad7975403933a291a11",
+          "size": [
+            4,
+            7,
+            4
+          ],
+          "origin": [
+            1869,
+            230,
+            1651
+          ],
+          "privateTemplate": "kithkyn_savanna_profile:st38_09_well",
+          "waterCells": 8,
+          "containment": {
+            "kind": "barrier ring",
+            "box": [
+              1867,
+              230,
+              1649,
+              1874,
+              230,
+              1656
+            ]
+          },
+          "standIns": 0
+        },
+        {
+          "id": "ST38.10",
+          "label": "Mesa Well",
+          "role": "well",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/mesa/deco/well.nbt",
+          "sourceSha256": "00fcd32a4480ecc56536cdc0eada2505c31864d56be7c48ddd0221d7376e15c5",
+          "preparedSha256": "8f12cddd774197be0184f131bd20f70a7e7028fa8c422983d15da8ccbb2261c5",
+          "size": [
+            3,
+            8,
+            3
+          ],
+          "origin": [
+            1879,
+            230,
+            1651
+          ],
+          "privateTemplate": "kithkyn_savanna_profile:st38_10_well",
+          "waterCells": 4,
+          "containment": {
+            "kind": "barrier ring",
+            "box": [
+              1877,
+              230,
+              1649,
+              1883,
+              230,
+              1655
+            ]
+          },
+          "standIns": 0
+        },
+        {
+          "id": "ST38.11",
+          "label": "Fortified Mesa Well",
+          "role": "well",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/mesa_fortified/deco/well.nbt",
+          "sourceSha256": "244b749ac91c8991c906519865e9335b8c8da8d439f84b8f1c16b76ea598bb6f",
+          "preparedSha256": "d98a31326cc352718997243444175788882c575000633cf48ca150b933135dc1",
+          "size": [
+            9,
+            8,
+            9
+          ],
+          "origin": [
+            1888,
+            230,
+            1651
+          ],
+          "privateTemplate": "kithkyn_savanna_profile:st38_11_well",
+          "waterCells": 19,
+          "containment": {
+            "kind": "barrier ring",
+            "box": [
+              1886,
+              230,
+              1649,
+              1898,
+              230,
+              1661
+            ]
+          },
+          "standIns": 0
+        },
+        {
+          "id": "ST38.12",
+          "label": "Desert Oasis",
+          "role": "well",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/desert/deco/oasis.nbt",
+          "sourceSha256": "ca3537d7e1630041e2c1f920c73287a78cd44093f0089f0c21c92ff1fafe9950",
+          "preparedSha256": "73365c430f311a97ee04649cfe1db443fcc0f6d70350e8844a113b5e0666c18c",
+          "size": [
+            6,
+            3,
+            6
+          ],
+          "origin": [
+            1903,
+            230,
+            1651
+          ],
+          "privateTemplate": "kithkyn_savanna_profile:st38_12_oasis",
+          "waterCells": 11,
+          "containment": {
+            "kind": "barrier ring",
+            "box": [
+              1901,
+              230,
+              1649,
+              1910,
+              230,
+              1658
+            ]
+          },
+          "standIns": 0
+        },
+        {
+          "id": "ST38.13",
+          "label": "Fishing Oasis",
+          "role": "fishery",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/desert/jobsite/fishing_oasis.nbt",
+          "sourceSha256": "68cd2535659fe585cedfdfd7639d0dabef8bbd87d3f40a118d83d88766623151",
+          "preparedSha256": "00fe3baf506b3d253ab6849b4e9fde0ca1caa44b868faca023e5f598eabe86b3",
+          "size": [
+            13,
+            13,
+            16
+          ],
+          "origin": [
+            1915,
+            230,
+            1651
+          ],
+          "privateTemplate": "kithkyn_savanna_profile:st38_13_fishing_oasis",
+          "waterCells": 117,
+          "containment": {
+            "kind": "barrier ring",
+            "box": [
+              1913,
+              230,
+              1649,
+              1929,
+              230,
+              1668
+            ]
+          },
+          "standIns": 0
+        },
+        {
+          "id": "ST38.14",
+          "label": "Desert Water Mill",
+          "role": "work",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/desert/jobsite/water_mill.nbt",
+          "sourceSha256": "bb4dc302b4d48a5e473e781c239b301fca18073b5ab1998b22b1554cc4e8f427",
+          "preparedSha256": "0d71b53dbf6ecf684358a78a7c9553f5a298f49f6fd9498e8084c4e000803b8b",
+          "size": [
+            8,
+            8,
+            9
+          ],
+          "origin": [
+            1934,
+            230,
+            1651
+          ],
+          "privateTemplate": "kithkyn_savanna_profile:st38_14_water_mill",
+          "waterCells": 25,
+          "containment": {
+            "kind": "barrier ring",
+            "box": [
+              1932,
+              230,
+              1649,
+              1943,
+              230,
+              1661
+            ]
+          },
+          "standIns": 26
+        }
+      ]
+    },
+    {
+      "id": "ST39",
+      "title": "DONORS \u2014 WELLS: YUNG'S, D&T, TERRALITH + T&T CLASSIC",
+      "origin": [
+        1730,
+        230,
+        1695
+      ],
+      "bounds": [
+        1720,
+        220,
+        1686,
+        1871,
+        276,
+        1705
+      ],
+      "entries": [
+        {
+          "id": "ST39.1",
+          "label": "Dry Well SM",
+          "role": "well",
+          "sourceMod": "YUNG's Extras",
+          "source": "data/yungsextras/structure/desert/wells/dry_well_sm.nbt",
+          "sourceSha256": "00cb76569da070d4db1297bff027ccfda90beece4a2912dda77a88b0c71a3e94",
+          "preparedSha256": "72b673b056576a49b362ccd5ec00db65223f4a0d9b68af6f3c1db0e26425f065",
+          "size": [
+            3,
+            10,
+            3
+          ],
+          "origin": [
+            1730,
+            224,
+            1695
+          ],
+          "privateTemplate": "kithkyn_savanna_profile:st39_01_dry_well_sm",
+          "waterCells": 0,
+          "containment": {
+            "kind": "floor",
+            "box": [
+              1730,
+              223,
+              1695,
+              1732,
+              223,
+              1697
+            ]
+          },
+          "standIns": 0
+        },
+        {
+          "id": "ST39.2",
+          "label": "Dry Well MD",
+          "role": "well",
+          "sourceMod": "YUNG's Extras",
+          "source": "data/yungsextras/structure/desert/wells/dry_well_md.nbt",
+          "sourceSha256": "2d85536753d58eecc79038830a61e7e607151e868c995efbc89bbcfe1e5dfcdf",
+          "preparedSha256": "9846eefa5ed3974c0122ff3a333565ab07802cd64766019a0e9dbbaaab87f9e4",
+          "size": [
+            5,
+            11,
+            5
+          ],
+          "origin": [
+            1739,
+            223,
+            1695
+          ],
+          "privateTemplate": "kithkyn_savanna_profile:st39_02_dry_well_md",
+          "waterCells": 0,
+          "containment": {
+            "kind": "floor",
+            "box": [
+              1739,
+              222,
+              1695,
+              1743,
+              222,
+              1699
+            ]
+          },
+          "standIns": 0
+        },
+        {
+          "id": "ST39.3",
+          "label": "Dry Well LG",
+          "role": "well",
+          "sourceMod": "YUNG's Extras",
+          "source": "data/yungsextras/structure/desert/wells/dry_well_lg.nbt",
+          "sourceSha256": "7fcb1f5196a4234f60148a0b9ec8d61ac3d69d509ca674ce3bd87ce62e6b35fb",
+          "preparedSha256": "8b70bb880c544f8635b0f3621125babfa5d0a2016b6138cacc6ab70069b952c2",
+          "size": [
+            7,
+            11,
+            7
+          ],
+          "origin": [
+            1750,
+            223,
+            1695
+          ],
+          "privateTemplate": "kithkyn_savanna_profile:st39_03_dry_well_lg",
+          "waterCells": 0,
+          "containment": {
+            "kind": "floor",
+            "box": [
+              1750,
+              222,
+              1695,
+              1756,
+              222,
+              1701
+            ]
+          },
+          "standIns": 0
+        },
+        {
+          "id": "ST39.4",
+          "label": "Well SM",
+          "role": "well",
+          "sourceMod": "YUNG's Extras",
+          "source": "data/yungsextras/structure/desert/wells/well_sm.nbt",
+          "sourceSha256": "c8c0c1e0cc7a5e387a2560910dedc631e21d37ccdec72eb4f3ff686944c88189",
+          "preparedSha256": "1f9a579a2be5acbeab0d9b35373ab11519614a06a9981a7372771fdfdfd78daf",
+          "size": [
+            3,
+            10,
+            3
+          ],
+          "origin": [
+            1763,
+            224,
+            1695
+          ],
+          "privateTemplate": "kithkyn_savanna_profile:st39_04_well_sm",
+          "waterCells": 5,
+          "containment": {
+            "kind": "floor",
+            "box": [
+              1763,
+              223,
+              1695,
+              1765,
+              223,
+              1697
+            ]
+          },
+          "standIns": 0
+        },
+        {
+          "id": "ST39.5",
+          "label": "Well MD",
+          "role": "well",
+          "sourceMod": "YUNG's Extras",
+          "source": "data/yungsextras/structure/desert/wells/well_md.nbt",
+          "sourceSha256": "ee686c33fd2385969cdd06153d45edbb4c7e44c8ca961f52e465fd62a0e01d41",
+          "preparedSha256": "a14af844e180ae09f47b219a6f0a111a6abda022c273e8955941676d2e7fdcc2",
+          "size": [
+            5,
+            11,
+            5
+          ],
+          "origin": [
+            1772,
+            223,
+            1695
+          ],
+          "privateTemplate": "kithkyn_savanna_profile:st39_05_well_md",
+          "waterCells": 6,
+          "containment": {
+            "kind": "floor",
+            "box": [
+              1772,
+              222,
+              1695,
+              1776,
+              222,
+              1699
+            ]
+          },
+          "standIns": 0
+        },
+        {
+          "id": "ST39.6",
+          "label": "Well LG",
+          "role": "well",
+          "sourceMod": "YUNG's Extras",
+          "source": "data/yungsextras/structure/desert/wells/well_lg.nbt",
+          "sourceSha256": "1b257af8ce0bda3fba7ffbb239672c9b5054a33eb99adab39a045a77f19fa77e",
+          "preparedSha256": "bd92724c6096962f1510e6a1ff3dde2ff4e2b59896130a9a5cfc1967864e5592",
+          "size": [
+            7,
+            11,
+            7
+          ],
+          "origin": [
+            1783,
+            223,
+            1695
+          ],
+          "privateTemplate": "kithkyn_savanna_profile:st39_06_well_lg",
+          "waterCells": 68,
+          "containment": {
+            "kind": "floor",
+            "box": [
+              1783,
+              222,
+              1695,
+              1789,
+              222,
+              1701
+            ]
+          },
+          "standIns": 0
+        },
+        {
+          "id": "ST39.7",
+          "label": "Wishing Well SM",
+          "role": "well",
+          "sourceMod": "YUNG's Extras",
+          "source": "data/yungsextras/structure/desert/wells/wishing_well_sm.nbt",
+          "sourceSha256": "6c811bc24400333c523e47a18aa7d616821ab4f57d815111e298aa8a0a1f5c87",
+          "preparedSha256": "c5f38cac967b45bb9af8fa8a44e5359e0cc11ed00d1dd855b1585ca4e0d9a453",
+          "size": [
+            3,
+            10,
+            3
+          ],
+          "origin": [
+            1796,
+            224,
+            1695
+          ],
+          "privateTemplate": "kithkyn_savanna_profile:st39_07_wishing_well_sm",
+          "waterCells": 3,
+          "containment": {
+            "kind": "floor",
+            "box": [
+              1796,
+              223,
+              1695,
+              1798,
+              223,
+              1697
+            ]
+          },
+          "standIns": 0
+        },
+        {
+          "id": "ST39.8",
+          "label": "Wishing Well MD",
+          "role": "well",
+          "sourceMod": "YUNG's Extras",
+          "source": "data/yungsextras/structure/desert/wells/wishing_well_md.nbt",
+          "sourceSha256": "d39e41595628a123b99538312aa9d514261643ea3b433d7f4e26b0df5e927843",
+          "preparedSha256": "c1d2cb441c83cdd27d4885e652831640af436b10b232a9e1092ca63cc5c383ba",
+          "size": [
+            5,
+            11,
+            5
+          ],
+          "origin": [
+            1805,
+            223,
+            1695
+          ],
+          "privateTemplate": "kithkyn_savanna_profile:st39_08_wishing_well_md",
+          "waterCells": 4,
+          "containment": {
+            "kind": "floor",
+            "box": [
+              1805,
+              222,
+              1695,
+              1809,
+              222,
+              1699
+            ]
+          },
+          "standIns": 0
+        },
+        {
+          "id": "ST39.9",
+          "label": "Wishing Well LG",
+          "role": "well",
+          "sourceMod": "YUNG's Extras",
+          "source": "data/yungsextras/structure/desert/wells/wishing_well_lg.nbt",
+          "sourceSha256": "dd4eeaa0dc0d29414a3f2cb741438091bf3c03bdc91057b17290c6351aa07aaa",
+          "preparedSha256": "48b0e3f5d609004732e33b99adcc20542aec339a374d55d6bfc1979332a26942",
+          "size": [
+            7,
+            11,
+            7
+          ],
+          "origin": [
+            1816,
+            223,
+            1695
+          ],
+          "privateTemplate": "kithkyn_savanna_profile:st39_09_wishing_well_lg",
+          "waterCells": 56,
+          "containment": {
+            "kind": "floor",
+            "box": [
+              1816,
+              222,
+              1695,
+              1822,
+              222,
+              1701
+            ]
+          },
+          "standIns": 0
+        },
+        {
+          "id": "ST39.10",
+          "label": "Classic Ruin Well",
+          "role": "well",
+          "sourceMod": "Dungeons & Taverns",
+          "source": "data/nova_structures/structure/remnant/classic_village/well.nbt",
+          "sourceSha256": "8e41d1abcde5c6e9fb0144c0f2d1a08209b38059eb78fdd40952a4e0bee61fae",
+          "preparedSha256": "6e675d206c6c050ad1c5b2908d3fe443f546e422d598da6616b5b4df643d30c3",
+          "size": [
+            6,
+            6,
+            6
+          ],
+          "origin": [
+            1829,
+            230,
+            1695
+          ],
+          "privateTemplate": "kithkyn_savanna_profile:st39_10_well",
+          "waterCells": 8,
+          "containment": {
+            "kind": "barrier ring",
+            "box": [
+              1827,
+              230,
+              1693,
+              1836,
+              230,
+              1702
+            ]
+          },
+          "standIns": 0
+        },
+        {
+          "id": "ST39.11",
+          "label": "Old Well",
+          "role": "well",
+          "sourceMod": "Terralith",
+          "source": "data/terralith/structure/small_decoration/old_well.nbt",
+          "sourceSha256": "95322b937f9af2f4e2ca5db0d1a3efe6d2ace2a794257dc2f4589a09cb14671b",
+          "preparedSha256": "cfdc36c809e8cf82a0e72d2bdb0d8c70d2c1d184b03bd216596e690044575d1b",
+          "size": [
+            5,
+            15,
+            5
+          ],
+          "origin": [
+            1841,
+            219,
+            1695
+          ],
+          "privateTemplate": "kithkyn_savanna_profile:st39_11_old_well",
+          "waterCells": 11,
+          "containment": {
+            "kind": "floor",
+            "box": [
+              1841,
+              218,
+              1695,
+              1845,
+              218,
+              1699
+            ]
+          },
+          "standIns": 0
+        },
+        {
+          "id": "ST39.12",
+          "label": "Frog Fountain",
+          "role": "well",
+          "sourceMod": "Terralith",
+          "source": "data/terralith/structure/small_decoration/frog_fountain.nbt",
+          "sourceSha256": "11f088becdcb179bdf15d18256b758ba48a1f3b10040e60c9785d905a617d2f9",
+          "preparedSha256": "cf6e080fd8d0437bd34dedc35b62bb9616cc448091fb4745a926f2cb9e2edabf",
+          "size": [
+            5,
+            11,
+            5
+          ],
+          "origin": [
+            1852,
+            223,
+            1695
+          ],
+          "privateTemplate": "kithkyn_savanna_profile:st39_12_frog_fountain",
+          "waterCells": 0,
+          "containment": {
+            "kind": "floor",
+            "box": [
+              1852,
+              222,
+              1695,
+              1856,
+              222,
+              1699
+            ]
+          },
+          "standIns": 0
+        },
+        {
+          "id": "ST39.13",
+          "label": "Classic Well",
+          "role": "well",
+          "sourceMod": "Kithkyn composite",
+          "source": "run/full-style-showcase/raw/classic-well-composite.nbt",
+          "sourceSha256": "c49eb3a89d6cd88b261c0f2916c087e99297b9ca8274a9d91f7b782d7b16aa15",
+          "preparedSha256": "296a0414c01e56973a66bc6528366eba9a94dfd4b77ff7db0f646b60b6c42d2c",
+          "size": [
+            6,
+            16,
+            6
+          ],
+          "origin": [
+            1863,
+            218,
+            1695
+          ],
+          "privateTemplate": "kithkyn_savanna_profile:st39_13_classic-well-composite",
+          "waterCells": 44,
+          "containment": {
+            "kind": "floor",
+            "box": [
+              1863,
+              217,
+              1695,
+              1868,
+              217,
+              1700
+            ]
+          },
+          "standIns": 0,
+          "assembly": "run/full-style-showcase/ClassicWell.java"
+        }
+      ]
     }
   ],
   "verification": {
-    "preparedTemplates": 280,
-    "placedTemplates": 280,
+    "preparedTemplates": 392,
+    "placedTemplates": 392,
     "allPlacementResponsesConfirmed": true,
-    "chunksGenerated": 64,
-    "worldSaved": true,
-    "worldBackup": "/Users/quzzar/Projects/kithkyn/run/backups/before-savanna-gallery-20260914-122518",
-    "console": "screen session 4515.kithkyn-center-labor",
-    "addedRows": [
-      "ST28"
+    "placements": [
+      "ST01-ST27 (270) 2026-09-14 10:16-10:27, screen session 13033.kithkyn-village-audit, backup before-savanna-gallery-20260914-101649",
+      "ST28 (10) 12:25, screen session 4515.kithkyn-center-labor, backup before-savanna-gallery-20260914-122518",
+      "ST29-ST38 (99) 13:41-13:49, screen session 43560.kithkyn-physical-workplace-labor; the server was restarted under the run during ST39",
+      "ST39 (13) re-placed 13:53, screen session 52297.kithkyn-occupation-verification, backup before-savanna-gallery-20260914-135352"
     ],
-    "offlineRender": "run/savanna-full-profile/offline-render.png, 280 footprints checked against their prepared templates, 0 short",
+    "chunksGenerated": 254,
+    "worldSaved": true,
+    "offlineRender": "run/savanna-full-profile/offline-render.png; 392 footprints checked against their prepared templates",
+    "offlineShortfalls": {
+      "ST05.6": "two white beds and a chest removed by Aaron while selecting (his edit, kept)",
+      "ST39.11": "counted short by the checker but every template block is present",
+      "ST39.13": "40 gravel blocks of the classic well's sunk shaft fell, as gravel does"
+    },
     "waterOutsideRings": 0,
-    "biomeFill": "saved chunk sections y 224-271 under the rows read minecraft:savanna (checked at x1750 z20, x1900 z1116, x1724 z5)",
-    "forceLoadsLeft": 0,
-    "firstPlacement": "27 rows, 270 pieces, 2026-09-14 10:16-10:27, screen session 13033.kithkyn-village-audit, backup before-savanna-gallery-20260914-101649"
+    "biomeFill": "every row's sky filled with minecraft:savanna before placement; saved sections y 224-271 under the rows read savanna",
+    "forceLoadsLeft": "none of this builder's; 36 chunks at x 1712-1887, z 48-79 and 224-255 were force-loaded by another console driver"
   },
   "biome": {
     "filled": "minecraft:savanna",
@@ -7454,9 +10822,31 @@
   },
   "licensing": "CTOV and Towns & Towers are CC BY-NC-ND 4.0 and Dungeons & Taverns is under its own licence: their display copies stay private under run/, as for every gallery. See docs/structure-sourcing.md.",
   "offlineCheck": {
-    "short": [],
+    "short": [
+      {
+        "id": "ST05.6",
+        "label": "Small Hut Yellow",
+        "expected": 131,
+        "placed": 126,
+        "ratio": 0.962
+      },
+      {
+        "id": "ST39.11",
+        "label": "Old Well",
+        "expected": 184,
+        "placed": 164,
+        "ratio": 0.891
+      },
+      {
+        "id": "ST39.13",
+        "label": "Classic Well",
+        "expected": 268,
+        "placed": 196,
+        "ratio": 0.731
+      }
+    ],
     "waterOutsideRings": [],
     "waterOutsideRingsCount": 0,
-    "footprintsChecked": 280
+    "footprintsChecked": 392
   }
 }
