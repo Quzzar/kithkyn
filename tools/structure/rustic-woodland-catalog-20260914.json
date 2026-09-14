@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "recorded": "2026-09-14",
-  "status": "verified",
+  "status": "approved_playable",
   "style": "rustic_woodland",
   "description": "Aaron's approved Rustic Woodland catalog, captured from the live trio-20260912 gallery.",
   "founding": {
@@ -402,6 +402,7 @@
     }
   ],
   "verification": {
+    "visual_approval": "APPROVED in the rebuilt live height gallery on 2026-09-14; this corrected gallery is the locked production reference",
     "static": "./gradlew auditStructureTemplates: PASS (81 templates; no barriers, invalid stations, out-of-bounds blocks, corner terrain air, unclassified containers, open or empty butcheries, or malformed markets)",
     "unit_and_build": "./gradlew check: PASS",
     "placement": "run/rustic-integration/placement/verification.json: PASS (48 corrected real-template placements through instant and incremental paths, four rotations, colors, frames, save receipts, and upgrades)",

@@ -2,6 +2,8 @@
 
 The Rustic Woodland catalog is the ordinary oak-forest village. It keeps the familiar shape of a traditional Minecraft woodland settlement while giving every building a concrete village role. Forest selects this catalog when its private datapack is installed. Compatible modded oak woodland biomes can opt in through `kithkyn:village_style/rustic_woodland`.
 
+The corrected live height gallery received final in-world approval on 2026-09-14. Its 21 buildings, founding set, identity rules, and wall family are the locked production reference for this playable variant.
+
 ## Founding village
 
 RW01.1 is the village center. Its bell is the meeting point and the guard captain's post; its lit campfire is a separate gathering fire. It contains five builder duty anchors, unlocked by the shared population thresholds, and one merchant post at the small stall. The built-in well grants water. The stall barrel is shared storage; the eight barrels around the water tower are scenery and are not village containers. The center has no beds.
