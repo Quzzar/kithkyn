@@ -56,17 +56,25 @@ record WallPalette(Block post, Block deck, Block stairs, Block slab,
       case NAUTICAL_COAST -> new WallPalette(
           Blocks.SANDSTONE, Blocks.SANDSTONE, Blocks.JUNGLE_STAIRS,
           Blocks.JUNGLE_SLAB, Blocks.SANDSTONE_WALL, Blocks.JUNGLE_TRAPDOOR);
+      // Study A (2026-09-14): a stripped acacia palisade with acacia fence tips,
+      // acacia slab walks and hatches. Its cobblestone footing resolves through
+      // footing().
+      case SAVANNA_TENT -> new WallPalette(
+          Blocks.STRIPPED_ACACIA_WOOD, Blocks.STRIPPED_ACACIA_WOOD, Blocks.ACACIA_STAIRS,
+          Blocks.ACACIA_SLAB, Blocks.ACACIA_FENCE, Blocks.ACACIA_TRAPDOOR);
     };
   }
 
   /**
    * The course a footed family seats on the ground (docs/walls.md): dead coral
    * under the Polynesian palisade, stripped jungle wood under the Nautical
-   * seawall. Families without a footing never place one.
+   * seawall, cobblestone under the Savanna Tent palisade. Families without a
+   * footing never place one.
    */
   Block footing() {
     if (this.post == Blocks.STRIPPED_SPRUCE_WOOD) return Blocks.DEAD_BUBBLE_CORAL_BLOCK;
     if (this.post == Blocks.SANDSTONE) return Blocks.STRIPPED_JUNGLE_WOOD;
+    if (this.post == Blocks.STRIPPED_ACACIA_WOOD) return Blocks.COBBLESTONE;
     return this.post;
   }
 

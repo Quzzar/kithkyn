@@ -42,7 +42,8 @@ class VillageStyleTest {
     assertEquals(List.of(VillageStyle.BIRCH_FOREST, VillageStyle.DESERT, VillageStyle.BADLANDS,
         VillageStyle.FLOODPLAIN, VillageStyle.JUNGLE, VillageStyle.SWAMP, VillageStyle.MEDITERRANEAN,
         VillageStyle.TUNDRA, VillageStyle.POLYNESIAN_COAST, VillageStyle.ROMANIAN,
-        VillageStyle.ALPINE_HIGHLANDS, VillageStyle.JAPANESE_CHERRY_GROVE, VillageStyle.NAUTICAL_COAST),
+        VillageStyle.ALPINE_HIGHLANDS, VillageStyle.JAPANESE_CHERRY_GROVE, VillageStyle.NAUTICAL_COAST,
+        VillageStyle.SAVANNA_TENT),
         List.of(VillageStyle.values()));
     assertEquals(VillageStyle.BIRCH_FOREST, VillageStyle.DEFAULT);
     assertEquals(VillageStyle.BIRCH_FOREST, VillageStyle.fromId(""));
@@ -85,7 +86,7 @@ class VillageStyleTest {
   }
 
   @Test
-  void puebloCoversMesaAndSavannaWhileSandyDesertsStayDistinct() {
+  void puebloCoversMesaAndTheSavannaTentCoversSavannaWhileSandyDesertsStayDistinct() {
     Set<TagKey<Biome>> mapped = Set.of(VillageStyle.BADLANDS.biomeTag(), Tags.Biomes.IS_BADLANDS);
     assertEquals(VillageStyle.BADLANDS,
         VillageStyle.select(mapped::contains, "badlands", 2F, false, 0F, 7L, ALL_STYLES));
@@ -99,7 +100,7 @@ class VillageStyleTest {
             style -> style == VillageStyle.DESERT));
     for (long seed = 0; seed < 20; seed++) {
       assertFamily(Tags.Biomes.IS_BADLANDS, VillageStyle.BADLANDS, seed);
-      assertFamily(Tags.Biomes.IS_SAVANNA, VillageStyle.BADLANDS, seed);
+      assertFamily(Tags.Biomes.IS_SAVANNA, VillageStyle.SAVANNA_TENT, seed);
       assertFamily(Tags.Biomes.IS_SANDY, VillageStyle.DESERT, seed);
       assertFamily(Tags.Biomes.IS_DESERT, VillageStyle.DESERT, seed);
       Set<TagKey<Biome>> sandyMesa = Set.of(Tags.Biomes.IS_BADLANDS, Tags.Biomes.IS_SANDY);
@@ -110,11 +111,21 @@ class VillageStyleTest {
 
   @Test
   void untaggedMesaAndSavannaNamesHaveStableCoverageThatExplicitTagsCanNarrow() {
-    for (String path : List.of("wooded_mesa", "red_badlands", "dry_savanna", "savannah_hills")) {
+    for (String path : List.of("wooded_mesa", "red_badlands")) {
       assertEquals(VillageStyle.BADLANDS,
           VillageStyle.select(NO_TAGS, path, 1.2F, false, 0F, 12L, ALL_STYLES));
       assertEquals(VillageStyle.DESERT,
           VillageStyle.select(VillageStyle.DESERT.biomeTag()::equals, path, 1.2F, false, 0F, 12L, ALL_STYLES));
+    }
+    for (String path : List.of("dry_savanna", "savannah_hills", "windswept_savanna")) {
+      assertEquals(VillageStyle.SAVANNA_TENT,
+          VillageStyle.select(NO_TAGS, path, 1.2F, false, 0F, 12L, ALL_STYLES),
+          "a savanna name is the Savanna Tent, the windswept one ahead of the mountain rule");
+      assertEquals(VillageStyle.DESERT,
+          VillageStyle.select(VillageStyle.DESERT.biomeTag()::equals, path, 1.2F, false, 0F, 12L, ALL_STYLES));
+      assertTrue(Set.of(VillageStyle.DESERT, VillageStyle.BADLANDS).contains(
+          VillageStyle.select(NO_TAGS, path, 1.2F, false, 0F, 12L, style -> style != VillageStyle.SAVANNA_TENT)),
+          "without the Savanna pack a savanna keeps the hot, dry cluster's answer");
     }
     assertEquals(VillageStyle.BIRCH_FOREST,
         VillageStyle.select(Tags.Biomes.IS_SAVANNA::equals, "birch_savanna", 1F, false, 0F, 12L, ALL_STYLES));

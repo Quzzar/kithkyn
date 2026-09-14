@@ -370,6 +370,18 @@ for the Nautical one, and the catalog seats either on each column's own ground b
 Its ordinal did not move, so saved section signatures are unchanged. Guard posts are read from the
 Birch footprint and stand on the jungle slab walks.
 
+The Savanna Tent family (`data/kithkyn/structure/wall/savanna_tent/`, 2026-09-14) is study A of
+the Savanna gallery, the acacia palisade: the Birch geometry with its cobblestone and mossy
+cobblestone turned to stripped acacia wood, its stone walls to acacia fence tips, its top
+cobblestone slabs to acacia slab walks and its oak hatches to acacia, on a course of cobblestone.
+The five templates are the gallery's own files byte for byte
+(`tools/structure/savanna-tent-walls-20260914.json`). The loader reads `stripped_acacia_wood` as
+`BODY`, like the Polynesian spruce. Its footing is the one block another family already uses as
+body, Birch cobblestone, so the piece mapping takes the family name: cobblestone is `FOOTING` for
+`savanna_tent` and `COBBLE_POST` for everyone else, and it resolves through the palette's
+`footing()`, cobblestone for this family. The catalog seats it on each column's own ground by the
+Polynesian rule. Guard posts are read from the Birch footprint and stand on the acacia slab walks.
+
 ## Planning and developer preview
 
 Walls are safety projects. An established village starts its regional wall after

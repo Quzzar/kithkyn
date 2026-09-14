@@ -26,6 +26,7 @@ These catalogs are integrated, selectable, and verified as complete founding vil
 | Alpine Highlands | Meadow, Grove, Snowy Slopes, mountain peaks, and Windswept mountain families | Iberian-inspired brick and spruce settlement with berry plots, dense shared homes, deep wells, and brushed brick walls |
 | Japanese Cherry Grove | Cherry Grove, Flower Forest, and compatible Sakura biomes | Flowering garden settlement with spruce frames, ponds, compact farms and cherry-leaf walls |
 | Nautical Coast | Beaches on temperate or cold water, Stony Shore, and compatible coasts | A fishing town around a lighthouse: thatched sandstone-and-jungle-timber beach cottages, a jetty fishery on its own water, a turnover-ship castle, and a sandstone seawall on stripped jungle wood |
+| Savanna Tent | Savanna, Savanna Plateau, Windswept Savanna, and compatible dry grasslands | A tent camp on the dry grass: the original white-canvas savanna tent as its centre, blue and yellow tipis and camp tents, a trader-tent storehouse, an acacia mine and stoneworks, vanilla's savanna temple and farm, and an acacia palisade on cobblestone |
 
 ## Locked directions
 
@@ -37,16 +38,17 @@ its production catalog and founding behavior are verified.
 | --- | --- | --- |
 | Rustic Woodland | Forest and compatible ordinary oak woodland biomes | Familiar timber woodland settlement with a restrained rustic character |
 | Taiga | Taiga, Old Growth Pine Taiga, Old Growth Spruce Taiga, and compatible cold forests | Cold forest settlement; its final visual language is deliberately deferred between the ornate Polish family and the grittier T&T Viking family |
-| Savanna Tent | Savanna, Savanna Plateau, Windswept Savanna, and compatible dry grasslands | African-inspired tent and grassland settlement with portable-looking structures and a coherent warm-climate material palette |
 | Mushroom | Mushroom Fields and compatible fungal biomes | Fantasy mushroom settlement drawn from the complete mushroom reference families |
 
 Jungle, ordinary Swamp, Mediterranean, Tundra, Polynesian Coast, Romanian, Alpine Highlands,
-Japanese Cherry Grove and Nautical Coast are complete private production catalogs. Swamp remains
+Japanese Cherry Grove, Nautical Coast and Savanna Tent are complete private production catalogs. Swamp remains
 separate from the mud-brick Floodplain catalog used by mangroves. Tundra starts from a four-bed
 centre with a naturally placed mine and storehouse and deliberately has no castle. The Polynesian
 Coast centre is the king's hall, which seats the ruler and keeps the village jail; that catalog has
 no castle yet. The Nautical Coast centre is a lighthouse whose four beds sleep the founding workers,
-and its castle is the Towns & Towers beach camp's turnover ship.
+and its castle is the Towns & Towers beach camp's turnover ship. The Savanna Tent centre is the
+original Village Life savanna tent, whose four beds sleep the founding workers; that catalog has no
+castle and no watchtower.
 
 Swedish and Polish are source languages in the current review rather than settled biome
 assignments. The Swedish temple and tower remain a useful candidate church progression for a
@@ -61,10 +63,10 @@ to Floodplain when site selection can classify them reliably.
 
 ## Next authoring shortlist
 
-Tundra, Polynesian Coast, Romanian, Alpine Highlands, Japanese Cherry Grove and Nautical Coast are
-complete. Taiga remains intentionally parked until the ornate Polish and grittier Viking directions
-can be judged after more village catalogs are complete. Savanna Tent is in selection: its gallery stands in the
-trio world (below). Mushroom remains available as the next catalog pass.
+Tundra, Polynesian Coast, Romanian, Alpine Highlands, Japanese Cherry Grove, Nautical Coast and
+Savanna Tent are complete. Taiga remains intentionally parked until the ornate Polish and grittier
+Viking directions can be judged after more village catalogs are complete. Mushroom and Rustic
+Woodland remain available as the next catalog pass.
 
 The three walk-through courts begin at **9913.5, 230, 986.5** in the live showcase world. The
 individual entrances are Swamp at **9929.5, 230, 1004.5**, Viking at
@@ -136,8 +138,11 @@ The current review status is:
   `tools/structure/nautical-full-profile-20260913.json`, and the catalog is in
   `tools/structure/nautical-coast-catalog-20260913.json`.
 
-- **Savanna Tent:** the selection gallery stands in the sky above the **trio-20260912** world,
-  beginning at **1723.5, 230, 10.5**, east of the Nautical gallery. Its 43 rows hold 410 pieces:
+- **Savanna Tent:** the production catalog is selected and verified
+  ([savanna-tent-village.md](savanna-tent-village.md)); the catalog is in
+  `tools/structure/savanna-tent-catalog-20260914.json`. Its selection gallery stands in the sky
+  above the **trio-20260912** world, beginning at **1723.5, 230, 10.5**, east of the Nautical
+  gallery. Its 43 rows hold 410 pieces:
   - ST01 to ST06: every standalone Towns & Towers savanna and tent piece: the ramshackled savanna
     plateau village with the showcase's assembled tower village and the fourteen storeys its towers
     are stacked from, the savanna plateau camp, the wooded badlands tipi village and camp, the

@@ -28,13 +28,13 @@ import net.neoforged.neoforge.common.Tags;
  * authored and never borrows another family's building to fill a gap. Birch
  * Forest is the one bundled catalog and so the default; Desert, Badlands,
  * Floodplain, Jungle, Swamp, Mediterranean, Tundra, Polynesian Coast,
- * Romanian, Alpine Highlands, Japanese Cherry Grove and Nautical Coast arrive
- * through private datapacks (docs/desert-village.md, docs/badlands-village.md,
+ * Romanian, Alpine Highlands, Japanese Cherry Grove, Nautical Coast and Savanna
+ * Tent arrive through private datapacks (docs/desert-village.md, docs/badlands-village.md,
  * docs/floodplain-village.md, docs/jungle-village.md, docs/swamp-village.md,
  * docs/mediterranean-village.md, docs/tundra-village.md,
  * docs/polynesian-coast-village.md, docs/romanian-village.md,
  * docs/alpine-highlands-village.md, docs/japanese-cherry-grove-village.md,
- * docs/nautical-coast-village.md), so they
+ * docs/nautical-coast-village.md, docs/savanna-tent-village.md), so they
  * are only automatic candidates while their founding sets are loaded.
  *
  * Explicit datapack style tags take precedence over conventional biome families.
@@ -46,7 +46,7 @@ import net.neoforged.neoforge.common.Tags;
  */
 public enum VillageStyle {
   BIRCH_FOREST, DESERT, BADLANDS, FLOODPLAIN, JUNGLE, SWAMP, MEDITERRANEAN, TUNDRA,
-  POLYNESIAN_COAST, ROMANIAN, ALPINE_HIGHLANDS, JAPANESE_CHERRY_GROVE, NAUTICAL_COAST;
+  POLYNESIAN_COAST, ROMANIAN, ALPINE_HIGHLANDS, JAPANESE_CHERRY_GROVE, NAUTICAL_COAST, SAVANNA_TENT;
 
   /**
    * What a blank or unknown saved style reads as, the answer for every climate
@@ -223,10 +223,13 @@ public enum VillageStyle {
         || path.contains("cherry") || path.contains("sakura")) {
       return JAPANESE_CHERRY_GROVE;
     }
-    // Pueblo covers the mesa and savanna families until more specific catalogs
-    // are authored. Explicit style tags can narrow that coverage later.
-    if (tagged.test(Tags.Biomes.IS_BADLANDS) || tagged.test(Tags.Biomes.IS_SAVANNA)
-        || path.contains("badlands") || path.contains("mesa") || path.contains("savanna")) {
+    // The savanna families are the Savanna Tent (docs/savanna-tent-village.md),
+    // Windswept Savanna included, ahead of the mountain rule that reads "windswept".
+    if (tagged.test(Tags.Biomes.IS_SAVANNA) || path.contains("savanna")) {
+      return SAVANNA_TENT;
+    }
+    // Pueblo covers the mesa families. Explicit style tags can narrow that coverage.
+    if (tagged.test(Tags.Biomes.IS_BADLANDS) || path.contains("badlands") || path.contains("mesa")) {
       return BADLANDS;
     }
     if (tagged.test(Tags.Biomes.IS_DESERT) || tagged.test(Tags.Biomes.IS_SANDY)) {

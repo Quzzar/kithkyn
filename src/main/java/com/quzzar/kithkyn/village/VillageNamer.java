@@ -214,6 +214,14 @@ public final class VillageNamer {
           List.of("Saltmere", "Gullhaven", "Kelmouth", "Tidewick"),
           List.of("Salt", "Gull", "Kel", "Tide", "Brine", "Wrack", "Shel", "Skerry"),
           List.of("mere", "haven", "mouth", "wick", "cove", "ness", "holm", "strand"));
+      case SAVANNA_TENT -> new NamingProfile(
+          "A tent camp on the dry grass: white canvas over acacia frames around the town fire, blue"
+              + " and yellow tipis, a trader's tent for the stores, an acacia mine and stoneworks,"
+              + " and a palisade of acacia posts on stone footings."
+              + " Warm, open invented names with a grassland sound.",
+          List.of("Sunveld", "Thornkraal", "Dustmere", "Kalandi"),
+          List.of("Sun", "Thorn", "Dust", "Veld", "Kala", "Umba", "Ember", "Grass"),
+          List.of("veld", "kraal", "mere", "moor", "ndi", "ara", "wela", "camp"));
     };
   }
 

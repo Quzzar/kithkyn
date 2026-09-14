@@ -109,6 +109,10 @@ in it, and update it in the same change that moves what it describes.
   turnover-ship castle and its jail, the CTOV beach homes and services, the jetty fishery on its
   own water, the sandstone seawall on stripped jungle wood, and its temperate-beach and
   stony-shore founding.
+- [savanna-tent-village.md](savanna-tent-village.md): the approved Savanna Tent catalog: the
+  original savanna tent as its centre, tipis and camp tents for homes and works, the trader-tent
+  storehouse, the original mine and stoneworks, vanilla's savanna temple and farm, the sunk
+  savanna well, the acacia palisade on cobblestone, and its savanna founding.
 - [appearance.md](appearance.md): why villagers use the player model and not the vanilla
   villager model, the wide/slim model split by gender, and the client-side runtime skin
   compositor that bakes a villager's look from inherited skin, hair, and eye structures,

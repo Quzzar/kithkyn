@@ -41,7 +41,8 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
  * catalog seats on the ground. The Polynesian Coast palisade (study A, 2026-09-12) is stripped spruce
  * with spruce fence tips and oak slab walks on dead coral; the Nautical Coast seawall (study C,
  * 2026-09-13) is sandstone and smooth sandstone with sandstone wall tips and jungle slab walks on
- * stripped jungle wood.
+ * stripped jungle wood; the Savanna Tent palisade (study A, 2026-09-14) is stripped acacia with acacia
+ * fence tips and acacia slab walks on cobblestone.
  */
 class FootedWallFamilyTest {
 
@@ -63,7 +64,9 @@ class FootedWallFamilyTest {
           "polynesian_coast", Blocks.DEAD_BUBBLE_CORAL_BLOCK, Set.of(Blocks.STRIPPED_SPRUCE_WOOD), Blocks.OAK_SLAB),
       new Family("Nautical study C", VillageStyle.NAUTICAL_COAST, AuthoredWoodWallSegments.NAUTICAL_COAST,
           "nautical_coast", Blocks.STRIPPED_JUNGLE_WOOD, Set.of(Blocks.SANDSTONE, Blocks.SMOOTH_SANDSTONE),
-          Blocks.JUNGLE_SLAB));
+          Blocks.JUNGLE_SLAB),
+      new Family("Savanna study A", VillageStyle.SAVANNA_TENT, AuthoredWoodWallSegments.SAVANNA_TENT,
+          "savanna_tent", Blocks.COBBLESTONE, Set.of(Blocks.STRIPPED_ACACIA_WOOD), Blocks.ACACIA_SLAB));
 
   /** One block of a bundled study template, with the facing and slab half it was captured with. */
   private record StudyCell(int x, int y, int z, String name, Direction facing, String slabType) {
