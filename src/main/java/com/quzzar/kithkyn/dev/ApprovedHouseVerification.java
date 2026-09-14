@@ -62,6 +62,7 @@ import net.minecraft.world.level.block.state.properties.SlabType;
 import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
 import net.minecraft.world.level.block.state.properties.Half;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -784,6 +785,16 @@ public final class ApprovedHouseVerification {
         .filter(goal -> goal.getGoal() instanceof OpenFenceGateGoal)
         .map(goal -> "running=" + goal.isRunning() + ",canUse=" + goal.getGoal().canUse()).toList();
     BlockPos feet = walker.blockPosition();
+    List<String> nearbyCollision = new ArrayList<>();
+    AABB nearby = walker.getBoundingBox().inflate(0.2D, 0.05D, 0.2D);
+    for (BlockPos position : BlockPos.betweenClosed(
+        BlockPos.containing(nearby.minX, nearby.minY, nearby.minZ),
+        BlockPos.containing(nearby.maxX, nearby.maxY, nearby.maxZ))) {
+      var state = walker.level().getBlockState(position);
+      boolean intersects = state.getCollisionShape(walker.level(), position).toAabbs().stream()
+          .map(box -> box.move(position)).anyMatch(box -> box.intersects(nearby));
+      if (intersects) nearbyCollision.add(position.subtract(ORIGIN) + "=" + state);
+    }
     return "collision=" + walker.horizontalCollision + ",onGround=" + walker.onGround()
         + ",pose=" + walker.getPose() + ",body=" + walker.getBbHeight()
         + ",onClimbable=" + walker.onClimbable()
@@ -792,6 +803,7 @@ public final class ApprovedHouseVerification {
         + ",canOpenDoors="
         + ((GroundPathNavigation) walker.getNavigation()).canOpenDoors() + ",doorGoals=" + doors
         + ",gateGoals=" + gates
+        + ",nearbyCollision=" + nearbyCollision
         + ",pathDone=" + walker.getNavigation().isDone() + ",nextNode="
         + (path == null ? "none" : path.getNextNodeIndex()) + ",nearbyNodes=" + nodes;
   }

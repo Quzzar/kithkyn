@@ -1,5 +1,9 @@
 # Castles
 
+Castle amenities are capability-based rather than name-based. Most regions place them in a
+standalone `castle`, while a sufficiently fortified `village_center` may author the same ruler,
+guard and custody layout. Either form counts as the settlement's single governing stronghold.
+
 ## Desert castle
 
 The first castle is the edited R07.2 Desert Fort from Towns and Towers. The editable gallery

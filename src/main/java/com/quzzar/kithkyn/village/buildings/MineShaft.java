@@ -94,8 +94,8 @@ public final class MineShaft {
 
   /** A shaft with an authored corridor width. Even widths keep the mouth in local x 0. */
   public static MineShaft root(BlockPos mouth, Rotation rotation, long rootStation, int width) {
-    if (width != 2 && width != 3 && width != 5) {
-      throw new IllegalArgumentException("Mine width must be 2, 3 or 5");
+    if (width < 2 || width > 5) {
+      throw new IllegalArgumentException("Mine width must be between 2 and 5");
     }
     int minX = -width / 2;
     return new MineShaft(mouth, rotation, rootStation, minX, minX + width - 1, null, null);

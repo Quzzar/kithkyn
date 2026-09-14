@@ -1,6 +1,7 @@
 package com.quzzar.kithkyn.entities.ai.goals.work;
 
-import java.util.HashSet;
+import java.util.Comparator;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -11,6 +12,7 @@ import com.quzzar.kithkyn.entities.RealPerson;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.NonNullList;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.entity.Pose;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -33,11 +35,11 @@ import net.minecraft.world.level.block.state.BlockState;
  *
  * <p>The raw item genuinely roasts on the fire via
  * {@link CampfireBlockEntity#placeFood}; what counts as cookable is read from
- * the vanilla campfire recipe set, so any campfire-cookable item counts and
- * modded ones come along for free. This helper owns the timing and lifts the
- * cooked food straight into the pack, so the fire's own cook tick never
- * finishes first and drops it on the ground. One instance per step, because
- * one person tends one roast at a time.
+ * the campfire recipe set, so potatoes become baked potatoes and any modded
+ * recipe that produces food comes along for free. This helper owns the timing
+ * and lifts the cooked food straight into the pack, so the fire's own cook
+ * tick never finishes first and drops it on the ground. One instance per step,
+ * because one person tends one roast at a time.
  */
 public final class CampfireRoast {
   /** Ticks a raw item roasts on the fire before it is lifted off cooked. */
@@ -49,7 +51,7 @@ public final class CampfireRoast {
    */
   private static final int FIRE_COOK_TICKS = 20 * 60;
 
-  /** The raw items any campfire recipe accepts, resolved once from the recipe set. */
+  /** The inputs of campfire recipes that produce food, resolved once from the recipe set. */
   @Nullable
   private Set<Item> cookableRaws;
   /** What those recipes produce, so a cook knows their own output. */
@@ -184,30 +186,42 @@ public final class CampfireRoast {
   }
 
   /**
-   * Every item a campfire recipe accepts as input, resolved once and kept,
-   * with the matching results alongside. A datapack reload is the only thing
-   * that changes the set, so a cache that outlives a reload is a fair trade
-   * for not walking the recipe set on every scan.
+   * Every input whose campfire recipe produces edible food, resolved once and
+   * kept with the matching results alongside. Recipes are read in id order so
+   * villagers make the same choice after every restart. A datapack reload is
+   * the only thing that changes the set, so a cache that outlives a reload is
+   * a fair trade for not walking the recipe set on every scan.
    */
   public Set<Item> cookableRaws(Level level) {
     if (this.cookableRaws == null) {
-      Set<Item> raws = new HashSet<>();
-      Set<Item> results = new HashSet<>();
-      for (RecipeHolder<CampfireCookingRecipe> holder
-          : level.getRecipeManager().getAllRecipesFor(RecipeType.CAMPFIRE_COOKING)) {
+      Set<Item> raws = new LinkedHashSet<>();
+      Set<Item> results = new LinkedHashSet<>();
+      List<RecipeHolder<CampfireCookingRecipe>> recipes = level.getRecipeManager()
+          .getAllRecipesFor(RecipeType.CAMPFIRE_COOKING).stream()
+          .sorted(Comparator.comparing(holder -> holder.id().toString()))
+          .toList();
+      for (RecipeHolder<CampfireCookingRecipe> holder : recipes) {
         NonNullList<Ingredient> inputs = holder.value().getIngredients();
         if (inputs.isEmpty()) {
           continue;
         }
-        for (ItemStack in : inputs.get(0).getItems()) {
-          raws.add(in.getItem());
-        }
-        results.add(holder.value().getResultItem(level.registryAccess()).getItem());
+        addFoodRecipe(inputs.getFirst(), holder.value().getResultItem(level.registryAccess()), raws, results);
       }
       this.cookableRaws = raws;
       this.cookedResults = results;
     }
     return this.cookableRaws;
+  }
+
+  /** Add every accepted input only when this campfire recipe actually prepares food. */
+  static void addFoodRecipe(Ingredient input, ItemStack result, Set<Item> raws, Set<Item> results) {
+    if (result.isEmpty() || !result.has(DataComponents.FOOD)) {
+      return;
+    }
+    for (ItemStack accepted : input.getItems()) {
+      raws.add(accepted.getItem());
+    }
+    results.add(result.getItem());
   }
 
   /** Wipe the first slot holding this raw item off the fire and sync the change. */

@@ -80,6 +80,19 @@ class BuildingGrantContractTest {
   }
 
   @Test
+  void aFortifiedCenterMustExplainItsRulerProtectionAndCustodyBenefits() {
+    BuildingInfo center = parse("""
+        {"structure":"village_center_test_1","grants":["CIVIC_CENTER"],
+         "castle":{"custody_cell":[1,1,1],"release_point":[2,1,1],
+           "evidence_containers":[[3,1,1],[4,1,1]]}}
+        """);
+    assertEquals(List.of(
+        "castle amenities requires grant GOVERNANCE",
+        "castle amenities requires grant PROTECTION",
+        "castle amenities requires grant CUSTODY"), BuildingGrantContract.missing(center));
+  }
+
+  @Test
   void everyBundledDefinitionMeetsTheCompleteGrantContract() throws Exception {
     Map<ResourceLocation, JsonElement> definitions = resources("kithkyn/buildings");
     Map<String, BuildingInfo> loaded = BuildingDefinitionLoader.resolve(definitions);

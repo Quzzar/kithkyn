@@ -46,6 +46,10 @@ was built with.
    jobs, routed worksites, grants, shared and personal storage, throughput, and progression role.
    Price that complete package rather than its block count. The loader rejects missing costs,
    missing grants, retired grant names, and grants that fail the building's authored-value contract.
+   Productive categories must also declare their core occupation as either a local
+   `work_stations` vacancy or a routed `worksites` destination. Never reuse a coordinate for two
+   stations: the loader rejects it, and `tools/structure/audit-templates.py` also checks every
+   station against the template bounds.
    See [building-spec.md](building-spec.md).
    Markets retain their original tent, decorative banner, rug and candle colors. Regional
    materials may change, but these fabrics must not become village identity slots; see
@@ -57,6 +61,8 @@ was built with.
    grass gallery. The command treats the supplied Y as the grass surface and applies each
    definition's authored `sink` through the same seating path as an ordinary village. Every sign
    states the sink so a swallowed step or floating foundation can be traced directly to its JSON.
+   The gallery enumerates the live `Buildings` catalog rather than a fixed variant list, so every
+   definition added by a future variant appears automatically after its datapack reloads.
    Build the gallery high above unused ground because it creates a continuous seven-block-deep
    platform across the complete catalog. `/reload` picks up JSON edits without a restart; a new
    `.nbt` needs a restart.
@@ -193,7 +199,9 @@ tree then grows on Minecraft's schedule and its canopy is a natural one. A templ
 wrong either way: persistent leaves never decay, so the lodge's original tree left its whole
 crown floating after the first felling (seen live); natural leaves placed one block per swing
 by the builder can decay before their trunk lands. Decorative trees a structure carries, such
-as the church's, stay persistent on purpose.
+as the church's, stay persistent on purpose. `audit-templates.py` rejects a lumberjack definition
+whose `LUMBERJACK` station points anywhere except its authored sapling, because an air station can
+be reached but can never regrow wood.
 
 Seating is checked offline rather than by eye: a door's lower half should sit one layer above
 the ground layer, beds and work stations likewise. Fisheries and level-1 watchtowers carried an

@@ -29,7 +29,7 @@ The private datapack contains 23 definitions:
 | --- | --- |
 | `village_center_tundra_1` | T01.1; four core jobs, four worker beds, four personal barrels, bell and four snow golems |
 | `mine_tundra_1` | T05.6; a three-block-wide shaft running south from its north-facing entrance |
-| `storehouse_tundra_1` | T01.5; two reachable village storage barrels and the quartermaster worksite; the third buried barrel remains decoration |
+| `storehouse_tundra_1` | T01.5; three reachable village storage barrels and the quartermaster worksite; every barrel is a central shelf |
 | `house_tundra_1` | T01.4 one-bed home |
 | `house_tundra_1__two_single` | T01.3 two single beds with separate personal storage |
 | `house_tundra_1__three_single` | T01.6 three single beds with shared storage |

@@ -144,7 +144,8 @@ class FootedWallFamilyTest {
     for (AuthoredWoodWallSegments other : List.of(AuthoredWoodWallSegments.INSTANCE,
         AuthoredWoodWallSegments.BIRCH_FOREST, AuthoredWoodWallSegments.ARID,
         AuthoredWoodWallSegments.SWAMP, AuthoredWoodWallSegments.MEDITERRANEAN,
-        AuthoredWoodWallSegments.ROMANIAN, AuthoredWoodWallSegments.ALPINE_HIGHLANDS)) {
+        AuthoredWoodWallSegments.ROMANIAN, AuthoredWoodWallSegments.ALPINE_HIGHLANDS,
+        AuthoredWoodWallSegments.JAPANESE_CHERRY_GROVE)) {
       assertFalse(other.hasFooting(), "an unfooted family's compile must not change");
     }
   }

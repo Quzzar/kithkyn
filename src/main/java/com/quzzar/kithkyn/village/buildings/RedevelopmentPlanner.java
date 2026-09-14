@@ -20,7 +20,6 @@ import com.quzzar.kithkyn.village.VillageManager;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
@@ -269,7 +268,7 @@ public final class RedevelopmentPlanner {
       }
     }
     List<Long> fill = new ArrayList<>(prep.toFill());
-    // Removed foundations outside the new footprint also get restored, using paid dirt.
+    // Removed foundations outside the new footprint also get restored as site work.
     for (Building victim : removed) {
       int floor = BlockPos.of(victim.getOriginLocation()).getY() + victim.getPlacedSink();
       for (RedevelopmentPlan.RemovalBlock block : blocks) {
@@ -282,9 +281,6 @@ public final class RedevelopmentPlanner {
     }
     ConstructionMode mode = source == null ? ConstructionMode.FRESH : ConstructionMode.UPGRADE;
     List<ItemStack> required = new ArrayList<>(ConstructionQuote.requiredFor(target, mode));
-    if (!fill.isEmpty()) {
-      required.add(new ItemStack(Items.DIRT, fill.size()));
-    }
     blocks.sort(Comparator.comparingInt((RedevelopmentPlan.RemovalBlock block) -> BlockPos.of(block.position()).getY())
         .reversed().thenComparingLong(RedevelopmentPlan.RemovalBlock::position));
     return new Assessment(Optional.of(new RedevelopmentPlan(UUID.randomUUID(), target.getName(), mode,

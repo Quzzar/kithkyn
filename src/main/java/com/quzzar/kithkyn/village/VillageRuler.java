@@ -14,7 +14,6 @@ import com.quzzar.kithkyn.entities.Virtue;
 import com.quzzar.kithkyn.persona.PersonaData;
 import com.quzzar.kithkyn.village.buildings.Building;
 import com.quzzar.kithkyn.village.buildings.BuildingInfo;
-import com.quzzar.kithkyn.village.buildings.Buildings;
 
 /**
  * The ruler's incumbent speaks through the existing village decision pipelines. The ruling seat
@@ -50,11 +49,6 @@ public final class VillageRuler {
         .ifPresent(person -> person.logMemory(event, Optional.empty()));
   }
 
-  /** A castle, or a centre that is itself the king's hall. */
-  private static boolean isRulingSeat(BuildingInfo info) {
-    return "castle".equals(info.getCategory()) || Buildings.VILLAGE_CENTER_CATEGORY.equals(info.getCategory());
-  }
-
   /** Only a loaded resident at a still-valid ruling-seat station can currently deliberate. Never loads chunks. */
   public static Optional<RealPerson> incumbent(Village village) {
     if (village == null || village.getLevel() == null) return Optional.empty();
@@ -63,7 +57,7 @@ public final class VillageRuler {
       if (job.getOccupation() != Occupation.LEADER) continue;
       Building building = village.getBuilding(job.getBuildingUUID());
       BuildingInfo info = building == null ? null : building.getInfo();
-      if (info == null || !isRulingSeat(info)) continue;
+      if (!isRulerSeat(info)) continue;
       List<Occupation> stations = List.copyOf(info.getWorkLocations().values());
       if (job.getStationIndex() < 0 || job.getStationIndex() >= stations.size()
           || stations.get(job.getStationIndex()) != Occupation.LEADER) continue;
@@ -72,6 +66,11 @@ public final class VillageRuler {
           && village.getPopulation().contains(entry.getKey())) return Optional.of(person);
     }
     return Optional.empty();
+  }
+
+  /** A fortified center can hold the same single ruling office as a standalone castle. */
+  static boolean isRulerSeat(BuildingInfo info) {
+    return info != null && info.getCastleLayout() != null;
   }
 
   /** Snapshot on the server thread before dispatching an asynchronous model call. */

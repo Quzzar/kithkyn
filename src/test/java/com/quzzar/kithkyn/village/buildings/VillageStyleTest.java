@@ -42,7 +42,7 @@ class VillageStyleTest {
     assertEquals(List.of(VillageStyle.BIRCH_FOREST, VillageStyle.DESERT, VillageStyle.BADLANDS,
         VillageStyle.FLOODPLAIN, VillageStyle.JUNGLE, VillageStyle.SWAMP, VillageStyle.MEDITERRANEAN,
         VillageStyle.TUNDRA, VillageStyle.POLYNESIAN_COAST, VillageStyle.ROMANIAN,
-        VillageStyle.ALPINE_HIGHLANDS, VillageStyle.NAUTICAL_COAST),
+        VillageStyle.ALPINE_HIGHLANDS, VillageStyle.JAPANESE_CHERRY_GROVE, VillageStyle.NAUTICAL_COAST),
         List.of(VillageStyle.values()));
     assertEquals(VillageStyle.BIRCH_FOREST, VillageStyle.DEFAULT);
     assertEquals(VillageStyle.BIRCH_FOREST, VillageStyle.fromId(""));
@@ -68,6 +68,20 @@ class VillageStyleTest {
           VillageStyle.select(NO_TAGS, path, 0.7F, true, 0.8F, 7L,
               style -> style != VillageStyle.ROMANIAN));
     }
+  }
+
+  @Test
+  void floweringWoodlandsUseJapaneseOnlyWhenItsCatalogIsLoaded() {
+    for (String path : List.of("cherry_grove", "flower_forest", "sakura_woodland")) {
+      assertEquals(VillageStyle.JAPANESE_CHERRY_GROVE,
+          VillageStyle.select(NO_TAGS, path, 0.5F, true, 0.8F, 7L, ALL_STYLES));
+      assertEquals(VillageStyle.BIRCH_FOREST,
+          VillageStyle.select(NO_TAGS, path, 0.5F, true, 0.8F, 7L,
+              style -> style != VillageStyle.JAPANESE_CHERRY_GROVE));
+    }
+    assertEquals(VillageStyle.JAPANESE_CHERRY_GROVE,
+        VillageStyle.select(VillageStyle.JAPANESE_CHERRY_GROVE.biomeTag()::equals,
+            "custom_flowery_woods", 0.5F, true, 0.8F, 7L, ALL_STYLES));
   }
 
   @Test

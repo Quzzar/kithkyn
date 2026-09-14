@@ -43,7 +43,6 @@ public final class AllayQuartermasterBehavior extends Behavior<Allay> {
   private static final int INSPECTION_TICKS = 60;
   private static final int INSPECTION_COOLDOWN_TICKS = 200;
   private static final int MOVES_PER_VISIT = 6;
-  private static final int MAX_STALE_CHESTS = 8;
   private static final int TRAVEL_TIMEOUT_TICKS = 400;
   private static final int UNREACHABLE_TICKS = 1200;
   private static final double REACH_SQR = 6.0D;
@@ -201,7 +200,7 @@ public final class AllayQuartermasterBehavior extends Behavior<Allay> {
   private BlockPos sourceChest(ServerLevel level, Allay allay, Village village) {
     List<BlockPos> skip = new ArrayList<>(VillageAllays.shelfPositions(village));
     skip.addAll(Treasury.chestPositions(village, level));
-    for (int attempt = 0; attempt < MAX_STALE_CHESTS; attempt++) {
+    for (int attempt = 0; attempt < village.getSharedContainerPositions().size(); attempt++) {
       BlockPos found = village.getNearestContainer(allay.blockPosition(), skip);
       if (found.equals(BlockPos.ZERO)) {
         return null;

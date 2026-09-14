@@ -66,6 +66,14 @@ public final class BuildingCatalogContract {
               + " work station or physical worksite");
         }
       }
+      if (info.getCastleLayout() != null) {
+        for (Occupation required : REQUIRED_WORK.get("castle")) {
+          if (!authoredWork.contains(required)) {
+            add(problems, info.getName(), "castle amenities require a " + required
+                + " work station or physical worksite");
+          }
+        }
+      }
       for (BuildingInfo.WorkStation station : info.workStations()) {
         station.worksiteCategory().ifPresent(category -> routes
             .computeIfAbsent(new WorksiteKey(info.getVariant(), category, station.occupation()), ignored -> new LinkedHashSet<>())

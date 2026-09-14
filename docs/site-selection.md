@@ -9,10 +9,10 @@ Implementation state: **the prepare phase is built** as of
 [#69](https://github.com/Quzzar/kithkyn/issues/69). `SitePreparation.planWork` returns
 the actual positions to break and to fill, a project carries that work in its own persisted
 queues, and the BUILDER performs it as the first phase of construction: one block per swing,
-cleared blocks going into village storage rather than onto the ground, fill paid for out of
-the village's own dirt. A site that needs work enters `PREPARING` and places nothing until
-the ground is ready. When fill runs out the village emits the ordinary shortage event and
-the builder says so in their own log, rather than spinning.
+cleared blocks going into village storage rather than onto the ground, and fill placed as
+site work. A site that needs work enters `PREPARING` and places nothing until the ground is
+ready. Ground preparation costs builder time only; its fill is not an unlisted addition to
+the authored building recipe.
 
 **Candidates are snapped to the real surface before scoring**, which is mitigation 1 below
 and was for a long time simply absent. The snap reads the footprint's most common ground
@@ -168,15 +168,15 @@ the brain needs to choose between options:
 | --- | --- | --- |
 | Flat meadow | 0 blocks | free |
 | Meadow with two trees | ~40 blocks removed, yields ~30 logs | cheap, and it pays for itself |
-| Gentle slope | ~120 blocks cut, ~80 filled | expensive, needs dirt from storage |
+| Gentle slope | ~120 blocks cut, ~80 filled | expensive in builder time |
 | Hillside, ravine edge, deep water | beyond budget | not a site |
 
 Preparation cost is its own quantity, counted in blocks moved, and it is deliberately not
 folded into the building's cost. A building's cost is a recipe of items
 ([building-spec.md](building-spec.md)); a site's preparation is the separate question of
-whether the ground can take the building's dimensions and what it takes to make it. Fill
-consumes real material from storage, so a site that needs levelling has a bill; clearing
-mostly does not.
+whether the ground can take the building's dimensions and what it takes to make it. Fill and
+clearing both consume builder time, but neither adds an inventory bill outside the building
+definition. The authored recipe remains the complete material price the brain and player see.
 
 Clearing yields go into village containers. A forested site is not purely a cost: clearing it
 is a lumber harvest that happens to also make room, which is exactly the kind of thing the
@@ -197,9 +197,9 @@ plane averaged across the footprint, with an ordinary per-column maximum of 3. O
 low depression may reach 6 blocks below the plane: at most one such column per eight footprint
 columns (with one allowed even on a smaller footprint), and no connected patch more than three
 blocks across either axis. That makes a dipped corner fillable without letting half a footprint,
-a trench, high ground, or a ravine become a site. Fill is placed from the bottom up and consumes
-dirt or the local ground material from village storage, so levelling a slope is a real expense
-the brain can weigh against building somewhere else.
+a trench, high ground, or a ravine become a site. Fill is placed from the bottom up as dirt.
+The movement budget makes levelling a slope a real labor expense the brain can weigh against
+building somewhere else without inventing an invisible material cost.
 
 The rule this encodes:
 
@@ -246,13 +246,12 @@ worker slots genuinely scarce. Site prep is part of building, so it belongs to t
 Construction becomes three phases instead of one:
 
 1. **Prepare**: walk the footprint, break tier 0 and tier 1 blocks, deposit yields in village
-   storage, place fill.
+   storage, place fill as labor already covered by the project.
 2. **Build**: the existing `StructureInProgress` block-by-block placement.
 3. **Finish**: register beds, work stations, and containers (already `processNewBuilding`).
 
-A `NoResourceBookkeepingEvent` fires when fill is short, exactly as it does for build
-materials, so a village that cannot afford to level a site complains in the way it already
-complains about everything else.
+Only the building definition's recipe may raise a construction material shortage. Site fill
+cannot quietly add dirt to that recipe.
 
 ## Natural founding searches nearby land
 

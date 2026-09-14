@@ -8,7 +8,10 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
+import com.google.gson.JsonParser;
+import com.mojang.serialization.JsonOps;
 import com.quzzar.kithkyn.entities.Gender;
+import com.quzzar.kithkyn.village.buildings.BuildingInfo;
 
 class VillageRulerTest {
   @Test
@@ -46,5 +49,17 @@ class VillageRulerTest {
     assertTrue(LaborPlanner.mustKeep(Occupation.LEADER, 2, false, false));
     assertFalse(VillageRuler.hasStableTenure(Occupation.GUARD));
     assertFalse(VillageRuler.hasStableTenure(Occupation.BLACKSMITH));
+  }
+
+  @Test
+  void aFortifiedVillageCenterCanSeatTheRuler() {
+    BuildingInfo center = BuildingInfo.CODEC.parse(JsonOps.INSTANCE, JsonParser.parseString("""
+        {"structure":"village_center_polynesian_coast_1",
+         "category":"village_center","variant":"polynesian_coast",
+         "castle":{"custody_cell":[1,1,1],"release_point":[2,1,1],
+           "evidence_containers":[[3,1,1],[4,1,1]]}}
+        """)).getOrThrow();
+    assertTrue(VillageRuler.isRulerSeat(center));
+    assertFalse(VillageRuler.isRulerSeat(new BuildingInfo("village_center_desert_1")));
   }
 }

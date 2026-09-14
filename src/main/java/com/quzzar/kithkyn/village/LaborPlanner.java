@@ -62,7 +62,8 @@ public final class LaborPlanner {
 
   /** The jobs that put food in the stores. */
   private static final Set<Occupation> FOOD_PRODUCERS =
-      EnumSet.of(Occupation.FARMER, Occupation.FISHER, Occupation.HUNTER);
+      EnumSet.of(Occupation.FARMER, Occupation.FISHER, Occupation.HUNTER,
+          Occupation.BAKER, Occupation.BUTCHER);
 
   /**
    * The trades a village always keeps at least one of: its miner (no miner, no
@@ -257,7 +258,7 @@ public final class LaborPlanner {
    * Loaded workers a reassignment could actually move onto the field. Three are
    * held back: whoever already does the wanted job; the last miner and the last
    * builder, the trades a village must always keep ({@link #ALWAYS_STAFFED});
-   * every active food producer while the village is hungry;
+   * the last active food producer while the village is hungry;
    * and anyone still inside their job-swap cooldown, so a person just placed or
    * moved is left to settle rather than yanked straight onto the field
    * (the same per-person cooldown the aptitude swap pass respects,
@@ -334,18 +335,18 @@ public final class LaborPlanner {
   }
 
   /**
-   * Applies the ordinary protection rules to a specific urgent vacancy. Active
-   * construction may borrow one food worker while hungry, but never the
-   * village's last food producer.
+   * Applies the ordinary protection rules to a specific urgent vacancy. A
+   * strained village may borrow an excess food worker to unblock construction,
+   * storage, or a saved project's material chain, but never its last food producer.
    */
   static boolean mustKeepForNeed(Occupation occupation, int sameOccupationCount,
       int foodProducerCount, boolean hungry, boolean storageBackedUp,
       Occupation neededOccupation) {
-    boolean mayCoverConstruction = neededOccupation == Occupation.BUILDER
+    boolean mayCoverUrgentNeed = neededOccupation != occupation
         && FOOD_PRODUCERS.contains(occupation)
         && foodProducerCount > 1;
     return mustKeep(occupation, sameOccupationCount,
-        hungry && !mayCoverConstruction, storageBackedUp);
+        hungry && !mayCoverUrgentNeed, storageBackedUp);
   }
 
   private static void ask(Village village, ServerLevel level, LaborNeed need, List<RealPerson> crew) {

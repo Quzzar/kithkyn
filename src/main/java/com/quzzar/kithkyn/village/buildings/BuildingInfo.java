@@ -50,17 +50,17 @@ public class BuildingInfo {
     }
 
     public MineEntrance {
-      if (width != 2 && width != 3 && width != 5) {
-        throw new IllegalArgumentException("Mine width must be 2, 3 or 5");
+      if (width < 2 || width > 5) {
+        throw new IllegalArgumentException("Mine width must be between 2 and 5");
       }
     }
 
     public static final Codec<MineEntrance> CODEC = RecordCodecBuilder.create(inst -> inst.group(
         Direction.CODEC.optionalFieldOf("facing", Direction.SOUTH).forGetter(MineEntrance::facing),
         BlockPos.CODEC.optionalFieldOf("offset", BlockPos.ZERO).forGetter(MineEntrance::offset),
-        Codec.INT.validate(width -> width == 2 || width == 3 || width == 5
+        Codec.INT.validate(width -> width >= 2 && width <= 5
             ? com.mojang.serialization.DataResult.success(width)
-            : com.mojang.serialization.DataResult.error(() -> "Mine width must be 2, 3 or 5"))
+            : com.mojang.serialization.DataResult.error(() -> "Mine width must be between 2 and 5"))
             .optionalFieldOf("width", 5).forGetter(MineEntrance::width)
     ).apply(inst, MineEntrance::new));
   }
@@ -299,6 +299,16 @@ public class BuildingInfo {
     }
     String stem = base.substring(0, levelSeparator);
     String variant = null;
+    // A newly installed datapack may introduce a multi-word family before the
+    // Java style enum knows about it. When it authors both halves explicitly,
+    // their exact concatenation is unambiguous and remains independently
+    // checked by validate(). Without this, alpine_highlands was misread as
+    // category "house_alpine" plus variant "highlands" and the whole catalog
+    // was rejected on load.
+    if (explicitCategory != null && explicitVariant != null
+        && stem.equals(explicitCategory + "_" + explicitVariant)) {
+      return new ParsedId(explicitCategory, explicitVariant, level, design);
+    }
     for (VillageStyle style : VillageStyle.values()) {
       String candidate = style.id();
       if (stem.endsWith("_" + candidate) && stem.length() > candidate.length() + 1

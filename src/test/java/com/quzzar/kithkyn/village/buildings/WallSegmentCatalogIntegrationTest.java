@@ -452,6 +452,39 @@ class WallSegmentCatalogIntegrationTest {
   }
 
   @Test
+  void everyClimbAttachmentFollowsItsSupportWithinASection() {
+    List<Long> ring = WallRoute.aroundBox(0, 48, 0, 48);
+    Set<Long> gates = WallPreview.cardinalGates(ring, 0, 48, 0, 48);
+    List<Integer> ground = java.util.stream.IntStream.range(0, ring.size())
+        .map(index -> 63 + Math.floorMod(index, 2))
+        .boxed()
+        .toList();
+    List<Integer> deck = WallTerraces.deckProfile(ground, WallTier.WOOD.height());
+
+    for (VillageStyle style : VillageStyle.values()) {
+      for (WallSection section : WallSegmentCatalog.forStyle(style)
+          .compile(ring, gates, ground, deck, WallTier.WOOD)) {
+        Map<Long, Integer> order = new HashMap<>();
+        for (int index = 0; index < section.blocks().size(); index++) {
+          order.put(section.blocks().get(index).position(), index);
+        }
+        for (int index = 0; index < section.blocks().size(); index++) {
+          WallBlockPlan block = section.blocks().get(index);
+          if (!block.piece().name().startsWith("LADDER_")) continue;
+          var state = block.desiredState(WallTier.WOOD, style);
+          BlockPos support = block.pos().relative(
+              state.getValue(net.minecraft.world.level.block.LadderBlock.FACING).getOpposite());
+          Integer supportIndex = order.get(support.asLong());
+          assertTrue(supportIndex != null,
+              () -> style + " ladder has no planned support at " + block.pos());
+          assertTrue(supportIndex < index,
+              () -> style + " ladder would be placed before its support at " + block.pos());
+        }
+      }
+    }
+  }
+
+  @Test
   void compiledWallClosesFlatRollingAndCliffTerrain() {
     List<Long> ring = WallRoute.aroundBox(0, 30, 0, 30);
     List<Integer> flat = Collections.nCopies(ring.size(), 64);

@@ -24,6 +24,7 @@ These catalogs are integrated, selectable, and verified as complete founding vil
 | Polynesian Coast | Sparse Jungle, and beaches beside warm or lukewarm ocean | Stilted stripped-spruce huts under oak roofs, a king's hall that keeps the village jail, tiki torches, a pond fishery, an open-air shrine, and a stripped-log palisade on coral footings |
 | Romanian | Dark Forest, forested highlands, and wooded valleys | Steep birch roofs, heavy dark-oak frames, enclosed yards, substantial woodland homes, and timber-and-deepslate walls |
 | Alpine Highlands | Meadow, Grove, Snowy Slopes, mountain peaks, and Windswept mountain families | Iberian-inspired brick and spruce settlement with berry plots, dense shared homes, deep wells, and brushed brick walls |
+| Japanese Cherry Grove | Cherry Grove, Flower Forest, and compatible Sakura biomes | Flowering garden settlement with spruce frames, ponds, compact farms and cherry-leaf walls |
 | Nautical Coast | Beaches on temperate or cold water, Stony Shore, and compatible coasts | A fishing town around a lighthouse: thatched sandstone-and-jungle-timber beach cottages, a jetty fishery on its own water, a turnover-ship castle, and a sandstone seawall on stripped jungle wood |
 
 ## Locked directions
@@ -35,18 +36,17 @@ its production catalog and founding behavior are verified.
 | Village biome | Founding environments | Direction |
 | --- | --- | --- |
 | Rustic Woodland | Forest and compatible ordinary oak woodland biomes | Familiar timber woodland settlement with a restrained rustic character |
-| Japanese | Cherry Grove, Flower Forest, and compatible Sakura biomes | Garden settlement shaped around flowering woodland and deliberate landscape details |
 | Taiga | Taiga, Old Growth Pine Taiga, Old Growth Spruce Taiga, and compatible cold forests | Cold forest settlement; its final visual language is deliberately deferred between the ornate Polish family and the grittier T&T Viking family |
 | Savanna Tent | Savanna, Savanna Plateau, Windswept Savanna, and compatible dry grasslands | African-inspired tent and grassland settlement with portable-looking structures and a coherent warm-climate material palette |
 | Mushroom | Mushroom Fields and compatible fungal biomes | Fantasy mushroom settlement drawn from the complete mushroom reference families |
 
-Jungle, ordinary Swamp, Mediterranean, Tundra, Polynesian Coast, Romanian, Alpine Highlands and
-Nautical Coast are complete private production catalogs. Swamp remains separate from the mud-brick
-Floodplain catalog used by mangroves. Tundra starts from a four-bed centre with a naturally placed
-mine and storehouse and deliberately has no castle. The Polynesian Coast centre is the king's hall,
-which seats the ruler and keeps the village jail; that catalog has no castle yet. The Nautical
-Coast centre is a lighthouse whose four beds sleep the founding workers, and its castle is the
-Towns & Towers beach camp's turnover ship.
+Jungle, ordinary Swamp, Mediterranean, Tundra, Polynesian Coast, Romanian, Alpine Highlands,
+Japanese Cherry Grove and Nautical Coast are complete private production catalogs. Swamp remains
+separate from the mud-brick Floodplain catalog used by mangroves. Tundra starts from a four-bed
+centre with a naturally placed mine and storehouse and deliberately has no castle. The Polynesian
+Coast centre is the king's hall, which seats the ruler and keeps the village jail; that catalog has
+no castle yet. The Nautical Coast centre is a lighthouse whose four beds sleep the founding workers,
+and its castle is the Towns & Towers beach camp's turnover ship.
 
 Swedish and Polish are source languages in the current review rather than settled biome
 assignments. The Swedish temple and tower remain a useful candidate church progression for a
@@ -61,10 +61,10 @@ to Floodplain when site selection can classify them reliably.
 
 ## Next authoring shortlist
 
-Tundra, Polynesian Coast, Romanian, Alpine Highlands and Nautical Coast are complete. Taiga remains
-intentionally parked until the ornate Polish and grittier Viking directions can be judged after
-more village catalogs are complete. Japanese, Savanna Tent and Mushroom remain available as the
-next catalog pass.
+Tundra, Polynesian Coast, Romanian, Alpine Highlands, Japanese Cherry Grove and Nautical Coast are
+complete. Taiga remains intentionally parked until the ornate Polish and grittier Viking directions
+can be judged after more village catalogs are complete. Savanna Tent and Mushroom remain available
+as the next catalog pass.
 
 The three walk-through courts begin at **9913.5, 230, 986.5** in the live showcase world. The
 individual entrances are Swamp at **9929.5, 230, 1004.5**, Viking at

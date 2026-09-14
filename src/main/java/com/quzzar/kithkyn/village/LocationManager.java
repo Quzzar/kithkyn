@@ -18,6 +18,8 @@ import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.block.DoorBlock;
 import net.minecraft.world.level.block.FenceGateBlock;
+import net.minecraft.world.level.block.SlabBlock;
+import net.minecraft.world.level.block.StairBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
@@ -285,6 +287,7 @@ public class LocationManager {
 
         Direction approachFront = building.getInfo() == null ? Direction.NORTH
                 : building.getRotation().rotate(building.getInfo().getEntranceFacing());
+        int floor = origin.getY() + building.getPlacedSink();
         BlockPos panel = null;
         for(BlockPos pos : BlockPos.betweenClosed(bounds.minX(), bounds.minY(), bounds.minZ(),
                 bounds.maxX(), bounds.maxY(), bounds.maxZ())) {
@@ -292,16 +295,26 @@ public class LocationManager {
             boolean entrancePanel = state.getBlock() instanceof FenceGateBlock
                     || state.getBlock() instanceof DoorBlock
                     && state.getValue(DoorBlock.HALF) == DoubleBlockHalf.LOWER;
+            Direction panelFacing = state.getBlock() instanceof FenceGateBlock
+                    ? state.getValue(FenceGateBlock.FACING)
+                    : state.getBlock() instanceof DoorBlock ? state.getValue(DoorBlock.FACING) : null;
+            // Sideways market railings do not cross the authored front and are
+            // decoration rather than an entrance panel.
+            if(building.getInfo() != null && entrancePanel
+                    && panelFacing.getAxis() != approachFront.getAxis()) {
+                entrancePanel = false;
+            }
             if(entrancePanel && (panel == null || pos.getY() < panel.getY()
                     || (pos.getY() == panel.getY()
                         && frontCoordinate(pos, approachFront) > frontCoordinate(panel, approachFront)))){
                 panel = pos.immutable();
             }
         }
-        if(panel == null){
-            if(building.getInfo() == null) return null;
+        // Prefer an authored ground opening over an upper-floor gate. If no
+        // such opening exists, retain the high panel as the valid fallback for
+        // buildings whose public entrance really is reached by exterior stairs.
+        if((panel == null || panel.getY() > floor + 2) && building.getInfo() != null){
             Direction front = building.getRotation().rotate(building.getInfo().getEntranceFacing());
-            int floor = origin.getY() + building.getPlacedSink();
             BlockPos middle = openFront(bounds, front, floor + 1);
             Direction across = front.getClockWise();
             int half = (front.getAxis() == Direction.Axis.X ? bounds.getZSpan() : bounds.getXSpan()) / 2;
@@ -314,22 +327,14 @@ public class LocationManager {
                         BlockPos support = outside.below();
                         if(!level.getFluidState(support).isEmpty()
                                 || !level.getBlockState(support).isFaceSturdy(level, support, Direction.UP)) continue;
-                        boolean open = true;
-                        for(BlockPos feet : List.of(outside, inside)) {
-                            // Adult people use a two-block-tall collision box. Requiring a third
-                            // empty block rejected valid authored doorless entries with a low roof.
-                            for(int head = 0; head < 2; head++) {
-                                BlockPos body = feet.above(head);
-                                if(!level.getFluidState(body).isEmpty()
-                                        || !level.getBlockState(body).getCollisionShape(level, body).isEmpty()) open = false;
-                            }
+                        if(clearBody(level, outside) && openDoorlessThreshold(level, inside)) {
+                            return new Entrance(outside, bounds);
                         }
-                        if(open) return new Entrance(outside, bounds);
                     }
                 }
             }
-            return null;
         }
+        if(panel == null) return null;
 
         // An entrance panel sits in a wall; of its two neighbours the one farther from the
         // building's middle is the outside.
@@ -351,8 +356,13 @@ public class LocationManager {
 
     /** World-space front of a rotated, doorless footprint. */
     public static BlockPos openFront(BoundingBox bounds, Direction front, int feetY) {
-        int x = (bounds.minX() + bounds.maxX()) / 2;
-        int z = (bounds.minZ() + bounds.maxZ()) / 2;
+        // An even-width front has two middle cells. Pick the one on the same
+        // authored side after every rotation; ordinary integer division drifts
+        // toward zero and therefore chooses a different physical doorway when
+        // the rotated bounds become negative.
+        Direction middleSide = front.getCounterClockWise();
+        int x = orientedMiddle(bounds.minX(), bounds.maxX(), middleSide.getStepX());
+        int z = orientedMiddle(bounds.minZ(), bounds.maxZ(), middleSide.getStepZ());
         return switch(front) {
             case EAST -> new BlockPos(bounds.maxX() + 1, feetY, z);
             case WEST -> new BlockPos(bounds.minX() - 1, feetY, z);
@@ -360,6 +370,36 @@ public class LocationManager {
             case NORTH -> new BlockPos(x, feetY, bounds.minZ() - 1);
             default -> throw new IllegalArgumentException("Entrance fronts must be horizontal");
         };
+    }
+
+    private static int orientedMiddle(int min, int max, int side) {
+        return side > 0 ? Math.floorDiv(min + max + 1, 2) : Math.floorDiv(min + max, 2);
+    }
+
+    /**
+     * A doorless façade may begin with an authored stair or slab rather than
+     * an empty interior cell. The public doorstep remains outside at ground
+     * level; navigation then takes the ordinary step into the building. If the
+     * threshold is treated as a wall, multi-storey homes can incorrectly pick
+     * an open balcony or roof edge as their entrance instead.
+     */
+    private static boolean openDoorlessThreshold(ServerLevel level, BlockPos inside) {
+        if(clearBody(level, inside)) return true;
+        BlockState threshold = level.getBlockState(inside);
+        if(!(threshold.getBlock() instanceof StairBlock)
+                && !(threshold.getBlock() instanceof SlabBlock)) return false;
+        if(!level.getFluidState(inside).isEmpty()) return false;
+        return clearBody(level, inside.above());
+    }
+
+    /** Two clear cells for the fixed adult collision height. */
+    private static boolean clearBody(ServerLevel level, BlockPos feet) {
+        for(int head = 0; head < 2; head++) {
+            BlockPos body = feet.above(head);
+            if(!level.getFluidState(body).isEmpty()
+                    || !level.getBlockState(body).getCollisionShape(level, body).isEmpty()) return false;
+        }
+        return true;
     }
 
 }

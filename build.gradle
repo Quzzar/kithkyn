@@ -95,6 +95,14 @@ neoForge {
             systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
         }
 
+        // Exercises recipe discovery and a physical potato fetch, roast, and deposit
+        // without opening or changing the monitored development world.
+        campfireVerification {
+            server()
+            programArguments.addAll '--nogui', '--universe', project.file('run-campfire-verification').getAbsolutePath(), '--world', 'world', '--port', '25677'
+            systemProperty 'kithkyn.campfires.verify', 'true'
+        }
+
         data {
             data()
 

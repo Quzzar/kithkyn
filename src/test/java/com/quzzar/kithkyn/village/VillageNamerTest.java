@@ -29,6 +29,17 @@ class VillageNamerTest {
   }
 
   @Test
+  void japaneseNamesUseTheApprovedGardenIdentityWithoutCopyingExamples() {
+    String prompt = VillageNamer.foundingPrompt(VillageStyle.JAPANESE_CHERRY_GROVE);
+    assertTrue(prompt.contains("flowering cherry trees"));
+    assertTrue(prompt.contains("ponds"));
+    for (String example : Set.of("Hanamori", "Kasayuki", "Mizuhana", "Sorakawa")) {
+      assertTrue(VillageNamer.acceptedName(example, VillageStyle.JAPANESE_CHERRY_GROVE,
+          Set.of()).isEmpty());
+    }
+  }
+
+  @Test
   void foundingPromptUsesSelectedArchitecturalIdentityAndExamplesAsInspiration() {
     String prompt = VillageNamer.foundingPrompt(VillageStyle.BIRCH_FOREST);
     assertTrue(prompt.contains("grass roofs"));

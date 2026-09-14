@@ -107,7 +107,7 @@
       "asset": "run/tundra-integration/datapack/data/kithkyn/structure/storehouse_tundra_1.nbt",
       "asset_sha256": "3f7b6f9b8d7982bae0df2737bd9d742bebdd9fa6f3960c9b4fd42f710bdf15fa",
       "definition": "run/tundra-integration/datapack/data/kithkyn/kithkyn/buildings/storehouse_tundra_1.json",
-      "definition_sha256": "0176fdb1ed489f88fdb33f92054c5da71496fba148b5ac1f56e76804c5a6830a"
+      "definition_sha256": "c2bb0b0ae5030b497bf60da941edc826427696afd064fc89c22d49f1cfcb485a"
     },
     {
       "exhibit": "T01.6",

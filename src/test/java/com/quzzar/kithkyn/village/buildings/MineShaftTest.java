@@ -15,6 +15,25 @@ import net.minecraft.world.level.block.Rotation;
 class MineShaftTest {
 
   @Test
+  void fourWideShaftUsesAllFourAuthoredColumnsInEveryRotation() {
+    for (Rotation rotation : Rotation.values()) {
+      MineShaft root = MineShaft.root(new BlockPos(30, 100, 40), rotation, 42L, 4);
+
+      assertEquals(4, root.width());
+      assertEquals(-2, root.minX());
+      assertEquals(1, root.maxX());
+      assertTrue(MineShaft.withinCorridor(new BlockPos(-2, -7, 5), root.minX(), root.maxX()));
+      assertTrue(MineShaft.withinCorridor(new BlockPos(1, -7, 5), root.minX(), root.maxX()));
+      assertFalse(MineShaft.withinCorridor(new BlockPos(2, -7, 5), root.minX(), root.maxX()));
+
+      MineShaft left = MineShaft.child(root, new MineBranch(42L, 8, -1, false));
+      MineShaft right = MineShaft.child(root, new MineBranch(42L, 8, 1, false));
+      assertEquals(4, left.width());
+      assertEquals(4, right.width());
+    }
+  }
+
+  @Test
   void twoWideShaftUsesOnlyTheTwoAuthoredColumnsInEveryRotation() {
     for (Rotation rotation : Rotation.values()) {
       BlockPos mouth = new BlockPos(30, 100, 40);

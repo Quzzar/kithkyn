@@ -101,6 +101,9 @@ in it, and update it in the same change that moves what it describes.
 - [alpine-highlands-village.md](alpine-highlands-village.md): the approved Iberian-inspired
   Alpine catalog: its bedless berry-growing center, naturally placed founding housing and work,
   dense shared homes, brick-and-spruce services, selected IF01.4 fishery and brushed brick wall.
+- [japanese-cherry-grove-village.md](japanese-cherry-grove-village.md): the approved Japanese
+  Cherry Grove catalog: its bedless bell center, naturally placed six-bed founding housing,
+  ponds and gardens, two farm levels, fixed-color markets and flowering spruce wall.
 - [nautical-coast-village.md](nautical-coast-village.md): the approved Nautical Coast catalog:
   its lighthouse centre that sleeps the four founding workers and keeps the town's storage, the
   turnover-ship castle and its jail, the CTOV beach homes and services, the jetty fishery on its

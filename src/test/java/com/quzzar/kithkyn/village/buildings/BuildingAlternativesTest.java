@@ -15,12 +15,14 @@ import java.util.stream.Collectors;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.mojang.serialization.JsonOps;
 import com.quzzar.kithkyn.village.Village;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.level.block.Rotation;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
@@ -137,6 +139,25 @@ class BuildingAlternativesTest {
     assertNull(BuildingUpgrade.standingSource(village(), larger));
   }
 
+  @Test
+  void aSecondPhysicalMineRemainsAPlanningOptionForASeparateShaft() {
+    BuildingInfo mine = BuildingInfo.CODEC.parse(JsonOps.INSTANCE, JsonParser.parseString("""
+        {"structure":"mine_birch_forest_1",
+         "worksites":[{"pos":[2,0,2],"occupation":"MINER"}],
+         "grants":["STONE","ORES","MINERALS"],
+         "cost":[{"item":"minecraft:cobblestone","count":8}]}
+        """)).getOrThrow();
+    load(List.of(mine));
+    PlanningVillage village = new PlanningVillage();
+    village.addCompleted(mine);
+
+    List<UrbanPlanner.Candidate> options = UrbanPlanner.optionsFor(village).buildable();
+
+    assertTrue(options.stream().anyMatch(option -> option.info() == mine));
+    assertTrue(options.stream().filter(option -> option.info() == mine).findFirst().orElseThrow()
+        .description().contains("opens a new shaft on a separate site"));
+  }
+
   private static Village village() {
     Village village = new Village("Layout test");
     village.setStyle(VillageStyle.BIRCH_FOREST);
@@ -191,5 +212,23 @@ class BuildingAlternativesTest {
     json.add("beds", beds);
     json.add("couple_beds", pairs);
     return BuildingInfo.CODEC.parse(JsonOps.INSTANCE, json).getOrThrow();
+  }
+
+  /** A planner fixture that can register a completed building without a game level. */
+  private static final class PlanningVillage extends Village {
+
+    private PlanningVillage() {
+      super("Layout test");
+      setStyle(VillageStyle.BIRCH_FOREST);
+    }
+
+    @Override
+    public Map<net.minecraft.world.item.Item, Integer> stockTally() {
+      return Map.of(Items.COBBLESTONE, 8);
+    }
+
+    private void addCompleted(BuildingInfo info) {
+      addBuilding(new Building(info.getName(), Rotation.NONE));
+    }
   }
 }

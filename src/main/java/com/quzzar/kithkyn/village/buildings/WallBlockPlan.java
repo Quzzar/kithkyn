@@ -165,6 +165,18 @@ public record WallBlockPlan(long position, Piece piece, WallCellRole role) {
     };
   }
 
+  /** Functional details cannot be substituted by an arbitrary collidable terrain block. */
+  public boolean requiresExactState() {
+    return switch (piece) {
+      case TRAPDOOR_NORTH, TRAPDOOR_EAST, TRAPDOOR_SOUTH, TRAPDOOR_WEST,
+          LADDER_NORTH, LADDER_EAST, LADDER_SOUTH, LADDER_WEST,
+          LANTERN, LANTERN_HANGING, TORCH, TORCH_NORTH, TORCH_EAST, TORCH_SOUTH, TORCH_WEST,
+          BANNER_NORTH, BANNER_EAST, BANNER_SOUTH, BANNER_WEST,
+          CAMPFIRE_NORTH, CAMPFIRE_EAST, CAMPFIRE_SOUTH, CAMPFIRE_WEST -> true;
+      default -> false;
+    };
+  }
+
   static Piece bannerPiece(Direction direction) {
     return switch (direction) {
       case NORTH -> Piece.BANNER_NORTH;

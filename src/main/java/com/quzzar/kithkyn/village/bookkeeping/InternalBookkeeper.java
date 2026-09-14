@@ -10,6 +10,9 @@ import com.mojang.serialization.Codec;
 
 public class InternalBookkeeper {
 
+  /** A sustained, rate-limited shortage needs recent context, not an unbounded stack of one symptom. */
+  private static final int MAX_ACTIVE_SHORTAGES_PER_ITEM = 3;
+
   public static final Codec<InternalBookkeeper> CODEC = BookkeepingEvent.DISPATCH_CODEC.listOf().xmap(events -> {
     InternalBookkeeper bookkeeper = new InternalBookkeeper();
     events.forEach(bookkeeper::addEvent);
@@ -41,9 +44,27 @@ public class InternalBookkeeper {
   }
 
   public void addEvent(BookkeepingEvent event) {
-
+    if (event instanceof NoResourceBookkeepingEvent shortage) {
+      Map.Entry<UUID, BookkeepingEvent> weakest = null;
+      int matching = 0;
+      for (Map.Entry<UUID, BookkeepingEvent> entry : eventLog.entrySet()) {
+        if (!(entry.getValue() instanceof NoResourceBookkeepingEvent existing)
+            || existing.getMissingItem() != shortage.getMissingItem()) {
+          continue;
+        }
+        matching++;
+        if (weakest == null || entry.getValue().getImpact() < weakest.getValue().getImpact()) {
+          weakest = entry;
+        }
+      }
+      if (matching >= MAX_ACTIVE_SHORTAGES_PER_ITEM) {
+        if (weakest == null || weakest.getValue().getImpact() >= event.getImpact()) {
+          return;
+        }
+        eventLog.remove(weakest.getKey());
+      }
+    }
     eventLog.put(event.getEventID(), event);
-
   }
 
   /** Sum of the decaying impact of all live events of the given type. */

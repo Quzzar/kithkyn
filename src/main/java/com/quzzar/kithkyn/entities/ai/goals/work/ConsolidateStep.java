@@ -36,7 +36,6 @@ public final class ConsolidateStep implements BlockWorkStep {
   private static final int INSPECTION_TICKS = 60;
   private static final int INSPECTION_COOLDOWN_TICKS = 200;
   private static final int MOVES_PER_VISIT = 6;
-  private static final int MAX_STALE_CHESTS = 8;
   private static final int PLAN_COOLDOWN_TICKS = 24000;
 
   private enum Phase { COLLECT, DELIVER, INSPECT }
@@ -184,7 +183,9 @@ public final class ConsolidateStep implements BlockWorkStep {
   private BlockPos sourceChest(RealPerson person, Village village) {
     List<BlockPos> skip = new ArrayList<>(Storehouse.chests(person));
     skip.addAll(Treasury.chestPositions(village, (ServerLevel) person.level()));
-    for (int attempt = 0; attempt < MAX_STALE_CHESTS; attempt++) {
+    // Visit the whole registered pool. Large villages routinely have more than
+    // eight workplace chests; an arbitrary search cap left the later ones full.
+    for (int attempt = 0; attempt < village.getSharedContainerPositions().size(); attempt++) {
       BlockPos found = village.getNearestContainer(person.blockPosition(), skip);
       if (found.equals(BlockPos.ZERO)) return null;
       Container container = containerAt(person, found);

@@ -44,6 +44,10 @@ public final class CraftStep implements BlockWorkStep {
   private final ItemStack output;
   private final int seconds;
   private final SoundEvent sound;
+  @Nullable
+  private BlockPos chestTarget;
+  @Nullable
+  private BlockPos chestApproach;
 
   public CraftStep(ItemStack input, ItemStack output, int seconds, SoundEvent sound) {
     this.input = input;
@@ -70,10 +74,10 @@ public final class CraftStep implements BlockWorkStep {
     // room for the finished goods still on the worker's back.
     BlockPos source = PackLogistics.chestHolding(person, village, List.of(fetchTarget()));
     if (source != null) {
-      return source;
+      return selectChest(person, source);
     }
     if (PackLogistics.carried(person, this.output.getItem()) > 0) {
-      return PackLogistics.chestWithRoomFor(person, village, this.output);
+      return selectChest(person, PackLogistics.chestWithRoomFor(person, village, this.output));
     }
     return null;
   }
@@ -107,9 +111,35 @@ public final class CraftStep implements BlockWorkStep {
     return PackLogistics.carried(person, this.input.getItem()) >= this.input.getCount();
   }
 
+  /** A solid chest is the interaction target; navigation goes to a verified hand-access stance beside it. */
+  @Override
+  public BlockPos positionOf(BlockPos target) {
+    return target.equals(this.chestTarget) && this.chestApproach != null ? this.chestApproach : target;
+  }
+
+  @Override
+  public boolean inReach(RealPerson person, BlockPos target) {
+    if (!target.equals(this.chestTarget)) {
+      return BlockWorkStep.super.inReach(person, target);
+    }
+    boolean handReach = ContainerAccess.canReach(person, person.getEyePosition(), target, reachSqr(person));
+    if (!handReach && this.chestApproach != null) {
+      this.chestApproach = ContainerAccess.resolveOpenedDoor(
+          person, target, this.chestApproach, reachSqr(person));
+    }
+    return handReach;
+  }
+
+  @Override
+  public boolean requiresExactArrival() {
+    return this.chestTarget != null;
+  }
+
   @Override
   public void released(RealPerson person, BlockPos target) {
     person.setPose(Pose.STANDING);
+    this.chestTarget = null;
+    this.chestApproach = null;
   }
 
   @Override
@@ -132,6 +162,14 @@ public final class CraftStep implements BlockWorkStep {
   /** What a fetch trip tries to bring home: a few batches' worth of input. */
   private ItemStack fetchTarget() {
     return new ItemStack(this.input.getItem(), this.input.getCount() * BATCHES_PER_TRIP);
+  }
+
+  /** Selects only a chest with an actual navigable, unobstructed hand-access position. */
+  @Nullable
+  private BlockPos selectChest(RealPerson person, @Nullable BlockPos chest) {
+    this.chestTarget = chest;
+    this.chestApproach = chest == null ? null : ContainerAccess.approachTo(person, chest, reachSqr(person));
+    return this.chestApproach == null ? null : chest;
   }
 
   private String role(RealPerson person) {

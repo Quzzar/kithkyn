@@ -13,6 +13,24 @@ import org.junit.jupiter.api.Test;
 
 class WallPaletteTest {
   @Test
+  void functionalAttachmentsRequireTheirAuthoredState() {
+    assertTrue(new WallBlockPlan(BlockPos.ZERO.asLong(),
+        WallBlockPlan.Piece.LADDER_NORTH, WallCellRole.FOUNDATION).requiresExactState());
+    assertTrue(new WallBlockPlan(BlockPos.ZERO.asLong(),
+        WallBlockPlan.Piece.TRAPDOOR_NORTH, WallCellRole.FOUNDATION).requiresExactState());
+    assertFalse(new WallBlockPlan(BlockPos.ZERO.asLong(),
+        WallBlockPlan.Piece.BODY, WallCellRole.EXACT).requiresExactState());
+  }
+
+  @Test
+  void maintenanceRepairsOnlyCellsTheVillageStillOwns() {
+    assertTrue(WallRaiser.shouldRepairOwnedCell(false, true, false));
+    assertFalse(WallRaiser.shouldRepairOwnedCell(true, true, false));
+    assertFalse(WallRaiser.shouldRepairOwnedCell(false, false, false));
+    assertFalse(WallRaiser.shouldRepairOwnedCell(false, true, true));
+  }
+
+  @Test
   void aridWallsUseRegionalMasonryAndKeepOakLadderAccess() {
     var ring = WallRoute.aroundBox(0, 48, 0, 48);
     var gates = Set.of(BlockPos.asLong(24, 0, 0), BlockPos.asLong(48, 0, 24),
@@ -305,6 +323,30 @@ class WallPaletteTest {
     }
     assertTrue(brick > 0 && brush > 0 && trapdoors > 0);
     assertEquals(Items.BRICK, WallTier.WOOD.material(style));
+  }
+
+  @Test
+  void japaneseWallsKeepTheirCenteredSpruceFrameAndFloweringFoliage() {
+    var ring = WallRoute.aroundBox(0, 48, 0, 48);
+    var gates = Set.of(BlockPos.asLong(24, 0, 0), BlockPos.asLong(48, 0, 24),
+        BlockPos.asLong(24, 0, 48), BlockPos.asLong(0, 0, 24));
+    var style = VillageStyle.JAPANESE_CHERRY_GROVE;
+    var wall = new WallProject(ring, gates, Collections.nCopies(ring.size(), 64),
+        WallTier.WOOD, style);
+    int spruce = 0, stairs = 0, leaves = 0, flowers = 0, trapdoors = 0;
+    for (var cell : wall.plannedBlocks()) {
+      var state = cell.desiredState(wall.getTier(), style);
+      if (state.is(Blocks.STRIPPED_SPRUCE_LOG)) spruce++;
+      if (state.is(Blocks.SPRUCE_STAIRS)) stairs++;
+      if (state.is(Blocks.CHERRY_LEAVES)) leaves++;
+      if (state.is(Blocks.FLOWERING_AZALEA_LEAVES)) flowers++;
+      if (state.is(Blocks.CHERRY_TRAPDOOR)) trapdoors++;
+      if (state.is(Blocks.CHERRY_LEAVES) || state.is(Blocks.FLOWERING_AZALEA_LEAVES)) {
+        assertTrue(state.getValue(net.minecraft.world.level.block.LeavesBlock.PERSISTENT));
+      }
+    }
+    assertTrue(spruce > 0 && stairs > 0 && leaves > 0 && flowers > 0 && trapdoors > 0);
+    assertEquals(Items.SPRUCE_LOG, WallTier.WOOD.material(style));
   }
 
   @Test

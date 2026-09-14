@@ -28,6 +28,7 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -556,6 +557,7 @@ public final class MineStep implements BlockWorkStep {
   /** Choosing a target is not proof it is reachable; only physical work clears the report. */
   private void worked(RealPerson person) {
     for (NoWork reason : NoWork.values()) person.clearBlocker(reason.text);
+    FetchMineSupportStep.clearObsoleteApproachBlocker(person);
   }
 
   @Nullable
@@ -711,7 +713,7 @@ public final class MineStep implements BlockWorkStep {
       // face has no footing, advance the earliest reachable floor edge first.
       // Otherwise the miner sees valid stone but rejects it forever while the
       // missing bridge work sits later in the cursor order.
-      if (columnBottom(local) && needsSeal(level, world.below())
+      if (columnBottom(local) && needsFloorSupport(level, world.below())
           && MineSupportMaterials.held(person.personMainInv) > 0) {
         BlockPos floorStand = standToLayFloor(person, mouth, rotation, local);
         if (floorStand != null) {
@@ -1192,7 +1194,7 @@ public final class MineStep implements BlockWorkStep {
     BlockPos floor = face.below();
     Level level = person.level();
     person.getLookControl().setLookAt(floor.getX(), floor.getY(), floor.getZ(), 30.0F, 30.0F);
-    if (!needsSeal(level, floor)) {
+    if (!needsFloorSupport(level, floor)) {
       return; // floored in the meantime (water sealed it, another pass laid it)
     }
     if (!placeSupport(person, floor, "I ran out of dirt or stone to floor the cave in my mine")) {
@@ -1598,7 +1600,7 @@ public final class MineStep implements BlockWorkStep {
   @Nullable
   private BlockPos openBoundary(Level level, BlockPos mouth, Rotation rotation,
       BlockPos worldCell, BlockPos local) {
-    if (columnBottom(local) && needsSeal(level, worldCell.below())) {
+    if (columnBottom(local) && needsFloorSupport(level, worldCell.below())) {
       return worldCell.below();
     }
     return openLining(level, mouth, rotation, worldCell, local);
@@ -1884,6 +1886,11 @@ public final class MineStep implements BlockWorkStep {
     return state.isAir() || !state.getFluidState().isEmpty();
   }
 
+  /** A ramp floor must expose a sturdy top, not merely contain a non-air block. */
+  static boolean needsFloorSupport(BlockGetter level, BlockPos pos) {
+    return !level.getBlockState(pos).isFaceSturdy(level, pos, Direction.UP);
+  }
+
   /**
    * The miner counts as carrying a bucket when one is in the pack, the main hand, or
    * the off hand -- the bucket is a persistent TOOL that enables clearing, so it
@@ -2007,7 +2014,7 @@ public final class MineStep implements BlockWorkStep {
       // across the void that nothing could stand at, which from outside was a
       // miner who had simply stopped flooring.
       if (columnBottom(this.offset)
-          && needsSeal(person.level(), facePos.below())) {
+          && needsFloorSupport(person.level(), facePos.below())) {
         this.placeFloor = true;
         return RampScan.WORK;
       }

@@ -25,6 +25,7 @@ import com.quzzar.kithkyn.village.buildings.Buildings;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Blocks;
@@ -56,23 +57,24 @@ public final class CampfireAccessVerification {
         level.setDayTime(6000);
         level.updateSkyBrightness();
         event.getServer().tickRateManager().setTickRate(100);
-        verifyCooking(level, new CookStep(), 0);
-        verifyCooking(level, new FishCookStep(), 80);
+        verifyRecipeDiscovery(level);
+        verifyCooking(level, new CookStep(), 0, Items.POTATO, Items.BAKED_POTATO);
+        verifyCooking(level, new FishCookStep(), 80, Items.COD, Items.COOKED_COD);
         if (Boolean.getBoolean("kithkyn.campfires.verifyPueblo")) {
           for (Rotation rotation : Rotation.values()) verifyPueblo(level, rotation);
         }
         beginCookingWalk(level);
       }
       if (walkingCook == null) return;
-      if (walkingCook.personMainInv.countItem(Items.COD) > 0) fetched = true;
-      if (pantry.countItem(Items.COOKED_COD) == 4) {
-        check(fetched && walkingCook.personMainInv.isEmpty() && pantry.countItem(Items.COD) == 0,
+      if (walkingCook.personMainInv.countItem(Items.POTATO) > 0) fetched = true;
+      if (pantry.countItem(Items.BAKED_POTATO) == 4) {
+        check(fetched && walkingCook.personMainInv.isEmpty() && pantry.countItem(Items.POTATO) == 0,
             "fetch/cook/deposit walk lost or duplicated food");
         check(ContainerAccess.canReach(walkingCook, walkingCook.getEyePosition(), pantryPosition, 9.0D),
             "cooked food was deposited remotely");
         walkingCook.discard();
         walkingCook = null;
-        Kithkyn.LOGGER.info("[campfires-verify] RESULT PASS: independent plaza, reachable/free fire fallback, stable batches, interrupted-food conservation, recovery, authored Pueblo approaches, physical fetch/cook/deposit");
+        Kithkyn.LOGGER.info("[campfires-verify] RESULT PASS: all vanilla campfire foods including potatoes, independent plaza, reachable/free fire fallback, stable batches, interrupted-food conservation, recovery, authored Pueblo approaches, physical potato fetch/cook/deposit");
         event.getServer().halt(false);
       }
       if (ticks > 3000) throw new AssertionError("Cook trip stalled at " + walkingCook.position());
@@ -102,7 +104,7 @@ public final class CampfireAccessVerification {
     }
     level.setBlock(pantryPosition, Blocks.CHEST.defaultBlockState(), 2);
     pantry = (net.minecraft.world.Container) level.getBlockEntity(pantryPosition);
-    pantry.setItem(0, new ItemStack(Items.COD, 4));
+    pantry.setItem(0, new ItemStack(Items.POTATO, 4));
     level.setBlock(village.getCampfirePositions().getFirst(), Blocks.CAMPFIRE.defaultBlockState(), 2);
     walkingCook = new RealPerson(PersonEntityType.PERSON.get(), level) {
       @Override public Village getVillage() { return village; }
@@ -118,7 +120,16 @@ public final class CampfireAccessVerification {
     level.addFreshEntity(walkingCook);
   }
 
-  private static void verifyCooking(ServerLevel level, BlockWorkStep cook, int offset) throws Exception {
+  private static void verifyRecipeDiscovery(ServerLevel level) {
+    var cookable = new CampfireRoast().cookableRaws(level);
+    for (Item raw : List.of(Items.POTATO, Items.BEEF, Items.CHICKEN, Items.COD, Items.KELP,
+        Items.MUTTON, Items.PORKCHOP, Items.RABBIT, Items.SALMON)) {
+      check(cookable.contains(raw), "campfire recipe discovery omitted " + raw);
+    }
+  }
+
+  private static void verifyCooking(ServerLevel level, BlockWorkStep cook, int offset, Item raw,
+      Item cooked) throws Exception {
     BuildingInfo info = BuildingInfo.CODEC.parse(JsonOps.INSTANCE, JsonParser.parseString("""
         {"structure":"village_center_birch_forest_1", "meeting_point":[0,1,0],
          "campfires":[[4,1,0],[10,1,0]]}
@@ -138,7 +149,7 @@ public final class CampfireAccessVerification {
     placeFallback.invoke(village);
     check(level.getBlockState(bell).is(Blocks.BELL) && level.getBlockState(meeting).isAir(), "founding replaced the bell/plaza");
     RealPerson person = person(level, village, meeting);
-    person.personMainInv.setItem(0, new ItemStack(Items.COD, 5));
+    person.personMainInv.setItem(0, new ItemStack(raw, 5));
     BlockPos first = village.getCampfirePositions().getFirst();
     BlockPos second = village.getCampfirePositions().getLast();
     CampfireBlockEntity firstFire = CampfireRoast.litFireAt(level, first);
@@ -152,12 +163,12 @@ public final class CampfireAccessVerification {
     check(second.equals(cook.select(person)), "mid-roast switched to the newly available nearer fire");
     person.tickCount += 160;
     check(cook.act(person, chosen), "roast did not finish");
-    check(person.personMainInv.countItem(Items.COOKED_COD) == 1, "cooked result missing");
+    check(person.personMainInv.countItem(cooked) == 1, "cooked result missing");
     check(cook.act(person, chosen), "second roast did not start");
     level.setBlock(second, level.getBlockState(second).setValue(CampfireBlock.LIT, false), 2);
     check(!cook.act(person, chosen), "doused fire kept its cooking job");
     cook.released(person, chosen);
-    check(person.personMainInv.countItem(Items.COD) == 4, "interrupted raw food lost or duplicated");
+    check(person.personMainInv.countItem(raw) == 4, "interrupted raw food lost or duplicated");
     check(((CampfireBlockEntity) level.getBlockEntity(second)).getItems().stream().allMatch(ItemStack::isEmpty),
         "interrupted roast remained in doused fire");
     check(first.equals(cook.select(person)), "cook did not fall back after the second fire went out");

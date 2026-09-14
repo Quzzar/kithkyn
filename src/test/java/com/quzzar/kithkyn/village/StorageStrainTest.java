@@ -4,10 +4,27 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.UUID;
+import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
+import net.minecraft.world.SimpleContainer;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+
 class StorageStrainTest {
+
+  @Test
+  void storageIsSaturatedOnlyWhenEveryObservedSlotIsOccupied() {
+    SimpleContainer storehouse = new SimpleContainer(3);
+    storehouse.setItem(0, new ItemStack(Items.WHEAT, 64));
+    storehouse.setItem(1, new ItemStack(Items.COBBLESTONE, 64));
+
+    assertFalse(VillageBrain.allObservedStorageSlotsOccupied(List.of(storehouse)));
+    storehouse.setItem(2, new ItemStack(Items.OAK_LOG, 64));
+    assertTrue(VillageBrain.allObservedStorageSlotsOccupied(List.of(storehouse)));
+    assertFalse(VillageBrain.allObservedStorageSlotsOccupied(List.of()));
+  }
 
   @Test
   void anIdleKeeperCannotClearAnotherKeepersBlockedReport() {

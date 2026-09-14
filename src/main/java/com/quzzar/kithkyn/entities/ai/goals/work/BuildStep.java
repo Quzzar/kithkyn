@@ -4,13 +4,12 @@ import javax.annotation.Nullable;
 
 import com.quzzar.kithkyn.entities.RealPerson;
 import com.quzzar.kithkyn.village.Village;
-import com.quzzar.kithkyn.village.bookkeeping.NoResourceBookkeepingEvent;
 import com.quzzar.kithkyn.village.buildings.BuildProgress;
 import com.quzzar.kithkyn.village.buildings.StructureInProgress;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.world.item.Items;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
 
 /**
@@ -91,13 +90,7 @@ public final class BuildStep implements BlockWorkStep {
     }
     // Clearing and levelling the ground is the builder's first phase, not a
     // separate job (docs/site-selection.md).
-    String blocker = "We have no earth to level the ground for the new building.";
-    if (!project.prepareStep(person.getVillage(), person)) {
-      person.getVillage().logEvent(new NoResourceBookkeepingEvent(Items.DIRT, 1));
-      person.logBlocker(blocker);
-    } else {
-      person.clearBlocker(blocker);
-    }
+    project.prepareStep(person.getVillage(), person);
     if (project.remainingPrepWork() == 0) {
       project.startBuilding();
     }
