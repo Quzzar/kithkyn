@@ -371,7 +371,11 @@ A workplace building finishing construction registers its work stations as open
   (`JobClaiming.nextOpening`). The town centre registers three builder posts at founding
   (worker-loops.md), but the second and third open only with population, one more per six
   people (`Village.PEOPLE_PER_BUILDER`); a locked post is not claimable and is not counted as
-  open. Without both rules a camp's first hires would be three builders.
+  open. A post no loaded idle resident can actually claim is skipped for this pass rather than
+  blocking every later opening. This matters when a bedless camper cannot use a wall post but
+  can move into a bakery's or lumberjack's free live-in bed. Without both rules a camp's first
+  hires would be three builders, and without the skip one unhousable opening could freeze the
+  whole hiring queue.
 - An open job claims a **housed** idle person from the campfire pool automatically (the
   employment-requires-housing rule above; a bedless camper is not claimable). Aptitude is a
   weighted sum over the genetics stat block, with per-occupation weights as datapack JSON
@@ -407,8 +411,9 @@ A workplace building finishing construction registers its work stations as open
   cover construction, but the last food producer remains protected. During the midnight window,
   then, a village that is
   **short of food** (stored food below the per-capita target that `VillageAttractiveness` reads) with a
-  **food post open** (farmer, fisher, or hunter), its building standing, and **no one idle**
-  to take it handles food first. Otherwise, a current saved project may name a vacancy whose
+  **food post open** (farmer, fisher, or hunter), its building standing, and **no idle resident who
+  can actually take that post** handles food first. A bedless camper does not suppress the pass
+  merely by existing when the urgent workplace cannot house them. Otherwise, a current saved project may name a vacancy whose
   standing building grants the capability for one of its missing materials. This is derived from
   the same shared material-source facts used by `UrbanPlanner`, not a second occupation table. A
   saved-project shortage runs on the ordinary labor cadence rather than waiting for midnight,

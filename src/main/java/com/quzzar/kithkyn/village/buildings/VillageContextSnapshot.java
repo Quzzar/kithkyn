@@ -21,6 +21,7 @@ import com.quzzar.kithkyn.village.JobAssignment;
 import com.quzzar.kithkyn.village.PopulationOutlook;
 import com.quzzar.kithkyn.village.Village;
 import com.quzzar.kithkyn.village.VillageAttractiveness;
+import com.quzzar.kithkyn.village.VillageBrain;
 
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.item.Item;
@@ -50,6 +51,7 @@ public record VillageContextSnapshot(
     PopulationOutlook populationOutlook,
     RecruitmentStatus recruitment,
     boolean storageStrained,
+    Optional<VillageBrain.StorageOccupancy> storageOccupancy,
     boolean recentDeaths,
     boolean jobDecisionPending,
     boolean laborDecisionPending,
@@ -122,6 +124,7 @@ public record VillageContextSnapshot(
     recentBuilds = List.copyOf(recentBuilds);
     workerBlockers = List.copyOf(workerBlockers);
     roomReport = roomReport == null ? Optional.empty() : roomReport;
+    storageOccupancy = storageOccupancy == null ? Optional.empty() : storageOccupancy;
   }
 
   /** Captures all prompt-facing village facts from one storage tally. */
@@ -188,7 +191,7 @@ public record VillageContextSnapshot(
         village.getTotalBeds(), village.getFreeGeneralBedCount(), freeReserved,
         village.getUnhousedAdultResidentCount(), standing, openings, wallOpenings,
         village.getPopulationOutlook(), RecruitmentStatus.capture(attractiveness),
-        village.isStorageBackedUp(),
+        village.isStorageBackedUp(), village.getStorehouseOccupancy(),
         attractiveness.deathImpact() > 0.5F,
         village.isJobDecisionPending(), village.isLaborDecisionPending(), workplaces,
         project, goalPlan, completed, blockers,
@@ -215,6 +218,8 @@ public record VillageContextSnapshot(
     if (storageStrained) {
       text.append("Shared storage is backed up: workers are carrying goods its containers cannot currently accept or reach. "
           + "Restoring shelf access or adding central storage is urgent. ");
+    } else {
+      appendStoragePressure(text);
     }
     if (recentDeaths) {
       text.append("There have been deaths recently. ");
@@ -254,6 +259,9 @@ public record VillageContextSnapshot(
     if (storageStrained) {
       text.append("Shared storage: backed up; workers are carrying goods its containers cannot currently accept or reach, "
           + "so restoring shelf access or adding central storage is urgent.\n");
+    } else {
+      appendStoragePressure(text);
+      if (storageOccupancy.filter(usage -> usage.fraction() >= 0.85D).isPresent()) text.append('\n');
     }
     appendConstruction(text);
     if (!recentBuilds.isEmpty()) {
@@ -432,6 +440,12 @@ public record VillageContextSnapshot(
     } else if (savedGoal.isEmpty()) {
       text.append("Your village is not saving up for or building anything at the moment.\n");
     }
+  }
+
+  private void appendStoragePressure(StringBuilder text) {
+    storageOccupancy.filter(usage -> usage.fraction() >= 0.85D).ifPresent(usage -> text.append(
+        String.format("Central storehouse shelves are %.0f%% occupied (%d of %d slots); adding storage deserves strong consideration. ",
+            usage.fraction() * 100.0D, usage.occupiedSlots(), usage.totalSlots())));
   }
 
   private void appendWorkerBlockers(StringBuilder text) {

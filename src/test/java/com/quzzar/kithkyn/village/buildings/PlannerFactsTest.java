@@ -76,4 +76,23 @@ class PlannerFactsTest {
     assertTrue(fact.contains("bakery"));
     assertTrue(fact.contains("another wheat field will not solve hunger"));
   }
+
+  @Test
+  void fullStorageLeavesOnlyViableStorehouseChoices() {
+    UrbanPlanner.Candidate farm = new UrbanPlanner.Candidate(
+        new ConstructionChoice(new BuildingInfo("farm_birch_forest_1"), ConstructionMode.FRESH), "farm");
+    UrbanPlanner.Candidate storehouse = new UrbanPlanner.Candidate(
+        new ConstructionChoice(new BuildingInfo("storehouse_birch_forest_1"), ConstructionMode.FRESH),
+        "storehouse");
+
+    UrbanPlanner.PlanningOptions emergency = UrbanPlanner.prioritizeStorageEmergency(
+        true, List.of(farm), List.of(storehouse));
+    assertEquals(List.of(), emergency.buildable());
+    assertEquals(List.of(storehouse), emergency.saveable());
+
+    UrbanPlanner.PlanningOptions ordinary = UrbanPlanner.prioritizeStorageEmergency(
+        false, List.of(farm), List.of(storehouse));
+    assertEquals(List.of(farm), ordinary.buildable());
+    assertEquals(List.of(storehouse), ordinary.saveable());
+  }
 }

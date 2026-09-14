@@ -1,6 +1,7 @@
 package com.quzzar.kithkyn.village;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.UUID;
@@ -21,6 +22,10 @@ class StorageStrainTest {
     storehouse.setItem(1, new ItemStack(Items.COBBLESTONE, 64));
 
     assertFalse(VillageBrain.allObservedStorageSlotsOccupied(List.of(storehouse)));
+    VillageBrain.StorageOccupancy pressure = VillageBrain.StorageOccupancy.capture(List.of(storehouse));
+    assertEquals(2, pressure.occupiedSlots());
+    assertEquals(3, pressure.totalSlots());
+    assertEquals(2.0D / 3.0D, pressure.fraction());
     storehouse.setItem(2, new ItemStack(Items.OAK_LOG, 64));
     assertTrue(VillageBrain.allObservedStorageSlotsOccupied(List.of(storehouse)));
     assertFalse(VillageBrain.allObservedStorageSlotsOccupied(List.of()));

@@ -92,6 +92,7 @@ public class UrbanPlanner {
   private static boolean isRedundant(Village village, ConstructionChoice choice) {
     BuildingInfo info = choice.info();
     if (!CastleLayout.canStart(village, info)) return true;
+    if (choice.mode() != ConstructionMode.FRESH) return false;
     if (info.getConditionalGrants().isEmpty()) {
       java.util.Set<Occupation> openings = village.claimableJobs().stream()
           .map(post -> post.getOccupation()).collect(java.util.stream.Collectors.toSet());
@@ -195,6 +196,10 @@ public class UrbanPlanner {
         ConstructionChoice wantedChoice = goalChoice(village, wanted);
         if (wantedChoice == null) {
           VillageGoal.clear(village, "the chosen construction path is no longer legal");
+        } else if (village.isStorageBackedUp() && !isStorehouse(wanted)) {
+          VillageGoal.clear(village, "shared storage filled before ordinary expansion could begin");
+        } else if (isRedundant(village, wantedChoice)) {
+          VillageGoal.clear(village, "the same productive capacity already stands vacant");
         } else if (hasMaterialsToConstruct(stock, wantedChoice)) {
           VillageGoal.clear(village, "affordable at last");
           Kithkyn.LOGGER.info("Village '{}' saved up and is building {}",
@@ -426,7 +431,24 @@ public class UrbanPlanner {
         }
       }
     }
-    return new PlanningOptions(affordable, saveable);
+    return prioritizeStorageEmergency(village.isStorageBackedUp(), affordable, saveable);
+  }
+
+  /** A full storage network preempts ordinary expansion when more central shelves are viable. */
+  static PlanningOptions prioritizeStorageEmergency(boolean backedUp,
+      List<Candidate> affordable, List<Candidate> saveable) {
+    if (!backedUp) return new PlanningOptions(affordable, saveable);
+    List<Candidate> storageNow = affordable.stream()
+        .filter(candidate -> isStorehouse(candidate.info())).toList();
+    List<Candidate> storageLater = saveable.stream()
+        .filter(candidate -> isStorehouse(candidate.info())).toList();
+    return storageNow.isEmpty() && storageLater.isEmpty()
+        ? new PlanningOptions(affordable, saveable)
+        : new PlanningOptions(storageNow, storageLater);
+  }
+
+  private static boolean isStorehouse(BuildingInfo info) {
+    return Buildings.FOUNDING_STOREHOUSE_CATEGORY.equals(info.getCategory());
   }
 
   private static ConstructionChoice pick(Village village, List<Candidate> buildable, List<Candidate> goals,

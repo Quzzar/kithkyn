@@ -12,6 +12,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
+import java.util.function.Predicate;
 
 import com.quzzar.kithkyn.Kithkyn;
 import com.quzzar.kithkyn.configuration.KithkynConfig;
@@ -397,9 +398,10 @@ public final class JobClaiming {
       return; // a pick is in flight; the post it is deciding stays open until it lands
     }
     while (!village.getUnassignedJobs().isEmpty()) {
-      JobAssignment job = nextOpening(village);
+      JobAssignment job = nextOpening(village,
+          candidate -> !shortlistFor(village, level, candidate).isEmpty());
       if (job == null) {
-        return; // only builder posts the village has not grown into remain
+        return; // no unlocked post can claim a loaded idle resident this pass
       }
       if (!isStationValid(village, job)) {
         // Stale opening from a redefined building: drop it, never fill it.
@@ -409,9 +411,7 @@ public final class JobClaiming {
         continue;
       }
       List<Applicant> shortlist = shortlistFor(village, level, job);
-      if (shortlist.isEmpty()) {
-        return; // nobody claimable is loaded; try again next pass
-      }
+      if (shortlist.isEmpty()) return; // defensive: the eligibility view changed during the pass
       if (shortlist.size() >= 2 && LlmService.get().isReady()) {
         askBrainToPick(village, level, job, shortlist);
         return; // one decision in flight; the rest of the queue waits for a later pass
@@ -432,16 +432,16 @@ public final class JobClaiming {
    * and never three builders: a camp with no miner never gets its stone.
    */
   @Nullable
-  private static JobAssignment nextOpening(Village village) {
+  static JobAssignment nextOpening(Village village, Predicate<JobAssignment> claimable) {
     List<JobAssignment> open = village.getUnassignedJobs();
     JobAssignment first = null;
     for (JobAssignment job : open) {
-      if (!village.isPostUnlocked(job)) {
+      if (!village.isPostUnlocked(job) || !claimable.test(job)) {
         continue;
       }
       if (!village.hasWorkerOf(job.getOccupation())) {
         return job.getOccupation() == Occupation.GUARD
-            ? bestGuardOpening(village, open)
+            ? bestGuardOpening(village, open, claimable)
             : job;
       }
       if (first == null || openingPriority(village, job) < openingPriority(village, first)) {
@@ -452,9 +452,11 @@ public final class JobClaiming {
   }
 
   /** The requested wall staffing tiers win over ordinary duplicate guard posts. */
-  private static JobAssignment bestGuardOpening(Village village, List<JobAssignment> open) {
+  private static JobAssignment bestGuardOpening(Village village, List<JobAssignment> open,
+      Predicate<JobAssignment> claimable) {
     return open.stream()
         .filter(village::isPostUnlocked)
+        .filter(claimable)
         .filter(job -> job.getOccupation() == Occupation.GUARD)
         .min(Comparator.comparingInt(job -> openingPriority(village, job)))
         .orElse(null);
