@@ -37,7 +37,7 @@
     "palette": "stripped spruce with spruce stair eaves, deepslate tile slabs, cherry leaves and flowering azalea leaves"
   },
   "verification": {
-    "staticAudit": "20 definitions and templates; no barriers, structure voids or out-of-bounds cells; three cows, three chickens and a two-wide mine",
+    "staticAudit": "20 definitions and templates; no barriers, structure voids or out-of-bounds cells; three cows, three chickens, four approved one-block raises and a two-wide mine with nine ground-clearing air cells",
     "placement": "PASS: 160 real-template placements through both paths and four rotations; colors, frames, entities, saves and upgrades preserved",
     "restart": "PASS: 160 buildings and 48 original entities survived server shutdown and restart without replenishment",
     "founding": "PASS: 20 templates, two housing alternatives, 12 upgrade fits, four founding rotations, codec reloads, natural biome selection, six beds and four positions",
@@ -51,7 +51,64 @@
       "cows": 3,
       "chickens": 3
     },
-    "mineWidth": 2
+    "mineWidth": 2,
+    "mineGroundAirCells": 9,
+    "mineGroundAir": [
+      [
+        3,
+        0,
+        2
+      ],
+      [
+        4,
+        0,
+        2
+      ],
+      [
+        3,
+        0,
+        3
+      ],
+      [
+        4,
+        0,
+        3
+      ],
+      [
+        3,
+        0,
+        4
+      ],
+      [
+        4,
+        0,
+        4
+      ],
+      [
+        2,
+        0,
+        5
+      ],
+      [
+        3,
+        0,
+        5
+      ],
+      [
+        4,
+        0,
+        5
+      ]
+    ],
+    "raisedOneBlock": [
+      "butchery_japanese_cherry_grove_1",
+      "hunting_lodge_japanese_cherry_grove_1",
+      "lumberjack_japanese_cherry_grove_1",
+      "storehouse_japanese_cherry_grove_1"
+    ],
+    "heightCorrectionPlacement": "PASS: 40 affected-template placements through both construction paths and four rotations",
+    "heightCorrectionAccess": "PASS: 20 affected rotations, 12 station routes, 32 shared-container deposits and eight mine walks",
+    "heightCorrectionFounding": "PASS: four founding rotations with the raised storehouse and ground-clearing mine"
   },
   "buildings": [
     {
@@ -140,14 +197,14 @@
         7,
         14
       ],
-      "sink": 0,
+      "sink": -1,
       "source": "run/japanese-full-profile/selection-capture-20260913-143836/captures/JP03.4.nbt",
       "source_sha256": "63760e65941c5f515ac5cd594dad3d328717a155d657fcb3df2ace3cc2b5a39b",
       "entities": 6,
       "asset": "run/japanese-integration/datapack/data/kithkyn/structure/butchery_japanese_cherry_grove_1.nbt",
       "asset_sha256": "3125b02cca07aff401962ad05327c7c1e0169f24c45f50fd49faf4f2a80af348",
       "definition": "run/japanese-integration/datapack/data/kithkyn/kithkyn/buildings/butchery_japanese_cherry_grove_1.json",
-      "definition_sha256": "c8d566ea42414a1a2ba7872044bbe6ae3d7f46c397cd2eb9d46bf78a65f86dd9"
+      "definition_sha256": "44145e7776baa72c32281cda3b1fa80e8fa7188b7e311375dff428c59c3f27d5"
     },
     {
       "exhibit": "JP03.5",
@@ -221,7 +278,7 @@
       "source_sha256": "634f3760cb33358b609f07b17b24256a306e5c9aed988c8818cdd2bf91b62f71",
       "entities": 0,
       "asset": "run/japanese-integration/datapack/data/kithkyn/structure/mine_japanese_cherry_grove_1.nbt",
-      "asset_sha256": "b353ccb179305bed1b1628f9bd5b11d544dbbf326537bff58fa264e144b2a765",
+      "asset_sha256": "47b6d20be488cbd64c7d69498a5b6f1f1addf27ba404bb7a5b4d86e86018aeb4",
       "definition": "run/japanese-integration/datapack/data/kithkyn/kithkyn/buildings/mine_japanese_cherry_grove_1.json",
       "definition_sha256": "d77b9827a62b6a8fc3a7158a6feffe0b174da159196f1040bfd4a90af25eaffd"
     },
@@ -311,14 +368,14 @@
         8,
         9
       ],
-      "sink": 0,
+      "sink": -1,
       "source": "run/japanese-full-profile/selection-capture-20260913-143836/captures/JP06.5.nbt",
       "source_sha256": "52ccd9fbfef8430cc2a6e4db7e52ab9692b5b311751dcf5202290a7edcc14ea9",
       "entities": 0,
       "asset": "run/japanese-integration/datapack/data/kithkyn/structure/hunting_lodge_japanese_cherry_grove_1.nbt",
       "asset_sha256": "9c7776126073822738e3f6ac42aeaa0f5c55df5ad66c3f007068c767803c7a26",
       "definition": "run/japanese-integration/datapack/data/kithkyn/kithkyn/buildings/hunting_lodge_japanese_cherry_grove_1.json",
-      "definition_sha256": "a98e3c32d54eb4b125e88ec99a7d44e81c153c2d1b0d1eda074d8a9ff510a2ab"
+      "definition_sha256": "9698eeab5c561064efd558a29bcdbeec51fa2be2e4bb5add385d8919a323980e"
     },
     {
       "exhibit": "JP07.1",
@@ -330,14 +387,14 @@
         8,
         14
       ],
-      "sink": 0,
+      "sink": -1,
       "source": "run/japanese-full-profile/selection-capture-20260913-143836/captures/JP07.1.nbt",
       "source_sha256": "113554d59797058587664bc2fbaa1bec6a4d95825180fe06a0665e08a946c769",
       "entities": 0,
       "asset": "run/japanese-integration/datapack/data/kithkyn/structure/lumberjack_japanese_cherry_grove_1.nbt",
       "asset_sha256": "dd4eb2868110c092e96f0e1213dd62fa46ae1c4362ba96a59bed327a99698ac3",
       "definition": "run/japanese-integration/datapack/data/kithkyn/kithkyn/buildings/lumberjack_japanese_cherry_grove_1.json",
-      "definition_sha256": "5682c47a04d5b7c10f04c96ffc69432592baa956fa95a523ffa5d5caa272d84d"
+      "definition_sha256": "e640dbfad93c27cb5fb8d9c0255f0171236de2ea63e1ca98e26fd8a60831ef5d"
     },
     {
       "exhibit": "JP07.3",
@@ -368,14 +425,14 @@
         8,
         9
       ],
-      "sink": 0,
+      "sink": -1,
       "source": "run/japanese-full-profile/selection-capture-20260913-143836/captures/JP07.6.nbt",
       "source_sha256": "2797841fded7c21bbb77e00a0f1f8adac00d082f2acfbd3d60899e9248de3473",
       "entities": 0,
       "asset": "run/japanese-integration/datapack/data/kithkyn/structure/storehouse_japanese_cherry_grove_1.nbt",
       "asset_sha256": "460618f317372ce725f04760dc95c9100eaf4ecb1df5affb02c3154793675608",
       "definition": "run/japanese-integration/datapack/data/kithkyn/kithkyn/buildings/storehouse_japanese_cherry_grove_1.json",
-      "definition_sha256": "9bff0309af3ec6d72eb78d13e9d8a94672e28322e2f72e08e21852359c39a775"
+      "definition_sha256": "a4855c7396417b9327d43e6f956dca5f2799a4da300ffb8c654cc70688a55827"
     },
     {
       "exhibit": "JM01",
