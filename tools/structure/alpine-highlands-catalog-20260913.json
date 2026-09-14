@@ -57,7 +57,7 @@
       "asset": "run/alpine-integration/datapack/data/kithkyn/structure/village_center_alpine_highlands_1.nbt",
       "asset_sha256": "6b83350f16276f07a46e4c8711bede3c9b8f84004b46016e3b55f15ad698da2b",
       "definition": "run/alpine-integration/datapack/data/kithkyn/kithkyn/buildings/village_center_alpine_highlands_1.json",
-      "definition_sha256": "1d1c24288c2b033220e3f12fd78ba0d69e95a04a4d0ee1d43e44f3d0baa6027a"
+      "definition_sha256": "44caac8abb9e286bcdddbd85674ae1d60ac5952f7e981ad47e2d0edebf3812b7"
     },
     {
       "exhibit": "AL09.2",
@@ -510,5 +510,16 @@
     "physical_access": "PASS: 84 rotations, 180 routes, 116 bed walks, 88 personal deposits, 64 station walks, 84 shared deposits and 8 mine walks",
     "body_height": "PASS: all ages and genetic scales; child one-block and working-age two-block openings",
     "gradle_build": "PASS: unit tests and 61-template repository audit"
+  },
+  "center_labor_contract": {
+    "recorded": "2026-09-14",
+    "builder_posts_per_center": 3,
+    "builder_unlock_populations": [
+      0,
+      6,
+      12
+    ],
+    "captain_posts_per_center": 1,
+    "routing": "Center-owned production vacancies work at physical facilities through worksite_category."
   }
 }

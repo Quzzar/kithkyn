@@ -106,7 +106,9 @@ class PhysicalWorksiteTest {
         {"structure":"village_center_swamp_1","work_stations":[
           {"pos":[4,1,4],"occupation":"MINER","worksite_category":"mine"},
           {"pos":[5,1,4],"occupation":"BUILDER"},
-          {"pos":[6,1,4],"occupation":"GUARD"}
+          {"pos":[6,1,4],"occupation":"GUARD","guard_duty":"CAPTAIN"},
+          {"pos":[7,1,4],"occupation":"BUILDER"},
+          {"pos":[8,1,4],"occupation":"BUILDER"}
         ]}
         """);
     BuildingInfo mine = definition("""
@@ -136,7 +138,9 @@ class PhysicalWorksiteTest {
         {"structure":"village_center_jungle_1","work_stations":[
           {"pos":[4,1,4],"occupation":"MINER","worksite_category":"mine"},
           {"pos":[5,1,4],"occupation":"BUILDER"},
-          {"pos":[6,1,4],"occupation":"GUARD"}
+          {"pos":[6,1,4],"occupation":"GUARD","guard_duty":"CAPTAIN"},
+          {"pos":[7,1,4],"occupation":"BUILDER"},
+          {"pos":[8,1,4],"occupation":"BUILDER"}
         ]}
         """);
 
@@ -151,7 +155,9 @@ class PhysicalWorksiteTest {
         {"structure":"village_center_desert_1","starting_buildings":["mine_desert_1"],
          "work_stations":[
           {"pos":[1,1,1],"occupation":"BUILDER"},
-          {"pos":[2,1,1],"occupation":"GUARD"}
+          {"pos":[2,1,1],"occupation":"GUARD","guard_duty":"CAPTAIN"},
+          {"pos":[3,1,1],"occupation":"BUILDER"},
+          {"pos":[4,1,1],"occupation":"BUILDER"}
          ]}
         """);
     BuildingInfo tower = definition("""
@@ -180,8 +186,43 @@ class PhysicalWorksiteTest {
         bakery.getName(), java.util.List.of(
             "bakery requires a BAKER work station or physical worksite"),
         center.getName(), java.util.List.of(
-            "village_center requires a GUARD work station or physical worksite")),
+            "village_center requires a GUARD work station or physical worksite",
+            "village_center requires exactly 3 BUILDER posts for lead, path and grading duties; found 1",
+            "village_center requires exactly one explicit CAPTAIN guard post; found 0")),
         BuildingCatalogContract.problems(Map.of(bakery.getName(), bakery, center.getName(), center)));
+  }
+
+  @Test
+  void everyCenterHasThreeBuilderDutiesAndOneExplicitCaptain() {
+    BuildingInfo center = definition("""
+        {"structure":"village_center_desert_1","work_stations":[
+          {"pos":[1,1,1],"occupation":"BUILDER"},
+          {"pos":[2,1,1],"occupation":"BUILDER"},
+          {"pos":[3,1,1],"occupation":"BUILDER"},
+          {"pos":[4,1,1],"occupation":"GUARD","guard_duty":"CAPTAIN"}
+        ]}
+        """);
+
+    assertTrue(BuildingCatalogContract.problems(Map.of(center.getName(), center)).isEmpty());
+  }
+
+  @Test
+  void centerOwnedProductionPostsPointAtTheirPhysicalFacilities() {
+    BuildingInfo center = definition("""
+        {"structure":"village_center_desert_1","work_stations":[
+          {"pos":[1,1,1],"occupation":"BUILDER"},
+          {"pos":[2,1,1],"occupation":"BUILDER"},
+          {"pos":[3,1,1],"occupation":"BUILDER"},
+          {"pos":[4,1,1],"occupation":"GUARD","guard_duty":"CAPTAIN"},
+          {"pos":[5,1,1],"occupation":"MINER"},
+          {"pos":[6,1,1],"occupation":"QUARTERMASTER"}
+        ]}
+        """);
+
+    assertEquals(java.util.List.of(
+        "a center-owned MINER post must route to the mine worksite",
+        "a center-owned QUARTERMASTER post needs center storage or a storehouse route"),
+        BuildingCatalogContract.problems(Map.of(center.getName(), center)).get(center.getName()));
   }
 
   private static BuildingInfo definition(String json) {

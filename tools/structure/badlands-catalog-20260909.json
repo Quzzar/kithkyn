@@ -22,7 +22,7 @@
       "asset": "run/badlands-integration/datapack/data/kithkyn/structure/village_center_badlands_1.nbt",
       "asset_sha256": "84f0bc46d5fc576d54b8d022031596355af199e6fdbf81821ae89388eb1adeca",
       "definition": "run/badlands-integration/datapack/data/kithkyn/kithkyn/buildings/village_center_badlands_1.json",
-      "definition_sha256": "9aff26bbb96ff583e1be611b344c58c9875ede7de841402b809983cb6e57150c",
+      "definition_sha256": "09ec6ffae2ae419a7766d3d926a7e24b9914373860e2ca6135613e24fe861f76",
       "reviewed_neutral": "run/pueblo-showcase/center-approved-20260909-161322/review-pack/data/kithkyn/structure/village_center_pueblo_1.nbt",
       "reviewed_neutral_sha256": "251f9371a692f4c6b2a3465bf3fccfdfd701056c73dbc39f4e19e53d3b800ea0"
     },
@@ -277,7 +277,7 @@
       "asset": "run/badlands-integration/datapack/data/kithkyn/structure/storehouse_badlands_2.nbt",
       "asset_sha256": "7bc4d3933f5273239fcd53e43f786695c5b09587392047eb7a020e893658835f",
       "definition": "run/badlands-integration/datapack/data/kithkyn/kithkyn/buildings/storehouse_badlands_2.json",
-      "definition_sha256": "e69390073ce78b2a9b67798e74910e7396811f3a778c1f2962b2a4634681dd1a",
+      "definition_sha256": "153e729f2608f3a8ae28cc665b22661103a4014b233e70af40c65f4dbe5d595e",
       "reviewed_neutral": "run/pueblo-showcase/services-approved-20260909-183601/neutral/P10.6.nbt",
       "reviewed_neutral_sha256": "b6d85ea6ed301d9a1155e01433d523f21070097fe601964505827b2fcbe4b063"
     },
@@ -305,7 +305,7 @@
       "asset": "run/badlands-integration/datapack/data/kithkyn/structure/stoneworks_badlands_1.nbt",
       "asset_sha256": "9ae26663196f7e7f977952ea7dd3953bff21f67cce9bc70d556a973377bd2d99",
       "definition": "run/badlands-integration/datapack/data/kithkyn/kithkyn/buildings/stoneworks_badlands_1.json",
-      "definition_sha256": "4c12f269baaf8b4921484780cab41b5e334c9340eb7a148ddde83da0d4328512",
+      "definition_sha256": "45526780f10e4aaebbe5ffe8b877ee91e6822f85d5816b298b6e13c7446c3085",
       "reviewed_neutral": "run/pueblo-showcase/services-approved-20260909-183601/neutral/P01.9.nbt",
       "reviewed_neutral_sha256": "662c58f1da9d9e97ef9b09a220a5c4343a03a74532589857942473f0120644e6"
     },
@@ -467,5 +467,16 @@
       "change": "sink -1",
       "note": "Seated one block low: a doorstep stair sat level with the ground (tools/structure/seating-check.py). Raised onto the ground; existing buildings keep their seat."
     }
-  ]
+  ],
+  "center_labor_contract": {
+    "recorded": "2026-09-14",
+    "builder_posts_per_center": 3,
+    "builder_unlock_populations": [
+      0,
+      6,
+      12
+    ],
+    "captain_posts_per_center": 1,
+    "routing": "Center-owned production vacancies work at physical facilities through worksite_category."
+  }
 }

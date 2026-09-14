@@ -16,7 +16,7 @@
       "asset": "run/floodplain-integration/datapack/data/kithkyn/structure/church_floodplain_1.nbt",
       "asset_sha256": "7daf80af3591d47a6558736e2b6c15d596c03483e54568a8fcebfdb399e8e44c",
       "definition": "run/floodplain-integration/datapack/data/kithkyn/kithkyn/buildings/church_floodplain_1.json",
-      "definition_sha256": "c8727cc970b5c79d4cbe7fb2ec7f93aeae2170b04142ff848ab0e38e16b82921",
+      "definition_sha256": "aa63dae683bf29927c9360c32da8f345330c3f66088b37665a02a4f179a51b79",
       "reviewed_capture": "run/nilotic-showcase/selection-20260910-floodplain/captures/NA01.1.nbt",
       "reviewed_capture_sha256": "e5109d99eddc84f4b9d9ddf671da7974489bffbcd58c1c1990cedf18b08e10eb"
     },
@@ -44,7 +44,7 @@
       "asset": "run/floodplain-integration/datapack/data/kithkyn/structure/village_center_floodplain_1.nbt",
       "asset_sha256": "774eb12e306a5362a91cdbadd87bcd084a39a3e1c34e0a6d55c6b3d87f4161d4",
       "definition": "run/floodplain-integration/datapack/data/kithkyn/kithkyn/buildings/village_center_floodplain_1.json",
-      "definition_sha256": "7e92483a0111d68e26168dbc2eeefdf61a4e7890671442c76cbea2039071b247",
+      "definition_sha256": "402b15dd5b1cbd5fba251f7d3a8f57ee68ad8b7d7e95f6fe54ac9bd4f6176e3a",
       "reviewed_capture": "run/nilotic-showcase/selection-20260910-floodplain/captures/NA01.4.nbt",
       "reviewed_capture_sha256": "0a2ee1771d5e52e70fcc2569afa308d4dfd9bfe39703178c3f7b7e61317b095c"
     },
@@ -170,7 +170,7 @@
       "asset": "run/floodplain-integration/datapack/data/kithkyn/structure/storehouse_floodplain_1.nbt",
       "asset_sha256": "89b3fa1e45252e4d0e6d77889146343d519c5aa14907f460b7c27ccc0a1f05dc",
       "definition": "run/floodplain-integration/datapack/data/kithkyn/kithkyn/buildings/storehouse_floodplain_1.json",
-      "definition_sha256": "6f7e7acdca735d22b7531b28a9fe4ae2ffb56c50fb9514eec01508ac2e5334ee",
+      "definition_sha256": "3f3760b667bf21b64c988fee7d68b355aa403f00b0b2d83ea9e6eec93a459ba1",
       "reviewed_capture": "run/nilotic-showcase/selection-20260910-floodplain/captures/NA02.4.nbt",
       "reviewed_capture_sha256": "07b720e63b5257071e75ff4b1d0730f6d4d91d0451ca7a98234b8b44ed0cd419"
     },
@@ -184,7 +184,7 @@
       "asset": "run/floodplain-integration/datapack/data/kithkyn/structure/fishery_floodplain_1.nbt",
       "asset_sha256": "4ce85e302bc89c231c1227f19e947b8e9937b174aae5a9e1c7ec5ec7f8fccf5a",
       "definition": "run/floodplain-integration/datapack/data/kithkyn/kithkyn/buildings/fishery_floodplain_1.json",
-      "definition_sha256": "a4735d7857e30e6fff59f55a5a778e1421c2bc022889103c1fb9466b68d8bde2",
+      "definition_sha256": "b78e6476ffd6710c14e36e6255134d26d7012a1410b1796abe8e644c87197d79",
       "reviewed_capture": "run/nilotic-showcase/selection-20260910-floodplain/captures/NA03.2.nbt",
       "reviewed_capture_sha256": "49c102697d552f9d693c0a31ed77db2f107edccecc5e21fb28a97327fd13ba1d"
     },
@@ -409,5 +409,16 @@
       "moved_to": "tools/structure/swamp-castle-20260911.json",
       "verification": "Static audit and native founding fixture pass with 20 Floodplain definitions, 2 housing alternatives, 12 upgrade fits and all four founding rotations."
     }
-  ]
+  ],
+  "center_labor_contract": {
+    "recorded": "2026-09-14",
+    "builder_posts_per_center": 3,
+    "builder_unlock_populations": [
+      0,
+      6,
+      12
+    ],
+    "captain_posts_per_center": 1,
+    "routing": "Center-owned production vacancies work at physical facilities through worksite_category."
+  }
 }

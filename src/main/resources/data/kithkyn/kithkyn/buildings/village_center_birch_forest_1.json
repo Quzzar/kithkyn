@@ -51,6 +51,7 @@
     },
     {
       "occupation": "GUARD",
+      "guard_duty": "CAPTAIN",
       "pos": [
         14,
         5,

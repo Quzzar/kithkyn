@@ -131,6 +131,22 @@
           18
         ],
         "guard_duty": "PATROL"
+      },
+      {
+        "occupation": "BUILDER",
+        "pos": [
+          11,
+          1,
+          16
+        ]
+      },
+      {
+        "occupation": "BUILDER",
+        "pos": [
+          12,
+          1,
+          15
+        ]
       }
     ],
     "personal_containers": [
@@ -656,5 +672,15 @@
     "recipe": "village_center_plains_1"
   },
   "source_mod_structure": "data/kaisyn/structure/village/badlands_pueblo/town_centers/badlands_meeting_point_1.nbt",
-  "source_mod": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar"
+  "source_mod": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar",
+  "labor_contract": {
+    "builder_posts": 3,
+    "builder_unlock_populations": [
+      0,
+      6,
+      12
+    ],
+    "captain_posts": 1,
+    "worksite_routing": "Center-owned production vacancies route to their physical buildings."
+  }
 }

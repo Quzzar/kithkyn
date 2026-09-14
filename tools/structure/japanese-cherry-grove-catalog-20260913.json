@@ -488,5 +488,16 @@
       "definition": "run/japanese-integration/datapack/data/kithkyn/kithkyn/buildings/market_japanese_cherry_grove_3.json",
       "definition_sha256": "15a4f5c9f815bfdcb435a90ee2beeed6ad9dda9ba2e94faafc93a405ff052338"
     }
-  ]
+  ],
+  "center_labor_contract": {
+    "recorded": "2026-09-14",
+    "builder_posts_per_center": 3,
+    "builder_unlock_populations": [
+      0,
+      6,
+      12
+    ],
+    "captain_posts_per_center": 1,
+    "routing": "Center-owned production vacancies work at physical facilities through worksite_category."
+  }
 }

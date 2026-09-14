@@ -60,7 +60,7 @@
       "asset": "run/jungle-integration/datapack/data/kithkyn/structure/village_center_jungle_1.nbt",
       "asset_sha256": "065b11bca6a9e43ce6138c8b19a6a54f86da66897600502dca1d77db3967bf09",
       "definition": "run/jungle-integration/datapack/data/kithkyn/kithkyn/buildings/village_center_jungle_1.json",
-      "definition_sha256": "8836341835707eafd69302a217ff72b5349c68b12e3e84bfab32045e92b22e55"
+      "definition_sha256": "1b4dc7805579f6f31575a9a07ad2eeefd4946cc27cb78df171807741c0642424"
     },
     {
       "exhibit": "JA01.4",
@@ -811,5 +811,16 @@
       "placement": "8 real-template placements passed across both construction paths and four rotations",
       "access": "12 routes passed across all four rotations"
     }
+  },
+  "center_labor_contract": {
+    "recorded": "2026-09-14",
+    "builder_posts_per_center": 3,
+    "builder_unlock_populations": [
+      0,
+      6,
+      12
+    ],
+    "captain_posts_per_center": 1,
+    "routing": "Center-owned production vacancies work at physical facilities through worksite_category."
   }
 }

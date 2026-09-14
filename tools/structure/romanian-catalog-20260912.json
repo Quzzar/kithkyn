@@ -48,7 +48,7 @@
       "asset": "run/romanian-integration/datapack/data/kithkyn/structure/village_center_romanian_1.nbt",
       "asset_sha256": "d155bdae7e8003bae29c2f5643d290ca2a7322df165e30e8a92a226e496d8b5a",
       "definition": "run/romanian-integration/datapack/data/kithkyn/kithkyn/buildings/village_center_romanian_1.json",
-      "definition_sha256": "b2c14fd904166ed70e44f681e24a59a429a9a12db98a1f8ad9ea3c4adac4f244"
+      "definition_sha256": "714cecf679feb55f3d1dbeff557f1350cc689fc74d3af9032501ebd14660029f"
     },
     {
       "exhibit": "R02.1",
@@ -409,7 +409,7 @@
       "asset": "run/romanian-integration/datapack/data/kithkyn/structure/well_romanian_1.nbt",
       "asset_sha256": "1285b8335c5dfddfaa91df011f72bbde0da2c9e4aafc38844bc69644f0a73bfc",
       "definition": "run/romanian-integration/datapack/data/kithkyn/kithkyn/buildings/well_romanian_1.json",
-      "definition_sha256": "343527bedf43a39fe1dcff09904abb155f4e7689e8551ed0e69915d1cd1d16db"
+      "definition_sha256": "e524347a6b0879ccd702b2bbcc448f609fa5fb7a077356bc6ab18c751c50b02e"
     },
     {
       "exhibit": "LUMBERJACK",
@@ -558,5 +558,16 @@
       "log": "run/romanian-integration/access/latest-verification.log"
     },
     "visual_review": "passed through the user's in-game review and final authored lumberjack edit"
+  },
+  "center_labor_contract": {
+    "recorded": "2026-09-14",
+    "builder_posts_per_center": 3,
+    "builder_unlock_populations": [
+      0,
+      6,
+      12
+    ],
+    "captain_posts_per_center": 1,
+    "routing": "Center-owned production vacancies work at physical facilities through worksite_category."
   }
 }

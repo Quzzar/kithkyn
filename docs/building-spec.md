@@ -101,6 +101,14 @@ physical building. If no matching completed building exists, the worker keeps th
 and waits. A routed miner station does not create a shaft below the center; the physical mine
 worksite owns the shaft geometry.
 
+Every center declares three logical `BUILDER` posts and one explicit `GUARD` post with
+`guard_duty: CAPTAIN`. Builder posts are accessible civic duty anchors rather than workstation
+blocks. Population unlocks the lead builder immediately, the path builder at six people and the
+grading builder at twelve. A center may add a local role when the structure actually contains that
+workplace, such as a berry farmer, cleric or market merchant. A center-owned miner always routes to
+the mine. A center-owned quartermaster either routes to the storehouse or works from real shared
+storage built into the center.
+
 ### Founding uses ordinary construction placement
 
 The requested location anchors the center's authored meeting point. After the center fits,

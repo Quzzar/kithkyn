@@ -57,7 +57,7 @@
       "asset": "run/swamp-integration/datapack/data/kithkyn/structure/village_center_swamp_1.nbt",
       "asset_sha256": "9ed72758f71b5a529c7dbfe07ae23aa0ba47e9dd822d8d43c354784ecd0bfe84",
       "definition": "run/swamp-integration/datapack/data/kithkyn/kithkyn/buildings/village_center_swamp_1.json",
-      "definition_sha256": "8477f8f542807dbeb4f94a92466ef3d83a7074048f515d09e3df02cb1bded372"
+      "definition_sha256": "26dbfc7de0eeecf7cd68c059b18cf769b8850939cd319c2c25753a2343ac6d5a"
     },
     {
       "exhibit": "NE03.6",
@@ -125,7 +125,7 @@
       "asset": "run/swamp-integration/datapack/data/kithkyn/structure/church_swamp_1__cleric_home.nbt",
       "asset_sha256": "e9f5873eb030fb37bfc7365408047e34f172d24ab9eb2b2e18509e603b6f2bfa",
       "definition": "run/swamp-integration/datapack/data/kithkyn/kithkyn/buildings/church_swamp_1__cleric_home.json",
-      "definition_sha256": "c0b3355125adc05f5fd6885ed4f779bef82db1ad4208e21a703b6ef7e213765c"
+      "definition_sha256": "9db0cd8aada44054246b4c1ea4ce57ea558feb688a17715f88edfd2a439f8840"
     },
     {
       "exhibit": "NF04.3",
@@ -261,7 +261,7 @@
       "asset": "run/swamp-integration/datapack/data/kithkyn/structure/butchery_swamp_1.nbt",
       "asset_sha256": "2984ac8c7685541ca1ccaa6623ee0b7fbab22b62daf070ff18cb6305d9d1b041",
       "definition": "run/swamp-integration/datapack/data/kithkyn/kithkyn/buildings/butchery_swamp_1.json",
-      "definition_sha256": "91388bd8e54c59a366dcf0a4d500287f57e31e9897796c9fb00748a6a47468eb"
+      "definition_sha256": "e83e4889bf1ad59f3411236137b0709b7a54060229ef152475cf4ef7b1d0f129"
     },
     {
       "exhibit": "NE06.10",
@@ -537,5 +537,16 @@
       "mine": "mine_swamp_1 uses two transverse cells, local x -1 and 0, matching its authored opening",
       "center": "cobbled deepslate stairs and slabs replaced with cobblestone equivalents"
     }
-  ]
+  ],
+  "center_labor_contract": {
+    "recorded": "2026-09-14",
+    "builder_posts_per_center": 3,
+    "builder_unlock_populations": [
+      0,
+      6,
+      12
+    ],
+    "captain_posts_per_center": 1,
+    "routing": "Center-owned production vacancies work at physical facilities through worksite_category."
+  }
 }

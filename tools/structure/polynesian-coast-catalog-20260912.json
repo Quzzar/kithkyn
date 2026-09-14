@@ -514,5 +514,16 @@
   "wall": {
     "record": "tools/structure/polynesian-coast-walls-20260912.json",
     "direction": "Aaron's study A (PC11.1 to PC11.5): a stripped spruce palisade with spruce fence tips and oak-slab walks on dead-coral footings; gatehouse banners are village banners"
+  },
+  "center_labor_contract": {
+    "recorded": "2026-09-14",
+    "builder_posts_per_center": 3,
+    "builder_unlock_populations": [
+      0,
+      6,
+      12
+    ],
+    "captain_posts_per_center": 1,
+    "routing": "Center-owned production vacancies work at physical facilities through worksite_category."
   }
 }

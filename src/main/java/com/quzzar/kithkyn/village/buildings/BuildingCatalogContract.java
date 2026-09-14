@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import com.quzzar.kithkyn.village.GuardRole;
 import com.quzzar.kithkyn.village.Occupation;
 
 /**
@@ -16,6 +17,9 @@ import com.quzzar.kithkyn.village.Occupation;
  * when a post in the same variant routes the same occupation to its category.
  */
 public final class BuildingCatalogContract {
+
+  /** The lead, path and grading posts unlocked by the population rules in {@code Village}. */
+  private static final int CENTER_BUILDER_POSTS = 3;
 
   /** Minimum work that makes each productive category what its id claims it is. */
   private static final Map<String, List<Occupation>> REQUIRED_WORK = Map.ofEntries(
@@ -74,6 +78,9 @@ public final class BuildingCatalogContract {
           }
         }
       }
+      if ("village_center".equals(info.getCategory())) {
+        validateCenterPosts(info, problems);
+      }
       for (BuildingInfo.WorkStation station : info.workStations()) {
         station.worksiteCategory().ifPresent(category -> routes
             .computeIfAbsent(new WorksiteKey(info.getVariant(), category, station.occupation()), ignored -> new LinkedHashSet<>())
@@ -109,6 +116,39 @@ public final class BuildingCatalogContract {
     Map<String, List<String>> immutable = new LinkedHashMap<>();
     problems.forEach((name, found) -> immutable.put(name, List.copyOf(found)));
     return Map.copyOf(immutable);
+  }
+
+  /** A center owns civic vacancies; production blocks remain in their physical buildings. */
+  private static void validateCenterPosts(BuildingInfo info,
+      Map<String, LinkedHashSet<String>> problems) {
+    long builders = info.workStations().stream()
+        .filter(station -> station.occupation() == Occupation.BUILDER)
+        .count();
+    if (builders != CENTER_BUILDER_POSTS) {
+      add(problems, info.getName(), "village_center requires exactly " + CENTER_BUILDER_POSTS
+          + " BUILDER posts for lead, path and grading duties; found " + builders);
+    }
+
+    long captains = info.workStations().stream()
+        .filter(station -> station.occupation() == Occupation.GUARD)
+        .filter(station -> station.guardDuty().orElse(null) == GuardRole.CAPTAIN)
+        .count();
+    if (captains != 1) {
+      add(problems, info.getName(), "village_center requires exactly one explicit CAPTAIN guard post; found "
+          + captains);
+    }
+
+    for (BuildingInfo.WorkStation station : info.workStations()) {
+      if (station.occupation() == Occupation.MINER
+          && !station.worksiteCategory().filter("mine"::equals).isPresent()) {
+        add(problems, info.getName(), "a center-owned MINER post must route to the mine worksite");
+      }
+      if (station.occupation() == Occupation.QUARTERMASTER
+          && station.worksiteCategory().isEmpty() && info.getContainerLocations().isEmpty()) {
+        add(problems, info.getName(),
+            "a center-owned QUARTERMASTER post needs center storage or a storehouse route");
+      }
+    }
   }
 
   private static void add(Map<String, LinkedHashSet<String>> problems, String name, String problem) {

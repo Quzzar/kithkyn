@@ -48,7 +48,7 @@
       "asset": "run/mediterranean-integration/datapack/data/kithkyn/structure/village_center_mediterranean_1.nbt",
       "asset_sha256": "c379dc942d2fd14675d5233ad2c89447be490e739ac45b0f5fd8ff0f8f0354fb",
       "definition": "run/mediterranean-integration/datapack/data/kithkyn/kithkyn/buildings/village_center_mediterranean_1.json",
-      "definition_sha256": "8bc18e29ab8f0d23a6b135b8048aec0e68abdd28254572e7af9563af49587023"
+      "definition_sha256": "b521eaede08480f8cb98c78c4360583727044f878d05a7e4d1af8d82484caf85"
     },
     {
       "exhibit": "M06.5",
@@ -428,7 +428,7 @@
       "asset": "run/mediterranean-integration/datapack/data/kithkyn/structure/well_mediterranean_1.nbt",
       "asset_sha256": "13b3a4dfe47f04c370f544e3b7900ce71552418a26a7bc249b2c4413841a04ec",
       "definition": "run/mediterranean-integration/datapack/data/kithkyn/kithkyn/buildings/well_mediterranean_1.json",
-      "definition_sha256": "91081609171d67f93131c860e32ec49621f26bb8be995fb735233073d49f647e"
+      "definition_sha256": "1af34fb897aa3f6d8c14fa45876faf54e2212dc149b5b86a5a3559de39f42615"
     },
     {
       "exhibit": "M04.2",
@@ -554,5 +554,16 @@
     "merchant": "not applicable: the M08.1 fort has no merchant stall, so the castle merchant systems and their check do not apply",
     "custody": "PASS: [custody-verify] RESULT PASS: real melee/arrow arrest, private minute notices, saved expiry, inventory capacity and identity, escape and damaged-cell release, full-cell fallback and village-only grace",
     "static_audit": "audit-templates.py PASS 24 templates: no barrier states or out-of-bounds blocks"
+  },
+  "center_labor_contract": {
+    "recorded": "2026-09-14",
+    "builder_posts_per_center": 3,
+    "builder_unlock_populations": [
+      0,
+      6,
+      12
+    ],
+    "captain_posts_per_center": 1,
+    "routing": "Center-owned production vacancies work at physical facilities through worksite_category."
   }
 }

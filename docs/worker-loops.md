@@ -481,7 +481,8 @@ walkable. Safety walls are exempt, being a need rather than a choice ([walls.md]
 The cooldown is Aaron's, against villages that overbuild whenever they can afford to.
 
 **Built, 2026-09-02: a village can have three builders, and they divide the duties.** The town
-centre registers three BUILDER posts at founding, but the second opens only at six people and
+centre registers three logical BUILDER duty anchors at founding; no workstation block is required.
+The second opens only at six people and
 the third at twelve (`Village.PEOPLE_PER_BUILDER`; a locked post is not open, and the planner
 does not count it as a job nobody has taken), and posts are filled each trade once before any
 trade is doubled (`JobClaiming.nextOpening`). So a camp's first hires are its guard, miner and

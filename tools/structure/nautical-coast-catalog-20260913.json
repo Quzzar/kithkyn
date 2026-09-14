@@ -520,5 +520,16 @@
     "routes-gate-access-nautical": "PASS: [gate-access-verify] RESULT PASS: NAUTICAL_COAST all 8 guards/workers ascended and descended",
     "routes-gate-access-polynesian": "PASS: [gate-access-verify] RESULT PASS: POLYNESIAN_COAST all 8 guards/workers ascended and descended",
     "static_audit": "PASS 24 templates (main's audit of 2026-09-13: no barrier states, out-of-bounds blocks, invalid or duplicate station coordinates, invalid lumberjack stands, terrain-clearing corner air, unclassified containers, open or empty butcheries, malformed market floors, or malformed market entrances), after the height walk's edits"
+  },
+  "center_labor_contract": {
+    "recorded": "2026-09-14",
+    "builder_posts_per_center": 3,
+    "builder_unlock_populations": [
+      0,
+      6,
+      12
+    ],
+    "captain_posts_per_center": 1,
+    "routing": "Center-owned production vacancies work at physical facilities through worksite_category."
   }
 }

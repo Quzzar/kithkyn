@@ -21,7 +21,7 @@
       "manifest": "tools/structure/desert-center-20260909.json",
       "recipe": "village_center_1",
       "asset_sha256": "ccc745378f8a72bda01bf381da4cfe6894fad0087381494c6da38a68bffcbd32",
-      "definition_sha256": "eec078967fe846c26c7adb2f3c70c04ce5cd06e91a141ab93679068f58c23353",
+      "definition_sha256": "ae205fe33deb1649c20985cd6e232d28e72c1fdf58b99e9e14ff1a40625c95bb",
       "source_mod": "[Neoforge]ctov-3.6.3.jar",
       "source_mod_structure": "data/ctov/structure/village/desert_oasis/town_center.nbt",
       "reviewed_neutral": "run/pueblo-showcase/desert-center-approved-20260909-224500/neutral/D05.1.nbt",
@@ -141,7 +141,7 @@
       "manifest": "tools/structure/desert-storehouses-20260909.json",
       "recipe": "storehouse_1",
       "asset_sha256": "4f6f8235a6784b4d34a446226bc7c46b7b9dc8853dd56662f84f064cb3cb69b2",
-      "definition_sha256": "79738aac1ab2fa1320e31f1b065d9f502889a45d8d2c220efde2734252d18df2",
+      "definition_sha256": "311ef226f194b88d5879a2920efa10713524c862479792ae5b42288361ba7e8c",
       "source_mod": "[Neoforge]ctov-3.6.3.jar",
       "source_mod_structure": "data/ctov/structure/village/desert/house/small_1.nbt",
       "reviewed_neutral": "run/pueblo-showcase/desert-storehouses-approved-20260909-213300/neutral/D01.7.nbt",
@@ -153,7 +153,7 @@
       "manifest": "tools/structure/desert-storehouses-20260909.json",
       "recipe": "storehouse_2",
       "asset_sha256": "b16374b5552480826be871ea8f9da3c7a559f3d899b57e4878dabd0452980819",
-      "definition_sha256": "9e5916e1c5b612be0dd37355dec0af3132baf2e77e0f093690526592d12321b9",
+      "definition_sha256": "da395482973dc845e8c8f3c1ecbb054cf4fff5b6615a45a4adee88261effac0a",
       "source_mod": "[Neoforge]ctov-3.6.3.jar",
       "source_mod_structure": "data/ctov/structure/village/desert/jobsite/vault.nbt",
       "reviewed_neutral": "run/pueblo-showcase/desert-storehouses-approved-20260909-213300/neutral/D03.8.nbt",
@@ -470,5 +470,16 @@
       ],
       "note": "The evening re-export had carried the gallery row sign at (6, 0, -4), outside the template; scrubbed and the template rebuilt within its bounds."
     }
-  ]
+  ],
+  "center_labor_contract": {
+    "recorded": "2026-09-14",
+    "builder_posts_per_center": 3,
+    "builder_unlock_populations": [
+      0,
+      6,
+      12
+    ],
+    "captain_posts_per_center": 1,
+    "routing": "Center-owned production vacancies work at physical facilities through worksite_category."
+  }
 }
