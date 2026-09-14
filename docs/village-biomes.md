@@ -137,7 +137,7 @@ The current review status is:
   `tools/structure/nautical-coast-catalog-20260913.json`.
 
 - **Savanna Tent:** the selection gallery stands in the sky above the **trio-20260912** world,
-  beginning at **1723.5, 230, 10.5**, east of the Nautical gallery. Its 39 rows hold 392 pieces:
+  beginning at **1723.5, 230, 10.5**, east of the Nautical gallery. Its 43 rows hold 410 pieces:
   - ST01 to ST06: every standalone Towns & Towers savanna and tent piece: the ramshackled savanna
     plateau village with the showcase's assembled tower village and the fourteen storeys its towers
     are stacked from, the savanna plateau camp, the wooded badlands tipi village and camp, the
@@ -157,6 +157,9 @@ The current review status is:
     statues and obelisks, two rows of farms and pens, lumber yards, the Dungeons & Taverns badlands
     miner compound, and two rows of wells, drawn from vanilla, Towns & Towers, CTOV's dry villages,
     Terralith, YUNG's Extras and Dungeons & Taverns.
+  - ST40 to ST43: the palette studies in Aaron's picks' materials: the three market tiers in acacia on
+    a coarse-dirt camp floor, and three wall directions on the shared Birch geometry: an acacia
+    palisade, a blue-and-yellow canvas wall on acacia, and dry stone with terracotta.
 
   The rows' sky is filled with the savanna biome, which has no precipitation, so lightning cannot
   reach the wool tents. Blocks from mods the server lacks are replaced by vanilla stand-ins in the

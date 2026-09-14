@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "recorded": "2026-09-14T13:53:51.104062-04:00",
+  "recorded": "2026-09-14T14:51:36.337791-04:00",
   "purpose": "Every standalone Towns & Towers savanna, tipi and trader-camp piece, both complete CTOV savanna villages with the savanna outpost, and the Dungeons & Taverns acacia tavern set, for selecting the Savanna Tent catalog. The T&T Nilotic houses stand in the last row for comparison; they are the Floodplain catalog.",
   "status": "placed_and_visually_verified",
   "world": "trio-20260912",
@@ -16,7 +16,7 @@
     4,
     1984,
     276,
-    1705
+    1881
   ],
   "selectionRule": "Every standalone piece of the T&T savanna plateau village and camp, the wooded badlands tipi village and camp, the wandering trader camp and the savanna outpost tower; every standalone CTOV savanna and Native American savanna piece plus the savanna outpost, roads omitted and entities stripped, with other mods' blocks shown as neutral vanilla markers; every non-villager D&T acacia tavern module and the savanna well; the showcase's assembled ramshackled tower village; and the T&T Nilotic houses for comparison. Street, terminator and villager templates are omitted.",
   "counts": {
@@ -28,9 +28,10 @@
     "minecraft": 20,
     "terralith": 4,
     "yungsExtras": 13,
+    "studies": 18,
     "standInPieces": 115,
-    "total": 392,
-    "rows": 39
+    "total": 410,
+    "rows": 43
   },
   "rows": [
     {
@@ -7798,7 +7799,8 @@
           "containment": null,
           "standIns": 0,
           "sourceCommit": "2a55bb2^",
-          "sourceNote": "Village Life catalog piece, removed by 2a55bb2 (Remove the old Village Life catalogs, 2026-09-10)"
+          "sourceNote": "Village Life catalog piece, removed by 2a55bb2 (Remove the old Village Life catalogs, 2026-09-10)",
+          "dampedFire": 1
         }
       ]
     },
@@ -10792,29 +10794,673 @@
           "assembly": "run/full-style-showcase/ClassicWell.java"
         }
       ]
+    },
+    {
+      "id": "ST40",
+      "title": "SAVANNA MARKET \u2014 TIERS 1 TO 3",
+      "origin": [
+        1730,
+        230,
+        1739
+      ],
+      "bounds": [
+        1720,
+        220,
+        1730,
+        1806,
+        276,
+        1767
+      ],
+      "entries": [
+        {
+          "id": "ST40.1",
+          "label": "Market Tier 1",
+          "role": "market",
+          "sourceMod": "Kithkyn study",
+          "source": "src/main/resources/data/kithkyn/structure/market_birch_forest_1.nbt",
+          "sourceSha256": "ba62598d3dc7ecbffc4d7e1c0542a37a4f7990c356f7613a38534a93f4ef72d1",
+          "preparedSha256": "56086629416c166d11ed82cb4e8bbc4ef245ec945c9795491f76413b3a131b09",
+          "size": [
+            16,
+            6,
+            17
+          ],
+          "origin": [
+            1730,
+            230,
+            1739
+          ],
+          "privateTemplate": "kithkyn_savanna_profile:st40_01_market_1",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0,
+          "study": "run/savanna-full-profile/studies/market_1.nbt",
+          "swaps": {
+            "cobblestone -> coarse_dirt": 16,
+            "birch_trapdoor -> acacia_trapdoor": 50,
+            "birch_log -> stripped_acacia_log": 4,
+            "birch_fence -> acacia_fence": 14
+          }
+        },
+        {
+          "id": "ST40.2",
+          "label": "Market Tier 2",
+          "role": "market",
+          "sourceMod": "Kithkyn study",
+          "source": "src/main/resources/data/kithkyn/structure/market_birch_forest_2.nbt",
+          "sourceSha256": "63f3a3fcfaecefd4dc4807d5a01b28d3e263bad1cddd5a5c12bab754c45c9a9f",
+          "preparedSha256": "b713f8e03340f4ef255d2ae4fe4c1ef942e683339793db8b421c996ffb828afb",
+          "size": [
+            23,
+            6,
+            17
+          ],
+          "origin": [
+            1752,
+            230,
+            1739
+          ],
+          "privateTemplate": "kithkyn_savanna_profile:st40_02_market_2",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0,
+          "study": "run/savanna-full-profile/studies/market_2.nbt",
+          "swaps": {
+            "cobblestone -> coarse_dirt": 57,
+            "birch_trapdoor -> acacia_trapdoor": 100,
+            "birch_log -> stripped_acacia_log": 8,
+            "birch_fence -> acacia_fence": 28
+          }
+        },
+        {
+          "id": "ST40.3",
+          "label": "Market Tier 3",
+          "role": "market",
+          "sourceMod": "Kithkyn study",
+          "source": "src/main/resources/data/kithkyn/structure/market_birch_forest_3.nbt",
+          "sourceSha256": "9b2a4c0903bb9cdd26e954fcc45a8f556ea853b2fe7def140a5d0cc088c7cfab",
+          "preparedSha256": "e4d19d0ccf2770030e4a2d04c34d74d69c2be6bbca309f78c32154b4dfa7bb1c",
+          "size": [
+            23,
+            6,
+            25
+          ],
+          "origin": [
+            1781,
+            230,
+            1739
+          ],
+          "privateTemplate": "kithkyn_savanna_profile:st40_03_market_3",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0,
+          "study": "run/savanna-full-profile/studies/market_3.nbt",
+          "swaps": {
+            "cobblestone -> coarse_dirt": 78,
+            "birch_trapdoor -> acacia_trapdoor": 150,
+            "birch_log -> stripped_acacia_log": 12,
+            "birch_fence -> acacia_fence": 42
+          }
+        }
+      ]
+    },
+    {
+      "id": "ST41",
+      "title": "SAVANNA WALL A \u2014 ACACIA PALISADE",
+      "origin": [
+        1730,
+        230,
+        1783
+      ],
+      "bounds": [
+        1720,
+        220,
+        1774,
+        1807,
+        276,
+        1793
+      ],
+      "entries": [
+        {
+          "id": "ST41.1",
+          "label": "Wall A Straight",
+          "role": "wall",
+          "sourceMod": "Kithkyn study",
+          "source": "src/main/resources/data/kithkyn/structure/wall/birch_forest/straight.nbt",
+          "sourceSha256": "417c3fa956b8b016be23d1a9fdb090b8d155466b75060234831a0a118cf90b85",
+          "preparedSha256": "c5fa98ff912ede8c0620bd3f0cff9b00b7d4d9cc8f8ea61191e9b5331cfc8b83",
+          "size": [
+            7,
+            8,
+            1
+          ],
+          "origin": [
+            1730,
+            230,
+            1783
+          ],
+          "privateTemplate": "kithkyn_savanna_profile:st41_01_wall_a_straight",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0,
+          "study": "run/savanna-full-profile/studies/wall_a_straight.nbt",
+          "swaps": {
+            "mossy_cobblestone -> cobblestone": 5,
+            "cobblestone -> cobblestone": 2,
+            "mossy_cobblestone -> stripped_acacia_wood": 6,
+            "cobblestone -> stripped_acacia_wood": 18,
+            "cobblestone_wall -> acacia_fence": 3,
+            "mossy_cobblestone_wall -> acacia_fence": 1
+          }
+        },
+        {
+          "id": "ST41.2",
+          "label": "Wall A Diagonal",
+          "role": "wall",
+          "sourceMod": "Kithkyn study",
+          "source": "src/main/resources/data/kithkyn/structure/wall/birch_forest/diagonal.nbt",
+          "sourceSha256": "641d8f0285db2aadcc581e4b4a60082a70d29824668fb8b3bff2be357073ca71",
+          "preparedSha256": "d7b6bac0e71872f955b813c0dcd045e6421a8d70137a16e251f0901335791493",
+          "size": [
+            7,
+            8,
+            7
+          ],
+          "origin": [
+            1743,
+            230,
+            1783
+          ],
+          "privateTemplate": "kithkyn_savanna_profile:st41_02_wall_a_diagonal",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0,
+          "study": "run/savanna-full-profile/studies/wall_a_diagonal.nbt",
+          "swaps": {
+            "mossy_cobblestone -> cobblestone": 3,
+            "cobblestone -> cobblestone": 4,
+            "mossy_cobblestone -> stripped_acacia_wood": 8,
+            "cobblestone -> stripped_acacia_wood": 16,
+            "cobblestone_wall -> acacia_fence": 4,
+            "mossy_cobblestone_wall -> acacia_fence": 2
+          }
+        },
+        {
+          "id": "ST41.3",
+          "label": "Wall A Corner Tower",
+          "role": "wall",
+          "sourceMod": "Kithkyn study",
+          "source": "src/main/resources/data/kithkyn/structure/wall/birch_forest/corner_tower.nbt",
+          "sourceSha256": "38b6df41ffe999e9ef9027a2b6b05e8af76f622cbd27d7cd0d5918124a1e84ea",
+          "preparedSha256": "26a5102e3c908983daad9276ff885292d4c6ff527ab72c1afd77161c82584aa3",
+          "size": [
+            12,
+            8,
+            6
+          ],
+          "origin": [
+            1756,
+            230,
+            1783
+          ],
+          "privateTemplate": "kithkyn_savanna_profile:st41_03_wall_a_corner_tower",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0,
+          "study": "run/savanna-full-profile/studies/wall_a_corner_tower.nbt",
+          "swaps": {
+            "mossy_cobblestone -> cobblestone": 7,
+            "cobblestone -> cobblestone": 7,
+            "oak_trapdoor -> acacia_trapdoor": 4,
+            "mossy_cobblestone -> stripped_acacia_wood": 11,
+            "cobblestone -> stripped_acacia_wood": 40,
+            "mossy_cobblestone_wall -> acacia_fence": 8,
+            "cobblestone_wall -> acacia_fence": 11,
+            "cobblestone_slab -> acacia_slab": 1
+          }
+        },
+        {
+          "id": "ST41.4",
+          "label": "Wall A Gatehouse",
+          "role": "wall",
+          "sourceMod": "Kithkyn study",
+          "source": "src/main/resources/data/kithkyn/structure/wall/birch_forest/gatehouse.nbt",
+          "sourceSha256": "6b18ae5516320898e1ad6b89393a2e6ab9ba34a2afc8bd4b733d4944d9cdfcf1",
+          "preparedSha256": "081cf6d8f8471e25fc9167cd6e478a5107ed49a1d05ae9c954a84aa4ecee77a4",
+          "size": [
+            17,
+            8,
+            7
+          ],
+          "origin": [
+            1774,
+            230,
+            1783
+          ],
+          "privateTemplate": "kithkyn_savanna_profile:st41_04_wall_a_gatehouse",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0,
+          "study": "run/savanna-full-profile/studies/wall_a_gatehouse.nbt",
+          "swaps": {
+            "mossy_cobblestone -> cobblestone": 8,
+            "cobblestone -> cobblestone": 10,
+            "cobblestone -> stripped_acacia_wood": 52,
+            "mossy_cobblestone -> stripped_acacia_wood": 30,
+            "cobblestone_wall -> acacia_fence": 20,
+            "mossy_cobblestone_wall -> acacia_fence": 11,
+            "cobblestone_slab -> acacia_slab": 9
+          }
+        },
+        {
+          "id": "ST41.5",
+          "label": "Wall A Terrace",
+          "role": "wall",
+          "sourceMod": "Kithkyn study",
+          "source": "src/main/resources/data/kithkyn/structure/wall/birch_forest/terrace.nbt",
+          "sourceSha256": "df728d8b1ed1fe0372acc52a4faf7057eefc5c24f2f1a0605a234613a3404056",
+          "preparedSha256": "d1c4dbdb906f7b3b593c1e66b2c47eb98a35d072d3d06771d7c38a4e9e90ced1",
+          "size": [
+            8,
+            9,
+            1
+          ],
+          "origin": [
+            1797,
+            230,
+            1783
+          ],
+          "privateTemplate": "kithkyn_savanna_profile:st41_05_wall_a_terrace",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0,
+          "study": "run/savanna-full-profile/studies/wall_a_terrace.nbt",
+          "swaps": {
+            "mossy_cobblestone -> cobblestone": 3,
+            "cobblestone -> cobblestone": 1,
+            "mossy_cobblestone -> stripped_acacia_wood": 12,
+            "cobblestone -> stripped_acacia_wood": 22,
+            "cobblestone_wall -> acacia_fence": 4,
+            "mossy_cobblestone_wall -> acacia_fence": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": "ST42",
+      "title": "SAVANNA WALL B \u2014 CANVAS ON ACACIA",
+      "origin": [
+        1730,
+        230,
+        1827
+      ],
+      "bounds": [
+        1720,
+        220,
+        1818,
+        1807,
+        276,
+        1837
+      ],
+      "entries": [
+        {
+          "id": "ST42.1",
+          "label": "Wall B Straight",
+          "role": "wall",
+          "sourceMod": "Kithkyn study",
+          "source": "src/main/resources/data/kithkyn/structure/wall/birch_forest/straight.nbt",
+          "sourceSha256": "417c3fa956b8b016be23d1a9fdb090b8d155466b75060234831a0a118cf90b85",
+          "preparedSha256": "581a6e7c8799c3d2e4605fc1092e157e7dd51262057c66e6675490b0c9a237bc",
+          "size": [
+            7,
+            8,
+            1
+          ],
+          "origin": [
+            1730,
+            230,
+            1827
+          ],
+          "privateTemplate": "kithkyn_savanna_profile:st42_01_wall_b_straight",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0,
+          "study": "run/savanna-full-profile/studies/wall_b_straight.nbt",
+          "swaps": {
+            "mossy_cobblestone -> stripped_acacia_wood": 5,
+            "cobblestone -> stripped_acacia_wood": 2,
+            "mossy_cobblestone -> yellow_wool": 6,
+            "cobblestone -> blue_wool": 18,
+            "cobblestone_wall -> acacia_fence": 3,
+            "mossy_cobblestone_wall -> acacia_fence": 1
+          }
+        },
+        {
+          "id": "ST42.2",
+          "label": "Wall B Diagonal",
+          "role": "wall",
+          "sourceMod": "Kithkyn study",
+          "source": "src/main/resources/data/kithkyn/structure/wall/birch_forest/diagonal.nbt",
+          "sourceSha256": "641d8f0285db2aadcc581e4b4a60082a70d29824668fb8b3bff2be357073ca71",
+          "preparedSha256": "41af3b004813c8c23577098b3da600e178eb8442bbee2e04d11e5508d6a7f020",
+          "size": [
+            7,
+            8,
+            7
+          ],
+          "origin": [
+            1743,
+            230,
+            1827
+          ],
+          "privateTemplate": "kithkyn_savanna_profile:st42_02_wall_b_diagonal",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0,
+          "study": "run/savanna-full-profile/studies/wall_b_diagonal.nbt",
+          "swaps": {
+            "mossy_cobblestone -> stripped_acacia_wood": 3,
+            "cobblestone -> stripped_acacia_wood": 4,
+            "mossy_cobblestone -> yellow_wool": 8,
+            "cobblestone -> blue_wool": 16,
+            "cobblestone_wall -> acacia_fence": 4,
+            "mossy_cobblestone_wall -> acacia_fence": 2
+          }
+        },
+        {
+          "id": "ST42.3",
+          "label": "Wall B Corner Tower",
+          "role": "wall",
+          "sourceMod": "Kithkyn study",
+          "source": "src/main/resources/data/kithkyn/structure/wall/birch_forest/corner_tower.nbt",
+          "sourceSha256": "38b6df41ffe999e9ef9027a2b6b05e8af76f622cbd27d7cd0d5918124a1e84ea",
+          "preparedSha256": "b486e97aa3f9d34729e49f250569831ecba575fa0a7e3beef6cb93810fc58a24",
+          "size": [
+            12,
+            8,
+            6
+          ],
+          "origin": [
+            1756,
+            230,
+            1827
+          ],
+          "privateTemplate": "kithkyn_savanna_profile:st42_03_wall_b_corner_tower",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0,
+          "study": "run/savanna-full-profile/studies/wall_b_corner_tower.nbt",
+          "swaps": {
+            "mossy_cobblestone -> stripped_acacia_wood": 7,
+            "cobblestone -> stripped_acacia_wood": 7,
+            "oak_trapdoor -> acacia_trapdoor": 4,
+            "mossy_cobblestone -> yellow_wool": 11,
+            "cobblestone -> blue_wool": 40,
+            "mossy_cobblestone_wall -> acacia_fence": 8,
+            "cobblestone_wall -> acacia_fence": 11,
+            "cobblestone_slab -> acacia_slab": 1
+          }
+        },
+        {
+          "id": "ST42.4",
+          "label": "Wall B Gatehouse",
+          "role": "wall",
+          "sourceMod": "Kithkyn study",
+          "source": "src/main/resources/data/kithkyn/structure/wall/birch_forest/gatehouse.nbt",
+          "sourceSha256": "6b18ae5516320898e1ad6b89393a2e6ab9ba34a2afc8bd4b733d4944d9cdfcf1",
+          "preparedSha256": "29ce2c257baf4daf1ca7250d0272887ef87e4830ed14b8f14db4068bb3a4975b",
+          "size": [
+            17,
+            8,
+            7
+          ],
+          "origin": [
+            1774,
+            230,
+            1827
+          ],
+          "privateTemplate": "kithkyn_savanna_profile:st42_04_wall_b_gatehouse",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0,
+          "study": "run/savanna-full-profile/studies/wall_b_gatehouse.nbt",
+          "swaps": {
+            "mossy_cobblestone -> stripped_acacia_wood": 8,
+            "cobblestone -> stripped_acacia_wood": 10,
+            "cobblestone -> blue_wool": 52,
+            "mossy_cobblestone -> yellow_wool": 30,
+            "cobblestone_wall -> acacia_fence": 20,
+            "mossy_cobblestone_wall -> acacia_fence": 11,
+            "cobblestone_slab -> acacia_slab": 9
+          }
+        },
+        {
+          "id": "ST42.5",
+          "label": "Wall B Terrace",
+          "role": "wall",
+          "sourceMod": "Kithkyn study",
+          "source": "src/main/resources/data/kithkyn/structure/wall/birch_forest/terrace.nbt",
+          "sourceSha256": "df728d8b1ed1fe0372acc52a4faf7057eefc5c24f2f1a0605a234613a3404056",
+          "preparedSha256": "72eb5522b7c03491e84f9d7f9338b97405f87d1e4a3ff930261c1c84153453e7",
+          "size": [
+            8,
+            9,
+            1
+          ],
+          "origin": [
+            1797,
+            230,
+            1827
+          ],
+          "privateTemplate": "kithkyn_savanna_profile:st42_05_wall_b_terrace",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0,
+          "study": "run/savanna-full-profile/studies/wall_b_terrace.nbt",
+          "swaps": {
+            "mossy_cobblestone -> stripped_acacia_wood": 3,
+            "cobblestone -> stripped_acacia_wood": 1,
+            "mossy_cobblestone -> yellow_wool": 12,
+            "cobblestone -> blue_wool": 22,
+            "cobblestone_wall -> acacia_fence": 4,
+            "mossy_cobblestone_wall -> acacia_fence": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": "ST43",
+      "title": "SAVANNA WALL C \u2014 DRY STONE + TERRACOTTA",
+      "origin": [
+        1730,
+        230,
+        1871
+      ],
+      "bounds": [
+        1720,
+        220,
+        1862,
+        1807,
+        276,
+        1881
+      ],
+      "entries": [
+        {
+          "id": "ST43.1",
+          "label": "Wall C Straight",
+          "role": "wall",
+          "sourceMod": "Kithkyn study",
+          "source": "src/main/resources/data/kithkyn/structure/wall/birch_forest/straight.nbt",
+          "sourceSha256": "417c3fa956b8b016be23d1a9fdb090b8d155466b75060234831a0a118cf90b85",
+          "preparedSha256": "9d1a8edfb975de5b3c165b7e92f0057daedc9e0d42cb94a488abe40b7bd50a1c",
+          "size": [
+            7,
+            8,
+            1
+          ],
+          "origin": [
+            1730,
+            230,
+            1871
+          ],
+          "privateTemplate": "kithkyn_savanna_profile:st43_01_wall_c_straight",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0,
+          "study": "run/savanna-full-profile/studies/wall_c_straight.nbt",
+          "swaps": {
+            "mossy_cobblestone -> terracotta": 11,
+            "cobblestone -> terracotta": 2,
+            "mossy_cobblestone_wall -> cobblestone_wall": 1
+          }
+        },
+        {
+          "id": "ST43.2",
+          "label": "Wall C Diagonal",
+          "role": "wall",
+          "sourceMod": "Kithkyn study",
+          "source": "src/main/resources/data/kithkyn/structure/wall/birch_forest/diagonal.nbt",
+          "sourceSha256": "641d8f0285db2aadcc581e4b4a60082a70d29824668fb8b3bff2be357073ca71",
+          "preparedSha256": "2caf785fbbccd690125f132dd34599806fdf0c32518943f1436d7d7e5b56470d",
+          "size": [
+            7,
+            8,
+            7
+          ],
+          "origin": [
+            1743,
+            230,
+            1871
+          ],
+          "privateTemplate": "kithkyn_savanna_profile:st43_02_wall_c_diagonal",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0,
+          "study": "run/savanna-full-profile/studies/wall_c_diagonal.nbt",
+          "swaps": {
+            "mossy_cobblestone -> terracotta": 11,
+            "cobblestone -> terracotta": 4,
+            "mossy_cobblestone_wall -> cobblestone_wall": 2
+          }
+        },
+        {
+          "id": "ST43.3",
+          "label": "Wall C Corner Tower",
+          "role": "wall",
+          "sourceMod": "Kithkyn study",
+          "source": "src/main/resources/data/kithkyn/structure/wall/birch_forest/corner_tower.nbt",
+          "sourceSha256": "38b6df41ffe999e9ef9027a2b6b05e8af76f622cbd27d7cd0d5918124a1e84ea",
+          "preparedSha256": "7793bf9e5360261a7e832865f6035f22f738987e2910e20df28fe2273c7a7f16",
+          "size": [
+            12,
+            8,
+            6
+          ],
+          "origin": [
+            1756,
+            230,
+            1871
+          ],
+          "privateTemplate": "kithkyn_savanna_profile:st43_03_wall_c_corner_tower",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0,
+          "study": "run/savanna-full-profile/studies/wall_c_corner_tower.nbt",
+          "swaps": {
+            "mossy_cobblestone -> terracotta": 18,
+            "cobblestone -> terracotta": 7,
+            "oak_trapdoor -> acacia_trapdoor": 4,
+            "mossy_cobblestone_wall -> cobblestone_wall": 8,
+            "cobblestone_slab -> acacia_slab": 1
+          }
+        },
+        {
+          "id": "ST43.4",
+          "label": "Wall C Gatehouse",
+          "role": "wall",
+          "sourceMod": "Kithkyn study",
+          "source": "src/main/resources/data/kithkyn/structure/wall/birch_forest/gatehouse.nbt",
+          "sourceSha256": "6b18ae5516320898e1ad6b89393a2e6ab9ba34a2afc8bd4b733d4944d9cdfcf1",
+          "preparedSha256": "39707c473f47b20e7bf71560fefd2a2874c3dad4e174cc095b71f0e00bef3ad0",
+          "size": [
+            17,
+            8,
+            7
+          ],
+          "origin": [
+            1774,
+            230,
+            1871
+          ],
+          "privateTemplate": "kithkyn_savanna_profile:st43_04_wall_c_gatehouse",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0,
+          "study": "run/savanna-full-profile/studies/wall_c_gatehouse.nbt",
+          "swaps": {
+            "mossy_cobblestone -> terracotta": 38,
+            "cobblestone -> terracotta": 10,
+            "mossy_cobblestone_wall -> cobblestone_wall": 11,
+            "cobblestone_slab -> acacia_slab": 9
+          }
+        },
+        {
+          "id": "ST43.5",
+          "label": "Wall C Terrace",
+          "role": "wall",
+          "sourceMod": "Kithkyn study",
+          "source": "src/main/resources/data/kithkyn/structure/wall/birch_forest/terrace.nbt",
+          "sourceSha256": "df728d8b1ed1fe0372acc52a4faf7057eefc5c24f2f1a0605a234613a3404056",
+          "preparedSha256": "adc2d8cf2134f54b8adfe7c07b98886a3a1fe8857599ed566783a2f224e4e9f2",
+          "size": [
+            8,
+            9,
+            1
+          ],
+          "origin": [
+            1797,
+            230,
+            1871
+          ],
+          "privateTemplate": "kithkyn_savanna_profile:st43_05_wall_c_terrace",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0,
+          "study": "run/savanna-full-profile/studies/wall_c_terrace.nbt",
+          "swaps": {
+            "mossy_cobblestone -> terracotta": 15,
+            "cobblestone -> terracotta": 1,
+            "mossy_cobblestone_wall -> cobblestone_wall": 1
+          }
+        }
+      ]
     }
   ],
   "verification": {
-    "preparedTemplates": 392,
-    "placedTemplates": 392,
+    "preparedTemplates": 410,
+    "placedTemplates": 410,
     "allPlacementResponsesConfirmed": true,
-    "placements": [
-      "ST01-ST27 (270) 2026-09-14 10:16-10:27, screen session 13033.kithkyn-village-audit, backup before-savanna-gallery-20260914-101649",
-      "ST28 (10) 12:25, screen session 4515.kithkyn-center-labor, backup before-savanna-gallery-20260914-122518",
-      "ST29-ST38 (99) 13:41-13:49, screen session 43560.kithkyn-physical-workplace-labor; the server was restarted under the run during ST39",
-      "ST39 (13) re-placed 13:53, screen session 52297.kithkyn-occupation-verification, backup before-savanna-gallery-20260914-135352"
-    ],
     "chunksGenerated": 254,
     "worldSaved": true,
-    "offlineRender": "run/savanna-full-profile/offline-render.png; 392 footprints checked against their prepared templates",
+    "worldBackup": "/Users/quzzar/Projects/kithkyn/run/backups/before-savanna-gallery-20260914-145212",
+    "console": "screen session 52297.kithkyn-occupation-verification",
+    "addedRows": [
+      "ST40",
+      "ST41",
+      "ST42",
+      "ST43"
+    ],
+    "placements": [
+      "ST40-ST43 (18 studies) 14:52, screen session 52297.kithkyn-occupation-verification, backup before-savanna-gallery-20260914-145212"
+    ],
+    "offlineRender": "run/savanna-full-profile/offline-render.png; 410 footprints checked against their prepared templates",
     "offlineShortfalls": {
       "ST05.6": "two white beds and a chest removed by Aaron while selecting (his edit, kept)",
+      "ST29.12": "burned to its stone shell by the fire block authored into the old bakery's oven; re-placed at 15:03 with that fire swapped for a lit campfire, 488 of 488 blocks present",
       "ST39.11": "counted short by the checker but every template block is present",
       "ST39.13": "40 gravel blocks of the classic well's sunk shaft fell, as gravel does"
     },
-    "waterOutsideRings": 0,
-    "biomeFill": "every row's sky filled with minecraft:savanna before placement; saved sections y 224-271 under the rows read savanna",
-    "forceLoadsLeft": "none of this builder's; 36 chunks at x 1712-1887, z 48-79 and 224-255 were force-loaded by another console driver"
+    "authoredHeat": "ST07.2 and ST15.2 smiths hold magma blocks, ST13.1 and ST21.1 factories one encased lava cell each; none spread in five hours"
   },
   "biome": {
     "filled": "minecraft:savanna",
@@ -10829,6 +11475,13 @@
         "expected": 131,
         "placed": 126,
         "ratio": 0.962
+      },
+      {
+        "id": "ST29.12",
+        "label": "Bakery",
+        "expected": 488,
+        "placed": 196,
+        "ratio": 0.402
       },
       {
         "id": "ST39.11",
@@ -10847,6 +11500,6 @@
     ],
     "waterOutsideRings": [],
     "waterOutsideRingsCount": 0,
-    "footprintsChecked": 392
+    "footprintsChecked": 410
   }
 }
