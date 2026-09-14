@@ -2329,7 +2329,7 @@
     },
     "openChoices": {
       "biome": "Decided 2026-09-12: Polynesian Coast founds in Sparse Jungle (taken from Jungle, which keeps Jungle and Bamboo Jungle) and on beaches beside warm or lukewarm ocean; Nautical Coast keeps temperate and cold coasts. Needs the jungle style tag and a warm-beach site check at integration.",
-      "centerPosts": "The quartermaster (routed to the storehouse), builder, guard captain and miner (routed to the mine) stand in the forecourt by the bell."
+      "centerPosts": "The center has five population-scaled builder duty anchors, one guard captain, the king and the jailer. The mine owns its miner workstation and the storehouse owns its quartermaster workstation."
     },
     "codeNotes": [
       "Castle amenities are allowed on a castle or a village centre (CastleLayout.allowedIn); custody accepts the centre.",

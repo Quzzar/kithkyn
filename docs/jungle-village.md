@@ -42,18 +42,17 @@ alternatives rather than an upgrade chain; the two level-2 homes are standalone 
 choices. Markets are the only upgrade chain. The market tents retain the established orange,
 cyan, red and white fabric instead of taking village colors.
 
-## Founding and physical worksites
+## Founding and workplaces
 
 The center deliberately has no beds. Its founding set places the mine, the storehouse and four
 one-person homes through ordinary construction site search, producing natural sprawl with the
 same two-block spacing preference and inward-facing preference as later growth. Those four homes
-house the center's four starting workers.
+house the four founding workers.
 
-The quartermaster and miner vacancies remain owned by the center, while their physical work
-happens in the separately placed storehouse and mine. A `worksite_category` on each center post
-routes the worker to the nearest matching building; the target building declares a `worksites`
-position without creating a duplicate vacancy. Removing or rebuilding that target makes the
-workplace temporarily unavailable. The mine alone owns its three-block-wide shaft. Its four-by-three
+The center owns five population-scaled builder duties and one captain duty. The founding mine
+owns its miner vacancy, and the founding storehouse owns its quartermaster vacancy. Building
+another mine or storehouse adds another matching job because each physical building carries its
+own workstation. The mine alone owns its three-block-wide shaft. Its four-by-three
 pit is one block deep, with three stairs down its west side and both material barrels at that stair
 rim. The miner stands in the pit's west column; the eastward ramp mouth is one column inward and one
 block above that post, keeping the first descending cuts inside the pavilion.
@@ -99,7 +98,7 @@ barriers and out-of-bounds cells in every later public or private catalog export
 
 ## Verification
 
-Core tests cover biome selection, codec persistence, routed physical worksites, mine ownership,
+Core tests cover biome selection, codec persistence, local workplace ownership, mine ownership,
 the Jungle wall palette and unchanged fallback behavior. An opt-in private-asset test fixes the
 mine's pit, stair, barrel, worksite and mouth geometry. Native checks run the private catalog
 through the shared reviewed-village, access and real-placement fixtures.
@@ -111,9 +110,9 @@ fixture passed 176 real-template placements through instant and incremental cons
 four rotations, including colors, frames, save receipts and upgrade preservation. A server
 restart retained all 176 buildings. The founding fixture passed 22 strict templates, all four
 center rotations, eight market upgrade fits, natural Jungle selection, four starting homes,
-four assigned workers, distinct bell and campfire locations, routed mine/storehouse work and
+four assigned workers, distinct bell and campfire locations, local mine/storehouse work and
 codec reloads. After the mine-floor revision, a focused native pass added four real excavation
-runs, eight routed-worksite access routes and eight instant/incremental construction placements
+runs, eight mine-workplace access routes and eight instant/incremental construction placements
 across all four rotations. The exported template has zero blockstate mismatches against Aaron's
 flushed live capture.
 

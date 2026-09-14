@@ -50,6 +50,22 @@
       ]
     },
     {
+      "occupation": "BUILDER",
+      "pos": [
+        11,
+        1,
+        12
+      ]
+    },
+    {
+      "occupation": "BUILDER",
+      "pos": [
+        12,
+        1,
+        13
+      ]
+    },
+    {
       "occupation": "GUARD",
       "guard_duty": "CAPTAIN",
       "pos": [

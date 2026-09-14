@@ -39,7 +39,7 @@
       "asset": "run/tundra-integration/datapack/data/kithkyn/structure/village_center_tundra_1.nbt",
       "asset_sha256": "18618ec88b5677b665f7dfc902b2a15f4082031fa9ac18ef68b05f6408b5e61b",
       "definition": "run/tundra-integration/datapack/data/kithkyn/kithkyn/buildings/village_center_tundra_1.json",
-      "definition_sha256": "ad225b9300c00ee719ee839a78b0789a6993c0930bb7e3ff94609591466a4937"
+      "definition_sha256": "30072ca7d26c35c7ed45bbf033be0427062d0cbe2d2149844e82bfb216aac2bc"
     },
     {
       "exhibit": "T01.2",
@@ -107,7 +107,7 @@
       "asset": "run/tundra-integration/datapack/data/kithkyn/structure/storehouse_tundra_1.nbt",
       "asset_sha256": "3f7b6f9b8d7982bae0df2737bd9d742bebdd9fa6f3960c9b4fd42f710bdf15fa",
       "definition": "run/tundra-integration/datapack/data/kithkyn/kithkyn/buildings/storehouse_tundra_1.json",
-      "definition_sha256": "c2bb0b0ae5030b497bf60da941edc826427696afd064fc89c22d49f1cfcb485a"
+      "definition_sha256": "db5a1002bc364107d6fe8ac05f44d2ef879d153116c88f0f04cba1ef1a33d305"
     },
     {
       "exhibit": "T01.6",
@@ -294,7 +294,7 @@
       "asset": "run/tundra-integration/datapack/data/kithkyn/structure/mine_tundra_1.nbt",
       "asset_sha256": "fcc4c43e01062a093a5f960bfb7a958d34e14fd0be7fc37bb08f5dead4bec39c",
       "definition": "run/tundra-integration/datapack/data/kithkyn/kithkyn/buildings/mine_tundra_1.json",
-      "definition_sha256": "08ba1bf5462a16b26607aace546f1c6ce3c3da1b4c3e14902e00fe9c55ff8f81"
+      "definition_sha256": "4813798bdef6cdc3f19daf5c2148ba818c6b49004d8740d353ad63f2b3aa271d"
     },
     {
       "exhibit": "T04.8",
@@ -502,13 +502,15 @@
   ],
   "center_labor_contract": {
     "recorded": "2026-09-14",
-    "builder_posts_per_center": 3,
+    "builder_posts_per_center": 5,
     "builder_unlock_populations": [
       0,
-      6,
-      12
+      12,
+      24,
+      48,
+      96
     ],
     "captain_posts_per_center": 1,
-    "routing": "Center-owned production vacancies work at physical facilities through worksite_category."
+    "routing": "Each mine and storehouse owns its worker vacancy; centers own civic and physically local roles."
   }
 }

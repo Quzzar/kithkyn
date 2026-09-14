@@ -72,20 +72,44 @@
     ],
     "work_stations": [
       {
-        "occupation": "QUARTERMASTER",
-        "pos": [
-          14,
-          1,
-          14
-        ]
-      },
-      {
-        "occupation": "BUILDER",
         "pos": [
           12,
           1,
           16
-        ]
+        ],
+        "occupation": "BUILDER"
+      },
+      {
+        "pos": [
+          11,
+          1,
+          16
+        ],
+        "occupation": "BUILDER"
+      },
+      {
+        "pos": [
+          12,
+          1,
+          15
+        ],
+        "occupation": "BUILDER"
+      },
+      {
+        "pos": [
+          13,
+          1,
+          15
+        ],
+        "occupation": "BUILDER"
+      },
+      {
+        "pos": [
+          11,
+          1,
+          17
+        ],
+        "occupation": "BUILDER"
       },
       {
         "occupation": "GUARD",
@@ -131,22 +155,6 @@
           18
         ],
         "guard_duty": "PATROL"
-      },
-      {
-        "occupation": "BUILDER",
-        "pos": [
-          11,
-          1,
-          16
-        ]
-      },
-      {
-        "occupation": "BUILDER",
-        "pos": [
-          12,
-          1,
-          15
-        ]
       }
     ],
     "personal_containers": [
@@ -674,13 +682,15 @@
   "source_mod_structure": "data/kaisyn/structure/village/badlands_pueblo/town_centers/badlands_meeting_point_1.nbt",
   "source_mod": "t_and_t-neoforge-fabric-1.13.9+1.21.1.jar",
   "labor_contract": {
-    "builder_posts": 3,
+    "builder_posts": 5,
     "builder_unlock_populations": [
       0,
-      6,
-      12
+      12,
+      24,
+      48,
+      96
     ],
     "captain_posts": 1,
-    "worksite_routing": "Center-owned production vacancies route to their physical buildings."
+    "workstation_ownership": "Each productive building owns its local worker vacancies. Each mine owns exactly one miner vacancy and each storehouse owns exactly one quartermaster vacancy."
   }
 }

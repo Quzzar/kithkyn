@@ -138,21 +138,44 @@
     ],
     "work_stations": [
       {
-        "occupation": "QUARTERMASTER",
-        "pos": [
-          8,
-          1,
-          3
-        ],
-        "worksite_category": "storehouse"
-      },
-      {
-        "occupation": "BUILDER",
         "pos": [
           6,
           1,
           5
-        ]
+        ],
+        "occupation": "BUILDER"
+      },
+      {
+        "pos": [
+          6,
+          1,
+          4
+        ],
+        "occupation": "BUILDER"
+      },
+      {
+        "pos": [
+          6,
+          1,
+          6
+        ],
+        "occupation": "BUILDER"
+      },
+      {
+        "pos": [
+          7,
+          1,
+          5
+        ],
+        "occupation": "BUILDER"
+      },
+      {
+        "pos": [
+          7,
+          1,
+          6
+        ],
+        "occupation": "BUILDER"
       },
       {
         "occupation": "GUARD",
@@ -162,22 +185,6 @@
           5
         ],
         "guard_duty": "CAPTAIN"
-      },
-      {
-        "occupation": "BUILDER",
-        "pos": [
-          6,
-          1,
-          4
-        ]
-      },
-      {
-        "occupation": "BUILDER",
-        "pos": [
-          6,
-          1,
-          6
-        ]
       }
     ],
     "meeting_point": [
@@ -290,7 +297,7 @@
   "notes": [
     "Live source geometry is preserved. Only gallery padding is cropped; bed/banner state is neutralized and leaves remain persistent.",
     "The bell meeting tile is separate from the fire. Each pavilion barrel belongs only to its assigned bed.",
-    "The founding storehouse supplies the quartermaster worksite; the center owns the single routed vacancy. The mine supplies the fourth founding job."
+    "The founding storehouse owns its quartermaster vacancy, and the founding mine owns its miner vacancy."
   ],
   "verification": {
     "native_report": "run/desert-center-verification-20260909-225300/verification.json",
@@ -321,13 +328,15 @@
     }
   },
   "labor_contract": {
-    "builder_posts": 3,
+    "builder_posts": 5,
     "builder_unlock_populations": [
       0,
-      6,
-      12
+      12,
+      24,
+      48,
+      96
     ],
     "captain_posts": 1,
-    "worksite_routing": "Center-owned production vacancies route to their physical buildings."
+    "workstation_ownership": "Each productive building owns its local worker vacancies. Each mine owns exactly one miner vacancy and each storehouse owns exactly one quartermaster vacancy."
   }
 }

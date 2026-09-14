@@ -13,14 +13,15 @@ for a later decision.
 ## Founding village
 
 `village_center_romanian_1` is R01.1 and combines the town center with the church. Its bell is the
-meeting point and its side campfire is the gathering fire. It opens the quartermaster, builder,
-guard captain, miner and cleric positions and carries the village's four authored banners.
+meeting point and its side campfire is the gathering fire. It opens five population-scaled builder
+duties, one guard captain position and one cleric position, and carries the village's four authored banners.
 
 The center has no beds. The normal site planner places `mine_romanian_1` and
 `storehouse_romanian_1` as founding companions with the same spacing, orientation and terrain
 rules used by later construction. Together they supply four beds for the four founding residents.
-The miner's bed is reserved through the routed mine worksite; the three storehouse beds are general
-housing. The cleric position remains open until the village adds housing.
+The mine owns the miner vacancy and reserves its bed for that worker. The storehouse owns the
+quartermaster vacancy; its three beds are general housing. The cleric position remains open until
+the village adds housing.
 
 ## Selected buildings
 
@@ -28,8 +29,8 @@ The private datapack contains 24 definitions:
 
 | Id | Use |
 | --- | --- |
-| `village_center_romanian_1` | R01.1 combined center and church; five jobs, bell, side campfire and four banners |
-| `mine_romanian_1` | R05.3; miner worksite, live-in bed and east-running three-block shaft |
+| `village_center_romanian_1` | R01.1 combined center and church; five builder duties, captain and cleric, bell, side campfire and four banners |
+| `mine_romanian_1` | R05.3; miner vacancy, live-in bed and east-running three-block shaft |
 | `storehouse_romanian_1` | R03.1 founding storehouse and three-bed home; four shared storage containers and two personal containers |
 | `storehouse_romanian_1__compact` | R02.6 extra compact storehouse with five shared containers |
 | `house_romanian_1`, `__small_three` | R02.2 and R02.3 one-bed homes |
@@ -72,5 +73,5 @@ remain in the local private datapack; source and output hashes are recorded in
 
 The native verification covers all 24 templates through instant and villager-paced construction,
 all four rotations, identity replacement, entity placement, save/reload receipts, founding
-placement, routed mine and storehouse work, and full-size villager access. Manual testing can use
+placement, locally owned mine and storehouse jobs, and full-size villager access. Manual testing can use
 `/kithkyn create-village ~ ~ ~ romanian`; natural founding in Dark Forest uses the same selector.

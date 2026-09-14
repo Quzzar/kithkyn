@@ -1,7 +1,6 @@
 package com.quzzar.kithkyn.village.buildings;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.google.gson.JsonParser;
@@ -101,23 +100,27 @@ class PhysicalWorksiteTest {
   }
 
   @Test
-  void everyPhysicalWorksiteRequiresAMatchingRoutedVacancy() {
+  void aRoutedVacancyAndItsPhysicalWorksiteAgreeAcrossBuildings() {
     BuildingInfo center = definition("""
         {"structure":"village_center_swamp_1","work_stations":[
-          {"pos":[4,1,4],"occupation":"MINER","worksite_category":"mine"},
+          {"pos":[4,1,4],"occupation":"LUMBERJACK","worksite_category":"lumberjack"},
           {"pos":[5,1,4],"occupation":"BUILDER"},
           {"pos":[6,1,4],"occupation":"GUARD","guard_duty":"CAPTAIN"},
           {"pos":[7,1,4],"occupation":"BUILDER"},
-          {"pos":[8,1,4],"occupation":"BUILDER"}
+          {"pos":[8,1,4],"occupation":"BUILDER"},
+          {"pos":[9,1,4],"occupation":"BUILDER"},
+          {"pos":[10,1,4],"occupation":"BUILDER"}
         ]}
         """);
     BuildingInfo mine = definition("""
-        {"structure":"mine_swamp_1","worksites":[
+        {"structure":"mine_swamp_1","work_stations":[
           {"pos":[2,0,4],"occupation":"MINER"}
         ]}
         """);
     BuildingInfo lumberjack = definition("""
-        {"structure":"lumberjack_swamp_1","worksites":[
+        {"structure":"lumberjack_swamp_1",
+         "work_stations":[{"pos":[3,1,6],"occupation":"LUMBERJACK"}],
+         "worksites":[
           {"pos":[2,1,6],"occupation":"LUMBERJACK"}
         ]}
         """);
@@ -125,28 +128,20 @@ class PhysicalWorksiteTest {
     Map<String, java.util.List<String>> problems = BuildingCatalogContract.problems(
         Map.of(center.getName(), center, mine.getName(), mine, lumberjack.getName(), lumberjack));
 
-    assertFalse(problems.containsKey(center.getName()), problems.toString());
-    assertFalse(problems.containsKey(mine.getName()), problems.toString());
-    assertEquals(java.util.List.of(
-        "LUMBERJACK worksite has no routed vacancy for swamp/lumberjack"),
-        problems.get(lumberjack.getName()));
+    assertTrue(problems.isEmpty(), problems.toString());
   }
 
   @Test
   void everyRoutedVacancyRequiresAMatchingPhysicalWorksite() {
-    BuildingInfo center = definition("""
-        {"structure":"village_center_jungle_1","work_stations":[
-          {"pos":[4,1,4],"occupation":"MINER","worksite_category":"mine"},
-          {"pos":[5,1,4],"occupation":"BUILDER"},
-          {"pos":[6,1,4],"occupation":"GUARD","guard_duty":"CAPTAIN"},
-          {"pos":[7,1,4],"occupation":"BUILDER"},
-          {"pos":[8,1,4],"occupation":"BUILDER"}
+    BuildingInfo house = definition("""
+        {"structure":"house_jungle_1","work_stations":[
+          {"pos":[4,1,4],"occupation":"LUMBERJACK","worksite_category":"lumberjack"}
         ]}
         """);
 
-    assertEquals(Map.of(center.getName(), java.util.List.of(
-        "MINER vacancy routes to missing jungle/mine worksite")),
-        BuildingCatalogContract.problems(Map.of(center.getName(), center)));
+    assertEquals(Map.of(house.getName(), java.util.List.of(
+        "LUMBERJACK vacancy routes to missing jungle/lumberjack worksite")),
+        BuildingCatalogContract.problems(Map.of(house.getName(), house)));
   }
 
   @Test
@@ -157,7 +152,9 @@ class PhysicalWorksiteTest {
           {"pos":[1,1,1],"occupation":"BUILDER"},
           {"pos":[2,1,1],"occupation":"GUARD","guard_duty":"CAPTAIN"},
           {"pos":[3,1,1],"occupation":"BUILDER"},
-          {"pos":[4,1,1],"occupation":"BUILDER"}
+          {"pos":[4,1,1],"occupation":"BUILDER"},
+          {"pos":[5,1,1],"occupation":"BUILDER"},
+          {"pos":[6,1,1],"occupation":"BUILDER"}
          ]}
         """);
     BuildingInfo tower = definition("""
@@ -184,22 +181,24 @@ class PhysicalWorksiteTest {
 
     assertEquals(Map.of(
         bakery.getName(), java.util.List.of(
-            "bakery requires a BAKER work station or physical worksite"),
+            "bakery requires a local BAKER vacancy in work_stations"),
         center.getName(), java.util.List.of(
-            "village_center requires a GUARD work station or physical worksite",
-            "village_center requires exactly 3 BUILDER posts for lead, path and grading duties; found 1",
+            "village_center requires a local GUARD vacancy in work_stations",
+            "village_center requires exactly 5 BUILDER duty anchors; found 1",
             "village_center requires exactly one explicit CAPTAIN guard post; found 0")),
         BuildingCatalogContract.problems(Map.of(bakery.getName(), bakery, center.getName(), center)));
   }
 
   @Test
-  void everyCenterHasThreeBuilderDutiesAndOneExplicitCaptain() {
+  void everyCenterHasFiveBuilderDutiesAndOneExplicitCaptain() {
     BuildingInfo center = definition("""
         {"structure":"village_center_desert_1","work_stations":[
           {"pos":[1,1,1],"occupation":"BUILDER"},
           {"pos":[2,1,1],"occupation":"BUILDER"},
           {"pos":[3,1,1],"occupation":"BUILDER"},
-          {"pos":[4,1,1],"occupation":"GUARD","guard_duty":"CAPTAIN"}
+          {"pos":[4,1,1],"occupation":"BUILDER"},
+          {"pos":[5,1,1],"occupation":"BUILDER"},
+          {"pos":[6,1,1],"occupation":"GUARD","guard_duty":"CAPTAIN"}
         ]}
         """);
 
@@ -207,22 +206,56 @@ class PhysicalWorksiteTest {
   }
 
   @Test
-  void centerOwnedProductionPostsPointAtTheirPhysicalFacilities() {
+  void centersCannotOwnMineOrStorehouseVacancies() {
     BuildingInfo center = definition("""
         {"structure":"village_center_desert_1","work_stations":[
           {"pos":[1,1,1],"occupation":"BUILDER"},
           {"pos":[2,1,1],"occupation":"BUILDER"},
           {"pos":[3,1,1],"occupation":"BUILDER"},
-          {"pos":[4,1,1],"occupation":"GUARD","guard_duty":"CAPTAIN"},
-          {"pos":[5,1,1],"occupation":"MINER"},
-          {"pos":[6,1,1],"occupation":"QUARTERMASTER"}
+          {"pos":[4,1,1],"occupation":"BUILDER"},
+          {"pos":[5,1,1],"occupation":"BUILDER"},
+          {"pos":[6,1,1],"occupation":"GUARD","guard_duty":"CAPTAIN"},
+          {"pos":[7,1,1],"occupation":"MINER","worksite_category":"mine"},
+          {"pos":[8,1,1],"occupation":"QUARTERMASTER","worksite_category":"storehouse"}
         ]}
         """);
 
     assertEquals(java.util.List.of(
-        "a center-owned MINER post must route to the mine worksite",
-        "a center-owned QUARTERMASTER post needs center storage or a storehouse route"),
+        "village_center cannot own a MINER vacancy; each physical mine must contribute its own worker",
+        "village_center cannot own a QUARTERMASTER vacancy; each physical storehouse must contribute its own worker"),
         BuildingCatalogContract.problems(Map.of(center.getName(), center)).get(center.getName()));
+  }
+
+  @Test
+  void everyMineAndStorehouseOwnsItsWorkerVacancy() {
+    BuildingInfo mine = definition("""
+        {"structure":"mine_jungle_1","worksites":[
+          {"pos":[2,0,4],"occupation":"MINER"}
+        ]}
+        """);
+    BuildingInfo storehouse = definition("""
+        {"structure":"storehouse_jungle_1","worksites":[
+          {"pos":[3,1,3],"occupation":"QUARTERMASTER"}
+        ]}
+        """);
+
+    assertEquals(java.util.List.of(
+        "mine must own exactly one MINER vacancy in work_stations; found 0"),
+        BuildingCatalogContract.problems(Map.of(mine.getName(), mine)).get(mine.getName()));
+    assertEquals(java.util.List.of(
+        "storehouse must own exactly one QUARTERMASTER vacancy in work_stations; found 0"),
+        BuildingCatalogContract.problems(Map.of(storehouse.getName(), storehouse)).get(storehouse.getName()));
+
+    BuildingInfo duplicateMine = definition("""
+        {"structure":"mine_swamp_1","work_stations":[
+          {"pos":[2,0,4],"occupation":"MINER"},
+          {"pos":[3,0,4],"occupation":"MINER"}
+        ]}
+        """);
+    assertEquals(java.util.List.of(
+        "mine must own exactly one MINER vacancy in work_stations; found 2"),
+        BuildingCatalogContract.problems(Map.of(duplicateMine.getName(), duplicateMine))
+            .get(duplicateMine.getName()));
   }
 
   private static BuildingInfo definition(String json) {

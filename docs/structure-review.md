@@ -1279,13 +1279,11 @@ Small House 2 and two copies of Small House 4, each with one ordinary bed. These
 four core workers without consuming the couple home. Exact placement still needs the shared
 founding-layout extension described below.
 
-The existing founding layout currently places only the center, mine and storehouse. Supporting
-starting homes requires extending that shared layout and its placement validation. Also,
-the current miner derives its shaft from its job building: adding a miner station directly
-to the center would make it dig there. The requested design needs a single miner vacancy owned
-by the center and a separate physical worksite at JA01.5, without a duplicate mine vacancy or
-a fallback shaft beneath the plaza. Exact job anchors, mine orientation, terrain placement,
-four-rotation navigation, worker housing and founding behavior remain implementation work.
+The founding layout places the center, mine, storehouse and four starting homes through the same
+placement search used by later construction. The miner derives its shaft from the job building,
+so JA01.5 owns both its miner vacancy and its shaft. The storehouse likewise owns its
+quartermaster vacancy. This keeps job ownership, mine orientation, terrain placement, worker
+housing and navigation attached to the physical buildings where the work happens.
 
 The service selections are now complete: JA03.1 is the only storehouse tier, JA01.4 is the
 bedless lumberjack station, and JA02.8 is the bedless bakery. JA02.4 Library 1 and JA03.4
@@ -1516,7 +1514,7 @@ without recipe rejection. This is a working-tree deployment, not a Git commit or
 | Pueblo/Mesa and Desert catalogs, selected Desert tavern/temple/towers and arid walls | Verified and locally deployed; earlier entries saying these await deployment are historical. |
 | Unstructured structure gallery | Placed, verified and available for review. |
 | Jungle buildings, three market tiers and one wall tier | Verified as a complete private catalog; bamboo, market repairs and torch-lit timber walls are applied. |
-| Playable Jungle villages | Complete: four-home founding sprawl, center-owned miner and quartermaster routed to separate worksites, identity export, access, construction, restart and natural-founding checks all pass. |
+| Playable Jungle villages | Complete: four-home founding sprawl, mine-owned miner and storehouse-owned quartermaster jobs, identity export, access, construction, restart and natural-founding checks all pass. |
 | Castle authoring | Edited fort, room/bed/container intentions, banners and tent colors captured and visually reviewed. |
 | Castle gameplay | Not buildable yet. Navigation and role reservations need implementation/verification; eligibility, pricing, ruler succession and jail/release rules remain design work. Ruler and jail implementation was explicitly deferred by Aaron. |
 
@@ -1812,12 +1810,10 @@ positions removed; the only authored state change closes one two-block spruce do
 ### Jungle catalog verified: September 10
 
 The approved Jungle selection is now a playable private catalog with 22 definitions: nineteen
-selected buildings and the three repaired market tiers. Its bedless center owns the founding
-quartermaster, builder, captain and miner vacancies. The starting planner places a mine, a
-storehouse and four one-bed homes with ordinary growth placement, while the center's quartermaster
-and miner route to non-vacancy physical worksites in those separate buildings. This also fixed a
-real ownership error exposed by the center test: a routed miner post must not create a shaft under
-the civic building; only the physical mine owns and excavates that shaft.
+selected buildings and the three repaired market tiers. Its bedless center owns five
+population-scaled builder duties and one captain duty. The starting planner places a mine, a
+storehouse and four one-bed homes with ordinary growth placement. The mine owns its miner vacancy
+and shaft, and the storehouse owns its quartermaster vacancy.
 
 Aaron's final mine edit adds a four-by-three pit one block beneath the pavilion, three jungle stairs
 down its west side and two material barrels at the stair rim. The miner's post is in the pit's west
@@ -1831,14 +1827,14 @@ All five native checks pass. The access fixture walked 84 rotations and 224 rout
 bed, personal container, workstation, shared container and mine descent/return. The construction
 fixture passed 176 instant and incremental placements across four rotations; a full server restart
 retained all 176. The reviewed-village fixture passed 22 strict templates, all four founding
-rotations, the market upgrades, natural Jungle selection, the four starting homes, routed worksites,
+rotations, the market upgrades, natural Jungle selection, the four starting homes, local workplaces,
 village identity and codec reloads. The public record is
 `tools/structure/jungle-catalog-20260910.json`; implementation and operating details are in
 [jungle-village.md](jungle-village.md).
 
 The approved mine-floor revision was then checked separately in every rotation. Four real mining
 loops opened the intended first descending step without crossing either authored entrance edge;
-eight routed-worksite walks covered both barrels plus mine descent and return; and eight instant or
+eight mine-workplace walks covered both barrels plus mine descent and return; and eight instant or
 incremental construction placements retained the revised template. The production NBT has zero
 blockstate differences from the flushed gallery capture.
 

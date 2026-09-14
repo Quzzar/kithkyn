@@ -87,27 +87,20 @@ be loaded and belong to the village's regional catalog; a missing home refuses t
 founding set.
 
 Starting beds and jobs come from those authored buildings. A bedless Jungle center uses
-four separate one-person huts for its four founding workers. Centers with accommodation
-can keep it inside the center, including for a post routed to a separate mine or storehouse:
-the routed worker sleeps at that worksite only when it declares beds of its own, and otherwise
-in the center's staff beds. Normal bed registration, job assignment and campfire arrivals
-apply; founding does not spawn a separate crew or simulate paid construction projects.
+separate homes for its founding workers. Normal bed registration, job assignment and campfire
+arrivals apply; founding does not spawn a separate crew or simulate paid construction projects.
 
-A founding job may belong to the center while its physical workplace sits in another starting
-building. The center's `work_stations` entry declares `worksite_category`; the matching building
-declares a same-occupation position in `worksites`. A `worksites` entry is a destination only and
-never creates a second vacancy. Job location, work area and workplace storage resolve through that
-physical building. If no matching completed building exists, the worker keeps the center-owned job
-and waits. A routed miner station does not create a shaft below the center; the physical mine
-worksite owns the shaft geometry.
+A job belongs to the building where the work happens. Every mine owns exactly one `MINER`
+vacancy in `work_stations`, and every storehouse owns exactly one `QUARTERMASTER` vacancy there.
+Building a second mine or storehouse therefore creates another matching worker position. Centers
+cannot own either vacancy. Other productive buildings follow the same rule: their local
+`work_stations` entries create their bakers, merchants, guards, and other workers.
 
-Every center declares three logical `BUILDER` posts and one explicit `GUARD` post with
+Every center declares five logical `BUILDER` posts and one explicit `GUARD` post with
 `guard_duty: CAPTAIN`. Builder posts are accessible civic duty anchors rather than workstation
-blocks. Population unlocks the lead builder immediately, the path builder at six people and the
-grading builder at twelve. A center may add a local role when the structure actually contains that
-workplace, such as a berry farmer, cleric or market merchant. A center-owned miner always routes to
-the mine. A center-owned quartermaster either routes to the storehouse or works from real shared
-storage built into the center.
+blocks. Population unlocks them at 0, 12, 24, 48 and 96 residents. A center may add a local role when the structure actually contains that
+workplace, such as a berry farmer, cleric or market merchant. Miners and quartermasters are always
+owned by their mines and storehouses.
 
 ### Founding uses ordinary construction placement
 
@@ -207,7 +200,7 @@ role. Working village storage belongs in `containers`, resident storage in `pers
 and castle evidence storage in `evidence_containers`. Intentionally unusable props belong in the
 authoring-only `decorative_containers` list. The runtime ignores that last list, while the catalog
 audit rejects any physical container left unclassified. This keeps decorative cabinets out of the
-quartermaster route without allowing a real shelf to disappear from village bookkeeping.
+quartermaster workflow without allowing a real shelf to disappear from village bookkeeping.
 
 For the locked first-pass prices and the comparison rubric used for all 224 current definitions,
 see [building-cost rebalance](research/building-cost-rebalance-2026-09-12.md). A new building starts
@@ -459,9 +452,10 @@ bug in its other guise: an author editing a definition on a live world.
 **A productive category must declare its core work.** The complete-catalog validator rejects a
 bakery without a BAKER position, a church without a CLERIC position, a center without both a
 BUILDER and GUARD, and the equivalent core occupations for the other productive categories.
-That position may be a local `work_stations` vacancy or a routed `worksites` destination; the
-catalog-level route check still requires the other half of a routed pair. Duplicate station or
-worksite coordinates are rejected because station indexes cannot represent two jobs at one key.
+That position must be a local `work_stations` vacancy in the productive building. Mines and
+storehouses specifically require exactly one matching vacancy so each copy adds exactly one
+miner or quartermaster. Duplicate station or worksite coordinates are rejected because station
+indexes cannot represent two jobs at one key.
 
 **Redevelopment can remove specific blocking buildings as part of a named construction project.**
 The game calculates the placement, consequences and salvage, then the model chooses. Net

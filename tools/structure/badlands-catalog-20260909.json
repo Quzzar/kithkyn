@@ -22,7 +22,7 @@
       "asset": "run/badlands-integration/datapack/data/kithkyn/structure/village_center_badlands_1.nbt",
       "asset_sha256": "84f0bc46d5fc576d54b8d022031596355af199e6fdbf81821ae89388eb1adeca",
       "definition": "run/badlands-integration/datapack/data/kithkyn/kithkyn/buildings/village_center_badlands_1.json",
-      "definition_sha256": "09ec6ffae2ae419a7766d3d926a7e24b9914373860e2ca6135613e24fe861f76",
+      "definition_sha256": "cfc608ba2b0714543c326b1c67df3f3ea6e3285d6a660cc3dfd816fe481b4de3",
       "reviewed_neutral": "run/pueblo-showcase/center-approved-20260909-161322/review-pack/data/kithkyn/structure/village_center_pueblo_1.nbt",
       "reviewed_neutral_sha256": "251f9371a692f4c6b2a3465bf3fccfdfd701056c73dbc39f4e19e53d3b800ea0"
     },
@@ -263,7 +263,7 @@
       "asset": "run/badlands-integration/datapack/data/kithkyn/structure/storehouse_badlands_1.nbt",
       "asset_sha256": "5db23d691b64ac6b5fff93844d0e92fdd69a838e1db8785fe5a30055b726e403",
       "definition": "run/badlands-integration/datapack/data/kithkyn/kithkyn/buildings/storehouse_badlands_1.json",
-      "definition_sha256": "ed8c546fb189bf452c3796f521afb9e2c562001951f3f07ead201fbf682f5314",
+      "definition_sha256": "78f986c2c8e68dd50d2d318296aee1faff1ba109379e50661aaa9eafa6d7e2c4",
       "reviewed_neutral": "run/pueblo-showcase/services-approved-20260909-183601/neutral/P08.7.nbt",
       "reviewed_neutral_sha256": "2b4f5fd74f7510004cb910a181ae3ee36bb85b43ff05b6c0381100314c7f85e1"
     },
@@ -277,7 +277,7 @@
       "asset": "run/badlands-integration/datapack/data/kithkyn/structure/storehouse_badlands_2.nbt",
       "asset_sha256": "7bc4d3933f5273239fcd53e43f786695c5b09587392047eb7a020e893658835f",
       "definition": "run/badlands-integration/datapack/data/kithkyn/kithkyn/buildings/storehouse_badlands_2.json",
-      "definition_sha256": "153e729f2608f3a8ae28cc665b22661103a4014b233e70af40c65f4dbe5d595e",
+      "definition_sha256": "6482d73015e147c7c6ac3b535154e6ecb1bf98981b4303893778d51452f97284",
       "reviewed_neutral": "run/pueblo-showcase/services-approved-20260909-183601/neutral/P10.6.nbt",
       "reviewed_neutral_sha256": "b6d85ea6ed301d9a1155e01433d523f21070097fe601964505827b2fcbe4b063"
     },
@@ -431,7 +431,7 @@
       "asset": "run/badlands-integration/datapack/data/kithkyn/structure/mine_badlands_1.nbt",
       "asset_sha256": "f9c4d3ab15bda3776dea206cf02b90518b1a768f7a18e4c0b8dd689110224513",
       "definition": "run/badlands-integration/datapack/data/kithkyn/kithkyn/buildings/mine_badlands_1.json",
-      "definition_sha256": "45574cd0cc739c699cc900f7f38a0f0ca83f3afcdd9c45eae9c9f6f14a350442",
+      "definition_sha256": "d185ad0ff685f9c10f906720e6d8723182a129142109c1ed27bf2b259e0b551b",
       "reviewed_neutral": "run/pueblo-showcase/workplaces-approved-20260909-181024/neutral/P11.5.nbt",
       "reviewed_neutral_sha256": "074f64976c569c3d9ab09664ac2658965913fc8d2b90c8151c154c72019baed1"
     }
@@ -470,13 +470,15 @@
   ],
   "center_labor_contract": {
     "recorded": "2026-09-14",
-    "builder_posts_per_center": 3,
+    "builder_posts_per_center": 5,
     "builder_unlock_populations": [
       0,
-      6,
-      12
+      12,
+      24,
+      48,
+      96
     ],
     "captain_posts_per_center": 1,
-    "routing": "Center-owned production vacancies work at physical facilities through worksite_category."
+    "routing": "Each mine and storehouse owns its worker vacancy; centers own civic and physically local roles."
   }
 }

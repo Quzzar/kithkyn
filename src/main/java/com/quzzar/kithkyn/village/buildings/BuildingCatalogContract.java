@@ -10,6 +10,7 @@ import java.util.Set;
 
 import com.quzzar.kithkyn.village.GuardRole;
 import com.quzzar.kithkyn.village.Occupation;
+import com.quzzar.kithkyn.village.Village;
 
 /**
  * Relationships that can only be validated after the complete building catalog
@@ -18,8 +19,8 @@ import com.quzzar.kithkyn.village.Occupation;
  */
 public final class BuildingCatalogContract {
 
-  /** The lead, path and grading posts unlocked by the population rules in {@code Village}. */
-  private static final int CENTER_BUILDER_POSTS = 3;
+  /** Logical builder duties unlocked by the population rules in {@code Village}. */
+  private static final int CENTER_BUILDER_POSTS = Village.MAX_BUILDER_POSTS;
 
   /** Minimum work that makes each productive category what its id claims it is. */
   private static final Map<String, List<Occupation>> REQUIRED_WORK = Map.ofEntries(
@@ -33,7 +34,6 @@ public final class BuildingCatalogContract {
       Map.entry("hunting_lodge", List.of(Occupation.HUNTER)),
       Map.entry("lumberjack", List.of(Occupation.LUMBERJACK)),
       Map.entry("market", List.of(Occupation.MERCHANT)),
-      Map.entry("mine", List.of(Occupation.MINER)),
       Map.entry("stoneworks", List.of(Occupation.MASON)),
       Map.entry("tavern", List.of(Occupation.INNKEEPER)),
       Map.entry("village_center", List.of(Occupation.BUILDER, Occupation.GUARD)),
@@ -63,30 +63,39 @@ public final class BuildingCatalogContract {
         }
       }
       Set<Occupation> authoredWork = new LinkedHashSet<>(info.getWorkLocations().values());
-      authoredWork.addAll(info.getWorksiteLocations().values());
       for (Occupation required : REQUIRED_WORK.getOrDefault(info.getCategory(), List.of())) {
         if (!authoredWork.contains(required)) {
-          add(problems, info.getName(), info.getCategory() + " requires a " + required
-              + " work station or physical worksite");
+          add(problems, info.getName(), info.getCategory() + " requires a local " + required
+              + " vacancy in work_stations");
         }
       }
       if (info.getCastleLayout() != null) {
         for (Occupation required : REQUIRED_WORK.get("castle")) {
           if (!authoredWork.contains(required)) {
-            add(problems, info.getName(), "castle amenities require a " + required
-                + " work station or physical worksite");
+            add(problems, info.getName(), "castle amenities require a local " + required
+                + " vacancy in work_stations");
           }
         }
       }
       if ("village_center".equals(info.getCategory())) {
         validateCenterPosts(info, problems);
       }
+      validateOwnedProductionPosts(info, problems);
       for (BuildingInfo.WorkStation station : info.workStations()) {
+        if ("village_center".equals(info.getCategory())
+            && (station.occupation() == Occupation.MINER
+                || station.occupation() == Occupation.QUARTERMASTER)) {
+          continue; // validateCenterPosts reports the ownership error directly
+        }
         station.worksiteCategory().ifPresent(category -> routes
             .computeIfAbsent(new WorksiteKey(info.getVariant(), category, station.occupation()), ignored -> new LinkedHashSet<>())
             .add(info.getName()));
       }
       for (Occupation occupation : new LinkedHashSet<>(info.getWorksiteLocations().values())) {
+        if (("mine".equals(info.getCategory()) && occupation == Occupation.MINER)
+            || ("storehouse".equals(info.getCategory()) && occupation == Occupation.QUARTERMASTER)) {
+          continue; // validateOwnedProductionPosts reports the ownership error directly
+        }
         worksites.computeIfAbsent(new WorksiteKey(info.getVariant(), info.getCategory(), occupation),
             ignored -> new LinkedHashSet<>()).add(info.getName());
       }
@@ -126,7 +135,7 @@ public final class BuildingCatalogContract {
         .count();
     if (builders != CENTER_BUILDER_POSTS) {
       add(problems, info.getName(), "village_center requires exactly " + CENTER_BUILDER_POSTS
-          + " BUILDER posts for lead, path and grading duties; found " + builders);
+          + " BUILDER duty anchors; found " + builders);
     }
 
     long captains = info.workStations().stream()
@@ -139,15 +148,32 @@ public final class BuildingCatalogContract {
     }
 
     for (BuildingInfo.WorkStation station : info.workStations()) {
-      if (station.occupation() == Occupation.MINER
-          && !station.worksiteCategory().filter("mine"::equals).isPresent()) {
-        add(problems, info.getName(), "a center-owned MINER post must route to the mine worksite");
+      if (station.occupation() == Occupation.MINER || station.occupation() == Occupation.QUARTERMASTER) {
+        add(problems, info.getName(), "village_center cannot own a " + station.occupation()
+            + " vacancy; each physical "
+            + (station.occupation() == Occupation.MINER ? "mine" : "storehouse")
+            + " must contribute its own worker");
       }
-      if (station.occupation() == Occupation.QUARTERMASTER
-          && station.worksiteCategory().isEmpty() && info.getContainerLocations().isEmpty()) {
-        add(problems, info.getName(),
-            "a center-owned QUARTERMASTER post needs center storage or a storehouse route");
-      }
+    }
+  }
+
+  /** Every physical mine and storehouse owns its corresponding worker vacancy. */
+  private static void validateOwnedProductionPosts(BuildingInfo info,
+      Map<String, LinkedHashSet<String>> problems) {
+    Occupation required = switch (info.getCategory()) {
+      case "mine" -> Occupation.MINER;
+      case "storehouse" -> Occupation.QUARTERMASTER;
+      default -> null;
+    };
+    if (required == null) {
+      return;
+    }
+    long vacancies = info.workStations().stream()
+        .filter(station -> station.occupation() == required)
+        .count();
+    if (vacancies != 1) {
+      add(problems, info.getName(), info.getCategory() + " must own exactly one " + required
+          + " vacancy in work_stations; found " + vacancies);
     }
   }
 

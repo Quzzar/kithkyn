@@ -16,9 +16,9 @@ The private datapack contains 24 definitions:
 
 | Id | Use |
 | --- | --- |
-| `village_center_mediterranean_1` | M06.1 church; no beds; quartermaster, builder and guard captain vacancies plus a cleric at the altar's brewing stand; the meeting point and one campfire on the forecourt |
+| `village_center_mediterranean_1` | M06.1 church; no beds; five population-scaled builder duties, one guard captain, and a cleric at the altar's brewing stand; the meeting point and one campfire on the forecourt |
 | `mine_mediterranean_1` | M07.8 library turned mine: it employs the miner beside the decorative station barrel under the bookshelf, digs a four-wide shaft south from the sunken room, and houses the miner in the bed with its personal barrel upstairs |
-| `storehouse_mediterranean_1` | M07.5 fisher's house converted to four village containers with the quartermaster's physical worksite |
+| `storehouse_mediterranean_1` | M07.5 fisher's house converted to four village containers with its own quartermaster vacancy |
 | `house_mediterranean_1` | M06.5 one-bed home with a barrel set into the floor |
 | `house_mediterranean_1__two_bed` | M06.3 two single beds on two floors, a barrel and a chest |
 | `house_mediterranean_1__two_room` | M06.2 two single rooms, each with its floor barrel |
@@ -29,7 +29,7 @@ The private datapack contains 24 definitions:
 | `watchtower_mediterranean_1` | M07.3 tower with the guard's bed and post in the upper room; its ladder ends one rung below the bedroom floor so a climber steps off instead of hanging in the corner |
 | `stoneworks_mediterranean_1` | M07.4 mason and farmer under one roof: stonecutter, composter, five berry bushes, two beds, two personal containers and two shared |
 | `hunting_lodge_mediterranean_1` | M07.6 hunter and smith: fletching and smithing tables downstairs, two beds sharing one chest upstairs |
-| `bakery_mediterranean_1` | M07.7 bakery with the baker's room and barrel, three village chests and a quartermaster's worksite: the second storehouse the village can build |
+| `bakery_mediterranean_1` | M07.7 bakery with the baker's room and barrel plus three village chests |
 | `farm_mediterranean_1` | M05.3 CTOV small farm as Aaron edited it, with wheat plus a small ready crop of carrots and potatoes and its field barrel |
 | `farm_mediterranean_2` | M08.2 large sweet-berry field, the small farm's upgrade |
 | `butchery_mediterranean_1` | M04.2 farm and pasture: a farmer picking glow berries from the trellised cave vines, and a butcher who works the pen whole (breeding, shearing and slaughter above six of a kind) with three cows and three sheep, one barrel each |
@@ -47,9 +47,8 @@ sweet berries and glow berries alike (docs/worker-loops.md).
 
 The centre has no beds. Its founding companions are the mine, the storehouse, three one-bed
 homes and the two-bed home, placed through the normal planner: five beds in the homes for the
-four centre workers (quartermaster, builder, captain and cleric), and the miner's own bed
-upstairs in the mine, which employs them. The quartermaster routes to the physical worksite in
-the storehouse.
+four workers (quartermaster, builder, captain and cleric), and the miner's own bed upstairs in
+the mine, which employs them. The storehouse owns the quartermaster vacancy.
 
 The church forecourt is the civic meeting point and carries the one authored campfire. Every
 assigned bed is neutral in the template and becomes the village primary or secondary colour;

@@ -2952,17 +2952,25 @@ public class Village {
     return jobAssignments.values().stream().anyMatch(job -> job.getOccupation() == occupation);
   }
 
+  /** Builder duty anchors every village center must declare. */
+  public static final int MAX_BUILDER_POSTS = 5;
+
   /**
-   * People per builder post. A camp's first hires must not be three builders
-   * (Aaron, 2026-09-02): the town centre carries three builder posts, but the
-   * second opens only once the village has this many people and the third at
-   * twice that. A post the village has not grown into is not open.
+   * Builder staffing grows slowly with the settlement: one from founding,
+   * then one more whenever the population doubles from twelve through
+   * ninety-six. A post the village has not grown into is not open.
    */
-  public static final int PEOPLE_PER_BUILDER = 6;
+  static int builderPostsForPopulation(int population) {
+    if (population >= 96) return 5;
+    if (population >= 48) return 4;
+    if (population >= 24) return 3;
+    if (population >= 12) return 2;
+    return 1;
+  }
 
   /** How many of the town centre's builder posts the village has grown into. */
   public int builderPostsUnlocked() {
-    return 1 + getPopulation().size() / PEOPLE_PER_BUILDER;
+    return builderPostsForPopulation(getPopulation().size());
   }
 
   /** Whether an open post may be claimed yet: any but a builder post beyond the population's. */
@@ -2978,8 +2986,9 @@ public class Village {
   /**
    * A builder's place among the village's builders, by the order of the
    * builder posts in their workplace's definition: 0 is the construction lead,
-   * 1 wears the paths, 2 grades the ground (docs/worker-loops.md). Anyone
-   * without a builder's post ranks 0, so a lone builder does everything.
+   * 1 wears the paths, 2 grades the ground, and the two late-growth builders
+   * help the whole construction loop (docs/worker-loops.md). Anyone without a
+   * builder's post ranks 0, so a lone builder does everything.
    */
   public int builderRank(UUID personId) {
     JobAssignment job = jobAssignments.get(personId);

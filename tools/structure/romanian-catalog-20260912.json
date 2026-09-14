@@ -48,7 +48,7 @@
       "asset": "run/romanian-integration/datapack/data/kithkyn/structure/village_center_romanian_1.nbt",
       "asset_sha256": "d155bdae7e8003bae29c2f5643d290ca2a7322df165e30e8a92a226e496d8b5a",
       "definition": "run/romanian-integration/datapack/data/kithkyn/kithkyn/buildings/village_center_romanian_1.json",
-      "definition_sha256": "714cecf679feb55f3d1dbeff557f1350cc689fc74d3af9032501ebd14660029f"
+      "definition_sha256": "2b926702f6bbb2b81fa6f62e9e74663735eb6e05dfb854dd70345884437c8630"
     },
     {
       "exhibit": "R02.1",
@@ -143,7 +143,7 @@
       "asset": "run/romanian-integration/datapack/data/kithkyn/structure/storehouse_romanian_1__compact.nbt",
       "asset_sha256": "5a0303a85cd6663bafca31eea5b1c4b1018f50040d1114829a131136a29ca884",
       "definition": "run/romanian-integration/datapack/data/kithkyn/kithkyn/buildings/storehouse_romanian_1__compact.json",
-      "definition_sha256": "4d36cd0f62c32eaee3cf020b47ec8d325236a2ed5de1a02f23e48808fa69c39c"
+      "definition_sha256": "a2196b994813370ed42d9caa63e7dfe793cb5666908f187e86ed871c8d56fe3e"
     },
     {
       "exhibit": "R03.1",
@@ -162,7 +162,7 @@
       "asset": "run/romanian-integration/datapack/data/kithkyn/structure/storehouse_romanian_1.nbt",
       "asset_sha256": "bea3dd0e74d95fb1695af41173287e7df145b848d1cb83d8848fac8f6db523a1",
       "definition": "run/romanian-integration/datapack/data/kithkyn/kithkyn/buildings/storehouse_romanian_1.json",
-      "definition_sha256": "fcc8eaf283418b0d140e099cbbe8706d23079f09f05d92dd704c0cfb72139601"
+      "definition_sha256": "17880a7a9a2e62dc577843c681a76d6533f45824fcfa828ea45602614c70f9ee"
     },
     {
       "exhibit": "R03.2",
@@ -333,7 +333,7 @@
       "asset": "run/romanian-integration/datapack/data/kithkyn/structure/mine_romanian_1.nbt",
       "asset_sha256": "24bd4b74c16e99e4bfc8b3d1a2219eb52ce693a26757f4adc7febc44ff64e64b",
       "definition": "run/romanian-integration/datapack/data/kithkyn/kithkyn/buildings/mine_romanian_1.json",
-      "definition_sha256": "320a2b8630c9e21d43dc40ae14c89133e63244434dd1cd2310338ad12c7b9ae9"
+      "definition_sha256": "6b3c10f09c9e032e97e81e5e15464927ce58d24db6dfbae613d75eb808f5fd81"
     },
     {
       "exhibit": "R05.4",
@@ -561,13 +561,15 @@
   },
   "center_labor_contract": {
     "recorded": "2026-09-14",
-    "builder_posts_per_center": 3,
+    "builder_posts_per_center": 5,
     "builder_unlock_populations": [
       0,
-      6,
-      12
+      12,
+      24,
+      48,
+      96
     ],
     "captain_posts_per_center": 1,
-    "routing": "Center-owned production vacancies work at physical facilities through worksite_category."
+    "routing": "Each mine and storehouse owns its worker vacancy; centers own civic and physically local roles."
   }
 }

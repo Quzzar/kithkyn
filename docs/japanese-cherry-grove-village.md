@@ -75,7 +75,7 @@ carved in the approved gallery plot, so placement clears its two-wide descending
 The catalog audit checks all 20 structures for barriers, structure voids, out-of-bounds cells,
 identity slots, containers, livestock, the four approved sinks and the exact mine frame and air
 cells. Native placement and founding verification cover all four rotations, the farm and market
-upgrades, dynamic colors, job and bed allocation, routed mine and storehouse work, and save/reload
+upgrades, dynamic colors, job and bed allocation, locally owned mine and storehouse jobs, and save/reload
 behavior. Manual testing can create the village with
 `/kithkyn create-village ~ ~ ~ japanese_cherry_grove`; natural founding in a mapped flowering
 woodland uses the same selection and founding path.

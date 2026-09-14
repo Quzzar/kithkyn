@@ -30,7 +30,7 @@
       "asset": "run/floodplain-integration/datapack/data/kithkyn/structure/mine_floodplain_1.nbt",
       "asset_sha256": "6b3c69fb1fcc5268ef2c62b3b1093260227f0c6ac86f4052ac9a7333fd8f9103",
       "definition": "run/floodplain-integration/datapack/data/kithkyn/kithkyn/buildings/mine_floodplain_1.json",
-      "definition_sha256": "8a169912c066d9e340e0efdf4b813fb014cdcd5688809a2829af7c71c2b33f8d",
+      "definition_sha256": "565a045418af5e7aaa550c9fbc287c196fbd809840f3686aee01954189dfc8d5",
       "reviewed_capture": "run/nilotic-showcase/selection-20260910-floodplain/captures/NA01.2.nbt",
       "reviewed_capture_sha256": "753aeb973aa7eaabecfcdba580b30449e78231b155a3f5ad0670fcc45adb6ed1"
     },
@@ -44,7 +44,7 @@
       "asset": "run/floodplain-integration/datapack/data/kithkyn/structure/village_center_floodplain_1.nbt",
       "asset_sha256": "774eb12e306a5362a91cdbadd87bcd084a39a3e1c34e0a6d55c6b3d87f4161d4",
       "definition": "run/floodplain-integration/datapack/data/kithkyn/kithkyn/buildings/village_center_floodplain_1.json",
-      "definition_sha256": "402b15dd5b1cbd5fba251f7d3a8f57ee68ad8b7d7e95f6fe54ac9bd4f6176e3a",
+      "definition_sha256": "5694937cbc7e92b4701c50a5b25d2950062998943de053bded8a1ae276c9c20f",
       "reviewed_capture": "run/nilotic-showcase/selection-20260910-floodplain/captures/NA01.4.nbt",
       "reviewed_capture_sha256": "0a2ee1771d5e52e70fcc2569afa308d4dfd9bfe39703178c3f7b7e61317b095c"
     },
@@ -170,7 +170,7 @@
       "asset": "run/floodplain-integration/datapack/data/kithkyn/structure/storehouse_floodplain_1.nbt",
       "asset_sha256": "89b3fa1e45252e4d0e6d77889146343d519c5aa14907f460b7c27ccc0a1f05dc",
       "definition": "run/floodplain-integration/datapack/data/kithkyn/kithkyn/buildings/storehouse_floodplain_1.json",
-      "definition_sha256": "3f3760b667bf21b64c988fee7d68b355aa403f00b0b2d83ea9e6eec93a459ba1",
+      "definition_sha256": "901b609762ca5876a95cbf1dd12961b78883cef5c854ff1b66f9dec95ebef635",
       "reviewed_capture": "run/nilotic-showcase/selection-20260910-floodplain/captures/NA02.4.nbt",
       "reviewed_capture_sha256": "07b720e63b5257071e75ff4b1d0730f6d4d91d0451ca7a98234b8b44ed0cd419"
     },
@@ -412,13 +412,15 @@
   ],
   "center_labor_contract": {
     "recorded": "2026-09-14",
-    "builder_posts_per_center": 3,
+    "builder_posts_per_center": 5,
     "builder_unlock_populations": [
       0,
-      6,
-      12
+      12,
+      24,
+      48,
+      96
     ],
     "captain_posts_per_center": 1,
-    "routing": "Center-owned production vacancies work at physical facilities through worksite_category."
+    "routing": "Each mine and storehouse owns its worker vacancy; centers own civic and physically local roles."
   }
 }
