@@ -436,9 +436,14 @@ public final class MineStep implements BlockWorkStep {
         }
         // No rib left to cut either: fall through to standing down, so a mine with
         // nothing to quarry still waits on a restock the way it always did.
-        resetShaft();
         logIdleState(person, NoWork.SUPPORT, "support-gated shaft has no rib work: mouth="
-            + mouth.toShortString());
+            + mouth.toShortString()
+            + ", local=" + this.offset.toShortString()
+            + ", block=" + this.block.getName().getString()
+            + ", floor=" + this.placeFloor
+            + ", seal=" + this.placeSeal
+            + ", wet=" + touchesLiquid(person.level(), face(mouth, rotation)));
+        resetShaft();
         return new ShaftPick(null, false);
       }
       this.fanning = false;
@@ -1179,14 +1184,17 @@ public final class MineStep implements BlockWorkStep {
     boolean dropsSupport = person.level() instanceof ServerLevel serverLevel
         && Block.getDrops(state, serverLevel, face, serverLevel.getBlockEntity(face), person,
             person.getMainHandItem()).stream().anyMatch(MineSupportMaterials::isSupport);
-    boolean wet = false;
+    boolean wet = touchesLiquid(person.level(), face);
+    return canBootstrapSupport(this.offset.getZ(), dropsSupport, wet, false);
+  }
+
+  private static boolean touchesLiquid(Level level, BlockPos center) {
     for (Direction direction : Direction.values()) {
-      if (isLiquid(person.level(), face.relative(direction))) {
-        wet = true;
-        break;
+      if (isLiquid(level, center.relative(direction))) {
+        return true;
       }
     }
-    return canBootstrapSupport(this.offset.getZ(), dropsSupport, wet, false);
+    return false;
   }
 
   /** Pure policy boundary for the live bootstrap exception. */

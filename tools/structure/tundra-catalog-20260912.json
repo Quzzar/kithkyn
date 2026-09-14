@@ -294,7 +294,7 @@
       "asset": "run/tundra-integration/datapack/data/kithkyn/structure/mine_tundra_1.nbt",
       "asset_sha256": "fcc4c43e01062a093a5f960bfb7a958d34e14fd0be7fc37bb08f5dead4bec39c",
       "definition": "run/tundra-integration/datapack/data/kithkyn/kithkyn/buildings/mine_tundra_1.json",
-      "definition_sha256": "aa686e782e4c0ab1dac08e4d3ed9d9c6fcd4b17f6e355a586c38e21a1a65ad79"
+      "definition_sha256": "08ba1bf5462a16b26607aace546f1c6ce3c3da1b4c3e14902e00fe9c55ff8f81"
     },
     {
       "exhibit": "T04.8",
