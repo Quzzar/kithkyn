@@ -165,7 +165,7 @@
       "source_sha256": "9a0f9628d7f032cceee3592ef413e326773b09de01e3586531e9c9f97cbea11e",
       "entities": 0,
       "asset": "run/rustic-integration/datapack/data/kithkyn/structure/blacksmith_rustic_woodland_1.nbt",
-      "asset_sha256": "d7e6e7e698579c19663f1dcef06b0236a7c6b61a526aa1488c73600603825b69",
+      "asset_sha256": "cb0b25f8286911325dde3d29d392eec01417ed5492a625b5a07005c267884e1e",
       "definition": "run/rustic-integration/datapack/data/kithkyn/kithkyn/buildings/blacksmith_rustic_woodland_1.json",
       "definition_sha256": "d951f27eacb185a40891cbf3024f47d8a8381ea4f190bb8cbf51d3fdc8d5b330"
     },
@@ -183,7 +183,7 @@
       "source_sha256": "8e54bc3391ff6ccea39c8359f9f3fc49bf724850d4f479e704509f4a625798a8",
       "entities": 0,
       "asset": "run/rustic-integration/datapack/data/kithkyn/structure/fishery_rustic_woodland_1.nbt",
-      "asset_sha256": "4f624225c4d55cdef2801b097ce3a86eb75a82de1850d5c5da39b44ed93a327b",
+      "asset_sha256": "f78d77a9712f13cd9d4ab777ffe8d8043700313303c2ec1fed1a8879baf23bba",
       "definition": "run/rustic-integration/datapack/data/kithkyn/kithkyn/buildings/fishery_rustic_woodland_1.json",
       "definition_sha256": "0e3dc7f9fcaaf16aa87857b4c383d95dc693cd76358d43696c5b00bed09ca87e"
     },
@@ -201,7 +201,7 @@
       "source_sha256": "ad215643e6002570839f2e3955831ea5bf60b4890461e683724a38d1bf244cbb",
       "entities": 0,
       "asset": "run/rustic-integration/datapack/data/kithkyn/structure/hunting_lodge_rustic_woodland_1.nbt",
-      "asset_sha256": "9935f1d1d5d4a030f60fda0de82cbdda0cd65deaa3a699ea1e03164623d7420a",
+      "asset_sha256": "672501fbae5c7db45778ee320cb260467b95d871aafcf8d43b32b81f0e6471b2",
       "definition": "run/rustic-integration/datapack/data/kithkyn/kithkyn/buildings/hunting_lodge_rustic_woodland_1.json",
       "definition_sha256": "a838c0410ef956fe2db92db5d2de9d27d9af0cd1c24a0b14aa2ba4a0e109258d"
     },
@@ -219,7 +219,7 @@
       "source_sha256": "a579849a9f0dda64c82e4791e6db911a48a3f24ce4256c348b2a6b565d910f33",
       "entities": 0,
       "asset": "run/rustic-integration/datapack/data/kithkyn/structure/stoneworks_rustic_woodland_1.nbt",
-      "asset_sha256": "a244c46a90eec933c6c94e4bc3ad7746c671e514be5f0b89b797bcc7ed782d3d",
+      "asset_sha256": "76e5354f0e1b531bccda80fb9264df9fd0d2dd78d8620c200015a686ce6c8ad1",
       "definition": "run/rustic-integration/datapack/data/kithkyn/kithkyn/buildings/stoneworks_rustic_woodland_1.json",
       "definition_sha256": "4e2bf863d75a37c1bb2e8b3d4308b0447845a8b472094d51c2968e9d669486d6"
     },
@@ -268,14 +268,14 @@
         11,
         9
       ],
-      "sink": 1,
+      "sink": 0,
       "source": "run/rustic-integration/captures/RW06.5.nbt",
       "source_sha256": "2159d3f2baaef46a9a49d12b8283efecaffba078043e69689e376265d2f2ac10",
       "entities": 0,
       "asset": "run/rustic-integration/datapack/data/kithkyn/structure/bakery_rustic_woodland_1.nbt",
       "asset_sha256": "c78ffd95d6c7da12edf4f0e41f5812d49a37f7cb24348989c6545f1b7bcd881c",
       "definition": "run/rustic-integration/datapack/data/kithkyn/kithkyn/buildings/bakery_rustic_woodland_1.json",
-      "definition_sha256": "0bae4f5e816997e087d49e0a64dc65f5a30414d837a66dff1430eacce9f44c03"
+      "definition_sha256": "ab3aba28f2aa2fdeeede164a38ce69086071bea640fc6a1394f3504ce6c1d95a"
     },
     {
       "exhibit": "RW07.1",
@@ -327,7 +327,7 @@
       "source_sha256": "8d7a4f12c058ee21b348efc77ad9d88cd6b89dc45cf9d58556fa9f4c0aebe372",
       "entities": 0,
       "asset": "run/rustic-integration/datapack/data/kithkyn/structure/mine_rustic_woodland_1.nbt",
-      "asset_sha256": "d3f355302912918a7a50c04dfa1860e917df2c1fe9d925f8b9d5070cb7193c6f",
+      "asset_sha256": "c63b37e5521b5337d3acca223b667f919cf1783737b10350763254752a78e9db",
       "definition": "run/rustic-integration/datapack/data/kithkyn/kithkyn/buildings/mine_rustic_woodland_1.json",
       "definition_sha256": "4fd4b1905bc4a86b1866e02928ccab55d4d5d1c1385bdb33ac307467a5237e1a"
     },
@@ -404,9 +404,10 @@
   "verification": {
     "static": "./gradlew auditStructureTemplates: PASS (81 templates; no barriers, invalid stations, out-of-bounds blocks, corner terrain air, unclassified containers, open or empty butcheries, or malformed markets)",
     "unit_and_build": "./gradlew check: PASS",
-    "placement": "run/rustic-integration/placement/verification.json: PASS (24 finalized real-template placements through instant and incremental paths, four rotations, color substitution, frames, entities, save receipts, and upgrades)",
+    "placement": "run/rustic-integration/placement/verification.json: PASS (48 corrected real-template placements through instant and incremental paths, four rotations, colors, frames, save receipts, and upgrades)",
     "center": "run/rustic-integration/center/verification.json: PASS (4 rotations, 28 station routes, 4 shared-storage deposits)",
-    "access": "run/rustic-integration/access/verification.json: PASS (80 rotated structures, 124 routes, 48 room/sleep walks, 48 personal deposits, 76 station walks, 76 shared deposits, 8 mine walks, 0 failures)",
-    "founding": "run/rustic-integration/founding/verification.json: PASS (21 strict templates, 2 housing alternatives, 8 upgrade fits, four rotations plus codec reloads, natural Forest selection, 4 starting beds, 5 starting positions, distinct meeting/fire locations, village identity)"
+    "access": "run/rustic-integration/access/verification.json: PASS (24 corrected rotations, 28 routes, 4 room/sleep walks, 4 personal deposits, 24 station walks, 24 shared deposits, 8 mine walks, 0 failures)",
+    "founding": "run/rustic-integration/founding/verification.json: PASS (21 strict templates, 2 housing alternatives, 8 upgrade fits, four rotations plus codec reloads, natural Forest selection, 4 starting beds, 5 starting positions, distinct meeting/fire locations, village identity)",
+    "height_corrections": "PASS: bakery sink 0; blacksmith, fishery, hunting lodge and stoneworks preserve the terrain plane; mine retains only its 15-cell central excavation"
   }
 }
