@@ -49,7 +49,7 @@ import net.neoforged.neoforge.event.tick.ServerTickEvent;
  * Shared private-catalog checks for the reviewed regional villages. Opt in with
  * the legacy Badlands flag or {@code -Dkithkyn.reviewedVillage.style=<style>}
  * for Desert, Floodplain, Jungle, Swamp, Mediterranean, Tundra, Polynesian Coast,
- * Romanian, Alpine Highlands, Japanese Cherry Grove, Nautical Coast or Savanna Tent;
+ * Romanian, Alpine Highlands, Japanese Cherry Grove, Nautical Coast, Savanna Tent or Rustic Woodland;
  * each catalog's authored numbers live in its
  * {@link Catalog} record so the checks read facts rather than guess them.
  */
@@ -146,6 +146,10 @@ public final class BadlandsVillageVerification {
     case SAVANNA_TENT -> new Catalog("[savanna-verify]", 18, 1, 2, new int[] {1, 0, 0}, Map.of(), List.of(), 0, 0,
         new String[][] {{id("market", 1), id("market", 2)}, {id("market", 2), id("market", 3)}},
         3, 4, 4, 1, 6, 4, 0, new BlockPos(4, 1, 5), new BlockPos(4, 5, 13), 1, Biomes.SAVANNA);
+    case RUSTIC_WOODLAND -> new Catalog("[rustic-verify]", 21, 2, 3, new int[] {2, 0, 0},
+        Map.of(), List.of(), 5, 1,
+        new String[][] {{id("market", 1), id("market", 2)}, {id("market", 2), id("market", 3)}},
+        6, 4, 5, 1, 7, 0, 0, new BlockPos(8, 1, 6), new BlockPos(8, 2, 8), 1, Biomes.FOREST);
     case BIRCH_FOREST -> null;
   };
   /** Extra local jobs a catalog's center also opens at founding. */
@@ -153,7 +157,8 @@ public final class BadlandsVillageVerification {
       || STYLE == VillageStyle.ROMANIAN
       ? Map.of(Occupation.CLERIC, 1L)
       : STYLE == VillageStyle.ALPINE_HIGHLANDS ? Map.of(Occupation.FARMER, 1L)
-      : STYLE == VillageStyle.POLYNESIAN_COAST ? Map.of(Occupation.LEADER, 1L) : Map.of();
+      : STYLE == VillageStyle.POLYNESIAN_COAST ? Map.of(Occupation.LEADER, 1L)
+      : STYLE == VillageStyle.RUSTIC_WOODLAND ? Map.of(Occupation.MERCHANT, 1L) : Map.of();
   private static final String PREFIX = CATALOG == null ? "[reviewed-village-verify]" : CATALOG.prefix();
   private static int ticks;
   private static int upgrades;
@@ -221,6 +226,8 @@ public final class BadlandsVillageVerification {
     }
     check(VillageStyle.fromBiome(registry.getHolderOrThrow(Biomes.DESERT), 0L, BlockPos.ZERO, everything)
         == VillageStyle.DESERT, "Sandy desert must remain Desert");
+    check(VillageStyle.fromBiome(registry.getHolderOrThrow(Biomes.FOREST), 0L, BlockPos.ZERO, everything)
+        == VillageStyle.RUSTIC_WOODLAND, "Forest must select Rustic Woodland");
     for (var biome : List.of(Biomes.BIRCH_FOREST, Biomes.OLD_GROWTH_BIRCH_FOREST)) {
       check(VillageStyle.fromBiome(registry.getHolderOrThrow(biome), 0L, BlockPos.ZERO, everything)
           == VillageStyle.BIRCH_FOREST, "Birch coverage changed " + biome.location());

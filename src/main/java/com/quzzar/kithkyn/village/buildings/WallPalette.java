@@ -62,6 +62,9 @@ record WallPalette(Block post, Block deck, Block stairs, Block slab,
       case SAVANNA_TENT -> new WallPalette(
           Blocks.STRIPPED_ACACIA_WOOD, Blocks.STRIPPED_ACACIA_WOOD, Blocks.ACACIA_STAIRS,
           Blocks.ACACIA_SLAB, Blocks.ACACIA_FENCE, Blocks.ACACIA_TRAPDOOR);
+      case RUSTIC_WOODLAND -> new WallPalette(
+          Blocks.STRIPPED_OAK_LOG, Blocks.STRIPPED_OAK_LOG, Blocks.OAK_STAIRS,
+          Blocks.OAK_SLAB, Blocks.OAK_FENCE, Blocks.OAK_TRAPDOOR);
     };
   }
 

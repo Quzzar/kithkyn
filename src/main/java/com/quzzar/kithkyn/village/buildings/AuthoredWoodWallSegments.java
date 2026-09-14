@@ -58,6 +58,8 @@ final class AuthoredWoodWallSegments {
    * cobblestone footing.
    */
   static final AuthoredWoodWallSegments SAVANNA_TENT = loadBundled("savanna_tent");
+  /** The approved Rustic Woodland wall: a clean stripped-oak palisade without foliage. */
+  static final AuthoredWoodWallSegments RUSTIC_WOODLAND = loadBundled("rustic_woodland");
 
   private static final String RESOURCE_ROOT =
       "data/kithkyn/structure/wall/";

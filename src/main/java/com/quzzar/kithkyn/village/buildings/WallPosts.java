@@ -140,6 +140,7 @@ public final class WallPosts {
       case POLYNESIAN_COAST -> AuthoredWoodWallSegments.POLYNESIAN_COAST;
       case NAUTICAL_COAST -> AuthoredWoodWallSegments.NAUTICAL_COAST;
       case SAVANNA_TENT -> AuthoredWoodWallSegments.SAVANNA_TENT;
+      case RUSTIC_WOODLAND -> AuthoredWoodWallSegments.RUSTIC_WOODLAND;
       default -> AuthoredWoodWallSegments.INSTANCE;
     };
     return segments.footprintAt(ring, index, kind);

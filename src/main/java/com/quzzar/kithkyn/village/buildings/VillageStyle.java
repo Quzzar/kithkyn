@@ -28,13 +28,14 @@ import net.neoforged.neoforge.common.Tags;
  * authored and never borrows another family's building to fill a gap. Birch
  * Forest is the one bundled catalog and so the default; Desert, Badlands,
  * Floodplain, Jungle, Swamp, Mediterranean, Tundra, Polynesian Coast,
- * Romanian, Alpine Highlands, Japanese Cherry Grove, Nautical Coast and Savanna
- * Tent arrive through private datapacks (docs/desert-village.md, docs/badlands-village.md,
+ * Romanian, Alpine Highlands, Japanese Cherry Grove, Nautical Coast, Savanna
+ * Tent and Rustic Woodland arrive through private datapacks (docs/desert-village.md, docs/badlands-village.md,
  * docs/floodplain-village.md, docs/jungle-village.md, docs/swamp-village.md,
  * docs/mediterranean-village.md, docs/tundra-village.md,
  * docs/polynesian-coast-village.md, docs/romanian-village.md,
  * docs/alpine-highlands-village.md, docs/japanese-cherry-grove-village.md,
- * docs/nautical-coast-village.md, docs/savanna-tent-village.md), so they
+ * docs/nautical-coast-village.md, docs/savanna-tent-village.md,
+ * docs/rustic-woodland-village.md), so they
  * are only automatic candidates while their founding sets are loaded.
  *
  * Explicit datapack style tags take precedence over conventional biome families.
@@ -46,7 +47,8 @@ import net.neoforged.neoforge.common.Tags;
  */
 public enum VillageStyle {
   BIRCH_FOREST, DESERT, BADLANDS, FLOODPLAIN, JUNGLE, SWAMP, MEDITERRANEAN, TUNDRA,
-  POLYNESIAN_COAST, ROMANIAN, ALPINE_HIGHLANDS, JAPANESE_CHERRY_GROVE, NAUTICAL_COAST, SAVANNA_TENT;
+  POLYNESIAN_COAST, ROMANIAN, ALPINE_HIGHLANDS, JAPANESE_CHERRY_GROVE, NAUTICAL_COAST, SAVANNA_TENT,
+  RUSTIC_WOODLAND;
 
   /**
    * What a blank or unknown saved style reads as, the answer for every climate
@@ -249,6 +251,12 @@ public enum VillageStyle {
     if (path.contains("dark_forest") || path.contains("darkforest")
         || path.contains("forested_highland") || path.contains("wooded_valley")) {
       return ROMANIAN;
+    }
+    // Ordinary oak woodland has its own restrained Rustic catalog. The explicit
+    // biome tag above is how modpacks opt compatible custom woodland biomes in.
+    if (path.equals("forest") || path.contains("oak_forest") || path.contains("oak_woodland")
+        || path.contains("oak_woods")) {
+      return RUSTIC_WOODLAND;
     }
     // Mountain settlements use the Iberian-inspired brick-and-spruce catalog.
     // This precedes the broad snowy family so snowy slopes and frozen peaks

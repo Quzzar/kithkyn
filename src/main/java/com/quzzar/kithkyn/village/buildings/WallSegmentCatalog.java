@@ -37,6 +37,7 @@ public interface WallSegmentCatalog {
       case JAPANESE_CHERRY_GROVE -> BuiltInWallSegmentCatalog.JAPANESE_CHERRY_GROVE;
       case NAUTICAL_COAST -> BuiltInWallSegmentCatalog.NAUTICAL_COAST;
       case SAVANNA_TENT -> BuiltInWallSegmentCatalog.SAVANNA_TENT;
+      case RUSTIC_WOODLAND -> BuiltInWallSegmentCatalog.RUSTIC_WOODLAND;
     };
   }
 }
