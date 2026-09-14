@@ -1448,6 +1448,22 @@ it at once; watch the `[quartermaster]` log lines for the round-by-round converg
 
 ## Still open
 
+### Executable occupation checks
+
+`OccupationWorkVerification` is the native server check for productive jobs that were easy to
+miss in ordinary village observation. The ordinary job-claiming pass seats idle residents in the
+real vacancies published by the Birch bakery, blacksmith and church, including housing checks,
+starting kits, commute targets and normal occupation goals. The check then requires physical
+storage-to-station-to-storage or patient movement before passing. It proves the baker deposits
+bread made from stored wheat, the blacksmith deposits a bucket forged from stored iron, and the
+cleric brews at the church before a hurt resident seeks them and receives a real potion.
+
+`CastleOperationsVerification` separately requires every authored jailer to walk to the cell post
+and remain there, in all four castle rotations. `CustodyVerification` owns the other half of that
+role: arrest, evidence capacity and identity, private sentence notices, escape, release, and cell
+failure. Run the productive check with `./gradlew runOccupationWorkVerification`; run the
+castle-post check with `-Dkithkyn.castleOperations.verify=true` and the reviewed castle datapack.
+
 - **After the bounded mine is depleted** ([#54](https://github.com/Quzzar/kithkyn/issues/54)):
   trees replant, ore does not. The physical root and child network ends honestly. The worker
   reports exhaustion, and the village can choose a fresh mine on a separate site, subject to

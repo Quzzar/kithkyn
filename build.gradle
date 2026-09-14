@@ -103,6 +103,14 @@ neoForge {
             systemProperty 'kithkyn.campfires.verify', 'true'
         }
 
+        // Exercises rarely observed occupations through their normal registered goals in a
+        // disposable world: real vacancy claim, walking, physical inputs and visible outputs.
+        occupationWorkVerification {
+            server()
+            programArguments.addAll '--nogui', '--universe', project.file('run/occupation-work-verification').getAbsolutePath(), '--world', 'world', '--port', '25678'
+            systemProperty 'kithkyn.occupationWork.verify', 'true'
+        }
+
         data {
             data()
 
