@@ -1,0 +1,218 @@
+{
+  "schemaVersion": 1,
+  "recorded": "2026-09-14",
+  "status": "bundled; unit-tested; gate access walked on this wall and the Nautical wall",
+  "description": "The Savanna Tent wall family: study A of the 2026-09-14 Savanna gallery, the bundled Birch wall pieces with their cobblestone and mossy cobblestone turned to stripped acacia wood above a course of cobblestone, their stone walls to acacia fence tips, their top cobblestone slabs to acacia slab walks and their oak hatches to acacia. The five templates are the gallery's own files byte for byte; the loader reads cobblestone as this family's footing and the catalog seats it on each column's own ground.",
+  "decision": "Aaron reviewed rows ST41 to ST43 of the Savanna gallery on 2026-09-14 and chose study A, the acacia palisade. Study B (blue and yellow canvas on stripped acacia) and study C (dry stone and terracotta) were not chosen.",
+  "gallery": {
+    "row": "ST41, the Savanna wall A study row, in run/savanna-full-profile/manifest.json above the trio-20260912 test world",
+    "workshop": "run/savanna-full-profile/workshop.py wall_swap(\"A\"), applied with tools/structure/ReplaceTemplateBlocks.java to the Birch pieces at origin/main",
+    "studies": "run/savanna-full-profile/studies/wall_a_straight.nbt through wall_a_terrace.nbt"
+  },
+  "swap": {
+    "minecraft:cobblestone and minecraft:mossy_cobblestone at local y 0": "minecraft:cobblestone, the footing",
+    "minecraft:cobblestone and minecraft:mossy_cobblestone above local y 0": "minecraft:stripped_acacia_wood",
+    "minecraft:cobblestone_wall and minecraft:mossy_cobblestone_wall": "minecraft:acacia_fence, from its defaults",
+    "minecraft:cobblestone_slab": "minecraft:acacia_slab, type kept",
+    "minecraft:oak_trapdoor": "minecraft:acacia_trapdoor, properties kept",
+    "kept": "torches, wall torches, ladders, the gatehouse campfire and its four white wall banners"
+  },
+  "vocabulary": {
+    "minecraft:stripped_acacia_wood": "BODY: the palette post, placed like the Polynesian spruce and Birch masonry",
+    "minecraft:cobblestone": "FOOTING for this family only: the loader reads cobblestone as Birch masonry in every other family, so the piece mapping takes the family name; it resolves through WallPalette.footing(), cobblestone for the Savanna Tent",
+    "minecraft:acacia_fence": "PARAPET: the palette railing",
+    "minecraft:acacia_slab": "SLAB: the palette slab, placed as a top slab",
+    "minecraft:acacia_trapdoor": "TRAPDOOR: the palette trapdoor, placed open and top half"
+  },
+  "palette": {
+    "post": "minecraft:stripped_acacia_wood",
+    "deck": "minecraft:stripped_acacia_wood",
+    "stairs": "minecraft:acacia_stairs (unused: the Birch geometry has no steps)",
+    "slab": "minecraft:acacia_slab",
+    "railing": "minecraft:acacia_fence",
+    "trapdoor": "minecraft:acacia_trapdoor",
+    "accent": "stripped acacia wood (the family authors none)",
+    "footing": "minecraft:cobblestone (WallPalette.footing())",
+    "material": "minecraft:acacia_log (WallTier, one block per ten cells)"
+  },
+  "footing": "BuiltInWallSegmentCatalog.seatFooting runs for every family whose templates author FOOTING: the Polynesian Coast, the Nautical Coast and the Savanna Tent. Every body course at or below its column's saved natural ground becomes FOOTING, and any FOOTING above that ground becomes BODY, so one cobblestone course follows the terrain under runs, towers and gates.",
+  "procedural_parts": "The run fill (BODY from the seam floor to the deck on every route column) is stripped acacia wood above the ground and cobblestone at or below it.",
+  "loader_variant": "loadBundled(\"savanna_tent\"), not the arid variant, for the reason the Polynesian family gives: the Birch geometry has no Mesa trim cells or roof lanterns for that flag to change.",
+  "banners": "Each gatehouse keeps its four white wall banners, two on each face; WallRaiser dyes and patterns them with the owning village's identity when it places them.",
+  "guard_posts": "WallPosts reads a Savanna gate or tower from the Savanna footprint, the Birch geometry. Crossbow posts stand on the acacia slab walks, at the cells a Birch wall uses.",
+  "known_normalizations": "Shared with Birch and the other footed walls, from the loader: fence tips reconnect to their neighbours when placed, every hatch is placed open and top half, and runs keep at most two courses above their deck, so tall capture columns are slid down into the ground.",
+  "tool": "tools/structure/ReplaceTemplateBlocks.java with the plan workshop.py builds from the swap above over every cell of birch_forest/<piece>.nbt; its output equals the bundled files byte for byte.",
+  "pieces": [
+    {
+      "kind": "straight",
+      "source": "src/main/resources/data/kithkyn/structure/wall/birch_forest/straight.nbt",
+      "source_sha256": "417c3fa956b8b016be23d1a9fdb090b8d155466b75060234831a0a118cf90b85",
+      "study_a": "run/savanna-full-profile/studies/wall_a_straight.nbt (gallery template kithkyn_savanna_profile:st41_01_wall_a_straight)",
+      "study_a_sha256": "c5fa98ff912ede8c0620bd3f0cff9b00b7d4d9cc8f8ea61191e9b5331cfc8b83",
+      "output": "src/main/resources/data/kithkyn/structure/wall/savanna_tent/straight.nbt",
+      "output_sha256": "c5fa98ff912ede8c0620bd3f0cff9b00b7d4d9cc8f8ea61191e9b5331cfc8b83",
+      "reproduced_byte_for_byte": true,
+      "size": [
+        7,
+        8,
+        1
+      ],
+      "cells": 37,
+      "palette": [
+        "minecraft:acacia_fence",
+        "minecraft:cobblestone",
+        "minecraft:stripped_acacia_wood",
+        "minecraft:torch"
+      ],
+      "swaps": {
+        "minecraft:mossy_cobblestone -> minecraft:cobblestone": 5,
+        "minecraft:cobblestone -> minecraft:cobblestone": 2,
+        "minecraft:mossy_cobblestone -> minecraft:stripped_acacia_wood": 6,
+        "minecraft:cobblestone -> minecraft:stripped_acacia_wood": 18,
+        "minecraft:cobblestone_wall -> minecraft:acacia_fence": 3,
+        "minecraft:mossy_cobblestone_wall -> minecraft:acacia_fence": 1
+      }
+    },
+    {
+      "kind": "diagonal",
+      "source": "src/main/resources/data/kithkyn/structure/wall/birch_forest/diagonal.nbt",
+      "source_sha256": "641d8f0285db2aadcc581e4b4a60082a70d29824668fb8b3bff2be357073ca71",
+      "study_a": "run/savanna-full-profile/studies/wall_a_diagonal.nbt (gallery template kithkyn_savanna_profile:st41_02_wall_a_diagonal)",
+      "study_a_sha256": "d7b6bac0e71872f955b813c0dcd045e6421a8d70137a16e251f0901335791493",
+      "output": "src/main/resources/data/kithkyn/structure/wall/savanna_tent/diagonal.nbt",
+      "output_sha256": "d7b6bac0e71872f955b813c0dcd045e6421a8d70137a16e251f0901335791493",
+      "reproduced_byte_for_byte": true,
+      "size": [
+        7,
+        8,
+        7
+      ],
+      "cells": 40,
+      "palette": [
+        "minecraft:acacia_fence",
+        "minecraft:cobblestone",
+        "minecraft:stripped_acacia_wood",
+        "minecraft:torch"
+      ],
+      "swaps": {
+        "minecraft:mossy_cobblestone -> minecraft:cobblestone": 3,
+        "minecraft:cobblestone -> minecraft:cobblestone": 4,
+        "minecraft:mossy_cobblestone -> minecraft:stripped_acacia_wood": 8,
+        "minecraft:cobblestone -> minecraft:stripped_acacia_wood": 16,
+        "minecraft:cobblestone_wall -> minecraft:acacia_fence": 4,
+        "minecraft:mossy_cobblestone_wall -> minecraft:acacia_fence": 2
+      }
+    },
+    {
+      "kind": "corner_tower",
+      "source": "src/main/resources/data/kithkyn/structure/wall/birch_forest/corner_tower.nbt",
+      "source_sha256": "38b6df41ffe999e9ef9027a2b6b05e8af76f622cbd27d7cd0d5918124a1e84ea",
+      "study_a": "run/savanna-full-profile/studies/wall_a_corner_tower.nbt (gallery template kithkyn_savanna_profile:st41_03_wall_a_corner_tower)",
+      "study_a_sha256": "77ad0a38f4d49178df3ba648c370bdbe1f3ba2b304cee1de95f66b7e4bfbd85e",
+      "output": "src/main/resources/data/kithkyn/structure/wall/savanna_tent/corner_tower.nbt",
+      "output_sha256": "77ad0a38f4d49178df3ba648c370bdbe1f3ba2b304cee1de95f66b7e4bfbd85e",
+      "reproduced_byte_for_byte": true,
+      "size": [
+        12,
+        8,
+        6
+      ],
+      "cells": 100,
+      "palette": [
+        "minecraft:acacia_fence",
+        "minecraft:acacia_slab",
+        "minecraft:acacia_trapdoor",
+        "minecraft:cobblestone",
+        "minecraft:ladder",
+        "minecraft:stripped_acacia_wood",
+        "minecraft:torch"
+      ],
+      "swaps": {
+        "minecraft:mossy_cobblestone -> minecraft:cobblestone": 7,
+        "minecraft:cobblestone -> minecraft:cobblestone": 7,
+        "minecraft:oak_trapdoor -> minecraft:acacia_trapdoor": 4,
+        "minecraft:mossy_cobblestone -> minecraft:stripped_acacia_wood": 11,
+        "minecraft:cobblestone -> minecraft:stripped_acacia_wood": 40,
+        "minecraft:mossy_cobblestone_wall -> minecraft:acacia_fence": 8,
+        "minecraft:cobblestone_wall -> minecraft:acacia_fence": 11,
+        "minecraft:cobblestone_slab -> minecraft:acacia_slab": 1
+      }
+    },
+    {
+      "kind": "gatehouse",
+      "source": "src/main/resources/data/kithkyn/structure/wall/birch_forest/gatehouse.nbt",
+      "source_sha256": "6b18ae5516320898e1ad6b89393a2e6ab9ba34a2afc8bd4b733d4944d9cdfcf1",
+      "study_a": "run/savanna-full-profile/studies/wall_a_gatehouse.nbt (gallery template kithkyn_savanna_profile:st41_04_wall_a_gatehouse)",
+      "study_a_sha256": "50752c5f02e65ca03e7bba94fd6a7669d7d2fe95741f254650989451be0f2eaa",
+      "output": "src/main/resources/data/kithkyn/structure/wall/savanna_tent/gatehouse.nbt",
+      "output_sha256": "50752c5f02e65ca03e7bba94fd6a7669d7d2fe95741f254650989451be0f2eaa",
+      "reproduced_byte_for_byte": true,
+      "size": [
+        17,
+        8,
+        7
+      ],
+      "cells": 163,
+      "palette": [
+        "minecraft:acacia_fence",
+        "minecraft:acacia_slab",
+        "minecraft:campfire",
+        "minecraft:cobblestone",
+        "minecraft:ladder",
+        "minecraft:stripped_acacia_wood",
+        "minecraft:torch",
+        "minecraft:wall_torch",
+        "minecraft:white_wall_banner"
+      ],
+      "swaps": {
+        "minecraft:mossy_cobblestone -> minecraft:cobblestone": 8,
+        "minecraft:cobblestone -> minecraft:cobblestone": 10,
+        "minecraft:cobblestone -> minecraft:stripped_acacia_wood": 52,
+        "minecraft:mossy_cobblestone -> minecraft:stripped_acacia_wood": 30,
+        "minecraft:cobblestone_wall -> minecraft:acacia_fence": 20,
+        "minecraft:mossy_cobblestone_wall -> minecraft:acacia_fence": 11,
+        "minecraft:cobblestone_slab -> minecraft:acacia_slab": 9
+      }
+    },
+    {
+      "kind": "terrace",
+      "source": "src/main/resources/data/kithkyn/structure/wall/birch_forest/terrace.nbt",
+      "source_sha256": "df728d8b1ed1fe0372acc52a4faf7057eefc5c24f2f1a0605a234613a3404056",
+      "study_a": "run/savanna-full-profile/studies/wall_a_terrace.nbt (gallery template kithkyn_savanna_profile:st41_05_wall_a_terrace)",
+      "study_a_sha256": "d1c4dbdb906f7b3b593c1e66b2c47eb98a35d072d3d06771d7c38a4e9e90ced1",
+      "output": "src/main/resources/data/kithkyn/structure/wall/savanna_tent/terrace.nbt",
+      "output_sha256": "d1c4dbdb906f7b3b593c1e66b2c47eb98a35d072d3d06771d7c38a4e9e90ced1",
+      "reproduced_byte_for_byte": true,
+      "size": [
+        8,
+        9,
+        1
+      ],
+      "cells": 45,
+      "palette": [
+        "minecraft:acacia_fence",
+        "minecraft:cobblestone",
+        "minecraft:stripped_acacia_wood",
+        "minecraft:torch"
+      ],
+      "swaps": {
+        "minecraft:mossy_cobblestone -> minecraft:cobblestone": 3,
+        "minecraft:cobblestone -> minecraft:cobblestone": 1,
+        "minecraft:mossy_cobblestone -> minecraft:stripped_acacia_wood": 12,
+        "minecraft:cobblestone -> minecraft:stripped_acacia_wood": 22,
+        "minecraft:cobblestone_wall -> minecraft:acacia_fence": 4,
+        "minecraft:mossy_cobblestone_wall -> minecraft:acacia_fence": 1
+      }
+    }
+  ],
+  "verification": {
+    "unit_tests": "FootedWallFamilyTest, shared with the Polynesian and Nautical walls: every study A gatehouse cell is reproduced at every gate on flat ground, one cobblestone course is seated on every run column's ground on flat, rolling and sawtooth terrain, crossbow posts stand on the acacia slab walks where Birch posts stand, and the project survives its codec. WallFoundationTest: its four gate passages stay open on flat and raised decks.",
+    "gate_access": {
+      "routes-gate-access-savanna": "PASS: [gate-access-verify] RESULT PASS: SAVANNA_TENT all 8 guards/workers ascended and descended",
+      "routes-gate-access-nautical": "PASS: [gate-access-verify] RESULT PASS: NAUTICAL_COAST all 8 guards/workers ascended and descended"
+    }
+  },
+  "open_questions": [
+    "The footing follows the Polynesian rule: one course at the natural ground, and piers of cobblestone where a run crosses an overhang. Aaron to confirm on real terrain."
+  ]
+}

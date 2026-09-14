@@ -1,0 +1,457 @@
+{
+  "schemaVersion": 1,
+  "recorded": "2026-09-14",
+  "status": "verified",
+  "style": "savanna_tent",
+  "description": "Aaron's Savanna Tent village catalog: the original Village Life savanna tent as the town centre, Towns & Towers tipis, camp pieces and trader tent for homes and works, CTOV's savanna tower pieces, the original savanna mine and stoneworks, vanilla's savanna temple and farm, the Dungeons & Taverns savanna well, and the shared market geometry in acacia, selected and edited live in the trio-20260912 sky gallery on 2026-09-14.",
+  "snapshot": "run/savanna-integration/world-snapshot-20260914-151721",
+  "founding": {
+    "center": "village_center_savanna_tent_1",
+    "center_beds": 4,
+    "starting_buildings": [
+      "mine_savanna_tent_1",
+      "storehouse_savanna_tent_1"
+    ],
+    "starting_workers": [
+      "BUILDER",
+      "GUARD (CAPTAIN)",
+      "MINER (at the mine)",
+      "QUARTERMASTER (at the storehouse)"
+    ],
+    "note": "the tent sleeps the four founding workers; the trader tent's four barrels are the town's storage"
+  },
+  "identity": {
+    "beds": "village primary and secondary colours alternate by bed unit; a couple bed is one unit; the couple cottage's unit is secondary at Aaron's word",
+    "canvas": "blue canvas is primary on the house and the storehouse and secondary on the couple cottage; yellow canvas and the carpets are secondary on the storehouse; the bakery's brown terracotta is primary",
+    "banners": "the storehouse's banner is the village banner",
+    "market_fabrics": "fixed Birch market trade colours"
+  },
+  "biomes": "Savanna, Savanna Plateau, Windswept Savanna and compatible dry grasslands",
+  "castle": null,
+  "watchtower": null,
+  "ruling_seat": null,
+  "wall": {
+    "record": "tools/structure/savanna-tent-walls-20260914.json",
+    "direction": "Aaron's study A (ST41.1 to ST41.5): a stripped acacia palisade with acacia fence tips and acacia slab walks on a cobblestone footing; gatehouse banners are village banners"
+  },
+  "buildings": [
+    {
+      "exhibit": "ST28.1",
+      "structure": "village_center_savanna_tent_1",
+      "category": "village_center",
+      "level": 1,
+      "size": [
+        9,
+        10,
+        20
+      ],
+      "sink": 0,
+      "source": "run/savanna-integration/world-snapshot-20260914-151721/captures/ST28.1.nbt",
+      "source_sha256": "b2372615099781d89b9d7f58ace3db9f6ecb5ba3c61eb54f1b519cb7e7a80a5e",
+      "entities": 0,
+      "frames_fixed": false,
+      "edits": [],
+      "identity_blocks": {},
+      "asset": "run/savanna-integration/datapack/data/kithkyn/structure/village_center_savanna_tent_1.nbt",
+      "asset_sha256": "22c48395695799103c1ca009abcf85abc2ca0943000a30a8bd345e187258f9ae",
+      "definition": "run/savanna-integration/datapack/data/kithkyn/kithkyn/buildings/village_center_savanna_tent_1.json",
+      "definition_sha256": "1485489db6747851e324f892c58ce32d85791cb199489e4c2c52cd0482863910"
+    },
+    {
+      "exhibit": "ST04.5",
+      "structure": "house_savanna_tent_1",
+      "category": "house",
+      "level": 1,
+      "size": [
+        7,
+        10,
+        8
+      ],
+      "sink": -1,
+      "source": "run/savanna-integration/world-snapshot-20260914-151721/captures/ST04.5.nbt",
+      "source_sha256": "472af55742d7ca94d18c676a2b4cb52222995a754355809f74928cfcf6a084da",
+      "entities": 0,
+      "frames_fixed": false,
+      "edits": [],
+      "identity_blocks": {
+        "minecraft:blue_wool": "primary"
+      },
+      "asset": "run/savanna-integration/datapack/data/kithkyn/structure/house_savanna_tent_1.nbt",
+      "asset_sha256": "e3e88e55603a76e63636b58081d6bfa54e2fce252a86649ec87e1fb72d013620",
+      "definition": "run/savanna-integration/datapack/data/kithkyn/kithkyn/buildings/house_savanna_tent_1.json",
+      "definition_sha256": "e83da4b23c3d27631665a85f1c990f9a999b8281e9fbba9e49eaec8c3b3e4a4f"
+    },
+    {
+      "exhibit": "ST05.2",
+      "structure": "couple_cottage_savanna_tent_1",
+      "category": "couple_cottage",
+      "level": 1,
+      "size": [
+        7,
+        9,
+        7
+      ],
+      "sink": -1,
+      "source": "run/savanna-integration/world-snapshot-20260914-151721/captures/ST05.2.nbt",
+      "source_sha256": "f336e1d8b2565394f4d94b9e050842261ab9bc7cc834f708a09119fb1b79a95f",
+      "entities": 0,
+      "frames_fixed": false,
+      "edits": [],
+      "identity_blocks": {
+        "minecraft:blue_wool": "secondary"
+      },
+      "asset": "run/savanna-integration/datapack/data/kithkyn/structure/couple_cottage_savanna_tent_1.nbt",
+      "asset_sha256": "27404c20aa076a64f91002b665003617a65da71e84d32514f0a53d324e57c35f",
+      "definition": "run/savanna-integration/datapack/data/kithkyn/kithkyn/buildings/couple_cottage_savanna_tent_1.json",
+      "definition_sha256": "6d86f0dc1fc5432345329961abaf46b0abb81e22c5b3341480d7ecb0bc183715"
+    },
+    {
+      "exhibit": "ST05.9",
+      "structure": "blacksmith_savanna_tent_1",
+      "category": "blacksmith",
+      "level": 1,
+      "size": [
+        9,
+        8,
+        15
+      ],
+      "sink": -1,
+      "source": "run/savanna-integration/world-snapshot-20260914-151721/captures/ST05.9.nbt",
+      "source_sha256": "9f524d74625d0bbb6ecdd10c3edb6805c320ca13cd64e324b40026c2665de721",
+      "entities": 0,
+      "frames_fixed": false,
+      "edits": [],
+      "identity_blocks": {},
+      "asset": "run/savanna-integration/datapack/data/kithkyn/structure/blacksmith_savanna_tent_1.nbt",
+      "asset_sha256": "ed4fd67f1fba08a551f279f5ca1ff0c9d19ed15051d786eeff36a57ecce88299",
+      "definition": "run/savanna-integration/datapack/data/kithkyn/kithkyn/buildings/blacksmith_savanna_tent_1.json",
+      "definition_sha256": "376c5384a8be8fa252549af72127288b2f6d57b5f16a71917a1176d044b176ac"
+    },
+    {
+      "exhibit": "ST05.10",
+      "structure": "hunting_lodge_savanna_tent_1",
+      "category": "hunting_lodge",
+      "level": 1,
+      "size": [
+        9,
+        5,
+        9
+      ],
+      "sink": -1,
+      "source": "run/savanna-integration/world-snapshot-20260914-151721/captures/ST05.10.nbt",
+      "source_sha256": "ac707e68e7c11d50b6d8050d0a52dbacfa73a97717fbff3d1ab7d567c6e384d8",
+      "entities": 0,
+      "frames_fixed": false,
+      "edits": [],
+      "identity_blocks": {},
+      "asset": "run/savanna-integration/datapack/data/kithkyn/structure/hunting_lodge_savanna_tent_1.nbt",
+      "asset_sha256": "2e2d1f46200f91eeb4a5478bec03550db884d6bb56d3e6a75797d4459d521916",
+      "definition": "run/savanna-integration/datapack/data/kithkyn/kithkyn/buildings/hunting_lodge_savanna_tent_1.json",
+      "definition_sha256": "3f49ad2843990b69737182ceee8396df3a7a131cf06e892ddc627fc96e652114"
+    },
+    {
+      "exhibit": "ST06.2",
+      "structure": "butchery_savanna_tent_1",
+      "category": "butchery",
+      "level": 1,
+      "size": [
+        4,
+        6,
+        5
+      ],
+      "sink": -1,
+      "source": "run/savanna-integration/world-snapshot-20260914-151721/captures/ST06.2.nbt",
+      "source_sha256": "7c0b42e00b06f984f0bdbcd8089c05c3a18b6710efed25cb505aab00fe194653",
+      "entities": 3,
+      "frames_fixed": false,
+      "edits": [],
+      "identity_blocks": {},
+      "asset": "run/savanna-integration/datapack/data/kithkyn/structure/butchery_savanna_tent_1.nbt",
+      "asset_sha256": "ad0948516deee018af94c65c2ba849db6df16436f79de5a394a3a3f5e30de061",
+      "definition": "run/savanna-integration/datapack/data/kithkyn/kithkyn/buildings/butchery_savanna_tent_1.json",
+      "definition_sha256": "507e81240ed046752a4f4f0cf22cfd312e5699103f6e700993c1d828ae4a542e"
+    },
+    {
+      "exhibit": "ST06.5",
+      "structure": "storehouse_savanna_tent_1",
+      "category": "storehouse",
+      "level": 1,
+      "size": [
+        8,
+        8,
+        7
+      ],
+      "sink": -1,
+      "source": "run/savanna-integration/world-snapshot-20260914-151721/captures/ST06.5.nbt",
+      "source_sha256": "8409bbac929dd0616fe76bf9980775a3f00a963c2fb557033fcf612f0db2c0ee",
+      "entities": 0,
+      "frames_fixed": false,
+      "edits": [],
+      "identity_blocks": {
+        "minecraft:blue_wool": "primary",
+        "minecraft:yellow_wool": "secondary",
+        "_carpet": "secondary"
+      },
+      "asset": "run/savanna-integration/datapack/data/kithkyn/structure/storehouse_savanna_tent_1.nbt",
+      "asset_sha256": "eae2d0654a84d261999ded230e4cc939bbc40ebc47ecd6642dd3e78f7f48c6d5",
+      "definition": "run/savanna-integration/datapack/data/kithkyn/kithkyn/buildings/storehouse_savanna_tent_1.json",
+      "definition_sha256": "b6422bffb1c04d5bce3ff59c2578b97aa2836dc069aaf31fb407eaa2c3fa42a9"
+    },
+    {
+      "exhibit": "ST07.6",
+      "structure": "bakery_savanna_tent_1",
+      "category": "bakery",
+      "level": 1,
+      "size": [
+        7,
+        13,
+        7
+      ],
+      "sink": 0,
+      "source": "run/savanna-integration/world-snapshot-20260914-151721/captures/ST07.6.nbt",
+      "source_sha256": "ed6408942abeff74b56d8af91c2176cf1e797f37d619f69ec753d0bad3ddb4ef",
+      "entities": 0,
+      "frames_fixed": false,
+      "edits": [],
+      "identity_blocks": {
+        "minecraft:brown_terracotta": "primary"
+      },
+      "asset": "run/savanna-integration/datapack/data/kithkyn/structure/bakery_savanna_tent_1.nbt",
+      "asset_sha256": "1a39949645f783624e4a69325bf75e337037adcb8e487d65220dfa72bf00cc08",
+      "definition": "run/savanna-integration/datapack/data/kithkyn/kithkyn/buildings/bakery_savanna_tent_1.json",
+      "definition_sha256": "ed98136ba795c4cf968474090596ff9a93571f942ee9d292660e03c5a7cdcaf0"
+    },
+    {
+      "exhibit": "ST09.4",
+      "structure": "fishery_savanna_tent_1",
+      "category": "fishery",
+      "level": 1,
+      "size": [
+        9,
+        11,
+        9
+      ],
+      "sink": 0,
+      "source": "run/savanna-integration/world-snapshot-20260914-151721/captures/ST09.4.nbt",
+      "source_sha256": "b77480c1c407136673164d482e5b22d182720b7ced9fe4d9cb92dd2c3f00e2c2",
+      "entities": 0,
+      "frames_fixed": true,
+      "edits": [
+        [
+          [
+            2,
+            1,
+            6
+          ],
+          "fence",
+          "minecraft:air",
+          {}
+        ]
+      ],
+      "identity_blocks": {},
+      "asset": "run/savanna-integration/datapack/data/kithkyn/structure/fishery_savanna_tent_1.nbt",
+      "asset_sha256": "3bf10e52789334fd5cfdb44dcd31af0a0a1af7992a016633f3fed844d876e0cf",
+      "definition": "run/savanna-integration/datapack/data/kithkyn/kithkyn/buildings/fishery_savanna_tent_1.json",
+      "definition_sha256": "a5f2a1352c6d2e67dc60d2ce609761222adcd085f0bda19b9978406eb956f2d3"
+    },
+    {
+      "exhibit": "ST29.1",
+      "structure": "mine_savanna_tent_1",
+      "category": "mine",
+      "level": 1,
+      "size": [
+        7,
+        6,
+        7
+      ],
+      "sink": 0,
+      "source": "run/savanna-integration/world-snapshot-20260914-151721/captures/ST29.1.nbt",
+      "source_sha256": "ed675560b874dbee38332f881894c3e1cb12831974928a05263d95920accadd3",
+      "entities": 0,
+      "frames_fixed": false,
+      "edits": [],
+      "identity_blocks": {},
+      "asset": "run/savanna-integration/datapack/data/kithkyn/structure/mine_savanna_tent_1.nbt",
+      "asset_sha256": "504548868a3c957250f5ee55a00ccf68d1414def8d5ab5899d619a396ebf274d",
+      "definition": "run/savanna-integration/datapack/data/kithkyn/kithkyn/buildings/mine_savanna_tent_1.json",
+      "definition_sha256": "446291b9032c8cb92ae6ab520d06a5ca0e6cdd69316ae796a61f54faa3bc78ba"
+    },
+    {
+      "exhibit": "ST34.2",
+      "structure": "farm_savanna_tent_1",
+      "category": "farm",
+      "level": 1,
+      "size": [
+        10,
+        4,
+        8
+      ],
+      "sink": 0,
+      "source": "run/savanna-integration/world-snapshot-20260914-151721/captures/ST34.2.nbt",
+      "source_sha256": "1072b1e74926cc52985ed05813321239c04440d3c29d42f4ff3be323fbf14144",
+      "entities": 0,
+      "frames_fixed": false,
+      "edits": [],
+      "identity_blocks": {},
+      "asset": "run/savanna-integration/datapack/data/kithkyn/structure/farm_savanna_tent_1.nbt",
+      "asset_sha256": "c95af89bf7a2dfdedf8d6a4f523e1e410fbf61a9f5a6e269b0af158331b2f6e2",
+      "definition": "run/savanna-integration/datapack/data/kithkyn/kithkyn/buildings/farm_savanna_tent_1.json",
+      "definition_sha256": "07894ac89444452f7b77794c4a019c4bd233c396b298288dceb0cbef169899ce"
+    },
+    {
+      "exhibit": "ST25.4",
+      "structure": "well_savanna_tent_1",
+      "category": "well",
+      "level": 1,
+      "size": [
+        3,
+        12,
+        3
+      ],
+      "sink": 7,
+      "source": "run/savanna-integration/world-snapshot-20260914-151721/captures/ST25.4.nbt",
+      "source_sha256": "88c8292922685222d1efd748ebecea6bc79bb8fab8e5b05cb5852422261cf169",
+      "entities": 0,
+      "frames_fixed": false,
+      "edits": [],
+      "identity_blocks": {},
+      "asset": "run/savanna-integration/datapack/data/kithkyn/structure/well_savanna_tent_1.nbt",
+      "asset_sha256": "3c05cbe683c9afec766cddb38caa8d163692765dd10ee6e80c512323f170bb47",
+      "definition": "run/savanna-integration/datapack/data/kithkyn/kithkyn/buildings/well_savanna_tent_1.json",
+      "definition_sha256": "22d308f1c09b30d5e577832a50942f1b995c0cc1f4fea8d48418f2799767d717"
+    },
+    {
+      "exhibit": "ST29.8",
+      "structure": "stoneworks_savanna_tent_1",
+      "category": "stoneworks",
+      "level": 1,
+      "size": [
+        7,
+        6,
+        7
+      ],
+      "sink": 0,
+      "source": "run/savanna-integration/world-snapshot-20260914-151721/captures/ST29.8.nbt",
+      "source_sha256": "377e7538d3aad462fa33a20da32ac98295f07f84c8fc62fee11d6ba472fb2135",
+      "entities": 0,
+      "frames_fixed": false,
+      "edits": [],
+      "identity_blocks": {},
+      "asset": "run/savanna-integration/datapack/data/kithkyn/structure/stoneworks_savanna_tent_1.nbt",
+      "asset_sha256": "9e99df517076188bbbd124eb138231428ec88ad711219f373d2b309887216055",
+      "definition": "run/savanna-integration/datapack/data/kithkyn/kithkyn/buildings/stoneworks_savanna_tent_1.json",
+      "definition_sha256": "36ace5ba850f23a4ae9b089c0bf04c71dd02910a84d06c4e54a6f5fd99ab88b5"
+    },
+    {
+      "exhibit": "ST32.1",
+      "structure": "church_savanna_tent_1",
+      "category": "church",
+      "level": 1,
+      "size": [
+        13,
+        7,
+        9
+      ],
+      "sink": 0,
+      "source": "run/savanna-integration/world-snapshot-20260914-151721/captures/ST32.1.nbt",
+      "source_sha256": "b6a8feb35e7a585f43a6a780d8dc0697d30847282eecc79e7d0b556a074400d9",
+      "entities": 0,
+      "frames_fixed": false,
+      "edits": [],
+      "identity_blocks": {},
+      "asset": "run/savanna-integration/datapack/data/kithkyn/structure/church_savanna_tent_1.nbt",
+      "asset_sha256": "dbd1f5ba296692e87c67c449c0437f2f7743cf58e5e4231fc3c5534e9ee1ec0b",
+      "definition": "run/savanna-integration/datapack/data/kithkyn/kithkyn/buildings/church_savanna_tent_1.json",
+      "definition_sha256": "56d4ef10a1c9528e840f478ba0003a5131c76d159e03dee677371fbeb1181d6f"
+    },
+    {
+      "exhibit": "ST20.7",
+      "structure": "lumberjack_savanna_tent_1",
+      "category": "lumberjack",
+      "level": 1,
+      "size": [
+        5,
+        3,
+        5
+      ],
+      "sink": 0,
+      "source": "run/savanna-integration/world-snapshot-20260914-151721/captures/ST20.7.nbt",
+      "source_sha256": "807c81b6f3ff0dac78c0bbd06b24b77ad460d8710e522e6925357698e84e4bd1",
+      "entities": 0,
+      "frames_fixed": false,
+      "edits": [],
+      "identity_blocks": {},
+      "asset": "run/savanna-integration/datapack/data/kithkyn/structure/lumberjack_savanna_tent_1.nbt",
+      "asset_sha256": "9a19a5801014ab7602781846eb621e42b2a77a79d5661c05ea417c03ca26935d",
+      "definition": "run/savanna-integration/datapack/data/kithkyn/kithkyn/buildings/lumberjack_savanna_tent_1.json",
+      "definition_sha256": "d5fd4cef595ce61cb2360ad53a7c5aef5acc570c2a32e750654b2fbcd6ab0634"
+    },
+    {
+      "exhibit": "ST40.1",
+      "structure": "market_savanna_tent_1",
+      "category": "market",
+      "level": 1,
+      "size": [
+        16,
+        6,
+        17
+      ],
+      "sink": 0,
+      "source": "run/savanna-full-profile/prepared/st40_01_market_1.nbt",
+      "source_sha256": "56086629416c166d11ed82cb4e8bbc4ef245ec945c9795491f76413b3a131b09",
+      "definition_from": "origin/main:src/main/resources/data/kithkyn/kithkyn/buildings/market_birch_forest_1.json",
+      "asset": "run/savanna-integration/datapack/data/kithkyn/structure/market_savanna_tent_1.nbt",
+      "asset_sha256": "a0c60d765a527b0a7119ed93064614528b4cd0e1d4ab3096b1fbd53fbc8196c8",
+      "definition": "run/savanna-integration/datapack/data/kithkyn/kithkyn/buildings/market_savanna_tent_1.json",
+      "definition_sha256": "dab6999985a2292b6ba9bf0cd189d303cbfa2bacfb57f69bdfe3b50050f26802"
+    },
+    {
+      "exhibit": "ST40.2",
+      "structure": "market_savanna_tent_2",
+      "category": "market",
+      "level": 2,
+      "size": [
+        23,
+        6,
+        17
+      ],
+      "sink": 0,
+      "source": "run/savanna-full-profile/prepared/st40_02_market_2.nbt",
+      "source_sha256": "b713f8e03340f4ef255d2ae4fe4c1ef942e683339793db8b421c996ffb828afb",
+      "definition_from": "origin/main:src/main/resources/data/kithkyn/kithkyn/buildings/market_birch_forest_2.json",
+      "asset": "run/savanna-integration/datapack/data/kithkyn/structure/market_savanna_tent_2.nbt",
+      "asset_sha256": "e8141e110a114a68c12b34e59b2d4c94562b975e6c7a5d51c621c9b1bfbd105b",
+      "definition": "run/savanna-integration/datapack/data/kithkyn/kithkyn/buildings/market_savanna_tent_2.json",
+      "definition_sha256": "895649d6eb39ad1325d1cdc9953383c77d68284672380f75b4aa7b16ead9049f"
+    },
+    {
+      "exhibit": "ST40.3",
+      "structure": "market_savanna_tent_3",
+      "category": "market",
+      "level": 3,
+      "size": [
+        23,
+        6,
+        25
+      ],
+      "sink": 0,
+      "source": "run/savanna-full-profile/prepared/st40_03_market_3.nbt",
+      "source_sha256": "e4d19d0ccf2770030e4a2d04c34d74d69c2be6bbca309f78c32154b4dfa7bb1c",
+      "definition_from": "origin/main:src/main/resources/data/kithkyn/kithkyn/buildings/market_birch_forest_3.json",
+      "asset": "run/savanna-integration/datapack/data/kithkyn/structure/market_savanna_tent_3.nbt",
+      "asset_sha256": "9d82d4611603ce803cdc2514ada5a0c6a800b1dfde5d30db7d31fff9488f818b",
+      "definition": "run/savanna-integration/datapack/data/kithkyn/kithkyn/buildings/market_savanna_tent_3.json",
+      "definition_sha256": "b66bc9b8506ec74e9122ccbcfd7c5b4f8cd665de91deba4607a9db740dcb591e"
+    }
+  ],
+  "verification": {
+    "placement": "PASS: [building-placement-verify] RESULT PASS: 144 real-template placements, both paths, four rotations, colors, frames, entity/save receipts and upgrade preservation",
+    "restart": "PASS: [building-placement-verify] RESTART PASS: 144 saved buildings and 32 original entities survived real server shutdown/restart without replenishment",
+    "founding": "PASS: [savanna-verify] RESULT PASS: 18 strict native templates, 1 housing alternatives, 8 upgrade fits, four founding rotations and codec reloads, natural biome selection, 4 beds, 4 positions, distinct meeting/fire locations and village identity",
+    "center": "PASS: [approved-house-verify] RESULT PASS: 4 rotated structures, 40 access routes, 16 physical room walks and assigned-bed sleeps, 16 physical personal-container deposits, 0 failed placements; probe size=18; station walks=24, shared deposits=0, mine walks=0, review walks=0",
+    "access": "PASS: [approved-house-verify] RESULT PASS: 68 rotated structures, 92 access routes, 24 physical room walks and assigned-bed sleeps, 24 physical personal-container deposits, 0 failed placements; probe size=18; station walks=68, shared deposits=80, mine walks=8, review walks=0",
+    "routes-gate-access-savanna": "PASS: [gate-access-verify] RESULT PASS: SAVANNA_TENT all 8 guards/workers ascended and descended",
+    "routes-gate-access-nautical": "PASS: [gate-access-verify] RESULT PASS: NAUTICAL_COAST all 8 guards/workers ascended and descended",
+    "static_audit": "PASS 18 templates (tools/structure/audit-templates.py at origin/main bcd5c52): no barrier states, out-of-bounds blocks, invalid or duplicate station coordinates, invalid lumberjack stands, terrain-clearing corner air, unclassified containers, open or empty butcheries, malformed market floors, or malformed market entrances"
+  }
+}

@@ -361,9 +361,9 @@ becoming one overloaded axis.
 
 ### Current runtime selection: 2026-09-13
 
-Thirteen styles exist today, in this stable order: `birch_forest`, `desert`, `badlands`,
+Fourteen styles exist today, in this stable order: `birch_forest`, `desert`, `badlands`,
 `floodplain`, `jungle`, `swamp`, `mediterranean`, `tundra`, `polynesian_coast`, `romanian`,
-`alpine_highlands`, `japanese_cherry_grove`, `nautical_coast`.
+`alpine_highlands`, `japanese_cherry_grove`, `nautical_coast`, `savanna_tent`.
 Birch Forest is the only catalog bundled in the jar and so the default: a blank
 or unknown saved style reads as Birch. Desert ([desert-village.md](desert-village.md)),
 Badlands ([badlands-village.md](badlands-village.md)) and Floodplain
@@ -375,8 +375,9 @@ Badlands ([badlands-village.md](badlands-village.md)) and Floodplain
 ([polynesian-coast-village.md](polynesian-coast-village.md)), Romanian
 ([romanian-village.md](romanian-village.md)), Alpine Highlands
 ([alpine-highlands-village.md](alpine-highlands-village.md)), Japanese Cherry Grove
-([japanese-cherry-grove-village.md](japanese-cherry-grove-village.md)) and Nautical Coast
-([nautical-coast-village.md](nautical-coast-village.md)) are installed as private datapacks that
+([japanese-cherry-grove-village.md](japanese-cherry-grove-village.md)), Nautical Coast
+([nautical-coast-village.md](nautical-coast-village.md)) and Savanna Tent
+([savanna-tent-village.md](savanna-tent-village.md)) are installed as private datapacks that
 supply their own definitions and templates under the ids the code resolves; without its pack
 a style has no founding set and is never selected automatically. The old Village Life families
 (plains, taiga, snowy, savanna and the bundled desert set) were removed on 2026-09-10; see
@@ -394,7 +395,7 @@ reroll an existing village. An explicit style argument on the command still over
 Selection first honors `kithkyn:village_style/<style>` biome tags, so a datapack can map a
 vanilla or modded biome precisely without a second mapping format. If a biome has several
 explicit tags, the stable order is Birch Forest, Desert, Badlands, Floodplain, Jungle, Swamp,
-Mediterranean, Tundra, Polynesian Coast, Romanian, Alpine Highlands, Japanese Cherry Grove, Nautical Coast. Sparse Jungle carries the Polynesian Coast tag and no
+Mediterranean, Tundra, Polynesian Coast, Romanian, Alpine Highlands, Japanese Cherry Grove, Nautical Coast, Savanna Tent. Sparse Jungle carries the Polynesian Coast tag and no
 longer the Jungle one, so Jungle keeps Jungle and Bamboo Jungle.
 Only styles whose own center, mine, and storehouse definitions are loaded are automatic candidates.
 
@@ -412,7 +413,8 @@ catalog exists:
 | Family | Village style |
 | --- | --- |
 | Birch, including `c:is_birch_forest` and untagged registry paths containing `birch` | Birch Forest |
-| Mesa/badlands or savanna, including their tagged modded families and recognizable registry paths | Pueblo / Badlands |
+| Savanna, savanna plateau and windswept savanna, including tagged modded families and registry paths containing `savanna` | Savanna Tent |
+| Mesa/badlands, including their tagged modded families and recognizable registry paths | Pueblo / Badlands |
 | Desert or sandy, excluding the mesa/badlands and savanna families above | Desert |
 | Mangrove: vanilla mangrove swamp through the `kithkyn:village_style/floodplain` tag, and untagged registry paths containing `mangrove` | Floodplain |
 | Jungle, including conventional Jungle tags and registry paths containing `jungle` | Jungle |
@@ -427,9 +429,9 @@ Birch wins before broader family tags; an explicit style tag can override even a
 biome. This name heuristic is a compatibility fallback for mods that omit conventional tags,
 not a substitute for those tags.
 
-The broad Pueblo assignment includes wooded badlands and savanna plateau for now. As more
-catalogs become playable, explicit style tags can separate those biomes without rerolling
-existing villages. Jungle and Swamp are complete strict catalogs: neither borrows missing buildings
+The Pueblo assignment includes wooded badlands; the savanna families left it for the Savanna
+Tent on 2026-09-14 without rerolling existing villages, since a village keeps its founding style.
+As more catalogs become playable, explicit style tags can separate other biomes the same way. Jungle and Swamp are complete strict catalogs: neither borrows missing buildings
 from Birch or another regional family.
 
 A family with no conventional mapping uses its precipitation, base temperature, downfall, and

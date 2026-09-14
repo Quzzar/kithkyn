@@ -30,6 +30,9 @@ final class BuiltInWallSegmentCatalog implements WallSegmentCatalog {
   /** The Nautical Coast seawall: study C, with its stripped jungle wood footing seated on the ground. */
   static final BuiltInWallSegmentCatalog NAUTICAL_COAST =
       new BuiltInWallSegmentCatalog(AuthoredWoodWallSegments.NAUTICAL_COAST);
+  /** The Savanna Tent palisade: study A, with its cobblestone footing seated on the ground. */
+  static final BuiltInWallSegmentCatalog SAVANNA_TENT =
+      new BuiltInWallSegmentCatalog(AuthoredWoodWallSegments.SAVANNA_TENT);
   private final AuthoredWoodWallSegments authored;
   private final boolean hedged;
 

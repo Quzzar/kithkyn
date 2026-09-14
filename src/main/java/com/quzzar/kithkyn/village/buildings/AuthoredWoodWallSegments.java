@@ -52,6 +52,12 @@ final class AuthoredWoodWallSegments {
    * sandstone wall tips and jungle slab walks on a stripped jungle wood footing.
    */
   static final AuthoredWoodWallSegments NAUTICAL_COAST = loadBundled("nautical_coast");
+  /**
+   * Study A of the Savanna Tent walls (2026-09-14): the Birch geometry as a
+   * stripped acacia palisade with acacia fence tips and acacia slab walks on a
+   * cobblestone footing.
+   */
+  static final AuthoredWoodWallSegments SAVANNA_TENT = loadBundled("savanna_tent");
 
   private static final String RESOURCE_ROOT =
       "data/kithkyn/structure/wall/";
@@ -403,30 +409,30 @@ final class AuthoredWoodWallSegments {
 
   private static AuthoredWoodWallSegments loadBundled(String family, boolean arid) {
     Map<WallSectionKind, Template> templates = new EnumMap<>(WallSectionKind.class);
-    load(templates, WallSectionKind.STRAIGHT, family + "/straight.nbt");
-    load(templates, WallSectionKind.DIAGONAL, family + "/diagonal.nbt");
-    load(templates, WallSectionKind.TERRACE, family + "/terrace.nbt");
-    load(templates, WallSectionKind.CORNER_TOWER, family + "/corner_tower.nbt");
-    load(templates, WallSectionKind.GATEHOUSE, family + "/gatehouse.nbt");
+    load(templates, WallSectionKind.STRAIGHT, family, "/straight.nbt");
+    load(templates, WallSectionKind.DIAGONAL, family, "/diagonal.nbt");
+    load(templates, WallSectionKind.TERRACE, family, "/terrace.nbt");
+    load(templates, WallSectionKind.CORNER_TOWER, family, "/corner_tower.nbt");
+    load(templates, WallSectionKind.GATEHOUSE, family, "/gatehouse.nbt");
     return new AuthoredWoodWallSegments(templates, arid);
   }
 
   private static void load(Map<WallSectionKind, Template> templates,
-      WallSectionKind kind, String file) {
-    String path = RESOURCE_ROOT + file;
+      WallSectionKind kind, String family, String file) {
+    String path = RESOURCE_ROOT + family + file;
     try (InputStream input = AuthoredWoodWallSegments.class.getClassLoader()
         .getResourceAsStream(path)) {
       if (input == null) {
         Kithkyn.LOGGER.error("Missing authored wall segment {}", path);
         return;
       }
-      templates.put(kind, readTemplate(input));
+      templates.put(kind, readTemplate(input, family));
     } catch (IOException | RuntimeException exception) {
       Kithkyn.LOGGER.error("Could not read authored wall segment {}", path, exception);
     }
   }
 
-  private static Template readTemplate(InputStream input) throws IOException {
+  private static Template readTemplate(InputStream input, String family) throws IOException {
     CompoundTag root = NbtIo.readCompressed(input, NbtAccounter.unlimitedHeap());
     ListTag palette = root.getList("palette", Tag.TAG_COMPOUND);
     ListTag serializedBlocks = root.getList("blocks", Tag.TAG_COMPOUND);
@@ -435,7 +441,7 @@ final class AuthoredWoodWallSegments {
       CompoundTag serialized = serializedBlocks.getCompound(index);
       ListTag pos = serialized.getList("pos", Tag.TAG_INT);
       CompoundTag paletteEntry = palette.getCompound(serialized.getInt("state"));
-      WallBlockPlan.Piece piece = pieceFor(paletteEntry);
+      WallBlockPlan.Piece piece = pieceFor(paletteEntry, family);
       if (piece != null) {
         cells.add(new Cell(pos.getInt(0), pos.getInt(1), pos.getInt(2), piece));
       }
@@ -533,14 +539,17 @@ final class AuthoredWoodWallSegments {
     };
   }
 
-  private static WallBlockPlan.Piece pieceFor(CompoundTag paletteEntry) {
+  /** The piece a captured block stands for; only the Savanna Tent reads cobblestone as its footing. */
+  private static WallBlockPlan.Piece pieceFor(CompoundTag paletteEntry, String family) {
     String name = paletteEntry.getString("Name");
     CompoundTag properties = paletteEntry.getCompound("Properties");
     if (name.startsWith("minecraft:") && name.endsWith("_wall_banner")) {
       return WallBlockPlan.bannerPiece(horizontal(properties.getString("facing")));
     }
     return switch (name) {
-      case "minecraft:cobblestone" -> WallBlockPlan.Piece.COBBLE_POST;
+      // Birch masonry; the Savanna Tent palisade's footing course (study A, 2026-09-14).
+      case "minecraft:cobblestone" -> "savanna_tent".equals(family)
+          ? WallBlockPlan.Piece.FOOTING : WallBlockPlan.Piece.COBBLE_POST;
       case "minecraft:cobbled_deepslate" -> WallBlockPlan.Piece.COBBLE_POST;
       case "minecraft:mossy_cobblestone" -> WallBlockPlan.Piece.MOSSY_POST;
       case "minecraft:cobblestone_wall" -> WallBlockPlan.Piece.COBBLE_WALL;
@@ -571,11 +580,12 @@ final class AuthoredWoodWallSegments {
         case "z" -> WallBlockPlan.Piece.BEAM_NORTH_SOUTH;
         default -> WallBlockPlan.Piece.POST;
       };
-      case "minecraft:oak_fence", "minecraft:spruce_fence" -> WallBlockPlan.Piece.PARAPET;
+      case "minecraft:oak_fence", "minecraft:spruce_fence", "minecraft:acacia_fence" -> WallBlockPlan.Piece.PARAPET;
       case "minecraft:oak_slab", "minecraft:spruce_slab", "minecraft:birch_slab",
-          "minecraft:jungle_slab" -> WallBlockPlan.Piece.SLAB;
+          "minecraft:jungle_slab", "minecraft:acacia_slab" -> WallBlockPlan.Piece.SLAB;
       case "minecraft:oak_trapdoor", "minecraft:spruce_trapdoor", "minecraft:dark_oak_trapdoor",
-          "minecraft:jungle_trapdoor", "minecraft:cherry_trapdoor" -> WallBlockPlan.trapdoorPiece(
+          "minecraft:jungle_trapdoor", "minecraft:cherry_trapdoor",
+          "minecraft:acacia_trapdoor" -> WallBlockPlan.trapdoorPiece(
           horizontal(properties.getString("facing")));
       case "minecraft:ladder" -> WallBlockPlan.ladderPiece(
           horizontal(properties.getString("facing")));
@@ -612,6 +622,9 @@ final class AuthoredWoodWallSegments {
       case "minecraft:sandstone" -> WallBlockPlan.Piece.BODY;
       case "minecraft:smooth_sandstone" -> WallBlockPlan.Piece.BODY_ACCENT;
       case "minecraft:stripped_jungle_wood" -> WallBlockPlan.Piece.FOOTING;
+      // The Savanna Tent capture (study A) is a stripped acacia palisade on the
+      // cobblestone footing above.
+      case "minecraft:stripped_acacia_wood" -> WallBlockPlan.Piece.BODY;
       default -> null;
     };
   }

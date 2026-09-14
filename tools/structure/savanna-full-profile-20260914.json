@@ -18,6 +18,11 @@
     276,
     1881
   ],
+  "returnPosition": [
+    1805.16,
+    247.03,
+    577.32
+  ],
   "selectionRule": "Every standalone piece of the T&T savanna plateau village and camp, the wooded badlands tipi village and camp, the wandering trader camp and the savanna outpost tower; every standalone CTOV savanna and Native American savanna piece plus the savanna outpost, roads omitted and entities stripped, with other mods' blocks shown as neutral vanilla markers; every non-villager D&T acacia tavern module and the savanna well; the showcase's assembled ramshackled tower village; and the T&T Nilotic houses for comparison. Street, terminator and villager templates are omitted.",
   "counts": {
     "townsAndTowers": 87,
@@ -11467,39 +11472,576 @@
     "reason": "no precipitation at any height, so no lightning on the wool tents"
   },
   "licensing": "CTOV and Towns & Towers are CC BY-NC-ND 4.0 and Dungeons & Taverns is under its own licence: their display copies stay private under run/, as for every gallery. See docs/structure-sourcing.md.",
-  "offlineCheck": {
-    "short": [
+  "worldBackup": "/Users/quzzar/Projects/kithkyn/run/backups/before-savanna-gallery-20260914-145212",
+  "studies": {
+    "recorded": "2026-09-14T14:50:29-04:00",
+    "rule": "Bundled Birch market and wall geometry from main with the Savanna picks' materials; trade colours, torches, ladders and the gatehouse campfire and banners untouched.",
+    "rows": [
       {
-        "id": "ST05.6",
-        "label": "Small Hut Yellow",
-        "expected": 131,
-        "placed": 126,
-        "ratio": 0.962
+        "id": "ST40",
+        "title": "SAVANNA MARKET \u2014 TIERS 1 TO 3"
       },
       {
-        "id": "ST29.12",
-        "label": "Bakery",
-        "expected": 488,
-        "placed": 196,
-        "ratio": 0.402
+        "id": "ST41",
+        "title": "SAVANNA WALL A \u2014 ACACIA PALISADE"
       },
       {
-        "id": "ST39.11",
-        "label": "Old Well",
-        "expected": 184,
-        "placed": 164,
-        "ratio": 0.891
+        "id": "ST42",
+        "title": "SAVANNA WALL B \u2014 CANVAS ON ACACIA"
       },
       {
-        "id": "ST39.13",
-        "label": "Classic Well",
-        "expected": 268,
-        "placed": 196,
-        "ratio": 0.731
+        "id": "ST43",
+        "title": "SAVANNA WALL C \u2014 DRY STONE + TERRACOTTA"
       }
     ],
-    "waterOutsideRings": [],
-    "waterOutsideRingsCount": 0,
-    "footprintsChecked": 410
+    "studies": [
+      {
+        "row": "ST40",
+        "stem": "market_1",
+        "label": "Market Tier 1",
+        "role": "market",
+        "source": "src/main/resources/data/kithkyn/structure/market_birch_forest_1.nbt",
+        "sourceSha256": "ba62598d3dc7ecbffc4d7e1c0542a37a4f7990c356f7613a38534a93f4ef72d1",
+        "swaps": {
+          "cobblestone -> coarse_dirt": 16,
+          "birch_trapdoor -> acacia_trapdoor": 50,
+          "birch_log -> stripped_acacia_log": 4,
+          "birch_fence -> acacia_fence": 14
+        },
+        "size": [
+          16,
+          6,
+          17
+        ],
+        "sha256": "a8b936f375348b3a7d150cc54c47ca1a618bf3969a0a587aa2f927813e0fc76f"
+      },
+      {
+        "row": "ST40",
+        "stem": "market_2",
+        "label": "Market Tier 2",
+        "role": "market",
+        "source": "src/main/resources/data/kithkyn/structure/market_birch_forest_2.nbt",
+        "sourceSha256": "63f3a3fcfaecefd4dc4807d5a01b28d3e263bad1cddd5a5c12bab754c45c9a9f",
+        "swaps": {
+          "cobblestone -> coarse_dirt": 57,
+          "birch_trapdoor -> acacia_trapdoor": 100,
+          "birch_log -> stripped_acacia_log": 8,
+          "birch_fence -> acacia_fence": 28
+        },
+        "size": [
+          23,
+          6,
+          17
+        ],
+        "sha256": "903316fe526dd345b16908b69cca28101aac1c9f836a9cd5617b4029a624412f"
+      },
+      {
+        "row": "ST40",
+        "stem": "market_3",
+        "label": "Market Tier 3",
+        "role": "market",
+        "source": "src/main/resources/data/kithkyn/structure/market_birch_forest_3.nbt",
+        "sourceSha256": "9b2a4c0903bb9cdd26e954fcc45a8f556ea853b2fe7def140a5d0cc088c7cfab",
+        "swaps": {
+          "cobblestone -> coarse_dirt": 78,
+          "birch_trapdoor -> acacia_trapdoor": 150,
+          "birch_log -> stripped_acacia_log": 12,
+          "birch_fence -> acacia_fence": 42
+        },
+        "size": [
+          23,
+          6,
+          25
+        ],
+        "sha256": "48a3aa54cbd00061f7e7e9b8e8d927393998e527b6873871c8ee4dfed3623343"
+      },
+      {
+        "row": "ST41",
+        "stem": "wall_a_straight",
+        "label": "Wall A Straight",
+        "role": "wall",
+        "source": "src/main/resources/data/kithkyn/structure/wall/birch_forest/straight.nbt",
+        "sourceSha256": "417c3fa956b8b016be23d1a9fdb090b8d155466b75060234831a0a118cf90b85",
+        "swaps": {
+          "mossy_cobblestone -> cobblestone": 5,
+          "cobblestone -> cobblestone": 2,
+          "mossy_cobblestone -> stripped_acacia_wood": 6,
+          "cobblestone -> stripped_acacia_wood": 18,
+          "cobblestone_wall -> acacia_fence": 3,
+          "mossy_cobblestone_wall -> acacia_fence": 1
+        },
+        "size": [
+          7,
+          8,
+          1
+        ],
+        "sha256": "c5fa98ff912ede8c0620bd3f0cff9b00b7d4d9cc8f8ea61191e9b5331cfc8b83"
+      },
+      {
+        "row": "ST41",
+        "stem": "wall_a_diagonal",
+        "label": "Wall A Diagonal",
+        "role": "wall",
+        "source": "src/main/resources/data/kithkyn/structure/wall/birch_forest/diagonal.nbt",
+        "sourceSha256": "641d8f0285db2aadcc581e4b4a60082a70d29824668fb8b3bff2be357073ca71",
+        "swaps": {
+          "mossy_cobblestone -> cobblestone": 3,
+          "cobblestone -> cobblestone": 4,
+          "mossy_cobblestone -> stripped_acacia_wood": 8,
+          "cobblestone -> stripped_acacia_wood": 16,
+          "cobblestone_wall -> acacia_fence": 4,
+          "mossy_cobblestone_wall -> acacia_fence": 2
+        },
+        "size": [
+          7,
+          8,
+          7
+        ],
+        "sha256": "d7b6bac0e71872f955b813c0dcd045e6421a8d70137a16e251f0901335791493"
+      },
+      {
+        "row": "ST41",
+        "stem": "wall_a_corner_tower",
+        "label": "Wall A Corner Tower",
+        "role": "wall",
+        "source": "src/main/resources/data/kithkyn/structure/wall/birch_forest/corner_tower.nbt",
+        "sourceSha256": "38b6df41ffe999e9ef9027a2b6b05e8af76f622cbd27d7cd0d5918124a1e84ea",
+        "swaps": {
+          "mossy_cobblestone -> cobblestone": 7,
+          "cobblestone -> cobblestone": 7,
+          "oak_trapdoor -> acacia_trapdoor": 4,
+          "mossy_cobblestone -> stripped_acacia_wood": 11,
+          "cobblestone -> stripped_acacia_wood": 40,
+          "mossy_cobblestone_wall -> acacia_fence": 8,
+          "cobblestone_wall -> acacia_fence": 11,
+          "cobblestone_slab -> acacia_slab": 1
+        },
+        "size": [
+          12,
+          8,
+          6
+        ],
+        "sha256": "77ad0a38f4d49178df3ba648c370bdbe1f3ba2b304cee1de95f66b7e4bfbd85e"
+      },
+      {
+        "row": "ST41",
+        "stem": "wall_a_gatehouse",
+        "label": "Wall A Gatehouse",
+        "role": "wall",
+        "source": "src/main/resources/data/kithkyn/structure/wall/birch_forest/gatehouse.nbt",
+        "sourceSha256": "6b18ae5516320898e1ad6b89393a2e6ab9ba34a2afc8bd4b733d4944d9cdfcf1",
+        "swaps": {
+          "mossy_cobblestone -> cobblestone": 8,
+          "cobblestone -> cobblestone": 10,
+          "cobblestone -> stripped_acacia_wood": 52,
+          "mossy_cobblestone -> stripped_acacia_wood": 30,
+          "cobblestone_wall -> acacia_fence": 20,
+          "mossy_cobblestone_wall -> acacia_fence": 11,
+          "cobblestone_slab -> acacia_slab": 9
+        },
+        "size": [
+          17,
+          8,
+          7
+        ],
+        "sha256": "50752c5f02e65ca03e7bba94fd6a7669d7d2fe95741f254650989451be0f2eaa"
+      },
+      {
+        "row": "ST41",
+        "stem": "wall_a_terrace",
+        "label": "Wall A Terrace",
+        "role": "wall",
+        "source": "src/main/resources/data/kithkyn/structure/wall/birch_forest/terrace.nbt",
+        "sourceSha256": "df728d8b1ed1fe0372acc52a4faf7057eefc5c24f2f1a0605a234613a3404056",
+        "swaps": {
+          "mossy_cobblestone -> cobblestone": 3,
+          "cobblestone -> cobblestone": 1,
+          "mossy_cobblestone -> stripped_acacia_wood": 12,
+          "cobblestone -> stripped_acacia_wood": 22,
+          "cobblestone_wall -> acacia_fence": 4,
+          "mossy_cobblestone_wall -> acacia_fence": 1
+        },
+        "size": [
+          8,
+          9,
+          1
+        ],
+        "sha256": "d1c4dbdb906f7b3b593c1e66b2c47eb98a35d072d3d06771d7c38a4e9e90ced1"
+      },
+      {
+        "row": "ST42",
+        "stem": "wall_b_straight",
+        "label": "Wall B Straight",
+        "role": "wall",
+        "source": "src/main/resources/data/kithkyn/structure/wall/birch_forest/straight.nbt",
+        "sourceSha256": "417c3fa956b8b016be23d1a9fdb090b8d155466b75060234831a0a118cf90b85",
+        "swaps": {
+          "mossy_cobblestone -> stripped_acacia_wood": 5,
+          "cobblestone -> stripped_acacia_wood": 2,
+          "mossy_cobblestone -> yellow_wool": 6,
+          "cobblestone -> blue_wool": 18,
+          "cobblestone_wall -> acacia_fence": 3,
+          "mossy_cobblestone_wall -> acacia_fence": 1
+        },
+        "size": [
+          7,
+          8,
+          1
+        ],
+        "sha256": "581a6e7c8799c3d2e4605fc1092e157e7dd51262057c66e6675490b0c9a237bc"
+      },
+      {
+        "row": "ST42",
+        "stem": "wall_b_diagonal",
+        "label": "Wall B Diagonal",
+        "role": "wall",
+        "source": "src/main/resources/data/kithkyn/structure/wall/birch_forest/diagonal.nbt",
+        "sourceSha256": "641d8f0285db2aadcc581e4b4a60082a70d29824668fb8b3bff2be357073ca71",
+        "swaps": {
+          "mossy_cobblestone -> stripped_acacia_wood": 3,
+          "cobblestone -> stripped_acacia_wood": 4,
+          "mossy_cobblestone -> yellow_wool": 8,
+          "cobblestone -> blue_wool": 16,
+          "cobblestone_wall -> acacia_fence": 4,
+          "mossy_cobblestone_wall -> acacia_fence": 2
+        },
+        "size": [
+          7,
+          8,
+          7
+        ],
+        "sha256": "41af3b004813c8c23577098b3da600e178eb8442bbee2e04d11e5508d6a7f020"
+      },
+      {
+        "row": "ST42",
+        "stem": "wall_b_corner_tower",
+        "label": "Wall B Corner Tower",
+        "role": "wall",
+        "source": "src/main/resources/data/kithkyn/structure/wall/birch_forest/corner_tower.nbt",
+        "sourceSha256": "38b6df41ffe999e9ef9027a2b6b05e8af76f622cbd27d7cd0d5918124a1e84ea",
+        "swaps": {
+          "mossy_cobblestone -> stripped_acacia_wood": 7,
+          "cobblestone -> stripped_acacia_wood": 7,
+          "oak_trapdoor -> acacia_trapdoor": 4,
+          "mossy_cobblestone -> yellow_wool": 11,
+          "cobblestone -> blue_wool": 40,
+          "mossy_cobblestone_wall -> acacia_fence": 8,
+          "cobblestone_wall -> acacia_fence": 11,
+          "cobblestone_slab -> acacia_slab": 1
+        },
+        "size": [
+          12,
+          8,
+          6
+        ],
+        "sha256": "e25ebbd32d85bd3cd5599cec3ccc37cdb7d95d8c1a26d63b45d6fb923d76c956"
+      },
+      {
+        "row": "ST42",
+        "stem": "wall_b_gatehouse",
+        "label": "Wall B Gatehouse",
+        "role": "wall",
+        "source": "src/main/resources/data/kithkyn/structure/wall/birch_forest/gatehouse.nbt",
+        "sourceSha256": "6b18ae5516320898e1ad6b89393a2e6ab9ba34a2afc8bd4b733d4944d9cdfcf1",
+        "swaps": {
+          "mossy_cobblestone -> stripped_acacia_wood": 8,
+          "cobblestone -> stripped_acacia_wood": 10,
+          "cobblestone -> blue_wool": 52,
+          "mossy_cobblestone -> yellow_wool": 30,
+          "cobblestone_wall -> acacia_fence": 20,
+          "mossy_cobblestone_wall -> acacia_fence": 11,
+          "cobblestone_slab -> acacia_slab": 9
+        },
+        "size": [
+          17,
+          8,
+          7
+        ],
+        "sha256": "e78153442c8a94bc26c89bb747c0622418e81443da0b47af96b517ce9d27cf9d"
+      },
+      {
+        "row": "ST42",
+        "stem": "wall_b_terrace",
+        "label": "Wall B Terrace",
+        "role": "wall",
+        "source": "src/main/resources/data/kithkyn/structure/wall/birch_forest/terrace.nbt",
+        "sourceSha256": "df728d8b1ed1fe0372acc52a4faf7057eefc5c24f2f1a0605a234613a3404056",
+        "swaps": {
+          "mossy_cobblestone -> stripped_acacia_wood": 3,
+          "cobblestone -> stripped_acacia_wood": 1,
+          "mossy_cobblestone -> yellow_wool": 12,
+          "cobblestone -> blue_wool": 22,
+          "cobblestone_wall -> acacia_fence": 4,
+          "mossy_cobblestone_wall -> acacia_fence": 1
+        },
+        "size": [
+          8,
+          9,
+          1
+        ],
+        "sha256": "72eb5522b7c03491e84f9d7f9338b97405f87d1e4a3ff930261c1c84153453e7"
+      },
+      {
+        "row": "ST43",
+        "stem": "wall_c_straight",
+        "label": "Wall C Straight",
+        "role": "wall",
+        "source": "src/main/resources/data/kithkyn/structure/wall/birch_forest/straight.nbt",
+        "sourceSha256": "417c3fa956b8b016be23d1a9fdb090b8d155466b75060234831a0a118cf90b85",
+        "swaps": {
+          "mossy_cobblestone -> terracotta": 11,
+          "cobblestone -> terracotta": 2,
+          "mossy_cobblestone_wall -> cobblestone_wall": 1
+        },
+        "size": [
+          7,
+          8,
+          1
+        ],
+        "sha256": "d3277129690cb558b8c2becc8606b0b2039a58bcaa9d01213729d91935bc381d"
+      },
+      {
+        "row": "ST43",
+        "stem": "wall_c_diagonal",
+        "label": "Wall C Diagonal",
+        "role": "wall",
+        "source": "src/main/resources/data/kithkyn/structure/wall/birch_forest/diagonal.nbt",
+        "sourceSha256": "641d8f0285db2aadcc581e4b4a60082a70d29824668fb8b3bff2be357073ca71",
+        "swaps": {
+          "mossy_cobblestone -> terracotta": 11,
+          "cobblestone -> terracotta": 4,
+          "mossy_cobblestone_wall -> cobblestone_wall": 2
+        },
+        "size": [
+          7,
+          8,
+          7
+        ],
+        "sha256": "679ca6b112bcb5e336914329f61e7ef9f813789c8b4eb688fd08f4b67fd44d24"
+      },
+      {
+        "row": "ST43",
+        "stem": "wall_c_corner_tower",
+        "label": "Wall C Corner Tower",
+        "role": "wall",
+        "source": "src/main/resources/data/kithkyn/structure/wall/birch_forest/corner_tower.nbt",
+        "sourceSha256": "38b6df41ffe999e9ef9027a2b6b05e8af76f622cbd27d7cd0d5918124a1e84ea",
+        "swaps": {
+          "mossy_cobblestone -> terracotta": 18,
+          "cobblestone -> terracotta": 7,
+          "oak_trapdoor -> acacia_trapdoor": 4,
+          "mossy_cobblestone_wall -> cobblestone_wall": 8,
+          "cobblestone_slab -> acacia_slab": 1
+        },
+        "size": [
+          12,
+          8,
+          6
+        ],
+        "sha256": "c4e49538e84dcd6e7833df0ca5aec14ea1b5d083f2805c39ec8f2c4337212fc9"
+      },
+      {
+        "row": "ST43",
+        "stem": "wall_c_gatehouse",
+        "label": "Wall C Gatehouse",
+        "role": "wall",
+        "source": "src/main/resources/data/kithkyn/structure/wall/birch_forest/gatehouse.nbt",
+        "sourceSha256": "6b18ae5516320898e1ad6b89393a2e6ab9ba34a2afc8bd4b733d4944d9cdfcf1",
+        "swaps": {
+          "mossy_cobblestone -> terracotta": 38,
+          "cobblestone -> terracotta": 10,
+          "mossy_cobblestone_wall -> cobblestone_wall": 11,
+          "cobblestone_slab -> acacia_slab": 9
+        },
+        "size": [
+          17,
+          8,
+          7
+        ],
+        "sha256": "ecc9af5a2679790c10e87bc8611f2cb38a730f7b9112778a62aa9261c61d1635"
+      },
+      {
+        "row": "ST43",
+        "stem": "wall_c_terrace",
+        "label": "Wall C Terrace",
+        "role": "wall",
+        "source": "src/main/resources/data/kithkyn/structure/wall/birch_forest/terrace.nbt",
+        "sourceSha256": "df728d8b1ed1fe0372acc52a4faf7057eefc5c24f2f1a0605a234613a3404056",
+        "swaps": {
+          "mossy_cobblestone -> terracotta": 15,
+          "cobblestone -> terracotta": 1,
+          "mossy_cobblestone_wall -> cobblestone_wall": 1
+        },
+        "size": [
+          8,
+          9,
+          1
+        ],
+        "sha256": "75976fb2e392a9962af34ed7c08f712874ff21dcd96aee80227623f3f0eb79a4"
+      }
+    ]
+  },
+  "selection": {
+    "schemaVersion": 1,
+    "status": "selection_locked",
+    "variant": "savanna_tent",
+    "world": "trio-20260912",
+    "galleryEntry": [
+      1723.5,
+      230.0,
+      10.5
+    ],
+    "gallery": "run/savanna-full-profile/manifest.json",
+    "recorded": "2026-09-14",
+    "coordinates": "Positions are template-local [x, y, z] from each exhibit's gallery origin, to be read from the saved world after Aaron's edits (run/savanna-full-profile/survey.py).",
+    "identity": {
+      "primary": "blue wool on ST04.5 and ST06.5; brown terracotta on ST07.6",
+      "secondary": "yellow wool on ST06.5; ST05.2's blue wool and beds",
+      "note": "The tents carry many wool colours; Aaron flagged that the wool-to-village-colour mapping needs a deliberate pass across the whole selection."
+    },
+    "selected": [
+      {
+        "exhibit": "ST28.1",
+        "label": "Kithkyn original savanna centre tent",
+        "role": "village_center",
+        "note": "Aaron: 'a great Savanna look', single storage, four beds. Its only technical post is the guard captain, like every centre now; builders are implicit, the miner belongs to the mine and the quartermaster to the storehouse."
+      },
+      {
+        "exhibit": "ST04.5",
+        "label": "T&T wooded badlands large hut, blue",
+        "role": "house",
+        "beds": 2,
+        "note": "Two-bed house. Chosen over ST03.6 and ST04.9. Its blue wool is the village's primary colour."
+      },
+      {
+        "exhibit": "ST05.2",
+        "label": "T&T wooded badlands small hut, blue",
+        "role": "couple_cottage",
+        "beds": 2,
+        "note": "Two beds; make it the couple's cottage. Its beds and its blue wool take the village's secondary colour."
+      },
+      {
+        "exhibit": "ST05.9",
+        "label": "T&T wooded badlands camp workshop",
+        "role": "blacksmith",
+        "note": "Blacksmith station, with a chest for the smith."
+      },
+      {
+        "exhibit": "ST05.10",
+        "label": "T&T wooded badlands camp tent",
+        "role": "hunting_lodge",
+        "note": "Hunter station: a chest by the hunter's personal bed and a barrel for the station."
+      },
+      {
+        "exhibit": "ST06.2",
+        "label": "T&T trader camp llama pen 1",
+        "role": "butchery",
+        "note": "Butchery, with its barrel as the station's container; about three cows in the pen."
+      },
+      {
+        "exhibit": "ST06.5",
+        "label": "T&T trader camp blue tent",
+        "role": "storehouse",
+        "note": "Four storage pieces. Blue wool becomes the primary colour, yellow the secondary; the banner becomes the village banner; the carpet takes the secondary colour. Chosen over the original storehouse tent beside ST28.1 (Aaron: 'I might do a different storehouse')."
+      },
+      {
+        "exhibit": "ST07.6",
+        "label": "CTOV Native Savanna cartographer",
+        "role": "bakery",
+        "note": "Bakery, with a chest for the baker. Its brown terracotta becomes the village's primary colour."
+      },
+      {
+        "exhibit": "ST09.4",
+        "label": "CTOV Native Savanna priest tower",
+        "role": "fishery",
+        "note": "Fishery. A barrel inside stands in for the fisher's bed spot; another barrel sits by the water for the station."
+      },
+      {
+        "exhibit": "ST29.1",
+        "label": "Kithkyn original savanna mine 1",
+        "role": "mine",
+        "note": "Aaron: 'this is awesome'. The one-miner 7 by 7 mine."
+      },
+      {
+        "exhibit": "ST34.2",
+        "label": "Vanilla savanna large farm 2",
+        "role": "farm",
+        "note": "'A way better farm' than the original farm 1 (ST29.3), which it replaced within the same walk."
+      },
+      {
+        "exhibit": "ST25.4",
+        "label": "Dungeons & Taverns savanna well",
+        "role": "well",
+        "note": "The sunk 3 by 12 well."
+      },
+      {
+        "exhibit": "ST29.8",
+        "label": "Kithkyn original savanna stoneworks",
+        "role": "stoneworks",
+        "note": "Replaces ST13.5 as the stone mason's works."
+      },
+      {
+        "exhibit": "ST32.1",
+        "label": "Vanilla savanna temple 1",
+        "role": "church",
+        "note": "The temple."
+      },
+      {
+        "exhibit": "ST20.7",
+        "label": "CTOV savanna balloon stand",
+        "role": "lumberjack",
+        "lumberjackTree": "Aaron placed a dead bush where the acacia tree should stand; read its position back with survey.py at capture and plant the acacia sapling on dirt there.",
+        "note": "Aaron confirmed the balloon stand is the lumberjack's stand (2026-09-14)."
+      }
+    ],
+    "dropped": [
+      {
+        "exhibit": "ST03.6",
+        "note": "Two-bed tent; passed over for ST04.9, then ST04.5."
+      },
+      {
+        "exhibit": "ST04.9",
+        "note": "'A better two bed' than ST03.6, but the colour lost to ST04.5."
+      },
+      {
+        "exhibit": "ST29.3",
+        "note": "Original farm 1; briefly the farm, replaced by ST34.2."
+      },
+      {
+        "exhibit": "ST13.5",
+        "note": "CTOV Native Savanna gunsmith; briefly the stoneworks with a stonecutter, replaced by ST29.8. Its brown-wool secondary colour note no longer applies."
+      },
+      {
+        "exhibit": "ST31.1-ST31.3",
+        "note": "The original markets are not wanted: the market tiers come from the workshop studies in the chosen materials, as for the Nautical Coast."
+      }
+    ],
+    "deferred": [
+      {
+        "exhibit": "ST07.2",
+        "note": "CTOV Native Savanna smith; Aaron asked whether a smith was already taken (ST05.9 is)."
+      }
+    ],
+    "missingRoles": [],
+    "openQuestions": [
+      "Storehouse: ST06.5 for now; the original storehouse tents in ST28 remain the alternative."
+    ],
+    "decisions": [
+      "No tavern for the Savanna Tent village (Aaron, 2026-09-14), like the Floodplain village.",
+      "Markets: no gallery pick; the three tiers are workshop studies in the selection's materials (Aaron, 2026-09-14).",
+      "No watchtower for the Savanna Tent village (Aaron, 2026-09-14): 'I don't think I have a watchtower for you'. The centre's captain post is then the village's only guard vacancy unless a castle is added.",
+      "Selection locked 2026-09-14 with Wall A; markets are the ST40 studies; a height test follows the catalog close-out (Aaron: 'lock it in, confirm everything, and then we'll do a height test later')."
+    ],
+    "closeOutNotes": [],
+    "wallFamily": {
+      "status": "Aaron chose Wall A, the acacia palisade (2026-09-14): stripped acacia body on a cobblestone footing, acacia fence tips, acacia slab walks",
+      "selected": "A",
+      "studies": "run/savanna-full-profile/studies/studies.json",
+      "notes": "Bundled Birch wall geometry with the picks' materials; the gatehouse campfire and banners untouched."
+    },
+    "markets": {
+      "status": "the three tiers are studies at ST40: Birch market geometry in acacia on a coarse-dirt camp floor, trade colours kept",
+      "studies": "run/savanna-full-profile/studies/studies.json"
+    }
   }
 }

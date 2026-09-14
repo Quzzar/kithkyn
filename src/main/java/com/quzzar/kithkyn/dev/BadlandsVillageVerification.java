@@ -49,7 +49,7 @@ import net.neoforged.neoforge.event.tick.ServerTickEvent;
  * Shared private-catalog checks for the reviewed regional villages. Opt in with
  * the legacy Badlands flag or {@code -Dkithkyn.reviewedVillage.style=<style>}
  * for Desert, Floodplain, Jungle, Swamp, Mediterranean, Tundra, Polynesian Coast,
- * Romanian, Alpine Highlands or Japanese Cherry Grove;
+ * Romanian, Alpine Highlands, Japanese Cherry Grove, Nautical Coast or Savanna Tent;
  * each catalog's authored numbers live in its
  * {@link Catalog} record so the checks read facts rather than guess them.
  */
@@ -140,6 +140,12 @@ public final class BadlandsVillageVerification {
         Map.of(), List.of("tavern_nautical_coast_1"), 4, 0,
         new String[][] {{id("market", 1), id("market", 2)}, {id("market", 2), id("market", 3)}},
         2, 4, 3, 1, 6, 4, 0, new BlockPos(13, 1, 21), new BlockPos(15, 2, 20), 1, Biomes.BEACH);
+    // The Savanna Tent centre is the original savanna tent: four beds for the founding builder, captain,
+    // miner and quartermaster, the town fire at its mouth, the bell on its ridge, and the mine and the
+    // trader-tent storehouse as its companions. One two-bed house, a couple cottage, no tavern.
+    case SAVANNA_TENT -> new Catalog("[savanna-verify]", 18, 1, 2, new int[] {1, 0, 0}, Map.of(), List.of(), 0, 0,
+        new String[][] {{id("market", 1), id("market", 2)}, {id("market", 2), id("market", 3)}},
+        3, 4, 4, 1, 6, 4, 0, new BlockPos(4, 1, 5), new BlockPos(4, 5, 13), 1, Biomes.SAVANNA);
     case BIRCH_FOREST -> null;
   };
   /** Extra local jobs a catalog's center also opens at founding. */
@@ -205,10 +211,13 @@ public final class BadlandsVillageVerification {
   private static void verifyBiomeCoverage(ServerLevel level) {
     var registry = level.registryAccess().registryOrThrow(Registries.BIOME);
     java.util.function.Predicate<VillageStyle> everything = ignored -> true;
-    for (var biome : List.of(Biomes.BADLANDS, Biomes.ERODED_BADLANDS, Biomes.WOODED_BADLANDS,
-        Biomes.SAVANNA, Biomes.SAVANNA_PLATEAU, Biomes.WINDSWEPT_SAVANNA)) {
+    for (var biome : List.of(Biomes.BADLANDS, Biomes.ERODED_BADLANDS, Biomes.WOODED_BADLANDS)) {
       check(VillageStyle.fromBiome(registry.getHolderOrThrow(biome), level.getSeed(), UPGRADE_SITE, everything)
           == VillageStyle.BADLANDS, "Pueblo coverage missing " + biome.location());
+    }
+    for (var biome : List.of(Biomes.SAVANNA, Biomes.SAVANNA_PLATEAU, Biomes.WINDSWEPT_SAVANNA)) {
+      check(VillageStyle.fromBiome(registry.getHolderOrThrow(biome), level.getSeed(), UPGRADE_SITE, everything)
+          == VillageStyle.SAVANNA_TENT, "Savanna Tent coverage missing " + biome.location());
     }
     check(VillageStyle.fromBiome(registry.getHolderOrThrow(Biomes.DESERT), 0L, BlockPos.ZERO, everything)
         == VillageStyle.DESERT, "Sandy desert must remain Desert");
@@ -247,7 +256,8 @@ public final class BadlandsVillageVerification {
           == VillageStyle.TUNDRA, "Tundra coverage missing " + biome.location());
     }
     Kithkyn.LOGGER.info("{} BIOMES PASS: Pueblo, Desert, Birch, Floodplain, Swamp, both Plains, "
-        + "the dense Jungle biomes, the sparse jungle's Polynesian Coast, the Nautical beaches and stony shores, Romanian Dark Forest, "
+        + "the dense Jungle biomes, the sparse jungle's Polynesian Coast, the Nautical beaches and stony shores, "
+        + "the Savanna Tent grasslands, Romanian Dark Forest, "
         + "Japanese flowering forests and exposed frozen lowlands", PREFIX);
   }
 
