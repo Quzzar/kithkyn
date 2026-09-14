@@ -113,6 +113,9 @@ in it, and update it in the same change that moves what it describes.
   original savanna tent as its centre, tipis and camp tents for homes and works, the trader-tent
   storehouse, the original mine and stoneworks, vanilla's savanna temple and farm, the sunk
   savanna well, the acacia palisade on cobblestone, and its savanna founding.
+- [rustic-woodland-village.md](rustic-woodland-village.md): the approved Rustic Woodland
+  catalog: its merchant-and-well center, naturally placed founding housing and work, oak
+  profession barns, RW10.2 farm, fixed-color markets, and clean stripped-oak palisade.
 - [appearance.md](appearance.md): why villagers use the player model and not the vanilla
   villager model, the wide/slim model split by gender, and the client-side runtime skin
   compositor that bakes a villager's look from inherited skin, hair, and eye structures,

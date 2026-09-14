@@ -33,6 +33,8 @@ final class BuiltInWallSegmentCatalog implements WallSegmentCatalog {
   /** The Savanna Tent palisade: study A, with its cobblestone footing seated on the ground. */
   static final BuiltInWallSegmentCatalog SAVANNA_TENT =
       new BuiltInWallSegmentCatalog(AuthoredWoodWallSegments.SAVANNA_TENT);
+  static final BuiltInWallSegmentCatalog RUSTIC_WOODLAND =
+      new BuiltInWallSegmentCatalog(AuthoredWoodWallSegments.RUSTIC_WOODLAND);
   private final AuthoredWoodWallSegments authored;
   private final boolean hedged;
 

@@ -192,6 +192,12 @@ public final class VillageNamer {
           List.of("Codrenia", "Valea Lunii", "Branovia", "Miercana"),
           List.of("Cod", "Vale", "Bran", "Mier", "Lun", "Sor", "Dra", "Veli"),
           List.of("enia", "ovia", "ana", "esti", "ora", "eni", "ava", "ina"));
+      case RUSTIC_WOODLAND -> new NamingProfile(
+          "A familiar oak-forest settlement of weathered timber halls, fieldstone foundations,"
+              + " working barns, fenced pasture, open fields and a clean oak palisade."
+              + " Grounded invented names with an old woodland sound.",
+          List.of("Oakmere", "Fernwick", "Briarholt", "Millhaven"),
+          List.of("Oak", "Fern", "Briar", "Mill", "Thorn", "Moss", "Hart", "Elm"));
       case ALPINE_HIGHLANDS -> new NamingProfile(
           "A close mountain settlement of brick walls, steep spruce roofs, berry gardens,"
               + " deep wells and large shared houses gathered in high meadows and windy passes."

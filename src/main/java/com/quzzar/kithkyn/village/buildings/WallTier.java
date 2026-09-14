@@ -34,6 +34,7 @@ public enum WallTier {
       case JAPANESE_CHERRY_GROVE -> Items.SPRUCE_LOG;
       case NAUTICAL_COAST -> Items.SANDSTONE;
       case SAVANNA_TENT -> Items.ACACIA_LOG;
+      case RUSTIC_WOODLAND -> Items.OAK_LOG;
     };
   }
 

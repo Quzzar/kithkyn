@@ -43,7 +43,7 @@ class VillageStyleTest {
         VillageStyle.FLOODPLAIN, VillageStyle.JUNGLE, VillageStyle.SWAMP, VillageStyle.MEDITERRANEAN,
         VillageStyle.TUNDRA, VillageStyle.POLYNESIAN_COAST, VillageStyle.ROMANIAN,
         VillageStyle.ALPINE_HIGHLANDS, VillageStyle.JAPANESE_CHERRY_GROVE, VillageStyle.NAUTICAL_COAST,
-        VillageStyle.SAVANNA_TENT),
+        VillageStyle.SAVANNA_TENT, VillageStyle.RUSTIC_WOODLAND),
         List.of(VillageStyle.values()));
     assertEquals(VillageStyle.BIRCH_FOREST, VillageStyle.DEFAULT);
     assertEquals(VillageStyle.BIRCH_FOREST, VillageStyle.fromId(""));
@@ -165,6 +165,20 @@ class VillageStyleTest {
               style -> style == VillageStyle.BIRCH_FOREST),
           "without the Tundra pack, snowy biomes fall back to the bundled catalog");
     }
+  }
+
+  @Test
+  void ordinaryOakForestUsesRusticWoodlandOnlyWhenItsCatalogIsLoaded() {
+    for (String path : List.of("forest", "ancient_oak_forest", "oak_woodland", "oak_woods")) {
+      assertEquals(VillageStyle.RUSTIC_WOODLAND,
+          VillageStyle.select(NO_TAGS, path, 0.7F, true, 0.8F, 7L, ALL_STYLES));
+      assertEquals(VillageStyle.BIRCH_FOREST,
+          VillageStyle.select(NO_TAGS, path, 0.7F, true, 0.8F, 7L,
+              style -> style != VillageStyle.RUSTIC_WOODLAND));
+    }
+    assertEquals(VillageStyle.RUSTIC_WOODLAND,
+        VillageStyle.select(VillageStyle.RUSTIC_WOODLAND.biomeTag()::equals,
+            "custom_deciduous_woods", 0.7F, true, 0.8F, 7L, ALL_STYLES));
   }
 
   @Test
