@@ -165,6 +165,16 @@ class MineTopologyTest {
   }
 
   @Test
+  void dryShallowSupportFaceCanBootstrapTheFirstLiningBlock() {
+    assertTrue(MineStep.canBootstrapSupport(MineShaft.ENTRY_COLUMN, true, false, false));
+    assertTrue(MineStep.canBootstrapSupport(MineShaft.RIB_MIN_LINE - 1, true, false, false));
+    assertFalse(MineStep.canBootstrapSupport(MineShaft.RIB_MIN_LINE, true, false, false));
+    assertFalse(MineStep.canBootstrapSupport(0, false, false, false));
+    assertFalse(MineStep.canBootstrapSupport(0, true, true, false));
+    assertFalse(MineStep.canBootstrapSupport(0, true, false, true));
+  }
+
+  @Test
   void routeAuditCanAnchorPastADecorativeEntranceStep() {
     var candidates = topology.entranceStandCandidates();
 

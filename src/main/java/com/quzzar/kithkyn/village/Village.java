@@ -1258,15 +1258,35 @@ public class Village {
    * started, so the caller does not also spend an LLM call choosing a building.
    */
   private boolean maybeStartWall() {
-    if (level == null || getTownCenter() == null || buildings.size() < WALL_MIN_BUILDINGS) {
+    if (level == null || getTownCenter() == null || wallProject != null) {
       return false;
     }
     VillageAttractiveness report = getAttractiveness();
-    boolean threatened = report != null && report.deathImpact() > WALL_SAFETY_THRESHOLD;
-    if (!threatened && buildings.size() < WALL_LARGE_BUILDINGS) {
+    VillageTier tier = getTier();
+    if (report == null || !canAutomaticallyStartWall(
+        tier == null ? -1 : tier.rank(), buildings.size(), report.population(),
+        report.foodCount(), report.deathImpact())) {
       return false;
     }
-    return wallProject == null && startWall(WallTier.WOOD);
+    return startWall(WallTier.WOOD);
+  }
+
+  /**
+   * The automatic wall gate, separated from world geometry so its survival
+   * priorities stay directly testable. A founding camp can already contain
+   * eight structures after its first workshop, which is not the same as being
+   * established. It must first reach hamlet population and hold at least one
+   * edible item per resident. Recent danger may bring the wall forward within
+   * that established settlement, but it cannot make a starving camp spend its
+   * only builder on a multi-day perimeter.
+   */
+  static boolean canAutomaticallyStartWall(int tierRank, int buildingCount,
+      int population, int foodCount, float deathImpact) {
+    if (tierRank < 1 || buildingCount < WALL_MIN_BUILDINGS
+        || population <= 0 || foodCount < population) {
+      return false;
+    }
+    return deathImpact > WALL_SAFETY_THRESHOLD || buildingCount >= WALL_LARGE_BUILDINGS;
   }
 
   /**

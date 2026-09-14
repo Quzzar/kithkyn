@@ -741,7 +741,11 @@ dirt, stone or sand (`FetchMineSupportStep`, the miner's counterpart of the farm
 meal fetch). The seal comes before the break, so a face whose fall would open an unsealed boundary is
 never broken with an empty pack: the miner fans ribs for material and comes back to it. Before
 that rule the seal failed and the same sand block was broken and reset without end (a Desert mine,
-2026-09-10).
+2026-09-10). The one bootstrap exception is a dry face before the first normal rib that itself
+drops a mine-support block. The miner may break that face without first sealing an air boundary,
+then spends the dirt or stone it physically yielded on the next pass. Placement work, wet faces,
+and every deeper cave keep the strict seal-first rule. This prevents a surface-edge mine from
+requiring its first lining block before it has been allowed to excavate one.
 
 The mine interior is the descending ramp plus every planned prospecting rib. A rib entrance is an
 intentional doorway through the ramp wall, so the lining pass never fills it back in. A flooded
@@ -1077,7 +1081,9 @@ bone meal in the pack; fell it again when it is a tree. Saplings reach the pack 
 picked up under the decaying canopy, picked up in the woods, or drawn from the stores at
 bedtime, four at a time, the same way bone meal is. The replant used to be a one-in-a-hundred
 roll per scan that conjured an oak sapling from nothing; that is gone, and a stand that is bare
-with no sapling in the pack says so in the shortage report instead of "growing back".
+with no sapling in the pack says so in the shortage report instead of "growing back". A planted
+sapling waiting on random growth is healthy pending work, never a shortage or operational blocker,
+even when it takes longer than the village-audit attention window.
 
 **Reach is measured from the eyes, not the feet (2026-09-01).** A tree is cut from beside its
 trunk or from beneath it: the worker stands within arm's length of the trunk horizontally, and

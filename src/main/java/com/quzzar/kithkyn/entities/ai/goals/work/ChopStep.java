@@ -224,14 +224,17 @@ public final class ChopStep implements WorkStep<ChopStep.Cut> {
     }
 
     // Nothing standing to fell: a sapling coming back, or a bare stump with
-    // nothing in the pack to plant on it. Most of these lulls are just the
-    // regrowth, so only a sustained dry stretch is reported, once, as a genuine
-    // wood shortage; the words tell the two apart, since a bare stand is the
-    // one a village can do something about.
+    // nothing in the pack to plant on it. Regrowth is healthy pending work and
+    // must not become an operational blocker merely because a random tick takes
+    // longer than the audit threshold. Only a sustained bare stand is a genuine
+    // wood shortage the village can act on.
     boolean bare = PlantStep.isBare(state) && PlantStep.saplingIn(person) == null;
-    this.dry.wentDry(person, Items.OAK_LOG, 1, bare
-        ? "My stand is bare and I have no sapling to plant on it; there is no wood to cut until I find one."
-        : "The tree at my stand is felled; I have no wood to cut until it grows back.");
+    if (bare) {
+      this.dry.wentDry(person, Items.OAK_LOG, 1,
+          "My stand is bare and I have no sapling to plant on it; there is no wood to cut until I find one.");
+    } else {
+      this.dry.foundWork(person);
+    }
     return null;
   }
 
