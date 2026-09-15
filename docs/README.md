@@ -3,6 +3,9 @@
 The project's knowledge, one topic per file. Read the topic covering an area before working
 in it, and update it in the same change that moves what it describes.
 
+- [website-brand.md](website-brand.md): selected KithKyn identity, square mark, website direction,
+  asset provenance and responsive verification.
+
 - [project-identity.md](project-identity.md): the Kithkyn name, website, repository, and the
   deliberate break with old mod saves and namespaces.
 
