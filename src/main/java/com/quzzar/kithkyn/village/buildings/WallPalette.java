@@ -80,6 +80,11 @@ record WallPalette(Block post, Block deck, Block stairs, Block slab,
       case TAIGA -> new WallPalette(
           Blocks.STRIPPED_SPRUCE_WOOD, Blocks.STRIPPED_SPRUCE_WOOD, Blocks.SPRUCE_STAIRS,
           Blocks.SPRUCE_SLAB, Blocks.SPRUCE_FENCE, Blocks.SPRUCE_TRAPDOOR, Blocks.COBBLESTONE);
+      // Study B (2026-09-14): red mushroom caps with oak fence tips, oak slab walks
+      // and hatches on a mushroom-stem footing; brown caps are the accent.
+      case MUSHROOM -> new WallPalette(
+          Blocks.RED_MUSHROOM_BLOCK, Blocks.RED_MUSHROOM_BLOCK, Blocks.OAK_STAIRS,
+          Blocks.OAK_SLAB, Blocks.OAK_FENCE, Blocks.OAK_TRAPDOOR, Blocks.MUSHROOM_STEM);
     };
   }
 
@@ -89,6 +94,7 @@ record WallPalette(Block post, Block deck, Block stairs, Block slab,
    * author none.
    */
   Block accent() {
+    if (this.post == Blocks.RED_MUSHROOM_BLOCK) return Blocks.BROWN_MUSHROOM_BLOCK;
     return this.post == Blocks.SANDSTONE ? Blocks.SMOOTH_SANDSTONE : this.post;
   }
 

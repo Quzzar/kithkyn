@@ -12,7 +12,7 @@ from nbt import read
 
 MARKET_NAME = re.compile(r"^.*market(?:_.+)?_(\d+)\.nbt$")
 AIR = {"minecraft:air", "minecraft:cave_air", "minecraft:void_air"}
-LIVESTOCK = {"minecraft:chicken", "minecraft:cow", "minecraft:pig", "minecraft:sheep"}
+LIVESTOCK = {"minecraft:chicken", "minecraft:cow", "minecraft:mooshroom", "minecraft:pig", "minecraft:sheep"}
 CONTAINER_BLOCKS = {"minecraft:chest", "minecraft:trapped_chest", "minecraft:barrel"}
 MARKET_COLORS = ("red", "cyan", "orange")
 MARKET_PART_COUNTS = {

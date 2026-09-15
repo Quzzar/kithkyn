@@ -394,6 +394,18 @@ every family without one), and the loader reads cobblestone as `FOOTING` for the
 for the Savanna Tent. The catalog seats it on each column's own ground by the Polynesian rule.
 Guard posts are read from the Birch footprint and stand on the spruce slab walks.
 
+The Mushroom family (`data/kithkyn/structure/wall/mushroom/`, 2026-09-14) is study B of the
+Mushroom gallery, the cap wall Aaron chose ("wall B is a vibe"): the Birch geometry with its
+cobblestone turned to red mushroom blocks and its mossy cobblestone to brown ones, its stone
+walls to oak fence tips, its top cobblestone slabs to oak slab walks and its oak hatches kept,
+on a course of mushroom stems. The five templates are the gallery's own files byte for byte
+(`tools/structure/mushroom-walls-20260915.json`). The loader reads `red_mushroom_block` as
+`BODY`, `brown_mushroom_block` as `BODY_ACCENT` and `mushroom_stem` as `FOOTING`; the palette's
+post is the red cap, its accent the brown cap (the one family whose accent is not its post),
+and its footing the stem. The catalog seats the stem course on each column's own ground by the
+Polynesian rule, and the procedural run fill is red caps above the ground and stems at or
+below it. Guard posts are read from the Birch footprint and stand on the oak slab walks.
+
 ## Planning and developer preview
 
 Walls are safety projects. An established village starts its regional wall after

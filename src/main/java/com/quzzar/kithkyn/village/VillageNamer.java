@@ -236,6 +236,14 @@ public final class VillageNamer {
           List.of("Granheim", "Tallvik", "Skogby", "Frostmark"),
           List.of("Gran", "Tall", "Skog", "Frost", "Bjorn", "Ulv", "Fjell", "Isen"),
           List.of("heim", "vik", "by", "mark", "dal", "berg", "stad", "fjord"));
+      case MUSHROOM -> new NamingProfile(
+          "A fantasy village on the mushroom island: houses under red and brown mushroom caps on"
+              + " pale stems, oak gazebos on orange paving around a meeting point with its bell and"
+              + " a cleric's loft, mooshrooms in the pen, and a wall of mushroom caps on a stem footing."
+              + " Soft, whimsical invented names with a fungal sound.",
+          List.of("Sporeholm", "Capwick", "Myceldale", "Gillmoor"),
+          List.of("Spore", "Cap", "Mycel", "Gill", "Puff", "Morel", "Shroom", "Stem"),
+          List.of("holm", "wick", "dale", "moor", "bloom", "fold", "ring", "hollow"));
     };
   }
 

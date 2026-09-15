@@ -118,6 +118,12 @@ in it, and update it in the same change that moves what it describes.
   hut, the old-growth taiga fort as the castle with its jail and the ruler's room, the firewatch
   tower, the spruce tavern, the cobblestone well, the spruce palisade, and its conifer-forest
   founding.
+- [mushroom-village.md](mushroom-village.md): the approved Mushroom catalog: the Towns & Towers
+  mushroom meeting point with a cleric's loft under its cap as the centre, houses under mushroom
+  caps, the light gazebo as the mine, the gazebos with their armorer, mason, fisher and fletcher
+  kits, the butcher stall as the bakery, the pen with its mooshrooms, Aaron's crop farm, the
+  jungle well, a gazebo with an oak stand as the lumberjack, the cap wall, and its Mushroom
+  Fields founding.
 - [rustic-woodland-village.md](rustic-woodland-village.md): the approved Rustic Woodland
   catalog: its merchant-and-well center, naturally placed founding housing and work, oak
   profession barns, RW10.2 farm, fixed-color markets, and clean stripped-oak palisade.

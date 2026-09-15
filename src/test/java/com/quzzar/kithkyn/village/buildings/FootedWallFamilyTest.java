@@ -68,7 +68,10 @@ class FootedWallFamilyTest {
       new Family("Savanna study A", VillageStyle.SAVANNA_TENT, AuthoredWoodWallSegments.SAVANNA_TENT,
           "savanna_tent", Blocks.COBBLESTONE, Set.of(Blocks.STRIPPED_ACACIA_WOOD), Blocks.ACACIA_SLAB),
       new Family("Taiga study A", VillageStyle.TAIGA, AuthoredWoodWallSegments.TAIGA,
-          "taiga", Blocks.COBBLESTONE, Set.of(Blocks.STRIPPED_SPRUCE_WOOD), Blocks.SPRUCE_SLAB));
+          "taiga", Blocks.COBBLESTONE, Set.of(Blocks.STRIPPED_SPRUCE_WOOD), Blocks.SPRUCE_SLAB),
+      new Family("Mushroom study B", VillageStyle.MUSHROOM, AuthoredWoodWallSegments.MUSHROOM,
+          "mushroom", Blocks.MUSHROOM_STEM, Set.of(Blocks.RED_MUSHROOM_BLOCK, Blocks.BROWN_MUSHROOM_BLOCK),
+          Blocks.OAK_SLAB));
 
   /** One block of a bundled study template, with the facing and slab half it was captured with. */
   private record StudyCell(int x, int y, int z, String name, Direction facing, String slabType) {

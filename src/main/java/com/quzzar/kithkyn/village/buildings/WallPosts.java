@@ -142,6 +142,7 @@ public final class WallPosts {
       case SAVANNA_TENT -> AuthoredWoodWallSegments.SAVANNA_TENT;
       case RUSTIC_WOODLAND -> AuthoredWoodWallSegments.RUSTIC_WOODLAND;
       case TAIGA -> AuthoredWoodWallSegments.TAIGA;
+      case MUSHROOM -> AuthoredWoodWallSegments.MUSHROOM;
       default -> AuthoredWoodWallSegments.INSTANCE;
     };
     return segments.footprintAt(ring, index, kind);
