@@ -399,9 +399,14 @@
       "swaps": {},
       "swapped_cells": 0,
       "asset": "run/taiga-integration/datapack/data/kithkyn/structure/mine_taiga_1.nbt",
-      "asset_sha256": "dc880a943700eac517b473962dc3939a65935a22fcbe33973f8069676deb39a0",
+      "asset_sha256": "12d8ebc41a044779dd782b86574bdb37b41cd77157c22b55aee3bd3f0c9b24a4",
       "definition": "run/taiga-integration/datapack/data/kithkyn/kithkyn/buildings/mine_taiga_1.json",
-      "definition_sha256": "b5602756298937455aee0e9c35e8fed78ae8573f9672ae2b0395c221468c5e5b"
+      "definition_sha256": "b5602756298937455aee0e9c35e8fed78ae8573f9672ae2b0395c221468c5e5b",
+      "hollow": {
+        "cells": "local x 2 to 4, z 1 to 5 on the ground course (layer 0), explicit air the export keeps for this piece (plan ground_layer -1)",
+        "why": "Aaron's height walk, 2026-09-15: 'the taiga mine also needs to have a bit of a cutout'; the capture left the hollow's ground cells to the terrain, so the placement filled them",
+        "previous_asset_sha256": "dc880a943700eac517b473962dc3939a65935a22fcbe33973f8069676deb39a0"
+      }
     },
     {
       "exhibit": "TA03.1",
@@ -614,5 +619,18 @@
     "routes-gate-access-polynesian": "PASS: [gate-access-verify] RESULT PASS: POLYNESIAN_COAST all 8 guards/workers ascended and descended",
     "routes-gate-access-nautical": "PASS: [gate-access-verify] RESULT PASS: NAUTICAL_COAST all 8 guards/workers ascended and descended",
     "static_audit": "PASS 23 templates (tools/structure/audit-templates.py at origin/main 9c64c50): no barrier states, out-of-bounds blocks, invalid or duplicate station coordinates, invalid lumberjack stands, terrain-clearing corner air, unclassified containers, open or empty butcheries, malformed market floors, or malformed market entrances"
-  }
+  },
+  "revisions": [
+    {
+      "recorded": "2026-09-15",
+      "structure": "mine_taiga_1",
+      "change": "the hut's hollow cut one block into the ground course as explicit air; the miner's post, the shaft and every other block unchanged",
+      "verification": {
+        "placement": "PASS: [building-placement-verify] RESULT PASS: 8 real-template placements, both paths, four rotations, colors, frames, entity/save receipts and upgrade preservation",
+        "access": "PASS: [approved-house-verify] RESULT PASS: 4 rotated structures, 4 access routes, 0 physical room walks and assigned-bed sleeps, 0 physical personal-container deposits, 0 failed placements; probe size=18; station walks=4, shared deposits=4, mine walks=8, review walks=0",
+        "static_audit": "PASS 23 templates (tools/structure/audit-templates.py on the mushroom-village branch)"
+      },
+      "installed": "with the Mushroom release of 2026-09-15 (run/mushroom-deploy-20260915)"
+    }
+  ]
 }
