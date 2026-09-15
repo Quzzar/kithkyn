@@ -40,11 +40,13 @@ final class RoleHousing {
       BlockPos other = position.relative(state.getValue(BedBlock.PART) == BedPart.HEAD
           ? state.getValue(BedBlock.FACING).getOpposite() : state.getValue(BedBlock.FACING));
       var otherState = level.getBlockState(other);
+      // Obstructed the way the game means it: a suffocating block over either half stops a sleeper
+      // lying down, while a hung shutter does not (the open trapdoor over the Taiga fort's ruler bed).
       if (!(otherState.getBlock() instanceof BedBlock)
           || otherState.getValue(BedBlock.PART) == state.getValue(BedBlock.PART)
           || otherState.getValue(BedBlock.FACING) != state.getValue(BedBlock.FACING)
-          || !level.getBlockState(position.above()).getCollisionShape(level, position.above()).isEmpty()
-          || !level.getBlockState(other.above()).getCollisionShape(level, other.above()).isEmpty()) return false;
+          || level.getBlockState(position.above()).isSuffocating(level, position.above())
+          || level.getBlockState(other.above()).isSuffocating(level, other.above())) return false;
     }
     return true;
   }

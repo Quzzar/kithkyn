@@ -113,6 +113,11 @@ in it, and update it in the same change that moves what it describes.
   original savanna tent as its centre, tipis and camp tents for homes and works, the trader-tent
   storehouse, the original mine and stoneworks, vanilla's savanna temple and farm, the sunk
   savanna well, the acacia palisade on cobblestone, and its savanna founding.
+- [taiga-village.md](taiga-village.md): the approved Taiga catalog: the Viking meeting point
+  with its crossbow watch tower as the centre, Viking homes and workplaces, Aaron's lumberjack
+  hut, the old-growth taiga fort as the castle with its jail and the ruler's room, the firewatch
+  tower, the spruce tavern, the cobblestone well, the spruce palisade, and its conifer-forest
+  founding.
 - [rustic-woodland-village.md](rustic-woodland-village.md): the approved Rustic Woodland
   catalog: its merchant-and-well center, naturally placed founding housing and work, oak
   profession barns, RW10.2 farm, fixed-color markets, and clean stripped-oak palisade.

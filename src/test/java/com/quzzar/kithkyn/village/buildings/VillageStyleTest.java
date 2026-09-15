@@ -43,14 +43,14 @@ class VillageStyleTest {
         VillageStyle.FLOODPLAIN, VillageStyle.JUNGLE, VillageStyle.SWAMP, VillageStyle.MEDITERRANEAN,
         VillageStyle.TUNDRA, VillageStyle.POLYNESIAN_COAST, VillageStyle.ROMANIAN,
         VillageStyle.ALPINE_HIGHLANDS, VillageStyle.JAPANESE_CHERRY_GROVE, VillageStyle.NAUTICAL_COAST,
-        VillageStyle.SAVANNA_TENT, VillageStyle.RUSTIC_WOODLAND),
+        VillageStyle.SAVANNA_TENT, VillageStyle.RUSTIC_WOODLAND, VillageStyle.TAIGA),
         List.of(VillageStyle.values()));
     assertEquals(VillageStyle.BIRCH_FOREST, VillageStyle.DEFAULT);
     assertEquals(VillageStyle.BIRCH_FOREST, VillageStyle.fromId(""));
-    assertEquals(VillageStyle.BIRCH_FOREST, VillageStyle.fromId("taiga"));
+    assertEquals(VillageStyle.BIRCH_FOREST, VillageStyle.fromId("mushroom"));
     assertEquals(VillageStyle.BIRCH_FOREST, VillageStyle.fromId("removed_family"));
     assertEquals(VillageStyle.DESERT, VillageStyle.fromId("DESERT"));
-    assertNull(VillageStyle.parse("taiga"));
+    assertNull(VillageStyle.parse("mushroom"));
   }
 
   @Test
@@ -101,6 +101,7 @@ class VillageStyleTest {
     for (long seed = 0; seed < 20; seed++) {
       assertFamily(Tags.Biomes.IS_BADLANDS, VillageStyle.BADLANDS, seed);
       assertFamily(Tags.Biomes.IS_SAVANNA, VillageStyle.SAVANNA_TENT, seed);
+      assertFamily(Tags.Biomes.IS_TAIGA, VillageStyle.TAIGA, seed);
       assertFamily(Tags.Biomes.IS_SANDY, VillageStyle.DESERT, seed);
       assertFamily(Tags.Biomes.IS_DESERT, VillageStyle.DESERT, seed);
       Set<TagKey<Biome>> sandyMesa = Set.of(Tags.Biomes.IS_BADLANDS, Tags.Biomes.IS_SANDY);
@@ -132,6 +133,24 @@ class VillageStyleTest {
   }
 
   @Test
+  void coniferForestsAreTheTaigaAndSnowyOnesStayTundra() {
+    for (String path : List.of("taiga", "old_growth_pine_taiga", "old_growth_spruce_taiga")) {
+      assertEquals(VillageStyle.TAIGA,
+          VillageStyle.select(NO_TAGS, path, 0.25F, true, 0.8F, 12L, ALL_STYLES));
+      assertEquals(VillageStyle.TAIGA,
+          VillageStyle.select(Tags.Biomes.IS_TAIGA::equals, "cold_pines", 0.25F, true, 0.8F, 12L, ALL_STYLES));
+    }
+    Set<TagKey<Biome>> snowyTaiga = Set.of(Tags.Biomes.IS_TAIGA, Tags.Biomes.IS_SNOWY);
+    assertEquals(VillageStyle.TUNDRA,
+        VillageStyle.select(snowyTaiga::contains, "snowy_taiga", -0.5F, true, 0.4F, 12L, ALL_STYLES),
+        "a snowy taiga keeps the frozen lowlands' catalog");
+    assertEquals(VillageStyle.BIRCH_FOREST,
+        VillageStyle.select(Tags.Biomes.IS_TAIGA::equals, "cold_pines", 0.25F, true, 0.8F, 12L,
+            style -> style != VillageStyle.TAIGA),
+        "without the Taiga pack a conifer forest keeps the temperate cluster's bundled catalog");
+  }
+
+  @Test
   void birchConventionWinsOverBroadForestAndClimateTags() {
     Set<TagKey<Biome>> tags = Set.of(Tags.Biomes.IS_BIRCH_FOREST, Tags.Biomes.IS_FOREST,
         Tags.Biomes.IS_COLD);
@@ -147,9 +166,9 @@ class VillageStyleTest {
 
   @Test
   void unfinishedConventionalFamiliesBuildBirchRatherThanARemovedCatalog() {
+    // The taiga family has its own catalog since 2026-09-14; a coniferous tree tag alone names no family.
     List<TagKey<Biome>> unfinished = List.of(Tags.Biomes.IS_FOREST,
-        Tags.Biomes.IS_DECIDUOUS_TREE, Tags.Biomes.IS_TAIGA,
-        Tags.Biomes.IS_CONIFEROUS_TREE);
+        Tags.Biomes.IS_DECIDUOUS_TREE, Tags.Biomes.IS_CONIFEROUS_TREE);
     for (long seed = 0; seed < 20; seed++) {
       for (TagKey<Biome> tag : unfinished) {
         assertFamily(tag, VillageStyle.BIRCH_FOREST, seed);

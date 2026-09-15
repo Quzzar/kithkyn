@@ -150,6 +150,13 @@ public final class BadlandsVillageVerification {
         Map.of(), List.of(), 5, 1,
         new String[][] {{id("market", 1), id("market", 2)}, {id("market", 2), id("market", 3)}},
         6, 4, 5, 1, 7, 0, 0, new BlockPos(8, 1, 6), new BlockPos(8, 2, 8), 1, Biomes.FOREST);
+    // The Taiga centre is the Viking meeting point: builders, the captain by the fire and a crossbow
+    // post on its tower, so two guards and five founding jobs. It has no beds; its founding set is the
+    // mine, the storehouse and three homes with four beds. The fort's ruler room is its married worker
+    // room; the tavern sleeps four guests and the keeper.
+    case TAIGA -> new Catalog("[taiga-verify]", 23, 3, 4, new int[] {3, 0, 0}, Map.of(), List.of("castle_taiga_1"), 5, 1,
+        new String[][] {{id("market", 1), id("market", 2)}, {id("market", 2), id("market", 3)}},
+        6, 4, 5, 2, 7, 0, 0, new BlockPos(7, 1, 9), new BlockPos(10, 2, 9), 1, Biomes.TAIGA);
     case BIRCH_FOREST -> null;
   };
   /** Extra local jobs a catalog's center also opens at founding. */
@@ -228,6 +235,12 @@ public final class BadlandsVillageVerification {
         == VillageStyle.DESERT, "Sandy desert must remain Desert");
     check(VillageStyle.fromBiome(registry.getHolderOrThrow(Biomes.FOREST), 0L, BlockPos.ZERO, everything)
         == VillageStyle.RUSTIC_WOODLAND, "Forest must select Rustic Woodland");
+    for (var biome : List.of(Biomes.TAIGA, Biomes.OLD_GROWTH_PINE_TAIGA, Biomes.OLD_GROWTH_SPRUCE_TAIGA)) {
+      check(VillageStyle.fromBiome(registry.getHolderOrThrow(biome), 0L, BlockPos.ZERO, everything)
+          == VillageStyle.TAIGA, "Taiga coverage missing " + biome.location());
+    }
+    check(VillageStyle.fromBiome(registry.getHolderOrThrow(Biomes.SNOWY_TAIGA), 0L, BlockPos.ZERO, everything)
+        == VillageStyle.TUNDRA, "Snowy taiga must stay Tundra");
     for (var biome : List.of(Biomes.BIRCH_FOREST, Biomes.OLD_GROWTH_BIRCH_FOREST)) {
       check(VillageStyle.fromBiome(registry.getHolderOrThrow(biome), 0L, BlockPos.ZERO, everything)
           == VillageStyle.BIRCH_FOREST, "Birch coverage changed " + biome.location());
@@ -264,7 +277,7 @@ public final class BadlandsVillageVerification {
     }
     Kithkyn.LOGGER.info("{} BIOMES PASS: Pueblo, Desert, Birch, Floodplain, Swamp, both Plains, "
         + "the dense Jungle biomes, the sparse jungle's Polynesian Coast, the Nautical beaches and stony shores, "
-        + "the Savanna Tent grasslands, Romanian Dark Forest, "
+        + "the Savanna Tent grasslands, the Taiga conifer forests, Romanian Dark Forest, "
         + "Japanese flowering forests and exposed frozen lowlands", PREFIX);
   }
 

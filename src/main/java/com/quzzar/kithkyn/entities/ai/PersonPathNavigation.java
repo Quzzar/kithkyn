@@ -100,7 +100,8 @@ public final class PersonPathNavigation extends GroundPathNavigation {
   private static final float MINIMUM_SEARCH_RANGE = 48.0F;
 
   /** Exact work posts can require a detour to a ladder before climbing back toward the target. */
-  private static final float EXACT_SEARCH_RANGE = 128.0F;
+  /** The horizon of the exact-target retry; the access harness gives its probes this range outright. */
+  public static final float EXACT_SEARCH_RANGE = 128.0F;
 
   /** A one-step ramp waypoint must not accept the current cell as close enough. */
   private static final int MINE_WAYPOINT_ACCURACY = 0;

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "recorded": "2026-09-14T21:20:52.446103-04:00",
+  "recorded": "2026-09-14T22:22:14.222593-04:00",
   "purpose": "Every standalone Towns & Towers Viking, Polish and Swedish piece with the taiga forts and towers, both complete CTOV taiga villages with the taiga outpost, the Dungeons & Taverns spruce tavern set, the vanilla taiga village and Kithkyn's original Village Life taiga family, for selecting the Taiga catalog.",
   "status": "placed",
   "world": "trio-20260912",
@@ -16,7 +16,12 @@
     4,
     2672,
     276,
-    1494
+    1659
+  ],
+  "returnPosition": [
+    2038.58,
+    243.0,
+    22.09
   ],
   "selectionRule": "Every standalone piece of the T&T Viking, Polish and Swedish villages and their outpost forts and towers; every standalone CTOV taiga and fortified taiga piece plus the taiga outpost, roads omitted and entities stripped, with other mods' blocks shown as neutral vanilla markers; every non-villager D&T spruce tavern module, the spruce well, the taiga castle ruin and firewatch tower; every vanilla taiga village piece but streets, villagers and zombie copies; and the original Village Life taiga family. Street, terminator and villager templates are omitted.",
   "counts": {
@@ -28,10 +33,10 @@
     "minecraft": 36,
     "terralith": 0,
     "yungsExtras": 0,
-    "studies": 0,
+    "studies": 18,
     "standInPieces": 100,
-    "total": 337,
-    "rows": 34
+    "total": 355,
+    "rows": 38
   },
   "rows": [
     {
@@ -8949,36 +8954,1266 @@
           "sourceNote": "Village Life catalog piece, removed by 2a55bb2 (Remove the old Village Life catalogs, 2026-09-10)"
         }
       ]
+    },
+    {
+      "id": "TA35",
+      "title": "TAIGA MARKET \u2014 TIERS 1 TO 3",
+      "origin": [
+        2400,
+        230,
+        1517
+      ],
+      "bounds": [
+        2390,
+        220,
+        1508,
+        2476,
+        276,
+        1545
+      ],
+      "entries": [
+        {
+          "id": "TA35.1",
+          "label": "Market Tier 1",
+          "role": "market",
+          "sourceMod": "Kithkyn study",
+          "source": "src/main/resources/data/kithkyn/structure/market_birch_forest_1.nbt",
+          "sourceSha256": "ba62598d3dc7ecbffc4d7e1c0542a37a4f7990c356f7613a38534a93f4ef72d1",
+          "preparedSha256": "05cf272e48213a92470133f662bb990bbc5b277bd0bfc3af48b73cc99b586750",
+          "size": [
+            16,
+            6,
+            17
+          ],
+          "origin": [
+            2400,
+            230,
+            1517
+          ],
+          "privateTemplate": "kithkyn_taiga_profile:ta35_01_market_1",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0,
+          "study": "run/taiga-full-profile/studies/market_1.nbt",
+          "swaps": {
+            "cobblestone -> podzol": 16,
+            "birch_trapdoor -> spruce_trapdoor": 50,
+            "birch_log -> stripped_spruce_log": 4,
+            "birch_fence -> spruce_fence": 14
+          }
+        },
+        {
+          "id": "TA35.2",
+          "label": "Market Tier 2",
+          "role": "market",
+          "sourceMod": "Kithkyn study",
+          "source": "src/main/resources/data/kithkyn/structure/market_birch_forest_2.nbt",
+          "sourceSha256": "63f3a3fcfaecefd4dc4807d5a01b28d3e263bad1cddd5a5c12bab754c45c9a9f",
+          "preparedSha256": "616804fb5e661221749f0de19002e5e9c4a91b0faa2a322929e54ff585bdea6b",
+          "size": [
+            23,
+            6,
+            17
+          ],
+          "origin": [
+            2422,
+            230,
+            1517
+          ],
+          "privateTemplate": "kithkyn_taiga_profile:ta35_02_market_2",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0,
+          "study": "run/taiga-full-profile/studies/market_2.nbt",
+          "swaps": {
+            "cobblestone -> podzol": 57,
+            "birch_trapdoor -> spruce_trapdoor": 100,
+            "birch_log -> stripped_spruce_log": 8,
+            "birch_fence -> spruce_fence": 28
+          }
+        },
+        {
+          "id": "TA35.3",
+          "label": "Market Tier 3",
+          "role": "market",
+          "sourceMod": "Kithkyn study",
+          "source": "src/main/resources/data/kithkyn/structure/market_birch_forest_3.nbt",
+          "sourceSha256": "9b2a4c0903bb9cdd26e954fcc45a8f556ea853b2fe7def140a5d0cc088c7cfab",
+          "preparedSha256": "69d721facbbeb721614e978f08c568e53bede698596a40dd79fd2ec19cfa58b0",
+          "size": [
+            23,
+            6,
+            25
+          ],
+          "origin": [
+            2451,
+            230,
+            1517
+          ],
+          "privateTemplate": "kithkyn_taiga_profile:ta35_03_market_3",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0,
+          "study": "run/taiga-full-profile/studies/market_3.nbt",
+          "swaps": {
+            "cobblestone -> podzol": 78,
+            "birch_trapdoor -> spruce_trapdoor": 150,
+            "birch_log -> stripped_spruce_log": 12,
+            "birch_fence -> spruce_fence": 42
+          }
+        }
+      ]
+    },
+    {
+      "id": "TA36",
+      "title": "TAIGA WALL A \u2014 SPRUCE PALISADE",
+      "origin": [
+        2400,
+        230,
+        1561
+      ],
+      "bounds": [
+        2390,
+        220,
+        1552,
+        2477,
+        276,
+        1571
+      ],
+      "entries": [
+        {
+          "id": "TA36.1",
+          "label": "Wall A Straight",
+          "role": "wall",
+          "sourceMod": "Kithkyn study",
+          "source": "src/main/resources/data/kithkyn/structure/wall/birch_forest/straight.nbt",
+          "sourceSha256": "417c3fa956b8b016be23d1a9fdb090b8d155466b75060234831a0a118cf90b85",
+          "preparedSha256": "1a1df413a926c66dd49d8d7c910c022417e10362363878fd6106dbfcfa59f76e",
+          "size": [
+            7,
+            8,
+            1
+          ],
+          "origin": [
+            2400,
+            230,
+            1561
+          ],
+          "privateTemplate": "kithkyn_taiga_profile:ta36_01_wall_a_straight",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0,
+          "study": "run/taiga-full-profile/studies/wall_a_straight.nbt",
+          "swaps": {
+            "mossy_cobblestone -> cobblestone": 5,
+            "cobblestone -> cobblestone": 2,
+            "mossy_cobblestone -> stripped_spruce_wood": 6,
+            "cobblestone -> stripped_spruce_wood": 18,
+            "cobblestone_wall -> spruce_fence": 3,
+            "mossy_cobblestone_wall -> spruce_fence": 1
+          }
+        },
+        {
+          "id": "TA36.2",
+          "label": "Wall A Diagonal",
+          "role": "wall",
+          "sourceMod": "Kithkyn study",
+          "source": "src/main/resources/data/kithkyn/structure/wall/birch_forest/diagonal.nbt",
+          "sourceSha256": "641d8f0285db2aadcc581e4b4a60082a70d29824668fb8b3bff2be357073ca71",
+          "preparedSha256": "26bb4a722f561d8f6ad889dcb2c2e9215c69f4210eff58706d3c4b952be5d0fe",
+          "size": [
+            7,
+            8,
+            7
+          ],
+          "origin": [
+            2413,
+            230,
+            1561
+          ],
+          "privateTemplate": "kithkyn_taiga_profile:ta36_02_wall_a_diagonal",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0,
+          "study": "run/taiga-full-profile/studies/wall_a_diagonal.nbt",
+          "swaps": {
+            "mossy_cobblestone -> cobblestone": 3,
+            "cobblestone -> cobblestone": 4,
+            "mossy_cobblestone -> stripped_spruce_wood": 8,
+            "cobblestone -> stripped_spruce_wood": 16,
+            "cobblestone_wall -> spruce_fence": 4,
+            "mossy_cobblestone_wall -> spruce_fence": 2
+          }
+        },
+        {
+          "id": "TA36.3",
+          "label": "Wall A Corner Tower",
+          "role": "wall",
+          "sourceMod": "Kithkyn study",
+          "source": "src/main/resources/data/kithkyn/structure/wall/birch_forest/corner_tower.nbt",
+          "sourceSha256": "38b6df41ffe999e9ef9027a2b6b05e8af76f622cbd27d7cd0d5918124a1e84ea",
+          "preparedSha256": "4baa0237d027e472e250e99c1997e2a53d0295074a9e5fc1452b1fcf989138b8",
+          "size": [
+            12,
+            8,
+            6
+          ],
+          "origin": [
+            2426,
+            230,
+            1561
+          ],
+          "privateTemplate": "kithkyn_taiga_profile:ta36_03_wall_a_corner_tower",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0,
+          "study": "run/taiga-full-profile/studies/wall_a_corner_tower.nbt",
+          "swaps": {
+            "mossy_cobblestone -> cobblestone": 7,
+            "cobblestone -> cobblestone": 7,
+            "oak_trapdoor -> spruce_trapdoor": 4,
+            "mossy_cobblestone -> stripped_spruce_wood": 11,
+            "cobblestone -> stripped_spruce_wood": 40,
+            "mossy_cobblestone_wall -> spruce_fence": 8,
+            "cobblestone_wall -> spruce_fence": 11,
+            "cobblestone_slab -> spruce_slab": 1
+          }
+        },
+        {
+          "id": "TA36.4",
+          "label": "Wall A Gatehouse",
+          "role": "wall",
+          "sourceMod": "Kithkyn study",
+          "source": "src/main/resources/data/kithkyn/structure/wall/birch_forest/gatehouse.nbt",
+          "sourceSha256": "6b18ae5516320898e1ad6b89393a2e6ab9ba34a2afc8bd4b733d4944d9cdfcf1",
+          "preparedSha256": "cf65cc992b008fcb99e61defab1c52d803230855a929bd0cb473e86456ff59a3",
+          "size": [
+            17,
+            8,
+            7
+          ],
+          "origin": [
+            2444,
+            230,
+            1561
+          ],
+          "privateTemplate": "kithkyn_taiga_profile:ta36_04_wall_a_gatehouse",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0,
+          "study": "run/taiga-full-profile/studies/wall_a_gatehouse.nbt",
+          "swaps": {
+            "mossy_cobblestone -> cobblestone": 8,
+            "cobblestone -> cobblestone": 10,
+            "cobblestone -> stripped_spruce_wood": 52,
+            "mossy_cobblestone -> stripped_spruce_wood": 30,
+            "cobblestone_wall -> spruce_fence": 20,
+            "mossy_cobblestone_wall -> spruce_fence": 11,
+            "cobblestone_slab -> spruce_slab": 9
+          }
+        },
+        {
+          "id": "TA36.5",
+          "label": "Wall A Terrace",
+          "role": "wall",
+          "sourceMod": "Kithkyn study",
+          "source": "src/main/resources/data/kithkyn/structure/wall/birch_forest/terrace.nbt",
+          "sourceSha256": "df728d8b1ed1fe0372acc52a4faf7057eefc5c24f2f1a0605a234613a3404056",
+          "preparedSha256": "62509c9ac8a6b5b9a61c27e9c14da13866a083705348bc22bfeb2ebfd128e0a8",
+          "size": [
+            8,
+            9,
+            1
+          ],
+          "origin": [
+            2467,
+            230,
+            1561
+          ],
+          "privateTemplate": "kithkyn_taiga_profile:ta36_05_wall_a_terrace",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0,
+          "study": "run/taiga-full-profile/studies/wall_a_terrace.nbt",
+          "swaps": {
+            "mossy_cobblestone -> cobblestone": 3,
+            "cobblestone -> cobblestone": 1,
+            "mossy_cobblestone -> stripped_spruce_wood": 12,
+            "cobblestone -> stripped_spruce_wood": 22,
+            "cobblestone_wall -> spruce_fence": 4,
+            "mossy_cobblestone_wall -> spruce_fence": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": "TA37",
+      "title": "TAIGA WALL B \u2014 FORT TIMBER, SPRUCE + DARK OAK",
+      "origin": [
+        2400,
+        230,
+        1605
+      ],
+      "bounds": [
+        2390,
+        220,
+        1596,
+        2477,
+        276,
+        1615
+      ],
+      "entries": [
+        {
+          "id": "TA37.1",
+          "label": "Wall B Straight",
+          "role": "wall",
+          "sourceMod": "Kithkyn study",
+          "source": "src/main/resources/data/kithkyn/structure/wall/birch_forest/straight.nbt",
+          "sourceSha256": "417c3fa956b8b016be23d1a9fdb090b8d155466b75060234831a0a118cf90b85",
+          "preparedSha256": "834a65a2c772baa45a2faa2fde1968dc06c2362db1e571142f1735a64eb6de4f",
+          "size": [
+            7,
+            8,
+            1
+          ],
+          "origin": [
+            2400,
+            230,
+            1605
+          ],
+          "privateTemplate": "kithkyn_taiga_profile:ta37_01_wall_b_straight",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0,
+          "study": "run/taiga-full-profile/studies/wall_b_straight.nbt",
+          "swaps": {
+            "mossy_cobblestone -> cobblestone": 5,
+            "cobblestone -> cobblestone": 2,
+            "mossy_cobblestone -> dark_oak_planks": 6,
+            "cobblestone -> stripped_spruce_wood": 18,
+            "cobblestone_wall -> spruce_fence": 3,
+            "mossy_cobblestone_wall -> spruce_fence": 1
+          }
+        },
+        {
+          "id": "TA37.2",
+          "label": "Wall B Diagonal",
+          "role": "wall",
+          "sourceMod": "Kithkyn study",
+          "source": "src/main/resources/data/kithkyn/structure/wall/birch_forest/diagonal.nbt",
+          "sourceSha256": "641d8f0285db2aadcc581e4b4a60082a70d29824668fb8b3bff2be357073ca71",
+          "preparedSha256": "3a2b55e123a409229a75d79135d163f67333451d38851d595e1a33b6b9661a08",
+          "size": [
+            7,
+            8,
+            7
+          ],
+          "origin": [
+            2413,
+            230,
+            1605
+          ],
+          "privateTemplate": "kithkyn_taiga_profile:ta37_02_wall_b_diagonal",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0,
+          "study": "run/taiga-full-profile/studies/wall_b_diagonal.nbt",
+          "swaps": {
+            "mossy_cobblestone -> cobblestone": 3,
+            "cobblestone -> cobblestone": 4,
+            "mossy_cobblestone -> dark_oak_planks": 8,
+            "cobblestone -> stripped_spruce_wood": 16,
+            "cobblestone_wall -> spruce_fence": 4,
+            "mossy_cobblestone_wall -> spruce_fence": 2
+          }
+        },
+        {
+          "id": "TA37.3",
+          "label": "Wall B Corner Tower",
+          "role": "wall",
+          "sourceMod": "Kithkyn study",
+          "source": "src/main/resources/data/kithkyn/structure/wall/birch_forest/corner_tower.nbt",
+          "sourceSha256": "38b6df41ffe999e9ef9027a2b6b05e8af76f622cbd27d7cd0d5918124a1e84ea",
+          "preparedSha256": "c4cc37fbaef385a323f05e5b88103a78990ce8a97ada3921418135780fcffc51",
+          "size": [
+            12,
+            8,
+            6
+          ],
+          "origin": [
+            2426,
+            230,
+            1605
+          ],
+          "privateTemplate": "kithkyn_taiga_profile:ta37_03_wall_b_corner_tower",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0,
+          "study": "run/taiga-full-profile/studies/wall_b_corner_tower.nbt",
+          "swaps": {
+            "mossy_cobblestone -> cobblestone": 7,
+            "cobblestone -> cobblestone": 7,
+            "oak_trapdoor -> dark_oak_trapdoor": 4,
+            "mossy_cobblestone -> dark_oak_planks": 11,
+            "cobblestone -> stripped_spruce_wood": 40,
+            "mossy_cobblestone_wall -> spruce_fence": 8,
+            "cobblestone_wall -> spruce_fence": 11,
+            "cobblestone_slab -> dark_oak_slab": 1
+          }
+        },
+        {
+          "id": "TA37.4",
+          "label": "Wall B Gatehouse",
+          "role": "wall",
+          "sourceMod": "Kithkyn study",
+          "source": "src/main/resources/data/kithkyn/structure/wall/birch_forest/gatehouse.nbt",
+          "sourceSha256": "6b18ae5516320898e1ad6b89393a2e6ab9ba34a2afc8bd4b733d4944d9cdfcf1",
+          "preparedSha256": "4bd6b70fa019a0e63dfc3f54e91b40cd7c12bf078abf9c16755a8a85aea4f2a6",
+          "size": [
+            17,
+            8,
+            7
+          ],
+          "origin": [
+            2444,
+            230,
+            1605
+          ],
+          "privateTemplate": "kithkyn_taiga_profile:ta37_04_wall_b_gatehouse",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0,
+          "study": "run/taiga-full-profile/studies/wall_b_gatehouse.nbt",
+          "swaps": {
+            "mossy_cobblestone -> cobblestone": 8,
+            "cobblestone -> cobblestone": 10,
+            "cobblestone -> stripped_spruce_wood": 52,
+            "mossy_cobblestone -> dark_oak_planks": 30,
+            "cobblestone_wall -> spruce_fence": 20,
+            "mossy_cobblestone_wall -> spruce_fence": 11,
+            "cobblestone_slab -> dark_oak_slab": 9
+          }
+        },
+        {
+          "id": "TA37.5",
+          "label": "Wall B Terrace",
+          "role": "wall",
+          "sourceMod": "Kithkyn study",
+          "source": "src/main/resources/data/kithkyn/structure/wall/birch_forest/terrace.nbt",
+          "sourceSha256": "df728d8b1ed1fe0372acc52a4faf7057eefc5c24f2f1a0605a234613a3404056",
+          "preparedSha256": "23cc4f383465f3c0c18f8f29bb7af74e5127fd59e169a43e912a84f7007831bd",
+          "size": [
+            8,
+            9,
+            1
+          ],
+          "origin": [
+            2467,
+            230,
+            1605
+          ],
+          "privateTemplate": "kithkyn_taiga_profile:ta37_05_wall_b_terrace",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0,
+          "study": "run/taiga-full-profile/studies/wall_b_terrace.nbt",
+          "swaps": {
+            "mossy_cobblestone -> cobblestone": 3,
+            "cobblestone -> cobblestone": 1,
+            "mossy_cobblestone -> dark_oak_planks": 12,
+            "cobblestone -> stripped_spruce_wood": 22,
+            "cobblestone_wall -> spruce_fence": 4,
+            "mossy_cobblestone_wall -> spruce_fence": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": "TA38",
+      "title": "TAIGA WALL C \u2014 STONE + SPRUCE",
+      "origin": [
+        2400,
+        230,
+        1649
+      ],
+      "bounds": [
+        2390,
+        220,
+        1640,
+        2477,
+        276,
+        1659
+      ],
+      "entries": [
+        {
+          "id": "TA38.1",
+          "label": "Wall C Straight",
+          "role": "wall",
+          "sourceMod": "Kithkyn study",
+          "source": "src/main/resources/data/kithkyn/structure/wall/birch_forest/straight.nbt",
+          "sourceSha256": "417c3fa956b8b016be23d1a9fdb090b8d155466b75060234831a0a118cf90b85",
+          "preparedSha256": "0f898778ea7d650c4a74af6964303a895193c0ebdaf67a6aaddccec250422882",
+          "size": [
+            7,
+            8,
+            1
+          ],
+          "origin": [
+            2400,
+            230,
+            1649
+          ],
+          "privateTemplate": "kithkyn_taiga_profile:ta38_01_wall_c_straight",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0,
+          "study": "run/taiga-full-profile/studies/wall_c_straight.nbt",
+          "swaps": {
+            "mossy_cobblestone -> stone_bricks": 5,
+            "cobblestone -> stone_bricks": 2,
+            "cobblestone_wall -> spruce_fence": 3,
+            "mossy_cobblestone_wall -> spruce_fence": 1
+          }
+        },
+        {
+          "id": "TA38.2",
+          "label": "Wall C Diagonal",
+          "role": "wall",
+          "sourceMod": "Kithkyn study",
+          "source": "src/main/resources/data/kithkyn/structure/wall/birch_forest/diagonal.nbt",
+          "sourceSha256": "641d8f0285db2aadcc581e4b4a60082a70d29824668fb8b3bff2be357073ca71",
+          "preparedSha256": "16990d6b2622617a74a6a10e8639b02228a3bbb0c042976006288d27a62c590f",
+          "size": [
+            7,
+            8,
+            7
+          ],
+          "origin": [
+            2413,
+            230,
+            1649
+          ],
+          "privateTemplate": "kithkyn_taiga_profile:ta38_02_wall_c_diagonal",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0,
+          "study": "run/taiga-full-profile/studies/wall_c_diagonal.nbt",
+          "swaps": {
+            "mossy_cobblestone -> stone_bricks": 3,
+            "cobblestone -> stone_bricks": 4,
+            "cobblestone_wall -> spruce_fence": 4,
+            "mossy_cobblestone_wall -> spruce_fence": 2
+          }
+        },
+        {
+          "id": "TA38.3",
+          "label": "Wall C Corner Tower",
+          "role": "wall",
+          "sourceMod": "Kithkyn study",
+          "source": "src/main/resources/data/kithkyn/structure/wall/birch_forest/corner_tower.nbt",
+          "sourceSha256": "38b6df41ffe999e9ef9027a2b6b05e8af76f622cbd27d7cd0d5918124a1e84ea",
+          "preparedSha256": "509b69cb0c74d98d5241b08487b373c59a21eae30ce7098775ffedc5b3efd95c",
+          "size": [
+            12,
+            8,
+            6
+          ],
+          "origin": [
+            2426,
+            230,
+            1649
+          ],
+          "privateTemplate": "kithkyn_taiga_profile:ta38_03_wall_c_corner_tower",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0,
+          "study": "run/taiga-full-profile/studies/wall_c_corner_tower.nbt",
+          "swaps": {
+            "mossy_cobblestone -> stone_bricks": 7,
+            "cobblestone -> stone_bricks": 7,
+            "oak_trapdoor -> spruce_trapdoor": 4,
+            "mossy_cobblestone_wall -> spruce_fence": 8,
+            "cobblestone_wall -> spruce_fence": 11,
+            "cobblestone_slab -> spruce_slab": 1
+          }
+        },
+        {
+          "id": "TA38.4",
+          "label": "Wall C Gatehouse",
+          "role": "wall",
+          "sourceMod": "Kithkyn study",
+          "source": "src/main/resources/data/kithkyn/structure/wall/birch_forest/gatehouse.nbt",
+          "sourceSha256": "6b18ae5516320898e1ad6b89393a2e6ab9ba34a2afc8bd4b733d4944d9cdfcf1",
+          "preparedSha256": "b240c5d0f145c2a31c1f63b61c5544950ffa84c98dec478a6c64c42dd45bc4dc",
+          "size": [
+            17,
+            8,
+            7
+          ],
+          "origin": [
+            2444,
+            230,
+            1649
+          ],
+          "privateTemplate": "kithkyn_taiga_profile:ta38_04_wall_c_gatehouse",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0,
+          "study": "run/taiga-full-profile/studies/wall_c_gatehouse.nbt",
+          "swaps": {
+            "mossy_cobblestone -> stone_bricks": 8,
+            "cobblestone -> stone_bricks": 10,
+            "cobblestone_wall -> spruce_fence": 20,
+            "mossy_cobblestone_wall -> spruce_fence": 11,
+            "cobblestone_slab -> spruce_slab": 9
+          }
+        },
+        {
+          "id": "TA38.5",
+          "label": "Wall C Terrace",
+          "role": "wall",
+          "sourceMod": "Kithkyn study",
+          "source": "src/main/resources/data/kithkyn/structure/wall/birch_forest/terrace.nbt",
+          "sourceSha256": "df728d8b1ed1fe0372acc52a4faf7057eefc5c24f2f1a0605a234613a3404056",
+          "preparedSha256": "455289305ebc581c9ab37aadf8c3a4784857bb928ae7110437e356bc3206c611",
+          "size": [
+            8,
+            9,
+            1
+          ],
+          "origin": [
+            2467,
+            230,
+            1649
+          ],
+          "privateTemplate": "kithkyn_taiga_profile:ta38_05_wall_c_terrace",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0,
+          "study": "run/taiga-full-profile/studies/wall_c_terrace.nbt",
+          "swaps": {
+            "mossy_cobblestone -> stone_bricks": 3,
+            "cobblestone -> stone_bricks": 1,
+            "cobblestone_wall -> spruce_fence": 4,
+            "mossy_cobblestone_wall -> spruce_fence": 1
+          }
+        }
+      ]
     }
   ],
   "verification": {
-    "preparedTemplates": 337,
-    "placedTemplates": 337,
+    "preparedTemplates": 355,
+    "placedTemplates": 18,
     "allPlacementResponsesConfirmed": true,
-    "chunksGenerated": 1227,
+    "chunksGenerated": 0,
     "worldSaved": true,
-    "worldBackup": "/Users/quzzar/Projects/kithkyn/run/backups/before-taiga-gallery-20260914-213746",
+    "worldBackup": "/Users/quzzar/Projects/kithkyn/run/backups/before-taiga-gallery-20260914-222224",
     "console": "screen session fifo:/Users/quzzar/Projects/kithkyn/run/deployed-runtime/20260914-181832-rustic-height-corrections/console.fifo",
-    "addedRows": []
+    "addedRows": [
+      "TA35",
+      "TA36",
+      "TA37",
+      "TA38"
+    ]
   },
   "biome": {
     "filled": "minecraft:the_void",
     "reason": "no precipitation at any height, so no snow on the roofs and no lightning; ordinary green grass"
   },
   "licensing": "CTOV and Towns & Towers are CC BY-NC-ND 4.0 and Dungeons & Taverns is under its own licence: their display copies stay private under run/, as for every gallery. See docs/structure-sourcing.md.",
-  "offlineCheck": {
-    "short": [
+  "worldBackup": "/Users/quzzar/Projects/kithkyn/run/backups/before-taiga-gallery-20260914-222224",
+  "studies": {
+    "recorded": "2026-09-14T22:21:43-04:00",
+    "rule": "Bundled Birch market and wall geometry from main with the Taiga picks' materials; trade colours, torches, ladders and the gatehouse campfire and banners untouched.",
+    "rows": [
       {
-        "id": "TA31.4",
-        "label": "Butcher Shop 1",
-        "expected": 316,
-        "placed": 299,
-        "ratio": 0.946
+        "id": "TA35",
+        "title": "TAIGA MARKET \u2014 TIERS 1 TO 3"
+      },
+      {
+        "id": "TA36",
+        "title": "TAIGA WALL A \u2014 SPRUCE PALISADE"
+      },
+      {
+        "id": "TA37",
+        "title": "TAIGA WALL B \u2014 FORT TIMBER, SPRUCE + DARK OAK"
+      },
+      {
+        "id": "TA38",
+        "title": "TAIGA WALL C \u2014 STONE + SPRUCE"
       }
     ],
-    "waterOutsideRings": [],
-    "waterOutsideRingsCount": 0,
-    "shortNote": "TA31.4: 3 ferns, 10 large ferns and 4 poppies at the template ground layer stand on the smooth-stone platform instead of dirt and pop; a display artifact, the same as grass under covered cells in earlier galleries",
-    "footprintsChecked": 337
+    "studies": [
+      {
+        "row": "TA35",
+        "stem": "market_1",
+        "label": "Market Tier 1",
+        "role": "market",
+        "source": "src/main/resources/data/kithkyn/structure/market_birch_forest_1.nbt",
+        "sourceSha256": "ba62598d3dc7ecbffc4d7e1c0542a37a4f7990c356f7613a38534a93f4ef72d1",
+        "swaps": {
+          "cobblestone -> podzol": 16,
+          "birch_trapdoor -> spruce_trapdoor": 50,
+          "birch_log -> stripped_spruce_log": 4,
+          "birch_fence -> spruce_fence": 14
+        },
+        "size": [
+          16,
+          6,
+          17
+        ],
+        "sha256": "076370a5754153a269e3da6774245550930a8ae8a6f4ed58f9eee2c884726af0"
+      },
+      {
+        "row": "TA35",
+        "stem": "market_2",
+        "label": "Market Tier 2",
+        "role": "market",
+        "source": "src/main/resources/data/kithkyn/structure/market_birch_forest_2.nbt",
+        "sourceSha256": "63f3a3fcfaecefd4dc4807d5a01b28d3e263bad1cddd5a5c12bab754c45c9a9f",
+        "swaps": {
+          "cobblestone -> podzol": 57,
+          "birch_trapdoor -> spruce_trapdoor": 100,
+          "birch_log -> stripped_spruce_log": 8,
+          "birch_fence -> spruce_fence": 28
+        },
+        "size": [
+          23,
+          6,
+          17
+        ],
+        "sha256": "53e88e57de01aa6063b704d9af4f7187149c0979531dd065b510ad7e8ddfb277"
+      },
+      {
+        "row": "TA35",
+        "stem": "market_3",
+        "label": "Market Tier 3",
+        "role": "market",
+        "source": "src/main/resources/data/kithkyn/structure/market_birch_forest_3.nbt",
+        "sourceSha256": "9b2a4c0903bb9cdd26e954fcc45a8f556ea853b2fe7def140a5d0cc088c7cfab",
+        "swaps": {
+          "cobblestone -> podzol": 78,
+          "birch_trapdoor -> spruce_trapdoor": 150,
+          "birch_log -> stripped_spruce_log": 12,
+          "birch_fence -> spruce_fence": 42
+        },
+        "size": [
+          23,
+          6,
+          25
+        ],
+        "sha256": "a12c29afbf4057b4adb59ee6fe202061b0d2b021cce58cf21c943439cc402816"
+      },
+      {
+        "row": "TA36",
+        "stem": "wall_a_straight",
+        "label": "Wall A Straight",
+        "role": "wall",
+        "source": "src/main/resources/data/kithkyn/structure/wall/birch_forest/straight.nbt",
+        "sourceSha256": "417c3fa956b8b016be23d1a9fdb090b8d155466b75060234831a0a118cf90b85",
+        "swaps": {
+          "mossy_cobblestone -> cobblestone": 5,
+          "cobblestone -> cobblestone": 2,
+          "mossy_cobblestone -> stripped_spruce_wood": 6,
+          "cobblestone -> stripped_spruce_wood": 18,
+          "cobblestone_wall -> spruce_fence": 3,
+          "mossy_cobblestone_wall -> spruce_fence": 1
+        },
+        "size": [
+          7,
+          8,
+          1
+        ],
+        "sha256": "1a1df413a926c66dd49d8d7c910c022417e10362363878fd6106dbfcfa59f76e"
+      },
+      {
+        "row": "TA36",
+        "stem": "wall_a_diagonal",
+        "label": "Wall A Diagonal",
+        "role": "wall",
+        "source": "src/main/resources/data/kithkyn/structure/wall/birch_forest/diagonal.nbt",
+        "sourceSha256": "641d8f0285db2aadcc581e4b4a60082a70d29824668fb8b3bff2be357073ca71",
+        "swaps": {
+          "mossy_cobblestone -> cobblestone": 3,
+          "cobblestone -> cobblestone": 4,
+          "mossy_cobblestone -> stripped_spruce_wood": 8,
+          "cobblestone -> stripped_spruce_wood": 16,
+          "cobblestone_wall -> spruce_fence": 4,
+          "mossy_cobblestone_wall -> spruce_fence": 2
+        },
+        "size": [
+          7,
+          8,
+          7
+        ],
+        "sha256": "26bb4a722f561d8f6ad889dcb2c2e9215c69f4210eff58706d3c4b952be5d0fe"
+      },
+      {
+        "row": "TA36",
+        "stem": "wall_a_corner_tower",
+        "label": "Wall A Corner Tower",
+        "role": "wall",
+        "source": "src/main/resources/data/kithkyn/structure/wall/birch_forest/corner_tower.nbt",
+        "sourceSha256": "38b6df41ffe999e9ef9027a2b6b05e8af76f622cbd27d7cd0d5918124a1e84ea",
+        "swaps": {
+          "mossy_cobblestone -> cobblestone": 7,
+          "cobblestone -> cobblestone": 7,
+          "oak_trapdoor -> spruce_trapdoor": 4,
+          "mossy_cobblestone -> stripped_spruce_wood": 11,
+          "cobblestone -> stripped_spruce_wood": 40,
+          "mossy_cobblestone_wall -> spruce_fence": 8,
+          "cobblestone_wall -> spruce_fence": 11,
+          "cobblestone_slab -> spruce_slab": 1
+        },
+        "size": [
+          12,
+          8,
+          6
+        ],
+        "sha256": "fdc30c15c580572005ac2f4840a3297ee34932392d51f5a628aaa4753574857e"
+      },
+      {
+        "row": "TA36",
+        "stem": "wall_a_gatehouse",
+        "label": "Wall A Gatehouse",
+        "role": "wall",
+        "source": "src/main/resources/data/kithkyn/structure/wall/birch_forest/gatehouse.nbt",
+        "sourceSha256": "6b18ae5516320898e1ad6b89393a2e6ab9ba34a2afc8bd4b733d4944d9cdfcf1",
+        "swaps": {
+          "mossy_cobblestone -> cobblestone": 8,
+          "cobblestone -> cobblestone": 10,
+          "cobblestone -> stripped_spruce_wood": 52,
+          "mossy_cobblestone -> stripped_spruce_wood": 30,
+          "cobblestone_wall -> spruce_fence": 20,
+          "mossy_cobblestone_wall -> spruce_fence": 11,
+          "cobblestone_slab -> spruce_slab": 9
+        },
+        "size": [
+          17,
+          8,
+          7
+        ],
+        "sha256": "64521f6561b6e22a19a959a98136d3a74975e6c1ac1c0872bbccd41b2683a147"
+      },
+      {
+        "row": "TA36",
+        "stem": "wall_a_terrace",
+        "label": "Wall A Terrace",
+        "role": "wall",
+        "source": "src/main/resources/data/kithkyn/structure/wall/birch_forest/terrace.nbt",
+        "sourceSha256": "df728d8b1ed1fe0372acc52a4faf7057eefc5c24f2f1a0605a234613a3404056",
+        "swaps": {
+          "mossy_cobblestone -> cobblestone": 3,
+          "cobblestone -> cobblestone": 1,
+          "mossy_cobblestone -> stripped_spruce_wood": 12,
+          "cobblestone -> stripped_spruce_wood": 22,
+          "cobblestone_wall -> spruce_fence": 4,
+          "mossy_cobblestone_wall -> spruce_fence": 1
+        },
+        "size": [
+          8,
+          9,
+          1
+        ],
+        "sha256": "62509c9ac8a6b5b9a61c27e9c14da13866a083705348bc22bfeb2ebfd128e0a8"
+      },
+      {
+        "row": "TA37",
+        "stem": "wall_b_straight",
+        "label": "Wall B Straight",
+        "role": "wall",
+        "source": "src/main/resources/data/kithkyn/structure/wall/birch_forest/straight.nbt",
+        "sourceSha256": "417c3fa956b8b016be23d1a9fdb090b8d155466b75060234831a0a118cf90b85",
+        "swaps": {
+          "mossy_cobblestone -> cobblestone": 5,
+          "cobblestone -> cobblestone": 2,
+          "mossy_cobblestone -> dark_oak_planks": 6,
+          "cobblestone -> stripped_spruce_wood": 18,
+          "cobblestone_wall -> spruce_fence": 3,
+          "mossy_cobblestone_wall -> spruce_fence": 1
+        },
+        "size": [
+          7,
+          8,
+          1
+        ],
+        "sha256": "834a65a2c772baa45a2faa2fde1968dc06c2362db1e571142f1735a64eb6de4f"
+      },
+      {
+        "row": "TA37",
+        "stem": "wall_b_diagonal",
+        "label": "Wall B Diagonal",
+        "role": "wall",
+        "source": "src/main/resources/data/kithkyn/structure/wall/birch_forest/diagonal.nbt",
+        "sourceSha256": "641d8f0285db2aadcc581e4b4a60082a70d29824668fb8b3bff2be357073ca71",
+        "swaps": {
+          "mossy_cobblestone -> cobblestone": 3,
+          "cobblestone -> cobblestone": 4,
+          "mossy_cobblestone -> dark_oak_planks": 8,
+          "cobblestone -> stripped_spruce_wood": 16,
+          "cobblestone_wall -> spruce_fence": 4,
+          "mossy_cobblestone_wall -> spruce_fence": 2
+        },
+        "size": [
+          7,
+          8,
+          7
+        ],
+        "sha256": "3a2b55e123a409229a75d79135d163f67333451d38851d595e1a33b6b9661a08"
+      },
+      {
+        "row": "TA37",
+        "stem": "wall_b_corner_tower",
+        "label": "Wall B Corner Tower",
+        "role": "wall",
+        "source": "src/main/resources/data/kithkyn/structure/wall/birch_forest/corner_tower.nbt",
+        "sourceSha256": "38b6df41ffe999e9ef9027a2b6b05e8af76f622cbd27d7cd0d5918124a1e84ea",
+        "swaps": {
+          "mossy_cobblestone -> cobblestone": 7,
+          "cobblestone -> cobblestone": 7,
+          "oak_trapdoor -> dark_oak_trapdoor": 4,
+          "mossy_cobblestone -> dark_oak_planks": 11,
+          "cobblestone -> stripped_spruce_wood": 40,
+          "mossy_cobblestone_wall -> spruce_fence": 8,
+          "cobblestone_wall -> spruce_fence": 11,
+          "cobblestone_slab -> dark_oak_slab": 1
+        },
+        "size": [
+          12,
+          8,
+          6
+        ],
+        "sha256": "acb15d4119e38eaa69e503f114cf2cf3c00680a15da1a89ab361c18262d416b4"
+      },
+      {
+        "row": "TA37",
+        "stem": "wall_b_gatehouse",
+        "label": "Wall B Gatehouse",
+        "role": "wall",
+        "source": "src/main/resources/data/kithkyn/structure/wall/birch_forest/gatehouse.nbt",
+        "sourceSha256": "6b18ae5516320898e1ad6b89393a2e6ab9ba34a2afc8bd4b733d4944d9cdfcf1",
+        "swaps": {
+          "mossy_cobblestone -> cobblestone": 8,
+          "cobblestone -> cobblestone": 10,
+          "cobblestone -> stripped_spruce_wood": 52,
+          "mossy_cobblestone -> dark_oak_planks": 30,
+          "cobblestone_wall -> spruce_fence": 20,
+          "mossy_cobblestone_wall -> spruce_fence": 11,
+          "cobblestone_slab -> dark_oak_slab": 9
+        },
+        "size": [
+          17,
+          8,
+          7
+        ],
+        "sha256": "53205f711aa6f1d949172f9ea8d91c04dfb416700c2d9a800a30f00497b6b128"
+      },
+      {
+        "row": "TA37",
+        "stem": "wall_b_terrace",
+        "label": "Wall B Terrace",
+        "role": "wall",
+        "source": "src/main/resources/data/kithkyn/structure/wall/birch_forest/terrace.nbt",
+        "sourceSha256": "df728d8b1ed1fe0372acc52a4faf7057eefc5c24f2f1a0605a234613a3404056",
+        "swaps": {
+          "mossy_cobblestone -> cobblestone": 3,
+          "cobblestone -> cobblestone": 1,
+          "mossy_cobblestone -> dark_oak_planks": 12,
+          "cobblestone -> stripped_spruce_wood": 22,
+          "cobblestone_wall -> spruce_fence": 4,
+          "mossy_cobblestone_wall -> spruce_fence": 1
+        },
+        "size": [
+          8,
+          9,
+          1
+        ],
+        "sha256": "23cc4f383465f3c0c18f8f29bb7af74e5127fd59e169a43e912a84f7007831bd"
+      },
+      {
+        "row": "TA38",
+        "stem": "wall_c_straight",
+        "label": "Wall C Straight",
+        "role": "wall",
+        "source": "src/main/resources/data/kithkyn/structure/wall/birch_forest/straight.nbt",
+        "sourceSha256": "417c3fa956b8b016be23d1a9fdb090b8d155466b75060234831a0a118cf90b85",
+        "swaps": {
+          "mossy_cobblestone -> stone_bricks": 5,
+          "cobblestone -> stone_bricks": 2,
+          "cobblestone_wall -> spruce_fence": 3,
+          "mossy_cobblestone_wall -> spruce_fence": 1
+        },
+        "size": [
+          7,
+          8,
+          1
+        ],
+        "sha256": "0f898778ea7d650c4a74af6964303a895193c0ebdaf67a6aaddccec250422882"
+      },
+      {
+        "row": "TA38",
+        "stem": "wall_c_diagonal",
+        "label": "Wall C Diagonal",
+        "role": "wall",
+        "source": "src/main/resources/data/kithkyn/structure/wall/birch_forest/diagonal.nbt",
+        "sourceSha256": "641d8f0285db2aadcc581e4b4a60082a70d29824668fb8b3bff2be357073ca71",
+        "swaps": {
+          "mossy_cobblestone -> stone_bricks": 3,
+          "cobblestone -> stone_bricks": 4,
+          "cobblestone_wall -> spruce_fence": 4,
+          "mossy_cobblestone_wall -> spruce_fence": 2
+        },
+        "size": [
+          7,
+          8,
+          7
+        ],
+        "sha256": "16990d6b2622617a74a6a10e8639b02228a3bbb0c042976006288d27a62c590f"
+      },
+      {
+        "row": "TA38",
+        "stem": "wall_c_corner_tower",
+        "label": "Wall C Corner Tower",
+        "role": "wall",
+        "source": "src/main/resources/data/kithkyn/structure/wall/birch_forest/corner_tower.nbt",
+        "sourceSha256": "38b6df41ffe999e9ef9027a2b6b05e8af76f622cbd27d7cd0d5918124a1e84ea",
+        "swaps": {
+          "mossy_cobblestone -> stone_bricks": 7,
+          "cobblestone -> stone_bricks": 7,
+          "oak_trapdoor -> spruce_trapdoor": 4,
+          "mossy_cobblestone_wall -> spruce_fence": 8,
+          "cobblestone_wall -> spruce_fence": 11,
+          "cobblestone_slab -> spruce_slab": 1
+        },
+        "size": [
+          12,
+          8,
+          6
+        ],
+        "sha256": "07af40f853f0c7d382c59852fd997250de511e384f6d03fca269586705302ff4"
+      },
+      {
+        "row": "TA38",
+        "stem": "wall_c_gatehouse",
+        "label": "Wall C Gatehouse",
+        "role": "wall",
+        "source": "src/main/resources/data/kithkyn/structure/wall/birch_forest/gatehouse.nbt",
+        "sourceSha256": "6b18ae5516320898e1ad6b89393a2e6ab9ba34a2afc8bd4b733d4944d9cdfcf1",
+        "swaps": {
+          "mossy_cobblestone -> stone_bricks": 8,
+          "cobblestone -> stone_bricks": 10,
+          "cobblestone_wall -> spruce_fence": 20,
+          "mossy_cobblestone_wall -> spruce_fence": 11,
+          "cobblestone_slab -> spruce_slab": 9
+        },
+        "size": [
+          17,
+          8,
+          7
+        ],
+        "sha256": "a26ebb39a5936e5025ce4d1d819e90d4074ea9969d9c273fc6304d8be5532905"
+      },
+      {
+        "row": "TA38",
+        "stem": "wall_c_terrace",
+        "label": "Wall C Terrace",
+        "role": "wall",
+        "source": "src/main/resources/data/kithkyn/structure/wall/birch_forest/terrace.nbt",
+        "sourceSha256": "df728d8b1ed1fe0372acc52a4faf7057eefc5c24f2f1a0605a234613a3404056",
+        "swaps": {
+          "mossy_cobblestone -> stone_bricks": 3,
+          "cobblestone -> stone_bricks": 1,
+          "cobblestone_wall -> spruce_fence": 4,
+          "mossy_cobblestone_wall -> spruce_fence": 1
+        },
+        "size": [
+          8,
+          9,
+          1
+        ],
+        "sha256": "455289305ebc581c9ab37aadf8c3a4784857bb928ae7110437e356bc3206c611"
+      }
+    ]
+  },
+  "selection": {
+    "schemaVersion": 1,
+    "status": "selection_locked",
+    "variant": "taiga",
+    "family": "Towns & Towers Viking (snowy_taiga_viking), with the T&T old-growth taiga fort and the D&T firewatch tower",
+    "world": "trio-20260912",
+    "galleryEntry": [
+      2393.5,
+      230.0,
+      10.5
+    ],
+    "gallery": "run/taiga-full-profile/manifest.json",
+    "recorded": "2026-09-14",
+    "coordinates": "Positions are template-local [x, y, z] from each exhibit's gallery origin, read from the saved world after Aaron's edits (run/taiga-full-profile/survey.py).",
+    "identity": {
+      "primary": "red wool on TA02.7 (stoneworks)",
+      "banners": "the four white wall banners Aaron hung on the centre's tower, the fort's banners, and beds everywhere take the village colours"
+    },
+    "selected": [
+      {
+        "exhibit": "TA01.1",
+        "label": "T&T Viking meeting point",
+        "role": "village_center",
+        "note": "Aaron: the centre's little tower is a watchtower post (GUARD CROSSBOW_POST at the top, no bed for it); the guard captain by the fire and bell; builders as normal. No beds in the piece: the founding set must bring homes. His four white wall banners at (3,4,5), (5,4,3), (5,4,7), (7,4,5) are village banners. Campfire (6,1,10), bell (10,2,9), ladder (5,1..3,5), gated platform at y 5.",
+        "stations": "5 BUILDER anchors + GUARD CAPTAIN + GUARD CROSSBOW_POST"
+      },
+      {
+        "exhibit": "TA01.6",
+        "label": "Viking small house 5",
+        "role": "house",
+        "beds": 1,
+        "note": "Aaron's final call after trying 1.2, 1.3 and 1.4: the one-bed home. Bed (4,1,2) north; his barrel at (3,0,2) is the personal container."
+      },
+      {
+        "exhibit": "TA01.3",
+        "label": "Viking small house 2",
+        "role": "house",
+        "beds": 1,
+        "note": "Added at the close-out (Claude, 2026-09-14) so the four founders all have beds: the meeting point has none, and the one-bed and two-bed homes hold three. A second one-bed design (house_taiga_1__small_house_2); Aaron to confirm or replace. Bed (3,1,2) west, chest (3,1,4)."
+      },
+      {
+        "exhibit": "TA01.5",
+        "label": "Viking small house 4",
+        "role": "house",
+        "beds": 2,
+        "note": "Two beds (2,1,6) south and (3,1,2) north sharing the chest at (5,1,2)."
+      },
+      {
+        "exhibit": "TA01.4",
+        "label": "Viking small house 3",
+        "role": "couple_cottage",
+        "note": "Aaron moved the beds into an adjacent pair: heads (5,1,2) and (5,1,3) facing east; barrel (5,1,4) as the couple's container."
+      },
+      {
+        "exhibit": "TA01.7",
+        "label": "Viking temple",
+        "role": "church",
+        "note": "Cleric at the brewing stand (5,2,4); chest (5,1,8) as the store. No bed."
+      },
+      {
+        "exhibit": "TA01.2",
+        "label": "Viking small house 1",
+        "role": "storehouse",
+        "note": "Aaron said 'two point two' but the four barrels are here: (2,1,2), (4,1,2), (4,1,3), (4,2,2); he removed the bed and chest. Quartermaster among the barrels."
+      },
+      {
+        "exhibit": "TA02.2",
+        "label": "Viking butcher",
+        "role": "butchery",
+        "note": "Three chickens in the fenced yard (entities at capture, as the savanna cows); smoker (3,1,2), chest (4,1,4)."
+      },
+      {
+        "exhibit": "TA02.3",
+        "label": "Viking cartographer",
+        "role": "bakery",
+        "note": "Aaron swapped the cartography table for a smoker at (2,1,2); chest (4,1,2)."
+      },
+      {
+        "exhibit": "TA02.4",
+        "label": "Viking fletcher",
+        "role": "hunting_lodge",
+        "note": "Fletching table (5,1,5), chest moved to (0,1,3), targets. No bed."
+      },
+      {
+        "exhibit": "TA02.7",
+        "label": "Viking mason",
+        "role": "stoneworks",
+        "note": "Stonecutter (3,1,3), chest (2,1,2); Aaron removed two hay blocks. Its red wool is the village's primary colour."
+      },
+      {
+        "exhibit": "TA02.9",
+        "label": "Viking toolsmith",
+        "role": "blacksmith",
+        "note": "Aaron moved the smith from 2.1 to 2.9: smithing table (4,1,4), chest (2,1,2), lava cauldron (3,1,1)."
+      },
+      {
+        "exhibit": "TA02.10",
+        "label": "Viking weaponsmith",
+        "role": "mine",
+        "note": "Aaron cleared the grindstone, cauldron and hay and dug the centre empty as the shaft's mouth; the box grows by a few blocks (grass at local x 2..7, z -1..3). Chest (5,1,5) as the store. Check the boundaries at capture."
+      },
+      {
+        "exhibit": "TA03.1",
+        "label": "Viking fisher",
+        "role": "fishery",
+        "note": "Barrel (3,1,1) outside by the water is the station's store; barrel (7,1,4) inside by the bed (7,1,2) east is the fisher's personal container; the bed is the fisher's live-in bed."
+      },
+      {
+        "exhibit": "TA03.2",
+        "label": "Viking large farm",
+        "role": "farm",
+        "level": 1,
+        "note": "Aaron's barrel (7,1,6) is the store; composter (6,2,5)."
+      },
+      {
+        "exhibit": "TA09.6",
+        "label": "D&T firewatch tower",
+        "role": "watchtower",
+        "note": "Tall but good: GUARD CROSSBOW_POST on the top deck, bed (5,13,3) north with chest (5,13,5), ladder (4,1..12,3)."
+      },
+      {
+        "exhibit": "TA09.1",
+        "label": "T&T old growth taiga fort",
+        "role": "castle",
+        "note": "Aaron's castle, read back 2026-09-14 after his edits. All nine banners become village banners; every bed takes a village colour.",
+        "stations": {
+          "jailer": "GUARD JAILER outside the one-cell jail at local (21,1,4): iron bars at x 20 and 22 on z 4 and x 20..22 on z 5, y 1..3, wall to the north; the two new barrels (23,0,4) and (24,1,4) hold the prisoner's things (evidence containers); jailer post (23,1,4) beside them, release point (21,1,6)",
+          "mason": "MASON at the stonecutter (15,1,31) on the back side; Aaron's barrel (16,1,31) is its container",
+          "cleric": "CLERIC at the brewing stand (17,2,21) Aaron put where the lectern was; chest (15,3,21) is its container",
+          "blacksmith": "BLACKSMITH at the smithing table (20,2,16); Aaron's barrel (21,2,14) is its container",
+          "hunter": "HUNTER at the fletching table (19,2,21); the chest a little further off, (24,3,20), is its container",
+          "baker": "BAKER at the furnace (13,2,20) by the cake (11,3,21); the barrel (13,4,20) is its container",
+          "ruler": "LEADER: the couple bed (22,8,16)+(22,8,17) facing east upstairs is the ruler's room (room_reservations LEADER), with the chest Aaron moved to (22,8,19) at the far end"
+        },
+        "beds": "four vacant single beds upstairs in a line at (11,8,19), (13,8,19), (15,8,19), (17,8,19) facing south, for whichever castle workers claim them: beds at x 11 and 13 share Aaron's chest (11,8,15), beds at x 15 and 17 share the chest (16,8,15). Six workers, four beds: two are housed from general housing, as the docs allow. Plus the ruler's pair.",
+        "removed": "Aaron removed the chest (4,1,28), the chest (22,8,18) (moved to (22,8,19)), the lectern (17,2,21), and the trapdoor bench at x 20..23, z 4..6 where the cell now is; he added the ladder (9,2..8,17)."
+      },
+      {
+        "exhibit": "TA28.1",
+        "label": "D&T spruce tavern house",
+        "role": "tavern",
+        "note": "Aaron: four guest beds (5,1,2), (8,1,2), (11,1,2), (14,1,2) facing east, each with its own barrel sunk in the floor beside it at (5,0,3), (8,0,3), (11,0,3), (14,0,3); the keeper's bed upstairs (4,5,6) north with the chest (7,5,9) is the worker bed. He removed the chest (8,3,15)."
+      },
+      {
+        "exhibit": "TA02.8",
+        "label": "Viking shepherd, rebuilt by Aaron",
+        "role": "lumberjack",
+        "note": "Aaron's own lumberjack: the dead bush at (3,1,-1), one block north of the template box, marks where the spruce sapling is planted (capture grows the box north by one, as the savanna balloon stand's did). Bed (2,1,5) north with chest (4,1,5) as the personal storage; the barrel (2,0,2) on the ground outside is the workstation's store. Loom removed."
+      },
+      {
+        "exhibit": "TA17.20",
+        "label": "CTOV taiga well",
+        "role": "well",
+        "note": "Aaron: a pretty cool well, with its deepslate bricks swapped for cobblestone variants: deepslate_bricks (24) to cobblestone, deepslate_brick_stairs (8) to cobblestone_stairs, deepslate_brick_wall (4) to cobblestone_wall. Spruce fence, stairs, planks, chains and trapdoors stay."
+      },
+      {
+        "exhibit": "TA35.1 to TA35.3",
+        "label": "Market tiers 1 to 3, the spruce-on-podzol studies",
+        "role": "market",
+        "note": "Aaron: 'these markets look good'; used from the prepared study copies."
+      },
+      {
+        "exhibit": "TA36.1 to TA36.5",
+        "label": "Wall A, the spruce palisade",
+        "role": "wall",
+        "note": "Aaron: 'wall A is probably the best, makes a lot of sense'. Stripped spruce wood body, spruce fence tips, spruce slab walks, spruce hatches, cobblestone footing. B and C not chosen."
+      }
+    ],
+    "open": [],
+    "notPicked": [
+      "TA01.3 small house 2",
+      "TA02.1 armorer",
+      "TA02.5 leatherworker",
+      "TA02.6 library",
+      "TA02.8 shepherd",
+      "TA03.3 small farm",
+      "TA03.4 drakkar",
+      "TA03.5 wood pile"
+    ],
+    "locked": "2026-09-14T22:30"
   }
 }

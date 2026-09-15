@@ -6,9 +6,19 @@ import net.minecraft.world.level.block.CandleBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.Blocks;
 
-/** Regional materials applied to the canonical authored wall geometry. */
+/**
+ * Regional materials applied to the canonical authored wall geometry. The
+ * footing is the course a footed family seats on the ground (docs/walls.md):
+ * dead coral under the Polynesian palisade, stripped jungle wood under the
+ * Nautical seawall, cobblestone under the Savanna Tent and Taiga palisades.
+ * Families without a footing name their post, and never place one.
+ */
 record WallPalette(Block post, Block deck, Block stairs, Block slab,
-    Block railing, Block trapdoor) {
+    Block railing, Block trapdoor, Block footing) {
+
+  WallPalette(Block post, Block deck, Block stairs, Block slab, Block railing, Block trapdoor) {
+    this(post, deck, stairs, slab, railing, trapdoor, post);
+  }
 
   static WallPalette forStyle(VillageStyle style) {
     return switch (style) {
@@ -37,10 +47,10 @@ record WallPalette(Block post, Block deck, Block stairs, Block slab,
           Blocks.SNOW_BLOCK, Blocks.SNOW_BLOCK, Blocks.STONE_BRICK_STAIRS,
           Blocks.STONE_BRICK_SLAB, Blocks.SPRUCE_FENCE, Blocks.SPRUCE_TRAPDOOR);
       // Study A (2026-09-12): stripped spruce body, oak slab walks, spruce fence
-      // tips and hatches. Its dead coral footing is a literal piece, not a slot.
+      // tips and hatches, on a dead coral footing.
       case POLYNESIAN_COAST -> new WallPalette(
           Blocks.STRIPPED_SPRUCE_WOOD, Blocks.STRIPPED_SPRUCE_WOOD, Blocks.OAK_STAIRS,
-          Blocks.OAK_SLAB, Blocks.SPRUCE_FENCE, Blocks.SPRUCE_TRAPDOOR);
+          Blocks.OAK_SLAB, Blocks.SPRUCE_FENCE, Blocks.SPRUCE_TRAPDOOR, Blocks.DEAD_BUBBLE_CORAL_BLOCK);
       case ROMANIAN -> new WallPalette(
           Blocks.STRIPPED_DARK_OAK_WOOD, Blocks.STRIPPED_DARK_OAK_WOOD, Blocks.BIRCH_STAIRS,
           Blocks.BIRCH_SLAB, Blocks.COBBLED_DEEPSLATE_WALL, Blocks.DARK_OAK_TRAPDOOR);
@@ -51,34 +61,26 @@ record WallPalette(Block post, Block deck, Block stairs, Block slab,
           Blocks.STRIPPED_SPRUCE_LOG, Blocks.STRIPPED_SPRUCE_LOG, Blocks.SPRUCE_STAIRS,
           Blocks.DEEPSLATE_TILE_SLAB, Blocks.SPRUCE_FENCE, Blocks.CHERRY_TRAPDOOR);
       // Study C (2026-09-13): a sandstone seawall with sandstone wall tips and
-      // jungle slab walks. Its smooth sandstone accents and stripped jungle wood
-      // footing resolve through accent() and footing().
+      // jungle slab walks on a stripped jungle wood footing. Its smooth
+      // sandstone accents resolve through accent().
       case NAUTICAL_COAST -> new WallPalette(
           Blocks.SANDSTONE, Blocks.SANDSTONE, Blocks.JUNGLE_STAIRS,
-          Blocks.JUNGLE_SLAB, Blocks.SANDSTONE_WALL, Blocks.JUNGLE_TRAPDOOR);
+          Blocks.JUNGLE_SLAB, Blocks.SANDSTONE_WALL, Blocks.JUNGLE_TRAPDOOR, Blocks.STRIPPED_JUNGLE_WOOD);
       // Study A (2026-09-14): a stripped acacia palisade with acacia fence tips,
-      // acacia slab walks and hatches. Its cobblestone footing resolves through
-      // footing().
+      // acacia slab walks and hatches on a cobblestone footing.
       case SAVANNA_TENT -> new WallPalette(
           Blocks.STRIPPED_ACACIA_WOOD, Blocks.STRIPPED_ACACIA_WOOD, Blocks.ACACIA_STAIRS,
-          Blocks.ACACIA_SLAB, Blocks.ACACIA_FENCE, Blocks.ACACIA_TRAPDOOR);
+          Blocks.ACACIA_SLAB, Blocks.ACACIA_FENCE, Blocks.ACACIA_TRAPDOOR, Blocks.COBBLESTONE);
       case RUSTIC_WOODLAND -> new WallPalette(
           Blocks.STRIPPED_OAK_LOG, Blocks.STRIPPED_OAK_LOG, Blocks.OAK_STAIRS,
           Blocks.OAK_SLAB, Blocks.OAK_FENCE, Blocks.OAK_TRAPDOOR);
+      // Study A (2026-09-14): a stripped spruce palisade with spruce fence tips,
+      // spruce slab walks and hatches on a cobblestone footing, the Viking
+      // houses' timber.
+      case TAIGA -> new WallPalette(
+          Blocks.STRIPPED_SPRUCE_WOOD, Blocks.STRIPPED_SPRUCE_WOOD, Blocks.SPRUCE_STAIRS,
+          Blocks.SPRUCE_SLAB, Blocks.SPRUCE_FENCE, Blocks.SPRUCE_TRAPDOOR, Blocks.COBBLESTONE);
     };
-  }
-
-  /**
-   * The course a footed family seats on the ground (docs/walls.md): dead coral
-   * under the Polynesian palisade, stripped jungle wood under the Nautical
-   * seawall, cobblestone under the Savanna Tent palisade. Families without a
-   * footing never place one.
-   */
-  Block footing() {
-    if (this.post == Blocks.STRIPPED_SPRUCE_WOOD) return Blocks.DEAD_BUBBLE_CORAL_BLOCK;
-    if (this.post == Blocks.SANDSTONE) return Blocks.STRIPPED_JUNGLE_WOOD;
-    if (this.post == Blocks.STRIPPED_ACACIA_WOOD) return Blocks.COBBLESTONE;
-    return this.post;
   }
 
   /**

@@ -361,9 +361,9 @@ becoming one overloaded axis.
 
 ### Current runtime selection: 2026-09-13
 
-Fifteen styles exist today, in this stable order: `birch_forest`, `desert`, `badlands`,
+Sixteen styles exist today, in this stable order: `birch_forest`, `desert`, `badlands`,
 `floodplain`, `jungle`, `swamp`, `mediterranean`, `tundra`, `polynesian_coast`, `romanian`,
-`alpine_highlands`, `japanese_cherry_grove`, `nautical_coast`, `savanna_tent`, `rustic_woodland`.
+`alpine_highlands`, `japanese_cherry_grove`, `nautical_coast`, `savanna_tent`, `rustic_woodland`, `taiga`.
 Birch Forest is the only catalog bundled in the jar and so the default: a blank
 or unknown saved style reads as Birch. Desert ([desert-village.md](desert-village.md)),
 Badlands ([badlands-village.md](badlands-village.md)) and Floodplain
@@ -377,8 +377,9 @@ Badlands ([badlands-village.md](badlands-village.md)) and Floodplain
 ([alpine-highlands-village.md](alpine-highlands-village.md)), Japanese Cherry Grove
 ([japanese-cherry-grove-village.md](japanese-cherry-grove-village.md)), Nautical Coast
 ([nautical-coast-village.md](nautical-coast-village.md)) and Savanna Tent
-([savanna-tent-village.md](savanna-tent-village.md)) and Rustic Woodland
-([rustic-woodland-village.md](rustic-woodland-village.md)) are installed as private datapacks that
+([savanna-tent-village.md](savanna-tent-village.md)), Rustic Woodland
+([rustic-woodland-village.md](rustic-woodland-village.md)) and Taiga
+([taiga-village.md](taiga-village.md)) are installed as private datapacks that
 supply their own definitions and templates under the ids the code resolves; without its pack
 a style has no founding set and is never selected automatically. The old Village Life families
 (plains, taiga, snowy, savanna and the bundled desert set) were removed on 2026-09-10; see
@@ -396,7 +397,7 @@ reroll an existing village. An explicit style argument on the command still over
 Selection first honors `kithkyn:village_style/<style>` biome tags, so a datapack can map a
 vanilla or modded biome precisely without a second mapping format. If a biome has several
 explicit tags, the stable order is Birch Forest, Desert, Badlands, Floodplain, Jungle, Swamp,
-Mediterranean, Tundra, Polynesian Coast, Romanian, Alpine Highlands, Japanese Cherry Grove, Nautical Coast, Savanna Tent, Rustic Woodland. Sparse Jungle carries the Polynesian Coast tag and no
+Mediterranean, Tundra, Polynesian Coast, Romanian, Alpine Highlands, Japanese Cherry Grove, Nautical Coast, Savanna Tent, Rustic Woodland, Taiga. Sparse Jungle carries the Polynesian Coast tag and no
 longer the Jungle one, so Jungle keeps Jungle and Bamboo Jungle.
 Only styles whose own center, mine, and storehouse definitions are loaded are automatic candidates.
 
@@ -425,6 +426,7 @@ catalog exists:
 | Temperate plains: the conventional Plains tag and registry paths ending in `plains`, unless the biome is also snowy, icy or named for snow, ice or frost | Mediterranean |
 | Dark Forest and registry paths named `dark_forest`, `darkforest`, `forested_highland` or `wooded_valley` | Romanian |
 | Ordinary Forest and compatible registry paths named for oak forests or oak woodlands | Rustic Woodland |
+| Taiga, old growth pine taiga and old growth spruce taiga, including `c:is_taiga` and registry paths containing `taiga`, unless snowy | Taiga |
 | Every other conventional family (taiga and the rest) | No conventional mapping; the climate cluster below decides |
 
 Birch wins before broader family tags; an explicit style tag can override even a birch-named
