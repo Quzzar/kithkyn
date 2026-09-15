@@ -29,13 +29,13 @@ import net.neoforged.neoforge.common.Tags;
  * Forest is the one bundled catalog and so the default; Desert, Badlands,
  * Floodplain, Jungle, Swamp, Mediterranean, Tundra, Polynesian Coast,
  * Romanian, Alpine Highlands, Japanese Cherry Grove, Nautical Coast, Savanna
- * Tent, Rustic Woodland and Taiga arrive through private datapacks (docs/desert-village.md, docs/badlands-village.md,
+ * Tent, Rustic Woodland, Taiga and Mushroom arrive through private datapacks (docs/desert-village.md, docs/badlands-village.md,
  * docs/floodplain-village.md, docs/jungle-village.md, docs/swamp-village.md,
  * docs/mediterranean-village.md, docs/tundra-village.md,
  * docs/polynesian-coast-village.md, docs/romanian-village.md,
  * docs/alpine-highlands-village.md, docs/japanese-cherry-grove-village.md,
  * docs/nautical-coast-village.md, docs/savanna-tent-village.md,
- * docs/rustic-woodland-village.md), so they
+ * docs/rustic-woodland-village.md, docs/taiga-village.md, docs/mushroom-village.md), so they
  * are only automatic candidates while their founding sets are loaded.
  *
  * Explicit datapack style tags take precedence over conventional biome families.
@@ -48,7 +48,7 @@ import net.neoforged.neoforge.common.Tags;
 public enum VillageStyle {
   BIRCH_FOREST, DESERT, BADLANDS, FLOODPLAIN, JUNGLE, SWAMP, MEDITERRANEAN, TUNDRA,
   POLYNESIAN_COAST, ROMANIAN, ALPINE_HIGHLANDS, JAPANESE_CHERRY_GROVE, NAUTICAL_COAST, SAVANNA_TENT,
-  RUSTIC_WOODLAND, TAIGA;
+  RUSTIC_WOODLAND, TAIGA, MUSHROOM;
 
   /**
    * What a blank or unknown saved style reads as, the answer for every climate
@@ -216,6 +216,11 @@ public enum VillageStyle {
   @Nullable
   private static VillageStyle conventionalStyle(Predicate<TagKey<Biome>> tagged, String biomePath) {
     String path = biomePath.toLowerCase(Locale.ROOT);
+    // The mushroom island is the Mushroom catalog (docs/mushroom-village.md):
+    // Mushroom Fields and any fungal family tagged or named for mushrooms.
+    if (tagged.test(Tags.Biomes.IS_MUSHROOM) || path.contains("mushroom")) {
+      return MUSHROOM;
+    }
     // Some biome mods omit conventional tags. A birch-named family is still
     // recognizable, while an explicit style tag above can correct an exception.
     if (tagged.test(Tags.Biomes.IS_BIRCH_FOREST) || path.contains("birch")) {

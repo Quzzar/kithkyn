@@ -36,6 +36,9 @@ final class BuiltInWallSegmentCatalog implements WallSegmentCatalog {
   /** The Taiga palisade: study A, with its cobblestone footing seated on the ground. */
   static final BuiltInWallSegmentCatalog TAIGA =
       new BuiltInWallSegmentCatalog(AuthoredWoodWallSegments.TAIGA);
+  /** The Mushroom cap wall: study B, with its mushroom-stem footing seated on the ground. */
+  static final BuiltInWallSegmentCatalog MUSHROOM =
+      new BuiltInWallSegmentCatalog(AuthoredWoodWallSegments.MUSHROOM);
   static final BuiltInWallSegmentCatalog RUSTIC_WOODLAND =
       new BuiltInWallSegmentCatalog(AuthoredWoodWallSegments.RUSTIC_WOODLAND);
   private final AuthoredWoodWallSegments authored;

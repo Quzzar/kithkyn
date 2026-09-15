@@ -43,14 +43,14 @@ class VillageStyleTest {
         VillageStyle.FLOODPLAIN, VillageStyle.JUNGLE, VillageStyle.SWAMP, VillageStyle.MEDITERRANEAN,
         VillageStyle.TUNDRA, VillageStyle.POLYNESIAN_COAST, VillageStyle.ROMANIAN,
         VillageStyle.ALPINE_HIGHLANDS, VillageStyle.JAPANESE_CHERRY_GROVE, VillageStyle.NAUTICAL_COAST,
-        VillageStyle.SAVANNA_TENT, VillageStyle.RUSTIC_WOODLAND, VillageStyle.TAIGA),
+        VillageStyle.SAVANNA_TENT, VillageStyle.RUSTIC_WOODLAND, VillageStyle.TAIGA, VillageStyle.MUSHROOM),
         List.of(VillageStyle.values()));
     assertEquals(VillageStyle.BIRCH_FOREST, VillageStyle.DEFAULT);
     assertEquals(VillageStyle.BIRCH_FOREST, VillageStyle.fromId(""));
-    assertEquals(VillageStyle.BIRCH_FOREST, VillageStyle.fromId("mushroom"));
+    assertEquals(VillageStyle.BIRCH_FOREST, VillageStyle.fromId("orchard"));
     assertEquals(VillageStyle.BIRCH_FOREST, VillageStyle.fromId("removed_family"));
     assertEquals(VillageStyle.DESERT, VillageStyle.fromId("DESERT"));
-    assertNull(VillageStyle.parse("mushroom"));
+    assertNull(VillageStyle.parse("orchard"));
   }
 
   @Test
@@ -148,6 +148,18 @@ class VillageStyleTest {
         VillageStyle.select(Tags.Biomes.IS_TAIGA::equals, "cold_pines", 0.25F, true, 0.8F, 12L,
             style -> style != VillageStyle.TAIGA),
         "without the Taiga pack a conifer forest keeps the temperate cluster's bundled catalog");
+  }
+
+  @Test
+  void mushroomFieldsAreTheMushroomCatalogOnlyWhenItIsLoaded() {
+    assertEquals(VillageStyle.MUSHROOM,
+        VillageStyle.select(NO_TAGS, "mushroom_fields", 0.9F, true, 1.0F, 12L, ALL_STYLES));
+    assertEquals(VillageStyle.MUSHROOM,
+        VillageStyle.select(Tags.Biomes.IS_MUSHROOM::equals, "fungal_isle", 0.9F, true, 1.0F, 12L, ALL_STYLES),
+        "a tagged fungal family is the Mushroom catalog whatever its name");
+    assertTrue(VillageStyle.select(NO_TAGS, "mushroom_fields", 0.9F, true, 1.0F, 12L,
+        style -> style != VillageStyle.MUSHROOM) != VillageStyle.MUSHROOM,
+        "without the Mushroom pack the island falls through to the climate clusters");
   }
 
   @Test

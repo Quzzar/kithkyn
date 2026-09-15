@@ -53,7 +53,7 @@ The private datapack contains 23 definitions:
 | `stoneworks_taiga_1` | TA02.7 | The Viking mason: the stonecutter, the chest; its red wool is the village's primary colour |
 | `lumberjack_taiga_1` | TA02.8 | Aaron's rebuilt shepherd hut: the spruce sapling where his dead bush stood, the lumberjack's bed and chest inside, the barrel in the ground outside as the store |
 | `blacksmith_taiga_1` | TA02.9 | The Viking toolsmith: the smithing table, the lava cauldron, the chest |
-| `mine_taiga_1` | TA02.10 | The Viking weaponsmith hut with its centre dug out: the miner east of the hollow, the shaft descending west into it, the chest as the store |
+| `mine_taiga_1` | TA02.10 | The Viking weaponsmith hut with its centre dug out one block into the ground: the miner east of the hollow, the shaft descending west into it, the chest as the store |
 | `fishery_taiga_1` | TA03.1 | The Viking fisher: the barrel by the pool is the store, the bed and its barrel are the fisher's |
 | `farm_taiga_1` | TA03.2 | The Viking large farm with Aaron's barrel, captured from the height strip after his second pass: potatoes on the west beds, carrots on the channel banks and three tilled path cells |
 | `well_taiga_1` | TA17.20 | The CTOV taiga well, its deepslate bricks traded for cobblestone, sunk two layers, one higher than the gallery showed it |
@@ -71,7 +71,11 @@ A few definitions differ from the gallery copies:
   feet below the ladder and never climbed. Every other block is Aaron's.
 - **Lumberjack.** The template box grows one block north of the hut to hold the sapling cell.
   The dead bush marks it; the template plants a spruce sapling there at stage 0.
-- **Mine.** The template box grows one block north and east for the ground Aaron laid there.
+- **Mine.** The template box grows one block north and east for the ground Aaron laid there. The
+  hollow (local x 2 to 4, z 1 to 5) is explicit air on the ground course, which the export keeps for
+  this piece alone, so the placement clears it and the floor is the course below; the first
+  release left those cells to the terrain and the hollow came out filled (Aaron's height walk,
+  2026-09-15). Placement and the mine walks were re-run on the cut template.
 - **Fishery and farm.** Every water cell is a source. The farm's raised channel ended in crop cells
   to the north and east at the water's own level, so the water washed them and ran off the top;
   both ends are farmland now, like the channel's other banks, and Aaron planted carrots on them,

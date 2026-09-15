@@ -29,6 +29,7 @@ These catalogs are integrated, selectable, and verified as complete founding vil
 | Savanna Tent | Savanna, Savanna Plateau, Windswept Savanna, and compatible dry grasslands | A tent camp on the dry grass: the original white-canvas savanna tent as its centre, blue and yellow tipis and camp tents, a trader-tent storehouse, an acacia mine and stoneworks, vanilla's savanna temple and farm, and an acacia palisade on cobblestone |
 | Rustic Woodland | Forest and compatible ordinary oak woodland biomes | Familiar oak buildings, working barns, a merchant-and-well center, open agriculture, and a clean stripped-oak palisade |
 | Taiga | Taiga, Old Growth Pine Taiga, Old Growth Spruce Taiga, and compatible cold forests that are not snowy | A Viking camp in the conifers: the meeting point with its crossbow watch tower, stripped spruce homes and workplaces, the old-growth taiga fort with its jail and ruler's room, the firewatch tower, the spruce tavern, and a stripped spruce palisade on cobblestone |
+| Mushroom | Mushroom Fields and compatible fungal biomes | A fantasy village on the mushroom island: the Towns & Towers meeting point with a cleric's loft under its cap, houses under red and brown caps on pale stems, oak gazebos on orange paving for the trades, mooshrooms in the pen, an oak stand for the lumberjack, and a wall of mushroom caps on a stem footing |
 
 ## Locked directions
 
@@ -38,10 +39,11 @@ its production catalog and founding behavior are verified.
 
 | Village biome | Founding environments | Direction |
 | --- | --- | --- |
-| Mushroom | Mushroom Fields and compatible fungal biomes | Fantasy mushroom settlement drawn from the complete mushroom reference families |
+
+No village biome is a locked direction today: every land variant on the roster has its catalog.
 
 Jungle, ordinary Swamp, Mediterranean, Tundra, Polynesian Coast, Romanian, Alpine Highlands,
-Japanese Cherry Grove, Nautical Coast, Savanna Tent, Rustic Woodland and Taiga are complete private production catalogs. Swamp remains
+Japanese Cherry Grove, Nautical Coast, Savanna Tent, Rustic Woodland, Taiga and Mushroom are complete private production catalogs. Swamp remains
 separate from the mud-brick Floodplain catalog used by mangroves. Tundra starts from a four-bed
 centre with a naturally placed mine and storehouse and deliberately has no castle. The Polynesian
 Coast centre is the king's hall, which seats the ruler and keeps the village jail; that catalog has
@@ -66,10 +68,11 @@ to Floodplain when site selection can classify them reliably.
 ## Next authoring shortlist
 
 Tundra, Polynesian Coast, Romanian, Alpine Highlands, Japanese Cherry Grove, Nautical Coast and
-Savanna Tent, Rustic Woodland and Taiga are complete. Taiga was parked until the ornate Polish and grittier
+Savanna Tent, Rustic Woodland, Taiga and Mushroom are complete. Taiga was parked until the ornate Polish and grittier
 Viking directions could be judged; Aaron judged them on 2026-09-14 and the Taiga catalog is
-complete on the Viking family. Mushroom is the last roster variant: its selection gallery stands
-in the trio sky since 2026-09-14, ready for Aaron's selection walk.
+complete on the Viking family. Mushroom, the last roster variant, was selected from its gallery
+the same evening and closed out on 2026-09-15, so every land variant on the roster now has a
+catalog; what remains are the ship and Piglin systems below.
 
 The three walk-through courts begin at **9913.5, 230, 986.5** in the live showcase world. The
 individual entrances are Swamp at **9929.5, 230, 1004.5**, Viking at
@@ -197,8 +200,12 @@ The current review status is:
   private display copies only. The sources, hashes, placements and the offline check are recorded in
   `tools/structure/savanna-full-profile-20260914.json`.
 
-- **Mushroom:** the selection gallery stands in the sky above the **trio-20260912** world,
-  beginning at **2023.5, 230, 10.5**, east of the Savanna gallery. Its 12 rows hold 113 pieces:
+- **Mushroom:** the production catalog is selected and verified
+  ([mushroom-village.md](mushroom-village.md)); the catalog is in
+  `tools/structure/mushroom-catalog-20260915.json`. Aaron chose the Towns & Towers
+  mushroom-fields fantasy family on 2026-09-14; the CTOV mushroom village stood beside it and
+  was not chosen. The selection gallery stands in the sky above the **trio-20260912** world,
+  beginning at **2023.5, 230, 10.5**, east of the Savanna gallery. Its 17 rows hold 139 pieces:
   - MU01 and MU02: every standalone Towns & Towers mushroom-fields fantasy piece: the meeting
     point, houses and the two profession gazebos, then the trades and the eight profession
     inserts, with the mushroom-fields outpost tower. The two mooshroom templates are entity-only
@@ -208,10 +215,19 @@ The current review status is:
   - MU11 and MU12: donors for the roles neither family has: the ten original Village Life mines
     with the Dungeons & Taverns miner compound, and the six D&T village wells with Terralith's
     and the T&T classic well.
+  - MU13: studies, each T&T gazebo composed with each of its four profession inserts on its
+    jigsaw anchor, since the inserts alone (MU02.4 to MU02.11) are bare station kits.
+  - MU14 to MU17: palette studies of the shared Birch market tiers and wall family in the
+    family's materials: the markets in oak with mushroom-stem posts on orange concrete paving,
+    then wall A (a stem palisade on cobbled deepslate), wall B (red and brown mushroom caps on a
+    stem footing) and wall C (cobbled deepslate and smooth basalt, the outpost tower's stone).
 
   The rows' sky is filled with the void biome, which has no precipitation, so lightning cannot
-  strike. Blocks from mods the server lacks are replaced by vanilla stand-ins in the private
-  display copies only. The sources, hashes, placements and the offline check are recorded in
+  strike. Blocks from mods the server lacks are replaced in the private display copies only, each
+  by a named vanilla block that keeps its facing and shape (Farmer's Delight crops as bushes on
+  their farmland, Create's windmill in wool and oak, its factory in andesite, glass, copper and
+  iron, the profession mods' job tables as the nearest vanilla job block); the table is the
+  record's `standInSwaps`. The sources, hashes, placements and the offline check are recorded in
   `tools/structure/mushroom-full-profile-20260914.json`.
 
 The Viking annex contains all 43 standalone structures: 22 Viking and 21 Polish. Road pieces

@@ -71,6 +71,12 @@ final class AuthoredWoodWallSegments {
    * cobblestone footing, the Viking houses' timber.
    */
   static final AuthoredWoodWallSegments TAIGA = loadBundled("taiga");
+  /**
+   * Study B of the Mushroom walls (2026-09-14): the Birch geometry as red mushroom
+   * caps with brown caps where Birch has mossy stone, oak fence tips and oak slab
+   * walks, on a mushroom-stem footing.
+   */
+  static final AuthoredWoodWallSegments MUSHROOM = loadBundled("mushroom");
 
   private static final String RESOURCE_ROOT =
       "data/kithkyn/structure/wall/";
@@ -634,6 +640,11 @@ final class AuthoredWoodWallSegments {
       // stripped jungle wood.
       case "minecraft:sandstone" -> WallBlockPlan.Piece.BODY;
       case "minecraft:smooth_sandstone" -> WallBlockPlan.Piece.BODY_ACCENT;
+      // The Mushroom capture (study B): red caps are the body, brown caps the
+      // accent, and the course of stems under them the footing.
+      case "minecraft:red_mushroom_block" -> WallBlockPlan.Piece.BODY;
+      case "minecraft:brown_mushroom_block" -> WallBlockPlan.Piece.BODY_ACCENT;
+      case "minecraft:mushroom_stem" -> WallBlockPlan.Piece.FOOTING;
       case "minecraft:stripped_jungle_wood" -> WallBlockPlan.Piece.FOOTING;
       // The Savanna Tent capture (study A) is a stripped acacia palisade on the
       // cobblestone footing above.

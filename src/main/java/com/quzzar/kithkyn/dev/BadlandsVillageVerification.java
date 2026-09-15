@@ -157,11 +157,18 @@ public final class BadlandsVillageVerification {
     case TAIGA -> new Catalog("[taiga-verify]", 23, 3, 4, new int[] {3, 0, 0}, Map.of(), List.of("castle_taiga_1"), 5, 1,
         new String[][] {{id("market", 1), id("market", 2)}, {id("market", 2), id("market", 3)}},
         6, 4, 5, 2, 7, 0, 0, new BlockPos(7, 1, 9), new BlockPos(10, 2, 9), 1, Biomes.TAIGA);
+    // The Mushroom centre is the T&T mushroom meeting point: builders on the plaza, the captain by the
+    // campfire, and a cleric upstairs under the cap with the one bed, meant for that job and open to any
+    // founder, with its own chest. The founding set is the mine, the storehouse and the two houses: four
+    // beds for five jobs, so one founding job waits for the next bed as the Taiga's does.
+    case MUSHROOM -> new Catalog("[mushroom-verify]", 18, 2, 3, new int[] {2, 0, 0}, Map.of(), List.of(), 0, 0,
+        new String[][] {{id("market", 1), id("market", 2)}, {id("market", 2), id("market", 3)}},
+        5, 4, 5, 1, 7, 1, 0, new BlockPos(7, 1, 12), new BlockPos(3, 2, 7), 1, Biomes.MUSHROOM_FIELDS);
     case BIRCH_FOREST -> null;
   };
   /** Extra local jobs a catalog's center also opens at founding. */
   private static final Map<Occupation, Long> EXTRA_CENTER_JOBS = STYLE == VillageStyle.MEDITERRANEAN
-      || STYLE == VillageStyle.ROMANIAN
+      || STYLE == VillageStyle.ROMANIAN || STYLE == VillageStyle.MUSHROOM
       ? Map.of(Occupation.CLERIC, 1L)
       : STYLE == VillageStyle.ALPINE_HIGHLANDS ? Map.of(Occupation.FARMER, 1L)
       : STYLE == VillageStyle.POLYNESIAN_COAST ? Map.of(Occupation.LEADER, 1L)
@@ -241,6 +248,8 @@ public final class BadlandsVillageVerification {
     }
     check(VillageStyle.fromBiome(registry.getHolderOrThrow(Biomes.SNOWY_TAIGA), 0L, BlockPos.ZERO, everything)
         == VillageStyle.TUNDRA, "Snowy taiga must stay Tundra");
+    check(VillageStyle.fromBiome(registry.getHolderOrThrow(Biomes.MUSHROOM_FIELDS), 0L, BlockPos.ZERO, everything)
+        == VillageStyle.MUSHROOM, "Mushroom Fields must select Mushroom");
     for (var biome : List.of(Biomes.BIRCH_FOREST, Biomes.OLD_GROWTH_BIRCH_FOREST)) {
       check(VillageStyle.fromBiome(registry.getHolderOrThrow(biome), 0L, BlockPos.ZERO, everything)
           == VillageStyle.BIRCH_FOREST, "Birch coverage changed " + biome.location());

@@ -1,0 +1,224 @@
+{
+  "schemaVersion": 1,
+  "recorded": "2026-09-15",
+  "status": "bundled; unit-tested; gate access walked on this wall and the Polynesian and Nautical walls",
+  "description": "The Mushroom wall family: study B of the 2026-09-14 Mushroom gallery, the bundled Birch wall pieces with their cobblestone turned to red mushroom blocks and their mossy cobblestone to brown ones above a course of mushroom stems, their stone walls to oak fence tips and their top cobblestone slabs to oak slab walks, the oak hatches kept. The five templates are the gallery's own files byte for byte; the loader reads the stem as this family's footing and the catalog seats it on each column's own ground.",
+  "decision": "Aaron reviewed rows MU15 to MU17 of the Mushroom gallery late on 2026-09-14 and chose study B, the cap wall ('wall B is a vibe'). Study A (a stem palisade on cobbled deepslate) and study C (cobbled deepslate and smooth basalt) were not chosen.",
+  "gallery": {
+    "row": "MU16, the Mushroom wall B study row, in run/mushroom-full-profile/manifest.json above the trio-20260912 test world",
+    "workshop": "run/mushroom-full-profile/workshop.py wall_swap(\"B\"), applied with tools/structure/ReplaceTemplateBlocks.java to the Birch pieces at origin/main",
+    "studies": "run/mushroom-full-profile/studies/wall_b_straight.nbt through wall_b_terrace.nbt"
+  },
+  "swap": {
+    "minecraft:cobblestone and minecraft:mossy_cobblestone at local y 0": "minecraft:mushroom_stem, the footing",
+    "minecraft:cobblestone above local y 0": "minecraft:red_mushroom_block",
+    "minecraft:mossy_cobblestone above local y 0": "minecraft:brown_mushroom_block",
+    "minecraft:cobblestone_wall and minecraft:mossy_cobblestone_wall": "minecraft:oak_fence, from its defaults",
+    "minecraft:cobblestone_slab": "minecraft:oak_slab, type kept",
+    "kept": "oak hatches, torches, wall torches, ladders, the gatehouse campfire and its four white wall banners"
+  },
+  "vocabulary": {
+    "minecraft:red_mushroom_block": "BODY: the palette post, placed like the Polynesian spruce and Birch masonry",
+    "minecraft:brown_mushroom_block": "BODY_ACCENT: the palette accent, brown caps where Birch has mossy stone; the one family whose accent is not its post",
+    "minecraft:mushroom_stem": "FOOTING: the palette's explicit footing course",
+    "minecraft:oak_fence": "PARAPET: the palette railing",
+    "minecraft:oak_slab": "SLAB: the palette slab, placed as a top slab",
+    "minecraft:oak_trapdoor": "TRAPDOOR: the palette trapdoor, placed open and top half"
+  },
+  "palette": {
+    "post": "minecraft:red_mushroom_block",
+    "deck": "minecraft:red_mushroom_block",
+    "stairs": "minecraft:oak_stairs (unused: the Birch geometry has no steps)",
+    "slab": "minecraft:oak_slab",
+    "railing": "minecraft:oak_fence",
+    "trapdoor": "minecraft:oak_trapdoor",
+    "accent": "minecraft:brown_mushroom_block",
+    "footing": "minecraft:mushroom_stem (the palette footing course)",
+    "material": "minecraft:oak_log (WallTier, one block per ten cells)"
+  },
+  "footing": "BuiltInWallSegmentCatalog.seatFooting runs for every family whose templates author FOOTING. Every body course at or below its column's saved natural ground becomes FOOTING, and any FOOTING above that ground becomes BODY, so one stem course follows the terrain under runs, towers and gates.",
+  "procedural_parts": "The run fill (BODY from the seam floor to the deck on every route column) is red caps above the ground and stems at or below it.",
+  "loader_variant": "loadBundled(\"mushroom\"), not the arid variant, for the reason the Polynesian family gives: the Birch geometry has no Mesa trim cells or roof lanterns for that flag to change.",
+  "banners": "Each gatehouse keeps its four white wall banners, two on each face; WallRaiser dyes and patterns them with the owning village's identity when it places them.",
+  "guard_posts": "WallPosts reads a Mushroom gate or tower from the Mushroom footprint, the Birch geometry. Crossbow posts stand on the oak slab walks, at the cells a Birch wall uses.",
+  "known_normalizations": "Shared with Birch and the other footed walls, from the loader: fence tips reconnect to their neighbours when placed, every hatch is placed open and top half, and runs keep at most two courses above their deck, so tall capture columns are slid down into the ground. Mushroom blocks are placed in their default state, every face a cap.",
+  "tool": "tools/structure/ReplaceTemplateBlocks.java with the plan workshop.py builds from the swap above over every cell of birch_forest/<piece>.nbt; its output equals the bundled files byte for byte.",
+  "pieces": [
+    {
+      "kind": "straight",
+      "source": "src/main/resources/data/kithkyn/structure/wall/birch_forest/straight.nbt",
+      "source_sha256": "417c3fa956b8b016be23d1a9fdb090b8d155466b75060234831a0a118cf90b85",
+      "study_b": "run/mushroom-full-profile/studies/wall_b_straight.nbt (gallery template kithkyn_mushroom_profile:mu16_01_wall_b_straight)",
+      "study_b_sha256": "620b64d07af7df6206cb760859242ce6ff2a51274f6905dd55241bdcf39d8838",
+      "output": "src/main/resources/data/kithkyn/structure/wall/mushroom/straight.nbt",
+      "output_sha256": "620b64d07af7df6206cb760859242ce6ff2a51274f6905dd55241bdcf39d8838",
+      "reproduced_byte_for_byte": true,
+      "size": [
+        7,
+        8,
+        1
+      ],
+      "cells": 37,
+      "palette": [
+        "minecraft:brown_mushroom_block",
+        "minecraft:mushroom_stem",
+        "minecraft:oak_fence",
+        "minecraft:red_mushroom_block",
+        "minecraft:torch"
+      ],
+      "swaps": {
+        "minecraft:mossy_cobblestone -> minecraft:mushroom_stem": 5,
+        "minecraft:cobblestone -> minecraft:mushroom_stem": 2,
+        "minecraft:mossy_cobblestone -> minecraft:brown_mushroom_block": 6,
+        "minecraft:cobblestone -> minecraft:red_mushroom_block": 18,
+        "minecraft:cobblestone_wall -> minecraft:oak_fence": 3,
+        "minecraft:mossy_cobblestone_wall -> minecraft:oak_fence": 1
+      }
+    },
+    {
+      "kind": "diagonal",
+      "source": "src/main/resources/data/kithkyn/structure/wall/birch_forest/diagonal.nbt",
+      "source_sha256": "641d8f0285db2aadcc581e4b4a60082a70d29824668fb8b3bff2be357073ca71",
+      "study_b": "run/mushroom-full-profile/studies/wall_b_diagonal.nbt (gallery template kithkyn_mushroom_profile:mu16_02_wall_b_diagonal)",
+      "study_b_sha256": "a2c268e6e0a88b980355c62f679bdd6298fe1dfa3f0f41df48c4f5d9b8714d0b",
+      "output": "src/main/resources/data/kithkyn/structure/wall/mushroom/diagonal.nbt",
+      "output_sha256": "a2c268e6e0a88b980355c62f679bdd6298fe1dfa3f0f41df48c4f5d9b8714d0b",
+      "reproduced_byte_for_byte": true,
+      "size": [
+        7,
+        8,
+        7
+      ],
+      "cells": 40,
+      "palette": [
+        "minecraft:brown_mushroom_block",
+        "minecraft:mushroom_stem",
+        "minecraft:oak_fence",
+        "minecraft:red_mushroom_block",
+        "minecraft:torch"
+      ],
+      "swaps": {
+        "minecraft:mossy_cobblestone -> minecraft:mushroom_stem": 3,
+        "minecraft:cobblestone -> minecraft:mushroom_stem": 4,
+        "minecraft:mossy_cobblestone -> minecraft:brown_mushroom_block": 8,
+        "minecraft:cobblestone -> minecraft:red_mushroom_block": 16,
+        "minecraft:cobblestone_wall -> minecraft:oak_fence": 4,
+        "minecraft:mossy_cobblestone_wall -> minecraft:oak_fence": 2
+      }
+    },
+    {
+      "kind": "corner_tower",
+      "source": "src/main/resources/data/kithkyn/structure/wall/birch_forest/corner_tower.nbt",
+      "source_sha256": "38b6df41ffe999e9ef9027a2b6b05e8af76f622cbd27d7cd0d5918124a1e84ea",
+      "study_b": "run/mushroom-full-profile/studies/wall_b_corner_tower.nbt (gallery template kithkyn_mushroom_profile:mu16_03_wall_b_corner_tower)",
+      "study_b_sha256": "695080a8c009c4693b05abf9b6af1548f5c6f09611d01781eee73dbfb0a16735",
+      "output": "src/main/resources/data/kithkyn/structure/wall/mushroom/corner_tower.nbt",
+      "output_sha256": "695080a8c009c4693b05abf9b6af1548f5c6f09611d01781eee73dbfb0a16735",
+      "reproduced_byte_for_byte": true,
+      "size": [
+        12,
+        8,
+        6
+      ],
+      "cells": 100,
+      "palette": [
+        "minecraft:brown_mushroom_block",
+        "minecraft:ladder",
+        "minecraft:mushroom_stem",
+        "minecraft:oak_fence",
+        "minecraft:oak_slab",
+        "minecraft:oak_trapdoor",
+        "minecraft:red_mushroom_block",
+        "minecraft:torch"
+      ],
+      "swaps": {
+        "minecraft:mossy_cobblestone -> minecraft:mushroom_stem": 7,
+        "minecraft:cobblestone -> minecraft:mushroom_stem": 7,
+        "minecraft:mossy_cobblestone -> minecraft:brown_mushroom_block": 11,
+        "minecraft:cobblestone -> minecraft:red_mushroom_block": 40,
+        "minecraft:mossy_cobblestone_wall -> minecraft:oak_fence": 8,
+        "minecraft:cobblestone_wall -> minecraft:oak_fence": 11,
+        "minecraft:cobblestone_slab -> minecraft:oak_slab": 1
+      }
+    },
+    {
+      "kind": "gatehouse",
+      "source": "src/main/resources/data/kithkyn/structure/wall/birch_forest/gatehouse.nbt",
+      "source_sha256": "6b18ae5516320898e1ad6b89393a2e6ab9ba34a2afc8bd4b733d4944d9cdfcf1",
+      "study_b": "run/mushroom-full-profile/studies/wall_b_gatehouse.nbt (gallery template kithkyn_mushroom_profile:mu16_04_wall_b_gatehouse)",
+      "study_b_sha256": "22146795e2ed6ecdce30de51ec9cd6b07a63e85bb0e47daaf6e7f72877246a00",
+      "output": "src/main/resources/data/kithkyn/structure/wall/mushroom/gatehouse.nbt",
+      "output_sha256": "22146795e2ed6ecdce30de51ec9cd6b07a63e85bb0e47daaf6e7f72877246a00",
+      "reproduced_byte_for_byte": true,
+      "size": [
+        17,
+        8,
+        7
+      ],
+      "cells": 163,
+      "palette": [
+        "minecraft:brown_mushroom_block",
+        "minecraft:campfire",
+        "minecraft:ladder",
+        "minecraft:mushroom_stem",
+        "minecraft:oak_fence",
+        "minecraft:oak_slab",
+        "minecraft:red_mushroom_block",
+        "minecraft:torch",
+        "minecraft:wall_torch",
+        "minecraft:white_wall_banner"
+      ],
+      "swaps": {
+        "minecraft:mossy_cobblestone -> minecraft:mushroom_stem": 8,
+        "minecraft:cobblestone -> minecraft:mushroom_stem": 10,
+        "minecraft:cobblestone -> minecraft:red_mushroom_block": 52,
+        "minecraft:mossy_cobblestone -> minecraft:brown_mushroom_block": 30,
+        "minecraft:cobblestone_wall -> minecraft:oak_fence": 20,
+        "minecraft:mossy_cobblestone_wall -> minecraft:oak_fence": 11,
+        "minecraft:cobblestone_slab -> minecraft:oak_slab": 9
+      }
+    },
+    {
+      "kind": "terrace",
+      "source": "src/main/resources/data/kithkyn/structure/wall/birch_forest/terrace.nbt",
+      "source_sha256": "df728d8b1ed1fe0372acc52a4faf7057eefc5c24f2f1a0605a234613a3404056",
+      "study_b": "run/mushroom-full-profile/studies/wall_b_terrace.nbt (gallery template kithkyn_mushroom_profile:mu16_05_wall_b_terrace)",
+      "study_b_sha256": "35e49fbdc3987fb01c26c0a7e05f7c0601f0c8c6a9bd62b1b46b0f0ebe0b7f60",
+      "output": "src/main/resources/data/kithkyn/structure/wall/mushroom/terrace.nbt",
+      "output_sha256": "35e49fbdc3987fb01c26c0a7e05f7c0601f0c8c6a9bd62b1b46b0f0ebe0b7f60",
+      "reproduced_byte_for_byte": true,
+      "size": [
+        8,
+        9,
+        1
+      ],
+      "cells": 45,
+      "palette": [
+        "minecraft:brown_mushroom_block",
+        "minecraft:mushroom_stem",
+        "minecraft:oak_fence",
+        "minecraft:red_mushroom_block",
+        "minecraft:torch"
+      ],
+      "swaps": {
+        "minecraft:mossy_cobblestone -> minecraft:mushroom_stem": 3,
+        "minecraft:cobblestone -> minecraft:mushroom_stem": 1,
+        "minecraft:mossy_cobblestone -> minecraft:brown_mushroom_block": 12,
+        "minecraft:cobblestone -> minecraft:red_mushroom_block": 22,
+        "minecraft:cobblestone_wall -> minecraft:oak_fence": 4,
+        "minecraft:mossy_cobblestone_wall -> minecraft:oak_fence": 1
+      }
+    }
+  ],
+  "verification": {
+    "unit_tests": "FootedWallFamilyTest, shared with the Polynesian, Nautical, Savanna and Taiga walls: every study B gatehouse cell is reproduced at every gate on flat ground, one stem course is seated on every run column's ground on flat, rolling and sawtooth terrain, crossbow posts stand on the oak slab walks where Birch posts stand, and the project survives its codec. WallFoundationTest: its four gate passages stay open on flat and raised decks.",
+    "gate_access": {
+      "routes-gate-access-mushroom": "PASS: [gate-access-verify] RESULT PASS: MUSHROOM all 8 guards/workers ascended and descended",
+      "routes-gate-access-polynesian": "PASS: [gate-access-verify] RESULT PASS: POLYNESIAN_COAST all 8 guards/workers ascended and descended",
+      "routes-gate-access-nautical": "PASS: [gate-access-verify] RESULT PASS: NAUTICAL_COAST all 8 guards/workers ascended and descended"
+    }
+  },
+  "open_questions": [
+    "The footing follows the Polynesian rule: one course at the natural ground, and piers of stems where a run crosses an overhang. Aaron to confirm on real terrain."
+  ]
+}
