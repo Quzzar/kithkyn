@@ -1,0 +1,618 @@
+{
+  "schemaVersion": 1,
+  "recorded": "2026-09-14",
+  "status": "verified",
+  "style": "taiga",
+  "description": "Aaron's Taiga village catalog: the Towns & Towers Viking meeting point, homes and workplaces, his own lumberjack hut, the old-growth taiga fort as the castle with its jail and the ruler's room, the D&T firewatch tower and spruce tavern, the CTOV taiga well in cobblestone, and the shared market geometry in spruce, selected and edited live in the trio-20260912 sky gallery on 2026-09-14.",
+  "snapshot": "run/taiga-integration/world-snapshot-20260914-223707",
+  "founding": {
+    "center": "village_center_taiga_1",
+    "center_beds": 0,
+    "starting_buildings": [
+      "mine_taiga_1",
+      "storehouse_taiga_1",
+      "house_taiga_1",
+      "house_taiga_1__two_bed",
+      "house_taiga_1__small_house_2"
+    ],
+    "starting_beds": 4,
+    "starting_workers": [
+      "BUILDER",
+      "GUARD (CAPTAIN)",
+      "GUARD (CROSSBOW_POST)",
+      "MINER (at the mine)",
+      "QUARTERMASTER (at the storehouse)"
+    ],
+    "note": "the meeting point has no beds; the founding set brings the mine, the storehouse and three homes with four beds"
+  },
+  "identity": {
+    "beds": "village primary and secondary colours alternate by bed unit; a couple bed is one unit",
+    "cloth": "the stoneworks' red wool is the village's primary colour",
+    "banners": "the four banners on the centre's tower and the fort's nine are village banners",
+    "market_fabrics": "fixed Birch market trade colours"
+  },
+  "biomes": "Taiga, Old Growth Pine Taiga, Old Growth Spruce Taiga and compatible cold forests",
+  "castle": "castle_taiga_1",
+  "watchtower": "watchtower_taiga_1",
+  "ruling_seat": "castle_taiga_1: the LEADER station by the ruler's paired bed upstairs, the one-cell jail and its two evidence barrels",
+  "wall": {
+    "record": "tools/structure/taiga-walls-20260914.json",
+    "direction": "Aaron's study A (TA36.1 to TA36.5): a stripped spruce palisade with spruce fence tips and spruce slab walks on a cobblestone footing; gatehouse banners are village banners"
+  },
+  "buildings": [
+    {
+      "exhibit": "TA01.1",
+      "structure": "village_center_taiga_1",
+      "category": "village_center",
+      "level": 1,
+      "size": [
+        17,
+        9,
+        17
+      ],
+      "sink": 0,
+      "source": "run/taiga-integration/world-snapshot-20260914-223707/captures/TA01.1.nbt",
+      "source_sha256": "6fbaf1cbf1db98761d18b37d179475c92c0e1ceea11f139591e77c58d7816104",
+      "entities": 0,
+      "edits": [
+        [
+          [
+            5,
+            5,
+            4
+          ],
+          "minecraft:spruce_fence_gate",
+          "minecraft:spruce_fence_gate",
+          {
+            "facing": "south",
+            "in_wall": "false",
+            "open": "true",
+            "powered": "false"
+          }
+        ],
+        [
+          [
+            5,
+            4,
+            5
+          ],
+          "minecraft:spruce_trapdoor",
+          "minecraft:ladder",
+          {
+            "facing": "south",
+            "waterlogged": "false"
+          }
+        ],
+        [
+          [
+            5,
+            0,
+            5
+          ],
+          "minecraft:dirt_path",
+          "minecraft:dirt",
+          {}
+        ]
+      ],
+      "identity_blocks": {},
+      "swaps": {},
+      "swapped_cells": 0,
+      "asset": "run/taiga-integration/datapack/data/kithkyn/structure/village_center_taiga_1.nbt",
+      "asset_sha256": "1b77e058c912ba6d2d9bb69f12f1ab3c963af17407c240b3886e947d80c7b7e1",
+      "definition": "run/taiga-integration/datapack/data/kithkyn/kithkyn/buildings/village_center_taiga_1.json",
+      "definition_sha256": "7728bc733f5cce288d19e6e77ceb7ff3c411cb3f738b171265fc9d7e10fbbf78"
+    },
+    {
+      "exhibit": "TA01.6",
+      "structure": "house_taiga_1",
+      "category": "house",
+      "level": 1,
+      "size": [
+        7,
+        6,
+        6
+      ],
+      "sink": 0,
+      "source": "run/taiga-integration/world-snapshot-20260914-223707/captures/TA01.6.nbt",
+      "source_sha256": "8c885f50dad870443f62590a0262ab890c40a710974934f3b7a7538673dc795c",
+      "entities": 0,
+      "edits": [],
+      "identity_blocks": {},
+      "swaps": {},
+      "swapped_cells": 0,
+      "asset": "run/taiga-integration/datapack/data/kithkyn/structure/house_taiga_1.nbt",
+      "asset_sha256": "0cc6722df32b6917c9403dfdce3482b219414b74a32db94598154da6e0f80563",
+      "definition": "run/taiga-integration/datapack/data/kithkyn/kithkyn/buildings/house_taiga_1.json",
+      "definition_sha256": "d6f93aec7856c2c16dfe44b8bb663b7274d68df2300e9bce4809e8bd9a02155f"
+    },
+    {
+      "exhibit": "TA01.5",
+      "structure": "house_taiga_1__two_bed",
+      "category": "house",
+      "level": 1,
+      "size": [
+        9,
+        7,
+        11
+      ],
+      "sink": 0,
+      "source": "run/taiga-integration/world-snapshot-20260914-223707/captures/TA01.5.nbt",
+      "source_sha256": "0239d4e891f384a83eaeb0619e1133e5cacdce5de9b86efe3b7458f2b69ad6d0",
+      "entities": 0,
+      "edits": [],
+      "identity_blocks": {},
+      "swaps": {},
+      "swapped_cells": 0,
+      "asset": "run/taiga-integration/datapack/data/kithkyn/structure/house_taiga_1__two_bed.nbt",
+      "asset_sha256": "6e337d09c2cc02b769cd92b14ad54b1f613c4fc85ec03648cc55c9ad4f62d0b3",
+      "definition": "run/taiga-integration/datapack/data/kithkyn/kithkyn/buildings/house_taiga_1__two_bed.json",
+      "definition_sha256": "940a2b168275cdb73d5ad226e5fb7b2792f556d26fa1884142b3dfa513462aa7"
+    },
+    {
+      "exhibit": "TA01.3",
+      "structure": "house_taiga_1__small_house_2",
+      "category": "house",
+      "level": 1,
+      "size": [
+        9,
+        6,
+        7
+      ],
+      "sink": 0,
+      "source": "run/taiga-integration/world-snapshot-20260914-223707/captures/TA01.3.nbt",
+      "source_sha256": "bc5395a2afa027e171d7d029f40acf3841095e193f4dca4f5d0fbf7b3be16ee1",
+      "entities": 0,
+      "edits": [],
+      "identity_blocks": {},
+      "swaps": {},
+      "swapped_cells": 0,
+      "asset": "run/taiga-integration/datapack/data/kithkyn/structure/house_taiga_1__small_house_2.nbt",
+      "asset_sha256": "545eb2b10484e252c5ad0f332de6b474ac5a47c0dd19488609ce74eda39f452a",
+      "definition": "run/taiga-integration/datapack/data/kithkyn/kithkyn/buildings/house_taiga_1__small_house_2.json",
+      "definition_sha256": "6db9c7d7eef066d8a388cfad4a791d9abce0d0f2424bc5dc78562d12e08fd14a"
+    },
+    {
+      "exhibit": "TA01.4",
+      "structure": "couple_cottage_taiga_1",
+      "category": "couple_cottage",
+      "level": 1,
+      "size": [
+        9,
+        6,
+        7
+      ],
+      "sink": 0,
+      "source": "run/taiga-integration/world-snapshot-20260914-223707/captures/TA01.4.nbt",
+      "source_sha256": "e817eb2f8224d41bf1bf787511989e69e086f8af50f8574c0b020f49b401bb83",
+      "entities": 0,
+      "edits": [],
+      "identity_blocks": {},
+      "swaps": {},
+      "swapped_cells": 0,
+      "asset": "run/taiga-integration/datapack/data/kithkyn/structure/couple_cottage_taiga_1.nbt",
+      "asset_sha256": "c34d91294d6a0359a9e3199e68cc8673f994ba10aaa1412a771733112b5e456e",
+      "definition": "run/taiga-integration/datapack/data/kithkyn/kithkyn/buildings/couple_cottage_taiga_1.json",
+      "definition_sha256": "193579a90bd68a860985d102ee706ebb494beae2decb3c967b989b2166be50c8"
+    },
+    {
+      "exhibit": "TA01.7",
+      "structure": "church_taiga_1",
+      "category": "church",
+      "level": 1,
+      "size": [
+        11,
+        8,
+        10
+      ],
+      "sink": 0,
+      "source": "run/taiga-integration/world-snapshot-20260914-223707/captures/TA01.7.nbt",
+      "source_sha256": "c1e0d6375176207163282c40187f4f4e29805c85dcc51613f795a5f4c734dfd8",
+      "entities": 0,
+      "edits": [],
+      "identity_blocks": {},
+      "swaps": {},
+      "swapped_cells": 0,
+      "asset": "run/taiga-integration/datapack/data/kithkyn/structure/church_taiga_1.nbt",
+      "asset_sha256": "07344c122fcdc1f701e17d5a3299e5a1e3182f49d1f05eb7a659d9123f520524",
+      "definition": "run/taiga-integration/datapack/data/kithkyn/kithkyn/buildings/church_taiga_1.json",
+      "definition_sha256": "3984d17008c8f6a54ba575d625bbbaf7a1f5f14ddb22241151ad24700ca2d617"
+    },
+    {
+      "exhibit": "TA01.2",
+      "structure": "storehouse_taiga_1",
+      "category": "storehouse",
+      "level": 1,
+      "size": [
+        7,
+        6,
+        7
+      ],
+      "sink": 0,
+      "source": "run/taiga-integration/world-snapshot-20260914-223707/captures/TA01.2.nbt",
+      "source_sha256": "121fb6323574184b8b4d026a2b8f152d11c91f36c265f41ac9c7679c126076a1",
+      "entities": 0,
+      "edits": [],
+      "identity_blocks": {},
+      "swaps": {},
+      "swapped_cells": 0,
+      "asset": "run/taiga-integration/datapack/data/kithkyn/structure/storehouse_taiga_1.nbt",
+      "asset_sha256": "61d15428343fd38fcef7a70eddb1e7cc4734baed6a7e22804d8c4cd7d9e9cec5",
+      "definition": "run/taiga-integration/datapack/data/kithkyn/kithkyn/buildings/storehouse_taiga_1.json",
+      "definition_sha256": "77f5cf1cf31608449f4673a65f5257b03ae257d1a967c86184b5810cdb23fea7"
+    },
+    {
+      "exhibit": "TA02.2",
+      "structure": "butchery_taiga_1",
+      "category": "butchery",
+      "level": 1,
+      "size": [
+        9,
+        8,
+        7
+      ],
+      "sink": 0,
+      "source": "run/taiga-integration/world-snapshot-20260914-223707/captures/TA02.2.nbt",
+      "source_sha256": "094dcd4e13fca819c38b53508d95ce43851bd463eb7530537dcbba2aaebc9ad5",
+      "entities": 3,
+      "edits": [],
+      "identity_blocks": {},
+      "swaps": {},
+      "swapped_cells": 0,
+      "asset": "run/taiga-integration/datapack/data/kithkyn/structure/butchery_taiga_1.nbt",
+      "asset_sha256": "e0657ca8d0a847a19f11b21ca4add2f7e47e1ea0b68b8217a4d004d5a14a0cd0",
+      "definition": "run/taiga-integration/datapack/data/kithkyn/kithkyn/buildings/butchery_taiga_1.json",
+      "definition_sha256": "f2eea231c592be20f43874adf7677a0f13a26ddf81c5c76c7963e5bbb70a9a4f"
+    },
+    {
+      "exhibit": "TA02.3",
+      "structure": "bakery_taiga_1",
+      "category": "bakery",
+      "level": 1,
+      "size": [
+        7,
+        8,
+        7
+      ],
+      "sink": 0,
+      "source": "run/taiga-integration/world-snapshot-20260914-223707/captures/TA02.3.nbt",
+      "source_sha256": "4bc22d229cf3fb1881daf836012558284c3a1aab76643e2e9e2678bb860be649",
+      "entities": 0,
+      "edits": [],
+      "identity_blocks": {},
+      "swaps": {},
+      "swapped_cells": 0,
+      "asset": "run/taiga-integration/datapack/data/kithkyn/structure/bakery_taiga_1.nbt",
+      "asset_sha256": "19866a8da7be4f717ab6b455b9f5b6cd5aed848832874f8e91a4a8d9bd9465f3",
+      "definition": "run/taiga-integration/datapack/data/kithkyn/kithkyn/buildings/bakery_taiga_1.json",
+      "definition_sha256": "aec85127c639f505368311f79dac2b0de1db3a1eb9d585bafca93c54f2c5b009"
+    },
+    {
+      "exhibit": "TA02.4",
+      "structure": "hunting_lodge_taiga_1",
+      "category": "hunting_lodge",
+      "level": 1,
+      "size": [
+        7,
+        3,
+        7
+      ],
+      "sink": 0,
+      "source": "run/taiga-integration/world-snapshot-20260914-223707/captures/TA02.4.nbt",
+      "source_sha256": "c90f43068e5a35beb956a2d70aeafb5f2137cffbe44fe992ff6519c22eb89862",
+      "entities": 0,
+      "edits": [],
+      "identity_blocks": {},
+      "swaps": {},
+      "swapped_cells": 0,
+      "asset": "run/taiga-integration/datapack/data/kithkyn/structure/hunting_lodge_taiga_1.nbt",
+      "asset_sha256": "fdf8d2afc91cd5ecc97cb8d4baa00051856439a55376ddb290d15a2c17524ad8",
+      "definition": "run/taiga-integration/datapack/data/kithkyn/kithkyn/buildings/hunting_lodge_taiga_1.json",
+      "definition_sha256": "a76405900d220e349502568a952200004231e6d946a00b848b0a6b7a174a84ce"
+    },
+    {
+      "exhibit": "TA02.7",
+      "structure": "stoneworks_taiga_1",
+      "category": "stoneworks",
+      "level": 1,
+      "size": [
+        7,
+        5,
+        7
+      ],
+      "sink": 0,
+      "source": "run/taiga-integration/world-snapshot-20260914-223707/captures/TA02.7.nbt",
+      "source_sha256": "4632593b052ae63940a4b70caf17c4d11cc7c72072803efc46095ee93943449c",
+      "entities": 0,
+      "edits": [],
+      "identity_blocks": {
+        "minecraft:red_wool": "primary"
+      },
+      "swaps": {},
+      "swapped_cells": 0,
+      "asset": "run/taiga-integration/datapack/data/kithkyn/structure/stoneworks_taiga_1.nbt",
+      "asset_sha256": "adb446d7152ca94b5e0c3a56d299ba568cde4187c3aaee58efdab47a4e466da4",
+      "definition": "run/taiga-integration/datapack/data/kithkyn/kithkyn/buildings/stoneworks_taiga_1.json",
+      "definition_sha256": "a1d9217e49878e91901426ed2982e47e00fa1f13ac4c015f4af185abefe1a553"
+    },
+    {
+      "exhibit": "TA02.8",
+      "structure": "lumberjack_taiga_1",
+      "category": "lumberjack",
+      "level": 1,
+      "size": [
+        7,
+        6,
+        10
+      ],
+      "sink": 0,
+      "source": "run/taiga-integration/world-snapshot-20260914-223707/captures/TA02.8.nbt",
+      "source_sha256": "1b95074ef45a8b16ea427f3aaedb3d688508143f18b0e9e7ad1dc3a010455b35",
+      "entities": 0,
+      "edits": [],
+      "identity_blocks": {},
+      "swaps": {},
+      "swapped_cells": 0,
+      "asset": "run/taiga-integration/datapack/data/kithkyn/structure/lumberjack_taiga_1.nbt",
+      "asset_sha256": "fc41c4991c54c99955a6b7406f83c9e43bef1b48dea357365126979759adaa12",
+      "definition": "run/taiga-integration/datapack/data/kithkyn/kithkyn/buildings/lumberjack_taiga_1.json",
+      "definition_sha256": "1b10e5bec4895b88612867700f4aefa701c3bf6917802daf5f4160b48216c1bc"
+    },
+    {
+      "exhibit": "TA02.9",
+      "structure": "blacksmith_taiga_1",
+      "category": "blacksmith",
+      "level": 1,
+      "size": [
+        9,
+        9,
+        7
+      ],
+      "sink": 0,
+      "source": "run/taiga-integration/world-snapshot-20260914-223707/captures/TA02.9.nbt",
+      "source_sha256": "18bd3fe4fecda7ddba6f106c86e80ee1c8afb0e61cfed62aa82aee9064c8428b",
+      "entities": 0,
+      "edits": [],
+      "identity_blocks": {},
+      "swaps": {},
+      "swapped_cells": 0,
+      "asset": "run/taiga-integration/datapack/data/kithkyn/structure/blacksmith_taiga_1.nbt",
+      "asset_sha256": "62b651ede2dff697cd267e1b28af44a79aca9ed4beefd9a3d40217f48d547aca",
+      "definition": "run/taiga-integration/datapack/data/kithkyn/kithkyn/buildings/blacksmith_taiga_1.json",
+      "definition_sha256": "3e860ed882cf0f9251036c1fe92638c26d0b0d258d75abc103ae3f5ce36de80e"
+    },
+    {
+      "exhibit": "TA02.10",
+      "structure": "mine_taiga_1",
+      "category": "mine",
+      "level": 1,
+      "size": [
+        8,
+        5,
+        8
+      ],
+      "sink": 0,
+      "source": "run/taiga-integration/world-snapshot-20260914-223707/captures/TA02.10.nbt",
+      "source_sha256": "a2e0d34166bbe1b0671a98cb8f337ae4c32ff9e55f9e6deab4294e030b45678a",
+      "entities": 0,
+      "edits": [],
+      "identity_blocks": {},
+      "swaps": {},
+      "swapped_cells": 0,
+      "asset": "run/taiga-integration/datapack/data/kithkyn/structure/mine_taiga_1.nbt",
+      "asset_sha256": "dc880a943700eac517b473962dc3939a65935a22fcbe33973f8069676deb39a0",
+      "definition": "run/taiga-integration/datapack/data/kithkyn/kithkyn/buildings/mine_taiga_1.json",
+      "definition_sha256": "b5602756298937455aee0e9c35e8fed78ae8573f9672ae2b0395c221468c5e5b"
+    },
+    {
+      "exhibit": "TA03.1",
+      "structure": "fishery_taiga_1",
+      "category": "fishery",
+      "level": 1,
+      "size": [
+        10,
+        6,
+        7
+      ],
+      "sink": 0,
+      "source": "run/taiga-integration/world-snapshot-20260914-223707/captures/TA03.1.nbt",
+      "source_sha256": "118d5277ae3250f76b41a1d72fbf0387582c18bc334ccbf68f70b78081241d9e",
+      "entities": 0,
+      "edits": [],
+      "identity_blocks": {},
+      "swaps": {},
+      "swapped_cells": 0,
+      "asset": "run/taiga-integration/datapack/data/kithkyn/structure/fishery_taiga_1.nbt",
+      "asset_sha256": "242518f6d85681e995f3e612a27767067f601b1b4de2530a49695604dea65304",
+      "definition": "run/taiga-integration/datapack/data/kithkyn/kithkyn/buildings/fishery_taiga_1.json",
+      "definition_sha256": "a14b886904e53af0fd78865d2839c22ac8b302b3d690f2b757392d3d1f6f67ec"
+    },
+    {
+      "exhibit": "TA03.2",
+      "structure": "farm_taiga_1",
+      "category": "farm",
+      "level": 1,
+      "size": [
+        10,
+        3,
+        8
+      ],
+      "sink": 0,
+      "source": "run/taiga-integration/world-snapshot-20260914-223707/captures/TA03.2.nbt",
+      "source_sha256": "850c544b07d57c3fd8f0ae79d8f26d7b3f0f7c0175bad37f3f25d564ad7977a4",
+      "entities": 0,
+      "edits": [],
+      "identity_blocks": {},
+      "swaps": {},
+      "swapped_cells": 0,
+      "asset": "run/taiga-integration/datapack/data/kithkyn/structure/farm_taiga_1.nbt",
+      "asset_sha256": "d60524a8d561cf0598aa9bacda60ec4b956facdece4f9fcb27148f453e7761bd",
+      "definition": "run/taiga-integration/datapack/data/kithkyn/kithkyn/buildings/farm_taiga_1.json",
+      "definition_sha256": "28a5483bf29b3e361e5e0c24b88da3ec614a7b3292ac6e0e0dcc079faf71a9d3"
+    },
+    {
+      "exhibit": "TA17.20",
+      "structure": "well_taiga_1",
+      "category": "well",
+      "level": 1,
+      "size": [
+        4,
+        8,
+        4
+      ],
+      "sink": 3,
+      "source": "run/taiga-integration/world-snapshot-20260914-223707/captures/TA17.20.nbt",
+      "source_sha256": "00187180d8350c57f7fbf3d41820a7e28cadc102078caa9f7962eaebb34936d9",
+      "entities": 0,
+      "edits": [],
+      "identity_blocks": {},
+      "swaps": {
+        "minecraft:deepslate_bricks": "minecraft:cobblestone",
+        "minecraft:deepslate_brick_stairs": "minecraft:cobblestone_stairs",
+        "minecraft:deepslate_brick_wall": "minecraft:cobblestone_wall"
+      },
+      "swapped_cells": 36,
+      "asset": "run/taiga-integration/datapack/data/kithkyn/structure/well_taiga_1.nbt",
+      "asset_sha256": "11c95d61d99ecf1643d3496a3b02564d6a71036be14cc44a7782cda0429218ef",
+      "definition": "run/taiga-integration/datapack/data/kithkyn/kithkyn/buildings/well_taiga_1.json",
+      "definition_sha256": "ab52098bdabbd386acac67104c48536ac5c2d4e2cd7799c155fef46aac400b3c"
+    },
+    {
+      "exhibit": "TA09.1",
+      "structure": "castle_taiga_1",
+      "category": "castle",
+      "level": 1,
+      "size": [
+        35,
+        17,
+        35
+      ],
+      "sink": 0,
+      "source": "run/taiga-integration/world-snapshot-20260914-223707/captures/TA09.1.nbt",
+      "source_sha256": "d84a7b071acc7d05c64feb2a4fa601488f3dfddbbb2e2cdef53494b708e78f11",
+      "entities": 0,
+      "edits": [],
+      "identity_blocks": {},
+      "swaps": {},
+      "swapped_cells": 0,
+      "asset": "run/taiga-integration/datapack/data/kithkyn/structure/castle_taiga_1.nbt",
+      "asset_sha256": "5f9e5d330d73588ed4670909b509913fefb8c9c0d50d7a43a40e420a5df54388",
+      "definition": "run/taiga-integration/datapack/data/kithkyn/kithkyn/buildings/castle_taiga_1.json",
+      "definition_sha256": "dad32b4364ad9d50eb236719f2a6e23bdee636e18460fd5a5797ea572ad03b74"
+    },
+    {
+      "exhibit": "TA09.6",
+      "structure": "watchtower_taiga_1",
+      "category": "watchtower",
+      "level": 1,
+      "size": [
+        9,
+        18,
+        9
+      ],
+      "sink": 0,
+      "source": "run/taiga-integration/world-snapshot-20260914-223707/captures/TA09.6.nbt",
+      "source_sha256": "b7c843112ee1b4b69375763376c9dfc544929d452feb06cfbf0644cde2c9a266",
+      "entities": 0,
+      "edits": [],
+      "identity_blocks": {},
+      "swaps": {},
+      "swapped_cells": 0,
+      "asset": "run/taiga-integration/datapack/data/kithkyn/structure/watchtower_taiga_1.nbt",
+      "asset_sha256": "b4bb12bf97422a93fff9fe2debb1fa30080a367a0f58843f5536b04052cea32f",
+      "definition": "run/taiga-integration/datapack/data/kithkyn/kithkyn/buildings/watchtower_taiga_1.json",
+      "definition_sha256": "d7020a16c03c8804cb9df9c9f4c099383a38771830162a8e6575a2a29b8024fd"
+    },
+    {
+      "exhibit": "TA28.1",
+      "structure": "tavern_taiga_1",
+      "category": "tavern",
+      "level": 1,
+      "size": [
+        17,
+        14,
+        19
+      ],
+      "sink": 0,
+      "source": "run/taiga-integration/world-snapshot-20260914-223707/captures/TA28.1.nbt",
+      "source_sha256": "158b5b8900a26111acbc7916fcb0863f03c2312d61ca4ed8707587c508ec9994",
+      "entities": 0,
+      "edits": [],
+      "identity_blocks": {},
+      "swaps": {},
+      "swapped_cells": 0,
+      "asset": "run/taiga-integration/datapack/data/kithkyn/structure/tavern_taiga_1.nbt",
+      "asset_sha256": "b4555dc0ace6a384f58fba9f1f4719a512e7cf80abc8f492351f59661b370b2c",
+      "definition": "run/taiga-integration/datapack/data/kithkyn/kithkyn/buildings/tavern_taiga_1.json",
+      "definition_sha256": "2908c503ccbe3dcc109aa5859c21302bb57e5b499ace0b272ce0d76ba5ee2aaf"
+    },
+    {
+      "exhibit": "TA35.1",
+      "structure": "market_taiga_1",
+      "category": "market",
+      "level": 1,
+      "size": [
+        16,
+        6,
+        17
+      ],
+      "sink": 0,
+      "source": "run/taiga-full-profile/prepared/ta35_01_market_1.nbt",
+      "source_sha256": "05cf272e48213a92470133f662bb990bbc5b277bd0bfc3af48b73cc99b586750",
+      "definition_from": "origin/main:src/main/resources/data/kithkyn/kithkyn/buildings/market_birch_forest_1.json",
+      "asset": "run/taiga-integration/datapack/data/kithkyn/structure/market_taiga_1.nbt",
+      "asset_sha256": "b1596593364b70d401fd8a29aa5170381af8a2c728b2ca7fedfd4e552e671281",
+      "definition": "run/taiga-integration/datapack/data/kithkyn/kithkyn/buildings/market_taiga_1.json",
+      "definition_sha256": "e253339c7fb19548844aa8b3afc4ba98645cc31172a8025b81536049e75f55a5"
+    },
+    {
+      "exhibit": "TA35.2",
+      "structure": "market_taiga_2",
+      "category": "market",
+      "level": 2,
+      "size": [
+        23,
+        6,
+        17
+      ],
+      "sink": 0,
+      "source": "run/taiga-full-profile/prepared/ta35_02_market_2.nbt",
+      "source_sha256": "616804fb5e661221749f0de19002e5e9c4a91b0faa2a322929e54ff585bdea6b",
+      "definition_from": "origin/main:src/main/resources/data/kithkyn/kithkyn/buildings/market_birch_forest_2.json",
+      "asset": "run/taiga-integration/datapack/data/kithkyn/structure/market_taiga_2.nbt",
+      "asset_sha256": "1f9abf4623e50f0daab41a3d8d1d0181f2f14cf1e09b75177478a3270e70f608",
+      "definition": "run/taiga-integration/datapack/data/kithkyn/kithkyn/buildings/market_taiga_2.json",
+      "definition_sha256": "b86b152a314393834e61f18c6293a627eeea7f5f80686a6334e2f90753c958a1"
+    },
+    {
+      "exhibit": "TA35.3",
+      "structure": "market_taiga_3",
+      "category": "market",
+      "level": 3,
+      "size": [
+        23,
+        6,
+        25
+      ],
+      "sink": 0,
+      "source": "run/taiga-full-profile/prepared/ta35_03_market_3.nbt",
+      "source_sha256": "69d721facbbeb721614e978f08c568e53bede698596a40dd79fd2ec19cfa58b0",
+      "definition_from": "origin/main:src/main/resources/data/kithkyn/kithkyn/buildings/market_birch_forest_3.json",
+      "asset": "run/taiga-integration/datapack/data/kithkyn/structure/market_taiga_3.nbt",
+      "asset_sha256": "81109e16383e0858e1e45c99a0b0d53ac59bb2b52bcf90e705eed1e16021bd42",
+      "definition": "run/taiga-integration/datapack/data/kithkyn/kithkyn/buildings/market_taiga_3.json",
+      "definition_sha256": "305c4bc532f14532c01423d4ab34ed57b7e4dc8174c3fc7c5b026f8d58330803"
+    }
+  ],
+  "verification": {
+    "placement": "PASS: [building-placement-verify] RESULT PASS: 184 real-template placements, both paths, four rotations, colors, frames, entity/save receipts and upgrade preservation",
+    "restart": "PASS: [building-placement-verify] RESTART PASS: 184 saved buildings and 24 original entities survived real server shutdown/restart without replenishment",
+    "founding": "PASS: [taiga-verify] RESULT PASS: 23 strict native templates, 3 housing alternatives, 8 upgrade fits, four founding rotations and codec reloads, natural biome selection, 4 beds, 5 positions, distinct meeting/fire locations and village identity",
+    "center": "PASS: [approved-house-verify] RESULT PASS: 4 rotated structures, 28 access routes, 0 physical room walks and assigned-bed sleeps, 0 physical personal-container deposits, 0 failed placements; probe size=18; station walks=28, shared deposits=0, mine walks=0, review walks=0",
+    "access": "PASS: [approved-house-verify] RESULT PASS: 88 rotated structures, 184 access routes, 80 physical room walks and assigned-bed sleeps, 80 physical personal-container deposits, 0 failed placements; probe size=18; station walks=104, shared deposits=100, mine walks=8, review walks=0",
+    "custody": "PASS: [custody-verify] RESULT PASS: real melee/arrow arrest, private minute notices, saved expiry, inventory capacity and identity, escape and damaged-cell release, full-cell fallback and village-only grace",
+    "routes-gate-access-taiga": "PASS: [gate-access-verify] RESULT PASS: TAIGA all 8 guards/workers ascended and descended",
+    "routes-gate-access-polynesian": "PASS: [gate-access-verify] RESULT PASS: POLYNESIAN_COAST all 8 guards/workers ascended and descended",
+    "routes-gate-access-nautical": "PASS: [gate-access-verify] RESULT PASS: NAUTICAL_COAST all 8 guards/workers ascended and descended",
+    "static_audit": "PASS 23 templates (tools/structure/audit-templates.py at origin/main 9c64c50): no barrier states, out-of-bounds blocks, invalid or duplicate station coordinates, invalid lumberjack stands, terrain-clearing corner air, unclassified containers, open or empty butcheries, malformed market floors, or malformed market entrances"
+  }
+}
