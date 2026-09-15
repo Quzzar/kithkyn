@@ -198,7 +198,7 @@ The current review status is:
   `tools/structure/savanna-full-profile-20260914.json`.
 
 - **Mushroom:** the selection gallery stands in the sky above the **trio-20260912** world,
-  beginning at **2023.5, 230, 10.5**, east of the Savanna gallery. Its 12 rows hold 113 pieces:
+  beginning at **2023.5, 230, 10.5**, east of the Savanna gallery. Its 13 rows hold 121 pieces:
   - MU01 and MU02: every standalone Towns & Towers mushroom-fields fantasy piece: the meeting
     point, houses and the two profession gazebos, then the trades and the eight profession
     inserts, with the mushroom-fields outpost tower. The two mooshroom templates are entity-only
@@ -208,6 +208,8 @@ The current review status is:
   - MU11 and MU12: donors for the roles neither family has: the ten original Village Life mines
     with the Dungeons & Taverns miner compound, and the six D&T village wells with Terralith's
     and the T&T classic well.
+  - MU13: studies, each T&T gazebo composed with each of its four profession inserts on its
+    jigsaw anchor, since the inserts alone (MU02.4 to MU02.11) are bare station kits.
 
   The rows' sky is filled with the void biome, which has no precipitation, so lightning cannot
   strike. Blocks from mods the server lacks are replaced in the private display copies only, each

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "recorded": "2026-09-14T23:23:46.107005-04:00",
+  "recorded": "2026-09-14T23:35:57.608080-04:00",
   "purpose": "Every standalone Towns & Towers mushroom-fields fantasy piece and the complete CTOV mushroom village, with mine and well donors, for selecting the Mushroom catalog.",
   "status": "placed",
   "world": "trio-20260912",
@@ -16,7 +16,7 @@
     4,
     2229,
     281,
-    516
+    561
   ],
   "selectionRule": "Every standalone piece of the T&T mushroom-fields fantasy village and its outpost tower, entity-only animal templates omitted; every standalone CTOV mushroom piece, roads omitted and entities stripped, with other mods' blocks shown as the vanilla blocks in standInSwaps; the ten original Village Life mines and the D&T miner compound; the D&T, Terralith and T&T classic wells. Street, terminator and villager templates are omitted.",
   "counts": {
@@ -28,10 +28,10 @@
     "minecraft": 0,
     "terralith": 2,
     "yungsExtras": 0,
-    "studies": 0,
+    "studies": 8,
     "standInPieces": 50,
-    "total": 113,
-    "rows": 12
+    "total": 121,
+    "rows": 13
   },
   "rows": [
     {
@@ -3061,18 +3061,253 @@
           "assembly": "run/full-style-showcase/ClassicWell.java"
         }
       ]
+    },
+    {
+      "id": "MU13",
+      "title": "STUDIES \u2014 THE GAZEBOS WITH THEIR INSERTS",
+      "origin": [
+        2030,
+        230,
+        551
+      ],
+      "bounds": [
+        2020,
+        220,
+        542,
+        2130,
+        276,
+        561
+      ],
+      "entries": [
+        {
+          "id": "MU13.1",
+          "label": "Heavy Gazebo + Armorer",
+          "role": "blacksmith",
+          "sourceMod": "Kithkyn study",
+          "source": "data/kaisyn/structure/village/mushroom_fields_fantasy/professions_misc/mushroom_heavy_professions_gazebo.nbt",
+          "sourceSha256": "378a00ad674d1e8c7c220e6be39c8576ca48885e6520da36fa0a1ab76cbf602e",
+          "preparedSha256": "ba143d3eaeea207fa117b9358c010c21212767f399ba61134ac582a80e101016",
+          "size": [
+            7,
+            6,
+            7
+          ],
+          "origin": [
+            2030,
+            230,
+            551
+          ],
+          "privateTemplate": "kithkyn_mushroom_profile:mu13_01_heavy_gazebo_armorer",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0,
+          "study": "run/mushroom-full-profile/studies/heavy_gazebo_armorer.nbt",
+          "swaps": {
+            "+ data/kaisyn/structure/village/mushroom_fields_fantasy/professions/mushroom_armorer_1.nbt at offset [2, 1, 2] (sha256 29dcb5dc38fa)": 105
+          }
+        },
+        {
+          "id": "MU13.2",
+          "label": "Heavy Gazebo + Mason",
+          "role": "stoneworks",
+          "sourceMod": "Kithkyn study",
+          "source": "data/kaisyn/structure/village/mushroom_fields_fantasy/professions_misc/mushroom_heavy_professions_gazebo.nbt",
+          "sourceSha256": "378a00ad674d1e8c7c220e6be39c8576ca48885e6520da36fa0a1ab76cbf602e",
+          "preparedSha256": "3b9989c4d0dd3716e4e1948de054bc9ac40392728d33f3b0b607f452ad6a966f",
+          "size": [
+            7,
+            6,
+            7
+          ],
+          "origin": [
+            2043,
+            230,
+            551
+          ],
+          "privateTemplate": "kithkyn_mushroom_profile:mu13_02_heavy_gazebo_mason",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0,
+          "study": "run/mushroom-full-profile/studies/heavy_gazebo_mason.nbt",
+          "swaps": {
+            "+ data/kaisyn/structure/village/mushroom_fields_fantasy/professions/mushroom_mason_1.nbt at offset [2, 1, 2] (sha256 8f7951b1d660)": 104
+          }
+        },
+        {
+          "id": "MU13.3",
+          "label": "Heavy Gazebo + Toolsmith",
+          "role": "blacksmith",
+          "sourceMod": "Kithkyn study",
+          "source": "data/kaisyn/structure/village/mushroom_fields_fantasy/professions_misc/mushroom_heavy_professions_gazebo.nbt",
+          "sourceSha256": "378a00ad674d1e8c7c220e6be39c8576ca48885e6520da36fa0a1ab76cbf602e",
+          "preparedSha256": "40a2de2c0bcefd8f73a48246ddb3b4f99f0db3201dfa8398669cfe51fd51b5c5",
+          "size": [
+            7,
+            6,
+            7
+          ],
+          "origin": [
+            2056,
+            230,
+            551
+          ],
+          "privateTemplate": "kithkyn_mushroom_profile:mu13_03_heavy_gazebo_toolsmith",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0,
+          "study": "run/mushroom-full-profile/studies/heavy_gazebo_toolsmith.nbt",
+          "swaps": {
+            "+ data/kaisyn/structure/village/mushroom_fields_fantasy/professions/mushroom_toolsmith_1.nbt at offset [2, 1, 2] (sha256 f5b47c234edc)": 103
+          }
+        },
+        {
+          "id": "MU13.4",
+          "label": "Heavy Gazebo + Weaponsmith",
+          "role": "blacksmith",
+          "sourceMod": "Kithkyn study",
+          "source": "data/kaisyn/structure/village/mushroom_fields_fantasy/professions_misc/mushroom_heavy_professions_gazebo.nbt",
+          "sourceSha256": "378a00ad674d1e8c7c220e6be39c8576ca48885e6520da36fa0a1ab76cbf602e",
+          "preparedSha256": "da7a45032ed29fde47752965f3904e019f9600631d6b5712237015f83365f046",
+          "size": [
+            7,
+            6,
+            7
+          ],
+          "origin": [
+            2069,
+            230,
+            551
+          ],
+          "privateTemplate": "kithkyn_mushroom_profile:mu13_04_heavy_gazebo_weaponsmith",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0,
+          "study": "run/mushroom-full-profile/studies/heavy_gazebo_weaponsmith.nbt",
+          "swaps": {
+            "+ data/kaisyn/structure/village/mushroom_fields_fantasy/professions/mushroom_weaponsmith_1.nbt at offset [2, 1, 2] (sha256 d5354dbaf9e8)": 102
+          }
+        },
+        {
+          "id": "MU13.5",
+          "label": "Light Gazebo + Cartographer",
+          "role": "civic",
+          "sourceMod": "Kithkyn study",
+          "source": "data/kaisyn/structure/village/mushroom_fields_fantasy/professions_misc/mushroom_light_professions_gazebo.nbt",
+          "sourceSha256": "5a372ac17d0a1a91df6c8095f508087eced14836fcddd4e1762721405385d461",
+          "preparedSha256": "a47b0c67bce82d1ae21d471c12bcf214338e60aeccdb615cc1314058c7d80914",
+          "size": [
+            7,
+            5,
+            7
+          ],
+          "origin": [
+            2082,
+            230,
+            551
+          ],
+          "privateTemplate": "kithkyn_mushroom_profile:mu13_05_light_gazebo_cartographer",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0,
+          "study": "run/mushroom-full-profile/studies/light_gazebo_cartographer.nbt",
+          "swaps": {
+            "+ data/kaisyn/structure/village/mushroom_fields_fantasy/professions/mushroom_cartographer_1.nbt at offset [2, 1, 2] (sha256 942edfb91cff)": 83
+          }
+        },
+        {
+          "id": "MU13.6",
+          "label": "Light Gazebo + Fisher",
+          "role": "fishery",
+          "sourceMod": "Kithkyn study",
+          "source": "data/kaisyn/structure/village/mushroom_fields_fantasy/professions_misc/mushroom_light_professions_gazebo.nbt",
+          "sourceSha256": "5a372ac17d0a1a91df6c8095f508087eced14836fcddd4e1762721405385d461",
+          "preparedSha256": "963c84c8dce3e9a99ec9953ecf3c7edcf0cd6be50f8b7185d9bd2335ae175f90",
+          "size": [
+            7,
+            5,
+            7
+          ],
+          "origin": [
+            2095,
+            230,
+            551
+          ],
+          "privateTemplate": "kithkyn_mushroom_profile:mu13_06_light_gazebo_fisher",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0,
+          "study": "run/mushroom-full-profile/studies/light_gazebo_fisher.nbt",
+          "swaps": {
+            "+ data/kaisyn/structure/village/mushroom_fields_fantasy/professions/mushroom_fisher_1.nbt at offset [2, 1, 2] (sha256 318d280215a1)": 83
+          }
+        },
+        {
+          "id": "MU13.7",
+          "label": "Light Gazebo + Fletcher",
+          "role": "work",
+          "sourceMod": "Kithkyn study",
+          "source": "data/kaisyn/structure/village/mushroom_fields_fantasy/professions_misc/mushroom_light_professions_gazebo.nbt",
+          "sourceSha256": "5a372ac17d0a1a91df6c8095f508087eced14836fcddd4e1762721405385d461",
+          "preparedSha256": "6e4ba2662f073191d023b8334caa3c0b84139c64531f2fd7b55c3c8a5551f545",
+          "size": [
+            7,
+            5,
+            7
+          ],
+          "origin": [
+            2108,
+            230,
+            551
+          ],
+          "privateTemplate": "kithkyn_mushroom_profile:mu13_07_light_gazebo_fletcher",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0,
+          "study": "run/mushroom-full-profile/studies/light_gazebo_fletcher.nbt",
+          "swaps": {
+            "+ data/kaisyn/structure/village/mushroom_fields_fantasy/professions/mushroom_fletcher_1.nbt at offset [2, 1, 2] (sha256 f72a560599f0)": 83
+          }
+        },
+        {
+          "id": "MU13.8",
+          "label": "Light Gazebo + Shepherd",
+          "role": "food",
+          "sourceMod": "Kithkyn study",
+          "source": "data/kaisyn/structure/village/mushroom_fields_fantasy/professions_misc/mushroom_light_professions_gazebo.nbt",
+          "sourceSha256": "5a372ac17d0a1a91df6c8095f508087eced14836fcddd4e1762721405385d461",
+          "preparedSha256": "810b7b185efe4c847f828781b66bd24f8afc0facb8aaa11599f2ae5344e1f529",
+          "size": [
+            7,
+            5,
+            7
+          ],
+          "origin": [
+            2121,
+            230,
+            551
+          ],
+          "privateTemplate": "kithkyn_mushroom_profile:mu13_08_light_gazebo_shepherd",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0,
+          "study": "run/mushroom-full-profile/studies/light_gazebo_shepherd.nbt",
+          "swaps": {
+            "+ data/kaisyn/structure/village/mushroom_fields_fantasy/professions/mushroom_shepherd_1.nbt at offset [2, 1, 2] (sha256 74650f667381)": 83
+          }
+        }
+      ]
     }
   ],
   "verification": {
-    "preparedTemplates": 113,
-    "placedTemplates": 7,
+    "preparedTemplates": 121,
+    "placedTemplates": 8,
     "allPlacementResponsesConfirmed": true,
     "chunksGenerated": 0,
     "worldSaved": true,
-    "worldBackup": "/Users/quzzar/Projects/kithkyn/run/backups/before-mushroom-gallery-20260914-232346",
+    "worldBackup": "/Users/quzzar/Projects/kithkyn/run/backups/before-mushroom-gallery-20260914-233600",
     "console": "screen session fifo:/Users/quzzar/Projects/kithkyn/run/deployed-runtime/20260914-181832-rustic-height-corrections/console.fifo",
     "addedRows": [
-      "MU09"
+      "MU13"
     ]
   },
   "biome": {
@@ -3305,6 +3540,6 @@
     ],
     "waterOutsideRings": [],
     "waterOutsideRingsCount": 0,
-    "footprintsChecked": 113
+    "footprintsChecked": 121
   }
 }
