@@ -1,0 +1,505 @@
+{
+  "schemaVersion": 1,
+  "recorded": "2026-09-13",
+  "status": "verified",
+  "style": "japanese_cherry_grove",
+  "description": "Approved Japanese Cherry Grove village selected and edited in the live JP gallery.",
+  "sourceCapture": "run/japanese-full-profile/selection-capture-20260913-143836",
+  "founding": {
+    "center": "village_center_japanese_cherry_grove_1",
+    "centerBeds": 0,
+    "startingBuildings": [
+      "mine_japanese_cherry_grove_1",
+      "storehouse_japanese_cherry_grove_1",
+      "house_japanese_cherry_grove_1__four_bed",
+      "house_japanese_cherry_grove_1"
+    ],
+    "startingBeds": 6,
+    "workers": [
+      "QUARTERMASTER",
+      "BUILDER",
+      "GUARD (CAPTAIN)",
+      "MINER"
+    ]
+  },
+  "identity": {
+    "beds": "all beds alternate between primary and secondary village colors",
+    "banners": "the six town-center banners use the village banner",
+    "markets": "red, cyan, orange and white trade cloth remains fixed"
+  },
+  "omitted": {
+    "castle": "JC07 remains a gallery-only candidate for a later pass",
+    "well": "no standalone well was selected"
+  },
+  "walls": {
+    "family": "japanese_cherry_grove",
+    "tiers": 1,
+    "palette": "stripped spruce with spruce stair eaves, deepslate tile slabs, cherry leaves and flowering azalea leaves"
+  },
+  "verification": {
+    "staticAudit": "20 definitions and templates; no barriers, structure voids or out-of-bounds cells; three cows, three chickens, four approved one-block raises and a two-wide mine with nine ground-clearing air cells",
+    "placement": "PASS: 160 real-template placements through both paths and four rotations; colors, frames, entities, saves and upgrades preserved",
+    "restart": "PASS: 160 buildings and 48 original entities survived server shutdown and restart without replenishment",
+    "founding": "PASS: 20 templates, two housing alternatives, 12 upgrade fits, four founding rotations, codec reloads, natural biome selection, six beds and four positions",
+    "centerAccess": "PASS: four rotations, 16 real station walks, zero failures",
+    "fullAccess": "PASS: 76 rotations, 124 routes, 48 room/sleep walks, 48 personal deposits, 76 station walks, 84 shared deposits and eight mine walks; zero failures",
+    "definitions": 20,
+    "barrierBlocks": 0,
+    "structureVoidBlocks": 0,
+    "outOfBoundsCells": 0,
+    "livestock": {
+      "cows": 3,
+      "chickens": 3
+    },
+    "mineWidth": 2,
+    "mineGroundAirCells": 9,
+    "mineGroundAir": [
+      [
+        3,
+        0,
+        2
+      ],
+      [
+        4,
+        0,
+        2
+      ],
+      [
+        3,
+        0,
+        3
+      ],
+      [
+        4,
+        0,
+        3
+      ],
+      [
+        3,
+        0,
+        4
+      ],
+      [
+        4,
+        0,
+        4
+      ],
+      [
+        2,
+        0,
+        5
+      ],
+      [
+        3,
+        0,
+        5
+      ],
+      [
+        4,
+        0,
+        5
+      ]
+    ],
+    "raisedOneBlock": [
+      "butchery_japanese_cherry_grove_1",
+      "hunting_lodge_japanese_cherry_grove_1",
+      "lumberjack_japanese_cherry_grove_1",
+      "storehouse_japanese_cherry_grove_1"
+    ],
+    "heightCorrectionPlacement": "PASS: 40 affected-template placements through both construction paths and four rotations",
+    "heightCorrectionAccess": "PASS: 20 affected rotations, 12 station routes, 32 shared-container deposits and eight mine walks",
+    "heightCorrectionFounding": "PASS: four founding rotations with the raised storehouse and ground-clearing mine"
+  },
+  "buildings": [
+    {
+      "exhibit": "JP01.2",
+      "structure": "village_center_japanese_cherry_grove_1",
+      "category": "village_center",
+      "level": 1,
+      "size": [
+        19,
+        8,
+        19
+      ],
+      "sink": 0,
+      "source": "run/japanese-full-profile/selection-capture-20260913-143836/captures/JP01.2.nbt",
+      "source_sha256": "eec9af7e0df61403247ca71f27bfb55339f0668664a9afa5d3ae78e851259e6d",
+      "entities": 0,
+      "asset": "run/japanese-integration/datapack/data/kithkyn/structure/village_center_japanese_cherry_grove_1.nbt",
+      "asset_sha256": "77fcfe09ba618712f47dba6f219ab5efe2432db71569f603d45b01e5fe329365",
+      "definition": "run/japanese-integration/datapack/data/kithkyn/kithkyn/buildings/village_center_japanese_cherry_grove_1.json",
+      "definition_sha256": "6f8784d9ede65eb911b5ce5f2b6c2b9a14230783b4dfa3018b95a7e27b39d292"
+    },
+    {
+      "exhibit": "JP01.3",
+      "structure": "watchtower_japanese_cherry_grove_1",
+      "category": "watchtower",
+      "level": 1,
+      "size": [
+        9,
+        21,
+        9
+      ],
+      "sink": 0,
+      "source": "run/japanese-full-profile/selection-capture-20260913-143836/captures/JP01.3.nbt",
+      "source_sha256": "cef5cc3a003adbeb3c0e4c8d258466a39bb4e77dd4aadbaaf3a21fe588aa2e34",
+      "entities": 0,
+      "asset": "run/japanese-integration/datapack/data/kithkyn/structure/watchtower_japanese_cherry_grove_1.nbt",
+      "asset_sha256": "10a1e75af1c6300e939633908191053eb5479710a5a5e9e2b5e8112d1e5d90bb",
+      "definition": "run/japanese-integration/datapack/data/kithkyn/kithkyn/buildings/watchtower_japanese_cherry_grove_1.json",
+      "definition_sha256": "6f30475cb35e551daa406230ecb2567d1f0ad49a4de5f29833a288d596a2677f"
+    },
+    {
+      "exhibit": "JP02.1",
+      "structure": "house_japanese_cherry_grove_1__four_bed",
+      "category": "house",
+      "level": 1,
+      "size": [
+        14,
+        14,
+        13
+      ],
+      "sink": 0,
+      "source": "run/japanese-full-profile/selection-capture-20260913-143836/captures/JP02.1.nbt",
+      "source_sha256": "4d6252ed5e15d39f18cc04ad09582296b9e4d2e9a1bd795a738e4f26a3c44fb7",
+      "entities": 0,
+      "asset": "run/japanese-integration/datapack/data/kithkyn/structure/house_japanese_cherry_grove_1__four_bed.nbt",
+      "asset_sha256": "4c1978b99e9ce0e62533c49f0e65c20951de7680cdc61f56edc701546ef2692d",
+      "definition": "run/japanese-integration/datapack/data/kithkyn/kithkyn/buildings/house_japanese_cherry_grove_1__four_bed.json",
+      "definition_sha256": "0741d670b0611881229a120b32b26feb6d5708a16d047b34ac435fc531d83096"
+    },
+    {
+      "exhibit": "JP02.2",
+      "structure": "house_japanese_cherry_grove_1",
+      "category": "house",
+      "level": 1,
+      "size": [
+        10,
+        10,
+        11
+      ],
+      "sink": 0,
+      "source": "run/japanese-full-profile/selection-capture-20260913-143836/captures/JP02.2.nbt",
+      "source_sha256": "ca43fe7ce186105b2b98fe0571b9e7e1900a963437c206b61f5cebd64f7c11f4",
+      "entities": 0,
+      "asset": "run/japanese-integration/datapack/data/kithkyn/structure/house_japanese_cherry_grove_1.nbt",
+      "asset_sha256": "2f1243d91890356c004bc3645b3e8c9f1bdc1496454136fe23597bdaa8b75d7c",
+      "definition": "run/japanese-integration/datapack/data/kithkyn/kithkyn/buildings/house_japanese_cherry_grove_1.json",
+      "definition_sha256": "75543395d4b176b269bda88cbef88f954bff25e5590dd4ad99c4683d9a2f9f8a"
+    },
+    {
+      "exhibit": "JP03.4",
+      "structure": "butchery_japanese_cherry_grove_1",
+      "category": "butchery",
+      "level": 1,
+      "size": [
+        10,
+        7,
+        14
+      ],
+      "sink": -1,
+      "source": "run/japanese-full-profile/selection-capture-20260913-143836/captures/JP03.4.nbt",
+      "source_sha256": "63760e65941c5f515ac5cd594dad3d328717a155d657fcb3df2ace3cc2b5a39b",
+      "entities": 6,
+      "asset": "run/japanese-integration/datapack/data/kithkyn/structure/butchery_japanese_cherry_grove_1.nbt",
+      "asset_sha256": "3125b02cca07aff401962ad05327c7c1e0169f24c45f50fd49faf4f2a80af348",
+      "definition": "run/japanese-integration/datapack/data/kithkyn/kithkyn/buildings/butchery_japanese_cherry_grove_1.json",
+      "definition_sha256": "44145e7776baa72c32281cda3b1fa80e8fa7188b7e311375dff428c59c3f27d5"
+    },
+    {
+      "exhibit": "JP03.5",
+      "structure": "fishery_japanese_cherry_grove_1",
+      "category": "fishery",
+      "level": 1,
+      "size": [
+        14,
+        8,
+        9
+      ],
+      "sink": 0,
+      "source": "run/japanese-full-profile/selection-capture-20260913-143836/captures/JP03.5.nbt",
+      "source_sha256": "a0c6bd11b7e53d13d359234a152c02223ecd03bae736020ab2e48eb47425ae13",
+      "entities": 0,
+      "asset": "run/japanese-integration/datapack/data/kithkyn/structure/fishery_japanese_cherry_grove_1.nbt",
+      "asset_sha256": "437af547fef68654f78e925bcfa7e94c0e311f05ef545890853ad155b5913836",
+      "definition": "run/japanese-integration/datapack/data/kithkyn/kithkyn/buildings/fishery_japanese_cherry_grove_1.json",
+      "definition_sha256": "e056ca8b8a55b630cef508f958351c04dbf58a1c72712546b6dbe33c432b81f5"
+    },
+    {
+      "exhibit": "JP03.8",
+      "structure": "farm_japanese_cherry_grove_1",
+      "category": "farm",
+      "level": 1,
+      "size": [
+        9,
+        4,
+        7
+      ],
+      "sink": 0,
+      "source": "run/japanese-full-profile/selection-capture-20260913-143836/captures/JP03.8.nbt",
+      "source_sha256": "9282f7d20d7093c5c260ff694b8837b4c9132d6b0d477b1c70f79a5bdeda3656",
+      "entities": 0,
+      "asset": "run/japanese-integration/datapack/data/kithkyn/structure/farm_japanese_cherry_grove_1.nbt",
+      "asset_sha256": "d1754bb1b983b9e4615f13789b0cb52004bfb32c32c2b179b4626ffafdc93390",
+      "definition": "run/japanese-integration/datapack/data/kithkyn/kithkyn/buildings/farm_japanese_cherry_grove_1.json",
+      "definition_sha256": "1b0edb21b2ec9877747f2ef10ac8595d37ea5ba40e6cf2c7d5c6594eae8253e3"
+    },
+    {
+      "exhibit": "JP03.7",
+      "structure": "farm_japanese_cherry_grove_2",
+      "category": "farm",
+      "level": 2,
+      "size": [
+        9,
+        5,
+        12
+      ],
+      "sink": 0,
+      "source": "run/japanese-full-profile/selection-capture-20260913-143836/captures/JP03.7.nbt",
+      "source_sha256": "9e85479c9cde2856290bb46d4f4ffec41378efabed015eb49ccfe37af51dc358",
+      "entities": 0,
+      "asset": "run/japanese-integration/datapack/data/kithkyn/structure/farm_japanese_cherry_grove_2.nbt",
+      "asset_sha256": "9dd6356c9a9485ea22626c68e5469f9bbe85f9ac6a691751f54ed0ba283cb7e5",
+      "definition": "run/japanese-integration/datapack/data/kithkyn/kithkyn/buildings/farm_japanese_cherry_grove_2.json",
+      "definition_sha256": "13f8549bb147208e00f7b78e17cde33adb830ccca65dee54d8fc00bd7398ad07"
+    },
+    {
+      "exhibit": "JP03.9",
+      "structure": "mine_japanese_cherry_grove_1",
+      "category": "mine",
+      "level": 1,
+      "size": [
+        7,
+        7,
+        8
+      ],
+      "sink": 0,
+      "source": "run/japanese-full-profile/selection-capture-20260913-143836/captures/JP03.9.nbt",
+      "source_sha256": "634f3760cb33358b609f07b17b24256a306e5c9aed988c8818cdd2bf91b62f71",
+      "entities": 0,
+      "asset": "run/japanese-integration/datapack/data/kithkyn/structure/mine_japanese_cherry_grove_1.nbt",
+      "asset_sha256": "47b6d20be488cbd64c7d69498a5b6f1f1addf27ba404bb7a5b4d86e86018aeb4",
+      "definition": "run/japanese-integration/datapack/data/kithkyn/kithkyn/buildings/mine_japanese_cherry_grove_1.json",
+      "definition_sha256": "8ef6fff0716753750e5133c3d8c9275cec0677fd7d03b436558bb8d02364b873"
+    },
+    {
+      "exhibit": "JP04.1",
+      "structure": "blacksmith_japanese_cherry_grove_1",
+      "category": "blacksmith",
+      "level": 1,
+      "size": [
+        9,
+        9,
+        9
+      ],
+      "sink": 0,
+      "source": "run/japanese-full-profile/selection-capture-20260913-143836/captures/JP04.1.nbt",
+      "source_sha256": "cd9af9cff5c464f54a4f33a20eec6c68280655bb07388fbc36462b52db4feff8",
+      "entities": 0,
+      "asset": "run/japanese-integration/datapack/data/kithkyn/structure/blacksmith_japanese_cherry_grove_1.nbt",
+      "asset_sha256": "9a3cc3e6bda22f4a272a96faac48148d0a95842af816adc8f179146105340bf0",
+      "definition": "run/japanese-integration/datapack/data/kithkyn/kithkyn/buildings/blacksmith_japanese_cherry_grove_1.json",
+      "definition_sha256": "555c72d9989f892734f419d64f15b8a7037b13db27a79d6b1d2dd5dbbd07463a"
+    },
+    {
+      "exhibit": "JP04.7",
+      "structure": "church_japanese_cherry_grove_1",
+      "category": "church",
+      "level": 1,
+      "size": [
+        9,
+        13,
+        9
+      ],
+      "sink": 0,
+      "source": "run/japanese-full-profile/selection-capture-20260913-143836/captures/JP04.7.nbt",
+      "source_sha256": "f76120890d821cf2d9b47e99347a3db31681e487ae97df43f8e294d047014065",
+      "entities": 0,
+      "asset": "run/japanese-integration/datapack/data/kithkyn/structure/church_japanese_cherry_grove_1.nbt",
+      "asset_sha256": "b1db61d6237112d8ea23240b69f33f4eff475f838fd1c795181ca2d4334ef8ad",
+      "definition": "run/japanese-integration/datapack/data/kithkyn/kithkyn/buildings/church_japanese_cherry_grove_1.json",
+      "definition_sha256": "09a7f04c2e9e2975d38639bdff8c9e28d1b2dabd78cf2b1d9bf6ed05ab401cd5"
+    },
+    {
+      "exhibit": "JP05.7",
+      "structure": "tavern_japanese_cherry_grove_1",
+      "category": "tavern",
+      "level": 1,
+      "size": [
+        17,
+        18,
+        20
+      ],
+      "sink": 0,
+      "source": "run/japanese-full-profile/selection-capture-20260913-143836/captures/JP05.7.nbt",
+      "source_sha256": "d24e01098c71c35897924f63af59a53a4ce7a6d9ed4d24baae2486ef6c382e0c",
+      "entities": 0,
+      "asset": "run/japanese-integration/datapack/data/kithkyn/structure/tavern_japanese_cherry_grove_1.nbt",
+      "asset_sha256": "169dde49a275436038a2aa2a33d914280d605b6a82e56101d9701046abf0357d",
+      "definition": "run/japanese-integration/datapack/data/kithkyn/kithkyn/buildings/tavern_japanese_cherry_grove_1.json",
+      "definition_sha256": "15b7c2a637c708b57e31bf6862bd3747c86d95aef978bb46f9fbf4550d5b992a"
+    },
+    {
+      "exhibit": "JP06.2",
+      "structure": "bakery_japanese_cherry_grove_1",
+      "category": "bakery",
+      "level": 1,
+      "size": [
+        8,
+        7,
+        6
+      ],
+      "sink": 0,
+      "source": "run/japanese-full-profile/selection-capture-20260913-143836/captures/JP06.2.nbt",
+      "source_sha256": "a9c776bf46d150920e64fabbb7d1b37e889c390bdedc87aa70749421b0338e6e",
+      "entities": 0,
+      "asset": "run/japanese-integration/datapack/data/kithkyn/structure/bakery_japanese_cherry_grove_1.nbt",
+      "asset_sha256": "e31fe4992196326f07da5b1c4984f3894d89a4127bb5bd450c754b153734f13d",
+      "definition": "run/japanese-integration/datapack/data/kithkyn/kithkyn/buildings/bakery_japanese_cherry_grove_1.json",
+      "definition_sha256": "36bf3c566a461931cee7f0f15a53f8a967b29dc4b1946deced205f825a06481a"
+    },
+    {
+      "exhibit": "JP06.5",
+      "structure": "hunting_lodge_japanese_cherry_grove_1",
+      "category": "hunting_lodge",
+      "level": 1,
+      "size": [
+        9,
+        8,
+        9
+      ],
+      "sink": -1,
+      "source": "run/japanese-full-profile/selection-capture-20260913-143836/captures/JP06.5.nbt",
+      "source_sha256": "52ccd9fbfef8430cc2a6e4db7e52ab9692b5b311751dcf5202290a7edcc14ea9",
+      "entities": 0,
+      "asset": "run/japanese-integration/datapack/data/kithkyn/structure/hunting_lodge_japanese_cherry_grove_1.nbt",
+      "asset_sha256": "9c7776126073822738e3f6ac42aeaa0f5c55df5ad66c3f007068c767803c7a26",
+      "definition": "run/japanese-integration/datapack/data/kithkyn/kithkyn/buildings/hunting_lodge_japanese_cherry_grove_1.json",
+      "definition_sha256": "9698eeab5c561064efd558a29bcdbeec51fa2be2e4bb5add385d8919a323980e"
+    },
+    {
+      "exhibit": "JP07.1",
+      "structure": "lumberjack_japanese_cherry_grove_1",
+      "category": "lumberjack",
+      "level": 1,
+      "size": [
+        14,
+        8,
+        14
+      ],
+      "sink": -1,
+      "source": "run/japanese-full-profile/selection-capture-20260913-143836/captures/JP07.1.nbt",
+      "source_sha256": "113554d59797058587664bc2fbaa1bec6a4d95825180fe06a0665e08a946c769",
+      "entities": 0,
+      "asset": "run/japanese-integration/datapack/data/kithkyn/structure/lumberjack_japanese_cherry_grove_1.nbt",
+      "asset_sha256": "dd4eb2868110c092e96f0e1213dd62fa46ae1c4362ba96a59bed327a99698ac3",
+      "definition": "run/japanese-integration/datapack/data/kithkyn/kithkyn/buildings/lumberjack_japanese_cherry_grove_1.json",
+      "definition_sha256": "e640dbfad93c27cb5fb8d9c0255f0171236de2ea63e1ca98e26fd8a60831ef5d"
+    },
+    {
+      "exhibit": "JP07.3",
+      "structure": "stoneworks_japanese_cherry_grove_1",
+      "category": "stoneworks",
+      "level": 1,
+      "size": [
+        9,
+        9,
+        9
+      ],
+      "sink": 0,
+      "source": "run/japanese-full-profile/selection-capture-20260913-143836/captures/JP07.3.nbt",
+      "source_sha256": "d7ee7b28b6045e28761c0e6ad77fec1db1163383666edb310289146f819bdf76",
+      "entities": 0,
+      "asset": "run/japanese-integration/datapack/data/kithkyn/structure/stoneworks_japanese_cherry_grove_1.nbt",
+      "asset_sha256": "f58e91c24506bdbea8eb09ff9cc95039fc0d265742006522ef2927d5993ec872",
+      "definition": "run/japanese-integration/datapack/data/kithkyn/kithkyn/buildings/stoneworks_japanese_cherry_grove_1.json",
+      "definition_sha256": "9b5ad2ce0fcba618dc6f8f77562c3b620247703ed53a0dacacab5cc070390e13"
+    },
+    {
+      "exhibit": "JP07.6",
+      "structure": "storehouse_japanese_cherry_grove_1",
+      "category": "storehouse",
+      "level": 1,
+      "size": [
+        11,
+        8,
+        9
+      ],
+      "sink": -1,
+      "source": "run/japanese-full-profile/selection-capture-20260913-143836/captures/JP07.6.nbt",
+      "source_sha256": "2797841fded7c21bbb77e00a0f1f8adac00d082f2acfbd3d60899e9248de3473",
+      "entities": 0,
+      "asset": "run/japanese-integration/datapack/data/kithkyn/structure/storehouse_japanese_cherry_grove_1.nbt",
+      "asset_sha256": "460618f317372ce725f04760dc95c9100eaf4ecb1df5affb02c3154793675608",
+      "definition": "run/japanese-integration/datapack/data/kithkyn/kithkyn/buildings/storehouse_japanese_cherry_grove_1.json",
+      "definition_sha256": "b2f5c82770c80a2e0dcf941e1f4f140c872e6b84d043687332fe606efba49691"
+    },
+    {
+      "exhibit": "JM01",
+      "structure": "market_japanese_cherry_grove_1",
+      "category": "market",
+      "level": 1,
+      "size": [
+        16,
+        6,
+        17
+      ],
+      "sink": 0,
+      "source": "run/japanese-workshop/prepared/jm01_market_1.nbt",
+      "source_sha256": "385b635e0580a575135a67f6a5fc774f00fa916b7f48b21878f586e439a8aa6b",
+      "asset": "run/japanese-integration/datapack/data/kithkyn/structure/market_japanese_cherry_grove_1.nbt",
+      "asset_sha256": "b5899090300f5060f2322611b0a477101e6880c9521bddcdcdbd72ca70a6eae7",
+      "definition": "run/japanese-integration/datapack/data/kithkyn/kithkyn/buildings/market_japanese_cherry_grove_1.json",
+      "definition_sha256": "ff825c156054172a90103386e62e687829238b1e5b55c7c0bbe58cddcb172658"
+    },
+    {
+      "exhibit": "JM02",
+      "structure": "market_japanese_cherry_grove_2",
+      "category": "market",
+      "level": 2,
+      "size": [
+        23,
+        6,
+        17
+      ],
+      "sink": 0,
+      "source": "run/japanese-workshop/prepared/jm02_market_2.nbt",
+      "source_sha256": "981ab85eb7d5336bacfd3496b33776a9e189ba6f5f2db33157c021c738af221b",
+      "asset": "run/japanese-integration/datapack/data/kithkyn/structure/market_japanese_cherry_grove_2.nbt",
+      "asset_sha256": "333cfbbc2fabb11a04bfb2b56f2adbee6ce1492e8d90e19d6f668b3e8b58e82c",
+      "definition": "run/japanese-integration/datapack/data/kithkyn/kithkyn/buildings/market_japanese_cherry_grove_2.json",
+      "definition_sha256": "46dd2c39d53fafc5a6988f80a450e0e600ac56270ed4ed693d815faddf02ec24"
+    },
+    {
+      "exhibit": "JM03",
+      "structure": "market_japanese_cherry_grove_3",
+      "category": "market",
+      "level": 3,
+      "size": [
+        23,
+        6,
+        25
+      ],
+      "sink": 0,
+      "source": "run/japanese-workshop/prepared/jm03_market_3.nbt",
+      "source_sha256": "8d3ca57c9c12493b29f6670fd0691f43053d10d172aef2c821aecd28e608250d",
+      "asset": "run/japanese-integration/datapack/data/kithkyn/structure/market_japanese_cherry_grove_3.nbt",
+      "asset_sha256": "c9f3c62a9aed4ced371bf48074539fdef4fdeeaee18635905ead9f99cfbc3596",
+      "definition": "run/japanese-integration/datapack/data/kithkyn/kithkyn/buildings/market_japanese_cherry_grove_3.json",
+      "definition_sha256": "15a4f5c9f815bfdcb435a90ee2beeed6ad9dda9ba2e94faafc93a405ff052338"
+    }
+  ],
+  "center_labor_contract": {
+    "recorded": "2026-09-14",
+    "builder_posts_per_center": 5,
+    "builder_unlock_populations": [
+      0,
+      12,
+      24,
+      48,
+      96
+    ],
+    "captain_posts_per_center": 1,
+    "routing": "Each mine and storehouse owns its worker vacancy; centers own civic and physically local roles."
+  }
+}

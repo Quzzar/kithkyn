@@ -111,6 +111,12 @@ public final class VillageTemplateExport {
         for (String key : List.of("Items", "LootTable", "LootTableSeed", "item", "RecipesUsed")) data.remove(key);
         if (data.contains("BurnTime")) data.putShort("BurnTime", (short)0);
         if (data.contains("CookTime")) data.putShort("CookTime", (short)0);
+        if (Set.of("minecraft:barrel", "minecraft:chest", "minecraft:trapped_chest").contains(name)
+            && !block.contains("nbt", Tag.TAG_COMPOUND)) {
+          CompoundTag container = new CompoundTag();
+          container.putString("id", name);
+          block.put("nbt", container);
+        }
       }
       CompoundTag air = new CompoundTag(); air.putString("Name", "minecraft:air");
       int airIndex = palette.size(); palette.add(air);
@@ -163,6 +169,14 @@ public final class VillageTemplateExport {
         });
       }
       compactPalette(palette, blocks);
+      // Vanilla writes a template floor by floor; a capture keeps its scan order and the appended
+      // air and overrides land last. Restore the floor order, stable within a floor, so the file
+      // reads as a vanilla one. Placement order is the loader's own (full blocks, partial shapes,
+      // then blocks with block entities), which the builders allow for themselves.
+      List<Tag> ordered = new ArrayList<>(blocks);
+      ordered.sort(Comparator.comparingInt(tag -> ((CompoundTag)tag).getList("pos", Tag.TAG_INT).getInt(1)));
+      blocks.clear();
+      blocks.addAll(ordered);
       // A block outside the declared size is never intended: it stretches the building's
       // footprint in the world (a gallery sign captured four cells in front of a mine
       // pushed the whole mine back), so the export fails instead of shipping it.
@@ -202,9 +216,20 @@ public final class VillageTemplateExport {
         }
         root.put("entities", entities);
       }
+      root.getList("entities", Tag.TAG_COMPOUND).removeIf(value -> {
+        CompoundTag entity = ((CompoundTag)value).getCompound("nbt");
+        String id = entity.getString("id");
+        return (id.equals("minecraft:item_frame") || id.equals("minecraft:glow_item_frame"))
+            && !entity.contains("Item", Tag.TAG_COMPOUND);
+      });
       for (Tag value : root.getList("entities", Tag.TAG_COMPOUND)) {
         CompoundTag entity = ((CompoundTag)value).getCompound("nbt");
         for (String key : List.of("UUID", "Leash", "AngryAt", "NeoForgeData")) entity.remove(key);
+        if (entity.contains("Tags", Tag.TAG_LIST)) {
+          ListTag tags = entity.getList("Tags", Tag.TAG_STRING);
+          tags.removeIf(tag -> ((StringTag)tag).getAsString().equals("kithkyn_iberian_selection_animal"));
+          if (tags.isEmpty()) entity.remove("Tags");
+        }
         entity.put("Motion", doubles(0,0,0));
         entity.putShort("Fire", (short)-1);
         entity.putShort("HurtTime", (short)0);

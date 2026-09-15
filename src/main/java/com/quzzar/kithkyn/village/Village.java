@@ -2683,8 +2683,13 @@ public class Village {
     RelationshipPair marriage = getRelationship(a, b);
     if (building == null || isBeingRebuilt(buildingUUID) || marriage == null || !marriage.married()) return false;
     if (sharesCoupleHome(a, b) && bedAssignments.get(a).getBuildingUUID().equals(buildingUUID)) return true;
-    return CoupleHousing.assign(a, b, building, bedAssignments, unassignedBeds,
-        pair -> coupleRoomAllows(building, pair, a, b));
+    // A couple entitled to the building's reserved room takes it before a general pair there, so
+    // the keeper's household does not fill the tavern's guest room (the Nautical tavern, 2026-09-13).
+    java.util.function.Predicate<BuildingInfo.CoupleBeds> allowed = pair -> coupleRoomAllows(building, pair, a, b);
+    java.util.function.Predicate<BuildingInfo.CoupleBeds> reserved = pair -> building.getInfo().isWorkerBed(
+        building.getInfo().getBedLocations().indexOf(pair.first().asLong()));
+    return CoupleHousing.assign(a, b, building, bedAssignments, unassignedBeds, allowed.and(reserved))
+        || CoupleHousing.assign(a, b, building, bedAssignments, unassignedBeds, allowed);
   }
 
   /** A completed couple room requires the two specific paired beds, not merely the same building. */
@@ -2730,7 +2735,37 @@ public class Village {
 
   private boolean worksAt(UUID resident, UUID building) {
     JobAssignment job = jobAssignments.get(resident);
-    return job != null && job.getBuildingUUID().equals(building);
+    Building workplace = housingWorkplace(job);
+    return workplace != null && workplace.getUUID().equals(building);
+  }
+
+  /**
+   * A center post may route to a separate mine or storehouse. Its live-in bed belongs there when
+   * that building sleeps its own worker (the Romanian mine); a routed building with no beds leaves
+   * the bed at the post's own building, as the Tundra and Nautical centres house their miner.
+   */
+  @Nullable
+  private Building housingWorkplace(@Nullable JobAssignment job) {
+    if (job == null || job.isWallPost()) return null;
+    Building owner = getBuilding(job.getBuildingUUID());
+    if (owner == null || owner.getInfo() == null || isBeingRebuilt(owner.getUUID())) return null;
+    int stationIndex = 0;
+    for (Map.Entry<Long, Occupation> station : owner.getInfo().getWorkLocations().entrySet()) {
+      if (stationIndex++ != job.getStationIndex()) continue;
+      String category = owner.getInfo().getWorksiteCategory(station.getKey());
+      if (category == null) return owner;
+      Building routed = getBuildings().stream()
+          .filter(candidate -> candidate.getInfo() != null && !isBeingRebuilt(candidate.getUUID()))
+          .filter(candidate -> category.equals(candidate.getInfo().getCategory()))
+          .filter(candidate -> candidate.getInfo().getWorksiteLocations().containsValue(job.getOccupation()))
+          .min(java.util.Comparator
+              .comparingDouble((Building candidate) -> BlockPos.of(candidate.getCenterLocation())
+                  .distSqr(BlockPos.of(owner.getCenterLocation())))
+              .thenComparing(candidate -> candidate.getUUID().toString()))
+          .orElse(null);
+      return routed != null && !routed.getInfo().getBedLocations().isEmpty() ? routed : owner;
+    }
+    return null;
   }
 
   @Nullable
@@ -2747,8 +2782,9 @@ public class Village {
     BuildingInfo.RoomReservation room = building == null || building.getInfo() == null
         ? null : building.getInfo().getRoomReservation(bed.getBedIndex());
     if (room != null) return roleRoomAllows(resident, building, room, job);
+    Building workplace = housingWorkplace(job);
     if (HousingPolicy.bedCanHouseJob(bed.getBuildingUUID(), isReservedWorkplaceBed(bed),
-        job == null ? null : job.getBuildingUUID())) return true;
+        workplace == null ? null : workplace.getUUID())) return true;
     UUID spouse = isReservedCoupleBed(bed) ? residentSpouse(resident) : null;
     return spouse != null && worksAt(spouse, bed.getBuildingUUID());
   }
@@ -2936,17 +2972,25 @@ public class Village {
     return jobAssignments.values().stream().anyMatch(job -> job.getOccupation() == occupation);
   }
 
+  /** Builder duty anchors every village center must declare. */
+  public static final int MAX_BUILDER_POSTS = 5;
+
   /**
-   * People per builder post. A camp's first hires must not be three builders
-   * (Aaron, 2026-09-02): the town centre carries three builder posts, but the
-   * second opens only once the village has this many people and the third at
-   * twice that. A post the village has not grown into is not open.
+   * Builder staffing grows slowly with the settlement: one from founding,
+   * then one more whenever the population doubles from twelve through
+   * ninety-six. A post the village has not grown into is not open.
    */
-  public static final int PEOPLE_PER_BUILDER = 6;
+  static int builderPostsForPopulation(int population) {
+    if (population >= 96) return 5;
+    if (population >= 48) return 4;
+    if (population >= 24) return 3;
+    if (population >= 12) return 2;
+    return 1;
+  }
 
   /** How many of the town centre's builder posts the village has grown into. */
   public int builderPostsUnlocked() {
-    return 1 + getPopulation().size() / PEOPLE_PER_BUILDER;
+    return builderPostsForPopulation(getPopulation().size());
   }
 
   /** Whether an open post may be claimed yet: any but a builder post beyond the population's. */
@@ -2962,8 +3006,9 @@ public class Village {
   /**
    * A builder's place among the village's builders, by the order of the
    * builder posts in their workplace's definition: 0 is the construction lead,
-   * 1 wears the paths, 2 grades the ground (docs/worker-loops.md). Anyone
-   * without a builder's post ranks 0, so a lone builder does everything.
+   * 1 wears the paths, 2 grades the ground, and the two late-growth builders
+   * help the whole construction loop (docs/worker-loops.md). Anyone without a
+   * builder's post ranks 0, so a lone builder does everything.
    */
   public int builderRank(UUID personId) {
     JobAssignment job = jobAssignments.get(personId);
@@ -3001,7 +3046,8 @@ public class Village {
     if (person != null && hasDependentHome(person)) {
       return; // a working teenager remains in the parents' home and consumes no bed
     }
-    preferWorkplaceBed(personId, job.getBuildingUUID());
+    Building workplace = housingWorkplace(job);
+    preferWorkplaceBed(personId, workplace == null ? job.getBuildingUUID() : workplace.getUUID());
     if (!bedAssignments.containsKey(personId)) {
       // An adult worker is never bedless: a workplace with no live-in bed leaves them
       // to general housing, taken here. Claiming only seats an adult the village
@@ -3096,7 +3142,9 @@ public class Village {
       if (person != null && person.getLifeStage().isDependentlyHoused()) {
         continue;
       }
-      preferWorkplaceBed(entry.getKey(), entry.getValue().getBuildingUUID());
+      Building workplace = housingWorkplace(entry.getValue());
+      preferWorkplaceBed(entry.getKey(), workplace == null
+          ? entry.getValue().getBuildingUUID() : workplace.getUUID());
     }
 
     // Residents displaced by the active project reclaim newly available homes before new arrivals.
@@ -3243,7 +3291,9 @@ public class Village {
 
   /** Admission uses the exact post so a smith or sentry cannot claim the royal bedroom. */
   public boolean canHouseForJob(UUID personId, JobAssignment targetJob) {
-    UUID targetBuildingUUID = targetJob.getBuildingUUID();
+    Building routedWorkplace = housingWorkplace(targetJob);
+    UUID targetBuildingUUID = routedWorkplace == null
+        ? targetJob.getBuildingUUID() : routedWorkplace.getUUID();
     BedAssignment current = bedAssignments.get(personId);
     UUID spouse = residentSpouse(personId);
     boolean currentMatchesTarget = false;

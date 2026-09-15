@@ -73,7 +73,7 @@ public final class VillageGeneration {
             }
             Village probe = new Village("Unplaced founding probe");
             probe.attach(level);
-            VillageStyle style = VillageStyle.fromBiome(level.getBiome(surface), level.getSeed(), surface);
+            VillageStyle style = VillageStyle.atSite(level, surface, level.getSeed());
             probe.setStyle(style);
             com.quzzar.kithkyn.entities.Kind kind = com.quzzar.kithkyn.entities.Kind.forNaturalFounding(level.getSeed(), surface);
             Rotation rotation = Rotation.values()[RandomSource.create(level.getSeed() ^ column.asLong())

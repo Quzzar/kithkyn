@@ -177,6 +177,73 @@ public final class VillageNamer {
               + " Clear, sturdy invented names with a wintry old-world sound.",
           List.of("Frostmere", "Skelwick", "Eirhavn", "Winterholt"),
           List.of("Eir", "Skel", "Frost", "Winter", "Rime", "Hail", "Sven", "Bryn"));
+      case POLYNESIAN_COAST -> new NamingProfile(
+          "An open island village on a warm coast: stilted huts of stripped spruce under oak roofs,"
+              + " a king's hall with a barred cell beside the village fire, tiki torches, fishing ponds,"
+              + " an open-air shrine ringed by logs and a palisade of stripped logs on coral footings."
+              + " Bright, flowing invented names with an open-vowel island sound.",
+          List.of("Vaelu", "Tenora", "Olamiri", "Kaelua"),
+          List.of("Vae", "Teno", "Ola", "Kae", "Mori", "Lua", "Rua", "Nali"),
+          List.of("lu", "ora", "miri", "lua", "ani", "eva", "oa", "ina"));
+      case ROMANIAN -> new NamingProfile(
+          "A sheltered Dark Forest settlement of steep pale roofs, dark-oak frames, enclosed yards,"
+              + " substantial woodland houses, torchlit timber walls and a tall church around its bell."
+              + " Warm, lyrical invented names with an eastern woodland sound.",
+          List.of("Codrenia", "Valea Lunii", "Branovia", "Miercana"),
+          List.of("Cod", "Vale", "Bran", "Mier", "Lun", "Sor", "Dra", "Veli"),
+          List.of("enia", "ovia", "ana", "esti", "ora", "eni", "ava", "ina"));
+      case RUSTIC_WOODLAND -> new NamingProfile(
+          "A familiar oak-forest settlement of weathered timber halls, fieldstone foundations,"
+              + " working barns, fenced pasture, open fields and a clean oak palisade."
+              + " Grounded invented names with an old woodland sound.",
+          List.of("Oakmere", "Fernwick", "Briarholt", "Millhaven"),
+          List.of("Oak", "Fern", "Briar", "Mill", "Thorn", "Moss", "Hart", "Elm"));
+      case ALPINE_HIGHLANDS -> new NamingProfile(
+          "A close mountain settlement of brick walls, steep spruce roofs, berry gardens,"
+              + " deep wells and large shared houses gathered in high meadows and windy passes."
+              + " Warm, resonant invented names with an Iberian highland sound.",
+          List.of("Valdora", "Monteluz", "Bravena", "Cerrosa"),
+          List.of("Val", "Monte", "Bra", "Cerro", "Luma", "Sierra", "Ald", "Vera"),
+          List.of("dora", "luz", "vena", "rosa", "alta", "era", "ona", "iel"));
+      case JAPANESE_CHERRY_GROVE -> new NamingProfile(
+          "A garden settlement among flowering cherry trees: spruce-framed homes, dark tiled roofs,"
+              + " ponds, compact farms, lanterns and carefully planted paths around a civic bell."
+              + " Calm, concise invented names with a soft woodland sound.",
+          List.of("Hanamori", "Kasayuki", "Mizuhana", "Sorakawa"),
+          List.of("Hana", "Mizu", "Sora", "Kasa", "Aki", "Yama", "Mori", "Tsuki"),
+          List.of("mori", "kawa", "hana", "yuki", "sato", "nami", "tani", "no"));
+      case NAUTICAL_COAST -> new NamingProfile(
+          "A working fishing town on a temperate shore: a lighthouse over the town fire, thatched"
+              + " sandstone and jungle-timber cottages on the sand, a jetty fishery, a turnover ship"
+              + " for its lord and a sandstone seawall on timber footings."
+              + " Brisk, weathered invented names with a salt-harbour sound.",
+          List.of("Saltmere", "Gullhaven", "Kelmouth", "Tidewick"),
+          List.of("Salt", "Gull", "Kel", "Tide", "Brine", "Wrack", "Shel", "Skerry"),
+          List.of("mere", "haven", "mouth", "wick", "cove", "ness", "holm", "strand"));
+      case SAVANNA_TENT -> new NamingProfile(
+          "A tent camp on the dry grass: white canvas over acacia frames around the town fire, blue"
+              + " and yellow tipis, a trader's tent for the stores, an acacia mine and stoneworks,"
+              + " and a palisade of acacia posts on stone footings."
+              + " Warm, open invented names with a grassland sound.",
+          List.of("Sunveld", "Thornkraal", "Dustmere", "Kalandi"),
+          List.of("Sun", "Thorn", "Dust", "Veld", "Kala", "Umba", "Ember", "Grass"),
+          List.of("veld", "kraal", "mere", "moor", "ndi", "ara", "wela", "camp"));
+      case TAIGA -> new NamingProfile(
+          "A Viking camp in the cold conifer forest: stripped spruce halls and steep spruce roofs"
+              + " around a meeting point with a watch tower, a timber fort with its jail and the"
+              + " ruler's hall, a firewatch tower, and a palisade of stripped spruce on stone footings."
+              + " Hard, short invented names with a Norse sound.",
+          List.of("Granheim", "Tallvik", "Skogby", "Frostmark"),
+          List.of("Gran", "Tall", "Skog", "Frost", "Bjorn", "Ulv", "Fjell", "Isen"),
+          List.of("heim", "vik", "by", "mark", "dal", "berg", "stad", "fjord"));
+      case MUSHROOM -> new NamingProfile(
+          "A fantasy village on the mushroom island: houses under red and brown mushroom caps on"
+              + " pale stems, oak gazebos on orange paving around a meeting point with its bell and"
+              + " a cleric's loft, mooshrooms in the pen, and a wall of mushroom caps on a stem footing."
+              + " Soft, whimsical invented names with a fungal sound.",
+          List.of("Sporeholm", "Capwick", "Myceldale", "Gillmoor"),
+          List.of("Spore", "Cap", "Mycel", "Gill", "Puff", "Morel", "Shroom", "Stem"),
+          List.of("holm", "wick", "dale", "moor", "bloom", "fold", "ring", "hollow"));
     };
   }
 

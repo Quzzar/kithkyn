@@ -1,0 +1,448 @@
+{
+  "schemaVersion": 1,
+  "recorded": "2026-09-15",
+  "status": "verified",
+  "style": "mushroom",
+  "description": "Aaron's Mushroom village catalog: the Towns & Towers mushroom-fields fantasy family, its meeting point as the town centre with a cleric under the cap, its mushroom houses, the light gazebo as the mine, the butcher stall as the bakery, the leatherworker's pen as the butchery with four mooshrooms, his rebuilt crop farm, the two gazebos with their armorer, mason, fisher and fletcher kits, the D&T jungle well, a gazebo with an oak stand as the lumberjack, and the shared market geometry in oak on orange concrete, selected and edited live in the trio-20260912 sky gallery on 2026-09-14.",
+  "snapshot": "run/mushroom-integration/world-snapshot-20260915-000157",
+  "founding": {
+    "center": "village_center_mushroom_1",
+    "center_beds": 1,
+    "starting_buildings": [
+      "mine_mushroom_1",
+      "storehouse_mushroom_1",
+      "house_mushroom_1",
+      "house_mushroom_1__one_bed"
+    ],
+    "starting_beds": 4,
+    "starting_workers": [
+      "BUILDER",
+      "GUARD (CAPTAIN)",
+      "CLERIC (at the centre)",
+      "MINER (at the mine)",
+      "QUARTERMASTER (at the storehouse)"
+    ],
+    "note": "the meeting point has one bed, meant for the cleric and open to any founder; the founding set brings the mine, the storehouse and both houses with three beds, four beds for five jobs"
+  },
+  "identity": {
+    "beds": "village primary and secondary colours alternate by bed unit; a couple bed is one unit",
+    "banners": "the two banners on the centre's trunk are village banners",
+    "market_fabrics": "fixed Birch market trade colours"
+  },
+  "biomes": "Mushroom Fields and compatible fungal biomes",
+  "castle": null,
+  "watchtower": null,
+  "church": "none: the cleric lives at the centre",
+  "tavern": null,
+  "wall": {
+    "record": "tools/structure/mushroom-walls-20260915.json",
+    "direction": "Aaron's study B (MU16.1 to MU16.5): red and brown mushroom caps on a mushroom-stem footing with oak fence tips and oak slab walks; gatehouse banners are village banners"
+  },
+  "buildings": [
+    {
+      "exhibit": "MU01.1",
+      "structure": "village_center_mushroom_1",
+      "category": "village_center",
+      "level": 1,
+      "size": [
+        15,
+        17,
+        15
+      ],
+      "sink": 0,
+      "source": "run/mushroom-integration/world-snapshot-20260915-000157/captures/MU01.1.nbt",
+      "source_sha256": "52dc12012cb7d5d46302ef1aafe731ddbe73254229ba8412ad93dc7a76b24bcd",
+      "entities": 0,
+      "edits": [],
+      "asset": "run/mushroom-integration/datapack/data/kithkyn/structure/village_center_mushroom_1.nbt",
+      "asset_sha256": "180a8d5c0b9be084e6cf94392a031adaf68441141a08f56bdf9b936412537223",
+      "definition": "run/mushroom-integration/datapack/data/kithkyn/kithkyn/buildings/village_center_mushroom_1.json",
+      "definition_sha256": "a6bf9df97ef5e9814d04f8a00645d6faa0893e4ecde838189574555ed3eb7fdc"
+    },
+    {
+      "exhibit": "MU01.3",
+      "structure": "house_mushroom_1",
+      "category": "house",
+      "level": 1,
+      "size": [
+        7,
+        11,
+        7
+      ],
+      "sink": 0,
+      "source": "run/mushroom-integration/world-snapshot-20260915-000157/captures/MU01.3.nbt",
+      "source_sha256": "a508cd19751d84c100a6a39030fa4ec1f5c36a496c4f94821e51972b2bf0bebf",
+      "entities": 0,
+      "edits": [],
+      "asset": "run/mushroom-integration/datapack/data/kithkyn/structure/house_mushroom_1.nbt",
+      "asset_sha256": "3219acf697fe850dbbea8618818ddf684f58c433a180ba50e0f50d405c48940e",
+      "definition": "run/mushroom-integration/datapack/data/kithkyn/kithkyn/buildings/house_mushroom_1.json",
+      "definition_sha256": "4b735f56016957f93d19be19305e1c5688e056922626d55c2e29dc14f11021b3"
+    },
+    {
+      "exhibit": "MU01.4",
+      "structure": "house_mushroom_1__one_bed",
+      "category": "house",
+      "level": 1,
+      "size": [
+        8,
+        10,
+        7
+      ],
+      "sink": 0,
+      "source": "run/mushroom-integration/world-snapshot-20260915-000157/captures/MU01.4.nbt",
+      "source_sha256": "00dbfa18e0b721a2c53ed7fe0089e22b120bc6c092a34daf9e1dda9ff1e90854",
+      "entities": 0,
+      "edits": [],
+      "asset": "run/mushroom-integration/datapack/data/kithkyn/structure/house_mushroom_1__one_bed.nbt",
+      "asset_sha256": "8deafbe464804374db8861d7aa04ddeb9b12606c49d2dd2efe43a558bae67b69",
+      "definition": "run/mushroom-integration/datapack/data/kithkyn/kithkyn/buildings/house_mushroom_1__one_bed.json",
+      "definition_sha256": "ac3119ea9011fa083bf568cc5ab26dc8a0f0fb7003109a9d197d93c16f500704"
+    },
+    {
+      "exhibit": "MU01.6",
+      "structure": "couple_cottage_mushroom_1",
+      "category": "couple_cottage",
+      "level": 1,
+      "size": [
+        7,
+        9,
+        7
+      ],
+      "sink": 0,
+      "source": "run/mushroom-integration/world-snapshot-20260915-000157/captures/MU01.6.nbt",
+      "source_sha256": "3faa22ea03713e8a508c46d970eb1eb360f45a1926f780a3a398b7fcdaedd449",
+      "entities": 0,
+      "edits": [],
+      "asset": "run/mushroom-integration/datapack/data/kithkyn/structure/couple_cottage_mushroom_1.nbt",
+      "asset_sha256": "98a7e05a723a4f4eb731dbfb84a89c38196d7a9ec0b3ab74a1ddf6be2987ec1c",
+      "definition": "run/mushroom-integration/datapack/data/kithkyn/kithkyn/buildings/couple_cottage_mushroom_1.json",
+      "definition_sha256": "d5d706632c2e0a25e169f89c3e4210c75ca14ada74c168ef4a47f1191ed3663c"
+    },
+    {
+      "exhibit": "MU01.7",
+      "structure": "storehouse_mushroom_1",
+      "category": "storehouse",
+      "level": 1,
+      "size": [
+        8,
+        7,
+        7
+      ],
+      "sink": 0,
+      "source": "run/mushroom-integration/world-snapshot-20260915-000157/captures/MU01.7.nbt",
+      "source_sha256": "10467075027bd0ff9de498f6af54a9e749bbaabad68417f8c212207667a5e526",
+      "entities": 0,
+      "edits": [],
+      "asset": "run/mushroom-integration/datapack/data/kithkyn/structure/storehouse_mushroom_1.nbt",
+      "asset_sha256": "8adee2b09686ade17e835ae6fd6721890fbf792677ff8659c6490a1ded62d8be",
+      "definition": "run/mushroom-integration/datapack/data/kithkyn/kithkyn/buildings/storehouse_mushroom_1.json",
+      "definition_sha256": "bc17b0417a6fa1b0b37370fdb00ae8bb1e8b1e9c46a8fe4f4a99002e1c20925e"
+    },
+    {
+      "exhibit": "MU01.5",
+      "structure": "mine_mushroom_1",
+      "category": "mine",
+      "level": 1,
+      "size": [
+        7,
+        5,
+        7
+      ],
+      "sink": 0,
+      "source": "run/mushroom-integration/world-snapshot-20260915-000157/captures/MU01.5.nbt",
+      "source_sha256": "fece5729a6f59081399b27df39395f41f15af5650d0ddf5ded4b0e05e502eb39",
+      "entities": 0,
+      "edits": [],
+      "asset": "run/mushroom-integration/datapack/data/kithkyn/structure/mine_mushroom_1.nbt",
+      "asset_sha256": "057b0eb329898f4bf7a322a9c3020b043296fe63c0726c926080941147fbbbc9",
+      "definition": "run/mushroom-integration/datapack/data/kithkyn/kithkyn/buildings/mine_mushroom_1.json",
+      "definition_sha256": "3d9011e551b9d57037eed2d863af2b5bcf58f65bb7c867b484e9ef560aa45326"
+    },
+    {
+      "exhibit": "MU02.1",
+      "structure": "bakery_mushroom_1",
+      "category": "bakery",
+      "level": 1,
+      "size": [
+        5,
+        8,
+        8
+      ],
+      "sink": 0,
+      "source": "run/mushroom-integration/world-snapshot-20260915-000157/captures/MU02.1.nbt",
+      "source_sha256": "540b0e4c32b1e582a2097e053a3dc58a29a4cd7d4681c83af079eee6bfbd4ddc",
+      "entities": 0,
+      "edits": [],
+      "asset": "run/mushroom-integration/datapack/data/kithkyn/structure/bakery_mushroom_1.nbt",
+      "asset_sha256": "74fc46c186d73f36fc7d29edb1563750802b046b31b851068ea825407b1ba053",
+      "definition": "run/mushroom-integration/datapack/data/kithkyn/kithkyn/buildings/bakery_mushroom_1.json",
+      "definition_sha256": "4d26136417e896f55d9405d1799a765f4212052b6c7b4fb22d18815bf1f4c6dc"
+    },
+    {
+      "exhibit": "MU02.2",
+      "structure": "butchery_mushroom_1",
+      "category": "butchery",
+      "level": 1,
+      "size": [
+        8,
+        5,
+        8
+      ],
+      "sink": 0,
+      "source": "run/mushroom-integration/world-snapshot-20260915-000157/captures/MU02.2.nbt",
+      "source_sha256": "1ff335ecf4dda495285fa5e3464d0a49e5eefc8ca0c3d7fbae4584923170fe96",
+      "entities": 4,
+      "edits": [],
+      "asset": "run/mushroom-integration/datapack/data/kithkyn/structure/butchery_mushroom_1.nbt",
+      "asset_sha256": "d7338d81e5593b0f75c72db07f11a73eba2e4c3e2236a82404a5c660b926cb7a",
+      "definition": "run/mushroom-integration/datapack/data/kithkyn/kithkyn/buildings/butchery_mushroom_1.json",
+      "definition_sha256": "338e58b02f37339bea1fd7655c4dd4240da973f1993e43f15034e1d9c8a96f08"
+    },
+    {
+      "exhibit": "MU02.3",
+      "structure": "farm_mushroom_1",
+      "category": "farm",
+      "level": 1,
+      "size": [
+        9,
+        3,
+        9
+      ],
+      "sink": -1,
+      "source": "run/mushroom-integration/world-snapshot-20260915-000157/captures/MU02.3.nbt",
+      "source_sha256": "b17b3fcca6c96951c0d785c32f69596b170f71c75177b051cba3431fa73304a7",
+      "entities": 0,
+      "edits": [],
+      "asset": "run/mushroom-integration/datapack/data/kithkyn/structure/farm_mushroom_1.nbt",
+      "asset_sha256": "beb9e750a3cebec5b561fcdf7877d8909f9b463c31249fe292d97b9c16ce8265",
+      "definition": "run/mushroom-integration/datapack/data/kithkyn/kithkyn/buildings/farm_mushroom_1.json",
+      "definition_sha256": "118b69f1b279dfbd5d6ae0e2c3faaaad9176e042a519857d9132c10e033f1ec1"
+    },
+    {
+      "exhibit": "MU12.5",
+      "structure": "well_mushroom_1",
+      "category": "well",
+      "level": 1,
+      "size": [
+        3,
+        12,
+        3
+      ],
+      "sink": 7,
+      "source": "run/mushroom-integration/world-snapshot-20260915-000157/captures/MU12.5.nbt",
+      "source_sha256": "59f06775359437fec56475c15362160713eeca71702f6eb93705c968688b2f10",
+      "entities": 0,
+      "edits": [],
+      "asset": "run/mushroom-integration/datapack/data/kithkyn/structure/well_mushroom_1.nbt",
+      "asset_sha256": "e70f0a207faf217507ce07dd876d4f6a01ca6704555f0380486e340d41f88018",
+      "definition": "run/mushroom-integration/datapack/data/kithkyn/kithkyn/buildings/well_mushroom_1.json",
+      "definition_sha256": "f8f4bfbaf90acc688248d1b8920f9180ec68e9b8592dfe348679cb3da30c9d13"
+    },
+    {
+      "exhibit": "MU13.1",
+      "structure": "blacksmith_mushroom_1",
+      "category": "blacksmith",
+      "level": 1,
+      "size": [
+        7,
+        6,
+        7
+      ],
+      "sink": 0,
+      "source": "run/mushroom-integration/world-snapshot-20260915-000157/captures/MU13.1.nbt",
+      "source_sha256": "50b597643c64b56e6f4b30b2ef76457d376d10b23394bc7c9144f7e424663fcf",
+      "entities": 0,
+      "edits": [],
+      "asset": "run/mushroom-integration/datapack/data/kithkyn/structure/blacksmith_mushroom_1.nbt",
+      "asset_sha256": "b68c99abae3f60acbbdea3e836b4b5437318444721a1e711dcb10e5207f2c6c5",
+      "definition": "run/mushroom-integration/datapack/data/kithkyn/kithkyn/buildings/blacksmith_mushroom_1.json",
+      "definition_sha256": "c17f95eaa52ca8231f0d66fa371861d6da22b5213c86848c26d8142677e2ad49"
+    },
+    {
+      "exhibit": "MU13.2",
+      "structure": "stoneworks_mushroom_1",
+      "category": "stoneworks",
+      "level": 1,
+      "size": [
+        7,
+        6,
+        7
+      ],
+      "sink": 0,
+      "source": "run/mushroom-integration/world-snapshot-20260915-000157/captures/MU13.2.nbt",
+      "source_sha256": "24eb89015afde905fa5103882a873d1dfc810fd2f88026abf0bc82fed27c6a96",
+      "entities": 0,
+      "edits": [],
+      "asset": "run/mushroom-integration/datapack/data/kithkyn/structure/stoneworks_mushroom_1.nbt",
+      "asset_sha256": "6354f218b173c95b7a51390da7185bb26b488cc399921f2d4bf724a39f3a1681",
+      "definition": "run/mushroom-integration/datapack/data/kithkyn/kithkyn/buildings/stoneworks_mushroom_1.json",
+      "definition_sha256": "1cb05e7f71880105d1e75f7009867880c0f9f11baf152fcf80e0f3632db6b3ee"
+    },
+    {
+      "exhibit": "MU13.6",
+      "structure": "fishery_mushroom_1",
+      "category": "fishery",
+      "level": 1,
+      "size": [
+        7,
+        5,
+        7
+      ],
+      "sink": 0,
+      "source": "run/mushroom-integration/world-snapshot-20260915-000157/captures/MU13.6.nbt",
+      "source_sha256": "92fd4ef62ab55a31f84c1a618bfcdaaa2ad5765be5a15e653ff1f7fe6bd6238b",
+      "entities": 0,
+      "edits": [],
+      "asset": "run/mushroom-integration/datapack/data/kithkyn/structure/fishery_mushroom_1.nbt",
+      "asset_sha256": "b2bcdb22481192b756015dbda97a9592188998e2d10df5e405497b4870228cbc",
+      "definition": "run/mushroom-integration/datapack/data/kithkyn/kithkyn/buildings/fishery_mushroom_1.json",
+      "definition_sha256": "3da58efe77d6d3ad63effbc54de9064f8ca7470ebfa067064915a2337215384c"
+    },
+    {
+      "exhibit": "MU13.7",
+      "structure": "hunting_lodge_mushroom_1",
+      "category": "hunting_lodge",
+      "level": 1,
+      "size": [
+        7,
+        5,
+        7
+      ],
+      "sink": 0,
+      "source": "run/mushroom-integration/world-snapshot-20260915-000157/captures/MU13.7.nbt",
+      "source_sha256": "9a2339b67e1e4892de76a9cb5aa6c06704eedad77f4580d7ccdfa9fcf2530400",
+      "entities": 0,
+      "edits": [],
+      "asset": "run/mushroom-integration/datapack/data/kithkyn/structure/hunting_lodge_mushroom_1.nbt",
+      "asset_sha256": "6e7a0f3f1af9c765fc5d7fc1f4f3b4c47e16d56031e3b528bbd2691f8530bb71",
+      "definition": "run/mushroom-integration/datapack/data/kithkyn/kithkyn/buildings/hunting_lodge_mushroom_1.json",
+      "definition_sha256": "f025bf747da7f196b7cc00b8a3d57bea84c95410233ecd5e18e7dcab8cf1ba85"
+    },
+    {
+      "exhibit": "derived from MU01.5",
+      "structure": "lumberjack_mushroom_1",
+      "category": "lumberjack",
+      "level": 1,
+      "size": [
+        10,
+        5,
+        7
+      ],
+      "sink": 0,
+      "source": "run/mushroom-full-profile/prepared/mu01_05_mushroom_light_professions_gazebo.nbt",
+      "source_sha256": "085972ab9c9df0fa0c52fa408d46975969dd320d08e5f3943cc6c1ffb84e53a5",
+      "entities": 0,
+      "edits": [
+        {
+          "pos": [
+            0,
+            0,
+            3
+          ],
+          "name": "minecraft:mycelium",
+          "properties": {
+            "snowy": "false"
+          }
+        },
+        {
+          "pos": [
+            0,
+            1,
+            3
+          ],
+          "name": "minecraft:oak_sapling",
+          "properties": {
+            "stage": "0"
+          }
+        },
+        {
+          "pos": [
+            8,
+            1,
+            2
+          ],
+          "name": "minecraft:barrel",
+          "properties": {
+            "facing": "up",
+            "open": "false"
+          }
+        }
+      ],
+      "derivation": "the prepared gallery copy of MU01.5 shifted 3 blocks east in a 10-wide box, an oak sapling at [0, 1, 3] as the stand and post, a barrel at [8, 1, 2] as the store",
+      "asset": "run/mushroom-integration/datapack/data/kithkyn/structure/lumberjack_mushroom_1.nbt",
+      "asset_sha256": "f25d35c3930227b999e083f4324ad6a1dad1a0afb52f2886d35c65fcff3c14f8",
+      "definition": "run/mushroom-integration/datapack/data/kithkyn/kithkyn/buildings/lumberjack_mushroom_1.json",
+      "definition_sha256": "bc68b3b735d06cef2c0b45f52af9a88ee4e75151a8ec2805a10ea981fd9c0334"
+    },
+    {
+      "exhibit": "MU14.1",
+      "structure": "market_mushroom_1",
+      "category": "market",
+      "level": 1,
+      "size": [
+        16,
+        6,
+        17
+      ],
+      "sink": 0,
+      "source": "run/mushroom-full-profile/prepared/mu14_01_market_1.nbt",
+      "source_sha256": "ae5741cc976d96a52d869d11ca785110199c32fce9d97f30d6a0feff6e29f0de",
+      "definition_from": "origin/main:src/main/resources/data/kithkyn/kithkyn/buildings/market_birch_forest_1.json",
+      "asset": "run/mushroom-integration/datapack/data/kithkyn/structure/market_mushroom_1.nbt",
+      "asset_sha256": "39b12125b78ad6738d73e721d426207930290af99bba213868471acb540284c9",
+      "definition": "run/mushroom-integration/datapack/data/kithkyn/kithkyn/buildings/market_mushroom_1.json",
+      "definition_sha256": "a9ae6278a920a20c9e58092601bc221928c71fe33e394568e5738d925605f9ba"
+    },
+    {
+      "exhibit": "MU14.2",
+      "structure": "market_mushroom_2",
+      "category": "market",
+      "level": 2,
+      "size": [
+        23,
+        6,
+        17
+      ],
+      "sink": 0,
+      "source": "run/mushroom-full-profile/prepared/mu14_02_market_2.nbt",
+      "source_sha256": "889d57349d282be0f90c29771276948f3f8707c62e1f8b917d5295f20bf8ed91",
+      "definition_from": "origin/main:src/main/resources/data/kithkyn/kithkyn/buildings/market_birch_forest_2.json",
+      "asset": "run/mushroom-integration/datapack/data/kithkyn/structure/market_mushroom_2.nbt",
+      "asset_sha256": "f6c2c2a13bf225350cea918edf076d1f99b7d5c6026ec5b03969310a6cf8210c",
+      "definition": "run/mushroom-integration/datapack/data/kithkyn/kithkyn/buildings/market_mushroom_2.json",
+      "definition_sha256": "51f6193e4eace151f5945716b0772eefb6cb304d489cde8f42fb04f8ff8651ca"
+    },
+    {
+      "exhibit": "MU14.3",
+      "structure": "market_mushroom_3",
+      "category": "market",
+      "level": 3,
+      "size": [
+        23,
+        6,
+        25
+      ],
+      "sink": 0,
+      "source": "run/mushroom-full-profile/prepared/mu14_03_market_3.nbt",
+      "source_sha256": "97c01d193b392cab98f9d2ad8f3247c1be88917cdda7fbd9a592a6e23db71a65",
+      "definition_from": "origin/main:src/main/resources/data/kithkyn/kithkyn/buildings/market_birch_forest_3.json",
+      "asset": "run/mushroom-integration/datapack/data/kithkyn/structure/market_mushroom_3.nbt",
+      "asset_sha256": "b12b3ab44b39a1722a82c81d1dbfdb5a977665aedbfdea4d114e5b766a206fa3",
+      "definition": "run/mushroom-integration/datapack/data/kithkyn/kithkyn/buildings/market_mushroom_3.json",
+      "definition_sha256": "abc6d9e7a6e8b613f70af301d2672ae6958bb8bf3f0df27b11984d20fefb3c0a"
+    }
+  ],
+  "verification": {
+    "placement": "PASS: [building-placement-verify] RESULT PASS: 144 real-template placements, both paths, four rotations, colors, frames, entity/save receipts and upgrade preservation",
+    "restart": "PASS: [building-placement-verify] RESTART PASS: 144 saved buildings and 32 original entities survived real server shutdown/restart without replenishment",
+    "founding": "PASS: [mushroom-verify] RESULT PASS: 18 strict native templates, 2 housing alternatives, 8 upgrade fits, four founding rotations and codec reloads, natural biome selection, 4 beds, 5 positions, distinct meeting/fire locations and village identity",
+    "center": "PASS: [approved-house-verify] RESULT PASS: 4 rotated structures, 32 access routes, 4 physical room walks and assigned-bed sleeps, 4 physical personal-container deposits, 0 failed placements; probe size=18; station walks=28, shared deposits=4, mine walks=0, review walks=0",
+    "access": "PASS: [approved-house-verify] RESULT PASS: 68 rotated structures, 84 access routes, 20 physical room walks and assigned-bed sleeps, 12 physical personal-container deposits, 0 failed placements; probe size=18; station walks=64, shared deposits=76, mine walks=8, review walks=0",
+    "routes-gate-access-mushroom": "PASS: [gate-access-verify] RESULT PASS: MUSHROOM all 8 guards/workers ascended and descended",
+    "routes-gate-access-polynesian": "PASS: [gate-access-verify] RESULT PASS: POLYNESIAN_COAST all 8 guards/workers ascended and descended",
+    "routes-gate-access-nautical": "PASS: [gate-access-verify] RESULT PASS: NAUTICAL_COAST all 8 guards/workers ascended and descended",
+    "custody": "not applicable: the Mushroom catalog has no castle",
+    "static_audit": "PASS 18 templates (tools/structure/audit-templates.py on the mushroom-village branch, mooshrooms admitted as livestock): no barrier states, out-of-bounds blocks, invalid or duplicate station coordinates, invalid lumberjack stands, terrain-clearing corner air, unclassified containers, open or empty butcheries, malformed market floors, or malformed market entrances"
+  }
+}

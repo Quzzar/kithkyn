@@ -12,7 +12,7 @@ from nbt import read
 
 MARKET_NAME = re.compile(r"^.*market(?:_.+)?_(\d+)\.nbt$")
 AIR = {"minecraft:air", "minecraft:cave_air", "minecraft:void_air"}
-LIVESTOCK = {"minecraft:chicken", "minecraft:cow", "minecraft:pig", "minecraft:sheep"}
+LIVESTOCK = {"minecraft:chicken", "minecraft:cow", "minecraft:mooshroom", "minecraft:pig", "minecraft:sheep"}
 CONTAINER_BLOCKS = {"minecraft:chest", "minecraft:trapped_chest", "minecraft:barrel"}
 MARKET_COLORS = ("red", "cyan", "orange")
 MARKET_PART_COUNTS = {
@@ -218,12 +218,12 @@ def problems(path):
                 "stairs",
                 f"expected {expected * 7} alternating awning stairs, found {awning_stairs}",
             ))
-        neutral_stairs = counts["minecraft:birch_stairs"]
+        neutral_stairs = awning_stairs - sum(counts[MARKET_ACCENT_STAIRS[color]] for color in expected_colors)
         if neutral_stairs != expected * 3:
             failures.append((
                 "market stair trim",
-                "minecraft:birch_stairs",
-                f"expected {expected * 3} white-stripe awning stairs, found {neutral_stairs}",
+                "neutral stairs",
+                f"expected {expected * 3} neutral-stripe awning stairs, found {neutral_stairs}",
             ))
 
         entrances = sorted(

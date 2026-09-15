@@ -1,7 +1,9 @@
 package com.quzzar.kithkyn.village.buildings;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.EnumSet;
 import java.util.HashSet;
@@ -39,14 +41,16 @@ class VillageStyleTest {
   void bundledBirchLeadsTheEnumAndIsWhatUnknownSavedStylesReadAs() {
     assertEquals(List.of(VillageStyle.BIRCH_FOREST, VillageStyle.DESERT, VillageStyle.BADLANDS,
         VillageStyle.FLOODPLAIN, VillageStyle.JUNGLE, VillageStyle.SWAMP, VillageStyle.MEDITERRANEAN,
-        VillageStyle.TUNDRA),
+        VillageStyle.TUNDRA, VillageStyle.POLYNESIAN_COAST, VillageStyle.ROMANIAN,
+        VillageStyle.ALPINE_HIGHLANDS, VillageStyle.JAPANESE_CHERRY_GROVE, VillageStyle.NAUTICAL_COAST,
+        VillageStyle.SAVANNA_TENT, VillageStyle.RUSTIC_WOODLAND, VillageStyle.TAIGA, VillageStyle.MUSHROOM),
         List.of(VillageStyle.values()));
     assertEquals(VillageStyle.BIRCH_FOREST, VillageStyle.DEFAULT);
     assertEquals(VillageStyle.BIRCH_FOREST, VillageStyle.fromId(""));
-    assertEquals(VillageStyle.BIRCH_FOREST, VillageStyle.fromId("taiga"));
+    assertEquals(VillageStyle.BIRCH_FOREST, VillageStyle.fromId("orchard"));
     assertEquals(VillageStyle.BIRCH_FOREST, VillageStyle.fromId("removed_family"));
     assertEquals(VillageStyle.DESERT, VillageStyle.fromId("DESERT"));
-    assertNull(VillageStyle.parse("taiga"));
+    assertNull(VillageStyle.parse("orchard"));
   }
 
   @Test
@@ -57,7 +61,32 @@ class VillageStyleTest {
   }
 
   @Test
-  void puebloCoversMesaAndSavannaWhileSandyDesertsStayDistinct() {
+  void darkForestAndNamedWoodlandHighlandsUseRomanianWhenItsCatalogIsLoaded() {
+    for (String path : List.of("dark_forest", "ancient_darkforest", "forested_highlands", "wooded_valley")) {
+      assertEquals(VillageStyle.ROMANIAN,
+          VillageStyle.select(NO_TAGS, path, 0.7F, true, 0.8F, 7L, ALL_STYLES));
+      assertEquals(VillageStyle.BIRCH_FOREST,
+          VillageStyle.select(NO_TAGS, path, 0.7F, true, 0.8F, 7L,
+              style -> style != VillageStyle.ROMANIAN));
+    }
+  }
+
+  @Test
+  void floweringWoodlandsUseJapaneseOnlyWhenItsCatalogIsLoaded() {
+    for (String path : List.of("cherry_grove", "flower_forest", "sakura_woodland")) {
+      assertEquals(VillageStyle.JAPANESE_CHERRY_GROVE,
+          VillageStyle.select(NO_TAGS, path, 0.5F, true, 0.8F, 7L, ALL_STYLES));
+      assertEquals(VillageStyle.BIRCH_FOREST,
+          VillageStyle.select(NO_TAGS, path, 0.5F, true, 0.8F, 7L,
+              style -> style != VillageStyle.JAPANESE_CHERRY_GROVE));
+    }
+    assertEquals(VillageStyle.JAPANESE_CHERRY_GROVE,
+        VillageStyle.select(VillageStyle.JAPANESE_CHERRY_GROVE.biomeTag()::equals,
+            "custom_flowery_woods", 0.5F, true, 0.8F, 7L, ALL_STYLES));
+  }
+
+  @Test
+  void puebloCoversMesaAndTheSavannaTentCoversSavannaWhileSandyDesertsStayDistinct() {
     Set<TagKey<Biome>> mapped = Set.of(VillageStyle.BADLANDS.biomeTag(), Tags.Biomes.IS_BADLANDS);
     assertEquals(VillageStyle.BADLANDS,
         VillageStyle.select(mapped::contains, "badlands", 2F, false, 0F, 7L, ALL_STYLES));
@@ -71,7 +100,8 @@ class VillageStyleTest {
             style -> style == VillageStyle.DESERT));
     for (long seed = 0; seed < 20; seed++) {
       assertFamily(Tags.Biomes.IS_BADLANDS, VillageStyle.BADLANDS, seed);
-      assertFamily(Tags.Biomes.IS_SAVANNA, VillageStyle.BADLANDS, seed);
+      assertFamily(Tags.Biomes.IS_SAVANNA, VillageStyle.SAVANNA_TENT, seed);
+      assertFamily(Tags.Biomes.IS_TAIGA, VillageStyle.TAIGA, seed);
       assertFamily(Tags.Biomes.IS_SANDY, VillageStyle.DESERT, seed);
       assertFamily(Tags.Biomes.IS_DESERT, VillageStyle.DESERT, seed);
       Set<TagKey<Biome>> sandyMesa = Set.of(Tags.Biomes.IS_BADLANDS, Tags.Biomes.IS_SANDY);
@@ -82,14 +112,54 @@ class VillageStyleTest {
 
   @Test
   void untaggedMesaAndSavannaNamesHaveStableCoverageThatExplicitTagsCanNarrow() {
-    for (String path : List.of("wooded_mesa", "red_badlands", "dry_savanna", "savannah_hills")) {
+    for (String path : List.of("wooded_mesa", "red_badlands")) {
       assertEquals(VillageStyle.BADLANDS,
           VillageStyle.select(NO_TAGS, path, 1.2F, false, 0F, 12L, ALL_STYLES));
       assertEquals(VillageStyle.DESERT,
           VillageStyle.select(VillageStyle.DESERT.biomeTag()::equals, path, 1.2F, false, 0F, 12L, ALL_STYLES));
     }
+    for (String path : List.of("dry_savanna", "savannah_hills", "windswept_savanna")) {
+      assertEquals(VillageStyle.SAVANNA_TENT,
+          VillageStyle.select(NO_TAGS, path, 1.2F, false, 0F, 12L, ALL_STYLES),
+          "a savanna name is the Savanna Tent, the windswept one ahead of the mountain rule");
+      assertEquals(VillageStyle.DESERT,
+          VillageStyle.select(VillageStyle.DESERT.biomeTag()::equals, path, 1.2F, false, 0F, 12L, ALL_STYLES));
+      assertTrue(Set.of(VillageStyle.DESERT, VillageStyle.BADLANDS).contains(
+          VillageStyle.select(NO_TAGS, path, 1.2F, false, 0F, 12L, style -> style != VillageStyle.SAVANNA_TENT)),
+          "without the Savanna pack a savanna keeps the hot, dry cluster's answer");
+    }
     assertEquals(VillageStyle.BIRCH_FOREST,
         VillageStyle.select(Tags.Biomes.IS_SAVANNA::equals, "birch_savanna", 1F, false, 0F, 12L, ALL_STYLES));
+  }
+
+  @Test
+  void coniferForestsAreTheTaigaAndSnowyOnesStayTundra() {
+    for (String path : List.of("taiga", "old_growth_pine_taiga", "old_growth_spruce_taiga")) {
+      assertEquals(VillageStyle.TAIGA,
+          VillageStyle.select(NO_TAGS, path, 0.25F, true, 0.8F, 12L, ALL_STYLES));
+      assertEquals(VillageStyle.TAIGA,
+          VillageStyle.select(Tags.Biomes.IS_TAIGA::equals, "cold_pines", 0.25F, true, 0.8F, 12L, ALL_STYLES));
+    }
+    Set<TagKey<Biome>> snowyTaiga = Set.of(Tags.Biomes.IS_TAIGA, Tags.Biomes.IS_SNOWY);
+    assertEquals(VillageStyle.TUNDRA,
+        VillageStyle.select(snowyTaiga::contains, "snowy_taiga", -0.5F, true, 0.4F, 12L, ALL_STYLES),
+        "a snowy taiga keeps the frozen lowlands' catalog");
+    assertEquals(VillageStyle.BIRCH_FOREST,
+        VillageStyle.select(Tags.Biomes.IS_TAIGA::equals, "cold_pines", 0.25F, true, 0.8F, 12L,
+            style -> style != VillageStyle.TAIGA),
+        "without the Taiga pack a conifer forest keeps the temperate cluster's bundled catalog");
+  }
+
+  @Test
+  void mushroomFieldsAreTheMushroomCatalogOnlyWhenItIsLoaded() {
+    assertEquals(VillageStyle.MUSHROOM,
+        VillageStyle.select(NO_TAGS, "mushroom_fields", 0.9F, true, 1.0F, 12L, ALL_STYLES));
+    assertEquals(VillageStyle.MUSHROOM,
+        VillageStyle.select(Tags.Biomes.IS_MUSHROOM::equals, "fungal_isle", 0.9F, true, 1.0F, 12L, ALL_STYLES),
+        "a tagged fungal family is the Mushroom catalog whatever its name");
+    assertTrue(VillageStyle.select(NO_TAGS, "mushroom_fields", 0.9F, true, 1.0F, 12L,
+        style -> style != VillageStyle.MUSHROOM) != VillageStyle.MUSHROOM,
+        "without the Mushroom pack the island falls through to the climate clusters");
   }
 
   @Test
@@ -108,9 +178,9 @@ class VillageStyleTest {
 
   @Test
   void unfinishedConventionalFamiliesBuildBirchRatherThanARemovedCatalog() {
+    // The taiga family has its own catalog since 2026-09-14; a coniferous tree tag alone names no family.
     List<TagKey<Biome>> unfinished = List.of(Tags.Biomes.IS_FOREST,
-        Tags.Biomes.IS_DECIDUOUS_TREE, Tags.Biomes.IS_TAIGA,
-        Tags.Biomes.IS_CONIFEROUS_TREE, Tags.Biomes.IS_MOUNTAIN);
+        Tags.Biomes.IS_DECIDUOUS_TREE, Tags.Biomes.IS_CONIFEROUS_TREE);
     for (long seed = 0; seed < 20; seed++) {
       for (TagKey<Biome> tag : unfinished) {
         assertFamily(tag, VillageStyle.BIRCH_FOREST, seed);
@@ -126,6 +196,38 @@ class VillageStyleTest {
               style -> style == VillageStyle.BIRCH_FOREST),
           "without the Tundra pack, snowy biomes fall back to the bundled catalog");
     }
+  }
+
+  @Test
+  void ordinaryOakForestUsesRusticWoodlandOnlyWhenItsCatalogIsLoaded() {
+    for (String path : List.of("forest", "ancient_oak_forest", "oak_woodland", "oak_woods")) {
+      assertEquals(VillageStyle.RUSTIC_WOODLAND,
+          VillageStyle.select(NO_TAGS, path, 0.7F, true, 0.8F, 7L, ALL_STYLES));
+      assertEquals(VillageStyle.BIRCH_FOREST,
+          VillageStyle.select(NO_TAGS, path, 0.7F, true, 0.8F, 7L,
+              style -> style != VillageStyle.RUSTIC_WOODLAND));
+    }
+    assertEquals(VillageStyle.RUSTIC_WOODLAND,
+        VillageStyle.select(VillageStyle.RUSTIC_WOODLAND.biomeTag()::equals,
+            "custom_deciduous_woods", 0.7F, true, 0.8F, 7L, ALL_STYLES));
+  }
+
+  @Test
+  void mountainFamiliesUseAlpineWhileFrozenLowlandsRemainTundra() {
+    for (String path : List.of("meadow", "grove", "jagged_peaks", "frozen_peaks",
+        "stony_peaks", "windswept_hills", "alpine_valley")) {
+      assertEquals(VillageStyle.ALPINE_HIGHLANDS,
+          VillageStyle.select(NO_TAGS, path, 0.2F, true, 0.7F, 11L, ALL_STYLES));
+    }
+    assertEquals(VillageStyle.ALPINE_HIGHLANDS,
+        VillageStyle.select(Tags.Biomes.IS_MOUNTAIN::equals, "snowy_slopes", 0.0F, true, 0.8F,
+            11L, ALL_STYLES));
+    assertEquals(VillageStyle.TUNDRA,
+        VillageStyle.select(Tags.Biomes.IS_SNOWY::equals, "snowy_plains", 0.0F, true, 0.5F,
+            11L, ALL_STYLES));
+    assertEquals(VillageStyle.BIRCH_FOREST,
+        VillageStyle.select(Tags.Biomes.IS_MOUNTAIN::equals, "meadow", 0.5F, true, 0.7F,
+            11L, style -> style != VillageStyle.ALPINE_HIGHLANDS));
   }
 
   @Test
@@ -156,6 +258,68 @@ class VillageStyleTest {
     assertEquals(VillageStyle.FLOODPLAIN,
         VillageStyle.select(Tags.Biomes.IS_JUNGLE::equals, "jungle", 0.95F, true, 0.9F, 7L,
             style -> style == VillageStyle.FLOODPLAIN));
+  }
+
+  @Test
+  void sparseJungleIsThePolynesianCoastWhenItsCatalogIsLoaded() {
+    Predicate<TagKey<Biome>> sparse = VillageStyle.POLYNESIAN_COAST.biomeTag()::equals;
+    assertEquals(VillageStyle.POLYNESIAN_COAST,
+        VillageStyle.select(sparse, "sparse_jungle", 0.95F, true, 0.8F, 7L, ALL_STYLES));
+    assertEquals(VillageStyle.JUNGLE,
+        VillageStyle.select(sparse, "sparse_jungle", 0.95F, true, 0.8F, 7L,
+            style -> style != VillageStyle.POLYNESIAN_COAST),
+        "without the Polynesian pack a sparse jungle stays a Jungle village by name");
+  }
+
+  @Test
+  void aSandyBeachOnWarmWaterIsThePolynesianCoast() {
+    Set<TagKey<Biome>> beach = Set.of(Tags.Biomes.IS_BEACH, Tags.Biomes.IS_SANDY);
+    assertEquals(VillageStyle.POLYNESIAN_COAST,
+        VillageStyle.select(beach::contains, "beach", 0.8F, true, 0.4F, true, 7L, ALL_STYLES));
+    assertEquals(VillageStyle.NAUTICAL_COAST,
+        VillageStyle.select(beach::contains, "beach", 0.8F, true, 0.4F, false, 7L, ALL_STYLES),
+        "a beach on temperate or cold water is the Nautical Coast");
+    Set<TagKey<Biome>> claimed = Set.of(Tags.Biomes.IS_BEACH, VillageStyle.SWAMP.biomeTag());
+    assertEquals(VillageStyle.SWAMP,
+        VillageStyle.select(claimed::contains, "beach", 0.8F, true, 0.4F, true, 7L, ALL_STYLES),
+        "an explicit style tag still wins");
+    assertEquals(VillageStyle.BIRCH_FOREST,
+        VillageStyle.select(NO_TAGS, "beach", 0.8F, true, 0.4F, true, 7L,
+            style -> style != VillageStyle.POLYNESIAN_COAST),
+        "without the Polynesian pack a warm beach falls through as before");
+    assertTrue(VillageStyle.isOpenBeach(beach::contains));
+    assertFalse(VillageStyle.isOpenBeach(Set.of(Tags.Biomes.IS_BEACH, Tags.Biomes.IS_SNOWY)::contains));
+    assertFalse(VillageStyle.isOpenBeach(NO_TAGS));
+  }
+
+  @Test
+  void otherOpenBeachesAndStonyShoresAreTheNauticalCoastWhenItsCatalogIsLoaded() {
+    Set<TagKey<Biome>> beach = Set.of(Tags.Biomes.IS_BEACH, Tags.Biomes.IS_SANDY);
+    assertEquals(VillageStyle.NAUTICAL_COAST,
+        VillageStyle.select(beach::contains, "beach", 0.8F, true, 0.4F, false, 7L, ALL_STYLES));
+    assertEquals(VillageStyle.NAUTICAL_COAST,
+        VillageStyle.select(Tags.Biomes.IS_STONY_SHORES::equals, "stony_shore", 0.2F, true, 0.3F, 7L, ALL_STYLES));
+    assertEquals(VillageStyle.NAUTICAL_COAST,
+        VillageStyle.select(beach::contains, "beach", 0.8F, true, 0.4F, true, 7L,
+            style -> style != VillageStyle.POLYNESIAN_COAST),
+        "without the Polynesian pack a warm beach is still a coast village");
+    Set<TagKey<Biome>> snowy = Set.of(Tags.Biomes.IS_BEACH, Tags.Biomes.IS_SNOWY);
+    assertEquals(VillageStyle.TUNDRA,
+        VillageStyle.select(snowy::contains, "snowy_beach", 0.05F, true, 0.3F, false, 7L, ALL_STYLES),
+        "a snowy beach stays Tundra country");
+    assertEquals(VillageStyle.DESERT,
+        VillageStyle.select(beach::contains, "beach", 0.8F, true, 0.4F, false, 7L,
+            style -> style != VillageStyle.NAUTICAL_COAST),
+        "without the Nautical pack a temperate beach keeps its sandy answer");
+  }
+
+  @Test
+  void theWarmWaterCheckReadsEightBearingsAtThreeDistances() {
+    List<BlockPos> samples = VillageStyle.coastSamples(new BlockPos(100, 64, -40));
+    assertEquals(24, samples.size());
+    assertTrue(samples.contains(new BlockPos(148, 64, -40)));
+    assertTrue(samples.contains(new BlockPos(100, 64, -24)));
+    assertTrue(samples.stream().allMatch(sample -> sample.getY() == 64));
   }
 
   @Test

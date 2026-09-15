@@ -14,9 +14,9 @@ The private datapack contains 27 definitions:
 
 | Id | Use |
 | --- | --- |
-| `village_center_swamp_1` | NF01.2 bell ruin; no beds; quartermaster, builder, guard captain, and miner vacancies; two separate campfires |
-| `mine_swamp_1` | NE01.6 edited mine with a three-wide southward shaft frame |
-| `storehouse_swamp_1` | NE03.2 storage house with three shared chests and the quartermaster's physical worksite |
+| `village_center_swamp_1` | NF01.2 bell ruin; no beds; five population-scaled builder duties, one guard captain, and two separate campfires |
+| `mine_swamp_1` | NE01.6 edited mine with its own miner vacancy and a two-wide southward shaft frame |
+| `storehouse_swamp_1` | NE03.2 storage house with three shared chests and its own quartermaster vacancy |
 | `house_swamp_1` | NE03.5 one-bed home |
 | `house_swamp_1__two_bed` | NE03.8 two-bed home |
 | `couple_cottage_swamp_1` | NE03.6 couple home; both bed slots share one village color |
@@ -46,9 +46,8 @@ than replacing the smaller level-one tower in place.
 The center has no beds. Its founding companions are the mine, storehouse, and four one-bed
 homes, all placed through the normal planner. They use the same terrain, spacing, and inward
 facing rules as later construction, so the initial settlement has ordinary sprawl rather than
-a fixed compound. The four homes house the four center workers. The center keeps those four
-vacancies while the quartermaster and miner route to physical worksites in the separate
-storehouse and mine.
+a fixed compound. The four homes house the four founding workers. The center owns the builder
+and captain duties; the separate storehouse and mine own the quartermaster and miner vacancies.
 
 The bell approach is the civic meeting point. Both authored campfires remain cooking and idle
 amenities and neither replaces the bell as the center. Every assigned bed is neutral in the

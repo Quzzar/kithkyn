@@ -28,6 +28,15 @@ public enum WallTier {
       case SWAMP -> Items.OAK_LOG;
       case MEDITERRANEAN -> Items.COBBLESTONE;
       case TUNDRA -> Items.COBBLESTONE;
+      case POLYNESIAN_COAST -> Items.SPRUCE_LOG;
+      case ROMANIAN -> Items.DARK_OAK_LOG;
+      case ALPINE_HIGHLANDS -> Items.BRICK;
+      case JAPANESE_CHERRY_GROVE -> Items.SPRUCE_LOG;
+      case NAUTICAL_COAST -> Items.SANDSTONE;
+      case SAVANNA_TENT -> Items.ACACIA_LOG;
+      case TAIGA -> Items.SPRUCE_LOG;
+      case MUSHROOM -> Items.OAK_LOG;
+      case RUSTIC_WOODLAND -> Items.OAK_LOG;
     };
   }
 

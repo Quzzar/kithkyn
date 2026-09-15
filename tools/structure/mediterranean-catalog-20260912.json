@@ -48,7 +48,7 @@
       "asset": "run/mediterranean-integration/datapack/data/kithkyn/structure/village_center_mediterranean_1.nbt",
       "asset_sha256": "c379dc942d2fd14675d5233ad2c89447be490e739ac45b0f5fd8ff0f8f0354fb",
       "definition": "run/mediterranean-integration/datapack/data/kithkyn/kithkyn/buildings/village_center_mediterranean_1.json",
-      "definition_sha256": "8bc18e29ab8f0d23a6b135b8048aec0e68abdd28254572e7af9563af49587023"
+      "definition_sha256": "b16bcefbbf74b2e086503f690749066cba01feb1771a514ad9c7af0d63dc6d81"
     },
     {
       "exhibit": "M06.5",
@@ -268,7 +268,7 @@
       "asset": "run/mediterranean-integration/datapack/data/kithkyn/structure/storehouse_mediterranean_1.nbt",
       "asset_sha256": "a614a06fd97e475de3b2639bd5b986978cd2b03d4eea40b91a0e5e38c26d0bb4",
       "definition": "run/mediterranean-integration/datapack/data/kithkyn/kithkyn/buildings/storehouse_mediterranean_1.json",
-      "definition_sha256": "24e2045bb61eb0c5734c3e6efecf581fb202d03fc4beca56561791e48bde7ac9"
+      "definition_sha256": "89efec0f1aca91875f092ce596275d7f096ddd79cd049fec3626125cbaaeedcc"
     },
     {
       "exhibit": "M07.6",
@@ -328,7 +328,7 @@
       "asset": "run/mediterranean-integration/datapack/data/kithkyn/structure/mine_mediterranean_1.nbt",
       "asset_sha256": "20c081fe702024b764e3b6e956f74befedb5ea437b44fac141ca671ccb096548",
       "definition": "run/mediterranean-integration/datapack/data/kithkyn/kithkyn/buildings/mine_mediterranean_1.json",
-      "definition_sha256": "810a110e2280ea740360e2eec94a97c86dc022fda58219ad3c519d6ea8908d63"
+      "definition_sha256": "dd7e071ba203a517c2df981fad7cfe59b257d71c0b23390c5c0f5ac6868b08d9"
     },
     {
       "exhibit": "M08.1",
@@ -428,7 +428,7 @@
       "asset": "run/mediterranean-integration/datapack/data/kithkyn/structure/well_mediterranean_1.nbt",
       "asset_sha256": "13b3a4dfe47f04c370f544e3b7900ce71552418a26a7bc249b2c4413841a04ec",
       "definition": "run/mediterranean-integration/datapack/data/kithkyn/kithkyn/buildings/well_mediterranean_1.json",
-      "definition_sha256": "91081609171d67f93131c860e32ec49621f26bb8be995fb735233073d49f647e"
+      "definition_sha256": "1af34fb897aa3f6d8c14fa45876faf54e2212dc149b5b86a5a3559de39f42615"
     },
     {
       "exhibit": "M04.2",
@@ -554,5 +554,18 @@
     "merchant": "not applicable: the M08.1 fort has no merchant stall, so the castle merchant systems and their check do not apply",
     "custody": "PASS: [custody-verify] RESULT PASS: real melee/arrow arrest, private minute notices, saved expiry, inventory capacity and identity, escape and damaged-cell release, full-cell fallback and village-only grace",
     "static_audit": "audit-templates.py PASS 24 templates: no barrier states or out-of-bounds blocks"
+  },
+  "center_labor_contract": {
+    "recorded": "2026-09-14",
+    "builder_posts_per_center": 5,
+    "builder_unlock_populations": [
+      0,
+      12,
+      24,
+      48,
+      96
+    ],
+    "captain_posts_per_center": 1,
+    "routing": "Each mine and storehouse owns its worker vacancy; centers own civic and physically local roles."
   }
 }

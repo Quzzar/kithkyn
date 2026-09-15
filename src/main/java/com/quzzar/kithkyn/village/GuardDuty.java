@@ -62,7 +62,11 @@ public record GuardDuty(BlockPos position, BlockPos lookAt, boolean ranged, bool
     return authoredRole(person) == GuardRole.JAILER;
   }
 
-  /** A castle sentry's movement stays within their available assigned castle. */
+  /**
+   * A castle sentry's movement stays within their available assigned castle. A centre that keeps
+   * the jail (the Polynesian Coast king's hall) is not a castle: its captain still rounds the
+   * village, and its jailer holds the post by the cell like any fixed duty.
+   */
   @Nullable
   public static Building assignedCastle(RealPerson person) {
     Village village = person.getVillage();
@@ -71,7 +75,8 @@ public record GuardDuty(BlockPos position, BlockPos lookAt, boolean ranged, bool
     if (job == null || job.isWallPost()) return null;
     Building building = village.getBuilding(job.getBuildingUUID());
     return building != null && !village.isBeingRebuilt(building.getUUID())
-        && building.getInfo() != null && building.getInfo().getCastleLayout() != null ? building : null;
+        && building.getInfo() != null && building.getInfo().getCastleLayout() != null
+        && "castle".equals(building.getInfo().getCategory()) ? building : null;
   }
 
   /** The presence of a route changes the awake shift without changing the guard's weapon duty. */

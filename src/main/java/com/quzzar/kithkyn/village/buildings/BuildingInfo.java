@@ -488,7 +488,7 @@ public class BuildingInfo {
       if (!mappedContainers.containsAll(personalContainerLocs)) return "personal container has no bed_containers mapping";
     }
     if (castleLayout != null) {
-      if (!"castle".equals(getCategory()) && !Buildings.VILLAGE_CENTER_CATEGORY.equals(getCategory())) {
+      if (!CastleLayout.allowedIn(getCategory())) {
         return "castle amenities require the castle or village_center category";
       }
       if (castleLayout.evidenceContainers().size() != 2
@@ -526,7 +526,9 @@ public class BuildingInfo {
     }
     java.util.Set<BlockPos> pairedBeds = new java.util.HashSet<>();
     if (workerBeds != null) {
-      if (!workerBeds.isEmpty() && workLocs.isEmpty()) return "worker_beds requires a workplace";
+      if (!workerBeds.isEmpty() && workLocs.isEmpty() && worksiteLocs.isEmpty()) {
+        return "worker_beds requires a workplace or routed worksite";
+      }
       if (new java.util.HashSet<>(workerBeds).size() != workerBeds.size()) return "worker_beds repeats a bed";
       if (workerBeds.stream().anyMatch(bed -> !bedLocs.contains(bed.asLong()))) {
         return "worker_beds names an undeclared bed";

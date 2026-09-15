@@ -1,0 +1,225 @@
+{
+  "schemaVersion": 1,
+  "recorded": "2026-09-13",
+  "status": "bundled; unit-tested; gate access walked on this wall and the Polynesian wall",
+  "description": "The Nautical Coast wall family: study C of the 2026-09-13 Nautical gallery, the bundled Birch wall pieces with their cobblestone turned to sandstone and their mossy cobblestone to smooth sandstone above a course of stripped jungle wood, their stone walls to sandstone wall tips, their top cobblestone slabs to jungle slab walks and their oak hatches to jungle. The five templates are the gallery's own files byte for byte; the loader maps the six new block names and the catalog seats the footing on each column's own ground.",
+  "decision": "Aaron reviewed rows NC18 to NC20 of the Nautical gallery on 2026-09-13. He asked for study B, the sandstone seawall, with stripped jungle wood in place of its terracotta footing, and locked that variant as study C. Study A (a stripped jungle palisade on sandstone) and study B itself were not chosen.",
+  "gallery": {
+    "row": "NC20, the Nautical wall C study row, in run/nautical-full-profile/manifest.json above the trio-20260912 test world",
+    "workshop": "run/nautical-full-profile/workshop.py wall_swap(\"C\"), applied with tools/structure/ReplaceTemplateBlocks.java to the Birch pieces at origin/main",
+    "studies": "run/nautical-full-profile/studies/wall_c_straight.nbt through wall_c_terrace.nbt"
+  },
+  "swap": {
+    "minecraft:cobblestone and minecraft:mossy_cobblestone at local y 0": "minecraft:stripped_jungle_wood",
+    "minecraft:cobblestone above local y 0": "minecraft:sandstone",
+    "minecraft:mossy_cobblestone above local y 0": "minecraft:smooth_sandstone",
+    "minecraft:cobblestone_wall and minecraft:mossy_cobblestone_wall": "minecraft:sandstone_wall, properties kept",
+    "minecraft:cobblestone_slab": "minecraft:jungle_slab, type kept: all ten are top slabs, one on the tower and nine on the gate roof",
+    "minecraft:oak_trapdoor": "minecraft:jungle_trapdoor, properties kept",
+    "kept": "torches, wall torches, ladders, the gatehouse campfire and its four white wall banners"
+  },
+  "vocabulary": {
+    "minecraft:sandstone": "BODY: the palette post, placed like the Polynesian spruce and Birch masonry",
+    "minecraft:smooth_sandstone": "BODY_ACCENT (new piece, appended after FOOTING so saved section signatures keep their ordinals): wall body that resolves through WallPalette.accent(), smooth sandstone for this family, so the two-tone masonry of study C survives",
+    "minecraft:stripped_jungle_wood": "FOOTING (the Polynesian CORAL_FOOTING piece, renamed in place with its ordinal kept): resolves through WallPalette.footing(), a ground-contact leg in the loader and a structural foundation in WallRaiser",
+    "minecraft:sandstone_wall": "PARAPET: the palette railing",
+    "minecraft:jungle_slab": "SLAB: the palette slab, placed as a top slab",
+    "minecraft:jungle_trapdoor": "TRAPDOOR: the palette trapdoor, placed open and top half"
+  },
+  "palette": {
+    "post": "minecraft:sandstone",
+    "deck": "minecraft:sandstone",
+    "stairs": "minecraft:jungle_stairs (unused: the Birch geometry has no steps)",
+    "slab": "minecraft:jungle_slab",
+    "railing": "minecraft:sandstone_wall",
+    "trapdoor": "minecraft:jungle_trapdoor",
+    "accent": "minecraft:smooth_sandstone (WallPalette.accent())",
+    "footing": "minecraft:stripped_jungle_wood (WallPalette.footing(); dead bubble coral for the Polynesian Coast)",
+    "material": "minecraft:sandstone (WallTier, one block per ten cells)"
+  },
+  "footing": "BuiltInWallSegmentCatalog.seatFooting runs for every family whose templates author FOOTING: the Polynesian Coast and the Nautical Coast. Every body course (BODY, BODY_ACCENT, POST or FOOTING) at or below its column's saved natural ground becomes FOOTING, and any FOOTING above that ground becomes BODY, so one stripped jungle wood course follows the terrain under runs, towers and gates.",
+  "procedural_parts": "The run fill (BODY from the seam floor to the deck on every route column) is sandstone above the ground and stripped jungle wood at or below it. Smooth sandstone appears only where the templates author it.",
+  "loader_variant": "loadBundled(\"nautical_coast\"), not the arid variant, for the reason the Polynesian family gives: the Birch geometry has no Mesa trim cells or roof lanterns for that flag to change.",
+  "banners": "Each gatehouse keeps its four white wall banners, two on each face; WallRaiser dyes and patterns them with the owning village's identity when it places them.",
+  "guard_posts": "WallPosts reads a Nautical gate or tower from the Nautical footprint, the Birch geometry. Crossbow posts stand on the jungle slab walks, at the cells a Birch wall uses.",
+  "known_normalizations": "Shared with Birch and the Polynesian wall, from the loader: wall tips reconnect to their neighbours when placed, every hatch is placed open and top half, and runs keep at most two courses above their deck, so tall capture columns are slid down into the ground.",
+  "tool": "tools/structure/ReplaceTemplateBlocks.java with the plan workshop.py builds from the swap above over every cell of birch_forest/<piece>.nbt; its output equals the bundled files byte for byte.",
+  "pieces": [
+    {
+      "kind": "straight",
+      "source": "src/main/resources/data/kithkyn/structure/wall/birch_forest/straight.nbt",
+      "source_sha256": "417c3fa956b8b016be23d1a9fdb090b8d155466b75060234831a0a118cf90b85",
+      "study_c": "run/nautical-full-profile/studies/wall_c_straight.nbt (gallery template kithkyn_nautical_profile:nc20_01_straight)",
+      "study_c_sha256": "6aeca8c8cd3be659c6981244e7e64bed684353cfaff2d52511816c14ed9fa237",
+      "output": "src/main/resources/data/kithkyn/structure/wall/nautical_coast/straight.nbt",
+      "output_sha256": "6aeca8c8cd3be659c6981244e7e64bed684353cfaff2d52511816c14ed9fa237",
+      "reproduced_byte_for_byte": true,
+      "size": [
+        7,
+        8,
+        1
+      ],
+      "cells": 37,
+      "palette": [
+        "minecraft:sandstone",
+        "minecraft:sandstone_wall",
+        "minecraft:smooth_sandstone",
+        "minecraft:stripped_jungle_wood",
+        "minecraft:torch"
+      ],
+      "swaps": {
+        "minecraft:mossy_cobblestone -> minecraft:stripped_jungle_wood": 5,
+        "minecraft:cobblestone -> minecraft:stripped_jungle_wood": 2,
+        "minecraft:mossy_cobblestone -> minecraft:smooth_sandstone": 6,
+        "minecraft:cobblestone -> minecraft:sandstone": 18,
+        "minecraft:cobblestone_wall -> minecraft:sandstone_wall": 3,
+        "minecraft:mossy_cobblestone_wall -> minecraft:sandstone_wall": 1
+      }
+    },
+    {
+      "kind": "diagonal",
+      "source": "src/main/resources/data/kithkyn/structure/wall/birch_forest/diagonal.nbt",
+      "source_sha256": "641d8f0285db2aadcc581e4b4a60082a70d29824668fb8b3bff2be357073ca71",
+      "study_c": "run/nautical-full-profile/studies/wall_c_diagonal.nbt (gallery template kithkyn_nautical_profile:nc20_02_diagonal)",
+      "study_c_sha256": "2d6566a51241e2ba4ce063123bedf7b75d0f0fde4d9c9389d47abb9ee9fa351f",
+      "output": "src/main/resources/data/kithkyn/structure/wall/nautical_coast/diagonal.nbt",
+      "output_sha256": "2d6566a51241e2ba4ce063123bedf7b75d0f0fde4d9c9389d47abb9ee9fa351f",
+      "reproduced_byte_for_byte": true,
+      "size": [
+        7,
+        8,
+        7
+      ],
+      "cells": 40,
+      "palette": [
+        "minecraft:sandstone",
+        "minecraft:sandstone_wall",
+        "minecraft:smooth_sandstone",
+        "minecraft:stripped_jungle_wood",
+        "minecraft:torch"
+      ],
+      "swaps": {
+        "minecraft:mossy_cobblestone -> minecraft:stripped_jungle_wood": 3,
+        "minecraft:cobblestone -> minecraft:stripped_jungle_wood": 4,
+        "minecraft:mossy_cobblestone -> minecraft:smooth_sandstone": 8,
+        "minecraft:cobblestone -> minecraft:sandstone": 16,
+        "minecraft:cobblestone_wall -> minecraft:sandstone_wall": 4,
+        "minecraft:mossy_cobblestone_wall -> minecraft:sandstone_wall": 2
+      }
+    },
+    {
+      "kind": "corner_tower",
+      "source": "src/main/resources/data/kithkyn/structure/wall/birch_forest/corner_tower.nbt",
+      "source_sha256": "38b6df41ffe999e9ef9027a2b6b05e8af76f622cbd27d7cd0d5918124a1e84ea",
+      "study_c": "run/nautical-full-profile/studies/wall_c_corner_tower.nbt (gallery template kithkyn_nautical_profile:nc20_03_corner_tower)",
+      "study_c_sha256": "a65d57dff16b01cde487967fbf03d48077b3e58dfd84c60b46d0d4ae00ecb416",
+      "output": "src/main/resources/data/kithkyn/structure/wall/nautical_coast/corner_tower.nbt",
+      "output_sha256": "a65d57dff16b01cde487967fbf03d48077b3e58dfd84c60b46d0d4ae00ecb416",
+      "reproduced_byte_for_byte": true,
+      "size": [
+        12,
+        8,
+        6
+      ],
+      "cells": 100,
+      "palette": [
+        "minecraft:jungle_slab",
+        "minecraft:jungle_trapdoor",
+        "minecraft:ladder",
+        "minecraft:sandstone",
+        "minecraft:sandstone_wall",
+        "minecraft:smooth_sandstone",
+        "minecraft:stripped_jungle_wood",
+        "minecraft:torch"
+      ],
+      "swaps": {
+        "minecraft:mossy_cobblestone -> minecraft:stripped_jungle_wood": 7,
+        "minecraft:cobblestone -> minecraft:stripped_jungle_wood": 7,
+        "minecraft:oak_trapdoor -> minecraft:jungle_trapdoor": 4,
+        "minecraft:mossy_cobblestone -> minecraft:smooth_sandstone": 11,
+        "minecraft:cobblestone -> minecraft:sandstone": 40,
+        "minecraft:mossy_cobblestone_wall -> minecraft:sandstone_wall": 8,
+        "minecraft:cobblestone_wall -> minecraft:sandstone_wall": 11,
+        "minecraft:cobblestone_slab -> minecraft:jungle_slab": 1
+      }
+    },
+    {
+      "kind": "gatehouse",
+      "source": "src/main/resources/data/kithkyn/structure/wall/birch_forest/gatehouse.nbt",
+      "source_sha256": "6b18ae5516320898e1ad6b89393a2e6ab9ba34a2afc8bd4b733d4944d9cdfcf1",
+      "study_c": "run/nautical-full-profile/studies/wall_c_gatehouse.nbt (gallery template kithkyn_nautical_profile:nc20_04_gatehouse)",
+      "study_c_sha256": "2488843bc411058b0d9422640630ec2c3ab330211d4738c248debfbdc0c43f36",
+      "output": "src/main/resources/data/kithkyn/structure/wall/nautical_coast/gatehouse.nbt",
+      "output_sha256": "2488843bc411058b0d9422640630ec2c3ab330211d4738c248debfbdc0c43f36",
+      "reproduced_byte_for_byte": true,
+      "size": [
+        17,
+        8,
+        7
+      ],
+      "cells": 163,
+      "palette": [
+        "minecraft:campfire",
+        "minecraft:jungle_slab",
+        "minecraft:ladder",
+        "minecraft:sandstone",
+        "minecraft:sandstone_wall",
+        "minecraft:smooth_sandstone",
+        "minecraft:stripped_jungle_wood",
+        "minecraft:torch",
+        "minecraft:wall_torch",
+        "minecraft:white_wall_banner"
+      ],
+      "swaps": {
+        "minecraft:mossy_cobblestone -> minecraft:stripped_jungle_wood": 8,
+        "minecraft:cobblestone -> minecraft:stripped_jungle_wood": 10,
+        "minecraft:cobblestone -> minecraft:sandstone": 52,
+        "minecraft:mossy_cobblestone -> minecraft:smooth_sandstone": 30,
+        "minecraft:cobblestone_wall -> minecraft:sandstone_wall": 20,
+        "minecraft:mossy_cobblestone_wall -> minecraft:sandstone_wall": 11,
+        "minecraft:cobblestone_slab -> minecraft:jungle_slab": 9
+      }
+    },
+    {
+      "kind": "terrace",
+      "source": "src/main/resources/data/kithkyn/structure/wall/birch_forest/terrace.nbt",
+      "source_sha256": "df728d8b1ed1fe0372acc52a4faf7057eefc5c24f2f1a0605a234613a3404056",
+      "study_c": "run/nautical-full-profile/studies/wall_c_terrace.nbt (gallery template kithkyn_nautical_profile:nc20_05_terrace)",
+      "study_c_sha256": "4df03d08d180fb920e0e663071768815a15a94d218d2133b3bfee246c6893e3e",
+      "output": "src/main/resources/data/kithkyn/structure/wall/nautical_coast/terrace.nbt",
+      "output_sha256": "4df03d08d180fb920e0e663071768815a15a94d218d2133b3bfee246c6893e3e",
+      "reproduced_byte_for_byte": true,
+      "size": [
+        8,
+        9,
+        1
+      ],
+      "cells": 45,
+      "palette": [
+        "minecraft:sandstone",
+        "minecraft:sandstone_wall",
+        "minecraft:smooth_sandstone",
+        "minecraft:stripped_jungle_wood",
+        "minecraft:torch"
+      ],
+      "swaps": {
+        "minecraft:mossy_cobblestone -> minecraft:stripped_jungle_wood": 3,
+        "minecraft:cobblestone -> minecraft:stripped_jungle_wood": 1,
+        "minecraft:mossy_cobblestone -> minecraft:smooth_sandstone": 12,
+        "minecraft:cobblestone -> minecraft:sandstone": 22,
+        "minecraft:cobblestone_wall -> minecraft:sandstone_wall": 4,
+        "minecraft:mossy_cobblestone_wall -> minecraft:sandstone_wall": 1
+      }
+    }
+  ],
+  "verification": {
+    "unit_tests": "WallPaletteTest: the Nautical wall on a 48-block ring with four gates resolves sandstone, smooth sandstone and stripped jungle wood, walks on top jungle slabs, carries sixteen gatehouse banners and bills sandstone. WallFoundationTest: its four gate passages stay open on flat and raised decks. FootedWallFamilyTest, shared with the Polynesian wall at Aaron's choice: every study C gatehouse cell is reproduced at every gate on flat ground, one stripped jungle wood course is seated on every run column's ground on flat, rolling and sawtooth terrain, crossbow posts stand on the jungle slab walks where Birch posts stand, and the project survives its codec.",
+    "gate_access": {
+      "routes-gate-access-nautical": "PASS: [gate-access-verify] RESULT PASS: NAUTICAL_COAST all 8 guards/workers ascended and descended",
+      "routes-gate-access-polynesian": "PASS: [gate-access-verify] RESULT PASS: POLYNESIAN_COAST all 8 guards/workers ascended and descended"
+    }
+  },
+  "open_questions": [
+    "The footing follows the Polynesian rule: one course at the natural ground, and piers of stripped jungle wood where a run crosses an overhang. Aaron to confirm on real terrain."
+  ]
+}

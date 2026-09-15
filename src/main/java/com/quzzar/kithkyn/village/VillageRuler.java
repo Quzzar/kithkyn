@@ -15,7 +15,11 @@ import com.quzzar.kithkyn.persona.PersonaData;
 import com.quzzar.kithkyn.village.buildings.Building;
 import com.quzzar.kithkyn.village.buildings.BuildingInfo;
 
-/** The castle's incumbent speaks through the existing village decision pipelines. */
+/**
+ * The ruler's incumbent speaks through the existing village decision pipelines. The ruling seat
+ * is a castle's LEADER station, or the centre's where the centre is itself the king's hall
+ * (the Polynesian Coast, docs/polynesian-coast-village.md).
+ */
 public final class VillageRuler {
   private VillageRuler() {}
 
@@ -45,7 +49,7 @@ public final class VillageRuler {
         .ifPresent(person -> person.logMemory(event, Optional.empty()));
   }
 
-  /** Only a loaded resident at a still-valid castle station can currently deliberate. Never loads chunks. */
+  /** Only a loaded resident at a still-valid ruling-seat station can currently deliberate. Never loads chunks. */
   public static Optional<RealPerson> incumbent(Village village) {
     if (village == null || village.getLevel() == null) return Optional.empty();
     for (Map.Entry<UUID, JobAssignment> entry : village.getJobAssignmentsView().entrySet()) {

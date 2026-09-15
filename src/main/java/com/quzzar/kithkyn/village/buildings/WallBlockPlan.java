@@ -49,7 +49,15 @@ public record WallBlockPlan(long position, Piece piece, WallCellRole role) {
     // Append only: saved section signatures include these ordinals.
     BANNER_NORTH, BANNER_EAST, BANNER_SOUTH, BANNER_WEST,
     GATE_FRAME_POST, GATE_FRAME_BEAM,
-    LEAVES, LEAVES_DARK;
+    LEAVES, LEAVES_DARK,
+    /**
+     * A footed family's ground course, seated by the catalog on each column's
+     * own ground: the Polynesian dead coral (study A, 2026-09-12) and the
+     * Nautical stripped jungle wood (study C, 2026-09-13), from the palette.
+     */
+    FOOTING,
+    /** A body course in the family's second masonry: the Nautical smooth sandstone. */
+    BODY_ACCENT;
   }
 
   public BlockPos pos() {
@@ -88,9 +96,9 @@ public record WallBlockPlan(long position, Piece piece, WallCellRole role) {
       case CAMPFIRE_EAST -> campfire(Direction.EAST);
       case CAMPFIRE_SOUTH -> campfire(Direction.SOUTH);
       case CAMPFIRE_WEST -> campfire(Direction.WEST);
-      case COBBLE_POST -> Blocks.COBBLESTONE.defaultBlockState();
+      case COBBLE_POST -> regionalCobble(palette, Blocks.COBBLESTONE);
       case MOSSY_POST -> Blocks.MOSSY_COBBLESTONE.defaultBlockState();
-      case COBBLE_WALL -> Blocks.COBBLESTONE_WALL.defaultBlockState();
+      case COBBLE_WALL -> regionalCobble(palette, Blocks.COBBLESTONE_WALL);
       case MOSSY_WALL -> Blocks.MOSSY_COBBLESTONE_WALL.defaultBlockState();
       case COBBLE_SLAB_BOTTOM -> Blocks.COBBLESTONE_SLAB.defaultBlockState();
       case COBBLE_SLAB_TOP -> Blocks.COBBLESTONE_SLAB.defaultBlockState().setValue(SlabBlock.TYPE, SlabType.TOP);
@@ -105,7 +113,23 @@ public record WallBlockPlan(long position, Piece piece, WallCellRole role) {
       case BANNER_WEST -> wallBanner(Direction.WEST);
       case LEAVES -> leaves(palette.leaves());
       case LEAVES_DARK -> leaves(palette.leavesDark());
+      case FOOTING -> palette.footing().defaultBlockState();
+      case BODY_ACCENT -> palette.accent().defaultBlockState();
     };
+  }
+
+  private static BlockState regionalCobble(WallPalette palette, net.minecraft.world.level.block.Block fallback) {
+    if (palette.post() == Blocks.STRIPPED_DARK_OAK_WOOD) {
+      return (fallback == Blocks.COBBLESTONE_WALL
+          ? Blocks.COBBLED_DEEPSLATE_WALL
+          : Blocks.COBBLED_DEEPSLATE).defaultBlockState();
+    }
+    if (palette.post() == Blocks.BRICKS) {
+      return (fallback == Blocks.COBBLESTONE_WALL
+          ? Blocks.BRICK_WALL
+          : Blocks.BRICKS).defaultBlockState();
+    }
+    return fallback.defaultBlockState();
   }
 
   /** Hedge leaves never decay: no log feeds them and no player planted them. */

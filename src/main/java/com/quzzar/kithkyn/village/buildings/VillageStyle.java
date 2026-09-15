@@ -1,5 +1,6 @@
 package com.quzzar.kithkyn.village.buildings;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.function.Predicate;
@@ -12,6 +13,7 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.levelgen.RandomSupport;
 import net.neoforged.neoforge.common.Tags;
@@ -25,18 +27,28 @@ import net.neoforged.neoforge.common.Tags;
  * Every style is a strict catalog: a village raises only what its own family
  * authored and never borrows another family's building to fill a gap. Birch
  * Forest is the one bundled catalog and so the default; Desert, Badlands,
- * Floodplain, Jungle, Swamp, Mediterranean and Tundra arrive through private datapacks
- * (docs/desert-village.md, docs/badlands-village.md, docs/floodplain-village.md,
- * docs/jungle-village.md, docs/swamp-village.md, docs/mediterranean-village.md,
- * docs/tundra-village.md), so they
+ * Floodplain, Jungle, Swamp, Mediterranean, Tundra, Polynesian Coast,
+ * Romanian, Alpine Highlands, Japanese Cherry Grove, Nautical Coast, Savanna
+ * Tent, Rustic Woodland, Taiga and Mushroom arrive through private datapacks (docs/desert-village.md, docs/badlands-village.md,
+ * docs/floodplain-village.md, docs/jungle-village.md, docs/swamp-village.md,
+ * docs/mediterranean-village.md, docs/tundra-village.md,
+ * docs/polynesian-coast-village.md, docs/romanian-village.md,
+ * docs/alpine-highlands-village.md, docs/japanese-cherry-grove-village.md,
+ * docs/nautical-coast-village.md, docs/savanna-tent-village.md,
+ * docs/rustic-woodland-village.md, docs/taiga-village.md, docs/mushroom-village.md), so they
  * are only automatic candidates while their founding sets are loaded.
  *
  * Explicit datapack style tags take precedence over conventional biome families.
+ * A beach on warm or lukewarm water ({@link #WARM_OCEAN}) is the Polynesian Coast,
+ * which is the one rule that reads the site's surroundings rather than one biome;
+ * every other open beach, and a stony shore, is the Nautical Coast.
  * An unfamiliar family chooses among climate-compatible loaded catalogs using
  * the world seed and founding site, not the world's mutable random stream.
  */
 public enum VillageStyle {
-  BIRCH_FOREST, DESERT, BADLANDS, FLOODPLAIN, JUNGLE, SWAMP, MEDITERRANEAN, TUNDRA;
+  BIRCH_FOREST, DESERT, BADLANDS, FLOODPLAIN, JUNGLE, SWAMP, MEDITERRANEAN, TUNDRA,
+  POLYNESIAN_COAST, ROMANIAN, ALPINE_HIGHLANDS, JAPANESE_CHERRY_GROVE, NAUTICAL_COAST, SAVANNA_TENT,
+  RUSTIC_WOODLAND, TAIGA, MUSHROOM;
 
   /**
    * What a blank or unknown saved style reads as, the answer for every climate
@@ -80,12 +92,31 @@ public enum VillageStyle {
     return style != null ? style : DEFAULT;
   }
 
-  /** Biome-only selection for previews that have no founding seed or position. */
-  public static VillageStyle fromBiome(Holder<Biome> biome) {
-    return fromBiome(biome, 0L, BlockPos.ZERO);
+  /**
+   * Oceans warm enough that a beach beside one belongs to the Polynesian Coast
+   * (docs/village-biomes.md); a datapack can add its own warm seas to the tag.
+   */
+  public static final TagKey<Biome> WARM_OCEAN = TagKey.create(Registries.BIOME,
+      ResourceLocation.fromNamespaceAndPath("kithkyn", "warm_ocean"));
+
+  /** How far from a beach site the warm-water check reads the biome, and on how many bearings. */
+  private static final int[] COAST_RADII = {16, 32, 48};
+  private static final int COAST_BEARINGS = 8;
+
+  /**
+   * The one selector for a real site, used by manual and naturally generated
+   * founding and by the wall preview: the biome there, and whether the site is a
+   * beach on warm water. Reading the neighbouring biomes never loads a chunk; an
+   * unloaded one answers from the generator's noise.
+   */
+  public static VillageStyle atSite(LevelReader level, BlockPos site, long worldSeed) {
+    Holder<Biome> biome = level.getBiome(site);
+    boolean warmCoast = isOpenBeach(biome::is)
+        && coastSamples(site).stream().anyMatch(sample -> level.getBiome(sample).is(WARM_OCEAN));
+    return fromBiome(biome, worldSeed, site, warmCoast, Buildings::hasFoundingSet);
   }
 
-  /** The one selector used by both manual and naturally generated village founding. */
+  /** The biome-only selection at a known site, for checks with no level to read the coast from. */
   public static VillageStyle fromBiome(Holder<Biome> biome, long worldSeed, BlockPos site) {
     return fromBiome(biome, worldSeed, site, Buildings::hasFoundingSet);
   }
@@ -96,25 +127,65 @@ public enum VillageStyle {
    */
   public static VillageStyle fromBiome(Holder<Biome> biome, long worldSeed, BlockPos site,
       Predicate<VillageStyle> available) {
+    return fromBiome(biome, worldSeed, site, false, available);
+  }
+
+  private static VillageStyle fromBiome(Holder<Biome> biome, long worldSeed, BlockPos site, boolean warmCoast,
+      Predicate<VillageStyle> available) {
     long biomeSeed = biome.unwrapKey().map(key -> (long) key.location().toString().hashCode()).orElse(0L);
     Biome climate = biome.value();
     String biomePath = biome.unwrapKey().map(key -> key.location().getPath()).orElse("");
     return select(biome::is, biomePath, climate.getBaseTemperature(), climate.hasPrecipitation(),
-        climate.getModifiedClimateSettings().downfall(), worldSeed ^ site.asLong() ^ biomeSeed, available);
+        climate.getModifiedClimateSettings().downfall(), warmCoast, worldSeed ^ site.asLong() ^ biomeSeed,
+        available);
+  }
+
+  /** A beach a coast village can stand on: sandy shore, not a snowy beach. */
+  static boolean isOpenBeach(Predicate<TagKey<Biome>> tagged) {
+    return tagged.test(Tags.Biomes.IS_BEACH) && !tagged.test(Tags.Biomes.IS_SNOWY);
+  }
+
+  /** Where the warm-water check reads the biome: eight bearings at three distances, on the site's level. */
+  static List<BlockPos> coastSamples(BlockPos site) {
+    List<BlockPos> samples = new ArrayList<>();
+    for (int radius : COAST_RADII) {
+      for (int bearing = 0; bearing < COAST_BEARINGS; bearing++) {
+        double angle = Math.PI * 2 * bearing / COAST_BEARINGS;
+        samples.add(site.offset((int) Math.round(Math.cos(angle) * radius), 0,
+            (int) Math.round(Math.sin(angle) * radius)));
+      }
+    }
+    return samples;
+  }
+
+  /** The selector for a site that is not a beach on warm water, as every biome-only caller asks it. */
+  static VillageStyle select(Predicate<TagKey<Biome>> tagged, String biomePath, float temperature,
+      boolean precipitation, float downfall, long siteSeed, Predicate<VillageStyle> available) {
+    return select(tagged, biomePath, temperature, precipitation, downfall, false, siteSeed, available);
   }
 
   /**
-   * Pure selector seam: explicit style tags first, then the conventional
-   * families that have a finished catalog, then a climate cluster, then the
-   * first loaded founding set in enum order. Only styles whose founding set is
-   * loaded are ever chosen automatically.
+   * Pure selector seam: explicit style tags first, then a beach on warm water
+   * (the Polynesian Coast), then any other open beach or a stony shore (the
+   * Nautical Coast), then the conventional families that have a finished
+   * catalog, then a climate cluster, then the first loaded founding set in enum
+   * order. Only styles whose founding set is loaded are ever chosen automatically.
    */
   static VillageStyle select(Predicate<TagKey<Biome>> tagged, String biomePath, float temperature,
-      boolean precipitation, float downfall, long siteSeed, Predicate<VillageStyle> available) {
+      boolean precipitation, float downfall, boolean warmCoast, long siteSeed,
+      Predicate<VillageStyle> available) {
     for (VillageStyle style : values()) {
       if (tagged.test(style.biomeTag()) && available.test(style)) {
         return style;
       }
+    }
+    // Ahead of the conventional families: NeoForge counts a beach as sandy, which reads as Desert.
+    if (warmCoast && available.test(POLYNESIAN_COAST)) {
+      return POLYNESIAN_COAST;
+    }
+    // Every other sandy beach, on temperate or cold water, and a stony shore are the fishing coast.
+    if ((isOpenBeach(tagged) || tagged.test(Tags.Biomes.IS_STONY_SHORES)) && available.test(NAUTICAL_COAST)) {
+      return NAUTICAL_COAST;
     }
     VillageStyle known = conventionalStyle(tagged, biomePath);
     if (known != null && available.test(known)) {
@@ -139,21 +210,33 @@ public enum VillageStyle {
 
   /**
    * The conventional families that map to a finished catalog. Every other
-   * family (forest, taiga, mountain and the rest) has no
+   * family (mountain and the rest) has no
    * catalog of its own and falls through to the climate clusters.
    */
   @Nullable
   private static VillageStyle conventionalStyle(Predicate<TagKey<Biome>> tagged, String biomePath) {
     String path = biomePath.toLowerCase(Locale.ROOT);
+    // The mushroom island is the Mushroom catalog (docs/mushroom-village.md):
+    // Mushroom Fields and any fungal family tagged or named for mushrooms.
+    if (tagged.test(Tags.Biomes.IS_MUSHROOM) || path.contains("mushroom")) {
+      return MUSHROOM;
+    }
     // Some biome mods omit conventional tags. A birch-named family is still
     // recognizable, while an explicit style tag above can correct an exception.
     if (tagged.test(Tags.Biomes.IS_BIRCH_FOREST) || path.contains("birch")) {
       return BIRCH_FOREST;
     }
-    // Pueblo covers the mesa and savanna families until more specific catalogs
-    // are authored. Explicit style tags can narrow that coverage later.
-    if (tagged.test(Tags.Biomes.IS_BADLANDS) || tagged.test(Tags.Biomes.IS_SAVANNA)
-        || path.contains("badlands") || path.contains("mesa") || path.contains("savanna")) {
+    if (path.contains("cherry_grove") || path.contains("flower_forest")
+        || path.contains("cherry") || path.contains("sakura")) {
+      return JAPANESE_CHERRY_GROVE;
+    }
+    // The savanna families are the Savanna Tent (docs/savanna-tent-village.md),
+    // Windswept Savanna included, ahead of the mountain rule that reads "windswept".
+    if (tagged.test(Tags.Biomes.IS_SAVANNA) || path.contains("savanna")) {
+      return SAVANNA_TENT;
+    }
+    // Pueblo covers the mesa families. Explicit style tags can narrow that coverage.
+    if (tagged.test(Tags.Biomes.IS_BADLANDS) || path.contains("badlands") || path.contains("mesa")) {
       return BADLANDS;
     }
     if (tagged.test(Tags.Biomes.IS_DESERT) || tagged.test(Tags.Biomes.IS_SANDY)) {
@@ -169,6 +252,32 @@ public enum VillageStyle {
     }
     if (tagged.test(Tags.Biomes.IS_SWAMP) || path.contains("swamp")) {
       return SWAMP;
+    }
+    if (path.contains("dark_forest") || path.contains("darkforest")
+        || path.contains("forested_highland") || path.contains("wooded_valley")) {
+      return ROMANIAN;
+    }
+    // Ordinary oak woodland has its own restrained Rustic catalog. The explicit
+    // biome tag above is how modpacks opt compatible custom woodland biomes in.
+    if (path.equals("forest") || path.contains("oak_forest") || path.contains("oak_woodland")
+        || path.contains("oak_woods")) {
+      return RUSTIC_WOODLAND;
+    }
+    // The cold conifer forests are the Taiga (docs/taiga-village.md): the plain,
+    // old-growth pine and old-growth spruce taigas. A snowy taiga stays with the
+    // frozen lowlands below, as an explicit style tag can also decide.
+    if ((tagged.test(Tags.Biomes.IS_TAIGA) || path.contains("taiga"))
+        && !tagged.test(Tags.Biomes.IS_SNOWY) && !path.contains("snow")) {
+      return TAIGA;
+    }
+    // Mountain settlements use the Iberian-inspired brick-and-spruce catalog.
+    // This precedes the broad snowy family so snowy slopes and frozen peaks
+    // remain Alpine while frozen plains and ice fields remain Tundra.
+    if (tagged.test(Tags.Biomes.IS_MOUNTAIN) || path.contains("mountain")
+        || path.contains("meadow") || path.contains("grove")
+        || path.contains("peak") || path.contains("windswept")
+        || path.contains("alpine")) {
+      return ALPINE_HIGHLANDS;
     }
     if (tagged.test(Tags.Biomes.IS_SNOWY) || tagged.test(Tags.Biomes.IS_ICY)
         || path.contains("snow") || path.contains("ice") || path.contains("frozen")

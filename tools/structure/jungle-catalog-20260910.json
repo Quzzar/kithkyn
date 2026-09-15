@@ -60,7 +60,7 @@
       "asset": "run/jungle-integration/datapack/data/kithkyn/structure/village_center_jungle_1.nbt",
       "asset_sha256": "065b11bca6a9e43ce6138c8b19a6a54f86da66897600502dca1d77db3967bf09",
       "definition": "run/jungle-integration/datapack/data/kithkyn/kithkyn/buildings/village_center_jungle_1.json",
-      "definition_sha256": "8836341835707eafd69302a217ff72b5349c68b12e3e84bfab32045e92b22e55"
+      "definition_sha256": "717ecc0c7edfbf512361a7863d08ae0379be51893b783456a4d67e4b512b124a"
     },
     {
       "exhibit": "JA01.4",
@@ -128,7 +128,7 @@
       "asset": "run/jungle-integration/datapack/data/kithkyn/structure/mine_jungle_1.nbt",
       "asset_sha256": "70868db7facac1a0a0d86386b2a718ce14c37e0fe3835ebdd2b3a8174affbe5e",
       "definition": "run/jungle-integration/datapack/data/kithkyn/kithkyn/buildings/mine_jungle_1.json",
-      "definition_sha256": "7e1d363e1d74e35db037ccd3a8409e6ac61cc8a87c55ca1299856b78c6287cd3",
+      "definition_sha256": "087d88058cffdcad7a8809221fe4eda6831e8976d26d440b587a1fc2a7365b7a",
       "revision_verification": {
         "status": "passed",
         "exact_capture_state_mismatches": 0,
@@ -572,7 +572,7 @@
       "asset": "run/jungle-integration/datapack/data/kithkyn/structure/storehouse_jungle_1.nbt",
       "asset_sha256": "ac3ca85398f48fcc490f79155466585066e49e6db49bbc1d358d5d3a099276d2",
       "definition": "run/jungle-integration/datapack/data/kithkyn/kithkyn/buildings/storehouse_jungle_1.json",
-      "definition_sha256": "135ebe3f4a3dbe30134b943054f1b7ce799f300a516162c845fb0457e3fd0be3"
+      "definition_sha256": "4b820a53ddc1d50855c4680f1ca8303b2eb57810ab845050595b607ecec8ef03"
     },
     {
       "exhibit": "JA03.2",
@@ -811,5 +811,18 @@
       "placement": "8 real-template placements passed across both construction paths and four rotations",
       "access": "12 routes passed across all four rotations"
     }
+  },
+  "center_labor_contract": {
+    "recorded": "2026-09-14",
+    "builder_posts_per_center": 5,
+    "builder_unlock_populations": [
+      0,
+      12,
+      24,
+      48,
+      96
+    ],
+    "captain_posts_per_center": 1,
+    "routing": "Each mine and storehouse owns its worker vacancy; centers own civic and physically local roles."
   }
 }

@@ -132,8 +132,19 @@ public final class WallPosts {
     WallSectionKind kind = duty == WallPost.Duty.WATCHTOWER_CROSSBOW
         ? WallSectionKind.CORNER_TOWER
         : WallSectionKind.GATEHOUSE;
-    AuthoredWoodWallSegments segments = wall.getStyle() == VillageStyle.BIRCH_FOREST
-        ? AuthoredWoodWallSegments.BIRCH_FOREST : AuthoredWoodWallSegments.INSTANCE;
+    // A post is looked for inside the feature its family drew. The Polynesian and
+    // Nautical Coasts are the Birch geometry; the other families keep the shared
+    // wood footprint.
+    AuthoredWoodWallSegments segments = switch (wall.getStyle()) {
+      case BIRCH_FOREST -> AuthoredWoodWallSegments.BIRCH_FOREST;
+      case POLYNESIAN_COAST -> AuthoredWoodWallSegments.POLYNESIAN_COAST;
+      case NAUTICAL_COAST -> AuthoredWoodWallSegments.NAUTICAL_COAST;
+      case SAVANNA_TENT -> AuthoredWoodWallSegments.SAVANNA_TENT;
+      case RUSTIC_WOODLAND -> AuthoredWoodWallSegments.RUSTIC_WOODLAND;
+      case TAIGA -> AuthoredWoodWallSegments.TAIGA;
+      case MUSHROOM -> AuthoredWoodWallSegments.MUSHROOM;
+      default -> AuthoredWoodWallSegments.INSTANCE;
+    };
     return segments.footprintAt(ring, index, kind);
   }
 

@@ -80,7 +80,7 @@ in it, and update it in the same change that moves what it describes.
   catalog from the Nilotic selection: roles, founding set, identity rules, the mud brick wall
   palette, authoring pipeline and verification.
 - [jungle-village.md](jungle-village.md): the approved playable Jungle catalog, including its
-  bedless center, four-home founding sprawl, routed mine and storehouse worksites, bamboo roofs,
+  bedless center, four-home founding sprawl, locally owned mine and storehouse jobs, bamboo roofs,
   repaired markets, Firewatch tower and timber perimeter.
 - [swamp-village.md](swamp-village.md): the approved ordinary Swamp catalog, its four-home
   founding sprawl, two campfires, mossy oak-and-spruce walls, tiered towers, and the castle's
@@ -91,6 +91,42 @@ in it, and update it in the same change that moves what it describes.
 - [tundra-village.md](tundra-village.md): the approved playable Tundra catalog: its four-bed
   snow-golem centre, naturally placed mine and storehouse, cold-weather farms, fixed-colour
   markets, packed-ice wall and deliberate absence of a castle.
+- [polynesian-coast-village.md](polynesian-coast-village.md): the approved Polynesian Coast
+  catalog: the king's hall centre that seats the ruler and keeps the village jail, three founding
+  homes, stilted spruce-and-oak huts, the pond fishery, the open-air shrine, and its Sparse Jungle
+  and warm-beach founding.
+- [romanian-village.md](romanian-village.md): the approved playable Romanian Dark Forest catalog:
+  its combined center and church, founding mine and storehouse housing, enclosed livestock,
+  steep birch roofs, timber-and-deepslate wall and deliberate absence of a castle.
+- [alpine-highlands-village.md](alpine-highlands-village.md): the approved Iberian-inspired
+  Alpine catalog: its bedless berry-growing center, naturally placed founding housing and work,
+  dense shared homes, brick-and-spruce services, selected IF01.4 fishery and brushed brick wall.
+- [japanese-cherry-grove-village.md](japanese-cherry-grove-village.md): the approved Japanese
+  Cherry Grove catalog: its bedless bell center, naturally placed six-bed founding housing,
+  ponds and gardens, two farm levels, fixed-color markets and flowering spruce wall.
+- [nautical-coast-village.md](nautical-coast-village.md): the approved Nautical Coast catalog:
+  its lighthouse centre that sleeps the four founding workers and keeps the town's storage, the
+  turnover-ship castle and its jail, the CTOV beach homes and services, the jetty fishery on its
+  own water, the sandstone seawall on stripped jungle wood, and its temperate-beach and
+  stony-shore founding.
+- [savanna-tent-village.md](savanna-tent-village.md): the approved Savanna Tent catalog: the
+  original savanna tent as its centre, tipis and camp tents for homes and works, the trader-tent
+  storehouse, the original mine and stoneworks, vanilla's savanna temple and farm, the sunk
+  savanna well, the acacia palisade on cobblestone, and its savanna founding.
+- [taiga-village.md](taiga-village.md): the approved Taiga catalog: the Viking meeting point
+  with its crossbow watch tower as the centre, Viking homes and workplaces, Aaron's lumberjack
+  hut, the old-growth taiga fort as the castle with its jail and the ruler's room, the firewatch
+  tower, the spruce tavern, the cobblestone well, the spruce palisade, and its conifer-forest
+  founding.
+- [mushroom-village.md](mushroom-village.md): the approved Mushroom catalog: the Towns & Towers
+  mushroom meeting point with a cleric's loft under its cap as the centre, houses under mushroom
+  caps, the light gazebo as the mine, the gazebos with their armorer, mason, fisher and fletcher
+  kits, the butcher stall as the bakery, the pen with its mooshrooms, Aaron's crop farm, the
+  jungle well, a gazebo with an oak stand as the lumberjack, the cap wall, and its Mushroom
+  Fields founding.
+- [rustic-woodland-village.md](rustic-woodland-village.md): the approved Rustic Woodland
+  catalog: its merchant-and-well center, naturally placed founding housing and work, oak
+  profession barns, RW10.2 farm, fixed-color markets, and clean stripped-oak palisade.
 - [appearance.md](appearance.md): why villagers use the player model and not the vanilla
   villager model, the wide/slim model split by gender, and the client-side runtime skin
   compositor that bakes a villager's look from inherited skin, hair, and eye structures,

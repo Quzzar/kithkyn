@@ -39,7 +39,7 @@
       "asset": "run/tundra-integration/datapack/data/kithkyn/structure/village_center_tundra_1.nbt",
       "asset_sha256": "18618ec88b5677b665f7dfc902b2a15f4082031fa9ac18ef68b05f6408b5e61b",
       "definition": "run/tundra-integration/datapack/data/kithkyn/kithkyn/buildings/village_center_tundra_1.json",
-      "definition_sha256": "7a880c25534d805d47b660e071ea9137d9a8c389cd5d841e2e9eb8a41a98921a"
+      "definition_sha256": "30072ca7d26c35c7ed45bbf033be0427062d0cbe2d2149844e82bfb216aac2bc"
     },
     {
       "exhibit": "T01.2",
@@ -107,7 +107,7 @@
       "asset": "run/tundra-integration/datapack/data/kithkyn/structure/storehouse_tundra_1.nbt",
       "asset_sha256": "3f7b6f9b8d7982bae0df2737bd9d742bebdd9fa6f3960c9b4fd42f710bdf15fa",
       "definition": "run/tundra-integration/datapack/data/kithkyn/kithkyn/buildings/storehouse_tundra_1.json",
-      "definition_sha256": "c2bb0b0ae5030b497bf60da941edc826427696afd064fc89c22d49f1cfcb485a"
+      "definition_sha256": "db5a1002bc364107d6fe8ac05f44d2ef879d153116c88f0f04cba1ef1a33d305"
     },
     {
       "exhibit": "T01.6",
@@ -158,7 +158,7 @@
       "asset": "run/tundra-integration/datapack/data/kithkyn/structure/fishery_tundra_1.nbt",
       "asset_sha256": "52e54926ca572fcdb1e39f7bd326caec6d08fc749028c4104e7226557c97bccd",
       "definition": "run/tundra-integration/datapack/data/kithkyn/kithkyn/buildings/fishery_tundra_1.json",
-      "definition_sha256": "07368bb8058e61cbd4e810e59170889838ccb8e3d1717064d44a99b0398bc1a3"
+      "definition_sha256": "09021f428eca6d99ea619fdb69f422067b4a1cce421367c5d40a3dd7625b54f1"
     },
     {
       "exhibit": "T02.4",
@@ -294,7 +294,7 @@
       "asset": "run/tundra-integration/datapack/data/kithkyn/structure/mine_tundra_1.nbt",
       "asset_sha256": "fcc4c43e01062a093a5f960bfb7a958d34e14fd0be7fc37bb08f5dead4bec39c",
       "definition": "run/tundra-integration/datapack/data/kithkyn/kithkyn/buildings/mine_tundra_1.json",
-      "definition_sha256": "08ba1bf5462a16b26607aace546f1c6ce3c3da1b4c3e14902e00fe9c55ff8f81"
+      "definition_sha256": "4813798bdef6cdc3f19daf5c2148ba818c6b49004d8740d353ad63f2b3aa271d"
     },
     {
       "exhibit": "T04.8",
@@ -362,7 +362,7 @@
       "asset": "run/tundra-integration/datapack/data/kithkyn/structure/well_tundra_1.nbt",
       "asset_sha256": "b519ef02108e2c604806c17a96100524580141065124fe15a945b871ae119e7f",
       "definition": "run/tundra-integration/datapack/data/kithkyn/kithkyn/buildings/well_tundra_1.json",
-      "definition_sha256": "038377e8d04b3757ab0bcc262b1ed8080d87240735b0673ccdb493c3854a1043"
+      "definition_sha256": "73bd36d434107ca3d19edfa77630f51492d30165e68f82986ff504d5188f2560"
     },
     {
       "exhibit": "APPROVED-MARKET-1",
@@ -499,5 +499,18 @@
         "PersonPathNavigation"
       ]
     }
-  ]
+  ],
+  "center_labor_contract": {
+    "recorded": "2026-09-14",
+    "builder_posts_per_center": 5,
+    "builder_unlock_populations": [
+      0,
+      12,
+      24,
+      48,
+      96
+    ],
+    "captain_posts_per_center": 1,
+    "routing": "Each mine and storehouse owns its worker vacancy; centers own civic and physically local roles."
+  }
 }

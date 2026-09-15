@@ -30,12 +30,53 @@ import net.minecraft.nbt.Tag;
  */
 final class AuthoredWoodWallSegments {
 
+  /**
+   * The families whose captured cobblestone is their footing course rather than
+   * Birch masonry; declared before the bundled families, which read it as they load.
+   */
+  private static final java.util.Set<String> COBBLESTONE_FOOTED = java.util.Set.of("savanna_tent", "taiga");
   static final AuthoredWoodWallSegments INSTANCE = loadBundled("wood");
   static final AuthoredWoodWallSegments BIRCH_FOREST = loadBundled("birch_forest");
 
   static final AuthoredWoodWallSegments ARID = loadBundled("wood", true);
   static final AuthoredWoodWallSegments SWAMP = loadBundled("swamp");
   static final AuthoredWoodWallSegments MEDITERRANEAN = loadBundled("mediterranean");
+  /**
+   * Study A of the Polynesian Coast walls (2026-09-12): the Birch geometry in
+   * stripped spruce with spruce fence tips and oak slab walks on a dead coral
+   * footing. Not the arid variant: that flag re-trims the wood gatehouse's Mesa
+   * frame cells and drops its roof lanterns, and this geometry has neither.
+   */
+  static final AuthoredWoodWallSegments POLYNESIAN_COAST = loadBundled("polynesian_coast");
+  static final AuthoredWoodWallSegments ROMANIAN = loadBundled("romanian");
+  static final AuthoredWoodWallSegments ALPINE_HIGHLANDS = loadBundled("alpine_highlands");
+  static final AuthoredWoodWallSegments JAPANESE_CHERRY_GROVE = loadBundled("japanese_cherry_grove");
+  /**
+   * Study C of the Nautical Coast walls (2026-09-13): the Birch geometry as a
+   * sandstone seawall, smooth sandstone where Birch has mossy cobblestone, with
+   * sandstone wall tips and jungle slab walks on a stripped jungle wood footing.
+   */
+  static final AuthoredWoodWallSegments NAUTICAL_COAST = loadBundled("nautical_coast");
+  /**
+   * Study A of the Savanna Tent walls (2026-09-14): the Birch geometry as a
+   * stripped acacia palisade with acacia fence tips and acacia slab walks on a
+   * cobblestone footing.
+   */
+  static final AuthoredWoodWallSegments SAVANNA_TENT = loadBundled("savanna_tent");
+  /** The approved Rustic Woodland wall: a clean stripped-oak palisade without foliage. */
+  static final AuthoredWoodWallSegments RUSTIC_WOODLAND = loadBundled("rustic_woodland");
+  /**
+   * Study A of the Taiga walls (2026-09-14): the Birch geometry as a stripped
+   * spruce palisade with spruce fence tips and spruce slab walks on a
+   * cobblestone footing, the Viking houses' timber.
+   */
+  static final AuthoredWoodWallSegments TAIGA = loadBundled("taiga");
+  /**
+   * Study B of the Mushroom walls (2026-09-14): the Birch geometry as red mushroom
+   * caps with brown caps where Birch has mossy stone, oak fence tips and oak slab
+   * walks, on a mushroom-stem footing.
+   */
+  static final AuthoredWoodWallSegments MUSHROOM = loadBundled("mushroom");
 
   private static final String RESOURCE_ROOT =
       "data/kithkyn/structure/wall/";
@@ -47,10 +88,24 @@ final class AuthoredWoodWallSegments {
 
   private final Map<WallSectionKind, Template> templates;
   private final boolean arid;
+  /** Whether any template authors a {@link WallBlockPlan.Piece#FOOTING} course. */
+  private final boolean footed;
 
   private AuthoredWoodWallSegments(Map<WallSectionKind, Template> templates, boolean arid) {
     this.templates = Map.copyOf(templates);
     this.arid = arid;
+    this.footed = templates.values().stream().flatMap(template -> template.cells().stream())
+        .anyMatch(cell -> cell.piece() == WallBlockPlan.Piece.FOOTING);
+  }
+
+  /**
+   * Whether this family authors a footing course. The catalog seats that
+   * course on every column's own ground, because the route slides tall run
+   * columns down and lifts terraced ones, which would bury or raise a course
+   * pinned to the template's local y 0.
+   */
+  boolean hasFooting() {
+    return this.footed;
   }
 
   /** Adds the authored cells belonging to one classified route section. */
@@ -340,7 +395,11 @@ final class AuthoredWoodWallSegments {
     };
   }
 
-  private static int nearestGround(List<Long> ring, List<Integer> ground, int x, int z) {
+  /**
+   * The saved natural ground of the route column nearest to a cell: exact on
+   * the route, and the sample an off-route leg or footing is extended down to.
+   */
+  static int nearestGround(List<Long> ring, List<Integer> ground, int x, int z) {
     int nearest = 0;
     long bestDistance = Long.MAX_VALUE;
     for (int index = 0; index < ring.size(); index++) {
@@ -355,10 +414,12 @@ final class AuthoredWoodWallSegments {
     return ground.get(nearest);
   }
 
+  /** Ground-contact legs. A footing is one, as Birch cobblestone is. */
   private static boolean isPost(WallBlockPlan.Piece piece) {
     return piece == WallBlockPlan.Piece.POST || piece == WallBlockPlan.Piece.GATE_FRAME_POST
         || piece == WallBlockPlan.Piece.COBBLE_POST
-        || piece == WallBlockPlan.Piece.MOSSY_POST;
+        || piece == WallBlockPlan.Piece.MOSSY_POST
+        || piece == WallBlockPlan.Piece.FOOTING;
   }
 
   private static AuthoredWoodWallSegments loadBundled(String family) {
@@ -367,30 +428,30 @@ final class AuthoredWoodWallSegments {
 
   private static AuthoredWoodWallSegments loadBundled(String family, boolean arid) {
     Map<WallSectionKind, Template> templates = new EnumMap<>(WallSectionKind.class);
-    load(templates, WallSectionKind.STRAIGHT, family + "/straight.nbt");
-    load(templates, WallSectionKind.DIAGONAL, family + "/diagonal.nbt");
-    load(templates, WallSectionKind.TERRACE, family + "/terrace.nbt");
-    load(templates, WallSectionKind.CORNER_TOWER, family + "/corner_tower.nbt");
-    load(templates, WallSectionKind.GATEHOUSE, family + "/gatehouse.nbt");
+    load(templates, WallSectionKind.STRAIGHT, family, "/straight.nbt");
+    load(templates, WallSectionKind.DIAGONAL, family, "/diagonal.nbt");
+    load(templates, WallSectionKind.TERRACE, family, "/terrace.nbt");
+    load(templates, WallSectionKind.CORNER_TOWER, family, "/corner_tower.nbt");
+    load(templates, WallSectionKind.GATEHOUSE, family, "/gatehouse.nbt");
     return new AuthoredWoodWallSegments(templates, arid);
   }
 
   private static void load(Map<WallSectionKind, Template> templates,
-      WallSectionKind kind, String file) {
-    String path = RESOURCE_ROOT + file;
+      WallSectionKind kind, String family, String file) {
+    String path = RESOURCE_ROOT + family + file;
     try (InputStream input = AuthoredWoodWallSegments.class.getClassLoader()
         .getResourceAsStream(path)) {
       if (input == null) {
         Kithkyn.LOGGER.error("Missing authored wall segment {}", path);
         return;
       }
-      templates.put(kind, readTemplate(input));
+      templates.put(kind, readTemplate(input, family));
     } catch (IOException | RuntimeException exception) {
       Kithkyn.LOGGER.error("Could not read authored wall segment {}", path, exception);
     }
   }
 
-  private static Template readTemplate(InputStream input) throws IOException {
+  private static Template readTemplate(InputStream input, String family) throws IOException {
     CompoundTag root = NbtIo.readCompressed(input, NbtAccounter.unlimitedHeap());
     ListTag palette = root.getList("palette", Tag.TAG_COMPOUND);
     ListTag serializedBlocks = root.getList("blocks", Tag.TAG_COMPOUND);
@@ -399,7 +460,7 @@ final class AuthoredWoodWallSegments {
       CompoundTag serialized = serializedBlocks.getCompound(index);
       ListTag pos = serialized.getList("pos", Tag.TAG_INT);
       CompoundTag paletteEntry = palette.getCompound(serialized.getInt("state"));
-      WallBlockPlan.Piece piece = pieceFor(paletteEntry);
+      WallBlockPlan.Piece piece = pieceFor(paletteEntry, family);
       if (piece != null) {
         cells.add(new Cell(pos.getInt(0), pos.getInt(1), pos.getInt(2), piece));
       }
@@ -476,7 +537,8 @@ final class AuthoredWoodWallSegments {
 
   private static int supportPriority(WallBlockPlan.Piece piece) {
     return switch (piece) {
-      case POST, GATE_FRAME_POST, GATE_FRAME_BEAM, COBBLE_POST, MOSSY_POST, BEAM_NORTH_SOUTH, BEAM_EAST_WEST, BODY, WALKWAY -> 0;
+      case POST, GATE_FRAME_POST, GATE_FRAME_BEAM, COBBLE_POST, MOSSY_POST, BEAM_NORTH_SOUTH, BEAM_EAST_WEST, BODY, WALKWAY,
+          FOOTING, BODY_ACCENT -> 0;
       case SLAB, PARAPET, STEP_NORTH, STEP_EAST, STEP_SOUTH, STEP_WEST -> 1;
       case TRAPDOOR_NORTH, TRAPDOOR_EAST, TRAPDOOR_SOUTH, TRAPDOOR_WEST -> 2;
       default -> 3;
@@ -496,17 +558,25 @@ final class AuthoredWoodWallSegments {
     };
   }
 
-  private static WallBlockPlan.Piece pieceFor(CompoundTag paletteEntry) {
+  /** The piece a captured block stands for; the Savanna Tent and Taiga read cobblestone as their footing. */
+  private static WallBlockPlan.Piece pieceFor(CompoundTag paletteEntry, String family) {
     String name = paletteEntry.getString("Name");
     CompoundTag properties = paletteEntry.getCompound("Properties");
     if (name.startsWith("minecraft:") && name.endsWith("_wall_banner")) {
       return WallBlockPlan.bannerPiece(horizontal(properties.getString("facing")));
     }
     return switch (name) {
-      case "minecraft:cobblestone" -> WallBlockPlan.Piece.COBBLE_POST;
+      // Birch masonry; the Savanna Tent and Taiga palisades' footing course (study A, 2026-09-14).
+      case "minecraft:cobblestone" -> COBBLESTONE_FOOTED.contains(family)
+          ? WallBlockPlan.Piece.FOOTING : WallBlockPlan.Piece.COBBLE_POST;
+      case "minecraft:cobbled_deepslate" -> WallBlockPlan.Piece.COBBLE_POST;
       case "minecraft:mossy_cobblestone" -> WallBlockPlan.Piece.MOSSY_POST;
       case "minecraft:cobblestone_wall" -> WallBlockPlan.Piece.COBBLE_WALL;
+      case "minecraft:cobbled_deepslate_wall" -> WallBlockPlan.Piece.COBBLE_WALL;
       case "minecraft:mossy_cobblestone_wall" -> WallBlockPlan.Piece.MOSSY_WALL;
+      case "minecraft:bricks" -> WallBlockPlan.Piece.BODY;
+      case "minecraft:brick_wall", "minecraft:sandstone_wall" -> WallBlockPlan.Piece.PARAPET;
+      case "minecraft:brick_slab" -> WallBlockPlan.Piece.SLAB;
       case "minecraft:cobblestone_slab" -> switch (properties.getString("type")) {
         case "bottom" -> WallBlockPlan.Piece.COBBLE_SLAB_BOTTOM;
         case "double" -> WallBlockPlan.Piece.COBBLE_POST;
@@ -519,14 +589,22 @@ final class AuthoredWoodWallSegments {
         case "z" -> WallBlockPlan.Piece.BEAM_NORTH_SOUTH;
         default -> WallBlockPlan.Piece.POST;
       };
+      case "minecraft:stripped_dark_oak_wood" -> switch (properties.getString("axis")) {
+        case "x" -> WallBlockPlan.Piece.BEAM_EAST_WEST;
+        case "z" -> WallBlockPlan.Piece.BEAM_NORTH_SOUTH;
+        default -> WallBlockPlan.Piece.POST;
+      };
       case "minecraft:oak_log" -> switch (properties.getString("axis")) {
         case "x" -> WallBlockPlan.Piece.BEAM_EAST_WEST;
         case "z" -> WallBlockPlan.Piece.BEAM_NORTH_SOUTH;
         default -> WallBlockPlan.Piece.POST;
       };
-      case "minecraft:oak_fence", "minecraft:spruce_fence" -> WallBlockPlan.Piece.PARAPET;
-      case "minecraft:oak_slab", "minecraft:spruce_slab" -> WallBlockPlan.Piece.SLAB;
-      case "minecraft:oak_trapdoor", "minecraft:spruce_trapdoor" -> WallBlockPlan.trapdoorPiece(
+      case "minecraft:oak_fence", "minecraft:spruce_fence", "minecraft:acacia_fence" -> WallBlockPlan.Piece.PARAPET;
+      case "minecraft:oak_slab", "minecraft:spruce_slab", "minecraft:birch_slab",
+          "minecraft:jungle_slab", "minecraft:acacia_slab" -> WallBlockPlan.Piece.SLAB;
+      case "minecraft:oak_trapdoor", "minecraft:spruce_trapdoor", "minecraft:dark_oak_trapdoor",
+          "minecraft:jungle_trapdoor", "minecraft:cherry_trapdoor",
+          "minecraft:acacia_trapdoor" -> WallBlockPlan.trapdoorPiece(
           horizontal(properties.getString("facing")));
       case "minecraft:ladder" -> WallBlockPlan.ladderPiece(
           horizontal(properties.getString("facing")));
@@ -537,11 +615,40 @@ final class AuthoredWoodWallSegments {
       case "minecraft:campfire" -> WallBlockPlan.campfirePiece(
           horizontal(properties.getString("facing")));
       // Authored coping stairs (the Mediterranean parapet) resolve through the palette's stair.
-      case "minecraft:oak_stairs" -> "top".equals(properties.getString("half"))
+      case "minecraft:oak_stairs", "minecraft:spruce_stairs" -> "top".equals(properties.getString("half"))
           ? null
           : WallBlockPlan.step(horizontal(properties.getString("facing")));
-      case "minecraft:oak_leaves" -> WallBlockPlan.Piece.LEAVES;
-      case "minecraft:dark_oak_leaves" -> WallBlockPlan.Piece.LEAVES_DARK;
+      case "minecraft:brick_stairs" -> "top".equals(properties.getString("half"))
+          ? null
+          : WallBlockPlan.step(horizontal(properties.getString("facing")));
+      case "minecraft:oak_leaves", "minecraft:mangrove_leaves", "minecraft:cherry_leaves" -> WallBlockPlan.Piece.LEAVES;
+      case "minecraft:dark_oak_leaves", "minecraft:flowering_azalea_leaves" -> WallBlockPlan.Piece.LEAVES_DARK;
+      // The Polynesian Coast capture (study A) names its own materials. Its
+      // stripped spruce is palisade body, placed like Birch masonry: a post
+      // would grow down through the gate passage under the roof edges. Its
+      // coral course is the footing.
+      case "minecraft:stripped_spruce_wood" -> WallBlockPlan.Piece.BODY;
+      case "minecraft:stripped_spruce_log" -> switch (properties.getString("axis")) {
+        case "x" -> WallBlockPlan.Piece.BEAM_EAST_WEST;
+        case "z" -> WallBlockPlan.Piece.BEAM_NORTH_SOUTH;
+        default -> WallBlockPlan.Piece.POST;
+      };
+      case "minecraft:deepslate_tile_slab" -> WallBlockPlan.Piece.SLAB;
+      case "minecraft:dead_bubble_coral_block" -> WallBlockPlan.Piece.FOOTING;
+      // The Nautical Coast capture (study C) is body the same way: sandstone,
+      // and smooth sandstone where Birch has mossy cobblestone, on a footing of
+      // stripped jungle wood.
+      case "minecraft:sandstone" -> WallBlockPlan.Piece.BODY;
+      case "minecraft:smooth_sandstone" -> WallBlockPlan.Piece.BODY_ACCENT;
+      // The Mushroom capture (study B): red caps are the body, brown caps the
+      // accent, and the course of stems under them the footing.
+      case "minecraft:red_mushroom_block" -> WallBlockPlan.Piece.BODY;
+      case "minecraft:brown_mushroom_block" -> WallBlockPlan.Piece.BODY_ACCENT;
+      case "minecraft:mushroom_stem" -> WallBlockPlan.Piece.FOOTING;
+      case "minecraft:stripped_jungle_wood" -> WallBlockPlan.Piece.FOOTING;
+      // The Savanna Tent capture (study A) is a stripped acacia palisade on the
+      // cobblestone footing above.
+      case "minecraft:stripped_acacia_wood" -> WallBlockPlan.Piece.BODY;
       default -> null;
     };
   }

@@ -480,17 +480,20 @@ buildings sit closer, and the spokes to each door are worn in, which is what mak
 walkable. Safety walls are exempt, being a need rather than a choice ([walls.md](walls.md)).
 The cooldown is Aaron's, against villages that overbuild whenever they can afford to.
 
-**Built, 2026-09-02: a village can have three builders, and they divide the duties.** The town
-centre registers three BUILDER posts at founding, but the second opens only at six people and
-the third at twelve (`Village.PEOPLE_PER_BUILDER`; a locked post is not open, and the planner
-does not count it as a job nobody has taken), and posts are filled each trade once before any
-trade is doubled (`JobClaiming.nextOpening`). So a camp's first hires are its guard, miner and
-quartermaster, never three builders, and the extra builders come as the village grows. A builder's rank is the order of its post in the definition
+**Built, 2026-09-02; rebalanced 2026-09-14: a village can grow to five builders, and they divide
+the duties.** The town centre registers five logical BUILDER duty anchors at founding; no
+workstation block is required. One is open immediately and the others open at populations 12,
+24, 48 and 96 (`Village.builderPostsForPopulation`; a locked post is not open, and the planner
+does not count it as a job nobody has taken). If population falls below a threshold, that builder
+stands down into the idle pool until the duty opens again. Posts are filled each trade once before
+any trade is doubled (`JobClaiming.nextOpening`). So a camp's first hires include its guard, miner
+and quartermaster, and the extra builders come only as the village grows. A builder's rank is the order of its post in the definition
 (`Village.builderRank`): the lead (rank 0) builds, gathers and raises the wall, then grades and
 wears paths between builds, exactly as a lone builder always did; the second (rank 1) wears
 paths first and helps build only when there is no path to wear; the third (rank 2) grades
-first. Only the lead is owned by a building project: the others keep to their duty while it
-runs. This exists because Wildflower Downs never got a path in a day: its one builder, whenever
+first. The fourth and fifth are late-growth construction helpers, using the lead's general work
+order while the original lead remains the builder whose maintenance work yields to an active
+project. This exists because Wildflower Downs never got a path in a day: its one builder, whenever
 it was idle, read over a thousand columns of hillside to grade, and grading a hillside does not
 end. A dedicated builder can grade forever without costing the village its paths.
 
@@ -960,6 +963,13 @@ cost, orthogonally only, and `OpenFenceGateGoal` is the door goal written for ga
 vanilla one tests for the door class and looks a block up for a top half a gate does not have.
 The gate swings away from the opener and closes twenty ticks later whether or not they are
 through, the door's rule, because a pen gate left open is an empty pen by evening.
+
+On 2026-09-12 the goal learned to handle a row of gates. A route through the Polynesian Coast
+mine's three gates, or through a pen's double gate, can step from one gate cell into the next.
+The goal used to take the first gate on the path, and that was the open one they stood in. The
+closed gate beside it never opened, and the open one shut on them twenty ticks later. Now the goal
+opens the closed gate they are pressed against, including the next one in a row. No gate closes
+while a body is still inside it, for up to five seconds.
 
 **Authored-home access, 2026-09-09.** An open door still occupies three pixels along the
 side of its block. The widest adults clip that leaf when vanilla aims at the block center,
@@ -1448,6 +1458,22 @@ it at once; watch the `[quartermaster]` log lines for the round-by-round converg
 - `entities/ai/goals/work/ContainerVisit.java`: native container opening and interruption cleanup.
 
 ## Still open
+
+### Executable occupation checks
+
+`OccupationWorkVerification` is the native server check for productive jobs that were easy to
+miss in ordinary village observation. The ordinary job-claiming pass seats idle residents in the
+real vacancies published by the Birch bakery, blacksmith and church, including housing checks,
+starting kits, commute targets and normal occupation goals. The check then requires physical
+storage-to-station-to-storage or patient movement before passing. It proves the baker deposits
+bread made from stored wheat, the blacksmith deposits a bucket forged from stored iron, and the
+cleric brews at the church before a hurt resident seeks them and receives a real potion.
+
+`CastleOperationsVerification` separately requires every authored jailer to walk to the cell post
+and remain there, in all four castle rotations. `CustodyVerification` owns the other half of that
+role: arrest, evidence capacity and identity, private sentence notices, escape, release, and cell
+failure. Run the productive check with `./gradlew runOccupationWorkVerification`; run the
+castle-post check with `-Dkithkyn.castleOperations.verify=true` and the reviewed castle datapack.
 
 - **After the bounded mine is depleted** ([#54](https://github.com/Quzzar/kithkyn/issues/54)):
   trees replant, ore does not. The physical root and child network ends honestly. The worker

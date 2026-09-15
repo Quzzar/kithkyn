@@ -109,10 +109,10 @@ tower or its access hanging above the ground. Ordinary authored runs keep no
 more than two courses of decorative silhouette above their local deck, which
 preserves uneven posts without allowing one terrain step to become a tall mast.
 
-Structural foundations, including Birch cobblestone and mossy cobblestone posts,
-embed exposed soil during placement. Built sections are checked when wall work resumes
-and after each section finishes, so a distant unfinished water section cannot delay
-the cleanup. When a natural dirt course has a side exposed to
+Structural foundations, including Birch cobblestone and mossy cobblestone posts and the
+Polynesian and Nautical footings, embed exposed soil during placement. Built sections are checked
+when wall work resumes and after each section finishes, so a distant unfinished water
+section cannot delay the cleanup. When a natural dirt course has a side exposed to
 air, the foundation replaces that one course. Buried dirt and player-owned or
 village-owned ground remain untouched. This makes an edge wall read as sunk
 into the bank instead of balanced on its visible dirt face.
@@ -333,6 +333,78 @@ in front of the gatehouse ladder were dropped); linear runs grow it procedurally
 one to three leaves by a stable position hash with gaps, none within two columns of a gate and
 never on a route column or inside a feature's clearance. The derivation is reproducible with
 `tools/structure/EditTemplateBlocks.java` from `tools/structure/mediterranean-walls-20260912.json`.
+
+The Polynesian Coast family (`data/kithkyn/structure/wall/polynesian_coast/`, 2026-09-12) is
+study A, the wall Aaron locked in the Polynesian gallery: the Birch geometry with its masonry
+turned to stripped spruce wood, its stone walls to spruce fence tips, its top cobblestone slabs to
+oak slab walks and its oak hatches to spruce, on a course of dead bubble coral. The five templates
+are the gallery's own files byte for byte, reproducible from the Birch captures with
+`tools/structure/ReplaceTemplateBlocks.java` (`tools/structure/polynesian-coast-walls-20260912.json`).
+The loader reads `stripped_spruce_wood` as palisade `BODY`, which places like Birch cobblestone:
+a `POST` would grow down to the ground on placement and fill the gate passage under the roof
+edges. It reads `dead_bubble_coral_block` as the `FOOTING` piece, a ground-contact leg like
+Birch cobblestone that also fills a hollow found at build time. The capture carries
+the coral at local y 0, but runs slide their tall columns into the ground and terraces lift
+whole slices, so a course pinned there would be buried in three of every seven straight columns
+even on flat ground. The catalog seats the footing instead: every body course at or below its
+column's natural ground is coral and any coral left above it is spruce. One coral course
+therefore follows the terrain under runs, towers and gates, and the buried footing below it only
+shows where the ground has a hollow: seam fill under lake ice, or a coral pier where a run crosses
+an overhang and its end columns drop to a lower neighbour's ground. An off-route column reads its
+nearest route column's ground, the sample its legs are extended to, so a gatehouse leg standing a
+course higher shows spruce at its foot. Guard posts are read from the Birch footprint and stand on
+the oak slab walks, where the Birch posts stand. The white gatehouse banners take the village
+identity like every gatehouse flag.
+
+The Nautical Coast family (`data/kithkyn/structure/wall/nautical_coast/`, 2026-09-13) is study C,
+Aaron's variant of the gallery's sandstone seawall: the Birch geometry with its cobblestone turned
+to sandstone and its mossy cobblestone to smooth sandstone, its stone walls to sandstone wall tips,
+its top cobblestone slabs to jungle slab walks and its oak hatches to jungle, on a course of
+stripped jungle wood where study B had terracotta. The five templates are the gallery's own files
+byte for byte (`tools/structure/nautical-coast-walls-20260913.json`). The loader reads `sandstone`
+as `BODY`, like the Polynesian spruce, and `smooth_sandstone` as `BODY_ACCENT`, a body course that
+resolves through the palette's `accent()`, so the two-tone masonry Aaron approved survives. It
+reads `stripped_jungle_wood` as `FOOTING`. That piece began as the Polynesian coral; it now resolves
+through the palette's `footing()`, dead coral for the Polynesian family and stripped jungle wood
+for the Nautical one, and the catalog seats either on each column's own ground by the same rule.
+Its ordinal did not move, so saved section signatures are unchanged. Guard posts are read from the
+Birch footprint and stand on the jungle slab walks.
+
+The Savanna Tent family (`data/kithkyn/structure/wall/savanna_tent/`, 2026-09-14) is study A of
+the Savanna gallery, the acacia palisade: the Birch geometry with its cobblestone and mossy
+cobblestone turned to stripped acacia wood, its stone walls to acacia fence tips, its top
+cobblestone slabs to acacia slab walks and its oak hatches to acacia, on a course of cobblestone.
+The five templates are the gallery's own files byte for byte
+(`tools/structure/savanna-tent-walls-20260914.json`). The loader reads `stripped_acacia_wood` as
+`BODY`, like the Polynesian spruce. Its footing is the one block another family already uses as
+body, Birch cobblestone, so the piece mapping takes the family name: cobblestone is `FOOTING` for
+`savanna_tent` and `COBBLE_POST` for everyone else, and it resolves through the palette's
+`footing()`, cobblestone for this family. The catalog seats it on each column's own ground by the
+Polynesian rule. Guard posts are read from the Birch footprint and stand on the acacia slab walks.
+
+The Taiga family (`data/kithkyn/structure/wall/taiga/`, 2026-09-14) is study A of the Taiga
+gallery, the spruce palisade: the Birch geometry with its cobblestone and mossy cobblestone turned
+to stripped spruce wood, its stone walls to spruce fence tips, its top cobblestone slabs to spruce
+slab walks and its oak hatches to spruce, on a course of cobblestone. The five templates are the
+gallery's own files byte for byte (`tools/structure/taiga-walls-20260914.json`). Its post is the
+Polynesian palisade's stripped spruce wood, so a footing can no longer be read off the post: the
+palette names its footing course explicitly (dead coral for the Polynesian Coast, stripped jungle
+wood for the Nautical Coast, cobblestone for the Savanna Tent and the Taiga, the post itself for
+every family without one), and the loader reads cobblestone as `FOOTING` for the Taiga as it does
+for the Savanna Tent. The catalog seats it on each column's own ground by the Polynesian rule.
+Guard posts are read from the Birch footprint and stand on the spruce slab walks.
+
+The Mushroom family (`data/kithkyn/structure/wall/mushroom/`, 2026-09-14) is study B of the
+Mushroom gallery, the cap wall Aaron chose ("wall B is a vibe"): the Birch geometry with its
+cobblestone turned to red mushroom blocks and its mossy cobblestone to brown ones, its stone
+walls to oak fence tips, its top cobblestone slabs to oak slab walks and its oak hatches kept,
+on a course of mushroom stems. The five templates are the gallery's own files byte for byte
+(`tools/structure/mushroom-walls-20260915.json`). The loader reads `red_mushroom_block` as
+`BODY`, `brown_mushroom_block` as `BODY_ACCENT` and `mushroom_stem` as `FOOTING`; the palette's
+post is the red cap, its accent the brown cap (the one family whose accent is not its post),
+and its footing the stem. The catalog seats the stem course on each column's own ground by the
+Polynesian rule, and the procedural run fill is red caps above the ground and stems at or
+below it. Guard posts are read from the Birch footprint and stand on the oak slab walks.
 
 ## Planning and developer preview
 

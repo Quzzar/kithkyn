@@ -327,7 +327,7 @@ culture names remain gallery labels only. Runtime ids use environmental names.
 | `badlands` | Pueblo | Complete family |
 | `beach` | Lighthouse | Small landmark family |
 | `birch_forest` | Romanian | Complete family |
-| `flower_forest` | Japanese | Complete family; low priority except farm and stable |
+| `flower_forest` | Japanese | Selected into the playable Japanese Cherry Grove catalog |
 | `forest` | Forest ruins | Complete family |
 | `grove` | Villager outpost | Small landmark family |
 | `jungle` | Tribal | Complete family |
@@ -359,17 +359,28 @@ CTOV fortified plains is a defense or development state of `plains`, while Chris
 Halloween are possible seasonal treatments. This keeps biome, progression, and event state from
 becoming one overloaded axis.
 
-### Current runtime selection: 2026-09-12
+### Current runtime selection: 2026-09-13
 
-Eight styles exist today, in this stable order: `birch_forest`, `desert`, `badlands`,
-`floodplain`, `jungle`, `swamp`, `mediterranean`, `tundra`. Birch Forest is the only catalog bundled in the jar and so the default: a blank
+Seventeen styles exist today, in this stable order: `birch_forest`, `desert`, `badlands`,
+`floodplain`, `jungle`, `swamp`, `mediterranean`, `tundra`, `polynesian_coast`, `romanian`,
+`alpine_highlands`, `japanese_cherry_grove`, `nautical_coast`, `savanna_tent`, `rustic_woodland`, `taiga`, `mushroom`.
+Birch Forest is the only catalog bundled in the jar and so the default: a blank
 or unknown saved style reads as Birch. Desert ([desert-village.md](desert-village.md)),
 Badlands ([badlands-village.md](badlands-village.md)) and Floodplain
 ([floodplain-village.md](floodplain-village.md)), Jungle
 ([jungle-village.md](jungle-village.md)), Swamp
 ([swamp-village.md](swamp-village.md)) and Mediterranean
-([mediterranean-village.md](mediterranean-village.md)) and Tundra
-([tundra-village.md](tundra-village.md)) are installed as private datapacks that
+([mediterranean-village.md](mediterranean-village.md)), Tundra
+([tundra-village.md](tundra-village.md)), Polynesian Coast
+([polynesian-coast-village.md](polynesian-coast-village.md)), Romanian
+([romanian-village.md](romanian-village.md)), Alpine Highlands
+([alpine-highlands-village.md](alpine-highlands-village.md)), Japanese Cherry Grove
+([japanese-cherry-grove-village.md](japanese-cherry-grove-village.md)), Nautical Coast
+([nautical-coast-village.md](nautical-coast-village.md)) and Savanna Tent
+([savanna-tent-village.md](savanna-tent-village.md)), Rustic Woodland
+([rustic-woodland-village.md](rustic-woodland-village.md)), Taiga
+([taiga-village.md](taiga-village.md)) and Mushroom
+([mushroom-village.md](mushroom-village.md)) are installed as private datapacks that
 supply their own definitions and templates under the ids the code resolves; without its pack
 a style has no founding set and is never selected automatically. The old Village Life families
 (plains, taiga, snowy, savanna and the bundled desert set) were removed on 2026-09-10; see
@@ -387,8 +398,17 @@ reroll an existing village. An explicit style argument on the command still over
 Selection first honors `kithkyn:village_style/<style>` biome tags, so a datapack can map a
 vanilla or modded biome precisely without a second mapping format. If a biome has several
 explicit tags, the stable order is Birch Forest, Desert, Badlands, Floodplain, Jungle, Swamp,
-Mediterranean, Tundra.
+Mediterranean, Tundra, Polynesian Coast, Romanian, Alpine Highlands, Japanese Cherry Grove, Nautical Coast, Savanna Tent, Rustic Woodland, Taiga, Mushroom. Sparse Jungle carries the Polynesian Coast tag and no
+longer the Jungle one, so Jungle keeps Jungle and Bamboo Jungle.
 Only styles whose own center, mine, and storehouse definitions are loaded are automatic candidates.
+
+One rule reads the site rather than a single biome, and it comes right after the explicit tags.
+A beach (`c:is_beach`, not snowy) with warm or lukewarm ocean
+(`kithkyn:warm_ocean`) within 48 blocks is the Polynesian Coast. The check samples eight bearings
+at 16, 32 and 48 blocks without loading chunks. Every other such beach, on temperate or cold
+water, and a stony shore (`c:is_stony_shores`) are the Nautical Coast. Both rules run ahead of the
+conventional families because NeoForge counts a beach as sandy, which would otherwise read as
+Desert. A snowy beach is not an open beach, so it stays Tundra.
 
 Conventional families then retain deterministic assignments, but only where a finished
 catalog exists:
@@ -396,22 +416,28 @@ catalog exists:
 | Family | Village style |
 | --- | --- |
 | Birch, including `c:is_birch_forest` and untagged registry paths containing `birch` | Birch Forest |
-| Mesa/badlands or savanna, including their tagged modded families and recognizable registry paths | Pueblo / Badlands |
+| Savanna, savanna plateau and windswept savanna, including tagged modded families and registry paths containing `savanna` | Savanna Tent |
+| Mesa/badlands, including their tagged modded families and recognizable registry paths | Pueblo / Badlands |
 | Desert or sandy, excluding the mesa/badlands and savanna families above | Desert |
 | Mangrove: vanilla mangrove swamp through the `kithkyn:village_style/floodplain` tag, and untagged registry paths containing `mangrove` | Floodplain |
 | Jungle, including conventional Jungle tags and registry paths containing `jungle` | Jungle |
 | Ordinary swamp, including the broad conventional Swamp tag and registry paths containing `swamp` after mangrove is excluded | Swamp |
+| Mountain, including the conventional Mountain tag and paths containing `mountain`, `meadow`, `grove`, `peak`, `windswept` or `alpine` | Alpine Highlands |
 | Snowy or icy lowlands, including their conventional tags and registry paths containing snow, ice, frozen or frost | Tundra |
 | Temperate plains: the conventional Plains tag and registry paths ending in `plains`, unless the biome is also snowy, icy or named for snow, ice or frost | Mediterranean |
-| Every other conventional family (forest, taiga and the rest) | No conventional mapping; the climate cluster below decides |
+| Dark Forest and registry paths named `dark_forest`, `darkforest`, `forested_highland` or `wooded_valley` | Romanian |
+| Ordinary Forest and compatible registry paths named for oak forests or oak woodlands | Rustic Woodland |
+| Taiga, old growth pine taiga and old growth spruce taiga, including `c:is_taiga` and registry paths containing `taiga`, unless snowy | Taiga |
+| Mushroom Fields, including `c:is_mushroom` and registry paths containing `mushroom` | Mushroom |
+| Every other conventional family (taiga and the rest) | No conventional mapping; the climate cluster below decides |
 
 Birch wins before broader family tags; an explicit style tag can override even a birch-named
 biome. This name heuristic is a compatibility fallback for mods that omit conventional tags,
 not a substitute for those tags.
 
-The broad Pueblo assignment includes wooded badlands and savanna plateau for now. As more
-catalogs become playable, explicit style tags can separate those biomes without rerolling
-existing villages. Jungle and Swamp are complete strict catalogs: neither borrows missing buildings
+The Pueblo assignment includes wooded badlands; the savanna families left it for the Savanna
+Tent on 2026-09-14 without rerolling existing villages, since a village keeps its founding style.
+As more catalogs become playable, explicit style tags can separate other biomes the same way. Jungle and Swamp are complete strict catalogs: neither borrows missing buildings
 from Birch or another regional family.
 
 A family with no conventional mapping uses its precipitation, base temperature, downfall, and
@@ -524,7 +550,7 @@ the player, with a caravan, or abstract is an open question below.
 | | Count |
 | --- | --- |
 | Categories | 37 |
-| Implemented village biomes | 9 (Birch Forest bundled; eight private datapack catalogs) |
+| Implemented village biomes | 15 (Birch Forest bundled; fourteen private datapack catalogs) |
 | Towns and Towers Overworld village-biome floor | 26 |
 | Additional village biomes already justified by reviewed families | 6 |
 | Existing structure-plan estimate, based on five village biomes | ~130 |

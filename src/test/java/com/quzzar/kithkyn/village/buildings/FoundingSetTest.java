@@ -56,6 +56,17 @@ class FoundingSetTest {
   }
 
   @Test
+  void aCentreThatKeepsTheTownsStorageMayFoundWithoutAStorehouse() {
+    BuildingInfo keeper = BuildingInfo.CODEC.parse(JsonOps.INSTANCE, JsonParser.parseString(
+        "{\"structure\":\"village_center_birch_forest_1\",\"containers\":[[1,1,1]],"
+            + "\"starting_buildings\":[\"mine_birch_forest_1\"]}")).getOrThrow();
+    Buildings.reload(definitions(keeper));
+    assertTrue(Buildings.hasFoundingSet(VillageStyle.BIRCH_FOREST));
+    assertEquals(List.of("mine_birch_forest_1"), Buildings.foundingCompanions(keeper, VillageStyle.BIRCH_FOREST)
+        .orElseThrow().stream().map(BuildingInfo::getName).toList());
+  }
+
+  @Test
   void authoredSetCannotOmitARequiredServiceOrContainASecondCenter() {
     for (String invalid : List.of("[\"mine_birch_forest_1\"]",
         "[\"mine_birch_forest_1\",\"storehouse_birch_forest_1\",\"village_center_birch_forest_1\"]")) {

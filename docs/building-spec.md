@@ -80,21 +80,27 @@ apart: if you add a variant above, the totals below are what change.
 Every village starts with its center, mine and storehouse, placed free. A center can also
 provide an ordered `starting_buildings` list of exact building ids, including its mine,
 storehouse and any starting homes. Repeat a home id to request several copies. Omission
-uses that style's mine and storehouse. Every named definition must be loaded and belong
-to the village's regional catalog; a missing home refuses the complete founding set.
+uses that style's mine and storehouse. A center that keeps the town's storage in its own
+shared containers, like the Nautical Coast lighthouse, may list its mine without a storehouse;
+the style still needs a storehouse definition to build one later. Every named definition must
+be loaded and belong to the village's regional catalog; a missing home refuses the complete
+founding set.
 
 Starting beds and jobs come from those authored buildings. A bedless Jungle center uses
-four separate one-person huts for its four founding workers. Centers with accommodation
-can keep it inside the center. Normal bed registration, job assignment and campfire arrivals
-apply; founding does not spawn a separate crew or simulate paid construction projects.
+separate homes for its founding workers. Normal bed registration, job assignment and campfire
+arrivals apply; founding does not spawn a separate crew or simulate paid construction projects.
 
-A founding job may belong to the center while its physical workplace sits in another starting
-building. The center's `work_stations` entry declares `worksite_category`; the matching building
-declares a same-occupation position in `worksites`. A `worksites` entry is a destination only and
-never creates a second vacancy. Job location, work area and workplace storage resolve through that
-physical building. If no matching completed building exists, the worker keeps the center-owned job
-and waits. A routed miner station does not create a shaft below the center; the physical mine
-worksite owns the shaft geometry.
+A job belongs to the building where the work happens. Every mine owns exactly one `MINER`
+vacancy in `work_stations`, and every storehouse owns exactly one `QUARTERMASTER` vacancy there.
+Building a second mine or storehouse therefore creates another matching worker position. Centers
+cannot own either vacancy. Other productive buildings follow the same rule: their local
+`work_stations` entries create their bakers, merchants, guards, and other workers.
+
+Every center declares five logical `BUILDER` posts and one explicit `GUARD` post with
+`guard_duty: CAPTAIN`. Builder posts are accessible civic duty anchors rather than workstation
+blocks. Population unlocks them at 0, 12, 24, 48 and 96 residents. A center may add a local role when the structure actually contains that
+workplace, such as a berry farmer, cleric or market merchant. Miners and quartermasters are always
+owned by their mines and storehouses.
 
 ### Founding uses ordinary construction placement
 
@@ -194,7 +200,7 @@ role. Working village storage belongs in `containers`, resident storage in `pers
 and castle evidence storage in `evidence_containers`. Intentionally unusable props belong in the
 authoring-only `decorative_containers` list. The runtime ignores that last list, while the catalog
 audit rejects any physical container left unclassified. This keeps decorative cabinets out of the
-quartermaster route without allowing a real shelf to disappear from village bookkeeping.
+quartermaster workflow without allowing a real shelf to disappear from village bookkeeping.
 
 For the locked first-pass prices and the comparison rubric used for all 224 current definitions,
 see [building-cost rebalance](research/building-cost-rebalance-2026-09-12.md). A new building starts
@@ -446,9 +452,10 @@ bug in its other guise: an author editing a definition on a live world.
 **A productive category must declare its core work.** The complete-catalog validator rejects a
 bakery without a BAKER position, a church without a CLERIC position, a center without both a
 BUILDER and GUARD, and the equivalent core occupations for the other productive categories.
-That position may be a local `work_stations` vacancy or a routed `worksites` destination; the
-catalog-level route check still requires the other half of a routed pair. Duplicate station or
-worksite coordinates are rejected because station indexes cannot represent two jobs at one key.
+That position must be a local `work_stations` vacancy in the productive building. Mines and
+storehouses specifically require exactly one matching vacancy so each copy adds exactly one
+miner or quartermaster. Duplicate station or worksite coordinates are rejected because station
+indexes cannot represent two jobs at one key.
 
 **Redevelopment can remove specific blocking buildings as part of a named construction project.**
 The game calculates the placement, consequences and salvage, then the model chooses. Net
@@ -693,7 +700,9 @@ with vanilla's keep-liquids rule, which let a pond beside a site soak into one r
 then round the whole ring. Now the builder places every liquid-bearing block of a structure
 last, and both placement paths ignore waterlogging, so a block set into water replaces it. A
 rim placed before its water stays dry: verified on a bare platform, rim first and water last,
-not one trapdoor or fence waterlogged. The pool was briefly moved a layer down into the base
+not one trapdoor or fence waterlogged. The plants that stand only on water or beside it (lily
+pads, sugar cane, frogspawn) follow the liquids. One laid before its water broke at the first
+neighbour update and dropped as an item, as the Polynesian Coast fishery showed on 2026-09-12. The pool was briefly moved a layer down into the base
 on a wrong reading of the flow rules; Aaron restored the authored layout.
 
 #### `storehouse`  (founding building)
