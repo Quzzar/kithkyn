@@ -29,6 +29,7 @@ repo
 
 .claude
 run-preview/
+run-campfire-verification/
 
 # dev/runtime artifacts, not part of the mod
 deploy.log*
