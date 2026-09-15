@@ -65,7 +65,8 @@ to Floodplain when site selection can classify them reliably.
 
 Tundra, Polynesian Coast, Romanian, Alpine Highlands, Japanese Cherry Grove, Nautical Coast and
 Savanna Tent are complete. Taiga remains intentionally parked until the ornate Polish and grittier
-Viking directions can be judged after more village catalogs are complete. Mushroom remains available as the next catalog pass.
+Viking directions can be judged after more village catalogs are complete. The Mushroom and Taiga
+selection galleries stand in the trio sky since 2026-09-14, so both are ready for Aaron's selection walk.
 
 The three walk-through courts begin at **9913.5, 230, 986.5** in the live showcase world. The
 individual entrances are Swamp at **9929.5, 230, 1004.5**, Viking at
@@ -80,8 +81,27 @@ The current review status is:
 - **Taiga:** source selection is deferred. The ornate Polish family and grittier T&T Viking
   family remain the two leading alternatives; neither is the production direction yet. V01.1,
   V03.5, and V05.2 remain candidates rather than locked selections. The complete standalone T&T
-  Viking and Polish families remain displayed in a six-row annex at
-  **10201.5, 230, 1224.5** for the later decision.
+  Viking and Polish families were displayed in a six-row annex at
+  **10201.5, 230, 1224.5** in the earlier showcase world. Since 2026-09-14 the full Taiga selection
+  gallery stands in the sky above the **trio-20260912** world, beginning at **2393.5, 230, 10.5**,
+  east of the Mushroom gallery. Its 34 rows hold 337 pieces:
+  - TA01 to TA08: every standalone Towns & Towers Viking, Polish and Swedish piece, each family
+    as centre and homes, workplaces, then food and details.
+  - TA09: the T&T old-growth-taiga fort and the snowy taiga, taiga and Swedish outpost towers,
+    with the Dungeons & Taverns taiga castle ruin and firewatch tower as castle and watchtower
+    donors.
+  - TA10 to TA25: both complete CTOV taiga villages, the ordinary one first, roads omitted.
+  - TA26 and TA27: the CTOV taiga outpost, entities stripped.
+  - TA28 and TA29: the Dungeons & Taverns spruce tavern modules and its spruce well.
+  - TA30 and TA31: the vanilla taiga village: meeting points, houses and decorations, then
+    workplaces and farms.
+  - TA32 to TA34: Kithkyn's original Village Life taiga family, recovered from git: centre,
+    storehouses and markets; mines, farms, well and works; church, homes, smiths and towers.
+
+  The rows' sky is filled with the void biome, which has no precipitation, so no snow settles on
+  the roofs and lightning cannot strike. Blocks from mods the server lacks are replaced by vanilla
+  stand-ins in the private display copies only. The sources, hashes, placements and the offline
+  check are recorded in `tools/structure/taiga-full-profile-20260914.json`.
 - **Tundra:** the complete source gallery begins at **11107.5, 230, 986.5**. Its 17 rows contain
   all 77 standalone CTOV Snowy Igloo templates, 23 Dungeons & Taverns snowy tavern modules,
   12 CTOV snowy outpost pieces and five Towns & Towers or Terralith landmarks. Fifty Snowy Igloo
@@ -169,6 +189,23 @@ The current review status is:
   reach the wool tents. Blocks from mods the server lacks are replaced by vanilla stand-ins in the
   private display copies only. The sources, hashes, placements and the offline check are recorded in
   `tools/structure/savanna-full-profile-20260914.json`.
+
+- **Mushroom:** the selection gallery stands in the sky above the **trio-20260912** world,
+  beginning at **2023.5, 230, 10.5**, east of the Savanna gallery. Its 12 rows hold 113 pieces:
+  - MU01 and MU02: every standalone Towns & Towers mushroom-fields fantasy piece: the meeting
+    point, houses and the two profession gazebos, then the trades and the eight profession
+    inserts, with the mushroom-fields outpost tower. The two mooshroom templates are entity-only
+    jigsaw pieces and are omitted.
+  - MU03 to MU10: the complete CTOV mushroom village, roads omitted, with its lamps, wagon and
+    well in the details row.
+  - MU11 and MU12: donors for the roles neither family has: the ten original Village Life mines
+    with the Dungeons & Taverns miner compound, and the six D&T village wells with Terralith's
+    and the T&T classic well.
+
+  The rows' sky is filled with the void biome, which has no precipitation, so lightning cannot
+  strike. Blocks from mods the server lacks are replaced by vanilla stand-ins in the private
+  display copies only. The sources, hashes, placements and the offline check are recorded in
+  `tools/structure/mushroom-full-profile-20260914.json`.
 
 The Viking annex contains all 43 standalone structures: 22 Viking and 21 Polish. Road pieces
 and terminators are omitted because they are layout internals rather than building candidates.

@@ -1,0 +1,3103 @@
+{
+  "schemaVersion": 1,
+  "recorded": "2026-09-14T21:14:02.917189-04:00",
+  "purpose": "Every standalone Towns & Towers mushroom-fields fantasy piece and the complete CTOV mushroom village, with mine and well donors, for selecting the Mushroom catalog.",
+  "status": "placed",
+  "world": "trio-20260912",
+  "worldNote": "Placed in the trio test world east of the Savanna gallery, with the void biome filled through every row's sky so lightning cannot strike.",
+  "entry": [
+    2023.5,
+    230.0,
+    10.5
+  ],
+  "bounds": [
+    2020,
+    220,
+    4,
+    2229,
+    281,
+    516
+  ],
+  "selectionRule": "Every standalone piece of the T&T mushroom-fields fantasy village and its outpost tower, entity-only animal templates omitted; every standalone CTOV mushroom piece, roads omitted and entities stripped, with other mods' blocks shown as neutral vanilla markers; the ten original Village Life mines and the D&T miner compound; the D&T, Terralith and T&T classic wells. Street, terminator and villager templates are omitted.",
+  "counts": {
+    "townsAndTowers": 19,
+    "ctov": 74,
+    "dungeonsAndTaverns": 7,
+    "composites": 1,
+    "kithkynOriginals": 10,
+    "minecraft": 0,
+    "terralith": 2,
+    "yungsExtras": 0,
+    "studies": 0,
+    "standInPieces": 50,
+    "total": 113,
+    "rows": 12
+  },
+  "rows": [
+    {
+      "id": "MU01",
+      "title": "T&T MUSHROOM FANTASY \u2014 CENTRE, HOMES + GAZEBOS",
+      "origin": [
+        2030,
+        230,
+        16
+      ],
+      "bounds": [
+        2020,
+        220,
+        7,
+        2127,
+        276,
+        34
+      ],
+      "entries": [
+        {
+          "id": "MU01.1",
+          "label": "Meeting Point 1",
+          "role": "center",
+          "sourceMod": "Towns & Towers",
+          "source": "data/kaisyn/structure/village/mushroom_fields_fantasy/town_centers/mushroom_meeting_point_1.nbt",
+          "sourceSha256": "4e8f8ccaa4673bed450da46b5a007c56fc9433dc87998f10d5295b994343863e",
+          "preparedSha256": "5c04b59c7744cd9398bcd471e9a663a8f2674f8ae1a238d49a719e1ffbbb0818",
+          "size": [
+            15,
+            17,
+            15
+          ],
+          "origin": [
+            2030,
+            230,
+            16
+          ],
+          "privateTemplate": "kithkyn_mushroom_profile:mu01_01_mushroom_meeting_point_1",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0
+        },
+        {
+          "id": "MU01.2",
+          "label": "Heavy Professions Gazebo",
+          "role": "detail",
+          "sourceMod": "Towns & Towers",
+          "source": "data/kaisyn/structure/village/mushroom_fields_fantasy/houses/mushroom_heavy_professions_gazebo.nbt",
+          "sourceSha256": "378a00ad674d1e8c7c220e6be39c8576ca48885e6520da36fa0a1ab76cbf602e",
+          "preparedSha256": "d6188fe1463f1907cadbb48170ac95131acae4615cf5c66139b94a5f70603ce0",
+          "size": [
+            7,
+            6,
+            7
+          ],
+          "origin": [
+            2051,
+            230,
+            16
+          ],
+          "privateTemplate": "kithkyn_mushroom_profile:mu01_02_mushroom_heavy_professions_gazebo",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0
+        },
+        {
+          "id": "MU01.3",
+          "label": "Large House 1",
+          "role": "house",
+          "sourceMod": "Towns & Towers",
+          "source": "data/kaisyn/structure/village/mushroom_fields_fantasy/houses/mushroom_large_house_1.nbt",
+          "sourceSha256": "f01cdaa92356569a2abe73c8ed98b7b40329cc1658e468523685a109c7e74870",
+          "preparedSha256": "e48fea58ae0605822bc96783ce88dc75c34ac842b983c4d47982acdbc6ee5bd1",
+          "size": [
+            7,
+            12,
+            7
+          ],
+          "origin": [
+            2064,
+            230,
+            16
+          ],
+          "privateTemplate": "kithkyn_mushroom_profile:mu01_03_mushroom_large_house_1",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0
+        },
+        {
+          "id": "MU01.4",
+          "label": "Large House 2",
+          "role": "house",
+          "sourceMod": "Towns & Towers",
+          "source": "data/kaisyn/structure/village/mushroom_fields_fantasy/houses/mushroom_large_house_2.nbt",
+          "sourceSha256": "0d1d098b6ce43acdc196ca8458745fc89899d3253bc4965acbe4d6ec866748ac",
+          "preparedSha256": "62db128e3685724fd310fcb826bd302c8485b91aa17c256babf80b9716a9e4bb",
+          "size": [
+            8,
+            10,
+            7
+          ],
+          "origin": [
+            2077,
+            230,
+            16
+          ],
+          "privateTemplate": "kithkyn_mushroom_profile:mu01_04_mushroom_large_house_2",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0
+        },
+        {
+          "id": "MU01.5",
+          "label": "Light Professions Gazebo",
+          "role": "detail",
+          "sourceMod": "Towns & Towers",
+          "source": "data/kaisyn/structure/village/mushroom_fields_fantasy/houses/mushroom_light_professions_gazebo.nbt",
+          "sourceSha256": "5a372ac17d0a1a91df6c8095f508087eced14836fcddd4e1762721405385d461",
+          "preparedSha256": "085972ab9c9df0fa0c52fa408d46975969dd320d08e5f3943cc6c1ffb84e53a5",
+          "size": [
+            7,
+            5,
+            7
+          ],
+          "origin": [
+            2091,
+            230,
+            16
+          ],
+          "privateTemplate": "kithkyn_mushroom_profile:mu01_05_mushroom_light_professions_gazebo",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0
+        },
+        {
+          "id": "MU01.6",
+          "label": "Small House 1",
+          "role": "house",
+          "sourceMod": "Towns & Towers",
+          "source": "data/kaisyn/structure/village/mushroom_fields_fantasy/houses/mushroom_small_house_1.nbt",
+          "sourceSha256": "75d5a527249392d361de4d4a32f0ef9999b6efe6357f3d7fb1be5a384e5983db",
+          "preparedSha256": "241c6619f9e8a24e4b6d72d8176a8f48f1c53b7f3b91075d7ecabeaa7bd5a591",
+          "size": [
+            7,
+            10,
+            7
+          ],
+          "origin": [
+            2104,
+            230,
+            16
+          ],
+          "privateTemplate": "kithkyn_mushroom_profile:mu01_06_mushroom_small_house_1",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0
+        },
+        {
+          "id": "MU01.7",
+          "label": "Small House 2",
+          "role": "house",
+          "sourceMod": "Towns & Towers",
+          "source": "data/kaisyn/structure/village/mushroom_fields_fantasy/houses/mushroom_small_house_2.nbt",
+          "sourceSha256": "04ae715b4e85bcbf5d32fe6e96a4d1742eba1662ff1b7b06c19638782f839437",
+          "preparedSha256": "6433f2b2307b4e0c56b818e863bedcc0d79f469be8fc57405e358f9572c5158e",
+          "size": [
+            8,
+            8,
+            7
+          ],
+          "origin": [
+            2117,
+            230,
+            16
+          ],
+          "privateTemplate": "kithkyn_mushroom_profile:mu01_07_mushroom_small_house_2",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0
+        }
+      ]
+    },
+    {
+      "id": "MU02",
+      "title": "T&T MUSHROOM FANTASY \u2014 TRADES + OUTPOST TOWER",
+      "origin": [
+        2030,
+        230,
+        60
+      ],
+      "bounds": [
+        2020,
+        220,
+        51,
+        2164,
+        281,
+        82
+      ],
+      "entries": [
+        {
+          "id": "MU02.1",
+          "label": "Butcher 1",
+          "role": "butchery",
+          "sourceMod": "Towns & Towers",
+          "source": "data/kaisyn/structure/village/mushroom_fields_fantasy/houses/mushroom_butcher_1.nbt",
+          "sourceSha256": "099433d0439c20af7091649d3e4ca332c2b56ff95db29cc9533e0302dcb4e7e6",
+          "preparedSha256": "2bf5a2b02752d84bf4ce9c8fb107d561fb55d9fcc03bd0427820d972872e4ed3",
+          "size": [
+            5,
+            8,
+            8
+          ],
+          "origin": [
+            2030,
+            230,
+            60
+          ],
+          "privateTemplate": "kithkyn_mushroom_profile:mu02_01_mushroom_butcher_1",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0
+        },
+        {
+          "id": "MU02.2",
+          "label": "Leatherworker 1",
+          "role": "work",
+          "sourceMod": "Towns & Towers",
+          "source": "data/kaisyn/structure/village/mushroom_fields_fantasy/houses/mushroom_leatherworker_1.nbt",
+          "sourceSha256": "6d8325466c7c4d3a0183ff5028d13ed8040f506b74c6848ab7432cea5e754962",
+          "preparedSha256": "0fb1bb7d272e904d8626224f5f4fa8855b568669772828ff9c4028e517ae5587",
+          "size": [
+            8,
+            5,
+            8
+          ],
+          "origin": [
+            2041,
+            230,
+            60
+          ],
+          "privateTemplate": "kithkyn_mushroom_profile:mu02_02_mushroom_leatherworker_1",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0
+        },
+        {
+          "id": "MU02.3",
+          "label": "Small Farm 1",
+          "role": "farm",
+          "sourceMod": "Towns & Towers",
+          "source": "data/kaisyn/structure/village/mushroom_fields_fantasy/houses/mushroom_small_farm_1.nbt",
+          "sourceSha256": "266dfdc9f4246bb2c5fdd6ef02048d8fa69a195ab6af216a53a2a6d6bde6ba60",
+          "preparedSha256": "64d2ec0bde8cca79d3e6ba524f5d683a73bdab668a57251df4831c95c8adb735",
+          "size": [
+            9,
+            3,
+            9
+          ],
+          "origin": [
+            2055,
+            230,
+            60
+          ],
+          "privateTemplate": "kithkyn_mushroom_profile:mu02_03_mushroom_small_farm_1",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0
+        },
+        {
+          "id": "MU02.4",
+          "label": "Armorer 1",
+          "role": "blacksmith",
+          "sourceMod": "Towns & Towers",
+          "source": "data/kaisyn/structure/village/mushroom_fields_fantasy/professions_misc/heavy_professions/mushroom_armorer_1.nbt",
+          "sourceSha256": "29dcb5dc38fa6627f6195dad562602ebe016fe19844681df4c8855e68574c05a",
+          "preparedSha256": "3c107a08c8b3fb44c83dc3967c38c4ae259342d035e506f0d82c16beb4f2959e",
+          "size": [
+            3,
+            2,
+            3
+          ],
+          "origin": [
+            2070,
+            230,
+            60
+          ],
+          "privateTemplate": "kithkyn_mushroom_profile:mu02_04_mushroom_armorer_1",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0
+        },
+        {
+          "id": "MU02.5",
+          "label": "Mason 1",
+          "role": "stoneworks",
+          "sourceMod": "Towns & Towers",
+          "source": "data/kaisyn/structure/village/mushroom_fields_fantasy/professions_misc/heavy_professions/mushroom_mason_1.nbt",
+          "sourceSha256": "8f7951b1d6608d87284a70419143c75216a01fcffe80189a1db2c44bfa36aa97",
+          "preparedSha256": "77a08119b6683c0019f46151c558c5af452d1494352d625e73bceb1b2118663c",
+          "size": [
+            3,
+            2,
+            3
+          ],
+          "origin": [
+            2079,
+            230,
+            60
+          ],
+          "privateTemplate": "kithkyn_mushroom_profile:mu02_05_mushroom_mason_1",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0
+        },
+        {
+          "id": "MU02.6",
+          "label": "Toolsmith 1",
+          "role": "blacksmith",
+          "sourceMod": "Towns & Towers",
+          "source": "data/kaisyn/structure/village/mushroom_fields_fantasy/professions_misc/heavy_professions/mushroom_toolsmith_1.nbt",
+          "sourceSha256": "f5b47c234edc65854d4e4eef8ed9d0237f147563f4c8c0ea7028f36ebc22ff96",
+          "preparedSha256": "f3907369a79b4c054702838dd750abf519d44a04c2476d8d517ec6c77cedd3f4",
+          "size": [
+            3,
+            2,
+            3
+          ],
+          "origin": [
+            2088,
+            230,
+            60
+          ],
+          "privateTemplate": "kithkyn_mushroom_profile:mu02_06_mushroom_toolsmith_1",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0
+        },
+        {
+          "id": "MU02.7",
+          "label": "Weaponsmith 1",
+          "role": "blacksmith",
+          "sourceMod": "Towns & Towers",
+          "source": "data/kaisyn/structure/village/mushroom_fields_fantasy/professions_misc/heavy_professions/mushroom_weaponsmith_1.nbt",
+          "sourceSha256": "d5354dbaf9e882a2668a2a2d9de90dd9fa6c559b044d0c73111243ac1671454d",
+          "preparedSha256": "12efc32ad9efbb841fd4ab7a34519c774d5d3f778459a9d1f120d6062cd46aa1",
+          "size": [
+            3,
+            2,
+            3
+          ],
+          "origin": [
+            2097,
+            230,
+            60
+          ],
+          "privateTemplate": "kithkyn_mushroom_profile:mu02_07_mushroom_weaponsmith_1",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0
+        },
+        {
+          "id": "MU02.8",
+          "label": "Cartographer 1",
+          "role": "civic",
+          "sourceMod": "Towns & Towers",
+          "source": "data/kaisyn/structure/village/mushroom_fields_fantasy/professions_misc/light_professions/mushroom_cartographer_1.nbt",
+          "sourceSha256": "942edfb91cff064e0609a797a0fe2ad422c11d60ea54877e710e3f78a6b0e463",
+          "preparedSha256": "42adc5fcbf5a6672fadf2ccabd588248c75ae9cd899b3c64006ac7b641cc34b5",
+          "size": [
+            3,
+            1,
+            3
+          ],
+          "origin": [
+            2106,
+            230,
+            60
+          ],
+          "privateTemplate": "kithkyn_mushroom_profile:mu02_08_mushroom_cartographer_1",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0
+        },
+        {
+          "id": "MU02.9",
+          "label": "Fisher 1",
+          "role": "fishery",
+          "sourceMod": "Towns & Towers",
+          "source": "data/kaisyn/structure/village/mushroom_fields_fantasy/professions_misc/light_professions/mushroom_fisher_1.nbt",
+          "sourceSha256": "318d280215a17560b1c2b3ba2ffea0992f5734a3801eb40cc84bc244719c6884",
+          "preparedSha256": "e5f5b6da020c684e6721852e3d3d2b0d27efe1b0fd6dd32118fe0c59226bd52d",
+          "size": [
+            3,
+            1,
+            3
+          ],
+          "origin": [
+            2115,
+            230,
+            60
+          ],
+          "privateTemplate": "kithkyn_mushroom_profile:mu02_09_mushroom_fisher_1",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0
+        },
+        {
+          "id": "MU02.10",
+          "label": "Fletcher 1",
+          "role": "work",
+          "sourceMod": "Towns & Towers",
+          "source": "data/kaisyn/structure/village/mushroom_fields_fantasy/professions_misc/light_professions/mushroom_fletcher_1.nbt",
+          "sourceSha256": "f72a560599f06e88dca98dbb06eba06d74336a8e91687b234bef57a581692ddd",
+          "preparedSha256": "5323e5b5424c88f4d08443f728e614a589e76ff621dd38bfdbe88a5f50630cbd",
+          "size": [
+            3,
+            1,
+            3
+          ],
+          "origin": [
+            2124,
+            230,
+            60
+          ],
+          "privateTemplate": "kithkyn_mushroom_profile:mu02_10_mushroom_fletcher_1",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0
+        },
+        {
+          "id": "MU02.11",
+          "label": "Shepherd 1",
+          "role": "food",
+          "sourceMod": "Towns & Towers",
+          "source": "data/kaisyn/structure/village/mushroom_fields_fantasy/professions_misc/light_professions/mushroom_shepherd_1.nbt",
+          "sourceSha256": "74650f66738148c76b19ccf693bb6ea6ac8cd3c58671844b19190c4f1d5965b8",
+          "preparedSha256": "25a1e0432e14aa6009c160071fde783c1b343e16065b79307e8aec42a9353706",
+          "size": [
+            3,
+            1,
+            3
+          ],
+          "origin": [
+            2133,
+            230,
+            60
+          ],
+          "privateTemplate": "kithkyn_mushroom_profile:mu02_11_mushroom_shepherd_1",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0
+        },
+        {
+          "id": "MU02.12",
+          "label": "Mushroom Fields Tower",
+          "role": "tower",
+          "sourceMod": "Towns & Towers",
+          "source": "data/kaisyn/structure/outpost/towers/mushroom_fields/base_plate.nbt",
+          "sourceSha256": "7f4c18dd151624b6c811d9f5a8c730ff19b77d8d36778c1344cb2effabc11645",
+          "preparedSha256": "3a1855d7551173392547f34c0225d0ee59fa8471d492687185a247ad3fb74b4a",
+          "size": [
+            20,
+            48,
+            19
+          ],
+          "origin": [
+            2142,
+            230,
+            60
+          ],
+          "privateTemplate": "kithkyn_mushroom_profile:mu02_12_base_plate",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0
+        }
+      ]
+    },
+    {
+      "id": "MU03",
+      "title": "CTOV MUSHROOM \u2014 SERVICES",
+      "origin": [
+        2030,
+        230,
+        104
+      ],
+      "bounds": [
+        2020,
+        220,
+        95,
+        2205,
+        276,
+        119
+      ],
+      "entries": [
+        {
+          "id": "MU03.1",
+          "label": "Vault",
+          "role": "storehouse",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/mushroom/jobsite/vault.nbt",
+          "sourceSha256": "310e0cc511fb38adf375a07c4c362a0f50468f0f9217cc1356f8e61003342600",
+          "preparedSha256": "6d759a232b1d4e3027f02262bd3593cdecea11571b46cd03da87773b59dfc32f",
+          "size": [
+            11,
+            16,
+            11
+          ],
+          "origin": [
+            2030,
+            230,
+            104
+          ],
+          "privateTemplate": "kithkyn_mushroom_profile:mu03_01_vault",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0
+        },
+        {
+          "id": "MU03.2",
+          "label": "Smith",
+          "role": "blacksmith",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/mushroom/jobsite/smith.nbt",
+          "sourceSha256": "cfbeabe2405ce40ba0af211c026e50592b3d414cc96e3cb77653698bc1484f1b",
+          "preparedSha256": "2917f74a3306e8b57e5f1f51ab98fca3c23823f7157eb99fb0d7112ba3a1dffd",
+          "size": [
+            13,
+            7,
+            7
+          ],
+          "origin": [
+            2047,
+            230,
+            104
+          ],
+          "privateTemplate": "kithkyn_mushroom_profile:mu03_02_smith",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0
+        },
+        {
+          "id": "MU03.3",
+          "label": "Mason",
+          "role": "stoneworks",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/mushroom/jobsite/mason.nbt",
+          "sourceSha256": "57b3733d52e25490162d82590c8e6decbb268e2a980ebf1b8e46e088ddc3a0b3",
+          "preparedSha256": "c703a287007301c550d90064e0a18be1dfde6a3c2ec49c1c0c15dbef1efa9349",
+          "size": [
+            7,
+            7,
+            7
+          ],
+          "origin": [
+            2066,
+            230,
+            104
+          ],
+          "privateTemplate": "kithkyn_mushroom_profile:mu03_03_mason",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0
+        },
+        {
+          "id": "MU03.4",
+          "label": "Butcher",
+          "role": "butchery",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/mushroom/jobsite/butcher.nbt",
+          "sourceSha256": "ec6341e8e4a924f2f5c69de44aff992a5b20c65829996f2fb3bf6a65ee71f1ba",
+          "preparedSha256": "86ca6b14ff50bca6e523534a74bc4f2b57f07e7b0def03a579ee9d6aaa714031",
+          "size": [
+            11,
+            7,
+            7
+          ],
+          "origin": [
+            2079,
+            230,
+            104
+          ],
+          "privateTemplate": "kithkyn_mushroom_profile:mu03_04_butcher",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0
+        },
+        {
+          "id": "MU03.5",
+          "label": "Library",
+          "role": "civic",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/mushroom/jobsite/library.nbt",
+          "sourceSha256": "41cad3b7562a98b190471e093a46ce932fdb9f8c5faf8e34263deb75c89fea47",
+          "preparedSha256": "76a8c28efd56ca8a83797cd1f4a2b4f49210a4366b15ce3f1d1fe94466d151b5",
+          "size": [
+            9,
+            8,
+            7
+          ],
+          "origin": [
+            2096,
+            230,
+            104
+          ],
+          "privateTemplate": "kithkyn_mushroom_profile:mu03_05_library",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0
+        },
+        {
+          "id": "MU03.6",
+          "label": "Cartographer",
+          "role": "civic",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/mushroom/jobsite/cartographer.nbt",
+          "sourceSha256": "35d02a258563b6c793b46972da31d48757f0be9f0c148bba27a157042cbdc523",
+          "preparedSha256": "ada17967476094aa1357273d8a5ede0cf5374f88726ef3ff6528e322a5e3240b",
+          "size": [
+            7,
+            7,
+            7
+          ],
+          "origin": [
+            2111,
+            230,
+            104
+          ],
+          "privateTemplate": "kithkyn_mushroom_profile:mu03_06_cartographer",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0
+        },
+        {
+          "id": "MU03.7",
+          "label": "Chemist",
+          "role": "work",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/mushroom/jobsite/chemist.nbt",
+          "sourceSha256": "37ad95bfddd7e51f06b86b889a8a2f51d30fcc486a1cfacaa3eb418fcd3e7d69",
+          "preparedSha256": "91b55cda60bc33bca7be1a1d09221008da6d1bdb95b95d469dd8a142d23619c8",
+          "size": [
+            13,
+            7,
+            7
+          ],
+          "origin": [
+            2124,
+            230,
+            104
+          ],
+          "privateTemplate": "kithkyn_mushroom_profile:mu03_07_chemist",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0
+        },
+        {
+          "id": "MU03.8",
+          "label": "Archery Range",
+          "role": "tower",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/mushroom/jobsite/archery_range.nbt",
+          "sourceSha256": "c51359ea286a0c1147972182f20928b58cac6d36c421300917fdd0639887176b",
+          "preparedSha256": "55ecd05ec73a53548b507d961298207618517ab1d6a276cf8e97d4fba0d20f1e",
+          "size": [
+            11,
+            20,
+            12
+          ],
+          "origin": [
+            2143,
+            230,
+            104
+          ],
+          "privateTemplate": "kithkyn_mushroom_profile:mu03_08_archery_range",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 1
+        },
+        {
+          "id": "MU03.9",
+          "label": "Farm",
+          "role": "farm",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/mushroom/jobsite/farm.nbt",
+          "sourceSha256": "ee0e1b89ec4cf4aa49b98a0df4eedb5c339904b9ab947b7e52d6c45aec695fbd",
+          "preparedSha256": "6cea8ff2fad4aa0e7d7bf2ea2f425c22c93d68d2a705bd6a797ebd331ce85fc7",
+          "size": [
+            12,
+            7,
+            9
+          ],
+          "origin": [
+            2160,
+            230,
+            104
+          ],
+          "privateTemplate": "kithkyn_mushroom_profile:mu03_09_farm",
+          "waterCells": 6,
+          "containment": {
+            "kind": "barrier ring",
+            "box": [
+              2158,
+              230,
+              102,
+              2173,
+              230,
+              114
+            ]
+          },
+          "standIns": 0
+        },
+        {
+          "id": "MU03.10",
+          "label": "Orchard",
+          "role": "farm",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/mushroom/jobsite/orchard.nbt",
+          "sourceSha256": "0bc71860948391584332e195c4412640d3610c2e5c22c2a07d272e0580afd337",
+          "preparedSha256": "43111afa045ce69689f1664c6d2f0e88326a61f34d1929e1e4a11dd62cfbd7f4",
+          "size": [
+            12,
+            7,
+            9
+          ],
+          "origin": [
+            2178,
+            230,
+            104
+          ],
+          "privateTemplate": "kithkyn_mushroom_profile:mu03_10_orchard",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0
+        },
+        {
+          "id": "MU03.11",
+          "label": "Tannery",
+          "role": "work",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/mushroom/jobsite/tannery.nbt",
+          "sourceSha256": "c58c1afb0b76948eed7d0c678cad0b7919ca8e1e8be67b807ef9b49fcf698d83",
+          "preparedSha256": "04cf1327c716eb3d3c1f9fbe7de5ecf22db0ce585b4bfb1a366d2654bae0da31",
+          "size": [
+            7,
+            7,
+            7
+          ],
+          "origin": [
+            2196,
+            230,
+            104
+          ],
+          "privateTemplate": "kithkyn_mushroom_profile:mu03_11_tannery",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0
+        }
+      ]
+    },
+    {
+      "id": "MU04",
+      "title": "CTOV MUSHROOM \u2014 HOMES",
+      "origin": [
+        2030,
+        230,
+        148
+      ],
+      "bounds": [
+        2020,
+        220,
+        139,
+        2087,
+        276,
+        160
+      ],
+      "entries": [
+        {
+          "id": "MU04.1",
+          "label": "Medium House 1",
+          "role": "house",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/mushroom/house/med_1.nbt",
+          "sourceSha256": "d360e6f15459f3e255bc375c3bf6c19c6cd0e21632dbb0375fca0d9419c9c610",
+          "preparedSha256": "c0be23c17c5ca43d6a4b466618007f94f138ffe6c92a3ca03eed702c07ad18de",
+          "size": [
+            13,
+            8,
+            7
+          ],
+          "origin": [
+            2030,
+            230,
+            148
+          ],
+          "privateTemplate": "kithkyn_mushroom_profile:mu04_01_med_1",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0
+        },
+        {
+          "id": "MU04.2",
+          "label": "Medium House 2",
+          "role": "house",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/mushroom/house/med_2.nbt",
+          "sourceSha256": "c2dca802f1f732beed4b8995ef6bb495116adc088218967c912ebcffd8cdc861",
+          "preparedSha256": "88a2efac3befd65c5a46b5adfacb77df274a2a9082d651ab04e295fbe90ad9a8",
+          "size": [
+            9,
+            9,
+            9
+          ],
+          "origin": [
+            2049,
+            230,
+            148
+          ],
+          "privateTemplate": "kithkyn_mushroom_profile:mu04_02_med_2",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0
+        },
+        {
+          "id": "MU04.3",
+          "label": "Small House 1",
+          "role": "house",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/mushroom/house/small_1.nbt",
+          "sourceSha256": "3f331d79b8489dfa644373d6b65cf96e3b3c06adb785013aa16df1d668e8453f",
+          "preparedSha256": "fdd0432e7d6145e65892c0ecab8d656ae3cfa8dc7c139bc86261429b21ed7405",
+          "size": [
+            7,
+            9,
+            7
+          ],
+          "origin": [
+            2064,
+            230,
+            148
+          ],
+          "privateTemplate": "kithkyn_mushroom_profile:mu04_03_small_1",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0
+        },
+        {
+          "id": "MU04.4",
+          "label": "Small House 2",
+          "role": "house",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/mushroom/house/small_2.nbt",
+          "sourceSha256": "92aeb2dc9e0df1276e1e480be4e11389ec9b7b1e3cd6081ffca6acd2d14b849e",
+          "preparedSha256": "34394a82f9fee1aac7b651e4c39b03f4b49ab987158a3107df4da2b70348b3fd",
+          "size": [
+            8,
+            8,
+            8
+          ],
+          "origin": [
+            2077,
+            230,
+            148
+          ],
+          "privateTemplate": "kithkyn_mushroom_profile:mu04_04_small_2",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0
+        }
+      ]
+    },
+    {
+      "id": "MU05",
+      "title": "CTOV MUSHROOM \u2014 CENTRE, TAVERN + CHURCH",
+      "origin": [
+        2030,
+        230,
+        192
+      ],
+      "bounds": [
+        2020,
+        220,
+        183,
+        2134,
+        276,
+        212
+      ],
+      "entries": [
+        {
+          "id": "MU05.1",
+          "label": "Town Centre",
+          "role": "center",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/mushroom/town_center.nbt",
+          "sourceSha256": "c22e5adb74d703612e7c5d2ff414daa9e21d461212dccf218c885bb1c057119a",
+          "preparedSha256": "64fcedf7a2c84d862420a09aa152ea11a63f8d1d7428c8d1db82ec5bfe40106d",
+          "size": [
+            17,
+            16,
+            17
+          ],
+          "origin": [
+            2030,
+            230,
+            192
+          ],
+          "privateTemplate": "kithkyn_mushroom_profile:mu05_01_town_center",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0
+        },
+        {
+          "id": "MU05.2",
+          "label": "Tavern",
+          "role": "tavern",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/mushroom/jobsite/tavern.nbt",
+          "sourceSha256": "b93f18549116ff589a37c1d082436ab2a761484c60b7c59a5c77639de95b8e9f",
+          "preparedSha256": "0c18cdbcd264739e50945f83c9bd0b2e5bef46ebb7166628401e5869d195966e",
+          "size": [
+            15,
+            15,
+            15
+          ],
+          "origin": [
+            2053,
+            230,
+            192
+          ],
+          "privateTemplate": "kithkyn_mushroom_profile:mu05_02_tavern",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 1
+        },
+        {
+          "id": "MU05.3",
+          "label": "Sanctuary",
+          "role": "church",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/mushroom/jobsite/sanctuary.nbt",
+          "sourceSha256": "1dc4c5d5d24a70ca012de90ad426ddaa6502e41f3dc9bee78c674733348685f5",
+          "preparedSha256": "18911b2be043ab7de835e60ac04769f8a5a0dc5c240a90815edd3d495bf312f3",
+          "size": [
+            12,
+            15,
+            12
+          ],
+          "origin": [
+            2074,
+            230,
+            192
+          ],
+          "privateTemplate": "kithkyn_mushroom_profile:mu05_03_sanctuary",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 1
+        },
+        {
+          "id": "MU05.4",
+          "label": "Priest Tower",
+          "role": "church",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/mushroom/jobsite/priest_tower.nbt",
+          "sourceSha256": "3530a3ad517a4e4942d0c86f07f0f7bb9bf91bf3071f6462d8b1b404cd940d38",
+          "preparedSha256": "74ce69bfc706f4fa0f06fb074416cd21ac24eae13ce56a07b6199e9e030674e3",
+          "size": [
+            9,
+            15,
+            9
+          ],
+          "origin": [
+            2092,
+            230,
+            192
+          ],
+          "privateTemplate": "kithkyn_mushroom_profile:mu05_04_priest_tower",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 2
+        },
+        {
+          "id": "MU05.5",
+          "label": "Barracks",
+          "role": "castle",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/mushroom/jobsite/barracks.nbt",
+          "sourceSha256": "ddc7b15a6d72bae47f4711129343b4fce97431a2ad5489d6c63927ada8511c61",
+          "preparedSha256": "7423e09330335a3ab41e046888f6704d152d933c0da6ba813d131c2ddce2bc86",
+          "size": [
+            12,
+            20,
+            12
+          ],
+          "origin": [
+            2107,
+            230,
+            192
+          ],
+          "privateTemplate": "kithkyn_mushroom_profile:mu05_05_barracks",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 1
+        },
+        {
+          "id": "MU05.6",
+          "label": "Gazebo",
+          "role": "detail",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/mushroom/jobsite/gazebo.nbt",
+          "sourceSha256": "ab8d93468639b7fe1842b60d5301183eaa559002d1403461ffe3b5ccca734b04",
+          "preparedSha256": "cc9d4084b91b5dc0adbe12e4fb1dd9f261b5148db706fd08ebba22ee5299df0b",
+          "size": [
+            7,
+            9,
+            7
+          ],
+          "origin": [
+            2125,
+            230,
+            192
+          ],
+          "privateTemplate": "kithkyn_mushroom_profile:mu05_06_gazebo",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 1
+        }
+      ]
+    },
+    {
+      "id": "MU06",
+      "title": "CTOV MUSHROOM \u2014 FOOD + GARDENS",
+      "origin": [
+        2030,
+        230,
+        236
+      ],
+      "bounds": [
+        2020,
+        220,
+        227,
+        2186,
+        276,
+        250
+      ],
+      "entries": [
+        {
+          "id": "MU06.1",
+          "label": "Bakery",
+          "role": "bakery",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/mushroom/jobsite/bakery.nbt",
+          "sourceSha256": "bd13b4acfc14aeb14ab8c8727be448aa1dd23083cb6d57121b8ab01383dd1b8a",
+          "preparedSha256": "a7c66c396477b2b19acc6482f6d301a7f7170506978f858581dd7c6bdbd097c8",
+          "size": [
+            9,
+            9,
+            9
+          ],
+          "origin": [
+            2030,
+            230,
+            236
+          ],
+          "privateTemplate": "kithkyn_mushroom_profile:mu06_01_bakery",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 4
+        },
+        {
+          "id": "MU06.2",
+          "label": "Restaurant",
+          "role": "food",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/mushroom/jobsite/restaurant.nbt",
+          "sourceSha256": "0de6b5c76be939dd93001c5999b47a5980fc6cf0d9c9ed6711b38f0e59efcc63",
+          "preparedSha256": "f5c3ff83c9322c8789c1a3bee257504d7fc9b427c75f7ec50d4f9f8cf6f3bc6a",
+          "size": [
+            9,
+            9,
+            9
+          ],
+          "origin": [
+            2045,
+            230,
+            236
+          ],
+          "privateTemplate": "kithkyn_mushroom_profile:mu06_02_restaurant",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 35
+        },
+        {
+          "id": "MU06.3",
+          "label": "Chicken Coop",
+          "role": "food",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/mushroom/jobsite/chicken_coop.nbt",
+          "sourceSha256": "578b2d1bf75478ddea8966e5cae093c98e95293f4e0ea357ea85a51e067781d5",
+          "preparedSha256": "1deb8248c746a06a323fc33b61ce97a9fe8ea024fb423f60144752ef5789491b",
+          "size": [
+            7,
+            7,
+            7
+          ],
+          "origin": [
+            2060,
+            230,
+            236
+          ],
+          "privateTemplate": "kithkyn_mushroom_profile:mu06_03_chicken_coop",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 1
+        },
+        {
+          "id": "MU06.4",
+          "label": "Farmer's Delight Farm",
+          "role": "farm",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/mushroom/jobsite/fd_farm.nbt",
+          "sourceSha256": "a4a4c42e0b28d808d81552451675e4d7eee34b25ae27ef058598578666bd5c87",
+          "preparedSha256": "1810f6bd6cacbbf9ffd27d9a215c0f94269b6c9d3cb85c25b44821d3ff2e67bf",
+          "size": [
+            12,
+            8,
+            9
+          ],
+          "origin": [
+            2073,
+            230,
+            236
+          ],
+          "privateTemplate": "kithkyn_mushroom_profile:mu06_04_fd_farm",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 42
+        },
+        {
+          "id": "MU06.5",
+          "label": "Flower Farm",
+          "role": "farm",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/mushroom/jobsite/flower_farm.nbt",
+          "sourceSha256": "6439aad65a89ea3187549275ea6e9b78c4c49f3f3f719c46398616e9d37a3871",
+          "preparedSha256": "254111c1f13bab600fa6aab1f3986848ff91be25c6120485f21de47f6e26ee75",
+          "size": [
+            9,
+            10,
+            9
+          ],
+          "origin": [
+            2091,
+            230,
+            236
+          ],
+          "privateTemplate": "kithkyn_mushroom_profile:mu06_05_flower_farm",
+          "waterCells": 4,
+          "containment": {
+            "kind": "barrier ring",
+            "box": [
+              2089,
+              230,
+              234,
+              2101,
+              230,
+              246
+            ]
+          },
+          "standIns": 16
+        },
+        {
+          "id": "MU06.6",
+          "label": "Garden",
+          "role": "farm",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/mushroom/jobsite/garden.nbt",
+          "sourceSha256": "5289f09810b27c26378203655855104c484f883e86c42b28f913c32cd9d3ab7d",
+          "preparedSha256": "d49b2c41eec652489788d1524c88af56535cae008db8f7ba6d1e3628bf4beb80",
+          "size": [
+            9,
+            8,
+            9
+          ],
+          "origin": [
+            2106,
+            230,
+            236
+          ],
+          "privateTemplate": "kithkyn_mushroom_profile:mu06_06_garden",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 1
+        },
+        {
+          "id": "MU06.7",
+          "label": "Vineyard",
+          "role": "farm",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/mushroom/jobsite/vineyard.nbt",
+          "sourceSha256": "4ad34c2e7223bbe9989d48b5873eb6cf5a56843d8f9c52954c7738b70b62e1cf",
+          "preparedSha256": "71ea744e3d5e734f338aa03f2a09e7b4628f92e010c47b54c90e238813769008",
+          "size": [
+            11,
+            15,
+            11
+          ],
+          "origin": [
+            2121,
+            230,
+            236
+          ],
+          "privateTemplate": "kithkyn_mushroom_profile:mu06_07_vineyard",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 36
+        },
+        {
+          "id": "MU06.8",
+          "label": "Forager",
+          "role": "food",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/mushroom/jobsite/forager.nbt",
+          "sourceSha256": "0989878319185a556b15626115bad51596047a0275d64bffd499f73c44d9a022",
+          "preparedSha256": "d95e83e00d26462c97a6deb71c9e5d79356ab7b82d914a371049efc8394e0a82",
+          "size": [
+            13,
+            10,
+            9
+          ],
+          "origin": [
+            2138,
+            230,
+            236
+          ],
+          "privateTemplate": "kithkyn_mushroom_profile:mu06_08_forager",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 11
+        },
+        {
+          "id": "MU06.9",
+          "label": "Botanist",
+          "role": "farm",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/mushroom/jobsite/botanist.nbt",
+          "sourceSha256": "4a11c7309259bf02d977fa0d99f9ae1499fe9ed5b812acea001eda0f42a497f0",
+          "preparedSha256": "8df58bc01af21af87841bc5ce9785f15039e363be22c84a8fea4851f8bf52a78",
+          "size": [
+            12,
+            7,
+            9
+          ],
+          "origin": [
+            2157,
+            230,
+            236
+          ],
+          "privateTemplate": "kithkyn_mushroom_profile:mu06_09_botanist",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 21
+        },
+        {
+          "id": "MU06.10",
+          "label": "Horticulturalist",
+          "role": "farm",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/mushroom/jobsite/horticulturalist.nbt",
+          "sourceSha256": "96d7f9ea7b7669f7c0a45d528e11dec38586ea0468d6d39db1238f19db4d7030",
+          "preparedSha256": "9ee5e08d9fbe129fe254be877bc3a944f08874c075ad2433e68cb0c04e593ec4",
+          "size": [
+            9,
+            9,
+            11
+          ],
+          "origin": [
+            2175,
+            230,
+            236
+          ],
+          "privateTemplate": "kithkyn_mushroom_profile:mu06_10_horticulturalist",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 1
+        }
+      ]
+    },
+    {
+      "id": "MU07",
+      "title": "CTOV MUSHROOM \u2014 CRAFT + WATER",
+      "origin": [
+        2030,
+        230,
+        280
+      ],
+      "bounds": [
+        2020,
+        220,
+        271,
+        2214,
+        276,
+        294
+      ],
+      "entries": [
+        {
+          "id": "MU07.1",
+          "label": "Warehouse",
+          "role": "storehouse",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/mushroom/jobsite/warehouse.nbt",
+          "sourceSha256": "7a10f4c49d7ffec51b23f4140655ec473a809a6a9c86d95a4664a04d6bf430af",
+          "preparedSha256": "cbb065f34f4f8a9731e3f219b1aacf104925bd3101fae9deec41a1dc0344504f",
+          "size": [
+            11,
+            12,
+            11
+          ],
+          "origin": [
+            2030,
+            230,
+            280
+          ],
+          "privateTemplate": "kithkyn_mushroom_profile:mu07_01_warehouse",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 10
+        },
+        {
+          "id": "MU07.2",
+          "label": "Sawmill",
+          "role": "lumberjack",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/mushroom/jobsite/sawmill.nbt",
+          "sourceSha256": "a164febd4bee2c566f7faf70f65b688484bea798bd9193c1a878fb99769d4564",
+          "preparedSha256": "51dd9cc99cfe7132d98eee83ce2348c798cd22aebe6c415f77c3babe071aeb99",
+          "size": [
+            9,
+            10,
+            9
+          ],
+          "origin": [
+            2047,
+            230,
+            280
+          ],
+          "privateTemplate": "kithkyn_mushroom_profile:mu07_02_sawmill",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 1
+        },
+        {
+          "id": "MU07.3",
+          "label": "Woodworker",
+          "role": "lumberjack",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/mushroom/jobsite/woodworker.nbt",
+          "sourceSha256": "97b53dbf05aafd685aaf7ca2324ed42804706386757694ebc4f161c3a3e7b150",
+          "preparedSha256": "890fd577df9a1db9eb13d9fbd67129fdb80f22c38614a21b8f723d8469e2aad1",
+          "size": [
+            7,
+            7,
+            7
+          ],
+          "origin": [
+            2062,
+            230,
+            280
+          ],
+          "privateTemplate": "kithkyn_mushroom_profile:mu07_03_woodworker",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 1
+        },
+        {
+          "id": "MU07.4",
+          "label": "Hunter",
+          "role": "hunter",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/mushroom/jobsite/hunter.nbt",
+          "sourceSha256": "572e0e59f24dc1265fefb6583a966489336f44f548273d9936c37ddd4d6d021c",
+          "preparedSha256": "b2eaaa8756c66e0a1ca5df84c3d7bc779627abd3d3c7431eae2005b78bea8ec9",
+          "size": [
+            7,
+            7,
+            7
+          ],
+          "origin": [
+            2075,
+            230,
+            280
+          ],
+          "privateTemplate": "kithkyn_mushroom_profile:mu07_04_hunter",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 1
+        },
+        {
+          "id": "MU07.5",
+          "label": "Hunter Trainer",
+          "role": "hunter",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/mushroom/jobsite/hunter_trainer.nbt",
+          "sourceSha256": "273ada369eb85b2035f8c172f5316fbfa18cadd2378f412d21eb2516537ef847",
+          "preparedSha256": "377ee575426e94fecff48a2b071af52eb34b6e39eef628955d17f2bd00a479e3",
+          "size": [
+            9,
+            8,
+            7
+          ],
+          "origin": [
+            2088,
+            230,
+            280
+          ],
+          "privateTemplate": "kithkyn_mushroom_profile:mu07_05_hunter_trainer",
+          "waterCells": 1,
+          "containment": {
+            "kind": "barrier ring",
+            "box": [
+              2086,
+              230,
+              278,
+              2098,
+              230,
+              288
+            ]
+          },
+          "standIns": 4
+        },
+        {
+          "id": "MU07.6",
+          "label": "Windmill",
+          "role": "work",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/mushroom/jobsite/windmill.nbt",
+          "sourceSha256": "27d7c8633466ccabff14d0aaa809c01522d4ea8a689e26f6822db4dddfff1a33",
+          "preparedSha256": "6ffa9a49ed7b19665e4d63be54c38645a02b7266e783158cdf5e257362c5b601",
+          "size": [
+            11,
+            15,
+            9
+          ],
+          "origin": [
+            2103,
+            230,
+            280
+          ],
+          "privateTemplate": "kithkyn_mushroom_profile:mu07_06_windmill",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 46
+        },
+        {
+          "id": "MU07.7",
+          "label": "Aquarium",
+          "role": "fishery",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/mushroom/jobsite/aquarium.nbt",
+          "sourceSha256": "ac42999e56566295dd003bc5c44899b3fec4040462b78b16d1b0c5d73e246034",
+          "preparedSha256": "7930c5e36b74466603f3b73f16a9977a71c9d8c490c81ed70d2b912e904b8e01",
+          "size": [
+            11,
+            12,
+            11
+          ],
+          "origin": [
+            2120,
+            230,
+            280
+          ],
+          "privateTemplate": "kithkyn_mushroom_profile:mu07_07_aquarium",
+          "waterCells": 45,
+          "containment": {
+            "kind": "barrier ring",
+            "box": [
+              2118,
+              230,
+              278,
+              2132,
+              230,
+              292
+            ]
+          },
+          "standIns": 1
+        },
+        {
+          "id": "MU07.8",
+          "label": "Oceanographer",
+          "role": "fishery",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/mushroom/jobsite/oceanographer.nbt",
+          "sourceSha256": "0e42f5976843eeca955e6606500e827e6f2650793f0c22e6e7a7f84cc904428f",
+          "preparedSha256": "be95eea4b400d28fb7b2e4db0a462d98a43384a690b793eefe1b0df8067ab524",
+          "size": [
+            9,
+            9,
+            9
+          ],
+          "origin": [
+            2137,
+            230,
+            280
+          ],
+          "privateTemplate": "kithkyn_mushroom_profile:mu07_08_oceanographer",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 1
+        },
+        {
+          "id": "MU07.9",
+          "label": "Alchemist",
+          "role": "work",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/mushroom/jobsite/alchemist.nbt",
+          "sourceSha256": "0646fadcf2407ddf80fb3a26849f65ec5d8cad3e933e762a89d7115ab3c8e182",
+          "preparedSha256": "26ee979993064476a2e74c9a4ada7961a4e56ef4532b31b9da7ace43caa3109b",
+          "size": [
+            11,
+            17,
+            11
+          ],
+          "origin": [
+            2152,
+            230,
+            280
+          ],
+          "privateTemplate": "kithkyn_mushroom_profile:mu07_09_alchemist",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 1
+        },
+        {
+          "id": "MU07.10",
+          "label": "Artist Studio",
+          "role": "work",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/mushroom/jobsite/artist_studio.nbt",
+          "sourceSha256": "cfb12e369ea96567a7e60d1a9c2379e13ef603dc37f7b7c31a41b366194f6a15",
+          "preparedSha256": "4326f69c17cc0b5334ba5d58f6a4740dac68e082ce14548698fc77800fb87fd4",
+          "size": [
+            11,
+            15,
+            9
+          ],
+          "origin": [
+            2169,
+            230,
+            280
+          ],
+          "privateTemplate": "kithkyn_mushroom_profile:mu07_10_artist_studio",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 1
+        },
+        {
+          "id": "MU07.11",
+          "label": "Loomhouse",
+          "role": "work",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/mushroom/jobsite/loomhouse.nbt",
+          "sourceSha256": "3edf0b1ccec06ce0e7a67646d85a9767da5daaa68247a3595038ba86490280dc",
+          "preparedSha256": "390d24e1d47b82344b81af5f9aa2d36169608b37d5f00c4f1b7d571f36a4ea83",
+          "size": [
+            11,
+            7,
+            7
+          ],
+          "origin": [
+            2186,
+            230,
+            280
+          ],
+          "privateTemplate": "kithkyn_mushroom_profile:mu07_11_loomhouse",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0
+        },
+        {
+          "id": "MU07.12",
+          "label": "Fishing House",
+          "role": "fishery",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/mushroom/jobsite/fishing_house.nbt",
+          "sourceSha256": "6b92491a562e6b5938eafc560a2e9cdae76b70a815c339578cb38a894f952d1d",
+          "preparedSha256": "24fd877d5da191ffab5f19de9f1f0dab47f00a558c3297e374844e63ee371719",
+          "size": [
+            9,
+            9,
+            9
+          ],
+          "origin": [
+            2203,
+            230,
+            280
+          ],
+          "privateTemplate": "kithkyn_mushroom_profile:mu07_12_fishing_house",
+          "waterCells": 23,
+          "containment": {
+            "kind": "barrier ring",
+            "box": [
+              2201,
+              230,
+              278,
+              2213,
+              230,
+              290
+            ]
+          },
+          "standIns": 0
+        }
+      ]
+    },
+    {
+      "id": "MU08",
+      "title": "CTOV MUSHROOM \u2014 SHOPS + STUDIOS",
+      "origin": [
+        2030,
+        230,
+        324
+      ],
+      "bounds": [
+        2020,
+        220,
+        315,
+        2146,
+        276,
+        339
+      ],
+      "entries": [
+        {
+          "id": "MU08.1",
+          "label": "Jewelry Shop",
+          "role": "market",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/mushroom/jobsite/jewelry_shop.nbt",
+          "sourceSha256": "f973c74d627349744b333c238f7c75e98e785ea1921fb3f2d4e0be33bd99d987",
+          "preparedSha256": "f3ee50fb54c9cc9842dab8d3068b5b389a032c990f72635a564ea4ecb1b68c46",
+          "size": [
+            11,
+            15,
+            11
+          ],
+          "origin": [
+            2030,
+            230,
+            324
+          ],
+          "privateTemplate": "kithkyn_mushroom_profile:mu08_01_jewelry_shop",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 1
+        },
+        {
+          "id": "MU08.2",
+          "label": "Iron's Jewelry",
+          "role": "market",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/mushroom/jobsite/irons_jewelry.nbt",
+          "sourceSha256": "cf4bedf8bed21fa2234fd3e901711b63ea70d2c80bee306914e0735cd914c3ac",
+          "preparedSha256": "e3108852918230f7aeff5e890492114bc18e16914e78b0812586ff1da3a9512e",
+          "size": [
+            11,
+            15,
+            11
+          ],
+          "origin": [
+            2047,
+            230,
+            324
+          ],
+          "privateTemplate": "kithkyn_mushroom_profile:mu08_02_irons_jewelry",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 1
+        },
+        {
+          "id": "MU08.3",
+          "label": "Scriber",
+          "role": "civic",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/mushroom/jobsite/scriber.nbt",
+          "sourceSha256": "6279c77c7a86e6cc06842b0376f5cb42155f03264254d22bd57377900c57ea08",
+          "preparedSha256": "e29e724f036c73fe1db13f7c9e3588d08d85f8c279a0a6e8cf08d97bb48df587",
+          "size": [
+            9,
+            17,
+            9
+          ],
+          "origin": [
+            2064,
+            230,
+            324
+          ],
+          "privateTemplate": "kithkyn_mushroom_profile:mu08_03_scriber",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 10
+        },
+        {
+          "id": "MU08.4",
+          "label": "Occultist",
+          "role": "work",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/mushroom/jobsite/occultist.nbt",
+          "sourceSha256": "16e6e0d34687e6d94983c31e23ab36b169022bf539775ebf2b2d29254d4c2a51",
+          "preparedSha256": "15f42b0e0522a8559f8ee88b7c2142dfbe818fbf25e3800b8e0c500c2f158c7e",
+          "size": [
+            9,
+            9,
+            12
+          ],
+          "origin": [
+            2079,
+            230,
+            324
+          ],
+          "privateTemplate": "kithkyn_mushroom_profile:mu08_04_occultist",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 1
+        },
+        {
+          "id": "MU08.5",
+          "label": "Wizard Tower",
+          "role": "tower",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/mushroom/jobsite/wizard_tower.nbt",
+          "sourceSha256": "81102a2713152e59abb9f3d8c2040e6558377aad169467fd1881848a9d58b1c0",
+          "preparedSha256": "a59ac6fb20352697124d6920dae3b9b7d3bc6a635838fde7aee15135fe14290e",
+          "size": [
+            9,
+            15,
+            9
+          ],
+          "origin": [
+            2094,
+            230,
+            324
+          ],
+          "privateTemplate": "kithkyn_mushroom_profile:mu08_05_wizard_tower",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 2
+        },
+        {
+          "id": "MU08.6",
+          "label": "Pet Shop",
+          "role": "market",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/mushroom/jobsite/petshop.nbt",
+          "sourceSha256": "833659dad5bcc7b63ed10ace78a4f4a53379765d92eeef1424f821db084c5b86",
+          "preparedSha256": "74d0e016f7166d49da78183364e67c5ff09059a3c9542715d8eeb0fe22c8fbb6",
+          "size": [
+            9,
+            15,
+            9
+          ],
+          "origin": [
+            2109,
+            230,
+            324
+          ],
+          "privateTemplate": "kithkyn_mushroom_profile:mu08_06_petshop",
+          "waterCells": 2,
+          "containment": {
+            "kind": "barrier ring",
+            "box": [
+              2107,
+              230,
+              322,
+              2119,
+              230,
+              334
+            ]
+          },
+          "standIns": 5
+        },
+        {
+          "id": "MU08.7",
+          "label": "Balloon Stand",
+          "role": "detail",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/mushroom/jobsite/balloon_stand.nbt",
+          "sourceSha256": "04432b44a3ada831fec36675a1638d464a5587c40a7675d4a8641b4df2832b28",
+          "preparedSha256": "cb3391daec1d02f324e73ae876c98ba65c6c9be67f3e3ea6b1c0a334e3c19ff8",
+          "size": [
+            5,
+            7,
+            5
+          ],
+          "origin": [
+            2124,
+            230,
+            324
+          ],
+          "privateTemplate": "kithkyn_mushroom_profile:mu08_07_balloon_stand",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 1
+        },
+        {
+          "id": "MU08.8",
+          "label": "Engineer",
+          "role": "work",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/mushroom/jobsite/engineer.nbt",
+          "sourceSha256": "733e928cdc2b4f4fe28de06802ae54685b4af67acacf1967dc5a967d41b0e39f",
+          "preparedSha256": "fa33b29799c203d9ccfc961f7bc76a35cfd35a1023d840ba01add4bbb2b97f49",
+          "size": [
+            9,
+            9,
+            9
+          ],
+          "origin": [
+            2135,
+            230,
+            324
+          ],
+          "privateTemplate": "kithkyn_mushroom_profile:mu08_08_engineer",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 1
+        }
+      ]
+    },
+    {
+      "id": "MU09",
+      "title": "CTOV MUSHROOM \u2014 OTHER MODS' JOBS",
+      "origin": [
+        2030,
+        230,
+        368
+      ],
+      "bounds": [
+        2020,
+        220,
+        359,
+        2149,
+        276,
+        386
+      ],
+      "entries": [
+        {
+          "id": "MU09.1",
+          "label": "Factory",
+          "role": "work",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/mushroom/jobsite/factory.nbt",
+          "sourceSha256": "09c2217c78a2a7f077e48c241a3bd8048824312a5db12d220ae574b259f947e7",
+          "preparedSha256": "fc088e7bde8771d8f61e4961655eabac4220cea6d2f59f6fb21cb4dd5c0efa67",
+          "size": [
+            15,
+            30,
+            15
+          ],
+          "origin": [
+            2030,
+            230,
+            368
+          ],
+          "privateTemplate": "kithkyn_mushroom_profile:mu09_01_factory",
+          "waterCells": 21,
+          "containment": {
+            "kind": "barrier ring",
+            "box": [
+              2028,
+              230,
+              366,
+              2046,
+              230,
+              384
+            ]
+          },
+          "standIns": 440
+        },
+        {
+          "id": "MU09.2",
+          "label": "Mechanic",
+          "role": "work",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/mushroom/jobsite/mechanic.nbt",
+          "sourceSha256": "76e7f63bb3dd708ee36a660e2c9415752cb860a39676b72fb38358e3ccb48c08",
+          "preparedSha256": "cec75e6c9d801e90033eb2c8300566b74332795759e3f8be7b1e57401b2768be",
+          "size": [
+            9,
+            16,
+            9
+          ],
+          "origin": [
+            2051,
+            230,
+            368
+          ],
+          "privateTemplate": "kithkyn_mushroom_profile:mu09_02_mechanic",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 18
+        },
+        {
+          "id": "MU09.3",
+          "label": "Immersive Engineer",
+          "role": "work",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/mushroom/jobsite/imengineer.nbt",
+          "sourceSha256": "ee890ab58fa07c3f920e0e39d327cfac66e54c463daf90a44cd2fbdb1e745fdd",
+          "preparedSha256": "017f9a352948c3e106df119cc4e4c70795486332bdf5043c3bbf51a5a200318b",
+          "size": [
+            13,
+            7,
+            7
+          ],
+          "origin": [
+            2066,
+            230,
+            368
+          ],
+          "privateTemplate": "kithkyn_mushroom_profile:mu09_03_imengineer",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 11
+        },
+        {
+          "id": "MU09.4",
+          "label": "Computer Lab",
+          "role": "work",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/mushroom/jobsite/computer_lab.nbt",
+          "sourceSha256": "36679559a9b0c6f5667cfd6ae22a6c295b79a47bff1e1eced91eb6434bb9c78f",
+          "preparedSha256": "73cb0abc1114e991a8f99c5652a90dde11aae7ba6d60f0648520de87d2dd9836",
+          "size": [
+            11,
+            22,
+            11
+          ],
+          "origin": [
+            2085,
+            230,
+            368
+          ],
+          "privateTemplate": "kithkyn_mushroom_profile:mu09_04_computer_lab",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 12
+        },
+        {
+          "id": "MU09.5",
+          "label": "Gunsmith",
+          "role": "work",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/mushroom/jobsite/gunsmith.nbt",
+          "sourceSha256": "e7f1480e74bfcad38df762015e827093bb3a5521266f6e2a7b8971b48e76431e",
+          "preparedSha256": "7a3fea31cdc5b825a7ebfd652186b8fb44b5de818caabb5233c594346b904c5f",
+          "size": [
+            9,
+            15,
+            9
+          ],
+          "origin": [
+            2102,
+            230,
+            368
+          ],
+          "privateTemplate": "kithkyn_mushroom_profile:mu09_05_gunsmith",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 4
+        },
+        {
+          "id": "MU09.6",
+          "label": "Krusty Krab",
+          "role": "food",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/mushroom/jobsite/krusty_krab.nbt",
+          "sourceSha256": "43a299563a3dd425058c2991e611cec3d1e9fb49014c03e03cc5015622ee1cd6",
+          "preparedSha256": "962ef77ad9856902ae5440e7898b0c90624eb911c9b884c5447f0b29cb2a1fc3",
+          "size": [
+            9,
+            9,
+            9
+          ],
+          "origin": [
+            2117,
+            230,
+            368
+          ],
+          "privateTemplate": "kithkyn_mushroom_profile:mu09_06_krusty_krab",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 1
+        },
+        {
+          "id": "MU09.7",
+          "label": "Poke Center",
+          "role": "civic",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/mushroom/jobsite/pokecenter.nbt",
+          "sourceSha256": "4dc608e61e1648d1d05eb0bd0298e72397ea3e539325f82a4a49882bfb36576d",
+          "preparedSha256": "21cde14f6553a1665613cc6286884ae2ed711862e538c5f09efdad2edd3fd70e",
+          "size": [
+            15,
+            16,
+            15
+          ],
+          "origin": [
+            2132,
+            230,
+            368
+          ],
+          "privateTemplate": "kithkyn_mushroom_profile:mu09_07_pokecenter",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 4
+        }
+      ]
+    },
+    {
+      "id": "MU10",
+      "title": "CTOV MUSHROOM \u2014 DETAILS",
+      "origin": [
+        2030,
+        230,
+        412
+      ],
+      "bounds": [
+        2020,
+        220,
+        403,
+        2199,
+        276,
+        424
+      ],
+      "entries": [
+        {
+          "id": "MU10.1",
+          "label": "Archeology Tent",
+          "role": "detail",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/mushroom/deco/archeology_tent.nbt",
+          "sourceSha256": "85d7f3285361681e03dadf88bd79837a570d3def17f6f625389f63c7d8500000",
+          "preparedSha256": "6a19400e96feb26b0003430f485ab96fff040b6f39179aa182e195d029c79218",
+          "size": [
+            7,
+            7,
+            7
+          ],
+          "origin": [
+            2030,
+            230,
+            412
+          ],
+          "privateTemplate": "kithkyn_mushroom_profile:mu10_01_archeology_tent",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 2
+        },
+        {
+          "id": "MU10.2",
+          "label": "Bard House",
+          "role": "detail",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/mushroom/deco/bard_house.nbt",
+          "sourceSha256": "3762261a6bea034717af8719d151373663d9913cc8ae773d25789cf141ff6083",
+          "preparedSha256": "42c038e0178cb331e77fa7bccc87fbbc8b742e27db32e4d34cbd694b60d010b1",
+          "size": [
+            7,
+            6,
+            7
+          ],
+          "origin": [
+            2043,
+            230,
+            412
+          ],
+          "privateTemplate": "kithkyn_mushroom_profile:mu10_02_bard_house",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 3
+        },
+        {
+          "id": "MU10.3",
+          "label": "Beekeeper",
+          "role": "detail",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/mushroom/deco/beekeeper.nbt",
+          "sourceSha256": "0f82af8da65b572bab7ba077016e0e153acaf4057f7b915f60aae053a46ec433",
+          "preparedSha256": "c111b233e69e13543f145332b85a5d36aa29cec36b6a500d372be25c15687b52",
+          "size": [
+            3,
+            3,
+            3
+          ],
+          "origin": [
+            2056,
+            230,
+            412
+          ],
+          "privateTemplate": "kithkyn_mushroom_profile:mu10_03_beekeeper",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 1
+        },
+        {
+          "id": "MU10.4",
+          "label": "Climatologist",
+          "role": "detail",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/mushroom/deco/climatologist.nbt",
+          "sourceSha256": "073f8d376133a500814afd6334ee1e233924c45d2544b93a70eb18ba8b4237da",
+          "preparedSha256": "bf93e518e0490ebba56d0d729ab3711975b51e1d62e26c4da288d8bc2a538d34",
+          "size": [
+            9,
+            10,
+            9
+          ],
+          "origin": [
+            2065,
+            230,
+            412
+          ],
+          "privateTemplate": "kithkyn_mushroom_profile:mu10_04_climatologist",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 1
+        },
+        {
+          "id": "MU10.5",
+          "label": "Copper Golem",
+          "role": "detail",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/mushroom/deco/copper_golem.nbt",
+          "sourceSha256": "a115c4324c28d4ea1a230d9908b91bbedbf2e10cd15b077a9efaa07fef16733d",
+          "preparedSha256": "30d0895de816be6836c77e5b128dae9f16f13f8a3b301bb9d9d2110bc4562a12",
+          "size": [
+            9,
+            8,
+            7
+          ],
+          "origin": [
+            2080,
+            230,
+            412
+          ],
+          "privateTemplate": "kithkyn_mushroom_profile:mu10_05_copper_golem",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 3
+        },
+        {
+          "id": "MU10.6",
+          "label": "Garbage Heaps",
+          "role": "detail",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/mushroom/deco/garbage_heaps.nbt",
+          "sourceSha256": "4869ca6a88db65187b8a2bbaca3a07b7cbb00c5555d233ac184fb26b4fc700be",
+          "preparedSha256": "a6b3898b36a3137d41e1f632a91db14ba05d031dc20ccb1d06b68e35dbbcbbdb",
+          "size": [
+            7,
+            5,
+            7
+          ],
+          "origin": [
+            2095,
+            230,
+            412
+          ],
+          "privateTemplate": "kithkyn_mushroom_profile:mu10_06_garbage_heaps",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 45
+        },
+        {
+          "id": "MU10.7",
+          "label": "Goddess Statue",
+          "role": "detail",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/mushroom/deco/goddess_statue.nbt",
+          "sourceSha256": "aeadf4efee6a4e8db8fe7b56aa2ddeedb9e0299dcdead154a709a843ce69e6bc",
+          "preparedSha256": "d56e431029c9a58dbf3c72cabbf4080a33796c097ad63a1a9b952786ad0c4483",
+          "size": [
+            3,
+            7,
+            4
+          ],
+          "origin": [
+            2108,
+            230,
+            412
+          ],
+          "privateTemplate": "kithkyn_mushroom_profile:mu10_07_goddess_statue",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 1
+        },
+        {
+          "id": "MU10.8",
+          "label": "Picnic Mat",
+          "role": "detail",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/mushroom/deco/picnic_mat.nbt",
+          "sourceSha256": "03d2fabca88199a5dde6857c64a0c0316acc84f72e46b4afa2dc9a01c1b2ffb6",
+          "preparedSha256": "580cc64f8a0df1f4786193e8645911f248b48797e40f86ac45b46065df0a975e",
+          "size": [
+            5,
+            7,
+            5
+          ],
+          "origin": [
+            2117,
+            230,
+            412
+          ],
+          "privateTemplate": "kithkyn_mushroom_profile:mu10_08_picnic_mat",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 1
+        },
+        {
+          "id": "MU10.9",
+          "label": "Vending Machine",
+          "role": "detail",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/mushroom/deco/vm.nbt",
+          "sourceSha256": "03d0c3cc62ca8d52b8143ac438e9fd8853cfa4fd5817106761c08660a3b5a8b2",
+          "preparedSha256": "217fed9dfbd3bb3a10ae6bbe60c4fd9ebfabd73f28e861adedb1600f9192828a",
+          "size": [
+            3,
+            7,
+            4
+          ],
+          "origin": [
+            2128,
+            230,
+            412
+          ],
+          "privateTemplate": "kithkyn_mushroom_profile:mu10_09_vm",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 2
+        },
+        {
+          "id": "MU10.10",
+          "label": "Hay Bale",
+          "role": "detail",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/mushroom/decos/hay_bale.nbt",
+          "sourceSha256": "97bbddd22126d438fc4cc9624ff7537f4b6a428894c54667ff3c796cec9bc854",
+          "preparedSha256": "1909b5fd4c2b532c7813589e3ff843adae9b492978b6e80ffc05a0eb79fe27d2",
+          "size": [
+            2,
+            2,
+            2
+          ],
+          "origin": [
+            2137,
+            230,
+            412
+          ],
+          "privateTemplate": "kithkyn_mushroom_profile:mu10_10_hay_bale",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0
+        },
+        {
+          "id": "MU10.11",
+          "label": "Lamp 1",
+          "role": "detail",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/mushroom/decos/lamp_1.nbt",
+          "sourceSha256": "1d85a525653ddac620bb5d46db61488c8aefccbfb98e70a0db0d9bea98f6340f",
+          "preparedSha256": "2e70730a852b7227ab7d1b5a7f416480b0cfa2350a04403aa5626e244b0436a4",
+          "size": [
+            2,
+            6,
+            1
+          ],
+          "origin": [
+            2145,
+            230,
+            412
+          ],
+          "privateTemplate": "kithkyn_mushroom_profile:mu10_11_lamp_1",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0
+        },
+        {
+          "id": "MU10.12",
+          "label": "Lamp 2",
+          "role": "detail",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/mushroom/decos/lamp_2.nbt",
+          "sourceSha256": "df0fbc6738328f30368975b05ed103b1635a9bb57e606b9e206ef62aa8c09ce4",
+          "preparedSha256": "414bb41b2381150c2792c44d20f97706a84efd803d3950d0db636189d6e44385",
+          "size": [
+            2,
+            6,
+            2
+          ],
+          "origin": [
+            2153,
+            230,
+            412
+          ],
+          "privateTemplate": "kithkyn_mushroom_profile:mu10_12_lamp_2",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0
+        },
+        {
+          "id": "MU10.13",
+          "label": "Lamp 3",
+          "role": "detail",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/mushroom/decos/lamp_3.nbt",
+          "sourceSha256": "4bcf0c1f41e3d1331a4d20b4ab2dd0ddae14cbc7f931602b82a044bc2c8297e4",
+          "preparedSha256": "8522af2329fb89825f7c7f77a8dfcfd175b13efe480a34ef1e586208b883b169",
+          "size": [
+            2,
+            6,
+            3
+          ],
+          "origin": [
+            2161,
+            230,
+            412
+          ],
+          "privateTemplate": "kithkyn_mushroom_profile:mu10_13_lamp_3",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0
+        },
+        {
+          "id": "MU10.14",
+          "label": "Lamp 4",
+          "role": "detail",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/mushroom/decos/lamp_4.nbt",
+          "sourceSha256": "13d92b75993a915bf83f1968d59afc93a79f04afbee45eca7e62a23db423a3ad",
+          "preparedSha256": "115aa0c553b423ca47c0c59ef6030cea8e67ed84079385909e2795d334120029",
+          "size": [
+            3,
+            6,
+            3
+          ],
+          "origin": [
+            2169,
+            230,
+            412
+          ],
+          "privateTemplate": "kithkyn_mushroom_profile:mu10_14_lamp_4",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0
+        },
+        {
+          "id": "MU10.15",
+          "label": "Wagon",
+          "role": "detail",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/mushroom/decos/wagon.nbt",
+          "sourceSha256": "32ad3dd02b4a04b65ff9ea567e6fb2cc1966ce1c2aaeeef4f237d1d11ae3f95c",
+          "preparedSha256": "2cc2968e32ff9a9f65f7baeb9498d62f0014b371eea00403fbf53e5ba7562766",
+          "size": [
+            7,
+            3,
+            6
+          ],
+          "origin": [
+            2178,
+            230,
+            412
+          ],
+          "privateTemplate": "kithkyn_mushroom_profile:mu10_15_wagon",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0
+        },
+        {
+          "id": "MU10.16",
+          "label": "Well",
+          "role": "well",
+          "sourceMod": "CTOV",
+          "source": "data/ctov/structure/village/mushroom/decos/well.nbt",
+          "sourceSha256": "282a1bd44ba563f5754d37a0634e888b599939c8fa6b9cadb606d556a72463b1",
+          "preparedSha256": "76fc5faedb5e96f05831b24d82b5fb7211f4198aee8073a90c80714e011c580b",
+          "size": [
+            6,
+            9,
+            6
+          ],
+          "origin": [
+            2191,
+            230,
+            412
+          ],
+          "privateTemplate": "kithkyn_mushroom_profile:mu10_16_well",
+          "waterCells": 12,
+          "containment": {
+            "kind": "barrier ring",
+            "box": [
+              2189,
+              230,
+              410,
+              2198,
+              230,
+              419
+            ]
+          },
+          "standIns": 0
+        }
+      ]
+    },
+    {
+      "id": "MU11",
+      "title": "DONORS \u2014 MINES: KITHKYN ORIGINALS + D&T MINER COMPOUND",
+      "origin": [
+        2030,
+        230,
+        456
+      ],
+      "bounds": [
+        2020,
+        220,
+        447,
+        2229,
+        276,
+        496
+      ],
+      "entries": [
+        {
+          "id": "MU11.1",
+          "label": "Plains Mine 1",
+          "role": "mine",
+          "sourceMod": "Kithkyn original",
+          "source": "src/main/resources/data/kithkyn/structure/mine_plains_1.nbt",
+          "sourceSha256": "02b03f5b659279cf26ed536becc4a1a85e2660568e0933d4a6555eb6cb5485de",
+          "preparedSha256": "3570bca80c0c77e75f19daea0cbf15536fae6e8553be86d8199901cfa43a72c2",
+          "size": [
+            7,
+            6,
+            7
+          ],
+          "origin": [
+            2030,
+            230,
+            456
+          ],
+          "privateTemplate": "kithkyn_mushroom_profile:mu11_01_mine_plains_1",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0,
+          "sourceCommit": "2a55bb2^",
+          "sourceNote": "Village Life catalog piece, removed by 2a55bb2 (Remove the old Village Life catalogs, 2026-09-10)"
+        },
+        {
+          "id": "MU11.2",
+          "label": "Plains Mine 2",
+          "role": "mine",
+          "sourceMod": "Kithkyn original",
+          "source": "src/main/resources/data/kithkyn/structure/mine_plains_2.nbt",
+          "sourceSha256": "b6bbb206af21f296ab8d40429e73ab9050927551e2fb8630ec526e7a84929089",
+          "preparedSha256": "87ca5484d4d496a62fd855c5e2f07e129c44ab44179278eb86f6a4123113a189",
+          "size": [
+            13,
+            6,
+            7
+          ],
+          "origin": [
+            2043,
+            230,
+            456
+          ],
+          "privateTemplate": "kithkyn_mushroom_profile:mu11_02_mine_plains_2",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0,
+          "sourceCommit": "2a55bb2^",
+          "sourceNote": "Village Life catalog piece, removed by 2a55bb2 (Remove the old Village Life catalogs, 2026-09-10)"
+        },
+        {
+          "id": "MU11.3",
+          "label": "Taiga Mine 1",
+          "role": "mine",
+          "sourceMod": "Kithkyn original",
+          "source": "src/main/resources/data/kithkyn/structure/mine_taiga_1.nbt",
+          "sourceSha256": "3c87dcdbdd2c974aea1d6885155e335cdfee08de4a76b759e2d867601ee148f6",
+          "preparedSha256": "5ffe9ae224c7885ff65d7a51b592349b708bc803af4f8a31ea0a45335a93cdb3",
+          "size": [
+            7,
+            6,
+            7
+          ],
+          "origin": [
+            2062,
+            230,
+            456
+          ],
+          "privateTemplate": "kithkyn_mushroom_profile:mu11_03_mine_taiga_1",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0,
+          "sourceCommit": "2a55bb2^",
+          "sourceNote": "Village Life catalog piece, removed by 2a55bb2 (Remove the old Village Life catalogs, 2026-09-10)"
+        },
+        {
+          "id": "MU11.4",
+          "label": "Taiga Mine 2",
+          "role": "mine",
+          "sourceMod": "Kithkyn original",
+          "source": "src/main/resources/data/kithkyn/structure/mine_taiga_2.nbt",
+          "sourceSha256": "1f3be00c6ad552dd7538eee0bd256113e3c88b61775bd8e334074bae9395dda4",
+          "preparedSha256": "b87100ae3d7128d10378215b31b4d215386092bd1c07686d6f509b00c900867f",
+          "size": [
+            13,
+            6,
+            7
+          ],
+          "origin": [
+            2075,
+            230,
+            456
+          ],
+          "privateTemplate": "kithkyn_mushroom_profile:mu11_04_mine_taiga_2",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0,
+          "sourceCommit": "2a55bb2^",
+          "sourceNote": "Village Life catalog piece, removed by 2a55bb2 (Remove the old Village Life catalogs, 2026-09-10)"
+        },
+        {
+          "id": "MU11.5",
+          "label": "Desert Mine 1",
+          "role": "mine",
+          "sourceMod": "Kithkyn original",
+          "source": "src/main/resources/data/kithkyn/structure/mine_desert_1.nbt",
+          "sourceSha256": "659cc04e545d0c3411a9b041f91ffa55dc0889165bf7489b0cd30889acfc9890",
+          "preparedSha256": "bd15bb234aec75c09df087c2c47f6dbca36241c9aeaaf7bb3fdd5bcdfdb019f0",
+          "size": [
+            7,
+            6,
+            7
+          ],
+          "origin": [
+            2094,
+            230,
+            456
+          ],
+          "privateTemplate": "kithkyn_mushroom_profile:mu11_05_mine_desert_1",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0,
+          "sourceCommit": "2a55bb2^",
+          "sourceNote": "Village Life catalog piece, removed by 2a55bb2 (Remove the old Village Life catalogs, 2026-09-10)"
+        },
+        {
+          "id": "MU11.6",
+          "label": "Desert Mine 2",
+          "role": "mine",
+          "sourceMod": "Kithkyn original",
+          "source": "src/main/resources/data/kithkyn/structure/mine_desert_2.nbt",
+          "sourceSha256": "d87664a57db70f30f7b1edf12dbf6a8228549c39c1950935eb5151b9bf676ae3",
+          "preparedSha256": "b1607db3da4fde832c37320dee7e8bf1b0ccdbb0f82b73264e50f3cf8264792d",
+          "size": [
+            13,
+            6,
+            7
+          ],
+          "origin": [
+            2107,
+            230,
+            456
+          ],
+          "privateTemplate": "kithkyn_mushroom_profile:mu11_06_mine_desert_2",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0,
+          "sourceCommit": "2a55bb2^",
+          "sourceNote": "Village Life catalog piece, removed by 2a55bb2 (Remove the old Village Life catalogs, 2026-09-10)"
+        },
+        {
+          "id": "MU11.7",
+          "label": "Snowy Mine 1",
+          "role": "mine",
+          "sourceMod": "Kithkyn original",
+          "source": "src/main/resources/data/kithkyn/structure/mine_snowy_1.nbt",
+          "sourceSha256": "34184d04ce49bf69bede093e12d28134062576933bdfaae049164ddb4a99646d",
+          "preparedSha256": "badc357d7c87b705c69bed5afdaa25de433582b5733c4a6a1b013497d142e4da",
+          "size": [
+            7,
+            6,
+            7
+          ],
+          "origin": [
+            2126,
+            230,
+            456
+          ],
+          "privateTemplate": "kithkyn_mushroom_profile:mu11_07_mine_snowy_1",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0,
+          "sourceCommit": "2a55bb2^",
+          "sourceNote": "Village Life catalog piece, removed by 2a55bb2 (Remove the old Village Life catalogs, 2026-09-10)"
+        },
+        {
+          "id": "MU11.8",
+          "label": "Snowy Mine 2",
+          "role": "mine",
+          "sourceMod": "Kithkyn original",
+          "source": "src/main/resources/data/kithkyn/structure/mine_snowy_2.nbt",
+          "sourceSha256": "d65ce8bd292878f264eaa70f1a97eeae2c62be1273bd65e3e46e2a33e1ee7510",
+          "preparedSha256": "1c01a7dc729c2ce05d6aad9076ccf67c8a4a7d1aa1c85e945e76b55a74349da1",
+          "size": [
+            13,
+            6,
+            7
+          ],
+          "origin": [
+            2139,
+            230,
+            456
+          ],
+          "privateTemplate": "kithkyn_mushroom_profile:mu11_08_mine_snowy_2",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0,
+          "sourceCommit": "2a55bb2^",
+          "sourceNote": "Village Life catalog piece, removed by 2a55bb2 (Remove the old Village Life catalogs, 2026-09-10)"
+        },
+        {
+          "id": "MU11.9",
+          "label": "Savanna Mine 1",
+          "role": "mine",
+          "sourceMod": "Kithkyn original",
+          "source": "src/main/resources/data/kithkyn/structure/mine_savanna_1.nbt",
+          "sourceSha256": "2640df6c6db43513425f965cfd8c25b00ec7746a935db3ae7e3564ef2bc74368",
+          "preparedSha256": "4f55cd05eac6440d07b3a010f72f602fe84d04830c40329df7b93e9705956a82",
+          "size": [
+            7,
+            6,
+            7
+          ],
+          "origin": [
+            2158,
+            230,
+            456
+          ],
+          "privateTemplate": "kithkyn_mushroom_profile:mu11_09_mine_savanna_1",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0,
+          "sourceCommit": "2a55bb2^",
+          "sourceNote": "Village Life catalog piece, removed by 2a55bb2 (Remove the old Village Life catalogs, 2026-09-10)"
+        },
+        {
+          "id": "MU11.10",
+          "label": "Savanna Mine 2",
+          "role": "mine",
+          "sourceMod": "Kithkyn original",
+          "source": "src/main/resources/data/kithkyn/structure/mine_savanna_2.nbt",
+          "sourceSha256": "a30223ea4b14f332cfeafd63b173a146670754f1e5740de51721f080efdb50e3",
+          "preparedSha256": "9cac0a718819161dc7088093aaff75e84c64127480267c80c73e138c6868073f",
+          "size": [
+            13,
+            6,
+            7
+          ],
+          "origin": [
+            2171,
+            230,
+            456
+          ],
+          "privateTemplate": "kithkyn_mushroom_profile:mu11_10_mine_savanna_2",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0,
+          "sourceCommit": "2a55bb2^",
+          "sourceNote": "Village Life catalog piece, removed by 2a55bb2 (Remove the old Village Life catalogs, 2026-09-10)"
+        },
+        {
+          "id": "MU11.11",
+          "label": "Miner Outpost Compound",
+          "role": "mine",
+          "sourceMod": "Dungeons & Taverns",
+          "source": "data/nova_structures/structure/badlands_miner_outpost/badlands_miner_outpost_tower.nbt",
+          "sourceSha256": "7238da87e53d402fc11bc8ec268f97cbae0c7d3cd61062cc0f4a34ba150cca2a",
+          "preparedSha256": "52fcf45ac54d54e9587e055d1717a0f8e61054c87cdbc65210f7961a0706ddc7",
+          "size": [
+            37,
+            26,
+            37
+          ],
+          "origin": [
+            2190,
+            230,
+            456
+          ],
+          "privateTemplate": "kithkyn_mushroom_profile:mu11_11_badlands_miner_outpost_tower",
+          "waterCells": 6,
+          "containment": {
+            "kind": "barrier ring",
+            "box": [
+              2188,
+              230,
+              454,
+              2228,
+              230,
+              494
+            ]
+          },
+          "standIns": 0
+        }
+      ]
+    },
+    {
+      "id": "MU12",
+      "title": "DONORS \u2014 WELLS: D&T WOODS, TERRALITH + T&T CLASSIC",
+      "origin": [
+        2030,
+        230,
+        507
+      ],
+      "bounds": [
+        2020,
+        220,
+        498,
+        2114,
+        276,
+        516
+      ],
+      "entries": [
+        {
+          "id": "MU12.1",
+          "label": "Oak Well",
+          "role": "well",
+          "sourceMod": "Dungeons & Taverns",
+          "source": "data/nova_structures/structure/well/well_oak.nbt",
+          "sourceSha256": "b79b25b6abebc59c2ac2e9b3fafc7e1b596723a08caaabac08b086b100c62f65",
+          "preparedSha256": "e0884a983ad1202c83c94ff12740fbc5382cbfd6de93af56c17f7fc1ecbc1902",
+          "size": [
+            3,
+            11,
+            3
+          ],
+          "origin": [
+            2030,
+            223,
+            507
+          ],
+          "privateTemplate": "kithkyn_mushroom_profile:mu12_01_well_oak",
+          "waterCells": 12,
+          "containment": {
+            "kind": "floor",
+            "box": [
+              2030,
+              222,
+              507,
+              2032,
+              222,
+              509
+            ]
+          },
+          "standIns": 0
+        },
+        {
+          "id": "MU12.2",
+          "label": "Spruce Well",
+          "role": "well",
+          "sourceMod": "Dungeons & Taverns",
+          "source": "data/nova_structures/structure/well/well_spruce.nbt",
+          "sourceSha256": "4a255b4ad9933b681324838c7d32010bd5478ad7f7fbb5da7213b413a1db8674",
+          "preparedSha256": "6d7f413f8a8049a8f914d3ed2670db00efbf951823ffe9ab3034a2efd3ba96d2",
+          "size": [
+            3,
+            12,
+            3
+          ],
+          "origin": [
+            2039,
+            222,
+            507
+          ],
+          "privateTemplate": "kithkyn_mushroom_profile:mu12_02_well_spruce",
+          "waterCells": 12,
+          "containment": {
+            "kind": "floor",
+            "box": [
+              2039,
+              221,
+              507,
+              2041,
+              221,
+              509
+            ]
+          },
+          "standIns": 0
+        },
+        {
+          "id": "MU12.3",
+          "label": "Birch Well",
+          "role": "well",
+          "sourceMod": "Dungeons & Taverns",
+          "source": "data/nova_structures/structure/well/well_birch.nbt",
+          "sourceSha256": "7f58f29a22a1e2e83233aef8f2c8629b315746e84a901425268dd41ce72fb521",
+          "preparedSha256": "4c77c38dd58611d438df4ae81d6f988ae3de7e2553d0a9be9fba8acdf31490d7",
+          "size": [
+            3,
+            11,
+            3
+          ],
+          "origin": [
+            2048,
+            223,
+            507
+          ],
+          "privateTemplate": "kithkyn_mushroom_profile:mu12_03_well_birch",
+          "waterCells": 12,
+          "containment": {
+            "kind": "floor",
+            "box": [
+              2048,
+              222,
+              507,
+              2050,
+              222,
+              509
+            ]
+          },
+          "standIns": 0
+        },
+        {
+          "id": "MU12.4",
+          "label": "Dark Oak Well",
+          "role": "well",
+          "sourceMod": "Dungeons & Taverns",
+          "source": "data/nova_structures/structure/well/well_dark_oak.nbt",
+          "sourceSha256": "130141f469be2d0e11507d763e791bc1efdcc5c1353a67dc5d7f488f47e2242c",
+          "preparedSha256": "eef642a276e57bcbec07a49e9e95730dcb71bd5e7d7cf484342e1b518fc791ff",
+          "size": [
+            3,
+            12,
+            3
+          ],
+          "origin": [
+            2057,
+            222,
+            507
+          ],
+          "privateTemplate": "kithkyn_mushroom_profile:mu12_04_well_dark_oak",
+          "waterCells": 12,
+          "containment": {
+            "kind": "floor",
+            "box": [
+              2057,
+              221,
+              507,
+              2059,
+              221,
+              509
+            ]
+          },
+          "standIns": 0
+        },
+        {
+          "id": "MU12.5",
+          "label": "Jungle Well",
+          "role": "well",
+          "sourceMod": "Dungeons & Taverns",
+          "source": "data/nova_structures/structure/well/well_jungle.nbt",
+          "sourceSha256": "26ef4a9633796bb26720ac00fcb369a67a77bcbfd5a174bf26c6a93caa48ed50",
+          "preparedSha256": "314f4e955a6c08ffbfb2a6768a3e528e0c69cdad999bcf8a5bbbb3a095b006e5",
+          "size": [
+            3,
+            12,
+            3
+          ],
+          "origin": [
+            2066,
+            222,
+            507
+          ],
+          "privateTemplate": "kithkyn_mushroom_profile:mu12_05_well_jungle",
+          "waterCells": 12,
+          "containment": {
+            "kind": "floor",
+            "box": [
+              2066,
+              221,
+              507,
+              2068,
+              221,
+              509
+            ]
+          },
+          "standIns": 0
+        },
+        {
+          "id": "MU12.6",
+          "label": "Savanna Well",
+          "role": "well",
+          "sourceMod": "Dungeons & Taverns",
+          "source": "data/nova_structures/structure/well/well_savana.nbt",
+          "sourceSha256": "e579c681024a5445c4a179433e9cc42dfb796f6dd633d0676549081f848c449f",
+          "preparedSha256": "9c36287ad836cf7e6fac892dc0b54e694e8941391470fe79d866899c64e32174",
+          "size": [
+            3,
+            12,
+            3
+          ],
+          "origin": [
+            2075,
+            222,
+            507
+          ],
+          "privateTemplate": "kithkyn_mushroom_profile:mu12_06_well_savana",
+          "waterCells": 12,
+          "containment": {
+            "kind": "floor",
+            "box": [
+              2075,
+              221,
+              507,
+              2077,
+              221,
+              509
+            ]
+          },
+          "standIns": 0
+        },
+        {
+          "id": "MU12.7",
+          "label": "Old Well",
+          "role": "well",
+          "sourceMod": "Terralith",
+          "source": "data/terralith/structure/small_decoration/old_well.nbt",
+          "sourceSha256": "95322b937f9af2f4e2ca5db0d1a3efe6d2ace2a794257dc2f4589a09cb14671b",
+          "preparedSha256": "cfdc36c809e8cf82a0e72d2bdb0d8c70d2c1d184b03bd216596e690044575d1b",
+          "size": [
+            5,
+            15,
+            5
+          ],
+          "origin": [
+            2084,
+            219,
+            507
+          ],
+          "privateTemplate": "kithkyn_mushroom_profile:mu12_07_old_well",
+          "waterCells": 11,
+          "containment": {
+            "kind": "floor",
+            "box": [
+              2084,
+              218,
+              507,
+              2088,
+              218,
+              511
+            ]
+          },
+          "standIns": 0
+        },
+        {
+          "id": "MU12.8",
+          "label": "Frog Fountain",
+          "role": "well",
+          "sourceMod": "Terralith",
+          "source": "data/terralith/structure/small_decoration/frog_fountain.nbt",
+          "sourceSha256": "11f088becdcb179bdf15d18256b758ba48a1f3b10040e60c9785d905a617d2f9",
+          "preparedSha256": "cf6e080fd8d0437bd34dedc35b62bb9616cc448091fb4745a926f2cb9e2edabf",
+          "size": [
+            5,
+            11,
+            5
+          ],
+          "origin": [
+            2095,
+            223,
+            507
+          ],
+          "privateTemplate": "kithkyn_mushroom_profile:mu12_08_frog_fountain",
+          "waterCells": 0,
+          "containment": {
+            "kind": "floor",
+            "box": [
+              2095,
+              222,
+              507,
+              2099,
+              222,
+              511
+            ]
+          },
+          "standIns": 0
+        },
+        {
+          "id": "MU12.9",
+          "label": "Classic Well",
+          "role": "well",
+          "sourceMod": "Kithkyn composite",
+          "source": "run/full-style-showcase/raw/classic-well-composite.nbt",
+          "sourceSha256": "c49eb3a89d6cd88b261c0f2916c087e99297b9ca8274a9d91f7b782d7b16aa15",
+          "preparedSha256": "296a0414c01e56973a66bc6528366eba9a94dfd4b77ff7db0f646b60b6c42d2c",
+          "size": [
+            6,
+            16,
+            6
+          ],
+          "origin": [
+            2106,
+            218,
+            507
+          ],
+          "privateTemplate": "kithkyn_mushroom_profile:mu12_09_classic-well-composite",
+          "waterCells": 44,
+          "containment": {
+            "kind": "floor",
+            "box": [
+              2106,
+              217,
+              507,
+              2111,
+              217,
+              512
+            ]
+          },
+          "standIns": 0,
+          "assembly": "run/full-style-showcase/ClassicWell.java"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "preparedTemplates": 113,
+    "placedTemplates": 113,
+    "allPlacementResponsesConfirmed": true,
+    "chunksGenerated": 99,
+    "worldSaved": true,
+    "worldBackup": "/Users/quzzar/Projects/kithkyn/run/backups/before-mushroom-gallery-20260914-211610",
+    "console": "screen session fifo:/Users/quzzar/Projects/kithkyn/run/deployed-runtime/20260914-181832-rustic-height-corrections/console.fifo",
+    "addedRows": []
+  },
+  "biome": {
+    "filled": "minecraft:the_void",
+    "reason": "no precipitation at any height, so no lightning on the mushroom blocks; ordinary green grass"
+  },
+  "licensing": "CTOV and Towns & Towers are CC BY-NC-ND 4.0 and Dungeons & Taverns is under its own licence: their display copies stay private under run/, as for every gallery. See docs/structure-sourcing.md.",
+  "offlineCheck": {
+    "short": [
+      {
+        "id": "MU12.7",
+        "label": "Old Well",
+        "expected": 184,
+        "placed": 164,
+        "ratio": 0.891
+      },
+      {
+        "id": "MU12.9",
+        "label": "Classic Well",
+        "expected": 268,
+        "placed": 196,
+        "ratio": 0.731
+      }
+    ],
+    "waterOutsideRings": [],
+    "waterOutsideRingsCount": 0,
+    "shortNote": "MU12.7 and MU12.9 are deep wells whose shafts hang below the platform floor; the known well artifact",
+    "footprintsChecked": 113
+  }
+}
