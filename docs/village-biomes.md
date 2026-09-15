@@ -210,8 +210,11 @@ The current review status is:
     and the T&T classic well.
 
   The rows' sky is filled with the void biome, which has no precipitation, so lightning cannot
-  strike. Blocks from mods the server lacks are replaced by vanilla stand-ins in the private
-  display copies only. The sources, hashes, placements and the offline check are recorded in
+  strike. Blocks from mods the server lacks are replaced in the private display copies only, each
+  by a named vanilla block that keeps its facing and shape (Farmer's Delight crops as bushes on
+  their farmland, Create's windmill in wool and oak, its factory in andesite, glass, copper and
+  iron, the profession mods' job tables as the nearest vanilla job block); the table is the
+  record's `standInSwaps`. The sources, hashes, placements and the offline check are recorded in
   `tools/structure/mushroom-full-profile-20260914.json`.
 
 The Viking annex contains all 43 standalone structures: 22 Viking and 21 Polish. Road pieces
