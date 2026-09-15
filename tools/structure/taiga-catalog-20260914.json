@@ -4,7 +4,7 @@
   "status": "verified",
   "style": "taiga",
   "description": "Aaron's Taiga village catalog: the Towns & Towers Viking meeting point, homes and workplaces, his own lumberjack hut, the old-growth taiga fort as the castle with its jail and the ruler's room, the D&T firewatch tower and spruce tavern, the CTOV taiga well in cobblestone, and the shared market geometry in spruce, selected and edited live in the trio-20260912 sky gallery on 2026-09-14.",
-  "snapshot": "run/taiga-integration/world-snapshot-20260914-223707",
+  "snapshot": "run/taiga-integration/world-snapshot-20260914-234219",
   "founding": {
     "center": "village_center_taiga_1",
     "center_beds": 0,
@@ -51,7 +51,7 @@
         17
       ],
       "sink": 0,
-      "source": "run/taiga-integration/world-snapshot-20260914-223707/captures/TA01.1.nbt",
+      "source": "run/taiga-integration/world-snapshot-20260914-234219/captures/TA01.1.nbt",
       "source_sha256": "6fbaf1cbf1db98761d18b37d179475c92c0e1ceea11f139591e77c58d7816104",
       "entities": 0,
       "edits": [
@@ -113,7 +113,7 @@
         6
       ],
       "sink": 0,
-      "source": "run/taiga-integration/world-snapshot-20260914-223707/captures/TA01.6.nbt",
+      "source": "run/taiga-integration/world-snapshot-20260914-234219/captures/TA01.6.nbt",
       "source_sha256": "8c885f50dad870443f62590a0262ab890c40a710974934f3b7a7538673dc795c",
       "entities": 0,
       "edits": [],
@@ -136,7 +136,7 @@
         11
       ],
       "sink": 0,
-      "source": "run/taiga-integration/world-snapshot-20260914-223707/captures/TA01.5.nbt",
+      "source": "run/taiga-integration/world-snapshot-20260914-234219/captures/TA01.5.nbt",
       "source_sha256": "0239d4e891f384a83eaeb0619e1133e5cacdce5de9b86efe3b7458f2b69ad6d0",
       "entities": 0,
       "edits": [],
@@ -159,7 +159,7 @@
         7
       ],
       "sink": 0,
-      "source": "run/taiga-integration/world-snapshot-20260914-223707/captures/TA01.3.nbt",
+      "source": "run/taiga-integration/world-snapshot-20260914-234219/captures/TA01.3.nbt",
       "source_sha256": "bc5395a2afa027e171d7d029f40acf3841095e193f4dca4f5d0fbf7b3be16ee1",
       "entities": 0,
       "edits": [],
@@ -182,7 +182,7 @@
         7
       ],
       "sink": 0,
-      "source": "run/taiga-integration/world-snapshot-20260914-223707/captures/TA01.4.nbt",
+      "source": "run/taiga-integration/world-snapshot-20260914-234219/captures/TA01.4.nbt",
       "source_sha256": "e817eb2f8224d41bf1bf787511989e69e086f8af50f8574c0b020f49b401bb83",
       "entities": 0,
       "edits": [],
@@ -205,7 +205,7 @@
         10
       ],
       "sink": 0,
-      "source": "run/taiga-integration/world-snapshot-20260914-223707/captures/TA01.7.nbt",
+      "source": "run/taiga-integration/world-snapshot-20260914-234219/captures/TA01.7.nbt",
       "source_sha256": "c1e0d6375176207163282c40187f4f4e29805c85dcc51613f795a5f4c734dfd8",
       "entities": 0,
       "edits": [],
@@ -228,7 +228,7 @@
         7
       ],
       "sink": 0,
-      "source": "run/taiga-integration/world-snapshot-20260914-223707/captures/TA01.2.nbt",
+      "source": "run/taiga-integration/world-snapshot-20260914-234219/captures/TA01.2.nbt",
       "source_sha256": "121fb6323574184b8b4d026a2b8f152d11c91f36c265f41ac9c7679c126076a1",
       "entities": 0,
       "edits": [],
@@ -251,7 +251,7 @@
         7
       ],
       "sink": 0,
-      "source": "run/taiga-integration/world-snapshot-20260914-223707/captures/TA02.2.nbt",
+      "source": "run/taiga-integration/world-snapshot-20260914-234219/captures/TA02.2.nbt",
       "source_sha256": "094dcd4e13fca819c38b53508d95ce43851bd463eb7530537dcbba2aaebc9ad5",
       "entities": 3,
       "edits": [],
@@ -274,7 +274,7 @@
         7
       ],
       "sink": 0,
-      "source": "run/taiga-integration/world-snapshot-20260914-223707/captures/TA02.3.nbt",
+      "source": "run/taiga-integration/world-snapshot-20260914-234219/captures/TA02.3.nbt",
       "source_sha256": "4bc22d229cf3fb1881daf836012558284c3a1aab76643e2e9e2678bb860be649",
       "entities": 0,
       "edits": [],
@@ -297,7 +297,7 @@
         7
       ],
       "sink": 0,
-      "source": "run/taiga-integration/world-snapshot-20260914-223707/captures/TA02.4.nbt",
+      "source": "run/taiga-integration/world-snapshot-20260914-234219/captures/TA02.4.nbt",
       "source_sha256": "c90f43068e5a35beb956a2d70aeafb5f2137cffbe44fe992ff6519c22eb89862",
       "entities": 0,
       "edits": [],
@@ -320,7 +320,7 @@
         7
       ],
       "sink": 0,
-      "source": "run/taiga-integration/world-snapshot-20260914-223707/captures/TA02.7.nbt",
+      "source": "run/taiga-integration/world-snapshot-20260914-234219/captures/TA02.7.nbt",
       "source_sha256": "4632593b052ae63940a4b70caf17c4d11cc7c72072803efc46095ee93943449c",
       "entities": 0,
       "edits": [],
@@ -345,7 +345,7 @@
         10
       ],
       "sink": 0,
-      "source": "run/taiga-integration/world-snapshot-20260914-223707/captures/TA02.8.nbt",
+      "source": "run/taiga-integration/world-snapshot-20260914-234219/captures/TA02.8.nbt",
       "source_sha256": "1b95074ef45a8b16ea427f3aaedb3d688508143f18b0e9e7ad1dc3a010455b35",
       "entities": 0,
       "edits": [],
@@ -368,7 +368,7 @@
         7
       ],
       "sink": 0,
-      "source": "run/taiga-integration/world-snapshot-20260914-223707/captures/TA02.9.nbt",
+      "source": "run/taiga-integration/world-snapshot-20260914-234219/captures/TA02.9.nbt",
       "source_sha256": "18bd3fe4fecda7ddba6f106c86e80ee1c8afb0e61cfed62aa82aee9064c8428b",
       "entities": 0,
       "edits": [],
@@ -391,7 +391,7 @@
         8
       ],
       "sink": 0,
-      "source": "run/taiga-integration/world-snapshot-20260914-223707/captures/TA02.10.nbt",
+      "source": "run/taiga-integration/world-snapshot-20260914-234219/captures/TA02.10.nbt",
       "source_sha256": "a2e0d34166bbe1b0671a98cb8f337ae4c32ff9e55f9e6deab4294e030b45678a",
       "entities": 0,
       "edits": [],
@@ -414,7 +414,7 @@
         7
       ],
       "sink": 0,
-      "source": "run/taiga-integration/world-snapshot-20260914-223707/captures/TA03.1.nbt",
+      "source": "run/taiga-integration/world-snapshot-20260914-234219/captures/TA03.1.nbt",
       "source_sha256": "118d5277ae3250f76b41a1d72fbf0387582c18bc334ccbf68f70b78081241d9e",
       "entities": 0,
       "edits": [],
@@ -437,15 +437,15 @@
         8
       ],
       "sink": 0,
-      "source": "run/taiga-integration/world-snapshot-20260914-223707/captures/TA03.2.nbt",
-      "source_sha256": "850c544b07d57c3fd8f0ae79d8f26d7b3f0f7c0175bad37f3f25d564ad7977a4",
+      "source": "run/taiga-integration/world-snapshot-20260914-234219/captures/TA03.2.nbt",
+      "source_sha256": "7da0cc0f72e6a175795d9c88de4d3b8af4909b91e43c04c7ddc693a99f1f4713",
       "entities": 0,
       "edits": [],
       "identity_blocks": {},
       "swaps": {},
       "swapped_cells": 0,
       "asset": "run/taiga-integration/datapack/data/kithkyn/structure/farm_taiga_1.nbt",
-      "asset_sha256": "d60524a8d561cf0598aa9bacda60ec4b956facdece4f9fcb27148f453e7761bd",
+      "asset_sha256": "6308998b551c3c33925136882dc2b54541bbce61b4fa2854bb785c1434607113",
       "definition": "run/taiga-integration/datapack/data/kithkyn/kithkyn/buildings/farm_taiga_1.json",
       "definition_sha256": "28a5483bf29b3e361e5e0c24b88da3ec614a7b3292ac6e0e0dcc079faf71a9d3"
     },
@@ -459,8 +459,8 @@
         8,
         4
       ],
-      "sink": 3,
-      "source": "run/taiga-integration/world-snapshot-20260914-223707/captures/TA17.20.nbt",
+      "sink": 2,
+      "source": "run/taiga-integration/world-snapshot-20260914-234219/captures/TA17.20.nbt",
       "source_sha256": "00187180d8350c57f7fbf3d41820a7e28cadc102078caa9f7962eaebb34936d9",
       "entities": 0,
       "edits": [],
@@ -472,9 +472,9 @@
       },
       "swapped_cells": 36,
       "asset": "run/taiga-integration/datapack/data/kithkyn/structure/well_taiga_1.nbt",
-      "asset_sha256": "11c95d61d99ecf1643d3496a3b02564d6a71036be14cc44a7782cda0429218ef",
+      "asset_sha256": "3c0f7394ac60bd5d27b29cc0f761a9e3b4a1a627834c2cf42c525e7f2bc2d4fa",
       "definition": "run/taiga-integration/datapack/data/kithkyn/kithkyn/buildings/well_taiga_1.json",
-      "definition_sha256": "ab52098bdabbd386acac67104c48536ac5c2d4e2cd7799c155fef46aac400b3c"
+      "definition_sha256": "310f910d6dfcb8de65132e000e631173169c4445d2e2acea3bebdd447a20d802"
     },
     {
       "exhibit": "TA09.1",
@@ -487,7 +487,7 @@
         35
       ],
       "sink": 0,
-      "source": "run/taiga-integration/world-snapshot-20260914-223707/captures/TA09.1.nbt",
+      "source": "run/taiga-integration/world-snapshot-20260914-234219/captures/TA09.1.nbt",
       "source_sha256": "d84a7b071acc7d05c64feb2a4fa601488f3dfddbbb2e2cdef53494b708e78f11",
       "entities": 0,
       "edits": [],
@@ -510,7 +510,7 @@
         9
       ],
       "sink": 0,
-      "source": "run/taiga-integration/world-snapshot-20260914-223707/captures/TA09.6.nbt",
+      "source": "run/taiga-integration/world-snapshot-20260914-234219/captures/TA09.6.nbt",
       "source_sha256": "b7c843112ee1b4b69375763376c9dfc544929d452feb06cfbf0644cde2c9a266",
       "entities": 0,
       "edits": [],
@@ -533,7 +533,7 @@
         19
       ],
       "sink": 0,
-      "source": "run/taiga-integration/world-snapshot-20260914-223707/captures/TA28.1.nbt",
+      "source": "run/taiga-integration/world-snapshot-20260914-234219/captures/TA28.1.nbt",
       "source_sha256": "158b5b8900a26111acbc7916fcb0863f03c2312d61ca4ed8707587c508ec9994",
       "entities": 0,
       "edits": [],

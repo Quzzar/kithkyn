@@ -55,8 +55,8 @@ The private datapack contains 23 definitions:
 | `blacksmith_taiga_1` | TA02.9 | The Viking toolsmith: the smithing table, the lava cauldron, the chest |
 | `mine_taiga_1` | TA02.10 | The Viking weaponsmith hut with its centre dug out: the miner east of the hollow, the shaft descending west into it, the chest as the store |
 | `fishery_taiga_1` | TA03.1 | The Viking fisher: the barrel by the pool is the store, the bed and its barrel are the fisher's |
-| `farm_taiga_1` | TA03.2 | The Viking large farm with Aaron's barrel |
-| `well_taiga_1` | TA17.20 | The CTOV taiga well, its deepslate bricks traded for cobblestone, sunk three layers so its rim is flush |
+| `farm_taiga_1` | TA03.2 | The Viking large farm with Aaron's barrel, captured from the height strip after his second pass: potatoes on the west beds, carrots on the channel banks and three tilled path cells |
+| `well_taiga_1` | TA17.20 | The CTOV taiga well, its deepslate bricks traded for cobblestone, sunk two layers, one higher than the gallery showed it |
 | `castle_taiga_1` | TA09.1 | The Towns & Towers old-growth taiga fort: the ruler's paired bed upstairs is the leader's room, four open castle beds two per chest, the one-cell jail with the jailer's post and the prisoner's two barrels, and the mason, cleric, blacksmith, hunter and baker at the tables Aaron set. Its nine banners are village banners |
 | `watchtower_taiga_1` | TA09.6 | The Dungeons & Taverns firewatch tower: the guard's crossbow post on the south balcony above the cabin door, the guard's bed and chest in the cabin |
 | `tavern_taiga_1` | TA28.1 | The Dungeons & Taverns spruce tavern house: the keeper by the smoker, four guest beds each with its barrel in the floor beside it, the keeper's bed and chest upstairs |
@@ -72,10 +72,14 @@ A few definitions differ from the gallery copies:
 - **Lumberjack.** The template box grows one block north of the hut to hold the sapling cell.
   The dead bush marks it; the template plants a spruce sapling there at stage 0.
 - **Mine.** The template box grows one block north and east for the ground Aaron laid there.
-- **Fishery and farm.** Every water cell is a source.
+- **Fishery and farm.** Every water cell is a source. The farm's raised channel ended in crop cells
+  to the north and east at the water's own level, so the water washed them and ran off the top;
+  both ends are farmland now, like the channel's other banks, and Aaron planted carrots on them,
+  swapped the west beds to potatoes and tilled three path cells on the height strip, from which
+  the farm is captured. The strip's grass datum under the footprint's empty corners is left out.
 - **Butchery.** The pen's doors start closed, as every door and gate where livestock lives does.
 - **Well.** Deepslate bricks, stairs and walls are cobblestone, cobblestone stairs and cobblestone
-  walls.
+  walls, and it sits one layer higher than the gallery showed it (Aaron's height walk).
 - **Markets.** The Birch market counters set each stall barrel into the deck with open air above
   it; the Taiga markets keep the barrels where the study has them.
 
