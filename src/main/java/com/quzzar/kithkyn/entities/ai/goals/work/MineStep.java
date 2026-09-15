@@ -267,6 +267,13 @@ public final class MineStep implements BlockWorkStep {
   private BlockPos sealFooting;
   private BlockPos sealStand;
 
+  /**
+   * The selected shallow face is itself the miner's first lining supply. Its
+   * break may leave a dry surface opening for one pass; the block it drops then
+   * closes that opening through the ordinary support work on the next pass.
+   */
+  private boolean bootstrapSupportBreak;
+
 
   // A wall vein under extraction: ore already pulled and awaiting its support
   // plug (sealed deepest-first, so the miner backs out toward the shaft as it
@@ -413,15 +420,30 @@ public final class MineStep implements BlockWorkStep {
       // a support source.
       if ((this.placeFloor || this.placeSeal || needsSupportToBreak(person.level(), mouth, rotation))
           && MineSupportMaterials.held(person.personMainInv) == 0) {
+        if (canBootstrapSupportFromFace(person, mouth, rotation)) {
+          this.bootstrapSupportBreak = true;
+          this.fanning = false;
+          BlockPos face = face(mouth, rotation);
+          BlockPos stand = standToMine(person, mouth, rotation, face);
+          if (stand != null) {
+            return new ShaftPick(stand, false);
+          }
+          this.bootstrapSupportBreak = false;
+        }
         BlockPos fanStand = selectFan(person, mouth, rotation);
         if (fanStand != null) {
           return new ShaftPick(fanStand, false);
         }
         // No rib left to cut either: fall through to standing down, so a mine with
         // nothing to quarry still waits on a restock the way it always did.
-        resetShaft();
         logIdleState(person, NoWork.SUPPORT, "support-gated shaft has no rib work: mouth="
-            + mouth.toShortString());
+            + mouth.toShortString()
+            + ", local=" + this.offset.toShortString()
+            + ", block=" + this.block.getName().getString()
+            + ", floor=" + this.placeFloor
+            + ", seal=" + this.placeSeal
+            + ", wet=" + touchesLiquid(person.level(), face(mouth, rotation)));
+        resetShaft();
         return new ShaftPick(null, false);
       }
       this.fanning = false;
@@ -984,7 +1006,7 @@ public final class MineStep implements BlockWorkStep {
       return sealAct(person);
     }
     if (this.oreTarget != null) {
-      return breakAct(person, mouth, this.oreTarget, true);
+      return breakAct(person, mouth, this.oreTarget, true, true);
     }
     if (this.block == null || this.offset == null) {
       return false;
@@ -1005,7 +1027,7 @@ public final class MineStep implements BlockWorkStep {
     if (this.bailWater) {
       return bailAct(person, mouth, rotation, face);
     }
-    return breakAct(person, mouth, face, false);
+    return breakAct(person, mouth, face, false, !this.bootstrapSupportBreak);
   }
 
   @Override
@@ -1032,7 +1054,8 @@ public final class MineStep implements BlockWorkStep {
    * while still breaking, false when the block comes down and the next select
    * should choose again.
    */
-  private boolean breakAct(RealPerson person, BlockPos mouth, BlockPos pos, boolean vein) {
+  private boolean breakAct(RealPerson person, BlockPos mouth, BlockPos pos, boolean vein,
+      boolean sealBoundary) {
     person.getLookControl().setLookAt(pos.getX(), pos.getY(), pos.getZ(), 30.0F, 30.0F);
 
     this.breakTime++;
@@ -1048,7 +1071,7 @@ public final class MineStep implements BlockWorkStep {
     if (!person.level().isClientSide) {
       // An open boundary beside the block about to fall is supported first, standing
       // right here, so it cannot flood the shaft the moment the block goes.
-      if (!sealAround(person, mouth, this.activeRotation, pos)) {
+      if (sealBoundary && !sealAround(person, mouth, this.activeRotation, pos)) {
         person.level().destroyBlockProgress(person.getId(), pos, -1);
         this.breakTime = 0;
         this.lastProgress = -1;
@@ -1067,6 +1090,9 @@ public final class MineStep implements BlockWorkStep {
         this.veinToSeal.push(pos);
         this.veinTaken++;
         Kithkyn.LOGGER.info("[mine] {} pulled {} from the wall at {}",
+            person.getName().getString(), this.block.getName().getString(), pos.toShortString());
+      } else if (!sealBoundary) {
+        Kithkyn.LOGGER.info("[mine] {} quarried its first shaft lining from {} at {}",
             person.getName().getString(), this.block.getName().getString(), pos.toShortString());
       }
     }
@@ -1139,6 +1165,42 @@ public final class MineStep implements BlockWorkStep {
   private boolean needsSupportToBreak(Level level, BlockPos mouth, Rotation rotation) {
     return openExteriorBoundary(level, mouth, rotation, this.offset, false) != null
         || openBoundary(level, mouth, rotation, face(mouth, rotation), this.offset) != null;
+  }
+
+  /**
+   * A fresh shaft may turn its own dry topsoil or stone face into the first
+   * lining block. Without this one physical bootstrap break, a mine whose
+   * authored mouth opens directly onto a shallow cave or surface edge can need
+   * support before it has been allowed to mine any support. The exception ends
+   * where normal ribs begin and never applies to placement work or a wet face.
+   */
+  private boolean canBootstrapSupportFromFace(RealPerson person, BlockPos mouth,
+      Rotation rotation) {
+    if (this.offset == null || this.block == null || this.placeFloor || this.placeSeal) {
+      return false;
+    }
+    BlockPos face = face(mouth, rotation);
+    BlockState state = person.level().getBlockState(face);
+    boolean dropsSupport = person.level() instanceof ServerLevel serverLevel
+        && Block.getDrops(state, serverLevel, face, serverLevel.getBlockEntity(face), person,
+            person.getMainHandItem()).stream().anyMatch(MineSupportMaterials::isSupport);
+    boolean wet = touchesLiquid(person.level(), face);
+    return canBootstrapSupport(this.offset.getZ(), dropsSupport, wet, false);
+  }
+
+  private static boolean touchesLiquid(Level level, BlockPos center) {
+    for (Direction direction : Direction.values()) {
+      if (isLiquid(level, center.relative(direction))) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  /** Pure policy boundary for the live bootstrap exception. */
+  static boolean canBootstrapSupport(int forward, boolean dropsSupport,
+      boolean wet, boolean placementWork) {
+    return forward < FAN_MIN_LINE && dropsSupport && !wet && !placementWork;
   }
 
   /**
@@ -1988,6 +2050,7 @@ public final class MineStep implements BlockWorkStep {
     this.sealCell = null;
     this.sealFooting = null;
     this.sealStand = null;
+    this.bootstrapSupportBreak = false;
     int steps = 0;
     BlockPos facePos = null;
     do {
@@ -2210,6 +2273,7 @@ public final class MineStep implements BlockWorkStep {
     this.sealCell = null;
     this.sealFooting = null;
     this.sealStand = null;
+    this.bootstrapSupportBreak = false;
   }
 
 }

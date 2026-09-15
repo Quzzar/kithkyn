@@ -22,9 +22,11 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.item.AxeItem;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraft.world.level.pathfinder.Node;
@@ -224,14 +226,17 @@ public final class ChopStep implements WorkStep<ChopStep.Cut> {
     }
 
     // Nothing standing to fell: a sapling coming back, or a bare stump with
-    // nothing in the pack to plant on it. Most of these lulls are just the
-    // regrowth, so only a sustained dry stretch is reported, once, as a genuine
-    // wood shortage; the words tell the two apart, since a bare stand is the
-    // one a village can do something about.
+    // nothing in the pack to plant on it. Regrowth is healthy pending work and
+    // must not become an operational blocker merely because a random tick takes
+    // longer than the audit threshold. Only a sustained bare stand is a genuine
+    // wood shortage the village can act on.
     boolean bare = PlantStep.isBare(state) && PlantStep.saplingIn(person) == null;
-    this.dry.wentDry(person, Items.OAK_LOG, 1, bare
-        ? "My stand is bare and I have no sapling to plant on it; there is no wood to cut until I find one."
-        : "The tree at my stand is felled; I have no wood to cut until it grows back.");
+    if (bare) {
+      this.dry.wentDry(person, Items.OAK_LOG, 1,
+          "My stand is bare and I have no sapling to plant on it; there is no wood to cut until I find one.");
+    } else {
+      this.dry.foundWork(person);
+    }
     return null;
   }
 
@@ -362,17 +367,63 @@ public final class ChopStep implements WorkStep<ChopStep.Cut> {
     if (!(person.level() instanceof ServerLevel level)) {
       return;
     }
+    BlockState trunk = level.getBlockState(struck);
     ItemStack axe = person.getMainHandItem();
     List<ItemStack> haul = this.woodlandRadius > 0
         ? TreeFelling.fell(level, struck, person, axe)
         : TreeFelling.fellStand(level, struck, person, axe);
+    if (this.woodlandRadius == 0) {
+      reserveForNextStand(trunk, haul);
+    }
     stripSome(person, haul);
     // Counted before the pack takes it: stacks that merge into ones already
     // carried are emptied as they go in, and read as nothing afterwards.
-    int logs = haul.stream().mapToInt(ItemStack::getCount).sum();
+    int logs = haul.stream()
+        .filter(stack -> TreeFelling.isWood(Block.byItem(stack.getItem()).defaultBlockState()))
+        .mapToInt(ItemStack::getCount).sum();
     person.addItems(haul);
     Kithkyn.LOGGER.debug("[resource-flow] {} ({}) felled a tree at {}: {} log(s) into the pack",
         person.getName().getString(), person.getOccupation(), struck.toShortString(), logs);
+  }
+
+  /**
+   * Keeps a planted stand renewable even when its harvested canopy rolls no
+   * sapling drop. One actual log from that harvest becomes a cutting of the
+   * same tree type, so the fallback costs production and never creates stock
+   * from an empty or unrelated inventory. Dark oak falls back to oak because a
+   * single dark-oak sapling cannot grow on a one-block stand.
+   */
+  static void reserveForNextStand(BlockState trunk, List<ItemStack> haul) {
+    if (haul.stream().anyMatch(stack -> PlantStep.isSapling(stack.getItem()))) {
+      return;
+    }
+    Item sapling = saplingFor(trunk);
+    if (sapling == null) {
+      return;
+    }
+    for (int index = 0; index < haul.size(); index++) {
+      ItemStack stack = haul.get(index);
+      if (stack.isEmpty() || !stack.is(trunk.getBlock().asItem())) {
+        continue;
+      }
+      stack.shrink(1);
+      if (stack.isEmpty()) {
+        haul.remove(index);
+      }
+      haul.add(new ItemStack(sapling));
+      return;
+    }
+  }
+
+  @Nullable
+  private static Item saplingFor(BlockState trunk) {
+    if (trunk.is(Blocks.SPRUCE_LOG)) return Items.SPRUCE_SAPLING;
+    if (trunk.is(Blocks.BIRCH_LOG)) return Items.BIRCH_SAPLING;
+    if (trunk.is(Blocks.JUNGLE_LOG)) return Items.JUNGLE_SAPLING;
+    if (trunk.is(Blocks.ACACIA_LOG)) return Items.ACACIA_SAPLING;
+    if (trunk.is(Blocks.CHERRY_LOG)) return Items.CHERRY_SAPLING;
+    if (trunk.is(Blocks.OAK_LOG) || trunk.is(Blocks.DARK_OAK_LOG)) return Items.OAK_SAPLING;
+    return null;
   }
 
   /** A strippable log sometimes comes off already stripped. */

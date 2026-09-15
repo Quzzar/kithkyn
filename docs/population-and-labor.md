@@ -417,7 +417,9 @@ A workplace building finishing construction registers its work stations as open
   **food post open** (farmer, fisher, or hunter), its building standing, and **no idle resident who
   can actually take that post** handles food first. A bedless camper does not suppress the pass
   merely by existing when the urgent workplace cannot house them. Otherwise, a current saved project may name a vacancy whose
-  standing building grants the capability for one of its missing materials. This is derived from
+  standing building grants the capability for one of its missing materials, but only when no staffed
+  workplace already grants that capability. Another vacant post is spare capacity rather than a
+  deadlock while an equivalent producer is already working. This is derived from
   the same shared material-source facts used by `UrbanPlanner`, not a second occupation table. A
   saved-project shortage runs on the ordinary labor cadence rather than waiting for midnight,
   because a saved goal may expire before the next midnight window. The brain
@@ -432,11 +434,10 @@ A workplace building finishing construction registers its work stations as open
   (`Village.laborDecisionPending`), and a brain that leaves the crew as it is sits the question
   out a while before it is asked again. If every otherwise-valid worker is inside the normal
   job-swap cooldown, an urgent shortage gets one pass that may break that cooldown because the
-  cooldown lasts longer than a saved goal. The last builder and miner are always protected. The
-  last active food producer is protected while the village is hungry, but an excess food worker
+  cooldown lasts longer than a saved goal. The last builder, miner, and quartermaster are always
+  protected. The last active food producer is protected while the village is hungry, but an excess food worker
   may be offered to an urgent builder, quartermaster, or material-producing vacancy when that move
-  is the way out of the shortage. The only quartermaster is protected while goods are backed up.
-  If a disruption already left that strained village with an open quartermaster post, the urgent
+  is the way out of the shortage. If a disruption already left a strained village with an open quartermaster post, the urgent
   labor pass may fill it. A second builder, miner, or quartermaster may still move when its
   corresponding protection applies.
 - The person walks from the meeting point to the workplace, takes on the `Occupation` of the

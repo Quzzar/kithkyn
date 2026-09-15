@@ -170,7 +170,7 @@ public final class TreeFelling {
     for (long hive : attachedHives) {
       fellAttachedHive(level, BlockPos.of(hive), feller, tool, drops);
     }
-    decayOrphanedCanopy(level, canopy, placed);
+    decayOrphanedCanopy(level, canopy, placed, feller, tool, drops);
     if (soundFrom != null) {
       level.playSound((Player) null, struck.getX(), struck.getY(), struck.getZ(),
           soundFrom.getSoundType().getBreakSound(), SoundSource.BLOCKS, 1.0F,
@@ -222,19 +222,27 @@ public final class TreeFelling {
   }
 
   /**
-   * Forces only unsupported natural leaves through the ordinary decay result.
-   * Drops are spawned where each leaf stood, just as a vanilla random decay
-   * would spawn them, so saplings remain physical things for workers to pick up.
+   * Harvests only unsupported natural leaves. A worker receives their ordinary
+   * loot with the log haul; site clearing has no worker and leaves the same loot
+   * on the ground where each leaf stood.
    */
   private static void decayOrphanedCanopy(ServerLevel level, List<BlockPos> canopy,
-      PlacedBlockStore placed) {
+      PlacedBlockStore placed, @Nullable Entity feller, ItemStack tool, List<ItemStack> haul) {
     for (BlockPos leaf : canopy) {
       BlockState state = level.getBlockState(leaf);
       if (!isNaturalLeaf(state, leaf, placed)
           || hasNaturalSupportOrUnknown(level, leaf, placed)) {
         continue;
       }
-      Block.dropResources(state, level, leaf);
+      if (feller == null) {
+        Block.dropResources(state, level, leaf);
+      } else {
+        // A worker harvesting the tree gathers the canopy with the logs. Leaving
+        // these drops high in the former crown made saplings depend on a later
+        // eight-block litter-pickup stroll, so a productive lumberjack could
+        // lose the next planting stock while standing directly beneath it.
+        haul.addAll(Block.getDrops(state, level, leaf, level.getBlockEntity(leaf), feller, tool));
+      }
       level.removeBlock(leaf, false);
     }
   }

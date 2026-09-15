@@ -408,8 +408,11 @@ below it. Guard posts are read from the Birch footprint and stand on the oak sla
 
 ## Planning and developer preview
 
-Walls are safety projects. An established village starts its regional wall after
-sufficient growth or danger. While incomplete,
+Walls are safety projects. Automatic wall construction waits until the settlement
+has reached at least hamlet population and holds one edible item per resident. An
+established village then starts its regional wall after sufficient building growth
+or recent danger. Danger can bring the project forward within a fed hamlet, but it
+does not send a hungry founding camp into a multi-day perimeter build. While incomplete,
 the wall holds normal village project selection just as a building project does.
 
 `/kkdev village wall` compiles the same project and places all of

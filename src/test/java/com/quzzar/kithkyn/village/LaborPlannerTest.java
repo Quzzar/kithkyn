@@ -24,7 +24,7 @@ class LaborPlannerTest {
     JobAssignment farmer = new JobAssignment(null, Occupation.FARMER, field, 0);
 
     JobAssignment selected = LaborPlanner.openProjectProducerPost(
-        List.of(new ItemStack(Items.OAK_LOG, 2)), List.of(farmer, lumberjack),
+        List.of(new ItemStack(Items.OAK_LOG, 2)), List.of(farmer, lumberjack), List.of(),
         building -> Map.of(lumberyard, List.of("LOGS", "PLANKS"), field, List.of("FOOD", "CROPS"))
             .getOrDefault(building, List.of()));
 
@@ -36,7 +36,20 @@ class LaborPlannerTest {
     JobAssignment farmer = new JobAssignment(null, Occupation.FARMER, UUID.randomUUID(), 0);
 
     assertNull(LaborPlanner.openProjectProducerPost(
-        List.of(new ItemStack(Items.IRON_INGOT, 2)), List.of(farmer), ignored -> List.of("FOOD", "CROPS")));
+        List.of(new ItemStack(Items.IRON_INGOT, 2)), List.of(farmer), List.of(),
+        ignored -> List.of("FOOD", "CROPS")));
+  }
+
+  @Test
+  void aStaffedProducerPreventsRepeatedReassignmentIntoEquivalentVacancies() {
+    UUID staffedLumberyard = UUID.randomUUID();
+    UUID vacantLumberyard = UUID.randomUUID();
+    JobAssignment staffed = new JobAssignment(UUID.randomUUID(), Occupation.LUMBERJACK, staffedLumberyard, 0);
+    JobAssignment vacancy = new JobAssignment(null, Occupation.LUMBERJACK, vacantLumberyard, 0);
+
+    assertNull(LaborPlanner.openProjectProducerPost(
+        List.of(new ItemStack(Items.OAK_LOG, 2)), List.of(vacancy), List.of(staffed),
+        building -> List.of("LOGS", "PLANKS")));
   }
 
   @Test
@@ -71,6 +84,7 @@ class LaborPlannerTest {
     assertTrue(LaborPlanner.mustKeep(Occupation.BAKER, 1, true, false));
     assertTrue(LaborPlanner.mustKeep(Occupation.BUTCHER, 1, true, false));
     assertTrue(LaborPlanner.mustKeep(Occupation.MINER, 1, false, false));
+    assertTrue(LaborPlanner.mustKeep(Occupation.QUARTERMASTER, 1, false, false));
     assertTrue(LaborPlanner.mustKeep(Occupation.QUARTERMASTER, 1, false, true));
     assertTrue(LaborPlanner.mustKeep(Occupation.FARMER, 1, true, false));
     assertFalse(LaborPlanner.mustKeep(Occupation.FARMER, 1, false, false));

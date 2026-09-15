@@ -744,7 +744,11 @@ dirt, stone or sand (`FetchMineSupportStep`, the miner's counterpart of the farm
 meal fetch). The seal comes before the break, so a face whose fall would open an unsealed boundary is
 never broken with an empty pack: the miner fans ribs for material and comes back to it. Before
 that rule the seal failed and the same sand block was broken and reset without end (a Desert mine,
-2026-09-10).
+2026-09-10). The one bootstrap exception is a dry face before the first normal rib that itself
+drops a mine-support block. The miner may break that face without first sealing an air boundary,
+then spends the dirt or stone it physically yielded on the next pass. Placement work, wet faces,
+and every deeper cave keep the strict seal-first rule. This prevents a surface-edge mine from
+requiring its first lining block before it has been allowed to excavate one.
 
 The mine interior is the descending ramp plus every planned prospecting rib. A rib entrance is an
 intentional doorway through the ramp wall, so the lining pass never fills it back in. A flooded
@@ -1078,16 +1082,22 @@ over the yard once it finally did). The loop now runs as `ChopStep` at the stati
 `PlantStep`, `BonemealStep`, all at one priority since they cannot want the station at once:
 fell the tree at the station whole, whoever planted it (`TreeFelling.fellStand` fells every log
 connected to the station without asking ownership, whatever its height or how far the branches
-reach, and drops each record as it goes); the grown tree's natural canopy decays and drops its
-saplings as part of the fell, even when a nearby building log would make vanilla preserve it;
+reach, and drops each record as it goes); the grown tree's natural canopy is harvested into the
+worker's pack with the logs, even when a nearby building log would make vanilla preserve it;
 set a sapling from the pack
 on the stump, any kind (a Birch lodge whose birch is down grows a spruce if spruce is what the
 pack holds), and it is nobody's, so the next fell is an ordinary one; feed it while there is
-bone meal in the pack; fell it again when it is a tree. Saplings reach the pack three ways:
-picked up under the decaying canopy, picked up in the woods, or drawn from the stores at
-bedtime, four at a time, the same way bone meal is. The replant used to be a one-in-a-hundred
-roll per scan that conjured an oak sapling from nothing; that is gone, and a stand that is bare
-with no sapling in the pack says so in the shortage report instead of "growing back".
+bone meal in the pack; fell it again when it is a tree. Saplings reach the pack from the harvested
+canopy, woodland pickups, or the stores at bedtime, four at a time, the same way bone meal does.
+If the canopy's ordinary loot happens to contain no sapling, the worker turns one harvested log
+into a matching cutting reserved for the next planting. Dark oak uses an oak cutting because a
+one-block stand cannot grow a four-sapling dark oak. This guarantees the planted loop remains
+renewable while charging it one real log in the unlucky case. The replant used to be a
+one-in-a-hundred roll per scan that created an oak sapling from nothing; that is gone, and a stand
+that is bare with no sapling in the pack says so in the shortage report instead of "growing back".
+A planted
+sapling waiting on random growth is healthy pending work, never a shortage or operational blocker,
+even when it takes longer than the village-audit attention window.
 
 **Reach is measured from the eyes, not the feet (2026-09-01).** A tree is cut from beside its
 trunk or from beneath it: the worker stands within arm's length of the trunk horizontally, and
@@ -1117,8 +1127,9 @@ when it gives the whole connected tree comes down at once through `TreeFelling` 
 building placement and a finished wall's tree-line cleanup, [site-selection.md](site-selection.md)):
 a bounded flood fill over its logs,
 all of it into the pack. Natural leaves supported by those logs are captured before the trunk
-comes down, then any that have no other natural tree supporting them decay immediately with
-ordinary ground drops. Player- and village-owned logs do not preserve a severed canopy, so a
+comes down, then any that have no other natural tree supporting them are harvested into the
+worker's pack. Site clearing still leaves ordinary ground drops because no worker performed that
+harvest. Player- and village-owned logs do not preserve a severed canopy, so a
 building beam beside a lumberjack stand cannot jam its next sapling. Persistent or ownership-marked
 leaves stay, as do shared leaves still supported by another natural tree. Two guards keep the axe off
 anything but a wild tree. A candidate must have a natural canopy nearby, leaves whose

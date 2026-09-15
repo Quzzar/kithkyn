@@ -67,14 +67,14 @@ public final class LaborPlanner {
 
   /**
    * The trades a village always keeps at least one of: its miner (no miner, no
-   * stone, and the build economy stalls) and its builder (no builder, and a
-   * project in progress never finishes, so the village sits stuck on it and
-   * never advances to houses). The last of either is never moved off to the
-   * field, however hungry the village; a second, if there is one, may still go
-   * (Aaron, 2026-09-03).
+   * stone, and the build economy stalls), its builder (no builder, and an
+   * active project never finishes), and its quartermaster (without one, full
+   * packs and mixed shelves recreate the storage emergency labor was meant to
+   * solve). The last of any is never moved off, however hungry the village; a
+   * second, if there is one, may still go.
    */
   private static final Set<Occupation> ALWAYS_STAFFED =
-      EnumSet.of(Occupation.MINER, Occupation.BUILDER);
+      EnumSet.of(Occupation.MINER, Occupation.BUILDER, Occupation.QUARTERMASTER);
 
   /** Village-seconds a village waits out after the brain leaves the crew as it is. */
   private static final int QUIET_SECONDS = 300;
@@ -213,7 +213,8 @@ public final class LaborPlanner {
       return null;
     }
     ConstructionQuote quote = ConstructionQuote.captureGoal(village, wanted, village.stockTally());
-    JobAssignment producer = openProjectProducerPost(quote.missing(), village.claimableJobs(), buildingId -> {
+    JobAssignment producer = openProjectProducerPost(quote.missing(), village.claimableJobs(),
+        List.copyOf(village.getJobAssignmentsView().values()), buildingId -> {
       Building building = village.getBuilding(buildingId);
       return building == null || building.getInfo() == null ? List.of() : building.getInfo().getGrants();
     });
@@ -233,10 +234,16 @@ public final class LaborPlanner {
    * definitions remain authoritative and no occupation-to-item table can drift.
    */
   static JobAssignment openProjectProducerPost(List<ItemStack> missing,
-      List<JobAssignment> openPosts, Function<UUID, List<String>> grantsForBuilding) {
+      List<JobAssignment> openPosts, List<JobAssignment> staffedPosts,
+      Function<UUID, List<String>> grantsForBuilding) {
     for (ItemStack shortage : missing) {
       String capability = MaterialProduction.capabilityFor(shortage.getItem());
       if (capability == null) {
+        continue;
+      }
+      boolean alreadyProduced = staffedPosts.stream()
+          .anyMatch(post -> grantsForBuilding.apply(post.getBuildingUUID()).contains(capability));
+      if (alreadyProduced) {
         continue;
       }
       for (JobAssignment post : openPosts) {

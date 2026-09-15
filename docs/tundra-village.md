@@ -28,7 +28,7 @@ The private datapack contains 23 definitions:
 | Id | Use |
 | --- | --- |
 | `village_center_tundra_1` | T01.1; four core jobs, four worker beds, four personal barrels, bell and four snow golems |
-| `mine_tundra_1` | T05.6; a three-block-wide shaft running south from its north-facing entrance |
+| `mine_tundra_1` | T05.6; a three-block-wide shaft running south from its north-facing entrance, anchored to the floor of its authored approach trench |
 | `storehouse_tundra_1` | T01.5; three reachable village storage barrels and the quartermaster worksite; every barrel is a central shelf |
 | `house_tundra_1` | T01.4 one-bed home |
 | `house_tundra_1__two_single` | T01.3 two single beds with separate personal storage |
@@ -87,3 +87,10 @@ personal storage and sleep in assigned beds. The founding simulation separately 
 icy biome selection, the four centre jobs, naturally planned mine and storehouse companions, the
 three-block mine mouth and the four captured snow golems. Exact run totals and log paths are kept
 in `tools/structure/tundra-catalog-20260912.json`.
+
+A later unattended founding audit caught an interaction the isolated access fixture did not: the
+mine's approach trench removes its ground layer, while the logical mouth was still anchored one
+block above that lower floor. A fresh miner therefore treated the first entry column as a bridge
+requiring support before the village had produced any support material. The T05.6 definition now
+anchors the mouth one block lower, on the authored trench floor. Fresh-village progression is the
+required verification for changes to a mine entrance, in addition to template access checks.
