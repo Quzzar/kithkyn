@@ -29,7 +29,7 @@ import net.neoforged.neoforge.common.Tags;
  * Forest is the one bundled catalog and so the default; Desert, Badlands,
  * Floodplain, Jungle, Swamp, Mediterranean, Tundra, Polynesian Coast,
  * Romanian, Alpine Highlands, Japanese Cherry Grove, Nautical Coast, Savanna
- * Tent and Rustic Woodland arrive through private datapacks (docs/desert-village.md, docs/badlands-village.md,
+ * Tent, Rustic Woodland and Taiga arrive through private datapacks (docs/desert-village.md, docs/badlands-village.md,
  * docs/floodplain-village.md, docs/jungle-village.md, docs/swamp-village.md,
  * docs/mediterranean-village.md, docs/tundra-village.md,
  * docs/polynesian-coast-village.md, docs/romanian-village.md,
@@ -48,7 +48,7 @@ import net.neoforged.neoforge.common.Tags;
 public enum VillageStyle {
   BIRCH_FOREST, DESERT, BADLANDS, FLOODPLAIN, JUNGLE, SWAMP, MEDITERRANEAN, TUNDRA,
   POLYNESIAN_COAST, ROMANIAN, ALPINE_HIGHLANDS, JAPANESE_CHERRY_GROVE, NAUTICAL_COAST, SAVANNA_TENT,
-  RUSTIC_WOODLAND;
+  RUSTIC_WOODLAND, TAIGA;
 
   /**
    * What a blank or unknown saved style reads as, the answer for every climate
@@ -210,7 +210,7 @@ public enum VillageStyle {
 
   /**
    * The conventional families that map to a finished catalog. Every other
-   * family (forest, taiga, mountain and the rest) has no
+   * family (mountain and the rest) has no
    * catalog of its own and falls through to the climate clusters.
    */
   @Nullable
@@ -257,6 +257,13 @@ public enum VillageStyle {
     if (path.equals("forest") || path.contains("oak_forest") || path.contains("oak_woodland")
         || path.contains("oak_woods")) {
       return RUSTIC_WOODLAND;
+    }
+    // The cold conifer forests are the Taiga (docs/taiga-village.md): the plain,
+    // old-growth pine and old-growth spruce taigas. A snowy taiga stays with the
+    // frozen lowlands below, as an explicit style tag can also decide.
+    if ((tagged.test(Tags.Biomes.IS_TAIGA) || path.contains("taiga"))
+        && !tagged.test(Tags.Biomes.IS_SNOWY) && !path.contains("snow")) {
+      return TAIGA;
     }
     // Mountain settlements use the Iberian-inspired brick-and-spruce catalog.
     // This precedes the broad snowy family so snowy slopes and frozen peaks

@@ -533,7 +533,7 @@ class WallSegmentCatalogIntegrationTest {
 
     assertEquals(VillageStyle.DESERT, restored.getStyle());
     assertEquals(VillageStyle.BIRCH_FOREST, restoredLegacy.getStyle());
-    encoded.getAsJsonObject().addProperty("style", "taiga");
+    encoded.getAsJsonObject().addProperty("style", "mushroom");
     assertEquals(VillageStyle.BIRCH_FOREST,
         WallProject.CODEC.parse(JsonOps.INSTANCE, encoded).getOrThrow().getStyle(),
         "a wall saved in a removed family reads as the bundled catalog");

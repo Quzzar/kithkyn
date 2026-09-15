@@ -228,6 +228,14 @@ public final class VillageNamer {
           List.of("Sunveld", "Thornkraal", "Dustmere", "Kalandi"),
           List.of("Sun", "Thorn", "Dust", "Veld", "Kala", "Umba", "Ember", "Grass"),
           List.of("veld", "kraal", "mere", "moor", "ndi", "ara", "wela", "camp"));
+      case TAIGA -> new NamingProfile(
+          "A Viking camp in the cold conifer forest: stripped spruce halls and steep spruce roofs"
+              + " around a meeting point with a watch tower, a timber fort with its jail and the"
+              + " ruler's hall, a firewatch tower, and a palisade of stripped spruce on stone footings."
+              + " Hard, short invented names with a Norse sound.",
+          List.of("Granheim", "Tallvik", "Skogby", "Frostmark"),
+          List.of("Gran", "Tall", "Skog", "Frost", "Bjorn", "Ulv", "Fjell", "Isen"),
+          List.of("heim", "vik", "by", "mark", "dal", "berg", "stad", "fjord"));
     };
   }
 

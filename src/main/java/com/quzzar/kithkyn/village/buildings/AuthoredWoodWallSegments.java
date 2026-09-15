@@ -30,6 +30,11 @@ import net.minecraft.nbt.Tag;
  */
 final class AuthoredWoodWallSegments {
 
+  /**
+   * The families whose captured cobblestone is their footing course rather than
+   * Birch masonry; declared before the bundled families, which read it as they load.
+   */
+  private static final java.util.Set<String> COBBLESTONE_FOOTED = java.util.Set.of("savanna_tent", "taiga");
   static final AuthoredWoodWallSegments INSTANCE = loadBundled("wood");
   static final AuthoredWoodWallSegments BIRCH_FOREST = loadBundled("birch_forest");
 
@@ -60,6 +65,12 @@ final class AuthoredWoodWallSegments {
   static final AuthoredWoodWallSegments SAVANNA_TENT = loadBundled("savanna_tent");
   /** The approved Rustic Woodland wall: a clean stripped-oak palisade without foliage. */
   static final AuthoredWoodWallSegments RUSTIC_WOODLAND = loadBundled("rustic_woodland");
+  /**
+   * Study A of the Taiga walls (2026-09-14): the Birch geometry as a stripped
+   * spruce palisade with spruce fence tips and spruce slab walks on a
+   * cobblestone footing, the Viking houses' timber.
+   */
+  static final AuthoredWoodWallSegments TAIGA = loadBundled("taiga");
 
   private static final String RESOURCE_ROOT =
       "data/kithkyn/structure/wall/";
@@ -541,7 +552,7 @@ final class AuthoredWoodWallSegments {
     };
   }
 
-  /** The piece a captured block stands for; only the Savanna Tent reads cobblestone as its footing. */
+  /** The piece a captured block stands for; the Savanna Tent and Taiga read cobblestone as their footing. */
   private static WallBlockPlan.Piece pieceFor(CompoundTag paletteEntry, String family) {
     String name = paletteEntry.getString("Name");
     CompoundTag properties = paletteEntry.getCompound("Properties");
@@ -549,8 +560,8 @@ final class AuthoredWoodWallSegments {
       return WallBlockPlan.bannerPiece(horizontal(properties.getString("facing")));
     }
     return switch (name) {
-      // Birch masonry; the Savanna Tent palisade's footing course (study A, 2026-09-14).
-      case "minecraft:cobblestone" -> "savanna_tent".equals(family)
+      // Birch masonry; the Savanna Tent and Taiga palisades' footing course (study A, 2026-09-14).
+      case "minecraft:cobblestone" -> COBBLESTONE_FOOTED.contains(family)
           ? WallBlockPlan.Piece.FOOTING : WallBlockPlan.Piece.COBBLE_POST;
       case "minecraft:cobbled_deepslate" -> WallBlockPlan.Piece.COBBLE_POST;
       case "minecraft:mossy_cobblestone" -> WallBlockPlan.Piece.MOSSY_POST;
