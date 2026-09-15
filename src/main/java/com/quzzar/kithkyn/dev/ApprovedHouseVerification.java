@@ -444,6 +444,12 @@ public final class ApprovedHouseVerification {
     CompoundTag stats = new CompoundTag();
     stats.putInt(Stat.SIZE.getNbtKey(), Integer.getInteger("kithkyn.approvedHouses.probeSize", 18));
     person.setStatBlock(StatBlock.load(stats));
+    // A probe plans a route to every bed and container of a placement inside one tick, and the shared
+    // long-retry budget admits one exact retry per person per tick (a live worker re-plans later instead).
+    // The Taiga fort's upper beds are more than 48 blocks of walking from its gate, so the probe searches
+    // as far as that retry would from the start.
+    person.getAttribute(net.minecraft.world.entity.ai.attributes.Attributes.FOLLOW_RANGE)
+        .setBaseValue(com.quzzar.kithkyn.entities.ai.PersonPathNavigation.EXACT_SEARCH_RANGE);
   }
 
   private static void beginWalk(ServerLevel level) throws ReflectiveOperationException {

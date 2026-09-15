@@ -20,7 +20,8 @@ the bundled Birch catalog.
 and the bell, and a small log tower with a ladder and a railed top. It declares the five builder
 duty anchors on the paving, the captain's post by the fire and the bell, and a crossbow watch post
 on the tower, in its north railing gate, which stands open so the guard has a cell to stand on
-above the top stairs. The four white banners Aaron hung on the tower are village banners.
+above the top stairs; the hatch at the ladder's top is one more rung, so the ladder tops out at
+the platform. The four white banners Aaron hung on the tower are village banners.
 
 The meeting point has no beds, so the founding set brings homes, as the Polynesian hall's does:
 
@@ -64,7 +65,10 @@ The private datapack contains 23 definitions:
 A few definitions differ from the gallery copies:
 
 - **Centre.** The north railing gate on the tower top is placed open, so the crossbow guard can
-  stand in it on the top stair below; every other block is Aaron's.
+  stand in it on the top stair below; the open hatch over the ladder is a ladder rung, since the
+  native walker stopped on the top rung under the hatch; and the paving cell under the ladder is
+  plain dirt, since a walker standing on the dirt path there, a fifteen-sixteenths block, had its
+  feet below the ladder and never climbed. Every other block is Aaron's.
 - **Lumberjack.** The template box grows one block north of the hut to hold the sapling cell.
   The dead bush marks it; the template plants a spruce sapling there at stage 0.
 - **Mine.** The template box grows one block north and east for the ground Aaron laid there.

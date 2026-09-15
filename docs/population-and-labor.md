@@ -125,8 +125,10 @@ including its station, is checked before a worker can use a role room as accommo
 An entitled single resident may use one side of a reserved double room, keeping the other
 side for a resident spouse. Both sides must be available before a household moves. A married
 captain keeps their existing couple home when the captain's castle room has only one bed.
-Role-room transfers verify intact beds and clear space above them before releasing the old
-home. The normal saved bed ledger remains authoritative across reloads, role changes and death.
+Role-room transfers verify intact beds and headroom above them before releasing the old
+home: a room counts as obstructed only when a suffocating block sits over either half of a bed,
+the same test the game applies to a sleeper lying down, so a hung shutter such as the open
+trapdoor over the Taiga fort's ruler bed does not close the room. The normal saved bed ledger remains authoritative across reloads, role changes and death.
 
 A married farmer or butcher can claim a job using its free staff couple room even when no single
 bed is available. The job housing check verifies a resident spouse and two available sides; final

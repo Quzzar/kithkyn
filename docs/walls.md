@@ -382,6 +382,18 @@ body, Birch cobblestone, so the piece mapping takes the family name: cobblestone
 `footing()`, cobblestone for this family. The catalog seats it on each column's own ground by the
 Polynesian rule. Guard posts are read from the Birch footprint and stand on the acacia slab walks.
 
+The Taiga family (`data/kithkyn/structure/wall/taiga/`, 2026-09-14) is study A of the Taiga
+gallery, the spruce palisade: the Birch geometry with its cobblestone and mossy cobblestone turned
+to stripped spruce wood, its stone walls to spruce fence tips, its top cobblestone slabs to spruce
+slab walks and its oak hatches to spruce, on a course of cobblestone. The five templates are the
+gallery's own files byte for byte (`tools/structure/taiga-walls-20260914.json`). Its post is the
+Polynesian palisade's stripped spruce wood, so a footing can no longer be read off the post: the
+palette names its footing course explicitly (dead coral for the Polynesian Coast, stripped jungle
+wood for the Nautical Coast, cobblestone for the Savanna Tent and the Taiga, the post itself for
+every family without one), and the loader reads cobblestone as `FOOTING` for the Taiga as it does
+for the Savanna Tent. The catalog seats it on each column's own ground by the Polynesian rule.
+Guard posts are read from the Birch footprint and stand on the spruce slab walks.
+
 ## Planning and developer preview
 
 Walls are safety projects. An established village starts its regional wall after

@@ -28,6 +28,7 @@ These catalogs are integrated, selectable, and verified as complete founding vil
 | Nautical Coast | Beaches on temperate or cold water, Stony Shore, and compatible coasts | A fishing town around a lighthouse: thatched sandstone-and-jungle-timber beach cottages, a jetty fishery on its own water, a turnover-ship castle, and a sandstone seawall on stripped jungle wood |
 | Savanna Tent | Savanna, Savanna Plateau, Windswept Savanna, and compatible dry grasslands | A tent camp on the dry grass: the original white-canvas savanna tent as its centre, blue and yellow tipis and camp tents, a trader-tent storehouse, an acacia mine and stoneworks, vanilla's savanna temple and farm, and an acacia palisade on cobblestone |
 | Rustic Woodland | Forest and compatible ordinary oak woodland biomes | Familiar oak buildings, working barns, a merchant-and-well center, open agriculture, and a clean stripped-oak palisade |
+| Taiga | Taiga, Old Growth Pine Taiga, Old Growth Spruce Taiga, and compatible cold forests that are not snowy | A Viking camp in the conifers: the meeting point with its crossbow watch tower, stripped spruce homes and workplaces, the old-growth taiga fort with its jail and ruler's room, the firewatch tower, the spruce tavern, and a stripped spruce palisade on cobblestone |
 
 ## Locked directions
 
@@ -37,23 +38,24 @@ its production catalog and founding behavior are verified.
 
 | Village biome | Founding environments | Direction |
 | --- | --- | --- |
-| Taiga | Taiga, Old Growth Pine Taiga, Old Growth Spruce Taiga, and compatible cold forests | Cold forest settlement; its final visual language is deliberately deferred between the ornate Polish family and the grittier T&T Viking family |
 | Mushroom | Mushroom Fields and compatible fungal biomes | Fantasy mushroom settlement drawn from the complete mushroom reference families |
 
 Jungle, ordinary Swamp, Mediterranean, Tundra, Polynesian Coast, Romanian, Alpine Highlands,
-Japanese Cherry Grove, Nautical Coast, Savanna Tent and Rustic Woodland are complete private production catalogs. Swamp remains
+Japanese Cherry Grove, Nautical Coast, Savanna Tent, Rustic Woodland and Taiga are complete private production catalogs. Swamp remains
 separate from the mud-brick Floodplain catalog used by mangroves. Tundra starts from a four-bed
 centre with a naturally placed mine and storehouse and deliberately has no castle. The Polynesian
 Coast centre is the king's hall, which seats the ruler and keeps the village jail; that catalog has
 no castle yet. The Nautical Coast centre is a lighthouse whose four beds sleep the founding workers,
 and its castle is the Towns & Towers beach camp's turnover ship. The Savanna Tent centre is the
 original Village Life savanna tent, whose four beds sleep the founding workers; that catalog has no
-castle and no watchtower.
+castle and no watchtower. The Taiga centre is the Towns & Towers Viking meeting point, which has
+no beds and carries a crossbow watch post on its tower; its founding set brings three homes, and
+its castle is the old-growth taiga fort with the ruler's room and the jail.
 
 Swedish and Polish are source languages in the current review rather than settled biome
 assignments. The Swedish temple and tower remain a useful candidate church progression for a
-future Taiga catalog. The complete Polish family remains the ornate Taiga option, while the T&T
-Viking family remains the grittier option with a stronger identity of its own. The Alpine review
+Taiga catalog's church, should it grow one. Aaron chose the grittier T&T Viking family for the
+Taiga on 2026-09-14; the ornate Polish family was not chosen. The Alpine review
 moved away from the cyan-concrete Swiss set and locked the Iberian family in brick and spruce. It
 remains distinct from forested Taiga and exposed Tundra.
 
@@ -64,9 +66,10 @@ to Floodplain when site selection can classify them reliably.
 ## Next authoring shortlist
 
 Tundra, Polynesian Coast, Romanian, Alpine Highlands, Japanese Cherry Grove, Nautical Coast and
-Savanna Tent are complete. Taiga remains intentionally parked until the ornate Polish and grittier
-Viking directions can be judged after more village catalogs are complete. The Mushroom and Taiga
-selection galleries stand in the trio sky since 2026-09-14, so both are ready for Aaron's selection walk.
+Savanna Tent, Rustic Woodland and Taiga are complete. Taiga was parked until the ornate Polish and grittier
+Viking directions could be judged; Aaron judged them on 2026-09-14 and the Taiga catalog is
+complete on the Viking family. Mushroom is the last roster variant: its selection gallery stands
+in the trio sky since 2026-09-14, ready for Aaron's selection walk.
 
 The three walk-through courts begin at **9913.5, 230, 986.5** in the live showcase world. The
 individual entrances are Swamp at **9929.5, 230, 1004.5**, Viking at
@@ -78,13 +81,14 @@ The current review status is:
 
 - **Swamp:** the source court remains as the provenance and comparison gallery for its completed
   production catalog. The selected village center is NF01.2 and SC01.2 is its castle.
-- **Taiga:** source selection is deferred. The ornate Polish family and grittier T&T Viking
-  family remain the two leading alternatives; neither is the production direction yet. V01.1,
-  V03.5, and V05.2 remain candidates rather than locked selections. The complete standalone T&T
-  Viking and Polish families were displayed in a six-row annex at
-  **10201.5, 230, 1224.5** in the earlier showcase world. Since 2026-09-14 the full Taiga selection
-  gallery stands in the sky above the **trio-20260912** world, beginning at **2393.5, 230, 10.5**,
-  east of the Mushroom gallery. Its 34 rows hold 337 pieces:
+- **Taiga:** the production catalog is selected and verified
+  ([taiga-village.md](taiga-village.md)); the catalog is in
+  `tools/structure/taiga-catalog-20260914.json`. Aaron chose the grittier T&T Viking family on
+  2026-09-14; the ornate Polish family, once the other leading alternative, was not chosen. The
+  complete standalone T&T Viking and Polish families were displayed in a six-row annex at
+  **10201.5, 230, 1224.5** in the earlier showcase world. The full Taiga selection gallery stands
+  in the sky above the **trio-20260912** world, beginning at **2393.5, 230, 10.5**, east of the
+  Mushroom gallery. Its 38 rows hold 355 pieces:
   - TA01 to TA08: every standalone Towns & Towers Viking, Polish and Swedish piece, each family
     as centre and homes, workplaces, then food and details.
   - TA09: the T&T old-growth-taiga fort and the snowy taiga, taiga and Swedish outpost towers,
@@ -97,6 +101,9 @@ The current review status is:
     workplaces and farms.
   - TA32 to TA34: Kithkyn's original Village Life taiga family, recovered from git: centre,
     storehouses and markets; mines, farms, well and works; church, homes, smiths and towers.
+  - TA35 to TA38: the palette studies in the Viking materials: the three market tiers in spruce
+    on a podzol floor, and three wall directions on the shared Birch geometry: a stripped spruce
+    palisade, the fort's spruce and dark oak, and the Birch stone with spruce fittings.
 
   The rows' sky is filled with the void biome, which has no precipitation, so no snow settles on
   the roofs and lightning cannot strike. Blocks from mods the server lacks are replaced by vanilla
