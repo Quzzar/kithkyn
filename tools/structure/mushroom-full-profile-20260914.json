@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "recorded": "2026-09-14T23:35:57.608080-04:00",
+  "recorded": "2026-09-14T23:51:37.387969-04:00",
   "purpose": "Every standalone Towns & Towers mushroom-fields fantasy piece and the complete CTOV mushroom village, with mine and well donors, for selecting the Mushroom catalog.",
   "status": "placed",
   "world": "trio-20260912",
@@ -16,7 +16,7 @@
     4,
     2229,
     281,
-    561
+    737
   ],
   "selectionRule": "Every standalone piece of the T&T mushroom-fields fantasy village and its outpost tower, entity-only animal templates omitted; every standalone CTOV mushroom piece, roads omitted and entities stripped, with other mods' blocks shown as the vanilla blocks in standInSwaps; the ten original Village Life mines and the D&T miner compound; the D&T, Terralith and T&T classic wells. Street, terminator and villager templates are omitted.",
   "counts": {
@@ -28,10 +28,10 @@
     "minecraft": 0,
     "terralith": 2,
     "yungsExtras": 0,
-    "studies": 8,
+    "studies": 26,
     "standInPieces": 50,
-    "total": 121,
-    "rows": 13
+    "total": 139,
+    "rows": 17
   },
   "rows": [
     {
@@ -3296,18 +3296,671 @@
           }
         }
       ]
+    },
+    {
+      "id": "MU14",
+      "title": "MUSHROOM MARKET \u2014 TIERS 1 TO 3",
+      "origin": [
+        2030,
+        230,
+        595
+      ],
+      "bounds": [
+        2020,
+        220,
+        586,
+        2106,
+        276,
+        623
+      ],
+      "entries": [
+        {
+          "id": "MU14.1",
+          "label": "Market Tier 1",
+          "role": "market",
+          "sourceMod": "Kithkyn study",
+          "source": "src/main/resources/data/kithkyn/structure/market_birch_forest_1.nbt",
+          "sourceSha256": "ba62598d3dc7ecbffc4d7e1c0542a37a4f7990c356f7613a38534a93f4ef72d1",
+          "preparedSha256": "ae5741cc976d96a52d869d11ca785110199c32fce9d97f30d6a0feff6e29f0de",
+          "size": [
+            16,
+            6,
+            17
+          ],
+          "origin": [
+            2030,
+            230,
+            595
+          ],
+          "privateTemplate": "kithkyn_mushroom_profile:mu14_01_market_1",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0,
+          "study": "run/mushroom-full-profile/studies/market_1.nbt",
+          "swaps": {
+            "cobblestone -> orange_concrete": 16,
+            "birch_trapdoor -> oak_trapdoor": 50,
+            "birch_log -> mushroom_stem": 4,
+            "birch_fence -> oak_fence": 14,
+            "birch_stairs -> oak_stairs": 3
+          }
+        },
+        {
+          "id": "MU14.2",
+          "label": "Market Tier 2",
+          "role": "market",
+          "sourceMod": "Kithkyn study",
+          "source": "src/main/resources/data/kithkyn/structure/market_birch_forest_2.nbt",
+          "sourceSha256": "63f3a3fcfaecefd4dc4807d5a01b28d3e263bad1cddd5a5c12bab754c45c9a9f",
+          "preparedSha256": "889d57349d282be0f90c29771276948f3f8707c62e1f8b917d5295f20bf8ed91",
+          "size": [
+            23,
+            6,
+            17
+          ],
+          "origin": [
+            2052,
+            230,
+            595
+          ],
+          "privateTemplate": "kithkyn_mushroom_profile:mu14_02_market_2",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0,
+          "study": "run/mushroom-full-profile/studies/market_2.nbt",
+          "swaps": {
+            "cobblestone -> orange_concrete": 57,
+            "birch_trapdoor -> oak_trapdoor": 100,
+            "birch_log -> mushroom_stem": 8,
+            "birch_fence -> oak_fence": 28,
+            "birch_stairs -> oak_stairs": 6
+          }
+        },
+        {
+          "id": "MU14.3",
+          "label": "Market Tier 3",
+          "role": "market",
+          "sourceMod": "Kithkyn study",
+          "source": "src/main/resources/data/kithkyn/structure/market_birch_forest_3.nbt",
+          "sourceSha256": "9b2a4c0903bb9cdd26e954fcc45a8f556ea853b2fe7def140a5d0cc088c7cfab",
+          "preparedSha256": "97c01d193b392cab98f9d2ad8f3247c1be88917cdda7fbd9a592a6e23db71a65",
+          "size": [
+            23,
+            6,
+            25
+          ],
+          "origin": [
+            2081,
+            230,
+            595
+          ],
+          "privateTemplate": "kithkyn_mushroom_profile:mu14_03_market_3",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0,
+          "study": "run/mushroom-full-profile/studies/market_3.nbt",
+          "swaps": {
+            "cobblestone -> orange_concrete": 78,
+            "birch_trapdoor -> oak_trapdoor": 150,
+            "birch_log -> mushroom_stem": 12,
+            "birch_fence -> oak_fence": 42,
+            "birch_stairs -> oak_stairs": 9
+          }
+        }
+      ]
+    },
+    {
+      "id": "MU15",
+      "title": "MUSHROOM WALL A \u2014 STEM PALISADE ON DEEPSLATE",
+      "origin": [
+        2030,
+        230,
+        639
+      ],
+      "bounds": [
+        2020,
+        220,
+        630,
+        2107,
+        276,
+        649
+      ],
+      "entries": [
+        {
+          "id": "MU15.1",
+          "label": "Wall A Straight",
+          "role": "wall",
+          "sourceMod": "Kithkyn study",
+          "source": "src/main/resources/data/kithkyn/structure/wall/birch_forest/straight.nbt",
+          "sourceSha256": "417c3fa956b8b016be23d1a9fdb090b8d155466b75060234831a0a118cf90b85",
+          "preparedSha256": "2bc1786771aaa03648d62777564ddad5b66fc65305a817cc347f49db14bce668",
+          "size": [
+            7,
+            8,
+            1
+          ],
+          "origin": [
+            2030,
+            230,
+            639
+          ],
+          "privateTemplate": "kithkyn_mushroom_profile:mu15_01_wall_a_straight",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0,
+          "study": "run/mushroom-full-profile/studies/wall_a_straight.nbt",
+          "swaps": {
+            "mossy_cobblestone -> cobbled_deepslate": 5,
+            "cobblestone -> cobbled_deepslate": 2,
+            "mossy_cobblestone -> mushroom_stem": 6,
+            "cobblestone -> mushroom_stem": 18,
+            "cobblestone_wall -> oak_fence": 3,
+            "mossy_cobblestone_wall -> oak_fence": 1
+          }
+        },
+        {
+          "id": "MU15.2",
+          "label": "Wall A Diagonal",
+          "role": "wall",
+          "sourceMod": "Kithkyn study",
+          "source": "src/main/resources/data/kithkyn/structure/wall/birch_forest/diagonal.nbt",
+          "sourceSha256": "641d8f0285db2aadcc581e4b4a60082a70d29824668fb8b3bff2be357073ca71",
+          "preparedSha256": "ec05a6d8d896a3f5f209f1bfb0a897d2e8a320118f66b45c8bbeff9710897153",
+          "size": [
+            7,
+            8,
+            7
+          ],
+          "origin": [
+            2043,
+            230,
+            639
+          ],
+          "privateTemplate": "kithkyn_mushroom_profile:mu15_02_wall_a_diagonal",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0,
+          "study": "run/mushroom-full-profile/studies/wall_a_diagonal.nbt",
+          "swaps": {
+            "mossy_cobblestone -> cobbled_deepslate": 3,
+            "cobblestone -> cobbled_deepslate": 4,
+            "mossy_cobblestone -> mushroom_stem": 8,
+            "cobblestone -> mushroom_stem": 16,
+            "cobblestone_wall -> oak_fence": 4,
+            "mossy_cobblestone_wall -> oak_fence": 2
+          }
+        },
+        {
+          "id": "MU15.3",
+          "label": "Wall A Corner Tower",
+          "role": "wall",
+          "sourceMod": "Kithkyn study",
+          "source": "src/main/resources/data/kithkyn/structure/wall/birch_forest/corner_tower.nbt",
+          "sourceSha256": "38b6df41ffe999e9ef9027a2b6b05e8af76f622cbd27d7cd0d5918124a1e84ea",
+          "preparedSha256": "e75c4ef2f7ed434d6cc61af5a34c754bfb5036201be276bf6a67cee318678e60",
+          "size": [
+            12,
+            8,
+            6
+          ],
+          "origin": [
+            2056,
+            230,
+            639
+          ],
+          "privateTemplate": "kithkyn_mushroom_profile:mu15_03_wall_a_corner_tower",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0,
+          "study": "run/mushroom-full-profile/studies/wall_a_corner_tower.nbt",
+          "swaps": {
+            "mossy_cobblestone -> cobbled_deepslate": 7,
+            "cobblestone -> cobbled_deepslate": 7,
+            "mossy_cobblestone -> mushroom_stem": 11,
+            "cobblestone -> mushroom_stem": 40,
+            "mossy_cobblestone_wall -> oak_fence": 8,
+            "cobblestone_wall -> oak_fence": 11,
+            "cobblestone_slab -> oak_slab": 1
+          }
+        },
+        {
+          "id": "MU15.4",
+          "label": "Wall A Gatehouse",
+          "role": "wall",
+          "sourceMod": "Kithkyn study",
+          "source": "src/main/resources/data/kithkyn/structure/wall/birch_forest/gatehouse.nbt",
+          "sourceSha256": "6b18ae5516320898e1ad6b89393a2e6ab9ba34a2afc8bd4b733d4944d9cdfcf1",
+          "preparedSha256": "7e2afe811abf2299c813db9ddc1a6d98f1875c40887dc2e90973f5ebd965e4d7",
+          "size": [
+            17,
+            8,
+            7
+          ],
+          "origin": [
+            2074,
+            230,
+            639
+          ],
+          "privateTemplate": "kithkyn_mushroom_profile:mu15_04_wall_a_gatehouse",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0,
+          "study": "run/mushroom-full-profile/studies/wall_a_gatehouse.nbt",
+          "swaps": {
+            "mossy_cobblestone -> cobbled_deepslate": 8,
+            "cobblestone -> cobbled_deepslate": 10,
+            "cobblestone -> mushroom_stem": 52,
+            "mossy_cobblestone -> mushroom_stem": 30,
+            "cobblestone_wall -> oak_fence": 20,
+            "mossy_cobblestone_wall -> oak_fence": 11,
+            "cobblestone_slab -> oak_slab": 9
+          }
+        },
+        {
+          "id": "MU15.5",
+          "label": "Wall A Terrace",
+          "role": "wall",
+          "sourceMod": "Kithkyn study",
+          "source": "src/main/resources/data/kithkyn/structure/wall/birch_forest/terrace.nbt",
+          "sourceSha256": "df728d8b1ed1fe0372acc52a4faf7057eefc5c24f2f1a0605a234613a3404056",
+          "preparedSha256": "9813ec66f225f506bab9a8833385239413d772dfebbf1a31583ce98e7a682a4e",
+          "size": [
+            8,
+            9,
+            1
+          ],
+          "origin": [
+            2097,
+            230,
+            639
+          ],
+          "privateTemplate": "kithkyn_mushroom_profile:mu15_05_wall_a_terrace",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0,
+          "study": "run/mushroom-full-profile/studies/wall_a_terrace.nbt",
+          "swaps": {
+            "mossy_cobblestone -> cobbled_deepslate": 3,
+            "cobblestone -> cobbled_deepslate": 1,
+            "mossy_cobblestone -> mushroom_stem": 12,
+            "cobblestone -> mushroom_stem": 22,
+            "cobblestone_wall -> oak_fence": 4,
+            "mossy_cobblestone_wall -> oak_fence": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": "MU16",
+      "title": "MUSHROOM WALL B \u2014 MUSHROOM CAPS ON A STEM FOOTING",
+      "origin": [
+        2030,
+        230,
+        683
+      ],
+      "bounds": [
+        2020,
+        220,
+        674,
+        2107,
+        276,
+        693
+      ],
+      "entries": [
+        {
+          "id": "MU16.1",
+          "label": "Wall B Straight",
+          "role": "wall",
+          "sourceMod": "Kithkyn study",
+          "source": "src/main/resources/data/kithkyn/structure/wall/birch_forest/straight.nbt",
+          "sourceSha256": "417c3fa956b8b016be23d1a9fdb090b8d155466b75060234831a0a118cf90b85",
+          "preparedSha256": "620b64d07af7df6206cb760859242ce6ff2a51274f6905dd55241bdcf39d8838",
+          "size": [
+            7,
+            8,
+            1
+          ],
+          "origin": [
+            2030,
+            230,
+            683
+          ],
+          "privateTemplate": "kithkyn_mushroom_profile:mu16_01_wall_b_straight",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0,
+          "study": "run/mushroom-full-profile/studies/wall_b_straight.nbt",
+          "swaps": {
+            "mossy_cobblestone -> mushroom_stem": 5,
+            "cobblestone -> mushroom_stem": 2,
+            "mossy_cobblestone -> brown_mushroom_block": 6,
+            "cobblestone -> red_mushroom_block": 18,
+            "cobblestone_wall -> oak_fence": 3,
+            "mossy_cobblestone_wall -> oak_fence": 1
+          }
+        },
+        {
+          "id": "MU16.2",
+          "label": "Wall B Diagonal",
+          "role": "wall",
+          "sourceMod": "Kithkyn study",
+          "source": "src/main/resources/data/kithkyn/structure/wall/birch_forest/diagonal.nbt",
+          "sourceSha256": "641d8f0285db2aadcc581e4b4a60082a70d29824668fb8b3bff2be357073ca71",
+          "preparedSha256": "a2c268e6e0a88b980355c62f679bdd6298fe1dfa3f0f41df48c4f5d9b8714d0b",
+          "size": [
+            7,
+            8,
+            7
+          ],
+          "origin": [
+            2043,
+            230,
+            683
+          ],
+          "privateTemplate": "kithkyn_mushroom_profile:mu16_02_wall_b_diagonal",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0,
+          "study": "run/mushroom-full-profile/studies/wall_b_diagonal.nbt",
+          "swaps": {
+            "mossy_cobblestone -> mushroom_stem": 3,
+            "cobblestone -> mushroom_stem": 4,
+            "mossy_cobblestone -> brown_mushroom_block": 8,
+            "cobblestone -> red_mushroom_block": 16,
+            "cobblestone_wall -> oak_fence": 4,
+            "mossy_cobblestone_wall -> oak_fence": 2
+          }
+        },
+        {
+          "id": "MU16.3",
+          "label": "Wall B Corner Tower",
+          "role": "wall",
+          "sourceMod": "Kithkyn study",
+          "source": "src/main/resources/data/kithkyn/structure/wall/birch_forest/corner_tower.nbt",
+          "sourceSha256": "38b6df41ffe999e9ef9027a2b6b05e8af76f622cbd27d7cd0d5918124a1e84ea",
+          "preparedSha256": "81c0b95d8bbc4fbbe6a548879f36da511e4e37783b28433f170dea30d83fe4de",
+          "size": [
+            12,
+            8,
+            6
+          ],
+          "origin": [
+            2056,
+            230,
+            683
+          ],
+          "privateTemplate": "kithkyn_mushroom_profile:mu16_03_wall_b_corner_tower",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0,
+          "study": "run/mushroom-full-profile/studies/wall_b_corner_tower.nbt",
+          "swaps": {
+            "mossy_cobblestone -> mushroom_stem": 7,
+            "cobblestone -> mushroom_stem": 7,
+            "mossy_cobblestone -> brown_mushroom_block": 11,
+            "cobblestone -> red_mushroom_block": 40,
+            "mossy_cobblestone_wall -> oak_fence": 8,
+            "cobblestone_wall -> oak_fence": 11,
+            "cobblestone_slab -> oak_slab": 1
+          }
+        },
+        {
+          "id": "MU16.4",
+          "label": "Wall B Gatehouse",
+          "role": "wall",
+          "sourceMod": "Kithkyn study",
+          "source": "src/main/resources/data/kithkyn/structure/wall/birch_forest/gatehouse.nbt",
+          "sourceSha256": "6b18ae5516320898e1ad6b89393a2e6ab9ba34a2afc8bd4b733d4944d9cdfcf1",
+          "preparedSha256": "ca56daa76aa0b37adcb805b53567a65276368fd6081f9f7c57f2b434b23585ff",
+          "size": [
+            17,
+            8,
+            7
+          ],
+          "origin": [
+            2074,
+            230,
+            683
+          ],
+          "privateTemplate": "kithkyn_mushroom_profile:mu16_04_wall_b_gatehouse",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0,
+          "study": "run/mushroom-full-profile/studies/wall_b_gatehouse.nbt",
+          "swaps": {
+            "mossy_cobblestone -> mushroom_stem": 8,
+            "cobblestone -> mushroom_stem": 10,
+            "cobblestone -> red_mushroom_block": 52,
+            "mossy_cobblestone -> brown_mushroom_block": 30,
+            "cobblestone_wall -> oak_fence": 20,
+            "mossy_cobblestone_wall -> oak_fence": 11,
+            "cobblestone_slab -> oak_slab": 9
+          }
+        },
+        {
+          "id": "MU16.5",
+          "label": "Wall B Terrace",
+          "role": "wall",
+          "sourceMod": "Kithkyn study",
+          "source": "src/main/resources/data/kithkyn/structure/wall/birch_forest/terrace.nbt",
+          "sourceSha256": "df728d8b1ed1fe0372acc52a4faf7057eefc5c24f2f1a0605a234613a3404056",
+          "preparedSha256": "35e49fbdc3987fb01c26c0a7e05f7c0601f0c8c6a9bd62b1b46b0f0ebe0b7f60",
+          "size": [
+            8,
+            9,
+            1
+          ],
+          "origin": [
+            2097,
+            230,
+            683
+          ],
+          "privateTemplate": "kithkyn_mushroom_profile:mu16_05_wall_b_terrace",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0,
+          "study": "run/mushroom-full-profile/studies/wall_b_terrace.nbt",
+          "swaps": {
+            "mossy_cobblestone -> mushroom_stem": 3,
+            "cobblestone -> mushroom_stem": 1,
+            "mossy_cobblestone -> brown_mushroom_block": 12,
+            "cobblestone -> red_mushroom_block": 22,
+            "cobblestone_wall -> oak_fence": 4,
+            "mossy_cobblestone_wall -> oak_fence": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": "MU17",
+      "title": "MUSHROOM WALL C \u2014 COBBLED DEEPSLATE + SMOOTH BASALT",
+      "origin": [
+        2030,
+        230,
+        727
+      ],
+      "bounds": [
+        2020,
+        220,
+        718,
+        2107,
+        276,
+        737
+      ],
+      "entries": [
+        {
+          "id": "MU17.1",
+          "label": "Wall C Straight",
+          "role": "wall",
+          "sourceMod": "Kithkyn study",
+          "source": "src/main/resources/data/kithkyn/structure/wall/birch_forest/straight.nbt",
+          "sourceSha256": "417c3fa956b8b016be23d1a9fdb090b8d155466b75060234831a0a118cf90b85",
+          "preparedSha256": "15668520e8e2081d2b3b749f5382c2ea5186105b519229acd78d0375b9302980",
+          "size": [
+            7,
+            8,
+            1
+          ],
+          "origin": [
+            2030,
+            230,
+            727
+          ],
+          "privateTemplate": "kithkyn_mushroom_profile:mu17_01_wall_c_straight",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0,
+          "study": "run/mushroom-full-profile/studies/wall_c_straight.nbt",
+          "swaps": {
+            "mossy_cobblestone -> cobbled_deepslate": 5,
+            "cobblestone -> cobbled_deepslate": 20,
+            "mossy_cobblestone -> smooth_basalt": 6,
+            "cobblestone_wall -> cobbled_deepslate_wall": 3,
+            "mossy_cobblestone_wall -> cobbled_deepslate_wall": 1
+          }
+        },
+        {
+          "id": "MU17.2",
+          "label": "Wall C Diagonal",
+          "role": "wall",
+          "sourceMod": "Kithkyn study",
+          "source": "src/main/resources/data/kithkyn/structure/wall/birch_forest/diagonal.nbt",
+          "sourceSha256": "641d8f0285db2aadcc581e4b4a60082a70d29824668fb8b3bff2be357073ca71",
+          "preparedSha256": "2827857b87e405cbb43e8740a34784ba664c6af987b46e14920a6efe52afbe6b",
+          "size": [
+            7,
+            8,
+            7
+          ],
+          "origin": [
+            2043,
+            230,
+            727
+          ],
+          "privateTemplate": "kithkyn_mushroom_profile:mu17_02_wall_c_diagonal",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0,
+          "study": "run/mushroom-full-profile/studies/wall_c_diagonal.nbt",
+          "swaps": {
+            "mossy_cobblestone -> cobbled_deepslate": 3,
+            "cobblestone -> cobbled_deepslate": 20,
+            "mossy_cobblestone -> smooth_basalt": 8,
+            "cobblestone_wall -> cobbled_deepslate_wall": 4,
+            "mossy_cobblestone_wall -> cobbled_deepslate_wall": 2
+          }
+        },
+        {
+          "id": "MU17.3",
+          "label": "Wall C Corner Tower",
+          "role": "wall",
+          "sourceMod": "Kithkyn study",
+          "source": "src/main/resources/data/kithkyn/structure/wall/birch_forest/corner_tower.nbt",
+          "sourceSha256": "38b6df41ffe999e9ef9027a2b6b05e8af76f622cbd27d7cd0d5918124a1e84ea",
+          "preparedSha256": "8553a2aa84d7f1c37ece3e8c0e81da29f67bc8dad2e503711dbbec8e0f8b174a",
+          "size": [
+            12,
+            8,
+            6
+          ],
+          "origin": [
+            2056,
+            230,
+            727
+          ],
+          "privateTemplate": "kithkyn_mushroom_profile:mu17_03_wall_c_corner_tower",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0,
+          "study": "run/mushroom-full-profile/studies/wall_c_corner_tower.nbt",
+          "swaps": {
+            "mossy_cobblestone -> cobbled_deepslate": 7,
+            "cobblestone -> cobbled_deepslate": 47,
+            "mossy_cobblestone -> smooth_basalt": 11,
+            "mossy_cobblestone_wall -> cobbled_deepslate_wall": 8,
+            "cobblestone_wall -> cobbled_deepslate_wall": 11,
+            "cobblestone_slab -> oak_slab": 1
+          }
+        },
+        {
+          "id": "MU17.4",
+          "label": "Wall C Gatehouse",
+          "role": "wall",
+          "sourceMod": "Kithkyn study",
+          "source": "src/main/resources/data/kithkyn/structure/wall/birch_forest/gatehouse.nbt",
+          "sourceSha256": "6b18ae5516320898e1ad6b89393a2e6ab9ba34a2afc8bd4b733d4944d9cdfcf1",
+          "preparedSha256": "0bcdf077422210ebb5dcc522fb54727395ce6b87e10c1b804a70ffb1652e5001",
+          "size": [
+            17,
+            8,
+            7
+          ],
+          "origin": [
+            2074,
+            230,
+            727
+          ],
+          "privateTemplate": "kithkyn_mushroom_profile:mu17_04_wall_c_gatehouse",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0,
+          "study": "run/mushroom-full-profile/studies/wall_c_gatehouse.nbt",
+          "swaps": {
+            "mossy_cobblestone -> cobbled_deepslate": 8,
+            "cobblestone -> cobbled_deepslate": 62,
+            "mossy_cobblestone -> smooth_basalt": 30,
+            "cobblestone_wall -> cobbled_deepslate_wall": 20,
+            "mossy_cobblestone_wall -> cobbled_deepslate_wall": 11,
+            "cobblestone_slab -> oak_slab": 9
+          }
+        },
+        {
+          "id": "MU17.5",
+          "label": "Wall C Terrace",
+          "role": "wall",
+          "sourceMod": "Kithkyn study",
+          "source": "src/main/resources/data/kithkyn/structure/wall/birch_forest/terrace.nbt",
+          "sourceSha256": "df728d8b1ed1fe0372acc52a4faf7057eefc5c24f2f1a0605a234613a3404056",
+          "preparedSha256": "6fbdbe88c0b52e7a336015d67fcfaa05b90665f0c899ee4d5fe81ed15c6ab937",
+          "size": [
+            8,
+            9,
+            1
+          ],
+          "origin": [
+            2097,
+            230,
+            727
+          ],
+          "privateTemplate": "kithkyn_mushroom_profile:mu17_05_wall_c_terrace",
+          "waterCells": 0,
+          "containment": null,
+          "standIns": 0,
+          "study": "run/mushroom-full-profile/studies/wall_c_terrace.nbt",
+          "swaps": {
+            "mossy_cobblestone -> cobbled_deepslate": 3,
+            "cobblestone -> cobbled_deepslate": 23,
+            "mossy_cobblestone -> smooth_basalt": 12,
+            "cobblestone_wall -> cobbled_deepslate_wall": 4,
+            "mossy_cobblestone_wall -> cobbled_deepslate_wall": 1
+          }
+        }
+      ]
     }
   ],
   "verification": {
-    "preparedTemplates": 121,
-    "placedTemplates": 8,
+    "preparedTemplates": 139,
+    "placedTemplates": 18,
     "allPlacementResponsesConfirmed": true,
     "chunksGenerated": 0,
     "worldSaved": true,
-    "worldBackup": "/Users/quzzar/Projects/kithkyn/run/backups/before-mushroom-gallery-20260914-233600",
+    "worldBackup": "/Users/quzzar/Projects/kithkyn/run/backups/before-mushroom-gallery-20260914-235144",
     "console": "screen session fifo:/Users/quzzar/Projects/kithkyn/run/deployed-runtime/20260914-181832-rustic-height-corrections/console.fifo",
     "addedRows": [
-      "MU13"
+      "MU14",
+      "MU15",
+      "MU16",
+      "MU17"
     ]
   },
   "biome": {
@@ -3540,6 +4193,6 @@
     ],
     "waterOutsideRings": [],
     "waterOutsideRingsCount": 0,
-    "footprintsChecked": 121
+    "footprintsChecked": 139
   }
 }
