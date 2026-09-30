@@ -43,11 +43,11 @@ export function Installation(): ReactElement {
             <p className={site.label}>
               <Download aria-hidden="true" /> Make yourself at home
             </p>
-            <h2 className={site.sectionHeading} id="setup-title">
+            <h1 className={site.sectionHeading} id="setup-title">
               New neighbors.
               <br />
               Your kind of world.
-            </h2>
+            </h1>
             <p className={styles.intro}>A local brain, or a cloud model you choose.</p>
             <Tabs.Root defaultValue="offline" className={styles.models}>
               <Tabs.List className={styles.modelList} aria-label="Village brain setup">

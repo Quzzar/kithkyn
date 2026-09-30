@@ -1,83 +1,104 @@
-# Hearth and horizon
+# Website direction exploration
 
-The September 30, 2026 brief authorizes a completely new KithKyn website and identity.
-This replaces the timber title-screen direction. The spelling stays KithKyn, while the
-Minecraft mod ID and repository stay kithkyn.
+The September 30, 2026 **Hearth and horizon** proposal was rejected. Aaron disliked the
+overall visual direction and explicitly asked to delete the generated village diorama.
+Do not reuse that artwork or its social-banner derivative. The pale green rounded landing
+page is not an approved direction. The previous logo assets are provisional, not selected.
 
-## Visual plan
+The next deliverable is three deliberately low-fidelity, structurally different concepts.
+Aaron chooses a direction before finished artwork, a new logo suite or production polish.
+All three explain the same Minecraft mod: autonomous villagers building their communities.
+Gray boxes stand for future real game captures or commissioned artwork; they are not footage.
 
-The page introduces autonomous village life to Minecraft players, then helps them explore
-the 17 bundled regional catalogs and understand installation. The village diorama is the
-single signature element.
+## Reference observations
 
-Color: mist (#eef3ed) for the page, pine (#23483f) for type and strong surfaces, meadow
-(#9cba9e) for quiet fields, honey (#f5c45b) for the primary action, sky (#cddfe7) for the
-atlas, and white for reading surfaces. These are named tokens, not component values.
+- [Shopify Editions](https://mobbin.com/sites/sections/47c5f830-b25e-4912-8484-47377cd8a238):
+  a single scene, title and central action can make an entry screen feel like a game.
+  Its glowing car and purple palette do not belong to this mod.
+- [GetYourGuide map browser](https://mobbin.com/screens/7d8762de-2deb-4393-8667-dd8751d3b206):
+  a persistent index beside a large detail surface lets exploration lead the experience.
+  Real-world maps, price labels and crowded pins would misrepresent a Minecraft catalog.
+- [Duolingo story section](https://mobbin.com/sites/sections/c7d4c0e0-4225-454a-85f0-e0386c7ff191):
+  characters and a small story scene establish personality before explaining mechanics.
+  Its finished mascot art is not a substitute for KithKyn's actual villagers.
 
-Type: Bricolage Grotesque for bold, tightly set display text; Outfit for body and controls.
-Keep useful labels small, sentence case, and plainly legible.
+## A — Title screen (`/play`)
 
-Layout: an asymmetrical illustrated introduction, a short account of village life, one
-interactive 17-style atlas, model/setup guidance, and a compact footer.
+Color: charcoal scene, white title, gray menu and quiet blue-gray lines.
+Type: large, widely spaced Outfit title; restrained body copy; monospace capture annotations.
+Layout: one full-width gameplay area, centered name and vertical menu, then a short scene strip.
+Signature: the website opens like the entrance to a game.
 
+```text
+review navigation
++----------------------------------------------------+
+|           [actual gameplay loop, later]             |
+|                    KITHKYN                          |
+|            A village with its own life              |
+|                [Explore villages]                   |
+|                [Installation guide]                 |
++----------------------------------------------------+
+  first fire           first home          community
 ```
-brand                 villages / life / get started
-large promise         original village diorama
-primary action        illustration caption
-village life          actual catalog previews
-style selector        selected village field notes
-offline / cloud       installation and common questions
-brand                 source / credits / brand kit
+
+## B — Village atlas (`/atlas`)
+
+Color: white canvas, pale gray drafting surface, charcoal text, muted blue selection.
+Type: Outfit for catalog names and description; monospace for index and materials.
+Layout: compact masthead, all 17 styles in a persistent index, generous selected-style preview.
+Signature: browse the worlds immediately, with no conventional marketing hero.
+
+```text
+review navigation
+KithKyn / Village atlas                     Setup
+Where will they make a home?
++-----------------+----------------------------------+
+| 17-style index  | [large architecture placeholder]  |
+| selected style  |                                  |
+|                 | Selected village / biome          |
+|                 | Materials and regional character |
++-----------------+----------------------------------+
 ```
 
-The emblem shows three homes gathered around one hearth. The suite includes the horizontal
-lockup, wordmark, standalone emblem, reversed and monochrome lockups, icon sizes, social
-artwork and a downloadable kit. The generated logo originals remain raster artwork.
+## C — Village stories (`/stories`)
 
-## References and rejected directions
+Color: white page, ink-gray frames, light gray illustration boxes, one muted blue accent.
+Type: Georgia headline gives the page a storybook voice; Outfit captions and controls.
+Layout: broad masthead followed by an asymmetric comic strip and a full-width final scene.
+Signature: framed moments and sample dialogue introduce individual villagers before buildings.
 
-The Mobbin reference pass examined [basement.studio](https://mobbin.com/sites/sections/28a88d90-f813-478b-bb89-336dbe1e48a0),
-[Shopify Editions](https://mobbin.com/sites/sections/47c5f830-b25e-4912-8484-47377cd8a238),
-[Chronicle](https://mobbin.com/sites/sections/6985d6b3-5a76-490b-8082-b723bdb5d232) and
-[Lightship](https://mobbin.com/sites/sections/a5fa6838-ff45-42cc-8e90-b513fd69a5e7).
-Carry forward a single immersive subject, compact navigation, a clear primary action and
-progressive disclosure of supporting information. Reject dark wireframes, purple lighting,
-presentation-software language and the previous centered scenic title screen.
+```text
+review navigation
+KithKyn                              Life / Places / Setup
+          Meet your new neighbors.
++-----------------------+----------------------------+
+| neighbor portrait     | building scene              |
+| [sample dialogue]     | [sample dialogue]            |
++-----------------------+----------------------------+
+|                a community grows                    |
++----------------------------------------------------+
+             [Explore all 17 styles]
+```
 
-Also reject cream/serif/terracotta editorial styling, decorative numbered feature cards,
-gradient type, and a generic technology dashboard. This is a village game.
-
-## Media and release truth
-
-The hero is original generated promotional illustration, explicitly captioned as such.
-Catalog screenshots are actual review-world captures, identified as building previews.
-They are not natural-terrain or autonomous-growth evidence. No borrowed Valecraft footage
-remains. The 17-style roster follows docs/village-biomes.md. Ocean and Nether systems are
-future work and are not advertised as included.
-
-Public Modrinth and CurseForge projects remain unverified. Keep those destinations marked
-coming soon. Source, installation documentation and issue links are real GitHub URLs.
-Deployment awaits a resolved domain/hosting destination: the checked live kithkyn.com is
-currently a hiring-product page, and kithkin.com redirects to /lander.
+These are wireframes, not three color variations of one layout. No concept is chosen yet.
+Final palette, lettering, artwork, motion and brand exports wait for that choice.
 
 ## Verification
 
-Run the website build, lint, formatting and desktop/mobile Playwright checks. Inspect
-fresh captures at both widths, including atlas selection, setup tabs, FAQ expansion and
-the brand-kit route. Check keyboard focus, reduced motion, image loading, contrast,
-console errors and horizontal overflow. Record the final results here before delivery.
+Render each direction at desktop and mobile widths. Inspect hierarchy, navigation, caption
+placement, keyboard selection, image loading and horizontal overflow. Save current captures
+in `docs/website-preview/`; remove the rejected homepage captures. The local preview stays
+available for side-by-side review. Do not publish or merge the exploratory designs.
 
-### Final review
+## Render review — September 30, 2026
 
-The production build, lint and formatting checks pass. All 22 desktop/mobile Playwright
-checks pass, including the 17-catalog loop, URL history, keyboard focus, FAQ disclosure,
-offline/cloud setup, ZIP download and section navigation from the brand page. Both page
-routes load without JavaScript errors or horizontal overflow. Reduced motion is verified.
+All three concepts were inspected at desktop and mobile widths. The centered title/menu,
+persistent regional index, and asymmetric story frames remain distinct on the rendered pages.
+The comparison page uses actual rendered concept captures, with equal thumbnail sizes.
 
-Fresh desktop and 390-pixel mobile captures were inspected. The review fixed the oversized
-inline footer logo, an over-wide hero illustration, page scroll restoration and section
-navigation. The atlas title was shortened to hold two clear lines, the redundant hero setup
-action was removed, and the mobile selector was bounded so its chosen preview stays close.
-The final primary, reversed, monochrome, emblem and wordmark gallery was inspected together.
-Screenshot samples live in docs/website-preview/; complete automated captures are ignored
-under Website/test-results/. No production domain was modified.
+A 320-pixel phone check exposed the inherited body minimum width and an oversized title.
+Removing that minimum and scaling the mobile title fixed the measured horizontal overflow.
+The corrected title screen was re-rendered at narrow and regular phone widths; the atlas
+was recaptured after its final token change. Build, lint, formatting and all 16 desktop/mobile
+Playwright scenarios pass, including every catalog selection and a 320-pixel overflow check
+for each route. No direction has been selected.

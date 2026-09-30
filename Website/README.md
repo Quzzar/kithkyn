@@ -1,7 +1,16 @@
-# KithKyn website
+# KithKyn website design study
 
-The new Hearth and horizon website: original illustrated introduction, a shareable atlas of
-all 17 bundled village styles, installation guidance and a full brand-kit page at `/brand`.
+Three low-fidelity directions are available from the comparison page at `/`:
+
+- `/play`: a game title screen, with a future real gameplay loop.
+- `/atlas`: an architecture browser, retaining all 17 catalogs and shareable selection.
+- `/stories`: a comic-style introduction to individual villagers and village life.
+
+The real installation requirements remain available at `/setup`. The previous generated
+village illustration and its social-banner derivative were rejected and removed, including
+copies inside the downloadable brand kit. The old logo exports are provisional assets;
+the final logo suite follows the user's choice of direction. No concept is selected yet.
+
 React, Vite, strict TypeScript, vanilla-extract, Radix, nuqs and Playwright, using Bun.
 
 ## Development
@@ -21,24 +30,6 @@ bun run test:e2e
 ```
 
 Tests run at port 45175 on desktop and mobile Chromium. Full-page captures are saved in
-`test-results/`. A static host must rewrite page routes such as `/brand` to `index.html`.
-Domain/hosting destination is unresolved; this branch does not replace either live domain.
-
-## Brand suite
-
-`public/brand/` contains the primary, reversed, monochrome, wordmark and emblem assets,
-favicon/touch/app icons, social banner, usage notes and generation prompts. These are
-transparent PNG originals and optimized WebP exports, not vectors. Local font licenses
-are in `public/fonts/`. The village diorama is original promotional artwork, and real
-catalog screenshots are identified separately on the website.
-
-To rebuild the downloadable kit after changing assets:
-
-```sh
-zip -j public/brand/kithkyn-brand-kit.zip public/brand/*.png public/brand/*.webp \
-  public/brand/README.md public/brand/generation-prompts.md public/art/*.webp \
-  public/fonts/*
-```
-
-The kit contains branding, not the mod. Public mod download destinations stay marked
-coming soon until real project pages exist. See `../docs/website-brand.md` for details.
+`test-results/`. A static host must rewrite page routes to `index.html`. This study is
+not deployed to either live domain. See `../docs/website-redesign.md` for the directions
+and the rejected-design record; `../docs/website-brand.md` records media provenance.

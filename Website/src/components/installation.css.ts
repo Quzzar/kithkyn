@@ -64,8 +64,7 @@ globalStyle(`${guardrail} svg`, { width: vars.size.icon, height: vars.size.icon 
 export const installCard = style({
   padding: vars.space.xxl,
   background: vars.color.white,
-  borderRadius: vars.radius.large,
-  boxShadow: vars.shadow.panel,
+  border: `${vars.size.border} solid ${vars.color.line}`,
   "@media": { [breakpoint.narrow]: { padding: vars.space.xl } },
 });
 export const releaseLabel = style({

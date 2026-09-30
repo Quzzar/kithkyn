@@ -1,46 +1,32 @@
-# Website and brand
+# Website and brand status
 
-The active website lives in `Website/`. The September 30, 2026 redesign replaces the previous
-timber title-screen identity with **Hearth and horizon**, a new direction requested by Aaron.
-Display the brand as **KithKyn**. The repository and Minecraft mod ID remain `kithkyn`.
+The active website is a three-direction low-fidelity study in `Website/`. Aaron rejected
+Hearth and horizon on September 30, 2026 and requested three substantially different options.
+No direction is selected. See [website-redesign.md](website-redesign.md) for the concepts,
+reference observations and rejection record.
 
-## Identity and assets
+The comparison page links to `/play` (game title screen), `/atlas` (architecture browser),
+and `/stories` (comic-style village life). The atlas retains all 17 bundled styles,
+Radix keyboard navigation and nuqs shareable selection with browser history. `/setup`
+retains the actual offline/cloud requirements, multiplayer guidance and expandable FAQ.
+Modrinth and CurseForge remain coming soon; installation and source links use GitHub.
 
-Three homes gather around a gold hearth flame. The horizontal wordmark uses rounded, compact
-lettering. Pine, mist, meadow, honey and sky carry the identity. Bricolage Grotesque is the
-display face; Outfit is the body face. Both fonts are locally hosted with their OFL licenses.
+## Artwork and logo status
 
-The suite in `Website/public/brand/` includes primary, reversed, monochrome, standalone
-wordmark and emblem PNG originals, optimized lossless WebP counterparts, icons at 32, 64,
-180 and 512 pixels, a 1200×630 social banner, usage notes and a downloadable ZIP. The `/brand`
-route is the visual brand guide and the gallery for every `LogoMark` variant. Assets are
-raster originals, not vector exports. Preserve their alpha and aspect ratio.
+The rejected generated village illustration, its social-banner derivative, the old homepage
+screenshots and the ZIP containing that artwork have been removed. The concepts use labeled
+media placeholders. No generated replacement illustration has been added.
 
-The artwork was created with the built-in image-generation tool. Exact prompts and provenance
-are in `Website/public/brand/generation-prompts.md`; usage instructions are in that folder's
-README. The new village illustration is in `Website/public/art/village-diorama.webp`. The
-same hearth emblem is used as the mod-list logo in `src/main/resources/kithkyn-logo.png`.
-No borrowed Valecraft video, poster or superseded timber-brand explorations are distributed.
+Earlier raster logo variants remain in `Website/public/brand/` as provisional source exports.
+They are not a chosen identity and are not displayed in the new concepts. Their provenance
+and alpha transparency remain intact. The mod-list logo still uses the earlier hearth emblem.
+Finish or replace the logo suite after Aaron chooses the website direction.
 
-## Website behavior
+## Real capture library
 
-The homepage introduces village life, then offers a 17-style atlas, offline/cloud requirements,
-real installation guidance and expandable common questions. The atlas uses Radix tabs with
-keyboard navigation. Its selected catalog is shareable through the `village` URL parameter,
-managed by nuqs, and restored by browser back/forward. Unknown values show Mediterranean.
-The model comparison and FAQs use Radix tabs and accordion primitives. All styles use the
-shared vanilla-extract tokens; reduced motion disables smooth scrolling and transitions.
-
-The roster follows [village-biomes.md](village-biomes.md). Swamp and Floodplain are separate;
-the latter belongs to mangrove biomes. Ocean and Nether settlement systems remain future work.
-Modrinth and CurseForge remain **Coming soon** until actual project pages exist. Development,
-installation, source, issue and credit destinations point to the real GitHub repository.
-
-## Media provenance
-
-The generated hero and social banner are promotional illustration, not gameplay captures.
-The homepage says so beneath its artwork. Building previews are actual review-world images,
-captioned as in-game catalog previews rather than naturally developed villages.
+The existing real catalog screenshots are retained for the next design phase. They are
+building-review captures, not naturally developed villages or autonomous-growth timelines.
+The current low-fidelity concepts deliberately use placeholders rather than finished media.
 
 Thirteen catalog images are included. Four catalogs (Japanese Cherry Grove, Nautical Coast,
 Savanna Tent and Mushroom) have material/biome field notes instead of an invented screenshot.
@@ -65,18 +51,13 @@ The capture sources, relative to the original project root, are:
 These are composition/catalog previews; some review images contain donor rows in the background.
 Use their captions, and do not present them as a production village's growth timeline.
 
-## Deployment and verification
+## Preview and verification
 
-This redesign is a local working website, not a production deployment. At the September 30
-check, `kithkyn.com` served a hiring product and `kithkin.com` redirected to `/lander`.
-Resolve the intended domain and hosting account before publishing. Update the social-image
-absolute URL in `index.html` if the domain changes. Static hosts must rewrite `/brand` to
-`index.html`, while serving assets normally.
+The local preview is `http://127.0.0.1:45173`. Desktop concept captures also power the
+comparison page from `Website/public/previews/`; mobile captures live in
+`docs/website-preview/`. Tests run on port 45175, on desktop and mobile Chromium.
+Use `bun run build`, `bun run lint`, `bun run format:check` and `bun run test:e2e`.
 
-From `Website/`, run `bun run build`, `bun run lint`, `bun run format:check` and
-`bun run test:e2e`. The preview runs on 45173; tests run on 45175. Tests cover desktop and
-mobile layouts, all 17 selections, deep links and browser history, keyboard focus, setup
-choices, FAQ disclosure, real destination URLs, brand-kit downloads, image loading, reduced
-motion, console errors and overflow. Full-page captures are written under `test-results/`.
-
-See [website-redesign.md](website-redesign.md) for the visual plan and final visual review.
+The study is not published or merged. Previously, `kithkyn.com` served a hiring product,
+while `kithkin.com` redirected to `/lander`; confirm the intended domain and hosting before
+any production deployment. Static hosts must rewrite page routes to `index.html`.

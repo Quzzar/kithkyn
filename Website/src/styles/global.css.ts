@@ -19,7 +19,7 @@ globalStyle("html", {
 });
 globalStyle("body", {
   margin: vars.space.none,
-  minWidth: "20rem",
+  minWidth: vars.space.none,
   color: vars.color.pine,
   fontFamily: vars.font.body,
   fontSize: vars.fontSize.body,

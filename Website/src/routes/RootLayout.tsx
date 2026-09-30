@@ -2,12 +2,18 @@ import { NuqsAdapter } from "nuqs/adapters/react-router/v7";
 import { useEffect, type ReactElement } from "react";
 import { Outlet, ScrollRestoration, useLocation } from "react-router-dom";
 
-/** Restore page navigation without losing the atlas's shareable URL state. */
+/** Restore prototype navigation and the atlas's shareable selection. */
 export function RootLayout(): ReactElement {
   const { pathname } = useLocation();
   useEffect((): void => {
-    document.title =
-      pathname === "/brand" ? "KithKyn | Brand kit" : "KithKyn | Your world. Their story.";
+    const titles: Readonly<Record<string, string>> = {
+      "/": "Compare directions",
+      "/play": "A · Title screen",
+      "/atlas": "B · Village atlas",
+      "/stories": "C · Village stories",
+      "/setup": "Setup reference",
+    };
+    document.title = `KithKyn | ${titles[pathname] ?? "Design study"}`;
   }, [pathname]);
   return (
     <NuqsAdapter>
