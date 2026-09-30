@@ -1,0 +1,126 @@
+{
+  "structure": "village_center_alpine_highlands_1",
+  "category": "village_center",
+  "variant": "alpine_highlands",
+  "beds": [],
+  "work_stations": [
+    {
+      "pos": [
+        8,
+        1,
+        8
+      ],
+      "occupation": "BUILDER"
+    },
+    {
+      "pos": [
+        8,
+        1,
+        7
+      ],
+      "occupation": "BUILDER"
+    },
+    {
+      "pos": [
+        8,
+        1,
+        9
+      ],
+      "occupation": "BUILDER"
+    },
+    {
+      "pos": [
+        9,
+        1,
+        7
+      ],
+      "occupation": "BUILDER"
+    },
+    {
+      "pos": [
+        7,
+        1,
+        9
+      ],
+      "occupation": "BUILDER"
+    },
+    {
+      "pos": [
+        9,
+        1,
+        8
+      ],
+      "occupation": "GUARD",
+      "guard_duty": "CAPTAIN"
+    },
+    {
+      "pos": [
+        10,
+        1,
+        2
+      ],
+      "occupation": "FARMER"
+    }
+  ],
+  "worksites": [],
+  "containers": [
+    [
+      10,
+      0,
+      2
+    ]
+  ],
+  "personal_containers": [],
+  "bed_containers": [],
+  "couple_beds": [],
+  "village_identity": {
+    "primary_blocks": [],
+    "secondary_blocks": [],
+    "banners": [
+      [
+        7,
+        3,
+        0
+      ]
+    ]
+  },
+  "sink": 0,
+  "entrance_facing": "south",
+  "grants": [
+    "CIVIC_CENTER",
+    "CONSTRUCTION",
+    "LOGISTICS",
+    "PROTECTION",
+    "FOOD",
+    "CROPS",
+    "STORAGE"
+  ],
+  "cost": [
+    {
+      "item": "minecraft:oak_log",
+      "count": 52
+    },
+    {
+      "item": "minecraft:cobblestone",
+      "count": 52
+    }
+  ],
+  "starting_buildings": [
+    "mine_alpine_highlands_1",
+    "storehouse_alpine_highlands_1",
+    "house_alpine_highlands_1__two_bed",
+    "house_alpine_highlands_1"
+  ],
+  "meeting_point": [
+    8,
+    1,
+    10
+  ],
+  "campfires": [
+    [
+      6,
+      1,
+      6
+    ]
+  ]
+}

@@ -26,17 +26,9 @@ import net.neoforged.neoforge.common.Tags;
  *
  * Every style is a strict catalog: a village raises only what its own family
  * authored and never borrows another family's building to fill a gap. Birch
- * Forest is the one bundled catalog and so the default; Desert, Badlands,
- * Floodplain, Jungle, Swamp, Mediterranean, Tundra, Polynesian Coast,
- * Romanian, Alpine Highlands, Japanese Cherry Grove, Nautical Coast, Savanna
- * Tent, Rustic Woodland, Taiga and Mushroom arrive through private datapacks (docs/desert-village.md, docs/badlands-village.md,
- * docs/floodplain-village.md, docs/jungle-village.md, docs/swamp-village.md,
- * docs/mediterranean-village.md, docs/tundra-village.md,
- * docs/polynesian-coast-village.md, docs/romanian-village.md,
- * docs/alpine-highlands-village.md, docs/japanese-cherry-grove-village.md,
- * docs/nautical-coast-village.md, docs/savanna-tent-village.md,
- * docs/rustic-woodland-village.md, docs/taiga-village.md, docs/mushroom-village.md), so they
- * are only automatic candidates while their founding sets are loaded.
+ * Forest remains the saved-style default. All seventeen approved regional catalogs ship
+ * in the jar; a modpack can still replace or extend their definitions through datapacks.
+ * Only styles with a complete loaded founding set are automatic candidates.
  *
  * Explicit datapack style tags take precedence over conventional biome families.
  * A beach on warm or lukewarm water ({@link #WARM_OCEAN}) is the Polynesian Coast,
@@ -51,12 +43,8 @@ public enum VillageStyle {
   RUSTIC_WOODLAND, TAIGA, MUSHROOM;
 
   /**
-   * What a blank or unknown saved style reads as, the answer for every climate
-   * without a catalog of its own, and the last resort. Birch holds this seat
-   * only because it is the one bundled catalog; the intended default is the
-   * Plains village once its catalog exists (docs/buildings.md, "The default is
-   * a placeholder"). Moving the seat is a change here, in the temperate branch
-   * of {@link #climateStyles} and in the enum order, nowhere else.
+   * What a blank or unknown saved style reads as, and the fallback for climates without
+   * a more specific mapping. Bundling the other catalogs preserves this save contract.
    */
   public static final VillageStyle DEFAULT = BIRCH_FOREST;
 

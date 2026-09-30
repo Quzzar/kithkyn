@@ -1,0 +1,49 @@
+{
+  "structure": "farm_nautical_coast_1",
+  "category": "farm",
+  "variant": "nautical_coast",
+  "beds": [],
+  "work_stations": [
+    {
+      "pos": [
+        5,
+        1,
+        0
+      ],
+      "occupation": "FARMER"
+    }
+  ],
+  "worksites": [],
+  "containers": [
+    [
+      5,
+      0,
+      1
+    ]
+  ],
+  "personal_containers": [],
+  "bed_containers": [],
+  "couple_beds": [],
+  "village_identity": {
+    "primary_blocks": [],
+    "secondary_blocks": [],
+    "banners": []
+  },
+  "sink": 0,
+  "entrance_facing": "north",
+  "grants": [
+    "STORAGE",
+    "FOOD",
+    "CROPS"
+  ],
+  "cost": [
+    {
+      "item": "minecraft:oak_log",
+      "count": 24
+    },
+    {
+      "item": "minecraft:cobblestone",
+      "count": 12
+    }
+  ]
+}

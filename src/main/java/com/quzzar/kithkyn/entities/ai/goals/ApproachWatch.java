@@ -103,7 +103,7 @@ public final class ApproachWatch {
       // walk out of, usually the bottom of the village's own mine. Recover them
       // the way a lost villager is already recovered, rather than leaving a
       // village with work nobody can do.
-      Kithkyn.LOGGER.info("{} was stranded and has been brought back to the village center",
+      Kithkyn.LOGGER.debug("{} was stranded and has been brought back to the village center",
           person.getFullName());
       person.tpToHome();
       consecutiveGiveUps = 0;

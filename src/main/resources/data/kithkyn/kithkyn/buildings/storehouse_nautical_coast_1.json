@@ -1,0 +1,73 @@
+{
+  "structure": "storehouse_nautical_coast_1",
+  "category": "storehouse",
+  "variant": "nautical_coast",
+  "beds": [],
+  "work_stations": [
+    {
+      "pos": [
+        3,
+        1,
+        6
+      ],
+      "occupation": "QUARTERMASTER"
+    }
+  ],
+  "worksites": [],
+  "containers": [
+    [
+      3,
+      1,
+      5
+    ],
+    [
+      4,
+      1,
+      4
+    ],
+    [
+      4,
+      1,
+      6
+    ],
+    [
+      4,
+      2,
+      5
+    ],
+    [
+      5,
+      1,
+      5
+    ],
+    [
+      5,
+      2,
+      5
+    ]
+  ],
+  "personal_containers": [],
+  "bed_containers": [],
+  "couple_beds": [],
+  "village_identity": {
+    "primary_blocks": [],
+    "secondary_blocks": [],
+    "banners": []
+  },
+  "sink": 0,
+  "entrance_facing": "south",
+  "grants": [
+    "STORAGE",
+    "LOGISTICS"
+  ],
+  "cost": [
+    {
+      "item": "minecraft:oak_log",
+      "count": 16
+    },
+    {
+      "item": "minecraft:cobblestone",
+      "count": 8
+    }
+  ]
+}

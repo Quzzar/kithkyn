@@ -1,0 +1,48 @@
+{
+  "structure": "stoneworks_polynesian_coast_1",
+  "category": "stoneworks",
+  "variant": "polynesian_coast",
+  "beds": [],
+  "work_stations": [
+    {
+      "pos": [
+        4,
+        2,
+        3
+      ],
+      "occupation": "MASON"
+    }
+  ],
+  "worksites": [],
+  "containers": [
+    [
+      3,
+      2,
+      5
+    ]
+  ],
+  "personal_containers": [],
+  "bed_containers": [],
+  "couple_beds": [],
+  "village_identity": {
+    "primary_blocks": [],
+    "secondary_blocks": [],
+    "banners": []
+  },
+  "sink": -1,
+  "entrance_facing": "north",
+  "grants": [
+    "STORAGE",
+    "CUT_STONE"
+  ],
+  "cost": [
+    {
+      "item": "minecraft:oak_log",
+      "count": 20
+    },
+    {
+      "item": "minecraft:cobblestone",
+      "count": 16
+    }
+  ]
+}

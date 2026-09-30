@@ -1,5 +1,7 @@
 # Structure sourcing: where buildings can legally come from
 
+**Current release decision (2026-09-14):** the approved catalogs ship in the jar, with creator credits and a standing offer to revise designs, as recorded in [release.md](release.md). The source survey below is historical research and does not change that release decision.
+
 **Survey, not a decision.** [building-spec.md](building-spec.md) needs roughly 173 structure
 files at full coverage, 81 for phase 1, and 11 for a minimum playable village. This is the
 inventory of where those could come from and what each source permits.

@@ -1,0 +1,45 @@
+{
+  "structure": "market_savanna_tent_1",
+  "category": "market",
+  "variant": "savanna_tent",
+  "beds": [],
+  "work_stations": [
+    {
+      "occupation": "MERCHANT",
+      "pos": [
+        8,
+        1,
+        7
+      ]
+    }
+  ],
+  "personal_containers": [],
+  "containers": [
+    [
+      8,
+      0,
+      9
+    ]
+  ],
+  "grants": [
+    "STORAGE",
+    "TRADE"
+  ],
+  "cost": [
+    {
+      "item": "minecraft:acacia_log",
+      "count": 24
+    },
+    {
+      "item": "minecraft:cobblestone",
+      "count": 12
+    }
+  ],
+  "sink": 0,
+  "village_identity": {
+    "primary_blocks": [],
+    "secondary_blocks": [],
+    "banners": []
+  },
+  "entrance_facing": "west"
+}

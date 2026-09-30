@@ -87,7 +87,7 @@ public class FetchFoodWhenHurtGoal extends Goal {
   @Override
   public void stop() {
     if (this.ticks >= GIVE_UP_TICKS && !person.hasMeal()) {
-      Kithkyn.LOGGER.info("'{}' could not reach any food while hurt; healing the slow way", person.getFullName());
+      Kithkyn.LOGGER.debug("'{}' could not reach any food while hurt; healing the slow way", person.getFullName());
     }
   }
 
@@ -126,7 +126,7 @@ public class FetchFoodWhenHurtGoal extends Goal {
         ItemStack taken = stack.split(Math.min(BITES, stack.getCount()));
         container.setChanged();
         person.addItems(List.of(taken));
-        Kithkyn.LOGGER.info("'{}' is hurt and took {} {} from a chest to eat", person.getFullName(),
+        Kithkyn.LOGGER.debug("'{}' is hurt and took {} {} from a chest to eat", person.getFullName(),
             taken.getCount(), taken.getItem().getDescription().getString().toLowerCase(java.util.Locale.ROOT));
         return;
       }

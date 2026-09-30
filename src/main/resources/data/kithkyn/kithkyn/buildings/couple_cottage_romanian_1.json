@@ -1,0 +1,103 @@
+{
+  "structure": "couple_cottage_romanian_1",
+  "category": "couple_cottage",
+  "variant": "romanian",
+  "beds": [
+    [
+      2,
+      3,
+      2
+    ],
+    [
+      2,
+      3,
+      3
+    ]
+  ],
+  "work_stations": [],
+  "worksites": [],
+  "containers": [],
+  "personal_containers": [
+    [
+      2,
+      3,
+      4
+    ]
+  ],
+  "bed_containers": [
+    {
+      "bed": [
+        2,
+        3,
+        2
+      ],
+      "containers": [
+        [
+          2,
+          3,
+          4
+        ]
+      ]
+    },
+    {
+      "bed": [
+        2,
+        3,
+        3
+      ],
+      "containers": [
+        [
+          2,
+          3,
+          4
+        ]
+      ]
+    }
+  ],
+  "couple_beds": [
+    [
+      [
+        2,
+        3,
+        2
+      ],
+      [
+        2,
+        3,
+        3
+      ]
+    ]
+  ],
+  "village_identity": {
+    "primary_blocks": [],
+    "secondary_blocks": [
+      [
+        2,
+        3,
+        2
+      ],
+      [
+        2,
+        3,
+        3
+      ]
+    ],
+    "banners": []
+  },
+  "sink": 0,
+  "entrance_facing": "south",
+  "grants": [
+    "HOUSING",
+    "FAMILY_HOUSING"
+  ],
+  "cost": [
+    {
+      "item": "minecraft:oak_log",
+      "count": 20
+    },
+    {
+      "item": "minecraft:cobblestone",
+      "count": 12
+    }
+  ]
+}

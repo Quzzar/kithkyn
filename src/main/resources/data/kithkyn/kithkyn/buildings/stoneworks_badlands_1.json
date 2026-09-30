@@ -1,0 +1,47 @@
+{
+  "category": "stoneworks",
+  "beds": [],
+  "couple_beds": [],
+  "work_stations": [
+    {
+      "occupation": "MASON",
+      "pos": [
+        5,
+        1,
+        4
+      ]
+    }
+  ],
+  "personal_containers": [],
+  "containers": [
+    [
+      4,
+      1,
+      3
+    ]
+  ],
+  "bed_containers": [],
+  "village_identity": {
+    "primary_blocks": [],
+    "secondary_blocks": [],
+    "banners": []
+  },
+  "sink": 0,
+  "entrance_facing": "west",
+  "grants": [
+    "STORAGE",
+    "CUT_STONE"
+  ],
+  "cost": [
+    {
+      "item": "minecraft:oak_log",
+      "count": 8
+    },
+    {
+      "item": "minecraft:cobblestone",
+      "count": 28
+    }
+  ],
+  "structure": "stoneworks_badlands_1",
+  "variant": "badlands"
+}

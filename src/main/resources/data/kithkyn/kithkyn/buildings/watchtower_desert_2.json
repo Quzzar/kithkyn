@@ -1,0 +1,91 @@
+{
+  "category": "watchtower",
+  "beds": [
+    [
+      4,
+      2,
+      7
+    ]
+  ],
+  "worker_beds": [
+    [
+      4,
+      2,
+      7
+    ]
+  ],
+  "couple_beds": [],
+  "work_stations": [
+    {
+      "occupation": "GUARD",
+      "pos": [
+        3,
+        13,
+        8
+      ],
+      "guard_duty": "CROSSBOW_POST"
+    }
+  ],
+  "personal_containers": [
+    [
+      4,
+      2,
+      9
+    ]
+  ],
+  "containers": [
+    [
+      7,
+      13,
+      6
+    ]
+  ],
+  "bed_containers": [
+    {
+      "bed": [
+        4,
+        2,
+        7
+      ],
+      "containers": [
+        [
+          4,
+          2,
+          9
+        ]
+      ]
+    }
+  ],
+  "village_identity": {
+    "primary_blocks": [
+      [
+        4,
+        2,
+        7
+      ]
+    ],
+    "secondary_blocks": [],
+    "banners": []
+  },
+  "sink": 1,
+  "entrance_facing": "north",
+  "grants": [
+    "HOUSING",
+    "PROTECTION",
+    "RANGED_GUARD_POSTS",
+    "STORAGE"
+  ],
+  "cost": [
+    {
+      "item": "minecraft:oak_log",
+      "count": 8
+    },
+    {
+      "item": "minecraft:cobblestone",
+      "count": 32
+    }
+  ],
+  "structure": "watchtower_desert_2",
+  "variant": "desert",
+  "upgrades_from": "watchtower_desert_1"
+}

@@ -1,0 +1,66 @@
+{
+  "category": "lumberjack",
+  "beds": [
+    [
+      6,
+      1,
+      5
+    ]
+  ],
+  "worker_beds": [
+    [
+      6,
+      1,
+      5
+    ]
+  ],
+  "couple_beds": [],
+  "work_stations": [
+    {
+      "occupation": "LUMBERJACK",
+      "pos": [
+        0,
+        1,
+        2
+      ]
+    }
+  ],
+  "personal_containers": [],
+  "containers": [],
+  "bed_containers": [
+    {
+      "bed": [
+        6,
+        1,
+        5
+      ],
+      "containers": []
+    }
+  ],
+  "village_identity": {
+    "primary_blocks": [
+      [
+        6,
+        1,
+        5
+      ]
+    ],
+    "secondary_blocks": [],
+    "banners": []
+  },
+  "sink": 0,
+  "entrance_facing": "west",
+  "grants": [
+    "HOUSING",
+    "LOGS",
+    "PLANKS"
+  ],
+  "cost": [
+    {
+      "item": "minecraft:cobblestone",
+      "count": 32
+    }
+  ],
+  "structure": "lumberjack_floodplain_1",
+  "variant": "floodplain"
+}

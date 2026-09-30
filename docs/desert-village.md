@@ -1,11 +1,13 @@
 # Desert village
 
+**Release availability:** this approved catalog ships in the Kithkyn jar. No separate world datapack is required. Exact shipped definitions and template hashes are recorded in [the bundled catalog manifest](../tools/release/bundled-catalogs.json). Local `run/` paths below are historical authoring and verification records.
+
 The September 9 selection uses the edited Desert Oasis buildings from the dry-biome
 gallery. Sandy desert biomes select this catalog. Mesa, badlands, and the savanna
 family select [Pueblo](badlands-village.md); Birch biomes retain the Birch catalog.
 Desert has a strict catalog and does not borrow missing buildings from any other family.
 
-The private catalog contains 30 selected building definitions:
+The bundled catalog contains 30 selected building definitions:
 
 | Selection | Buildings |
 | --- | --- |
@@ -36,7 +38,7 @@ See [walls.md](walls.md) for construction and guard access.
 
 Selections, immutable capture hashes, export corrections, and physical access checks
 are recorded in `tools/structure/desert-*-20260909.json` and
-`tools/structure/desert-tavern-adoption-20260910.json`. The reviewed private assets
+`tools/structure/desert-tavern-adoption-20260910.json`. The reviewed bundled assets
 are assembled in `run/desert-integration/datapack` and installed as `kithkyn-desert`
 after `mod_data`. Its filter removes superseded Desert definitions from lower packs;
 no old-building aliases or save migrations are provided.
@@ -70,7 +72,7 @@ four general beds on the upper floors. Its remaining chest is communal.
 Both changed buildings passed sixteen instant/incremental placements and all four
 rotations. Adult residents passed sixty access routes, twenty-eight assigned-bed sleeps,
 twelve personal deposits, four innkeeper station walks, and sixteen communal deposits.
-The two definitions and their templates are installed in the live private datapack;
+The two definitions and their templates are installed in the live bundled datapack;
 a reload confirmed 199 total building definitions. The comparison court at
 `4240.5, 230, 980.5` now labels the selected couple home, tavern, and retained well.
 
@@ -106,7 +108,7 @@ wooden stall, two sword posts, two crossbow posts and a jailer. The merchant use
 village's existing staffed market and treasury. Two stacked evidence barrels beside the
 rooftop cell are excluded from village storage and theft rules. See [castles.md](castles.md) for custody, inventory handling
 and ruler decisions. All four rotations passed physical access and role-allocation
-checks; the live private catalogs plus bundled Birch now contain 200 building definitions.
+checks; the release manifest now records 394 bundled building definitions across all seventeen styles.
 
 ## Mining in sand
 

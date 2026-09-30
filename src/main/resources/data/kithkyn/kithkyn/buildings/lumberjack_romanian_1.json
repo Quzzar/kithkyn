@@ -1,0 +1,86 @@
+{
+  "structure": "lumberjack_romanian_1",
+  "category": "lumberjack",
+  "variant": "romanian",
+  "beds": [
+    [
+      2,
+      1,
+      2
+    ]
+  ],
+  "work_stations": [
+    {
+      "pos": [
+        10,
+        1,
+        3
+      ],
+      "occupation": "LUMBERJACK"
+    }
+  ],
+  "worksites": [],
+  "containers": [
+    [
+      7,
+      0,
+      1
+    ]
+  ],
+  "personal_containers": [
+    [
+      2,
+      1,
+      4
+    ]
+  ],
+  "bed_containers": [
+    {
+      "bed": [
+        2,
+        1,
+        2
+      ],
+      "containers": [
+        [
+          2,
+          1,
+          4
+        ]
+      ]
+    }
+  ],
+  "couple_beds": [],
+  "village_identity": {
+    "primary_blocks": [
+      [
+        2,
+        1,
+        2
+      ]
+    ],
+    "secondary_blocks": [],
+    "banners": []
+  },
+  "sink": 0,
+  "entrance_facing": "south",
+  "grants": [
+    "HOUSING",
+    "STORAGE",
+    "LOGS",
+    "PLANKS"
+  ],
+  "worker_beds": [
+    [
+      2,
+      1,
+      2
+    ]
+  ],
+  "cost": [
+    {
+      "item": "minecraft:cobblestone",
+      "count": 40
+    }
+  ]
+}

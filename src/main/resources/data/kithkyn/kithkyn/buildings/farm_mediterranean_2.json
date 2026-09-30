@@ -1,0 +1,43 @@
+{
+  "structure": "farm_mediterranean_2",
+  "category": "farm",
+  "variant": "mediterranean",
+  "beds": [],
+  "work_stations": [
+    {
+      "pos": [
+        4,
+        1,
+        4
+      ],
+      "occupation": "FARMER"
+    }
+  ],
+  "worksites": [],
+  "containers": [],
+  "personal_containers": [],
+  "bed_containers": [],
+  "couple_beds": [],
+  "village_identity": {
+    "primary_blocks": [],
+    "secondary_blocks": [],
+    "banners": []
+  },
+  "sink": 0,
+  "entrance_facing": "north",
+  "grants": [
+    "FOOD",
+    "CROPS"
+  ],
+  "upgrades_from": "farm_mediterranean_1",
+  "cost": [
+    {
+      "item": "minecraft:oak_log",
+      "count": 16
+    },
+    {
+      "item": "minecraft:cobblestone",
+      "count": 32
+    }
+  ]
+}

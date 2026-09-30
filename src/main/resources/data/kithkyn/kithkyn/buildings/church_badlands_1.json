@@ -1,0 +1,67 @@
+{
+  "category": "church",
+  "beds": [
+    [
+      3,
+      2,
+      5
+    ]
+  ],
+  "worker_beds": [
+    [
+      3,
+      2,
+      5
+    ]
+  ],
+  "couple_beds": [],
+  "work_stations": [
+    {
+      "occupation": "CLERIC",
+      "pos": [
+        5,
+        2,
+        6
+      ]
+    }
+  ],
+  "personal_containers": [],
+  "containers": [
+    [
+      6,
+      3,
+      8
+    ]
+  ],
+  "bed_containers": [],
+  "village_identity": {
+    "primary_blocks": [
+      [
+        3,
+        2,
+        5
+      ]
+    ],
+    "secondary_blocks": [],
+    "banners": []
+  },
+  "sink": 0,
+  "entrance_facing": "north",
+  "grants": [
+    "HOUSING",
+    "STORAGE",
+    "HEALING"
+  ],
+  "cost": [
+    {
+      "item": "minecraft:oak_log",
+      "count": 12
+    },
+    {
+      "item": "minecraft:cobblestone",
+      "count": 40
+    }
+  ],
+  "structure": "church_badlands_1",
+  "variant": "badlands"
+}

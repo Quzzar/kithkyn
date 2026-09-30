@@ -169,14 +169,14 @@ public class StashAtHomeGoal extends Goal {
       this.stalledTicks++;
     }
     if (this.stalledTicks >= STALL_TICKS) {
-      Kithkyn.LOGGER.info("'{}' made no headway toward their chest at home ({} blocks off, {}); {}",
+      Kithkyn.LOGGER.debug("'{}' made no headway toward their chest at home ({} blocks off, {}); {}",
           person.getFullName(), Math.round(distance), this.indoors ? "indoors" : "on the way to the door",
           pending());
       person.doneKeeping();
       return;
     }
     if (this.ticks >= GIVE_UP_TICKS) {
-      Kithkyn.LOGGER.info("'{}' could not reach their chest at home tonight; {}",
+      Kithkyn.LOGGER.debug("'{}' could not reach their chest at home tonight; {}",
           person.getFullName(), pending());
       person.doneKeeping();
       return;
@@ -223,7 +223,7 @@ public class StashAtHomeGoal extends Goal {
     Set<Item> taking = person.takingFromHome();
     Container container = PersonalChest.container(person, this.chest);
     if (container == null) {
-      Kithkyn.LOGGER.info("'{}' found no chest at home; {}", person.getFullName(), pending());
+      Kithkyn.LOGGER.debug("'{}' found no chest at home; {}", person.getFullName(), pending());
       person.doneKeeping();
       return;
     }
@@ -232,10 +232,10 @@ public class StashAtHomeGoal extends Goal {
       put += PackLogistics.depositCarried(person, container, item, "home");
     }
     if (put > 0) {
-      Kithkyn.LOGGER.info("'{}' put {} item(s) of {} away in their chest at home", person.getFullName(),
+      Kithkyn.LOGGER.debug("'{}' put {} item(s) of {} away in their chest at home", person.getFullName(),
           put, StashOffer.names(keeping));
     } else if (!keeping.isEmpty()) {
-      Kithkyn.LOGGER.info("'{}' found no room in their chest at home for the {}", person.getFullName(),
+      Kithkyn.LOGGER.debug("'{}' found no room in their chest at home for the {}", person.getFullName(),
           StashOffer.names(keeping));
     }
     int took = 0;
@@ -243,10 +243,10 @@ public class StashAtHomeGoal extends Goal {
       took += PackLogistics.takeStored(person, container, item, "home");
     }
     if (took > 0) {
-      Kithkyn.LOGGER.info("'{}' took {} item(s) of {} out of their chest at home", person.getFullName(),
+      Kithkyn.LOGGER.debug("'{}' took {} item(s) of {} out of their chest at home", person.getFullName(),
           took, StashOffer.names(taking));
     } else if (!taking.isEmpty()) {
-      Kithkyn.LOGGER.info("'{}' found none of the {} left in their chest at home, or no room in the pack for it",
+      Kithkyn.LOGGER.debug("'{}' found none of the {} left in their chest at home, or no room in the pack for it",
           person.getFullName(), StashOffer.names(taking));
     }
     person.doneKeeping();

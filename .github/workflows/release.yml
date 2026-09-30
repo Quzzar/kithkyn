@@ -1,0 +1,42 @@
+name: Release
+
+on:
+  push:
+    tags: ['v*']
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7.0.1
+      - uses: actions/setup-java@v6.0.1
+        with:
+          java-version: '21'
+          distribution: temurin
+      - uses: actions/setup-python@v7.0.0
+        with:
+          python-version: '3.13'
+      - uses: gradle/actions/setup-gradle@v6.4.0
+      - name: Verify version and dated changelog
+        env:
+          RELEASE_TAG: ${{ github.ref_name }}
+        run: python3 tools/release/release-notes.py "$RELEASE_TAG" > release-notes.md
+      - run: ./gradlew check build
+      - name: Audit the installable jar
+        env:
+          RELEASE_TAG: ${{ github.ref_name }}
+        run: python3 tools/release/audit-catalogs.py "build/libs/kithkyn-${RELEASE_TAG#v}.jar"
+      - name: Packaged production smoke
+        env:
+          RELEASE_TAG: ${{ github.ref_name }}
+        run: python3 tools/release/smoke-server.py --jar "build/libs/kithkyn-${RELEASE_TAG#v}.jar" --directory smoke-release --accept-eula
+      - name: Create draft with the canonical jar
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_TAG: ${{ github.ref_name }}
+        run: |
+          sha256sum build/libs/*.jar > SHA256SUMS
+          gh release create "$RELEASE_TAG" build/libs/*.jar SHA256SUMS --verify-tag --draft --title "Kithkyn $RELEASE_TAG" --notes-file release-notes.md

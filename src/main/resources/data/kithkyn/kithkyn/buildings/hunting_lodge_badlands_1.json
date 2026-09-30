@@ -1,0 +1,49 @@
+{
+  "category": "hunting_lodge",
+  "beds": [],
+  "couple_beds": [],
+  "work_stations": [
+    {
+      "occupation": "HUNTER",
+      "pos": [
+        4,
+        1,
+        4
+      ]
+    }
+  ],
+  "personal_containers": [],
+  "containers": [
+    [
+      5,
+      2,
+      3
+    ]
+  ],
+  "bed_containers": [],
+  "village_identity": {
+    "primary_blocks": [],
+    "secondary_blocks": [],
+    "banners": []
+  },
+  "sink": 0,
+  "entrance_facing": "west",
+  "grants": [
+    "STORAGE",
+    "FOOD",
+    "MEAT",
+    "LEATHER"
+  ],
+  "cost": [
+    {
+      "item": "minecraft:oak_log",
+      "count": 12
+    },
+    {
+      "item": "minecraft:cobblestone",
+      "count": 28
+    }
+  ],
+  "structure": "hunting_lodge_badlands_1",
+  "variant": "badlands"
+}

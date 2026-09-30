@@ -410,5 +410,12 @@
     "access": "run/rustic-integration/access/verification.json: PASS (24 corrected rotations, 28 routes, 4 room/sleep walks, 4 personal deposits, 24 station walks, 24 shared deposits, 8 mine walks, 0 failures)",
     "founding": "run/rustic-integration/founding/verification.json: PASS (21 strict templates, 2 housing alternatives, 8 upgrade fits, four rotations plus codec reloads, natural Forest selection, 4 starting beds, 5 starting positions, distinct meeting/fire locations, village identity)",
     "height_corrections": "PASS: bakery sink 0; blacksmith, fishery, hunting lodge and stoneworks preserve the terrain plane; mine retains only its 15-cell central excavation"
+  },
+  "source_policy": "Bundled in the Kithkyn jar under the September 14, 2026 release decision. Approved edits and source provenance are retained; creator credits and the standing offer to revise designs are in README.md.",
+  "bundled": {
+    "date": "2026-09-30",
+    "source": "run/trio-20260912/datapacks/kithkyn-rustic-woodland",
+    "manifest": "tools/release/bundled-catalogs.json",
+    "definitions": 21
   }
 }

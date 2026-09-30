@@ -69,7 +69,7 @@ public final class CampStep implements BlockWorkStep {
       // the pack, and the road takes over.
       this.roast.abandon(person, camp);
       person.breakCamp();
-      Kithkyn.LOGGER.info("[road] '{}' broke camp at {}", person.getFullName(), camp.toShortString());
+      Kithkyn.LOGGER.debug("[road] '{}' broke camp at {}", person.getFullName(), camp.toShortString());
       return false;
     }
     CampfireBlockEntity campfire = CampfireRoast.litFireAt(level, camp);
@@ -111,7 +111,7 @@ public final class CampStep implements BlockWorkStep {
     PackLogistics.spendIn(person, ItemTags.LOGS, CAMP_LOGS);
     level.setBlock(spot, Blocks.CAMPFIRE.defaultBlockState().setValue(CampfireBlock.LIT, true), 3);
     person.setCamp(spot);
-    Kithkyn.LOGGER.info("[road] '{}' made camp at {} from {} logs", person.getFullName(),
+    Kithkyn.LOGGER.debug("[road] '{}' made camp at {} from {} logs", person.getFullName(),
         spot.toShortString(), CAMP_LOGS);
     return false; // re-select: the fire itself
   }

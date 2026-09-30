@@ -1,0 +1,171 @@
+{
+  "structure": "tavern_polynesian_coast_1",
+  "category": "tavern",
+  "variant": "polynesian_coast",
+  "beds": [
+    [
+      7,
+      4,
+      2
+    ],
+    [
+      10,
+      4,
+      2
+    ],
+    [
+      12,
+      8,
+      7
+    ],
+    [
+      13,
+      4,
+      2
+    ]
+  ],
+  "work_stations": [
+    {
+      "pos": [
+        10,
+        4,
+        11
+      ],
+      "occupation": "INNKEEPER"
+    }
+  ],
+  "worksites": [],
+  "containers": [],
+  "personal_containers": [
+    [
+      6,
+      4,
+      2
+    ],
+    [
+      9,
+      4,
+      2
+    ],
+    [
+      12,
+      4,
+      2
+    ],
+    [
+      10,
+      8,
+      7
+    ]
+  ],
+  "bed_containers": [
+    {
+      "bed": [
+        7,
+        4,
+        2
+      ],
+      "containers": [
+        [
+          6,
+          4,
+          2
+        ]
+      ]
+    },
+    {
+      "bed": [
+        10,
+        4,
+        2
+      ],
+      "containers": [
+        [
+          9,
+          4,
+          2
+        ]
+      ]
+    },
+    {
+      "bed": [
+        12,
+        8,
+        7
+      ],
+      "containers": [
+        [
+          10,
+          8,
+          7
+        ]
+      ]
+    },
+    {
+      "bed": [
+        13,
+        4,
+        2
+      ],
+      "containers": [
+        [
+          12,
+          4,
+          2
+        ]
+      ]
+    }
+  ],
+  "couple_beds": [],
+  "village_identity": {
+    "primary_blocks": [
+      [
+        7,
+        4,
+        2
+      ],
+      [
+        13,
+        4,
+        2
+      ]
+    ],
+    "secondary_blocks": [
+      [
+        10,
+        4,
+        2
+      ],
+      [
+        12,
+        8,
+        7
+      ]
+    ],
+    "banners": []
+  },
+  "sink": 0,
+  "entrance_facing": "west",
+  "grants": [
+    "HOUSING",
+    "HOSPITALITY",
+    "WANDERERS"
+  ],
+  "worker_beds": [
+    [
+      12,
+      8,
+      7
+    ]
+  ],
+  "cost": [
+    {
+      "item": "minecraft:oak_log",
+      "count": 48
+    },
+    {
+      "item": "minecraft:cobblestone",
+      "count": 40
+    }
+  ]
+}

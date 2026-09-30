@@ -1,0 +1,202 @@
+{
+  "structure": "tavern_tundra_1",
+  "category": "tavern",
+  "variant": "tundra",
+  "beds": [
+    [
+      6,
+      1,
+      2
+    ],
+    [
+      9,
+      1,
+      2
+    ],
+    [
+      10,
+      5,
+      15
+    ],
+    [
+      12,
+      1,
+      2
+    ],
+    [
+      14,
+      5,
+      15
+    ]
+  ],
+  "work_stations": [
+    {
+      "pos": [
+        11,
+        5,
+        13
+      ],
+      "occupation": "INNKEEPER"
+    },
+    {
+      "pos": [
+        12,
+        5,
+        13
+      ],
+      "occupation": "INNKEEPER"
+    }
+  ],
+  "worksites": [],
+  "containers": [],
+  "personal_containers": [
+    [
+      6,
+      0,
+      4
+    ],
+    [
+      9,
+      0,
+      4
+    ],
+    [
+      12,
+      0,
+      4
+    ],
+    [
+      10,
+      5,
+      13
+    ]
+  ],
+  "bed_containers": [
+    {
+      "bed": [
+        6,
+        1,
+        2
+      ],
+      "containers": [
+        [
+          6,
+          0,
+          4
+        ]
+      ]
+    },
+    {
+      "bed": [
+        9,
+        1,
+        2
+      ],
+      "containers": [
+        [
+          9,
+          0,
+          4
+        ]
+      ]
+    },
+    {
+      "bed": [
+        10,
+        5,
+        15
+      ],
+      "containers": [
+        [
+          10,
+          5,
+          13
+        ]
+      ]
+    },
+    {
+      "bed": [
+        12,
+        1,
+        2
+      ],
+      "containers": [
+        [
+          12,
+          0,
+          4
+        ]
+      ]
+    },
+    {
+      "bed": [
+        14,
+        5,
+        15
+      ],
+      "containers": []
+    }
+  ],
+  "couple_beds": [],
+  "village_identity": {
+    "primary_blocks": [
+      [
+        6,
+        1,
+        2
+      ],
+      [
+        10,
+        5,
+        15
+      ],
+      [
+        14,
+        5,
+        15
+      ]
+    ],
+    "secondary_blocks": [
+      [
+        9,
+        1,
+        2
+      ],
+      [
+        12,
+        1,
+        2
+      ]
+    ],
+    "banners": []
+  },
+  "sink": 0,
+  "entrance_facing": "west",
+  "grants": [
+    "HOUSING",
+    "HOSPITALITY",
+    "WANDERERS"
+  ],
+  "worker_beds": [
+    [
+      10,
+      5,
+      15
+    ],
+    [
+      14,
+      5,
+      15
+    ]
+  ],
+  "cost": [
+    {
+      "item": "minecraft:oak_log",
+      "count": 48
+    },
+    {
+      "item": "minecraft:cobblestone",
+      "count": 52
+    }
+  ]
+}

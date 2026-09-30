@@ -1,0 +1,155 @@
+{
+  "category": "village_center",
+  "beds": [],
+  "couple_beds": [],
+  "work_stations": [
+    {
+      "pos": [
+        5,
+        1,
+        3
+      ],
+      "occupation": "BUILDER"
+    },
+    {
+      "pos": [
+        6,
+        1,
+        3
+      ],
+      "occupation": "BUILDER"
+    },
+    {
+      "pos": [
+        4,
+        1,
+        2
+      ],
+      "occupation": "BUILDER"
+    },
+    {
+      "pos": [
+        6,
+        1,
+        4
+      ],
+      "occupation": "BUILDER"
+    },
+    {
+      "pos": [
+        6,
+        1,
+        2
+      ],
+      "occupation": "BUILDER"
+    },
+    {
+      "occupation": "GUARD",
+      "pos": [
+        4,
+        1,
+        6
+      ],
+      "guard_duty": "CAPTAIN"
+    }
+  ],
+  "personal_containers": [],
+  "containers": [],
+  "bed_containers": [],
+  "village_identity": {
+    "primary_blocks": [
+      [
+        4,
+        1,
+        3
+      ],
+      [
+        3,
+        1,
+        4
+      ],
+      [
+        4,
+        1,
+        4
+      ],
+      [
+        5,
+        1,
+        4
+      ],
+      [
+        3,
+        1,
+        5
+      ],
+      [
+        4,
+        1,
+        5
+      ]
+    ],
+    "secondary_blocks": [],
+    "banners": [
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        7,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        7
+      ],
+      [
+        7,
+        1,
+        7
+      ]
+    ]
+  },
+  "sink": 0,
+  "entrance_facing": "north",
+  "grants": [
+    "CIVIC_CENTER",
+    "CONSTRUCTION",
+    "LOGISTICS",
+    "PROTECTION"
+  ],
+  "cost": [
+    {
+      "item": "minecraft:oak_log",
+      "count": 32
+    },
+    {
+      "item": "minecraft:cobblestone",
+      "count": 24
+    }
+  ],
+  "structure": "village_center_floodplain_1",
+  "variant": "floodplain",
+  "starting_buildings": [
+    "mine_floodplain_1",
+    "storehouse_floodplain_1",
+    "house_floodplain_2",
+    "house_floodplain_2",
+    "house_floodplain_1"
+  ],
+  "meeting_point": [
+    4,
+    1,
+    2
+  ],
+  "campfires": [
+    [
+      5,
+      1,
+      0
+    ]
+  ]
+}

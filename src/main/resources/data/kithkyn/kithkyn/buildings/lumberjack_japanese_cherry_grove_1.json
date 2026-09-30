@@ -1,0 +1,45 @@
+{
+  "structure": "lumberjack_japanese_cherry_grove_1",
+  "category": "lumberjack",
+  "variant": "japanese_cherry_grove",
+  "beds": [],
+  "work_stations": [
+    {
+      "pos": [
+        11,
+        1,
+        4
+      ],
+      "occupation": "LUMBERJACK"
+    }
+  ],
+  "worksites": [],
+  "containers": [
+    [
+      3,
+      1,
+      5
+    ]
+  ],
+  "personal_containers": [],
+  "bed_containers": [],
+  "couple_beds": [],
+  "village_identity": {
+    "primary_blocks": [],
+    "secondary_blocks": [],
+    "banners": []
+  },
+  "sink": -1,
+  "entrance_facing": "north",
+  "grants": [
+    "STORAGE",
+    "LOGS",
+    "PLANKS"
+  ],
+  "cost": [
+    {
+      "item": "minecraft:cobblestone",
+      "count": 28
+    }
+  ]
+}

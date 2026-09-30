@@ -1,0 +1,130 @@
+{
+  "structure": "tavern_romanian_1",
+  "category": "tavern",
+  "variant": "romanian",
+  "beds": [
+    [
+      6,
+      1,
+      2
+    ],
+    [
+      9,
+      1,
+      2
+    ],
+    [
+      12,
+      1,
+      2
+    ]
+  ],
+  "work_stations": [
+    {
+      "pos": [
+        13,
+        1,
+        13
+      ],
+      "occupation": "INNKEEPER"
+    }
+  ],
+  "worksites": [],
+  "containers": [
+    [
+      6,
+      2,
+      13
+    ],
+    [
+      7,
+      2,
+      13
+    ],
+    [
+      7,
+      2,
+      16
+    ]
+  ],
+  "personal_containers": [],
+  "bed_containers": [
+    {
+      "bed": [
+        6,
+        1,
+        2
+      ],
+      "containers": []
+    },
+    {
+      "bed": [
+        9,
+        1,
+        2
+      ],
+      "containers": []
+    },
+    {
+      "bed": [
+        12,
+        1,
+        2
+      ],
+      "containers": []
+    }
+  ],
+  "couple_beds": [],
+  "village_identity": {
+    "primary_blocks": [
+      [
+        6,
+        1,
+        2
+      ],
+      [
+        11,
+        7,
+        6
+      ]
+    ],
+    "secondary_blocks": [
+      [
+        9,
+        1,
+        2
+      ],
+      [
+        12,
+        1,
+        2
+      ]
+    ],
+    "banners": []
+  },
+  "sink": 0,
+  "entrance_facing": "south",
+  "grants": [
+    "HOUSING",
+    "HOSPITALITY",
+    "WANDERERS",
+    "STORAGE"
+  ],
+  "worker_beds": [
+    [
+      6,
+      1,
+      2
+    ]
+  ],
+  "cost": [
+    {
+      "item": "minecraft:oak_log",
+      "count": 40
+    },
+    {
+      "item": "minecraft:cobblestone",
+      "count": 32
+    }
+  ]
+}

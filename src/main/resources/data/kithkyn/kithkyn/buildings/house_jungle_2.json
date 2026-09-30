@@ -1,0 +1,96 @@
+{
+  "structure": "house_jungle_2",
+  "category": "house",
+  "variant": "jungle",
+  "beds": [
+    [
+      7,
+      4,
+      2
+    ],
+    [
+      5,
+      8,
+      2
+    ]
+  ],
+  "work_stations": [],
+  "worksites": [],
+  "containers": [],
+  "personal_containers": [
+    [
+      5,
+      4,
+      2
+    ],
+    [
+      5,
+      8,
+      3
+    ]
+  ],
+  "bed_containers": [
+    {
+      "bed": [
+        7,
+        4,
+        2
+      ],
+      "containers": [
+        [
+          5,
+          4,
+          2
+        ]
+      ]
+    },
+    {
+      "bed": [
+        5,
+        8,
+        2
+      ],
+      "containers": [
+        [
+          5,
+          8,
+          3
+        ]
+      ]
+    }
+  ],
+  "couple_beds": [],
+  "village_identity": {
+    "primary_blocks": [
+      [
+        7,
+        4,
+        2
+      ]
+    ],
+    "secondary_blocks": [
+      [
+        5,
+        8,
+        2
+      ]
+    ],
+    "banners": []
+  },
+  "sink": 0,
+  "entrance_facing": "west",
+  "grants": [
+    "HOUSING"
+  ],
+  "cost": [
+    {
+      "item": "minecraft:oak_log",
+      "count": 20
+    },
+    {
+      "item": "minecraft:cobblestone",
+      "count": 8
+    }
+  ],
+  "standalone": true
+}

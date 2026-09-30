@@ -1,0 +1,84 @@
+{
+  "structure": "butchery_romanian_1",
+  "category": "butchery",
+  "variant": "romanian",
+  "beds": [
+    [
+      8,
+      4,
+      2
+    ]
+  ],
+  "work_stations": [
+    {
+      "pos": [
+        2,
+        1,
+        3
+      ],
+      "occupation": "BUTCHER"
+    }
+  ],
+  "worksites": [],
+  "containers": [],
+  "personal_containers": [
+    [
+      8,
+      5,
+      6
+    ]
+  ],
+  "bed_containers": [
+    {
+      "bed": [
+        8,
+        4,
+        2
+      ],
+      "containers": [
+        [
+          8,
+          5,
+          6
+        ]
+      ]
+    }
+  ],
+  "couple_beds": [],
+  "village_identity": {
+    "primary_blocks": [
+      [
+        8,
+        4,
+        2
+      ]
+    ],
+    "secondary_blocks": [],
+    "banners": []
+  },
+  "sink": 0,
+  "entrance_facing": "south",
+  "grants": [
+    "HOUSING",
+    "FOOD",
+    "MEAT",
+    "LEATHER"
+  ],
+  "worker_beds": [
+    [
+      8,
+      4,
+      2
+    ]
+  ],
+  "cost": [
+    {
+      "item": "minecraft:oak_log",
+      "count": 24
+    },
+    {
+      "item": "minecraft:cobblestone",
+      "count": 24
+    }
+  ]
+}

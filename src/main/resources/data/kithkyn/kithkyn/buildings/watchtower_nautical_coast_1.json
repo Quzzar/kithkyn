@@ -1,0 +1,137 @@
+{
+  "structure": "watchtower_nautical_coast_1",
+  "category": "watchtower",
+  "variant": "nautical_coast",
+  "beds": [
+    [
+      8,
+      5,
+      9
+    ],
+    [
+      9,
+      1,
+      9
+    ]
+  ],
+  "work_stations": [
+    {
+      "pos": [
+        7,
+        9,
+        8
+      ],
+      "occupation": "GUARD",
+      "guard_duty": "CROSSBOW_POST"
+    },
+    {
+      "pos": [
+        2,
+        1,
+        3
+      ],
+      "occupation": "HUNTER"
+    }
+  ],
+  "worksites": [],
+  "containers": [
+    [
+      1,
+      1,
+      3
+    ]
+  ],
+  "personal_containers": [
+    [
+      6,
+      1,
+      10
+    ],
+    [
+      8,
+      5,
+      7
+    ]
+  ],
+  "bed_containers": [
+    {
+      "bed": [
+        8,
+        5,
+        9
+      ],
+      "containers": [
+        [
+          8,
+          5,
+          7
+        ]
+      ]
+    },
+    {
+      "bed": [
+        9,
+        1,
+        9
+      ],
+      "containers": [
+        [
+          6,
+          1,
+          10
+        ]
+      ]
+    }
+  ],
+  "couple_beds": [],
+  "village_identity": {
+    "primary_blocks": [
+      [
+        9,
+        1,
+        9
+      ]
+    ],
+    "secondary_blocks": [
+      [
+        8,
+        5,
+        9
+      ]
+    ],
+    "banners": []
+  },
+  "sink": 0,
+  "entrance_facing": "north",
+  "grants": [
+    "HOUSING",
+    "STORAGE",
+    "PROTECTION",
+    "RANGED_GUARD_POSTS",
+    "FOOD",
+    "MEAT",
+    "LEATHER"
+  ],
+  "worker_beds": [
+    [
+      8,
+      5,
+      9
+    ],
+    [
+      9,
+      1,
+      9
+    ]
+  ],
+  "cost": [
+    {
+      "item": "minecraft:oak_log",
+      "count": 32
+    },
+    {
+      "item": "minecraft:cobblestone",
+      "count": 24
+    }
+  ]
+}

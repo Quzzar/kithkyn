@@ -1,0 +1,49 @@
+{
+  "structure": "farm_polynesian_coast_1",
+  "category": "farm",
+  "variant": "polynesian_coast",
+  "beds": [],
+  "work_stations": [
+    {
+      "pos": [
+        4,
+        1,
+        4
+      ],
+      "occupation": "FARMER"
+    }
+  ],
+  "worksites": [],
+  "containers": [
+    [
+      3,
+      0,
+      0
+    ]
+  ],
+  "personal_containers": [],
+  "bed_containers": [],
+  "couple_beds": [],
+  "village_identity": {
+    "primary_blocks": [],
+    "secondary_blocks": [],
+    "banners": []
+  },
+  "sink": 0,
+  "entrance_facing": "north",
+  "grants": [
+    "STORAGE",
+    "FOOD",
+    "CROPS"
+  ],
+  "cost": [
+    {
+      "item": "minecraft:oak_log",
+      "count": 24
+    },
+    {
+      "item": "minecraft:cobblestone",
+      "count": 12
+    }
+  ]
+}

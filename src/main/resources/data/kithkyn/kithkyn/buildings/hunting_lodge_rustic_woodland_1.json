@@ -1,0 +1,50 @@
+{
+  "structure": "hunting_lodge_rustic_woodland_1",
+  "category": "hunting_lodge",
+  "variant": "rustic_woodland",
+  "beds": [],
+  "work_stations": [
+    {
+      "pos": [
+        6,
+        2,
+        3
+      ],
+      "occupation": "HUNTER"
+    }
+  ],
+  "worksites": [],
+  "containers": [
+    [
+      4,
+      4,
+      6
+    ]
+  ],
+  "personal_containers": [],
+  "bed_containers": [],
+  "couple_beds": [],
+  "village_identity": {
+    "primary_blocks": [],
+    "secondary_blocks": [],
+    "banners": []
+  },
+  "sink": 1,
+  "entrance_facing": "west",
+  "grants": [
+    "STORAGE",
+    "FOOD",
+    "MEAT",
+    "LEATHER"
+  ],
+  "cost": [
+    {
+      "item": "minecraft:oak_log",
+      "count": 28
+    },
+    {
+      "item": "minecraft:cobblestone",
+      "count": 20
+    }
+  ]
+}

@@ -1,0 +1,163 @@
+{
+  "structure": "village_center_mushroom_1",
+  "category": "village_center",
+  "variant": "mushroom",
+  "beds": [
+    [
+      10,
+      13,
+      9
+    ]
+  ],
+  "work_stations": [
+    {
+      "pos": [
+        5,
+        1,
+        11
+      ],
+      "occupation": "BUILDER"
+    },
+    {
+      "pos": [
+        6,
+        1,
+        11
+      ],
+      "occupation": "BUILDER"
+    },
+    {
+      "pos": [
+        6,
+        1,
+        13
+      ],
+      "occupation": "GUARD",
+      "guard_duty": "CAPTAIN"
+    },
+    {
+      "pos": [
+        8,
+        1,
+        11
+      ],
+      "occupation": "BUILDER"
+    },
+    {
+      "pos": [
+        9,
+        1,
+        11
+      ],
+      "occupation": "BUILDER"
+    },
+    {
+      "pos": [
+        7,
+        1,
+        11
+      ],
+      "occupation": "BUILDER"
+    },
+    {
+      "pos": [
+        9,
+        13,
+        7
+      ],
+      "occupation": "CLERIC"
+    }
+  ],
+  "worksites": [],
+  "containers": [
+    [
+      7,
+      13,
+      4
+    ]
+  ],
+  "personal_containers": [
+    [
+      5,
+      13,
+      10
+    ]
+  ],
+  "bed_containers": [
+    {
+      "bed": [
+        10,
+        13,
+        9
+      ],
+      "containers": [
+        [
+          5,
+          13,
+          10
+        ]
+      ]
+    }
+  ],
+  "couple_beds": [],
+  "village_identity": {
+    "primary_blocks": [
+      [
+        10,
+        13,
+        9
+      ]
+    ],
+    "secondary_blocks": [],
+    "banners": [
+      [
+        7,
+        5,
+        4
+      ],
+      [
+        7,
+        5,
+        10
+      ]
+    ]
+  },
+  "sink": 0,
+  "entrance_facing": "south",
+  "grants": [
+    "CIVIC_CENTER",
+    "CONSTRUCTION",
+    "PROTECTION",
+    "HOUSING",
+    "STORAGE",
+    "HEALING"
+  ],
+  "starting_buildings": [
+    "mine_mushroom_1",
+    "storehouse_mushroom_1",
+    "house_mushroom_1",
+    "house_mushroom_1__one_bed"
+  ],
+  "meeting_point": [
+    7,
+    1,
+    12
+  ],
+  "campfires": [
+    [
+      7,
+      1,
+      13
+    ]
+  ],
+  "cost": [
+    {
+      "item": "minecraft:oak_log",
+      "count": 40
+    },
+    {
+      "item": "minecraft:cobblestone",
+      "count": 40
+    }
+  ]
+}

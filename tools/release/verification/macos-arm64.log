@@ -1,0 +1,75 @@
+[14:16:43] [kithkyn-llama-launcher/INFO] [co.qu.ki.Kithkyn/]: Verified local runtime ready at <isolated-install>/kithkyn/runtime/b10653/verified/llama-b10653/llama-server
+[14:16:43] [kithkyn-llama-launcher/INFO] [co.qu.ki.Kithkyn/]: Downloading Llama-3.2-3B-Instruct-Q4_K_M.gguf (2019 MB) into <isolated-install>/kithkyn/models; resuming at byte 516718584
+[14:16:43] [Server thread/INFO] [minecraft/DedicatedServer]: Done (0.753s)! For help, type "help"
+[14:16:47] [Server thread/INFO] [co.qu.ki.Kithkyn/]: [bundled-catalog-verify] birch_forest NONE PASS: 3 buildings, 4 beds
+[14:16:48] [Server thread/INFO] [co.qu.ki.Kithkyn/]: [bundled-catalog-verify] birch_forest CLOCKWISE_90 PASS: 3 buildings, 4 beds
+[14:16:48] [Server thread/INFO] [co.qu.ki.Kithkyn/]: [bundled-catalog-verify] birch_forest CLOCKWISE_180 PASS: 3 buildings, 4 beds
+[14:16:48] [Server thread/INFO] [co.qu.ki.Kithkyn/]: [bundled-catalog-verify] birch_forest COUNTERCLOCKWISE_90 PASS: 3 buildings, 4 beds
+[14:16:48] [Server thread/INFO] [co.qu.ki.Kithkyn/]: [bundled-catalog-verify] desert NONE PASS: 3 buildings, 5 beds
+[14:16:48] [Server thread/INFO] [co.qu.ki.Kithkyn/]: [bundled-catalog-verify] desert CLOCKWISE_90 PASS: 3 buildings, 5 beds
+[14:16:48] [Server thread/INFO] [co.qu.ki.Kithkyn/]: [bundled-catalog-verify] desert CLOCKWISE_180 PASS: 3 buildings, 5 beds
+[14:16:48] [Server thread/INFO] [co.qu.ki.Kithkyn/]: [bundled-catalog-verify] desert COUNTERCLOCKWISE_90 PASS: 3 buildings, 5 beds
+[14:16:48] [Server thread/INFO] [co.qu.ki.Kithkyn/]: [bundled-catalog-verify] badlands NONE PASS: 3 buildings, 10 beds
+[14:16:48] [Server thread/INFO] [co.qu.ki.Kithkyn/]: [bundled-catalog-verify] badlands CLOCKWISE_90 PASS: 3 buildings, 10 beds
+[14:16:48] [Server thread/INFO] [co.qu.ki.Kithkyn/]: [bundled-catalog-verify] badlands CLOCKWISE_180 PASS: 3 buildings, 10 beds
+[14:16:48] [Server thread/INFO] [co.qu.ki.Kithkyn/]: [bundled-catalog-verify] badlands COUNTERCLOCKWISE_90 PASS: 3 buildings, 10 beds
+[14:16:49] [Server thread/INFO] [co.qu.ki.Kithkyn/]: [bundled-catalog-verify] floodplain NONE PASS: 6 buildings, 5 beds
+[14:16:49] [Server thread/INFO] [co.qu.ki.Kithkyn/]: [bundled-catalog-verify] floodplain CLOCKWISE_90 PASS: 6 buildings, 5 beds
+[14:16:49] [Server thread/INFO] [co.qu.ki.Kithkyn/]: [bundled-catalog-verify] floodplain CLOCKWISE_180 PASS: 6 buildings, 5 beds
+[14:16:49] [Server thread/INFO] [co.qu.ki.Kithkyn/]: [bundled-catalog-verify] floodplain COUNTERCLOCKWISE_90 PASS: 6 buildings, 5 beds
+[14:16:49] [Server thread/INFO] [co.qu.ki.Kithkyn/]: [bundled-catalog-verify] jungle NONE PASS: 7 buildings, 4 beds
+[14:16:49] [Server thread/INFO] [co.qu.ki.Kithkyn/]: [bundled-catalog-verify] jungle CLOCKWISE_90 PASS: 7 buildings, 4 beds
+[14:16:49] [Server thread/INFO] [co.qu.ki.Kithkyn/]: [bundled-catalog-verify] jungle CLOCKWISE_180 PASS: 7 buildings, 4 beds
+[14:16:49] [Server thread/INFO] [co.qu.ki.Kithkyn/]: [bundled-catalog-verify] jungle COUNTERCLOCKWISE_90 PASS: 7 buildings, 4 beds
+[14:16:50] [Server thread/INFO] [co.qu.ki.Kithkyn/]: [bundled-catalog-verify] swamp NONE PASS: 7 buildings, 4 beds
+[14:16:50] [Server thread/INFO] [co.qu.ki.Kithkyn/]: [bundled-catalog-verify] swamp CLOCKWISE_90 PASS: 7 buildings, 4 beds
+[14:16:50] [Server thread/INFO] [co.qu.ki.Kithkyn/]: [bundled-catalog-verify] swamp CLOCKWISE_180 PASS: 7 buildings, 4 beds
+[14:16:50] [Server thread/INFO] [co.qu.ki.Kithkyn/]: [bundled-catalog-verify] swamp COUNTERCLOCKWISE_90 PASS: 7 buildings, 4 beds
+[14:16:50] [Server thread/INFO] [co.qu.ki.Kithkyn/]: [bundled-catalog-verify] mediterranean NONE PASS: 7 buildings, 6 beds
+[14:16:50] [Server thread/INFO] [co.qu.ki.Kithkyn/]: [bundled-catalog-verify] mediterranean CLOCKWISE_90 PASS: 7 buildings, 6 beds
+[14:16:50] [Server thread/INFO] [co.qu.ki.Kithkyn/]: [bundled-catalog-verify] mediterranean CLOCKWISE_180 PASS: 7 buildings, 6 beds
+[14:16:50] [Server thread/INFO] [co.qu.ki.Kithkyn/]: [bundled-catalog-verify] mediterranean COUNTERCLOCKWISE_90 PASS: 7 buildings, 6 beds
+[14:16:50] [Server thread/INFO] [co.qu.ki.Kithkyn/]: [bundled-catalog-verify] tundra NONE PASS: 3 buildings, 4 beds
+[14:16:50] [Server thread/INFO] [co.qu.ki.Kithkyn/]: [bundled-catalog-verify] tundra CLOCKWISE_90 PASS: 3 buildings, 4 beds
+[14:16:51] [Server thread/INFO] [co.qu.ki.Kithkyn/]: [bundled-catalog-verify] tundra CLOCKWISE_180 PASS: 3 buildings, 4 beds
+[14:16:51] [Server thread/INFO] [co.qu.ki.Kithkyn/]: [bundled-catalog-verify] tundra COUNTERCLOCKWISE_90 PASS: 3 buildings, 4 beds
+[14:16:51] [Server thread/INFO] [co.qu.ki.Kithkyn/]: [bundled-catalog-verify] polynesian_coast NONE PASS: 6 buildings, 8 beds
+[14:16:51] [Server thread/INFO] [co.qu.ki.Kithkyn/]: [bundled-catalog-verify] polynesian_coast CLOCKWISE_90 PASS: 6 buildings, 8 beds
+[14:16:51] [Server thread/INFO] [co.qu.ki.Kithkyn/]: [bundled-catalog-verify] polynesian_coast CLOCKWISE_180 PASS: 6 buildings, 8 beds
+[14:16:51] [Server thread/INFO] [co.qu.ki.Kithkyn/]: [bundled-catalog-verify] polynesian_coast COUNTERCLOCKWISE_90 PASS: 6 buildings, 8 beds
+[14:16:51] [Server thread/INFO] [co.qu.ki.Kithkyn/]: [bundled-catalog-verify] romanian NONE PASS: 3 buildings, 4 beds
+[14:16:51] [Server thread/INFO] [co.qu.ki.Kithkyn/]: [bundled-catalog-verify] romanian CLOCKWISE_90 PASS: 3 buildings, 4 beds
+[14:16:51] [Server thread/INFO] [co.qu.ki.Kithkyn/]: [bundled-catalog-verify] romanian CLOCKWISE_180 PASS: 3 buildings, 4 beds
+[14:16:51] [Server thread/INFO] [co.qu.ki.Kithkyn/]: [bundled-catalog-verify] romanian COUNTERCLOCKWISE_90 PASS: 3 buildings, 4 beds
+[14:16:52] [Server thread/INFO] [co.qu.ki.Kithkyn/]: [bundled-catalog-verify] alpine_highlands NONE PASS: 5 buildings, 5 beds
+[14:16:52] [Server thread/INFO] [co.qu.ki.Kithkyn/]: [bundled-catalog-verify] alpine_highlands CLOCKWISE_90 PASS: 5 buildings, 5 beds
+[14:16:52] [Server thread/INFO] [co.qu.ki.Kithkyn/]: [bundled-catalog-verify] alpine_highlands CLOCKWISE_180 PASS: 5 buildings, 5 beds
+[14:16:52] [Server thread/INFO] [co.qu.ki.Kithkyn/]: [bundled-catalog-verify] alpine_highlands COUNTERCLOCKWISE_90 PASS: 5 buildings, 5 beds
+[14:16:52] [Server thread/INFO] [co.qu.ki.Kithkyn/]: [bundled-catalog-verify] japanese_cherry_grove NONE PASS: 5 buildings, 6 beds
+[14:16:52] [Server thread/INFO] [co.qu.ki.Kithkyn/]: [bundled-catalog-verify] japanese_cherry_grove CLOCKWISE_90 PASS: 5 buildings, 6 beds
+[14:16:52] [Server thread/INFO] [co.qu.ki.Kithkyn/]: [bundled-catalog-verify] japanese_cherry_grove CLOCKWISE_180 PASS: 5 buildings, 6 beds
+[14:16:52] [Server thread/INFO] [co.qu.ki.Kithkyn/]: [bundled-catalog-verify] japanese_cherry_grove COUNTERCLOCKWISE_90 PASS: 5 buildings, 6 beds
+[14:16:52] [Server thread/INFO] [co.qu.ki.Kithkyn/]: [bundled-catalog-verify] nautical_coast NONE PASS: 2 buildings, 4 beds
+[14:16:52] [Server thread/INFO] [co.qu.ki.Kithkyn/]: [bundled-catalog-verify] nautical_coast CLOCKWISE_90 PASS: 2 buildings, 4 beds
+[14:16:52] [Server thread/INFO] [co.qu.ki.Kithkyn/]: [bundled-catalog-verify] nautical_coast CLOCKWISE_180 PASS: 2 buildings, 4 beds
+[14:16:52] [Server thread/INFO] [co.qu.ki.Kithkyn/]: [bundled-catalog-verify] nautical_coast COUNTERCLOCKWISE_90 PASS: 2 buildings, 4 beds
+[14:16:53] [Server thread/INFO] [co.qu.ki.Kithkyn/]: [bundled-catalog-verify] savanna_tent NONE PASS: 3 buildings, 4 beds
+[14:16:53] [Server thread/INFO] [co.qu.ki.Kithkyn/]: [bundled-catalog-verify] savanna_tent CLOCKWISE_90 PASS: 3 buildings, 4 beds
+[14:16:53] [Server thread/INFO] [co.qu.ki.Kithkyn/]: [bundled-catalog-verify] savanna_tent CLOCKWISE_180 PASS: 3 buildings, 4 beds
+[14:16:53] [Server thread/INFO] [co.qu.ki.Kithkyn/]: [bundled-catalog-verify] savanna_tent COUNTERCLOCKWISE_90 PASS: 3 buildings, 4 beds
+[14:16:53] [Server thread/INFO] [co.qu.ki.Kithkyn/]: [bundled-catalog-verify] rustic_woodland NONE PASS: 6 buildings, 4 beds
+[14:16:53] [Server thread/INFO] [co.qu.ki.Kithkyn/]: [bundled-catalog-verify] rustic_woodland CLOCKWISE_90 PASS: 6 buildings, 4 beds
+[14:16:53] [Server thread/INFO] [co.qu.ki.Kithkyn/]: [bundled-catalog-verify] rustic_woodland CLOCKWISE_180 PASS: 6 buildings, 4 beds
+[14:16:53] [Server thread/INFO] [co.qu.ki.Kithkyn/]: [bundled-catalog-verify] rustic_woodland COUNTERCLOCKWISE_90 PASS: 6 buildings, 4 beds
+[14:16:53] [Server thread/INFO] [co.qu.ki.Kithkyn/]: [bundled-catalog-verify] taiga NONE PASS: 6 buildings, 4 beds
+[14:16:53] [Server thread/INFO] [co.qu.ki.Kithkyn/]: [bundled-catalog-verify] taiga CLOCKWISE_90 PASS: 6 buildings, 4 beds
+[14:16:54] [Server thread/INFO] [co.qu.ki.Kithkyn/]: [bundled-catalog-verify] taiga CLOCKWISE_180 PASS: 6 buildings, 4 beds
+[14:16:54] [Server thread/INFO] [co.qu.ki.Kithkyn/]: [bundled-catalog-verify] taiga COUNTERCLOCKWISE_90 PASS: 6 buildings, 4 beds
+[14:16:54] [Server thread/INFO] [co.qu.ki.Kithkyn/]: [bundled-catalog-verify] mushroom NONE PASS: 5 buildings, 4 beds
+[14:16:54] [Server thread/INFO] [co.qu.ki.Kithkyn/]: [bundled-catalog-verify] mushroom CLOCKWISE_90 PASS: 5 buildings, 4 beds
+[14:16:54] [Server thread/INFO] [co.qu.ki.Kithkyn/]: [bundled-catalog-verify] mushroom CLOCKWISE_180 PASS: 5 buildings, 4 beds
+[14:16:54] [Server thread/INFO] [co.qu.ki.Kithkyn/]: [bundled-catalog-verify] mushroom COUNTERCLOCKWISE_90 PASS: 5 buildings, 4 beds
+[14:18:33] [kithkyn-llama-launcher/INFO] [co.qu.ki.Kithkyn/]: Verified Llama-3.2-3B-Instruct ready (2019 MB)
+[14:19:01] [kithkyn-llama-launcher/INFO] [co.qu.ki.Kithkyn/]: Local runtime ready: Llama-3.2-3B-Instruct on llama.cpp
+[14:19:01] [Server thread/INFO] [co.qu.ki.Kithkyn/]: [bundled-catalog-verify] RESULT PASS: 394 definitions, 17 founding sets in four rotations, physical beds/containers and save round trips
+[14:19:02] [Server thread/INFO] [minecraft/MinecraftServer]: ThreadedAnvilChunkStorage: All dimensions are saved

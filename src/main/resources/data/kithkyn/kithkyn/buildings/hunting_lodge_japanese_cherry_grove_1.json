@@ -1,0 +1,50 @@
+{
+  "structure": "hunting_lodge_japanese_cherry_grove_1",
+  "category": "hunting_lodge",
+  "variant": "japanese_cherry_grove",
+  "beds": [],
+  "work_stations": [
+    {
+      "pos": [
+        4,
+        1,
+        4
+      ],
+      "occupation": "HUNTER"
+    }
+  ],
+  "worksites": [],
+  "containers": [
+    [
+      5,
+      1,
+      5
+    ]
+  ],
+  "personal_containers": [],
+  "bed_containers": [],
+  "couple_beds": [],
+  "village_identity": {
+    "primary_blocks": [],
+    "secondary_blocks": [],
+    "banners": []
+  },
+  "sink": -1,
+  "entrance_facing": "north",
+  "grants": [
+    "STORAGE",
+    "FOOD",
+    "MEAT",
+    "LEATHER"
+  ],
+  "cost": [
+    {
+      "item": "minecraft:oak_log",
+      "count": 24
+    },
+    {
+      "item": "minecraft:cobblestone",
+      "count": 16
+    }
+  ]
+}

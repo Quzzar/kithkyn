@@ -1,0 +1,58 @@
+{
+  "structure": "storehouse_polynesian_coast_1",
+  "category": "storehouse",
+  "variant": "polynesian_coast",
+  "beds": [],
+  "work_stations": [
+    {
+      "pos": [
+        3,
+        2,
+        3
+      ],
+      "occupation": "QUARTERMASTER"
+    }
+  ],
+  "worksites": [],
+  "containers": [
+    [
+      2,
+      2,
+      3
+    ],
+    [
+      2,
+      3,
+      4
+    ],
+    [
+      3,
+      2,
+      4
+    ]
+  ],
+  "personal_containers": [],
+  "bed_containers": [],
+  "couple_beds": [],
+  "village_identity": {
+    "primary_blocks": [],
+    "secondary_blocks": [],
+    "banners": []
+  },
+  "sink": -1,
+  "entrance_facing": "north",
+  "grants": [
+    "STORAGE",
+    "LOGISTICS"
+  ],
+  "cost": [
+    {
+      "item": "minecraft:oak_log",
+      "count": 16
+    },
+    {
+      "item": "minecraft:cobblestone",
+      "count": 8
+    }
+  ]
+}

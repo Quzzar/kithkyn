@@ -25,7 +25,7 @@ test("introduces the villages and how they work", async ({ page }): Promise<void
   await expect(page.getByRole("button")).toHaveCount(2);
   await expect(page.getByText("A KithKyn project for Minecraft Java Edition.")).toHaveCount(0);
   await expect(page.getByText("Minecraft NeoForge")).toHaveCount(2);
-  await expect(page.getByText(/Minecraft 1\.21\.1/)).toHaveCount(0);
+  await expect(page.getByText(/Minecraft 1\.21\.1/)).toHaveCount(1);
 });
 
 test("scrolls through village styles with icon controls", async ({ page }): Promise<void> => {

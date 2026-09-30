@@ -1,0 +1,218 @@
+{
+  "structure": "village_center_savanna_tent_1",
+  "category": "village_center",
+  "variant": "savanna_tent",
+  "beds": [
+    [
+      6,
+      1,
+      10
+    ],
+    [
+      6,
+      1,
+      12
+    ],
+    [
+      6,
+      1,
+      14
+    ],
+    [
+      6,
+      1,
+      16
+    ]
+  ],
+  "work_stations": [
+    {
+      "pos": [
+        3,
+        1,
+        15
+      ],
+      "occupation": "BUILDER"
+    },
+    {
+      "pos": [
+        4,
+        1,
+        15
+      ],
+      "occupation": "BUILDER"
+    },
+    {
+      "pos": [
+        6,
+        1,
+        4
+      ],
+      "occupation": "GUARD",
+      "guard_duty": "CAPTAIN"
+    },
+    {
+      "pos": [
+        3,
+        1,
+        14
+      ],
+      "occupation": "BUILDER"
+    },
+    {
+      "pos": [
+        4,
+        1,
+        14
+      ],
+      "occupation": "BUILDER"
+    },
+    {
+      "pos": [
+        3,
+        1,
+        16
+      ],
+      "occupation": "BUILDER"
+    }
+  ],
+  "worksites": [],
+  "containers": [],
+  "personal_containers": [
+    [
+      2,
+      1,
+      16
+    ]
+  ],
+  "bed_containers": [
+    {
+      "bed": [
+        6,
+        1,
+        10
+      ],
+      "containers": [
+        [
+          2,
+          1,
+          16
+        ]
+      ]
+    },
+    {
+      "bed": [
+        6,
+        1,
+        12
+      ],
+      "containers": [
+        [
+          2,
+          1,
+          16
+        ]
+      ]
+    },
+    {
+      "bed": [
+        6,
+        1,
+        14
+      ],
+      "containers": [
+        [
+          2,
+          1,
+          16
+        ]
+      ]
+    },
+    {
+      "bed": [
+        6,
+        1,
+        16
+      ],
+      "containers": [
+        [
+          2,
+          1,
+          16
+        ]
+      ]
+    }
+  ],
+  "couple_beds": [],
+  "village_identity": {
+    "primary_blocks": [
+      [
+        6,
+        1,
+        10
+      ],
+      [
+        6,
+        1,
+        14
+      ]
+    ],
+    "secondary_blocks": [
+      [
+        6,
+        1,
+        12
+      ],
+      [
+        6,
+        1,
+        16
+      ]
+    ],
+    "banners": [
+      [
+        4,
+        7,
+        6
+      ],
+      [
+        4,
+        7,
+        20
+      ]
+    ]
+  },
+  "sink": 0,
+  "entrance_facing": "north",
+  "grants": [
+    "CIVIC_CENTER",
+    "CONSTRUCTION",
+    "PROTECTION",
+    "HOUSING"
+  ],
+  "meeting_point": [
+    4,
+    1,
+    5
+  ],
+  "campfires": [
+    [
+      4,
+      1,
+      4
+    ]
+  ],
+  "cost": [
+    {
+      "item": "minecraft:acacia_log",
+      "count": 40
+    },
+    {
+      "item": "minecraft:cobblestone",
+      "count": 48
+    },
+    {
+      "item": "minecraft:white_wool",
+      "count": 24
+    }
+  ]
+}

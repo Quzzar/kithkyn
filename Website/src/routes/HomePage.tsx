@@ -177,16 +177,16 @@ export function HomePage(): ReactElement {
                 <Cloud aria-hidden="true" />
                 <h3>Online models</h3>
                 <p>
-                  Connect OpenAI, Claude or DeepSeek. The worker calls your chosen provider only
-                  when a village needs a decision.
+                  Connect OpenAI, Claude or DeepSeek for conversation and village decisions with
+                  your own API key.
                 </p>
               </article>
               <article>
                 <HardDrive aria-hidden="true" />
                 <h3>Offline models</h3>
                 <p>
-                  Run the bundled local model through llama.cpp. Decisions stay on your machine and
-                  need no API key.
+                  KithKyn downloads its local model once, about 2 GB. Allow roughly 3 GB extra RAM.
+                  Later starts run offline without an API key.
                 </p>
               </article>
             </div>
@@ -205,8 +205,8 @@ export function HomePage(): ReactElement {
             <p>Minecraft NeoForge</p>
             <h2 id="download-title">Bring the village to your world.</h2>
             <p>
-              Public downloads are being prepared. Follow development on GitHub, then choose your
-              preferred launcher when the first release lands.
+              The first release bundles 17 regional building styles for Minecraft 1.21.1. Install
+              NeoForge and KithKyn on the server and every client. Public downloads are coming soon.
             </p>
           </div>
           <div className={styles.downloadActions} aria-label="Download destinations">

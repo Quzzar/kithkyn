@@ -1,5 +1,7 @@
 # Floodplain village
 
+**Release availability:** this approved catalog ships in the Kithkyn jar. No separate world datapack is required. Exact shipped definitions and template hashes are recorded in [the bundled catalog manifest](../tools/release/bundled-catalogs.json). Local `run/` paths below are historical authoring and verification records.
+
 The Floodplain catalog is the mangrove swamp village: the Nilotic houses from Towns and
 Towers with roles assigned by Aaron, three editable drafts restyled toward mud and mangrove,
 the two Polynesian farms, and the arid wall geometry painted in mud brick. It is the fourth
@@ -87,10 +89,8 @@ without changing the other twenty Floodplain buildings.
 captures, writes the export plan, runs `tools/structure/VillageTemplateExport.java` (which
 gained an optional `entities` plan key for the livestock and the allays) and assembles
 `run/floodplain-integration/datapack/`. `check.py` validates every definition and template
-statically. The private pack is installed in the local world's `datapacks` directory as
-`kithkyn-floodplain` alongside the updated runtime and kept with world backups; the public
-jar deliberately carries none of these third-party-derived structures
-([structure-sourcing.md](structure-sourcing.md)). A manual sample can request
+statically. The approved production set ships in the jar; the local `kithkyn-floodplain`
+pack is an authoring record, not an installation requirement. A manual sample can request
 `/kithkyn create-village ~ ~ ~ floodplain`.
 
 ## Verification
@@ -106,7 +106,7 @@ release under `run/floodplain-integration/`.
 The September 10 release passed all 470 unit tests. The placement fixture passed 160 real-template placements, both paths, four rotations, colors, frames, entity/save receipts and upgrade preservation. A real server restart kept 160 saved buildings and 64 original entities. The approved-centre and house-access fixtures passed for every building. The shared reviewed-village
 fixture passed its catalogue, upgrade, founding and natural founding checks in a mangrove swamp world: 20 strict native templates, 2 housing alternatives, 12 upgrade fits, four founding rotations and codec reloads, natural biome selection, 5 beds, 4 positions, distinct meeting/fire locations and village identity.
 
-The verified runtime and private datapack were installed locally on September 10 with the old
+The verified runtime and bundled datapack were installed locally on September 10 with the old
 Village Life villages removed from the world first (a flushed world snapshot precedes their removal
 in the release backup). The server loaded the pack automatically and registered 104 building
 definitions. The first floodplain village, Ruwaleni, was founded by command at the nearest mangrove

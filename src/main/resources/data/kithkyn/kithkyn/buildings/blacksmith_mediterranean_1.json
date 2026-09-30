@@ -1,0 +1,118 @@
+{
+  "structure": "blacksmith_mediterranean_1",
+  "category": "blacksmith",
+  "variant": "mediterranean",
+  "beds": [
+    [
+      8,
+      1,
+      6
+    ]
+  ],
+  "work_stations": [
+    {
+      "pos": [
+        6,
+        1,
+        3
+      ],
+      "occupation": "BLACKSMITH"
+    }
+  ],
+  "worksites": [],
+  "containers": [
+    [
+      3,
+      2,
+      8
+    ]
+  ],
+  "personal_containers": [
+    [
+      6,
+      0,
+      7
+    ]
+  ],
+  "bed_containers": [
+    {
+      "bed": [
+        8,
+        1,
+        6
+      ],
+      "containers": [
+        [
+          6,
+          0,
+          7
+        ]
+      ]
+    }
+  ],
+  "couple_beds": [],
+  "village_identity": {
+    "primary_blocks": [
+      [
+        5,
+        3,
+        0
+      ],
+      [
+        5,
+        3,
+        2
+      ],
+      [
+        5,
+        3,
+        4
+      ],
+      [
+        6,
+        3,
+        1
+      ],
+      [
+        6,
+        3,
+        3
+      ],
+      [
+        8,
+        1,
+        6
+      ]
+    ],
+    "secondary_blocks": [],
+    "banners": []
+  },
+  "sink": 0,
+  "entrance_facing": "east",
+  "grants": [
+    "HOUSING",
+    "STORAGE",
+    "REPAIR",
+    "SMELTING",
+    "TOOLS_IRON",
+    "ARMOR_IRON",
+    "SHIELDS"
+  ],
+  "worker_beds": [
+    [
+      8,
+      1,
+      6
+    ]
+  ],
+  "cost": [
+    {
+      "item": "minecraft:oak_log",
+      "count": 20
+    },
+    {
+      "item": "minecraft:cobblestone",
+      "count": 52
+    }
+  ]
+}

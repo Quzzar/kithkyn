@@ -1,0 +1,51 @@
+{
+  "category": "blacksmith",
+  "beds": [],
+  "couple_beds": [],
+  "work_stations": [
+    {
+      "occupation": "BLACKSMITH",
+      "pos": [
+        4,
+        1,
+        3
+      ]
+    }
+  ],
+  "personal_containers": [],
+  "containers": [
+    [
+      6,
+      2,
+      4
+    ]
+  ],
+  "bed_containers": [],
+  "village_identity": {
+    "primary_blocks": [],
+    "secondary_blocks": [],
+    "banners": []
+  },
+  "sink": 0,
+  "entrance_facing": "west",
+  "grants": [
+    "STORAGE",
+    "REPAIR",
+    "SMELTING",
+    "TOOLS_IRON",
+    "ARMOR_IRON",
+    "SHIELDS"
+  ],
+  "cost": [
+    {
+      "item": "minecraft:oak_log",
+      "count": 32
+    },
+    {
+      "item": "minecraft:cobblestone",
+      "count": 32
+    }
+  ],
+  "structure": "blacksmith_floodplain_1",
+  "variant": "floodplain"
+}

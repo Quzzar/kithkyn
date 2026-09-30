@@ -1,0 +1,426 @@
+{
+  "structure": "castle_taiga_1",
+  "category": "castle",
+  "variant": "taiga",
+  "beds": [
+    [
+      11,
+      8,
+      19
+    ],
+    [
+      13,
+      8,
+      19
+    ],
+    [
+      15,
+      8,
+      19
+    ],
+    [
+      17,
+      8,
+      19
+    ],
+    [
+      22,
+      8,
+      16
+    ],
+    [
+      22,
+      8,
+      17
+    ]
+  ],
+  "work_stations": [
+    {
+      "pos": [
+        22,
+        8,
+        18
+      ],
+      "occupation": "LEADER"
+    },
+    {
+      "pos": [
+        23,
+        1,
+        4
+      ],
+      "occupation": "GUARD",
+      "guard_duty": "JAILER"
+    },
+    {
+      "pos": [
+        14,
+        1,
+        31
+      ],
+      "occupation": "MASON"
+    },
+    {
+      "pos": [
+        17,
+        2,
+        20
+      ],
+      "occupation": "CLERIC"
+    },
+    {
+      "pos": [
+        20,
+        2,
+        17
+      ],
+      "occupation": "BLACKSMITH"
+    },
+    {
+      "pos": [
+        19,
+        2,
+        20
+      ],
+      "occupation": "HUNTER"
+    },
+    {
+      "pos": [
+        12,
+        2,
+        20
+      ],
+      "occupation": "BAKER"
+    }
+  ],
+  "worksites": [],
+  "containers": [
+    [
+      13,
+      4,
+      20
+    ],
+    [
+      15,
+      3,
+      21
+    ],
+    [
+      16,
+      1,
+      31
+    ],
+    [
+      21,
+      2,
+      14
+    ],
+    [
+      24,
+      3,
+      20
+    ]
+  ],
+  "personal_containers": [
+    [
+      11,
+      8,
+      15
+    ],
+    [
+      16,
+      8,
+      15
+    ],
+    [
+      22,
+      8,
+      19
+    ]
+  ],
+  "bed_containers": [
+    {
+      "bed": [
+        11,
+        8,
+        19
+      ],
+      "containers": [
+        [
+          11,
+          8,
+          15
+        ]
+      ]
+    },
+    {
+      "bed": [
+        13,
+        8,
+        19
+      ],
+      "containers": [
+        [
+          11,
+          8,
+          15
+        ]
+      ]
+    },
+    {
+      "bed": [
+        15,
+        8,
+        19
+      ],
+      "containers": [
+        [
+          16,
+          8,
+          15
+        ]
+      ]
+    },
+    {
+      "bed": [
+        17,
+        8,
+        19
+      ],
+      "containers": [
+        [
+          16,
+          8,
+          15
+        ]
+      ]
+    },
+    {
+      "bed": [
+        22,
+        8,
+        16
+      ],
+      "containers": [
+        [
+          22,
+          8,
+          19
+        ]
+      ]
+    },
+    {
+      "bed": [
+        22,
+        8,
+        17
+      ],
+      "containers": [
+        [
+          22,
+          8,
+          19
+        ]
+      ]
+    }
+  ],
+  "couple_beds": [
+    [
+      [
+        22,
+        8,
+        16
+      ],
+      [
+        22,
+        8,
+        17
+      ]
+    ]
+  ],
+  "village_identity": {
+    "primary_blocks": [
+      [
+        11,
+        8,
+        19
+      ],
+      [
+        15,
+        8,
+        19
+      ],
+      [
+        22,
+        8,
+        16
+      ],
+      [
+        22,
+        8,
+        17
+      ]
+    ],
+    "secondary_blocks": [
+      [
+        13,
+        8,
+        19
+      ],
+      [
+        17,
+        8,
+        19
+      ]
+    ],
+    "banners": [
+      [
+        6,
+        5,
+        17
+      ],
+      [
+        12,
+        4,
+        23
+      ],
+      [
+        14,
+        3,
+        1
+      ],
+      [
+        17,
+        5,
+        21
+      ],
+      [
+        18,
+        3,
+        0
+      ],
+      [
+        20,
+        4,
+        23
+      ],
+      [
+        26,
+        5,
+        17
+      ],
+      [
+        34,
+        4,
+        13
+      ],
+      [
+        34,
+        4,
+        17
+      ]
+    ]
+  },
+  "sink": 0,
+  "entrance_facing": "north",
+  "grants": [
+    "GOVERNANCE",
+    "PROTECTION",
+    "CUSTODY",
+    "HOUSING",
+    "FAMILY_HOUSING",
+    "STORAGE",
+    "CUT_STONE",
+    "HEALING",
+    "REPAIR",
+    "SMELTING",
+    "TOOLS_IRON",
+    "ARMOR_IRON",
+    "SHIELDS",
+    "FOOD",
+    "MEAT",
+    "LEATHER",
+    "BAKED_GOODS"
+  ],
+  "worker_beds": [
+    [
+      11,
+      8,
+      19
+    ],
+    [
+      13,
+      8,
+      19
+    ],
+    [
+      15,
+      8,
+      19
+    ],
+    [
+      17,
+      8,
+      19
+    ]
+  ],
+  "room_reservations": [
+    {
+      "beds": [
+        [
+          22,
+          8,
+          16
+        ],
+        [
+          22,
+          8,
+          17
+        ]
+      ],
+      "occupation": "LEADER"
+    }
+  ],
+  "castle": {
+    "custody_cell": [
+      21,
+      1,
+      4
+    ],
+    "release_point": [
+      21,
+      1,
+      6
+    ],
+    "evidence_containers": [
+      [
+        23,
+        0,
+        4
+      ],
+      [
+        24,
+        1,
+        4
+      ]
+    ]
+  },
+  "cost": [
+    {
+      "item": "minecraft:spruce_log",
+      "count": 96
+    },
+    {
+      "item": "minecraft:cobblestone",
+      "count": 64
+    },
+    {
+      "item": "minecraft:dark_oak_log",
+      "count": 32
+    },
+    {
+      "item": "minecraft:iron_ingot",
+      "count": 8
+    }
+  ]
+}

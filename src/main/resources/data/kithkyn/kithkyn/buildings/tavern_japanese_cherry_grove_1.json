@@ -1,0 +1,208 @@
+{
+  "structure": "tavern_japanese_cherry_grove_1",
+  "category": "tavern",
+  "variant": "japanese_cherry_grove",
+  "beds": [
+    [
+      5,
+      2,
+      16
+    ],
+    [
+      5,
+      6,
+      4
+    ],
+    [
+      8,
+      2,
+      16
+    ],
+    [
+      9,
+      6,
+      6
+    ],
+    [
+      11,
+      2,
+      16
+    ]
+  ],
+  "work_stations": [
+    {
+      "pos": [
+        9,
+        2,
+        10
+      ],
+      "occupation": "INNKEEPER"
+    },
+    {
+      "pos": [
+        11,
+        2,
+        10
+      ],
+      "occupation": "INNKEEPER"
+    }
+  ],
+  "worksites": [],
+  "containers": [],
+  "personal_containers": [
+    [
+      6,
+      1,
+      15
+    ],
+    [
+      9,
+      1,
+      15
+    ],
+    [
+      12,
+      1,
+      15
+    ],
+    [
+      9,
+      6,
+      5
+    ]
+  ],
+  "bed_containers": [
+    {
+      "bed": [
+        5,
+        2,
+        16
+      ],
+      "containers": [
+        [
+          6,
+          1,
+          15
+        ]
+      ]
+    },
+    {
+      "bed": [
+        5,
+        6,
+        4
+      ],
+      "containers": [
+        [
+          9,
+          6,
+          5
+        ]
+      ]
+    },
+    {
+      "bed": [
+        8,
+        2,
+        16
+      ],
+      "containers": [
+        [
+          9,
+          1,
+          15
+        ]
+      ]
+    },
+    {
+      "bed": [
+        9,
+        6,
+        6
+      ],
+      "containers": [
+        [
+          9,
+          6,
+          5
+        ]
+      ]
+    },
+    {
+      "bed": [
+        11,
+        2,
+        16
+      ],
+      "containers": [
+        [
+          12,
+          1,
+          15
+        ]
+      ]
+    }
+  ],
+  "couple_beds": [],
+  "village_identity": {
+    "primary_blocks": [
+      [
+        5,
+        2,
+        16
+      ],
+      [
+        11,
+        2,
+        16
+      ],
+      [
+        9,
+        6,
+        6
+      ]
+    ],
+    "secondary_blocks": [
+      [
+        8,
+        2,
+        16
+      ],
+      [
+        5,
+        6,
+        4
+      ]
+    ],
+    "banners": []
+  },
+  "sink": 0,
+  "entrance_facing": "west",
+  "worker_beds": [
+    [
+      5,
+      6,
+      4
+    ],
+    [
+      9,
+      6,
+      6
+    ]
+  ],
+  "grants": [
+    "HOUSING",
+    "HOSPITALITY",
+    "WANDERERS"
+  ],
+  "cost": [
+    {
+      "item": "minecraft:oak_log",
+      "count": 48
+    },
+    {
+      "item": "minecraft:cobblestone",
+      "count": 40
+    }
+  ]
+}

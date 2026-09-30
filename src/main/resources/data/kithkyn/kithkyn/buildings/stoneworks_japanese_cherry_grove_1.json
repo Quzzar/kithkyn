@@ -1,0 +1,48 @@
+{
+  "structure": "stoneworks_japanese_cherry_grove_1",
+  "category": "stoneworks",
+  "variant": "japanese_cherry_grove",
+  "beds": [],
+  "work_stations": [
+    {
+      "pos": [
+        4,
+        2,
+        4
+      ],
+      "occupation": "MASON"
+    }
+  ],
+  "worksites": [],
+  "containers": [
+    [
+      3,
+      2,
+      3
+    ]
+  ],
+  "personal_containers": [],
+  "bed_containers": [],
+  "couple_beds": [],
+  "village_identity": {
+    "primary_blocks": [],
+    "secondary_blocks": [],
+    "banners": []
+  },
+  "sink": 0,
+  "entrance_facing": "north",
+  "grants": [
+    "STORAGE",
+    "CUT_STONE"
+  ],
+  "cost": [
+    {
+      "item": "minecraft:oak_log",
+      "count": 20
+    },
+    {
+      "item": "minecraft:cobblestone",
+      "count": 16
+    }
+  ]
+}

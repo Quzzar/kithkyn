@@ -1,0 +1,751 @@
+{
+  "structure": "castle_swamp_1",
+  "variant": "swamp",
+  "category": "castle",
+  "beds": [
+    [
+      23,
+      2,
+      13
+    ],
+    [
+      25,
+      2,
+      13
+    ],
+    [
+      5,
+      2,
+      17
+    ],
+    [
+      7,
+      2,
+      17
+    ],
+    [
+      7,
+      6,
+      13
+    ],
+    [
+      7,
+      6,
+      15
+    ],
+    [
+      23,
+      6,
+      13
+    ],
+    [
+      23,
+      6,
+      15
+    ],
+    [
+      23,
+      6,
+      17
+    ],
+    [
+      19,
+      10,
+      20
+    ],
+    [
+      20,
+      10,
+      20
+    ]
+  ],
+  "couple_beds": [
+    [
+      [
+        19,
+        10,
+        20
+      ],
+      [
+        20,
+        10,
+        20
+      ]
+    ]
+  ],
+  "bed_containers": [
+    {
+      "bed": [
+        23,
+        2,
+        13
+      ],
+      "containers": [
+        [
+          26,
+          2,
+          13
+        ]
+      ]
+    },
+    {
+      "bed": [
+        25,
+        2,
+        13
+      ],
+      "containers": [
+        [
+          26,
+          2,
+          13
+        ]
+      ]
+    },
+    {
+      "bed": [
+        5,
+        2,
+        17
+      ],
+      "containers": [
+        [
+          4,
+          2,
+          17
+        ]
+      ]
+    },
+    {
+      "bed": [
+        7,
+        2,
+        17
+      ],
+      "containers": [
+        [
+          4,
+          2,
+          17
+        ]
+      ]
+    },
+    {
+      "bed": [
+        7,
+        6,
+        13
+      ],
+      "containers": [
+        [
+          7,
+          6,
+          17
+        ]
+      ]
+    },
+    {
+      "bed": [
+        7,
+        6,
+        15
+      ],
+      "containers": [
+        [
+          7,
+          6,
+          17
+        ]
+      ]
+    },
+    {
+      "bed": [
+        23,
+        6,
+        13
+      ],
+      "containers": [
+        [
+          26,
+          6,
+          17
+        ]
+      ]
+    },
+    {
+      "bed": [
+        23,
+        6,
+        15
+      ],
+      "containers": [
+        [
+          26,
+          6,
+          17
+        ]
+      ]
+    },
+    {
+      "bed": [
+        23,
+        6,
+        17
+      ],
+      "containers": [
+        [
+          26,
+          6,
+          17
+        ]
+      ]
+    },
+    {
+      "bed": [
+        19,
+        10,
+        20
+      ],
+      "containers": [
+        [
+          21,
+          11,
+          16
+        ]
+      ]
+    },
+    {
+      "bed": [
+        20,
+        10,
+        20
+      ],
+      "containers": [
+        [
+          21,
+          11,
+          16
+        ]
+      ]
+    }
+  ],
+  "personal_containers": [
+    [
+      26,
+      2,
+      13
+    ],
+    [
+      4,
+      2,
+      17
+    ],
+    [
+      7,
+      6,
+      17
+    ],
+    [
+      26,
+      6,
+      17
+    ],
+    [
+      21,
+      11,
+      16
+    ]
+  ],
+  "decorative_containers": [
+    [
+      9,
+      10,
+      17
+    ],
+    [
+      10,
+      14,
+      20
+    ]
+  ],
+  "containers": [
+    [
+      10,
+      3,
+      20
+    ],
+    [
+      21,
+      19,
+      18
+    ]
+  ],
+  "worker_beds": [],
+  "work_stations": [
+    {
+      "occupation": "BAKER",
+      "pos": [
+        10,
+        10,
+        19
+      ]
+    },
+    {
+      "occupation": "MERCHANT",
+      "pos": [
+        10,
+        2,
+        19
+      ]
+    },
+    {
+      "occupation": "BLACKSMITH",
+      "pos": [
+        21,
+        18,
+        11
+      ]
+    },
+    {
+      "occupation": "LEADER",
+      "pos": [
+        19,
+        10,
+        17
+      ]
+    },
+    {
+      "occupation": "GUARD",
+      "guard_duty": "JAILER",
+      "pos": [
+        14,
+        2,
+        10
+      ]
+    },
+    {
+      "occupation": "GUARD",
+      "guard_duty": "SWORD_POST",
+      "pos": [
+        14,
+        1,
+        26
+      ],
+      "patrol_route": [
+        [
+          14,
+          1,
+          26
+        ],
+        [
+          14,
+          2,
+          23
+        ]
+      ]
+    },
+    {
+      "occupation": "GUARD",
+      "guard_duty": "SWORD_POST",
+      "pos": [
+        16,
+        1,
+        26
+      ],
+      "patrol_route": [
+        [
+          16,
+          1,
+          26
+        ],
+        [
+          16,
+          2,
+          23
+        ]
+      ]
+    },
+    {
+      "occupation": "GUARD",
+      "guard_duty": "CROSSBOW_POST",
+      "pos": [
+        15,
+        10,
+        5
+      ],
+      "patrol_route": [
+        [
+          15,
+          10,
+          5
+        ],
+        [
+          13,
+          10,
+          4
+        ],
+        [
+          17,
+          10,
+          4
+        ]
+      ]
+    },
+    {
+      "occupation": "GUARD",
+      "guard_duty": "CROSSBOW_POST",
+      "pos": [
+        15,
+        10,
+        25
+      ],
+      "patrol_route": [
+        [
+          15,
+          10,
+          25
+        ],
+        [
+          13,
+          10,
+          25
+        ],
+        [
+          15,
+          10,
+          23
+        ],
+        [
+          17,
+          10,
+          23
+        ]
+      ]
+    },
+    {
+      "occupation": "GUARD",
+      "guard_duty": "CROSSBOW_POST",
+      "pos": [
+        9,
+        18,
+        9
+      ],
+      "patrol_route": [
+        [
+          9,
+          18,
+          9
+        ],
+        [
+          8,
+          18,
+          8
+        ],
+        [
+          9,
+          18,
+          11
+        ],
+        [
+          11,
+          18,
+          11
+        ]
+      ]
+    },
+    {
+      "occupation": "GUARD",
+      "guard_duty": "CROSSBOW_POST",
+      "pos": [
+        15,
+        18,
+        22
+      ],
+      "patrol_route": [
+        [
+          15,
+          18,
+          22
+        ],
+        [
+          13,
+          18,
+          22
+        ],
+        [
+          13,
+          18,
+          19
+        ],
+        [
+          17,
+          18,
+          19
+        ],
+        [
+          17,
+          18,
+          22
+        ]
+      ]
+    },
+    {
+      "occupation": "GUARD",
+      "guard_duty": "CROSSBOW_POST",
+      "pos": [
+        21,
+        18,
+        9
+      ],
+      "patrol_route": [
+        [
+          21,
+          18,
+          9
+        ],
+        [
+          19,
+          18,
+          8
+        ],
+        [
+          19,
+          18,
+          11
+        ],
+        [
+          22,
+          18,
+          11
+        ]
+      ]
+    }
+  ],
+  "village_identity": {
+    "primary_blocks": [
+      [
+        23,
+        2,
+        13
+      ],
+      [
+        5,
+        2,
+        17
+      ],
+      [
+        7,
+        6,
+        13
+      ],
+      [
+        23,
+        6,
+        13
+      ],
+      [
+        23,
+        6,
+        17
+      ],
+      [
+        19,
+        10,
+        20
+      ],
+      [
+        20,
+        10,
+        20
+      ]
+    ],
+    "secondary_blocks": [
+      [
+        25,
+        2,
+        13
+      ],
+      [
+        7,
+        2,
+        17
+      ],
+      [
+        7,
+        6,
+        15
+      ],
+      [
+        23,
+        6,
+        15
+      ]
+    ],
+    "banners": [
+      [
+        2,
+        3,
+        15
+      ],
+      [
+        28,
+        3,
+        15
+      ],
+      [
+        12,
+        4,
+        29
+      ],
+      [
+        18,
+        4,
+        29
+      ],
+      [
+        15,
+        18,
+        5
+      ],
+      [
+        4,
+        18,
+        15
+      ],
+      [
+        26,
+        18,
+        15
+      ],
+      [
+        15,
+        18,
+        25
+      ]
+    ]
+  },
+  "entrance_facing": "south",
+  "sink": 0,
+  "castle": {
+    "custody_cell": [
+      16,
+      2,
+      8
+    ],
+    "release_point": [
+      16,
+      2,
+      11
+    ],
+    "evidence_containers": [
+      [
+        16,
+        5,
+        9
+      ],
+      [
+        17,
+        5,
+        9
+      ]
+    ],
+    "patrol_routes": {
+      "SWORD_POST": [
+        [
+          14,
+          1,
+          26
+        ],
+        [
+          16,
+          1,
+          26
+        ],
+        [
+          16,
+          2,
+          23
+        ],
+        [
+          14,
+          2,
+          23
+        ]
+      ],
+      "CROSSBOW_POST": [
+        [
+          15,
+          10,
+          5
+        ],
+        [
+          9,
+          18,
+          9
+        ],
+        [
+          15,
+          18,
+          22
+        ],
+        [
+          21,
+          18,
+          9
+        ],
+        [
+          15,
+          10,
+          25
+        ]
+      ]
+    }
+  },
+  "room_reservations": [
+    {
+      "beds": [
+        [
+          19,
+          10,
+          20
+        ],
+        [
+          20,
+          10,
+          20
+        ]
+      ],
+      "occupation": "LEADER"
+    }
+  ],
+  "grants": [
+    "GOVERNANCE",
+    "HOUSING",
+    "FAMILY_HOUSING",
+    "PROTECTION",
+    "CUSTODY",
+    "STORAGE",
+    "FOOD",
+    "BAKED_GOODS",
+    "REPAIR",
+    "SMELTING",
+    "TOOLS_IRON",
+    "ARMOR_IRON",
+    "SHIELDS",
+    "TRADE"
+  ],
+  "cost": [
+    {
+      "item": "minecraft:oak_log",
+      "count": 144
+    },
+    {
+      "item": "minecraft:cobblestone",
+      "count": 152
+    },
+    {
+      "item": "minecraft:iron_ingot",
+      "count": 16
+    }
+  ]
+}

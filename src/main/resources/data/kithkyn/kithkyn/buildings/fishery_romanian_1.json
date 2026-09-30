@@ -1,0 +1,49 @@
+{
+  "structure": "fishery_romanian_1",
+  "category": "fishery",
+  "variant": "romanian",
+  "beds": [],
+  "work_stations": [
+    {
+      "pos": [
+        4,
+        1,
+        5
+      ],
+      "occupation": "FISHER"
+    }
+  ],
+  "worksites": [],
+  "containers": [
+    [
+      5,
+      1,
+      5
+    ]
+  ],
+  "personal_containers": [],
+  "bed_containers": [],
+  "couple_beds": [],
+  "village_identity": {
+    "primary_blocks": [],
+    "secondary_blocks": [],
+    "banners": []
+  },
+  "sink": 0,
+  "entrance_facing": "south",
+  "grants": [
+    "STORAGE",
+    "FOOD",
+    "FISH"
+  ],
+  "cost": [
+    {
+      "item": "minecraft:oak_log",
+      "count": 20
+    },
+    {
+      "item": "minecraft:cobblestone",
+      "count": 20
+    }
+  ]
+}

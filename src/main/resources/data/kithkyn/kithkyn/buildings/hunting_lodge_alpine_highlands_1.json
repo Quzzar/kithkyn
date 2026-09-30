@@ -1,0 +1,121 @@
+{
+  "structure": "hunting_lodge_alpine_highlands_1",
+  "category": "hunting_lodge",
+  "variant": "alpine_highlands",
+  "beds": [
+    [
+      4,
+      4,
+      5
+    ],
+    [
+      9,
+      1,
+      6
+    ]
+  ],
+  "work_stations": [
+    {
+      "pos": [
+        7,
+        1,
+        8
+      ],
+      "occupation": "HUNTER"
+    }
+  ],
+  "worksites": [],
+  "containers": [
+    [
+      8,
+      0,
+      6
+    ]
+  ],
+  "personal_containers": [
+    [
+      9,
+      1,
+      8
+    ],
+    [
+      5,
+      4,
+      5
+    ]
+  ],
+  "bed_containers": [
+    {
+      "bed": [
+        4,
+        4,
+        5
+      ],
+      "containers": [
+        [
+          5,
+          4,
+          5
+        ]
+      ]
+    },
+    {
+      "bed": [
+        9,
+        1,
+        6
+      ],
+      "containers": [
+        [
+          9,
+          1,
+          8
+        ]
+      ]
+    }
+  ],
+  "couple_beds": [],
+  "village_identity": {
+    "primary_blocks": [
+      [
+        4,
+        4,
+        5
+      ]
+    ],
+    "secondary_blocks": [
+      [
+        9,
+        1,
+        6
+      ]
+    ],
+    "banners": []
+  },
+  "sink": -1,
+  "entrance_facing": "south",
+  "grants": [
+    "FOOD",
+    "MEAT",
+    "LEATHER",
+    "HOUSING",
+    "STORAGE"
+  ],
+  "cost": [
+    {
+      "item": "minecraft:oak_log",
+      "count": 20
+    },
+    {
+      "item": "minecraft:cobblestone",
+      "count": 20
+    }
+  ],
+  "worker_beds": [
+    [
+      9,
+      1,
+      6
+    ]
+  ]
+}

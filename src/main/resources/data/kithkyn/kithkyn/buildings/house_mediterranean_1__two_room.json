@@ -1,0 +1,95 @@
+{
+  "structure": "house_mediterranean_1__two_room",
+  "category": "house",
+  "variant": "mediterranean",
+  "beds": [
+    [
+      1,
+      1,
+      6
+    ],
+    [
+      6,
+      1,
+      1
+    ]
+  ],
+  "work_stations": [],
+  "worksites": [],
+  "containers": [],
+  "personal_containers": [
+    [
+      2,
+      0,
+      8
+    ],
+    [
+      6,
+      0,
+      3
+    ]
+  ],
+  "bed_containers": [
+    {
+      "bed": [
+        1,
+        1,
+        6
+      ],
+      "containers": [
+        [
+          2,
+          0,
+          8
+        ]
+      ]
+    },
+    {
+      "bed": [
+        6,
+        1,
+        1
+      ],
+      "containers": [
+        [
+          6,
+          0,
+          3
+        ]
+      ]
+    }
+  ],
+  "couple_beds": [],
+  "village_identity": {
+    "primary_blocks": [
+      [
+        1,
+        1,
+        6
+      ]
+    ],
+    "secondary_blocks": [
+      [
+        6,
+        1,
+        1
+      ]
+    ],
+    "banners": []
+  },
+  "sink": 0,
+  "entrance_facing": "east",
+  "grants": [
+    "HOUSING"
+  ],
+  "cost": [
+    {
+      "item": "minecraft:oak_log",
+      "count": 12
+    },
+    {
+      "item": "minecraft:cobblestone",
+      "count": 16
+    }
+  ]
+}

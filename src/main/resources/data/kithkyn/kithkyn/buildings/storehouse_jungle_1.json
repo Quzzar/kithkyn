@@ -1,0 +1,69 @@
+{
+  "structure": "storehouse_jungle_1",
+  "category": "storehouse",
+  "variant": "jungle",
+  "beds": [],
+  "work_stations": [
+    {
+      "pos": [
+        4,
+        1,
+        3
+      ],
+      "occupation": "QUARTERMASTER"
+    }
+  ],
+  "worksites": [],
+  "containers": [
+    [
+      3,
+      1,
+      4
+    ],
+    [
+      4,
+      1,
+      4
+    ],
+    [
+      5,
+      1,
+      4
+    ]
+  ],
+  "personal_containers": [],
+  "bed_containers": [],
+  "couple_beds": [],
+  "village_identity": {
+    "primary_blocks": [],
+    "secondary_blocks": [],
+    "banners": [
+      [
+        7,
+        2,
+        2
+      ],
+      [
+        7,
+        2,
+        4
+      ]
+    ]
+  },
+  "sink": 0,
+  "entrance_facing": "west",
+  "grants": [
+    "STORAGE",
+    "LOGISTICS"
+  ],
+  "cost": [
+    {
+      "item": "minecraft:oak_log",
+      "count": 16
+    },
+    {
+      "item": "minecraft:cobblestone",
+      "count": 8
+    }
+  ]
+}

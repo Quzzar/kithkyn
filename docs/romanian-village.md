@@ -1,9 +1,11 @@
 # Romanian village
 
+**Release availability:** this approved catalog ships in the Kithkyn jar. No separate world datapack is required. Exact shipped definitions and template hashes are recorded in [the bundled catalog manifest](../tools/release/bundled-catalogs.json). Local `run/` paths below are historical authoring and verification records.
+
 The Romanian catalog is the Dark Forest village: steep pale birch roofs over dark-oak frames,
 white walls, cobblestone details, enclosed yards and substantial woodland homes. The style token
 is `romanian`. Dark Forest and compatible modded biome paths named `dark_forest`,
-`darkforest`, `forested_highland` or `wooded_valley` select it whenever its private founding set
+`darkforest`, `forested_highland` or `wooded_valley` select it whenever its bundled founding set
 is loaded. A datapack may map any other biome explicitly with the
 `kithkyn:village_style/romanian` biome tag.
 
@@ -25,7 +27,7 @@ the village adds housing.
 
 ## Selected buildings
 
-The private datapack contains 24 definitions:
+The bundled datapack contains 24 definitions:
 
 | Id | Use |
 | --- | --- |
@@ -68,7 +70,7 @@ torches light the wall. There is no second wall upgrade.
 `tools/structure/VillageTemplateExport.java`. It removes gallery-only barriers and structure
 voids, neutralizes identity slots, empties containers, records authored air above the ground and
 places livestock only on clear pen floors. Third-party-derived building templates and definitions
-remain in the local private datapack; source and output hashes are recorded in
+remain in the local bundled datapack; source and output hashes are recorded in
 `tools/structure/romanian-catalog-20260912.json`.
 
 The native verification covers all 24 templates through instant and villager-paced construction,

@@ -1,0 +1,168 @@
+{
+  "beds": [
+    [
+      4,
+      1,
+      11
+    ],
+    [
+      6,
+      1,
+      11
+    ],
+    [
+      4,
+      4,
+      10
+    ],
+    [
+      4,
+      4,
+      11
+    ]
+  ],
+  "couple_beds": [
+    [
+      [
+        4,
+        4,
+        10
+      ],
+      [
+        4,
+        4,
+        11
+      ]
+    ]
+  ],
+  "work_stations": [],
+  "personal_containers": [
+    [
+      6,
+      2,
+      3
+    ],
+    [
+      4,
+      5,
+      5
+    ]
+  ],
+  "containers": [],
+  "bed_containers": [
+    {
+      "bed": [
+        4,
+        1,
+        11
+      ],
+      "containers": [
+        [
+          6,
+          2,
+          3
+        ]
+      ]
+    },
+    {
+      "bed": [
+        6,
+        1,
+        11
+      ],
+      "containers": [
+        [
+          6,
+          2,
+          3
+        ]
+      ]
+    },
+    {
+      "bed": [
+        4,
+        4,
+        10
+      ],
+      "containers": [
+        [
+          4,
+          5,
+          5
+        ]
+      ]
+    },
+    {
+      "bed": [
+        4,
+        4,
+        11
+      ],
+      "containers": [
+        [
+          4,
+          5,
+          5
+        ]
+      ]
+    }
+  ],
+  "village_identity": {
+    "primary_blocks": [
+      [
+        4,
+        1,
+        11
+      ],
+      [
+        4,
+        4,
+        10
+      ],
+      [
+        4,
+        4,
+        11
+      ]
+    ],
+    "secondary_blocks": [
+      [
+        6,
+        1,
+        11
+      ]
+    ],
+    "banners": [
+      [
+        2,
+        5,
+        8
+      ],
+      [
+        2,
+        5,
+        12
+      ]
+    ]
+  },
+  "sink": 0,
+  "structure": "house_badlands_3",
+  "category": "house",
+  "variant": "badlands",
+  "entrance_facing": "west",
+  "standalone": true,
+  "grants": [
+    "HOUSING",
+    "FAMILY_HOUSING"
+  ],
+  "cost": [
+    {
+      "item": "minecraft:oak_log",
+      "count": 20
+    },
+    {
+      "item": "minecraft:cobblestone",
+      "count": 28
+    }
+  ]
+}

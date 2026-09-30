@@ -1,0 +1,230 @@
+{
+  "structure": "house_alpine_highlands_1__family_house",
+  "category": "house",
+  "variant": "alpine_highlands",
+  "beds": [
+    [
+      3,
+      1,
+      4
+    ],
+    [
+      4,
+      1,
+      12
+    ],
+    [
+      5,
+      2,
+      8
+    ],
+    [
+      12,
+      1,
+      7
+    ],
+    [
+      13,
+      1,
+      7
+    ],
+    [
+      14,
+      2,
+      5
+    ]
+  ],
+  "work_stations": [],
+  "worksites": [],
+  "containers": [],
+  "personal_containers": [
+    [
+      14,
+      0,
+      7
+    ],
+    [
+      5,
+      1,
+      4
+    ],
+    [
+      6,
+      1,
+      12
+    ],
+    [
+      14,
+      2,
+      4
+    ],
+    [
+      3,
+      2,
+      8
+    ]
+  ],
+  "bed_containers": [
+    {
+      "bed": [
+        3,
+        1,
+        4
+      ],
+      "containers": [
+        [
+          5,
+          1,
+          4
+        ]
+      ]
+    },
+    {
+      "bed": [
+        4,
+        1,
+        12
+      ],
+      "containers": [
+        [
+          6,
+          1,
+          12
+        ]
+      ]
+    },
+    {
+      "bed": [
+        5,
+        2,
+        8
+      ],
+      "containers": [
+        [
+          3,
+          2,
+          8
+        ]
+      ]
+    },
+    {
+      "bed": [
+        12,
+        1,
+        7
+      ],
+      "containers": [
+        [
+          14,
+          0,
+          7
+        ],
+        [
+          14,
+          2,
+          4
+        ]
+      ]
+    },
+    {
+      "bed": [
+        13,
+        1,
+        7
+      ],
+      "containers": [
+        [
+          14,
+          0,
+          7
+        ],
+        [
+          14,
+          2,
+          4
+        ]
+      ]
+    },
+    {
+      "bed": [
+        14,
+        2,
+        5
+      ],
+      "containers": [
+        [
+          14,
+          2,
+          4
+        ]
+      ]
+    }
+  ],
+  "couple_beds": [
+    [
+      [
+        12,
+        1,
+        7
+      ],
+      [
+        13,
+        1,
+        7
+      ]
+    ]
+  ],
+  "village_identity": {
+    "primary_blocks": [
+      [
+        3,
+        1,
+        4
+      ],
+      [
+        5,
+        2,
+        8
+      ]
+    ],
+    "secondary_blocks": [
+      [
+        4,
+        1,
+        12
+      ],
+      [
+        12,
+        1,
+        7
+      ],
+      [
+        14,
+        2,
+        5
+      ],
+      [
+        13,
+        1,
+        7
+      ]
+    ],
+    "banners": []
+  },
+  "sink": -1,
+  "entrance_facing": "south",
+  "grants": [
+    "HOUSING",
+    "FAMILY_HOUSING"
+  ],
+  "cost": [
+    {
+      "item": "minecraft:oak_log",
+      "count": 12
+    },
+    {
+      "item": "minecraft:cobblestone",
+      "count": 8
+    }
+  ]
+}

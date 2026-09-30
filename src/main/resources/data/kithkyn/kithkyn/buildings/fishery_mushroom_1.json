@@ -1,0 +1,49 @@
+{
+  "structure": "fishery_mushroom_1",
+  "category": "fishery",
+  "variant": "mushroom",
+  "beds": [],
+  "work_stations": [
+    {
+      "pos": [
+        2,
+        1,
+        3
+      ],
+      "occupation": "FISHER"
+    }
+  ],
+  "worksites": [],
+  "containers": [
+    [
+      2,
+      1,
+      2
+    ]
+  ],
+  "personal_containers": [],
+  "bed_containers": [],
+  "couple_beds": [],
+  "village_identity": {
+    "primary_blocks": [],
+    "secondary_blocks": [],
+    "banners": []
+  },
+  "sink": 0,
+  "entrance_facing": "east",
+  "grants": [
+    "STORAGE",
+    "FOOD",
+    "FISH"
+  ],
+  "cost": [
+    {
+      "item": "minecraft:oak_log",
+      "count": 28
+    },
+    {
+      "item": "minecraft:cobblestone",
+      "count": 20
+    }
+  ]
+}

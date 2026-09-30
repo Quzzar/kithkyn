@@ -1,0 +1,71 @@
+{
+  "category": "lumberjack",
+  "beds": [
+    [
+      17,
+      2,
+      7
+    ]
+  ],
+  "couple_beds": [],
+  "work_stations": [
+    {
+      "occupation": "LUMBERJACK",
+      "pos": [
+        9,
+        1,
+        6
+      ]
+    }
+  ],
+  "personal_containers": [
+    [
+      15,
+      2,
+      3
+    ]
+  ],
+  "containers": [],
+  "bed_containers": [
+    {
+      "bed": [
+        17,
+        2,
+        7
+      ],
+      "containers": [
+        [
+          15,
+          2,
+          3
+        ]
+      ]
+    }
+  ],
+  "village_identity": {
+    "primary_blocks": [
+      [
+        17,
+        2,
+        7
+      ]
+    ],
+    "secondary_blocks": [],
+    "banners": []
+  },
+  "sink": 0,
+  "entrance_facing": "west",
+  "grants": [
+    "HOUSING",
+    "LOGS",
+    "PLANKS"
+  ],
+  "cost": [
+    {
+      "item": "minecraft:cobblestone",
+      "count": 36
+    }
+  ],
+  "structure": "lumberjack_badlands_1",
+  "variant": "badlands"
+}

@@ -1,0 +1,49 @@
+{
+  "structure": "bakery_nautical_coast_1",
+  "category": "bakery",
+  "variant": "nautical_coast",
+  "beds": [],
+  "work_stations": [
+    {
+      "pos": [
+        4,
+        2,
+        5
+      ],
+      "occupation": "BAKER"
+    }
+  ],
+  "worksites": [],
+  "containers": [
+    [
+      3,
+      2,
+      6
+    ]
+  ],
+  "personal_containers": [],
+  "bed_containers": [],
+  "couple_beds": [],
+  "village_identity": {
+    "primary_blocks": [],
+    "secondary_blocks": [],
+    "banners": []
+  },
+  "sink": 0,
+  "entrance_facing": "north",
+  "grants": [
+    "STORAGE",
+    "FOOD",
+    "BAKED_GOODS"
+  ],
+  "cost": [
+    {
+      "item": "minecraft:oak_log",
+      "count": 24
+    },
+    {
+      "item": "minecraft:cobblestone",
+      "count": 16
+    }
+  ]
+}

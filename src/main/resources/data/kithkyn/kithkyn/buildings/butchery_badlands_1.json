@@ -1,0 +1,167 @@
+{
+  "category": "butchery",
+  "beds": [
+    [
+      3,
+      2,
+      8
+    ],
+    [
+      3,
+      2,
+      9
+    ]
+  ],
+  "couple_beds": [
+    [
+      [
+        3,
+        2,
+        8
+      ],
+      [
+        3,
+        2,
+        9
+      ]
+    ]
+  ],
+  "work_stations": [
+    {
+      "occupation": "BUTCHER",
+      "pos": [
+        6,
+        2,
+        7
+      ]
+    }
+  ],
+  "personal_containers": [
+    [
+      7,
+      2,
+      8
+    ]
+  ],
+  "containers": [],
+  "bed_containers": [
+    {
+      "bed": [
+        3,
+        2,
+        8
+      ],
+      "containers": [
+        [
+          7,
+          2,
+          8
+        ]
+      ]
+    },
+    {
+      "bed": [
+        3,
+        2,
+        9
+      ],
+      "containers": [
+        [
+          7,
+          2,
+          8
+        ]
+      ]
+    }
+  ],
+  "village_identity": {
+    "primary_blocks": [
+      [
+        5,
+        5,
+        2
+      ],
+      [
+        7,
+        5,
+        2
+      ],
+      [
+        5,
+        5,
+        3
+      ],
+      [
+        7,
+        5,
+        3
+      ],
+      [
+        5,
+        5,
+        4
+      ],
+      [
+        7,
+        5,
+        4
+      ],
+      [
+        5,
+        5,
+        5
+      ],
+      [
+        7,
+        5,
+        5
+      ]
+    ],
+    "secondary_blocks": [
+      [
+        3,
+        2,
+        8
+      ],
+      [
+        3,
+        2,
+        9
+      ]
+    ],
+    "banners": []
+  },
+  "sink": 0,
+  "entrance_facing": "north",
+  "grants": [
+    "HOUSING",
+    "FAMILY_HOUSING",
+    "FOOD",
+    "MEAT",
+    "LEATHER"
+  ],
+  "cost": [
+    {
+      "item": "minecraft:oak_log",
+      "count": 16
+    },
+    {
+      "item": "minecraft:cobblestone",
+      "count": 40
+    }
+  ],
+  "worker_beds": [
+    [
+      3,
+      2,
+      8
+    ],
+    [
+      3,
+      2,
+      9
+    ]
+  ],
+  "structure": "butchery_badlands_1",
+  "variant": "badlands"
+}

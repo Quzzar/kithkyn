@@ -1,0 +1,48 @@
+{
+  "category": "farm",
+  "beds": [],
+  "couple_beds": [],
+  "work_stations": [
+    {
+      "occupation": "FARMER",
+      "pos": [
+        2,
+        1,
+        5
+      ]
+    }
+  ],
+  "personal_containers": [],
+  "containers": [
+    [
+      2,
+      0,
+      5
+    ]
+  ],
+  "bed_containers": [],
+  "village_identity": {
+    "primary_blocks": [],
+    "secondary_blocks": [],
+    "banners": []
+  },
+  "sink": 0,
+  "entrance_facing": "south",
+  "grants": [
+    "STORAGE",
+    "FOOD",
+    "CROPS"
+  ],
+  "cost": [
+    {
+      "item": "minecraft:oak_log",
+      "count": 20
+    },
+    {
+      "item": "minecraft:cobblestone",
+      "count": 16
+    }
+  ],
+  "structure": "farm_floodplain_1",
+  "variant": "floodplain"
+}

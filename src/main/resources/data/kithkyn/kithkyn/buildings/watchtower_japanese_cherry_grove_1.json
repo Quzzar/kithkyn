@@ -1,0 +1,85 @@
+{
+  "structure": "watchtower_japanese_cherry_grove_1",
+  "category": "watchtower",
+  "variant": "japanese_cherry_grove",
+  "beds": [
+    [
+      3,
+      13,
+      5
+    ]
+  ],
+  "work_stations": [
+    {
+      "pos": [
+        5,
+        13,
+        3
+      ],
+      "occupation": "GUARD",
+      "guard_duty": "CROSSBOW_POST"
+    }
+  ],
+  "worksites": [],
+  "containers": [],
+  "personal_containers": [
+    [
+      3,
+      13,
+      3
+    ]
+  ],
+  "bed_containers": [
+    {
+      "bed": [
+        3,
+        13,
+        5
+      ],
+      "containers": [
+        [
+          3,
+          13,
+          3
+        ]
+      ]
+    }
+  ],
+  "couple_beds": [],
+  "village_identity": {
+    "primary_blocks": [
+      [
+        3,
+        13,
+        5
+      ]
+    ],
+    "secondary_blocks": [],
+    "banners": []
+  },
+  "sink": 0,
+  "entrance_facing": "south",
+  "worker_beds": [
+    [
+      3,
+      13,
+      5
+    ]
+  ],
+  "grants": [
+    "HOUSING",
+    "STORAGE",
+    "PROTECTION",
+    "RANGED_GUARD_POSTS"
+  ],
+  "cost": [
+    {
+      "item": "minecraft:oak_log",
+      "count": 20
+    },
+    {
+      "item": "minecraft:cobblestone",
+      "count": 20
+    }
+  ]
+}

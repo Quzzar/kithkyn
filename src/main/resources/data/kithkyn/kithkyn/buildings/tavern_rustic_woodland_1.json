@@ -1,0 +1,200 @@
+{
+  "structure": "tavern_rustic_woodland_1",
+  "category": "tavern",
+  "variant": "rustic_woodland",
+  "beds": [
+    [
+      4,
+      1,
+      2
+    ],
+    [
+      6,
+      5,
+      7
+    ],
+    [
+      7,
+      1,
+      2
+    ],
+    [
+      10,
+      1,
+      2
+    ],
+    [
+      13,
+      1,
+      6
+    ]
+  ],
+  "work_stations": [
+    {
+      "pos": [
+        10,
+        1,
+        10
+      ],
+      "occupation": "INNKEEPER"
+    }
+  ],
+  "worksites": [],
+  "containers": [],
+  "personal_containers": [
+    [
+      4,
+      0,
+      3
+    ],
+    [
+      7,
+      0,
+      3
+    ],
+    [
+      10,
+      0,
+      3
+    ],
+    [
+      15,
+      1,
+      8
+    ],
+    [
+      4,
+      5,
+      6
+    ]
+  ],
+  "bed_containers": [
+    {
+      "bed": [
+        4,
+        1,
+        2
+      ],
+      "containers": [
+        [
+          4,
+          0,
+          3
+        ]
+      ]
+    },
+    {
+      "bed": [
+        6,
+        5,
+        7
+      ],
+      "containers": [
+        [
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "bed": [
+        7,
+        1,
+        2
+      ],
+      "containers": [
+        [
+          7,
+          0,
+          3
+        ]
+      ]
+    },
+    {
+      "bed": [
+        10,
+        1,
+        2
+      ],
+      "containers": [
+        [
+          10,
+          0,
+          3
+        ]
+      ]
+    },
+    {
+      "bed": [
+        13,
+        1,
+        6
+      ],
+      "containers": [
+        [
+          15,
+          1,
+          8
+        ]
+      ]
+    }
+  ],
+  "couple_beds": [],
+  "village_identity": {
+    "primary_blocks": [
+      [
+        4,
+        1,
+        2
+      ],
+      [
+        10,
+        1,
+        2
+      ],
+      [
+        6,
+        5,
+        7
+      ]
+    ],
+    "secondary_blocks": [
+      [
+        7,
+        1,
+        2
+      ],
+      [
+        13,
+        1,
+        6
+      ]
+    ],
+    "banners": []
+  },
+  "sink": 0,
+  "entrance_facing": "south",
+  "grants": [
+    "HOUSING",
+    "HOSPITALITY",
+    "WANDERERS"
+  ],
+  "worker_beds": [
+    [
+      13,
+      1,
+      6
+    ]
+  ],
+  "cost": [
+    {
+      "item": "minecraft:oak_log",
+      "count": 48
+    },
+    {
+      "item": "minecraft:cobblestone",
+      "count": 40
+    }
+  ]
+}

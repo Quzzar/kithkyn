@@ -1,0 +1,103 @@
+{
+  "structure": "couple_cottage_polynesian_coast_1",
+  "category": "couple_cottage",
+  "variant": "polynesian_coast",
+  "beds": [
+    [
+      2,
+      2,
+      4
+    ],
+    [
+      3,
+      2,
+      4
+    ]
+  ],
+  "work_stations": [],
+  "worksites": [],
+  "containers": [],
+  "personal_containers": [
+    [
+      4,
+      2,
+      8
+    ]
+  ],
+  "bed_containers": [
+    {
+      "bed": [
+        2,
+        2,
+        4
+      ],
+      "containers": [
+        [
+          4,
+          2,
+          8
+        ]
+      ]
+    },
+    {
+      "bed": [
+        3,
+        2,
+        4
+      ],
+      "containers": [
+        [
+          4,
+          2,
+          8
+        ]
+      ]
+    }
+  ],
+  "couple_beds": [
+    [
+      [
+        2,
+        2,
+        4
+      ],
+      [
+        3,
+        2,
+        4
+      ]
+    ]
+  ],
+  "village_identity": {
+    "primary_blocks": [
+      [
+        2,
+        2,
+        4
+      ],
+      [
+        3,
+        2,
+        4
+      ]
+    ],
+    "secondary_blocks": [],
+    "banners": []
+  },
+  "sink": -1,
+  "entrance_facing": "south",
+  "grants": [
+    "HOUSING",
+    "FAMILY_HOUSING"
+  ],
+  "cost": [
+    {
+      "item": "minecraft:oak_log",
+      "count": 24
+    },
+    {
+      "item": "minecraft:cobblestone",
+      "count": 8
+    }
+  ]
+}

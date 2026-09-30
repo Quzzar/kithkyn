@@ -1,9 +1,11 @@
 # Japanese Cherry Grove village
 
+**Release availability:** this approved catalog ships in the Kithkyn jar. No separate world datapack is required. Exact shipped definitions and template hashes are recorded in [the bundled catalog manifest](../tools/release/bundled-catalogs.json). Local `run/` paths below are historical authoring and verification records.
+
 The Japanese Cherry Grove catalog is a flowering woodland settlement of spruce-framed houses,
 dark tiled roofs, ponds, compact farms and deliberate garden planting. Its style token is
 `japanese_cherry_grove`. Cherry Grove, Flower Forest and compatible modded biome paths containing
-`cherry` or `sakura` select it whenever its private founding set is loaded. A datapack may map
+`cherry` or `sakura` select it whenever its bundled founding set is loaded. A datapack may map
 another biome explicitly with the `kithkyn:village_style/japanese_cherry_grove` biome tag.
 
 The catalog deliberately has no castle. JC07 remains in the gallery as a candidate for a later
@@ -23,7 +25,7 @@ route to the physical storehouse and mine.
 
 ## Selected buildings
 
-The private datapack contains 20 definitions:
+The bundled datapack contains 20 definitions:
 
 | Id | Exhibit | Use |
 | --- | --- | --- |
@@ -64,8 +66,7 @@ lanterns provide light. There is no second wall upgrade.
 market templates through `tools/structure/VillageTemplateExport.java`. It preserves authored
 geometry, clears only gallery barriers and structure voids, neutralizes identity slots, empties
 containers, converts the lumberjack marker to a cherry sapling and adds only the approved
-butchery livestock. Third-party-derived buildings and definitions remain in the local private
-datapack; source and output hashes are recorded in
+butchery livestock. Approved buildings and definitions are bundled in the jar; source and output hashes are recorded in
 `tools/structure/japanese-cherry-grove-catalog-20260913.json`.
 
 The production-height pass seats the butchery, hunting lodge, lumberjack and storehouse one block

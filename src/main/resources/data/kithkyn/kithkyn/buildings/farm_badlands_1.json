@@ -1,0 +1,125 @@
+{
+  "category": "farm",
+  "beds": [
+    [
+      17,
+      2,
+      5
+    ],
+    [
+      17,
+      2,
+      6
+    ]
+  ],
+  "couple_beds": [
+    [
+      [
+        17,
+        2,
+        5
+      ],
+      [
+        17,
+        2,
+        6
+      ]
+    ]
+  ],
+  "work_stations": [
+    {
+      "occupation": "FARMER",
+      "pos": [
+        12,
+        1,
+        5
+      ]
+    }
+  ],
+  "personal_containers": [
+    [
+      15,
+      2,
+      3
+    ]
+  ],
+  "containers": [],
+  "bed_containers": [
+    {
+      "bed": [
+        17,
+        2,
+        5
+      ],
+      "containers": [
+        [
+          15,
+          2,
+          3
+        ]
+      ]
+    },
+    {
+      "bed": [
+        17,
+        2,
+        6
+      ],
+      "containers": [
+        [
+          15,
+          2,
+          3
+        ]
+      ]
+    }
+  ],
+  "village_identity": {
+    "primary_blocks": [
+      [
+        17,
+        2,
+        5
+      ],
+      [
+        17,
+        2,
+        6
+      ]
+    ],
+    "secondary_blocks": [],
+    "banners": []
+  },
+  "sink": 0,
+  "entrance_facing": "west",
+  "grants": [
+    "HOUSING",
+    "FAMILY_HOUSING",
+    "FOOD",
+    "CROPS"
+  ],
+  "cost": [
+    {
+      "item": "minecraft:oak_log",
+      "count": 16
+    },
+    {
+      "item": "minecraft:cobblestone",
+      "count": 40
+    }
+  ],
+  "worker_beds": [
+    [
+      17,
+      2,
+      5
+    ],
+    [
+      17,
+      2,
+      6
+    ]
+  ],
+  "structure": "farm_badlands_1",
+  "variant": "badlands"
+}

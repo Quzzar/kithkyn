@@ -1,0 +1,167 @@
+{
+  "structure": "village_center_mediterranean_1",
+  "category": "village_center",
+  "variant": "mediterranean",
+  "beds": [],
+  "work_stations": [
+    {
+      "pos": [
+        8,
+        1,
+        6
+      ],
+      "occupation": "BUILDER"
+    },
+    {
+      "pos": [
+        7,
+        1,
+        6
+      ],
+      "occupation": "BUILDER"
+    },
+    {
+      "pos": [
+        7,
+        1,
+        5
+      ],
+      "occupation": "BUILDER"
+    },
+    {
+      "pos": [
+        7,
+        1,
+        7
+      ],
+      "occupation": "BUILDER"
+    },
+    {
+      "pos": [
+        10,
+        1,
+        6
+      ],
+      "occupation": "BUILDER"
+    },
+    {
+      "pos": [
+        6,
+        1,
+        8
+      ],
+      "occupation": "GUARD",
+      "guard_duty": "CAPTAIN"
+    },
+    {
+      "pos": [
+        7,
+        1,
+        13
+      ],
+      "occupation": "CLERIC"
+    }
+  ],
+  "worksites": [],
+  "containers": [
+    [
+      7,
+      2,
+      17
+    ]
+  ],
+  "personal_containers": [],
+  "bed_containers": [],
+  "couple_beds": [],
+  "village_identity": {
+    "primary_blocks": [
+      [
+        2,
+        3,
+        22
+      ],
+      [
+        2,
+        3,
+        24
+      ],
+      [
+        3,
+        3,
+        1
+      ],
+      [
+        3,
+        3,
+        23
+      ],
+      [
+        11,
+        3,
+        23
+      ],
+      [
+        12,
+        3,
+        22
+      ],
+      [
+        12,
+        3,
+        24
+      ]
+    ],
+    "secondary_blocks": [],
+    "banners": [
+      [
+        5,
+        5,
+        15
+      ],
+      [
+        9,
+        5,
+        15
+      ]
+    ]
+  },
+  "sink": 0,
+  "entrance_facing": "north",
+  "grants": [
+    "CIVIC_CENTER",
+    "CONSTRUCTION",
+    "PROTECTION",
+    "STORAGE",
+    "HEALING"
+  ],
+  "starting_buildings": [
+    "mine_mediterranean_1",
+    "storehouse_mediterranean_1",
+    "house_mediterranean_1",
+    "house_mediterranean_1",
+    "house_mediterranean_1",
+    "house_mediterranean_1__two_bed"
+  ],
+  "meeting_point": [
+    7,
+    1,
+    2
+  ],
+  "campfires": [
+    [
+      13,
+      1,
+      3
+    ]
+  ],
+  "cost": [
+    {
+      "item": "minecraft:oak_log",
+      "count": 32
+    },
+    {
+      "item": "minecraft:cobblestone",
+      "count": 60
+    }
+  ]
+}

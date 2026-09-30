@@ -1,0 +1,84 @@
+{
+  "structure": "watchtower_swamp_1",
+  "category": "watchtower",
+  "variant": "swamp",
+  "beds": [
+    [
+      2,
+      2,
+      4
+    ]
+  ],
+  "work_stations": [
+    {
+      "pos": [
+        4,
+        2,
+        4
+      ],
+      "occupation": "GUARD",
+      "guard_duty": "CROSSBOW_POST"
+    }
+  ],
+  "worksites": [],
+  "containers": [],
+  "personal_containers": [
+    [
+      2,
+      2,
+      2
+    ]
+  ],
+  "bed_containers": [
+    {
+      "bed": [
+        2,
+        2,
+        4
+      ],
+      "containers": [
+        [
+          2,
+          2,
+          2
+        ]
+      ]
+    }
+  ],
+  "couple_beds": [],
+  "village_identity": {
+    "primary_blocks": [
+      [
+        2,
+        2,
+        4
+      ]
+    ],
+    "secondary_blocks": [],
+    "banners": []
+  },
+  "sink": -1,
+  "entrance_facing": "west",
+  "grants": [
+    "HOUSING",
+    "PROTECTION",
+    "RANGED_GUARD_POSTS"
+  ],
+  "worker_beds": [
+    [
+      2,
+      2,
+      4
+    ]
+  ],
+  "cost": [
+    {
+      "item": "minecraft:oak_log",
+      "count": 20
+    },
+    {
+      "item": "minecraft:cobblestone",
+      "count": 20
+    }
+  ]
+}

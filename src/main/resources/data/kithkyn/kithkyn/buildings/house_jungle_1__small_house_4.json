@@ -1,0 +1,53 @@
+{
+  "structure": "house_jungle_1__small_house_4",
+  "category": "house",
+  "variant": "jungle",
+  "beds": [
+    [
+      4,
+      1,
+      2
+    ]
+  ],
+  "work_stations": [],
+  "worksites": [],
+  "containers": [],
+  "personal_containers": [],
+  "bed_containers": [
+    {
+      "bed": [
+        4,
+        1,
+        2
+      ],
+      "containers": []
+    }
+  ],
+  "couple_beds": [],
+  "village_identity": {
+    "primary_blocks": [
+      [
+        4,
+        1,
+        2
+      ]
+    ],
+    "secondary_blocks": [],
+    "banners": []
+  },
+  "sink": 0,
+  "entrance_facing": "west",
+  "grants": [
+    "HOUSING"
+  ],
+  "cost": [
+    {
+      "item": "minecraft:oak_log",
+      "count": 12
+    },
+    {
+      "item": "minecraft:cobblestone",
+      "count": 4
+    }
+  ]
+}

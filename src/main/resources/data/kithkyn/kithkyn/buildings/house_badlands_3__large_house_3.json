@@ -1,0 +1,205 @@
+{
+  "beds": [
+    [
+      6,
+      1,
+      4
+    ],
+    [
+      6,
+      1,
+      8
+    ],
+    [
+      7,
+      1,
+      8
+    ],
+    [
+      6,
+      5,
+      4
+    ],
+    [
+      6,
+      5,
+      12
+    ],
+    [
+      7,
+      5,
+      12
+    ]
+  ],
+  "couple_beds": [
+    [
+      [
+        6,
+        1,
+        8
+      ],
+      [
+        7,
+        1,
+        8
+      ]
+    ],
+    [
+      [
+        6,
+        5,
+        12
+      ],
+      [
+        7,
+        5,
+        12
+      ]
+    ]
+  ],
+  "work_stations": [],
+  "personal_containers": [
+    [
+      4,
+      1,
+      10
+    ],
+    [
+      4,
+      5,
+      12
+    ]
+  ],
+  "containers": [],
+  "bed_containers": [
+    {
+      "bed": [
+        6,
+        1,
+        4
+      ],
+      "containers": []
+    },
+    {
+      "bed": [
+        6,
+        1,
+        8
+      ],
+      "containers": [
+        [
+          4,
+          1,
+          10
+        ]
+      ]
+    },
+    {
+      "bed": [
+        7,
+        1,
+        8
+      ],
+      "containers": [
+        [
+          4,
+          1,
+          10
+        ]
+      ]
+    },
+    {
+      "bed": [
+        6,
+        5,
+        4
+      ],
+      "containers": []
+    },
+    {
+      "bed": [
+        6,
+        5,
+        12
+      ],
+      "containers": [
+        [
+          4,
+          5,
+          12
+        ]
+      ]
+    },
+    {
+      "bed": [
+        7,
+        5,
+        12
+      ],
+      "containers": [
+        [
+          4,
+          5,
+          12
+        ]
+      ]
+    }
+  ],
+  "village_identity": {
+    "primary_blocks": [
+      [
+        6,
+        1,
+        8
+      ],
+      [
+        7,
+        1,
+        8
+      ],
+      [
+        6,
+        5,
+        4
+      ]
+    ],
+    "secondary_blocks": [
+      [
+        6,
+        1,
+        4
+      ],
+      [
+        6,
+        5,
+        12
+      ],
+      [
+        7,
+        5,
+        12
+      ]
+    ],
+    "banners": []
+  },
+  "sink": 0,
+  "structure": "house_badlands_3__large_house_3",
+  "category": "house",
+  "variant": "badlands",
+  "entrance_facing": "west",
+  "standalone": true,
+  "grants": [
+    "HOUSING",
+    "FAMILY_HOUSING"
+  ],
+  "cost": [
+    {
+      "item": "minecraft:oak_log",
+      "count": 24
+    },
+    {
+      "item": "minecraft:cobblestone",
+      "count": 44
+    }
+  ]
+}

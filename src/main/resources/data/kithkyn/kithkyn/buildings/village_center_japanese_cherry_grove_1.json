@@ -1,0 +1,133 @@
+{
+  "structure": "village_center_japanese_cherry_grove_1",
+  "category": "village_center",
+  "variant": "japanese_cherry_grove",
+  "beds": [],
+  "work_stations": [
+    {
+      "pos": [
+        11,
+        1,
+        15
+      ],
+      "occupation": "BUILDER"
+    },
+    {
+      "pos": [
+        10,
+        1,
+        15
+      ],
+      "occupation": "BUILDER"
+    },
+    {
+      "pos": [
+        11,
+        1,
+        14
+      ],
+      "occupation": "BUILDER"
+    },
+    {
+      "pos": [
+        12,
+        1,
+        15
+      ],
+      "occupation": "BUILDER"
+    },
+    {
+      "pos": [
+        12,
+        1,
+        14
+      ],
+      "occupation": "BUILDER"
+    },
+    {
+      "pos": [
+        9,
+        1,
+        14
+      ],
+      "occupation": "GUARD",
+      "guard_duty": "CAPTAIN"
+    }
+  ],
+  "worksites": [],
+  "containers": [],
+  "personal_containers": [],
+  "bed_containers": [],
+  "couple_beds": [],
+  "village_identity": {
+    "primary_blocks": [],
+    "secondary_blocks": [],
+    "banners": [
+      [
+        1,
+        2,
+        4
+      ],
+      [
+        1,
+        2,
+        14
+      ],
+      [
+        7,
+        2,
+        17
+      ],
+      [
+        11,
+        2,
+        17
+      ],
+      [
+        17,
+        2,
+        4
+      ],
+      [
+        17,
+        2,
+        14
+      ]
+    ]
+  },
+  "sink": 0,
+  "entrance_facing": "south",
+  "starting_buildings": [
+    "mine_japanese_cherry_grove_1",
+    "storehouse_japanese_cherry_grove_1",
+    "house_japanese_cherry_grove_1__four_bed",
+    "house_japanese_cherry_grove_1"
+  ],
+  "meeting_point": [
+    9,
+    2,
+    10
+  ],
+  "campfires": [
+    [
+      4,
+      1,
+      13
+    ]
+  ],
+  "grants": [
+    "CIVIC_CENTER",
+    "CONSTRUCTION",
+    "PROTECTION"
+  ],
+  "cost": [
+    {
+      "item": "minecraft:oak_log",
+      "count": 48
+    },
+    {
+      "item": "minecraft:cobblestone",
+      "count": 40
+    }
+  ]
+}

@@ -1,0 +1,58 @@
+{
+  "category": "mine",
+  "beds": [],
+  "couple_beds": [],
+  "work_stations": [
+    {
+      "occupation": "MINER",
+      "pos": [
+        3,
+        1,
+        1
+      ]
+    }
+  ],
+  "personal_containers": [],
+  "containers": [
+    [
+      4,
+      1,
+      1
+    ]
+  ],
+  "bed_containers": [],
+  "village_identity": {
+    "primary_blocks": [],
+    "secondary_blocks": [],
+    "banners": []
+  },
+  "sink": -1,
+  "entrance_facing": "north",
+  "mine_entrance": {
+    "facing": "south",
+    "offset": [
+      1,
+      0,
+      3
+    ]
+  },
+  "grants": [
+    "STORAGE",
+    "STONE",
+    "ORES",
+    "MINERALS"
+  ],
+  "cost": [
+    {
+      "item": "minecraft:oak_log",
+      "count": 12
+    },
+    {
+      "item": "minecraft:cobblestone",
+      "count": 32
+    }
+  ],
+  "structure": "mine_badlands_1",
+  "variant": "badlands",
+  "worksites": []
+}

@@ -1,0 +1,84 @@
+{
+  "structure": "butchery_swamp_1",
+  "category": "butchery",
+  "variant": "swamp",
+  "beds": [
+    [
+      2,
+      1,
+      4
+    ]
+  ],
+  "work_stations": [
+    {
+      "pos": [
+        5,
+        1,
+        4
+      ],
+      "occupation": "BUTCHER"
+    }
+  ],
+  "worksites": [],
+  "containers": [],
+  "personal_containers": [
+    [
+      2,
+      1,
+      2
+    ]
+  ],
+  "bed_containers": [
+    {
+      "bed": [
+        2,
+        1,
+        4
+      ],
+      "containers": [
+        [
+          2,
+          1,
+          2
+        ]
+      ]
+    }
+  ],
+  "couple_beds": [],
+  "village_identity": {
+    "primary_blocks": [
+      [
+        2,
+        1,
+        4
+      ]
+    ],
+    "secondary_blocks": [],
+    "banners": []
+  },
+  "sink": -1,
+  "entrance_facing": "north",
+  "grants": [
+    "HOUSING",
+    "FOOD",
+    "MEAT",
+    "LEATHER"
+  ],
+  "worker_beds": [
+    [
+      2,
+      1,
+      4
+    ]
+  ],
+  "cost": [
+    {
+      "item": "minecraft:oak_log",
+      "count": 28
+    },
+    {
+      "item": "minecraft:cobblestone",
+      "count": 20
+    }
+  ]
+}

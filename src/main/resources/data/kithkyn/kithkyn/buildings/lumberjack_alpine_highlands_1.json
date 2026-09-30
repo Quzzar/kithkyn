@@ -1,0 +1,45 @@
+{
+  "structure": "lumberjack_alpine_highlands_1",
+  "category": "lumberjack",
+  "variant": "alpine_highlands",
+  "beds": [],
+  "work_stations": [
+    {
+      "pos": [
+        3,
+        1,
+        4
+      ],
+      "occupation": "LUMBERJACK"
+    }
+  ],
+  "worksites": [],
+  "containers": [
+    [
+      3,
+      0,
+      9
+    ]
+  ],
+  "personal_containers": [],
+  "bed_containers": [],
+  "couple_beds": [],
+  "village_identity": {
+    "primary_blocks": [],
+    "secondary_blocks": [],
+    "banners": []
+  },
+  "sink": 0,
+  "entrance_facing": "south",
+  "grants": [
+    "LOGS",
+    "PLANKS",
+    "STORAGE"
+  ],
+  "cost": [
+    {
+      "item": "minecraft:cobblestone",
+      "count": 40
+    }
+  ]
+}

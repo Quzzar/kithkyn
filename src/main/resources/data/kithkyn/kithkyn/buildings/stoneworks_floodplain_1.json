@@ -1,0 +1,76 @@
+{
+  "category": "stoneworks",
+  "beds": [
+    [
+      6,
+      1,
+      6
+    ]
+  ],
+  "worker_beds": [
+    [
+      6,
+      1,
+      6
+    ]
+  ],
+  "couple_beds": [],
+  "work_stations": [
+    {
+      "occupation": "MASON",
+      "pos": [
+        3,
+        1,
+        2
+      ]
+    }
+  ],
+  "personal_containers": [],
+  "containers": [
+    [
+      6,
+      1,
+      4
+    ]
+  ],
+  "bed_containers": [
+    {
+      "bed": [
+        6,
+        1,
+        6
+      ],
+      "containers": []
+    }
+  ],
+  "village_identity": {
+    "primary_blocks": [
+      [
+        6,
+        1,
+        6
+      ]
+    ],
+    "secondary_blocks": [],
+    "banners": []
+  },
+  "sink": 0,
+  "entrance_facing": "west",
+  "grants": [
+    "HOUSING",
+    "STORAGE",
+    "CUT_STONE"
+  ],
+  "cost": [
+    {
+      "item": "minecraft:oak_log",
+      "count": 20
+    },
+    {
+      "item": "minecraft:cobblestone",
+      "count": 24
+    }
+  ],
+  "structure": "stoneworks_floodplain_1",
+  "variant": "floodplain"
+}

@@ -1,5 +1,7 @@
 # Savanna Tent village
 
+**Release availability:** this approved catalog ships in the Kithkyn jar. No separate world datapack is required. Exact shipped definitions and template hashes are recorded in [the bundled catalog manifest](../tools/release/bundled-catalogs.json). Local `run/` paths below are historical authoring and verification records.
+
 The Savanna Tent catalog is the dry-grassland camp. A white canvas tent over an acacia frame is
 the town centre, blue and yellow tipis and camp tents stand around its fire, a trader's tent keeps
 the stores, an acacia-framed mine and stoneworks work the ground, and a palisade of acacia posts on
@@ -32,7 +34,7 @@ captain's post is the village's only guard vacancy until a castle is added.
 
 ## Selected buildings
 
-The private datapack contains 18 definitions:
+The bundled datapack contains 18 definitions:
 
 | Id | Exhibit | Use |
 | --- | --- | --- |

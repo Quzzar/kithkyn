@@ -1,0 +1,109 @@
+{
+  "structure": "village_center_swamp_1",
+  "category": "village_center",
+  "variant": "swamp",
+  "beds": [],
+  "work_stations": [
+    {
+      "pos": [
+        10,
+        4,
+        12
+      ],
+      "occupation": "BUILDER"
+    },
+    {
+      "pos": [
+        8,
+        4,
+        12
+      ],
+      "occupation": "BUILDER"
+    },
+    {
+      "pos": [
+        9,
+        4,
+        13
+      ],
+      "occupation": "BUILDER"
+    },
+    {
+      "pos": [
+        11,
+        4,
+        11
+      ],
+      "occupation": "BUILDER"
+    },
+    {
+      "pos": [
+        12,
+        4,
+        14
+      ],
+      "occupation": "BUILDER"
+    },
+    {
+      "pos": [
+        11,
+        4,
+        12
+      ],
+      "occupation": "GUARD",
+      "guard_duty": "CAPTAIN"
+    }
+  ],
+  "worksites": [],
+  "containers": [],
+  "personal_containers": [],
+  "bed_containers": [],
+  "couple_beds": [],
+  "village_identity": {
+    "primary_blocks": [],
+    "secondary_blocks": [],
+    "banners": []
+  },
+  "sink": 0,
+  "entrance_facing": "north",
+  "grants": [
+    "CIVIC_CENTER",
+    "CONSTRUCTION",
+    "PROTECTION"
+  ],
+  "starting_buildings": [
+    "mine_swamp_1",
+    "storehouse_swamp_1",
+    "house_swamp_1",
+    "house_swamp_1",
+    "house_swamp_1",
+    "house_swamp_1"
+  ],
+  "meeting_point": [
+    12,
+    4,
+    13
+  ],
+  "campfires": [
+    [
+      9,
+      4,
+      11
+    ],
+    [
+      18,
+      7,
+      14
+    ]
+  ],
+  "cost": [
+    {
+      "item": "minecraft:oak_log",
+      "count": 48
+    },
+    {
+      "item": "minecraft:cobblestone",
+      "count": 32
+    }
+  ]
+}

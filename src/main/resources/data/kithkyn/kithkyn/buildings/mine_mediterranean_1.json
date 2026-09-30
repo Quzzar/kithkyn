@@ -1,0 +1,110 @@
+{
+  "structure": "mine_mediterranean_1",
+  "category": "mine",
+  "variant": "mediterranean",
+  "beds": [
+    [
+      3,
+      5,
+      8
+    ]
+  ],
+  "work_stations": [
+    {
+      "pos": [
+        8,
+        1,
+        2
+      ],
+      "occupation": "MINER"
+    }
+  ],
+  "worksites": [],
+  "containers": [],
+  "personal_containers": [
+    [
+      1,
+      5,
+      8
+    ]
+  ],
+  "decorative_containers": [
+    [
+      8,
+      1,
+      1
+    ]
+  ],
+  "bed_containers": [
+    {
+      "bed": [
+        3,
+        5,
+        8
+      ],
+      "containers": [
+        [
+          1,
+          5,
+          8
+        ]
+      ]
+    }
+  ],
+  "couple_beds": [],
+  "village_identity": {
+    "primary_blocks": [
+      [
+        1,
+        7,
+        4
+      ],
+      [
+        3,
+        7,
+        4
+      ],
+      [
+        3,
+        5,
+        8
+      ]
+    ],
+    "secondary_blocks": [],
+    "banners": []
+  },
+  "sink": 0,
+  "entrance_facing": "east",
+  "grants": [
+    "HOUSING",
+    "STONE",
+    "ORES",
+    "MINERALS"
+  ],
+  "worker_beds": [
+    [
+      3,
+      5,
+      8
+    ]
+  ],
+  "mine_entrance": {
+    "facing": "south",
+    "offset": [
+      -1,
+      0,
+      3
+    ],
+    "width": 4
+  },
+  "cost": [
+    {
+      "item": "minecraft:oak_log",
+      "count": 20
+    },
+    {
+      "item": "minecraft:cobblestone",
+      "count": 32
+    }
+  ]
+}

@@ -1,0 +1,119 @@
+{
+  "structure": "couple_cottage_jungle_1",
+  "category": "couple_cottage",
+  "variant": "jungle",
+  "beds": [
+    [
+      6,
+      4,
+      4
+    ],
+    [
+      6,
+      4,
+      5
+    ]
+  ],
+  "work_stations": [],
+  "worksites": [],
+  "containers": [],
+  "personal_containers": [
+    [
+      6,
+      4,
+      7
+    ]
+  ],
+  "bed_containers": [
+    {
+      "bed": [
+        6,
+        4,
+        4
+      ],
+      "containers": [
+        [
+          6,
+          4,
+          7
+        ]
+      ]
+    },
+    {
+      "bed": [
+        6,
+        4,
+        5
+      ],
+      "containers": [
+        [
+          6,
+          4,
+          7
+        ]
+      ]
+    }
+  ],
+  "couple_beds": [
+    [
+      [
+        6,
+        4,
+        4
+      ],
+      [
+        6,
+        4,
+        5
+      ]
+    ]
+  ],
+  "village_identity": {
+    "primary_blocks": [
+      [
+        6,
+        4,
+        4
+      ],
+      [
+        6,
+        4,
+        5
+      ]
+    ],
+    "secondary_blocks": [],
+    "banners": [
+      [
+        3,
+        3,
+        5
+      ],
+      [
+        3,
+        3,
+        6
+      ],
+      [
+        3,
+        3,
+        7
+      ]
+    ]
+  },
+  "sink": 0,
+  "entrance_facing": "east",
+  "grants": [
+    "HOUSING",
+    "FAMILY_HOUSING"
+  ],
+  "cost": [
+    {
+      "item": "minecraft:oak_log",
+      "count": 24
+    },
+    {
+      "item": "minecraft:cobblestone",
+      "count": 8
+    }
+  ]
+}

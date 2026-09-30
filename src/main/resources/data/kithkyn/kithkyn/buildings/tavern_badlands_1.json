@@ -1,0 +1,206 @@
+{
+  "category": "tavern",
+  "beds": [
+    [
+      7,
+      5,
+      6
+    ],
+    [
+      7,
+      5,
+      8
+    ]
+  ],
+  "couple_beds": [],
+  "work_stations": [
+    {
+      "occupation": "INNKEEPER",
+      "pos": [
+        10,
+        1,
+        6
+      ]
+    }
+  ],
+  "personal_containers": [],
+  "containers": [
+    [
+      7,
+      3,
+      9
+    ],
+    [
+      8,
+      3,
+      9
+    ],
+    [
+      9,
+      3,
+      9
+    ],
+    [
+      13,
+      5,
+      5
+    ],
+    [
+      13,
+      7,
+      3
+    ]
+  ],
+  "bed_containers": [
+    {
+      "bed": [
+        7,
+        5,
+        6
+      ],
+      "containers": []
+    },
+    {
+      "bed": [
+        7,
+        5,
+        8
+      ],
+      "containers": []
+    }
+  ],
+  "village_identity": {
+    "primary_blocks": [
+      [
+        7,
+        5,
+        6
+      ],
+      [
+        2,
+        5,
+        2
+      ],
+      [
+        4,
+        5,
+        2
+      ],
+      [
+        2,
+        5,
+        3
+      ],
+      [
+        4,
+        5,
+        3
+      ],
+      [
+        2,
+        5,
+        4
+      ],
+      [
+        4,
+        5,
+        4
+      ],
+      [
+        2,
+        5,
+        5
+      ],
+      [
+        4,
+        5,
+        5
+      ],
+      [
+        2,
+        5,
+        6
+      ],
+      [
+        4,
+        5,
+        6
+      ],
+      [
+        2,
+        5,
+        7
+      ],
+      [
+        4,
+        5,
+        7
+      ],
+      [
+        2,
+        5,
+        8
+      ],
+      [
+        4,
+        5,
+        8
+      ],
+      [
+        2,
+        5,
+        9
+      ],
+      [
+        4,
+        5,
+        9
+      ],
+      [
+        2,
+        5,
+        10
+      ],
+      [
+        4,
+        5,
+        10
+      ]
+    ],
+    "secondary_blocks": [
+      [
+        7,
+        5,
+        8
+      ]
+    ],
+    "banners": []
+  },
+  "sink": -1,
+  "entrance_facing": "west",
+  "grants": [
+    "HOUSING",
+    "HOSPITALITY",
+    "WANDERERS",
+    "STORAGE"
+  ],
+  "cost": [
+    {
+      "item": "minecraft:oak_log",
+      "count": 24
+    },
+    {
+      "item": "minecraft:cobblestone",
+      "count": 40
+    }
+  ],
+  "worker_beds": [
+    [
+      7,
+      5,
+      6
+    ]
+  ],
+  "structure": "tavern_badlands_1",
+  "variant": "badlands"
+}

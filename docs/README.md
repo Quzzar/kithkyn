@@ -76,7 +76,7 @@ in it, and update it in the same change that moves what it describes.
 - [birch-village.md](birch-village.md): the approved playable Birch Forest catalog, exact
   amenities and intentionally omitted tiers, biome selection, identity slots and preservation.
 - [badlands-village.md](badlands-village.md): the approved Pueblo/Mesa local catalog, house
-  alternatives, staffing, identity, biome selection and private datapack installation.
+  alternatives, staffing, identity, biome selection and bundled availability.
 - [desert-village.md](desert-village.md): the selected Desert Oasis catalog, founding jobs,
   housing, identity colors, service access, and sandstone walls.
 - [floodplain-village.md](floodplain-village.md): the approved Floodplain (mangrove swamp) local

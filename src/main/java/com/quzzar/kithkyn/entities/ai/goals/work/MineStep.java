@@ -358,7 +358,7 @@ public final class MineStep implements BlockWorkStep {
         return pick.stand();
       }
       building.completeMineBranch(branch);
-      Kithkyn.LOGGER.info("[mine] {} finished the child shaft from root rib {} side {}",
+      Kithkyn.LOGGER.debug("[mine] {} finished the child shaft from root rib {} side {}",
           person.getName().getString(), branch.sourceDepth(), branch.side());
       branch = nextBranch(person, building, root, deepestDugColumn(person, rootMouth, root.rotation()));
     }
@@ -571,7 +571,7 @@ public final class MineStep implements BlockWorkStep {
     this.noWork = reason;
     if (!state.equals(this.lastIdleState)) {
       this.lastIdleState = state;
-      Kithkyn.LOGGER.info("[mine-state] {} selected no work: {}",
+      Kithkyn.LOGGER.debug("[mine-state] {} selected no work: {}",
           person.getName().getString(), state);
     }
   }
@@ -619,7 +619,7 @@ public final class MineStep implements BlockWorkStep {
         continue;
       }
       building.addMineBranch(candidate);
-      Kithkyn.LOGGER.info("[mine] {} opened a child shaft from root rib {} side {} at {}",
+      Kithkyn.LOGGER.debug("[mine] {} opened a child shaft from root rib {} side {} at {}",
           person.getName().getString(), candidate.sourceDepth(), candidate.side(),
           candidateShaft.entry().toShortString());
       return candidate;
@@ -1089,10 +1089,10 @@ public final class MineStep implements BlockWorkStep {
       if (vein) {
         this.veinToSeal.push(pos);
         this.veinTaken++;
-        Kithkyn.LOGGER.info("[mine] {} pulled {} from the wall at {}",
+        Kithkyn.LOGGER.debug("[mine] {} pulled {} from the wall at {}",
             person.getName().getString(), this.block.getName().getString(), pos.toShortString());
       } else if (!sealBoundary) {
-        Kithkyn.LOGGER.info("[mine] {} quarried its first shaft lining from {} at {}",
+        Kithkyn.LOGGER.debug("[mine] {} quarried its first shaft lining from {} at {}",
             person.getName().getString(), this.block.getName().getString(), pos.toShortString());
       }
     }
@@ -1263,7 +1263,7 @@ public final class MineStep implements BlockWorkStep {
       resetShaft();
       return;
     }
-    Kithkyn.LOGGER.info("[mine] {} floored the shaft at {}",
+    Kithkyn.LOGGER.debug("[mine] {} floored the shaft at {}",
         person.getName().getString(), floor.toShortString());
     // The next pick re-walks the shaft and meets this cell again, now floored.
   }
@@ -1295,7 +1295,7 @@ public final class MineStep implements BlockWorkStep {
       this.pendingFloodBoundary = null;
       this.pendingFloodInside = null;
     }
-    Kithkyn.LOGGER.info(plug ? "[mine] {} plugged the water in the shaft at {}"
+    Kithkyn.LOGGER.debug(plug ? "[mine] {} plugged the water in the shaft at {}"
         : "[mine] {} sealed the shaft lining at {}",
         person.getName().getString(), cell.toShortString());
   }
@@ -1791,7 +1791,7 @@ public final class MineStep implements BlockWorkStep {
     level.playSound((Player) null, cell.getX(), cell.getY(), cell.getZ(),
         Blocks.WALL_TORCH.defaultBlockState().getSoundType().getPlaceSound(), SoundSource.BLOCKS,
         1.0F, person.getRandom().nextFloat() * 0.4F + 0.8F);
-    Kithkyn.LOGGER.info("[mine] {} lit the shaft at {}", person.getName().getString(),
+    Kithkyn.LOGGER.debug("[mine] {} lit the shaft at {}", person.getName().getString(),
         cell.toShortString());
   }
 
@@ -1873,7 +1873,7 @@ public final class MineStep implements BlockWorkStep {
     }
     level.playSound((Player) null, face.getX(), face.getY(), face.getZ(),
         SoundEvents.BUCKET_FILL, SoundSource.BLOCKS, 1.0F, 1.0F);
-    Kithkyn.LOGGER.info("[mine] {} bailed the sealed shaft at {}: {} cell(s) cleared",
+    Kithkyn.LOGGER.debug("[mine] {} bailed the sealed shaft at {}: {} cell(s) cleared",
         person.getName().getString(), face.toShortString(), water.size());
     return true; // hold this target while the off-hand bucket remains visible
   }
@@ -1997,7 +1997,7 @@ public final class MineStep implements BlockWorkStep {
             EquipmentSwap.exchange(person.personMainInv, slot, offhand));
         this.bucketShownTicks = BUCKET_SHOWN_TICKS;
         person.clearBlocker("I need my off hand free to use the bucket in my mine");
-        Kithkyn.LOGGER.info("[mine] {} brought its bucket to its off hand",
+        Kithkyn.LOGGER.debug("[mine] {} brought its bucket to its off hand",
             person.getName().getString());
         return true;
       }
@@ -2238,7 +2238,7 @@ public final class MineStep implements BlockWorkStep {
         + (reachableWater == null ? " no-water" : " water");
     if (!reason.equals(this.lastFluidDeadEnd)) {
       this.lastFluidDeadEnd = reason;
-      Kithkyn.LOGGER.info("[mine-state] {} cannot advance flooded shaft: {}",
+      Kithkyn.LOGGER.debug("[mine-state] {} cannot advance flooded shaft: {}",
           person.getName().getString(), state);
     }
   }

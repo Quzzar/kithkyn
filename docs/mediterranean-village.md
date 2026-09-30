@@ -1,5 +1,7 @@
 # Mediterranean village
 
+**Release availability:** this approved catalog ships in the Kithkyn jar. No separate world datapack is required. Exact shipped definitions and template hashes are recorded in [the bundled catalog manifest](../tools/release/bundled-catalogs.json). Local `run/` paths below are historical authoring and verification records.
+
 The Mediterranean catalog is the temperate Plains village: a white quartz-and-plaster town with
 terracotta tile roofs, gathered around its church. It is Aaron's selection from the Towns & Towers
 Mediterranean family (annex rows M06 to M08 of the live showcase world) plus two edited pieces
@@ -7,12 +9,12 @@ from the Mediterranean court, all arranged live on 2026-09-11 and 2026-09-12, wi
 three-tier markets restyled from the Desert set, the hedged quartz wall from the workshop row, and
 the M08.1 fort as its castle. Its style token is `mediterranean`. Vanilla Plains and Sunflower
 Plains, the conventional Plains tag, and modded biome paths ending in `plains` select it whenever
-its complete private founding set is loaded; a snowy or frozen plain is not Mediterranean country
+its complete bundled founding set is loaded; a snowy or frozen plain is not Mediterranean country
 and stays with the temperate Birch fallback.
 
 ## Selected buildings
 
-The private datapack contains 24 definitions:
+The bundled datapack contains 24 definitions:
 
 | Id | Use |
 | --- | --- |
@@ -90,7 +92,7 @@ collision, and aimed one block above them, where nobody can stand). Containers n
 can see, the fort's buried north-west chest and the barrels under other barrels in its nook and
 the timber yard, are left as decoration rather than declared storage. The catalog hashes
 and source record are in `tools/structure/mediterranean-catalog-20260912.json`. Third-party
-building templates stay in the private local datapack; only the wall family is bundled.
+building templates stay in the bundled datapack; only the wall family is bundled.
 
 Manual testing can create the style with `/kithkyn create-village ~ ~ ~ mediterranean`. Natural
 founding on a temperate plain uses the same selector and founding path.

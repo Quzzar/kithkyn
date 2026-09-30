@@ -1,0 +1,78 @@
+{
+  "category": "hunting_lodge",
+  "beds": [
+    [
+      4,
+      1,
+      2
+    ]
+  ],
+  "worker_beds": [
+    [
+      4,
+      1,
+      2
+    ]
+  ],
+  "couple_beds": [],
+  "work_stations": [
+    {
+      "occupation": "HUNTER",
+      "pos": [
+        3,
+        1,
+        4
+      ]
+    }
+  ],
+  "personal_containers": [],
+  "containers": [
+    [
+      2,
+      1,
+      4
+    ]
+  ],
+  "bed_containers": [
+    {
+      "bed": [
+        4,
+        1,
+        2
+      ],
+      "containers": []
+    }
+  ],
+  "village_identity": {
+    "primary_blocks": [
+      [
+        4,
+        1,
+        2
+      ]
+    ],
+    "secondary_blocks": [],
+    "banners": []
+  },
+  "sink": 0,
+  "entrance_facing": "west",
+  "grants": [
+    "HOUSING",
+    "STORAGE",
+    "FOOD",
+    "MEAT",
+    "LEATHER"
+  ],
+  "cost": [
+    {
+      "item": "minecraft:oak_log",
+      "count": 28
+    },
+    {
+      "item": "minecraft:cobblestone",
+      "count": 20
+    }
+  ],
+  "structure": "hunting_lodge_floodplain_1",
+  "variant": "floodplain"
+}

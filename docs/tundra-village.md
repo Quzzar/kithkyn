@@ -1,10 +1,12 @@
 # Tundra village
 
+**Release availability:** this approved catalog ships in the Kithkyn jar. No separate world datapack is required. Exact shipped definitions and template hashes are recorded in [the bundled catalog manifest](../tools/release/bundled-catalogs.json). Local `run/` paths below are historical authoring and verification records.
+
 The Tundra catalog is the exposed frozen-lowland village: compact snowbound buildings with
 stone brick, packed ice, spruce details and enclosed food production. It is Aaron's selection
 from the complete Tundra gallery built on 2026-09-12. The style token is `tundra`. Snowy and icy
 biomes, including Snowy Plains, Ice Spikes, snowy beaches, frozen rivers and compatible modded
-biome paths, select it whenever its complete private founding set is loaded.
+biome paths, select it whenever its complete bundled founding set is loaded.
 
 The catalog deliberately has no castle. T17.3 and the other castle studies remain gallery
 references for a future village variant.
@@ -23,7 +25,7 @@ golem recruitment system.
 
 ## Selected buildings
 
-The private datapack contains 23 definitions:
+The bundled datapack contains 23 definitions:
 
 | Id | Use |
 | --- | --- |
@@ -66,7 +68,7 @@ brown candles. There is no second wall upgrade.
 `tools/structure/VillageTemplateExport.java`. It strips every barrier and structure-void marker,
 neutralizes beds and banners, records authored air above the ground layer and preserves the four
 snow golems and three sheep. It also corrects the three approved market counters so their barrels
-sit above a complete foundation like the other working regional markets. The private production
+sit above a complete foundation like the other working regional markets. The bundled production
 assets remain under `run/tundra-integration/datapack`; source and output hashes are recorded in
 `tools/structure/tundra-catalog-20260912.json`.
 

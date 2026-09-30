@@ -1,0 +1,92 @@
+{
+  "category": "blacksmith",
+  "beds": [
+    [
+      6,
+      2,
+      9
+    ]
+  ],
+  "worker_beds": [
+    [
+      6,
+      2,
+      9
+    ]
+  ],
+  "couple_beds": [],
+  "work_stations": [
+    {
+      "occupation": "BLACKSMITH",
+      "pos": [
+        5,
+        2,
+        4
+      ]
+    }
+  ],
+  "personal_containers": [
+    [
+      4,
+      2,
+      9
+    ]
+  ],
+  "containers": [
+    [
+      4,
+      2,
+      6
+    ]
+  ],
+  "bed_containers": [
+    {
+      "bed": [
+        6,
+        2,
+        9
+      ],
+      "containers": [
+        [
+          4,
+          2,
+          9
+        ]
+      ]
+    }
+  ],
+  "village_identity": {
+    "primary_blocks": [
+      [
+        6,
+        2,
+        9
+      ]
+    ],
+    "secondary_blocks": [],
+    "banners": []
+  },
+  "sink": 0,
+  "entrance_facing": "west",
+  "grants": [
+    "HOUSING",
+    "STORAGE",
+    "REPAIR",
+    "SMELTING",
+    "TOOLS_IRON",
+    "ARMOR_IRON",
+    "SHIELDS"
+  ],
+  "cost": [
+    {
+      "item": "minecraft:oak_log",
+      "count": 12
+    },
+    {
+      "item": "minecraft:cobblestone",
+      "count": 60
+    }
+  ],
+  "structure": "blacksmith_desert_1",
+  "variant": "desert"
+}

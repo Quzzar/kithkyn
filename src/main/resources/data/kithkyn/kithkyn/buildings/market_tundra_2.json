@@ -1,0 +1,55 @@
+{
+  "structure": "market_tundra_2",
+  "upgrades_from": "market_tundra_1",
+  "work_stations": [
+    {
+      "pos": [
+        3,
+        1,
+        4
+      ],
+      "occupation": "MERCHANT"
+    },
+    {
+      "pos": [
+        11,
+        1,
+        4
+      ],
+      "occupation": "MERCHANT"
+    }
+  ],
+  "containers": [
+    [
+      3,
+      0,
+      5
+    ],
+    [
+      11,
+      0,
+      5
+    ]
+  ],
+  "cost": [
+    {
+      "item": "minecraft:oak_log",
+      "count": 24
+    },
+    {
+      "item": "minecraft:cobblestone",
+      "count": 36
+    },
+    {
+      "item": "minecraft:white_wool",
+      "count": 8
+    }
+  ],
+  "grants": [
+    "STORAGE",
+    "TRADE",
+    "TRADE_INITIATIVE"
+  ],
+  "variant": "tundra",
+  "sink": 0
+}

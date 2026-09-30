@@ -1,0 +1,63 @@
+{
+  "beds": [
+    [
+      6,
+      1,
+      4
+    ]
+  ],
+  "couple_beds": [],
+  "work_stations": [],
+  "personal_containers": [
+    [
+      4,
+      1,
+      6
+    ]
+  ],
+  "containers": [],
+  "bed_containers": [
+    {
+      "bed": [
+        6,
+        1,
+        4
+      ],
+      "containers": [
+        [
+          4,
+          1,
+          6
+        ]
+      ]
+    }
+  ],
+  "village_identity": {
+    "primary_blocks": [],
+    "secondary_blocks": [
+      [
+        6,
+        1,
+        4
+      ]
+    ],
+    "banners": []
+  },
+  "sink": -1,
+  "structure": "house_desert_1",
+  "category": "house",
+  "variant": "desert",
+  "grants": [
+    "HOUSING"
+  ],
+  "cost": [
+    {
+      "item": "minecraft:oak_log",
+      "count": 8
+    },
+    {
+      "item": "minecraft:cobblestone",
+      "count": 12
+    }
+  ]
+}

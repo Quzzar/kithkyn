@@ -58,7 +58,7 @@ public final class BrewStep implements BlockWorkStep {
     for (int index = 0; index < made; index++) {
       person.personMainInv.addItem(brew.sample().copyWithCount(1));
     }
-    Kithkyn.LOGGER.info("'{}' brewed {} more {} at their station", person.getFullName(), made,
+    Kithkyn.LOGGER.debug("'{}' brewed {} more {} at their station", person.getFullName(), made,
         brew.sample().getHoverName().getString().toLowerCase(java.util.Locale.ROOT));
     this.ticksBrewing = 0;
     return false;

@@ -1,0 +1,134 @@
+{
+  "structure": "village_center_taiga_1",
+  "category": "village_center",
+  "variant": "taiga",
+  "beds": [],
+  "work_stations": [
+    {
+      "pos": [
+        8,
+        1,
+        7
+      ],
+      "occupation": "BUILDER"
+    },
+    {
+      "pos": [
+        9,
+        1,
+        7
+      ],
+      "occupation": "BUILDER"
+    },
+    {
+      "pos": [
+        8,
+        1,
+        10
+      ],
+      "occupation": "GUARD",
+      "guard_duty": "CAPTAIN"
+    },
+    {
+      "pos": [
+        8,
+        1,
+        8
+      ],
+      "occupation": "BUILDER"
+    },
+    {
+      "pos": [
+        9,
+        1,
+        8
+      ],
+      "occupation": "BUILDER"
+    },
+    {
+      "pos": [
+        10,
+        1,
+        7
+      ],
+      "occupation": "BUILDER"
+    },
+    {
+      "pos": [
+        5,
+        5,
+        4
+      ],
+      "occupation": "GUARD",
+      "guard_duty": "CROSSBOW_POST"
+    }
+  ],
+  "worksites": [],
+  "containers": [],
+  "personal_containers": [],
+  "bed_containers": [],
+  "couple_beds": [],
+  "village_identity": {
+    "primary_blocks": [],
+    "secondary_blocks": [],
+    "banners": [
+      [
+        3,
+        4,
+        5
+      ],
+      [
+        5,
+        4,
+        3
+      ],
+      [
+        5,
+        4,
+        7
+      ],
+      [
+        7,
+        4,
+        5
+      ]
+    ]
+  },
+  "sink": 0,
+  "entrance_facing": "north",
+  "grants": [
+    "CIVIC_CENTER",
+    "CONSTRUCTION",
+    "PROTECTION",
+    "RANGED_GUARD_POSTS"
+  ],
+  "starting_buildings": [
+    "mine_taiga_1",
+    "storehouse_taiga_1",
+    "house_taiga_1",
+    "house_taiga_1__two_bed",
+    "house_taiga_1__small_house_2"
+  ],
+  "meeting_point": [
+    7,
+    1,
+    9
+  ],
+  "campfires": [
+    [
+      6,
+      1,
+      10
+    ]
+  ],
+  "cost": [
+    {
+      "item": "minecraft:spruce_log",
+      "count": 48
+    },
+    {
+      "item": "minecraft:cobblestone",
+      "count": 40
+    }
+  ]
+}

@@ -1,0 +1,199 @@
+{
+  "structure": "tavern_nautical_coast_1",
+  "category": "tavern",
+  "variant": "nautical_coast",
+  "beds": [
+    [
+      3,
+      5,
+      5
+    ],
+    [
+      4,
+      5,
+      5
+    ],
+    [
+      10,
+      5,
+      5
+    ],
+    [
+      10,
+      5,
+      6
+    ]
+  ],
+  "work_stations": [
+    {
+      "pos": [
+        8,
+        1,
+        7
+      ],
+      "occupation": "INNKEEPER"
+    }
+  ],
+  "worksites": [],
+  "containers": [
+    [
+      6,
+      2,
+      4
+    ]
+  ],
+  "personal_containers": [
+    [
+      2,
+      5,
+      7
+    ],
+    [
+      6,
+      5,
+      6
+    ]
+  ],
+  "bed_containers": [
+    {
+      "bed": [
+        3,
+        5,
+        5
+      ],
+      "containers": [
+        [
+          2,
+          5,
+          7
+        ]
+      ]
+    },
+    {
+      "bed": [
+        4,
+        5,
+        5
+      ],
+      "containers": [
+        [
+          2,
+          5,
+          7
+        ]
+      ]
+    },
+    {
+      "bed": [
+        10,
+        5,
+        5
+      ],
+      "containers": [
+        [
+          6,
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "bed": [
+        10,
+        5,
+        6
+      ],
+      "containers": [
+        [
+          6,
+          5,
+          6
+        ]
+      ]
+    }
+  ],
+  "couple_beds": [
+    [
+      [
+        3,
+        5,
+        5
+      ],
+      [
+        4,
+        5,
+        5
+      ]
+    ],
+    [
+      [
+        10,
+        5,
+        5
+      ],
+      [
+        10,
+        5,
+        6
+      ]
+    ]
+  ],
+  "village_identity": {
+    "primary_blocks": [
+      [
+        3,
+        5,
+        5
+      ],
+      [
+        4,
+        5,
+        5
+      ]
+    ],
+    "secondary_blocks": [
+      [
+        10,
+        5,
+        5
+      ],
+      [
+        10,
+        5,
+        6
+      ]
+    ],
+    "banners": []
+  },
+  "sink": 0,
+  "entrance_facing": "north",
+  "grants": [
+    "HOUSING",
+    "FAMILY_HOUSING",
+    "STORAGE",
+    "HOSPITALITY",
+    "WANDERERS"
+  ],
+  "worker_beds": [
+    [
+      10,
+      5,
+      5
+    ],
+    [
+      10,
+      5,
+      6
+    ]
+  ],
+  "cost": [
+    {
+      "item": "minecraft:oak_log",
+      "count": 48
+    },
+    {
+      "item": "minecraft:cobblestone",
+      "count": 40
+    }
+  ]
+}

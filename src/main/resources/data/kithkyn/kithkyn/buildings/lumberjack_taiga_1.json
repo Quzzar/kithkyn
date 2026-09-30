@@ -1,0 +1,86 @@
+{
+  "structure": "lumberjack_taiga_1",
+  "category": "lumberjack",
+  "variant": "taiga",
+  "beds": [
+    [
+      2,
+      1,
+      6
+    ]
+  ],
+  "work_stations": [
+    {
+      "pos": [
+        3,
+        1,
+        0
+      ],
+      "occupation": "LUMBERJACK"
+    }
+  ],
+  "worksites": [],
+  "containers": [
+    [
+      2,
+      0,
+      3
+    ]
+  ],
+  "personal_containers": [
+    [
+      4,
+      1,
+      6
+    ]
+  ],
+  "bed_containers": [
+    {
+      "bed": [
+        2,
+        1,
+        6
+      ],
+      "containers": [
+        [
+          4,
+          1,
+          6
+        ]
+      ]
+    }
+  ],
+  "couple_beds": [],
+  "village_identity": {
+    "primary_blocks": [
+      [
+        2,
+        1,
+        6
+      ]
+    ],
+    "secondary_blocks": [],
+    "banners": []
+  },
+  "sink": 0,
+  "entrance_facing": "north",
+  "grants": [
+    "HOUSING",
+    "STORAGE",
+    "LOGS",
+    "PLANKS"
+  ],
+  "worker_beds": [
+    [
+      2,
+      1,
+      6
+    ]
+  ],
+  "cost": [
+    {
+      "item": "minecraft:cobblestone",
+      "count": 28
+    }
+  ]
+}

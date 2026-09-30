@@ -1,0 +1,56 @@
+{
+  "structure": "blacksmith_savanna_tent_1",
+  "category": "blacksmith",
+  "variant": "savanna_tent",
+  "beds": [],
+  "work_stations": [
+    {
+      "pos": [
+        4,
+        0,
+        8
+      ],
+      "occupation": "BLACKSMITH"
+    }
+  ],
+  "worksites": [],
+  "containers": [
+    [
+      3,
+      1,
+      6
+    ]
+  ],
+  "personal_containers": [],
+  "bed_containers": [],
+  "couple_beds": [],
+  "village_identity": {
+    "primary_blocks": [],
+    "secondary_blocks": [],
+    "banners": []
+  },
+  "sink": -1,
+  "entrance_facing": "north",
+  "grants": [
+    "STORAGE",
+    "REPAIR",
+    "SMELTING",
+    "TOOLS_IRON",
+    "ARMOR_IRON",
+    "SHIELDS"
+  ],
+  "cost": [
+    {
+      "item": "minecraft:acacia_log",
+      "count": 32
+    },
+    {
+      "item": "minecraft:cobblestone",
+      "count": 24
+    },
+    {
+      "item": "minecraft:white_wool",
+      "count": 12
+    }
+  ]
+}

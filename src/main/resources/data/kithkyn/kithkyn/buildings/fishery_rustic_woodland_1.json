@@ -1,0 +1,90 @@
+{
+  "structure": "fishery_rustic_woodland_1",
+  "category": "fishery",
+  "variant": "rustic_woodland",
+  "beds": [
+    [
+      8,
+      2,
+      5
+    ]
+  ],
+  "work_stations": [
+    {
+      "pos": [
+        4,
+        2,
+        3
+      ],
+      "occupation": "FISHER"
+    }
+  ],
+  "worksites": [],
+  "containers": [
+    [
+      3,
+      2,
+      2
+    ]
+  ],
+  "personal_containers": [
+    [
+      8,
+      1,
+      3
+    ]
+  ],
+  "bed_containers": [
+    {
+      "bed": [
+        8,
+        2,
+        5
+      ],
+      "containers": [
+        [
+          8,
+          1,
+          3
+        ]
+      ]
+    }
+  ],
+  "couple_beds": [],
+  "village_identity": {
+    "primary_blocks": [
+      [
+        8,
+        2,
+        5
+      ]
+    ],
+    "secondary_blocks": [],
+    "banners": []
+  },
+  "sink": 1,
+  "entrance_facing": "west",
+  "grants": [
+    "HOUSING",
+    "STORAGE",
+    "FOOD",
+    "FISH"
+  ],
+  "worker_beds": [
+    [
+      8,
+      2,
+      5
+    ]
+  ],
+  "cost": [
+    {
+      "item": "minecraft:oak_log",
+      "count": 28
+    },
+    {
+      "item": "minecraft:cobblestone",
+      "count": 20
+    }
+  ]
+}

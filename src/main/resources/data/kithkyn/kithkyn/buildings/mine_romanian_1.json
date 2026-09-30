@@ -1,0 +1,93 @@
+{
+  "structure": "mine_romanian_1",
+  "category": "mine",
+  "variant": "romanian",
+  "beds": [
+    [
+      2,
+      1,
+      2
+    ]
+  ],
+  "work_stations": [
+    {
+      "pos": [
+        7,
+        1,
+        3
+      ],
+      "occupation": "MINER"
+    }
+  ],
+  "worksites": [],
+  "containers": [
+    [
+      4,
+      1,
+      2
+    ]
+  ],
+  "personal_containers": [
+    [
+      7,
+      1,
+      1
+    ]
+  ],
+  "bed_containers": [
+    {
+      "bed": [
+        2,
+        1,
+        2
+      ],
+      "containers": [
+        [
+          7,
+          1,
+          1
+        ]
+      ]
+    }
+  ],
+  "couple_beds": [],
+  "village_identity": {
+    "primary_blocks": [
+      [
+        2,
+        1,
+        2
+      ]
+    ],
+    "secondary_blocks": [],
+    "banners": []
+  },
+  "sink": 0,
+  "entrance_facing": "south",
+  "grants": [
+    "HOUSING",
+    "STORAGE",
+    "STONE",
+    "ORES",
+    "MINERALS"
+  ],
+  "mine_entrance": {
+    "facing": "east",
+    "offset": [
+      6,
+      1,
+      0
+    ],
+    "width": 3
+  },
+  "cost": [
+    {
+      "item": "minecraft:oak_log",
+      "count": 24
+    },
+    {
+      "item": "minecraft:cobblestone",
+      "count": 28
+    }
+  ]
+}

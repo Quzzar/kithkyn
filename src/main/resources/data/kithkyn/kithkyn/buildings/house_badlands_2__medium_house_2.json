@@ -1,0 +1,95 @@
+{
+  "beds": [
+    [
+      5,
+      1,
+      3
+    ],
+    [
+      3,
+      4,
+      4
+    ]
+  ],
+  "couple_beds": [],
+  "work_stations": [],
+  "personal_containers": [
+    [
+      3,
+      1,
+      6
+    ],
+    [
+      3,
+      4,
+      6
+    ]
+  ],
+  "containers": [],
+  "bed_containers": [
+    {
+      "bed": [
+        5,
+        1,
+        3
+      ],
+      "containers": [
+        [
+          3,
+          1,
+          6
+        ]
+      ]
+    },
+    {
+      "bed": [
+        3,
+        4,
+        4
+      ],
+      "containers": [
+        [
+          3,
+          4,
+          6
+        ]
+      ]
+    }
+  ],
+  "village_identity": {
+    "primary_blocks": [
+      [
+        5,
+        1,
+        3
+      ]
+    ],
+    "secondary_blocks": [
+      [
+        3,
+        4,
+        4
+      ]
+    ],
+    "banners": []
+  },
+  "sink": 0,
+  "structure": "house_badlands_2__medium_house_2",
+  "category": "house",
+  "variant": "badlands",
+  "entrance_facing": "west",
+  "standalone": true,
+  "grants": [
+    "HOUSING"
+  ],
+  "cost": [
+    {
+      "item": "minecraft:oak_log",
+      "count": 12
+    },
+    {
+      "item": "minecraft:cobblestone",
+      "count": 16
+    }
+  ]
+}

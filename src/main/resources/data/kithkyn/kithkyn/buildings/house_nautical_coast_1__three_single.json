@@ -1,0 +1,114 @@
+{
+  "structure": "house_nautical_coast_1__three_single",
+  "category": "house",
+  "variant": "nautical_coast",
+  "beds": [
+    [
+      2,
+      1,
+      2
+    ],
+    [
+      4,
+      1,
+      6
+    ],
+    [
+      6,
+      1,
+      6
+    ]
+  ],
+  "work_stations": [],
+  "worksites": [],
+  "containers": [],
+  "personal_containers": [
+    [
+      6,
+      1,
+      2
+    ]
+  ],
+  "bed_containers": [
+    {
+      "bed": [
+        2,
+        1,
+        2
+      ],
+      "containers": [
+        [
+          6,
+          1,
+          2
+        ]
+      ]
+    },
+    {
+      "bed": [
+        4,
+        1,
+        6
+      ],
+      "containers": [
+        [
+          6,
+          1,
+          2
+        ]
+      ]
+    },
+    {
+      "bed": [
+        6,
+        1,
+        6
+      ],
+      "containers": [
+        [
+          6,
+          1,
+          2
+        ]
+      ]
+    }
+  ],
+  "couple_beds": [],
+  "village_identity": {
+    "primary_blocks": [
+      [
+        2,
+        1,
+        2
+      ],
+      [
+        6,
+        1,
+        6
+      ]
+    ],
+    "secondary_blocks": [
+      [
+        4,
+        1,
+        6
+      ]
+    ],
+    "banners": []
+  },
+  "sink": -1,
+  "entrance_facing": "north",
+  "grants": [
+    "HOUSING"
+  ],
+  "cost": [
+    {
+      "item": "minecraft:oak_log",
+      "count": 24
+    },
+    {
+      "item": "minecraft:cobblestone",
+      "count": 8
+    }
+  ]
+}

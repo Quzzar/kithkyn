@@ -1,12 +1,13 @@
 # Badlands village
 
+**Release availability:** this approved catalog ships in the Kithkyn jar. No separate world datapack is required. Exact shipped definitions and template hashes are recorded in [the bundled catalog manifest](../tools/release/bundled-catalogs.json). Local `run/` paths below are historical authoring and verification records.
+
 The approved Pueblo/Mesa selection uses the environmental runtime style `badlands`.
 It is a distinct catalog from sandy Desert/Oasis. For the current broad coverage pass,
 Pueblo also serves wooded badlands, savanna and savanna plateau; those biomes can acquire
 more specific looks when their own catalogs are ready.
-The selected edited structures are installed as a private local datapack. They are not
-included in the public source tree or default jar; the source boundary in
-[structure-sourcing.md](structure-sourcing.md) still applies to publication.
+The selected edited structures are installed as a bundled datapack. They are included in the public source tree and default jar under the decision in
+[release.md](release.md).
 
 ## Selected buildings
 
@@ -79,9 +80,8 @@ The checked-in `tools/structure/pueblo-*-20260909.json` manifests retain immutab
 capture hashes, reviewed geometry, rooms and final production bindings. The existing
 `prepare-reviewed-houses.py` and native `VillageTemplateExport.java` produce the local
 datapack under `run/badlands-integration/datapack/`. Source captures remain unchanged.
-The private pack is installed in the local world's `datapacks` directory alongside the
-updated runtime. Keep it with world backups: the default public jar intentionally does
-not contain these third-party-derived structures.
+The approved production set now ships in the jar. The local datapack remains an authoring
+record and is unnecessary for a release installation.
 
 After installation, ordinary and natural founding use the same selector. A manual sample
 can request `/kithkyn create-village ~ ~ ~ badlands`. Authored gallery copies are not
@@ -106,7 +106,7 @@ Four complete founding rotations verified the eight starting jobs, ten center be
 storage ownership, separated meeting and cooking locations, and village persistence. Natural
 founding also passed biome selection, protected-anchor safety and delayed-plan checks.
 
-The verified runtime and private datapack were installed locally on September 9. The server
+The verified runtime and bundled datapack were installed locally on September 9. The server
 loaded the pack automatically, registered 199 building definitions in total, and accepted the
 returning player after the matching Prism client update. The current world and gallery were
 fully backed up and preserved. Rendered views confirmed the colored market cloth, village

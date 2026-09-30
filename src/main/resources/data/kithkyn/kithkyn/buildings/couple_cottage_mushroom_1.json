@@ -1,0 +1,85 @@
+{
+  "structure": "couple_cottage_mushroom_1",
+  "category": "couple_cottage",
+  "variant": "mushroom",
+  "beds": [
+    [
+      3,
+      5,
+      5
+    ],
+    [
+      4,
+      5,
+      5
+    ]
+  ],
+  "work_stations": [],
+  "worksites": [],
+  "containers": [],
+  "personal_containers": [],
+  "bed_containers": [
+    {
+      "bed": [
+        3,
+        5,
+        5
+      ],
+      "containers": []
+    },
+    {
+      "bed": [
+        4,
+        5,
+        5
+      ],
+      "containers": []
+    }
+  ],
+  "couple_beds": [
+    [
+      [
+        3,
+        5,
+        5
+      ],
+      [
+        4,
+        5,
+        5
+      ]
+    ]
+  ],
+  "village_identity": {
+    "primary_blocks": [
+      [
+        3,
+        5,
+        5
+      ],
+      [
+        4,
+        5,
+        5
+      ]
+    ],
+    "secondary_blocks": [],
+    "banners": []
+  },
+  "sink": 0,
+  "entrance_facing": "north",
+  "grants": [
+    "HOUSING",
+    "FAMILY_HOUSING"
+  ],
+  "cost": [
+    {
+      "item": "minecraft:oak_log",
+      "count": 20
+    },
+    {
+      "item": "minecraft:cobblestone",
+      "count": 8
+    }
+  ]
+}

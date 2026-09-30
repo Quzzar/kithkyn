@@ -1,0 +1,12 @@
+{
+  "passed": true,
+  "os": "darwin",
+  "curios": true,
+  "launcher": "prepared native development launcher; packaged jar only",
+  "jar_sha256": "cbc2928884a8111a8289acb78ef9b088a0ca7611f10f0d814c45242afd8405a3",
+  "screens": [
+    "chat",
+    "trade"
+  ],
+  "payloads": "UiPreview sample data"
+}

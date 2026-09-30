@@ -1,0 +1,84 @@
+{
+  "category": "butchery",
+  "beds": [
+    [
+      4,
+      1,
+      4
+    ]
+  ],
+  "worker_beds": [
+    [
+      4,
+      1,
+      4
+    ]
+  ],
+  "couple_beds": [],
+  "work_stations": [
+    {
+      "occupation": "BUTCHER",
+      "pos": [
+        6,
+        1,
+        4
+      ]
+    }
+  ],
+  "personal_containers": [
+    [
+      4,
+      1,
+      7
+    ]
+  ],
+  "containers": [],
+  "bed_containers": [
+    {
+      "bed": [
+        4,
+        1,
+        4
+      ],
+      "containers": [
+        [
+          4,
+          1,
+          7
+        ]
+      ]
+    }
+  ],
+  "village_identity": {
+    "primary_blocks": [
+      [
+        4,
+        1,
+        4
+      ]
+    ],
+    "secondary_blocks": [],
+    "banners": []
+  },
+  "sink": 0,
+  "entrance_facing": "south",
+  "grants": [
+    "HOUSING",
+    "FOOD",
+    "MEAT",
+    "LEATHER",
+    "WOOL"
+  ],
+  "cost": [
+    {
+      "item": "minecraft:oak_log",
+      "count": 16
+    },
+    {
+      "item": "minecraft:cobblestone",
+      "count": 36
+    }
+  ],
+  "structure": "butchery_desert_1",
+  "variant": "desert"
+}

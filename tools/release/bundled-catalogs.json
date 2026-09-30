@@ -1,0 +1,2885 @@
+{
+  "schema_version": 1,
+  "bundled_on": "2026-09-30",
+  "source_policy": "Bundled in the Kithkyn jar under the September 14, 2026 release decision. Approved edits and source provenance are retained; creator credits and the standing offer to revise designs are in README.md.",
+  "catalogs": [
+    {
+      "style": "birch_forest",
+      "source": "src/main/resources",
+      "selection_record": "docs/birch-village.md",
+      "buildings": [
+        {
+          "id": "bakery_birch_forest_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/bakery_birch_forest_1.json",
+          "definition_sha256": "fa499fcbd1bf14ea3d6debbe8eb2214ebc31e022e438443582450cf74ed3427d",
+          "template": "src/main/resources/data/kithkyn/structure/bakery_birch_forest_1.nbt",
+          "template_sha256": "f2c419dc41e8fd28eb6f1e522f98de1a523850e2a3578689e3c1c86076e4312d"
+        },
+        {
+          "id": "blacksmith_birch_forest_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/blacksmith_birch_forest_1.json",
+          "definition_sha256": "fcf666194a4e067d89b9e4b8c0e77b8691d55e555ecf56bf1936f697c7507912",
+          "template": "src/main/resources/data/kithkyn/structure/blacksmith_birch_forest_1.nbt",
+          "template_sha256": "81d4fe48f9786c68c2add818c7d41b88954d36797f2af5cc1868950ce7c22b5a"
+        },
+        {
+          "id": "butchery_birch_forest_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/butchery_birch_forest_1.json",
+          "definition_sha256": "b52ce4e3751a895b54565abcb1aff903ebd7c1bda3c0cd759060873239a49cd8",
+          "template": "src/main/resources/data/kithkyn/structure/butchery_birch_forest_1.nbt",
+          "template_sha256": "573870795a163283a5345e7e62c06523473ec3049b31f921d9750e847535f92a"
+        },
+        {
+          "id": "church_birch_forest_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/church_birch_forest_1.json",
+          "definition_sha256": "835b074ad870f37726ce69efeddc6dde2194c1e11656d9bf5ec208ac80babe36",
+          "template": "src/main/resources/data/kithkyn/structure/church_birch_forest_1.nbt",
+          "template_sha256": "a4ed0c2c208836d41a79ab439788238f6408256b7834186b89ac9ecc97256738"
+        },
+        {
+          "id": "couple_cottage_birch_forest_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/couple_cottage_birch_forest_1.json",
+          "definition_sha256": "80905b0ed83fdbb623b6709d9fe17b27c1ed5e0a8df81092aae83974415a0a8a",
+          "template": "src/main/resources/data/kithkyn/structure/couple_cottage_birch_forest_1.nbt",
+          "template_sha256": "44881a3560cb22e08463ba904dc4ce61af07b3e1652e5f5e6584fd3bc712a9c2"
+        },
+        {
+          "id": "farm_birch_forest_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/farm_birch_forest_1.json",
+          "definition_sha256": "da873579752c456bf5e9406370ba1ab106207030424278953cba30fd2e93a0a7",
+          "template": "src/main/resources/data/kithkyn/structure/farm_birch_forest_1.nbt",
+          "template_sha256": "cd7d9cfae5b1f7d9ede0f8d40432b3f7a271eb63b81abe989adca8830127cafc"
+        },
+        {
+          "id": "farm_birch_forest_2",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/farm_birch_forest_2.json",
+          "definition_sha256": "f03f9d86b30c17081b076f1e2981f55a7b2ed33ecc767286f2156b1b7cd72126",
+          "template": "src/main/resources/data/kithkyn/structure/farm_birch_forest_2.nbt",
+          "template_sha256": "83f71194870ad6943e9740b5de262c49ece13d01f133b4735d0a7b529f449a4a"
+        },
+        {
+          "id": "fishery_birch_forest_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/fishery_birch_forest_1.json",
+          "definition_sha256": "7824512d22cd746c28059896756e165b3bf9128057e7d58952452e0cd76653ea",
+          "template": "src/main/resources/data/kithkyn/structure/fishery_birch_forest_1.nbt",
+          "template_sha256": "ce4428bbad54e52596e6ce75f75f25894fde32c21deffd6e08a4f8bf36b0edf7"
+        },
+        {
+          "id": "house_birch_forest_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/house_birch_forest_1.json",
+          "definition_sha256": "24adc554f44385cc2d22ace640bb7713c183f159879624fb51674a001c047611",
+          "template": "src/main/resources/data/kithkyn/structure/house_birch_forest_1.nbt",
+          "template_sha256": "75abe68709ad69c7d3e964e7337057465b4b553ce72faa967d45a115be8d8b80"
+        },
+        {
+          "id": "house_birch_forest_2",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/house_birch_forest_2.json",
+          "definition_sha256": "ce3965cd067df18605a7796bf90e3c723a7799b1df864cac692bf3315bf56047",
+          "template": "src/main/resources/data/kithkyn/structure/house_birch_forest_2.nbt",
+          "template_sha256": "99915144df8a4ab8ebb56312b680fd42a11c35aa77911815996d4944dfee3563"
+        },
+        {
+          "id": "hunting_lodge_birch_forest_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/hunting_lodge_birch_forest_1.json",
+          "definition_sha256": "150e10d50068674d2c246215681d02e706948d31f666dc7bd39e20fb6c4062e5",
+          "template": "src/main/resources/data/kithkyn/structure/hunting_lodge_birch_forest_1.nbt",
+          "template_sha256": "dffaa36bf7382e597222546d34692c05aabaccd7e60ccddcf1cb46acbb56f498"
+        },
+        {
+          "id": "lumberjack_birch_forest_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/lumberjack_birch_forest_1.json",
+          "definition_sha256": "773e6bb0c9a3aa49ed62b032ab1b57450270d0bd904d8d427556a05abd8748cc",
+          "template": "src/main/resources/data/kithkyn/structure/lumberjack_birch_forest_1.nbt",
+          "template_sha256": "903a03b3282d0a59246bc50715fa6d11149e50ed6f2babbb07472619735bedd5"
+        },
+        {
+          "id": "market_birch_forest_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/market_birch_forest_1.json",
+          "definition_sha256": "377a1e1c5d927edef57a75c5486d262252078cb24e21428d982453065fd42dfb",
+          "template": "src/main/resources/data/kithkyn/structure/market_birch_forest_1.nbt",
+          "template_sha256": "ba62598d3dc7ecbffc4d7e1c0542a37a4f7990c356f7613a38534a93f4ef72d1"
+        },
+        {
+          "id": "market_birch_forest_2",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/market_birch_forest_2.json",
+          "definition_sha256": "075c4600147526df72e2150b6375c2c6ef8a729d0ff1a2e873b34eca4403fe09",
+          "template": "src/main/resources/data/kithkyn/structure/market_birch_forest_2.nbt",
+          "template_sha256": "63f3a3fcfaecefd4dc4807d5a01b28d3e263bad1cddd5a5c12bab754c45c9a9f"
+        },
+        {
+          "id": "market_birch_forest_3",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/market_birch_forest_3.json",
+          "definition_sha256": "fb12a3ffc36c4b47477f73c82e97dd0de1b297e674c4654fed636fb485970f92",
+          "template": "src/main/resources/data/kithkyn/structure/market_birch_forest_3.nbt",
+          "template_sha256": "9b2a4c0903bb9cdd26e954fcc45a8f556ea853b2fe7def140a5d0cc088c7cfab"
+        },
+        {
+          "id": "mine_birch_forest_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/mine_birch_forest_1.json",
+          "definition_sha256": "425ff2ace30426f78ba6196a3a012f594f012b4660205dacd86d8bf7b76fe6be",
+          "template": "src/main/resources/data/kithkyn/structure/mine_birch_forest_1.nbt",
+          "template_sha256": "171d80f1eb7b9f684cfa972503795f8d19e637ff1ae31a9b4d375a537176e05d"
+        },
+        {
+          "id": "stoneworks_birch_forest_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/stoneworks_birch_forest_1.json",
+          "definition_sha256": "71a0139fd16e8b7fa80398ff7d6c0628139272a170205982b71050e971b488dc",
+          "template": "src/main/resources/data/kithkyn/structure/stoneworks_birch_forest_1.nbt",
+          "template_sha256": "9dfc6763b7ed5f715cb3f257b6676984ac6fbd6c6c08946cf9d7189fd85ab323"
+        },
+        {
+          "id": "storehouse_birch_forest_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/storehouse_birch_forest_1.json",
+          "definition_sha256": "fc28b86f3c68b77ab52d4bc959da83156f692a4148d8caebc0b9e6eb8aef0af3",
+          "template": "src/main/resources/data/kithkyn/structure/storehouse_birch_forest_1.nbt",
+          "template_sha256": "fd0c5710ff1f4ca072964e8c0a6c10dd0a273e9fa13ab50e7698afa13774ae9f"
+        },
+        {
+          "id": "tavern_birch_forest_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/tavern_birch_forest_1.json",
+          "definition_sha256": "43422ba6579d6aaeccf35efc235678b02da6387742f9a62c4621d34b5760e51f",
+          "template": "src/main/resources/data/kithkyn/structure/tavern_birch_forest_1.nbt",
+          "template_sha256": "ac89d9200948d047bb6fa8d1c4b48526832bc74c4bd74a8897b133f2b91eabff"
+        },
+        {
+          "id": "village_center_birch_forest_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/village_center_birch_forest_1.json",
+          "definition_sha256": "68524f4081b9d4f3e0bca09a19066acf4ae694e6926f95b8eee24f879791879d",
+          "template": "src/main/resources/data/kithkyn/structure/village_center_birch_forest_1.nbt",
+          "template_sha256": "76b7a1b96cc66c422c60c985e5c0bf0c584d291b54ba4f65e9d4bfb24f71f42f"
+        },
+        {
+          "id": "watchtower_birch_forest_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/watchtower_birch_forest_1.json",
+          "definition_sha256": "8a01f9919ec19acb910aef0d2043afc5022bff5b3359072acd5d860ad7927b7c",
+          "template": "src/main/resources/data/kithkyn/structure/watchtower_birch_forest_1.nbt",
+          "template_sha256": "3602bfd2ff0f468a569e7ad0dcd70ad40ad3d23d09c13989ea50e8b3d067f53a"
+        },
+        {
+          "id": "watchtower_birch_forest_2",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/watchtower_birch_forest_2.json",
+          "definition_sha256": "116b8378edfa5790f9f563881b0de0416449017518a42eafd26a5ea3b8774726",
+          "template": "src/main/resources/data/kithkyn/structure/watchtower_birch_forest_2.nbt",
+          "template_sha256": "9c8227438c6af3d663a7b579eb267c0d45e1d5b46c4b259087675ecacbfa8ebb"
+        },
+        {
+          "id": "well_birch_forest_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/well_birch_forest_1.json",
+          "definition_sha256": "afff30a6e668440981042dd9594512db6635405a5d4fcfd7c77a18a71de26205",
+          "template": "src/main/resources/data/kithkyn/structure/well_birch_forest_1.nbt",
+          "template_sha256": "bff44a67c251e44c2be5a40e89b8df360026f42718079fff0b8d70579916a689"
+        }
+      ]
+    },
+    {
+      "style": "desert",
+      "source": "run/trio-20260912/datapacks/kithkyn-desert",
+      "selection_record": "tools/structure/desert-catalog-20260909.json",
+      "buildings": [
+        {
+          "id": "bakery_desert_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/bakery_desert_1.json",
+          "definition_sha256": "4b759bd77464b79148dfdba0cc89de627beb5ad29481bf0bcf38afe5891b63f9",
+          "template": "src/main/resources/data/kithkyn/structure/bakery_desert_1.nbt",
+          "template_sha256": "7e3488b06a3f70f9306ce19aa89b9a2baf25ad324dc4d423eba93e875aa676ba"
+        },
+        {
+          "id": "blacksmith_desert_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/blacksmith_desert_1.json",
+          "definition_sha256": "d48755ac962b0af177ba94bc4cd27ddaf23efd7d089143252ac07c1bbeaad389",
+          "template": "src/main/resources/data/kithkyn/structure/blacksmith_desert_1.nbt",
+          "template_sha256": "ed01240c563fb82be80a65d819afe95c12b0752a8ed5639773939060fa427c17"
+        },
+        {
+          "id": "butchery_desert_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/butchery_desert_1.json",
+          "definition_sha256": "ff50ffab01b18c250d5f1a6767e46886aba7e358067c3eddc1ce1df9b519a01c",
+          "template": "src/main/resources/data/kithkyn/structure/butchery_desert_1.nbt",
+          "template_sha256": "2c4c4e3d1a915f659c36e5147a1ccfcc4f8e46f1c73bc2a48c5f3de8b006db21"
+        },
+        {
+          "id": "castle_desert_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/castle_desert_1.json",
+          "definition_sha256": "edb405bafd2466b3c50f2115135a4e718dd5cefa2f998b282ef5beb8e7af9f11",
+          "template": "src/main/resources/data/kithkyn/structure/castle_desert_1.nbt",
+          "template_sha256": "af86d02486a01e11bf6f3af51803410232b8b7c4773427ada1553cfc552fb67e"
+        },
+        {
+          "id": "church_desert_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/church_desert_1.json",
+          "definition_sha256": "f311f5ac780940ee238d686e0380b50400861bd7d8857b01347676566903dc10",
+          "template": "src/main/resources/data/kithkyn/structure/church_desert_1.nbt",
+          "template_sha256": "74295f0c0333d59eece36fd6f9cc296362f47afbf6b6358b124333f9c6ab6193"
+        },
+        {
+          "id": "couple_cottage_desert_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/couple_cottage_desert_1.json",
+          "definition_sha256": "30b99f855c78120c1772b79b323cc9edbdcc149ca1a0b0233013fca53817e860",
+          "template": "src/main/resources/data/kithkyn/structure/couple_cottage_desert_1.nbt",
+          "template_sha256": "6bf1519d79a6460b15385e14bf96934aca04e7e00f9631ceb83c6cd8da695483"
+        },
+        {
+          "id": "farm_desert_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/farm_desert_1.json",
+          "definition_sha256": "a81bd9931607f560557363d561930ff21fdb05186d7b0d3bfbc85226569ecd8c",
+          "template": "src/main/resources/data/kithkyn/structure/farm_desert_1.nbt",
+          "template_sha256": "0470ffa16b1e54069acf9590c6dc4df2b1eb98854b40e5bff9a3cd931cb649f7"
+        },
+        {
+          "id": "fishery_desert_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/fishery_desert_1.json",
+          "definition_sha256": "29c99187d4121eef87ab1f11e2ed1842aaca88bc4f94912078cffb983e5995ec",
+          "template": "src/main/resources/data/kithkyn/structure/fishery_desert_1.nbt",
+          "template_sha256": "1e78df4b3c4cd432c9914146d0a0e811e62f96f18c471e8d12802d54f6733755"
+        },
+        {
+          "id": "house_desert_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/house_desert_1.json",
+          "definition_sha256": "9acb82ab4f9d54b71853bef0db0d61251456bce1a180ca429c4949155bd406ab",
+          "template": "src/main/resources/data/kithkyn/structure/house_desert_1.nbt",
+          "template_sha256": "2c4768383f08af13a46ed602561143d369dd7529c79681c133f8ad795e51ef07"
+        },
+        {
+          "id": "house_desert_1__small_house_2",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/house_desert_1__small_house_2.json",
+          "definition_sha256": "cf554b3b8c5b326312b8549254e2591a0f25c795f2a1de388f47ee2087b61507",
+          "template": "src/main/resources/data/kithkyn/structure/house_desert_1__small_house_2.nbt",
+          "template_sha256": "20b6be8658ce1c91f21eda4cbda0eb824ccfe329ac592de2afc66f15b7619d30"
+        },
+        {
+          "id": "house_desert_1__small_house_3",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/house_desert_1__small_house_3.json",
+          "definition_sha256": "e3a464b65dd912feccf2a8afa85ad9091ffe532e10bd2b861693120376db763a",
+          "template": "src/main/resources/data/kithkyn/structure/house_desert_1__small_house_3.nbt",
+          "template_sha256": "058846d69f754b3d8ef395fca6947f75c440f9391ba60b77074a11e727301983"
+        },
+        {
+          "id": "house_desert_1__small_house_4",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/house_desert_1__small_house_4.json",
+          "definition_sha256": "7b4c708bce1aed382a76872f82006329b2cbb3ab8cc4244d7c71ae36c7ee3a51",
+          "template": "src/main/resources/data/kithkyn/structure/house_desert_1__small_house_4.nbt",
+          "template_sha256": "86c1578049d828afd6a4c5820be44469fe0684d022541ef0d13a777928832260"
+        },
+        {
+          "id": "house_desert_1__small_house_5",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/house_desert_1__small_house_5.json",
+          "definition_sha256": "ae31c0119cf29fa4fbd2cdd5a724a9d3f273022d8e57865f7d4daf82374949f3",
+          "template": "src/main/resources/data/kithkyn/structure/house_desert_1__small_house_5.nbt",
+          "template_sha256": "4788c299ffb0e3ca973945bd0fa0636df440859ba365e648fe97f086b1b5f04b"
+        },
+        {
+          "id": "house_desert_1__small_house_6",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/house_desert_1__small_house_6.json",
+          "definition_sha256": "6f99375a836b1e2907d3e308bc3b21a3789688fedf4e32b16b9d40e95e613d55",
+          "template": "src/main/resources/data/kithkyn/structure/house_desert_1__small_house_6.nbt",
+          "template_sha256": "55f13c127f8f1e3630c16699f9b9fdcd8c20eeecae5e094b479f5fa049ef39ca"
+        },
+        {
+          "id": "house_desert_2",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/house_desert_2.json",
+          "definition_sha256": "149942c03d041691111f02ac495de97cece918b95244881a7844e384046f7be0",
+          "template": "src/main/resources/data/kithkyn/structure/house_desert_2.nbt",
+          "template_sha256": "add91058b91abfaf0d737acfd73f8bf58eae1d0146f9330432028c233749ed14"
+        },
+        {
+          "id": "house_desert_2__medium_house_2",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/house_desert_2__medium_house_2.json",
+          "definition_sha256": "72d19962e417ee6c6e6a173917e47a3b59cf4e6550fb0a4f1865064cd3f97961",
+          "template": "src/main/resources/data/kithkyn/structure/house_desert_2__medium_house_2.nbt",
+          "template_sha256": "9a66fd6e9eed3ab6d1c4aa8538125f51262199f756657d1068bdb7c24b24479a"
+        },
+        {
+          "id": "house_desert_3",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/house_desert_3.json",
+          "definition_sha256": "d8456409c7cdab8a56dddc1a9fc6c3bb6ada15d623cf18ac5783d8dd9d58659b",
+          "template": "src/main/resources/data/kithkyn/structure/house_desert_3.nbt",
+          "template_sha256": "ca1b3bee7c5f77e1c10f2db416135fe638506816bf114928408af50d525e51ee"
+        },
+        {
+          "id": "hunting_lodge_desert_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/hunting_lodge_desert_1.json",
+          "definition_sha256": "6d0945211e621db2893ddcd5f98b6a7177afbce6399a237abf16eff72ded9a09",
+          "template": "src/main/resources/data/kithkyn/structure/hunting_lodge_desert_1.nbt",
+          "template_sha256": "78f482ea65616be39823be8367dac5dcc9a1479cde7ef49eaf396b0a58f22600"
+        },
+        {
+          "id": "lumberjack_desert_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/lumberjack_desert_1.json",
+          "definition_sha256": "4d63e3715459452037ef9559625e2c8fa6680580669740d9e2f14df41b3d8954",
+          "template": "src/main/resources/data/kithkyn/structure/lumberjack_desert_1.nbt",
+          "template_sha256": "de5fa2bc7fc1696e37ef2e63cde441de469691ac306f420c173fea79212602bc"
+        },
+        {
+          "id": "market_desert_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/market_desert_1.json",
+          "definition_sha256": "df206d502c97551dc1e2cfedf500be7144bd37713bccebf9c056c60f7499c241",
+          "template": "src/main/resources/data/kithkyn/structure/market_desert_1.nbt",
+          "template_sha256": "fee3d0defe8e8f40fef95790e1c61cb851b655351d751b2f7bf0e6d9151bdc43"
+        },
+        {
+          "id": "market_desert_2",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/market_desert_2.json",
+          "definition_sha256": "de36b66e555122e53b66137325729b536e7ceed261c2ea4b2e562a82b6dd0cc6",
+          "template": "src/main/resources/data/kithkyn/structure/market_desert_2.nbt",
+          "template_sha256": "25c4bb8fd91f964d2ab9e5ed4bc134afa554ab7935a62a9e33131da1c42ce99e"
+        },
+        {
+          "id": "market_desert_3",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/market_desert_3.json",
+          "definition_sha256": "eaad5a3c283fba428395dee7172cd36dfa21772fb211f1dbe3cf81e223179d5d",
+          "template": "src/main/resources/data/kithkyn/structure/market_desert_3.nbt",
+          "template_sha256": "cdf400a0e7e6beb0808ec5068d404c7d8f6e5a95ed08f210d49cbf31a86b7876"
+        },
+        {
+          "id": "mine_desert_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/mine_desert_1.json",
+          "definition_sha256": "eb1aa1d7a69d55b01f8ffae333860bfcb469c6e67603a60f05633e9e75e625cb",
+          "template": "src/main/resources/data/kithkyn/structure/mine_desert_1.nbt",
+          "template_sha256": "94bd1d6948bc6464f7e4e3e82482b7566b5c7d3810ac896d6add7865895e3a0c"
+        },
+        {
+          "id": "stoneworks_desert_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/stoneworks_desert_1.json",
+          "definition_sha256": "a9ea2b90d0aee1920f7eaccaa72cd40e8d7f9170d6bd5be384adc5887ff103c9",
+          "template": "src/main/resources/data/kithkyn/structure/stoneworks_desert_1.nbt",
+          "template_sha256": "e449b6c43f86fcf413d398193d080697909c598226ab093255ce4d995d03017e"
+        },
+        {
+          "id": "storehouse_desert_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/storehouse_desert_1.json",
+          "definition_sha256": "3f47e531b0757640f7cba3d5ec7744eaf2bb6e667e87d896227ffcc667a6bb84",
+          "template": "src/main/resources/data/kithkyn/structure/storehouse_desert_1.nbt",
+          "template_sha256": "4f6f8235a6784b4d34a446226bc7c46b7b9dc8853dd56662f84f064cb3cb69b2"
+        },
+        {
+          "id": "storehouse_desert_2",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/storehouse_desert_2.json",
+          "definition_sha256": "446fbcd423f27719542f8d7c85e255924c6681861e0ac6c386291f06a57e18fc",
+          "template": "src/main/resources/data/kithkyn/structure/storehouse_desert_2.nbt",
+          "template_sha256": "b16374b5552480826be871ea8f9da3c7a559f3d899b57e4878dabd0452980819"
+        },
+        {
+          "id": "tavern_desert_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/tavern_desert_1.json",
+          "definition_sha256": "f955e09045204563463787d48de72f3a2d51d4297dd520d70241cb691b84a3f6",
+          "template": "src/main/resources/data/kithkyn/structure/tavern_desert_1.nbt",
+          "template_sha256": "74827cbe6992fb2ec536b64b1f61728f0da04a15cb8e1692467eff35fe2fc967"
+        },
+        {
+          "id": "village_center_desert_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/village_center_desert_1.json",
+          "definition_sha256": "cfc8ba93c967f7252356a93e260b6279e3549f3aa624aba8c007b18e3ddb2ee2",
+          "template": "src/main/resources/data/kithkyn/structure/village_center_desert_1.nbt",
+          "template_sha256": "ccc745378f8a72bda01bf381da4cfe6894fad0087381494c6da38a68bffcbd32"
+        },
+        {
+          "id": "watchtower_desert_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/watchtower_desert_1.json",
+          "definition_sha256": "f8a3738e57a69b310c7dce889e01b69e6593e43fd6bbe521fdf7098abb83158d",
+          "template": "src/main/resources/data/kithkyn/structure/watchtower_desert_1.nbt",
+          "template_sha256": "f536b690fe9b02b1ad7326905cdb48a06360b7cfcfe7b0600d75ec0dd49ea052"
+        },
+        {
+          "id": "watchtower_desert_2",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/watchtower_desert_2.json",
+          "definition_sha256": "aab9549cdab8ed5d08722349a54ab46858f527439a35e2a450d60163d98855dd",
+          "template": "src/main/resources/data/kithkyn/structure/watchtower_desert_2.nbt",
+          "template_sha256": "761230aa0a90ccd34174aca6683e72760a5ad7aebdba61c0b18b923cca6104da"
+        },
+        {
+          "id": "well_desert_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/well_desert_1.json",
+          "definition_sha256": "14df7e36696d78eb336c2dd2a972454c8eb4051f062edaac6d3fe711afa75e65",
+          "template": "src/main/resources/data/kithkyn/structure/well_desert_1.nbt",
+          "template_sha256": "501c9901d4f867a17325ac3fb0b9bdfa6ac0705be6a32abd23e99c7960aaef9a"
+        }
+      ]
+    },
+    {
+      "style": "badlands",
+      "source": "run/trio-20260912/datapacks/kithkyn-badlands",
+      "selection_record": "tools/structure/badlands-catalog-20260909.json",
+      "buildings": [
+        {
+          "id": "bakery_badlands_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/bakery_badlands_1.json",
+          "definition_sha256": "5f33247292c359cef11b65a56366b47cae43586b5e071a8f0fffddd279d77409",
+          "template": "src/main/resources/data/kithkyn/structure/bakery_badlands_1.nbt",
+          "template_sha256": "a6f0baab3495b81ad79bb297dcc31418108be8445c1b4449af81280c735b1b54"
+        },
+        {
+          "id": "blacksmith_badlands_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/blacksmith_badlands_1.json",
+          "definition_sha256": "507cb34769020c527246bbce337e58ec29e8fa4d5b5af99333c973ebe7ec8f23",
+          "template": "src/main/resources/data/kithkyn/structure/blacksmith_badlands_1.nbt",
+          "template_sha256": "a152824fbb2c5519703af7ff3b84b53bf1ccd3b96a7aca125cf62139fb437a77"
+        },
+        {
+          "id": "butchery_badlands_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/butchery_badlands_1.json",
+          "definition_sha256": "33b115b983603a7612deae856ae936184a1d79bbf1c5c9e1c274263ff783a8d2",
+          "template": "src/main/resources/data/kithkyn/structure/butchery_badlands_1.nbt",
+          "template_sha256": "a06cf9a61c4be48deb7e6b073d932d58f0533dbe5a257b5a52719960f9c4e40c"
+        },
+        {
+          "id": "church_badlands_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/church_badlands_1.json",
+          "definition_sha256": "2330ab8ba998dbc8a4ece85ab472aa0558e96995df3319235199ab92c5c7cd6f",
+          "template": "src/main/resources/data/kithkyn/structure/church_badlands_1.nbt",
+          "template_sha256": "1aea18fc354b04b5591f98661fcd2943a44fb688fa9dcf7f6e64efc1374ebda2"
+        },
+        {
+          "id": "farm_badlands_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/farm_badlands_1.json",
+          "definition_sha256": "9bbb11c092cd0ec7b3b0b5f931be1dfc2c5cb9ff7b294338edcd545f2e5dd824",
+          "template": "src/main/resources/data/kithkyn/structure/farm_badlands_1.nbt",
+          "template_sha256": "6e0b24b26d58df102be47d21f73fa76b896b9e390ba0a5d102c8de407dc36322"
+        },
+        {
+          "id": "fishery_badlands_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/fishery_badlands_1.json",
+          "definition_sha256": "1fdfbf0b78153724b9ed2b13e689bf487d94689d686f451d564d055913f685ed",
+          "template": "src/main/resources/data/kithkyn/structure/fishery_badlands_1.nbt",
+          "template_sha256": "3c37c3e0ac4a486f409ad3da5a61481d34a75c68ca7b9d98947f5a25d6cd830f"
+        },
+        {
+          "id": "house_badlands_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/house_badlands_1.json",
+          "definition_sha256": "14fbc2e0c72ea49da3300966a2707f10294a46c4a9a8049cb2c644368096f628",
+          "template": "src/main/resources/data/kithkyn/structure/house_badlands_1.nbt",
+          "template_sha256": "86213851e963dbb189a5b63d72ece26cd69e5a6c8b01304b6c7e280747fe1afd"
+        },
+        {
+          "id": "house_badlands_1__small_house_2",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/house_badlands_1__small_house_2.json",
+          "definition_sha256": "09e6fd6a9dfec20f1a1363364f38817bf82654355703699c6c7addd4baa6b65d",
+          "template": "src/main/resources/data/kithkyn/structure/house_badlands_1__small_house_2.nbt",
+          "template_sha256": "a7a13c9eeb3dbb39f246b4de824130559eef233de2a12c900e4cbf0b74e19c5e"
+        },
+        {
+          "id": "house_badlands_1__small_house_3",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/house_badlands_1__small_house_3.json",
+          "definition_sha256": "cf908aba380bdc2ab2e10c08e5ea96ab2d3cb3778cd2adf38251ab128a45c554",
+          "template": "src/main/resources/data/kithkyn/structure/house_badlands_1__small_house_3.nbt",
+          "template_sha256": "50f5dad3bd89b8729ed4e37eef50c1bdcf73c54972dc528659ce5b52ca85350b"
+        },
+        {
+          "id": "house_badlands_1__small_house_4",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/house_badlands_1__small_house_4.json",
+          "definition_sha256": "917379e21737cb4aceb59ae3726e4d4b50897505aa93263576d7a0971cfffe3c",
+          "template": "src/main/resources/data/kithkyn/structure/house_badlands_1__small_house_4.nbt",
+          "template_sha256": "5a7d2868d9c7dd290ed8d402f6d76021e15d644162fb3267fbed729b98327271"
+        },
+        {
+          "id": "house_badlands_1__small_house_5",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/house_badlands_1__small_house_5.json",
+          "definition_sha256": "ac0d1dd1b065ce3323f942b95af1e66e934b5664578d50b603e164efeb5b5990",
+          "template": "src/main/resources/data/kithkyn/structure/house_badlands_1__small_house_5.nbt",
+          "template_sha256": "96e83393de1aeedb4b1807dc44f19daab0ac7b97c50121aa6d6996a7b77f151c"
+        },
+        {
+          "id": "house_badlands_1__small_house_6",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/house_badlands_1__small_house_6.json",
+          "definition_sha256": "418045edaa6592677d86820609bd0484aca19135addfc7a0339581ef06430eea",
+          "template": "src/main/resources/data/kithkyn/structure/house_badlands_1__small_house_6.nbt",
+          "template_sha256": "027c510aa2d9e7069bc221a7301a9de49a3d287cc2123d9e1d771096b6530e71"
+        },
+        {
+          "id": "house_badlands_2",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/house_badlands_2.json",
+          "definition_sha256": "b4a8ef36053dc0d23bf67350e6a39c54c6c6613bc0cf8bae41b9db1604575bcb",
+          "template": "src/main/resources/data/kithkyn/structure/house_badlands_2.nbt",
+          "template_sha256": "ed668395a0d3e344e4ce7e820c15397262b61e8a520a6aea3f1846d9b7cbfe54"
+        },
+        {
+          "id": "house_badlands_2__large_house_2",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/house_badlands_2__large_house_2.json",
+          "definition_sha256": "b45aa911a734807eebfcab536c05bc1a479eacc1632bd71601c335e720781ff4",
+          "template": "src/main/resources/data/kithkyn/structure/house_badlands_2__large_house_2.nbt",
+          "template_sha256": "027f6b0ebce40eeda3ee986f4cc509875a61679718da8e680c13668ff9da3cc0"
+        },
+        {
+          "id": "house_badlands_2__large_house_4",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/house_badlands_2__large_house_4.json",
+          "definition_sha256": "de78912095b74d35edb347a211d85080636d497d172eb0c64e20309d389b8a7a",
+          "template": "src/main/resources/data/kithkyn/structure/house_badlands_2__large_house_4.nbt",
+          "template_sha256": "7eaa7aa643609dc7a74078dfdc70f07b944c32f6761a08bd2ead60ccde0c372d"
+        },
+        {
+          "id": "house_badlands_2__medium_house_2",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/house_badlands_2__medium_house_2.json",
+          "definition_sha256": "ae9f548085bf7e1ee9edcd0320743cc77c1d8097c0d3fc5047b2e9de59337aa6",
+          "template": "src/main/resources/data/kithkyn/structure/house_badlands_2__medium_house_2.nbt",
+          "template_sha256": "06fbdca81a2390b38c3be47a3e5d3bfc1a1ff9cd47f70cb31c1d72cacc6654ed"
+        },
+        {
+          "id": "house_badlands_3",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/house_badlands_3.json",
+          "definition_sha256": "89c0c135b00d60bd3c26ea5b291bbc67bf94713d3b6141157e9801ad38bb7a40",
+          "template": "src/main/resources/data/kithkyn/structure/house_badlands_3.nbt",
+          "template_sha256": "e31bec10116b215069753b19866243ecf928d40528655b0ba3cafd4a42636703"
+        },
+        {
+          "id": "house_badlands_3__large_house_3",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/house_badlands_3__large_house_3.json",
+          "definition_sha256": "ebadca042884fd5a6dd310406b27e7eff01fe7b2a102092f0ce4735540c31831",
+          "template": "src/main/resources/data/kithkyn/structure/house_badlands_3__large_house_3.nbt",
+          "template_sha256": "dd9f1334386880feef174b65d6604ebed35ad4e6537c734679647c4bc0216036"
+        },
+        {
+          "id": "hunting_lodge_badlands_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/hunting_lodge_badlands_1.json",
+          "definition_sha256": "3f4b1e880317d4f451c373e1345e51b8cf3aeaba2f44ce8c663e47ae93248744",
+          "template": "src/main/resources/data/kithkyn/structure/hunting_lodge_badlands_1.nbt",
+          "template_sha256": "2f613bb5128cc26ff631a45be4fbd8fadd3667599a7f9a085d7f4bbccb3cbb92"
+        },
+        {
+          "id": "lumberjack_badlands_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/lumberjack_badlands_1.json",
+          "definition_sha256": "fb6fbcba974780ef39278577b4473af93c16a870a057b3b9e105d5aa755a0d32",
+          "template": "src/main/resources/data/kithkyn/structure/lumberjack_badlands_1.nbt",
+          "template_sha256": "21e418d2923b5b63012614019cc493cf0473d5c318aa40c72b687becbc442048"
+        },
+        {
+          "id": "market_badlands_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/market_badlands_1.json",
+          "definition_sha256": "45ac0d3d7d4a6d4d2af7bcdc0c067f19d972ff7011d338c88251f98365dfde20",
+          "template": "src/main/resources/data/kithkyn/structure/market_badlands_1.nbt",
+          "template_sha256": "6b7bc8cd2ce0aa01e16cc2dcc9aea6224beb77921023b444ddd8a2d840c56c13"
+        },
+        {
+          "id": "market_badlands_2",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/market_badlands_2.json",
+          "definition_sha256": "d96ca000b44c01541c5785b95983cf78ed56c25247025f34cba08f64539863cf",
+          "template": "src/main/resources/data/kithkyn/structure/market_badlands_2.nbt",
+          "template_sha256": "7da28df0d18e6870b368e3e66994e756dac59677cab4cfebee7b905ecfa76c0e"
+        },
+        {
+          "id": "market_badlands_3",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/market_badlands_3.json",
+          "definition_sha256": "3daa4ec333af37660d2fa6d641a9318f639bbaeda3d9d3bf33b2a6bb51558955",
+          "template": "src/main/resources/data/kithkyn/structure/market_badlands_3.nbt",
+          "template_sha256": "ede9fade19944cba82fad76398ae96f979a1a4291228816c7406d696fcee8140"
+        },
+        {
+          "id": "mine_badlands_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/mine_badlands_1.json",
+          "definition_sha256": "445012a7c35ca983507819ac6fa33b8825ed50ebea1e1e3973a561e314ccda03",
+          "template": "src/main/resources/data/kithkyn/structure/mine_badlands_1.nbt",
+          "template_sha256": "f9c4d3ab15bda3776dea206cf02b90518b1a768f7a18e4c0b8dd689110224513"
+        },
+        {
+          "id": "stoneworks_badlands_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/stoneworks_badlands_1.json",
+          "definition_sha256": "cc205bd4ef136b3386395ce8585cf6efe5b403f461e94a23de45ebf39fd76ec4",
+          "template": "src/main/resources/data/kithkyn/structure/stoneworks_badlands_1.nbt",
+          "template_sha256": "9ae26663196f7e7f977952ea7dd3953bff21f67cce9bc70d556a973377bd2d99"
+        },
+        {
+          "id": "storehouse_badlands_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/storehouse_badlands_1.json",
+          "definition_sha256": "6768f55f9abe51b9e01e3d48666643fabf3f469f39694a0e197bcbaecec0106f",
+          "template": "src/main/resources/data/kithkyn/structure/storehouse_badlands_1.nbt",
+          "template_sha256": "5db23d691b64ac6b5fff93844d0e92fdd69a838e1db8785fe5a30055b726e403"
+        },
+        {
+          "id": "storehouse_badlands_2",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/storehouse_badlands_2.json",
+          "definition_sha256": "49289a81ce7ed337658fc83911bf72d80c8a3346aebee96f3f462994e808f741",
+          "template": "src/main/resources/data/kithkyn/structure/storehouse_badlands_2.nbt",
+          "template_sha256": "7bc4d3933f5273239fcd53e43f786695c5b09587392047eb7a020e893658835f"
+        },
+        {
+          "id": "tavern_badlands_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/tavern_badlands_1.json",
+          "definition_sha256": "258e845b909a243cebf957a101e95532aabd73fa2e934b5f632acd59747792bc",
+          "template": "src/main/resources/data/kithkyn/structure/tavern_badlands_1.nbt",
+          "template_sha256": "78822ed4342a3da19ad0cb62394eb7aa6f585479101efe97d06d86f81b87de03"
+        },
+        {
+          "id": "village_center_badlands_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/village_center_badlands_1.json",
+          "definition_sha256": "f8c301bea3587222e1635867716fcb1f8b55247aaf8331503ba38a41d4c8bd98",
+          "template": "src/main/resources/data/kithkyn/structure/village_center_badlands_1.nbt",
+          "template_sha256": "84f0bc46d5fc576d54b8d022031596355af199e6fdbf81821ae89388eb1adeca"
+        },
+        {
+          "id": "watchtower_badlands_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/watchtower_badlands_1.json",
+          "definition_sha256": "33d64d10dde71c1fe5ae9e9ae7e3b3b4b3ce28e8aaf467d4dc006adf77d63772",
+          "template": "src/main/resources/data/kithkyn/structure/watchtower_badlands_1.nbt",
+          "template_sha256": "346ad36704eb9b04d5f329c8ca4053dd8e52ef978949b4bc2fc33bb48f0f2c93"
+        }
+      ]
+    },
+    {
+      "style": "floodplain",
+      "source": "run/trio-20260912/datapacks/kithkyn-floodplain",
+      "selection_record": "tools/structure/floodplain-catalog-20260910.json",
+      "buildings": [
+        {
+          "id": "blacksmith_floodplain_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/blacksmith_floodplain_1.json",
+          "definition_sha256": "b6157e79e4175a17ca5a1f8acba0909c20a3835b524327239e5dc1ae443bede9",
+          "template": "src/main/resources/data/kithkyn/structure/blacksmith_floodplain_1.nbt",
+          "template_sha256": "08a49177906b519671de69f8753541df1e5f7618664e96838f2057aef5267eda"
+        },
+        {
+          "id": "butchery_floodplain_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/butchery_floodplain_1.json",
+          "definition_sha256": "3585022bdf0d59aea6723ca1a5e6f27e7828f616b8a87d4b20d9495b919532c9",
+          "template": "src/main/resources/data/kithkyn/structure/butchery_floodplain_1.nbt",
+          "template_sha256": "4e2d584cf4e443892500bff33f2c157013beb09576e8b990460810d904f60e32"
+        },
+        {
+          "id": "church_floodplain_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/church_floodplain_1.json",
+          "definition_sha256": "07ebabc393fb646cc36445a04d35ae1e86dcad310a1768ffa85fba95381be147",
+          "template": "src/main/resources/data/kithkyn/structure/church_floodplain_1.nbt",
+          "template_sha256": "a5525a4cee8e3eaa40d07fcc564bcc0b371f7d674b1d7618444654446bcf6362"
+        },
+        {
+          "id": "couple_cottage_floodplain_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/couple_cottage_floodplain_1.json",
+          "definition_sha256": "ce9cd88ec4fbd0d0cc498fd54fac2f0081875a36f6922fc1311a4260919caa3c",
+          "template": "src/main/resources/data/kithkyn/structure/couple_cottage_floodplain_1.nbt",
+          "template_sha256": "96aa5d71b8b27398ca9c8a483baf7bc9bd857004d7bd2bd985cb3695d665ac7d"
+        },
+        {
+          "id": "farm_floodplain_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/farm_floodplain_1.json",
+          "definition_sha256": "6e741d8392d32f8a5862bba4da053ecb9ae92bcd0b640516af61879427d52dc8",
+          "template": "src/main/resources/data/kithkyn/structure/farm_floodplain_1.nbt",
+          "template_sha256": "2a6656eb98b5affe840d885cd0a0e7b0da585af2e14f0e7b3cc1f1dc2790a361"
+        },
+        {
+          "id": "farm_floodplain_2",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/farm_floodplain_2.json",
+          "definition_sha256": "3a8f2ac652fbf3dca642f2ba6247d36e1fd733d0d4a19bfdc83d50eaebc0ed9c",
+          "template": "src/main/resources/data/kithkyn/structure/farm_floodplain_2.nbt",
+          "template_sha256": "c5b145ef4ce56efbefc04e87646e4e5027dc980c0eae1a6828f2e000b25161a1"
+        },
+        {
+          "id": "fishery_floodplain_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/fishery_floodplain_1.json",
+          "definition_sha256": "518d02b2beafbc957160dda6676342f70fd908228f14f3001159e4034e84f9c7",
+          "template": "src/main/resources/data/kithkyn/structure/fishery_floodplain_1.nbt",
+          "template_sha256": "bd454c3a820bdc82e606964d6dbef7b015203bff6cda88b787f4e49b3efb3056"
+        },
+        {
+          "id": "house_floodplain_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/house_floodplain_1.json",
+          "definition_sha256": "df621325008a6b7d796f355ffd9a846c1e496a0907c114aad8d6e6b30fbb948a",
+          "template": "src/main/resources/data/kithkyn/structure/house_floodplain_1.nbt",
+          "template_sha256": "e3ab1aaf9666e73048575cab41aedc41ff99bf2779c8b5182f61ca1916926bc7"
+        },
+        {
+          "id": "house_floodplain_2",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/house_floodplain_2.json",
+          "definition_sha256": "15dfd4c0dca032a64790c1e8919304720a389faa6f46834e8eaac975b9dfc8a3",
+          "template": "src/main/resources/data/kithkyn/structure/house_floodplain_2.nbt",
+          "template_sha256": "dff31a2bfcf7439b00e311c449ea4f0c836993165cb13bdf887d1a7042427fc0"
+        },
+        {
+          "id": "hunting_lodge_floodplain_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/hunting_lodge_floodplain_1.json",
+          "definition_sha256": "75611700930a0902baa27c4af66ae7139d6087b08ee0d55dc56536c2ec59a1de",
+          "template": "src/main/resources/data/kithkyn/structure/hunting_lodge_floodplain_1.nbt",
+          "template_sha256": "dd6ca693ac86d184bd9cef0df53c4ee69799d7f3478c45a39434d0783b7b719e"
+        },
+        {
+          "id": "lumberjack_floodplain_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/lumberjack_floodplain_1.json",
+          "definition_sha256": "03818ce49c67a6b7b6965ea6b62ed1f33e7585731436f2c75b33fd6c81c08e9f",
+          "template": "src/main/resources/data/kithkyn/structure/lumberjack_floodplain_1.nbt",
+          "template_sha256": "fb7f0374193700ad0a7cfa70fb2bf22dd25042bf0202ff1f29f904c0742f50b9"
+        },
+        {
+          "id": "market_floodplain_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/market_floodplain_1.json",
+          "definition_sha256": "aedaa40534f1fe6a2b55141b697dc06c0d5c087528f95edccd3e7a2900fafcb1",
+          "template": "src/main/resources/data/kithkyn/structure/market_floodplain_1.nbt",
+          "template_sha256": "a9ae1b6bd8b291378cd08f34e1bcf7dbf6549458893415c9582927b994f35cd9"
+        },
+        {
+          "id": "market_floodplain_2",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/market_floodplain_2.json",
+          "definition_sha256": "d57b8c98ef52674c0126eee433c2e7f22fdf57e01f034bddd4adbb9389ddb0f3",
+          "template": "src/main/resources/data/kithkyn/structure/market_floodplain_2.nbt",
+          "template_sha256": "1a071c27be17abefca88def26a4066e161502eae17db299f09902964d9887fc2"
+        },
+        {
+          "id": "market_floodplain_3",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/market_floodplain_3.json",
+          "definition_sha256": "1aa4020bae3644b1d91452f8ba5c43c720c57f85abaf0ca57228d40a50a8d157",
+          "template": "src/main/resources/data/kithkyn/structure/market_floodplain_3.nbt",
+          "template_sha256": "64d0afa90ab8f78148a3e3c035f799d0aeed842b25a4f27c1524a31a3056aa25"
+        },
+        {
+          "id": "mine_floodplain_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/mine_floodplain_1.json",
+          "definition_sha256": "2d8ea7b9dd0425b1519e214e9525d6647e7bf677a091c951d2dfbe67d94bd7ec",
+          "template": "src/main/resources/data/kithkyn/structure/mine_floodplain_1.nbt",
+          "template_sha256": "6b3c69fb1fcc5268ef2c62b3b1093260227f0c6ac86f4052ac9a7333fd8f9103"
+        },
+        {
+          "id": "stoneworks_floodplain_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/stoneworks_floodplain_1.json",
+          "definition_sha256": "5d1c2c42e404ab4d221bf03117f04a231b7fc03a6e134080f543a4fce8126415",
+          "template": "src/main/resources/data/kithkyn/structure/stoneworks_floodplain_1.nbt",
+          "template_sha256": "739d19b91b0504c511320fa3439743b49f1333ce0f4b9763ca30a54177fcb716"
+        },
+        {
+          "id": "storehouse_floodplain_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/storehouse_floodplain_1.json",
+          "definition_sha256": "c84a0edec6e84e0bf6b139488a28fc73c64f517e51d1a8efd1560a685b9d41b8",
+          "template": "src/main/resources/data/kithkyn/structure/storehouse_floodplain_1.nbt",
+          "template_sha256": "89b3fa1e45252e4d0e6d77889146343d519c5aa14907f460b7c27ccc0a1f05dc"
+        },
+        {
+          "id": "village_center_floodplain_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/village_center_floodplain_1.json",
+          "definition_sha256": "a9994ea825fdb775bd9657e95f9879342faf34b85eda11ae495b80884948c363",
+          "template": "src/main/resources/data/kithkyn/structure/village_center_floodplain_1.nbt",
+          "template_sha256": "774eb12e306a5362a91cdbadd87bcd084a39a3e1c34e0a6d55c6b3d87f4161d4"
+        },
+        {
+          "id": "watchtower_floodplain_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/watchtower_floodplain_1.json",
+          "definition_sha256": "2933dd72541ce4a312d6514821a2bef3952cf8306ef6ee8240a847d915a50009",
+          "template": "src/main/resources/data/kithkyn/structure/watchtower_floodplain_1.nbt",
+          "template_sha256": "c432a16fde9b5b795c925c599a9f15fe17331d9123afa05561bd4032d96c22e4"
+        },
+        {
+          "id": "well_floodplain_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/well_floodplain_1.json",
+          "definition_sha256": "3396a1213c2f04857ff3977a384267252031bc844903feaa207fb2f352c74875",
+          "template": "src/main/resources/data/kithkyn/structure/well_floodplain_1.nbt",
+          "template_sha256": "78889aedcbbc479b26683e97fcf03c61fe6a34a5ecb81f26b65de97d71a8f9d3"
+        }
+      ]
+    },
+    {
+      "style": "jungle",
+      "source": "run/trio-20260912/datapacks/kithkyn-jungle",
+      "selection_record": "tools/structure/jungle-catalog-20260910.json",
+      "buildings": [
+        {
+          "id": "bakery_jungle_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/bakery_jungle_1.json",
+          "definition_sha256": "87a0f945ee0748fa376215fd965807ab5d8d5f57c3ebb556f2522f7b144dade8",
+          "template": "src/main/resources/data/kithkyn/structure/bakery_jungle_1.nbt",
+          "template_sha256": "af3bd34e32e7bc32728defb064d4544015329e5074ad9ed82f2abd3208c3d409"
+        },
+        {
+          "id": "blacksmith_jungle_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/blacksmith_jungle_1.json",
+          "definition_sha256": "73033d161d98ca523a9e2b67f8d2e248f2a58735869699b4ddcc586bd488ab14",
+          "template": "src/main/resources/data/kithkyn/structure/blacksmith_jungle_1.nbt",
+          "template_sha256": "053d903b5b97e72f1978b75e27ea6d1f392feec00f097ccc736a1774ea8ed9e0"
+        },
+        {
+          "id": "butchery_jungle_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/butchery_jungle_1.json",
+          "definition_sha256": "f26014f48132f669b9ea84eb29c9dc15312419313ff12cf2faf4ff8fda8e8b12",
+          "template": "src/main/resources/data/kithkyn/structure/butchery_jungle_1.nbt",
+          "template_sha256": "fbde877d36aa3b44e6019ddf82c25b142ace592f52080dcfb9c526ee921d253e"
+        },
+        {
+          "id": "church_jungle_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/church_jungle_1.json",
+          "definition_sha256": "1e1c1ad9c494771cbb0746f2fa7447e4c54b3995e15cc65072e2d5f701397abf",
+          "template": "src/main/resources/data/kithkyn/structure/church_jungle_1.nbt",
+          "template_sha256": "dbce3b21580c554e543a6f1ae57af07b8061b6f76540b842661933b0ab6d6091"
+        },
+        {
+          "id": "couple_cottage_jungle_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/couple_cottage_jungle_1.json",
+          "definition_sha256": "c0e43cd868268b4576100dad3daf6db5ec707c1032f0dc4b8e8049acd97e2660",
+          "template": "src/main/resources/data/kithkyn/structure/couple_cottage_jungle_1.nbt",
+          "template_sha256": "a84a6fac1d276436644491ae3fd02ac2202aa716367faf7d9f697834a53e0beb"
+        },
+        {
+          "id": "farm_jungle_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/farm_jungle_1.json",
+          "definition_sha256": "f53f387719c8e94364ff8704780cfb4d4af3e39617df545037b92dbbea5e8fcc",
+          "template": "src/main/resources/data/kithkyn/structure/farm_jungle_1.nbt",
+          "template_sha256": "62a6b628bb56bc0834f3f815f3c6989057d59163e77732c7116d1a6698fa1e03"
+        },
+        {
+          "id": "fishery_jungle_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/fishery_jungle_1.json",
+          "definition_sha256": "5e51959ab4e88a92f17ac63e605e358a369206610613d67f491e7f1858a9ba3e",
+          "template": "src/main/resources/data/kithkyn/structure/fishery_jungle_1.nbt",
+          "template_sha256": "4df5059390a048c9f5d7162d50668ed452ceb02415bba10f94a35747e2d17be2"
+        },
+        {
+          "id": "house_jungle_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/house_jungle_1.json",
+          "definition_sha256": "3b11e022cb3ffbd65ef57bda9cf6e1983c549f5bbf3bd980670cbcbf02c8a804",
+          "template": "src/main/resources/data/kithkyn/structure/house_jungle_1.nbt",
+          "template_sha256": "afa87cd3d00a9a72fc0eaa8f0a8247364629482c90b969cdb3443439f550c612"
+        },
+        {
+          "id": "house_jungle_1__small_house_4",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/house_jungle_1__small_house_4.json",
+          "definition_sha256": "6d08b8c636d17e7cef693e0920711ef16340d749bc172740c15f77cb00df3937",
+          "template": "src/main/resources/data/kithkyn/structure/house_jungle_1__small_house_4.nbt",
+          "template_sha256": "42b8c76e4f4478824b8460d73058323eb47b143c322f6c3e6e32fa8913c646f7"
+        },
+        {
+          "id": "house_jungle_2",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/house_jungle_2.json",
+          "definition_sha256": "5079e0d447cd384a26c1c3cd5099db5c3f3001cf86515d9254bb1c7d7953f3f0",
+          "template": "src/main/resources/data/kithkyn/structure/house_jungle_2.nbt",
+          "template_sha256": "5372f67a8460988bdb900714c9d06dceefbdef612e07b4870b8ee6532b9ceb52"
+        },
+        {
+          "id": "house_jungle_2__large_house_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/house_jungle_2__large_house_1.json",
+          "definition_sha256": "13f7535ba6a52760a3ec1d7290b69a59b1118245928de4d30f67f9ffd0ca1402",
+          "template": "src/main/resources/data/kithkyn/structure/house_jungle_2__large_house_1.nbt",
+          "template_sha256": "ac5207b0d271e7301d386e802fba05150af0ac505fc6c70ad5cc19baf8dcf491"
+        },
+        {
+          "id": "hunting_lodge_jungle_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/hunting_lodge_jungle_1.json",
+          "definition_sha256": "b0af8afbabbaa08c92bb814c530386242db92be14f41955616ac6d3eb907cd0e",
+          "template": "src/main/resources/data/kithkyn/structure/hunting_lodge_jungle_1.nbt",
+          "template_sha256": "7d2c316330f25f7162a402365cdc9b0449ed8a14d11ffad8fbfc1a0c232cfea3"
+        },
+        {
+          "id": "lumberjack_jungle_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/lumberjack_jungle_1.json",
+          "definition_sha256": "d23d06d19c240dc088bdfeefb2a0bb0d22590e033b5d8f207e2f56d13aaa9b64",
+          "template": "src/main/resources/data/kithkyn/structure/lumberjack_jungle_1.nbt",
+          "template_sha256": "9ee39b0616c4f80e7a4df9641103d307fb6a987b25c1cc4d97004928b212cec5"
+        },
+        {
+          "id": "market_jungle_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/market_jungle_1.json",
+          "definition_sha256": "43892645f229bd0f89af371934feba7f69871c0c74be11d67ccef2ec8e7af8c5",
+          "template": "src/main/resources/data/kithkyn/structure/market_jungle_1.nbt",
+          "template_sha256": "9c414a0852cf7e00e0bf588b6e0132b5c5646ab52c2780da1bfc11158401a49b"
+        },
+        {
+          "id": "market_jungle_2",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/market_jungle_2.json",
+          "definition_sha256": "98e9956a01d5c5511ec1e990fc1afb6b73dd58cbe9b056bc35b161f5a9d8aefa",
+          "template": "src/main/resources/data/kithkyn/structure/market_jungle_2.nbt",
+          "template_sha256": "9de6111ed28525eb48066346cd42605499a55e45d6ac1c427d97343c23f2ca4c"
+        },
+        {
+          "id": "market_jungle_3",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/market_jungle_3.json",
+          "definition_sha256": "5730ee1f2980a7e01d41a6bd46aa8ac7c98ce6a47fb158d768753b197cf1728f",
+          "template": "src/main/resources/data/kithkyn/structure/market_jungle_3.nbt",
+          "template_sha256": "dbcf67d8f682689908b5c9629fc48a8ee9a322db90571574ebe8021d27dc62ea"
+        },
+        {
+          "id": "mine_jungle_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/mine_jungle_1.json",
+          "definition_sha256": "87f3347ac0047abc18ec80826b552ebf05ffd521626afbeae44fe28391891fcf",
+          "template": "src/main/resources/data/kithkyn/structure/mine_jungle_1.nbt",
+          "template_sha256": "70868db7facac1a0a0d86386b2a718ce14c37e0fe3835ebdd2b3a8174affbe5e"
+        },
+        {
+          "id": "stoneworks_jungle_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/stoneworks_jungle_1.json",
+          "definition_sha256": "9be1ea8b31087b3d98e12b455b827a7429e9ba4bb5606b878ffc01b965fb54b8",
+          "template": "src/main/resources/data/kithkyn/structure/stoneworks_jungle_1.nbt",
+          "template_sha256": "0b05a3f6e12523b4962bdd7aa0512e15b734ac06eac5a9b4da2662a24b628ccd"
+        },
+        {
+          "id": "storehouse_jungle_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/storehouse_jungle_1.json",
+          "definition_sha256": "21fc6b838aa4c51e770fc2c6bb788060499c9608dde74dc7afde30cfdbf751e9",
+          "template": "src/main/resources/data/kithkyn/structure/storehouse_jungle_1.nbt",
+          "template_sha256": "ac3ca85398f48fcc490f79155466585066e49e6db49bbc1d358d5d3a099276d2"
+        },
+        {
+          "id": "tavern_jungle_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/tavern_jungle_1.json",
+          "definition_sha256": "770b0e9b109825efc65d19531630764e6fb4db5b65c230fe340cdb716a6a900e",
+          "template": "src/main/resources/data/kithkyn/structure/tavern_jungle_1.nbt",
+          "template_sha256": "80ed8fca18b88ca032491846c74ca6d6d4f39c04dde645f8440a6dd3f1ffefce"
+        },
+        {
+          "id": "village_center_jungle_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/village_center_jungle_1.json",
+          "definition_sha256": "c58d06a5235b70190a79b5ff5b88e6619ef67dfe0d05161969b1c22e1c66e94a",
+          "template": "src/main/resources/data/kithkyn/structure/village_center_jungle_1.nbt",
+          "template_sha256": "e751e1babe9f596301127cdc79eca7281617c90e539c1b67b9acb33eb624bede"
+        },
+        {
+          "id": "watchtower_jungle_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/watchtower_jungle_1.json",
+          "definition_sha256": "1356c540601e6198b02627502eca54901fc3df94940e7f55df48478981e38e10",
+          "template": "src/main/resources/data/kithkyn/structure/watchtower_jungle_1.nbt",
+          "template_sha256": "8b7ed01e77550b3bb8b7fef025dea3a880c0e53eb8cc4900fe8e1ad1754b4149"
+        }
+      ]
+    },
+    {
+      "style": "swamp",
+      "source": "run/trio-20260912/datapacks/kithkyn-swamp",
+      "selection_record": "tools/structure/swamp-catalog-20260911.json",
+      "buildings": [
+        {
+          "id": "bakery_swamp_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/bakery_swamp_1.json",
+          "definition_sha256": "fcb5a097e1b3a5f7f7977b125eef4c73085ffa1e9c204129a18e5bfcf2f55b3e",
+          "template": "src/main/resources/data/kithkyn/structure/bakery_swamp_1.nbt",
+          "template_sha256": "bf423f8710f561517fbc63813f57be0e69c15d2ca41d68086bf1ee04e8371788"
+        },
+        {
+          "id": "blacksmith_swamp_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/blacksmith_swamp_1.json",
+          "definition_sha256": "d3f7ff23b37fdacd11acbbaacd8a30a299ddccb9ade3340fb58a70a1469912fa",
+          "template": "src/main/resources/data/kithkyn/structure/blacksmith_swamp_1.nbt",
+          "template_sha256": "385569348ff9dd2928360850e2655304e570ecf1ec38fc4d6b11c05aa63755b9"
+        },
+        {
+          "id": "butchery_swamp_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/butchery_swamp_1.json",
+          "definition_sha256": "709c6d340325c67e86a68fc60d6899786db803987274dec91915d7c09bb85f2f",
+          "template": "src/main/resources/data/kithkyn/structure/butchery_swamp_1.nbt",
+          "template_sha256": "6d7cb387905886b42b93bc51276a939e25567eed8b02124d0f53d5f49a9f30af"
+        },
+        {
+          "id": "castle_swamp_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/castle_swamp_1.json",
+          "definition_sha256": "5cfb289e48a7d3ded19d316802a9217fbc583a0c5592bb9fb3f938ad643e201d",
+          "template": "src/main/resources/data/kithkyn/structure/castle_swamp_1.nbt",
+          "template_sha256": "5e1c3ebe75c056d5f72e0465aad11432502732dc235033b588f42b50958ccc88"
+        },
+        {
+          "id": "church_swamp_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/church_swamp_1.json",
+          "definition_sha256": "d34dcefd3a24db82c3090a67e341b1bf5ebed41eeede726d2ad376d8f79eaf75",
+          "template": "src/main/resources/data/kithkyn/structure/church_swamp_1.nbt",
+          "template_sha256": "ee403ee2dedf6bc5b0992cba8c1ee3e1218bb8f3a1685812bd35c21659ccde25"
+        },
+        {
+          "id": "church_swamp_1__cleric_couple_home",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/church_swamp_1__cleric_couple_home.json",
+          "definition_sha256": "24433cd0ff5aa5204ea8cfcdba7fff660f62204566c8676fbf3e8bb226e06f0d",
+          "template": "src/main/resources/data/kithkyn/structure/church_swamp_1__cleric_couple_home.nbt",
+          "template_sha256": "3a398a12efe0a055fa4c7d24cf83b283c0d87581deb82a27a5d2712b36a05641"
+        },
+        {
+          "id": "church_swamp_1__cleric_home",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/church_swamp_1__cleric_home.json",
+          "definition_sha256": "2370ca2c9e5f865b348f3bc913557c0001cceebc221542ea7645b7a04215d2ab",
+          "template": "src/main/resources/data/kithkyn/structure/church_swamp_1__cleric_home.nbt",
+          "template_sha256": "f820f4c65a34aabc857f3d61380184cb1a9dc44abe769ef107f6db47e427fd4e"
+        },
+        {
+          "id": "church_swamp_1__cleric_mixed_home",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/church_swamp_1__cleric_mixed_home.json",
+          "definition_sha256": "508380ad3aa6986f34907138019555a8a0ee7db7c45d5f0895d4110ce365cf0a",
+          "template": "src/main/resources/data/kithkyn/structure/church_swamp_1__cleric_mixed_home.nbt",
+          "template_sha256": "c92d5db699c8f3bf6d7cac963ae6fba445658d0e66706502bce0461a9d7a47d5"
+        },
+        {
+          "id": "couple_cottage_swamp_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/couple_cottage_swamp_1.json",
+          "definition_sha256": "be904c1f318b9aa95ab49b9563075770fc5f5cef7e60e79def0d34522fcc3c3c",
+          "template": "src/main/resources/data/kithkyn/structure/couple_cottage_swamp_1.nbt",
+          "template_sha256": "8bb48e8579e29f682c10740484929416deaf4829a489602e9c67987df46d2320"
+        },
+        {
+          "id": "farm_swamp_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/farm_swamp_1.json",
+          "definition_sha256": "fa63ee059c441b9ad460696ffb74e56c9142f0854af037bd5b4caf4282fc9878",
+          "template": "src/main/resources/data/kithkyn/structure/farm_swamp_1.nbt",
+          "template_sha256": "4024cde08d0014dadd5faafbaa7f1f656ae6d8bdb557495c30bd8b1a861e0a96"
+        },
+        {
+          "id": "farm_swamp_2",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/farm_swamp_2.json",
+          "definition_sha256": "12bae46a4078911883d78183f7e3265413edf38992a3f56af5f5b20f243e996e",
+          "template": "src/main/resources/data/kithkyn/structure/farm_swamp_2.nbt",
+          "template_sha256": "a897e99c91a5c9cac3e2033b9dcd36733321c1cb57c77f81ba5c2c0aa94646cc"
+        },
+        {
+          "id": "fishery_swamp_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/fishery_swamp_1.json",
+          "definition_sha256": "576366a06d95bf9ba402ee2b5f38d66db8ef7a1a0c058b53e9739b870026b40a",
+          "template": "src/main/resources/data/kithkyn/structure/fishery_swamp_1.nbt",
+          "template_sha256": "5afd16ef51c42f209fc0324615ea815d51b4efa77ab2d3621b0e628ce69b9037"
+        },
+        {
+          "id": "house_swamp_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/house_swamp_1.json",
+          "definition_sha256": "eea886061bb5b9bf1ff8e56c9510f8210b7d804805d83ca8422d4cd0490f6866",
+          "template": "src/main/resources/data/kithkyn/structure/house_swamp_1.nbt",
+          "template_sha256": "0a4b0f7ce0acd578d1d332c7babffe9bba09805b9b801ef4c204336c127ee82e"
+        },
+        {
+          "id": "house_swamp_1__two_bed",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/house_swamp_1__two_bed.json",
+          "definition_sha256": "6e6ee940c94a6380bfd079888f0a10b2ad580dd64147dcd830d402c8bc4c27e1",
+          "template": "src/main/resources/data/kithkyn/structure/house_swamp_1__two_bed.nbt",
+          "template_sha256": "860d370b8fdcd66375e01576502bf1d984a97cc9dd6e6d2fc458943cd028cc54"
+        },
+        {
+          "id": "hunting_lodge_swamp_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/hunting_lodge_swamp_1.json",
+          "definition_sha256": "fb868fb06720eeffb2ffdb9d556664235113e874d501894c5878fa01f78a4c46",
+          "template": "src/main/resources/data/kithkyn/structure/hunting_lodge_swamp_1.nbt",
+          "template_sha256": "756ecaf3d8ced3f1d48a8a4a48739c161c09159282c2acc19b29f37b1fcbc7b6"
+        },
+        {
+          "id": "lumberjack_swamp_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/lumberjack_swamp_1.json",
+          "definition_sha256": "fb848cf716c82bcaba1002abd856cf159ed8a28126c711813104582197978fb9",
+          "template": "src/main/resources/data/kithkyn/structure/lumberjack_swamp_1.nbt",
+          "template_sha256": "fe00c4fc7ee1fa683a2affde4d5e4122b7e1695f73eb43be5b9d9d3ebdb261e4"
+        },
+        {
+          "id": "market_swamp_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/market_swamp_1.json",
+          "definition_sha256": "e1abba17bde058f15828ce6971b3f580320a5143122140e151b8b6e168996061",
+          "template": "src/main/resources/data/kithkyn/structure/market_swamp_1.nbt",
+          "template_sha256": "70775bee1cde12214760c2e5b0de644b82eb98e0ba0083b4772cb4181b9f7573"
+        },
+        {
+          "id": "market_swamp_2",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/market_swamp_2.json",
+          "definition_sha256": "38e35177b3a03c0c8004111c19de1c3319c1f920aff031e88a99fe26f49d84a6",
+          "template": "src/main/resources/data/kithkyn/structure/market_swamp_2.nbt",
+          "template_sha256": "ff3ef92626cdd86627691bdf503bf81153a101aa1d1eb11b449b51db8da7091e"
+        },
+        {
+          "id": "market_swamp_3",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/market_swamp_3.json",
+          "definition_sha256": "e1c640551af15b4ffa130a0f9b5fc82ac70f9a4cddb55d7437017fe2ff915910",
+          "template": "src/main/resources/data/kithkyn/structure/market_swamp_3.nbt",
+          "template_sha256": "808431a87c2564725d3f7d4eeb4bf1462e5b4c9807b3b015064687d89c59d93f"
+        },
+        {
+          "id": "mine_swamp_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/mine_swamp_1.json",
+          "definition_sha256": "2d1df91c92ff1c414729e114188823543f087d356e85f26d3a9800cf2d2c64d7",
+          "template": "src/main/resources/data/kithkyn/structure/mine_swamp_1.nbt",
+          "template_sha256": "c29e59f628bff45f4ea109cc4c272cec0d6751b0c95c74ba60334f0c0cd14d87"
+        },
+        {
+          "id": "stoneworks_swamp_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/stoneworks_swamp_1.json",
+          "definition_sha256": "3e1a696fbaffa7d25507ab38b2056881ee749fc46ca25f3d598107b70e2c9f16",
+          "template": "src/main/resources/data/kithkyn/structure/stoneworks_swamp_1.nbt",
+          "template_sha256": "f1426118d52c9c4d2892f1f8fb8e958b980d61b2557499ce495e8c15eb939d59"
+        },
+        {
+          "id": "storehouse_swamp_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/storehouse_swamp_1.json",
+          "definition_sha256": "7cf7f325462fb5b0b987de83034d3f1d00c98b7c0a70688635ed152550ae2eb3",
+          "template": "src/main/resources/data/kithkyn/structure/storehouse_swamp_1.nbt",
+          "template_sha256": "5a922d9ee5313932e54b0866df65da27ce9be5a024c7783a01969bd743e4eec9"
+        },
+        {
+          "id": "tavern_swamp_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/tavern_swamp_1.json",
+          "definition_sha256": "92dd63a96c62aa9055bfcc58e205c275c9b4eaa65d0c2023811cf50212dcece0",
+          "template": "src/main/resources/data/kithkyn/structure/tavern_swamp_1.nbt",
+          "template_sha256": "aede15d3adcbeeb190f9499d1af238b1ec49c6a23f97f81ab99f677d43855792"
+        },
+        {
+          "id": "village_center_swamp_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/village_center_swamp_1.json",
+          "definition_sha256": "36cdffbeda0e2884467011bc338522671bde203f9830709f833516cf04e31364",
+          "template": "src/main/resources/data/kithkyn/structure/village_center_swamp_1.nbt",
+          "template_sha256": "9ed72758f71b5a529c7dbfe07ae23aa0ba47e9dd822d8d43c354784ecd0bfe84"
+        },
+        {
+          "id": "watchtower_swamp_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/watchtower_swamp_1.json",
+          "definition_sha256": "c8646e1100097332c708a4f6b9395599617bc6e224cdf56e7e0d5924fccd6f60",
+          "template": "src/main/resources/data/kithkyn/structure/watchtower_swamp_1.nbt",
+          "template_sha256": "622249eb8d43330964f4c9ea8c7aabdb7fc530e343be5e6fdd337e16b4877337"
+        },
+        {
+          "id": "watchtower_swamp_2",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/watchtower_swamp_2.json",
+          "definition_sha256": "67a2c707595cf0ea314070035a1db7f1dec2897c2a51fd7d30b068ae841e2d71",
+          "template": "src/main/resources/data/kithkyn/structure/watchtower_swamp_2.nbt",
+          "template_sha256": "1620e657aaab0ffa9ef0103f350e0dee598b8c1e99184ec1f3c35142ebf354f2"
+        },
+        {
+          "id": "well_swamp_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/well_swamp_1.json",
+          "definition_sha256": "71ddd0d8e64f991d98a0a12cb6fe5c5e430d4484ff46747cef33adda0bea0814",
+          "template": "src/main/resources/data/kithkyn/structure/well_swamp_1.nbt",
+          "template_sha256": "0323fa08fa8008059c89c16d288d9472f0849da644decc121c91ce65e551c189"
+        }
+      ]
+    },
+    {
+      "style": "mediterranean",
+      "source": "run/trio-20260912/datapacks/kithkyn-mediterranean",
+      "selection_record": "tools/structure/mediterranean-catalog-20260912.json",
+      "buildings": [
+        {
+          "id": "bakery_mediterranean_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/bakery_mediterranean_1.json",
+          "definition_sha256": "532f1a7e3c47de888a3721f2f369435de92341ed4d5c21bee36058f188f28fd3",
+          "template": "src/main/resources/data/kithkyn/structure/bakery_mediterranean_1.nbt",
+          "template_sha256": "d3b95f39a237851418a5b7bf7587c949c7318abc9daed1bdba884fff40bb6ce7"
+        },
+        {
+          "id": "blacksmith_mediterranean_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/blacksmith_mediterranean_1.json",
+          "definition_sha256": "3621841ede92f51da87f50fbddaddd82fc87bfb0c0b949d2e1f2515954541806",
+          "template": "src/main/resources/data/kithkyn/structure/blacksmith_mediterranean_1.nbt",
+          "template_sha256": "7147904b085485bb1c8a0399d3a02c9ada667820288e591c67a44939ba27dc90"
+        },
+        {
+          "id": "butchery_mediterranean_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/butchery_mediterranean_1.json",
+          "definition_sha256": "70f2633b0149f53b2c41fd84227f601a4f7653b6f4c461f91012db22020aa96e",
+          "template": "src/main/resources/data/kithkyn/structure/butchery_mediterranean_1.nbt",
+          "template_sha256": "b1cb50ae5cffe4efeb62dac887f85674acd352611042c7b351e07cf56ba95b7a"
+        },
+        {
+          "id": "castle_mediterranean_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/castle_mediterranean_1.json",
+          "definition_sha256": "cd3b15384ff1a37fa7e43e528ba88f0863a70d6e4edbfaac8e8d2c94af43630a",
+          "template": "src/main/resources/data/kithkyn/structure/castle_mediterranean_1.nbt",
+          "template_sha256": "3a75502c236268ed47ed4aef4ad9bbc56b2c702a245cf90d7e60825b2c8d67dc"
+        },
+        {
+          "id": "couple_cottage_mediterranean_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/couple_cottage_mediterranean_1.json",
+          "definition_sha256": "f3ca86ee16c9d19834486ce9e1cc729da4602fecc19cf3713c2f06d0570e64db",
+          "template": "src/main/resources/data/kithkyn/structure/couple_cottage_mediterranean_1.nbt",
+          "template_sha256": "c181259702b9f6735a2053098380965a8cb591922756d4a23fceb6dde0c39ebb"
+        },
+        {
+          "id": "farm_mediterranean_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/farm_mediterranean_1.json",
+          "definition_sha256": "44400206b3d061c2275a41a7ed959e1efc2ae7c49136aadbd72595e3c64582c7",
+          "template": "src/main/resources/data/kithkyn/structure/farm_mediterranean_1.nbt",
+          "template_sha256": "77871f691f14a0fb274feefe4be435706e945639d28f1d2e2330b111bbfa3e52"
+        },
+        {
+          "id": "farm_mediterranean_2",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/farm_mediterranean_2.json",
+          "definition_sha256": "251a178eebc2b6ff72659145a8d3f4e0180a4a026bd52190a42a22854da6005e",
+          "template": "src/main/resources/data/kithkyn/structure/farm_mediterranean_2.nbt",
+          "template_sha256": "fa33736a5647d7ea2f43c96c897a24b844363de50755c8a674b8bf4074243b81"
+        },
+        {
+          "id": "house_mediterranean_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/house_mediterranean_1.json",
+          "definition_sha256": "40994323d10f57f5da460885acdb5e192e769608b231536e38c66fc8a54f6297",
+          "template": "src/main/resources/data/kithkyn/structure/house_mediterranean_1.nbt",
+          "template_sha256": "1232128747df202c48da200293d2c3b390a35cee4aca04573e1853556d30dfff"
+        },
+        {
+          "id": "house_mediterranean_1__couple_room",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/house_mediterranean_1__couple_room.json",
+          "definition_sha256": "c48a607d27e76d5de4bfeb3193a42ae11b853ed22d52de9760aef22ba46a1dfe",
+          "template": "src/main/resources/data/kithkyn/structure/house_mediterranean_1__couple_room.nbt",
+          "template_sha256": "491edc815dee95800e34977c3c4b760f4d6a1ce2823718ca4725a79eafd2bcaf"
+        },
+        {
+          "id": "house_mediterranean_1__small_4",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/house_mediterranean_1__small_4.json",
+          "definition_sha256": "3316a4aa586f1b7f3428e26aa85482c8614bd8b54dada520ef09f1b109f455a6",
+          "template": "src/main/resources/data/kithkyn/structure/house_mediterranean_1__small_4.nbt",
+          "template_sha256": "e30715f705c4e614700258175bc9f310d86650d2d356f113b43d34702d6bf1c6"
+        },
+        {
+          "id": "house_mediterranean_1__small_5",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/house_mediterranean_1__small_5.json",
+          "definition_sha256": "9810e107632dfd1a576c20894a025bb91f8623285140dd09ec65a5c91e3f0a11",
+          "template": "src/main/resources/data/kithkyn/structure/house_mediterranean_1__small_5.nbt",
+          "template_sha256": "0cc71a9cf0c3422f5d727d49cdfd14a86ab51468e8289c4b0cb2c532eb762039"
+        },
+        {
+          "id": "house_mediterranean_1__two_bed",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/house_mediterranean_1__two_bed.json",
+          "definition_sha256": "570938c1ffce2748ab70a49cde25ace78af2242f6e3993d09f2e134b2290ffd2",
+          "template": "src/main/resources/data/kithkyn/structure/house_mediterranean_1__two_bed.nbt",
+          "template_sha256": "477530486a77ba112506997cb4f25ebda681ecc97ec453f525bc196dd673f147"
+        },
+        {
+          "id": "house_mediterranean_1__two_room",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/house_mediterranean_1__two_room.json",
+          "definition_sha256": "951b0c25b2f03f4f762ee710ddf27ca8ac3c6c5b7006722525e11b2341ceb9f6",
+          "template": "src/main/resources/data/kithkyn/structure/house_mediterranean_1__two_room.nbt",
+          "template_sha256": "0b4de64f41c4c8d5c657d5a1907fadbee5d25da25d41684fef93a5a3b408cb23"
+        },
+        {
+          "id": "hunting_lodge_mediterranean_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/hunting_lodge_mediterranean_1.json",
+          "definition_sha256": "47cc899cb0f806e3b650c611d3688bb5bd8a202ad71eb952f49f0dc907e44de6",
+          "template": "src/main/resources/data/kithkyn/structure/hunting_lodge_mediterranean_1.nbt",
+          "template_sha256": "3184d7288fee1a0a4026557cb7247b0190507b538f83b55cfa570309b08443c2"
+        },
+        {
+          "id": "lumberjack_mediterranean_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/lumberjack_mediterranean_1.json",
+          "definition_sha256": "921f6c6b184d66668d1866faab3cf74dad3eedda9913dc4cfc1b3dca6bfecb3e",
+          "template": "src/main/resources/data/kithkyn/structure/lumberjack_mediterranean_1.nbt",
+          "template_sha256": "20b340c1baeac424d4fae6761a30010b8356f47d16c7336248cb2bbeb57bbf05"
+        },
+        {
+          "id": "market_mediterranean_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/market_mediterranean_1.json",
+          "definition_sha256": "199e43afdd82b529e9c269415f762246151325b437a6b595d299df87e95a44fb",
+          "template": "src/main/resources/data/kithkyn/structure/market_mediterranean_1.nbt",
+          "template_sha256": "b36bedc743d46cada76b2a80529c13ca7c295fa52b55278f9d885a4db38c8fd1"
+        },
+        {
+          "id": "market_mediterranean_2",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/market_mediterranean_2.json",
+          "definition_sha256": "66bfdaab2a470a2fa574727cd9f83b39b017261dcc7d65d81c9b6a4cab73f4c3",
+          "template": "src/main/resources/data/kithkyn/structure/market_mediterranean_2.nbt",
+          "template_sha256": "5ae3710442d8e93f40e5a070585a2e63e6eaef5e7fb0abceae88188990771730"
+        },
+        {
+          "id": "market_mediterranean_3",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/market_mediterranean_3.json",
+          "definition_sha256": "8d649159bc55e9838f7dd22a4bfd94c0a376c33d2020d75a832834fc2d7a3074",
+          "template": "src/main/resources/data/kithkyn/structure/market_mediterranean_3.nbt",
+          "template_sha256": "b70a56685560891c8c46470c9e6847c1d7d3328cbc396f1d7e67ac5b07c1a445"
+        },
+        {
+          "id": "mine_mediterranean_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/mine_mediterranean_1.json",
+          "definition_sha256": "565743633a48ae7e14871e802db724cd9cb6bf1da5bbea9218a66df224a84bd5",
+          "template": "src/main/resources/data/kithkyn/structure/mine_mediterranean_1.nbt",
+          "template_sha256": "20c081fe702024b764e3b6e956f74befedb5ea437b44fac141ca671ccb096548"
+        },
+        {
+          "id": "stoneworks_mediterranean_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/stoneworks_mediterranean_1.json",
+          "definition_sha256": "449040656bfe72e706373930ed4b22d54f4401cc5fbf9eac7af0e643e244aa93",
+          "template": "src/main/resources/data/kithkyn/structure/stoneworks_mediterranean_1.nbt",
+          "template_sha256": "fb6afee9a8e1415898e5037aa726a0bf96498af0308d47d78a9ae227551d18d8"
+        },
+        {
+          "id": "storehouse_mediterranean_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/storehouse_mediterranean_1.json",
+          "definition_sha256": "a5edb4fe987cc400e0af645aac9f3915da3e62f5b9daa9fb46fa6b79dea9cdfd",
+          "template": "src/main/resources/data/kithkyn/structure/storehouse_mediterranean_1.nbt",
+          "template_sha256": "a614a06fd97e475de3b2639bd5b986978cd2b03d4eea40b91a0e5e38c26d0bb4"
+        },
+        {
+          "id": "village_center_mediterranean_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/village_center_mediterranean_1.json",
+          "definition_sha256": "b2b838153c241d30d655318aa832b81ecb947c3fb8cd01f8f14d76a0f4cae377",
+          "template": "src/main/resources/data/kithkyn/structure/village_center_mediterranean_1.nbt",
+          "template_sha256": "c379dc942d2fd14675d5233ad2c89447be490e739ac45b0f5fd8ff0f8f0354fb"
+        },
+        {
+          "id": "watchtower_mediterranean_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/watchtower_mediterranean_1.json",
+          "definition_sha256": "64c93f372ee393758bd5899f8e46a4a272ca4f2fef128b0ea0d67c3d4a43b62d",
+          "template": "src/main/resources/data/kithkyn/structure/watchtower_mediterranean_1.nbt",
+          "template_sha256": "be27ababd73b277fa55d31de0bc117f39e86f2177a9cf2047c7f3e20fffa5c5b"
+        },
+        {
+          "id": "well_mediterranean_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/well_mediterranean_1.json",
+          "definition_sha256": "d2d4122abc64a20aaa25707e593bdc9a92d743f2b0327f7bd0eb28e36ec3f605",
+          "template": "src/main/resources/data/kithkyn/structure/well_mediterranean_1.nbt",
+          "template_sha256": "13b3a4dfe47f04c370f544e3b7900ce71552418a26a7bc249b2c4413841a04ec"
+        }
+      ]
+    },
+    {
+      "style": "tundra",
+      "source": "run/trio-20260912/datapacks/kithkyn-tundra",
+      "selection_record": "tools/structure/tundra-catalog-20260912.json",
+      "buildings": [
+        {
+          "id": "bakery_tundra_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/bakery_tundra_1.json",
+          "definition_sha256": "b47934d0394ca5c968dd737a1a804d63a6b7b4c36bc5f0c715cab6f5b3175592",
+          "template": "src/main/resources/data/kithkyn/structure/bakery_tundra_1.nbt",
+          "template_sha256": "953d05ca3a50a03d8255549b2b30ff35c76dd8069ce42a2bd95d37ef8d70f844"
+        },
+        {
+          "id": "blacksmith_tundra_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/blacksmith_tundra_1.json",
+          "definition_sha256": "a4fa6e9bd435a33365bc01a361a8225c02cd451aa1b9199fdc862d51744123ac",
+          "template": "src/main/resources/data/kithkyn/structure/blacksmith_tundra_1.nbt",
+          "template_sha256": "f0d637b37bdcb91829087d3aedb99ae002bae32912fcefbd62e704a2b41d2cb8"
+        },
+        {
+          "id": "butchery_tundra_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/butchery_tundra_1.json",
+          "definition_sha256": "07f0c5a355b38f4fd4c5284bccfa47e67f2d3a9beee38371e15431d13190cd47",
+          "template": "src/main/resources/data/kithkyn/structure/butchery_tundra_1.nbt",
+          "template_sha256": "b9bc5a6eecab162f060c83ed4d3c745878d8a8e2bb3d643d48eb5bdf496d053d"
+        },
+        {
+          "id": "church_tundra_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/church_tundra_1.json",
+          "definition_sha256": "870ba4688a98a3eec459377009d33f69ac75b0b59da0b5cdb5e460672d869493",
+          "template": "src/main/resources/data/kithkyn/structure/church_tundra_1.nbt",
+          "template_sha256": "6ea6390dad6d94c50adcd8784131950bc94e946addcfd34abd367656a25d3ba2"
+        },
+        {
+          "id": "couple_cottage_tundra_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/couple_cottage_tundra_1.json",
+          "definition_sha256": "798567474f11d7ea8aa8125157945475938492590bf644f5d232e0075994db7d",
+          "template": "src/main/resources/data/kithkyn/structure/couple_cottage_tundra_1.nbt",
+          "template_sha256": "66d224dacfdefe28c130d3770e86472cf0e5a1cb9bf3c826e4b65edfdc864840"
+        },
+        {
+          "id": "farm_tundra_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/farm_tundra_1.json",
+          "definition_sha256": "94e04620666d15742cab72f351c87e22a4c461cc84b2ea5db40337ff7626b903",
+          "template": "src/main/resources/data/kithkyn/structure/farm_tundra_1.nbt",
+          "template_sha256": "fe638af6fe271fd0ef3bb307b607e4ff42456501f41626b2c66d26c0e11ef4ba"
+        },
+        {
+          "id": "farm_tundra_2",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/farm_tundra_2.json",
+          "definition_sha256": "a4dbb887a6d0bf66653a7877b25cd462b39a1f95c727e9279279c258727a5f53",
+          "template": "src/main/resources/data/kithkyn/structure/farm_tundra_2.nbt",
+          "template_sha256": "329cf850eb8efa23f33f84481b7135182c9b1d366df55545e2a4deaf30d3dabe"
+        },
+        {
+          "id": "fishery_tundra_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/fishery_tundra_1.json",
+          "definition_sha256": "4a3d6d1a8532eb734fffb6917069e7b7611b6c80526e9105fe46635483b0cbbb",
+          "template": "src/main/resources/data/kithkyn/structure/fishery_tundra_1.nbt",
+          "template_sha256": "52e54926ca572fcdb1e39f7bd326caec6d08fc749028c4104e7226557c97bccd"
+        },
+        {
+          "id": "house_tundra_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/house_tundra_1.json",
+          "definition_sha256": "ac00621d812c1ea063976d7d6cd16a26491c07ba6c6c69979072e7010da4e8f0",
+          "template": "src/main/resources/data/kithkyn/structure/house_tundra_1.nbt",
+          "template_sha256": "78721358c96d8815d2c147186418f0e862409c13ab3306da081f7844e3f61309"
+        },
+        {
+          "id": "house_tundra_1__three_single",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/house_tundra_1__three_single.json",
+          "definition_sha256": "5254e16ac2352370cd5f8a820a8b10de7a2094a2cc8026da3f59ce22479359d8",
+          "template": "src/main/resources/data/kithkyn/structure/house_tundra_1__three_single.nbt",
+          "template_sha256": "1eedf2e70ab9867465fe59bec75ede2cdea5f1ad058ec53982184a61fab91ee4"
+        },
+        {
+          "id": "house_tundra_1__two_single",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/house_tundra_1__two_single.json",
+          "definition_sha256": "e5f7dde2590457e52266563b76a0f0c6ff281ce112994ec5c54f55b2106113a5",
+          "template": "src/main/resources/data/kithkyn/structure/house_tundra_1__two_single.nbt",
+          "template_sha256": "51e507a93c3e04e6a460bd963aac9ef1f1b7ebbeceaa94de14dc4353c72bac5a"
+        },
+        {
+          "id": "hunting_lodge_tundra_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/hunting_lodge_tundra_1.json",
+          "definition_sha256": "75192bd1bc887662419dd3ea3fcd71e9c8bb7ce4e2c5fd23e6f0608691015363",
+          "template": "src/main/resources/data/kithkyn/structure/hunting_lodge_tundra_1.nbt",
+          "template_sha256": "f32425b8ad61e90b21c0fd6c0c010f9769aa36fd1d40780c52ea7429a738ef44"
+        },
+        {
+          "id": "lumberjack_tundra_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/lumberjack_tundra_1.json",
+          "definition_sha256": "521764bcc3abe661fbc0b5ff58eeaeda664f730da6deeddfe0c2a44769c9be1a",
+          "template": "src/main/resources/data/kithkyn/structure/lumberjack_tundra_1.nbt",
+          "template_sha256": "ae1f91835b01b9fd406bd3b648175e359d9842484687d02733c617f485924c2e"
+        },
+        {
+          "id": "market_tundra_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/market_tundra_1.json",
+          "definition_sha256": "301f3616269f45449e04fdcda12e7166328fd91e6e4a3c7d2d6cd3418b5fdebf",
+          "template": "src/main/resources/data/kithkyn/structure/market_tundra_1.nbt",
+          "template_sha256": "30ba1d33955f41ba637a060f2ed2aa8ed83d040c82208d2466afde261b2e524d"
+        },
+        {
+          "id": "market_tundra_2",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/market_tundra_2.json",
+          "definition_sha256": "7abb235e4c60062a219f0835925dda6b014226cee9e27b902f08762fe0b7d7b1",
+          "template": "src/main/resources/data/kithkyn/structure/market_tundra_2.nbt",
+          "template_sha256": "1bc7f634bd8aaff442962b01a808655c53166a5af9ffac9481fae6a8c096b9c6"
+        },
+        {
+          "id": "market_tundra_3",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/market_tundra_3.json",
+          "definition_sha256": "7546ecfb303f1c2a4ec95ecd094428f5da39b063accac7f1c1e7ce798b912155",
+          "template": "src/main/resources/data/kithkyn/structure/market_tundra_3.nbt",
+          "template_sha256": "082e91b615b0c8c14e850399db162b0a83039a3849f7ad734d3dcccbf898b3c7"
+        },
+        {
+          "id": "mine_tundra_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/mine_tundra_1.json",
+          "definition_sha256": "bf98ee51dbd67accd069d46d00fead1738c866521306819652094af896675e60",
+          "template": "src/main/resources/data/kithkyn/structure/mine_tundra_1.nbt",
+          "template_sha256": "f40208cb9ac05e13f709447eae5eb9bda1d005093a1d85e2c1b85d9a4c61749b"
+        },
+        {
+          "id": "stoneworks_tundra_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/stoneworks_tundra_1.json",
+          "definition_sha256": "4d23fc00a61b046b905c60ed03a308044b431a7f869a7c0c3f70f82d4de4a985",
+          "template": "src/main/resources/data/kithkyn/structure/stoneworks_tundra_1.nbt",
+          "template_sha256": "2c0a3f7d93cf00dda4383fd3e3a4f82f2f0ccd6fc14515e0c5a2744c6aba0475"
+        },
+        {
+          "id": "storehouse_tundra_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/storehouse_tundra_1.json",
+          "definition_sha256": "db5a1002bc364107d6fe8ac05f44d2ef879d153116c88f0f04cba1ef1a33d305",
+          "template": "src/main/resources/data/kithkyn/structure/storehouse_tundra_1.nbt",
+          "template_sha256": "3f7b6f9b8d7982bae0df2737bd9d742bebdd9fa6f3960c9b4fd42f710bdf15fa"
+        },
+        {
+          "id": "tavern_tundra_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/tavern_tundra_1.json",
+          "definition_sha256": "557bb5601792a93f093b539814dde4f6907332fc965ccbfcb4fd994abaf5e8cb",
+          "template": "src/main/resources/data/kithkyn/structure/tavern_tundra_1.nbt",
+          "template_sha256": "522cab43181d14f235eacb9e6821d7896067f42eadc2613d6db0c7e05731346c"
+        },
+        {
+          "id": "village_center_tundra_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/village_center_tundra_1.json",
+          "definition_sha256": "856bb6566251163e5c38349cc74038f6b0f71eae7e0cc539bf8476991d74cf85",
+          "template": "src/main/resources/data/kithkyn/structure/village_center_tundra_1.nbt",
+          "template_sha256": "18618ec88b5677b665f7dfc902b2a15f4082031fa9ac18ef68b05f6408b5e61b"
+        },
+        {
+          "id": "watchtower_tundra_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/watchtower_tundra_1.json",
+          "definition_sha256": "c331af7267fa93b9854e240d5ca197165081a298cb96b1e4b2c4f6309319fccd",
+          "template": "src/main/resources/data/kithkyn/structure/watchtower_tundra_1.nbt",
+          "template_sha256": "a8f31b5c87da468858f032b9bb7cfd92dabc89384c824976efec97e2f26441a2"
+        },
+        {
+          "id": "well_tundra_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/well_tundra_1.json",
+          "definition_sha256": "ccd65814d7d4b8a4ffaa74c2459519da036beb468b05ac36c6af04ea9afc33fe",
+          "template": "src/main/resources/data/kithkyn/structure/well_tundra_1.nbt",
+          "template_sha256": "b519ef02108e2c604806c17a96100524580141065124fe15a945b871ae119e7f"
+        }
+      ]
+    },
+    {
+      "style": "polynesian_coast",
+      "source": "run/trio-20260912/datapacks/kithkyn-polynesian-coast",
+      "selection_record": "tools/structure/polynesian-coast-catalog-20260912.json",
+      "buildings": [
+        {
+          "id": "bakery_polynesian_coast_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/bakery_polynesian_coast_1.json",
+          "definition_sha256": "4af6d15842c84c31780f7e428a5ff4e9b86a60ceca47db99080a0b031878f2a3",
+          "template": "src/main/resources/data/kithkyn/structure/bakery_polynesian_coast_1.nbt",
+          "template_sha256": "c418c2f4f5a5ebd128a92d955a53125f4045e27cd29ffa3ff06da68be62cb09c"
+        },
+        {
+          "id": "blacksmith_polynesian_coast_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/blacksmith_polynesian_coast_1.json",
+          "definition_sha256": "d6c2aa8db40ec93e46f353175eff71accb275f8f1007537d7425c159beedc764",
+          "template": "src/main/resources/data/kithkyn/structure/blacksmith_polynesian_coast_1.nbt",
+          "template_sha256": "e3df93350de4419fb56e0ab55b9aa25aee22f93307f20a838b8488a6e39a98c1"
+        },
+        {
+          "id": "butchery_polynesian_coast_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/butchery_polynesian_coast_1.json",
+          "definition_sha256": "1056f383cff3eb83f720381845e11b13d328fc4709c3ed148f34f0797ded3d2c",
+          "template": "src/main/resources/data/kithkyn/structure/butchery_polynesian_coast_1.nbt",
+          "template_sha256": "76f80cf9be97ef5efb77fa550e66b0e619dc380a4e6b12662280f60c73fb9b90"
+        },
+        {
+          "id": "church_polynesian_coast_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/church_polynesian_coast_1.json",
+          "definition_sha256": "5587602f103cf32c8052306839f7a2ea615809b5936ca302e45a4c6db2968311",
+          "template": "src/main/resources/data/kithkyn/structure/church_polynesian_coast_1.nbt",
+          "template_sha256": "15a1214644443435d6e6a9323f834239c4bcc91bd7cb8a1576e47cba8acc04b0"
+        },
+        {
+          "id": "couple_cottage_polynesian_coast_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/couple_cottage_polynesian_coast_1.json",
+          "definition_sha256": "2582042bd6c5b05b927f92b3b66ca27e7bea09741ab75c28d9c9430e802c5680",
+          "template": "src/main/resources/data/kithkyn/structure/couple_cottage_polynesian_coast_1.nbt",
+          "template_sha256": "aa74449d2a3dba782d32a6ac0221f90f90a0bb383615e95f8cd3edb0351df524"
+        },
+        {
+          "id": "farm_polynesian_coast_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/farm_polynesian_coast_1.json",
+          "definition_sha256": "58385e8889a0299501497d0234800f4fda908bae12d6392e9c591e91d1b47596",
+          "template": "src/main/resources/data/kithkyn/structure/farm_polynesian_coast_1.nbt",
+          "template_sha256": "69ae7facab7a8b485f3e76827a64a51dc9b5ccbf855d4443c3052b89dc86f88b"
+        },
+        {
+          "id": "farm_polynesian_coast_2",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/farm_polynesian_coast_2.json",
+          "definition_sha256": "0b89534d695d5d948355489c8c048600d8045668b7f913ec9b49d43bcecd65ed",
+          "template": "src/main/resources/data/kithkyn/structure/farm_polynesian_coast_2.nbt",
+          "template_sha256": "63fa78e33f9c4542ac3cba1831884d5a7e2a7382525003388301e63cb9c7dafd"
+        },
+        {
+          "id": "fishery_polynesian_coast_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/fishery_polynesian_coast_1.json",
+          "definition_sha256": "8cf92a61c79ae8b03e6aef6fb54d71dbc4d727a895b98e8abb5df134bab6a9bf",
+          "template": "src/main/resources/data/kithkyn/structure/fishery_polynesian_coast_1.nbt",
+          "template_sha256": "f8e02e68f64a7de77f97cd3cf2b93811b6ef9e8ee857656ff5622794f617d13a"
+        },
+        {
+          "id": "house_polynesian_coast_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/house_polynesian_coast_1.json",
+          "definition_sha256": "c995c984d6deb0b1ff4151b4d0b83c1de0a59a0c29c1188ba414e6279d2d2fa1",
+          "template": "src/main/resources/data/kithkyn/structure/house_polynesian_coast_1.nbt",
+          "template_sha256": "92c3f6ac52790b46c5e28fa5013676b16cc921531a0ef9640d4ac4c8be2add2a"
+        },
+        {
+          "id": "house_polynesian_coast_1__couple_room",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/house_polynesian_coast_1__couple_room.json",
+          "definition_sha256": "cefc9d2dfe4cee23dbdfd837abf0cbcb9dac9d34c9835d475cf37d714695261a",
+          "template": "src/main/resources/data/kithkyn/structure/house_polynesian_coast_1__couple_room.nbt",
+          "template_sha256": "45920390425993f8d0e4d378b69f2247bc06ae212a3a3c553c4cef003445ee3e"
+        },
+        {
+          "id": "house_polynesian_coast_1__stilted",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/house_polynesian_coast_1__stilted.json",
+          "definition_sha256": "f78bdb51a146063353d7ffa755684e8a40083497febd264d26007f497a1e3a9a",
+          "template": "src/main/resources/data/kithkyn/structure/house_polynesian_coast_1__stilted.nbt",
+          "template_sha256": "298e73d4911d5da854014b9efddb6a223b0033fb35b5d4d291b14eb400fe62b0"
+        },
+        {
+          "id": "house_polynesian_coast_1__three_single",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/house_polynesian_coast_1__three_single.json",
+          "definition_sha256": "35ce9b816d3e0c67c0ff39df8e3b1f4758cdec4a24baf1b09ac3c5047acd2354",
+          "template": "src/main/resources/data/kithkyn/structure/house_polynesian_coast_1__three_single.nbt",
+          "template_sha256": "cb1d608c2f97198f3fd7230e54cb06e87d76a29effe7906701436ccf571fc298"
+        },
+        {
+          "id": "house_polynesian_coast_1__two_single",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/house_polynesian_coast_1__two_single.json",
+          "definition_sha256": "18810aa35d7f6ded17b06aed9f17a9a90d2c57ebd6c375da5063a4aab5ff29f6",
+          "template": "src/main/resources/data/kithkyn/structure/house_polynesian_coast_1__two_single.nbt",
+          "template_sha256": "f4b3a0020eb28f6ab2aaa095d5d8c19247e061a3d95c2e343d912ff09524db62"
+        },
+        {
+          "id": "lumberjack_polynesian_coast_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/lumberjack_polynesian_coast_1.json",
+          "definition_sha256": "8a9d87147244dbd2da440dd3cbaf5f1b8256ed7c541aa34733ea562b0b6fe623",
+          "template": "src/main/resources/data/kithkyn/structure/lumberjack_polynesian_coast_1.nbt",
+          "template_sha256": "b02796247a2471b8eea5d8e5880439959040f82629777cbde4ffc0255e4d4331"
+        },
+        {
+          "id": "market_polynesian_coast_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/market_polynesian_coast_1.json",
+          "definition_sha256": "915e182402b88210ece67561ce2133e2c4fea8f3e60eb05467093ad87cdb2a64",
+          "template": "src/main/resources/data/kithkyn/structure/market_polynesian_coast_1.nbt",
+          "template_sha256": "1160a272d3b5fbed911d3a8415b6af762452738dadc48af9ccad4afb0159b3a5"
+        },
+        {
+          "id": "market_polynesian_coast_2",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/market_polynesian_coast_2.json",
+          "definition_sha256": "ca4927b968abdd06a3a40e9128268d7f0a31d2439a82d19f1bd3a459da46726a",
+          "template": "src/main/resources/data/kithkyn/structure/market_polynesian_coast_2.nbt",
+          "template_sha256": "e1dd4abf6beec583bcbff6654460cb2fd9a9991206fc79d350f44f9bc2ea123f"
+        },
+        {
+          "id": "market_polynesian_coast_3",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/market_polynesian_coast_3.json",
+          "definition_sha256": "8c0d9e215cebc2ef818f69d483d49c9e1929b60af23a1904193eafa53262bc3a",
+          "template": "src/main/resources/data/kithkyn/structure/market_polynesian_coast_3.nbt",
+          "template_sha256": "e8ae7b9cad488b4217e48a4afe50c98abda49faceb4ce979e4aef8d3c594c87b"
+        },
+        {
+          "id": "mine_polynesian_coast_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/mine_polynesian_coast_1.json",
+          "definition_sha256": "cebf47a30fbe42e33a1a58c5e25f939d9a387eb7d46ae53d14d66de08a29856d",
+          "template": "src/main/resources/data/kithkyn/structure/mine_polynesian_coast_1.nbt",
+          "template_sha256": "aff204778e07189b73cc6861af21b013fec7f72cb75cbd0015b451d1477ef686"
+        },
+        {
+          "id": "stoneworks_polynesian_coast_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/stoneworks_polynesian_coast_1.json",
+          "definition_sha256": "db61a6d958540815f7c5f99cc10b4c707c312cafe2ee84832434c7f44c1796bd",
+          "template": "src/main/resources/data/kithkyn/structure/stoneworks_polynesian_coast_1.nbt",
+          "template_sha256": "af259439362220ad8c6259a6cb4c151f1d7435af972dafb27159ab4761a88028"
+        },
+        {
+          "id": "storehouse_polynesian_coast_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/storehouse_polynesian_coast_1.json",
+          "definition_sha256": "b9537209bf0fd18e15b19255b59dcd64eaa2d79ee8d510964daf263e2df5768d",
+          "template": "src/main/resources/data/kithkyn/structure/storehouse_polynesian_coast_1.nbt",
+          "template_sha256": "0742f76e59ce5639cd22f77cafd18d4d029d6031006574b21056113a6bab478d"
+        },
+        {
+          "id": "tavern_polynesian_coast_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/tavern_polynesian_coast_1.json",
+          "definition_sha256": "2f0b7ff20d8bc3368fee2a7335b09693691049a4ba2605524ef3a6ecf3265e5b",
+          "template": "src/main/resources/data/kithkyn/structure/tavern_polynesian_coast_1.nbt",
+          "template_sha256": "0bf6b37e046ffc8b9c597f2f7e20e44395e2f9111eb21c3ef6cbe78f09cbada4"
+        },
+        {
+          "id": "village_center_polynesian_coast_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/village_center_polynesian_coast_1.json",
+          "definition_sha256": "5aa0ddbe968c6ab0db460b0291af03e52901860c21a7ca10aa57f428c3369969",
+          "template": "src/main/resources/data/kithkyn/structure/village_center_polynesian_coast_1.nbt",
+          "template_sha256": "6b82a8fc987739077072ce621243d12432431ca881dd6781ce425a1a1f6cd644"
+        },
+        {
+          "id": "watchtower_polynesian_coast_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/watchtower_polynesian_coast_1.json",
+          "definition_sha256": "bed9483adbb02dcd2094d6db5f139446ec9d727f536975a854a3ce04784b8669",
+          "template": "src/main/resources/data/kithkyn/structure/watchtower_polynesian_coast_1.nbt",
+          "template_sha256": "6e2f8c33612a606cd7537bccbde9ed8b4a16af83462d7c0ae7f5b7ee4c9a4dcc"
+        },
+        {
+          "id": "well_polynesian_coast_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/well_polynesian_coast_1.json",
+          "definition_sha256": "a2c8d512e91158dcd1df2af136d5c2e32d49397d7bf8cdeb1f3816c9eedde6e4",
+          "template": "src/main/resources/data/kithkyn/structure/well_polynesian_coast_1.nbt",
+          "template_sha256": "f9e2ffc12f4df49a877465baed44a303e5b4a6f93cded4095087edc91d632e4a"
+        }
+      ]
+    },
+    {
+      "style": "romanian",
+      "source": "run/trio-20260912/datapacks/kithkyn-romanian",
+      "selection_record": "tools/structure/romanian-catalog-20260912.json",
+      "buildings": [
+        {
+          "id": "bakery_romanian_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/bakery_romanian_1.json",
+          "definition_sha256": "7777bffb87b20e42f8c7fa36a5178caff64c0396ded1ff4bbe0287b8c3c0fbe3",
+          "template": "src/main/resources/data/kithkyn/structure/bakery_romanian_1.nbt",
+          "template_sha256": "f4038a6962ce12ea6106b0ef4a3a093428466f11e6def7441b5d124248481f76"
+        },
+        {
+          "id": "blacksmith_romanian_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/blacksmith_romanian_1.json",
+          "definition_sha256": "f03100b9e2943495c37d760fac984f7c2d33d74e15ee6d6b366946330b89f705",
+          "template": "src/main/resources/data/kithkyn/structure/blacksmith_romanian_1.nbt",
+          "template_sha256": "f5a6bd4f1b1afa1ac6310ca1db3f15e500e033346f6640f4bc2fe909284ffe51"
+        },
+        {
+          "id": "butchery_romanian_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/butchery_romanian_1.json",
+          "definition_sha256": "e9e52fe294df63ed15a4fcf246ea98f0f6b5047a50a761a939bbbf6cfef17157",
+          "template": "src/main/resources/data/kithkyn/structure/butchery_romanian_1.nbt",
+          "template_sha256": "bd70c33987df7f9b7a13d88c82c53799189721ac9ba857f81220558202876045"
+        },
+        {
+          "id": "butchery_romanian_1__herder_home",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/butchery_romanian_1__herder_home.json",
+          "definition_sha256": "113c4e445db81bd78c7d408a6e72244043c0e65ce5a143f40dc1833816f5970c",
+          "template": "src/main/resources/data/kithkyn/structure/butchery_romanian_1__herder_home.nbt",
+          "template_sha256": "6a7ec708d270911498766370ff2f6c45783845e8bba6f3759d5a96698bf967bd"
+        },
+        {
+          "id": "couple_cottage_romanian_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/couple_cottage_romanian_1.json",
+          "definition_sha256": "9285288d2c39da30e01f4e7057e27249c4524951fcba21ffa735813d0b61b43a",
+          "template": "src/main/resources/data/kithkyn/structure/couple_cottage_romanian_1.nbt",
+          "template_sha256": "a346435b659028edc43a995cfe5403ef6ead6ba4a7cbd3a96365518eaff7308c"
+        },
+        {
+          "id": "farm_romanian_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/farm_romanian_1.json",
+          "definition_sha256": "aa23779e65c3f6a60c5b7a8dc7488ecd874c1492caf0ed946ecefe7f071956fc",
+          "template": "src/main/resources/data/kithkyn/structure/farm_romanian_1.nbt",
+          "template_sha256": "1582027bea1d989d32e40765beb555a1eaeb54fbc9120a22e298978d7a216e66"
+        },
+        {
+          "id": "fishery_romanian_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/fishery_romanian_1.json",
+          "definition_sha256": "b09f75097979bee7cd7ec752d9f82c79c73c71f45bf4d2fcc8582ed6cffb3412",
+          "template": "src/main/resources/data/kithkyn/structure/fishery_romanian_1.nbt",
+          "template_sha256": "e3a1135fa929180766516f8996793b4542bc5de23c4767449c5d5db2769f553b"
+        },
+        {
+          "id": "house_romanian_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/house_romanian_1.json",
+          "definition_sha256": "1f4a3da6743660aa8edf47feeff775c55f1c6b520fa663a821e6f324e36434b7",
+          "template": "src/main/resources/data/kithkyn/structure/house_romanian_1.nbt",
+          "template_sha256": "276825d9b9f1a22d548eec16fc98d4f9bd8ffeadfd6429e55c9d2dfba36515fe"
+        },
+        {
+          "id": "house_romanian_1__four_single",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/house_romanian_1__four_single.json",
+          "definition_sha256": "043f754c3e922798c16c8e145ee1b777b502bbc6f9d06a9c7fc8018f9e2c39fe",
+          "template": "src/main/resources/data/kithkyn/structure/house_romanian_1__four_single.nbt",
+          "template_sha256": "aa57036e5cddad3a903eee2d09ac6ff70391993cd357df70a033e4b775ae0250"
+        },
+        {
+          "id": "house_romanian_1__small_three",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/house_romanian_1__small_three.json",
+          "definition_sha256": "5ad2c088bbf0d47dbc543abd521c61cb837d1c538f709388dc138844d1cb9df4",
+          "template": "src/main/resources/data/kithkyn/structure/house_romanian_1__small_three.nbt",
+          "template_sha256": "5acd39569b60640f483972a25640a71d51b4f5e681fd73bc9285abd808d5917d"
+        },
+        {
+          "id": "house_romanian_1__two_single",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/house_romanian_1__two_single.json",
+          "definition_sha256": "16b307d8eb62e7d0e828ae2df42d1d5f9a3370ec2ddc62a6c862ac350be14a89",
+          "template": "src/main/resources/data/kithkyn/structure/house_romanian_1__two_single.nbt",
+          "template_sha256": "eb817b2fb09367113ba8f5d2ef77b4b8838ef95b2724330ee1549557f48374df"
+        },
+        {
+          "id": "hunting_lodge_romanian_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/hunting_lodge_romanian_1.json",
+          "definition_sha256": "42dc00bbfe2641f3b82518f602dbdfa810c0c94eb9c83e869d275c24d3618d29",
+          "template": "src/main/resources/data/kithkyn/structure/hunting_lodge_romanian_1.nbt",
+          "template_sha256": "69bd07929e5c60f1933d867a00117072423df0127902298e61bff1bece84593b"
+        },
+        {
+          "id": "lumberjack_romanian_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/lumberjack_romanian_1.json",
+          "definition_sha256": "ffff37bc0ab39e1c51357212f55f85cf8571c3f713338fef2c39a5b69bec6172",
+          "template": "src/main/resources/data/kithkyn/structure/lumberjack_romanian_1.nbt",
+          "template_sha256": "5050097244d568e246f0e641de9335ff235cfefcc0be18d9147c9dfc670b117b"
+        },
+        {
+          "id": "market_romanian_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/market_romanian_1.json",
+          "definition_sha256": "08b230615b7aa0171309b1f4ffb3c01b4597aac7c78869a0ef23921c012b1e87",
+          "template": "src/main/resources/data/kithkyn/structure/market_romanian_1.nbt",
+          "template_sha256": "683d573de4f82567e82d02c4e6f46759c536ed491f569792888079ff6139cd26"
+        },
+        {
+          "id": "market_romanian_2",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/market_romanian_2.json",
+          "definition_sha256": "fb01e3282e39deeaad1dd7c231cdc4d00a55e5b92527a3946a8814f2e05bf900",
+          "template": "src/main/resources/data/kithkyn/structure/market_romanian_2.nbt",
+          "template_sha256": "55b8c7ee3c4b7b5f6e702c7f0ca83e1df53cf52d3d427a2241b56af6998a972b"
+        },
+        {
+          "id": "market_romanian_3",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/market_romanian_3.json",
+          "definition_sha256": "46b1be5ceee443bfe7b42156a0c1ed3f19c54259c56b8318269f647a3fefac66",
+          "template": "src/main/resources/data/kithkyn/structure/market_romanian_3.nbt",
+          "template_sha256": "5d87f88080ccd6d22266e3187d9ffec4e744051dff025b536ba2ddf17afdc3ce"
+        },
+        {
+          "id": "mine_romanian_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/mine_romanian_1.json",
+          "definition_sha256": "30c2fa5502abd5d2d9c9b84834f0683c2bd746d5f31141bc945ef592a2590339",
+          "template": "src/main/resources/data/kithkyn/structure/mine_romanian_1.nbt",
+          "template_sha256": "f7b713b655d4164d8c7a7e9f04a55bd0f19ebf81043e6b7a950d0833aa68b3ca"
+        },
+        {
+          "id": "stoneworks_romanian_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/stoneworks_romanian_1.json",
+          "definition_sha256": "7fceac57f75e7a6480411057481feb79f692ad2f717c55ac45a58c65f9a7a13b",
+          "template": "src/main/resources/data/kithkyn/structure/stoneworks_romanian_1.nbt",
+          "template_sha256": "e2c1147f2c14185266396703495bc8076f0917efc6b4ed2b41d8fe0b85bae1b7"
+        },
+        {
+          "id": "storehouse_romanian_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/storehouse_romanian_1.json",
+          "definition_sha256": "b8ff7eed07061b2e24e337801be769ca832bc23e6c92081d96e79d9d3f75a9be",
+          "template": "src/main/resources/data/kithkyn/structure/storehouse_romanian_1.nbt",
+          "template_sha256": "bea3dd0e74d95fb1695af41173287e7df145b848d1cb83d8848fac8f6db523a1"
+        },
+        {
+          "id": "storehouse_romanian_1__compact",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/storehouse_romanian_1__compact.json",
+          "definition_sha256": "62f25db87e35b84ff2590e10c2d76bdea028767c552b4fa4d4c58ff37ba9909b",
+          "template": "src/main/resources/data/kithkyn/structure/storehouse_romanian_1__compact.nbt",
+          "template_sha256": "5a0303a85cd6663bafca31eea5b1c4b1018f50040d1114829a131136a29ca884"
+        },
+        {
+          "id": "tavern_romanian_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/tavern_romanian_1.json",
+          "definition_sha256": "921947edf56b72d16866a195302cef7995f8d290f5585f538f3bde9c5343b9cb",
+          "template": "src/main/resources/data/kithkyn/structure/tavern_romanian_1.nbt",
+          "template_sha256": "d5ef08a53424d7f6f56e68bd44b03df59a23188b5284b9e580f504821f60beef"
+        },
+        {
+          "id": "village_center_romanian_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/village_center_romanian_1.json",
+          "definition_sha256": "85d8b4be855ef82489ad2842f199687076233fdc4417b51c8d9b799da344ba2c",
+          "template": "src/main/resources/data/kithkyn/structure/village_center_romanian_1.nbt",
+          "template_sha256": "d155bdae7e8003bae29c2f5643d290ca2a7322df165e30e8a92a226e496d8b5a"
+        },
+        {
+          "id": "watchtower_romanian_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/watchtower_romanian_1.json",
+          "definition_sha256": "37b86b13c4771867e2100f1d58bb3902fae6f57b86ea3fa160f1de4cc51213fc",
+          "template": "src/main/resources/data/kithkyn/structure/watchtower_romanian_1.nbt",
+          "template_sha256": "334502b22c6c45f553c813e6e65606550c9845c8d94da6001c5d768bf71a43a3"
+        },
+        {
+          "id": "well_romanian_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/well_romanian_1.json",
+          "definition_sha256": "50aebd9777743e75650edd9ea4938a1b860beb57958fd57293c8337933966f04",
+          "template": "src/main/resources/data/kithkyn/structure/well_romanian_1.nbt",
+          "template_sha256": "1285b8335c5dfddfaa91df011f72bbde0da2c9e4aafc38844bc69644f0a73bfc"
+        }
+      ]
+    },
+    {
+      "style": "alpine_highlands",
+      "source": "run/trio-20260912/datapacks/kithkyn-alpine-highlands",
+      "selection_record": "tools/structure/alpine-highlands-catalog-20260913.json",
+      "buildings": [
+        {
+          "id": "bakery_alpine_highlands_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/bakery_alpine_highlands_1.json",
+          "definition_sha256": "03002f08424ca3622dfb759f03cce7ec733a9f0734fb5aa486f251b547dd8c10",
+          "template": "src/main/resources/data/kithkyn/structure/bakery_alpine_highlands_1.nbt",
+          "template_sha256": "566ea8a105273586f3fa2f47ac2e1931454a5a87c487c423586ea65620359e64"
+        },
+        {
+          "id": "bakery_alpine_highlands_1__baker_home",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/bakery_alpine_highlands_1__baker_home.json",
+          "definition_sha256": "ccda051f3766f68b61a3fdd205a450b09ce8b2f743ebe546735bb91b533d6319",
+          "template": "src/main/resources/data/kithkyn/structure/bakery_alpine_highlands_1__baker_home.nbt",
+          "template_sha256": "8456dbea6c43a295cdb1f31aafba11684d2f6968d700e44ba9bf4497942a8c0d"
+        },
+        {
+          "id": "blacksmith_alpine_highlands_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/blacksmith_alpine_highlands_1.json",
+          "definition_sha256": "981f58695d06ea6c8f2ce6625b880c4918b9755f17b9c588a5faaf55d983902e",
+          "template": "src/main/resources/data/kithkyn/structure/blacksmith_alpine_highlands_1.nbt",
+          "template_sha256": "4dcaa66760f60ba13edcf27061797973b1a6f103a5b11b862f47bd9f934646ad"
+        },
+        {
+          "id": "butchery_alpine_highlands_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/butchery_alpine_highlands_1.json",
+          "definition_sha256": "34068f21ef3ff2e48986d3637ad4fec18aca7f1d17e6c1ed4dde144fb63a185e",
+          "template": "src/main/resources/data/kithkyn/structure/butchery_alpine_highlands_1.nbt",
+          "template_sha256": "91c14b49c03f5384f949b97320839db8087baccd3aade24a1e8a410e6e588853"
+        },
+        {
+          "id": "church_alpine_highlands_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/church_alpine_highlands_1.json",
+          "definition_sha256": "b0106a507083c593d9714d956bd42ada768b01f5d5dce73fb8b79c61c26e929a",
+          "template": "src/main/resources/data/kithkyn/structure/church_alpine_highlands_1.nbt",
+          "template_sha256": "0a0a76e1cc295d70bfe028b8483828fac9674f40506432e8f19c0500f8dce813"
+        },
+        {
+          "id": "farm_alpine_highlands_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/farm_alpine_highlands_1.json",
+          "definition_sha256": "3f40f10f37eec3e49e2a4d25f3d9128e3e10157c080e250187b4937bf561b6b9",
+          "template": "src/main/resources/data/kithkyn/structure/farm_alpine_highlands_1.nbt",
+          "template_sha256": "336a04babc01450474c017bb49ed7ad7618a9425a475ce227a5d51322e8927fd"
+        },
+        {
+          "id": "fishery_alpine_highlands_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/fishery_alpine_highlands_1.json",
+          "definition_sha256": "474ccd3b00d7bbfb933221175a3cf56363de292c6237cb87775116cf7666da5e",
+          "template": "src/main/resources/data/kithkyn/structure/fishery_alpine_highlands_1.nbt",
+          "template_sha256": "97353618adaae29dd5c43bcb94c6b548f0859b6094cce9bbccf2899cccf5fb96"
+        },
+        {
+          "id": "house_alpine_highlands_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/house_alpine_highlands_1.json",
+          "definition_sha256": "78018dcbec5f3e429c5ea1b75b059109c40d18c7d81a88b2001594f88f20ea7a",
+          "template": "src/main/resources/data/kithkyn/structure/house_alpine_highlands_1.nbt",
+          "template_sha256": "c4ac5ba2d12cb0982cf97d8dbddcb6e7c9be06e459ec252f891f5b4518bce9cd"
+        },
+        {
+          "id": "house_alpine_highlands_1__family_house",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/house_alpine_highlands_1__family_house.json",
+          "definition_sha256": "1f5a92182bf88454802429a3eb86468d9b8704911d6dd9a82848bf12df7e9302",
+          "template": "src/main/resources/data/kithkyn/structure/house_alpine_highlands_1__family_house.nbt",
+          "template_sha256": "bbd173d429a9c88c6accb5e46819677c0983744c225e61bd80c654a59d4564c6"
+        },
+        {
+          "id": "house_alpine_highlands_1__five_bed",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/house_alpine_highlands_1__five_bed.json",
+          "definition_sha256": "821c8e9e93428463b09d386a921ec58cea25a6b8389ba79b20630e7d5e326cb9",
+          "template": "src/main/resources/data/kithkyn/structure/house_alpine_highlands_1__five_bed.nbt",
+          "template_sha256": "e9969a69d7e7a3df31c369a88b5835ff1dacc73d94cf4911c3b200d0b4aded77"
+        },
+        {
+          "id": "house_alpine_highlands_1__three_bed",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/house_alpine_highlands_1__three_bed.json",
+          "definition_sha256": "cecdc6380616781ebc4284f8fc1f8ea0d89e15e394d2f3820f613c832283cd03",
+          "template": "src/main/resources/data/kithkyn/structure/house_alpine_highlands_1__three_bed.nbt",
+          "template_sha256": "1d3ba4bf3b1972b9f65bdf5386a87ff871c64edfb4ec47f2c4927ede91d4924c"
+        },
+        {
+          "id": "house_alpine_highlands_1__two_bed",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/house_alpine_highlands_1__two_bed.json",
+          "definition_sha256": "06ffd2d154aa4c55677d48429042243058b43a4ed9a4d34ac7f83e7ef1678123",
+          "template": "src/main/resources/data/kithkyn/structure/house_alpine_highlands_1__two_bed.nbt",
+          "template_sha256": "4f3de511dd6696a7d2dd291e18ceb5376204365272a9bec0dcf86c03ae64872b"
+        },
+        {
+          "id": "hunting_lodge_alpine_highlands_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/hunting_lodge_alpine_highlands_1.json",
+          "definition_sha256": "5ddedf57d93b2403a3becd310f24e4b89ff58a7dd0886205bf3d66e52166a3b4",
+          "template": "src/main/resources/data/kithkyn/structure/hunting_lodge_alpine_highlands_1.nbt",
+          "template_sha256": "9c37acfd6c87cb40f788d2006575eb1f8364635b49bd4fa240a193b77d4e871b"
+        },
+        {
+          "id": "lumberjack_alpine_highlands_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/lumberjack_alpine_highlands_1.json",
+          "definition_sha256": "ce8fb1d1077ca928f9066e3cd38e62cc84dfb353f894ab5dfa32508fd8f78802",
+          "template": "src/main/resources/data/kithkyn/structure/lumberjack_alpine_highlands_1.nbt",
+          "template_sha256": "49106d1bba25563e60cc1cda3273c0c65552cdea332c3bb520b97dcd689995f2"
+        },
+        {
+          "id": "market_alpine_highlands_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/market_alpine_highlands_1.json",
+          "definition_sha256": "82509fc3ee55a29b52e562a95194b212b74871aa5b7a3bf05e0bf7ced7ead257",
+          "template": "src/main/resources/data/kithkyn/structure/market_alpine_highlands_1.nbt",
+          "template_sha256": "78bba325614bce3934c582398caa0f4a3971be23b48ae3045f29c5f97ef1e7eb"
+        },
+        {
+          "id": "market_alpine_highlands_2",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/market_alpine_highlands_2.json",
+          "definition_sha256": "57aeebcfb6e30a702e8d5956ed9191418912269510c16fa4c6ecb2252989242b",
+          "template": "src/main/resources/data/kithkyn/structure/market_alpine_highlands_2.nbt",
+          "template_sha256": "58bcf39fca859a68ba4eb71cf8ad32d1887a19f03fe8f385a62b72e5f5748bf9"
+        },
+        {
+          "id": "market_alpine_highlands_3",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/market_alpine_highlands_3.json",
+          "definition_sha256": "7ea66a6f31e9f95a90c578b60ff49c72fdd68776f8580e57c30aead320681135",
+          "template": "src/main/resources/data/kithkyn/structure/market_alpine_highlands_3.nbt",
+          "template_sha256": "045bdb3c7334f886313bd2d99817bd79ba18b21a74b51c1d6376a7a74bf99739"
+        },
+        {
+          "id": "mine_alpine_highlands_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/mine_alpine_highlands_1.json",
+          "definition_sha256": "725eff8c45ee478939e7c68f653595e4db89169d38b02f906e2e7c0a9944fdec",
+          "template": "src/main/resources/data/kithkyn/structure/mine_alpine_highlands_1.nbt",
+          "template_sha256": "5b2667de8d57f87bd8ddf37e5c19ded99c1e5e70fe5f5d76b4eca6f7b5937b36"
+        },
+        {
+          "id": "storehouse_alpine_highlands_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/storehouse_alpine_highlands_1.json",
+          "definition_sha256": "07c98d52ce10444a9cbd616b5512045200127dfced1520f1a2a830dc44124095",
+          "template": "src/main/resources/data/kithkyn/structure/storehouse_alpine_highlands_1.nbt",
+          "template_sha256": "541f75f391b248d0cd9506aa354e62a4e309fcef369eb97d156abbfbdc436420"
+        },
+        {
+          "id": "storehouse_alpine_highlands_1__compact",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/storehouse_alpine_highlands_1__compact.json",
+          "definition_sha256": "6a7418205960b50879fc054679cda095695f75983661b09b74825623b48caa2b",
+          "template": "src/main/resources/data/kithkyn/structure/storehouse_alpine_highlands_1__compact.nbt",
+          "template_sha256": "0ec32ef03295b6d4f2dbe36f5087a34f8d34f1022b21ca1e9abdb96613dbcf46"
+        },
+        {
+          "id": "village_center_alpine_highlands_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/village_center_alpine_highlands_1.json",
+          "definition_sha256": "32e66a93d1def56f746de56251cbb425c536d05bfa2004c84a08599c4c6f34d8",
+          "template": "src/main/resources/data/kithkyn/structure/village_center_alpine_highlands_1.nbt",
+          "template_sha256": "6b83350f16276f07a46e4c8711bede3c9b8f84004b46016e3b55f15ad698da2b"
+        },
+        {
+          "id": "well_alpine_highlands_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/well_alpine_highlands_1.json",
+          "definition_sha256": "39eefe601cb824a6c3b22581e0285a37d18160c391c28476185f9d6a73e05a18",
+          "template": "src/main/resources/data/kithkyn/structure/well_alpine_highlands_1.nbt",
+          "template_sha256": "790eaadaaee9a89d1602d975f311ec1dd14b6c982089a7d8388696bb9c78e33c"
+        }
+      ]
+    },
+    {
+      "style": "japanese_cherry_grove",
+      "source": "run/trio-20260912/datapacks/kithkyn-japanese-cherry-grove",
+      "selection_record": "tools/structure/japanese-cherry-grove-catalog-20260913.json",
+      "buildings": [
+        {
+          "id": "bakery_japanese_cherry_grove_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/bakery_japanese_cherry_grove_1.json",
+          "definition_sha256": "36bf3c566a461931cee7f0f15a53f8a967b29dc4b1946deced205f825a06481a",
+          "template": "src/main/resources/data/kithkyn/structure/bakery_japanese_cherry_grove_1.nbt",
+          "template_sha256": "e31fe4992196326f07da5b1c4984f3894d89a4127bb5bd450c754b153734f13d"
+        },
+        {
+          "id": "blacksmith_japanese_cherry_grove_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/blacksmith_japanese_cherry_grove_1.json",
+          "definition_sha256": "555c72d9989f892734f419d64f15b8a7037b13db27a79d6b1d2dd5dbbd07463a",
+          "template": "src/main/resources/data/kithkyn/structure/blacksmith_japanese_cherry_grove_1.nbt",
+          "template_sha256": "9a3cc3e6bda22f4a272a96faac48148d0a95842af816adc8f179146105340bf0"
+        },
+        {
+          "id": "butchery_japanese_cherry_grove_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/butchery_japanese_cherry_grove_1.json",
+          "definition_sha256": "44145e7776baa72c32281cda3b1fa80e8fa7188b7e311375dff428c59c3f27d5",
+          "template": "src/main/resources/data/kithkyn/structure/butchery_japanese_cherry_grove_1.nbt",
+          "template_sha256": "3125b02cca07aff401962ad05327c7c1e0169f24c45f50fd49faf4f2a80af348"
+        },
+        {
+          "id": "church_japanese_cherry_grove_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/church_japanese_cherry_grove_1.json",
+          "definition_sha256": "09a7f04c2e9e2975d38639bdff8c9e28d1b2dabd78cf2b1d9bf6ed05ab401cd5",
+          "template": "src/main/resources/data/kithkyn/structure/church_japanese_cherry_grove_1.nbt",
+          "template_sha256": "b1db61d6237112d8ea23240b69f33f4eff475f838fd1c795181ca2d4334ef8ad"
+        },
+        {
+          "id": "farm_japanese_cherry_grove_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/farm_japanese_cherry_grove_1.json",
+          "definition_sha256": "1b0edb21b2ec9877747f2ef10ac8595d37ea5ba40e6cf2c7d5c6594eae8253e3",
+          "template": "src/main/resources/data/kithkyn/structure/farm_japanese_cherry_grove_1.nbt",
+          "template_sha256": "d1754bb1b983b9e4615f13789b0cb52004bfb32c32c2b179b4626ffafdc93390"
+        },
+        {
+          "id": "farm_japanese_cherry_grove_2",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/farm_japanese_cherry_grove_2.json",
+          "definition_sha256": "13f8549bb147208e00f7b78e17cde33adb830ccca65dee54d8fc00bd7398ad07",
+          "template": "src/main/resources/data/kithkyn/structure/farm_japanese_cherry_grove_2.nbt",
+          "template_sha256": "9dd6356c9a9485ea22626c68e5469f9bbe85f9ac6a691751f54ed0ba283cb7e5"
+        },
+        {
+          "id": "fishery_japanese_cherry_grove_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/fishery_japanese_cherry_grove_1.json",
+          "definition_sha256": "e056ca8b8a55b630cef508f958351c04dbf58a1c72712546b6dbe33c432b81f5",
+          "template": "src/main/resources/data/kithkyn/structure/fishery_japanese_cherry_grove_1.nbt",
+          "template_sha256": "437af547fef68654f78e925bcfa7e94c0e311f05ef545890853ad155b5913836"
+        },
+        {
+          "id": "house_japanese_cherry_grove_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/house_japanese_cherry_grove_1.json",
+          "definition_sha256": "75543395d4b176b269bda88cbef88f954bff25e5590dd4ad99c4683d9a2f9f8a",
+          "template": "src/main/resources/data/kithkyn/structure/house_japanese_cherry_grove_1.nbt",
+          "template_sha256": "2f1243d91890356c004bc3645b3e8c9f1bdc1496454136fe23597bdaa8b75d7c"
+        },
+        {
+          "id": "house_japanese_cherry_grove_1__four_bed",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/house_japanese_cherry_grove_1__four_bed.json",
+          "definition_sha256": "0741d670b0611881229a120b32b26feb6d5708a16d047b34ac435fc531d83096",
+          "template": "src/main/resources/data/kithkyn/structure/house_japanese_cherry_grove_1__four_bed.nbt",
+          "template_sha256": "4c1978b99e9ce0e62533c49f0e65c20951de7680cdc61f56edc701546ef2692d"
+        },
+        {
+          "id": "hunting_lodge_japanese_cherry_grove_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/hunting_lodge_japanese_cherry_grove_1.json",
+          "definition_sha256": "9698eeab5c561064efd558a29bcdbeec51fa2be2e4bb5add385d8919a323980e",
+          "template": "src/main/resources/data/kithkyn/structure/hunting_lodge_japanese_cherry_grove_1.nbt",
+          "template_sha256": "9c7776126073822738e3f6ac42aeaa0f5c55df5ad66c3f007068c767803c7a26"
+        },
+        {
+          "id": "lumberjack_japanese_cherry_grove_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/lumberjack_japanese_cherry_grove_1.json",
+          "definition_sha256": "e640dbfad93c27cb5fb8d9c0255f0171236de2ea63e1ca98e26fd8a60831ef5d",
+          "template": "src/main/resources/data/kithkyn/structure/lumberjack_japanese_cherry_grove_1.nbt",
+          "template_sha256": "dd4eb2868110c092e96f0e1213dd62fa46ae1c4362ba96a59bed327a99698ac3"
+        },
+        {
+          "id": "market_japanese_cherry_grove_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/market_japanese_cherry_grove_1.json",
+          "definition_sha256": "ff825c156054172a90103386e62e687829238b1e5b55c7c0bbe58cddcb172658",
+          "template": "src/main/resources/data/kithkyn/structure/market_japanese_cherry_grove_1.nbt",
+          "template_sha256": "b5899090300f5060f2322611b0a477101e6880c9521bddcdcdbd72ca70a6eae7"
+        },
+        {
+          "id": "market_japanese_cherry_grove_2",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/market_japanese_cherry_grove_2.json",
+          "definition_sha256": "46dd2c39d53fafc5a6988f80a450e0e600ac56270ed4ed693d815faddf02ec24",
+          "template": "src/main/resources/data/kithkyn/structure/market_japanese_cherry_grove_2.nbt",
+          "template_sha256": "333cfbbc2fabb11a04bfb2b56f2adbee6ce1492e8d90e19d6f668b3e8b58e82c"
+        },
+        {
+          "id": "market_japanese_cherry_grove_3",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/market_japanese_cherry_grove_3.json",
+          "definition_sha256": "15a4f5c9f815bfdcb435a90ee2beeed6ad9dda9ba2e94faafc93a405ff052338",
+          "template": "src/main/resources/data/kithkyn/structure/market_japanese_cherry_grove_3.nbt",
+          "template_sha256": "c9f3c62a9aed4ced371bf48074539fdef4fdeeaee18635905ead9f99cfbc3596"
+        },
+        {
+          "id": "mine_japanese_cherry_grove_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/mine_japanese_cherry_grove_1.json",
+          "definition_sha256": "8ef6fff0716753750e5133c3d8c9275cec0677fd7d03b436558bb8d02364b873",
+          "template": "src/main/resources/data/kithkyn/structure/mine_japanese_cherry_grove_1.nbt",
+          "template_sha256": "47b6d20be488cbd64c7d69498a5b6f1f1addf27ba404bb7a5b4d86e86018aeb4"
+        },
+        {
+          "id": "stoneworks_japanese_cherry_grove_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/stoneworks_japanese_cherry_grove_1.json",
+          "definition_sha256": "9b5ad2ce0fcba618dc6f8f77562c3b620247703ed53a0dacacab5cc070390e13",
+          "template": "src/main/resources/data/kithkyn/structure/stoneworks_japanese_cherry_grove_1.nbt",
+          "template_sha256": "f58e91c24506bdbea8eb09ff9cc95039fc0d265742006522ef2927d5993ec872"
+        },
+        {
+          "id": "storehouse_japanese_cherry_grove_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/storehouse_japanese_cherry_grove_1.json",
+          "definition_sha256": "b2f5c82770c80a2e0dcf941e1f4f140c872e6b84d043687332fe606efba49691",
+          "template": "src/main/resources/data/kithkyn/structure/storehouse_japanese_cherry_grove_1.nbt",
+          "template_sha256": "460618f317372ce725f04760dc95c9100eaf4ecb1df5affb02c3154793675608"
+        },
+        {
+          "id": "tavern_japanese_cherry_grove_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/tavern_japanese_cherry_grove_1.json",
+          "definition_sha256": "15b7c2a637c708b57e31bf6862bd3747c86d95aef978bb46f9fbf4550d5b992a",
+          "template": "src/main/resources/data/kithkyn/structure/tavern_japanese_cherry_grove_1.nbt",
+          "template_sha256": "169dde49a275436038a2aa2a33d914280d605b6a82e56101d9701046abf0357d"
+        },
+        {
+          "id": "village_center_japanese_cherry_grove_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/village_center_japanese_cherry_grove_1.json",
+          "definition_sha256": "6f8784d9ede65eb911b5ce5f2b6c2b9a14230783b4dfa3018b95a7e27b39d292",
+          "template": "src/main/resources/data/kithkyn/structure/village_center_japanese_cherry_grove_1.nbt",
+          "template_sha256": "77fcfe09ba618712f47dba6f219ab5efe2432db71569f603d45b01e5fe329365"
+        },
+        {
+          "id": "watchtower_japanese_cherry_grove_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/watchtower_japanese_cherry_grove_1.json",
+          "definition_sha256": "6f30475cb35e551daa406230ecb2567d1f0ad49a4de5f29833a288d596a2677f",
+          "template": "src/main/resources/data/kithkyn/structure/watchtower_japanese_cherry_grove_1.nbt",
+          "template_sha256": "10a1e75af1c6300e939633908191053eb5479710a5a5e9e2b5e8112d1e5d90bb"
+        }
+      ]
+    },
+    {
+      "style": "nautical_coast",
+      "source": "run/trio-20260912/datapacks/kithkyn-nautical-coast",
+      "selection_record": "tools/structure/nautical-coast-catalog-20260913.json",
+      "buildings": [
+        {
+          "id": "bakery_nautical_coast_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/bakery_nautical_coast_1.json",
+          "definition_sha256": "cd6fb7690b6e852810b1a2ddfae8743d43b4df274f3648bb63543b8ef369b128",
+          "template": "src/main/resources/data/kithkyn/structure/bakery_nautical_coast_1.nbt",
+          "template_sha256": "1c6b80bae6166e87ce2abebbfaee6cf1a32a98beb4a22e6e91a34a57cdcdb662"
+        },
+        {
+          "id": "blacksmith_nautical_coast_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/blacksmith_nautical_coast_1.json",
+          "definition_sha256": "9a993ee0279d11244f796ba26b41160a209307683494c8644e161ef3be8d157a",
+          "template": "src/main/resources/data/kithkyn/structure/blacksmith_nautical_coast_1.nbt",
+          "template_sha256": "498c86c2917d6a53f4aac86bb6f9adcdc87cf3a003e28f3da4521a2641d4037f"
+        },
+        {
+          "id": "butchery_nautical_coast_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/butchery_nautical_coast_1.json",
+          "definition_sha256": "5f72a2e3c889fc69bdae692a1d955395ae83c9af78188bb3a41cfbbeff6af790",
+          "template": "src/main/resources/data/kithkyn/structure/butchery_nautical_coast_1.nbt",
+          "template_sha256": "d592b687316cefaa0e263e2bbbc0140a9eb588c8657432961e9fb7d31c8117f2"
+        },
+        {
+          "id": "castle_nautical_coast_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/castle_nautical_coast_1.json",
+          "definition_sha256": "4fc1cbeb21d73f8b70646dd8502d7fcf8920ff67c039e5af9806ae6b20fa44c0",
+          "template": "src/main/resources/data/kithkyn/structure/castle_nautical_coast_1.nbt",
+          "template_sha256": "718779edb0839cba2adaf2f976e55106320c4a496054e5bae3f35aeaaed71b5f"
+        },
+        {
+          "id": "church_nautical_coast_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/church_nautical_coast_1.json",
+          "definition_sha256": "cebf024dbe6bb637fd1ac35ae003e69bd2e5d4431ea8bea6d5e92a8a3b7ba615",
+          "template": "src/main/resources/data/kithkyn/structure/church_nautical_coast_1.nbt",
+          "template_sha256": "173472aaa0871bbea3b1ee8caabd43e775d4f11e1c6456d79b7ee0bebf78ae69"
+        },
+        {
+          "id": "couple_cottage_nautical_coast_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/couple_cottage_nautical_coast_1.json",
+          "definition_sha256": "e117f0bd0c178598867d4982e54795e0b6e8afabf8bd5cb8174f9a36f6e0bf76",
+          "template": "src/main/resources/data/kithkyn/structure/couple_cottage_nautical_coast_1.nbt",
+          "template_sha256": "bbf1ae9e7a5d5d26a7567c4882ad5009bb312e392d3fe41701f9120c92ad0654"
+        },
+        {
+          "id": "farm_nautical_coast_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/farm_nautical_coast_1.json",
+          "definition_sha256": "96f34e73e6f092761a1e544f5dd1aa6637fa74b62b104311fa9506232c2bc403",
+          "template": "src/main/resources/data/kithkyn/structure/farm_nautical_coast_1.nbt",
+          "template_sha256": "97999309c2716148b95846d5f62ed416bd72231d7ba0a1ffac05881518324f38"
+        },
+        {
+          "id": "fishery_nautical_coast_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/fishery_nautical_coast_1.json",
+          "definition_sha256": "87faa5dcd6e145b3517b2364d3f09c45bf96d844932f25e2924e94b38e5d9926",
+          "template": "src/main/resources/data/kithkyn/structure/fishery_nautical_coast_1.nbt",
+          "template_sha256": "ed010ae1febafb7ee3c4583f6768ae71fa3a2c634026e7a3dcf387a20fa71707"
+        },
+        {
+          "id": "house_nautical_coast_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/house_nautical_coast_1.json",
+          "definition_sha256": "b41cc21754d22f4b428c8e448e69d8fb7c6ca1efe31a59a55d5a7a35fb13faba",
+          "template": "src/main/resources/data/kithkyn/structure/house_nautical_coast_1.nbt",
+          "template_sha256": "62f0c70d6724f81a1b791dd00ed1341c3012039a711dcba761f5b989900c7e1e"
+        },
+        {
+          "id": "house_nautical_coast_1__four_single",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/house_nautical_coast_1__four_single.json",
+          "definition_sha256": "57ec8dd2c8ad03a39b61a29e59b17410b8ae1a0066c8285973cf93dcefc46ae1",
+          "template": "src/main/resources/data/kithkyn/structure/house_nautical_coast_1__four_single.nbt",
+          "template_sha256": "2bb361a0939c4a14564fd324ffbc6db761642c18b0aefebf2697c59fb2f30f88"
+        },
+        {
+          "id": "house_nautical_coast_1__three_single",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/house_nautical_coast_1__three_single.json",
+          "definition_sha256": "e170e96bdeb436cd5ce1b814603ecb168ec8619f8c6617aeb10f0194f1b7ae0a",
+          "template": "src/main/resources/data/kithkyn/structure/house_nautical_coast_1__three_single.nbt",
+          "template_sha256": "ca296d3c7ebcf6c9fa836da6ecb8aa61611b8753c8d9e3d0f65cd40ee4e55889"
+        },
+        {
+          "id": "house_nautical_coast_1__two_loft",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/house_nautical_coast_1__two_loft.json",
+          "definition_sha256": "6df8d797e91ae13e2a19465bb70eccf646932347c76e2c0edcb1f051f1dbb975",
+          "template": "src/main/resources/data/kithkyn/structure/house_nautical_coast_1__two_loft.nbt",
+          "template_sha256": "be29b21744c8f351bc7c7ee68bc7d4e62ab3372be404d231447dbd4070bee3e9"
+        },
+        {
+          "id": "house_nautical_coast_1__two_single",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/house_nautical_coast_1__two_single.json",
+          "definition_sha256": "5d13ba59c86c2768cbd04a7fdb725fad5f92415d0cd9142b0703aac3fdf6fd94",
+          "template": "src/main/resources/data/kithkyn/structure/house_nautical_coast_1__two_single.nbt",
+          "template_sha256": "82e322bf214b6d7b3d1975bdc317c9327c6cf0b438b004db9d2d167feadf77aa"
+        },
+        {
+          "id": "lumberjack_nautical_coast_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/lumberjack_nautical_coast_1.json",
+          "definition_sha256": "870e8f16f94ca53d0445d918d7ccef403451e0a6533162df0a4c320da5fa29b2",
+          "template": "src/main/resources/data/kithkyn/structure/lumberjack_nautical_coast_1.nbt",
+          "template_sha256": "d64d64505a4df0c55a969cea636cf9847e2f2a72a22d270157deb3ce32d226e9"
+        },
+        {
+          "id": "market_nautical_coast_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/market_nautical_coast_1.json",
+          "definition_sha256": "d841eb2d442f6f9b795e547e86fdde530060e285a0ef53dfe53867f17de601c9",
+          "template": "src/main/resources/data/kithkyn/structure/market_nautical_coast_1.nbt",
+          "template_sha256": "caf37b28c9ee951053c9d37e66926fbb5baab11eb5032082c12993849b6d33b4"
+        },
+        {
+          "id": "market_nautical_coast_2",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/market_nautical_coast_2.json",
+          "definition_sha256": "d1cea15b13e02bdb615789d786c3ddc217e6893ef1ddef18c437133a132a232d",
+          "template": "src/main/resources/data/kithkyn/structure/market_nautical_coast_2.nbt",
+          "template_sha256": "dd879f0deeac1d24c022f6dacfc255a98fcc5e94a0d1c284a6054802d234cbeb"
+        },
+        {
+          "id": "market_nautical_coast_3",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/market_nautical_coast_3.json",
+          "definition_sha256": "5e84d3d77a0105d41361e78a3266109875fd6031d1527d59050a032c5d98bf40",
+          "template": "src/main/resources/data/kithkyn/structure/market_nautical_coast_3.nbt",
+          "template_sha256": "744a55efe3a29bd3c798ca5439733d713bb29f078df8c2a9827a1e02731250a8"
+        },
+        {
+          "id": "mine_nautical_coast_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/mine_nautical_coast_1.json",
+          "definition_sha256": "812421396ced7b36804427d0768b125ee1f7bc85e829a121c7be15a8c8ede2af",
+          "template": "src/main/resources/data/kithkyn/structure/mine_nautical_coast_1.nbt",
+          "template_sha256": "87ad6eeb25bf295e85d6f88a78a3364a7d5b7ff443878e0cc57d5155d7a9183c"
+        },
+        {
+          "id": "stoneworks_nautical_coast_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/stoneworks_nautical_coast_1.json",
+          "definition_sha256": "cc1fa958ce5d587b34cfcd2edd4b61a9c794bfa771bedb6fabe5dd2331296115",
+          "template": "src/main/resources/data/kithkyn/structure/stoneworks_nautical_coast_1.nbt",
+          "template_sha256": "9d1c1171e70698db13f2022c13ed1a47ca2966f86dd60a475bba5062b131e7ce"
+        },
+        {
+          "id": "storehouse_nautical_coast_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/storehouse_nautical_coast_1.json",
+          "definition_sha256": "40fb9dc862337a54b355616b44e51ded9c061768c9b915e93f67a69a41f629aa",
+          "template": "src/main/resources/data/kithkyn/structure/storehouse_nautical_coast_1.nbt",
+          "template_sha256": "30bfc958876c2623294ead78f5e16b518d568cd74c233890e45fa872b0a74b4c"
+        },
+        {
+          "id": "tavern_nautical_coast_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/tavern_nautical_coast_1.json",
+          "definition_sha256": "d7e3c511504fae54b5a4eb3dc82bee26e8a3600d405228a618efdec3eb166624",
+          "template": "src/main/resources/data/kithkyn/structure/tavern_nautical_coast_1.nbt",
+          "template_sha256": "6fd619c218c0192df3a31530d4f983e160affabd2e47608e69d3c0f9b59c777d"
+        },
+        {
+          "id": "village_center_nautical_coast_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/village_center_nautical_coast_1.json",
+          "definition_sha256": "ee939acb62300cec220534f0db847abb89f9f7c6aa0442daf554d5cbc2351392",
+          "template": "src/main/resources/data/kithkyn/structure/village_center_nautical_coast_1.nbt",
+          "template_sha256": "513be40581f2e758bf3270ac48f64838e1585550109414233bff7464fe98e4f2"
+        },
+        {
+          "id": "watchtower_nautical_coast_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/watchtower_nautical_coast_1.json",
+          "definition_sha256": "7882e113b43acb58c07150be6627d5438b503529bf3337321ca7733a63d7d998",
+          "template": "src/main/resources/data/kithkyn/structure/watchtower_nautical_coast_1.nbt",
+          "template_sha256": "3eead22a8a5952db4f2841100edae3095fee0811d3557253047707ed068e2741"
+        },
+        {
+          "id": "well_nautical_coast_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/well_nautical_coast_1.json",
+          "definition_sha256": "1e6a4d33fe27e66d5ed58d8d8867494f3776c16b39446f9699c51e734cd8a334",
+          "template": "src/main/resources/data/kithkyn/structure/well_nautical_coast_1.nbt",
+          "template_sha256": "8c54b3bb4088812891b5ca7d09fe633b549a63a06d8866280332cced1f646edb"
+        }
+      ]
+    },
+    {
+      "style": "savanna_tent",
+      "source": "run/trio-20260912/datapacks/kithkyn-savanna-tent",
+      "selection_record": "tools/structure/savanna-tent-catalog-20260914.json",
+      "buildings": [
+        {
+          "id": "bakery_savanna_tent_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/bakery_savanna_tent_1.json",
+          "definition_sha256": "ed98136ba795c4cf968474090596ff9a93571f942ee9d292660e03c5a7cdcaf0",
+          "template": "src/main/resources/data/kithkyn/structure/bakery_savanna_tent_1.nbt",
+          "template_sha256": "4fcf16a4fc3b6aa0dc22aa7349a7ccf42198c431c8874f6330efa91dade97799"
+        },
+        {
+          "id": "blacksmith_savanna_tent_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/blacksmith_savanna_tent_1.json",
+          "definition_sha256": "376c5384a8be8fa252549af72127288b2f6d57b5f16a71917a1176d044b176ac",
+          "template": "src/main/resources/data/kithkyn/structure/blacksmith_savanna_tent_1.nbt",
+          "template_sha256": "0015e772ed4856f6e5bf6c400acb2990603a1d73c22705861d071766759a5d17"
+        },
+        {
+          "id": "butchery_savanna_tent_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/butchery_savanna_tent_1.json",
+          "definition_sha256": "507e81240ed046752a4f4f0cf22cfd312e5699103f6e700993c1d828ae4a542e",
+          "template": "src/main/resources/data/kithkyn/structure/butchery_savanna_tent_1.nbt",
+          "template_sha256": "654a6122e9f9e2ab881a272de77056315815f72d949f7e5b7f729ae2378c16b0"
+        },
+        {
+          "id": "church_savanna_tent_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/church_savanna_tent_1.json",
+          "definition_sha256": "f57fd377f0ab03e8f832d54914cd7332768cce1c3aa4d92e1b00cf6696fcd12a",
+          "template": "src/main/resources/data/kithkyn/structure/church_savanna_tent_1.nbt",
+          "template_sha256": "c4413c6816c94d1c50432f1e478c05d3da25d14e43a18c46ae6c12ea046ffe0f"
+        },
+        {
+          "id": "couple_cottage_savanna_tent_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/couple_cottage_savanna_tent_1.json",
+          "definition_sha256": "4f947fe29f3dc50402e8ea6fffc60dd0239c6c1cad7c707a93a1fdea91ac4490",
+          "template": "src/main/resources/data/kithkyn/structure/couple_cottage_savanna_tent_1.nbt",
+          "template_sha256": "e766e814ba478586b62235fc828f2c0faac47b739f36e92fcbefc73562d0f861"
+        },
+        {
+          "id": "farm_savanna_tent_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/farm_savanna_tent_1.json",
+          "definition_sha256": "61588aba6e85bb15dd09550b8b34dad7efb6216d7716fa5fde9e39f171b8b1ba",
+          "template": "src/main/resources/data/kithkyn/structure/farm_savanna_tent_1.nbt",
+          "template_sha256": "a86d8afb4c30282637ed7cf1dda08671c5eab31d619fb222697bf711ccfdf474"
+        },
+        {
+          "id": "fishery_savanna_tent_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/fishery_savanna_tent_1.json",
+          "definition_sha256": "03b19638a5b8f7066e7cf8456c3d3634421daa88d60345ba0a491e0f56d4dbb5",
+          "template": "src/main/resources/data/kithkyn/structure/fishery_savanna_tent_1.nbt",
+          "template_sha256": "824031991db64a7861300e30fabcf9e80f1a46030cfb314bdc31566a09367011"
+        },
+        {
+          "id": "house_savanna_tent_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/house_savanna_tent_1.json",
+          "definition_sha256": "e4db6fcf71b4d49b6ccf020d46d7e20a6daa867562f6dd1bafe0903b4137be6e",
+          "template": "src/main/resources/data/kithkyn/structure/house_savanna_tent_1.nbt",
+          "template_sha256": "7f23e7bcab038200a3a55bec8038cf9fe51c657082cdb171eb3ec47e55b7b890"
+        },
+        {
+          "id": "hunting_lodge_savanna_tent_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/hunting_lodge_savanna_tent_1.json",
+          "definition_sha256": "7d53e35bca08a14733445a83cf92e54f80e77d605a95ec40c182de03043ac183",
+          "template": "src/main/resources/data/kithkyn/structure/hunting_lodge_savanna_tent_1.nbt",
+          "template_sha256": "c4b8e277a18ac351f061f088df07e2ba6bef78d69c4639180b1be52b1bb602a1"
+        },
+        {
+          "id": "lumberjack_savanna_tent_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/lumberjack_savanna_tent_1.json",
+          "definition_sha256": "d5fd4cef595ce61cb2360ad53a7c5aef5acc570c2a32e750654b2fbcd6ab0634",
+          "template": "src/main/resources/data/kithkyn/structure/lumberjack_savanna_tent_1.nbt",
+          "template_sha256": "9a19a5801014ab7602781846eb621e42b2a77a79d5661c05ea417c03ca26935d"
+        },
+        {
+          "id": "market_savanna_tent_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/market_savanna_tent_1.json",
+          "definition_sha256": "dab6999985a2292b6ba9bf0cd189d303cbfa2bacfb57f69bdfe3b50050f26802",
+          "template": "src/main/resources/data/kithkyn/structure/market_savanna_tent_1.nbt",
+          "template_sha256": "a0c60d765a527b0a7119ed93064614528b4cd0e1d4ab3096b1fbd53fbc8196c8"
+        },
+        {
+          "id": "market_savanna_tent_2",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/market_savanna_tent_2.json",
+          "definition_sha256": "895649d6eb39ad1325d1cdc9953383c77d68284672380f75b4aa7b16ead9049f",
+          "template": "src/main/resources/data/kithkyn/structure/market_savanna_tent_2.nbt",
+          "template_sha256": "e8141e110a114a68c12b34e59b2d4c94562b975e6c7a5d51c621c9b1bfbd105b"
+        },
+        {
+          "id": "market_savanna_tent_3",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/market_savanna_tent_3.json",
+          "definition_sha256": "b66bc9b8506ec74e9122ccbcfd7c5b4f8cd665de91deba4607a9db740dcb591e",
+          "template": "src/main/resources/data/kithkyn/structure/market_savanna_tent_3.nbt",
+          "template_sha256": "9d82d4611603ce803cdc2514ada5a0c6a800b1dfde5d30db7d31fff9488f818b"
+        },
+        {
+          "id": "mine_savanna_tent_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/mine_savanna_tent_1.json",
+          "definition_sha256": "446291b9032c8cb92ae6ab520d06a5ca0e6cdd69316ae796a61f54faa3bc78ba",
+          "template": "src/main/resources/data/kithkyn/structure/mine_savanna_tent_1.nbt",
+          "template_sha256": "504548868a3c957250f5ee55a00ccf68d1414def8d5ab5899d619a396ebf274d"
+        },
+        {
+          "id": "stoneworks_savanna_tent_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/stoneworks_savanna_tent_1.json",
+          "definition_sha256": "36ace5ba850f23a4ae9b089c0bf04c71dd02910a84d06c4e54a6f5fd99ab88b5",
+          "template": "src/main/resources/data/kithkyn/structure/stoneworks_savanna_tent_1.nbt",
+          "template_sha256": "9e99df517076188bbbd124eb138231428ec88ad711219f373d2b309887216055"
+        },
+        {
+          "id": "storehouse_savanna_tent_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/storehouse_savanna_tent_1.json",
+          "definition_sha256": "b6422bffb1c04d5bce3ff59c2578b97aa2836dc069aaf31fb407eaa2c3fa42a9",
+          "template": "src/main/resources/data/kithkyn/structure/storehouse_savanna_tent_1.nbt",
+          "template_sha256": "a75e326f39cf0d2e8ff29fd36e7bf9abe64fa3c61cef1fb28706d590e7124b4a"
+        },
+        {
+          "id": "village_center_savanna_tent_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/village_center_savanna_tent_1.json",
+          "definition_sha256": "9e707d9477a7844649c00f386ab8bc9916e9a6aae5e2d157e4f9feadd474c270",
+          "template": "src/main/resources/data/kithkyn/structure/village_center_savanna_tent_1.nbt",
+          "template_sha256": "754fdff1b3c71a07d13351624c116d24d75ff6684763e43a5f72a53a143fa483"
+        },
+        {
+          "id": "well_savanna_tent_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/well_savanna_tent_1.json",
+          "definition_sha256": "22d308f1c09b30d5e577832a50942f1b995c0cc1f4fea8d48418f2799767d717",
+          "template": "src/main/resources/data/kithkyn/structure/well_savanna_tent_1.nbt",
+          "template_sha256": "3c05cbe683c9afec766cddb38caa8d163692765dd10ee6e80c512323f170bb47"
+        }
+      ]
+    },
+    {
+      "style": "rustic_woodland",
+      "source": "run/trio-20260912/datapacks/kithkyn-rustic-woodland",
+      "selection_record": "tools/structure/rustic-woodland-catalog-20260914.json",
+      "buildings": [
+        {
+          "id": "bakery_rustic_woodland_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/bakery_rustic_woodland_1.json",
+          "definition_sha256": "ab3aba28f2aa2fdeeede164a38ce69086071bea640fc6a1394f3504ce6c1d95a",
+          "template": "src/main/resources/data/kithkyn/structure/bakery_rustic_woodland_1.nbt",
+          "template_sha256": "c78ffd95d6c7da12edf4f0e41f5812d49a37f7cb24348989c6545f1b7bcd881c"
+        },
+        {
+          "id": "blacksmith_rustic_woodland_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/blacksmith_rustic_woodland_1.json",
+          "definition_sha256": "d951f27eacb185a40891cbf3024f47d8a8381ea4f190bb8cbf51d3fdc8d5b330",
+          "template": "src/main/resources/data/kithkyn/structure/blacksmith_rustic_woodland_1.nbt",
+          "template_sha256": "cb0b25f8286911325dde3d29d392eec01417ed5492a625b5a07005c267884e1e"
+        },
+        {
+          "id": "butchery_rustic_woodland_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/butchery_rustic_woodland_1.json",
+          "definition_sha256": "3aac56d54a3cf19041d165cd398ed925d6ff7dd5a69e555ca9eb17a9a8419c73",
+          "template": "src/main/resources/data/kithkyn/structure/butchery_rustic_woodland_1.nbt",
+          "template_sha256": "2a7224dd2d3328065b3e6854fd30a80bcd44ddeebb37a40ec3670f07bc0b2dee"
+        },
+        {
+          "id": "church_rustic_woodland_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/church_rustic_woodland_1.json",
+          "definition_sha256": "a53b3ab95869d2901b87f8ac8389f5dde2912840f3b67cb6133bfeb81e1c4cda",
+          "template": "src/main/resources/data/kithkyn/structure/church_rustic_woodland_1.nbt",
+          "template_sha256": "9b21314571a5f472715c18839bab870433b2cbb0d29b8f15b4ed271d35fc41b0"
+        },
+        {
+          "id": "couple_cottage_rustic_woodland_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/couple_cottage_rustic_woodland_1.json",
+          "definition_sha256": "c3f5c5ec6077b9484b0eecd09be2e32a4925c17e78ddadaa8ecdcc35e5a2f31b",
+          "template": "src/main/resources/data/kithkyn/structure/couple_cottage_rustic_woodland_1.nbt",
+          "template_sha256": "1d0efede19da795eae12950209bd6bf0bf8eaac79a1ce614b4fe260a58a53d5c"
+        },
+        {
+          "id": "farm_rustic_woodland_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/farm_rustic_woodland_1.json",
+          "definition_sha256": "ff5d90d50c0547ee37f4ef459800837032173b0435b29a8220c7f8d1feee27ab",
+          "template": "src/main/resources/data/kithkyn/structure/farm_rustic_woodland_1.nbt",
+          "template_sha256": "af72ed71e8be2a0b26d6dd11abffa1567d4b8929d3dc3d1968dd97837775e05e"
+        },
+        {
+          "id": "fishery_rustic_woodland_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/fishery_rustic_woodland_1.json",
+          "definition_sha256": "0e3dc7f9fcaaf16aa87857b4c383d95dc693cd76358d43696c5b00bed09ca87e",
+          "template": "src/main/resources/data/kithkyn/structure/fishery_rustic_woodland_1.nbt",
+          "template_sha256": "f78d77a9712f13cd9d4ab777ffe8d8043700313303c2ec1fed1a8879baf23bba"
+        },
+        {
+          "id": "house_rustic_woodland_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/house_rustic_woodland_1.json",
+          "definition_sha256": "2d76386548dda86a140f827eee480a1df11ed085062a2b183ec5c727df218147",
+          "template": "src/main/resources/data/kithkyn/structure/house_rustic_woodland_1.nbt",
+          "template_sha256": "b8c0a1813489577982e8ff835a441dc714ea591e1ffbe89a70f1a065f33de204"
+        },
+        {
+          "id": "house_rustic_woodland_1__two_single",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/house_rustic_woodland_1__two_single.json",
+          "definition_sha256": "cc14e5ea692e73e0fb1181f6a0dcc49a9f1c9036e3aa4e63c6a6e2bba400d27c",
+          "template": "src/main/resources/data/kithkyn/structure/house_rustic_woodland_1__two_single.nbt",
+          "template_sha256": "88fb65f6832f62455f984009de7b8aaaa9e9a900c509906acf13bfbddd8e19db"
+        },
+        {
+          "id": "hunting_lodge_rustic_woodland_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/hunting_lodge_rustic_woodland_1.json",
+          "definition_sha256": "a838c0410ef956fe2db92db5d2de9d27d9af0cd1c24a0b14aa2ba4a0e109258d",
+          "template": "src/main/resources/data/kithkyn/structure/hunting_lodge_rustic_woodland_1.nbt",
+          "template_sha256": "672501fbae5c7db45778ee320cb260467b95d871aafcf8d43b32b81f0e6471b2"
+        },
+        {
+          "id": "lumberjack_rustic_woodland_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/lumberjack_rustic_woodland_1.json",
+          "definition_sha256": "e84a10327c9bf9685d9a33f9511b511b2ffe3f59f3ef305229bce5ce5148dfac",
+          "template": "src/main/resources/data/kithkyn/structure/lumberjack_rustic_woodland_1.nbt",
+          "template_sha256": "ebec5b67fdbdbf89428508d6280ac2609d13a9ca08974c7c220f6a0f130f79dc"
+        },
+        {
+          "id": "market_rustic_woodland_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/market_rustic_woodland_1.json",
+          "definition_sha256": "d2af329a9dce45f4a9d66b4302fc438499daba00fd8b2201b81c1ebb52f8fdb7",
+          "template": "src/main/resources/data/kithkyn/structure/market_rustic_woodland_1.nbt",
+          "template_sha256": "ea1adc378c6bb22936ab364c78c4cbd7673d6c7b0d15f7c7f258629c5ee7c58e"
+        },
+        {
+          "id": "market_rustic_woodland_2",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/market_rustic_woodland_2.json",
+          "definition_sha256": "d264133da6234a47d01670d2e50b1011b141d48d016894ef82aed0610158c92f",
+          "template": "src/main/resources/data/kithkyn/structure/market_rustic_woodland_2.nbt",
+          "template_sha256": "d1d72d2ee5dc9b471496768564a3029785d688b692b34a98fe835c934f833bfe"
+        },
+        {
+          "id": "market_rustic_woodland_3",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/market_rustic_woodland_3.json",
+          "definition_sha256": "e71fc9d25b4af1618e6469ed1e4a306e6b35d8ca718a5c43cb48f0a47f1e8bda",
+          "template": "src/main/resources/data/kithkyn/structure/market_rustic_woodland_3.nbt",
+          "template_sha256": "e1f4b39faf4e277b48dcf87f4f465b5416827c15222616ac359c9eb3bf7a2972"
+        },
+        {
+          "id": "mine_rustic_woodland_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/mine_rustic_woodland_1.json",
+          "definition_sha256": "4fd4b1905bc4a86b1866e02928ccab55d4d5d1c1385bdb33ac307467a5237e1a",
+          "template": "src/main/resources/data/kithkyn/structure/mine_rustic_woodland_1.nbt",
+          "template_sha256": "c63b37e5521b5337d3acca223b667f919cf1783737b10350763254752a78e9db"
+        },
+        {
+          "id": "stoneworks_rustic_woodland_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/stoneworks_rustic_woodland_1.json",
+          "definition_sha256": "4e2bf863d75a37c1bb2e8b3d4308b0447845a8b472094d51c2968e9d669486d6",
+          "template": "src/main/resources/data/kithkyn/structure/stoneworks_rustic_woodland_1.nbt",
+          "template_sha256": "76e5354f0e1b531bccda80fb9264df9fd0d2dd78d8620c200015a686ce6c8ad1"
+        },
+        {
+          "id": "storehouse_rustic_woodland_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/storehouse_rustic_woodland_1.json",
+          "definition_sha256": "e60a593ab6b915d7ae1b289858f7674172fffd9d29dc2fcb1a48692dc231e30b",
+          "template": "src/main/resources/data/kithkyn/structure/storehouse_rustic_woodland_1.nbt",
+          "template_sha256": "fd022f667e8f31ce1ca0f4cdee14316155985a913c99aaa70e95364036fdc16a"
+        },
+        {
+          "id": "tavern_rustic_woodland_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/tavern_rustic_woodland_1.json",
+          "definition_sha256": "046d020c00b38fd77872dff168c1976272036cf22c8937445669c972a02d2a62",
+          "template": "src/main/resources/data/kithkyn/structure/tavern_rustic_woodland_1.nbt",
+          "template_sha256": "10a25afe99283ed7f4635e4209722b33ba8d5f0a2e8b1f182403b80b43c64f1b"
+        },
+        {
+          "id": "village_center_rustic_woodland_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/village_center_rustic_woodland_1.json",
+          "definition_sha256": "fa8a5fd9fadcffcc8b7d67e4554da9b65d5fbc4fbf54bbccfa0516326f4c905f",
+          "template": "src/main/resources/data/kithkyn/structure/village_center_rustic_woodland_1.nbt",
+          "template_sha256": "0668a4e0f69f1f137582a74325527ecc09c7e76edc17963122ab4eea68b4ad25",
+          "release_correction": "Classify the eight water-tower barrels as decorative, as approved in docs/rustic-woodland-village.md."
+        },
+        {
+          "id": "watchtower_rustic_woodland_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/watchtower_rustic_woodland_1.json",
+          "definition_sha256": "336ed3e43d2682c4a2831dbdb4b7a9c07ce4deb84117bb66cebfd36a36de5bad",
+          "template": "src/main/resources/data/kithkyn/structure/watchtower_rustic_woodland_1.nbt",
+          "template_sha256": "12a5f103750ef21478d3638a0a61ff83e3bea1648308bc7b649bbf84c8f88cef"
+        },
+        {
+          "id": "well_rustic_woodland_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/well_rustic_woodland_1.json",
+          "definition_sha256": "352e24afd3bf9af959554ff50fc8ac7442dc0ea18bd099310e5f80df701c1feb",
+          "template": "src/main/resources/data/kithkyn/structure/well_rustic_woodland_1.nbt",
+          "template_sha256": "bf543f3d17e52644b8fbadf0e664f3e035f01ac63b741c60a49eabae5c66ebbc"
+        }
+      ]
+    },
+    {
+      "style": "taiga",
+      "source": "run/trio-20260912/datapacks/kithkyn-taiga",
+      "selection_record": "tools/structure/taiga-catalog-20260914.json",
+      "buildings": [
+        {
+          "id": "bakery_taiga_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/bakery_taiga_1.json",
+          "definition_sha256": "aec85127c639f505368311f79dac2b0de1db3a1eb9d585bafca93c54f2c5b009",
+          "template": "src/main/resources/data/kithkyn/structure/bakery_taiga_1.nbt",
+          "template_sha256": "19866a8da7be4f717ab6b455b9f5b6cd5aed848832874f8e91a4a8d9bd9465f3"
+        },
+        {
+          "id": "blacksmith_taiga_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/blacksmith_taiga_1.json",
+          "definition_sha256": "3e860ed882cf0f9251036c1fe92638c26d0b0d258d75abc103ae3f5ce36de80e",
+          "template": "src/main/resources/data/kithkyn/structure/blacksmith_taiga_1.nbt",
+          "template_sha256": "62b651ede2dff697cd267e1b28af44a79aca9ed4beefd9a3d40217f48d547aca"
+        },
+        {
+          "id": "butchery_taiga_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/butchery_taiga_1.json",
+          "definition_sha256": "f2eea231c592be20f43874adf7677a0f13a26ddf81c5c76c7963e5bbb70a9a4f",
+          "template": "src/main/resources/data/kithkyn/structure/butchery_taiga_1.nbt",
+          "template_sha256": "e0657ca8d0a847a19f11b21ca4add2f7e47e1ea0b68b8217a4d004d5a14a0cd0"
+        },
+        {
+          "id": "castle_taiga_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/castle_taiga_1.json",
+          "definition_sha256": "dad32b4364ad9d50eb236719f2a6e23bdee636e18460fd5a5797ea572ad03b74",
+          "template": "src/main/resources/data/kithkyn/structure/castle_taiga_1.nbt",
+          "template_sha256": "5f9e5d330d73588ed4670909b509913fefb8c9c0d50d7a43a40e420a5df54388"
+        },
+        {
+          "id": "church_taiga_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/church_taiga_1.json",
+          "definition_sha256": "3984d17008c8f6a54ba575d625bbbaf7a1f5f14ddb22241151ad24700ca2d617",
+          "template": "src/main/resources/data/kithkyn/structure/church_taiga_1.nbt",
+          "template_sha256": "07344c122fcdc1f701e17d5a3299e5a1e3182f49d1f05eb7a659d9123f520524"
+        },
+        {
+          "id": "couple_cottage_taiga_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/couple_cottage_taiga_1.json",
+          "definition_sha256": "193579a90bd68a860985d102ee706ebb494beae2decb3c967b989b2166be50c8",
+          "template": "src/main/resources/data/kithkyn/structure/couple_cottage_taiga_1.nbt",
+          "template_sha256": "c34d91294d6a0359a9e3199e68cc8673f994ba10aaa1412a771733112b5e456e"
+        },
+        {
+          "id": "farm_taiga_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/farm_taiga_1.json",
+          "definition_sha256": "28a5483bf29b3e361e5e0c24b88da3ec614a7b3292ac6e0e0dcc079faf71a9d3",
+          "template": "src/main/resources/data/kithkyn/structure/farm_taiga_1.nbt",
+          "template_sha256": "6308998b551c3c33925136882dc2b54541bbce61b4fa2854bb785c1434607113"
+        },
+        {
+          "id": "fishery_taiga_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/fishery_taiga_1.json",
+          "definition_sha256": "a14b886904e53af0fd78865d2839c22ac8b302b3d690f2b757392d3d1f6f67ec",
+          "template": "src/main/resources/data/kithkyn/structure/fishery_taiga_1.nbt",
+          "template_sha256": "242518f6d85681e995f3e612a27767067f601b1b4de2530a49695604dea65304"
+        },
+        {
+          "id": "house_taiga_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/house_taiga_1.json",
+          "definition_sha256": "d6f93aec7856c2c16dfe44b8bb663b7274d68df2300e9bce4809e8bd9a02155f",
+          "template": "src/main/resources/data/kithkyn/structure/house_taiga_1.nbt",
+          "template_sha256": "0cc6722df32b6917c9403dfdce3482b219414b74a32db94598154da6e0f80563"
+        },
+        {
+          "id": "house_taiga_1__small_house_2",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/house_taiga_1__small_house_2.json",
+          "definition_sha256": "6db9c7d7eef066d8a388cfad4a791d9abce0d0f2424bc5dc78562d12e08fd14a",
+          "template": "src/main/resources/data/kithkyn/structure/house_taiga_1__small_house_2.nbt",
+          "template_sha256": "545eb2b10484e252c5ad0f332de6b474ac5a47c0dd19488609ce74eda39f452a"
+        },
+        {
+          "id": "house_taiga_1__two_bed",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/house_taiga_1__two_bed.json",
+          "definition_sha256": "940a2b168275cdb73d5ad226e5fb7b2792f556d26fa1884142b3dfa513462aa7",
+          "template": "src/main/resources/data/kithkyn/structure/house_taiga_1__two_bed.nbt",
+          "template_sha256": "6e337d09c2cc02b769cd92b14ad54b1f613c4fc85ec03648cc55c9ad4f62d0b3"
+        },
+        {
+          "id": "hunting_lodge_taiga_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/hunting_lodge_taiga_1.json",
+          "definition_sha256": "a76405900d220e349502568a952200004231e6d946a00b848b0a6b7a174a84ce",
+          "template": "src/main/resources/data/kithkyn/structure/hunting_lodge_taiga_1.nbt",
+          "template_sha256": "fdf8d2afc91cd5ecc97cb8d4baa00051856439a55376ddb290d15a2c17524ad8"
+        },
+        {
+          "id": "lumberjack_taiga_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/lumberjack_taiga_1.json",
+          "definition_sha256": "1b10e5bec4895b88612867700f4aefa701c3bf6917802daf5f4160b48216c1bc",
+          "template": "src/main/resources/data/kithkyn/structure/lumberjack_taiga_1.nbt",
+          "template_sha256": "fc41c4991c54c99955a6b7406f83c9e43bef1b48dea357365126979759adaa12"
+        },
+        {
+          "id": "market_taiga_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/market_taiga_1.json",
+          "definition_sha256": "e253339c7fb19548844aa8b3afc4ba98645cc31172a8025b81536049e75f55a5",
+          "template": "src/main/resources/data/kithkyn/structure/market_taiga_1.nbt",
+          "template_sha256": "b1596593364b70d401fd8a29aa5170381af8a2c728b2ca7fedfd4e552e671281"
+        },
+        {
+          "id": "market_taiga_2",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/market_taiga_2.json",
+          "definition_sha256": "b86b152a314393834e61f18c6293a627eeea7f5f80686a6334e2f90753c958a1",
+          "template": "src/main/resources/data/kithkyn/structure/market_taiga_2.nbt",
+          "template_sha256": "1f9abf4623e50f0daab41a3d8d1d0181f2f14cf1e09b75177478a3270e70f608"
+        },
+        {
+          "id": "market_taiga_3",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/market_taiga_3.json",
+          "definition_sha256": "305c4bc532f14532c01423d4ab34ed57b7e4dc8174c3fc7c5b026f8d58330803",
+          "template": "src/main/resources/data/kithkyn/structure/market_taiga_3.nbt",
+          "template_sha256": "81109e16383e0858e1e45c99a0b0d53ac59bb2b52bcf90e705eed1e16021bd42"
+        },
+        {
+          "id": "mine_taiga_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/mine_taiga_1.json",
+          "definition_sha256": "b5602756298937455aee0e9c35e8fed78ae8573f9672ae2b0395c221468c5e5b",
+          "template": "src/main/resources/data/kithkyn/structure/mine_taiga_1.nbt",
+          "template_sha256": "12d8ebc41a044779dd782b86574bdb37b41cd77157c22b55aee3bd3f0c9b24a4"
+        },
+        {
+          "id": "stoneworks_taiga_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/stoneworks_taiga_1.json",
+          "definition_sha256": "a1d9217e49878e91901426ed2982e47e00fa1f13ac4c015f4af185abefe1a553",
+          "template": "src/main/resources/data/kithkyn/structure/stoneworks_taiga_1.nbt",
+          "template_sha256": "adb446d7152ca94b5e0c3a56d299ba568cde4187c3aaee58efdab47a4e466da4"
+        },
+        {
+          "id": "storehouse_taiga_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/storehouse_taiga_1.json",
+          "definition_sha256": "77f5cf1cf31608449f4673a65f5257b03ae257d1a967c86184b5810cdb23fea7",
+          "template": "src/main/resources/data/kithkyn/structure/storehouse_taiga_1.nbt",
+          "template_sha256": "61d15428343fd38fcef7a70eddb1e7cc4734baed6a7e22804d8c4cd7d9e9cec5"
+        },
+        {
+          "id": "tavern_taiga_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/tavern_taiga_1.json",
+          "definition_sha256": "2908c503ccbe3dcc109aa5859c21302bb57e5b499ace0b272ce0d76ba5ee2aaf",
+          "template": "src/main/resources/data/kithkyn/structure/tavern_taiga_1.nbt",
+          "template_sha256": "b4555dc0ace6a384f58fba9f1f4719a512e7cf80abc8f492351f59661b370b2c"
+        },
+        {
+          "id": "village_center_taiga_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/village_center_taiga_1.json",
+          "definition_sha256": "7728bc733f5cce288d19e6e77ceb7ff3c411cb3f738b171265fc9d7e10fbbf78",
+          "template": "src/main/resources/data/kithkyn/structure/village_center_taiga_1.nbt",
+          "template_sha256": "1b77e058c912ba6d2d9bb69f12f1ab3c963af17407c240b3886e947d80c7b7e1"
+        },
+        {
+          "id": "watchtower_taiga_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/watchtower_taiga_1.json",
+          "definition_sha256": "d7020a16c03c8804cb9df9c9f4c099383a38771830162a8e6575a2a29b8024fd",
+          "template": "src/main/resources/data/kithkyn/structure/watchtower_taiga_1.nbt",
+          "template_sha256": "b4bb12bf97422a93fff9fe2debb1fa30080a367a0f58843f5536b04052cea32f"
+        },
+        {
+          "id": "well_taiga_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/well_taiga_1.json",
+          "definition_sha256": "310f910d6dfcb8de65132e000e631173169c4445d2e2acea3bebdd447a20d802",
+          "template": "src/main/resources/data/kithkyn/structure/well_taiga_1.nbt",
+          "template_sha256": "3c0f7394ac60bd5d27b29cc0f761a9e3b4a1a627834c2cf42c525e7f2bc2d4fa"
+        }
+      ]
+    },
+    {
+      "style": "mushroom",
+      "source": "run/trio-20260912/datapacks/kithkyn-mushroom",
+      "selection_record": "tools/structure/mushroom-catalog-20260915.json",
+      "buildings": [
+        {
+          "id": "bakery_mushroom_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/bakery_mushroom_1.json",
+          "definition_sha256": "4d26136417e896f55d9405d1799a765f4212052b6c7b4fb22d18815bf1f4c6dc",
+          "template": "src/main/resources/data/kithkyn/structure/bakery_mushroom_1.nbt",
+          "template_sha256": "74fc46c186d73f36fc7d29edb1563750802b046b31b851068ea825407b1ba053"
+        },
+        {
+          "id": "blacksmith_mushroom_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/blacksmith_mushroom_1.json",
+          "definition_sha256": "c17f95eaa52ca8231f0d66fa371861d6da22b5213c86848c26d8142677e2ad49",
+          "template": "src/main/resources/data/kithkyn/structure/blacksmith_mushroom_1.nbt",
+          "template_sha256": "b68c99abae3f60acbbdea3e836b4b5437318444721a1e711dcb10e5207f2c6c5"
+        },
+        {
+          "id": "butchery_mushroom_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/butchery_mushroom_1.json",
+          "definition_sha256": "338e58b02f37339bea1fd7655c4dd4240da973f1993e43f15034e1d9c8a96f08",
+          "template": "src/main/resources/data/kithkyn/structure/butchery_mushroom_1.nbt",
+          "template_sha256": "d7338d81e5593b0f75c72db07f11a73eba2e4c3e2236a82404a5c660b926cb7a"
+        },
+        {
+          "id": "couple_cottage_mushroom_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/couple_cottage_mushroom_1.json",
+          "definition_sha256": "d5d706632c2e0a25e169f89c3e4210c75ca14ada74c168ef4a47f1191ed3663c",
+          "template": "src/main/resources/data/kithkyn/structure/couple_cottage_mushroom_1.nbt",
+          "template_sha256": "98a7e05a723a4f4eb731dbfb84a89c38196d7a9ec0b3ab74a1ddf6be2987ec1c"
+        },
+        {
+          "id": "farm_mushroom_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/farm_mushroom_1.json",
+          "definition_sha256": "118b69f1b279dfbd5d6ae0e2c3faaaad9176e042a519857d9132c10e033f1ec1",
+          "template": "src/main/resources/data/kithkyn/structure/farm_mushroom_1.nbt",
+          "template_sha256": "beb9e750a3cebec5b561fcdf7877d8909f9b463c31249fe292d97b9c16ce8265"
+        },
+        {
+          "id": "fishery_mushroom_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/fishery_mushroom_1.json",
+          "definition_sha256": "3da58efe77d6d3ad63effbc54de9064f8ca7470ebfa067064915a2337215384c",
+          "template": "src/main/resources/data/kithkyn/structure/fishery_mushroom_1.nbt",
+          "template_sha256": "b2bcdb22481192b756015dbda97a9592188998e2d10df5e405497b4870228cbc"
+        },
+        {
+          "id": "house_mushroom_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/house_mushroom_1.json",
+          "definition_sha256": "4b735f56016957f93d19be19305e1c5688e056922626d55c2e29dc14f11021b3",
+          "template": "src/main/resources/data/kithkyn/structure/house_mushroom_1.nbt",
+          "template_sha256": "3219acf697fe850dbbea8618818ddf684f58c433a180ba50e0f50d405c48940e"
+        },
+        {
+          "id": "house_mushroom_1__one_bed",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/house_mushroom_1__one_bed.json",
+          "definition_sha256": "ac3119ea9011fa083bf568cc5ab26dc8a0f0fb7003109a9d197d93c16f500704",
+          "template": "src/main/resources/data/kithkyn/structure/house_mushroom_1__one_bed.nbt",
+          "template_sha256": "8deafbe464804374db8861d7aa04ddeb9b12606c49d2dd2efe43a558bae67b69"
+        },
+        {
+          "id": "hunting_lodge_mushroom_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/hunting_lodge_mushroom_1.json",
+          "definition_sha256": "f025bf747da7f196b7cc00b8a3d57bea84c95410233ecd5e18e7dcab8cf1ba85",
+          "template": "src/main/resources/data/kithkyn/structure/hunting_lodge_mushroom_1.nbt",
+          "template_sha256": "6e7a0f3f1af9c765fc5d7fc1f4f3b4c47e16d56031e3b528bbd2691f8530bb71"
+        },
+        {
+          "id": "lumberjack_mushroom_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/lumberjack_mushroom_1.json",
+          "definition_sha256": "bc68b3b735d06cef2c0b45f52af9a88ee4e75151a8ec2805a10ea981fd9c0334",
+          "template": "src/main/resources/data/kithkyn/structure/lumberjack_mushroom_1.nbt",
+          "template_sha256": "f25d35c3930227b999e083f4324ad6a1dad1a0afb52f2886d35c65fcff3c14f8"
+        },
+        {
+          "id": "market_mushroom_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/market_mushroom_1.json",
+          "definition_sha256": "a9ae6278a920a20c9e58092601bc221928c71fe33e394568e5738d925605f9ba",
+          "template": "src/main/resources/data/kithkyn/structure/market_mushroom_1.nbt",
+          "template_sha256": "39b12125b78ad6738d73e721d426207930290af99bba213868471acb540284c9"
+        },
+        {
+          "id": "market_mushroom_2",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/market_mushroom_2.json",
+          "definition_sha256": "51f6193e4eace151f5945716b0772eefb6cb304d489cde8f42fb04f8ff8651ca",
+          "template": "src/main/resources/data/kithkyn/structure/market_mushroom_2.nbt",
+          "template_sha256": "f6c2c2a13bf225350cea918edf076d1f99b7d5c6026ec5b03969310a6cf8210c"
+        },
+        {
+          "id": "market_mushroom_3",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/market_mushroom_3.json",
+          "definition_sha256": "abc6d9e7a6e8b613f70af301d2672ae6958bb8bf3f0df27b11984d20fefb3c0a",
+          "template": "src/main/resources/data/kithkyn/structure/market_mushroom_3.nbt",
+          "template_sha256": "b12b3ab44b39a1722a82c81d1dbfdb5a977665aedbfdea4d114e5b766a206fa3"
+        },
+        {
+          "id": "mine_mushroom_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/mine_mushroom_1.json",
+          "definition_sha256": "3d9011e551b9d57037eed2d863af2b5bcf58f65bb7c867b484e9ef560aa45326",
+          "template": "src/main/resources/data/kithkyn/structure/mine_mushroom_1.nbt",
+          "template_sha256": "057b0eb329898f4bf7a322a9c3020b043296fe63c0726c926080941147fbbbc9"
+        },
+        {
+          "id": "stoneworks_mushroom_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/stoneworks_mushroom_1.json",
+          "definition_sha256": "1cb05e7f71880105d1e75f7009867880c0f9f11baf152fcf80e0f3632db6b3ee",
+          "template": "src/main/resources/data/kithkyn/structure/stoneworks_mushroom_1.nbt",
+          "template_sha256": "6354f218b173c95b7a51390da7185bb26b488cc399921f2d4bf724a39f3a1681"
+        },
+        {
+          "id": "storehouse_mushroom_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/storehouse_mushroom_1.json",
+          "definition_sha256": "bc17b0417a6fa1b0b37370fdb00ae8bb1e8b1e9c46a8fe4f4a99002e1c20925e",
+          "template": "src/main/resources/data/kithkyn/structure/storehouse_mushroom_1.nbt",
+          "template_sha256": "8adee2b09686ade17e835ae6fd6721890fbf792677ff8659c6490a1ded62d8be"
+        },
+        {
+          "id": "village_center_mushroom_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/village_center_mushroom_1.json",
+          "definition_sha256": "a6bf9df97ef5e9814d04f8a00645d6faa0893e4ecde838189574555ed3eb7fdc",
+          "template": "src/main/resources/data/kithkyn/structure/village_center_mushroom_1.nbt",
+          "template_sha256": "180a8d5c0b9be084e6cf94392a031adaf68441141a08f56bdf9b936412537223"
+        },
+        {
+          "id": "well_mushroom_1",
+          "definition": "src/main/resources/data/kithkyn/kithkyn/buildings/well_mushroom_1.json",
+          "definition_sha256": "f8f4bfbaf90acc688248d1b8920f9180ec68e9b8592dfe348679cb3da30c9d13",
+          "template": "src/main/resources/data/kithkyn/structure/well_mushroom_1.nbt",
+          "template_sha256": "e70f0a207faf217507ce07dd876d4f6a01ca6704555f0380486e340d41f88018"
+        }
+      ]
+    }
+  ]
+}

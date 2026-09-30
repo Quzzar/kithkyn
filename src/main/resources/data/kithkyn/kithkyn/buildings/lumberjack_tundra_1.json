@@ -1,0 +1,86 @@
+{
+  "structure": "lumberjack_tundra_1",
+  "category": "lumberjack",
+  "variant": "tundra",
+  "beds": [
+    [
+      1,
+      1,
+      3
+    ]
+  ],
+  "work_stations": [
+    {
+      "pos": [
+        2,
+        1,
+        7
+      ],
+      "occupation": "LUMBERJACK"
+    }
+  ],
+  "worksites": [],
+  "containers": [
+    [
+      5,
+      0,
+      9
+    ]
+  ],
+  "personal_containers": [
+    [
+      3,
+      0,
+      1
+    ]
+  ],
+  "bed_containers": [
+    {
+      "bed": [
+        1,
+        1,
+        3
+      ],
+      "containers": [
+        [
+          3,
+          0,
+          1
+        ]
+      ]
+    }
+  ],
+  "couple_beds": [],
+  "village_identity": {
+    "primary_blocks": [
+      [
+        1,
+        1,
+        3
+      ]
+    ],
+    "secondary_blocks": [],
+    "banners": []
+  },
+  "sink": 0,
+  "entrance_facing": "east",
+  "grants": [
+    "HOUSING",
+    "STORAGE",
+    "LOGS",
+    "PLANKS"
+  ],
+  "worker_beds": [
+    [
+      1,
+      1,
+      3
+    ]
+  ],
+  "cost": [
+    {
+      "item": "minecraft:cobblestone",
+      "count": 40
+    }
+  ]
+}

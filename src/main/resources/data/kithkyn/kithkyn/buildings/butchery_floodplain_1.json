@@ -1,0 +1,78 @@
+{
+  "category": "butchery",
+  "beds": [
+    [
+      5,
+      1,
+      7
+    ]
+  ],
+  "worker_beds": [
+    [
+      5,
+      1,
+      7
+    ]
+  ],
+  "couple_beds": [],
+  "work_stations": [
+    {
+      "occupation": "BUTCHER",
+      "pos": [
+        6,
+        1,
+        6
+      ]
+    }
+  ],
+  "personal_containers": [],
+  "containers": [
+    [
+      7,
+      1,
+      5
+    ]
+  ],
+  "bed_containers": [
+    {
+      "bed": [
+        5,
+        1,
+        7
+      ],
+      "containers": []
+    }
+  ],
+  "village_identity": {
+    "primary_blocks": [
+      [
+        5,
+        1,
+        7
+      ]
+    ],
+    "secondary_blocks": [],
+    "banners": []
+  },
+  "sink": 0,
+  "entrance_facing": "north",
+  "grants": [
+    "HOUSING",
+    "STORAGE",
+    "FOOD",
+    "MEAT",
+    "LEATHER"
+  ],
+  "cost": [
+    {
+      "item": "minecraft:oak_log",
+      "count": 28
+    },
+    {
+      "item": "minecraft:cobblestone",
+      "count": 20
+    }
+  ],
+  "structure": "butchery_floodplain_1",
+  "variant": "floodplain"
+}

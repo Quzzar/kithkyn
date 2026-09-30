@@ -1,0 +1,65 @@
+{
+  "structure": "house_polynesian_coast_1__stilted",
+  "category": "house",
+  "variant": "polynesian_coast",
+  "beds": [
+    [
+      4,
+      3,
+      4
+    ]
+  ],
+  "work_stations": [],
+  "worksites": [],
+  "containers": [],
+  "personal_containers": [
+    [
+      2,
+      3,
+      2
+    ]
+  ],
+  "bed_containers": [
+    {
+      "bed": [
+        4,
+        3,
+        4
+      ],
+      "containers": [
+        [
+          2,
+          3,
+          2
+        ]
+      ]
+    }
+  ],
+  "couple_beds": [],
+  "village_identity": {
+    "primary_blocks": [
+      [
+        4,
+        3,
+        4
+      ]
+    ],
+    "secondary_blocks": [],
+    "banners": []
+  },
+  "sink": -1,
+  "entrance_facing": "north",
+  "grants": [
+    "HOUSING"
+  ],
+  "cost": [
+    {
+      "item": "minecraft:oak_log",
+      "count": 16
+    },
+    {
+      "item": "minecraft:cobblestone",
+      "count": 4
+    }
+  ]
+}

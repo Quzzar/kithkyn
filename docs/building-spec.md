@@ -5,23 +5,20 @@ approved catalog for `birch_forest`. Its 23 templates and exact amenities supers
 document's older generic tier counts, founding contents and candidate choices for that family.
 In particular it has no tier-3 house/farm or higher center/storehouse/mine/church. The bakery
 and tavern are separate buildings, each with one worker bed and a personal container. The approved
-private catalogs for Desert, Badlands, Floodplain and Jungle are documented separately; Jungle's
+bundled catalogs for Desert, Badlands, Floodplain and Jungle are documented separately; Jungle's
 22-template catalog and four-home start are specified in [jungle-village.md](jungle-village.md).
 
 **The catalogue below enumerates 36 categories; 22 of them survived the cut.** The totals in
 this document count the full map of the possible, not the shipping set — see
 [The cut](#the-cut) for which categories stand and why the rest went.
 
-**Current contract, with a historical catalog below.** Reality check before reading: the jar bundles one family, the
-23-template Birch Forest catalog of [birch-village.md](birch-village.md), and that is the whole
-shipped set. It covers every founding and phase 1 category at level 1 (`house` and `farm` also
-at level 2, `watchtower` at level 2, `market` at levels 1 to 3), with real MASON, HUNTER,
-FISHER, BAKER, BUTCHER and INNKEEPER occupations behind the workplaces. The old Village Life
-families (plains, taiga, snowy, savanna and the bundled desert set), which carried the
-level-3 houses, level-2 mines and level-3 farms this document once counted, were removed on
-2026-09-10. Desert, Badlands, Floodplain and Jungle ship locally as private datapacks with their
-own enumerations ([desert-village.md](desert-village.md), [badlands-village.md](badlands-village.md),
-[floodplain-village.md](floodplain-village.md), [jungle-village.md](jungle-village.md)).
+**Current shipping contract (2026-09-30).** The jar bundles all seventeen approved regional
+catalogs: 394 building definitions and 459 templates, including the shared wall families.
+The exact shipping set and hashes live in [the release manifest](../tools/release/bundled-catalogs.json).
+Each regional village document records its authored variants, amenities and founding contents.
+The older generic tier tables below are design history, rather than a promise that every
+family includes every tier. The removed Village Life catalogs are distinct from the current
+Taiga, Savanna Tent and Desert catalogs.
 
 **One occupation exists only as a name in these tables**: HERDER is not in the
 Occupation enum, and a definition naming one fails the codec
@@ -627,7 +624,7 @@ Arrival and room assignment continue to follow [population-and-labor.md](populat
 ## The catalog
 
 The "Variants" line under each category names what the jar bundles today, which is the Birch
-Forest catalog alone ([birch-village.md](birch-village.md)); the private Desert and Badlands
+Forest catalog alone ([birch-village.md](birch-village.md)); the bundled Desert and Badlands
 packs enumerate their own buildings in [desert-village.md](desert-village.md) and
 [badlands-village.md](badlands-village.md). The catalog below is historical. Current recipes and
 grants are owned by each exact definition and recorded in the
