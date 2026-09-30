@@ -14,10 +14,12 @@ not load old Village Life worlds.
 ## What it does
 
 - **Villages that grow.** A village founds itself with a centre and a campfire, then plans,
-  saves for, and constructs its own buildings from a catalog of thirteen biome styles:
+  saves for, and constructs its own buildings from seventeen bundled regional catalogs:
   birch forest, desert, badlands, floodplain, jungle, swamp, Mediterranean plains, tundra,
-  alpine highlands, Japanese cherry grove, nautical coast, Polynesian coast, and Romanian,
-  each with its own houses, farms, workshops, market, and wall.
+  alpine highlands, Japanese cherry grove, nautical coast, Polynesian coast, Romanian, Savanna Tent, Rustic Woodland, Taiga, and
+  Mushroom. The jar includes 394 building definitions and 459 templates, including walls;
+  no additional building datapacks are required. Each catalog has its own authored variants
+  and upgrades.
 - **People, not villagers.** Every person carries genetics, a stat block, an appearance
   composed from inherited features, a persona, and opinions of everyone they know. They
   take jobs from the campfire pool: builder, farmer, lumberjack, miner, guard, cleric,
@@ -39,8 +41,8 @@ not load old Village Life worlds.
 | | |
 | --- | --- |
 | Minecraft | 1.21.1 |
-| Loader | NeoForge 21.1.0 or newer |
-| Java | 21 (the Minecraft launcher and the NeoForge installer provide it) |
+| Loader | NeoForge 21.1.72 (tested); metadata allows 21.1.0+ |
+| Java | 21 (use the Minecraft launcher’s bundled runtime, or install Java 21 for a server) |
 | Sides | Both. Install on the server and on every client. |
 | Disk | About 2 GB for the offline language model, downloaded once |
 | Memory | Roughly 3 GB on top of the server's usual heap for the offline model, or nothing extra with a cloud provider |
@@ -51,8 +53,12 @@ not load old Village Life worlds.
 2. Put `kithkyn-<version>.jar` in the `mods` folder, on the server and on each client.
 3. Start the game. On the first start of any world or server, Kithkyn downloads its
    language model (about 2 GB) into `kithkyn/` inside the game directory. This happens once
-   and needs an internet connection; later starts are offline. Villagers fall back to
+   and needs an internet connection; later starts are offline. Downloads are pinned, checked against SHA-256 hashes, and
+   resumed after interruptions. Villagers fall back to
    rule-based behaviour until the model is ready, so the world is playable meanwhile.
+
+Single-player uses the same download in that installation’s game directory. Allow the
+extra model RAM in addition to Minecraft’s own memory.
 
 Kithkyn's villages generate in place of Minecraft's in chunks created after the mod is
 installed. Villages already generated in an existing world are left as they are.
@@ -91,9 +97,9 @@ key with a comment. The ones most people change:
 ## Commands
 
 `/kithkyn` is the player-facing command: found a village at a position in a chosen style,
-inspect a village's plan, treasury, and residents, and trigger raids. The world-changing
-branches need operator permission. `/kkdev` holds developer tooling and is
-off unless `Developer commands` is enabled.
+check AI status or retry startup. It requires operator permission.
+World-changing diagnostics, treasury controls and raid tools live under `/kkdev`. `/kkdev` holds developer tooling and is
+off unless `Developer commands` is enabled in the advanced config; it also requires operator permission.
 
 ## Compatibility
 
@@ -102,6 +108,12 @@ off unless `Developer commands` is enabled.
 - [Curios API](https://www.curseforge.com/minecraft/mc-mods/curios) is optional. When a
   Curios-backed mod is installed, villagers notice and use accessory slots.
 - Modpacks: item values for the market are data-driven; see [docs/economy.md](docs/economy.md).
+
+## Current limits
+
+Villager undertakings and quests remain experimental and are not a released gameplay feature.
+Ships and Nether settlement styles are future designs; the seventeen regional catalogs above
+are the bundled playable set.
 
 ## Development
 
@@ -122,7 +134,7 @@ current release checklist are in [docs/release.md](docs/release.md).
 
 Issues and pull requests are welcome at the
 [issue tracker](https://github.com/Quzzar/kithkyn/issues). Fork, branch, and open a PR; CI
-builds every push.
+builds every pull request and push to main.
 
 ## License
 
@@ -155,6 +167,6 @@ We're happy to listen and work with you on changes.
 **Models.** Built with Llama. The default offline model is
 [Llama 3.2 3B Instruct](https://www.llama.com/llama3_2/license/), used under the Llama 3.2
 Community License. The alternative is [Gemma 2 2B](https://ai.google.dev/gemma/terms),
-used under the Gemma Terms of Use. The offline runtime is
+used under the Gemma Terms of Use and its [Prohibited Use Policy](https://ai.google.dev/gemma/prohibited_use_policy). The offline runtime is
 [llama.cpp](https://github.com/ggml-org/llama.cpp) (MIT). Kithkyn downloads these on first
 start rather than shipping them.
