@@ -1,0 +1,81 @@
+{
+  "category": "stoneworks",
+  "beds": [
+    [
+      10,
+      2,
+      4
+    ]
+  ],
+  "worker_beds": [
+    [
+      10,
+      2,
+      4
+    ]
+  ],
+  "couple_beds": [],
+  "work_stations": [
+    {
+      "occupation": "MASON",
+      "pos": [
+        5,
+        2,
+        6
+      ]
+    }
+  ],
+  "personal_containers": [
+    [
+      10,
+      2,
+      6
+    ]
+  ],
+  "containers": [],
+  "bed_containers": [
+    {
+      "bed": [
+        10,
+        2,
+        4
+      ],
+      "containers": [
+        [
+          10,
+          2,
+          6
+        ]
+      ]
+    }
+  ],
+  "village_identity": {
+    "primary_blocks": [],
+    "secondary_blocks": [
+      [
+        10,
+        2,
+        4
+      ]
+    ],
+    "banners": []
+  },
+  "sink": 0,
+  "entrance_facing": "south",
+  "grants": [
+    "HOUSING",
+    "CUT_STONE"
+  ],
+  "cost": [
+    {
+      "item": "minecraft:oak_log",
+      "count": 8
+    },
+    {
+      "item": "minecraft:cobblestone",
+      "count": 36
+    }
+  ],
+  "structure": "stoneworks_desert_1",
+  "variant": "desert"
+}

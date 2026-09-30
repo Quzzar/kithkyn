@@ -43,7 +43,7 @@ its production catalog and founding behavior are verified.
 No village biome is a locked direction today: every land variant on the roster has its catalog.
 
 Jungle, ordinary Swamp, Mediterranean, Tundra, Polynesian Coast, Romanian, Alpine Highlands,
-Japanese Cherry Grove, Nautical Coast, Savanna Tent, Rustic Woodland, Taiga and Mushroom are complete private production catalogs. Swamp remains
+Japanese Cherry Grove, Nautical Coast, Savanna Tent, Rustic Woodland, Taiga and Mushroom are complete bundled production catalogs. Swamp remains
 separate from the mud-brick Floodplain catalog used by mangroves. Tundra starts from a four-bed
 centre with a naturally placed mine and storehouse and deliberately has no castle. The Polynesian
 Coast centre is the king's hall, which seats the ruler and keeps the village jail; that catalog has
@@ -119,7 +119,7 @@ The current review status is:
   their private display copies. The exact sources, hashes, positions and screenshots are recorded
   in `tools/structure/tundra-full-profile-20260912.json`. The selected center, homes, storehouse,
   food buildings, sole watchtower, church, workshops, two farm tiers, mine, T04.8 hunter, T04.4
-  bakery, T11.2 tavern and T09.10 well form the verified 23-building private production catalog
+  bakery, T11.2 tavern and T09.10 well form the verified 23-building bundled production catalog
   recorded in `tools/structure/tundra-catalog-20260912.json`. Four snow golems begin at the centre as
   unclaimed guard recruits. Three complete market tiers preserve the market's established trade
   colors; every stall has one supported entrance carpet. The single-level wall uses snow, packed

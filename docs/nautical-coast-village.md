@@ -1,5 +1,7 @@
 # Nautical Coast village
 
+**Release availability:** this approved catalog ships in the Kithkyn jar. No separate world datapack is required. Exact shipped definitions and template hashes are recorded in [the bundled catalog manifest](../tools/release/bundled-catalogs.json). Local `run/` paths below are historical authoring and verification records.
+
 The Nautical Coast catalog is the temperate fishing town. A lighthouse stands over the town fire,
 thatched cottages of sandstone and jungle timber sit on the sand, a fishing hut stands on its own
 water at the end of a jetty, and a turnover ship drawn up on the beach is the ruler's castle. It is
@@ -45,7 +47,7 @@ Polynesian gallery showed as PC07.4. It is the settlement's ruling seat ([castle
 
 ## Selected buildings
 
-The private datapack contains 24 definitions:
+The bundled datapack contains 24 definitions:
 
 | Id | Exhibit | Use |
 | --- | --- | --- |
@@ -138,7 +140,7 @@ are in `tools/structure/nautical-coast-walls-20260913.json` and [walls.md](walls
 Every piece is captured in its exact footprint, except the NC05.4 cross, which grows one block west
 for the barrel Aaron set beside it.
 
-`run/nautical-integration/prepare.py` writes the private datapack through
+`run/nautical-integration/prepare.py` writes the bundled datapack through
 `tools/structure/VillageTemplateExport.java`:
 
 - It removes gallery markers, neutralizes beds and village banners, and plants the lumberjack's

@@ -1,0 +1,78 @@
+{
+  "structure": "fishery_tundra_1",
+  "category": "fishery",
+  "variant": "tundra",
+  "beds": [
+    [
+      6,
+      2,
+      3
+    ]
+  ],
+  "work_stations": [
+    {
+      "pos": [
+        6,
+        2,
+        2
+      ],
+      "occupation": "FISHER"
+    }
+  ],
+  "worksites": [],
+  "containers": [
+    [
+      6,
+      2,
+      1
+    ]
+  ],
+  "personal_containers": [],
+  "bed_containers": [
+    {
+      "bed": [
+        6,
+        2,
+        3
+      ],
+      "containers": []
+    }
+  ],
+  "couple_beds": [],
+  "village_identity": {
+    "primary_blocks": [
+      [
+        6,
+        2,
+        3
+      ]
+    ],
+    "secondary_blocks": [],
+    "banners": []
+  },
+  "sink": 1,
+  "entrance_facing": "east",
+  "grants": [
+    "HOUSING",
+    "STORAGE",
+    "FOOD",
+    "FISH"
+  ],
+  "worker_beds": [
+    [
+      6,
+      2,
+      3
+    ]
+  ],
+  "cost": [
+    {
+      "item": "minecraft:oak_log",
+      "count": 20
+    },
+    {
+      "item": "minecraft:cobblestone",
+      "count": 28
+    }
+  ]
+}

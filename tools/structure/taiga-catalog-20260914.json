@@ -632,5 +632,12 @@
       },
       "installed": "with the Mushroom release of 2026-09-15 (run/mushroom-deploy-20260915)"
     }
-  ]
+  ],
+  "source_policy": "Bundled in the Kithkyn jar under the September 14, 2026 release decision. Approved edits and source provenance are retained; creator credits and the standing offer to revise designs are in README.md.",
+  "bundled": {
+    "date": "2026-09-30",
+    "source": "run/trio-20260912/datapacks/kithkyn-taiga",
+    "manifest": "tools/release/bundled-catalogs.json",
+    "definitions": 23
+  }
 }

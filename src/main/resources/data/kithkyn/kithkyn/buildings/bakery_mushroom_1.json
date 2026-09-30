@@ -1,0 +1,49 @@
+{
+  "structure": "bakery_mushroom_1",
+  "category": "bakery",
+  "variant": "mushroom",
+  "beds": [],
+  "work_stations": [
+    {
+      "pos": [
+        3,
+        1,
+        6
+      ],
+      "occupation": "BAKER"
+    }
+  ],
+  "worksites": [],
+  "containers": [
+    [
+      1,
+      1,
+      0
+    ]
+  ],
+  "personal_containers": [],
+  "bed_containers": [],
+  "couple_beds": [],
+  "village_identity": {
+    "primary_blocks": [],
+    "secondary_blocks": [],
+    "banners": []
+  },
+  "sink": 0,
+  "entrance_facing": "west",
+  "grants": [
+    "STORAGE",
+    "FOOD",
+    "BAKED_GOODS"
+  ],
+  "cost": [
+    {
+      "item": "minecraft:oak_log",
+      "count": 24
+    },
+    {
+      "item": "minecraft:cobblestone",
+      "count": 16
+    }
+  ]
+}

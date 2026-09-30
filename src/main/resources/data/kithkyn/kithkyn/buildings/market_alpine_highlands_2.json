@@ -1,0 +1,67 @@
+{
+  "structure": "market_alpine_highlands_2",
+  "category": "market",
+  "variant": "alpine_highlands",
+  "beds": [],
+  "work_stations": [
+    {
+      "pos": [
+        3,
+        1,
+        4
+      ],
+      "occupation": "MERCHANT"
+    },
+    {
+      "pos": [
+        11,
+        1,
+        4
+      ],
+      "occupation": "MERCHANT"
+    }
+  ],
+  "worksites": [],
+  "containers": [
+    [
+      3,
+      0,
+      5
+    ],
+    [
+      11,
+      0,
+      5
+    ]
+  ],
+  "personal_containers": [],
+  "bed_containers": [],
+  "couple_beds": [],
+  "village_identity": {
+    "primary_blocks": [],
+    "secondary_blocks": [],
+    "banners": []
+  },
+  "sink": 0,
+  "entrance_facing": "west",
+  "grants": [
+    "STORAGE",
+    "TRADE",
+    "TRADE_INITIATIVE"
+  ],
+  "cost": [
+    {
+      "item": "minecraft:oak_log",
+      "count": 20
+    },
+    {
+      "item": "minecraft:cobblestone",
+      "count": 40
+    },
+    {
+      "item": "minecraft:white_wool",
+      "count": 8
+    }
+  ],
+  "upgrades_from": "market_alpine_highlands_1"
+}

@@ -1,0 +1,45 @@
+{
+  "structure": "lumberjack_mushroom_1",
+  "category": "lumberjack",
+  "variant": "mushroom",
+  "beds": [],
+  "work_stations": [
+    {
+      "pos": [
+        0,
+        1,
+        3
+      ],
+      "occupation": "LUMBERJACK"
+    }
+  ],
+  "worksites": [],
+  "containers": [
+    [
+      8,
+      1,
+      2
+    ]
+  ],
+  "personal_containers": [],
+  "bed_containers": [],
+  "couple_beds": [],
+  "village_identity": {
+    "primary_blocks": [],
+    "secondary_blocks": [],
+    "banners": []
+  },
+  "sink": 0,
+  "entrance_facing": "east",
+  "grants": [
+    "STORAGE",
+    "LOGS",
+    "PLANKS"
+  ],
+  "cost": [
+    {
+      "item": "minecraft:cobblestone",
+      "count": 28
+    }
+  ]
+}

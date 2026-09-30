@@ -1,0 +1,65 @@
+{
+  "structure": "house_alpine_highlands_1",
+  "category": "house",
+  "variant": "alpine_highlands",
+  "beds": [
+    [
+      5,
+      1,
+      2
+    ]
+  ],
+  "work_stations": [],
+  "worksites": [],
+  "containers": [],
+  "personal_containers": [
+    [
+      3,
+      1,
+      2
+    ]
+  ],
+  "bed_containers": [
+    {
+      "bed": [
+        5,
+        1,
+        2
+      ],
+      "containers": [
+        [
+          3,
+          1,
+          2
+        ]
+      ]
+    }
+  ],
+  "couple_beds": [],
+  "village_identity": {
+    "primary_blocks": [
+      [
+        5,
+        1,
+        2
+      ]
+    ],
+    "secondary_blocks": [],
+    "banners": []
+  },
+  "sink": -1,
+  "entrance_facing": "south",
+  "grants": [
+    "HOUSING"
+  ],
+  "cost": [
+    {
+      "item": "minecraft:oak_log",
+      "count": 12
+    },
+    {
+      "item": "minecraft:cobblestone",
+      "count": 8
+    }
+  ]
+}

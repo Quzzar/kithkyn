@@ -1,0 +1,76 @@
+{
+  "structure": "market_desert_3",
+  "upgrades_from": "market_desert_2",
+  "work_stations": [
+    {
+      "pos": [
+        7,
+        1,
+        4
+      ],
+      "occupation": "MERCHANT"
+    },
+    {
+      "pos": [
+        3,
+        1,
+        12
+      ],
+      "occupation": "MERCHANT"
+    },
+    {
+      "pos": [
+        11,
+        1,
+        12
+      ],
+      "occupation": "MERCHANT"
+    }
+  ],
+  "containers": [
+    [
+      8,
+      0,
+      4
+    ],
+    [
+      3,
+      0,
+      13
+    ],
+    [
+      11,
+      0,
+      13
+    ]
+  ],
+  "grants": [
+    "STORAGE",
+    "TRADE",
+    "TRADE_INITIATIVE"
+  ],
+  "cost": [
+    {
+      "item": "minecraft:oak_log",
+      "count": 20
+    },
+    {
+      "item": "minecraft:cobblestone",
+      "count": 52
+    },
+    {
+      "item": "minecraft:white_wool",
+      "count": 12
+    },
+    {
+      "item": "minecraft:iron_ingot",
+      "count": 4
+    }
+  ],
+  "entrance_facing": "west",
+  "village_identity": {
+    "primary_blocks": [],
+    "secondary_blocks": [],
+    "banners": []
+  }
+}

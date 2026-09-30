@@ -210,10 +210,17 @@ tasks.withType(Test).configureEach {
 var auditStructureTemplates = tasks.register("auditStructureTemplates", Exec) {
     group = "verification"
     description = "Rejects structure templates containing gallery fixtures, invalid cells, or malformed market entrances."
-    commandLine "python3", "tools/structure/audit-templates.py", "src/main/resources/data/kithkyn/structure"
+    commandLine (findProperty("pythonExecutable") ?: "python3"), "tools/structure/audit-templates.py", "src/main/resources/data/kithkyn/structure"
+}
+
+var auditBundledCatalogs = tasks.register("auditBundledCatalogs", Exec) {
+    group = "verification"
+    description = "Verifies all shipped regional catalogs and their approved asset hashes."
+    commandLine (findProperty("pythonExecutable") ?: "python3"), "tools/release/audit-catalogs.py"
 }
 
 tasks.named("check").configure {
+    dependsOn auditBundledCatalogs
     dependsOn auditStructureTemplates
 }
 
@@ -268,4 +275,9 @@ idea {
         downloadSources = true
         downloadJavadoc = true
     }
+}
+
+// Keep source licensing and model notices available alongside the installed mod.
+tasks.named("jar").configure {
+    from(["LICENSE", "README.md"]) { into "META-INF" }
 }

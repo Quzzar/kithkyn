@@ -1,0 +1,447 @@
+{
+  "structure": "village_center_badlands_1",
+  "category": "village_center",
+  "variant": "badlands",
+  "beds": [
+    [
+      7,
+      1,
+      11
+    ],
+    [
+      18,
+      1,
+      12
+    ],
+    [
+      6,
+      1,
+      18
+    ],
+    [
+      17,
+      1,
+      21
+    ],
+    [
+      13,
+      1,
+      23
+    ],
+    [
+      9,
+      4,
+      10
+    ],
+    [
+      8,
+      4,
+      18
+    ],
+    [
+      19,
+      5,
+      12
+    ],
+    [
+      21,
+      5,
+      21
+    ],
+    [
+      13,
+      5,
+      23
+    ]
+  ],
+  "work_stations": [
+    {
+      "pos": [
+        12,
+        1,
+        16
+      ],
+      "occupation": "BUILDER"
+    },
+    {
+      "pos": [
+        11,
+        1,
+        16
+      ],
+      "occupation": "BUILDER"
+    },
+    {
+      "pos": [
+        12,
+        1,
+        15
+      ],
+      "occupation": "BUILDER"
+    },
+    {
+      "pos": [
+        13,
+        1,
+        15
+      ],
+      "occupation": "BUILDER"
+    },
+    {
+      "pos": [
+        11,
+        1,
+        17
+      ],
+      "occupation": "BUILDER"
+    },
+    {
+      "occupation": "GUARD",
+      "pos": [
+        12,
+        1,
+        18
+      ],
+      "guard_duty": "CAPTAIN"
+    },
+    {
+      "occupation": "GUARD",
+      "pos": [
+        8,
+        8,
+        18
+      ],
+      "guard_duty": "CROSSBOW_POST"
+    },
+    {
+      "occupation": "GUARD",
+      "pos": [
+        13,
+        10,
+        23
+      ],
+      "guard_duty": "CROSSBOW_POST"
+    },
+    {
+      "occupation": "GUARD",
+      "pos": [
+        11,
+        1,
+        15
+      ],
+      "guard_duty": "PATROL"
+    },
+    {
+      "occupation": "GUARD",
+      "pos": [
+        14,
+        1,
+        18
+      ],
+      "guard_duty": "PATROL"
+    }
+  ],
+  "personal_containers": [
+    [
+      9,
+      1,
+      8
+    ],
+    [
+      15,
+      1,
+      11
+    ],
+    [
+      8,
+      1,
+      18
+    ],
+    [
+      21,
+      2,
+      25
+    ],
+    [
+      8,
+      4,
+      20
+    ],
+    [
+      19,
+      5,
+      21
+    ],
+    [
+      15,
+      5,
+      25
+    ]
+  ],
+  "containers": [
+    [
+      15,
+      1,
+      14
+    ],
+    [
+      6,
+      2,
+      26
+    ],
+    [
+      16,
+      8,
+      10
+    ]
+  ],
+  "bed_containers": [
+    {
+      "bed": [
+        7,
+        1,
+        11
+      ],
+      "containers": [
+        [
+          9,
+          1,
+          8
+        ]
+      ]
+    },
+    {
+      "bed": [
+        18,
+        1,
+        12
+      ],
+      "containers": [
+        [
+          15,
+          1,
+          11
+        ]
+      ]
+    },
+    {
+      "bed": [
+        6,
+        1,
+        18
+      ],
+      "containers": [
+        [
+          8,
+          1,
+          18
+        ]
+      ]
+    },
+    {
+      "bed": [
+        17,
+        1,
+        21
+      ],
+      "containers": [
+        [
+          21,
+          2,
+          25
+        ]
+      ]
+    },
+    {
+      "bed": [
+        13,
+        1,
+        23
+      ],
+      "containers": []
+    },
+    {
+      "bed": [
+        9,
+        4,
+        10
+      ],
+      "containers": []
+    },
+    {
+      "bed": [
+        8,
+        4,
+        18
+      ],
+      "containers": [
+        [
+          8,
+          4,
+          20
+        ]
+      ]
+    },
+    {
+      "bed": [
+        19,
+        5,
+        12
+      ],
+      "containers": []
+    },
+    {
+      "bed": [
+        21,
+        5,
+        21
+      ],
+      "containers": [
+        [
+          19,
+          5,
+          21
+        ]
+      ]
+    },
+    {
+      "bed": [
+        13,
+        5,
+        23
+      ],
+      "containers": [
+        [
+          15,
+          5,
+          25
+        ]
+      ]
+    }
+  ],
+  "meeting_point": [
+    12,
+    1,
+    17
+  ],
+  "campfires": [
+    [
+      7,
+      9,
+      19
+    ],
+    [
+      14,
+      11,
+      24
+    ]
+  ],
+  "grants": [
+    "CIVIC_CENTER",
+    "CONSTRUCTION",
+    "LOGISTICS",
+    "HOUSING",
+    "PROTECTION",
+    "STORAGE",
+    "WATER"
+  ],
+  "cost": [
+    {
+      "item": "minecraft:oak_log",
+      "count": 64
+    },
+    {
+      "item": "minecraft:cobblestone",
+      "count": 148
+    }
+  ],
+  "sink": 0,
+  "village_identity": {
+    "primary_blocks": [
+      [
+        7,
+        1,
+        11
+      ],
+      [
+        6,
+        1,
+        18
+      ],
+      [
+        13,
+        1,
+        23
+      ],
+      [
+        8,
+        4,
+        18
+      ],
+      [
+        13,
+        5,
+        23
+      ]
+    ],
+    "secondary_blocks": [
+      [
+        18,
+        1,
+        12
+      ],
+      [
+        17,
+        1,
+        21
+      ],
+      [
+        9,
+        4,
+        10
+      ],
+      [
+        19,
+        5,
+        12
+      ],
+      [
+        21,
+        5,
+        21
+      ]
+    ],
+    "banners": [
+      [
+        10,
+        4,
+        17
+      ],
+      [
+        10,
+        4,
+        21
+      ],
+      [
+        23,
+        5,
+        20
+      ],
+      [
+        23,
+        5,
+        26
+      ],
+      [
+        5,
+        6,
+        9
+      ],
+      [
+        8,
+        7,
+        6
+      ]
+    ]
+  }
+}

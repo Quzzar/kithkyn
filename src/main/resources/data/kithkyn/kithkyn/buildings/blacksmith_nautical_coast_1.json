@@ -1,0 +1,93 @@
+{
+  "structure": "blacksmith_nautical_coast_1",
+  "category": "blacksmith",
+  "variant": "nautical_coast",
+  "beds": [
+    [
+      4,
+      2,
+      2
+    ]
+  ],
+  "work_stations": [
+    {
+      "pos": [
+        5,
+        2,
+        5
+      ],
+      "occupation": "BLACKSMITH"
+    }
+  ],
+  "worksites": [],
+  "containers": [
+    [
+      5,
+      2,
+      6
+    ]
+  ],
+  "personal_containers": [
+    [
+      6,
+      2,
+      4
+    ]
+  ],
+  "bed_containers": [
+    {
+      "bed": [
+        4,
+        2,
+        2
+      ],
+      "containers": [
+        [
+          6,
+          2,
+          4
+        ]
+      ]
+    }
+  ],
+  "couple_beds": [],
+  "village_identity": {
+    "primary_blocks": [
+      [
+        4,
+        2,
+        2
+      ]
+    ],
+    "secondary_blocks": [],
+    "banners": []
+  },
+  "sink": 0,
+  "entrance_facing": "west",
+  "grants": [
+    "HOUSING",
+    "STORAGE",
+    "REPAIR",
+    "SMELTING",
+    "TOOLS_IRON",
+    "ARMOR_IRON",
+    "SHIELDS"
+  ],
+  "worker_beds": [
+    [
+      4,
+      2,
+      2
+    ]
+  ],
+  "cost": [
+    {
+      "item": "minecraft:oak_log",
+      "count": 32
+    },
+    {
+      "item": "minecraft:cobblestone",
+      "count": 32
+    }
+  ]
+}

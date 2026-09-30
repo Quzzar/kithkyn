@@ -1,0 +1,90 @@
+{
+  "structure": "fishery_nautical_coast_1",
+  "category": "fishery",
+  "variant": "nautical_coast",
+  "beds": [
+    [
+      3,
+      1,
+      5
+    ]
+  ],
+  "work_stations": [
+    {
+      "pos": [
+        4,
+        1,
+        1
+      ],
+      "occupation": "FISHER"
+    }
+  ],
+  "worksites": [],
+  "containers": [
+    [
+      3,
+      0,
+      3
+    ]
+  ],
+  "personal_containers": [
+    [
+      5,
+      1,
+      5
+    ]
+  ],
+  "bed_containers": [
+    {
+      "bed": [
+        3,
+        1,
+        5
+      ],
+      "containers": [
+        [
+          5,
+          1,
+          5
+        ]
+      ]
+    }
+  ],
+  "couple_beds": [],
+  "village_identity": {
+    "primary_blocks": [
+      [
+        3,
+        1,
+        5
+      ]
+    ],
+    "secondary_blocks": [],
+    "banners": []
+  },
+  "sink": 0,
+  "entrance_facing": "north",
+  "grants": [
+    "HOUSING",
+    "STORAGE",
+    "FOOD",
+    "FISH"
+  ],
+  "worker_beds": [
+    [
+      3,
+      1,
+      5
+    ]
+  ],
+  "cost": [
+    {
+      "item": "minecraft:oak_log",
+      "count": 24
+    },
+    {
+      "item": "minecraft:cobblestone",
+      "count": 12
+    }
+  ]
+}

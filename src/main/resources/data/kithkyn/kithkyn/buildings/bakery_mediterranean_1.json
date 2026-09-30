@@ -1,0 +1,132 @@
+{
+  "structure": "bakery_mediterranean_1",
+  "category": "bakery",
+  "variant": "mediterranean",
+  "beds": [
+    [
+      8,
+      1,
+      4
+    ]
+  ],
+  "work_stations": [
+    {
+      "pos": [
+        3,
+        1,
+        2
+      ],
+      "occupation": "BAKER"
+    }
+  ],
+  "worksites": [],
+  "containers": [
+    [
+      4,
+      1,
+      4
+    ],
+    [
+      5,
+      2,
+      8
+    ],
+    [
+      8,
+      1,
+      6
+    ]
+  ],
+  "personal_containers": [
+    [
+      8,
+      0,
+      3
+    ]
+  ],
+  "decorative_containers": [
+    [
+      1,
+      4,
+      7
+    ]
+  ],
+  "bed_containers": [
+    {
+      "bed": [
+        8,
+        1,
+        4
+      ],
+      "containers": [
+        [
+          8,
+          0,
+          3
+        ]
+      ]
+    }
+  ],
+  "couple_beds": [],
+  "village_identity": {
+    "primary_blocks": [
+      [
+        0,
+        3,
+        4
+      ],
+      [
+        1,
+        3,
+        3
+      ],
+      [
+        3,
+        3,
+        2
+      ],
+      [
+        3,
+        3,
+        4
+      ],
+      [
+        4,
+        3,
+        3
+      ],
+      [
+        8,
+        1,
+        4
+      ]
+    ],
+    "secondary_blocks": [],
+    "banners": []
+  },
+  "sink": 0,
+  "entrance_facing": "north",
+  "grants": [
+    "HOUSING",
+    "STORAGE",
+    "FOOD",
+    "BAKED_GOODS"
+  ],
+  "worker_beds": [
+    [
+      8,
+      1,
+      4
+    ]
+  ],
+  "cost": [
+    {
+      "item": "minecraft:oak_log",
+      "count": 24
+    },
+    {
+      "item": "minecraft:cobblestone",
+      "count": 32
+    }
+  ]
+}

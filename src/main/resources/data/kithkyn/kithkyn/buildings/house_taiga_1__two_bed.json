@@ -1,0 +1,91 @@
+{
+  "structure": "house_taiga_1__two_bed",
+  "category": "house",
+  "variant": "taiga",
+  "beds": [
+    [
+      2,
+      1,
+      6
+    ],
+    [
+      3,
+      1,
+      2
+    ]
+  ],
+  "work_stations": [],
+  "worksites": [],
+  "containers": [],
+  "personal_containers": [
+    [
+      5,
+      1,
+      2
+    ]
+  ],
+  "bed_containers": [
+    {
+      "bed": [
+        2,
+        1,
+        6
+      ],
+      "containers": [
+        [
+          5,
+          1,
+          2
+        ]
+      ]
+    },
+    {
+      "bed": [
+        3,
+        1,
+        2
+      ],
+      "containers": [
+        [
+          5,
+          1,
+          2
+        ]
+      ]
+    }
+  ],
+  "couple_beds": [],
+  "village_identity": {
+    "primary_blocks": [
+      [
+        2,
+        1,
+        6
+      ]
+    ],
+    "secondary_blocks": [
+      [
+        3,
+        1,
+        2
+      ]
+    ],
+    "banners": []
+  },
+  "sink": 0,
+  "entrance_facing": "south",
+  "grants": [
+    "HOUSING",
+    "STORAGE"
+  ],
+  "cost": [
+    {
+      "item": "minecraft:spruce_log",
+      "count": 20
+    },
+    {
+      "item": "minecraft:cobblestone",
+      "count": 8
+    }
+  ]
+}

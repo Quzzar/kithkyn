@@ -1,0 +1,48 @@
+{
+  "category": "fishery",
+  "beds": [],
+  "couple_beds": [],
+  "work_stations": [
+    {
+      "occupation": "FISHER",
+      "pos": [
+        5,
+        2,
+        2
+      ]
+    }
+  ],
+  "personal_containers": [],
+  "containers": [
+    [
+      4,
+      1,
+      2
+    ]
+  ],
+  "bed_containers": [],
+  "village_identity": {
+    "primary_blocks": [],
+    "secondary_blocks": [],
+    "banners": []
+  },
+  "sink": 1,
+  "entrance_facing": "east",
+  "grants": [
+    "STORAGE",
+    "FOOD",
+    "FISH"
+  ],
+  "cost": [
+    {
+      "item": "minecraft:oak_log",
+      "count": 24
+    },
+    {
+      "item": "minecraft:cobblestone",
+      "count": 16
+    }
+  ],
+  "structure": "fishery_floodplain_1",
+  "variant": "floodplain"
+}

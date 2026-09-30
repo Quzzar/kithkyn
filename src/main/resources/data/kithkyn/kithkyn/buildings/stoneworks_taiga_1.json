@@ -1,0 +1,84 @@
+{
+  "structure": "stoneworks_taiga_1",
+  "category": "stoneworks",
+  "variant": "taiga",
+  "beds": [],
+  "work_stations": [
+    {
+      "pos": [
+        3,
+        1,
+        2
+      ],
+      "occupation": "MASON"
+    }
+  ],
+  "worksites": [],
+  "containers": [
+    [
+      2,
+      1,
+      2
+    ]
+  ],
+  "personal_containers": [],
+  "bed_containers": [],
+  "couple_beds": [],
+  "village_identity": {
+    "primary_blocks": [
+      [
+        1,
+        3,
+        3
+      ],
+      [
+        2,
+        3,
+        4
+      ],
+      [
+        2,
+        4,
+        2
+      ],
+      [
+        3,
+        4,
+        1
+      ],
+      [
+        3,
+        4,
+        3
+      ],
+      [
+        4,
+        4,
+        2
+      ],
+      [
+        5,
+        3,
+        1
+      ]
+    ],
+    "secondary_blocks": [],
+    "banners": []
+  },
+  "sink": 0,
+  "entrance_facing": "north",
+  "grants": [
+    "STORAGE",
+    "CUT_STONE"
+  ],
+  "cost": [
+    {
+      "item": "minecraft:spruce_log",
+      "count": 16
+    },
+    {
+      "item": "minecraft:cobblestone",
+      "count": 20
+    }
+  ]
+}

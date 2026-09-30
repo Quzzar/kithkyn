@@ -1,0 +1,125 @@
+{
+  "structure": "church_swamp_1__cleric_couple_home",
+  "category": "church",
+  "variant": "swamp",
+  "beds": [
+    [
+      7,
+      3,
+      5
+    ],
+    [
+      8,
+      3,
+      5
+    ]
+  ],
+  "work_stations": [
+    {
+      "pos": [
+        3,
+        3,
+        6
+      ],
+      "occupation": "CLERIC"
+    }
+  ],
+  "worksites": [],
+  "containers": [],
+  "personal_containers": [
+    [
+      8,
+      3,
+      8
+    ]
+  ],
+  "bed_containers": [
+    {
+      "bed": [
+        7,
+        3,
+        5
+      ],
+      "containers": [
+        [
+          8,
+          3,
+          8
+        ]
+      ]
+    },
+    {
+      "bed": [
+        8,
+        3,
+        5
+      ],
+      "containers": [
+        [
+          8,
+          3,
+          8
+        ]
+      ]
+    }
+  ],
+  "couple_beds": [
+    [
+      [
+        7,
+        3,
+        5
+      ],
+      [
+        8,
+        3,
+        5
+      ]
+    ]
+  ],
+  "village_identity": {
+    "primary_blocks": [
+      [
+        7,
+        3,
+        5
+      ],
+      [
+        8,
+        3,
+        5
+      ]
+    ],
+    "secondary_blocks": [],
+    "banners": []
+  },
+  "sink": -1,
+  "entrance_facing": "west",
+  "grants": [
+    "HOUSING",
+    "FAMILY_HOUSING",
+    "HEALING"
+  ],
+  "worker_beds": [
+    [
+      7,
+      3,
+      5
+    ],
+    [
+      8,
+      3,
+      5
+    ]
+  ],
+  "cost": [
+    {
+      "item": "minecraft:oak_log",
+      "count": 32
+    },
+    {
+      "item": "minecraft:cobblestone",
+      "count": 32
+    }
+  ]
+}

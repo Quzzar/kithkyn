@@ -1,0 +1,94 @@
+{
+  "structure": "watchtower_polynesian_coast_1",
+  "category": "watchtower",
+  "variant": "polynesian_coast",
+  "beds": [
+    [
+      2,
+      2,
+      2
+    ]
+  ],
+  "work_stations": [
+    {
+      "pos": [
+        3,
+        10,
+        3
+      ],
+      "occupation": "GUARD",
+      "guard_duty": "CROSSBOW_POST"
+    }
+  ],
+  "worksites": [],
+  "containers": [],
+  "personal_containers": [
+    [
+      6,
+      2,
+      2
+    ],
+    [
+      2,
+      10,
+      2
+    ]
+  ],
+  "bed_containers": [
+    {
+      "bed": [
+        2,
+        2,
+        2
+      ],
+      "containers": [
+        [
+          6,
+          2,
+          2
+        ],
+        [
+          2,
+          10,
+          2
+        ]
+      ]
+    }
+  ],
+  "couple_beds": [],
+  "village_identity": {
+    "primary_blocks": [
+      [
+        2,
+        2,
+        2
+      ]
+    ],
+    "secondary_blocks": [],
+    "banners": []
+  },
+  "sink": 0,
+  "entrance_facing": "south",
+  "grants": [
+    "HOUSING",
+    "PROTECTION",
+    "RANGED_GUARD_POSTS"
+  ],
+  "worker_beds": [
+    [
+      2,
+      2,
+      2
+    ]
+  ],
+  "cost": [
+    {
+      "item": "minecraft:oak_log",
+      "count": 20
+    },
+    {
+      "item": "minecraft:cobblestone",
+      "count": 20
+    }
+  ]
+}

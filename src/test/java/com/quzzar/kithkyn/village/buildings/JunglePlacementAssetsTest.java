@@ -15,13 +15,11 @@ import net.minecraft.nbt.NbtAccounter;
 import net.minecraft.nbt.NbtIo;
 import net.minecraft.nbt.Tag;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.condition.EnabledIfEnvironmentVariable;
 
-/** Authored pit and entrance contracts for the private Jungle mine. */
-@EnabledIfEnvironmentVariable(named = "KITHKYN_JUNGLE_DATAPACK", matches = ".+")
+/** Authored pit and entrance contracts for the bundled Jungle mine. */
 class JunglePlacementAssetsTest {
-  private static Path data() {
-    return Path.of(System.getenv("KITHKYN_JUNGLE_DATAPACK"), "data", "kithkyn");
+  private static Path data() throws Exception {
+    return Path.of(java.util.Objects.requireNonNull(JunglePlacementAssetsTest.class.getResource("/data/kithkyn")).toURI());
   }
 
   @Test
@@ -30,7 +28,7 @@ class JunglePlacementAssetsTest {
         data().resolve("kithkyn/buildings/mine_jungle_1.json"))).getAsJsonObject();
     assertEquals(0, definition.get("sink").getAsInt());
 
-    var worksite = definition.getAsJsonArray("worksites").get(0).getAsJsonObject().getAsJsonArray("pos");
+    var worksite = definition.getAsJsonArray("work_stations").get(0).getAsJsonObject().getAsJsonArray("pos");
     assertEquals(1, worksite.get(0).getAsInt());
     assertEquals(0, worksite.get(1).getAsInt());
     assertEquals(2, worksite.get(2).getAsInt());

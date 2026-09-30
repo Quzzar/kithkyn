@@ -1,0 +1,89 @@
+{
+  "category": "bakery",
+  "beds": [
+    [
+      4,
+      2,
+      8
+    ]
+  ],
+  "worker_beds": [
+    [
+      4,
+      2,
+      8
+    ]
+  ],
+  "couple_beds": [],
+  "work_stations": [
+    {
+      "occupation": "BAKER",
+      "pos": [
+        7,
+        2,
+        5
+      ]
+    }
+  ],
+  "personal_containers": [
+    [
+      4,
+      2,
+      9
+    ]
+  ],
+  "containers": [
+    [
+      3,
+      6,
+      8
+    ]
+  ],
+  "bed_containers": [
+    {
+      "bed": [
+        4,
+        2,
+        8
+      ],
+      "containers": [
+        [
+          4,
+          2,
+          9
+        ]
+      ]
+    }
+  ],
+  "village_identity": {
+    "primary_blocks": [],
+    "secondary_blocks": [
+      [
+        4,
+        2,
+        8
+      ]
+    ],
+    "banners": []
+  },
+  "sink": 0,
+  "entrance_facing": "south",
+  "grants": [
+    "HOUSING",
+    "STORAGE",
+    "FOOD",
+    "BAKED_GOODS"
+  ],
+  "cost": [
+    {
+      "item": "minecraft:oak_log",
+      "count": 16
+    },
+    {
+      "item": "minecraft:cobblestone",
+      "count": 28
+    }
+  ],
+  "structure": "bakery_desert_1",
+  "variant": "desert"
+}

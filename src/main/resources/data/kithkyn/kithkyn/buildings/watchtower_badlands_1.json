@@ -1,0 +1,76 @@
+{
+  "category": "watchtower",
+  "beds": [
+    [
+      5,
+      1,
+      3
+    ]
+  ],
+  "couple_beds": [],
+  "work_stations": [
+    {
+      "occupation": "GUARD",
+      "pos": [
+        5,
+        11,
+        3
+      ],
+      "guard_duty": "CROSSBOW_POST"
+    }
+  ],
+  "personal_containers": [
+    [
+      5,
+      1,
+      5
+    ]
+  ],
+  "containers": [],
+  "bed_containers": [
+    {
+      "bed": [
+        5,
+        1,
+        3
+      ],
+      "containers": [
+        [
+          5,
+          1,
+          5
+        ]
+      ]
+    }
+  ],
+  "village_identity": {
+    "primary_blocks": [
+      [
+        5,
+        1,
+        3
+      ]
+    ],
+    "secondary_blocks": [],
+    "banners": []
+  },
+  "sink": 0,
+  "entrance_facing": "west",
+  "grants": [
+    "HOUSING",
+    "PROTECTION",
+    "RANGED_GUARD_POSTS"
+  ],
+  "cost": [
+    {
+      "item": "minecraft:oak_log",
+      "count": 8
+    },
+    {
+      "item": "minecraft:cobblestone",
+      "count": 32
+    }
+  ],
+  "structure": "watchtower_badlands_1",
+  "variant": "badlands"
+}

@@ -1,0 +1,91 @@
+{
+  "structure": "butchery_polynesian_coast_1",
+  "category": "butchery",
+  "variant": "polynesian_coast",
+  "beds": [
+    [
+      2,
+      4,
+      5
+    ]
+  ],
+  "work_stations": [
+    {
+      "pos": [
+        3,
+        1,
+        2
+      ],
+      "occupation": "BUTCHER"
+    }
+  ],
+  "worksites": [],
+  "containers": [
+    [
+      5,
+      0,
+      0
+    ]
+  ],
+  "personal_containers": [
+    [
+      2,
+      4,
+      3
+    ]
+  ],
+  "bed_containers": [
+    {
+      "bed": [
+        2,
+        4,
+        5
+      ],
+      "containers": [
+        [
+          2,
+          4,
+          3
+        ]
+      ]
+    }
+  ],
+  "couple_beds": [],
+  "village_identity": {
+    "primary_blocks": [
+      [
+        2,
+        4,
+        5
+      ]
+    ],
+    "secondary_blocks": [],
+    "banners": []
+  },
+  "sink": 0,
+  "entrance_facing": "north",
+  "grants": [
+    "HOUSING",
+    "STORAGE",
+    "FOOD",
+    "MEAT",
+    "LEATHER"
+  ],
+  "worker_beds": [
+    [
+      2,
+      4,
+      5
+    ]
+  ],
+  "cost": [
+    {
+      "item": "minecraft:oak_log",
+      "count": 28
+    },
+    {
+      "item": "minecraft:cobblestone",
+      "count": 24
+    }
+  ]
+}

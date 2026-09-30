@@ -1,0 +1,123 @@
+{
+  "category": "storehouse",
+  "beds": [
+    [
+      7,
+      6,
+      8
+    ]
+  ],
+  "couple_beds": [],
+  "work_stations": [
+    {
+      "occupation": "QUARTERMASTER",
+      "pos": [
+        5,
+        1,
+        6
+      ]
+    }
+  ],
+  "personal_containers": [
+    [
+      6,
+      5,
+      8
+    ]
+  ],
+  "containers": [
+    [
+      3,
+      1,
+      5
+    ],
+    [
+      7,
+      1,
+      5
+    ],
+    [
+      3,
+      1,
+      7
+    ],
+    [
+      7,
+      1,
+      7
+    ],
+    [
+      6,
+      1,
+      8
+    ],
+    [
+      7,
+      2,
+      5
+    ],
+    [
+      3,
+      2,
+      7
+    ],
+    [
+      7,
+      2,
+      7
+    ],
+    [
+      3,
+      3,
+      7
+    ]
+  ],
+  "bed_containers": [
+    {
+      "bed": [
+        7,
+        6,
+        8
+      ],
+      "containers": [
+        [
+          6,
+          5,
+          8
+        ]
+      ]
+    }
+  ],
+  "village_identity": {
+    "primary_blocks": [
+      [
+        7,
+        6,
+        8
+      ]
+    ],
+    "secondary_blocks": [],
+    "banners": []
+  },
+  "sink": 4,
+  "entrance_facing": "north",
+  "grants": [
+    "LOGISTICS",
+    "HOUSING",
+    "STORAGE"
+  ],
+  "cost": [
+    {
+      "item": "minecraft:oak_log",
+      "count": 16
+    },
+    {
+      "item": "minecraft:cobblestone",
+      "count": 44
+    }
+  ],
+  "upgrades_from": "storehouse_badlands_1",
+  "structure": "storehouse_badlands_2",
+  "variant": "badlands",
+  "worksites": []
+}

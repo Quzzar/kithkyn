@@ -1,0 +1,59 @@
+{
+  "structure": "mine_alpine_highlands_1",
+  "category": "mine",
+  "variant": "alpine_highlands",
+  "beds": [],
+  "work_stations": [
+    {
+      "pos": [
+        3,
+        1,
+        1
+      ],
+      "occupation": "MINER"
+    }
+  ],
+  "worksites": [],
+  "containers": [
+    [
+      5,
+      0,
+      1
+    ]
+  ],
+  "personal_containers": [],
+  "bed_containers": [],
+  "couple_beds": [],
+  "village_identity": {
+    "primary_blocks": [],
+    "secondary_blocks": [],
+    "banners": []
+  },
+  "sink": 0,
+  "entrance_facing": "north",
+  "grants": [
+    "STONE",
+    "ORES",
+    "MINERALS",
+    "STORAGE"
+  ],
+  "cost": [
+    {
+      "item": "minecraft:oak_log",
+      "count": 24
+    },
+    {
+      "item": "minecraft:cobblestone",
+      "count": 28
+    }
+  ],
+  "mine_entrance": {
+    "facing": "south",
+    "offset": [
+      0,
+      0,
+      1
+    ],
+    "width": 3
+  }
+}

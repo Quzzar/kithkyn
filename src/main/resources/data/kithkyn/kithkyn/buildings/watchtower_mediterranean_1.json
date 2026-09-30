@@ -1,0 +1,94 @@
+{
+  "structure": "watchtower_mediterranean_1",
+  "category": "watchtower",
+  "variant": "mediterranean",
+  "beds": [
+    [
+      1,
+      5,
+      1
+    ]
+  ],
+  "work_stations": [
+    {
+      "pos": [
+        2,
+        5,
+        2
+      ],
+      "occupation": "GUARD",
+      "guard_duty": "CROSSBOW_POST"
+    }
+  ],
+  "worksites": [],
+  "containers": [],
+  "personal_containers": [
+    [
+      1,
+      1,
+      2
+    ]
+  ],
+  "bed_containers": [
+    {
+      "bed": [
+        1,
+        5,
+        1
+      ],
+      "containers": [
+        [
+          1,
+          1,
+          2
+        ]
+      ]
+    }
+  ],
+  "couple_beds": [],
+  "village_identity": {
+    "primary_blocks": [
+      [
+        9,
+        3,
+        1
+      ],
+      [
+        9,
+        3,
+        3
+      ],
+      [
+        1,
+        5,
+        1
+      ]
+    ],
+    "secondary_blocks": [],
+    "banners": []
+  },
+  "sink": 0,
+  "entrance_facing": "east",
+  "grants": [
+    "HOUSING",
+    "PROTECTION",
+    "RANGED_GUARD_POSTS"
+  ],
+  "worker_beds": [
+    [
+      1,
+      5,
+      1
+    ]
+  ],
+  "cost": [
+    {
+      "item": "minecraft:oak_log",
+      "count": 12
+    },
+    {
+      "item": "minecraft:cobblestone",
+      "count": 28
+    }
+  ]
+}

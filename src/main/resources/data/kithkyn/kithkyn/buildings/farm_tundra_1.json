@@ -1,0 +1,49 @@
+{
+  "structure": "farm_tundra_1",
+  "category": "farm",
+  "variant": "tundra",
+  "beds": [],
+  "work_stations": [
+    {
+      "pos": [
+        4,
+        1,
+        5
+      ],
+      "occupation": "FARMER"
+    }
+  ],
+  "worksites": [],
+  "containers": [
+    [
+      4,
+      0,
+      4
+    ]
+  ],
+  "personal_containers": [],
+  "bed_containers": [],
+  "couple_beds": [],
+  "village_identity": {
+    "primary_blocks": [],
+    "secondary_blocks": [],
+    "banners": []
+  },
+  "sink": 0,
+  "entrance_facing": "north",
+  "grants": [
+    "STORAGE",
+    "FOOD",
+    "CROPS"
+  ],
+  "cost": [
+    {
+      "item": "minecraft:oak_log",
+      "count": 16
+    },
+    {
+      "item": "minecraft:cobblestone",
+      "count": 20
+    }
+  ]
+}

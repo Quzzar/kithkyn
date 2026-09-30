@@ -1,0 +1,49 @@
+{
+  "structure": "farm_jungle_1",
+  "category": "farm",
+  "variant": "jungle",
+  "beds": [],
+  "work_stations": [
+    {
+      "pos": [
+        11,
+        1,
+        3
+      ],
+      "occupation": "FARMER"
+    }
+  ],
+  "worksites": [],
+  "containers": [
+    [
+      11,
+      0,
+      3
+    ]
+  ],
+  "personal_containers": [],
+  "bed_containers": [],
+  "couple_beds": [],
+  "village_identity": {
+    "primary_blocks": [],
+    "secondary_blocks": [],
+    "banners": []
+  },
+  "sink": 0,
+  "entrance_facing": "west",
+  "grants": [
+    "STORAGE",
+    "FOOD",
+    "CROPS"
+  ],
+  "cost": [
+    {
+      "item": "minecraft:oak_log",
+      "count": 24
+    },
+    {
+      "item": "minecraft:cobblestone",
+      "count": 12
+    }
+  ]
+}

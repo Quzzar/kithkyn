@@ -1,0 +1,78 @@
+{
+  "category": "lumberjack",
+  "beds": [
+    [
+      5,
+      2,
+      13
+    ]
+  ],
+  "worker_beds": [
+    [
+      5,
+      2,
+      13
+    ]
+  ],
+  "couple_beds": [],
+  "work_stations": [
+    {
+      "occupation": "LUMBERJACK",
+      "pos": [
+        11,
+        1,
+        5
+      ]
+    }
+  ],
+  "personal_containers": [
+    [
+      5,
+      2,
+      11
+    ]
+  ],
+  "containers": [],
+  "bed_containers": [
+    {
+      "bed": [
+        5,
+        2,
+        13
+      ],
+      "containers": [
+        [
+          5,
+          2,
+          11
+        ]
+      ]
+    }
+  ],
+  "village_identity": {
+    "primary_blocks": [
+      [
+        5,
+        2,
+        13
+      ]
+    ],
+    "secondary_blocks": [],
+    "banners": []
+  },
+  "sink": 0,
+  "entrance_facing": "east",
+  "grants": [
+    "HOUSING",
+    "LOGS",
+    "PLANKS"
+  ],
+  "cost": [
+    {
+      "item": "minecraft:cobblestone",
+      "count": 36
+    }
+  ],
+  "structure": "lumberjack_desert_1",
+  "variant": "desert"
+}

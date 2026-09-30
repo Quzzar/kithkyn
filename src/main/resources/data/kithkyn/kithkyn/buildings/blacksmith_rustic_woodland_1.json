@@ -1,0 +1,52 @@
+{
+  "structure": "blacksmith_rustic_woodland_1",
+  "category": "blacksmith",
+  "variant": "rustic_woodland",
+  "beds": [],
+  "work_stations": [
+    {
+      "pos": [
+        4,
+        2,
+        4
+      ],
+      "occupation": "BLACKSMITH"
+    }
+  ],
+  "worksites": [],
+  "containers": [
+    [
+      6,
+      3,
+      2
+    ]
+  ],
+  "personal_containers": [],
+  "bed_containers": [],
+  "couple_beds": [],
+  "village_identity": {
+    "primary_blocks": [],
+    "secondary_blocks": [],
+    "banners": []
+  },
+  "sink": 1,
+  "entrance_facing": "west",
+  "grants": [
+    "STORAGE",
+    "REPAIR",
+    "SMELTING",
+    "TOOLS_IRON",
+    "ARMOR_IRON",
+    "SHIELDS"
+  ],
+  "cost": [
+    {
+      "item": "minecraft:oak_log",
+      "count": 36
+    },
+    {
+      "item": "minecraft:cobblestone",
+      "count": 36
+    }
+  ]
+}

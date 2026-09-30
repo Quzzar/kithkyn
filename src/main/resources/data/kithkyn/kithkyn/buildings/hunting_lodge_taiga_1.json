@@ -1,0 +1,50 @@
+{
+  "structure": "hunting_lodge_taiga_1",
+  "category": "hunting_lodge",
+  "variant": "taiga",
+  "beds": [],
+  "work_stations": [
+    {
+      "pos": [
+        4,
+        1,
+        5
+      ],
+      "occupation": "HUNTER"
+    }
+  ],
+  "worksites": [],
+  "containers": [
+    [
+      0,
+      1,
+      3
+    ]
+  ],
+  "personal_containers": [],
+  "bed_containers": [],
+  "couple_beds": [],
+  "village_identity": {
+    "primary_blocks": [],
+    "secondary_blocks": [],
+    "banners": []
+  },
+  "sink": 0,
+  "entrance_facing": "north",
+  "grants": [
+    "STORAGE",
+    "FOOD",
+    "MEAT",
+    "LEATHER"
+  ],
+  "cost": [
+    {
+      "item": "minecraft:spruce_log",
+      "count": 12
+    },
+    {
+      "item": "minecraft:cobblestone",
+      "count": 8
+    }
+  ]
+}

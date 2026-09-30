@@ -1,0 +1,162 @@
+{
+  "structure": "village_center_polynesian_coast_1",
+  "category": "village_center",
+  "variant": "polynesian_coast",
+  "beds": [],
+  "work_stations": [
+    {
+      "pos": [
+        10,
+        1,
+        16
+      ],
+      "occupation": "BUILDER"
+    },
+    {
+      "pos": [
+        10,
+        1,
+        15
+      ],
+      "occupation": "BUILDER"
+    },
+    {
+      "pos": [
+        10,
+        1,
+        17
+      ],
+      "occupation": "BUILDER"
+    },
+    {
+      "pos": [
+        11,
+        1,
+        16
+      ],
+      "occupation": "BUILDER"
+    },
+    {
+      "pos": [
+        11,
+        1,
+        15
+      ],
+      "occupation": "BUILDER"
+    },
+    {
+      "pos": [
+        8,
+        1,
+        17
+      ],
+      "occupation": "GUARD",
+      "guard_duty": "CAPTAIN"
+    },
+    {
+      "pos": [
+        7,
+        3,
+        8
+      ],
+      "occupation": "LEADER"
+    },
+    {
+      "pos": [
+        7,
+        1,
+        2
+      ],
+      "occupation": "GUARD",
+      "guard_duty": "JAILER"
+    }
+  ],
+  "worksites": [],
+  "containers": [],
+  "personal_containers": [],
+  "bed_containers": [],
+  "couple_beds": [],
+  "village_identity": {
+    "primary_blocks": [],
+    "secondary_blocks": [],
+    "banners": [
+      [
+        4,
+        3,
+        5
+      ],
+      [
+        10,
+        3,
+        5
+      ],
+      [
+        7,
+        7,
+        7
+      ]
+    ]
+  },
+  "sink": 0,
+  "entrance_facing": "south",
+  "grants": [
+    "CIVIC_CENTER",
+    "CONSTRUCTION",
+    "PROTECTION",
+    "GOVERNANCE",
+    "CUSTODY"
+  ],
+  "starting_buildings": [
+    "mine_polynesian_coast_1",
+    "storehouse_polynesian_coast_1",
+    "house_polynesian_coast_1__two_single",
+    "house_polynesian_coast_1__three_single",
+    "house_polynesian_coast_1__couple_room"
+  ],
+  "meeting_point": [
+    6,
+    1,
+    17
+  ],
+  "campfires": [
+    [
+      7,
+      1,
+      1
+    ]
+  ],
+  "castle": {
+    "custody_cell": [
+      7,
+      2,
+      5
+    ],
+    "release_point": [
+      9,
+      1,
+      2
+    ],
+    "evidence_containers": [
+      [
+        6,
+        0,
+        2
+      ],
+      [
+        8,
+        0,
+        2
+      ]
+    ]
+  },
+  "cost": [
+    {
+      "item": "minecraft:oak_log",
+      "count": 48
+    },
+    {
+      "item": "minecraft:cobblestone",
+      "count": 40
+    }
+  ]
+}

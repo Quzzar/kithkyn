@@ -1,0 +1,67 @@
+{
+  "structure": "market_romanian_2",
+  "category": "market",
+  "variant": "romanian",
+  "beds": [],
+  "work_stations": [
+    {
+      "pos": [
+        7,
+        1,
+        7
+      ],
+      "occupation": "MERCHANT"
+    },
+    {
+      "pos": [
+        15,
+        1,
+        7
+      ],
+      "occupation": "MERCHANT"
+    }
+  ],
+  "worksites": [],
+  "containers": [
+    [
+      7,
+      0,
+      9
+    ],
+    [
+      15,
+      0,
+      9
+    ]
+  ],
+  "personal_containers": [],
+  "bed_containers": [],
+  "couple_beds": [],
+  "village_identity": {
+    "primary_blocks": [],
+    "secondary_blocks": [],
+    "banners": []
+  },
+  "sink": 0,
+  "entrance_facing": "north",
+  "grants": [
+    "STORAGE",
+    "TRADE",
+    "TRADE_INITIATIVE"
+  ],
+  "upgrades_from": "market_romanian_1",
+  "cost": [
+    {
+      "item": "minecraft:oak_log",
+      "count": 28
+    },
+    {
+      "item": "minecraft:cobblestone",
+      "count": 32
+    },
+    {
+      "item": "minecraft:white_wool",
+      "count": 8
+    }
+  ]
+}

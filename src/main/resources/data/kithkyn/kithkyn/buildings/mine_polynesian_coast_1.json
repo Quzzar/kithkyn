@@ -1,0 +1,59 @@
+{
+  "structure": "mine_polynesian_coast_1",
+  "category": "mine",
+  "variant": "polynesian_coast",
+  "beds": [],
+  "work_stations": [
+    {
+      "pos": [
+        4,
+        2,
+        1
+      ],
+      "occupation": "MINER"
+    }
+  ],
+  "worksites": [],
+  "containers": [
+    [
+      6,
+      2,
+      3
+    ]
+  ],
+  "personal_containers": [],
+  "bed_containers": [],
+  "couple_beds": [],
+  "village_identity": {
+    "primary_blocks": [],
+    "secondary_blocks": [],
+    "banners": []
+  },
+  "sink": 0,
+  "entrance_facing": "north",
+  "grants": [
+    "STORAGE",
+    "STONE",
+    "ORES",
+    "MINERALS"
+  ],
+  "mine_entrance": {
+    "facing": "south",
+    "offset": [
+      0,
+      0,
+      2
+    ],
+    "width": 3
+  },
+  "cost": [
+    {
+      "item": "minecraft:oak_log",
+      "count": 16
+    },
+    {
+      "item": "minecraft:cobblestone",
+      "count": 12
+    }
+  ]
+}

@@ -1,7 +1,7 @@
 {
   "variant": "desert",
   "status": "verified_and_locally_deployed",
-  "source_policy": "Locally approved playable datapack, excluded from public distribution. CTOV, Towns and Towers, and Dungeons & Taverns source provenance is retained; written redistribution permission is not asserted.",
+  "source_policy": "Bundled in the Kithkyn jar under the September 14, 2026 release decision. Approved edits and source provenance are retained; creator credits and the standing offer to revise designs are in README.md.",
   "asset_root": "run/desert-integration/datapack/data/kithkyn/structure",
   "definition_root": "run/desert-integration/datapack/data/kithkyn/kithkyn/buildings",
   "manifests": [
@@ -483,5 +483,11 @@
     ],
     "captain_posts_per_center": 1,
     "routing": "Each mine and storehouse owns its worker vacancy; centers own civic and physically local roles."
+  },
+  "bundled": {
+    "date": "2026-09-30",
+    "source": "run/trio-20260912/datapacks/kithkyn-desert",
+    "manifest": "tools/release/bundled-catalogs.json",
+    "definitions": 31
   }
 }

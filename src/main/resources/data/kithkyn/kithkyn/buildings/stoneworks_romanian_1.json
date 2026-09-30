@@ -1,0 +1,48 @@
+{
+  "structure": "stoneworks_romanian_1",
+  "category": "stoneworks",
+  "variant": "romanian",
+  "beds": [],
+  "work_stations": [
+    {
+      "pos": [
+        3,
+        1,
+        4
+      ],
+      "occupation": "MASON"
+    }
+  ],
+  "worksites": [],
+  "containers": [
+    [
+      2,
+      2,
+      4
+    ]
+  ],
+  "personal_containers": [],
+  "bed_containers": [],
+  "couple_beds": [],
+  "village_identity": {
+    "primary_blocks": [],
+    "secondary_blocks": [],
+    "banners": []
+  },
+  "sink": 0,
+  "entrance_facing": "south",
+  "grants": [
+    "STORAGE",
+    "CUT_STONE"
+  ],
+  "cost": [
+    {
+      "item": "minecraft:oak_log",
+      "count": 16
+    },
+    {
+      "item": "minecraft:cobblestone",
+      "count": 20
+    }
+  ]
+}

@@ -1,0 +1,52 @@
+{
+  "structure": "blacksmith_jungle_1",
+  "category": "blacksmith",
+  "variant": "jungle",
+  "beds": [],
+  "work_stations": [
+    {
+      "pos": [
+        8,
+        1,
+        4
+      ],
+      "occupation": "BLACKSMITH"
+    }
+  ],
+  "worksites": [],
+  "containers": [
+    [
+      9,
+      1,
+      2
+    ]
+  ],
+  "personal_containers": [],
+  "bed_containers": [],
+  "couple_beds": [],
+  "village_identity": {
+    "primary_blocks": [],
+    "secondary_blocks": [],
+    "banners": []
+  },
+  "sink": 0,
+  "entrance_facing": "west",
+  "grants": [
+    "STORAGE",
+    "REPAIR",
+    "SMELTING",
+    "TOOLS_IRON",
+    "ARMOR_IRON",
+    "SHIELDS"
+  ],
+  "cost": [
+    {
+      "item": "minecraft:oak_log",
+      "count": 32
+    },
+    {
+      "item": "minecraft:cobblestone",
+      "count": 32
+    }
+  ]
+}

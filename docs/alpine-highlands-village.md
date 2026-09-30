@@ -1,12 +1,14 @@
 # Alpine Highlands village
 
+**Release availability:** this approved catalog ships in the Kithkyn jar. No separate world datapack is required. Exact shipped definitions and template hashes are recorded in [the bundled catalog manifest](../tools/release/bundled-catalogs.json). Local `run/` paths below are historical authoring and verification records.
+
 The Alpine Highlands catalog is the Iberian-inspired mountain village selected from the Alpine
 and Iberian galleries. Brick walls and lower courses, steep spruce roofs, berry plots and large
 shared houses give it a warmer identity than the frozen Tundra settlement. The style token is
 `alpine_highlands`.
 
 Meadow, Grove, Snowy Slopes, Jagged Peaks, Frozen Peaks, Stony Peaks and the three vanilla
-Windswept mountain biomes select it while its private founding catalog is loaded. The mountain
+Windswept mountain biomes select it while its bundled founding catalog is loaded. The mountain
 mapping runs before the broad snowy mapping, so Snowy Slopes and Frozen Peaks are Alpine while
 Snowy Plains, Ice Spikes and frozen lowlands remain Tundra. Datapacks can extend the assignment
 with the `kithkyn:village_style/alpine_highlands` biome tag.
@@ -25,7 +27,7 @@ founding workers.
 
 ## Selected buildings
 
-The private datapack contains 22 definitions:
+The bundled datapack contains 22 definitions:
 
 | Id | Exhibit | Use |
 | --- | --- | --- |
@@ -84,7 +86,7 @@ scales. These movement rules leave every approved structure block intact.
 gallery structure voids, neutralizes identity slots, empties containers and removes the
 butchery animals' gallery-only tag. The compact mine also preserves omitted source cells instead
 of exporting them as explicit air, so placing it does not clear surrounding terrain. Third-party-derived
-structures and definitions stay in the local private datapack. Their source and output hashes are recorded in
+structures and definitions stay in the local bundled datapack. Their source and output hashes are recorded in
 `tools/structure/alpine-highlands-catalog-20260913.json`.
 
 The catalog audit checks all 22 structures for barriers, out-of-bounds cells, terrain-clearing

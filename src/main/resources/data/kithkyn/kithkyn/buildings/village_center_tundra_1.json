@@ -1,0 +1,279 @@
+{
+  "structure": "village_center_tundra_1",
+  "category": "village_center",
+  "variant": "tundra",
+  "beds": [
+    [
+      5,
+      1,
+      4
+    ],
+    [
+      11,
+      1,
+      4
+    ],
+    [
+      5,
+      1,
+      12
+    ],
+    [
+      11,
+      1,
+      12
+    ]
+  ],
+  "work_stations": [
+    {
+      "pos": [
+        9,
+        1,
+        7
+      ],
+      "occupation": "BUILDER"
+    },
+    {
+      "pos": [
+        8,
+        1,
+        7
+      ],
+      "occupation": "BUILDER"
+    },
+    {
+      "pos": [
+        9,
+        1,
+        6
+      ],
+      "occupation": "BUILDER"
+    },
+    {
+      "pos": [
+        10,
+        1,
+        7
+      ],
+      "occupation": "BUILDER"
+    },
+    {
+      "pos": [
+        9,
+        1,
+        8
+      ],
+      "occupation": "BUILDER"
+    },
+    {
+      "pos": [
+        7,
+        1,
+        9
+      ],
+      "occupation": "GUARD",
+      "guard_duty": "CAPTAIN"
+    }
+  ],
+  "worksites": [],
+  "containers": [],
+  "personal_containers": [
+    [
+      4,
+      0,
+      4
+    ],
+    [
+      12,
+      0,
+      4
+    ],
+    [
+      4,
+      0,
+      12
+    ],
+    [
+      12,
+      0,
+      12
+    ]
+  ],
+  "bed_containers": [
+    {
+      "bed": [
+        5,
+        1,
+        4
+      ],
+      "containers": [
+        [
+          4,
+          0,
+          4
+        ]
+      ]
+    },
+    {
+      "bed": [
+        11,
+        1,
+        4
+      ],
+      "containers": [
+        [
+          12,
+          0,
+          4
+        ]
+      ]
+    },
+    {
+      "bed": [
+        5,
+        1,
+        12
+      ],
+      "containers": [
+        [
+          4,
+          0,
+          12
+        ]
+      ]
+    },
+    {
+      "bed": [
+        11,
+        1,
+        12
+      ],
+      "containers": [
+        [
+          12,
+          0,
+          12
+        ]
+      ]
+    }
+  ],
+  "couple_beds": [],
+  "village_identity": {
+    "primary_blocks": [
+      [
+        5,
+        1,
+        4
+      ],
+      [
+        11,
+        1,
+        12
+      ]
+    ],
+    "secondary_blocks": [
+      [
+        11,
+        1,
+        4
+      ],
+      [
+        5,
+        1,
+        12
+      ]
+    ],
+    "banners": [
+      [
+        6,
+        3,
+        0
+      ],
+      [
+        10,
+        3,
+        0
+      ],
+      [
+        0,
+        3,
+        6
+      ],
+      [
+        16,
+        3,
+        6
+      ],
+      [
+        0,
+        3,
+        10
+      ],
+      [
+        16,
+        3,
+        10
+      ],
+      [
+        6,
+        3,
+        16
+      ],
+      [
+        10,
+        3,
+        16
+      ]
+    ]
+  },
+  "sink": 0,
+  "entrance_facing": "north",
+  "grants": [
+    "CIVIC_CENTER",
+    "CONSTRUCTION",
+    "HOUSING",
+    "PROTECTION"
+  ],
+  "worker_beds": [
+    [
+      5,
+      1,
+      4
+    ],
+    [
+      11,
+      1,
+      4
+    ],
+    [
+      5,
+      1,
+      12
+    ],
+    [
+      11,
+      1,
+      12
+    ]
+  ],
+  "starting_buildings": [
+    "mine_tundra_1",
+    "storehouse_tundra_1"
+  ],
+  "meeting_point": [
+    8,
+    1,
+    7
+  ],
+  "campfires": [],
+  "cost": [
+    {
+      "item": "minecraft:oak_log",
+      "count": 48
+    },
+    {
+      "item": "minecraft:cobblestone",
+      "count": 68
+    }
+  ]
+}

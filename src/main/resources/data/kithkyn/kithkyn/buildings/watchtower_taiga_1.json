@@ -1,0 +1,85 @@
+{
+  "structure": "watchtower_taiga_1",
+  "category": "watchtower",
+  "variant": "taiga",
+  "beds": [
+    [
+      5,
+      13,
+      3
+    ]
+  ],
+  "work_stations": [
+    {
+      "pos": [
+        3,
+        13,
+        7
+      ],
+      "occupation": "GUARD",
+      "guard_duty": "CROSSBOW_POST"
+    }
+  ],
+  "worksites": [],
+  "containers": [],
+  "personal_containers": [
+    [
+      5,
+      13,
+      5
+    ]
+  ],
+  "bed_containers": [
+    {
+      "bed": [
+        5,
+        13,
+        3
+      ],
+      "containers": [
+        [
+          5,
+          13,
+          5
+        ]
+      ]
+    }
+  ],
+  "couple_beds": [],
+  "village_identity": {
+    "primary_blocks": [
+      [
+        5,
+        13,
+        3
+      ]
+    ],
+    "secondary_blocks": [],
+    "banners": []
+  },
+  "sink": 0,
+  "entrance_facing": "south",
+  "grants": [
+    "HOUSING",
+    "STORAGE",
+    "PROTECTION",
+    "RANGED_GUARD_POSTS"
+  ],
+  "worker_beds": [
+    [
+      5,
+      13,
+      3
+    ]
+  ],
+  "cost": [
+    {
+      "item": "minecraft:spruce_log",
+      "count": 28
+    },
+    {
+      "item": "minecraft:cobblestone",
+      "count": 16
+    }
+  ]
+}

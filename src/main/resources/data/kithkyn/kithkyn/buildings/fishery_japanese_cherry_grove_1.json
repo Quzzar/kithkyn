@@ -1,0 +1,49 @@
+{
+  "structure": "fishery_japanese_cherry_grove_1",
+  "category": "fishery",
+  "variant": "japanese_cherry_grove",
+  "beds": [],
+  "work_stations": [
+    {
+      "pos": [
+        8,
+        2,
+        3
+      ],
+      "occupation": "FISHER"
+    }
+  ],
+  "worksites": [],
+  "containers": [
+    [
+      7,
+      2,
+      3
+    ]
+  ],
+  "personal_containers": [],
+  "bed_containers": [],
+  "couple_beds": [],
+  "village_identity": {
+    "primary_blocks": [],
+    "secondary_blocks": [],
+    "banners": []
+  },
+  "sink": 0,
+  "entrance_facing": "west",
+  "grants": [
+    "STORAGE",
+    "FOOD",
+    "FISH"
+  ],
+  "cost": [
+    {
+      "item": "minecraft:oak_log",
+      "count": 24
+    },
+    {
+      "item": "minecraft:cobblestone",
+      "count": 16
+    }
+  ]
+}

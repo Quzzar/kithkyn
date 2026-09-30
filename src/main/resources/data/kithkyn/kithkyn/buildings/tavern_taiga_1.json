@@ -1,0 +1,201 @@
+{
+  "structure": "tavern_taiga_1",
+  "category": "tavern",
+  "variant": "taiga",
+  "beds": [
+    [
+      4,
+      5,
+      6
+    ],
+    [
+      5,
+      1,
+      2
+    ],
+    [
+      8,
+      1,
+      2
+    ],
+    [
+      11,
+      1,
+      2
+    ],
+    [
+      14,
+      1,
+      2
+    ]
+  ],
+  "work_stations": [
+    {
+      "pos": [
+        9,
+        1,
+        9
+      ],
+      "occupation": "INNKEEPER"
+    }
+  ],
+  "worksites": [],
+  "containers": [],
+  "personal_containers": [
+    [
+      5,
+      0,
+      3
+    ],
+    [
+      8,
+      0,
+      3
+    ],
+    [
+      11,
+      0,
+      3
+    ],
+    [
+      14,
+      0,
+      3
+    ],
+    [
+      7,
+      5,
+      9
+    ]
+  ],
+  "bed_containers": [
+    {
+      "bed": [
+        4,
+        5,
+        6
+      ],
+      "containers": [
+        [
+          7,
+          5,
+          9
+        ]
+      ]
+    },
+    {
+      "bed": [
+        5,
+        1,
+        2
+      ],
+      "containers": [
+        [
+          5,
+          0,
+          3
+        ]
+      ]
+    },
+    {
+      "bed": [
+        8,
+        1,
+        2
+      ],
+      "containers": [
+        [
+          8,
+          0,
+          3
+        ]
+      ]
+    },
+    {
+      "bed": [
+        11,
+        1,
+        2
+      ],
+      "containers": [
+        [
+          11,
+          0,
+          3
+        ]
+      ]
+    },
+    {
+      "bed": [
+        14,
+        1,
+        2
+      ],
+      "containers": [
+        [
+          14,
+          0,
+          3
+        ]
+      ]
+    }
+  ],
+  "couple_beds": [],
+  "village_identity": {
+    "primary_blocks": [
+      [
+        5,
+        1,
+        2
+      ],
+      [
+        11,
+        1,
+        2
+      ],
+      [
+        4,
+        5,
+        6
+      ]
+    ],
+    "secondary_blocks": [
+      [
+        8,
+        1,
+        2
+      ],
+      [
+        14,
+        1,
+        2
+      ]
+    ],
+    "banners": []
+  },
+  "sink": 0,
+  "entrance_facing": "west",
+  "grants": [
+    "HOUSING",
+    "STORAGE",
+    "HOSPITALITY",
+    "WANDERERS"
+  ],
+  "worker_beds": [
+    [
+      4,
+      5,
+      6
+    ]
+  ],
+  "cost": [
+    {
+      "item": "minecraft:spruce_log",
+      "count": 56
+    },
+    {
+      "item": "minecraft:cobblestone",
+      "count": 40
+    }
+  ]
+}

@@ -1,0 +1,66 @@
+{
+  "category": "market",
+  "beds": [],
+  "couple_beds": [],
+  "work_stations": [
+    {
+      "occupation": "MERCHANT",
+      "pos": [
+        3,
+        1,
+        4
+      ]
+    },
+    {
+      "occupation": "MERCHANT",
+      "pos": [
+        11,
+        1,
+        4
+      ]
+    }
+  ],
+  "personal_containers": [],
+  "containers": [
+    [
+      3,
+      0,
+      5
+    ],
+    [
+      11,
+      0,
+      5
+    ]
+  ],
+  "bed_containers": [],
+  "village_identity": {
+    "primary_blocks": [],
+    "secondary_blocks": [],
+    "banners": []
+  },
+  "sink": 0,
+  "entrance_facing": "west",
+  "grants": [
+    "STORAGE",
+    "TRADE",
+    "TRADE_INITIATIVE"
+  ],
+  "cost": [
+    {
+      "item": "minecraft:oak_log",
+      "count": 36
+    },
+    {
+      "item": "minecraft:cobblestone",
+      "count": 24
+    },
+    {
+      "item": "minecraft:white_wool",
+      "count": 8
+    }
+  ],
+  "structure": "market_floodplain_2",
+  "variant": "floodplain",
+  "upgrades_from": "market_floodplain_1"
+}

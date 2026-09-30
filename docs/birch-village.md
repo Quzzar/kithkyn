@@ -1,5 +1,7 @@
 # Approved Birch Forest village
 
+**Release availability:** this approved catalog ships in the Kithkyn jar. No separate world datapack is required. Exact shipped definitions and template hashes are recorded in [the bundled catalog manifest](../tools/release/bundled-catalogs.json). Local `run/` paths below are historical authoring and verification records.
+
 The 2026-09-07 approved set, with the revisions below, is the playable `birch_forest` catalog. It uses the existing
 village, building, labor, construction, and identity systems. It is not a separate simulation.
 These decisions supersede the older candidate-gallery choices and generic counts in
@@ -57,7 +59,7 @@ Priority is:
    precipitation, downfall and conventional hot/cold/wet/dry tags inform the cluster. World
    seed, biome ID and founding location seed the choice.
 
-The styles are Birch Forest (bundled), Desert and Badlands (private datapacks). Only birch,
+The styles are Birch Forest (bundled), Desert and Badlands (bundled datapacks). Only birch,
 desert/sandy and mesa/badlands/savanna families map conventionally; every other family goes by
 climate, where a hot, dry biome chooses between Desert and Badlands and everything else builds
 Birch Forest. This is a practical fallback, not a claim that temperature identifies a biome's

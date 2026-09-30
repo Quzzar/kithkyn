@@ -1,0 +1,75 @@
+{
+  "category": "fishery",
+  "beds": [
+    [
+      5,
+      6,
+      6
+    ]
+  ],
+  "couple_beds": [],
+  "work_stations": [
+    {
+      "occupation": "FISHER",
+      "pos": [
+        6,
+        6,
+        4
+      ]
+    }
+  ],
+  "personal_containers": [
+    [
+      7,
+      6,
+      6
+    ]
+  ],
+  "containers": [],
+  "bed_containers": [
+    {
+      "bed": [
+        5,
+        6,
+        6
+      ],
+      "containers": [
+        [
+          7,
+          6,
+          6
+        ]
+      ]
+    }
+  ],
+  "village_identity": {
+    "primary_blocks": [],
+    "secondary_blocks": [
+      [
+        5,
+        6,
+        6
+      ]
+    ],
+    "banners": []
+  },
+  "sink": 4,
+  "entrance_facing": "north",
+  "grants": [
+    "HOUSING",
+    "FOOD",
+    "FISH"
+  ],
+  "cost": [
+    {
+      "item": "minecraft:oak_log",
+      "count": 16
+    },
+    {
+      "item": "minecraft:cobblestone",
+      "count": 32
+    }
+  ],
+  "structure": "fishery_badlands_1",
+  "variant": "badlands"
+}

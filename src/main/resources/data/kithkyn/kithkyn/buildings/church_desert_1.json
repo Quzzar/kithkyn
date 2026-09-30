@@ -1,0 +1,48 @@
+{
+  "beds": [],
+  "worker_beds": [],
+  "couple_beds": [],
+  "personal_containers": [],
+  "containers": [
+    [
+      5,
+      2,
+      10
+    ]
+  ],
+  "bed_containers": [],
+  "village_identity": {
+    "primary_blocks": [],
+    "secondary_blocks": [],
+    "banners": []
+  },
+  "sink": -1,
+  "category": "church",
+  "structure": "church_desert_1",
+  "variant": "desert",
+  "work_stations": [
+    {
+      "occupation": "CLERIC",
+      "pos": [
+        8,
+        2,
+        10
+      ]
+    }
+  ],
+  "entrance_facing": "south",
+  "grants": [
+    "STORAGE",
+    "HEALING"
+  ],
+  "cost": [
+    {
+      "item": "minecraft:oak_log",
+      "count": 8
+    },
+    {
+      "item": "minecraft:cobblestone",
+      "count": 36
+    }
+  ]
+}

@@ -1,0 +1,144 @@
+{
+  "structure": "tavern_swamp_1",
+  "category": "tavern",
+  "variant": "swamp",
+  "beds": [
+    [
+      2,
+      3,
+      16
+    ],
+    [
+      5,
+      3,
+      16
+    ],
+    [
+      7,
+      7,
+      12
+    ],
+    [
+      8,
+      3,
+      16
+    ],
+    [
+      13,
+      7,
+      7
+    ]
+  ],
+  "work_stations": [
+    {
+      "pos": [
+        12,
+        7,
+        6
+      ],
+      "occupation": "INNKEEPER"
+    }
+  ],
+  "worksites": [],
+  "containers": [],
+  "personal_containers": [],
+  "bed_containers": [
+    {
+      "bed": [
+        2,
+        3,
+        16
+      ],
+      "containers": []
+    },
+    {
+      "bed": [
+        5,
+        3,
+        16
+      ],
+      "containers": []
+    },
+    {
+      "bed": [
+        7,
+        7,
+        12
+      ],
+      "containers": []
+    },
+    {
+      "bed": [
+        8,
+        3,
+        16
+      ],
+      "containers": []
+    },
+    {
+      "bed": [
+        13,
+        7,
+        7
+      ],
+      "containers": []
+    }
+  ],
+  "couple_beds": [],
+  "village_identity": {
+    "primary_blocks": [
+      [
+        2,
+        3,
+        16
+      ],
+      [
+        7,
+        7,
+        12
+      ],
+      [
+        13,
+        7,
+        7
+      ]
+    ],
+    "secondary_blocks": [
+      [
+        5,
+        3,
+        16
+      ],
+      [
+        8,
+        3,
+        16
+      ]
+    ],
+    "banners": []
+  },
+  "sink": -1,
+  "entrance_facing": "south",
+  "grants": [
+    "HOUSING",
+    "HOSPITALITY",
+    "WANDERERS"
+  ],
+  "worker_beds": [
+    [
+      13,
+      7,
+      7
+    ]
+  ],
+  "cost": [
+    {
+      "item": "minecraft:oak_log",
+      "count": 52
+    },
+    {
+      "item": "minecraft:cobblestone",
+      "count": 28
+    }
+  ]
+}

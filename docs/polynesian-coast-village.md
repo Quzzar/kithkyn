@@ -1,5 +1,7 @@
 # Polynesian Coast village
 
+**Release availability:** this approved catalog ships in the Kithkyn jar. No separate world datapack is required. Exact shipped definitions and template hashes are recorded in [the bundled catalog manifest](../tools/release/bundled-catalogs.json). Local `run/` paths below are historical authoring and verification records.
+
 The Polynesian Coast catalog is the warm-coast island village. It has stilted huts of stripped
 spruce under oak roofs, a king's hall with the village jail beside its fire, tiki torches, a pond
 fishery and an open-air shrine. It is Aaron's selection from the Polynesian gallery he reviewed
@@ -62,7 +64,7 @@ has one ruling position, and a castle LEADER would be a second one.
 
 ## Selected buildings
 
-The private datapack contains 24 definitions:
+The bundled datapack contains 24 definitions:
 
 | Id | Exhibit | Use |
 | --- | --- | --- |
@@ -138,7 +140,7 @@ world:
 - The shrine includes the course below it, which holds the barrel Aaron sank into the gallery pad.
 - The lumberjack plot is his converted copy of the well.
 
-`run/polynesian-integration/prepare.py` writes the private datapack through
+`run/polynesian-integration/prepare.py` writes the bundled datapack through
 `tools/structure/VillageTemplateExport.java`:
 
 - It removes gallery markers, neutralizes beds and village banners, and plants the lumberjack's

@@ -1,0 +1,145 @@
+{
+  "structure": "village_center_romanian_1",
+  "category": "village_center",
+  "variant": "romanian",
+  "beds": [],
+  "work_stations": [
+    {
+      "pos": [
+        11,
+        1,
+        23
+      ],
+      "occupation": "BUILDER"
+    },
+    {
+      "pos": [
+        12,
+        1,
+        22
+      ],
+      "occupation": "BUILDER"
+    },
+    {
+      "pos": [
+        13,
+        1,
+        22
+      ],
+      "occupation": "BUILDER"
+    },
+    {
+      "pos": [
+        13,
+        1,
+        21
+      ],
+      "occupation": "BUILDER"
+    },
+    {
+      "pos": [
+        15,
+        1,
+        23
+      ],
+      "occupation": "BUILDER"
+    },
+    {
+      "pos": [
+        9,
+        1,
+        25
+      ],
+      "occupation": "GUARD",
+      "guard_duty": "CAPTAIN"
+    },
+    {
+      "pos": [
+        10,
+        1,
+        6
+      ],
+      "occupation": "CLERIC"
+    }
+  ],
+  "worksites": [],
+  "containers": [
+    [
+      9,
+      2,
+      5
+    ]
+  ],
+  "personal_containers": [],
+  "decorative_containers": [
+    [
+      10,
+      16,
+      20
+    ]
+  ],
+  "bed_containers": [],
+  "couple_beds": [],
+  "village_identity": {
+    "primary_blocks": [],
+    "secondary_blocks": [],
+    "banners": [
+      [
+        8,
+        4,
+        23
+      ],
+      [
+        12,
+        4,
+        23
+      ],
+      [
+        8,
+        4,
+        25
+      ],
+      [
+        12,
+        4,
+        25
+      ]
+    ]
+  },
+  "sink": 0,
+  "entrance_facing": "south",
+  "grants": [
+    "CIVIC_CENTER",
+    "CONSTRUCTION",
+    "LOGISTICS",
+    "PROTECTION",
+    "STORAGE",
+    "HEALING"
+  ],
+  "starting_buildings": [
+    "mine_romanian_1",
+    "storehouse_romanian_1"
+  ],
+  "meeting_point": [
+    12,
+    2,
+    27
+  ],
+  "campfires": [
+    [
+      17,
+      1,
+      30
+    ]
+  ],
+  "cost": [
+    {
+      "item": "minecraft:oak_log",
+      "count": 52
+    },
+    {
+      "item": "minecraft:cobblestone",
+      "count": 52
+    }
+  ]
+}

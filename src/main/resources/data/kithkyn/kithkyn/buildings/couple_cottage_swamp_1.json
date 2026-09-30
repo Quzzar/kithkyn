@@ -1,0 +1,103 @@
+{
+  "structure": "couple_cottage_swamp_1",
+  "category": "couple_cottage",
+  "variant": "swamp",
+  "beds": [
+    [
+      4,
+      2,
+      6
+    ],
+    [
+      5,
+      2,
+      6
+    ]
+  ],
+  "work_stations": [],
+  "worksites": [],
+  "containers": [],
+  "personal_containers": [
+    [
+      5,
+      2,
+      2
+    ]
+  ],
+  "bed_containers": [
+    {
+      "bed": [
+        4,
+        2,
+        6
+      ],
+      "containers": [
+        [
+          5,
+          2,
+          2
+        ]
+      ]
+    },
+    {
+      "bed": [
+        5,
+        2,
+        6
+      ],
+      "containers": [
+        [
+          5,
+          2,
+          2
+        ]
+      ]
+    }
+  ],
+  "couple_beds": [
+    [
+      [
+        4,
+        2,
+        6
+      ],
+      [
+        5,
+        2,
+        6
+      ]
+    ]
+  ],
+  "village_identity": {
+    "primary_blocks": [
+      [
+        4,
+        2,
+        6
+      ],
+      [
+        5,
+        2,
+        6
+      ]
+    ],
+    "secondary_blocks": [],
+    "banners": []
+  },
+  "sink": -1,
+  "entrance_facing": "west",
+  "grants": [
+    "HOUSING",
+    "FAMILY_HOUSING"
+  ],
+  "cost": [
+    {
+      "item": "minecraft:oak_log",
+      "count": 20
+    },
+    {
+      "item": "minecraft:cobblestone",
+      "count": 12
+    }
+  ]
+}

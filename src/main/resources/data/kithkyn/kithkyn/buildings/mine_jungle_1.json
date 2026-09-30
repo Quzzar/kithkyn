@@ -1,0 +1,64 @@
+{
+  "structure": "mine_jungle_1",
+  "category": "mine",
+  "variant": "jungle",
+  "beds": [],
+  "work_stations": [
+    {
+      "pos": [
+        1,
+        0,
+        2
+      ],
+      "occupation": "MINER"
+    }
+  ],
+  "worksites": [],
+  "containers": [
+    [
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      4
+    ]
+  ],
+  "personal_containers": [],
+  "bed_containers": [],
+  "couple_beds": [],
+  "village_identity": {
+    "primary_blocks": [],
+    "secondary_blocks": [],
+    "banners": []
+  },
+  "sink": 0,
+  "entrance_facing": "west",
+  "grants": [
+    "STORAGE",
+    "STONE",
+    "ORES",
+    "MINERALS"
+  ],
+  "cost": [
+    {
+      "item": "minecraft:oak_log",
+      "count": 20
+    },
+    {
+      "item": "minecraft:cobblestone",
+      "count": 12
+    }
+  ],
+  "mine_entrance": {
+    "facing": "east",
+    "offset": [
+      1,
+      1,
+      0
+    ],
+    "width": 3
+  }
+}

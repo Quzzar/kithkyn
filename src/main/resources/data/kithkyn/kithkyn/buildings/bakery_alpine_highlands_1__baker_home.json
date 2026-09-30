@@ -1,0 +1,90 @@
+{
+  "structure": "bakery_alpine_highlands_1__baker_home",
+  "category": "bakery",
+  "variant": "alpine_highlands",
+  "beds": [
+    [
+      7,
+      1,
+      5
+    ]
+  ],
+  "work_stations": [
+    {
+      "pos": [
+        4,
+        1,
+        6
+      ],
+      "occupation": "BAKER"
+    }
+  ],
+  "worksites": [],
+  "containers": [
+    [
+      8,
+      1,
+      2
+    ]
+  ],
+  "personal_containers": [
+    [
+      5,
+      1,
+      4
+    ]
+  ],
+  "bed_containers": [
+    {
+      "bed": [
+        7,
+        1,
+        5
+      ],
+      "containers": [
+        [
+          5,
+          1,
+          4
+        ]
+      ]
+    }
+  ],
+  "couple_beds": [],
+  "village_identity": {
+    "primary_blocks": [
+      [
+        7,
+        1,
+        5
+      ]
+    ],
+    "secondary_blocks": [],
+    "banners": []
+  },
+  "sink": -1,
+  "entrance_facing": "south",
+  "grants": [
+    "FOOD",
+    "BAKED_GOODS",
+    "HOUSING",
+    "STORAGE"
+  ],
+  "cost": [
+    {
+      "item": "minecraft:oak_log",
+      "count": 16
+    },
+    {
+      "item": "minecraft:cobblestone",
+      "count": 16
+    }
+  ],
+  "worker_beds": [
+    [
+      7,
+      1,
+      5
+    ]
+  ]
+}

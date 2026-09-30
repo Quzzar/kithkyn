@@ -1,0 +1,50 @@
+{
+  "structure": "lumberjack_nautical_coast_1",
+  "category": "lumberjack",
+  "variant": "nautical_coast",
+  "beds": [],
+  "work_stations": [
+    {
+      "pos": [
+        8,
+        1,
+        8
+      ],
+      "occupation": "LUMBERJACK"
+    }
+  ],
+  "worksites": [],
+  "containers": [
+    [
+      2,
+      2,
+      4
+    ],
+    [
+      3,
+      2,
+      4
+    ]
+  ],
+  "personal_containers": [],
+  "bed_containers": [],
+  "couple_beds": [],
+  "village_identity": {
+    "primary_blocks": [],
+    "secondary_blocks": [],
+    "banners": []
+  },
+  "sink": 0,
+  "entrance_facing": "north",
+  "grants": [
+    "STORAGE",
+    "LOGS",
+    "PLANKS"
+  ],
+  "cost": [
+    {
+      "item": "minecraft:cobblestone",
+      "count": 28
+    }
+  ]
+}

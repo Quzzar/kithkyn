@@ -1,6 +1,8 @@
 # Rustic Woodland village
 
-The Rustic Woodland catalog is the ordinary oak-forest village. It keeps the familiar shape of a traditional Minecraft woodland settlement while giving every building a concrete village role. Forest selects this catalog when its private datapack is installed. Compatible modded oak woodland biomes can opt in through `kithkyn:village_style/rustic_woodland`.
+**Release availability:** this approved catalog ships in the Kithkyn jar. No separate world datapack is required. Exact shipped definitions and template hashes are recorded in [the bundled catalog manifest](../tools/release/bundled-catalogs.json). Local `run/` paths below are historical authoring and verification records.
+
+The Rustic Woodland catalog is the ordinary oak-forest village. It keeps the familiar shape of a traditional Minecraft woodland settlement while giving every building a concrete village role. Forest selects this catalog from the bundled catalog. Compatible modded oak woodland biomes can opt in through `kithkyn:village_style/rustic_woodland`.
 
 The corrected live height gallery received final in-world approval on 2026-09-14. Its 21 buildings, founding set, identity rules, and wall family are the locked production reference for this playable variant.
 
@@ -42,4 +44,4 @@ Every registered bed is a village identity slot and resolves to the primary or s
 
 The production templates preserve the user-edited live gallery. Barrier and structure-void blocks are removed at export. Missing cells above the ground layer are generally authored as air. The blacksmith, fishery, hunting lodge, and stoneworks omit empty terrain-plane cells so they do not cut away the surrounding ground. The mine follows the same rule around its perimeter while retaining the 15 authored air cells in its central excavation. The tavern's existing upper trapdoor is saved open and two ladder rungs occupy the clear shaft beneath it so the upstairs bed remains usable. Buildings keep their blocks; navigation failures are reported through the structure-access checks rather than repaired by deleting architecture.
 
-The private datapack lives at `run/rustic-integration/datapack`. The tracked catalog receipt is `tools/structure/rustic-woodland-catalog-20260914.json`.
+The bundled datapack lives at `run/rustic-integration/datapack`. The tracked catalog receipt is `tools/structure/rustic-woodland-catalog-20260914.json`.

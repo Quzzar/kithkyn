@@ -444,5 +444,12 @@
     "routes-gate-access-nautical": "PASS: [gate-access-verify] RESULT PASS: NAUTICAL_COAST all 8 guards/workers ascended and descended",
     "custody": "not applicable: the Mushroom catalog has no castle",
     "static_audit": "PASS 18 templates (tools/structure/audit-templates.py on the mushroom-village branch, mooshrooms admitted as livestock): no barrier states, out-of-bounds blocks, invalid or duplicate station coordinates, invalid lumberjack stands, terrain-clearing corner air, unclassified containers, open or empty butcheries, malformed market floors, or malformed market entrances"
+  },
+  "source_policy": "Bundled in the Kithkyn jar under the September 14, 2026 release decision. Approved edits and source provenance are retained; creator credits and the standing offer to revise designs are in README.md.",
+  "bundled": {
+    "date": "2026-09-30",
+    "source": "run/trio-20260912/datapacks/kithkyn-mushroom",
+    "manifest": "tools/release/bundled-catalogs.json",
+    "definitions": 18
   }
 }

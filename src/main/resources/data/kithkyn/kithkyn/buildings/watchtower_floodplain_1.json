@@ -1,0 +1,99 @@
+{
+  "category": "watchtower",
+  "beds": [
+    [
+      5,
+      13,
+      3
+    ]
+  ],
+  "worker_beds": [
+    [
+      5,
+      13,
+      3
+    ]
+  ],
+  "couple_beds": [],
+  "work_stations": [
+    {
+      "occupation": "GUARD",
+      "pos": [
+        4,
+        13,
+        2
+      ],
+      "guard_duty": "CROSSBOW_POST"
+    }
+  ],
+  "personal_containers": [],
+  "containers": [
+    [
+      5,
+      13,
+      6
+    ]
+  ],
+  "bed_containers": [
+    {
+      "bed": [
+        5,
+        13,
+        3
+      ],
+      "containers": []
+    }
+  ],
+  "village_identity": {
+    "primary_blocks": [
+      [
+        5,
+        13,
+        3
+      ]
+    ],
+    "secondary_blocks": [],
+    "banners": [
+      [
+        4,
+        12,
+        0
+      ],
+      [
+        0,
+        12,
+        4
+      ],
+      [
+        8,
+        12,
+        4
+      ],
+      [
+        4,
+        12,
+        8
+      ]
+    ]
+  },
+  "sink": 0,
+  "entrance_facing": "south",
+  "grants": [
+    "HOUSING",
+    "PROTECTION",
+    "RANGED_GUARD_POSTS",
+    "STORAGE"
+  ],
+  "cost": [
+    {
+      "item": "minecraft:oak_log",
+      "count": 20
+    },
+    {
+      "item": "minecraft:cobblestone",
+      "count": 20
+    }
+  ],
+  "structure": "watchtower_floodplain_1",
+  "variant": "floodplain"
+}

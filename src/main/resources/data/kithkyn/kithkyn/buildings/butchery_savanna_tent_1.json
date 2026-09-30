@@ -1,0 +1,50 @@
+{
+  "structure": "butchery_savanna_tent_1",
+  "category": "butchery",
+  "variant": "savanna_tent",
+  "beds": [],
+  "work_stations": [
+    {
+      "pos": [
+        1,
+        0,
+        1
+      ],
+      "occupation": "BUTCHER"
+    }
+  ],
+  "worksites": [],
+  "containers": [
+    [
+      0,
+      0,
+      0
+    ]
+  ],
+  "personal_containers": [],
+  "bed_containers": [],
+  "couple_beds": [],
+  "village_identity": {
+    "primary_blocks": [],
+    "secondary_blocks": [],
+    "banners": []
+  },
+  "sink": -1,
+  "entrance_facing": "east",
+  "grants": [
+    "STORAGE",
+    "FOOD",
+    "MEAT",
+    "LEATHER"
+  ],
+  "cost": [
+    {
+      "item": "minecraft:acacia_log",
+      "count": 20
+    },
+    {
+      "item": "minecraft:cobblestone",
+      "count": 8
+    }
+  ]
+}

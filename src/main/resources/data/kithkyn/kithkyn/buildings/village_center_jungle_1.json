@@ -1,0 +1,110 @@
+{
+  "structure": "village_center_jungle_1",
+  "category": "village_center",
+  "variant": "jungle",
+  "beds": [],
+  "work_stations": [
+    {
+      "pos": [
+        5,
+        1,
+        0
+      ],
+      "occupation": "BUILDER"
+    },
+    {
+      "pos": [
+        5,
+        1,
+        1
+      ],
+      "occupation": "BUILDER"
+    },
+    {
+      "pos": [
+        5,
+        1,
+        3
+      ],
+      "occupation": "BUILDER"
+    },
+    {
+      "pos": [
+        2,
+        1,
+        0
+      ],
+      "occupation": "BUILDER"
+    },
+    {
+      "pos": [
+        7,
+        1,
+        1
+      ],
+      "occupation": "BUILDER"
+    },
+    {
+      "pos": [
+        6,
+        1,
+        0
+      ],
+      "occupation": "GUARD",
+      "guard_duty": "CAPTAIN"
+    }
+  ],
+  "worksites": [],
+  "containers": [],
+  "personal_containers": [],
+  "bed_containers": [],
+  "couple_beds": [],
+  "village_identity": {
+    "primary_blocks": [],
+    "secondary_blocks": [],
+    "banners": [
+      [
+        5,
+        2,
+        9
+      ]
+    ]
+  },
+  "sink": 0,
+  "entrance_facing": "north",
+  "grants": [
+    "CIVIC_CENTER",
+    "CONSTRUCTION",
+    "PROTECTION"
+  ],
+  "cost": [
+    {
+      "item": "minecraft:oak_log",
+      "count": 48
+    },
+    {
+      "item": "minecraft:cobblestone",
+      "count": 32
+    }
+  ],
+  "starting_buildings": [
+    "mine_jungle_1",
+    "storehouse_jungle_1",
+    "house_jungle_1",
+    "house_jungle_1__small_house_4",
+    "house_jungle_1",
+    "house_jungle_1__small_house_4"
+  ],
+  "meeting_point": [
+    3,
+    1,
+    5
+  ],
+  "campfires": [
+    [
+      5,
+      2,
+      5
+    ]
+  ]
+}

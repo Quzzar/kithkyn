@@ -1,0 +1,66 @@
+{
+  "category": "market",
+  "beds": [],
+  "work_stations": [
+    {
+      "occupation": "MERCHANT",
+      "pos": [
+        7,
+        1,
+        7
+      ]
+    },
+    {
+      "occupation": "MERCHANT",
+      "pos": [
+        15,
+        1,
+        7
+      ]
+    }
+  ],
+  "personal_containers": [],
+  "containers": [
+    [
+      7,
+      0,
+      9
+    ],
+    [
+      15,
+      0,
+      9
+    ]
+  ],
+  "grants": [
+    "STORAGE",
+    "TRADE",
+    "TRADE_INITIATIVE"
+  ],
+  "cost": [
+    {
+      "item": "minecraft:oak_log",
+      "count": 16
+    },
+    {
+      "item": "minecraft:cobblestone",
+      "count": 44
+    },
+    {
+      "item": "minecraft:white_wool",
+      "count": 8
+    }
+  ],
+  "sink": 0,
+  "village_identity": {
+    "primary_blocks": [],
+    "secondary_blocks": [],
+    "banners": []
+  },
+  "upgrades_from": "market_badlands_1",
+  "entrance_facing": "north",
+  "couple_beds": [],
+  "bed_containers": [],
+  "structure": "market_badlands_2",
+  "variant": "badlands"
+}

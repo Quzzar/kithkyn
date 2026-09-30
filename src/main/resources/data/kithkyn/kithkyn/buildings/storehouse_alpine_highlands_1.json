@@ -1,0 +1,122 @@
+{
+  "structure": "storehouse_alpine_highlands_1",
+  "category": "storehouse",
+  "variant": "alpine_highlands",
+  "beds": [
+    [
+      3,
+      1,
+      8
+    ],
+    [
+      5,
+      1,
+      2
+    ]
+  ],
+  "work_stations": [
+    {
+      "pos": [
+        11,
+        1,
+        5
+      ],
+      "occupation": "QUARTERMASTER"
+    }
+  ],
+  "worksites": [],
+  "containers": [
+    [
+      11,
+      1,
+      5
+    ],
+    [
+      12,
+      1,
+      5
+    ],
+    [
+      12,
+      2,
+      5
+    ]
+  ],
+  "personal_containers": [
+    [
+      4,
+      0,
+      8
+    ],
+    [
+      5,
+      1,
+      4
+    ]
+  ],
+  "bed_containers": [
+    {
+      "bed": [
+        3,
+        1,
+        8
+      ],
+      "containers": [
+        [
+          4,
+          0,
+          8
+        ]
+      ]
+    },
+    {
+      "bed": [
+        5,
+        1,
+        2
+      ],
+      "containers": [
+        [
+          5,
+          1,
+          4
+        ]
+      ]
+    }
+  ],
+  "couple_beds": [],
+  "village_identity": {
+    "primary_blocks": [
+      [
+        3,
+        1,
+        8
+      ]
+    ],
+    "secondary_blocks": [
+      [
+        5,
+        1,
+        2
+      ]
+    ],
+    "banners": []
+  },
+  "sink": -1,
+  "entrance_facing": "south",
+  "grants": [
+    "STORAGE",
+    "HOUSING",
+    "LOGISTICS"
+  ],
+  "cost": [
+    {
+      "item": "minecraft:oak_log",
+      "count": 32
+    },
+    {
+      "item": "minecraft:cobblestone",
+      "count": 28
+    }
+  ]
+}

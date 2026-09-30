@@ -1,16 +1,18 @@
 # Swamp village
 
+**Release availability:** this approved catalog ships in the Kithkyn jar. No separate world datapack is required. Exact shipped definitions and template hashes are recorded in [the bundled catalog manifest](../tools/release/bundled-catalogs.json). Local `run/` paths below are historical authoring and verification records.
+
 The Swamp catalog is the ordinary wetland village, separate from the mud-brick Floodplain
 catalog used by mangrove swamps. It combines the approved Dungeons & Taverns Swamp and Towns
 and Towers Boat Village buildings with the user-edited NF01.2 civic ruin, regional markets,
 the approved one-stage wall, and the SC01.2 castle. Its style token is `swamp`. Vanilla Swamp,
 the conventional Swamp biome tag, and recognizable modded biome paths containing `swamp`
-select it whenever its complete private founding set is loaded. A path containing `mangrove`
+select it whenever its complete bundled founding set is loaded. A path containing `mangrove`
 is resolved to Floodplain first.
 
 ## Selected buildings
 
-The private datapack contains 27 definitions:
+The bundled datapack contains 27 definitions:
 
 | Id | Use |
 | --- | --- |
@@ -81,7 +83,7 @@ the NF04.2 cleric home and NE06.10 tavern, neutralizes identity slots, adds the 
 builds the three regional markets, and joins the completed castle into
 `run/swamp-integration/datapack/`. The catalog hashes and source record are in
 `tools/structure/swamp-catalog-20260911.json`. Third-party-derived building templates remain in
-the private local datapack; only the authored wall segment family is bundled with the runtime.
+the bundled datapack; only the authored wall segment family is bundled with the runtime.
 
 Manual testing can create the style with `/kithkyn create-village ~ ~ ~ swamp`. Natural founding
 in an ordinary swamp uses the same selector and founding path.

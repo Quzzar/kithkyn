@@ -119,7 +119,8 @@ class BuildingRecipeTest {
     for (BuildingInfo info : loaded.values()) {
       assertFalse(info.getMaterialCost().isEmpty(), info.getName());
       assertFalse(info.getGrants().isEmpty(), info.getName());
-      assertTrue(info.getMaterialCost().stream().allMatch(stack -> stack.is(Items.OAK_LOG)
+      assertTrue(info.getMaterialCost().stream().allMatch(stack -> stack.is(Items.OAK_LOG) || stack.is(Items.SPRUCE_LOG)
+          || stack.is(Items.ACACIA_LOG) || stack.is(Items.DARK_OAK_LOG)
           || stack.is(Items.COBBLESTONE) || stack.is(Items.WHITE_WOOL) || stack.is(Items.IRON_INGOT)), info.getName());
       assertTrue(info.validateAuthoredContract() == null, info.getName() + ": " + info.validateAuthoredContract());
     }

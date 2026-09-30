@@ -1,0 +1,97 @@
+{
+  "structure": "house_tundra_1__three_single",
+  "category": "house",
+  "variant": "tundra",
+  "beds": [
+    [
+      2,
+      1,
+      1
+    ],
+    [
+      6,
+      1,
+      1
+    ],
+    [
+      6,
+      1,
+      4
+    ]
+  ],
+  "work_stations": [],
+  "worksites": [],
+  "containers": [
+    [
+      4,
+      1,
+      1
+    ]
+  ],
+  "personal_containers": [],
+  "bed_containers": [
+    {
+      "bed": [
+        2,
+        1,
+        1
+      ],
+      "containers": []
+    },
+    {
+      "bed": [
+        6,
+        1,
+        1
+      ],
+      "containers": []
+    },
+    {
+      "bed": [
+        6,
+        1,
+        4
+      ],
+      "containers": []
+    }
+  ],
+  "couple_beds": [],
+  "village_identity": {
+    "primary_blocks": [
+      [
+        2,
+        1,
+        1
+      ],
+      [
+        6,
+        1,
+        4
+      ]
+    ],
+    "secondary_blocks": [
+      [
+        6,
+        1,
+        1
+      ]
+    ],
+    "banners": []
+  },
+  "sink": 0,
+  "entrance_facing": "east",
+  "grants": [
+    "HOUSING",
+    "STORAGE"
+  ],
+  "cost": [
+    {
+      "item": "minecraft:oak_log",
+      "count": 16
+    },
+    {
+      "item": "minecraft:cobblestone",
+      "count": 20
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "category": "blacksmith",
+  "beds": [],
+  "couple_beds": [],
+  "work_stations": [
+    {
+      "occupation": "BLACKSMITH",
+      "pos": [
+        3,
+        4,
+        2
+      ]
+    }
+  ],
+  "personal_containers": [],
+  "containers": [
+    [
+      3,
+      2,
+      1
+    ],
+    [
+      2,
+      4,
+      1
+    ]
+  ],
+  "bed_containers": [],
+  "village_identity": {
+    "primary_blocks": [],
+    "secondary_blocks": [],
+    "banners": []
+  },
+  "sink": 0,
+  "entrance_facing": "west",
+  "grants": [
+    "STORAGE",
+    "REPAIR",
+    "SMELTING",
+    "TOOLS_IRON",
+    "ARMOR_IRON",
+    "SHIELDS"
+  ],
+  "cost": [
+    {
+      "item": "minecraft:oak_log",
+      "count": 12
+    },
+    {
+      "item": "minecraft:cobblestone",
+      "count": 52
+    }
+  ],
+  "structure": "blacksmith_badlands_1",
+  "variant": "badlands"
+}

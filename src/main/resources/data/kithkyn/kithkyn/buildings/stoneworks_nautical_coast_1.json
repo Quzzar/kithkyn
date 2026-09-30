@@ -1,0 +1,89 @@
+{
+  "structure": "stoneworks_nautical_coast_1",
+  "category": "stoneworks",
+  "variant": "nautical_coast",
+  "beds": [
+    [
+      6,
+      2,
+      4
+    ]
+  ],
+  "work_stations": [
+    {
+      "pos": [
+        4,
+        2,
+        3
+      ],
+      "occupation": "MASON"
+    }
+  ],
+  "worksites": [],
+  "containers": [
+    [
+      2,
+      2,
+      2
+    ]
+  ],
+  "personal_containers": [
+    [
+      5,
+      2,
+      4
+    ]
+  ],
+  "bed_containers": [
+    {
+      "bed": [
+        6,
+        2,
+        4
+      ],
+      "containers": [
+        [
+          5,
+          2,
+          4
+        ]
+      ]
+    }
+  ],
+  "couple_beds": [],
+  "village_identity": {
+    "primary_blocks": [
+      [
+        6,
+        2,
+        4
+      ]
+    ],
+    "secondary_blocks": [],
+    "banners": []
+  },
+  "sink": 0,
+  "entrance_facing": "north",
+  "grants": [
+    "HOUSING",
+    "STORAGE",
+    "CUT_STONE"
+  ],
+  "worker_beds": [
+    [
+      6,
+      2,
+      4
+    ]
+  ],
+  "cost": [
+    {
+      "item": "minecraft:oak_log",
+      "count": 24
+    },
+    {
+      "item": "minecraft:cobblestone",
+      "count": 20
+    }
+  ]
+}

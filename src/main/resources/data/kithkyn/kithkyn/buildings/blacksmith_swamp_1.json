@@ -1,0 +1,52 @@
+{
+  "structure": "blacksmith_swamp_1",
+  "category": "blacksmith",
+  "variant": "swamp",
+  "beds": [],
+  "work_stations": [
+    {
+      "pos": [
+        2,
+        1,
+        2
+      ],
+      "occupation": "BLACKSMITH"
+    }
+  ],
+  "worksites": [],
+  "containers": [
+    [
+      2,
+      1,
+      1
+    ]
+  ],
+  "personal_containers": [],
+  "bed_containers": [],
+  "couple_beds": [],
+  "village_identity": {
+    "primary_blocks": [],
+    "secondary_blocks": [],
+    "banners": []
+  },
+  "sink": -1,
+  "entrance_facing": "west",
+  "grants": [
+    "STORAGE",
+    "REPAIR",
+    "SMELTING",
+    "TOOLS_IRON",
+    "ARMOR_IRON",
+    "SHIELDS"
+  ],
+  "cost": [
+    {
+      "item": "minecraft:oak_log",
+      "count": 32
+    },
+    {
+      "item": "minecraft:cobblestone",
+      "count": 32
+    }
+  ]
+}

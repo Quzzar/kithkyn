@@ -1,0 +1,77 @@
+{
+  "structure": "lumberjack_mediterranean_1",
+  "category": "lumberjack",
+  "variant": "mediterranean",
+  "beds": [],
+  "work_stations": [
+    {
+      "pos": [
+        9,
+        1,
+        7
+      ],
+      "occupation": "LUMBERJACK"
+    }
+  ],
+  "worksites": [],
+  "containers": [
+    [
+      3,
+      1,
+      9
+    ],
+    [
+      3,
+      2,
+      7
+    ],
+    [
+      4,
+      1,
+      7
+    ]
+  ],
+  "personal_containers": [],
+  "decorative_containers": [
+    [
+      1,
+      1,
+      7
+    ],
+    [
+      3,
+      1,
+      7
+    ],
+    [
+      6,
+      1,
+      16
+    ],
+    [
+      10,
+      1,
+      11
+    ]
+  ],
+  "bed_containers": [],
+  "couple_beds": [],
+  "village_identity": {
+    "primary_blocks": [],
+    "secondary_blocks": [],
+    "banners": []
+  },
+  "sink": 0,
+  "entrance_facing": "north",
+  "grants": [
+    "STORAGE",
+    "LOGS",
+    "PLANKS"
+  ],
+  "cost": [
+    {
+      "item": "minecraft:cobblestone",
+      "count": 40
+    }
+  ]
+}

@@ -1,0 +1,45 @@
+{
+  "structure": "lumberjack_swamp_1",
+  "category": "lumberjack",
+  "variant": "swamp",
+  "beds": [],
+  "work_stations": [
+    {
+      "pos": [
+        2,
+        1,
+        6
+      ],
+      "occupation": "LUMBERJACK"
+    }
+  ],
+  "worksites": [],
+  "containers": [],
+  "personal_containers": [],
+  "decorative_containers": [
+    [
+      3,
+      0,
+      3
+    ]
+  ],
+  "bed_containers": [],
+  "couple_beds": [],
+  "village_identity": {
+    "primary_blocks": [],
+    "secondary_blocks": [],
+    "banners": []
+  },
+  "sink": 0,
+  "entrance_facing": "north",
+  "grants": [
+    "LOGS",
+    "PLANKS"
+  ],
+  "cost": [
+    {
+      "item": "minecraft:cobblestone",
+      "count": 24
+    }
+  ]
+}

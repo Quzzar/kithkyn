@@ -1,0 +1,50 @@
+{
+  "structure": "butchery_alpine_highlands_1",
+  "category": "butchery",
+  "variant": "alpine_highlands",
+  "beds": [],
+  "work_stations": [
+    {
+      "pos": [
+        5,
+        1,
+        7
+      ],
+      "occupation": "BUTCHER"
+    }
+  ],
+  "worksites": [],
+  "containers": [
+    [
+      5,
+      0,
+      7
+    ]
+  ],
+  "personal_containers": [],
+  "bed_containers": [],
+  "couple_beds": [],
+  "village_identity": {
+    "primary_blocks": [],
+    "secondary_blocks": [],
+    "banners": []
+  },
+  "sink": 0,
+  "entrance_facing": "south",
+  "grants": [
+    "FOOD",
+    "MEAT",
+    "LEATHER",
+    "STORAGE"
+  ],
+  "cost": [
+    {
+      "item": "minecraft:oak_log",
+      "count": 24
+    },
+    {
+      "item": "minecraft:cobblestone",
+      "count": 24
+    }
+  ]
+}

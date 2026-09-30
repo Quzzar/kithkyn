@@ -1,0 +1,59 @@
+{
+  "structure": "mine_japanese_cherry_grove_1",
+  "category": "mine",
+  "variant": "japanese_cherry_grove",
+  "beds": [],
+  "work_stations": [
+    {
+      "pos": [
+        2,
+        1,
+        3
+      ],
+      "occupation": "MINER"
+    }
+  ],
+  "worksites": [],
+  "containers": [
+    [
+      2,
+      1,
+      2
+    ]
+  ],
+  "personal_containers": [],
+  "bed_containers": [],
+  "couple_beds": [],
+  "village_identity": {
+    "primary_blocks": [],
+    "secondary_blocks": [],
+    "banners": []
+  },
+  "sink": 0,
+  "entrance_facing": "west",
+  "mine_entrance": {
+    "facing": "south",
+    "offset": [
+      1,
+      1,
+      1
+    ],
+    "width": 2
+  },
+  "grants": [
+    "STORAGE",
+    "STONE",
+    "ORES",
+    "MINERALS"
+  ],
+  "cost": [
+    {
+      "item": "minecraft:oak_log",
+      "count": 16
+    },
+    {
+      "item": "minecraft:cobblestone",
+      "count": 12
+    }
+  ]
+}

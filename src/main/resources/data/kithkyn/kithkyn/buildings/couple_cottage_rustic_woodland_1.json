@@ -1,0 +1,103 @@
+{
+  "structure": "couple_cottage_rustic_woodland_1",
+  "category": "couple_cottage",
+  "variant": "rustic_woodland",
+  "beds": [
+    [
+      3,
+      1,
+      2
+    ],
+    [
+      4,
+      1,
+      2
+    ]
+  ],
+  "work_stations": [],
+  "worksites": [],
+  "containers": [],
+  "personal_containers": [
+    [
+      2,
+      1,
+      6
+    ]
+  ],
+  "bed_containers": [
+    {
+      "bed": [
+        3,
+        1,
+        2
+      ],
+      "containers": [
+        [
+          2,
+          1,
+          6
+        ]
+      ]
+    },
+    {
+      "bed": [
+        4,
+        1,
+        2
+      ],
+      "containers": [
+        [
+          2,
+          1,
+          6
+        ]
+      ]
+    }
+  ],
+  "couple_beds": [
+    [
+      [
+        3,
+        1,
+        2
+      ],
+      [
+        4,
+        1,
+        2
+      ]
+    ]
+  ],
+  "village_identity": {
+    "primary_blocks": [
+      [
+        3,
+        1,
+        2
+      ],
+      [
+        4,
+        1,
+        2
+      ]
+    ],
+    "secondary_blocks": [],
+    "banners": []
+  },
+  "sink": 0,
+  "entrance_facing": "west",
+  "grants": [
+    "HOUSING",
+    "FAMILY_HOUSING"
+  ],
+  "cost": [
+    {
+      "item": "minecraft:oak_log",
+      "count": 20
+    },
+    {
+      "item": "minecraft:cobblestone",
+      "count": 8
+    }
+  ]
+}

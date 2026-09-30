@@ -1,0 +1,95 @@
+{
+  "structure": "house_japanese_cherry_grove_1",
+  "category": "house",
+  "variant": "japanese_cherry_grove",
+  "beds": [
+    [
+      6,
+      1,
+      8
+    ],
+    [
+      6,
+      5,
+      5
+    ]
+  ],
+  "work_stations": [],
+  "worksites": [],
+  "containers": [],
+  "personal_containers": [
+    [
+      3,
+      1,
+      2
+    ],
+    [
+      4,
+      5,
+      7
+    ]
+  ],
+  "bed_containers": [
+    {
+      "bed": [
+        6,
+        1,
+        8
+      ],
+      "containers": [
+        [
+          3,
+          1,
+          2
+        ]
+      ]
+    },
+    {
+      "bed": [
+        6,
+        5,
+        5
+      ],
+      "containers": [
+        [
+          4,
+          5,
+          7
+        ]
+      ]
+    }
+  ],
+  "couple_beds": [],
+  "village_identity": {
+    "primary_blocks": [
+      [
+        6,
+        1,
+        8
+      ]
+    ],
+    "secondary_blocks": [
+      [
+        6,
+        5,
+        5
+      ]
+    ],
+    "banners": []
+  },
+  "sink": 0,
+  "entrance_facing": "west",
+  "grants": [
+    "HOUSING"
+  ],
+  "cost": [
+    {
+      "item": "minecraft:oak_log",
+      "count": 20
+    },
+    {
+      "item": "minecraft:cobblestone",
+      "count": 8
+    }
+  ]
+}

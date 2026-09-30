@@ -1,0 +1,41 @@
+{
+  "structure": "market_mediterranean_1",
+  "work_stations": [
+    {
+      "pos": [
+        4,
+        1,
+        4
+      ],
+      "occupation": "MERCHANT"
+    }
+  ],
+  "containers": [
+    [
+      4,
+      0,
+      5
+    ]
+  ],
+  "grants": [
+    "STORAGE",
+    "TRADE"
+  ],
+  "entrance_facing": "west",
+  "village_identity": {
+    "primary_blocks": [],
+    "secondary_blocks": [],
+    "banners": []
+  },
+  "variant": "mediterranean",
+  "cost": [
+    {
+      "item": "minecraft:oak_log",
+      "count": 12
+    },
+    {
+      "item": "minecraft:cobblestone",
+      "count": 24
+    }
+  ]
+}

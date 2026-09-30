@@ -1,0 +1,36 @@
+{
+  "structure": "market_tundra_1",
+  "work_stations": [
+    {
+      "pos": [
+        4,
+        1,
+        4
+      ],
+      "occupation": "MERCHANT"
+    }
+  ],
+  "containers": [
+    [
+      4,
+      0,
+      5
+    ]
+  ],
+  "cost": [
+    {
+      "item": "minecraft:oak_log",
+      "count": 16
+    },
+    {
+      "item": "minecraft:cobblestone",
+      "count": 20
+    }
+  ],
+  "grants": [
+    "STORAGE",
+    "TRADE"
+  ],
+  "variant": "tundra",
+  "sink": 0
+}

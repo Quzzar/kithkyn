@@ -1,0 +1,84 @@
+{
+  "structure": "watchtower_romanian_1",
+  "category": "watchtower",
+  "variant": "romanian",
+  "beds": [
+    [
+      6,
+      13,
+      3
+    ]
+  ],
+  "work_stations": [
+    {
+      "pos": [
+        4,
+        13,
+        4
+      ],
+      "occupation": "GUARD",
+      "guard_duty": "CROSSBOW_POST"
+    }
+  ],
+  "worksites": [],
+  "containers": [],
+  "personal_containers": [
+    [
+      3,
+      13,
+      5
+    ]
+  ],
+  "bed_containers": [
+    {
+      "bed": [
+        6,
+        13,
+        3
+      ],
+      "containers": [
+        [
+          3,
+          13,
+          5
+        ]
+      ]
+    }
+  ],
+  "couple_beds": [],
+  "village_identity": {
+    "primary_blocks": [
+      [
+        6,
+        13,
+        3
+      ]
+    ],
+    "secondary_blocks": [],
+    "banners": []
+  },
+  "sink": 0,
+  "entrance_facing": "south",
+  "grants": [
+    "HOUSING",
+    "PROTECTION",
+    "RANGED_GUARD_POSTS"
+  ],
+  "worker_beds": [
+    [
+      6,
+      13,
+      3
+    ]
+  ],
+  "cost": [
+    {
+      "item": "minecraft:oak_log",
+      "count": 16
+    },
+    {
+      "item": "minecraft:cobblestone",
+      "count": 24
+    }
+  ]
+}

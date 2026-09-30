@@ -1,5 +1,7 @@
 # Taiga village
 
+**Release availability:** this approved catalog ships in the Kithkyn jar. No separate world datapack is required. Exact shipped definitions and template hashes are recorded in [the bundled catalog manifest](../tools/release/bundled-catalogs.json). Local `run/` paths below are historical authoring and verification records.
+
 The Taiga catalog is the cold conifer-forest camp. Stripped spruce halls with steep spruce roofs
 stand around a paved meeting point with a little watch tower, a timber fort with its jail and
 the ruler's hall guards the town, a firewatch tower and a spruce tavern stand among the works,
@@ -36,7 +38,7 @@ companions are declared on the centre (`starting_buildings`) so the site planner
 
 ## Selected buildings
 
-The private datapack contains 23 definitions:
+The bundled datapack contains 23 definitions:
 
 | Id | Exhibit | Use |
 | --- | --- | --- |

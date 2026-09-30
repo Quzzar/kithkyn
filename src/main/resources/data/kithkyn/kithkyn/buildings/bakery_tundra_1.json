@@ -1,0 +1,71 @@
+{
+  "structure": "bakery_tundra_1",
+  "category": "bakery",
+  "variant": "tundra",
+  "beds": [
+    [
+      2,
+      1,
+      1
+    ]
+  ],
+  "work_stations": [
+    {
+      "pos": [
+        6,
+        1,
+        2
+      ],
+      "occupation": "BAKER"
+    }
+  ],
+  "worksites": [],
+  "containers": [],
+  "personal_containers": [],
+  "bed_containers": [
+    {
+      "bed": [
+        2,
+        1,
+        1
+      ],
+      "containers": []
+    }
+  ],
+  "couple_beds": [],
+  "village_identity": {
+    "primary_blocks": [
+      [
+        2,
+        1,
+        1
+      ]
+    ],
+    "secondary_blocks": [],
+    "banners": []
+  },
+  "sink": 0,
+  "entrance_facing": "south",
+  "grants": [
+    "HOUSING",
+    "FOOD",
+    "BAKED_GOODS"
+  ],
+  "worker_beds": [
+    [
+      2,
+      1,
+      1
+    ]
+  ],
+  "cost": [
+    {
+      "item": "minecraft:oak_log",
+      "count": 20
+    },
+    {
+      "item": "minecraft:cobblestone",
+      "count": 20
+    }
+  ]
+}

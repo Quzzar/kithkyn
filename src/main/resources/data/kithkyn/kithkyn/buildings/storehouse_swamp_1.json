@@ -1,0 +1,58 @@
+{
+  "structure": "storehouse_swamp_1",
+  "category": "storehouse",
+  "variant": "swamp",
+  "beds": [],
+  "work_stations": [
+    {
+      "pos": [
+        3,
+        2,
+        3
+      ],
+      "occupation": "QUARTERMASTER"
+    }
+  ],
+  "worksites": [],
+  "containers": [
+    [
+      2,
+      2,
+      4
+    ],
+    [
+      3,
+      2,
+      5
+    ],
+    [
+      4,
+      2,
+      4
+    ]
+  ],
+  "personal_containers": [],
+  "bed_containers": [],
+  "couple_beds": [],
+  "village_identity": {
+    "primary_blocks": [],
+    "secondary_blocks": [],
+    "banners": []
+  },
+  "sink": -1,
+  "entrance_facing": "north",
+  "grants": [
+    "STORAGE",
+    "LOGISTICS"
+  ],
+  "cost": [
+    {
+      "item": "minecraft:oak_log",
+      "count": 12
+    },
+    {
+      "item": "minecraft:cobblestone",
+      "count": 12
+    }
+  ]
+}

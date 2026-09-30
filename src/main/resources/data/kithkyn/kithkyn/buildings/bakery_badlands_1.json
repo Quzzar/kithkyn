@@ -1,0 +1,48 @@
+{
+  "category": "bakery",
+  "beds": [],
+  "couple_beds": [],
+  "work_stations": [
+    {
+      "occupation": "BAKER",
+      "pos": [
+        4,
+        1,
+        6
+      ]
+    }
+  ],
+  "personal_containers": [],
+  "containers": [
+    [
+      5,
+      3,
+      8
+    ]
+  ],
+  "bed_containers": [],
+  "village_identity": {
+    "primary_blocks": [],
+    "secondary_blocks": [],
+    "banners": []
+  },
+  "sink": -1,
+  "entrance_facing": "north",
+  "grants": [
+    "STORAGE",
+    "FOOD",
+    "BAKED_GOODS"
+  ],
+  "cost": [
+    {
+      "item": "minecraft:oak_log",
+      "count": 12
+    },
+    {
+      "item": "minecraft:cobblestone",
+      "count": 20
+    }
+  ],
+  "structure": "bakery_badlands_1",
+  "variant": "badlands"
+}

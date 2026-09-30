@@ -1,0 +1,560 @@
+{
+  "structure": "castle_mediterranean_1",
+  "category": "castle",
+  "variant": "mediterranean",
+  "beds": [
+    [
+      5,
+      2,
+      2
+    ],
+    [
+      5,
+      2,
+      10
+    ],
+    [
+      5,
+      2,
+      11
+    ],
+    [
+      11,
+      2,
+      2
+    ]
+  ],
+  "work_stations": [
+    {
+      "pos": [
+        10,
+        2,
+        14
+      ],
+      "occupation": "BAKER"
+    },
+    {
+      "pos": [
+        13,
+        2,
+        11
+      ],
+      "occupation": "BLACKSMITH"
+    },
+    {
+      "pos": [
+        3,
+        2,
+        11
+      ],
+      "occupation": "LEADER"
+    },
+    {
+      "pos": [
+        3,
+        7,
+        6
+      ],
+      "occupation": "GUARD",
+      "guard_duty": "JAILER"
+    },
+    {
+      "pos": [
+        7,
+        2,
+        16
+      ],
+      "occupation": "GUARD",
+      "guard_duty": "SWORD_POST",
+      "patrol_route": [
+        [
+          7,
+          2,
+          16
+        ],
+        [
+          9,
+          2,
+          16
+        ],
+        [
+          9,
+          2,
+          14
+        ],
+        [
+          7,
+          2,
+          14
+        ]
+      ]
+    },
+    {
+      "pos": [
+        7,
+        2,
+        3
+      ],
+      "occupation": "GUARD",
+      "guard_duty": "SWORD_POST",
+      "patrol_route": [
+        [
+          7,
+          2,
+          3
+        ],
+        [
+          9,
+          2,
+          3
+        ],
+        [
+          9,
+          2,
+          4
+        ],
+        [
+          7,
+          2,
+          4
+        ]
+      ]
+    },
+    {
+      "pos": [
+        8,
+        2,
+        7
+      ],
+      "occupation": "GUARD",
+      "guard_duty": "SWORD_POST",
+      "patrol_route": [
+        [
+          8,
+          2,
+          7
+        ],
+        [
+          8,
+          2,
+          9
+        ],
+        [
+          9,
+          2,
+          9
+        ],
+        [
+          9,
+          2,
+          7
+        ]
+      ]
+    },
+    {
+      "pos": [
+        11,
+        2,
+        7
+      ],
+      "occupation": "GUARD",
+      "guard_duty": "SWORD_POST",
+      "patrol_route": [
+        [
+          11,
+          2,
+          7
+        ],
+        [
+          11,
+          2,
+          9
+        ],
+        [
+          12,
+          2,
+          9
+        ],
+        [
+          12,
+          2,
+          7
+        ]
+      ]
+    }
+  ],
+  "worksites": [],
+  "containers": [
+    [
+      11,
+      3,
+      16
+    ],
+    [
+      13,
+      2,
+      3
+    ],
+    [
+      13,
+      2,
+      4
+    ],
+    [
+      13,
+      3,
+      4
+    ],
+    [
+      14,
+      1,
+      3
+    ],
+    [
+      14,
+      1,
+      4
+    ]
+  ],
+  "personal_containers": [
+    [
+      7,
+      2,
+      5
+    ],
+    [
+      2,
+      1,
+      11
+    ]
+  ],
+  "decorative_containers": [
+    [
+      3,
+      1,
+      3
+    ],
+    [
+      7,
+      3,
+      9
+    ],
+    [
+      12,
+      3,
+      12
+    ],
+    [
+      13,
+      1,
+      3
+    ],
+    [
+      13,
+      1,
+      4
+    ]
+  ],
+  "bed_containers": [
+    {
+      "bed": [
+        5,
+        2,
+        2
+      ],
+      "containers": [
+        [
+          7,
+          2,
+          5
+        ]
+      ]
+    },
+    {
+      "bed": [
+        5,
+        2,
+        10
+      ],
+      "containers": [
+        [
+          2,
+          1,
+          11
+        ]
+      ]
+    },
+    {
+      "bed": [
+        5,
+        2,
+        11
+      ],
+      "containers": [
+        [
+          2,
+          1,
+          11
+        ]
+      ]
+    },
+    {
+      "bed": [
+        11,
+        2,
+        2
+      ],
+      "containers": [
+        [
+          7,
+          2,
+          5
+        ]
+      ]
+    }
+  ],
+  "couple_beds": [
+    [
+      [
+        5,
+        2,
+        10
+      ],
+      [
+        5,
+        2,
+        11
+      ]
+    ]
+  ],
+  "village_identity": {
+    "primary_blocks": [
+      [
+        5,
+        2,
+        10
+      ],
+      [
+        5,
+        2,
+        11
+      ],
+      [
+        5,
+        2,
+        2
+      ]
+    ],
+    "secondary_blocks": [
+      [
+        11,
+        2,
+        2
+      ]
+    ],
+    "banners": [
+      [
+        5,
+        3,
+        18
+      ],
+      [
+        11,
+        3,
+        18
+      ],
+      [
+        5,
+        4,
+        0
+      ],
+      [
+        11,
+        4,
+        0
+      ],
+      [
+        1,
+        4,
+        5
+      ],
+      [
+        15,
+        4,
+        5
+      ],
+      [
+        1,
+        4,
+        13
+      ],
+      [
+        15,
+        4,
+        13
+      ],
+      [
+        3,
+        9,
+        8
+      ]
+    ]
+  },
+  "sink": 0,
+  "entrance_facing": "south",
+  "grants": [
+    "GOVERNANCE",
+    "HOUSING",
+    "FAMILY_HOUSING",
+    "PROTECTION",
+    "CUSTODY",
+    "STORAGE",
+    "FOOD",
+    "BAKED_GOODS",
+    "REPAIR",
+    "SMELTING",
+    "TOOLS_IRON",
+    "ARMOR_IRON",
+    "SHIELDS"
+  ],
+  "worker_beds": [],
+  "room_reservations": [
+    {
+      "beds": [
+        [
+          5,
+          2,
+          10
+        ],
+        [
+          5,
+          2,
+          11
+        ]
+      ],
+      "occupation": "LEADER"
+    }
+  ],
+  "castle": {
+    "custody_cell": [
+      5,
+      7,
+      8
+    ],
+    "release_point": [
+      3,
+      7,
+      7
+    ],
+    "evidence_containers": [
+      [
+        5,
+        7,
+        6
+      ],
+      [
+        3,
+        7,
+        8
+      ]
+    ],
+    "patrol_routes": {
+      "SWORD_POST": [
+        [
+          7,
+          2,
+          16
+        ],
+        [
+          9,
+          2,
+          16
+        ],
+        [
+          9,
+          2,
+          14
+        ],
+        [
+          7,
+          2,
+          14
+        ],
+        [
+          7,
+          2,
+          3
+        ],
+        [
+          9,
+          2,
+          3
+        ],
+        [
+          9,
+          2,
+          4
+        ],
+        [
+          7,
+          2,
+          4
+        ],
+        [
+          8,
+          2,
+          7
+        ],
+        [
+          8,
+          2,
+          9
+        ],
+        [
+          9,
+          2,
+          9
+        ],
+        [
+          9,
+          2,
+          7
+        ],
+        [
+          11,
+          2,
+          7
+        ],
+        [
+          11,
+          2,
+          9
+        ],
+        [
+          12,
+          2,
+          9
+        ],
+        [
+          12,
+          2,
+          7
+        ]
+      ]
+    }
+  },
+  "cost": [
+    {
+      "item": "minecraft:oak_log",
+      "count": 48
+    },
+    {
+      "item": "minecraft:cobblestone",
+      "count": 136
+    },
+    {
+      "item": "minecraft:iron_ingot",
+      "count": 16
+    }
+  ]
+}

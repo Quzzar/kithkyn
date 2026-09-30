@@ -1,0 +1,317 @@
+{
+  "structure": "village_center_nautical_coast_1",
+  "category": "village_center",
+  "variant": "nautical_coast",
+  "beds": [
+    [
+      8,
+      8,
+      12
+    ],
+    [
+      10,
+      8,
+      8
+    ],
+    [
+      11,
+      2,
+      8
+    ],
+    [
+      11,
+      8,
+      14
+    ]
+  ],
+  "work_stations": [
+    {
+      "pos": [
+        11,
+        1,
+        19
+      ],
+      "occupation": "BUILDER"
+    },
+    {
+      "pos": [
+        10,
+        1,
+        19
+      ],
+      "occupation": "BUILDER"
+    },
+    {
+      "pos": [
+        11,
+        1,
+        20
+      ],
+      "occupation": "BUILDER"
+    },
+    {
+      "pos": [
+        12,
+        1,
+        19
+      ],
+      "occupation": "BUILDER"
+    },
+    {
+      "pos": [
+        12,
+        1,
+        20
+      ],
+      "occupation": "BUILDER"
+    },
+    {
+      "pos": [
+        9,
+        1,
+        19
+      ],
+      "occupation": "GUARD",
+      "guard_duty": "CAPTAIN"
+    }
+  ],
+  "worksites": [],
+  "containers": [
+    [
+      5,
+      1,
+      11
+    ],
+    [
+      6,
+      1,
+      11
+    ],
+    [
+      6,
+      1,
+      12
+    ],
+    [
+      6,
+      1,
+      13
+    ],
+    [
+      6,
+      2,
+      12
+    ],
+    [
+      7,
+      1,
+      9
+    ],
+    [
+      11,
+      1,
+      6
+    ],
+    [
+      12,
+      1,
+      6
+    ],
+    [
+      13,
+      1,
+      7
+    ],
+    [
+      13,
+      2,
+      7
+    ]
+  ],
+  "personal_containers": [
+    [
+      10,
+      2,
+      8
+    ],
+    [
+      8,
+      8,
+      10
+    ],
+    [
+      12,
+      8,
+      8
+    ],
+    [
+      12,
+      8,
+      14
+    ]
+  ],
+  "bed_containers": [
+    {
+      "bed": [
+        8,
+        8,
+        12
+      ],
+      "containers": [
+        [
+          8,
+          8,
+          10
+        ]
+      ]
+    },
+    {
+      "bed": [
+        10,
+        8,
+        8
+      ],
+      "containers": [
+        [
+          12,
+          8,
+          8
+        ]
+      ]
+    },
+    {
+      "bed": [
+        11,
+        2,
+        8
+      ],
+      "containers": [
+        [
+          10,
+          2,
+          8
+        ]
+      ]
+    },
+    {
+      "bed": [
+        11,
+        8,
+        14
+      ],
+      "containers": [
+        [
+          12,
+          8,
+          14
+        ]
+      ]
+    }
+  ],
+  "couple_beds": [],
+  "village_identity": {
+    "primary_blocks": [
+      [
+        11,
+        2,
+        8
+      ],
+      [
+        10,
+        8,
+        8
+      ]
+    ],
+    "secondary_blocks": [
+      [
+        8,
+        8,
+        12
+      ],
+      [
+        11,
+        8,
+        14
+      ]
+    ],
+    "banners": [
+      [
+        6,
+        5,
+        11
+      ],
+      [
+        11,
+        4,
+        12
+      ],
+      [
+        11,
+        5,
+        6
+      ],
+      [
+        16,
+        5,
+        11
+      ]
+    ]
+  },
+  "sink": 0,
+  "entrance_facing": "south",
+  "grants": [
+    "CIVIC_CENTER",
+    "CONSTRUCTION",
+    "PROTECTION",
+    "HOUSING",
+    "STORAGE",
+    "LOGISTICS"
+  ],
+  "worker_beds": [
+    [
+      8,
+      8,
+      12
+    ],
+    [
+      10,
+      8,
+      8
+    ],
+    [
+      11,
+      2,
+      8
+    ],
+    [
+      11,
+      8,
+      14
+    ]
+  ],
+  "starting_buildings": [
+    "mine_nautical_coast_1"
+  ],
+  "meeting_point": [
+    13,
+    1,
+    21
+  ],
+  "campfires": [
+    [
+      2,
+      1,
+      10
+    ]
+  ],
+  "cost": [
+    {
+      "item": "minecraft:oak_log",
+      "count": 48
+    },
+    {
+      "item": "minecraft:cobblestone",
+      "count": 72
+    }
+  ]
+}

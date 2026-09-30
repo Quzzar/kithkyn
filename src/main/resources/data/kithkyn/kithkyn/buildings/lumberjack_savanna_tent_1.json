@@ -1,0 +1,45 @@
+{
+  "structure": "lumberjack_savanna_tent_1",
+  "category": "lumberjack",
+  "variant": "savanna_tent",
+  "beds": [],
+  "work_stations": [
+    {
+      "pos": [
+        2,
+        1,
+        2
+      ],
+      "occupation": "LUMBERJACK"
+    }
+  ],
+  "worksites": [],
+  "containers": [
+    [
+      4,
+      1,
+      4
+    ]
+  ],
+  "personal_containers": [],
+  "bed_containers": [],
+  "couple_beds": [],
+  "village_identity": {
+    "primary_blocks": [],
+    "secondary_blocks": [],
+    "banners": []
+  },
+  "sink": 0,
+  "entrance_facing": "north",
+  "grants": [
+    "STORAGE",
+    "LOGS",
+    "PLANKS"
+  ],
+  "cost": [
+    {
+      "item": "minecraft:cobblestone",
+      "count": 28
+    }
+  ]
+}

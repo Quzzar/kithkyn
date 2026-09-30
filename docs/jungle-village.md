@@ -1,18 +1,20 @@
 # Jungle village
 
+**Release availability:** this approved catalog ships in the Kithkyn jar. No separate world datapack is required. Exact shipped definitions and template hashes are recorded in [the bundled catalog manifest](../tools/release/bundled-catalogs.json). Local `run/` paths below are historical authoring and verification records.
+
 The Jungle catalog is the first playable raised-timber village. It uses the selected Tribal
 family, Aaron's edited tree homes and service buildings, the NH06.5 Firewatch tower, three
 repaired market tiers, stripped-bamboo roofs and the timber-and-bamboo perimeter. It is the
 fifth finished regional style after Birch Forest, Desert, Badlands and Floodplain
 ([buildings.md](buildings.md), "Current runtime selection"). The style token is `jungle`.
 Vanilla jungle, bamboo jungle and sparse jungle select it; conventional jungle biome tags and
-recognizable modded biome names use it whenever its complete private catalog is loaded.
+recognizable modded biome names use it whenever its complete bundled catalog is loaded.
 
 ## Selected buildings
 
 The public selection record is `tools/structure/jungle-selections-20260910.json`; the final
 catalog and immutable output hashes are recorded in
-`tools/structure/jungle-catalog-20260910.json`. The private datapack contains 22 definitions:
+`tools/structure/jungle-catalog-20260910.json`. The bundled datapack contains 22 definitions:
 
 | Id | Selected use | Beds and stations |
 | --- | --- | --- |
@@ -83,9 +85,8 @@ the other regional styles.
 structures, neutralizes village identity slots, moves the butcher's inaccessible chest and applies
 the approved sunken mine-floor revision, then assembles
 `run/jungle-integration/datapack/`. Programmatically placed chests and barrels receive native
-block-entity data from `tools/structure/VillageTemplateExport.java`. The private pack is installed
-as `kithkyn-jungle` and kept with world backups; the public jar deliberately carries none of the
-third-party-derived templates ([structure-sourcing.md](structure-sourcing.md)). A manual sample
+block-entity data from `tools/structure/VillageTemplateExport.java`. The approved production
+set ships in the jar; the local `kithkyn-jungle` pack remains an authoring record. A manual sample
 can request `/kithkyn create-village ~ ~ ~ jungle`.
 
 The September 11 fishery repair removed the gallery's two-block water-containment frame from
@@ -94,13 +95,13 @@ Its definition now uses `sink: 1`, placing the captured ground course into the r
 of raising the whole fishery. Because that sink also places local layer 1 at terrain height, the
 export now treats layers 0 and 1 as ground: 37 empty cells around the pond are omitted instead of
 encoded as air, so construction preserves the surrounding bank. The shared template audit rejects
-barriers and out-of-bounds cells in every later public or private catalog export.
+barriers and out-of-bounds cells in every later public or bundled catalog export.
 
 ## Verification
 
 Core tests cover biome selection, codec persistence, local workplace ownership, mine ownership,
-the Jungle wall palette and unchanged fallback behavior. An opt-in private-asset test fixes the
-mine's pit, stair, barrel, worksite and mouth geometry. Native checks run the private catalog
+the Jungle wall palette and unchanged fallback behavior. The bundled-asset test fixes the
+mine's pit, stair, barrel, worksite and mouth geometry. Native checks run the bundled catalog
 through the shared reviewed-village, access and real-placement fixtures.
 
 The September 10 integration passed the complete access suite: 84 rotated structures, 224 real

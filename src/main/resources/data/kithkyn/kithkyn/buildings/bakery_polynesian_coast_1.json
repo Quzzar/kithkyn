@@ -1,0 +1,163 @@
+{
+  "structure": "bakery_polynesian_coast_1",
+  "category": "bakery",
+  "variant": "polynesian_coast",
+  "beds": [
+    [
+      3,
+      2,
+      4
+    ],
+    [
+      3,
+      2,
+      8
+    ],
+    [
+      9,
+      2,
+      4
+    ],
+    [
+      9,
+      2,
+      8
+    ]
+  ],
+  "work_stations": [
+    {
+      "pos": [
+        7,
+        2,
+        5
+      ],
+      "occupation": "BAKER"
+    }
+  ],
+  "worksites": [],
+  "containers": [
+    [
+      6,
+      2,
+      4
+    ]
+  ],
+  "personal_containers": [
+    [
+      7,
+      3,
+      8
+    ]
+  ],
+  "bed_containers": [
+    {
+      "bed": [
+        3,
+        2,
+        4
+      ],
+      "containers": [
+        [
+          7,
+          3,
+          8
+        ]
+      ]
+    },
+    {
+      "bed": [
+        3,
+        2,
+        8
+      ],
+      "containers": [
+        [
+          7,
+          3,
+          8
+        ]
+      ]
+    },
+    {
+      "bed": [
+        9,
+        2,
+        4
+      ],
+      "containers": [
+        [
+          7,
+          3,
+          8
+        ]
+      ]
+    },
+    {
+      "bed": [
+        9,
+        2,
+        8
+      ],
+      "containers": [
+        [
+          7,
+          3,
+          8
+        ]
+      ]
+    }
+  ],
+  "couple_beds": [],
+  "village_identity": {
+    "primary_blocks": [
+      [
+        3,
+        2,
+        4
+      ],
+      [
+        9,
+        2,
+        4
+      ]
+    ],
+    "secondary_blocks": [
+      [
+        3,
+        2,
+        8
+      ],
+      [
+        9,
+        2,
+        8
+      ]
+    ],
+    "banners": []
+  },
+  "sink": -1,
+  "entrance_facing": "south",
+  "grants": [
+    "HOUSING",
+    "STORAGE",
+    "FOOD",
+    "BAKED_GOODS"
+  ],
+  "worker_beds": [
+    [
+      9,
+      2,
+      4
+    ]
+  ],
+  "cost": [
+    {
+      "item": "minecraft:oak_log",
+      "count": 36
+    },
+    {
+      "item": "minecraft:cobblestone",
+      "count": 16
+    }
+  ]
+}

@@ -1,5 +1,7 @@
 # Mushroom village
 
+**Release availability:** this approved catalog ships in the Kithkyn jar. No separate world datapack is required. Exact shipped definitions and template hashes are recorded in [the bundled catalog manifest](../tools/release/bundled-catalogs.json). Local `run/` paths below are historical authoring and verification records.
+
 The Mushroom catalog is the fantasy village on the mushroom island. Houses stand under red and
 brown mushroom caps on pale stems, oak gazebos on orange paving hold the trades around a meeting
 point with its bell and a cleric's loft under the cap, mooshrooms graze in the pen, and a wall
@@ -38,7 +40,7 @@ centre (`starting_buildings`) so the site planner places them.
 
 ## Selected buildings
 
-The private datapack contains 18 definitions:
+The bundled datapack contains 18 definitions:
 
 | Id | Exhibit | Use |
 | --- | --- | --- |
@@ -110,7 +112,7 @@ tiers 24, 36 and 44 logs with the shared wool and iron on the upper tiers.
 
 ## Verification
 
-The close-out ran the native verifications on the worktree's jar with the private datapack:
+The close-out ran the native verifications on the worktree's jar with the bundled datapack:
 placement and restart of every template, the founding checks in a mushroom-fields world, the
 centre and access walks with the size-18 probe, and the gate-access walks on the Mushroom,
 Polynesian and Nautical walls, with the static template audit and the unit tests. The verdicts

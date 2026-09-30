@@ -364,25 +364,11 @@ becoming one overloaded axis.
 Seventeen styles exist today, in this stable order: `birch_forest`, `desert`, `badlands`,
 `floodplain`, `jungle`, `swamp`, `mediterranean`, `tundra`, `polynesian_coast`, `romanian`,
 `alpine_highlands`, `japanese_cherry_grove`, `nautical_coast`, `savanna_tent`, `rustic_woodland`, `taiga`, `mushroom`.
-Birch Forest is the only catalog bundled in the jar and so the default: a blank
-or unknown saved style reads as Birch. Desert ([desert-village.md](desert-village.md)),
-Badlands ([badlands-village.md](badlands-village.md)) and Floodplain
-([floodplain-village.md](floodplain-village.md)), Jungle
-([jungle-village.md](jungle-village.md)), Swamp
-([swamp-village.md](swamp-village.md)) and Mediterranean
-([mediterranean-village.md](mediterranean-village.md)), Tundra
-([tundra-village.md](tundra-village.md)), Polynesian Coast
-([polynesian-coast-village.md](polynesian-coast-village.md)), Romanian
-([romanian-village.md](romanian-village.md)), Alpine Highlands
-([alpine-highlands-village.md](alpine-highlands-village.md)), Japanese Cherry Grove
-([japanese-cherry-grove-village.md](japanese-cherry-grove-village.md)), Nautical Coast
-([nautical-coast-village.md](nautical-coast-village.md)) and Savanna Tent
-([savanna-tent-village.md](savanna-tent-village.md)), Rustic Woodland
-([rustic-woodland-village.md](rustic-woodland-village.md)), Taiga
-([taiga-village.md](taiga-village.md)) and Mushroom
-([mushroom-village.md](mushroom-village.md)) are installed as private datapacks that
-supply their own definitions and templates under the ids the code resolves; without its pack
-a style has no founding set and is never selected automatically. The old Village Life families
+All seventeen catalogs are bundled in the jar, including every approved building alternative,
+workplace, market tier and authored wall family. No separate world datapack is needed.
+Blank or unknown saved styles still read as Birch Forest; existing villages retain their
+saved style. Exact shipped files are recorded in `tools/release/bundled-catalogs.json`.
+The old Village Life families
 (plains, taiga, snowy, savanna and the bundled desert set) were removed on 2026-09-10; see
 "Villages saved in a removed family" below for what that means for an existing world. The
 reference roster above reserves future work, not phantom runtime catalogs. The approved
@@ -468,24 +454,12 @@ suffix; custom single-token variants retain the existing naming format. Recipes 
 identical across village biomes, and an upgrade follows the explicitly named predecessor of
 the building already standing.
 
-#### The default is a placeholder
+#### Unclassified biomes
 
-Birch Forest answers for every biome that has no catalog of its own only because it is the one
-catalog bundled in the jar. That is a placeholder, decided 2026-09-10. The intended default is
-the Plains village, which does not exist yet and is expected to be a Mediterranean set: an open,
-temperate farming village is the right answer for a plains, forest, taiga or snowy biome that a
-modpack never described, and for a modded biome that was made badly, while Birch should stay
-the answer for birch biomes only.
-
-When the Plains catalog lands, the switch is three edits in `VillageStyle`, nothing elsewhere:
-
-1. Add `PLAINS` first in the enum, so it leads the stable order and is the first loaded founding
-   set tried when a climate cluster is empty.
-2. Point `DEFAULT` at it, so blank and unknown saved styles read as Plains.
-3. Return it from the temperate branch of `climateStyles`, and map the conventional plains,
-   forest and deciduous families to it in `conventionalStyle`.
-
-Existing villages keep the style they were founded with; nothing rerolls.
+Birch Forest remains the default for blank or unknown saved styles and for temperate
+biomes without a more specific mapping. Mediterranean is the finished Plains catalog,
+Rustic Woodland covers ordinary oak forests, and Taiga and Tundra have their own mappings.
+Bundling catalogs does not change saved styles or reroll an existing village.
 
 #### Modded biomes
 
@@ -508,8 +482,8 @@ the records stay in the save untouched, but they provide no beds, jobs or footpr
 and job assignments that pointed at them are released, and a project raising one is dropped.
 With its centre absent the village plans nothing, recruits nobody and raises no wall; its
 residents still gather at the old centre's saved position. The same rule protects a Desert or
-Badlands village whose private datapack is missing: reinstall the pack and its buildings are
-back on the next load.
+Badlands village whose definitions a modpack removes: restore its bundled definitions and
+its buildings return on the next load.
 
 ### Village identity is separate from village biome
 
@@ -550,7 +524,7 @@ the player, with a caravan, or abstract is an open question below.
 | | Count |
 | --- | --- |
 | Categories | 37 |
-| Implemented village biomes | 15 (Birch Forest bundled; fourteen private datapack catalogs) |
+| Implemented village biomes | 17 bundled regional catalogs |
 | Towns and Towers Overworld village-biome floor | 26 |
 | Additional village biomes already justified by reviewed families | 6 |
 | Existing structure-plan estimate, based on five village biomes | ~130 |

@@ -1,0 +1,50 @@
+{
+  "structure": "farm_swamp_2",
+  "category": "farm",
+  "variant": "swamp",
+  "beds": [],
+  "work_stations": [
+    {
+      "pos": [
+        4,
+        1,
+        6
+      ],
+      "occupation": "FARMER"
+    }
+  ],
+  "worksites": [],
+  "containers": [
+    [
+      3,
+      0,
+      2
+    ]
+  ],
+  "personal_containers": [],
+  "bed_containers": [],
+  "couple_beds": [],
+  "village_identity": {
+    "primary_blocks": [],
+    "secondary_blocks": [],
+    "banners": []
+  },
+  "sink": 0,
+  "entrance_facing": "north",
+  "grants": [
+    "STORAGE",
+    "FOOD",
+    "CROPS"
+  ],
+  "upgrades_from": "farm_swamp_1",
+  "cost": [
+    {
+      "item": "minecraft:oak_log",
+      "count": 32
+    },
+    {
+      "item": "minecraft:cobblestone",
+      "count": 20
+    }
+  ]
+}

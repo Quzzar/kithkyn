@@ -1,0 +1,119 @@
+{
+  "structure": "church_alpine_highlands_1",
+  "category": "church",
+  "variant": "alpine_highlands",
+  "beds": [
+    [
+      2,
+      1,
+      6
+    ],
+    [
+      12,
+      1,
+      6
+    ]
+  ],
+  "work_stations": [
+    {
+      "pos": [
+        7,
+        2,
+        4
+      ],
+      "occupation": "CLERIC"
+    }
+  ],
+  "worksites": [],
+  "containers": [
+    [
+      10,
+      1,
+      5
+    ],
+    [
+      8,
+      2,
+      4
+    ]
+  ],
+  "personal_containers": [
+    [
+      2,
+      1,
+      8
+    ]
+  ],
+  "bed_containers": [
+    {
+      "bed": [
+        2,
+        1,
+        6
+      ],
+      "containers": [
+        [
+          2,
+          1,
+          8
+        ]
+      ]
+    },
+    {
+      "bed": [
+        12,
+        1,
+        6
+      ],
+      "containers": []
+    }
+  ],
+  "couple_beds": [],
+  "village_identity": {
+    "primary_blocks": [
+      [
+        2,
+        1,
+        6
+      ]
+    ],
+    "secondary_blocks": [
+      [
+        12,
+        1,
+        6
+      ]
+    ],
+    "banners": [
+      [
+        7,
+        5,
+        2
+      ]
+    ]
+  },
+  "sink": -1,
+  "entrance_facing": "south",
+  "grants": [
+    "HEALING",
+    "HOUSING",
+    "STORAGE"
+  ],
+  "cost": [
+    {
+      "item": "minecraft:oak_log",
+      "count": 16
+    },
+    {
+      "item": "minecraft:cobblestone",
+      "count": 36
+    }
+  ],
+  "worker_beds": [
+    [
+      2,
+      1,
+      6
+    ]
+  ]
+}

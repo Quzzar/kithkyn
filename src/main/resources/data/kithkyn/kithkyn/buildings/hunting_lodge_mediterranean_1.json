@@ -1,0 +1,139 @@
+{
+  "structure": "hunting_lodge_mediterranean_1",
+  "category": "hunting_lodge",
+  "variant": "mediterranean",
+  "beds": [
+    [
+      1,
+      5,
+      4
+    ],
+    [
+      2,
+      5,
+      8
+    ]
+  ],
+  "work_stations": [
+    {
+      "pos": [
+        1,
+        1,
+        7
+      ],
+      "occupation": "HUNTER"
+    },
+    {
+      "pos": [
+        2,
+        1,
+        2
+      ],
+      "occupation": "BLACKSMITH"
+    }
+  ],
+  "worksites": [],
+  "containers": [
+    [
+      1,
+      2,
+      5
+    ],
+    [
+      2,
+      1,
+      1
+    ]
+  ],
+  "personal_containers": [
+    [
+      1,
+      5,
+      8
+    ]
+  ],
+  "bed_containers": [
+    {
+      "bed": [
+        1,
+        5,
+        4
+      ],
+      "containers": [
+        [
+          1,
+          5,
+          8
+        ]
+      ]
+    },
+    {
+      "bed": [
+        2,
+        5,
+        8
+      ],
+      "containers": [
+        [
+          1,
+          5,
+          8
+        ]
+      ]
+    }
+  ],
+  "couple_beds": [],
+  "village_identity": {
+    "primary_blocks": [
+      [
+        1,
+        5,
+        4
+      ]
+    ],
+    "secondary_blocks": [
+      [
+        2,
+        5,
+        8
+      ]
+    ],
+    "banners": []
+  },
+  "sink": 0,
+  "entrance_facing": "east",
+  "grants": [
+    "HOUSING",
+    "STORAGE",
+    "FOOD",
+    "MEAT",
+    "LEATHER",
+    "REPAIR",
+    "SMELTING",
+    "TOOLS_IRON",
+    "ARMOR_IRON",
+    "SHIELDS"
+  ],
+  "worker_beds": [
+    [
+      1,
+      5,
+      4
+    ],
+    [
+      2,
+      5,
+      8
+    ]
+  ],
+  "cost": [
+    {
+      "item": "minecraft:oak_log",
+      "count": 36
+    },
+    {
+      "item": "minecraft:cobblestone",
+      "count": 60
+    }
+  ]
+}

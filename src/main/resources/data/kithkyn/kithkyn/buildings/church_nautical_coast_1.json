@@ -1,0 +1,48 @@
+{
+  "structure": "church_nautical_coast_1",
+  "category": "church",
+  "variant": "nautical_coast",
+  "beds": [],
+  "work_stations": [
+    {
+      "pos": [
+        1,
+        1,
+        0
+      ],
+      "occupation": "CLERIC"
+    }
+  ],
+  "worksites": [],
+  "containers": [
+    [
+      0,
+      1,
+      2
+    ]
+  ],
+  "personal_containers": [],
+  "bed_containers": [],
+  "couple_beds": [],
+  "village_identity": {
+    "primary_blocks": [],
+    "secondary_blocks": [],
+    "banners": []
+  },
+  "sink": 0,
+  "entrance_facing": "north",
+  "grants": [
+    "STORAGE",
+    "HEALING"
+  ],
+  "cost": [
+    {
+      "item": "minecraft:oak_log",
+      "count": 12
+    },
+    {
+      "item": "minecraft:cobblestone",
+      "count": 16
+    }
+  ]
+}
