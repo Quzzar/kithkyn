@@ -13,18 +13,18 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-java@v4
+      - uses: actions/checkout@v7.0.1
+      - uses: actions/setup-java@v6.0.1
         with:
           java-version: '21'
           distribution: temurin
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v7.0.0
         with:
           python-version: '3.13'
-      - uses: gradle/actions/setup-gradle@v4
+      - uses: gradle/actions/setup-gradle@v6.4.0
       - run: ./gradlew check build
       - run: python3 tools/release/audit-catalogs.py build/libs
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7.0.1
         with:
           name: kithkyn-jars
           path: build/libs/*.jar
@@ -39,15 +39,15 @@ jobs:
     runs-on: ${{ matrix.os }}
     timeout-minutes: 45
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-java@v4
+      - uses: actions/checkout@v7.0.1
+      - uses: actions/setup-java@v6.0.1
         with:
           java-version: '21'
           distribution: temurin
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v7.0.0
         with:
           python-version: '3.13'
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v8.0.1
         with:
           name: kithkyn-jars
           path: release-jars
@@ -60,7 +60,7 @@ jobs:
         run: python tools/release/smoke-server.py --jar release-jars --directory smoke-with-curios --curios curios.jar --disable-llm --accept-eula --timeout 900
       - name: Preserve smoke logs and evidence
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7.0.1
         with:
           name: production-smoke-${{ matrix.os }}
           path: |

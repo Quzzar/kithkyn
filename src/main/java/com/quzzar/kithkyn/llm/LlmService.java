@@ -203,8 +203,8 @@ public final class LlmService {
         provider = createProvider(KithkynConfig.LlmProviderName);
         Kithkyn.LOGGER.info("LLM provider: {}", KithkynConfig.LlmProviderName);
       }
+      provider.start();
     }
-    provider.start();
   }
 
   static LlmProvider createProvider(String name) {
@@ -247,7 +247,7 @@ public final class LlmService {
     tryDispatchPersona();
   }
 
-  /** Stops the provider; called when the JVM shuts down. */
+  /** Stops and releases the provider when a world or dedicated server shuts down. */
   public void shutdown() {
     synchronized (providerLock) {
       LlmProvider active = provider;
