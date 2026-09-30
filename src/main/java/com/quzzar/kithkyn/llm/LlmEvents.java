@@ -80,6 +80,7 @@ public class LlmEvents {
             context.getSource().sendFailure(Component.literal("The LLM is disabled in the kithkyn config."));
             return 0;
           }
+          notifiedOperators.clear();
           LlmService.get().startLoading();
           context.getSource().sendSuccess(() -> Component.literal("LLM loading started, check /kithkyn status."), false);
           return 1;
