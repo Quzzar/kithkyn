@@ -1,93 +1,82 @@
 # Website and brand
 
-The website lives in `Website/`, using Bun, React, Vite, TypeScript, vanilla-extract and
-Playwright. This first branded pass is local only, not a production deployment.
+The active website lives in `Website/`. The September 30, 2026 redesign replaces the previous
+timber title-screen identity with **Hearth and horizon**, a new direction requested by Aaron.
+Display the brand as **KithKyn**. The repository and Minecraft mod ID remain `kithkyn`.
 
-## Selected identity
+## Identity and assets
 
-The approved primary logo is **Sturdy timber**, the first mixed-case alternative in v11.
-Display the name as **KithKyn**, with two capital Ks. Repository/mod spelling remains
-`kithkyn`. The exact tagline is **Bringing villages to life**.
+Three homes gather around a gold hearth flame. The horizontal wordmark uses rounded, compact
+lettering. Pine, mist, meadow, honey and sky carry the identity. Bricolage Grotesque is the
+display face; Outfit is the body face. Both fonts are locally hosted with their OFL licenses.
 
-The title consists of upright oak-board letters beneath three terracotta-roof cottages.
-Keep straight wood grain, no knots, no repeated letter nailheads. The subtitle sits in a
-fitted timber plaque, with no hanging ropes. The square companion shows only the three
-cottages on forest green, making it usable without unreadable small text.
+The suite in `Website/public/brand/` includes primary, reversed, monochrome, standalone
+wordmark and emblem PNG originals, optimized lossless WebP counterparts, icons at 32, 64,
+180 and 512 pixels, a 1200×630 social banner, usage notes and a downloadable ZIP. The `/brand`
+route is the visual brand guide and the gallery for every `LogoMark` variant. Assets are
+raster originals, not vector exports. Preserve their alpha and aspect ratio.
 
-`Website/public/brand/` holds the active assets. The main logo uses
-`kithkyn-logo-transparent.png`, a real RGBA cutout. Neutral checkerboard components were
-removed directly, preserving the original colored pixels and enclosed plaster highlights.
-The header uses `kithkyn-wordmark.png`, an extracted mixed-case timber wordmark with real
-transparency. The square mark's forest fill is intentional and remains unchanged.
+The artwork was created with the built-in image-generation tool. Exact prompts and provenance
+are in `Website/public/brand/generation-prompts.md`; usage instructions are in that folder's
+README. The new village illustration is in `Website/public/art/village-diorama.webp`. The
+same hearth emblem is used as the mod-list logo in `src/main/resources/kithkyn-logo.png`.
+No borrowed Valecraft video, poster or superseded timber-brand explorations are distributed.
 
-The wordmark was created with the built-in image-generation edit workflow using the approved
-logo as its reference. The prompt asked for only the exact wooden **KithKyn** lettering, kept
-both capital Ks, and removed the cottages, plaque, tagline and every background pixel. The
-generator rendered a checkerboard instead of alpha twice, so a deterministic alpha cleanup
-removed only the connected neutral background and preserved the generated colored lettering.
+## Website behavior
 
-Previous explorations remain in `Website/public/brand-explorations/` as design references.
-Do not reintroduce all-capitals, italic lettering, timber sign-only marks, knots, or repeated
-letter fasteners: those directions were superseded by user feedback.
+The homepage introduces village life, then offers a 17-style atlas, offline/cloud requirements,
+real installation guidance and expandable common questions. The atlas uses Radix tabs with
+keyboard navigation. Its selected catalog is shareable through the `village` URL parameter,
+managed by nuqs, and restored by browser back/forward. Unknown values show Mediterranean.
+The model comparison and FAQs use Radix tabs and accordion primitives. All styles use the
+shared vanilla-extract tokens; reduced motion disables smooth scrolling and transitions.
 
-## Website direction
+The roster follows [village-biomes.md](village-biomes.md). Swamp and Floodplain are separate;
+the latter belongs to mangrove biomes. Ocean and Nether settlement systems remain future work.
+Modrinth and CurseForge remain **Coming soon** until actual project pages exist. Development,
+installation, source, issue and credit destinations point to the real GitHub repository.
 
-The full logo is always the focal point. The selected homepage is the **Title screen**
-direction: a centered scenic introduction followed by three large village postcards. Its
-composition takes cues from [Lightship's centered scenic panel](https://mobbin.com/sites/sections/a5fa6838-ff45-42cc-8e90-b513fd69a5e7).
-The comparison bar and the unused Village atlas and World menu directions have been removed.
-The top-left brand now pairs the square village emblem with the transparent timber wordmark
-instead of typeset text.
+## Media provenance
 
-The numbered three-step explanation was rejected because it read like generic AI marketing.
-The technical section now compares the two real ways to run the village brain. Online models
-use OpenAI, Claude or DeepSeek, while the offline path uses the bundled local model through
-llama.cpp. Copy must explain that the selected LLM steers village priorities from a compact
-simulation brief, the game validates available actions, and safe rules keep a village moving
-when no model is available.
+The generated hero and social banner are promotional illustration, not gameplay captures.
+The homepage says so beneath its artwork. Building previews are actual review-world images,
+captioned as in-game catalog previews rather than naturally developed villages.
 
-Village types appear in a horizontally scrollable carousel with explicit previous and next
-controls. This should accommodate new variants without turning the section into a dense grid.
-Directional, external-link and technical symbols use Lucide icons rather than Unicode glyphs.
-The footer contains the compact brand, useful page navigation and the version-neutral
-**Minecraft NeoForge** platform label. It does not repeat the tagline, pin compatibility to a
-specific Minecraft release or describe itself as a KithKyn project.
+Thirteen catalog images are included. Four catalogs (Japanese Cherry Grove, Nautical Coast,
+Savanna Tent and Mushroom) have material/biome field notes instead of an invented screenshot.
+The capture sources, relative to the original project root, are:
 
-The homepage palette is intentionally narrow: night and one raised forest surface for dark
-areas, parchment for the download area, cream and muted sage for text, oak for emphasis, and
-one timber brown for text on parchment. Filled dark buttons on the parchment section were
-removed because their contrast competed with the primary identity.
+| Catalog | Source |
+| --- | --- |
+| Mediterranean | `docs/release-gallery/mediterranean-homes.png` |
+| Jungle Tribal | `docs/release-gallery/jungle-homes.png` |
+| Swamp | `docs/release-gallery/swamp-homes.png` |
+| Pueblo | `docs/release-gallery/badlands-center.png` |
+| Tundra | `docs/release-gallery/tundra-walls.png` |
+| Birch Forest | `run/full-style-showcase/client/screenshots/approved-birch-reference.png` |
+| Rustic Woodland | `run/full-style-showcase/client/screenshots/rustic-complete-barns.png` |
+| Taiga | `run/viking-full-profile/render/client/screenshots/viking-full-homes.png` |
+| Romanian | `run/romanian-full-profile/render/client/screenshots/romanian-center-and-small-homes.png` |
+| Desert Oasis | `run/pueblo-showcase/desert-center-approved-20260909-224500/screenshots/client/screenshots/desert-center-overview.png` |
+| Floodplain | `run/nilotic-showcase/screenshots/client/screenshots/nilotic-houses.png` |
+| Alpine Highlands | `run/next-village-preview/client/screenshots/alpine_highlands.png` |
+| Polynesian Coast | `run/jungle-showcase/screenshots/client/screenshots/polynesian-center.png` |
 
-The village carousel uses real **structure review screenshots**, not autonomous-village
-progress or polished promotional imagery. Sources:
+These are composition/catalog previews; some review images contain donor rows in the background.
+Use their captions, and do not present them as a production village's growth timeline.
 
-- Mediterranean: `run/mediterranean-full-profile/render/client/screenshots/mediterranean-full-center-homes.png`
-- Jungle: `run/jungle-showcase/bamboo-adoption-20260910/render/client/screenshots/jungle-bamboo-homes.png`
-- Mangrove: `run/next-village-preview/client/screenshots/mangrove_swamp.png`
+## Deployment and verification
 
-The hero uses the existing 27-second Valecraft forest video at
-`Website/public/media/valecraft-reference-hero.mp4`, paired with
-`valecraft-reference-forest.jpg` as its static poster. The poster renders immediately and the
-video fades in only after playback starts. Video is limited to wider screens and is disabled
-for reduced-motion or data-saving preferences. It is muted, inline and looping.
+This redesign is a local working website, not a production deployment. At the September 30
+check, `kithkyn.com` served a hiring product and `kithkin.com` redirected to `/lander`.
+Resolve the intended domain and hosting account before publishing. Update the social-image
+absolute URL in `index.html` if the domain changes. Static hosts must rewrite `/brand` to
+`index.html`, while serving assets normally.
 
-Both hero assets come from the user's `valecraft-site/src/assets/` and remain composition
-placeholders, not KithKyn simulation footage. The next media pass should replace them with a
-real KithKyn village captured in its biome with no HUD. Keep the logo and scenery separate. Do
-not pass off generated art, gallery previews, or illustrative timelines as live simulation
-evidence.
-Locally hosted Pixelify Sans and Outfit fonts include their OFL license files under
-`Website/public/fonts/`. No live server-status, wake, or download behavior was copied.
+From `Website/`, run `bun run build`, `bun run lint`, `bun run format:check` and
+`bun run test:e2e`. The preview runs on 45173; tests run on 45175. Tests cover desktop and
+mobile layouts, all 17 selections, deep links and browser history, keyboard focus, setup
+choices, FAQ disclosure, real destination URLs, brand-kit downloads, image loading, reduced
+motion, console errors and overflow. Full-page captures are written under `test-results/`.
 
-There is no invented release/download link. No verified KithKyn project was found on Modrinth
-or CurseForge as of September 14, 2026, so both download destinations are visible but marked
-**Coming soon**. Development links point to the project on GitHub until actual release pages
-exist.
-
-## Verification
-
-From `Website/`: `bun run build`, `bun run lint`, `bun run format:check`, and
-`bun run test:e2e`. Browser tests run on 45175; the user preview uses 45173. Tests cover the
-selected homepage on mobile and desktop, image loading, content and link accuracy, overflow,
-keyboard focus, both transparent logo assets and reduced motion. Full-page captures are written
-under `test-results/`.
+See [website-redesign.md](website-redesign.md) for the visual plan and final visual review.

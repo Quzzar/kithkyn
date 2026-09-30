@@ -1,24 +1,21 @@
 import type { ReactElement } from "react";
 
-import * as styles from "./logo-mark.css";
-
 type LogoMarkProps = {
-  readonly variant?: "full" | "square";
+  readonly variant?: "primary" | "reversed" | "emblem" | "monochrome" | "wordmark";
   readonly className?: string;
   readonly alt?: string;
 };
 
-/** Approved Sturdy timber identity and its square village companion. */
-export function LogoMark({ variant = "full", className, alt }: LogoMarkProps): ReactElement {
-  const isSquare: boolean = variant === "square";
+/** The hearth identity, with production variants demonstrated on the brand-kit page. */
+export function LogoMark({ variant = "primary", className, alt }: LogoMarkProps): ReactElement {
+  const isSquare: boolean = variant === "emblem";
   return (
     <img
-      className={`${styles.mark} ${className ?? ""}`}
-      src={isSquare ? "/brand/kithkyn-square.png" : "/brand/kithkyn-logo-transparent.png"}
-      alt={alt ?? (isSquare ? "KithKyn village emblem" : "KithKyn. Bringing villages to life.")}
-      width={isSquare ? 1254 : 1536}
-      height={isSquare ? 1254 : 1024}
-      fetchPriority={isSquare ? "auto" : "high"}
+      className={className}
+      src={`/brand/kithkyn-${variant}.webp`}
+      alt={alt ?? (isSquare ? "KithKyn hearth emblem" : "KithKyn")}
+      width={isSquare ? 512 : 1000}
+      height={isSquare ? 512 : 280}
     />
   );
 }
