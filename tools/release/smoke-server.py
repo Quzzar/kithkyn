@@ -46,11 +46,12 @@ if not argument_file.exists():
     if not installer.exists():
         urllib.request.urlretrieve('https://maven.neoforged.net/releases/net/neoforged/neoforge/21.1.72/neoforge-21.1.72-installer.jar', installer)
     with install_log.open('w') as log:
-        subprocess.run([args.java, '-jar', str(installer), '--installServer', str(directory)], stdout=log, stderr=subprocess.STDOUT, check=True)
+        subprocess.run([args.java, '-jar', str(installer), '--installServer', str(directory)], cwd=directory, stdout=log, stderr=subprocess.STDOUT, check=True)
 mods = directory / 'mods'
 mods.mkdir(exist_ok=True)
 if list(mods.glob('*.jar')): sys.exit('Refusing an installation that already contains mods')
-shutil.copy2(jar, mods / jar.name)
+installed_jar = mods / jar.name
+shutil.copy2(jar, installed_jar)
 if args.curios: shutil.copy2(args.curios.resolve(), mods / args.curios.name)
 (directory / 'eula.txt').write_text('eula=true\n')
 (directory / 'server.properties').write_text('''server-ip=127.0.0.1
@@ -106,7 +107,7 @@ passed = (not timed_out and process.returncode == 0 and 'Done (' in content
           and '[bundled-catalog-verify] RESULT PASS' in content and not errors and runtime_stopped
           and (config / 'kithkyn-advanced.toml').exists()
           and (args.disable_llm or 'Local runtime ready:' in content))
-report = {'passed': passed, 'os': sys.platform, 'jar_sha256': hashlib.sha256(jar.read_bytes()).hexdigest(),
+report = {'passed': passed, 'os': sys.platform, 'jar_sha256': hashlib.sha256(installed_jar.read_bytes()).hexdigest(),
           'llm_enabled': not args.disable_llm, 'curios': bool(args.curios), 'runtime_stopped': runtime_stopped,
           'exit_code': process.returncode, 'timed_out': timed_out, 'checks': checks, 'errors': errors,
           'log': str(log_path)}
