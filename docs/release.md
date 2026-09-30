@@ -79,7 +79,10 @@ separate final action. The first release’s changelog is deliberately still und
 - [x] Curios-present production boot and packaged-jar client connection; chat and trade
   both rendered. Evidence: [server](../tools/release/verification/macos-arm64-curios.json),
   [client](../tools/release/verification/macos-arm64-client.json).
-- [ ] Confirm the Windows x64 and Linux x64 production CI matrix passes.
+- [x] Windows x64 and Linux x64 production CI passed all 68 founding cases per
+  installation, with the real default AI and in separate Curios-present installations.
+  [Recorded CI evidence](https://github.com/Quzzar/kithkyn/actions/runs/36761040988);
+  [the preparation PR](https://github.com/Quzzar/kithkyn/pull/177) carries current checks.
 - [ ] Complete an ordinary Minecraft-launcher client installation on Windows before publication.
 
 The disposable server fixture disables world generation, uses loopback networking and offline
@@ -142,7 +145,9 @@ to the client. [ui-preview.md](ui-preview.md) explains the sample payloads.
   the release work does not enable it. Ships and Nether settlement catalogs remain future work.
 - [x] Document rules while AI starts or is unavailable, model memory/disk use, both-side
   installation and the new-chunks rule for world generation.
-- [ ] Final review of the release candidate and CI evidence.
+- [x] Review the candidate diff, packaged metadata, credits, screenshots and evidence:
+  684 Java tests, 18 website checks, both asset audits, and macOS/Windows/Linux production
+  checks pass. The preparation PR retains the final commit’s CI results.
 
 ### Publish after the remaining checks
 
