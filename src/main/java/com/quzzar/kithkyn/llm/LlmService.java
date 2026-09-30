@@ -249,9 +249,10 @@ public final class LlmService {
 
   /** Stops the provider; called when the JVM shuts down. */
   public void shutdown() {
-    LlmProvider active = provider;
-    if (active != null) {
-      active.shutdown();
+    synchronized (providerLock) {
+      LlmProvider active = provider;
+      provider = null;
+      if (active != null) active.shutdown();
     }
   }
 

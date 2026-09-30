@@ -78,7 +78,7 @@ public final class ForageHuntStep implements WorkStep<Animal> {
       person.getLookControl().setLookAt(target, 30.0F, 30.0F);
       person.doHurtTarget(target);
       if (!target.isAlive()) {
-        Kithkyn.LOGGER.info("[road] '{}' brought down a {}", person.getFullName(),
+        Kithkyn.LOGGER.debug("[road] '{}' brought down a {}", person.getFullName(),
             target.getName().getString().toLowerCase(Locale.ROOT));
       }
       return true;
@@ -98,7 +98,7 @@ public final class ForageHuntStep implements WorkStep<Animal> {
     }
     if (!taken.isEmpty()) {
       person.addItems(taken);
-      Kithkyn.LOGGER.info("[road] '{}' picked up {} off the ground", person.getFullName(), describe(taken));
+      Kithkyn.LOGGER.debug("[road] '{}' picked up {} off the ground", person.getFullName(), describe(taken));
     }
     return false;
   }

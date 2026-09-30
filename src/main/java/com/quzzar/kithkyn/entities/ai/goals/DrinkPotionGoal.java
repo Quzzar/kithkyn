@@ -68,7 +68,7 @@ public final class DrinkPotionGoal extends Goal {
       this.potion = null;
       return;
     }
-    Kithkyn.LOGGER.info("'{}' is drinking a {}", this.person.getFullName(),
+    Kithkyn.LOGGER.debug("'{}' is drinking a {}", this.person.getFullName(),
         this.potion.getHoverName().getString().toLowerCase(Locale.ROOT));
     this.person.startUsingItem(InteractionHand.OFF_HAND);
   }

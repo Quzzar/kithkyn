@@ -313,10 +313,10 @@ public final class ConsolidateStep implements BlockWorkStep {
         QuartermasterPlanner.Outcome settled = outcome.get();
         ShelvingPlan.store(home, settled.plan());
         this.inspectedAt.clear(); // visit each shelf to put the new plan into practice
-        Kithkyn.LOGGER.info("[quartermaster] {} adopted a shelving plan of {} categories: \"{}\"",
+        Kithkyn.LOGGER.debug("[quartermaster] {} adopted a shelving plan of {} categories: \"{}\"",
             person.getName().getString(), settled.plan().categories().size(), settled.note());
         for (ShelvingPlan.Category category : settled.plan().categories()) {
-          Kithkyn.LOGGER.info("[quartermaster]   {} (slots {} to {}): {}", category.name(),
+          Kithkyn.LOGGER.debug("[quartermaster]   {} (slots {} to {}): {}", category.name(),
               category.firstSlot() + 1, category.firstSlot() + category.slotCount(),
               String.join(", ", category.itemIds()));
         }

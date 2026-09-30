@@ -117,7 +117,7 @@ public final class ForageChopStep implements BlockWorkStep {
     List<ItemStack> haul = TreeFelling.fell(level, base, person, person.getMainHandItem());
     int logs = haul.stream().mapToInt(ItemStack::getCount).sum();
     person.addItems(haul);
-    Kithkyn.LOGGER.info("[road] '{}' brought down a tree at {} {}: {} log(s) into the pack",
+    Kithkyn.LOGGER.debug("[road] '{}' brought down a tree at {} {}: {} log(s) into the pack",
         person.getFullName(), base.toShortString(), axe ? "with an axe" : "bare-handed", logs);
     person.toolUpFromPack();
     return false;

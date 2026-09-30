@@ -214,7 +214,7 @@ public final class PersonPathNavigation extends GroundPathNavigation {
     restrictVillageDepth(Set.of(pos));
     if (this.mob instanceof RealPerson person && person.getVillage() != null) {
       if (MineShaft.belowExcavation(person.getVillage(), this.mob.blockPosition())) {
-        Kithkyn.LOGGER.info(
+        Kithkyn.LOGGER.debug(
             "[mine] {} fell below the planned shaft and has been brought back to the village center",
             person.getFullName());
         person.tpToHome();
@@ -248,7 +248,7 @@ public final class PersonPathNavigation extends GroundPathNavigation {
               + ", below=" + below.getBlock().getName().getString();
           if (!failure.equals(this.lastMinePathFailure)) {
             this.lastMinePathFailure = failure;
-            Kithkyn.LOGGER.info("[mine-path] {} cannot route from {}",
+            Kithkyn.LOGGER.debug("[mine-path] {} cannot route from {}",
                 person.getFullName(), failure);
           }
         } else {

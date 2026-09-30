@@ -49,19 +49,23 @@ public final class LocalRuntimeProvider implements LlmProvider {
   private final AtomicReference<LlmService.Status> status =
       new AtomicReference<>(LlmService.Status.NOT_LOADED);
   private final HttpClient http = HttpClient.newBuilder()
-      .connectTimeout(Duration.ofSeconds(5))
+      .followRedirects(HttpClient.Redirect.NORMAL)
+      .connectTimeout(Duration.ofSeconds(30))
       .build();
 
   private volatile String statusDetail = "not started";
   private volatile Process process;
+  private Thread starter;
+  private volatile boolean stopped;
   private volatile OpenAiCompatibleProvider http_provider;
 
   @Override
-  public void start() {
-    if (status.get() == LlmService.Status.READY) {
+  public synchronized void start() {
+    if (stopped || (starter != null && starter.isAlive()) || status.get() == LlmService.Status.READY) {
       return;
     }
-    Thread starter = new Thread(this::provisionAndSpawn, "kithkyn-llama-launcher");
+    status.set(LlmService.Status.DOWNLOADING);
+    starter = new Thread(this::provisionAndSpawn, "kithkyn-llama-launcher");
     starter.setDaemon(true);
     starter.start();
   }
@@ -70,7 +74,7 @@ public final class LocalRuntimeProvider implements LlmProvider {
     try {
       status.set(LlmService.Status.DOWNLOADING);
       statusDetail = "fetching the local runtime";
-      Path server = LlamaServerLauncher.ensureServer();
+      Path server = LlamaServerLauncher.ensureServer(http);
       if (server == null) {
         fail("no llama.cpp build for this platform");
         return;
@@ -78,13 +82,16 @@ public final class LocalRuntimeProvider implements LlmProvider {
 
       LlamaServerLauncher.Model model = chosenModel();
       statusDetail = "downloading " + model.label();
-      Path weights = LlamaServerLauncher.ensureModel(model);
+      Path weights = LlamaServerLauncher.ensureModel(http, model);
 
       status.set(LlmService.Status.LOADING);
       statusDetail = "starting " + model.label();
       ProcessBuilder builder = LlamaServerLauncher.buildCommand(server, weights, PORT, CONTEXT);
       builder.redirectErrorStream(true);
-      process = builder.start();
+      synchronized (this) {
+        if (stopped) return;
+        process = builder.start();
+      }
       drainOutput(process);
 
       if (!awaitHealthy()) {
@@ -92,18 +99,22 @@ public final class LocalRuntimeProvider implements LlmProvider {
         return;
       }
 
-      http_provider = new OpenAiCompatibleProvider(
-          OpenAiCompatibleProvider.local("http://127.0.0.1:" + PORT, model.file()),
-          () -> "", model::file);
-      statusDetail = model.label() + " on llama.cpp";
-      status.set(LlmService.Status.READY);
+      synchronized (this) {
+        if (stopped) return;
+        http_provider = new OpenAiCompatibleProvider(
+            OpenAiCompatibleProvider.local("http://127.0.0.1:" + PORT, model.file()),
+            () -> "", model::file);
+        statusDetail = model.label() + " on llama.cpp";
+        status.set(LlmService.Status.READY);
+      }
       Kithkyn.LOGGER.info("Local runtime ready: {}", statusDetail);
       LlmService.get().onProviderReady();
 
     } catch (InterruptedException e) {
       Thread.currentThread().interrupt();
-      fail("interrupted while starting");
+      if (!stopped) fail("interrupted while starting");
     } catch (Exception e) {
+      if (stopped) return;
       Kithkyn.LOGGER.error("Could not start the local runtime", e);
       fail(e.getMessage() == null ? e.toString() : e.getMessage());
     }
@@ -156,17 +167,28 @@ public final class LocalRuntimeProvider implements LlmProvider {
   }
 
   private void fail(String why) {
-    statusDetail = why + ". The offline model remains available.";
+    stopProcess();
+    statusDetail = why + ". Villagers continue with rule-based behavior.";
     status.set(LlmService.Status.FAILED);
     Kithkyn.LOGGER.warn("Local runtime unavailable: {}", why);
   }
 
   @Override
   public void shutdown() {
+    synchronized (this) {
+      stopped = true;
+      if (starter != null) starter.interrupt();
+    }
     // Close the HTTP client first, and unconditionally: even when no llama process is
     // running, an unclosed java.net.http.HttpClient keeps non-daemon threads alive that
     // hang the server JVM on stop. shutdownNow so it does not block on an in-flight probe.
     http.shutdownNow();
+    OpenAiCompatibleProvider delegate = http_provider;
+    if (delegate != null) delegate.shutdown();
+    stopProcess();
+  }
+
+  private void stopProcess() {
     Process running = process;
     if (running == null) {
       return;

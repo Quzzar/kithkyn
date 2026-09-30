@@ -2,6 +2,10 @@ package com.quzzar.kithkyn.llm;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.UUID;
+import net.neoforged.neoforge.event.tick.ServerTickEvent;
 
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.quzzar.kithkyn.Kithkyn;
@@ -19,6 +23,7 @@ import net.neoforged.neoforge.event.server.ServerStoppingEvent;
 
 @EventBusSubscriber(modid = Kithkyn.MODID)
 public class LlmEvents {
+  private static final Set<UUID> notifiedOperators = new HashSet<>();
 
   /**
    * Stops the LLM while the server is still running, which is the only moment
@@ -32,8 +37,28 @@ public class LlmEvents {
 
   @SubscribeEvent
   public static void onServerAboutToStart(ServerAboutToStartEvent event) {
+    notifiedOperators.clear();
     if (KithkynConfig.LlmEnabled) {
       LlmService.get().startLoading();
+    }
+  }
+
+  /** One warning per online operator per failed attempt, including operators who join later. */
+  @SubscribeEvent
+  public static void notifyFailure(ServerTickEvent.Post event) {
+    LlmService llm = LlmService.get();
+    if (!KithkynConfig.LlmEnabled || llm.getStatus() != LlmService.Status.FAILED) {
+      notifiedOperators.clear();
+      return;
+    }
+    if (event.getServer().getTickCount() % 20 != 0) return;
+    String detail = llm.getStatusDetail().replaceAll("[\\r\\n\\t]", " ");
+    if (detail.length() > 500) detail = detail.substring(0, 500);
+    Component message = Component.literal("Kithkyn AI is unavailable: " + detail
+        + " Set 'Enable LLM?' to false or configure 'LLM provider' in config/kithkyn-common.toml."
+        + " After fixing the problem, retry with /kithkyn load.");
+    for (var player : event.getServer().getPlayerList().getPlayers()) {
+      if (player.hasPermissions(2) && notifiedOperators.add(player.getUUID())) player.sendSystemMessage(message);
     }
   }
 
