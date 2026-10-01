@@ -4,16 +4,27 @@ import { Installation } from "../components/Installation";
 import { SiteHeader } from "../components/SiteHeader";
 import { SiteFooter } from "../components/SiteFooter";
 import { VillageAtlas } from "../components/VillageAtlas";
+import { TimberHero } from "../components/TimberHero";
+import type { SiteBranding } from "../data/brand";
+import type { TimberIdentity } from "../data/timber-identities";
 import * as site from "../components/site.css";
 import * as styles from "./home-page.css";
 
 /** The selected identity introduces the mod and its regional village catalogs. */
-export function HomePage(): ReactElement {
+export function HomePage({ identity }: { readonly identity?: TimberIdentity } = {}): ReactElement {
+  const branding: SiteBranding = identity
+    ? {
+        wordmark: identity.wordmark,
+        homePath: `/brand/directions/${identity.id}`,
+        brandPath: "/brand/directions",
+        isStudy: true,
+      }
+    : {};
   return (
     <div className={styles.page}>
-      <SiteHeader />
+      <SiteHeader {...branding} />
       <main id="main">
-        <VillageHero />
+        {identity ? <TimberHero identity={identity} /> : <VillageHero />}
         <section className={styles.life} id="life" aria-labelledby="life-title">
           <div className={styles.lifeInner}>
             <div>
@@ -44,7 +55,7 @@ export function HomePage(): ReactElement {
         <VillageAtlas />
         <Installation />
       </main>
-      <SiteFooter />
+      <SiteFooter {...branding} />
     </div>
   );
 }

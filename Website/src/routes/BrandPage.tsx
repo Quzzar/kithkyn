@@ -1,5 +1,6 @@
 import { Download } from "lucide-react";
 import type { ReactElement } from "react";
+import { Link } from "react-router-dom";
 import { SiteHeader } from "../components/SiteHeader";
 import { SiteFooter } from "../components/SiteFooter";
 import { BRAND_ICON, BRAND_WORDMARK, type BrandAsset, type BrandExport } from "../data/brand";
@@ -17,6 +18,9 @@ export function BrandPage(): ReactElement {
           <a className={styles.kit} href="/brand/kithkyn-brand-kit.zip" download>
             Download the brand kit <Download aria-hidden="true" />
           </a>
+          <div className={styles.downloads}>
+            <Link to="/brand/directions">Explore new timber directions</Link>
+          </div>
         </div>
         <div className={styles.grid}>
           {[BRAND_WORDMARK, BRAND_ICON].map((asset: BrandAsset): ReactElement => (

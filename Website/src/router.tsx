@@ -3,6 +3,8 @@ import { BrandPage } from "./routes/BrandPage";
 import { HomePage } from "./routes/HomePage";
 import { RootLayout } from "./routes/RootLayout";
 import { SectionRedirect } from "./routes/SectionRedirect";
+import { TimberDirectionsPage } from "./routes/TimberDirectionsPage";
+import { IdentityPreviewPage } from "./routes/IdentityPreviewPage";
 
 const routes: RouteObject[] = [
   {
@@ -11,6 +13,8 @@ const routes: RouteObject[] = [
     children: [
       { index: true, element: <HomePage /> },
       { path: "brand", element: <BrandPage /> },
+      { path: "brand/directions", element: <TimberDirectionsPage /> },
+      { path: "brand/directions/:directionId", element: <IdentityPreviewPage /> },
       { path: "studies/:round", element: <SectionRedirect /> },
       { path: "directions/:identityId", element: <SectionRedirect /> },
       { path: "play", element: <SectionRedirect /> },

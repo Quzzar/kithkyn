@@ -98,8 +98,8 @@ Lettering, open Corner Frame and slim Oak Frame. Corner Frame was selected, then
 unframed lettering with the earlier study's taller ith. The corner brackets and small lower K
 protrusions were specifically rejected; do not reintroduce them.
 
-The comparison pages, alternate identities and historical captures are removed from the
-shipping site. Git commit `e4c9fc4` preserves the exploration and original prompts. The selected
+The earlier comparison pages, alternate identities and historical captures were removed from the
+shipping site. Git commit `e4c9fc4` preserves that exploration and its original prompts. The selected
 Pixel Joinery reference, Corner Frame and subsequent refinement prompts ship in
 `Website/public/brand/generation-prompts.md`.
 
@@ -108,6 +108,47 @@ logo, plank controls, wooden page frames and Pixelify headings were rejected as 
 unfinished. They remain removed. The real in-game scene and catalog captures stay, with their
 provenance recorded in [website-brand.md](website-brand.md). Five styles use field notes where
 useful captures are unavailable. The scene is not presented as an autonomous-growth timeline.
+
+## Logo and website designed together
+
+On October 1, Aaron reopened the identity and requested the logo, small K and website as one
+coherent design, with patchwork timber and a log-cabin feel. The new comparison at
+`/brand/directions` presents two complete working homepages rather than isolated marks.
+
+| Direction | Artwork | Website |
+| --- | --- | --- |
+| Cabin Joinery | Honey oak and walnut beams, visible joins, pale end-grain faces; titlecase lettering | Moss canvas, lighter green surfaces, ivory text, a split hero with real gameplay |
+| Patchwork | Flat birch, honey oak and muted cedar pieces; compact uppercase lettering | Charcoal canvas and panels, warm ivory text, a centered wordmark and wide gameplay image |
+
+The wordmarks use native 128 × 35 and 128 × 26 grids, respectively. Their matching K icons
+use 32 × 32 grids. Both palettes share the site's semantic roles and existing readable Outfit
+typography. All display sizes are integer pixel multiples. Transparent artwork padding was
+trimmed; page spacing now controls the composition. The website controls remain simple.
+
+The brand-led hero reference pass inspected
+[Yellowbird](https://mobbin.com/sites/sections/40234df9-9e87-4b29-ae2f-aea3ff95bb50),
+[Norma](https://mobbin.com/sites/sections/4c83ffbb-502c-4d4f-a953-5ba945d10a46) and
+[Maze](https://mobbin.com/sites/sections/2f649f2b-a738-49a9-aec8-57d999eaf29a).
+Yellowbird's large wordmark supplies personality while navigation stays quiet. Norma gives
+photography room to establish the setting. Maze's concise centered statement and clear primary
+action inform the Patchwork composition. Their mascots, blurred navigation, blue SaaS styling
+and dense menus do not fit this brief. The Minecraft mod references above remain the relevant
+material and pixel-art precedents.
+
+Both study pages retain the 17-style atlas, genuine catalog images, material notes, Offline and
+Cloud setup, FAQ and footer. Navigation and shareable village selection stay inside each identity.
+The comparison includes actual browser captures and native PNG downloads. The current selected
+homepage and complete brand kit remain available while Aaron judges the new pairings.
+Exact imagegen prompts, source filenames and sampling details are recorded in
+`Website/public/brand/directions/generation-prompts.md`.
+
+The two previews and comparison were visually reviewed at 1280 × 900, 390 × 844 and
+320 × 720, including small K rendering, village navigation and keyboard-operated setup tabs.
+All assets loaded, the K download completed and a clean reload reported no warnings or errors.
+Text and oak accents exceed 4.5:1 on all three surfaces: Cabin's minimum is 4.88:1;
+Patchwork's is 4.93:1. Strict TypeScript, the production build, ESLint, Prettier and all
+18 existing desktop/mobile browser checks passed. Reviewed comparison and homepage captures
+are saved as `docs/website-preview/timber-*.jpg`.
 
 ## Verification and publishing
 

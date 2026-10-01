@@ -6,8 +6,11 @@ import { Outlet, ScrollRestoration, useLocation } from "react-router-dom";
 export function RootLayout(): ReactElement {
   const { pathname } = useLocation();
   useEffect((): void => {
-    document.title =
-      pathname === "/brand" ? "Kithkyn | Brand assets" : "Kithkyn | Bringing villages to life";
+    document.title = pathname.startsWith("/brand/directions")
+      ? "Kithkyn | Timber directions"
+      : pathname === "/brand"
+        ? "Kithkyn | Brand assets"
+        : "Kithkyn | Bringing villages to life";
   }, [pathname]);
   return (
     <NuqsAdapter>

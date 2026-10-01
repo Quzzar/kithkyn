@@ -62,6 +62,13 @@ export const vars = createGlobalTheme(":root", {
     wordmarkPreview: "21.75rem",
     iconPreview: "10rem",
     heroPhoto: "34rem",
+    timberWordmark: "48rem",
+    timberPanorama: "22rem",
+    studyIcon: "4rem",
+    studyArtwork: "12rem",
+    studyWordmark: "16rem",
+    studyWordmarkMobile: "8rem",
+    timberSplitWordmark: "24rem",
   },
   motion: { short: "180ms", ease: "cubic-bezier(0.2, 0.8, 0.2, 1)" },
 });

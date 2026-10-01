@@ -14,6 +14,17 @@ export type BrandAsset = {
   readonly exports: readonly BrandExport[];
 };
 
+/** Artwork shared by the selected identity and complete website studies. */
+export type BrandArtwork = Pick<BrandAsset, "source" | "width" | "height">;
+
+/** Local destinations let a study retain its own identity while visitors browse the page. */
+export type SiteBranding = {
+  readonly wordmark?: BrandArtwork;
+  readonly homePath?: string;
+  readonly brandPath?: string;
+  readonly isStudy?: boolean;
+};
+
 /** The selected artwork is sampled onto a native pixel grid before any larger export. */
 export const BRAND_WORDMARK: BrandAsset = {
   kind: "wordmark",
