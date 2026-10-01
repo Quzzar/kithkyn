@@ -1,6 +1,35 @@
 # Website design decisions
 
-## Current identity: refined timber lettering
+## Current identity: Hewn Planks over a game backdrop
+
+Aaron accepted Hewn Planks, then requested a real game render behind the intro with an overlay,
+using Veilcraft as the general direction. The main homepage now pairs the 128 × 34 native
+honey-oak wordmark with its matching 32 × 32 K. The header uses the K at 1×; the desktop hero
+uses the wordmark at 4× and the phone hero at 2×. Outfit typography and cool slate surfaces
+provide the rest of the design. The downloadable kit, favicon, README and packaged mod icon
+use this same identity. Earlier full website studies remain available for comparison.
+
+The existing mangrove-coast capture is the actual backdrop, extending behind the navigation.
+Its open water gives the left-aligned intro room; the right side shows timber homes and a
+villager. A horizontal slate overlay protects the desktop copy, a vertical overlay protects
+the navigation and fades into the next section. Phones use a crop toward the village and a
+vertical overlay with an opaque fraction of at least 70%. Phone copy, including the eyebrow,
+uses ivory; this preserves at least 4.55:1 contrast even over a white source pixel. The desktop
+oak eyebrow stays inside the 90% horizontal overlay. Controls remain simple and stationary.
+The caption says "Mangrove coast · In-game capture". This remains a site-review image, not a
+claim that the displayed settlement is an autonomous-growth timeline.
+
+The backdrop reference pass inspected
+[Lightship](https://mobbin.com/sites/sections/a5fa6838-ff45-42cc-8e90-b513fd69a5e7),
+[Aurora](https://mobbin.com/sites/sections/c7d426dd-5880-436c-85cb-ddf9fa2eddce) and
+[Savor](https://mobbin.com/sites/sections/f6870d1a-3708-4347-92c6-048af2b0d73f).
+Lightship's darkened landscape carries a readable message without boxing in the image.
+Savor puts a small wordmark and sparse navigation directly over a full-width scene. Its blurred
+image is unsuitable for showing village detail. Aurora's returned section is blank apart from
+its header, so it does not inform this composition. Local project and public searches did not
+identify the user's Veilcraft website; no specific Veilcraft layout is claimed as inspected.
+
+## Earlier unframed timber direction
 
 On October 1, 2026 Aaron selected Corner Frame (10), attaching the exact generated wordmark.
 His follow-up requested native pixels matching the visual block granularity. The chosen source
@@ -176,7 +205,7 @@ Aaron preferred Hewn's broader forms but requested the original wooden-plank mat
 Hewn Planks reinterprets those letters in honey oak, with dark joins, pale cut end faces and
 sparse grain marks. The first K has a flat bottom; the rejected corner brackets and hanging
 K tips remain absent. Its native wordmark is 128 × 34 and matching reference-edited K is
-32 × 32. The cool slate palette and split homepage continue to frame the timber.
+32 × 32. The initial preview used the cool slate palette and a split homepage.
 
 The current comparison now leads with Hewn Planks; the original spruce Hewn is available among
 the earlier directions. Its complete website preview is at `/brand/directions/hewn-planks`.
@@ -189,22 +218,22 @@ the final preview reload reported no console warnings or errors.
 
 ## Verification and publishing
 
-Current captures in `docs/website-preview/` show the chosen homepage and brand downloads at
-desktop and phone sizes. Browser checks cover the chosen identity, download formats, old-link
-redirects, all 17 styles, shared selection and browser history, keyboard focus, setup tabs,
-FAQ disclosure, reduced motion, loaded assets, typography and 320-pixel overflow.
+The completed game backdrop, main website, asset library and matching direction preview were
+visually reviewed at 1280 × 900, 390 × 844 and 320 × 720. The reviewed captures are saved in
+`docs/website-preview/`. Main logo and icon specimens remain integer-scaled at these widths;
+the native wordmark and K are 128 × 34 and 32 × 32. The 1200 × 630 sharing JPEG was rendered
+from its updated SVG and inspected before packaging. All 16 ZIP entries match their published
+files, and the packaged NeoForge K matches the exact 128-pixel export.
 
-All 18 browser checks passed after the dark theme pass, along with the strict TypeScript
-production build, ESLint and Prettier. Native dimensions, equal integer display scales,
-pixelated rendering and exported downloads remain covered. The sampling and extraction recipe
-is recorded in [website-brand.md](website-brand.md). The logo PNGs and integer exports remain
-byte-identical. The earlier Gradle `processResources` check passed, and the K's packaged resource
-matches its 128-pixel export.
-The render review covered 1280 × 900, 390 × 844 and 320 × 720 viewports. A clean final browser
-reload reported no new console warnings or errors. Keyboard navigation visibly renders the
-amber focus ring. Ivory text, muted copy and oak accents all exceed 4.5:1 against all three dark
-surfaces; muted text has a minimum 5.60:1 ratio. The brand ZIP passed an archive integrity check,
-and all 16 entries match their published files.
+Strict TypeScript, the production build, ESLint, Prettier and Gradle `processResources` passed.
+All 18 desktop/mobile browser checks were verified: 17 passed in the initial run, and one
+desktop 17-style traversal reached the 30-second deadline while builds ran in parallel. It
+passed its focused rerun in 2.8 seconds. These cover brand downloads and identity, old links,
+all 17 styles, shared selection/history, keyboard focus, setup tabs, FAQ disclosure, reduced
+motion, loaded assets, typography and 320-pixel overflow. Keyboard focus was also inspected
+on the hero action, and a clean final reload reported no new console warnings or errors. Ivory, muted text and oak exceed 4.5:1 over all three slate surfaces;
+the palette's minimum ratio is 4.63:1. The phone image overlay protects ivory text to at least
+4.55:1 even over a white source pixel.
 
 Production deployment waits for the intended domain and hosting destination. The sharing-image
 metadata needs the final host's absolute URL at publication. See [website-brand.md](website-brand.md).

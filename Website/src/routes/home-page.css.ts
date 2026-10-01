@@ -6,7 +6,6 @@ export const page = style({ background: vars.color.canvas, color: vars.color.tex
 export const life = style({
   background: vars.color.canvas,
   paddingBlock: vars.space.section,
-  borderTop: `${vars.size.border} solid ${vars.color.line}`,
 });
 export const lifeInner = style([
   container,

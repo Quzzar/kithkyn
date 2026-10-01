@@ -23,14 +23,14 @@ test("uses the native timber identity on the main landing page", async ({
   await expect(page).toHaveURL("/");
   await expect(page).toHaveTitle("Kithkyn | Bringing villages to life");
   await expect(page.getByRole("heading", { level: 1 })).toContainText("A world with");
-  await expect(page.locator("header img")).toHaveAttribute("src", "/brand/wordmark.png");
+  await expect(page.locator("header img")).toHaveAttribute("src", "/brand/icon.png");
   await expect(page.locator("header img")).toHaveCSS("image-rendering", "pixelated");
   expect(
     await page
       .locator("header img")
       .evaluate((image: HTMLImageElement): number[] => [image.naturalWidth, image.naturalHeight]),
-  ).toEqual([116, 48]);
-  for (const image of await page.locator("header img, footer img").all()) {
+  ).toEqual([32, 32]);
+  for (const image of await page.locator('header img, footer img, img[alt="Kithkyn"]').all()) {
     const scales: number[] = await image.evaluate((element: HTMLImageElement): number[] => {
       const bounds: DOMRect = element.getBoundingClientRect();
       return [bounds.width / element.naturalWidth, bounds.height / element.naturalHeight];
@@ -40,6 +40,11 @@ test("uses the native timber identity on the main landing page", async ({
     expect(scales[1]).toBe(scales[0]);
   }
   await expect(page.locator("footer img")).toHaveAttribute("src", "/brand/wordmark.png");
+  await expect(page.getByRole("img", { name: "Kithkyn", exact: true })).toHaveAttribute(
+    "src",
+    "/brand/wordmark.png",
+  );
+  await expect(page.getByText("Mangrove coast · In-game capture")).toBeVisible();
   await expect(page.locator('link[rel="icon"]')).toHaveAttribute("href", "/brand/icon.svg");
   await expect(page.getByRole("link", { name: "Compare identities" })).toHaveCount(0);
   await expect(page.locator('img[src*="diorama"]')).toHaveCount(0);
@@ -160,8 +165,8 @@ test("downloads the chosen brand kit and preserves links from earlier previews",
   for (const source of [
     "wordmark.png",
     "icon.png",
-    "wordmark-464.png",
-    "wordmark-928.png",
+    "wordmark-512.png",
+    "wordmark-1024.png",
     "icon-64.png",
     "icon-128.png",
     "icon-256.png",
@@ -181,7 +186,7 @@ test("downloads the chosen brand kit and preserves links from earlier previews",
       if (source === "wordmark.png" || source === "icon.png") {
         const pixels: Buffer = await response.body();
         expect([pixels.readUInt32BE(16), pixels.readUInt32BE(20)]).toEqual(
-          source === "wordmark.png" ? [116, 48] : [32, 32],
+          source === "wordmark.png" ? [128, 34] : [32, 32],
         );
       }
     }

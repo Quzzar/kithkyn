@@ -1,6 +1,6 @@
 # Kithkyn
 
-<img src="Website/public/brand/wordmark-464.png" alt="Kithkyn" width="464" />
+<img src="Website/public/brand/wordmark-512.png" alt="Kithkyn" width="512" />
 
 Autonomous villagers who build and run their own villages. Kithkyn replaces Minecraft's
 villagers with people: each one has a name, a personality, a family, a job, and a small

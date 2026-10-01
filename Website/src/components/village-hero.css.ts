@@ -1,36 +1,5 @@
 import { globalStyle, style } from "@vanilla-extract/css";
-import { container } from "./site.css";
 import { breakpoint, vars } from "../styles/theme.css";
-
-export const hero = style([
-  container,
-  {
-    display: "grid",
-    gridTemplateColumns: "1fr 1fr",
-    alignItems: "center",
-    gap: vars.space.xxl,
-    paddingTop: vars.space.xxl,
-    paddingBottom: vars.space.section,
-    "@media": {
-      [breakpoint.narrow]: {
-        gridTemplateColumns: "1fr",
-        gap: vars.space.xl,
-        paddingTop: vars.space.xl,
-      },
-    },
-  },
-]);
-export const copy = style({
-  display: "flex",
-  flexDirection: "column",
-  gap: vars.space.lg,
-  minWidth: 0,
-});
-globalStyle(`${copy} h1`, {
-  fontSize: vars.fontSize.hero,
-  fontWeight: vars.weight.medium,
-  marginTop: vars.space.lg,
-});
 export const label = style({
   color: vars.color.accent,
   fontSize: vars.fontSize.small,
@@ -40,13 +9,6 @@ export const lead = style({
   color: vars.color.muted,
   fontSize: vars.fontSize.lead,
   maxWidth: vars.size.copy,
-});
-export const actions = style({
-  display: "flex",
-  gap: vars.space.lg,
-  alignItems: "center",
-  flexWrap: "wrap",
-  marginTop: vars.space.xl,
 });
 export const primary = style({
   display: "inline-flex",

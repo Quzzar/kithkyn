@@ -38,7 +38,7 @@ export function TimberHero({ identity }: { readonly identity: TimberIdentity }):
           height={960}
           fetchPriority="high"
         />
-        <figcaption>In-game village capture · site review</figcaption>
+        <figcaption>Mangrove coast · In-game capture</figcaption>
       </figure>
     </section>
   );

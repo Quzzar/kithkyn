@@ -20,6 +20,7 @@ export type BrandArtwork = Pick<BrandAsset, "source" | "width" | "height">;
 /** Local destinations let a study retain its own identity while visitors browse the page. */
 export type SiteBranding = {
   readonly wordmark?: BrandArtwork;
+  readonly icon?: BrandArtwork;
   readonly homePath?: string;
   readonly brandPath?: string;
   readonly isStudy?: boolean;
@@ -29,14 +30,14 @@ export type SiteBranding = {
 export const BRAND_WORDMARK: BrandAsset = {
   kind: "wordmark",
   name: "Wordmark",
-  description: "116 × 48 native pixels.",
+  description: "128 × 34 native pixels. Joined honey oak planks.",
   source: "/brand/wordmark.png",
-  width: 116,
-  height: 48,
+  width: 128,
+  height: 34,
   svgSource: "/brand/wordmark.svg",
   exports: [
-    { label: "4× PNG", source: "/brand/wordmark-464.png" },
-    { label: "8× PNG", source: "/brand/wordmark-928.png" },
+    { label: "4× PNG", source: "/brand/wordmark-512.png" },
+    { label: "8× PNG", source: "/brand/wordmark-1024.png" },
   ],
 };
 export const BRAND_ICON: BrandAsset = {
@@ -57,10 +58,10 @@ export const BRAND_ICON: BrandAsset = {
 
 /** Three slate surface levels frame the timber art; ivory and oak carry content and actions. */
 export const BRAND_PALETTE = {
-  canvas: "#20272b",
-  surface: "#293238",
-  raised: "#333e44",
-  ink: "#f0ece3",
-  oak: "#dcb075",
-  muted: "#b1bbbd",
+  canvas: "#252e35",
+  surface: "#303e46",
+  raised: "#40525a",
+  ink: "#f2eee5",
+  oak: "#e3bd88",
+  muted: "#c0cace",
 } as const;

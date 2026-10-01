@@ -16,7 +16,7 @@ export const grid = style({
   display: "grid",
   gridTemplateColumns: "1fr 1fr",
   gap: vars.space.xxl,
-  "@media": { [breakpoint.narrow]: { gridTemplateColumns: "1fr" } },
+  "@media": { [breakpoint.compact]: { gridTemplateColumns: "1fr" } },
 });
 export const asset = style({ minWidth: 0 });
 export const stage = style({
@@ -27,7 +27,7 @@ export const stage = style({
   justifyContent: "center",
   background: vars.color.raised,
   borderRadius: vars.radius.small,
-  "@media": { [breakpoint.narrow]: { padding: vars.space.md } },
+  "@media": { [breakpoint.narrow]: { padding: vars.space.xxs } },
 });
 globalStyle(`${stage} img`, {
   imageRendering: "pixelated",

@@ -1,13 +1,10 @@
 # Website and brand status
 
-On October 1, 2026 Aaron selected Corner Frame (10), attaching the exact wordmark, then requested
-the corners removed, a cleaner K foot and a blend with the preferred ith lettering.
-The current unframed wordmark is paired with a square K extracted from the same native grid.
-The wooden-board flavor is concentrated in the logo; the website stays sleek. Aaron requested
-a lighter dark presentation, so the homepage, asset library and sharing card use slate surfaces,
-ivory text and warm oak accents. The homepage at `/` now uses this chosen identity. `/brand`
-provides downloads. Earlier comparisons and unused assets are removed, with exploration
-preserved in Git at commit `e4c9fc4`.
+On October 1, 2026 Aaron accepted Hewn Planks, then requested an in-game backdrop with an
+logo and intro over it. The homepage at `/` now uses this honey-oak identity, cool slate
+surfaces, ivory copy and Outfit typography. The wooden flavor belongs to the wordmark and K.
+The full-width shoreline scene extends behind the navigation and intro, with layered slate
+overlays and a fade into the following section. `/brand` provides the matching kit.
 
 All 17 bundled Overworld land styles remain available, with Radix keyboard navigation and
 nuqs shareable selection and browser history. Offline/cloud requirements, multiplayer guidance
@@ -18,76 +15,63 @@ and source links use GitHub. Ocean and Nether catalogs are planned.
 
 | Asset | Master | Dimensions |
 | --- | --- | --- |
-| Unframed timber wordmark | `Website/public/brand/wordmark.png` | 116 × 48 |
-| Square timber K | `Website/public/brand/icon.png` | 32 × 32 |
+| Hewn Planks wordmark | `Website/public/brand/wordmark.png` | 128 × 34 |
+| Matching timber K | `Website/public/brand/icon.png` | 32 × 32 |
 
-Aaron's follow-up requested actual image pixels matching the artwork's visual granularity.
-The selected 1945 × 809 source is preserved at Git commit `fc64070`, with SHA-256
-`5b6d5491cf238665737ba9b4c726c1deffc4eecfcd5ca5e7d9c282946e603a8d`. Its roughly 17-pixel drawn blocks
-were reduced to one native image pixel. The prior native version is preserved at `7725c93`.
+The accepted wordmark combines Hewn's broad letter shapes with the honey-oak planks from
+Aaron's attached reference. Joined faces, pale cut ends, sparse grain and a slim dark outline
+supply the material. The first K has a flat bottom. The rejected corner brackets and hanging
+K tips remain absent. The matching K is a reference edit, not a pixel-identical extraction.
 
-The current refinement uses the built-in image editor. The "top one" reference was interpreted
-as the earlier bare Log Lettering study. It guides the taller ith; the selected wordmark guides
-the remaining letters. All corner brackets
-are removed, and the capital K's lower side nub and hanging tip are cleaned up. The edited source
-is 1950 × 807, SHA-256
-`ca6f377ebe188a4cec37e661349e25ccc46c51bf3e4ffa2d6f42d61c34cb2fa8`.
-Its original local file is `exec-f4a80f59-372f-4c7b-9ed6-ef5ccd0dd074.png` in this chat's
-generated-images directory. Exact edit prompts ship beside the assets.
+The built-in image editor produced wordmark source
+`exec-59a21a0e-4ab7-4f47-a0d8-e2971099b9b1.png` (2170 × 725) and icon source
+`exec-62248666-f059-4673-8261-828d4ea957ab.png` (1280 × 1280) in this chat's generated-images
+directory. Exact edit prompts, input roles and the sampling recipe ship in
+`Website/public/brand/generation-prompts.md`. The previous 116 × 48 identity and its original
+provenance remain in Git at `0212509`.
 
-The wordmark is center-sampled to 116 × 48. For output cell `(x, y)`, sample source coordinates
-`floor((x + 0.5) * 1950 / 116)` and `floor((y + 0.5) * 807 / 48)`. Retain the sampled RGB color;
-alpha below 128 becomes transparent, and alpha at or above 128 becomes fully opaque. Transparent
-RGB is zero. Extract the first K from a 26 × 30 region beginning at `(7, 8)` on this grid. Copy that
-region to `(3, 1)` on a transparent 32 × 32 canvas for the square icon.
+The wordmark is center-sampled to 128 × 43. For output cell `(x, y)`, sample source coordinates
+`floor((x + 0.5) * 2170 / 128)` and `floor((y + 0.5) * 725 / 43)`. Retain sampled RGB;
+alpha below 128 becomes transparent with zero RGB, while alpha at or above 128 becomes fully
+opaque. Trim empty top and bottom rows to one transparent row beyond the visible art, yielding
+128 × 34. The K uses the same sampling and alpha rule from 1280 × 1280 to 32 × 32.
 
-The kit includes wordmark exports at 464 × 192 and 928 × 384, and square K exports at 64, 128,
-256 and 512 pixels. Every larger PNG copies each native pixel into a whole-number square block;
-no smoothing, intermediate colors or soft alpha are introduced. Pixel data was checked against
-the native masters for every export. The masters are 5505 and 1623 bytes respectively.
+The kit includes wordmark exports at 512 × 136 and 1024 × 272, and square K exports at 64,
+128, 256 and 512 pixels. Every larger PNG copies each native pixel into a whole-number square
+block; no smoothing, intermediate colors or soft alpha are introduced. Pixel data is checked
+against the native masters for every export.
 
 The 128 × 128 K ships as `src/main/resources/kithkyn-logo.png`, referenced by NeoForge metadata.
-The 32 × 32 SVG icon supplies the favicon. The wordmark appears in the header and footer at 2×
-on desktop and 1× in the phone header; brand specimens use 3×/2× for the wordmark and 5× for the K.
+The 32 × 32 SVG icon supplies the favicon. The header K is 1×, desktop hero wordmark 4×,
+phone hero 2× and footer wordmark 2×. Brand specimens use 3×/2× for the wordmark and 5× for the K.
 CSS uses `image-rendering: pixelated`. The README uses the 4× wordmark PNG at its native size.
 
-The downloadable kit includes the native masters, larger PNGs, SVG containers embedding native
-pixels with pixelated rendering, a 1200 × 630 sharing card in JPEG and SVG, palette, usage notes,
-original generation prompts and the Outfit license. The sharing SVG enlarges the wordmark at
-exactly 8×. Its JPEG is recaptured from that SVG before packaging. These remain raster pixel
-masters inside SVG containers. Use a quiet slate background and integer scales.
+The downloadable kit includes the native masters, integer PNG exports, SVG containers embedding
+native pixels, a 1200 × 630 JPEG and SVG sharing card, palette, usage notes, generation prompts
+and the Outfit license. The sharing SVG enlarges the wordmark exactly 8×. Its JPEG is recaptured
+before packaging. `bun run brand:export` regenerates SVG containers and the ZIP from the
+checked-in PNGs and integer exports. The SVGs preserve raster pixels instead of tracing paths.
 
-The fixed dark system uses three slate levels. Canvas `#20272b` serves the page and footer;
-surface `#293238` serves the village section and setup panels; raised `#333e44` serves logo
-specimens, the sharing artwork and hover states. Text is ivory `#f0ece3`, muted text is `#b1bbbd`
-and the oak accent is `#dcb075`. Borders derive from ivory at 16% opacity. The CSS contract uses
-semantic roles rather than aliases from the previous forest and light palettes.
+The fixed dark system uses three slate levels: canvas `#252e35`, content surface `#303e46`
+and artwork/hover stage `#40525a`. Text is ivory `#f2eee5`, muted copy `#c0cace`, and the oak
+accent `#e3bd88`. Borders derive from ivory at 16% opacity. Text and oak accents exceed 4.5:1
+on every surface, with a minimum ratio of 4.63:1. The backdrop's phone overlay has at least
+70% opaque slate; ivory copy exceeds 4.55:1 even over pure white. The desktop oak eyebrow stays
+in the horizontal overlay's 90% region. Browser controls and scrollbars use the dark scheme.
 
-Browser controls and scrollbars use the dark color scheme. Filled actions use ivory or oak
-with canvas-colored labels; selected tabs and keyboard focus use oak. Secondary text has at
-least 5.60:1 contrast across all three surfaces. The PNG artwork and native pixel dimensions
-remain unchanged.
-
-Exact generation and refinement prompts live in `Website/public/brand/generation-prompts.md`.
-The pixel reduction and K extraction used deterministic sampling. `bun run brand:export`
-inside `Website/` regenerates the SVG containers and ZIP from the checked-in PNG masters and exports.
-
+The comparison at `/brand/directions` and the complete `/brand/directions/hewn-planks` preview
+remain available. Their wordmark and K PNGs are byte-identical to the canonical masters.
+The earlier-directions gallery retains the original spruce Hewn, Cabin Joinery and Patchwork.
 The rejected generated village diorama and literal wooden page controls remain deleted.
-See [website-redesign.md](website-redesign.md) for the reference pass and decision history.
-
-The identity comparison at `/brand/directions` includes Hewn Planks: a broader honey-oak
-wordmark and square K, paired with Hewn's slate website. These preview masters are
-`Website/public/brand/directions/hewn-planks-wordmark.png` (128 × 34) and
-`hewn-planks-icon.png` (32 × 32). Their edit prompts and sampling recipe are saved in
-`generation-prompts-hewn-planks.md` beside the PNGs. The original spruce Hewn is available in
-the earlier-directions gallery for comparison.
+See [website-redesign.md](website-redesign.md) for references and design decisions.
 
 ## Real capture library
 
 The scenic backdrop comes from
 `run/floodplain-site-review/screenshots/client/screenshots/mavulena-overview.png`,
 relative to the original project root. It shows real in-game village buildings and terrain.
-Its caption identifies it as a site-review capture, not an autonomous-growth timeline.
+Its visible caption is "Mangrove coast · In-game capture". This is a site-review capture,
+not an autonomous-growth timeline.
 
 Twelve real catalog captures are displayed. Romanian, Japanese Cherry Grove, Nautical Coast,
 Savanna Tent and Mushroom use material/biome field notes. The former Romanian capture was

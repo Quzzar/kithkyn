@@ -38,12 +38,18 @@ No plaque, cabin, frame, corner brackets, other letters, extra objects, backgrou
 
 ## Native grid preparation
 
-The sources remain in this chat's generated-images directory. Preparation uses the
-center-sampling and binary-alpha recipe in `generation-prompts.md`.
+The sources remain in this chat's generated-images directory. For output cell `(x, y)`,
+sample source coordinates `floor((x + 0.5) * sourceWidth / outputWidth)` and
+`floor((y + 0.5) * sourceHeight / outputHeight)`. Retain sampled RGB. Alpha below 128
+becomes transparent with zero RGB; alpha at or above 128 becomes fully opaque.
 The wordmark's intermediate grid is 128 × 43; transparent rows are then trimmed to one
-row beyond the visible artwork, yielding 128 × 34. The K retains its 32 × 32 square canvas.
+row beyond the visible artwork, yielding 128 × 34. The reference-edited K is sampled
+from 1280 × 1280 to 32 × 32 and retains that square canvas. Larger exports copy each
+native pixel into an exact integer square block.
 
-The website keeps Hewn's existing slate palette, Outfit text and split hero. Header and footer
-render the wordmark at 2×, the desktop hero at 3×, phone hero at 2× and phone header at 1×.
-The toolbar K is 1×. All use pixelated rendering. The original spruce Hewn remains available
-in the earlier-directions gallery for comparison.
+Aaron accepted this direction, then requested a game backdrop with an overlay. The homepage
+and matching preview now use the Hewn slate palette, Outfit text and a full-width real
+game capture. The desktop hero renders the wordmark at 4×; the phone hero is 2×. The header
+K is 1× and footer wordmark 2×. All use pixelated rendering. The original spruce Hewn
+remains available in the earlier-directions gallery for comparison. The same masters also
+ship at the canonical `/brand/wordmark.png` and `/brand/icon.png` paths.

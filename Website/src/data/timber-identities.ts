@@ -1,4 +1,4 @@
-import type { BrandArtwork } from "./brand";
+import { BRAND_PALETTE, type BrandArtwork } from "./brand";
 
 export type TimberPalette = {
   readonly canvas: string;
@@ -11,7 +11,7 @@ export type TimberPalette = {
 
 export type TimberIdentity = {
   readonly id: "cabin" | "patchwork" | "hewn" | "hewn-planks" | "woven" | "cabin-mark";
-  readonly layout: "split" | "centered";
+  readonly layout: "split" | "centered" | "backdrop";
   readonly name: string;
   readonly description: string;
   readonly wordmark: BrandArtwork;
@@ -20,14 +20,7 @@ export type TimberIdentity = {
 };
 
 /** The plank refinement keeps Hewn's cool slate website presentation. */
-const HEWN_PALETTE: TimberPalette = {
-  canvas: "#252e35",
-  surface: "#303e46",
-  raised: "#40525a",
-  ink: "#f2eee5",
-  muted: "#c0cace",
-  oak: "#e3bd88",
-};
+const HEWN_PALETTE: TimberPalette = BRAND_PALETTE;
 
 /** Each timber identity pairs original artwork with its own complete website palette. */
 export const TIMBER_IDENTITIES: Readonly<Record<TimberIdentity["id"], TimberIdentity>> = {
@@ -74,7 +67,7 @@ export const TIMBER_IDENTITIES: Readonly<Record<TimberIdentity["id"], TimberIden
   },
   "hewn-planks": {
     id: "hewn-planks",
-    layout: "split",
+    layout: "backdrop",
     name: "Hewn Planks",
     description: "Chunky lettering, joined from honey oak planks.",
     wordmark: { source: "/brand/directions/hewn-planks-wordmark.png", width: 128, height: 34 },

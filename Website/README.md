@@ -1,9 +1,11 @@
 # Kithkyn website
 
-The landing page at `/` uses the refined unframed timber wordmark and its square K.
-The artwork uses a real 116 × 48 grid, with a 32 × 32 icon extracted from the same master.
-The website uses a lighter slate canvas, ivory text, oak accents, Outfit typography and real game
-captures; the wooden flavor belongs to the logo. Three surface levels serve the page, content
+The landing page at `/` uses the accepted Hewn Planks wordmark and matching square K.
+The artwork uses a real 128 × 34 grid, with a matching reference-edited 32 × 32 icon.
+A full-width in-game shoreline capture sits behind the header and intro. Layered slate
+overlays keep the text readable and fade into the page below. The desktop wordmark is 4×,
+the phone wordmark 2× and header K 1×. The wooden flavor belongs to the logo.
+The website uses slate, ivory, oak accents and Outfit typography. Three surface levels serve the page, content
 panels and logo stages. The sharing card uses the logo stage. Semantic color tokens keep hover,
 focus, borders and captions consistent. Browser controls use the dark color scheme.
 
@@ -17,7 +19,7 @@ charcoal. Each has a native 128-pixel-wide wordmark and 32 × 32 K. All full pre
 17-style village browser, setup tabs and FAQ. `/brand/directions/previous` retains the original
 spruce Hewn, Cabin Joinery and Patchwork. PNG downloads and exact generation prompts live in
 `public/brand/directions/`.
-The current homepage remains available during comparison.
+Hewn Planks is also the main homepage and canonical downloadable brand kit.
 
 React, Vite, strict TypeScript, vanilla-extract, Radix, nuqs and Playwright, using Bun.
 

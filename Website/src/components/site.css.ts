@@ -59,6 +59,18 @@ export const studyBrand = style([
     "@media": { [breakpoint.narrow]: { width: vars.size.studyWordmarkMobile } },
   },
 ]);
+export const iconBrand = style({
+  display: "grid",
+  placeItems: "center",
+  width: vars.size.button,
+  minHeight: vars.size.button,
+  flexShrink: 0,
+});
+globalStyle(`${iconBrand} img`, {
+  width: vars.size.headerIcon,
+  height: vars.size.headerIcon,
+  imageRendering: "pixelated",
+});
 export const headerNav = style({
   display: "flex",
   alignItems: "center",
