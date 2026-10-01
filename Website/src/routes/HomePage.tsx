@@ -1,74 +1,92 @@
+import { ArrowDown, Compass, Download, Users } from "lucide-react";
 import type { ReactElement } from "react";
-import { Link } from "react-router-dom";
-import * as styles from "./directions-index.css";
+import { Installation } from "../components/Installation";
+import { LogoMark } from "../components/LogoMark";
+import { SiteFooter } from "../components/SiteFooter";
+import { SiteHeader } from "../components/SiteHeader";
+import { VillageAtlas } from "../components/VillageAtlas";
+import * as site from "../components/site.css";
+import * as styles from "./home-page.css";
 
-type Direction = {
-  readonly id: string;
-  readonly title: string;
-  readonly description: string;
-  readonly path: string;
-  readonly image: string;
-};
-const DIRECTIONS: readonly Direction[] = [
+type VillageLife = { readonly title: string; readonly detail: string };
+const VILLAGE_LIFE: readonly VillageLife[] = [
   {
-    id: "A",
-    title: "Title screen",
-    description: "Gameplay first. A centered title and game menu.",
-    path: "/play",
-    image: "title-screen",
+    title: "Work together",
+    detail: "Gather resources, build homes, and keep the village running.",
   },
-  {
-    id: "B",
-    title: "Village atlas",
-    description: "Exploration first. Browse every regional building style.",
-    path: "/atlas",
-    image: "village-atlas",
-  },
-  {
-    id: "C",
-    title: "Village stories",
-    description: "People first. A comic strip about shared village life.",
-    path: "/stories",
-    image: "village-stories",
-  },
+  { title: "Grow roots", detail: "Form families, take on jobs, and welcome new neighbors." },
+  { title: "Think ahead", detail: "Make plans around what the community needs next." },
 ];
 
-/** A review surface gives each concept equal weight and leaves the choice open. */
+/** The selected title-screen direction becomes one complete, navigable public website. */
 export function HomePage(): ReactElement {
   return (
-    <main id="main" className={styles.page}>
-      <header className={styles.header}>
-        <span className={styles.brand}>KithKyn</span>
-        <span className={styles.note}>Design study · September 2026</span>
-      </header>
-      <div className={styles.intro}>
-        <p className={styles.label}>Three low-fidelity directions</p>
-        <h1>Which world do we step into?</h1>
-        <p>Compare the structure and feel. Artwork and branding come after the choice.</p>
-      </div>
-      <div className={styles.options}>
-        {DIRECTIONS.map((direction: Direction): ReactElement => (
-          <Link className={styles.option} to={direction.path} key={direction.id}>
-            <img
-              src={`/previews/${direction.image}.png`}
-              alt={`${direction.title} wireframe preview`}
-              width={1280}
-              height={900}
-            />
-            <div className={styles.optionCopy}>
-              <h2>
-                {direction.id} · {direction.title}
-              </h2>
-              <p>{direction.description}</p>
-              <span className={styles.open}>Open prototype ↗</span>
+    <>
+      <div className={styles.entrance}>
+        <img
+          className={styles.backdrop}
+          src="/art/village-site.webp"
+          alt=""
+          width={1708}
+          height={960}
+          fetchPriority="high"
+        />
+        <div className={styles.shade} aria-hidden="true" />
+        <SiteHeader />
+        <main id="main">
+          <section className={styles.hero} aria-labelledby="game-title">
+            <h1 id="game-title" className={styles.title}>
+              <LogoMark />
+            </h1>
+            <p className={styles.tagline}>Bringing villages to life</p>
+            <nav className={styles.menu} aria-label="Start exploring">
+              <a className={styles.primaryPlank} href="#villages">
+                <Compass aria-hidden="true" />
+                Explore the villages
+              </a>
+              <a className={styles.middlePlank} href="#life">
+                <Users aria-hidden="true" />
+                Meet your neighbors
+              </a>
+              <a className={styles.lastPlank} href="#get-started">
+                <Download aria-hidden="true" />
+                Installation guide
+              </a>
+            </nav>
+            <div className={styles.heroFoot}>
+              <span>Minecraft Java 1.21.1 · NeoForge</span>
+              <span>In-game village capture · site review</span>
             </div>
-          </Link>
-        ))}
+            <a className={styles.down} href="#life" aria-label="Discover village life">
+              <ArrowDown aria-hidden="true" />
+            </a>
+          </section>
+          <section className={styles.life} id="life" aria-labelledby="life-title">
+            <div className={styles.lifeInner}>
+              <div>
+                <p className={site.label}>A village with a life of its own</p>
+                <h2 className={site.sectionHeading} id="life-title">
+                  They’ve got
+                  <br />
+                  things to do.
+                </h2>
+                <p className={styles.lifeLead}>Neighbors who make plans of their own.</p>
+              </div>
+              <div className={styles.lifeRows}>
+                {VILLAGE_LIFE.map((entry: VillageLife): ReactElement => (
+                  <div className={styles.lifeRow} key={entry.title}>
+                    <h3>{entry.title}</h3>
+                    <p>{entry.detail}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+          <VillageAtlas />
+          <Installation />
+        </main>
       </div>
-      <footer className={styles.footer}>
-        <span>No direction selected.</span>
-        <Link to="/setup">Existing setup requirements ↗</Link>
-      </footer>
-    </main>
+      <SiteFooter />
+    </>
   );
 }

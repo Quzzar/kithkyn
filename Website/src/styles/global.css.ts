@@ -1,9 +1,9 @@
 import { globalFontFace, globalStyle } from "@vanilla-extract/css";
 import { vars } from "./theme.css";
 
-globalFontFace("Bricolage Grotesque", {
-  src: "url('/fonts/bricolage-grotesque.woff2') format('woff2')",
-  fontWeight: "200 800",
+globalFontFace("Pixelify Sans", {
+  src: "url('/fonts/pixelify-sans.woff2') format('woff2')",
+  fontWeight: "400 700",
   fontDisplay: "swap",
 });
 globalFontFace("Outfit", {
@@ -13,20 +13,20 @@ globalFontFace("Outfit", {
 });
 globalStyle("*", { boxSizing: "border-box" });
 globalStyle("html", {
-  background: vars.color.mist,
+  background: vars.color.forest,
   scrollBehavior: "smooth",
   scrollPaddingTop: vars.space.xl,
 });
 globalStyle("body", {
-  margin: vars.space.none,
-  minWidth: vars.space.none,
-  color: vars.color.pine,
+  margin: 0,
+  minWidth: 0,
+  color: vars.color.cream,
   fontFamily: vars.font.body,
   fontSize: vars.fontSize.body,
   lineHeight: vars.line.body,
   textRendering: "optimizeLegibility",
 });
-globalStyle("h1, h2, h3, p, figure", { margin: vars.space.none });
+globalStyle("h1, h2, h3, p, figure", { margin: 0 });
 globalStyle("h1, h2, h3", {
   fontFamily: vars.font.display,
   fontWeight: vars.weight.display,
@@ -35,13 +35,14 @@ globalStyle("h1, h2, h3", {
 });
 globalStyle("a", { color: "inherit", textDecoration: "none" });
 globalStyle("button", { font: "inherit", cursor: "pointer" });
-globalStyle("img", { display: "block", maxWidth: "100%" });
+globalStyle("button:disabled", { cursor: "default" });
+globalStyle("img", { display: "block", maxWidth: "100%", height: "auto" });
 globalStyle("svg", { flexShrink: 0 });
 globalStyle("a:focus-visible, button:focus-visible, [tabindex]:focus-visible", {
   outline: `${vars.size.focus} solid ${vars.color.focus}`,
   outlineOffset: vars.space.xxs,
 });
-globalStyle("::selection", { background: vars.color.honey, color: vars.color.pine });
+globalStyle("::selection", { background: vars.color.oak, color: vars.color.ink });
 globalStyle("html, *, *::before, *::after", {
   "@media": {
     "(prefers-reduced-motion: reduce)": {

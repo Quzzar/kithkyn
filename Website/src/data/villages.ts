@@ -49,7 +49,6 @@ export const VILLAGES: readonly Village[] = [
     biome: "Dark forests & wooded valleys",
     detail: "Steep roofs, heavy timber frames, and enclosed woodland yards.",
     materials: ["Dark oak", "Birch", "Deepslate"],
-    image: "romanian",
   },
   {
     id: "jungle",

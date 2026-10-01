@@ -5,7 +5,7 @@ in it, and update it in the same change that moves what it describes.
 
 - [website-brand.md](website-brand.md): active KithKyn identity, full brand suite, website behavior,
   media provenance and responsive verification.
-- [website-redesign.md](website-redesign.md): Hearth and horizon visual plan, references and review.
+- [website-redesign.md](website-redesign.md): selected wooden title-screen plan, references and review.
 
 - [project-identity.md](project-identity.md): the Kithkyn name, website, repository, and the
   deliberate break with old mod saves and namespaces.

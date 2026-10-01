@@ -1,10 +1,8 @@
-import { createBrowserRouter, type RouteObject } from "react-router-dom";
-import { AtlasPage } from "./routes/AtlasPage";
+import { createBrowserRouter, Navigate, type RouteObject } from "react-router-dom";
+import { BrandPage } from "./routes/BrandPage";
 import { HomePage } from "./routes/HomePage";
 import { RootLayout } from "./routes/RootLayout";
-import { SetupPage } from "./routes/SetupPage";
-import { StoriesPage } from "./routes/StoriesPage";
-import { TitleScreenPage } from "./routes/TitleScreenPage";
+import { SectionRedirect } from "./routes/SectionRedirect";
 
 const routes: RouteObject[] = [
   {
@@ -12,13 +10,13 @@ const routes: RouteObject[] = [
     element: <RootLayout />,
     children: [
       { index: true, element: <HomePage /> },
-      { path: "play", element: <TitleScreenPage /> },
-      { path: "atlas", element: <AtlasPage /> },
-      { path: "stories", element: <StoriesPage /> },
-      { path: "setup", element: <SetupPage /> },
+      { path: "brand", element: <BrandPage /> },
+      { path: "play", element: <Navigate to="/" replace /> },
+      { path: "atlas", element: <SectionRedirect section="villages" /> },
+      { path: "stories", element: <SectionRedirect section="life" /> },
+      { path: "setup", element: <SectionRedirect section="get-started" /> },
     ],
   },
 ];
 
-/** Public website router. */
 export const router = createBrowserRouter(routes);
