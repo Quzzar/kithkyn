@@ -31,7 +31,7 @@ export function TimberDirectionsPage({
         </div>
         <h1>{previous ? "Timber, together." : "Another kind of timber."}</h1>
         <p>
-          {previous ? "The earlier pair." : "Three new directions."} Each with a logo, K and
+          {previous ? "Earlier directions." : "Three new directions."} Each with a logo, K and
           website.
         </p>
       </div>

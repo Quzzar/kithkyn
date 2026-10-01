@@ -172,6 +172,21 @@ verified. A clean browser reload reported no warnings or errors. Text and oak ac
 The production build, strict TypeScript, ESLint, Prettier and all 18 existing browser checks passed
 for this round as well.
 
+Aaron preferred Hewn's broader forms but requested the original wooden-plank material.
+Hewn Planks reinterprets those letters in honey oak, with dark joins, pale cut end faces and
+sparse grain marks. The first K has a flat bottom; the rejected corner brackets and hanging
+K tips remain absent. Its native wordmark is 128 × 34 and matching reference-edited K is
+32 × 32. The cool slate palette and split homepage continue to frame the timber.
+
+The current comparison now leads with Hewn Planks; the original spruce Hewn is available among
+the earlier directions. Its complete website preview is at `/brand/directions/hewn-planks`.
+The logo, header K and gallery were reviewed at desktop, phone and 320-pixel widths, including
+integer pixel scales and loaded download assets. Exact built-in imagegen prompts, reference
+roles and preparation details are in
+`Website/public/brand/directions/generation-prompts-hewn-planks.md`.
+The production build, strict TypeScript, ESLint, Prettier and all 18 browser checks passed;
+the final preview reload reported no console warnings or errors.
+
 ## Verification and publishing
 
 Current captures in `docs/website-preview/` show the chosen homepage and brand downloads at

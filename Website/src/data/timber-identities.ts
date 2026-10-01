@@ -10,13 +10,23 @@ export type TimberPalette = {
 };
 
 export type TimberIdentity = {
-  readonly id: "cabin" | "patchwork" | "hewn" | "woven" | "cabin-mark";
+  readonly id: "cabin" | "patchwork" | "hewn" | "hewn-planks" | "woven" | "cabin-mark";
   readonly layout: "split" | "centered";
   readonly name: string;
   readonly description: string;
   readonly wordmark: BrandArtwork;
   readonly icon: BrandArtwork;
   readonly palette: TimberPalette;
+};
+
+/** The plank refinement keeps Hewn's cool slate website presentation. */
+const HEWN_PALETTE: TimberPalette = {
+  canvas: "#252e35",
+  surface: "#303e46",
+  raised: "#40525a",
+  ink: "#f2eee5",
+  muted: "#c0cace",
+  oak: "#e3bd88",
 };
 
 /** Each timber identity pairs original artwork with its own complete website palette. */
@@ -60,14 +70,16 @@ export const TIMBER_IDENTITIES: Readonly<Record<TimberIdentity["id"], TimberIden
     description: "Thick spruce lettering. Friendly shapes. Cool slate.",
     wordmark: { source: "/brand/directions/hewn-wordmark.png", width: 128, height: 35 },
     icon: { source: "/brand/directions/hewn-icon.png", width: 32, height: 32 },
-    palette: {
-      canvas: "#252e35",
-      surface: "#303e46",
-      raised: "#40525a",
-      ink: "#f2eee5",
-      muted: "#c0cace",
-      oak: "#e3bd88",
-    },
+    palette: HEWN_PALETTE,
+  },
+  "hewn-planks": {
+    id: "hewn-planks",
+    layout: "split",
+    name: "Hewn Planks",
+    description: "Chunky lettering, joined from honey oak planks.",
+    wordmark: { source: "/brand/directions/hewn-planks-wordmark.png", width: 128, height: 34 },
+    icon: { source: "/brand/directions/hewn-planks-icon.png", width: 32, height: 32 },
+    palette: HEWN_PALETTE,
   },
   woven: {
     id: "woven",
@@ -104,12 +116,13 @@ export const TIMBER_IDENTITIES: Readonly<Record<TimberIdentity["id"], TimberIden
 };
 
 export const CURRENT_TIMBER_IDENTITIES: readonly TimberIdentity[] = [
-  TIMBER_IDENTITIES.hewn,
+  TIMBER_IDENTITIES["hewn-planks"],
   TIMBER_IDENTITIES.woven,
   TIMBER_IDENTITIES["cabin-mark"],
 ];
 
 export const PREVIOUS_TIMBER_IDENTITIES: readonly TimberIdentity[] = [
+  TIMBER_IDENTITIES.hewn,
   TIMBER_IDENTITIES.cabin,
   TIMBER_IDENTITIES.patchwork,
 ];

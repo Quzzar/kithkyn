@@ -11,11 +11,12 @@ focus, borders and captions consistent. Browser controls use the dark color sche
 The SVG logo containers embed the original pixels, not traced vector paths.
 
 `/brand/directions` compares three new identities designed together with their websites:
-Hewn uses thick spruce lettering and cool slate; Woven uses one interlocking timber K and
+Hewn Planks uses joined honey oak lettering and cool slate; Woven uses one interlocking timber K and
 ivory lettering over olive charcoal; Cabin Mark builds a K into a little cedar home, over warm
 charcoal. Each has a native 128-pixel-wide wordmark and 32 × 32 K. All full previews keep the
-17-style village browser, setup tabs and FAQ. `/brand/directions/previous` retains Cabin Joinery
-and Patchwork. PNG downloads and exact generation prompts live in `public/brand/directions/`.
+17-style village browser, setup tabs and FAQ. `/brand/directions/previous` retains the original
+spruce Hewn, Cabin Joinery and Patchwork. PNG downloads and exact generation prompts live in
+`public/brand/directions/`.
 The current homepage remains available during comparison.
 
 React, Vite, strict TypeScript, vanilla-extract, Radix, nuqs and Playwright, using Bun.

@@ -75,6 +75,13 @@ inside `Website/` regenerates the SVG containers and ZIP from the checked-in PNG
 The rejected generated village diorama and literal wooden page controls remain deleted.
 See [website-redesign.md](website-redesign.md) for the reference pass and decision history.
 
+The identity comparison at `/brand/directions` includes Hewn Planks: a broader honey-oak
+wordmark and square K, paired with Hewn's slate website. These preview masters are
+`Website/public/brand/directions/hewn-planks-wordmark.png` (128 × 34) and
+`hewn-planks-icon.png` (32 × 32). Their edit prompts and sampling recipe are saved in
+`generation-prompts-hewn-planks.md` beside the PNGs. The original spruce Hewn is available in
+the earlier-directions gallery for comparison.
+
 ## Real capture library
 
 The scenic backdrop comes from
