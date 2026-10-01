@@ -1,5 +1,5 @@
 import { createGlobalTheme, styleVariants } from "@vanilla-extract/css";
-import type { IdentityId } from "../data/identities";
+import type { IdentityPresentation } from "../data/identities";
 
 /** Quiet surfaces leave personality in the icon and bespoke logo lettering. */
 export const vars = createGlobalTheme(":root", {
@@ -81,7 +81,7 @@ type Palette = {
   readonly muted: string;
   readonly line: string;
 };
-const PALETTES: Record<IdentityId, Palette> = {
+const PALETTES: Record<IdentityPresentation, Palette> = {
   joinery: {
     canvas: "#fafbfc",
     surface: "#eff3f6",

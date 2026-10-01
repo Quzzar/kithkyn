@@ -1,5 +1,26 @@
 # Website identity studies
 
+## Focused round: pixel timber
+
+The next iteration follows Aaron's request for a Cobblemon-like pixel-game feel: a K made
+from pixelated wooden planks, paired with softer readable lettering. Wood stays in the logo.
+The signature is the stepped timber K; the existing quiet website layouts remain the context.
+Oak and honey form the sprite, charcoal defines its silhouette, and ivory or slate fills
+the rounded wordmark. Outfit remains the body and control face.
+
+Four new studies, numbered 5 through 8, compare precise plank joinery, a looser pegged K,
+a branded wooden tile and a little villager peeking around the planks. The current comparison
+shows this focused round; the first four remain available at `/studies/first` for reference.
+Both rounds reuse the same comparison component and product content.
+
+```text
+latest round / four pixel-timber lockups / full page previews
+             / link to first round for comparison
+```
+
+The prior Mobbin layout pass remains applicable because the page composition is unchanged.
+The Minecraft mod reference pass supplies the identity precedent for this iteration.
+
 Aaron clarified on September 30, 2026 that the slapstick wooden-board influence belongs
 mainly in the logo and a little flavor. The website should look sleek. The literal plank
 menu and pixel-lettered sign logo were rejected as tacky and unfinished. Four new identities
@@ -29,7 +50,22 @@ The earlier layout pass also used sparse compositions from
 and [Koto](https://mobbin.com/sites/sections/062eb6b8-b141-4fe5-8c11-9edc778e2468).
 Minecraft mod identities are the more relevant brand precedents.
 
-## Four directions
+## Pixel-timber directions
+
+| Direction | Identity | Website treatment |
+| --- | --- | --- |
+| 5. Pixel Joinery | Three stepped oak planks form a K, with ivory rounded lettering and a charcoal outline. | Light slate surfaces, split text and scene. |
+| 6. Crossgrain | A looser timber K with offset planks and a square peg, with ivory rounded lettering. | Soft green surfaces, centered copy and a wide scene. |
+| 7. Woodcut | A dark K stamped into a pixel oak tile, with quiet dark lettering. | Ink and copper accents, two-column copy above a wide scene. |
+| 8. Peek | A tiny original villager peeks around a timber K, with ivory rounded lettering. | Blue and honey, scene on the left and copy on the right. |
+
+The same four page compositions make it possible to judge each identity without introducing
+another website redesign. The first Woodcut output had noisy edges around the lettering;
+a fresh generation replaced it with solid dark lettering and an opaque wooden tile.
+Exact prompts, including that refinement, are saved in
+`Website/public/studies/pixel-timber-prompts.md`.
+
+## First-round directions
 
 | Direction | Identity | Website treatment |
 | --- | --- | --- |
@@ -66,13 +102,14 @@ not available. Nothing in the preview claims the scene is an autonomous-growth t
 ## Verification
 
 Current desktop and mobile captures live in `docs/website-preview/`. They show the
-comparison and the four homepage entrances. Browser checks cover all four directions,
+latest comparison and the four new homepage entrances, alongside the first-round captures.
+Browser checks cover both comparisons and all eight directions,
 all 17 styles, shared selection and browser history, keyboard focus, setup tabs, FAQ
 disclosure, reduced motion, loaded assets, the page font and 320-pixel overflow.
 
 All 18 desktop/mobile Playwright checks pass, along with the production build, ESLint and
 Prettier. The render pass also checked 1280 × 900, 390 × 844 and 320 × 720 viewports and
-found no console warnings or errors. A crowded narrow header was corrected before recapture.
+found no console warnings or errors. All four new logos were inspected in mobile headers.
 
 The domain and hosting destination remain unresolved. This work stays a local preview and
 draft PR. A final logo suite and publication follow the owner's identity selection.

@@ -14,15 +14,15 @@ test("compares four identities and opens their homepage previews", async ({
 }): Promise<void> => {
   await page.goto("/play");
   await expect(page).toHaveURL("/");
-  await expect(page).toHaveTitle("Kithkyn | Four identity studies");
-  await expect(page.getByRole("heading", { level: 1 })).toContainText("Four ways to feel");
+  await expect(page).toHaveTitle("Kithkyn | Pixel timber studies");
+  await expect(page.getByRole("heading", { level: 1 })).toContainText("Pixel timber.");
   await expect(page.getByRole("img")).toHaveCount(4);
   await expect(page.locator('img[src*="diorama"]')).toHaveCount(0);
   for (const [id, name, headline] of [
-    ["joinery", "Joinery", "A world with"],
-    ["gather", "Gather", "A little life"],
-    ["offcut", "Offcut", "Life finds a way"],
-    ["neighbor", "Neighbor", "Good neighbors."],
+    ["pixel-joinery", "Pixel Joinery", "A world with"],
+    ["crossgrain", "Crossgrain", "A little life"],
+    ["woodcut", "Woodcut", "Life finds a way"],
+    ["peek", "Peek", "Good neighbors."],
   ] as const) {
     await page.goto("/");
     await page.getByRole("link", { name: new RegExp(`Preview \\d: ${name}`) }).click();
@@ -139,7 +139,15 @@ test("returns to the comparison from previews and handles old links", async ({
   await page.goto("/brand");
   await expect(page).toHaveURL("/");
   await waitForImages(page);
+  await page.getByRole("link", { name: "Preview 8: Peek" }).click();
+  await page.getByRole("link", { name: "Compare identities", exact: true }).first().click();
+  await expect(page).toHaveURL("/");
+  await page.getByRole("link", { name: "Earlier studies" }).click();
+  await expect(page).toHaveURL("/studies/first");
+  await expect(page).toHaveTitle("Kithkyn | First identity studies");
+  await expect(page.getByRole("img")).toHaveCount(4);
   await page.getByRole("link", { name: "Preview 4: Neighbor" }).click();
+  await expect(page.getByRole("heading", { level: 1 })).toContainText("Good neighbors.");
   await page.getByRole("link", { name: "Compare identities", exact: true }).first().click();
   await expect(page).toHaveURL("/");
   await page.goto("/directions/unknown");
@@ -155,6 +163,11 @@ test("renders the comparison and every preview without errors or narrow-screen o
   });
   const paths: readonly string[] = [
     "/",
+    "/studies/first",
+    "/directions/pixel-joinery",
+    "/directions/crossgrain",
+    "/directions/woodcut",
+    "/directions/peek",
     "/directions/joinery",
     "/directions/gather",
     "/directions/offcut",
@@ -193,7 +206,7 @@ test("respects reduced motion and keeps actions still on hover", async ({
   page,
 }): Promise<void> => {
   await page.emulateMedia({ reducedMotion: "reduce" });
-  await page.goto("/directions/offcut");
+  await page.goto("/directions/woodcut");
   await expect(page.locator("html")).toHaveCSS("scroll-behavior", "auto");
   const action = page.getByRole("link", { name: "Explore the villages", exact: true });
   await expect(action).toHaveCSS("transform", "none");

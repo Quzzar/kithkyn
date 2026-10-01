@@ -7,10 +7,10 @@ import * as styles from "./identity-hero.css";
 export function IdentityHero({ identity }: { readonly identity: Identity }): ReactElement {
   return (
     <section
-      className={`${styles.hero} ${styles.layout[identity.id]}`}
+      className={`${styles.hero} ${styles.layout[identity.presentation]}`}
       aria-labelledby="hero-title"
     >
-      <div className={`${styles.copy} ${styles.copyLayout[identity.id]}`}>
+      <div className={`${styles.copy} ${styles.copyLayout[identity.presentation]}`}>
         <div>
           <p className={styles.label}>Autonomous villagers for Minecraft</p>
           <h1 id="hero-title">
@@ -32,7 +32,7 @@ export function IdentityHero({ identity }: { readonly identity: Identity }): Rea
           <p className={styles.platform}>Minecraft Java 1.21.1 · NeoForge</p>
         </div>
       </div>
-      <figure className={`${styles.figure} ${styles.figureLayout[identity.id]}`}>
+      <figure className={`${styles.figure} ${styles.figureLayout[identity.presentation]}`}>
         <img
           src="/art/village-site.webp"
           alt="Kithkyn village buildings beside a mangrove coast in Minecraft"

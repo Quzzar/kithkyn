@@ -3,9 +3,9 @@
 The project's knowledge, one topic per file. Read the topic covering an area before working
 in it, and update it in the same change that moves what it describes.
 
-- [website-brand.md](website-brand.md): four Kithkyn identity studies, website behavior,
+- [website-brand.md](website-brand.md): pixel-timber and earlier Kithkyn identity studies, website behavior,
   media provenance and responsive verification.
-- [website-redesign.md](website-redesign.md): four sleek identity directions, Minecraft mod logo references and review.
+- [website-redesign.md](website-redesign.md): logo iterations, sleek website layouts, Minecraft mod references and review.
 
 - [project-identity.md](project-identity.md): the Kithkyn name, website, repository, and the
   deliberate break with old mod saves and namespaces.

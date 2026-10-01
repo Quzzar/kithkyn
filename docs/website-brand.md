@@ -1,9 +1,11 @@
 # Website and brand status
 
 Aaron clarified on September 30, 2026 that the wooden-board flavor should be concentrated
-in the logo, with a sleek website. `Website/` now compares four original icon/wordmark
-studies and matching homepage designs: Joinery, Gather, Offcut and Neighbor. No identity
-has been selected. See [website-redesign.md](website-redesign.md) for the Minecraft mod
+in the logo, with a sleek website. The latest iteration adds a pixel-timber K and rounded
+lettering, following the Cobblemon reference. `Website/` compares four new studies:
+Pixel Joinery, Crossgrain, Woodcut and Peek. The earlier Joinery, Gather, Offcut and Neighbor
+round remains available at `/studies/first`. No identity has been selected.
+See [website-redesign.md](website-redesign.md) for the Minecraft mod
 logo references, visual plan and rejection record.
 
 All 17 bundled land styles remain available, with horizontal Radix keyboard navigation
@@ -13,8 +15,9 @@ installation and source links use GitHub.
 
 ## Identity and artwork
 
-Four original transparent PNG lockups were generated for this comparison. Exact prompts
-are saved in `Website/public/studies/prompts.md`. Each is paired with a usable page preview
+Eight original transparent PNG lockups were generated across the two rounds. Exact prompts
+are saved in `Website/public/studies/prompts.md` and
+`Website/public/studies/pixel-timber-prompts.md`. Each is paired with a usable page preview
 so the logo can be judged in context. These are raster studies, not a final vector suite.
 
 The rejected wooden suite, plank menu, wood frames, sharing card and kit download are removed.
@@ -57,9 +60,10 @@ image is captioned as an in-game building preview from a catalog review world.
 ## Preview and publishing
 
 The local preview is `http://127.0.0.1:45173`. Current captures live in
-`docs/website-preview/`. `/` compares the identities; `/directions/:identityId` opens each
-complete homepage. `/play` and `/brand` return to the comparison. `/atlas`, `/stories` and
-`/setup` open the corresponding section in the first preview; `/atlas` preserves query parameters.
+`docs/website-preview/`. `/` compares the latest pixel-timber studies; `/studies/first`
+compares the earlier round. `/directions/:identityId` opens each complete homepage.
+`/play` and `/brand` return to the latest comparison. `/atlas`, `/stories` and `/setup`
+open the corresponding section in Pixel Joinery; `/atlas` preserves query parameters.
 
 This version is not published or merged. Earlier domain checks found that `kithkyn.com`
 served a hiring product, while `kithkin.com` redirected to `/lander`; confirm the intended

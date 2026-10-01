@@ -8,7 +8,9 @@ export function RootLayout(): ReactElement {
   useEffect((): void => {
     document.title = pathname.startsWith("/directions/")
       ? "Kithkyn | Bringing villages to life"
-      : "Kithkyn | Four identity studies";
+      : pathname === "/studies/first"
+        ? "Kithkyn | First identity studies"
+        : "Kithkyn | Pixel timber studies";
   }, [pathname]);
   return (
     <NuqsAdapter>

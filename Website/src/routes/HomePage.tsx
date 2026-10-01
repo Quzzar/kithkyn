@@ -10,7 +10,7 @@ import { identityTheme } from "../styles/theme.css";
 import * as site from "../components/site.css";
 import * as styles from "./home-page.css";
 
-/** Shared product content makes the four visual directions equally useful to review. */
+/** Shared product content puts each logo study in the same usable website context. */
 export function HomePage(): ReactElement {
   const { identityId } = useParams();
   const identity: Identity | undefined = IDENTITIES.find(
@@ -18,7 +18,7 @@ export function HomePage(): ReactElement {
   );
   if (!identity) return <Navigate to="/" replace />;
   return (
-    <div className={`${styles.page} ${identityTheme[identity.id]}`}>
+    <div className={`${styles.page} ${identityTheme[identity.presentation]}`}>
       <SiteHeader identity={identity} />
       <main id="main">
         <IdentityHero identity={identity} />
