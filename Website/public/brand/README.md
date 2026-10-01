@@ -1,6 +1,6 @@
 # Kithkyn brand kit
 
-Selected on October 1, 2026: the Corner Frame timber wordmark, reduced to its native pixel grid.
+Refined on October 1, 2026: unframed timber lettering with a fuller ith and a cleaned capital K.
 The square icon is the first K extracted from that same master.
 
 - wordmark.png: transparent 116 × 48 native pixel master.
@@ -21,6 +21,6 @@ Keep the colors, proportions and transparent clear space. Use a light, quiet bac
 so the charcoal outline remains readable. Do not put the wordmark on a wood texture.
 Use whole-number enlargement with nearest-neighbor sampling. In CSS, set image-rendering: pixelated.
 
-The generated 1945 × 809 source was center-sampled at the visual block cadence, with binary alpha.
+The edited 1950 × 807 source was center-sampled at the visual block cadence, with binary alpha.
 The PNG masters have one actual image pixel per grid cell. The SVG containers embed these pixels.
 The sharing card displays the wordmark at exactly 8×, with native SVG text and layout.

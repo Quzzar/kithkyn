@@ -1,6 +1,6 @@
 # Kithkyn website
 
-The landing page at `/` uses the selected Corner Frame timber wordmark and its square K.
+The landing page at `/` uses the refined unframed timber wordmark and its square K.
 The artwork uses a real 116 × 48 grid, with a 32 × 32 icon extracted from the same master. The website keeps a clean slate canvas, Outfit
 typography and real game captures; the wooden flavor belongs to the logo.
 

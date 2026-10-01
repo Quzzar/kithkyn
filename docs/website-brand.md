@@ -1,7 +1,9 @@
 # Website and brand status
 
-On October 1, 2026 Aaron selected Corner Frame (10), attaching the exact wordmark. It is paired
-with a square K extracted from the same wordmark. The wooden-board flavor is concentrated in the
+On October 1, 2026 Aaron selected Corner Frame (10), attaching the exact wordmark, then requested
+the corners removed, a cleaner K foot and a blend with the preferred ith lettering.
+The current unframed wordmark is paired with a square K extracted from the same native grid.
+The wooden-board flavor is concentrated in the
 logo; the website stays sleek. The homepage at `/` now uses this chosen identity. `/brand`
 provides downloads. Earlier comparisons and unused assets are removed, with exploration
 preserved in Git at commit `e4c9fc4`.
@@ -15,24 +17,33 @@ and source links use GitHub. Ocean and Nether catalogs are planned.
 
 | Asset | Master | Dimensions |
 | --- | --- | --- |
-| Corner Frame wordmark | `Website/public/brand/wordmark.png` | 116 × 48 |
+| Unframed timber wordmark | `Website/public/brand/wordmark.png` | 116 × 48 |
 | Square timber K | `Website/public/brand/icon.png` | 32 × 32 |
 
 Aaron's follow-up requested actual image pixels matching the artwork's visual granularity.
 The selected 1945 × 809 source is preserved at Git commit `fc64070`, with SHA-256
 `5b6d5491cf238665737ba9b4c726c1deffc4eecfcd5ca5e7d9c282946e603a8d`. Its roughly 17-pixel drawn blocks
-are reduced to one native image pixel. The identity and its open charcoal corners remain the same.
+were reduced to one native image pixel. The prior native version is preserved at `7725c93`.
+
+The current refinement uses the built-in image editor. The "top one" reference was interpreted
+as the earlier bare Log Lettering study. It guides the taller ith; the selected wordmark guides
+the remaining letters. All corner brackets
+are removed, and the capital K's lower side nub and hanging tip are cleaned up. The edited source
+is 1950 × 807, SHA-256
+`ca6f377ebe188a4cec37e661349e25ccc46c51bf3e4ffa2d6f42d61c34cb2fa8`.
+Its original local file is `exec-f4a80f59-372f-4c7b-9ed6-ef5ccd0dd074.png` in this chat's
+generated-images directory. Exact edit prompts ship beside the assets.
 
 The wordmark is center-sampled to 116 × 48. For output cell `(x, y)`, sample source coordinates
-`floor((x + 0.5) * 1945 / 116)` and `floor((y + 0.5) * 809 / 48)`. Retain the sampled RGB color;
+`floor((x + 0.5) * 1950 / 116)` and `floor((y + 0.5) * 807 / 48)`. Retain the sampled RGB color;
 alpha below 128 becomes transparent, and alpha at or above 128 becomes fully opaque. Transparent
-RGB is zero. The first K occupies a 25 × 30 region beginning at `(11, 9)` on this grid. Copy that
+RGB is zero. Extract the first K from a 26 × 30 region beginning at `(7, 8)` on this grid. Copy that
 region to `(3, 1)` on a transparent 32 × 32 canvas for the square icon.
 
 The kit includes wordmark exports at 464 × 192 and 928 × 384, and square K exports at 64, 128,
 256 and 512 pixels. Every larger PNG copies each native pixel into a whole-number square block;
 no smoothing, intermediate colors or soft alpha are introduced. Pixel data was checked against
-the native masters for every export. The masters are 5423 and 1641 bytes respectively.
+the native masters for every export. The masters are 5505 and 1623 bytes respectively.
 
 The 128 × 128 K ships as `src/main/resources/kithkyn-logo.png`, referenced by NeoForge metadata.
 The 32 × 32 SVG icon supplies the favicon. The wordmark appears in the header and footer at 2×
@@ -45,7 +56,7 @@ original generation prompts and the Outfit license. The sharing SVG enlarges the
 exactly 8×. Its JPEG is recaptured from that SVG before packaging. These remain raster pixel
 masters inside SVG containers. Use a quiet light background and integer scales.
 
-Exact original generation prompts live in `Website/public/brand/generation-prompts.md`.
+Exact generation and refinement prompts live in `Website/public/brand/generation-prompts.md`.
 The pixel reduction and K extraction used deterministic sampling. `bun run brand:export`
 inside `Website/` regenerates the SVG containers and ZIP from the checked-in PNG masters and exports.
 

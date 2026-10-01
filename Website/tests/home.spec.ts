@@ -16,7 +16,7 @@ async function waitForImages(page: Page): Promise<void> {
   );
 }
 
-test("uses the chosen corner-frame identity on the main landing page", async ({
+test("uses the native timber identity on the main landing page", async ({
   page,
 }): Promise<void> => {
   await page.goto("/play");
