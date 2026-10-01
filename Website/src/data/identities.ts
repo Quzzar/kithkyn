@@ -1,5 +1,18 @@
 export type IdentityPresentation = "joinery" | "gather" | "offcut" | "neighbor";
-export type IdentityId = IdentityPresentation | "pixel-joinery" | "crossgrain" | "woodcut" | "peek";
+export type IdentityId =
+  | IdentityPresentation
+  | "pixel-joinery"
+  | "crossgrain"
+  | "woodcut"
+  | "peek"
+  | "log-lettering"
+  | "corner-frame"
+  | "oak-frame";
+export type IdentityAsset = {
+  readonly source: string;
+  readonly width: number;
+  readonly height: number;
+};
 export type Identity = {
   readonly id: IdentityId;
   readonly presentation: IdentityPresentation;
@@ -9,6 +22,7 @@ export type Identity = {
   readonly description: string;
   readonly width: number;
   readonly height: number;
+  readonly icon?: IdentityAsset;
   readonly headline: readonly [string, string];
 };
 
@@ -60,19 +74,23 @@ export const FIRST_STUDIES: readonly Identity[] = [
   },
 ];
 
+/** The owner selected this timber K as the icon for the next lettering iteration. */
+export const SELECTED_IDENTITY: Identity = {
+  id: "pixel-joinery",
+  presentation: "joinery",
+  number: 5,
+  name: "Pixel Joinery",
+  character: "A familiar blocky warmth.",
+  description: "Three joined oak planks. Rounded ivory lettering.",
+  width: 1942,
+  height: 809,
+  icon: { source: "/studies/selected-k.png", width: 1254, height: 1254 },
+  headline: ["A world with", "neighbors."],
+};
+
 /** A focused second round compares pixel timber and softer mod-style lettering. */
 export const TIMBER_STUDIES: readonly Identity[] = [
-  {
-    id: "pixel-joinery",
-    presentation: "joinery",
-    number: 5,
-    name: "Pixel Joinery",
-    character: "A familiar blocky warmth.",
-    description: "Three joined oak planks. Rounded ivory lettering.",
-    width: 1942,
-    height: 809,
-    headline: ["A world with", "neighbors."],
-  },
+  SELECTED_IDENTITY,
   {
     id: "crossgrain",
     presentation: "gather",
@@ -108,5 +126,83 @@ export const TIMBER_STUDIES: readonly Identity[] = [
   },
 ];
 
-/** Both rounds use the same product previews and remain directly addressable. */
-export const IDENTITIES: readonly Identity[] = [...TIMBER_STUDIES, ...FIRST_STUDIES];
+/** Matching timber letters are compared with three levels of framing. */
+export const LETTERING_STUDIES: readonly Identity[] = [
+  SELECTED_IDENTITY,
+  {
+    id: "log-lettering",
+    presentation: "joinery",
+    number: 9,
+    name: "Log Lettering",
+    character: "The whole name, built from timber.",
+    description: "Matching oak letters. Open and unframed.",
+    width: 1944,
+    height: 809,
+    headline: ["A world with", "neighbors."],
+  },
+  {
+    id: "corner-frame",
+    presentation: "joinery",
+    number: 10,
+    name: "Corner Frame",
+    character: "A little structure around the name.",
+    description: "Timber letters with a light, open frame.",
+    width: 1945,
+    height: 809,
+    headline: ["A world with", "neighbors."],
+  },
+  {
+    id: "oak-frame",
+    presentation: "joinery",
+    number: 11,
+    name: "Oak Frame",
+    character: "Held together with a little oak.",
+    description: "The full timber name inside slim wooden rails.",
+    width: 1944,
+    height: 809,
+    headline: ["A world with", "neighbors."],
+  },
+];
+
+export type IdentityStudyRound = "first" | "timber" | "lettering";
+export type IdentityRoundContent = {
+  readonly headline: readonly [string, string];
+  readonly description: string;
+  readonly studies: readonly Identity[];
+  readonly previous: string;
+  readonly footer: string;
+};
+
+/** One comparison surface serves every actively reviewed round. */
+export const STUDY_ROUNDS: Record<IdentityStudyRound, IdentityRoundContent> = {
+  first: {
+    headline: ["Four ways to feel", "like Kithkyn."],
+    description: "Small hints of timber. More room to breathe.",
+    studies: FIRST_STUDIES,
+    previous: "/",
+    footer: "Four studies. One identity to choose.",
+  },
+  timber: {
+    headline: ["Pixel timber.", "A little character."],
+    description: "Four takes on a wooden K.",
+    studies: TIMBER_STUDIES,
+    previous: "/studies/first",
+    footer: "The first K is selected. Next, the lettering.",
+  },
+  lettering: {
+    headline: ["A timber name.", "A familiar K."],
+    description: "The selected icon. Three ways to frame the name.",
+    studies: LETTERING_STUDIES,
+    previous: "/studies/timber",
+    footer: "One selected K. Three lettering studies.",
+  },
+};
+
+/** Earlier identities retain their direct links while the selected K is developed. */
+export const IDENTITIES: readonly Identity[] = [
+  ...LETTERING_STUDIES.filter(
+    (identity: Identity): boolean => identity.id !== SELECTED_IDENTITY.id,
+  ),
+  ...TIMBER_STUDIES,
+  ...FIRST_STUDIES,
+];

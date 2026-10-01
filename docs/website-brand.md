@@ -1,10 +1,11 @@
 # Website and brand status
 
 Aaron clarified on September 30, 2026 that the wooden-board flavor should be concentrated
-in the logo, with a sleek website. The latest iteration adds a pixel-timber K and rounded
-lettering, following the Cobblemon reference. `Website/` compares four new studies:
-Pixel Joinery, Crossgrain, Woodcut and Peek. The earlier Joinery, Gather, Offcut and Neighbor
-round remains available at `/studies/first`. No identity has been selected.
+in the logo, with a sleek website. He selected the Pixel Joinery K from the pixel-timber
+round and asked for the full name written in matching logs with light framing.
+`Website/` now compares the selected standalone K with Log Lettering, Corner Frame and
+Oak Frame. The icon is selected; the wordmark and framing remain under review.
+Earlier icon studies remain at `/studies/timber`, with the broader first round at `/studies/first`.
 See [website-redesign.md](website-redesign.md) for the Minecraft mod
 logo references, visual plan and rejection record.
 
@@ -15,15 +16,19 @@ installation and source links use GitHub.
 
 ## Identity and artwork
 
-Eight original transparent PNG lockups were generated across the two rounds. Exact prompts
+Eleven original transparent PNG lockups were generated across the three rounds. A standalone
+K was extracted through the image-generation tool from the selected Pixel Joinery reference.
+Exact prompts
 are saved in `Website/public/studies/prompts.md` and
-`Website/public/studies/pixel-timber-prompts.md`. Each is paired with a usable page preview
+`Website/public/studies/pixel-timber-prompts.md` and
+`Website/public/studies/log-lettering-prompts.md`. Each wordmark is paired with a usable page preview
 so the logo can be judged in context. These are raster studies, not a final vector suite.
 
-The rejected wooden suite, plank menu, wood frames, sharing card and kit download are removed.
+The rejected wooden suite, plank menu, wooden page frames, sharing card and kit download are removed.
 The earlier generated diorama and its derivatives remain deleted. The mod-list icon has
-been restored to its existing version while the new identity is undecided. A final suite
-will include vector artwork, small-size icon variants and sharing graphics after selection.
+been restored to its existing version while the complete new identity is being refined.
+A final suite will include vector artwork, small-size icon variants and sharing graphics
+after wordmark selection. The latest framing experiments belong to the logo asset.
 
 ## Real capture library
 
@@ -60,10 +65,11 @@ image is captioned as an in-game building preview from a catalog review world.
 ## Preview and publishing
 
 The local preview is `http://127.0.0.1:45173`. Current captures live in
-`docs/website-preview/`. `/` compares the latest pixel-timber studies; `/studies/first`
-compares the earlier round. `/directions/:identityId` opens each complete homepage.
+`docs/website-preview/`. `/` compares the selected K and full timber lettering;
+`/studies/timber` compares the earlier pixel-timber icons and `/studies/first` the first round.
+`/directions/:identityId` opens each complete homepage.
 `/play` and `/brand` return to the latest comparison. `/atlas`, `/stories` and `/setup`
-open the corresponding section in Pixel Joinery; `/atlas` preserves query parameters.
+open the corresponding section in Log Lettering; `/atlas` preserves query parameters.
 
 This version is not published or merged. Earlier domain checks found that `kithkyn.com`
 served a hiring product, while `kithkin.com` redirected to `/lander`; confirm the intended

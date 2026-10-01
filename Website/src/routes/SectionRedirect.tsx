@@ -7,6 +7,6 @@ type SectionRedirectProps = { readonly section: "villages" | "life" | "get-start
 export function SectionRedirect({ section }: SectionRedirectProps): ReactElement {
   const { search } = useLocation();
   return (
-    <Navigate to={{ pathname: "/directions/pixel-joinery", search, hash: `#${section}` }} replace />
+    <Navigate to={{ pathname: "/directions/log-lettering", search, hash: `#${section}` }} replace />
   );
 }

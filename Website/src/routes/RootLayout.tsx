@@ -10,7 +10,9 @@ export function RootLayout(): ReactElement {
       ? "Kithkyn | Bringing villages to life"
       : pathname === "/studies/first"
         ? "Kithkyn | First identity studies"
-        : "Kithkyn | Pixel timber studies";
+        : pathname === "/studies/timber"
+          ? "Kithkyn | Pixel timber studies"
+          : "Kithkyn | Timber lettering studies";
   }, [pathname]);
   return (
     <NuqsAdapter>

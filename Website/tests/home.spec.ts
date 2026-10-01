@@ -9,23 +9,26 @@ async function waitForImages(page: Page): Promise<void> {
   );
 }
 
-test("compares four identities and opens their homepage previews", async ({
+test("compares the selected icon and three timber wordmarks in homepage previews", async ({
   page,
 }): Promise<void> => {
   await page.goto("/play");
   await expect(page).toHaveURL("/");
-  await expect(page).toHaveTitle("Kithkyn | Pixel timber studies");
-  await expect(page.getByRole("heading", { level: 1 })).toContainText("Pixel timber.");
+  await expect(page).toHaveTitle("Kithkyn | Timber lettering studies");
+  await expect(page.getByRole("heading", { level: 1 })).toContainText("A timber name.");
   await expect(page.getByRole("img")).toHaveCount(4);
+  await expect(
+    page.getByRole("img", { name: "Kithkyn: Pixel Joinery selected icon" }),
+  ).toHaveAttribute("src", "/studies/selected-k.png");
   await expect(page.locator('img[src*="diorama"]')).toHaveCount(0);
   for (const [id, name, headline] of [
     ["pixel-joinery", "Pixel Joinery", "A world with"],
-    ["crossgrain", "Crossgrain", "A little life"],
-    ["woodcut", "Woodcut", "Life finds a way"],
-    ["peek", "Peek", "Good neighbors."],
+    ["log-lettering", "Log Lettering", "A world with"],
+    ["corner-frame", "Corner Frame", "A world with"],
+    ["oak-frame", "Oak Frame", "A world with"],
   ] as const) {
     await page.goto("/");
-    await page.getByRole("link", { name: new RegExp(`Preview \\d: ${name}`) }).click();
+    await page.getByRole("link", { name: new RegExp(`Preview \\d+: ${name}`) }).click();
     await expect(page).toHaveURL(`/directions/${id}`);
     await expect(page.getByRole("heading", { level: 1 })).toContainText(headline);
     await expect(page.getByRole("heading", { level: 1 })).toBeInViewport();
@@ -139,9 +142,16 @@ test("returns to the comparison from previews and handles old links", async ({
   await page.goto("/brand");
   await expect(page).toHaveURL("/");
   await waitForImages(page);
-  await page.getByRole("link", { name: "Preview 8: Peek" }).click();
+  await page.getByRole("link", { name: "Preview 11: Oak Frame" }).click();
   await page.getByRole("link", { name: "Compare identities", exact: true }).first().click();
   await expect(page).toHaveURL("/");
+  await page.getByRole("link", { name: "Earlier studies" }).click();
+  await expect(page).toHaveURL("/studies/timber");
+  await expect(page).toHaveTitle("Kithkyn | Pixel timber studies");
+  await page.getByRole("link", { name: "Preview 8: Peek" }).click();
+  await expect(page.getByRole("heading", { level: 1 })).toContainText("Good neighbors.");
+  await page.getByRole("link", { name: "Compare identities", exact: true }).first().click();
+  await page.getByRole("link", { name: "Earlier studies" }).click();
   await page.getByRole("link", { name: "Earlier studies" }).click();
   await expect(page).toHaveURL("/studies/first");
   await expect(page).toHaveTitle("Kithkyn | First identity studies");
@@ -164,6 +174,10 @@ test("renders the comparison and every preview without errors or narrow-screen o
   const paths: readonly string[] = [
     "/",
     "/studies/first",
+    "/studies/timber",
+    "/directions/log-lettering",
+    "/directions/corner-frame",
+    "/directions/oak-frame",
     "/directions/pixel-joinery",
     "/directions/crossgrain",
     "/directions/woodcut",
@@ -206,7 +220,7 @@ test("respects reduced motion and keeps actions still on hover", async ({
   page,
 }): Promise<void> => {
   await page.emulateMedia({ reducedMotion: "reduce" });
-  await page.goto("/directions/woodcut");
+  await page.goto("/directions/corner-frame");
   await expect(page.locator("html")).toHaveCSS("scroll-behavior", "auto");
   const action = page.getByRole("link", { name: "Explore the villages", exact: true });
   await expect(action).toHaveCSS("transform", "none");

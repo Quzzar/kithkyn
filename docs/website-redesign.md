@@ -1,5 +1,37 @@
 # Website identity studies
 
+## Selected icon, full timber lettering
+
+Aaron selected the first icon in the pixel-timber round, Pixel Joinery (5). The next
+iteration writes the full name, Kithkyn, in matching logs and tests restrained framing.
+The approved K remains the reference: stepped oak planks, honey highlights, sparse grain
+and a charcoal silhouette. Every letter should use the same material and pixel scale.
+
+Three wordmarks compare bare log lettering, a thin open corner frame and a slim wooden
+frame. The K serves as the first letter of the full name rather than being repeated beside
+another K. The selected standalone icon is shown alongside the three wordmarks.
+
+| Study | Treatment |
+| --- | --- |
+| Selected K | Standalone version of the approved Pixel Joinery icon. |
+| 9. Log Lettering | All seven letters are matching oak timbers, with no frame. |
+| 10. Corner Frame | Four short charcoal corner brackets leave the frame open. |
+| 11. Oak Frame | Thin oak rails surround the name, with a transparent interior. |
+
+Exact built-in generation prompts live in `Website/public/studies/log-lettering-prompts.md`.
+
+The signature is the timber lettering. Existing slate surfaces, oak accents, charcoal text
+and locally hosted Outfit remain fixed. Each new logo uses the quiet Pixel Joinery homepage
+for context; the website gains no wooden controls or decorative texture. Earlier rounds
+remain available for comparison. This changes the identity assets, not the page composition,
+so the prior Mobbin layout pass remains applicable.
+
+```text
+comparison / selected K / three timber wordmarks
+           / previous pixel-timber round
+preview / full timber name in the header / existing product page
+```
+
 ## Focused round: pixel timber
 
 The next iteration follows Aaron's request for a Cobblemon-like pixel-game feel: a K made
@@ -9,12 +41,12 @@ Oak and honey form the sprite, charcoal defines its silhouette, and ivory or sla
 the rounded wordmark. Outfit remains the body and control face.
 
 Four new studies, numbered 5 through 8, compare precise plank joinery, a looser pegged K,
-a branded wooden tile and a little villager peeking around the planks. The current comparison
-shows this focused round; the first four remain available at `/studies/first` for reference.
-Both rounds reuse the same comparison component and product content.
+a branded wooden tile and a little villager peeking around the planks. This round now lives
+at `/studies/timber`; the first four remain at `/studies/first` for reference.
+All rounds reuse the same comparison component and product content.
 
 ```text
-latest round / four pixel-timber lockups / full page previews
+pixel-timber round / four lockups / full page previews
              / link to first round for comparison
 ```
 
@@ -92,7 +124,7 @@ final brand kit. The existing mod-list icon remains in place until selection.
 ## Rejection record
 
 The generated village diorama, its banner derivative and bundled copies remain deleted.
-The later wooden sign logo, plank controls, wood frames, Pixelify font, obsolete brand-kit
+The later wooden sign logo, plank controls, wooden page frames, Pixelify font, obsolete brand-kit
 downloads and obsolete preview images are removed. Git history preserves the prior attempts.
 
 The real in-game scene and catalog captures remain. Their provenance is recorded in
@@ -102,14 +134,14 @@ not available. Nothing in the preview claims the scene is an autonomous-growth t
 ## Verification
 
 Current desktop and mobile captures live in `docs/website-preview/`. They show the
-latest comparison and the four new homepage entrances, alongside the first-round captures.
-Browser checks cover both comparisons and all eight directions,
+latest lettering comparison and the three new homepage entrances, alongside the earlier captures.
+Browser checks cover all three comparisons and all eleven directions,
 all 17 styles, shared selection and browser history, keyboard focus, setup tabs, FAQ
 disclosure, reduced motion, loaded assets, the page font and 320-pixel overflow.
 
 All 18 desktop/mobile Playwright checks pass, along with the production build, ESLint and
 Prettier. The render pass also checked 1280 × 900, 390 × 844 and 320 × 720 viewports and
-found no console warnings or errors. All four new logos were inspected in mobile headers.
+found no console warnings or errors. All three full timber wordmarks were inspected in mobile headers.
 
 The domain and hosting destination remain unresolved. This work stays a local preview and
-draft PR. A final logo suite and publication follow the owner's identity selection.
+draft PR. A final logo suite and publication follow the owner's wordmark selection.

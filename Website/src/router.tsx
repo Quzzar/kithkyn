@@ -10,7 +10,8 @@ const routes: RouteObject[] = [
     element: <RootLayout />,
     children: [
       { index: true, element: <IdentityStudyPage /> },
-      { path: "studies/first", element: <IdentityStudyPage isEarlierRound /> },
+      { path: "studies/first", element: <IdentityStudyPage round="first" /> },
+      { path: "studies/timber", element: <IdentityStudyPage round="timber" /> },
       { path: "directions/:identityId", element: <HomePage /> },
       { path: "brand", element: <Navigate to="/" replace /> },
       { path: "play", element: <Navigate to="/" replace /> },
