@@ -49,7 +49,7 @@ export const brand = style({
   display: "block",
   width: vars.size.compactLogo,
   flexShrink: 0,
-  "@media": { [breakpoint.narrow]: { width: vars.size.studyLogo } },
+  "@media": { [breakpoint.narrow]: { width: vars.size.mobileLogo } },
 });
 export const headerNav = style({
   display: "flex",

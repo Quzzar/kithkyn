@@ -1,23 +1,22 @@
 import type { ReactElement } from "react";
 import { Link } from "react-router-dom";
-import type { Identity } from "../data/identities";
-import { IdentityLogo } from "./IdentityLogo";
+import { BrandLogo } from "./BrandLogo";
 import * as styles from "./site.css";
 
-/** Preview navigation stays separate from real public release destinations. */
-export function SiteFooter({ identity }: { readonly identity: Identity }): ReactElement {
+/** Public project links and the chosen brand files remain available from every page. */
+export function SiteFooter(): ReactElement {
   return (
     <footer className={styles.footer}>
       <div className={styles.footerInner}>
         <div>
-          <Link to="/" className={styles.footerBrand} aria-label="Compare identities">
-            <IdentityLogo identity={identity} isDecorative />
+          <Link to="/" className={styles.footerBrand} aria-label="Kithkyn home">
+            <BrandLogo />
           </Link>
           <p className={styles.footerNote}>Minecraft NeoForge</p>
         </div>
         <div>
           <nav className={styles.footerLinks} aria-label="Footer navigation">
-            <Link to="/">Compare identities</Link>
+            <Link to="/brand">Brand assets</Link>
             <a href="https://github.com/Quzzar/kithkyn">GitHub</a>
             <a href="https://github.com/Quzzar/kithkyn/issues">Report an issue</a>
             <a href="https://github.com/Quzzar/kithkyn#credits">Credits</a>

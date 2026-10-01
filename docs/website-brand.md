@@ -1,34 +1,39 @@
 # Website and brand status
 
-Aaron clarified on September 30, 2026 that the wooden-board flavor should be concentrated
-in the logo, with a sleek website. He selected the Pixel Joinery K from the pixel-timber
-round and asked for the full name written in matching logs with light framing.
-`Website/` now compares the selected standalone K with Log Lettering, Corner Frame and
-Oak Frame. The icon is selected; the wordmark and framing remain under review.
-Earlier icon studies remain at `/studies/timber`, with the broader first round at `/studies/first`.
-See [website-redesign.md](website-redesign.md) for the Minecraft mod
-logo references, visual plan and rejection record.
+On October 1, 2026 Aaron selected Corner Frame (10), attaching the exact wordmark. It is paired
+with the previously selected Pixel Joinery K. The wooden-board flavor is concentrated in the
+logo; the website stays sleek. The homepage at `/` now uses this chosen identity. `/brand`
+provides downloads. Earlier comparisons and unused assets are removed, with exploration
+preserved in Git at commit `e4c9fc4`.
 
-All 17 bundled land styles remain available, with horizontal Radix keyboard navigation
-and nuqs shareable selection and browser history. Offline/cloud requirements, multiplayer
-guidance and the expandable FAQ are retained. Modrinth and CurseForge remain coming soon;
-installation and source links use GitHub.
+All 17 bundled Overworld land styles remain available, with Radix keyboard navigation and
+nuqs shareable selection and browser history. Offline/cloud requirements, multiplayer guidance
+and the expandable FAQ are retained. Modrinth and CurseForge remain coming soon; installation
+and source links use GitHub. Ocean and Nether catalogs are planned.
 
-## Identity and artwork
+## Chosen identity
 
-Eleven original transparent PNG lockups were generated across the three rounds. A standalone
-K was extracted through the image-generation tool from the selected Pixel Joinery reference.
-Exact prompts
-are saved in `Website/public/studies/prompts.md` and
-`Website/public/studies/pixel-timber-prompts.md` and
-`Website/public/studies/log-lettering-prompts.md`. Each wordmark is paired with a usable page preview
-so the logo can be judged in context. These are raster studies, not a final vector suite.
+| Asset | Master | Dimensions |
+| --- | --- | --- |
+| Corner Frame wordmark | `Website/public/brand/wordmark.png` | 1945 × 809 |
+| Pixel Joinery K | `Website/public/brand/icon.png` | 1254 × 1254 |
 
-The rejected wooden suite, plank menu, wooden page frames, sharing card and kit download are removed.
-The earlier generated diorama and its derivatives remain deleted. The mod-list icon has
-been restored to its existing version while the complete new identity is being refined.
-A final suite will include vector artwork, small-size icon variants and sharing graphics
-after wordmark selection. The latest framing experiments belong to the logo asset.
+Both transparent PNG masters ship unchanged. The wordmark's SHA-256 is
+`5b6d5491cf238665737ba9b4c726c1deffc4eecfcd5ca5e7d9c282946e603a8d`, matching the owner's attachment.
+The K also ships as `src/main/resources/kithkyn-logo.png`, referenced by NeoForge mod metadata.
+The wordmark appears in the site header, footer and repository README; the K supplies the favicon.
+
+The downloadable kit includes both PNG masters, SVG containers embedding the originals,
+a 1200 × 630 sharing card in JPEG and SVG, the palette, usage notes, original generation prompts
+and the embedded Outfit font's license. These are pixel-art raster masters, not traced vectors.
+Use a quiet light background and preserve proportions, colors and clear space.
+
+Exact prompts live in `Website/public/brand/generation-prompts.md`. `bun run brand:export`
+inside `Website/` regenerates the SVG containers and ZIP. The sharing JPEG is captured from
+the SVG in the browser at its native dimensions, then included by a subsequent export.
+
+The rejected generated village diorama and literal wooden page controls remain deleted.
+See [website-redesign.md](website-redesign.md) for the reference pass and decision history.
 
 ## Real capture library
 
@@ -64,14 +69,12 @@ image is captioned as an in-game building preview from a catalog review world.
 
 ## Preview and publishing
 
-The local preview is `http://127.0.0.1:45173`. Current captures live in
-`docs/website-preview/`. `/` compares the selected K and full timber lettering;
-`/studies/timber` compares the earlier pixel-timber icons and `/studies/first` the first round.
-`/directions/:identityId` opens each complete homepage.
-`/play` and `/brand` return to the latest comparison. `/atlas`, `/stories` and `/setup`
-open the corresponding section in Log Lettering; `/atlas` preserves query parameters.
+The local preview is `http://127.0.0.1:45173`. Reviewed desktop and mobile captures live in
+`docs/website-preview/`. `/` is the landing page; `/brand` is the asset library. Old direction,
+study and `/play` links redirect home. `/atlas`, `/stories` and `/setup` redirect to the relevant
+section. Redirects preserve query parameters and, where no section is specified, existing hashes.
 
-This version is not published or merged. Earlier domain checks found that `kithkyn.com`
-served a hiring product, while `kithkin.com` redirected to `/lander`; confirm the intended
-domain and hosting destination before production deployment. Static hosts must rewrite
-page routes to `index.html`.
+This version is not deployed. Earlier domain checks found that `kithkyn.com` served a hiring
+product, while `kithkin.com` redirected to `/lander`. Confirm the intended domain and hosting
+destination before production deployment. Static hosts must rewrite page routes to `index.html`.
+The sharing-image metadata must use the final host's absolute URL when publishing.

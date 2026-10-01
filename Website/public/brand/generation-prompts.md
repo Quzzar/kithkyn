@@ -1,0 +1,27 @@
+# Selected brand generation prompts
+
+Selected on October 1, 2026. The PNG masters ship unchanged. These are the exact original built-in image-generation prompts. Earlier reference artwork is preserved at Git commit e4c9fc4.
+
+## Pixel Joinery reference
+
+Use case: logo-brand. Create one NEW original logo study for Kithkyn, an independent Minecraft mod about villagers building their own settlements. Input image 1 is a lettering/personality reference: use its confident soft rounded lettering as a starting point, not its flat doorway icon. Input image 2 is a material/reference for a K assembled from timber: replace its smooth illustrative wood treatment with crisp deliberate PIXEL ART. Exact text: "Kithkyn", K-i-t-h-k-y-n. One horizontal icon-plus-wordmark lockup only, compact square K icon on the left, beautifully kerned wordmark on the right. Genuine transparent background, tight but comfortable padding. The icon must look like a polished low-resolution game sprite, with a consistent coarse pixel grid, staircase diagonals and a 5-color wood palette: dark charcoal outline, brown shadow, mid oak, honey highlight, pale end grain. Clearly visible blocky pixels even when the logo is small. No smooth curves in the icon, no blur, no dithering, no realistic grain, no glossy gradients, no drop shadow around the whole canvas. Limited sparse rectangular grain marks; keep broad readable forms. The mood is lightly slapstick and handmade, but polished. The wordmark is simpler and smoother than the icon: original rounded bold lowercase letters with a capital K, pale warm ivory fill and a restrained dark slate outline, comparable in finish and readability to strong indie Minecraft mod branding. Do not copy Cobblemon, Pokemon, or the Minecraft title lettering. No scene, no plaque behind the name, no ropes, no slogan, no extra text or duplicate sample logos. This is logo exploration, not a mockup. Variation: a precise K made from three pixel-art oak planks. The vertical upright and the two diagonal arms meet at one tidy mortise-like center join. The diagonals use an obvious consistent stepped pixel contour. One arm projects a single pixel farther than expected for a quiet handmade joke. Flat front view, strong silhouette, no metal bolts. Keep the wordmark calm, rounded and tightly composed.
+
+## selected-k
+
+```text
+Use case: precise-object-edit. Input image: edit target. Extract only the approved pixel timber K symbol at the far left as a standalone transparent icon. Remove all seven smooth ivory letters and all other content. Preserve the K itself exactly: same three plank shapes and joinery, proportions, stepped charcoal outline, warm golden oak faces, honey highlights and sparse brown grain marks. Do not redraw, alter, simplify, add screws or change its silhouette. Center this single K in a square transparent canvas with modest even padding. Actual transparent alpha outside the icon, including the spaces between its angled arms. No shadow, background, frame, wordmark or other text.
+```
+
+## corner-frame
+
+```text
+Use case: logo-brand.
+Asset type: original transparent Kithkyn wordmark for a clean Minecraft mod website.
+Input image: edit target. The existing pixel oak K is the approved icon. Preserve its three joined planks, silhouette, charcoal stepped outline, honey highlights and sparse wood grain.
+Primary request: replace the smooth ivory lettering with the full name made from matching pixel wooden logs. The approved timber K should become the first letter of the name, followed directly by i t h k y n; do not show a separate K icon and another initial K.
+Text (verbatim): "Kithkyn", exactly seven characters, spelled K-i-t-h-k-y-n. Capital K followed by lowercase ithkyn.
+Style: deliberate pixel-game lettering with a coherent pixel grid. Each stroke is a joined oak timber with light end grain, warm golden oak faces, two restrained brown grain marks and a charcoal outline. Readable letter silhouettes, clean open counters, comfortable spacing and one baseline. The dot of the i is a small square oak block. The y has a clear descender.
+Constraints: every letter is wooden, with the same material and light direction as the approved K. No ivory letter fills. No backdrop or white fringe. No scenery, mascots, slogans, Minecraft trademark font or extra text. Actual transparent alpha outside the logo and inside letter counters. Keep edges crisp and use few broad texture marks so it survives a header size.
+Composition: one centered horizontal wordmark, generous transparent breathing room, no other studies or mockup labels.
+Framing version: a quiet open corner frame. Add only four short, thin stepped charcoal corner brackets around the full timber wordmark. Leave the middle of every frame side open. Brackets use the same charcoal as the letter outline, are visually much lighter than the letters and have generous air between them and the name. No filled panel, complete border or extra wood rails.
+```

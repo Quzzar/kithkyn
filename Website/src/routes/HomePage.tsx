@@ -1,27 +1,19 @@
 import type { ReactElement } from "react";
-import { Navigate, useParams } from "react-router-dom";
-import { IdentityHero } from "../components/IdentityHero";
+import { VillageHero } from "../components/VillageHero";
 import { Installation } from "../components/Installation";
 import { SiteHeader } from "../components/SiteHeader";
 import { SiteFooter } from "../components/SiteFooter";
 import { VillageAtlas } from "../components/VillageAtlas";
-import { IDENTITIES, type Identity } from "../data/identities";
-import { identityTheme } from "../styles/theme.css";
 import * as site from "../components/site.css";
 import * as styles from "./home-page.css";
 
-/** Shared product content puts each logo study in the same usable website context. */
+/** The selected identity introduces the mod and its regional village catalogs. */
 export function HomePage(): ReactElement {
-  const { identityId } = useParams();
-  const identity: Identity | undefined = IDENTITIES.find(
-    (entry: Identity): boolean => entry.id === identityId,
-  );
-  if (!identity) return <Navigate to="/" replace />;
   return (
-    <div className={`${styles.page} ${identityTheme[identity.presentation]}`}>
-      <SiteHeader identity={identity} />
+    <div className={styles.page}>
+      <SiteHeader />
       <main id="main">
-        <IdentityHero identity={identity} />
+        <VillageHero />
         <section className={styles.life} id="life" aria-labelledby="life-title">
           <div className={styles.lifeInner}>
             <div>
@@ -52,7 +44,7 @@ export function HomePage(): ReactElement {
         <VillageAtlas />
         <Installation />
       </main>
-      <SiteFooter identity={identity} />
+      <SiteFooter />
     </div>
   );
 }

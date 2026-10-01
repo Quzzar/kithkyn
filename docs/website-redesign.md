@@ -1,64 +1,38 @@
-# Website identity studies
+# Website design decisions
 
-## Selected icon, full timber lettering
+## Final selection: Corner Frame
 
-Aaron selected the first icon in the pixel-timber round, Pixel Joinery (5). The next
-iteration writes the full name, Kithkyn, in matching logs and tests restrained framing.
-The approved K remains the reference: stepped oak planks, honey highlights, sparse grain
-and a charcoal silhouette. Every letter should use the same material and pixel scale.
+On October 1, 2026 Aaron selected Corner Frame (10), attaching the exact generated wordmark.
+Use that original PNG unchanged, paired with the previously selected Pixel Joinery K icon.
+The root route becomes the finished landing page, and the unused comparison pages, alternate
+identities and their assets are removed. Git history preserves the exploration.
 
-Three wordmarks compare bare log lettering, a thin open corner frame and a slim wooden
-frame. The K serves as the first letter of the full name rather than being repeated beside
-another K. The selected standalone icon is shown alongside the three wordmarks.
+The signature remains the pixel oak lettering with four charcoal corners. The website keeps
+the slate canvas and surfaces, charcoal ink, oak accent and Outfit typography from the selected
+preview. Its split hero, real capture, all 17 catalogs and setup content remain in place.
 
-| Study | Treatment |
-| --- | --- |
-| Selected K | Standalone version of the approved Pixel Joinery icon. |
-| 9. Log Lettering | All seven letters are matching oak timbers, with no frame. |
-| 10. Corner Frame | Four short charcoal corner brackets leave the frame open. |
-| 11. Oak Frame | Thin oak rails surround the name, with a transparent interior. |
-
-Exact built-in generation prompts live in `Website/public/studies/log-lettering-prompts.md`.
-
-The signature is the timber lettering. Existing slate surfaces, oak accents, charcoal text
-and locally hosted Outfit remain fixed. Each new logo uses the quiet Pixel Joinery homepage
-for context; the website gains no wooden controls or decorative texture. Earlier rounds
-remain available for comparison. This changes the identity assets, not the page composition,
-so the prior Mobbin layout pass remains applicable.
+The brand page serves creators downloading the exact chosen artwork. The reference pass used
+[Whereby](https://mobbin.com/sites/sections/cf76cdcc-c266-4216-b88a-5daa902bb9f1),
+[1Password](https://mobbin.com/sites/sections/403eb185-13d1-4e62-a44c-8182fb79d068) and
+[Fiverr](https://mobbin.com/sites/sections/1ffa8f98-2e40-4b5f-837a-049dbca8870e).
+Their useful patterns are a clear specimen beside its downloads, a complete kit action above
+individual assets, and format labels close to the files. Dense legal copy, monochrome alternatives
+and corporate contact panels do not serve this small mod's kit.
 
 ```text
-comparison / selected K / three timber wordmarks
-           / previous pixel-timber round
-preview / full timber name in the header / existing product page
+home / selected wordmark + navigation / split village hero
+     / village life / 17 catalogs / setup + FAQs
+brand / complete kit download
+      / wordmark specimen + files / standalone icon + files
+      / sharing card / short usage notes
 ```
 
-## Focused round: pixel timber
-
-The next iteration follows Aaron's request for a Cobblemon-like pixel-game feel: a K made
-from pixelated wooden planks, paired with softer readable lettering. Wood stays in the logo.
-The signature is the stepped timber K; the existing quiet website layouts remain the context.
-Oak and honey form the sprite, charcoal defines its silhouette, and ivory or slate fills
-the rounded wordmark. Outfit remains the body and control face.
-
-Four new studies, numbered 5 through 8, compare precise plank joinery, a looser pegged K,
-a branded wooden tile and a little villager peeking around the planks. This round now lives
-at `/studies/timber`; the first four remain at `/studies/first` for reference.
-All rounds reuse the same comparison component and product content.
-
-```text
-pixel-timber round / four lockups / full page previews
-             / link to first round for comparison
-```
-
-The prior Mobbin layout pass remains applicable because the page composition is unchanged.
-The Minecraft mod reference pass supplies the identity precedent for this iteration.
-
-Aaron clarified on September 30, 2026 that the slapstick wooden-board influence belongs
-mainly in the logo and a little flavor. The website should look sleek. The literal plank
-menu and pixel-lettered sign logo were rejected as tacky and unfinished. Four new identities
-are compared before one is selected.
+The PNG masters are raster artwork. SVG containers embed those same originals without tracing
+or changing their appearance; describe them accurately. A sharing card uses the chosen mark,
+plain slate canvas and one short product line. No new generated scene or wooden page controls.
 
 ## Popular Minecraft mod references
+
 
 The project owner asked for a reference pass through popular Minecraft mod logos. These
 observations come from viewing their official sites and author-maintained listings, not
@@ -82,66 +56,36 @@ The earlier layout pass also used sparse compositions from
 and [Koto](https://mobbin.com/sites/sections/062eb6b8-b141-4fe5-8c11-9edc778e2468).
 Minecraft mod identities are the more relevant brand precedents.
 
-## Pixel-timber directions
+## Exploration and rejection record
 
-| Direction | Identity | Website treatment |
-| --- | --- | --- |
-| 5. Pixel Joinery | Three stepped oak planks form a K, with ivory rounded lettering and a charcoal outline. | Light slate surfaces, split text and scene. |
-| 6. Crossgrain | A looser timber K with offset planks and a square peg, with ivory rounded lettering. | Soft green surfaces, centered copy and a wide scene. |
-| 7. Woodcut | A dark K stamped into a pixel oak tile, with quiet dark lettering. | Ink and copper accents, two-column copy above a wide scene. |
-| 8. Peek | A tiny original villager peeks around a timber K, with ivory rounded lettering. | Blue and honey, scene on the left and copy on the right. |
+The first broad round compared Joinery, Gather, Offcut and Neighbor. A focused pixel-timber
+round then compared Pixel Joinery, Crossgrain, Woodcut and Peek. Aaron selected Pixel Joinery's
+K and requested the entire name in matching logs. The final lettering round compared bare Log
+Lettering, open Corner Frame and slim Oak Frame. Corner Frame is the chosen wordmark.
 
-The same four page compositions make it possible to judge each identity without introducing
-another website redesign. The first Woodcut output had noisy edges around the lettering;
-a fresh generation replaced it with solid dark lettering and an opaque wooden tile.
-Exact prompts, including that refinement, are saved in
-`Website/public/studies/pixel-timber-prompts.md`.
+The comparison pages, alternate identities and historical captures are removed from the
+shipping site. Git commit `e4c9fc4` preserves the exploration and original prompts. The selected
+reference, K extraction and Corner Frame prompts ship in
+`Website/public/brand/generation-prompts.md`.
 
-## First-round directions
+The generated village diorama and its banner derivative remain deleted. The later wooden sign
+logo, plank controls, wooden page frames and Pixelify headings were rejected as tacky and
+unfinished. They remain removed. The real in-game scene and catalog captures stay, with their
+provenance recorded in [website-brand.md](website-brand.md). Five styles use field notes where
+useful captures are unavailable. The scene is not presented as an autonomous-growth timeline.
 
-| Direction | Identity | Website treatment |
-| --- | --- | --- |
-| 1. Joinery | Interlocking slate and oak K, precise sans lettering. | Light slate surfaces, split text and scene. |
-| 2. Gather | Two neighboring homes, pine and honey, serif logo lettering. | Soft green surfaces, centered copy and a wide scene. |
-| 3. Offcut | Timber K, hand-cut dark lettering with a fine oak edge. | Ink and copper accents, two-column copy above a wide scene. |
-| 4. Neighbor | A friendly character peeking from a doorway, rounded lettering. | Blue and honey, scene on the left and copy on the right. |
+## Verification and publishing
 
-Offcut was refined after the mod reference pass to add a game artist's lettering and a
-recognizable timber object. The other studies keep broader alternatives open. The body
-and controls use locally hosted Outfit, with readable text and ordinary buttons.
+Current captures in `docs/website-preview/` show the chosen homepage and brand downloads at
+desktop and phone sizes. Browser checks cover the chosen identity, download formats, old-link
+redirects, all 17 styles, shared selection and browser history, keyboard focus, setup tabs,
+FAQ disclosure, reduced motion, loaded assets, typography and 320-pixel overflow.
 
-```text
-comparison / four icon + wordmark studies / links to full previews
-preview / compact brand + navigation
-        / distinct headline, real village still, restrained action
-        / village life / 17 styles / actual setup and FAQs
-```
+All 18 desktop/mobile Playwright checks passed. The download checks passed again after verifying
+the final PNG and JPEG signatures. The strict TypeScript production build, ESLint, Prettier and
+Gradle `processResources` passed. The K's packaged resource matches its approved master.
+The render review covered 1280 × 900, 390 × 844 and 320 × 720 viewports. A clean final browser
+session reported no console warnings or errors. The brand ZIP passed an archive integrity check.
 
-The image-generation tool created original transparent raster lockups. Exact prompts are
-saved in `Website/public/studies/prompts.md`. These are concepts, not vector exports or a
-final brand kit. The existing mod-list icon remains in place until selection.
-
-## Rejection record
-
-The generated village diorama, its banner derivative and bundled copies remain deleted.
-The later wooden sign logo, plank controls, wooden page frames, Pixelify font, obsolete brand-kit
-downloads and obsolete preview images are removed. Git history preserves the prior attempts.
-
-The real in-game scene and catalog captures remain. Their provenance is recorded in
-[website-brand.md](website-brand.md). Five styles use field notes where a useful capture is
-not available. Nothing in the preview claims the scene is an autonomous-growth timeline.
-
-## Verification
-
-Current desktop and mobile captures live in `docs/website-preview/`. They show the
-latest lettering comparison and the three new homepage entrances, alongside the earlier captures.
-Browser checks cover all three comparisons and all eleven directions,
-all 17 styles, shared selection and browser history, keyboard focus, setup tabs, FAQ
-disclosure, reduced motion, loaded assets, the page font and 320-pixel overflow.
-
-All 18 desktop/mobile Playwright checks pass, along with the production build, ESLint and
-Prettier. The render pass also checked 1280 × 900, 390 × 844 and 320 × 720 viewports and
-found no console warnings or errors. All three full timber wordmarks were inspected in mobile headers.
-
-The domain and hosting destination remain unresolved. This work stays a local preview and
-draft PR. A final logo suite and publication follow the owner's wordmark selection.
+Production deployment waits for the intended domain and hosting destination. The sharing-image
+metadata needs the final host's absolute URL at publication. See [website-brand.md](website-brand.md).

@@ -1,4 +1,11 @@
-import { expect, test, type Page, type TestInfo } from "@playwright/test";
+import {
+  expect,
+  test,
+  type APIResponse,
+  type Download,
+  type Page,
+  type TestInfo,
+} from "@playwright/test";
 
 /** Wait for displayed assets before checking layout or saving a render. */
 async function waitForImages(page: Page): Promise<void> {
@@ -9,32 +16,21 @@ async function waitForImages(page: Page): Promise<void> {
   );
 }
 
-test("compares the selected icon and three timber wordmarks in homepage previews", async ({
+test("uses the chosen corner-frame identity on the main landing page", async ({
   page,
 }): Promise<void> => {
   await page.goto("/play");
   await expect(page).toHaveURL("/");
-  await expect(page).toHaveTitle("Kithkyn | Timber lettering studies");
-  await expect(page.getByRole("heading", { level: 1 })).toContainText("A timber name.");
-  await expect(page.getByRole("img")).toHaveCount(4);
-  await expect(
-    page.getByRole("img", { name: "Kithkyn: Pixel Joinery selected icon" }),
-  ).toHaveAttribute("src", "/studies/selected-k.png");
+  await expect(page).toHaveTitle("Kithkyn | Bringing villages to life");
+  await expect(page.getByRole("heading", { level: 1 })).toContainText("A world with");
+  await expect(page.locator("header img")).toHaveAttribute("src", "/brand/wordmark.png");
+  await expect(page.locator("footer img")).toHaveAttribute("src", "/brand/wordmark.png");
+  await expect(page.locator('link[rel="icon"]')).toHaveAttribute("href", "/brand/icon.svg");
+  await expect(page.getByRole("link", { name: "Compare identities" })).toHaveCount(0);
   await expect(page.locator('img[src*="diorama"]')).toHaveCount(0);
-  for (const [id, name, headline] of [
-    ["pixel-joinery", "Pixel Joinery", "A world with"],
-    ["log-lettering", "Log Lettering", "A world with"],
-    ["corner-frame", "Corner Frame", "A world with"],
-    ["oak-frame", "Oak Frame", "A world with"],
-  ] as const) {
-    await page.goto("/");
-    await page.getByRole("link", { name: new RegExp(`Preview \\d+: ${name}`) }).click();
-    await expect(page).toHaveURL(`/directions/${id}`);
-    await expect(page.getByRole("heading", { level: 1 })).toContainText(headline);
-    await expect(page.getByRole("heading", { level: 1 })).toBeInViewport();
-    await page.getByRole("link", { name: "Explore the villages", exact: true }).click();
-    await expect(page.getByRole("heading", { name: "Where will they settle?" })).toBeInViewport();
-  }
+  await expect(page.getByRole("heading", { level: 1 })).toBeInViewport();
+  await page.getByRole("link", { name: "Explore the villages", exact: true }).click();
+  await expect(page.getByRole("heading", { name: "Where will they settle?" })).toBeInViewport();
 });
 
 test("browses all 17 styles without rendering inactive frames", async ({ page }): Promise<void> => {
@@ -136,57 +132,65 @@ test("retains multiplayer guidance and real installation destinations", async ({
   );
 });
 
-test("returns to the comparison from previews and handles old links", async ({
+test("downloads the chosen brand kit and preserves links from earlier previews", async ({
   page,
 }): Promise<void> => {
   await page.goto("/brand");
-  await expect(page).toHaveURL("/");
+  await expect(page).toHaveTitle("Kithkyn | Brand assets");
   await waitForImages(page);
-  await page.getByRole("link", { name: "Preview 11: Oak Frame" }).click();
-  await page.getByRole("link", { name: "Compare identities", exact: true }).first().click();
-  await expect(page).toHaveURL("/");
-  await page.getByRole("link", { name: "Earlier studies" }).click();
-  await expect(page).toHaveURL("/studies/timber");
-  await expect(page).toHaveTitle("Kithkyn | Pixel timber studies");
-  await page.getByRole("link", { name: "Preview 8: Peek" }).click();
-  await expect(page.getByRole("heading", { level: 1 })).toContainText("Good neighbors.");
-  await page.getByRole("link", { name: "Compare identities", exact: true }).first().click();
-  await page.getByRole("link", { name: "Earlier studies" }).click();
-  await page.getByRole("link", { name: "Earlier studies" }).click();
-  await expect(page).toHaveURL("/studies/first");
-  await expect(page).toHaveTitle("Kithkyn | First identity studies");
-  await expect(page.getByRole("img")).toHaveCount(4);
-  await page.getByRole("link", { name: "Preview 4: Neighbor" }).click();
-  await expect(page.getByRole("heading", { level: 1 })).toContainText("Good neighbors.");
-  await page.getByRole("link", { name: "Compare identities", exact: true }).first().click();
-  await expect(page).toHaveURL("/");
-  await page.goto("/directions/unknown");
+  const pendingDownload: Promise<Download> = page.waitForEvent("download");
+  await page.getByRole("link", { name: "Download the brand kit" }).click();
+  const download: Download = await pendingDownload;
+  expect(download.suggestedFilename()).toBe("kithkyn-brand-kit.zip");
+  for (const source of [
+    "wordmark.png",
+    "icon.png",
+    "wordmark.svg",
+    "icon.svg",
+    "social.jpg",
+    "kithkyn-brand-kit.zip",
+  ]) {
+    const response: APIResponse = await page.request.get(`/brand/${source}`);
+    expect(response.ok(), source).toBe(true);
+    if (source.endsWith(".png")) {
+      expect(response.headers()["content-type"]).toContain("image/png");
+      expect(Array.from((await response.body()).subarray(0, 8))).toEqual([
+        137, 80, 78, 71, 13, 10, 26, 10,
+      ]);
+    }
+    if (source.endsWith(".jpg")) {
+      expect(response.headers()["content-type"]).toContain("image/jpeg");
+      expect(Array.from((await response.body()).subarray(0, 3))).toEqual([255, 216, 255]);
+    }
+    if (source.endsWith(".svg"))
+      expect(response.headers()["content-type"]).toContain("image/svg+xml");
+    if (source.endsWith(".zip"))
+      expect((await response.body()).subarray(0, 2).toString()).toBe("PK");
+  }
+  await page.getByRole("link", { name: "Villages", exact: true }).click();
+  await expect(page.getByRole("heading", { name: "Where will they settle?" })).toBeInViewport();
+  for (const path of ["/play", "/directions/corner-frame", "/studies/first", "/studies/timber"]) {
+    await page.goto(path);
+    await expect(page).toHaveURL("/");
+  }
+  await page.goto("/directions/unknown?village=jungle#villages");
+  await expect(page).toHaveURL("/?village=jungle#villages");
+  await expect(page.getByRole("tab", { name: "Jungle Tribal", exact: true })).toHaveAttribute(
+    "aria-selected",
+    "true",
+  );
+  await page.getByRole("link", { name: "Kithkyn home" }).first().click();
   await expect(page).toHaveURL("/");
 });
 
-test("renders the comparison and every preview without errors or narrow-screen overflow", async ({
+test("renders the homepage and brand assets without errors or narrow-screen overflow", async ({
   page,
 }, testInfo: TestInfo): Promise<void> => {
   const errors: string[] = [];
   page.on("pageerror", (error: Error): void => {
     errors.push(error.message);
   });
-  const paths: readonly string[] = [
-    "/",
-    "/studies/first",
-    "/studies/timber",
-    "/directions/log-lettering",
-    "/directions/corner-frame",
-    "/directions/oak-frame",
-    "/directions/pixel-joinery",
-    "/directions/crossgrain",
-    "/directions/woodcut",
-    "/directions/peek",
-    "/directions/joinery",
-    "/directions/gather",
-    "/directions/offcut",
-    "/directions/neighbor",
-  ];
+  const paths: readonly string[] = ["/", "/brand"];
   for (const path of paths) {
     await page.goto(path);
     await waitForImages(page);
@@ -197,9 +201,7 @@ test("renders the comparison and every preview without errors or narrow-screen o
       ),
     ).toBe(true);
     await page.screenshot({
-      path: testInfo.outputPath(
-        `${path === "/" ? "comparison" : (path.split("/").at(-1) ?? "preview")}.png`,
-      ),
+      path: testInfo.outputPath(`${path === "/" ? "home" : "brand"}.png`),
       fullPage: true,
     });
   }
@@ -220,7 +222,7 @@ test("respects reduced motion and keeps actions still on hover", async ({
   page,
 }): Promise<void> => {
   await page.emulateMedia({ reducedMotion: "reduce" });
-  await page.goto("/directions/corner-frame");
+  await page.goto("/");
   await expect(page.locator("html")).toHaveCSS("scroll-behavior", "auto");
   const action = page.getByRole("link", { name: "Explore the villages", exact: true });
   await expect(action).toHaveCSS("transform", "none");

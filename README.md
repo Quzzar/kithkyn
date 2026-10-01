@@ -1,5 +1,7 @@
 # Kithkyn
 
+<img src="Website/public/brand/wordmark.png" alt="Kithkyn" width="420" />
+
 Autonomous villagers who build and run their own villages. Kithkyn replaces Minecraft's
 villagers with people: each one has a name, a personality, a family, a job, and a small
 language model behind their conversation and their village's decisions. Villages plan their
