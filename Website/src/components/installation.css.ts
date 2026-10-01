@@ -13,9 +13,6 @@ export const setup = style({
   alignItems: "start",
   "@media": { [breakpoint.narrow]: { gridTemplateColumns: "1fr", gap: vars.space.xxl } },
 });
-globalStyle(`${section} a:focus-visible, ${section} button:focus-visible`, {
-  outlineColor: vars.color.ink,
-});
 globalStyle(`${section} h2`, { marginTop: vars.space.md });
 globalStyle(`${section} > div > div > div > p:first-child`, { color: vars.color.paperMuted });
 export const intro = style({
@@ -43,7 +40,7 @@ export const modelTab = style({
   selectors: {
     '&[data-state="active"]': {
       color: vars.color.ink,
-      borderBottomColor: vars.color.ink,
+      borderBottomColor: vars.color.oak,
       fontWeight: vars.weight.strong,
     },
   },

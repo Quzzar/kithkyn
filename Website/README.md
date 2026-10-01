@@ -1,8 +1,10 @@
 # Kithkyn website
 
 The landing page at `/` uses the refined unframed timber wordmark and its square K.
-The artwork uses a real 116 × 48 grid, with a 32 × 32 icon extracted from the same master. The website keeps a clean slate canvas, Outfit
-typography and real game captures; the wooden flavor belongs to the logo.
+The artwork uses a real 116 × 48 grid, with a 32 × 32 icon extracted from the same master.
+The website uses a dark charcoal canvas, ivory text, oak accents, Outfit typography and real game
+captures; the wooden flavor belongs to the logo. The same palette serves every section and the
+sharing card. Browser controls use the dark color scheme.
 
 `/brand` provides the complete kit, individual PNG and SVG logo downloads, and a sharing card.
 The SVG logo containers embed the original pixels, not traced vector paths.

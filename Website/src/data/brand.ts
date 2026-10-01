@@ -46,10 +46,10 @@ export const BRAND_ICON: BrandAsset = {
 
 /** Shared colors keep the site and exported sharing card consistent. */
 export const BRAND_PALETTE = {
-  canvas: "#fafbfc",
-  surface: "#eff3f6",
-  ink: "#22384a",
-  oak: "#9d6c36",
-  muted: "#657584",
-  line: "#d8dfe5",
+  canvas: "#15191b",
+  surface: "#22292d",
+  ink: "#f0ece3",
+  oak: "#dcb075",
+  muted: "#a8b1b2",
+  line: "#414c51",
 } as const;

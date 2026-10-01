@@ -27,7 +27,7 @@ export const primaryButton = style({
   padding: `${vars.space.sm} ${vars.space.lg}`,
   border: `${vars.size.outline} solid currentColor`,
   fontWeight: vars.weight.strong,
-  selectors: { "&:hover": { background: vars.color.paper, color: vars.color.ink } },
+  selectors: { "&:hover": { background: vars.color.cream, color: vars.color.forest } },
 });
 globalStyle(`${primaryButton} svg, ${label} svg`, {
   width: vars.size.icon,

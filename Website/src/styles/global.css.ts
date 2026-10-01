@@ -9,6 +9,8 @@ globalFontFace("Outfit", {
 globalStyle("*", { boxSizing: "border-box" });
 globalStyle("html", {
   background: vars.color.forest,
+  colorScheme: "dark",
+  scrollbarColor: `${vars.color.line} ${vars.color.forest}`,
   scrollBehavior: "smooth",
   scrollPaddingTop: vars.space.xl,
 });
@@ -37,7 +39,7 @@ globalStyle("a:focus-visible, button:focus-visible, [tabindex]:focus-visible", {
   outline: `${vars.size.focus} solid ${vars.color.focus}`,
   outlineOffset: vars.space.xxs,
 });
-globalStyle("::selection", { background: vars.color.oak, color: vars.color.ink });
+globalStyle("::selection", { background: vars.color.oak, color: vars.color.forest });
 globalStyle("html, *, *::before, *::after", {
   "@media": {
     "(prefers-reduced-motion: reduce)": {

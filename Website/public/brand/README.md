@@ -10,15 +10,15 @@ The square icon is the first K extracted from that same master.
 - wordmark.svg and icon.svg: SVG containers embedding the native PNGs with pixelated rendering.
 - social.jpg: 1200 × 630 sharing card, captured from social.svg.
 - social.svg: sharing card with the native wordmark and embedded Outfit font.
-- palette.json: the website's slate and oak colors.
+- palette.json: the website's charcoal, ivory and oak colors.
 - generation-prompts.md: the exact original built-in image-generation prompts.
 - outfit-LICENSE.txt: the sharing card font's license.
 
 ## Usage
 
 Use the full wordmark when the name needs to be read. Use the K icon in compact spaces.
-Keep the colors, proportions and transparent clear space. Use a light, quiet background
-so the charcoal outline remains readable. Do not put the wordmark on a wood texture.
+Keep the colors, proportions and transparent clear space. Use a quiet charcoal background
+to bring out the warm oak lettering. Do not put the wordmark on a wood texture.
 Use whole-number enlargement with nearest-neighbor sampling. In CSS, set image-rendering: pixelated.
 
 The edited 1950 × 807 source was center-sampled at the visual block cadence, with binary alpha.

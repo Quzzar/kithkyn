@@ -10,9 +10,9 @@ ith is guided by the earlier unframed study, with the remaining letters based on
 The root route becomes the finished landing page, and the unused comparison pages, alternate
 identities and their assets are removed. Git history preserves the exploration.
 
-The signature remains the pixel oak lettering, now without framing. The website keeps
-the slate canvas and surfaces, charcoal ink, oak accent and Outfit typography from the selected
-preview. Its split hero, real capture, all 17 catalogs and setup content remain in place.
+The signature remains the pixel oak lettering, now without framing. The website uses
+charcoal surfaces, warm ivory text, oak accents and Outfit typography. Its split hero, real
+capture, all 17 catalogs and setup content remain in place.
 
 The brand page serves creators downloading the exact chosen artwork. The reference pass used
 [Whereby](https://mobbin.com/sites/sections/cf76cdcc-c266-4216-b88a-5daa902bb9f1),
@@ -32,7 +32,30 @@ brand / complete kit download
 
 The PNG masters are native raster pixel artwork. SVG containers embed those pixels with
 nearest-neighbor rendering. Integer-sized exports preserve the same grid. A sharing card uses the
-chosen mark, plain slate canvas and one short product line. No new generated scene or wooden page controls.
+chosen mark, plain charcoal canvas and one short product line. No new generated scene or wooden page controls.
+
+## Dark presentation
+
+Aaron requested a dark site to suit the timber lettering. This is a fixed brand presentation
+across the homepage, asset library and sharing card. Charcoal canvas and raised surfaces provide
+depth; ivory headings and body text carry the content; muted gray supports captions; oak marks
+active tabs and keyboard focus. The logo remains the signature. Keep the established layout,
+Outfit hierarchy and real imagery. Avoid neon accents, decorative glow, wood-texture panels and
+dim body text.
+
+The dark reference pass inspected
+[Linear](https://mobbin.com/sites/sections/66f59864-ae93-419b-89c9-e53fbb46a3f3),
+[Framer](https://mobbin.com/sites/sections/5831b9f2-ea5e-4e01-b34e-bb68e74ebef3) and
+[Retool](https://mobbin.com/sites/sections/e086c44d-6365-469c-860a-0450b25241df).
+Carry forward strong light headings over dark surfaces, restrained navigation, colorful artwork
+that supplies the personality, and clearly contrasted filled actions. Linear's small secondary
+copy is too subdued for the setup instructions. Framer's animated artwork strip and Retool's
+multicolored glow do not fit the quiet timber direction.
+
+The canvas, village panels, setup section, footer and logo specimens all use the same palette.
+Ivory actions use charcoal labels; oak hovers retain charcoal labels. Active setup tabs and all
+focus rings use oak. Browser controls and scrollbars use the dark color scheme. The sharing
+JPEG is recaptured from its dark SVG before packaging. The logo pixels and geometry remain unchanged.
 
 ## Popular Minecraft mod references
 
@@ -86,13 +109,17 @@ desktop and phone sizes. Browser checks cover the chosen identity, download form
 redirects, all 17 styles, shared selection and browser history, keyboard focus, setup tabs,
 FAQ disclosure, reduced motion, loaded assets, typography and 320-pixel overflow.
 
-All 18 browser checks passed. After the asset refinements, six focused checks passed for
-native dimensions, equal integer display scales, pixelated rendering, exported downloads and
-responsive layouts. The sampling and extraction recipe is recorded in
-[website-brand.md](website-brand.md). The strict TypeScript production build, ESLint, Prettier and
-Gradle `processResources` passed. The K's packaged resource matches its 128-pixel export.
+All 18 browser checks passed after the dark theme pass, along with the strict TypeScript
+production build, ESLint and Prettier. Native dimensions, equal integer display scales,
+pixelated rendering and exported downloads remain covered. The sampling and extraction recipe
+is recorded in [website-brand.md](website-brand.md). The logo PNGs and integer exports remain
+byte-identical. The earlier Gradle `processResources` check passed, and the K's packaged resource
+matches its 128-pixel export.
 The render review covered 1280 × 900, 390 × 844 and 320 × 720 viewports. A clean final browser
-reload reported no new console warnings or errors. The brand ZIP passed an archive integrity check.
+reload reported no new console warnings or errors. Keyboard navigation visibly renders the
+amber focus ring. Ivory text, muted copy and oak accents all exceed 4.5:1 against both dark
+surfaces; muted text has a minimum 6.74:1 ratio. The brand ZIP passed an archive integrity check,
+and all 16 entries match their published files.
 
 Production deployment waits for the intended domain and hosting destination. The sharing-image
 metadata needs the final host's absolute URL at publication. See [website-brand.md](website-brand.md).

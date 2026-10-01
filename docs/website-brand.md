@@ -3,8 +3,9 @@
 On October 1, 2026 Aaron selected Corner Frame (10), attaching the exact wordmark, then requested
 the corners removed, a cleaner K foot and a blend with the preferred ith lettering.
 The current unframed wordmark is paired with a square K extracted from the same native grid.
-The wooden-board flavor is concentrated in the
-logo; the website stays sleek. The homepage at `/` now uses this chosen identity. `/brand`
+The wooden-board flavor is concentrated in the logo; the website stays sleek. Aaron requested
+a dark presentation, so the homepage, asset library and sharing card use charcoal surfaces,
+ivory text and warm oak accents. The homepage at `/` now uses this chosen identity. `/brand`
 provides downloads. Earlier comparisons and unused assets are removed, with exploration
 preserved in Git at commit `e4c9fc4`.
 
@@ -54,7 +55,13 @@ The downloadable kit includes the native masters, larger PNGs, SVG containers em
 pixels with pixelated rendering, a 1200 × 630 sharing card in JPEG and SVG, palette, usage notes,
 original generation prompts and the Outfit license. The sharing SVG enlarges the wordmark at
 exactly 8×. Its JPEG is recaptured from that SVG before packaging. These remain raster pixel
-masters inside SVG containers. Use a quiet light background and integer scales.
+masters inside SVG containers. Use a quiet charcoal background and integer scales.
+
+The fixed dark palette is canvas `#15191b`, surface `#22292d`, text `#f0ece3`, oak `#dcb075`,
+muted text `#a8b1b2` and line `#414c51`. The browser's native controls and scrollbars use a dark
+color scheme. Village descriptions, setup panels and the footer share these tokens. Filled
+actions use ivory or oak with charcoal labels, and keyboard focus uses oak. The PNG artwork and
+native pixel dimensions are unchanged by the theme pass.
 
 Exact generation and refinement prompts live in `Website/public/brand/generation-prompts.md`.
 The pixel reduction and K extraction used deterministic sampling. `bun run brand:export`
