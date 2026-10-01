@@ -1,26 +1,18 @@
 import { createGlobalTheme } from "@vanilla-extract/css";
 import { BRAND_PALETTE } from "../data/brand";
 
-/** Quiet surfaces leave personality in the icon and bespoke logo lettering. */
+/** Semantic roles keep the page, panels, artwork stages and interactive states consistent. */
 export const vars = createGlobalTheme(":root", {
   color: {
-    forest: BRAND_PALETTE.canvas,
-    raised: BRAND_PALETTE.surface,
-    deep: BRAND_PALETTE.canvas,
-    cream: BRAND_PALETTE.ink,
-    leaf: BRAND_PALETTE.muted,
+    canvas: BRAND_PALETTE.canvas,
+    surface: BRAND_PALETTE.surface,
+    raised: BRAND_PALETTE.raised,
+    text: BRAND_PALETTE.ink,
     muted: BRAND_PALETTE.muted,
-    line: BRAND_PALETTE.line,
-    oak: BRAND_PALETTE.oak,
-    ink: BRAND_PALETTE.ink,
-    paper: BRAND_PALETTE.canvas,
-    paperRaised: BRAND_PALETTE.surface,
-    paperLine: BRAND_PALETTE.line,
-    paperMuted: BRAND_PALETTE.muted,
+    line: `${BRAND_PALETTE.ink}28`,
+    accent: BRAND_PALETTE.oak,
     focus: BRAND_PALETTE.oak,
-    sky: BRAND_PALETTE.surface,
-    photoInk: BRAND_PALETTE.ink,
-    overlayBottom: `${BRAND_PALETTE.canvas}e6`,
+    imageOverlay: `${BRAND_PALETTE.canvas}e6`,
   },
   font: { display: '"Outfit", sans-serif', body: '"Outfit", sans-serif' },
   fontSize: {

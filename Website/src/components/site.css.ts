@@ -11,7 +11,7 @@ export const label = style({
   display: "flex",
   alignItems: "center",
   gap: vars.space.xs,
-  color: vars.color.leaf,
+  color: vars.color.muted,
   fontSize: vars.fontSize.tiny,
   fontWeight: vars.weight.strong,
   letterSpacing: vars.tracking.label,
@@ -27,7 +27,7 @@ export const primaryButton = style({
   padding: `${vars.space.sm} ${vars.space.lg}`,
   border: `${vars.size.outline} solid currentColor`,
   fontWeight: vars.weight.strong,
-  selectors: { "&:hover": { background: vars.color.cream, color: vars.color.forest } },
+  selectors: { "&:hover": { background: vars.color.text, color: vars.color.canvas } },
 });
 globalStyle(`${primaryButton} svg, ${label} svg`, {
   width: vars.size.icon,
@@ -72,7 +72,7 @@ globalStyle(`${headerNav} a.${sourceText}`, {
   "@media": { [breakpoint.narrow]: { display: "none" } },
 });
 export const footer = style({
-  background: vars.color.deep,
+  background: vars.color.canvas,
   paddingBlock: vars.space.xxl,
   borderTop: `${vars.size.border} solid ${vars.color.line}`,
 });
@@ -107,8 +107,8 @@ export const skipLink = style({
   left: vars.space.md,
   zIndex: 10,
   padding: vars.space.md,
-  background: vars.color.paper,
-  color: vars.color.ink,
+  background: vars.color.canvas,
+  color: vars.color.text,
   transform: "translateY(-200%)",
   opacity: 0,
   pointerEvents: "none",

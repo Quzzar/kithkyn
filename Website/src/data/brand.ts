@@ -44,12 +44,12 @@ export const BRAND_ICON: BrandAsset = {
   ],
 };
 
-/** Shared colors keep the site and exported sharing card consistent. */
+/** Three slate surface levels frame the timber art; ivory and oak carry content and actions. */
 export const BRAND_PALETTE = {
-  canvas: "#15191b",
-  surface: "#22292d",
+  canvas: "#20272b",
+  surface: "#293238",
+  raised: "#333e44",
   ink: "#f0ece3",
   oak: "#dcb075",
-  muted: "#a8b1b2",
-  line: "#414c51",
+  muted: "#b1bbbd",
 } as const;

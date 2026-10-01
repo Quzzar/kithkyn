@@ -1,7 +1,7 @@
 import { globalStyle, style } from "@vanilla-extract/css";
 import { breakpoint, vars } from "../styles/theme.css";
 
-export const section = style({ background: vars.color.raised, paddingBlock: vars.space.section });
+export const section = style({ background: vars.color.surface, paddingBlock: vars.space.section });
 export const heading = style({
   display: "flex",
   alignItems: "end",
@@ -24,10 +24,10 @@ export const arrow = style({
   width: vars.size.button,
   height: vars.size.button,
   border: `${vars.size.border} solid ${vars.color.line}`,
-  background: vars.color.forest,
-  color: vars.color.cream,
+  background: vars.color.canvas,
+  color: vars.color.text,
   selectors: {
-    "&:hover:not(:disabled)": { background: vars.color.deep },
+    "&:hover:not(:disabled)": { background: vars.color.raised },
     "&:disabled": { opacity: 0.35 },
   },
 });
@@ -39,7 +39,7 @@ export const selector = style({
   overflowX: "auto",
   padding: `${vars.space.xs} ${vars.space.xxs} ${vars.space.lg}`,
   marginBottom: vars.space.lg,
-  scrollbarColor: `${vars.color.line} ${vars.color.raised}`,
+  scrollbarColor: `${vars.color.line} ${vars.color.surface}`,
 });
 export const tab = style({
   flexShrink: 0,
@@ -52,11 +52,11 @@ export const tab = style({
   whiteSpace: "nowrap",
   selectors: {
     "&[data-state='active']": {
-      color: vars.color.cream,
-      borderBottomColor: vars.color.oak,
+      color: vars.color.text,
+      borderBottomColor: vars.color.accent,
       fontWeight: vars.weight.strong,
     },
-    "&:hover": { background: vars.color.forest },
+    "&:hover": { background: vars.color.raised },
   },
 });
 export const detail = style({
@@ -69,7 +69,7 @@ export const detail = style({
   selectors: { "&[hidden]": { display: "none" } },
   "@media": { [breakpoint.narrow]: { gridTemplateColumns: "1fr" } },
 });
-export const picture = style({ position: "relative", background: vars.color.sky, minWidth: 0 });
+export const picture = style({ position: "relative", background: vars.color.surface, minWidth: 0 });
 globalStyle(`${picture} img`, {
   width: "100%",
   height: vars.size.photo,
@@ -81,8 +81,8 @@ globalStyle(`${picture} figcaption`, {
   insetInline: 0,
   bottom: 0,
   padding: `${vars.space.sm} ${vars.space.md}`,
-  background: vars.color.overlayBottom,
-  color: vars.color.photoInk,
+  background: vars.color.imageOverlay,
+  color: vars.color.text,
   fontSize: vars.fontSize.tiny,
 });
 export const description = style({
@@ -91,8 +91,8 @@ export const description = style({
   justifyContent: "center",
   gap: vars.space.lg,
   padding: vars.space.xxl,
-  background: vars.color.paper,
-  color: vars.color.ink,
+  background: vars.color.canvas,
+  color: vars.color.text,
   minWidth: 0,
   "@media": { [breakpoint.narrow]: { padding: vars.space.lg } },
 });
@@ -100,7 +100,7 @@ export const biome = style({
   display: "flex",
   alignItems: "start",
   gap: vars.space.xs,
-  color: vars.color.paperMuted,
+  color: vars.color.muted,
   fontSize: vars.fontSize.small,
 });
 globalStyle(`${biome} svg`, { width: vars.size.icon, height: vars.size.icon });
@@ -116,7 +116,7 @@ globalStyle(`${description} ul`, {
 globalStyle(`${description} li`, {
   fontSize: vars.fontSize.tiny,
   padding: `${vars.space.xxs} ${vars.space.xs}`,
-  border: `${vars.size.border} solid ${vars.color.paperLine}`,
+  border: `${vars.size.border} solid ${vars.color.line}`,
 });
 export const fieldNotes = style({
   display: "flex",
@@ -127,8 +127,8 @@ export const fieldNotes = style({
   gap: vars.space.lg,
   padding: vars.space.xxl,
   minHeight: vars.size.photo,
-  background: vars.color.forest,
-  color: vars.color.leaf,
+  background: vars.color.canvas,
+  color: vars.color.muted,
   "@media": { [breakpoint.narrow]: { minHeight: vars.size.mobilePhoto } },
 });
 globalStyle(`${fieldNotes} > svg`, { width: vars.size.emblem, height: vars.size.emblem });

@@ -8,16 +8,16 @@ globalFontFace("Outfit", {
 });
 globalStyle("*", { boxSizing: "border-box" });
 globalStyle("html", {
-  background: vars.color.forest,
+  background: vars.color.canvas,
   colorScheme: "dark",
-  scrollbarColor: `${vars.color.line} ${vars.color.forest}`,
+  scrollbarColor: `${vars.color.line} ${vars.color.canvas}`,
   scrollBehavior: "smooth",
   scrollPaddingTop: vars.space.xl,
 });
 globalStyle("body", {
   margin: 0,
   minWidth: 0,
-  color: vars.color.cream,
+  color: vars.color.text,
   fontFamily: vars.font.body,
   fontSize: vars.fontSize.body,
   lineHeight: vars.line.body,
@@ -39,7 +39,7 @@ globalStyle("a:focus-visible, button:focus-visible, [tabindex]:focus-visible", {
   outline: `${vars.size.focus} solid ${vars.color.focus}`,
   outlineOffset: vars.space.xxs,
 });
-globalStyle("::selection", { background: vars.color.oak, color: vars.color.forest });
+globalStyle("::selection", { background: vars.color.accent, color: vars.color.canvas });
 globalStyle("html, *, *::before, *::after", {
   "@media": {
     "(prefers-reduced-motion: reduce)": {

@@ -4,7 +4,7 @@ On October 1, 2026 Aaron selected Corner Frame (10), attaching the exact wordmar
 the corners removed, a cleaner K foot and a blend with the preferred ith lettering.
 The current unframed wordmark is paired with a square K extracted from the same native grid.
 The wooden-board flavor is concentrated in the logo; the website stays sleek. Aaron requested
-a dark presentation, so the homepage, asset library and sharing card use charcoal surfaces,
+a lighter dark presentation, so the homepage, asset library and sharing card use slate surfaces,
 ivory text and warm oak accents. The homepage at `/` now uses this chosen identity. `/brand`
 provides downloads. Earlier comparisons and unused assets are removed, with exploration
 preserved in Git at commit `e4c9fc4`.
@@ -55,13 +55,18 @@ The downloadable kit includes the native masters, larger PNGs, SVG containers em
 pixels with pixelated rendering, a 1200 × 630 sharing card in JPEG and SVG, palette, usage notes,
 original generation prompts and the Outfit license. The sharing SVG enlarges the wordmark at
 exactly 8×. Its JPEG is recaptured from that SVG before packaging. These remain raster pixel
-masters inside SVG containers. Use a quiet charcoal background and integer scales.
+masters inside SVG containers. Use a quiet slate background and integer scales.
 
-The fixed dark palette is canvas `#15191b`, surface `#22292d`, text `#f0ece3`, oak `#dcb075`,
-muted text `#a8b1b2` and line `#414c51`. The browser's native controls and scrollbars use a dark
-color scheme. Village descriptions, setup panels and the footer share these tokens. Filled
-actions use ivory or oak with charcoal labels, and keyboard focus uses oak. The PNG artwork and
-native pixel dimensions are unchanged by the theme pass.
+The fixed dark system uses three slate levels. Canvas `#20272b` serves the page and footer;
+surface `#293238` serves the village section and setup panels; raised `#333e44` serves logo
+specimens, the sharing artwork and hover states. Text is ivory `#f0ece3`, muted text is `#b1bbbd`
+and the oak accent is `#dcb075`. Borders derive from ivory at 16% opacity. The CSS contract uses
+semantic roles rather than aliases from the previous forest and light palettes.
+
+Browser controls and scrollbars use the dark color scheme. Filled actions use ivory or oak
+with canvas-colored labels; selected tabs and keyboard focus use oak. Secondary text has at
+least 5.60:1 contrast across all three surfaces. The PNG artwork and native pixel dimensions
+remain unchanged.
 
 Exact generation and refinement prompts live in `Website/public/brand/generation-prompts.md`.
 The pixel reduction and K extraction used deterministic sampling. `bun run brand:export`

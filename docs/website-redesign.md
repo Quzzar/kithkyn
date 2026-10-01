@@ -11,7 +11,7 @@ The root route becomes the finished landing page, and the unused comparison page
 identities and their assets are removed. Git history preserves the exploration.
 
 The signature remains the pixel oak lettering, now without framing. The website uses
-charcoal surfaces, warm ivory text, oak accents and Outfit typography. Its split hero, real
+slate surfaces, warm ivory text, oak accents and Outfit typography. Its split hero, real
 capture, all 17 catalogs and setup content remain in place.
 
 The brand page serves creators downloading the exact chosen artwork. The reference pass used
@@ -32,12 +32,12 @@ brand / complete kit download
 
 The PNG masters are native raster pixel artwork. SVG containers embed those pixels with
 nearest-neighbor rendering. Integer-sized exports preserve the same grid. A sharing card uses the
-chosen mark, plain charcoal canvas and one short product line. No new generated scene or wooden page controls.
+chosen mark, plain slate stage and one short product line. No new generated scene or wooden page controls.
 
 ## Dark presentation
 
 Aaron requested a dark site to suit the timber lettering. This is a fixed brand presentation
-across the homepage, asset library and sharing card. Charcoal canvas and raised surfaces provide
+across the homepage, asset library and sharing card. Slate canvas and raised surfaces provide
 depth; ivory headings and body text carry the content; muted gray supports captions; oak marks
 active tabs and keyboard focus. The logo remains the signature. Keep the established layout,
 Outfit hierarchy and real imagery. Avoid neon accents, decorative glow, wood-texture panels and
@@ -52,8 +52,15 @@ that supplies the personality, and clearly contrasted filled actions. Linear's s
 copy is too subdued for the setup instructions. Framer's animated artwork strip and Retool's
 multicolored glow do not fit the quiet timber direction.
 
+The first near-black canvas was too dark for the preferred logo presentation. Aaron requested
+a slightly lighter dark mode, so the system now has three deliberate levels: the slate page,
+lighter content panels, and a brighter stage for the timber art. Logo specimens and sharing
+artwork use that stage. The dark outline stays visible without adding glows or artificial shadows.
+Color roles replace the old forest/light aliases; hover states use the raised level and borders
+derive from ivory at 16% opacity.
+
 The canvas, village panels, setup section, footer and logo specimens all use the same palette.
-Ivory actions use charcoal labels; oak hovers retain charcoal labels. Active setup tabs and all
+Ivory actions use canvas-colored labels; oak hovers retain those labels. Active setup tabs and all
 focus rings use oak. Browser controls and scrollbars use the dark color scheme. The sharing
 JPEG is recaptured from its dark SVG before packaging. The logo pixels and geometry remain unchanged.
 
@@ -117,8 +124,8 @@ byte-identical. The earlier Gradle `processResources` check passed, and the K's 
 matches its 128-pixel export.
 The render review covered 1280 × 900, 390 × 844 and 320 × 720 viewports. A clean final browser
 reload reported no new console warnings or errors. Keyboard navigation visibly renders the
-amber focus ring. Ivory text, muted copy and oak accents all exceed 4.5:1 against both dark
-surfaces; muted text has a minimum 6.74:1 ratio. The brand ZIP passed an archive integrity check,
+amber focus ring. Ivory text, muted copy and oak accents all exceed 4.5:1 against all three dark
+surfaces; muted text has a minimum 5.60:1 ratio. The brand ZIP passed an archive integrity check,
 and all 16 entries match their published files.
 
 Production deployment waits for the intended domain and hosting destination. The sharing-image

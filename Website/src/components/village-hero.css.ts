@@ -32,7 +32,7 @@ globalStyle(`${copy} h1`, {
   marginTop: vars.space.lg,
 });
 export const label = style({
-  color: vars.color.oak,
+  color: vars.color.accent,
   fontSize: vars.fontSize.small,
   fontWeight: vars.weight.medium,
 });
@@ -55,12 +55,12 @@ export const primary = style({
   gap: vars.space.sm,
   minHeight: vars.size.button,
   padding: `${vars.space.sm} ${vars.space.lg}`,
-  background: vars.color.cream,
-  color: vars.color.paper,
+  background: vars.color.text,
+  color: vars.color.canvas,
   borderRadius: vars.radius.small,
   fontWeight: vars.weight.medium,
 });
-globalStyle(`${primary}:hover`, { background: vars.color.oak });
+globalStyle(`${primary}:hover`, { background: vars.color.accent });
 globalStyle(`${primary} svg`, { width: vars.size.icon, height: vars.size.icon });
 export const secondary = style({
   display: "inline-flex",
@@ -81,7 +81,7 @@ export const figure = style({
   minWidth: 0,
   overflow: "hidden",
   borderRadius: vars.radius.scene,
-  background: vars.color.sky,
+  background: vars.color.surface,
   "@media": { [breakpoint.narrow]: { height: vars.size.mobilePhoto } },
 });
 globalStyle(`${figure} img`, {
@@ -96,8 +96,8 @@ globalStyle(`${figure} figcaption`, {
   left: vars.space.md,
   right: vars.space.md,
   width: "fit-content",
-  background: vars.color.overlayBottom,
-  color: vars.color.photoInk,
+  background: vars.color.imageOverlay,
+  color: vars.color.text,
   padding: `${vars.space.xxs} ${vars.space.sm}`,
   borderRadius: vars.radius.small,
   fontSize: vars.fontSize.tiny,

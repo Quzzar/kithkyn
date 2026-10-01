@@ -2,9 +2,10 @@
 
 The landing page at `/` uses the refined unframed timber wordmark and its square K.
 The artwork uses a real 116 × 48 grid, with a 32 × 32 icon extracted from the same master.
-The website uses a dark charcoal canvas, ivory text, oak accents, Outfit typography and real game
-captures; the wooden flavor belongs to the logo. The same palette serves every section and the
-sharing card. Browser controls use the dark color scheme.
+The website uses a lighter slate canvas, ivory text, oak accents, Outfit typography and real game
+captures; the wooden flavor belongs to the logo. Three surface levels serve the page, content
+panels and logo stages. The sharing card uses the logo stage. Semantic color tokens keep hover,
+focus, borders and captions consistent. Browser controls use the dark color scheme.
 
 `/brand` provides the complete kit, individual PNG and SVG logo downloads, and a sharing card.
 The SVG logo containers embed the original pixels, not traced vector paths.

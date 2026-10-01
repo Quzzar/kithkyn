@@ -2,9 +2,9 @@ import { globalStyle, style } from "@vanilla-extract/css";
 import { container } from "../components/site.css";
 import { breakpoint, vars } from "../styles/theme.css";
 
-export const page = style({ background: vars.color.forest, color: vars.color.cream });
+export const page = style({ background: vars.color.canvas, color: vars.color.text });
 export const life = style({
-  background: vars.color.forest,
+  background: vars.color.canvas,
   paddingBlock: vars.space.section,
   borderTop: `${vars.size.border} solid ${vars.color.line}`,
 });

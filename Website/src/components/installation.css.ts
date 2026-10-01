@@ -3,8 +3,8 @@ import { breakpoint, vars } from "../styles/theme.css";
 
 export const section = style({
   paddingBlock: vars.space.section,
-  background: vars.color.paper,
-  color: vars.color.ink,
+  background: vars.color.canvas,
+  color: vars.color.text,
 });
 export const setup = style({
   display: "grid",
@@ -14,17 +14,17 @@ export const setup = style({
   "@media": { [breakpoint.narrow]: { gridTemplateColumns: "1fr", gap: vars.space.xxl } },
 });
 globalStyle(`${section} h2`, { marginTop: vars.space.md });
-globalStyle(`${section} > div > div > div > p:first-child`, { color: vars.color.paperMuted });
+globalStyle(`${section} > div > div > div > p:first-child`, { color: vars.color.muted });
 export const intro = style({
   marginTop: vars.space.lg,
-  color: vars.color.paperMuted,
+  color: vars.color.muted,
   fontSize: vars.fontSize.lead,
 });
 export const models = style({ marginTop: vars.space.xl });
 export const modelList = style({
   display: "flex",
   gap: vars.space.xs,
-  borderBottom: `${vars.size.border} solid ${vars.color.paperLine}`,
+  borderBottom: `${vars.size.border} solid ${vars.color.line}`,
   width: "fit-content",
 });
 export const modelTab = style({
@@ -33,14 +33,14 @@ export const modelTab = style({
   gap: vars.space.xs,
   minHeight: vars.size.button,
   padding: `${vars.space.sm} ${vars.space.lg}`,
-  color: vars.color.paperMuted,
+  color: vars.color.muted,
   background: "transparent",
   border: 0,
   borderBottom: `${vars.size.outline} solid transparent`,
   selectors: {
     '&[data-state="active"]': {
-      color: vars.color.ink,
-      borderBottomColor: vars.color.oak,
+      color: vars.color.text,
+      borderBottomColor: vars.color.accent,
       fontWeight: vars.weight.strong,
     },
   },
@@ -51,42 +51,42 @@ globalStyle(`${modelContent} h3`, {
   fontSize: vars.fontSize.subheading,
   marginBottom: vars.space.xs,
 });
-globalStyle(`${modelContent} p`, { color: vars.color.paperMuted });
+globalStyle(`${modelContent} p`, { color: vars.color.muted });
 globalStyle(`${modelContent} dl`, { marginTop: vars.space.lg, marginBottom: 0 });
 globalStyle(`${modelContent} dl > div`, {
   display: "flex",
   justifyContent: "space-between",
   gap: vars.space.md,
   paddingBlock: vars.space.sm,
-  borderBottom: `${vars.size.border} solid ${vars.color.paperLine}`,
+  borderBottom: `${vars.size.border} solid ${vars.color.line}`,
   fontSize: vars.fontSize.small,
 });
-globalStyle(`${modelContent} dt`, { color: vars.color.paperMuted });
+globalStyle(`${modelContent} dt`, { color: vars.color.muted });
 globalStyle(`${modelContent} dd`, { margin: 0, textAlign: "right" });
 export const guardrail = style({
   display: "flex",
   gap: vars.space.xs,
   fontSize: vars.fontSize.tiny,
-  color: vars.color.paperMuted,
+  color: vars.color.muted,
   marginTop: vars.space.lg,
 });
 globalStyle(`${guardrail} svg`, { width: vars.size.icon, height: vars.size.icon });
 export const installCard = style({
   padding: vars.space.xxl,
-  background: vars.color.paperRaised,
-  border: `${vars.size.outline} solid ${vars.color.paperLine}`,
+  background: vars.color.surface,
+  border: `${vars.size.outline} solid ${vars.color.line}`,
   "@media": { [breakpoint.narrow]: { padding: vars.space.lg } },
 });
 export const releaseLabel = style({
   display: "inline-block",
   fontSize: vars.fontSize.tiny,
-  color: vars.color.paperMuted,
+  color: vars.color.muted,
   marginBottom: vars.space.lg,
   fontWeight: vars.weight.strong,
 });
 globalStyle(`${installCard} h3`, { fontSize: vars.fontSize.heading });
 export const platform = style({
-  color: vars.color.paperMuted,
+  color: vars.color.muted,
   marginTop: vars.space.md,
   fontSize: vars.fontSize.small,
 });
@@ -103,12 +103,12 @@ export const destinations = style({
   flexWrap: "wrap",
   paddingTop: vars.space.xl,
   marginTop: vars.space.xl,
-  borderTop: `${vars.size.border} solid ${vars.color.paperLine}`,
+  borderTop: `${vars.size.border} solid ${vars.color.line}`,
 });
 globalStyle(`${destinations} span`, { fontWeight: vars.weight.strong });
 globalStyle(`${destinations} small`, {
   display: "block",
-  color: vars.color.paperMuted,
+  color: vars.color.muted,
   fontWeight: vars.weight.body,
   fontSize: vars.fontSize.tiny,
 });
@@ -129,7 +129,7 @@ export const faq = style({
 });
 export const questions = style({ minWidth: 0 });
 export const question = style({
-  borderBottom: `${vars.size.border} solid ${vars.color.paperLine}`,
+  borderBottom: `${vars.size.border} solid ${vars.color.line}`,
 });
 export const questionTrigger = style({
   display: "flex",
@@ -141,7 +141,7 @@ export const questionTrigger = style({
   paddingBlock: vars.space.lg,
   paddingInline: 0,
   background: "transparent",
-  color: vars.color.ink,
+  color: vars.color.text,
   border: 0,
   fontFamily: vars.font.body,
   fontWeight: vars.weight.strong,
@@ -156,7 +156,7 @@ globalStyle(`${questionTrigger} svg`, {
 });
 globalStyle(`${questionTrigger}[data-state="open"] svg`, { transform: "rotate(180deg)" });
 export const answer = style({
-  color: vars.color.paperMuted,
+  color: vars.color.muted,
   fontSize: vars.fontSize.small,
   paddingBottom: vars.space.lg,
   maxWidth: vars.size.reading,
