@@ -14,7 +14,7 @@ const QUESTIONS: readonly Question[] = [
   {
     question: "Does it work on a multiplayer server?",
     answer:
-      "Install NeoForge and KithKyn on the server and every client. The server runs the village simulation and its model. If you add the optional Curios mod, install a matching version on both sides.",
+      "Install NeoForge and Kithkyn on the server and every client. The server runs the village simulation and its model. If you add the optional Curios mod, install a matching version on both sides.",
   },
   {
     question: "What happens if the model stops responding?",
@@ -27,9 +27,9 @@ const QUESTIONS: readonly Question[] = [
       "The first release is being prepared. Modrinth and CurseForge links will appear when their project pages are ready. For now, follow development and release notes on GitHub.",
   },
   {
-    question: "Is KithKyn open source?",
+    question: "Is Kithkyn open source?",
     answer:
-      "Yes, under GPL-3.0-only. The source repository includes the full architecture credits and licenses. KithKyn is an independent project, not affiliated with Mojang or Microsoft.",
+      "Yes, under GPL-3.0-only. The source repository includes the full architecture credits and licenses. Kithkyn is an independent project, not affiliated with Mojang or Microsoft.",
   },
 ];
 
@@ -103,14 +103,14 @@ export function Installation(): ReactElement {
           <div className={styles.installCard}>
             <span className={styles.releaseLabel}>First release in preparation</span>
             <h3>
-              Bring KithKyn
+              Bring Kithkyn
               <br />
               to your world.
             </h3>
             <p className={styles.platform}>Minecraft Java 1.21.1 · NeoForge 21.1</p>
             <ol>
               <li>Install the matching NeoForge loader.</li>
-              <li>Add KithKyn to the server and every client.</li>
+              <li>Add Kithkyn to the server and every client.</li>
               <li>Start your world. The local brain sets itself up.</li>
             </ol>
             <a className={site.primaryButton} href="https://github.com/Quzzar/kithkyn#install">

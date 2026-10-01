@@ -1,9 +1,10 @@
 # Website and brand status
 
-Aaron selected direction A on September 30, 2026, with a slapstick wooden-board feel.
-The active implementation is in `Website/`: a centered wooden title sign, crooked plank
-menu, village-life explanation, regional postcard carousel, then installation and FAQs.
-See [website-redesign.md](website-redesign.md) for the visual plan and rejection record.
+Aaron clarified on September 30, 2026 that the wooden-board flavor should be concentrated
+in the logo, with a sleek website. `Website/` now compares four original icon/wordmark
+studies and matching homepage designs: Joinery, Gather, Offcut and Neighbor. No identity
+has been selected. See [website-redesign.md](website-redesign.md) for the Minecraft mod
+logo references, visual plan and rejection record.
 
 All 17 bundled land styles remain available, with horizontal Radix keyboard navigation
 and nuqs shareable selection and browser history. Offline/cloud requirements, multiplayer
@@ -12,14 +13,14 @@ installation and source links use GitHub.
 
 ## Identity and artwork
 
-The new identity is code-authored SVG geometry with outlined pixel lettering. The suite
-includes primary, reversed, monochrome, wordmark and signpost-emblem variants, matching
-transparent PNG and lossless WebP exports, 32/64/180/512-pixel icons, a logo-only sharing card,
-and a downloadable ZIP with fonts, licenses and usage notes. `/brand` displays the suite.
-The mod-list logo uses the new signpost emblem.
+Four original transparent PNG lockups were generated for this comparison. Exact prompts
+are saved in `Website/public/studies/prompts.md`. Each is paired with a usable page preview
+so the logo can be judged in context. These are raster studies, not a final vector suite.
 
-The rejected generated diorama, its banner derivative, old screenshots and bundled copies
-remain deleted. The current sharing card is new vector logo artwork on forest green.
+The rejected wooden suite, plank menu, wood frames, sharing card and kit download are removed.
+The earlier generated diorama and its derivatives remain deleted. The mod-list icon has
+been restored to its existing version while the new identity is undecided. A final suite
+will include vector artwork, small-size icon variants and sharing graphics after selection.
 
 ## Real capture library
 
@@ -56,8 +57,9 @@ image is captioned as an in-game building preview from a catalog review world.
 ## Preview and publishing
 
 The local preview is `http://127.0.0.1:45173`. Current captures live in
-`docs/website-preview/`. The former comparison routes redirect to homepage sections.
-`/atlas` preserves village query parameters.
+`docs/website-preview/`. `/` compares the identities; `/directions/:identityId` opens each
+complete homepage. `/play` and `/brand` return to the comparison. `/atlas`, `/stories` and
+`/setup` open the corresponding section in the first preview; `/atlas` preserves query parameters.
 
 This version is not published or merged. Earlier domain checks found that `kithkyn.com`
 served a hiring product, while `kithkin.com` redirected to `/lander`; confirm the intended

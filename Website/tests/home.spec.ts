@@ -9,20 +9,28 @@ async function waitForImages(page: Page): Promise<void> {
   );
 }
 
-test("opens the wooden title screen and navigates its menu", async ({ page }): Promise<void> => {
+test("compares four identities and opens their homepage previews", async ({
+  page,
+}): Promise<void> => {
   await page.goto("/play");
   await expect(page).toHaveURL("/");
-  await expect(page).toHaveTitle("KithKyn | Bringing villages to life");
-  await expect(page.getByRole("heading", { level: 1, name: "KithKyn" })).toBeInViewport();
+  await expect(page).toHaveTitle("Kithkyn | Four identity studies");
+  await expect(page.getByRole("heading", { level: 1 })).toContainText("Four ways to feel");
+  await expect(page.getByRole("img")).toHaveCount(4);
   await expect(page.locator('img[src*="diorama"]')).toHaveCount(0);
-  for (const [link, section] of [
-    ["Explore the villages", "Where will they settle?"],
-    ["Meet your neighbors", "They’ve got things to do."],
-    ["Installation guide", "New neighbors. Your kind of world."],
+  for (const [id, name, headline] of [
+    ["joinery", "Joinery", "A world with"],
+    ["gather", "Gather", "A little life"],
+    ["offcut", "Offcut", "Life finds a way"],
+    ["neighbor", "Neighbor", "Good neighbors."],
   ] as const) {
     await page.goto("/");
-    await page.getByRole("link", { name: link, exact: true }).click();
-    await expect(page.getByRole("heading", { name: section, exact: true })).toBeInViewport();
+    await page.getByRole("link", { name: new RegExp(`Preview \\d: ${name}`) }).click();
+    await expect(page).toHaveURL(`/directions/${id}`);
+    await expect(page.getByRole("heading", { level: 1 })).toContainText(headline);
+    await expect(page.getByRole("heading", { level: 1 })).toBeInViewport();
+    await page.getByRole("link", { name: "Explore the villages", exact: true }).click();
+    await expect(page.getByRole("heading", { name: "Where will they settle?" })).toBeInViewport();
   }
 });
 
@@ -114,7 +122,7 @@ test("retains multiplayer guidance and real installation destinations", async ({
   await question.click();
   await expect(question).toHaveAttribute("aria-expanded", "true");
   await expect(
-    page.getByText(/Install NeoForge and KithKyn on the server and every client/),
+    page.getByText(/Install NeoForge and Kithkyn on the server and every client/),
   ).toBeVisible();
   await question.click();
   await expect(question).toHaveAttribute("aria-expanded", "false");
@@ -125,60 +133,70 @@ test("retains multiplayer guidance and real installation destinations", async ({
   );
 });
 
-test("loads the complete brand suite and downloads the kit", async ({ page }): Promise<void> => {
+test("returns to the comparison from previews and handles old links", async ({
+  page,
+}): Promise<void> => {
   await page.goto("/brand");
-  await expect(page).toHaveTitle("KithKyn | Brand kit");
-  await expect(page.getByText("Primary wooden sign")).toBeVisible();
-  await expect(page.getByText("One-color stamp")).toBeVisible();
-  await expect(page.getByText("Signpost emblem")).toBeVisible();
+  await expect(page).toHaveURL("/");
   await waitForImages(page);
-  const downloadPromise = page.waitForEvent("download");
-  await page.getByRole("link", { name: "Download the brand kit" }).click();
-  const download = await downloadPromise;
-  expect(download.suggestedFilename()).toBe("kithkyn-brand-kit.zip");
-  expect(await download.failure()).toBeNull();
-  await page.getByRole("link", { name: "Villages", exact: true }).click();
-  await expect(page.getByRole("heading", { name: "Where will they settle?" })).toBeInViewport();
+  await page.getByRole("link", { name: "Preview 4: Neighbor" }).click();
+  await page.getByRole("link", { name: "Compare identities", exact: true }).first().click();
+  await expect(page).toHaveURL("/");
+  await page.goto("/directions/unknown");
+  await expect(page).toHaveURL("/");
 });
 
-test("renders home and brand pages without errors or narrow-screen overflow", async ({
+test("renders the comparison and every preview without errors or narrow-screen overflow", async ({
   page,
 }, testInfo: TestInfo): Promise<void> => {
   const errors: string[] = [];
   page.on("pageerror", (error: Error): void => {
     errors.push(error.message);
   });
-  for (const path of ["/", "/brand"]) {
+  const paths: readonly string[] = [
+    "/",
+    "/directions/joinery",
+    "/directions/gather",
+    "/directions/offcut",
+    "/directions/neighbor",
+  ];
+  for (const path of paths) {
     await page.goto(path);
     await waitForImages(page);
+    await expect(page.locator("body")).toHaveCSS("font-family", /Outfit/);
     expect(
       await page.evaluate(
         (): boolean => document.documentElement.scrollWidth <= document.documentElement.clientWidth,
       ),
     ).toBe(true);
     await page.screenshot({
-      path: testInfo.outputPath(`${path === "/" ? "home" : "brand"}.png`),
+      path: testInfo.outputPath(
+        `${path === "/" ? "comparison" : (path.split("/").at(-1) ?? "preview")}.png`,
+      ),
       fullPage: true,
     });
   }
   await page.setViewportSize({ width: 320, height: 720 });
-  for (const path of ["/", "/brand", "/atlas?village=cherry", "/setup"]) {
+  for (const path of [...paths, "/atlas?village=cherry", "/setup"]) {
     await page.goto(path);
     expect(
       await page.evaluate(
         (): boolean => document.documentElement.scrollWidth <= document.documentElement.clientWidth,
       ),
+      `No overflow at 320px on ${path}`,
     ).toBe(true);
   }
   expect(errors).toEqual([]);
 });
 
-test("respects reduced motion and keeps planks still on hover", async ({ page }): Promise<void> => {
+test("respects reduced motion and keeps actions still on hover", async ({
+  page,
+}): Promise<void> => {
   await page.emulateMedia({ reducedMotion: "reduce" });
-  await page.goto("/");
+  await page.goto("/directions/offcut");
   await expect(page.locator("html")).toHaveCSS("scroll-behavior", "auto");
-  const plank = page.getByRole("link", { name: "Explore the villages", exact: true });
-  await expect(plank).toHaveCSS("transform", "none");
-  await plank.hover();
-  await expect(plank).toHaveCSS("transform", "none");
+  const action = page.getByRole("link", { name: "Explore the villages", exact: true });
+  await expect(action).toHaveCSS("transform", "none");
+  await action.hover();
+  await expect(action).toHaveCSS("transform", "none");
 });

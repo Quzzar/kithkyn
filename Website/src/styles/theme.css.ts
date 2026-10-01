@@ -1,32 +1,28 @@
-import { createGlobalTheme } from "@vanilla-extract/css";
+import { createGlobalTheme, styleVariants } from "@vanilla-extract/css";
+import type { IdentityId } from "../data/identities";
 
-/** Wooden title screen: forest, oak and painted lettering share one token system. */
+/** Quiet surfaces leave personality in the icon and bespoke logo lettering. */
 export const vars = createGlobalTheme(":root", {
   color: {
-    forest: "#172d27",
-    raised: "#203b31",
-    deep: "#10221d",
-    cream: "#fff3d8",
-    leaf: "#a9bb94",
-    muted: "#c0cab3",
-    line: "#45604c",
-    oak: "#c58a4c",
-    timber: "#4f301d",
-    ink: "#382216",
-    grain: "#784321",
-    paper: "#f1e3c5",
-    paperRaised: "#faf1dc",
-    paperLine: "#c6b68f",
-    paperMuted: "#675638",
-    focus: "#f4ca76",
-    shadow: "#091610",
-    backdrop: "#20352b",
-    sky: "#b2c6da",
-    overlayTop: "#10221d70",
-    overlayBottom: "#10221dbb",
-    overlayCenter: "#10221d20",
+    forest: "#fafbfc",
+    raised: "#eff3f6",
+    deep: "#e6edf2",
+    cream: "#22384a",
+    leaf: "#657584",
+    muted: "#657584",
+    line: "#d8dfe5",
+    oak: "#9d6c36",
+    ink: "#22384a",
+    paper: "#ffffff",
+    paperRaised: "#f7f9fb",
+    paperLine: "#d8dfe5",
+    paperMuted: "#657584",
+    focus: "#386885",
+    sky: "#bbc6ce",
+    photoInk: "#ffffff",
+    overlayBottom: "#22384ad9",
   },
-  font: { display: '"Pixelify Sans", sans-serif', body: '"Outfit", sans-serif' },
+  font: { display: '"Outfit", sans-serif', body: '"Outfit", sans-serif' },
   fontSize: {
     tiny: "0.78rem",
     small: "0.9rem",
@@ -34,14 +30,13 @@ export const vars = createGlobalTheme(":root", {
     lead: "1.2rem",
     heading: "clamp(2.5rem, 4.5vw, 4rem)",
     subheading: "1.5rem",
-    menu: "1.15rem",
-    tagline: "clamp(1.3rem, 2vw, 1.65rem)",
     title: "clamp(3rem, 6vw, 5rem)",
     catalog: "clamp(1.75rem, 3vw, 2.5rem)",
+    hero: "clamp(2.6rem, 5vw, 4.6rem)",
   },
-  weight: { body: "400", medium: "500", strong: "600", display: "700" },
+  weight: { body: "400", medium: "500", strong: "600", display: "600" },
   line: { body: "1.55", heading: "1.05" },
-  tracking: { heading: "-0.02em", label: "0.06em" },
+  tracking: { heading: "-0.035em", label: "0.06em" },
   space: {
     none: "0",
     xxs: "0.25rem",
@@ -54,48 +49,87 @@ export const vars = createGlobalTheme(":root", {
     xxxl: "4rem",
     section: "clamp(4rem, 7vw, 6rem)",
     gutter: "clamp(1.25rem, 4vw, 3.5rem)",
-    heroTop: "7rem",
-    heroBottom: "8rem",
   },
-  radius: { small: "0.25rem", pill: "999rem" },
+  radius: { small: "0.625rem", scene: "1.5rem", pill: "999rem" },
   size: {
     content: "78rem",
     copy: "34rem",
     reading: "46rem",
-    logo: "43rem",
-    compactLogo: "10rem",
+    compactLogo: "12rem",
     emblem: "2.75rem",
-    menu: "22rem",
     icon: "1.2rem",
     border: "0.0625rem",
-    frame: "0.5rem",
     focus: "0.1875rem",
     button: "3rem",
-    plank: "3.7rem",
-    hero: "48rem",
-    heroMobile: "44rem",
     header: "5rem",
     photo: "27rem",
     mobilePhoto: "17rem",
     outline: "0.125rem",
     brandTile: "16rem",
-    brandEmblem: "7rem",
-    brandIcon: "4rem",
-    swatch: "5rem",
+    studyLogo: "8rem",
+    heroPhoto: "34rem",
+    widePhoto: "26rem",
   },
-  angle: { left: "-1.2deg", right: "0.9deg", gentle: "-0.5deg", pressed: "1.8deg" },
-  shadow: {
-    plank: "drop-shadow(0 0.3rem 0 #4f301d) drop-shadow(0 0.7rem 0.8rem #09161055)",
-    frame: "0 0.45rem 0 #0c1c17",
-    title: "drop-shadow(0 1rem 1.5rem #09161055)",
-  },
-  motion: {
-    short: "180ms",
-    ease: "cubic-bezier(0.2, 0.8, 0.2, 1)",
-    lift: "-0.125rem",
-    press: "0.25rem",
-  },
+  motion: { short: "180ms", ease: "cubic-bezier(0.2, 0.8, 0.2, 1)" },
 });
+
+type Palette = {
+  readonly canvas: string;
+  readonly surface: string;
+  readonly ink: string;
+  readonly accent: string;
+  readonly muted: string;
+  readonly line: string;
+};
+const PALETTES: Record<IdentityId, Palette> = {
+  joinery: {
+    canvas: "#fafbfc",
+    surface: "#eff3f6",
+    ink: "#22384a",
+    accent: "#9d6c36",
+    muted: "#657584",
+    line: "#d8dfe5",
+  },
+  gather: {
+    canvas: "#f7faf7",
+    surface: "#e9f1ec",
+    ink: "#254b43",
+    accent: "#8d692c",
+    muted: "#5d7469",
+    line: "#d1ded6",
+  },
+  offcut: {
+    canvas: "#f9f9f8",
+    surface: "#f0ece7",
+    ink: "#29313e",
+    accent: "#995d37",
+    muted: "#687079",
+    line: "#dcd9d3",
+  },
+  neighbor: {
+    canvas: "#f8f9fc",
+    surface: "#edf0f7",
+    ink: "#343f67",
+    accent: "#936c20",
+    muted: "#68718a",
+    line: "#d9deeb",
+  },
+};
+export const identityTheme = styleVariants(PALETTES, (palette: Palette) => ({
+  vars: {
+    [vars.color.forest]: palette.canvas,
+    [vars.color.raised]: palette.surface,
+    [vars.color.deep]: palette.surface,
+    [vars.color.cream]: palette.ink,
+    [vars.color.ink]: palette.ink,
+    [vars.color.oak]: palette.accent,
+    [vars.color.leaf]: palette.muted,
+    [vars.color.muted]: palette.muted,
+    [vars.color.paperMuted]: palette.muted,
+    [vars.color.line]: palette.line,
+    [vars.color.paperLine]: palette.line,
+  },
+}));
 
 export const breakpoint = {
   compact: "screen and (max-width: 64rem)",

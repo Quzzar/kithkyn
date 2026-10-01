@@ -1,81 +1,78 @@
-# Wooden title-screen website
+# Website identity studies
 
-Aaron selected direction A on September 30, 2026: build the title-screen composition with
-a slapstick, wooden-board feel. This is the active direction. The comparison page and B/C
-prototypes are superseded; their source remains recoverable through Git history.
+Aaron clarified on September 30, 2026 that the slapstick wooden-board influence belongs
+mainly in the logo and a little flavor. The website should look sleek. The literal plank
+menu and pixel-lettered sign logo were rejected as tacky and unfinished. Four new identities
+are compared before one is selected.
 
-## Design plan
+## Popular Minecraft mod references
 
-The visitor's job is to understand the autonomous-villager mod, explore its regional villages,
-then find installation guidance. A centered wooden title sign and vertical plank menu are the
-focal point. The signature is the slightly crooked, tactile plank menu, with a short press wobble.
+The project owner asked for a reference pass through popular Minecraft mod logos. These
+observations come from viewing their official sites and author-maintained listings, not
+from generic logo inspiration. Download counts below are Modrinth snapshots from
+September 30, 2026, not totals across platforms.
 
-Color: deep forest (#172d27) surrounds warm oak (#c58a4c), pale painted lettering (#fff3d8),
-dark timber (#4f301d), muted leaf (#a9bb94), and paper (#f1e3c5) for setup information.
-Type: original outlined pixel lettering for the logo, locally hosted Pixelify Sans for section
-heads, and Outfit for readable controls and body copy. Keep the mixed-case name KithKyn.
-Layout: scenic title/menu, concise village-life explanation, regional postcard carousel,
-then installation and FAQs. Wood is concentrated in the identity, menu and photo frames;
-plain forest and paper surfaces keep supporting information quiet.
+| Mod | Observed identity | Useful lesson for Kithkyn |
+| --- | --- | --- |
+| [Create](https://modrinth.com/mod/create) (26.8M downloads) | A recognizable mechanical crank on a blue circular ground, with strong material color and a simple silhouette. | An object from the gameplay can carry the icon without a whole illustrated landscape. |
+| [Farmer's Delight](https://modrinth.com/mod/farmers-delight) (24.3M downloads) | A pixel-art wooden cutting board and knife, with a framed title strip in the full lockup. | Timber can live in the identity. This is the closest reference for the requested wooden-board flavor. |
+| [Cobblemon](https://cobblemon.com/en) ([35.5M Modrinth downloads](https://modrinth.com/mod/cobblemon)) | A compact hexagonal ball icon paired with a rounded lowercase wordmark and a dark outline. Its site uses clean navigation and real game imagery. | Game personality and a sleek website can coexist. The logo does not need the Minecraft title font. |
+| [MineColonies](https://minecolonies.com/) | Chunky uppercase settlement lettering, copper tones, a skyline and ribbon. | Settlement imagery makes the subject apparent. Its dense decorative page framing does not fit this brief. |
+
+Our design conclusion is an interpretation: use one memorable construction or villager symbol
+with custom readable lettering, then let spacing, typography and real captures carry the
+page. Do not copy any of these mods' assets or letterforms. Their artwork is reference only.
+
+The earlier layout pass also used sparse compositions from
+[KOBU](https://mobbin.com/sites/sections/92720ac4-a34f-4460-854c-ba4c969c697e),
+[General Intelligence Company](https://mobbin.com/sites/sections/fbf517c5-c4b4-4246-818b-818bd1f88032)
+and [Koto](https://mobbin.com/sites/sections/062eb6b8-b141-4fe5-8c11-9edc778e2468).
+Minecraft mod identities are the more relevant brand precedents.
+
+## Four directions
+
+| Direction | Identity | Website treatment |
+| --- | --- | --- |
+| 1. Joinery | Interlocking slate and oak K, precise sans lettering. | Light slate surfaces, split text and scene. |
+| 2. Gather | Two neighboring homes, pine and honey, serif logo lettering. | Soft green surfaces, centered copy and a wide scene. |
+| 3. Offcut | Timber K, hand-cut dark lettering with a fine oak edge. | Ink and copper accents, two-column copy above a wide scene. |
+| 4. Neighbor | A friendly character peeking from a doorway, rounded lettering. | Blue and honey, scene on the left and copy on the right. |
+
+Offcut was refined after the mod reference pass to add a game artist's lettering and a
+recognizable timber object. The other studies keep broader alternatives open. The body
+and controls use locally hosted Outfit, with readable text and ordinary buttons.
 
 ```text
-Minecraft / NeoForge                              Source
-+-----------------------------------------------------+
-|           [wooden KithKyn title sign]                 |
-|             Bringing villages to life                |
-|               [Explore villages]                     |
-|               [Meet your neighbors]                  |
-|               [Installation guide]                   |
-|                real village capture                  |
-+-----------------------------------------------------+
-  village life / work, families, community
-  17 styles / horizontal selector + framed postcard
-  offline and cloud setup / installation / common questions
-  footer / brand kit / source
+comparison / four icon + wordmark studies / links to full previews
+preview / compact brand + navigation
+        / distinct headline, real village still, restrained action
+        / village life / 17 styles / actual setup and FAQs
 ```
 
-## Reference observations
+The image-generation tool created original transparent raster lockups. Exact prompts are
+saved in `Website/public/studies/prompts.md`. These are concepts, not vector exports or a
+final brand kit. The existing mod-list icon remains in place until selection.
 
-- [Shopify Editions](https://mobbin.com/sites/sections/47c5f830-b25e-4912-8484-47377cd8a238):
-  the scene, title and action form a game entrance. Keep that hierarchy; glowing car effects
-  and the purple palette do not fit KithKyn.
-- [Lightship](https://mobbin.com/sites/sections/a5fa6838-ff45-42cc-8e90-b513fd69a5e7):
-  a centered message can sit above scenery when contrast and foreground/background separation
-  are deliberate. KithKyn keeps a compact vertical game menu rather than a standard hero CTA.
-- [Going](https://mobbin.com/sites/sections/20111087-8150-4e7e-9d82-c50d0cc7684a):
-  oversized identity can carry a scenic entrance. Its capsule-shaped photo and SaaS navigation
-  are not the selected game-menu composition.
+## Rejection record
 
-## Media and identity
+The generated village diorama, its banner derivative and bundled copies remain deleted.
+The later wooden sign logo, plank controls, wood frames, Pixelify font, obsolete brand-kit
+downloads and obsolete preview images are removed. Git history preserves the prior attempts.
 
-Use a real KithKyn village capture from `run/floodplain-site-review/` for the backdrop,
-captioned as an in-game site-review capture. It is a still, not an invented gameplay loop.
-Inspect catalog captures before using them: the prior library included obstructed camera
-views that should become field notes until a useful capture is available.
-
-Create a self-contained vector identity with outlined lettering and a simple wooden sign
-emblem, plus primary, reversed, monochrome, wordmark and icon exports. Use code-authored
-plank/grain shapes for UI decoration. No generated scene illustration is needed.
-
-## Rejected directions
-
-Hearth and horizon was rejected: the pale green rounded landing page and generated village
-diorama did not match Aaron's taste. The illustration, its social-banner derivative and
-bundled copies were deleted. Do not restore them. B's dense atlas entrance and C's comic-strip
-entrance were passed over when Aaron selected A.
+The real in-game scene and catalog captures remain. Their provenance is recorded in
+[website-brand.md](website-brand.md). Five styles use field notes where a useful capture is
+not available. Nothing in the preview claims the scene is an autonomous-growth timeline.
 
 ## Verification
 
-Desktop (1280 × 900), mobile (390 × 844) and narrow phone (320 × 720) renders were inspected.
-The warm sign and plank controls remain the entrance's focal point, with readable supporting
-copy and quiet forest/paper sections. The brand suite was inspected on desktop and mobile.
+Current desktop and mobile captures live in `docs/website-preview/`. They show the
+comparison and the four homepage entrances. Browser checks cover all four directions,
+all 17 styles, shared selection and browser history, keyboard focus, setup tabs, FAQ
+disclosure, reduced motion, loaded assets, the page font and 320-pixel overflow.
 
-The first render exposed empty borders from inactive Radix panels. Their hidden state now
-removes the inactive frames. The reduced-motion rule also disables each plank's resting tilt
-and hover/press transform. Current renders were recaptured after these corrections.
+All 18 desktop/mobile Playwright checks pass, along with the production build, ESLint and
+Prettier. The render pass also checked 1280 × 900, 390 × 844 and 320 × 720 viewports and
+found no console warnings or errors. A crowded narrow header was corrected before recapture.
 
-All 18 desktop/mobile Playwright checks pass: all 17 styles, arrows, keyboard focus, shared
-selection/history, setup tabs, FAQ disclosure, brand downloads, menu navigation, reduced motion,
-loaded images and 320-pixel overflow. Production build, ESLint, Prettier and Gradle
-`processResources` pass. Current captures are in `docs/website-preview/`.
-The domain/hosting destination remains unresolved; this work is a local preview and draft PR.
+The domain and hosting destination remain unresolved. This work stays a local preview and
+draft PR. A final logo suite and publication follow the owner's identity selection.

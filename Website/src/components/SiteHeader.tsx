@@ -1,27 +1,26 @@
-import { ArrowUpRight } from "lucide-react";
 import type { ReactElement } from "react";
 import { Link } from "react-router-dom";
-import { LogoMark } from "./LogoMark";
+import type { Identity } from "../data/identities";
+import { IdentityLogo } from "./IdentityLogo";
 import * as styles from "./site.css";
 
-/** Quiet navigation leaves the large title sign as the homepage's focal point. */
-export function SiteHeader(): ReactElement {
+/** Compact branding leaves the scene and message room to carry the page. */
+export function SiteHeader({ identity }: { readonly identity: Identity }): ReactElement {
   return (
     <>
       <a className={styles.skipLink} href="#main">
         Skip to content
       </a>
       <header className={styles.header}>
-        <Link to="/" className={styles.brand} aria-label="KithKyn home">
-          <LogoMark variant="emblem" alt="" />
+        <Link to="/" className={styles.brand} aria-label="Compare identities">
+          <IdentityLogo identity={identity} isDecorative />
         </Link>
         <nav className={styles.headerNav} aria-label="Main navigation">
-          <Link to="/#villages">Villages</Link>
-          <Link to="/#get-started">Setup</Link>
-          <a href="https://github.com/Quzzar/kithkyn" aria-label="Source code on GitHub">
-            <ArrowUpRight aria-hidden="true" />
-            <span className={styles.sourceText}>Source code</span>
-          </a>
+          <a href="#villages">Villages</a>
+          <a href="#get-started">Setup</a>
+          <Link to="/" className={styles.sourceText}>
+            Compare identities
+          </Link>
         </nav>
       </header>
     </>

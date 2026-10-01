@@ -6,5 +6,5 @@ type SectionRedirectProps = { readonly section: "villages" | "life" | "get-start
 /** Existing preview links keep their selected village when they land on the finished site. */
 export function SectionRedirect({ section }: SectionRedirectProps): ReactElement {
   const { search } = useLocation();
-  return <Navigate to={{ pathname: "/", search, hash: `#${section}` }} replace />;
+  return <Navigate to={{ pathname: "/directions/joinery", search, hash: `#${section}` }} replace />;
 }

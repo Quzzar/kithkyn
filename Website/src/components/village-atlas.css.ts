@@ -62,8 +62,9 @@ export const tab = style({
 export const detail = style({
   display: "grid",
   gridTemplateColumns: "1.35fr 1fr",
-  border: `${vars.size.frame} solid ${vars.color.grain}`,
-  boxShadow: vars.shadow.frame,
+  border: `${vars.size.border} solid ${vars.color.line}`,
+  borderRadius: vars.radius.small,
+  overflow: "hidden",
   minWidth: 0,
   selectors: { "&[hidden]": { display: "none" } },
   "@media": { [breakpoint.narrow]: { gridTemplateColumns: "1fr" } },
@@ -81,7 +82,7 @@ globalStyle(`${picture} figcaption`, {
   bottom: 0,
   padding: `${vars.space.sm} ${vars.space.md}`,
   background: vars.color.overlayBottom,
-  color: vars.color.cream,
+  color: vars.color.photoInk,
   fontSize: vars.fontSize.tiny,
 });
 export const description = style({

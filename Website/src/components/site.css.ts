@@ -45,7 +45,12 @@ export const header = style([
     zIndex: 2,
   },
 ]);
-export const brand = style({ display: "block", width: vars.size.emblem, flexShrink: 0 });
+export const brand = style({
+  display: "block",
+  width: vars.size.compactLogo,
+  flexShrink: 0,
+  "@media": { [breakpoint.narrow]: { width: vars.size.studyLogo } },
+});
 export const headerNav = style({
   display: "flex",
   alignItems: "center",
@@ -61,7 +66,10 @@ globalStyle(`${headerNav} a`, {
 });
 globalStyle(`${headerNav} a:hover`, { textDecoration: "underline" });
 globalStyle(`${headerNav} svg`, { width: vars.size.icon, height: vars.size.icon });
-export const sourceText = style({ "@media": { [breakpoint.narrow]: { display: "none" } } });
+export const sourceText = style({});
+globalStyle(`${headerNav} a.${sourceText}`, {
+  "@media": { [breakpoint.narrow]: { display: "none" } },
+});
 export const footer = style({
   background: vars.color.deep,
   paddingBlock: vars.space.xxl,

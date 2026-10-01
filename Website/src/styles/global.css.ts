@@ -1,11 +1,6 @@
 import { globalFontFace, globalStyle } from "@vanilla-extract/css";
 import { vars } from "./theme.css";
 
-globalFontFace("Pixelify Sans", {
-  src: "url('/fonts/pixelify-sans.woff2') format('woff2')",
-  fontWeight: "400 700",
-  fontDisplay: "swap",
-});
 globalFontFace("Outfit", {
   src: "url('/fonts/outfit.woff2') format('woff2')",
   fontWeight: "100 900",
