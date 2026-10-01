@@ -66,6 +66,7 @@ export const vars = createGlobalTheme(":root", {
     timberPanorama: "22rem",
     studyIcon: "4rem",
     studyArtwork: "12rem",
+    studyIntro: "8rem",
     studyWordmark: "16rem",
     studyWordmarkMobile: "8rem",
     timberSplitWordmark: "24rem",

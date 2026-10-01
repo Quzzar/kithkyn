@@ -1,23 +1,42 @@
 import { ArrowUpRight, Download } from "lucide-react";
 import type { ReactElement } from "react";
 import { Link } from "react-router-dom";
-import { TIMBER_IDENTITIES, type TimberIdentity } from "../data/timber-identities";
+import {
+  CURRENT_TIMBER_IDENTITIES,
+  PREVIOUS_TIMBER_IDENTITIES,
+  type TimberIdentity,
+} from "../data/timber-identities";
 import { identityTheme } from "../styles/timber-identities.css";
 import * as styles from "./timber-directions.css";
 
 /** Compare the wordmark, small K and actual website together before selecting an identity. */
-export function TimberDirectionsPage(): ReactElement {
+export function TimberDirectionsPage({
+  previous = false,
+}: { readonly previous?: boolean } = {}): ReactElement {
+  const identities: readonly TimberIdentity[] = previous
+    ? PREVIOUS_TIMBER_IDENTITIES
+    : CURRENT_TIMBER_IDENTITIES;
   return (
     <main id="main" className={styles.page}>
       <div className={styles.intro}>
-        <Link to="/brand" className={styles.back}>
-          Current brand
-        </Link>
-        <h1>Timber, together.</h1>
-        <p>Two identities. Each with a logo, K and website.</p>
+        <div className={styles.introLinks}>
+          <Link to={previous ? "/brand/directions" : "/brand"} className={styles.back}>
+            {previous ? "New directions" : "Current brand"}
+          </Link>
+          {!previous && (
+            <Link to="/brand/directions/previous" className={styles.back}>
+              Earlier directions
+            </Link>
+          )}
+        </div>
+        <h1>{previous ? "Timber, together." : "Another kind of timber."}</h1>
+        <p>
+          {previous ? "The earlier pair." : "Three new directions."} Each with a logo, K and
+          website.
+        </p>
       </div>
-      <div className={styles.grid}>
-        {Object.values(TIMBER_IDENTITIES).map((identity: TimberIdentity): ReactElement => (
+      <div className={previous ? styles.previousGrid : styles.grid}>
+        {identities.map((identity: TimberIdentity): ReactElement => (
           <section
             key={identity.id}
             className={`${styles.direction} ${identityTheme[identity.id]}`}
@@ -26,7 +45,7 @@ export function TimberDirectionsPage(): ReactElement {
               <h2>{identity.name}</h2>
               <p>{identity.description}</p>
             </div>
-            <div className={styles.assets}>
+            <div className={previous ? styles.previousAssets : styles.assets}>
               <img
                 className={styles.wordmark}
                 src={identity.wordmark.source}

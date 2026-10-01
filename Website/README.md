@@ -10,12 +10,13 @@ focus, borders and captions consistent. Browser controls use the dark color sche
 `/brand` provides the complete kit, individual PNG and SVG logo downloads, and a sharing card.
 The SVG logo containers embed the original pixels, not traced vector paths.
 
-`/brand/directions` compares two new identities designed together with their websites:
-Cabin Joinery pairs joined oak lettering with moss surfaces and a split hero; Patchwork pairs
-birch, oak and cedar lettering with charcoal surfaces and a centered hero. Each has a native
-128-pixel-wide wordmark and 32 × 32 K. Both full previews keep the 17-style village browser,
-setup tabs and FAQ. Their PNG downloads and exact generation prompts live in
-`public/brand/directions/`. The current homepage remains available during comparison.
+`/brand/directions` compares three new identities designed together with their websites:
+Hewn uses thick spruce lettering and cool slate; Woven uses one interlocking timber K and
+ivory lettering over olive charcoal; Cabin Mark builds a K into a little cedar home, over warm
+charcoal. Each has a native 128-pixel-wide wordmark and 32 × 32 K. All full previews keep the
+17-style village browser, setup tabs and FAQ. `/brand/directions/previous` retains Cabin Joinery
+and Patchwork. PNG downloads and exact generation prompts live in `public/brand/directions/`.
+The current homepage remains available during comparison.
 
 React, Vite, strict TypeScript, vanilla-extract, Radix, nuqs and Playwright, using Bun.
 

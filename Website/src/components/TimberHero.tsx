@@ -7,8 +7,8 @@ import * as styles from "./timber-hero.css";
 /** The artwork leads each identity, while real gameplay supplies the setting. */
 export function TimberHero({ identity }: { readonly identity: TimberIdentity }): ReactElement {
   return (
-    <section className={styles.layout[identity.id]} aria-labelledby="hero-title">
-      <div className={styles.copy[identity.id]}>
+    <section className={styles.layout[identity.layout]} aria-labelledby="hero-title">
+      <div className={styles.copy[identity.layout]}>
         <p className={hero.label}>Autonomous villagers for Minecraft</p>
         <img
           className={styles.wordmark}
@@ -20,7 +20,7 @@ export function TimberHero({ identity }: { readonly identity: TimberIdentity }):
         />
         <h1 id="hero-title">A world with neighbors.</h1>
         <p className={hero.lead}>Villagers who build, belong, and think for themselves.</p>
-        <div className={styles.actions[identity.id]}>
+        <div className={styles.actions[identity.layout]}>
           <a className={hero.primary} href="#villages">
             Explore the villages <ArrowUpRight aria-hidden="true" />
           </a>
@@ -30,7 +30,7 @@ export function TimberHero({ identity }: { readonly identity: TimberIdentity }):
         </div>
         <p className={hero.platform}>Minecraft Java 1.21.1 · NeoForge</p>
       </div>
-      <figure className={styles.picture[identity.id]}>
+      <figure className={styles.picture[identity.layout]}>
         <img
           src="/art/village-site.webp"
           alt="Kithkyn village buildings beside a mangrove coast in Minecraft"

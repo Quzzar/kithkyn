@@ -4,6 +4,7 @@ import { breakpoint, vars } from "../styles/theme.css";
 
 export const page = style([container, { paddingBlock: vars.space.xxl }]);
 export const intro = style({ paddingBottom: vars.space.xxl });
+export const introLinks = style({ display: "flex", flexWrap: "wrap", gap: vars.space.lg });
 globalStyle(`${intro} h1`, { fontSize: vars.fontSize.title, marginTop: vars.space.lg });
 globalStyle(`${intro} p`, {
   color: vars.color.muted,
@@ -17,10 +18,17 @@ export const back = style({
 });
 export const grid = style({
   display: "grid",
-  gridTemplateColumns: "1fr 1fr",
+  gridTemplateColumns: "repeat(3, 1fr)",
   gap: vars.space.xl,
   "@media": { [breakpoint.compact]: { gridTemplateColumns: "1fr" } },
 });
+export const previousGrid = style([
+  grid,
+  {
+    gridTemplateColumns: "1fr 1fr",
+    "@media": { [breakpoint.compact]: { gridTemplateColumns: "1fr" } },
+  },
+]);
 export const direction = style({
   minWidth: 0,
   background: vars.color.canvas,
@@ -29,7 +37,11 @@ export const direction = style({
   borderRadius: vars.radius.small,
   overflow: "hidden",
 });
-export const cardIntro = style({ padding: vars.space.lg });
+export const cardIntro = style({
+  padding: vars.space.lg,
+  minHeight: vars.size.studyIntro,
+  "@media": { [breakpoint.compact]: { minHeight: vars.space.none } },
+});
 globalStyle(`${cardIntro} h2`, { fontSize: vars.fontSize.subheading });
 globalStyle(`${cardIntro} p`, {
   color: vars.color.muted,
@@ -38,13 +50,25 @@ globalStyle(`${cardIntro} p`, {
 });
 export const assets = style({
   display: "grid",
-  gridTemplateColumns: "1fr auto",
+  gridTemplateColumns: "1fr",
   alignItems: "center",
-  gap: vars.space.lg,
-  padding: vars.space.lg,
+  justifyItems: "center",
+  gap: vars.space.md,
+  padding: vars.space.md,
+  height: vars.size.studyArtwork,
   background: vars.color.raised,
-  "@media": { [breakpoint.narrow]: { padding: vars.space.md, gap: vars.space.md } },
+  "@media": {
+    [breakpoint.compact]: {
+      gridTemplateColumns: "1fr auto",
+      justifyItems: "start",
+      height: "auto",
+    },
+  },
 });
+export const previousAssets = style([
+  assets,
+  { gridTemplateColumns: "1fr auto", justifyItems: "start" },
+]);
 export const wordmark = style({
   width: vars.size.studyWordmark,
   height: "auto",

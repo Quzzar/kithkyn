@@ -14,6 +14,7 @@ const routes: RouteObject[] = [
       { index: true, element: <HomePage /> },
       { path: "brand", element: <BrandPage /> },
       { path: "brand/directions", element: <TimberDirectionsPage /> },
+      { path: "brand/directions/previous", element: <TimberDirectionsPage previous /> },
       { path: "brand/directions/:directionId", element: <IdentityPreviewPage /> },
       { path: "studies/:round", element: <SectionRedirect /> },
       { path: "directions/:identityId", element: <SectionRedirect /> },

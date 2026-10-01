@@ -150,6 +150,28 @@ Patchwork's is 4.93:1. Strict TypeScript, the production build, ESLint, Prettier
 18 existing desktop/mobile browser checks passed. Reviewed comparison and homepage captures
 are saved as `docs/website-preview/timber-*.jpg`.
 
+Aaron then requested different options. The current comparison presents three further directions:
+
+| Direction | Artwork | Website |
+| --- | --- | --- |
+| Hewn | Thick pale spruce letters with stepped corners and end-grain faces; a substantial K | Cool slate surfaces, warm ivory, split hero |
+| Woven | An interlocking birch-and-oak K with simple ivory pixel lettering | Olive charcoal surfaces, centered wordmark, wide gameplay image |
+| Cabin Mark | A pale K in a compact cedar cabin silhouette, with birch uppercase lettering | Warm charcoal surfaces, split hero |
+
+Their wordmarks are 128 × 35, 128 × 31 and 128 × 29 native pixels. All three K icons remain
+32 × 32 and readable at the toolbar's 1× scale. The earlier pair stays available at
+`/brand/directions/previous`. Six individual PNG downloads ship alongside the new full website
+previews. Exact built-in imagegen prompts and sampling details are in
+`Website/public/brand/directions/generation-prompts-round-two.md`.
+
+The new comparison uses three aligned cards at desktop and one column on phones. Captures of
+all three complete websites, the comparison and 320-pixel layouts were reviewed. Shareable
+village selection, keyboard setup tabs, earlier-study navigation and all loaded images were
+verified. A clean browser reload reported no warnings or errors. Text and oak accents exceed
+4.5:1 on every surface; minimum ratios are 4.63:1 (Hewn), 4.69:1 (Woven) and 5.56:1 (Cabin Mark).
+The production build, strict TypeScript, ESLint, Prettier and all 18 existing browser checks passed
+for this round as well.
+
 ## Verification and publishing
 
 Current captures in `docs/website-preview/` show the chosen homepage and brand downloads at
