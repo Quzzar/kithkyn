@@ -1,7 +1,7 @@
 # Kithkyn website
 
-The landing page at `/` uses the selected Corner Frame timber wordmark and Pixel Joinery K.
-The original PNG masters ship unchanged. The website keeps a clean slate canvas, Outfit
+The landing page at `/` uses the selected Corner Frame timber wordmark and its square K.
+The artwork uses a real 116 × 48 grid, with a 32 × 32 icon extracted from the same master. The website keeps a clean slate canvas, Outfit
 typography and real game captures; the wooden flavor belongs to the logo.
 
 `/brand` provides the complete kit, individual PNG and SVG logo downloads, and a sharing card.
@@ -36,8 +36,10 @@ parameters, and village selection remains shareable through `?village=...`.
 
 ## Brand exports
 
-`public/brand/wordmark.png` and `icon.png` are the approved masters. The K also supplies the
-mod-list icon. Exact generation prompts are saved beside the assets.
+`public/brand/wordmark.png` and `icon.png` are the native pixel masters. Larger exports use
+whole-number copies of each pixel. The 128-pixel K supplies the mod-list icon. The site uses
+pixelated rendering and integer display scales. Sampling details and source provenance are
+recorded in `../docs/website-brand.md`; original generation prompts are saved beside the assets.
 
 ```sh
 bun run brand:export

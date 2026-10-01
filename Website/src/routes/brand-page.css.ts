@@ -1,4 +1,4 @@
-import { globalStyle, style } from "@vanilla-extract/css";
+import { globalStyle, style, styleVariants } from "@vanilla-extract/css";
 import { container } from "../components/site.css";
 import { primary } from "../components/village-hero.css";
 import { breakpoint, vars } from "../styles/theme.css";
@@ -27,11 +27,18 @@ export const stage = style({
   justifyContent: "center",
   background: vars.color.raised,
   borderRadius: vars.radius.small,
+  "@media": { [breakpoint.narrow]: { padding: vars.space.md } },
 });
 globalStyle(`${stage} img`, {
-  width: "100%",
-  height: vars.size.brandPreview,
-  objectFit: "contain",
+  imageRendering: "pixelated",
+  height: "auto",
+});
+export const artwork = styleVariants({
+  wordmark: {
+    width: vars.size.wordmarkPreview,
+    "@media": { [breakpoint.narrow]: { width: vars.size.compactLogo } },
+  },
+  icon: { width: vars.size.iconPreview },
 });
 globalStyle(`${asset} h2`, { marginTop: vars.space.lg, fontSize: vars.fontSize.subheading });
 globalStyle(`${asset} p`, {
@@ -39,7 +46,12 @@ globalStyle(`${asset} p`, {
   color: vars.color.muted,
   fontSize: vars.fontSize.small,
 });
-export const downloads = style({ display: "flex", gap: vars.space.xl, marginTop: vars.space.md });
+export const downloads = style({
+  display: "flex",
+  flexWrap: "wrap",
+  gap: vars.space.lg,
+  marginTop: vars.space.md,
+});
 globalStyle(`${downloads} a`, {
   display: "inline-flex",
   alignItems: "center",

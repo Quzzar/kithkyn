@@ -3,7 +3,8 @@
 ## Final selection: Corner Frame
 
 On October 1, 2026 Aaron selected Corner Frame (10), attaching the exact generated wordmark.
-Use that original PNG unchanged, paired with the previously selected Pixel Joinery K icon.
+His follow-up requested native pixels matching the visual block granularity. The chosen source
+is reduced to a 116 × 48 master, with a 32 × 32 K extracted from its first letter.
 The root route becomes the finished landing page, and the unused comparison pages, alternate
 identities and their assets are removed. Git history preserves the exploration.
 
@@ -27,9 +28,9 @@ brand / complete kit download
       / sharing card / short usage notes
 ```
 
-The PNG masters are raster artwork. SVG containers embed those same originals without tracing
-or changing their appearance; describe them accurately. A sharing card uses the chosen mark,
-plain slate canvas and one short product line. No new generated scene or wooden page controls.
+The PNG masters are native raster pixel artwork. SVG containers embed those pixels with
+nearest-neighbor rendering. Integer-sized exports preserve the same grid. A sharing card uses the
+chosen mark, plain slate canvas and one short product line. No new generated scene or wooden page controls.
 
 ## Popular Minecraft mod references
 
@@ -65,7 +66,7 @@ Lettering, open Corner Frame and slim Oak Frame. Corner Frame is the chosen word
 
 The comparison pages, alternate identities and historical captures are removed from the
 shipping site. Git commit `e4c9fc4` preserves the exploration and original prompts. The selected
-reference, K extraction and Corner Frame prompts ship in
+Pixel Joinery reference and Corner Frame prompts ship in
 `Website/public/brand/generation-prompts.md`.
 
 The generated village diorama and its banner derivative remain deleted. The later wooden sign
@@ -81,11 +82,13 @@ desktop and phone sizes. Browser checks cover the chosen identity, download form
 redirects, all 17 styles, shared selection and browser history, keyboard focus, setup tabs,
 FAQ disclosure, reduced motion, loaded assets, typography and 320-pixel overflow.
 
-All 18 desktop/mobile Playwright checks passed. The download checks passed again after verifying
-the final PNG and JPEG signatures. The strict TypeScript production build, ESLint, Prettier and
-Gradle `processResources` passed. The K's packaged resource matches its approved master.
+All 18 browser checks passed. After the final sizing adjustment, six focused checks passed for
+native dimensions, equal integer display scales, pixelated rendering, exported downloads and
+responsive layouts. The sampling and extraction recipe is recorded in
+[website-brand.md](website-brand.md). The strict TypeScript production build, ESLint, Prettier and
+Gradle `processResources` passed. The K's packaged resource matches its 128-pixel export.
 The render review covered 1280 × 900, 390 × 844 and 320 × 720 viewports. A clean final browser
-session reported no console warnings or errors. The brand ZIP passed an archive integrity check.
+reload reported no new console warnings or errors. The brand ZIP passed an archive integrity check.
 
 Production deployment waits for the intended domain and hosting destination. The sharing-image
 metadata needs the final host's absolute URL at publication. See [website-brand.md](website-brand.md).

@@ -2,7 +2,7 @@ import { Download } from "lucide-react";
 import type { ReactElement } from "react";
 import { SiteHeader } from "../components/SiteHeader";
 import { SiteFooter } from "../components/SiteFooter";
-import { BRAND_ICON, BRAND_WORDMARK, type BrandAsset } from "../data/brand";
+import { BRAND_ICON, BRAND_WORDMARK, type BrandAsset, type BrandExport } from "../data/brand";
 import * as styles from "./brand-page.css";
 
 /** Creators can inspect and download the chosen identity without selecting a variant. */
@@ -23,6 +23,7 @@ export function BrandPage(): ReactElement {
             <section className={styles.asset} key={asset.name}>
               <div className={styles.stage}>
                 <img
+                  className={styles.artwork[asset.kind]}
                   src={asset.source}
                   alt={`Kithkyn ${asset.name.toLowerCase()}`}
                   width={asset.width}
@@ -38,6 +39,18 @@ export function BrandPage(): ReactElement {
                 <a href={asset.svgSource} download aria-label={`Download ${asset.name} SVG`}>
                   SVG <Download aria-hidden="true" />
                 </a>
+              </div>
+              <div className={styles.downloads}>
+                {asset.exports.map((exported: BrandExport): ReactElement => (
+                  <a
+                    href={exported.source}
+                    download
+                    key={exported.source}
+                    aria-label={`Download ${asset.name} ${exported.label}`}
+                  >
+                    {exported.label}
+                  </a>
+                ))}
               </div>
             </section>
           ))}
@@ -60,8 +73,8 @@ export function BrandPage(): ReactElement {
           />
         </section>
         <p className={styles.notes}>
-          Keep the original colors, proportions and clear space. SVG files contain the original
-          pixel artwork.
+          Use whole-number scales and nearest-neighbor rendering. SVG files contain the native pixel
+          artwork.
         </p>
       </main>
       <SiteFooter />

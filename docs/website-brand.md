@@ -1,7 +1,7 @@
 # Website and brand status
 
 On October 1, 2026 Aaron selected Corner Frame (10), attaching the exact wordmark. It is paired
-with the previously selected Pixel Joinery K. The wooden-board flavor is concentrated in the
+with a square K extracted from the same wordmark. The wooden-board flavor is concentrated in the
 logo; the website stays sleek. The homepage at `/` now uses this chosen identity. `/brand`
 provides downloads. Earlier comparisons and unused assets are removed, with exploration
 preserved in Git at commit `e4c9fc4`.
@@ -15,22 +15,39 @@ and source links use GitHub. Ocean and Nether catalogs are planned.
 
 | Asset | Master | Dimensions |
 | --- | --- | --- |
-| Corner Frame wordmark | `Website/public/brand/wordmark.png` | 1945 × 809 |
-| Pixel Joinery K | `Website/public/brand/icon.png` | 1254 × 1254 |
+| Corner Frame wordmark | `Website/public/brand/wordmark.png` | 116 × 48 |
+| Square timber K | `Website/public/brand/icon.png` | 32 × 32 |
 
-Both transparent PNG masters ship unchanged. The wordmark's SHA-256 is
-`5b6d5491cf238665737ba9b4c726c1deffc4eecfcd5ca5e7d9c282946e603a8d`, matching the owner's attachment.
-The K also ships as `src/main/resources/kithkyn-logo.png`, referenced by NeoForge mod metadata.
-The wordmark appears in the site header, footer and repository README; the K supplies the favicon.
+Aaron's follow-up requested actual image pixels matching the artwork's visual granularity.
+The selected 1945 × 809 source is preserved at Git commit `fc64070`, with SHA-256
+`5b6d5491cf238665737ba9b4c726c1deffc4eecfcd5ca5e7d9c282946e603a8d`. Its roughly 17-pixel drawn blocks
+are reduced to one native image pixel. The identity and its open charcoal corners remain the same.
 
-The downloadable kit includes both PNG masters, SVG containers embedding the originals,
-a 1200 × 630 sharing card in JPEG and SVG, the palette, usage notes, original generation prompts
-and the embedded Outfit font's license. These are pixel-art raster masters, not traced vectors.
-Use a quiet light background and preserve proportions, colors and clear space.
+The wordmark is center-sampled to 116 × 48. For output cell `(x, y)`, sample source coordinates
+`floor((x + 0.5) * 1945 / 116)` and `floor((y + 0.5) * 809 / 48)`. Retain the sampled RGB color;
+alpha below 128 becomes transparent, and alpha at or above 128 becomes fully opaque. Transparent
+RGB is zero. The first K occupies a 25 × 30 region beginning at `(11, 9)` on this grid. Copy that
+region to `(3, 1)` on a transparent 32 × 32 canvas for the square icon.
 
-Exact prompts live in `Website/public/brand/generation-prompts.md`. `bun run brand:export`
-inside `Website/` regenerates the SVG containers and ZIP. The sharing JPEG is captured from
-the SVG in the browser at its native dimensions, then included by a subsequent export.
+The kit includes wordmark exports at 464 × 192 and 928 × 384, and square K exports at 64, 128,
+256 and 512 pixels. Every larger PNG copies each native pixel into a whole-number square block;
+no smoothing, intermediate colors or soft alpha are introduced. Pixel data was checked against
+the native masters for every export. The masters are 5423 and 1641 bytes respectively.
+
+The 128 × 128 K ships as `src/main/resources/kithkyn-logo.png`, referenced by NeoForge metadata.
+The 32 × 32 SVG icon supplies the favicon. The wordmark appears in the header and footer at 2×
+on desktop and 1× in the phone header; brand specimens use 3×/2× for the wordmark and 5× for the K.
+CSS uses `image-rendering: pixelated`. The README uses the 4× wordmark PNG at its native size.
+
+The downloadable kit includes the native masters, larger PNGs, SVG containers embedding native
+pixels with pixelated rendering, a 1200 × 630 sharing card in JPEG and SVG, palette, usage notes,
+original generation prompts and the Outfit license. The sharing SVG enlarges the wordmark at
+exactly 8×. Its JPEG is recaptured from that SVG before packaging. These remain raster pixel
+masters inside SVG containers. Use a quiet light background and integer scales.
+
+Exact original generation prompts live in `Website/public/brand/generation-prompts.md`.
+The pixel reduction and K extraction used deterministic sampling. `bun run brand:export`
+inside `Website/` regenerates the SVG containers and ZIP from the checked-in PNG masters and exports.
 
 The rejected generated village diorama and literal wooden page controls remain deleted.
 See [website-redesign.md](website-redesign.md) for the reference pass and decision history.

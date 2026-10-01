@@ -8,13 +8,13 @@ function brandPath(name: string): string {
   return fileURLToPath(new URL(`../public/brand/${name}`, import.meta.url));
 }
 
-/** SVG containers embed the original PNG; they do not repaint or trace the artwork. */
+/** SVG containers preserve the native PNG and its nearest-neighbor display rule. */
 function artworkSvg(asset: BrandAsset): string {
   const encoded: string = readFileSync(
     fileURLToPath(new URL(`../public${asset.source}`, import.meta.url)),
   ).toString("base64");
   return `<svg xmlns="http://www.w3.org/2000/svg" width="${String(asset.width)}" height="${String(asset.height)}" viewBox="0 0 ${String(asset.width)} ${String(asset.height)}" role="img" aria-label="Kithkyn ${asset.name.toLowerCase()}">
-  <image width="${String(asset.width)}" height="${String(asset.height)}" href="data:image/png;base64,${encoded}"/>
+  <image width="${String(asset.width)}" height="${String(asset.height)}" style="image-rendering:pixelated" href="data:image/png;base64,${encoded}"/>
 </svg>\n`;
 }
 
@@ -30,7 +30,7 @@ writeFileSync(
   <style>@font-face{font-family:Outfit;src:url(data:font/woff2;base64,${font}) format('woff2');font-weight:100 900}text{font-family:Outfit,sans-serif}</style>
   <rect width="1200" height="630" fill="${BRAND_PALETTE.canvas}"/>
   <text x="600" y="66" text-anchor="middle" font-size="21" font-weight="500" fill="${BRAND_PALETTE.oak}">Autonomous villagers for Minecraft</text>
-  <image x="120" y="108" width="960" height="399" href="data:image/png;base64,${wordmark}"/>
+  <image x="136" y="112" width="928" height="384" style="image-rendering:pixelated" href="data:image/png;base64,${wordmark}"/>
   <text x="600" y="570" text-anchor="middle" font-size="46" font-weight="500" fill="${BRAND_PALETTE.ink}">A world with neighbors.</text>
 </svg>\n`,
 );
@@ -43,13 +43,16 @@ writeFileSync(
   brandPath("README.md"),
   `# Kithkyn brand kit
 
-Selected on October 1, 2026: the Corner Frame wordmark and the Pixel Joinery K icon.
+Selected on October 1, 2026: the Corner Frame timber wordmark, reduced to its native pixel grid.
+The square icon is the first K extracted from that same master.
 
-- wordmark.png: original transparent 1945 × 809 PNG master.
-- icon.png: original transparent 1254 × 1254 PNG master.
-- wordmark.svg and icon.svg: self-contained SVG containers embedding the original PNGs.
+- wordmark.png: transparent 116 × 48 native pixel master.
+- icon.png: transparent 32 × 32 native square K.
+- wordmark-464.png and wordmark-928.png: exact 4× and 8× pixel copies.
+- icon-64.png, icon-128.png, icon-256.png and icon-512.png: exact integer-scaled square exports.
+- wordmark.svg and icon.svg: SVG containers embedding the native PNGs with pixelated rendering.
 - social.jpg: 1200 × 630 sharing card, captured from social.svg.
-- social.svg: sharing card with the original wordmark and embedded Outfit font.
+- social.svg: sharing card with the native wordmark and embedded Outfit font.
 - palette.json: the website's slate and oak colors.
 - generation-prompts.md: the exact original built-in image-generation prompts.
 - outfit-LICENSE.txt: the sharing card font's license.
@@ -59,15 +62,23 @@ Selected on October 1, 2026: the Corner Frame wordmark and the Pixel Joinery K i
 Use the full wordmark when the name needs to be read. Use the K icon in compact spaces.
 Keep the colors, proportions and transparent clear space. Use a light, quiet background
 so the charcoal outline remains readable. Do not put the wordmark on a wood texture.
+Use whole-number enlargement with nearest-neighbor sampling. In CSS, set image-rendering: pixelated.
 
-These are pixel-art raster masters. The SVG logo containers are not traced vector paths.
-The sharing card uses the same artwork unchanged, with native SVG text and layout.
+The generated 1945 × 809 source was center-sampled at the visual block cadence, with binary alpha.
+The PNG masters have one actual image pixel per grid cell. The SVG containers embed these pixels.
+The sharing card displays the wordmark at exactly 8×, with native SVG text and layout.
 `,
 );
 
 const names: readonly string[] = [
   "wordmark.png",
   "icon.png",
+  "wordmark-464.png",
+  "wordmark-928.png",
+  "icon-64.png",
+  "icon-128.png",
+  "icon-256.png",
+  "icon-512.png",
   "wordmark.svg",
   "icon.svg",
   "social.svg",

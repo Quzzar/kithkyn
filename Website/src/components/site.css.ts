@@ -51,6 +51,7 @@ export const brand = style({
   flexShrink: 0,
   "@media": { [breakpoint.narrow]: { width: vars.size.mobileLogo } },
 });
+globalStyle(`${brand} img`, { width: "100%", imageRendering: "pixelated" });
 export const headerNav = style({
   display: "flex",
   alignItems: "center",
@@ -86,6 +87,7 @@ export const footerInner = style([
   },
 ]);
 export const footerBrand = style({ display: "block", width: vars.size.compactLogo });
+globalStyle(`${footerBrand} img`, { width: "100%", imageRendering: "pixelated" });
 export const footerLinks = style({
   display: "flex",
   flexWrap: "wrap",

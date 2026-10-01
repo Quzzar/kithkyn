@@ -24,6 +24,21 @@ test("uses the chosen corner-frame identity on the main landing page", async ({
   await expect(page).toHaveTitle("Kithkyn | Bringing villages to life");
   await expect(page.getByRole("heading", { level: 1 })).toContainText("A world with");
   await expect(page.locator("header img")).toHaveAttribute("src", "/brand/wordmark.png");
+  await expect(page.locator("header img")).toHaveCSS("image-rendering", "pixelated");
+  expect(
+    await page
+      .locator("header img")
+      .evaluate((image: HTMLImageElement): number[] => [image.naturalWidth, image.naturalHeight]),
+  ).toEqual([116, 48]);
+  for (const image of await page.locator("header img, footer img").all()) {
+    const scales: number[] = await image.evaluate((element: HTMLImageElement): number[] => {
+      const bounds: DOMRect = element.getBoundingClientRect();
+      return [bounds.width / element.naturalWidth, bounds.height / element.naturalHeight];
+    });
+    expect(scales[0]).toBeGreaterThanOrEqual(1);
+    expect(Number.isInteger(scales[0])).toBe(true);
+    expect(scales[1]).toBe(scales[0]);
+  }
   await expect(page.locator("footer img")).toHaveAttribute("src", "/brand/wordmark.png");
   await expect(page.locator('link[rel="icon"]')).toHaveAttribute("href", "/brand/icon.svg");
   await expect(page.getByRole("link", { name: "Compare identities" })).toHaveCount(0);
@@ -145,6 +160,12 @@ test("downloads the chosen brand kit and preserves links from earlier previews",
   for (const source of [
     "wordmark.png",
     "icon.png",
+    "wordmark-464.png",
+    "wordmark-928.png",
+    "icon-64.png",
+    "icon-128.png",
+    "icon-256.png",
+    "icon-512.png",
     "wordmark.svg",
     "icon.svg",
     "social.jpg",
@@ -157,6 +178,12 @@ test("downloads the chosen brand kit and preserves links from earlier previews",
       expect(Array.from((await response.body()).subarray(0, 8))).toEqual([
         137, 80, 78, 71, 13, 10, 26, 10,
       ]);
+      if (source === "wordmark.png" || source === "icon.png") {
+        const pixels: Buffer = await response.body();
+        expect([pixels.readUInt32BE(16), pixels.readUInt32BE(20)]).toEqual(
+          source === "wordmark.png" ? [116, 48] : [32, 32],
+        );
+      }
     }
     if (source.endsWith(".jpg")) {
       expect(response.headers()["content-type"]).toContain("image/jpeg");

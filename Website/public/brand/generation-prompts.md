@@ -1,16 +1,10 @@
 # Selected brand generation prompts
 
-Selected on October 1, 2026. The PNG masters ship unchanged. These are the exact original built-in image-generation prompts. Earlier reference artwork is preserved at Git commit e4c9fc4.
+Selected on October 1, 2026. These are the original built-in image-generation prompts for the chosen source. The source wordmark is preserved at Git commit fc64070. Shipping masters now use deterministic native-grid sampling and K extraction, documented in docs/website-brand.md. No new generation was used for this pixel-preparation pass.
 
 ## Pixel Joinery reference
 
 Use case: logo-brand. Create one NEW original logo study for Kithkyn, an independent Minecraft mod about villagers building their own settlements. Input image 1 is a lettering/personality reference: use its confident soft rounded lettering as a starting point, not its flat doorway icon. Input image 2 is a material/reference for a K assembled from timber: replace its smooth illustrative wood treatment with crisp deliberate PIXEL ART. Exact text: "Kithkyn", K-i-t-h-k-y-n. One horizontal icon-plus-wordmark lockup only, compact square K icon on the left, beautifully kerned wordmark on the right. Genuine transparent background, tight but comfortable padding. The icon must look like a polished low-resolution game sprite, with a consistent coarse pixel grid, staircase diagonals and a 5-color wood palette: dark charcoal outline, brown shadow, mid oak, honey highlight, pale end grain. Clearly visible blocky pixels even when the logo is small. No smooth curves in the icon, no blur, no dithering, no realistic grain, no glossy gradients, no drop shadow around the whole canvas. Limited sparse rectangular grain marks; keep broad readable forms. The mood is lightly slapstick and handmade, but polished. The wordmark is simpler and smoother than the icon: original rounded bold lowercase letters with a capital K, pale warm ivory fill and a restrained dark slate outline, comparable in finish and readability to strong indie Minecraft mod branding. Do not copy Cobblemon, Pokemon, or the Minecraft title lettering. No scene, no plaque behind the name, no ropes, no slogan, no extra text or duplicate sample logos. This is logo exploration, not a mockup. Variation: a precise K made from three pixel-art oak planks. The vertical upright and the two diagonal arms meet at one tidy mortise-like center join. The diagonals use an obvious consistent stepped pixel contour. One arm projects a single pixel farther than expected for a quiet handmade joke. Flat front view, strong silhouette, no metal bolts. Keep the wordmark calm, rounded and tightly composed.
-
-## selected-k
-
-```text
-Use case: precise-object-edit. Input image: edit target. Extract only the approved pixel timber K symbol at the far left as a standalone transparent icon. Remove all seven smooth ivory letters and all other content. Preserve the K itself exactly: same three plank shapes and joinery, proportions, stepped charcoal outline, warm golden oak faces, honey highlights and sparse brown grain marks. Do not redraw, alter, simplify, add screws or change its silhouette. Center this single K in a square transparent canvas with modest even padding. Actual transparent alpha outside the icon, including the spaces between its angled arms. No shadow, background, frame, wordmark or other text.
-```
 
 ## corner-frame
 
