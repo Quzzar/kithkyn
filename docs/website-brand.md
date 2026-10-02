@@ -10,7 +10,8 @@ All 17 bundled land catalogs appear under biome-group names, with Radix keyboard
 and nuqs shareable selection and browser history. Existing selection IDs stay stable.
 The main headline is "Autonomous Villages", with no duplicate eyebrow.
 Copy describes concrete game actions. Local/cloud AI requirements and multiplayer installation
-instructions remain; the FAQ, future-catalog note and coming-soon placeholders are removed.
+instructions remain; the Village life section, FAQ, future-catalog note and coming-soon
+placeholders are removed.
 Installation and source links use GitHub. The public page makes no roadmap promises.
 
 Credits opens the existing [Credits and inspiration](https://github.com/Quzzar/kithkyn#credits-and-inspiration)
@@ -90,7 +91,8 @@ in `Website/src/data/imagery.ts`, so replacement does not require changing compo
 
 The local preview is `http://127.0.0.1:45173`. Reviewed desktop and mobile captures live in
 `docs/website-preview/`. `/` is the player landing page. Old `/brand` and identity-preview links
-redirect home. `/atlas`, `/stories` and `/setup` redirect to their relevant section. Redirects
+redirect home. `/stories` also redirects home; `/atlas` and `/setup` redirect to their relevant
+section. Redirects
 preserve query parameters and, where no section is specified, existing hashes.
 
 Browser checks cover intact native outlines, integer display scales, no public design tools,
