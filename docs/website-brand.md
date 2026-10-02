@@ -1,76 +1,70 @@
-# Website and brand status
+# Website and artwork status
 
-On October 2, 2026 Aaron requested a light presentation and different temporary Minecraft
-images. The homepage at `/` uses the accepted Hewn Planks wordmark and matching K, warm-white
-surfaces, dark brown copy, saddle-brown actions and Outfit typography. A softly washed Minecraft
-village scene extends behind the desktop navigation and intro. On phones, the photograph sits
-below the intro so it remains visible. `/brand` provides the matching light palette and kit.
+The player homepage uses the accepted Hewn Planks wordmark and matching K, warm-white
+surfaces, dark brown copy, saddle-brown actions and Outfit typography. A softly washed
+Minecraft village scene extends behind the desktop navigation and intro. On phones, the
+photograph sits below the intro. The site has no public brand library, download kit or
+identity-comparison pages. Artwork provenance stays in these internal project notes.
 
-All 17 bundled land catalogs remain available under biome-group names, with Radix keyboard
-navigation and nuqs shareable selection and browser history. Existing selection IDs stay stable.
+All 17 bundled land catalogs appear under biome-group names, with Radix keyboard navigation
+and nuqs shareable selection and browser history. Existing selection IDs stay stable.
 The main headline is "Autonomous Villages for Minecraft", with no duplicate eyebrow.
 Copy describes concrete game actions. Local/cloud AI requirements and multiplayer installation
-instructions remain; the FAQ, future-catalog note and coming-soon download placeholders are removed.
+instructions remain; the FAQ, future-catalog note and coming-soon placeholders are removed.
 Installation and source links use GitHub. The public page makes no roadmap promises.
 
-## Chosen identity
+Credits opens the existing [Credits and inspiration](https://github.com/Quzzar/kithkyn#credits-and-inspiration)
+list in a new tab. That README section credits the building projects and their creators,
+plus the language models and runtime. Keep that list as the source of truth rather than
+maintaining a second contributor list in the website.
+
+## Chosen identity and native pixels
 
 | Asset | Master | Dimensions |
 | --- | --- | --- |
-| Hewn Planks wordmark | `Website/public/brand/wordmark.png` | 128 × 34 |
+| Hewn Planks wordmark | `Website/public/brand/wordmark.png` | 128 × 37 |
 | Matching timber K | `Website/public/brand/icon.png` | 32 × 32 |
 
-The accepted wordmark combines Hewn's broad letter shapes with the honey-oak planks from
-Aaron's attached reference. Joined faces, pale cut ends, sparse grain and a slim dark outline
-supply the material. The first K has a flat bottom. The rejected corner brackets and hanging
-K tips remain absent. The matching K is a reference edit, not a pixel-identical extraction.
+The wordmark combines Hewn's broad letter shapes with the honey-oak planks from Aaron's
+attached reference. Joined faces, pale cut ends, sparse grain and a dark outline supply
+the material. The first K has a flat bottom. Corner brackets and hanging K tips were rejected.
+The matching K is a reference edit, not a pixel-identical extraction.
 
 The built-in image editor produced wordmark source
 `exec-59a21a0e-4ab7-4f47-a0d8-e2971099b9b1.png` (2170 × 725) and icon source
 `exec-9e890def-5c77-401c-8e74-2fd076b5e979.png` (1254 × 1254) in this chat's generated-images
-directory. Exact edit prompts, input roles and the sampling recipe ship in
-`Website/public/brand/generation-prompts.md`. The previous 116 × 48 identity and its original
-provenance remain in Git at `0212509`.
+directory. Exact historical prompts and the corrected preparation recipe are in
+[website-brand-prompts.md](website-brand-prompts.md). Earlier artwork and explorations remain
+in Git history; they do not ship in the site's public directory.
 
-The wordmark is center-sampled to 128 × 43. For output cell `(x, y)`, sample source coordinates
-`floor((x + 0.5) * 2170 / 128)` and `floor((y + 0.5) * 725 / 43)`. Retain sampled RGB;
-alpha below 128 becomes transparent with zero RGB, while alpha at or above 128 becomes fully
-opaque. Trim empty top and bottom rows to one transparent row beyond the visible art, yielding
-128 × 34. The repaired K uses the same sampling and alpha rule from 1254 × 1254 to 32 × 32.
-Its visible bounds are `(7, 4)` through `(25, 27)`, leaving at least four empty grid cells
-on every edge. The repair retains the original plank silhouette and makes the end faces
-and dark outline complete at small sizes. Earlier K artwork remains in Git history.
+The original single-center sampling discarded thin source-outline segments, making the
+K's left edge and the wordmark's top look cropped despite transparent canvas margins.
+The corrected conversion checks outline coverage in each native cell and selects existing
+dark source colors for every exposed boundary cell. Alpha is binary. The wordmark keeps two
+transparent rows above and below its silhouette; its visible bounds are `(3, 2)` through
+`(124, 34)`. The K keeps its 32-pixel square, with bounds `(6, 4)` through `(26, 28)` and at
+least three transparent cells on every side. No new generated artwork was needed for this repair.
 
-The kit includes wordmark exports at 512 × 136 and 1024 × 272, and square K exports at 64,
-128, 256 and 512 pixels. Every larger PNG copies each native pixel into a whole-number square
-block; no smoothing, intermediate colors or soft alpha are introduced. Pixel data is checked
-against the native masters for every export.
+The website retains only the assets it uses: native PNGs, a 512 × 148 wordmark for the README,
+a 128 × 128 K for `src/main/resources/kithkyn-logo.png`, the SVG favicon and a 1200 × 630 sharing
+card in JPEG and SVG. Larger PNGs copy each native pixel into an exact 4 × 4 square. Their
+pixel data matches the native masters, and the mod logo is byte-identical to the 128-pixel K.
+The header K is 1×, desktop hero wordmark 4×, phone hero 2× and footer wordmark 2×.
+CSS uses `image-rendering: pixelated`. The README renders its 4× PNG at native size.
 
-The 128 × 128 K ships as `src/main/resources/kithkyn-logo.png`, referenced by NeoForge metadata.
-The 32 × 32 SVG icon supplies the favicon. The header K is 1×, desktop hero wordmark 4×,
-phone hero 2× and footer wordmark 2×. Brand specimens use 3×/2× for the wordmark and 5× for the K.
-CSS uses `image-rendering: pixelated`. The README uses the 4× wordmark PNG at its native size.
+`bun run brand:export` embeds the corrected native PNGs into the favicon and sharing SVG
+without resampling. The sharing wordmark uses an exact 8× enlargement. Its JPEG is recaptured
+from the rendered SVG after artwork changes. The exporter creates no downloadable kit.
 
-The downloadable kit includes the native masters, integer PNG exports, SVG containers embedding
-native pixels, a 1200 × 630 JPEG and SVG sharing card, palette, usage notes, generation prompts
-and the Outfit license. The sharing SVG enlarges the wordmark exactly 8×. Its JPEG is recaptured
-before packaging. `bun run brand:export` regenerates SVG containers and the ZIP from the
-checked-in PNGs and integer exports. The SVGs preserve raster pixels instead of tracing paths.
-
-The fixed light system uses canvas `#faf8f2`, content surface `#f0ece3` and artwork/hover
-stage `#e7dfd1`. Text is dark brown `#302a24`, muted copy `#665c50`, and the saddle-brown
-accent `#805437`. Borders derive from dark ink at 16% opacity. Text and accents exceed 4.5:1
-on all three surfaces; the minimum ratio is 4.90:1. Desktop copy sits in the pale horizontal
-wash. Phone copy sits on the opaque canvas, with a separate full-color photo below. Browser
-controls use the light scheme. Earlier dark studies retain their scoped palettes.
-
-The comparison at `/brand/directions` and the complete `/brand/directions/hewn-planks` preview
-remain available. Their wordmark and K PNGs are byte-identical to the canonical masters.
-The earlier-directions gallery retains the original spruce Hewn, Cabin Joinery and Patchwork.
-The rejected generated village diorama and literal wooden page controls remain deleted.
-See [website-redesign.md](website-redesign.md) for references and design decisions.
+The fixed light system uses canvas `#faf8f2`, content surface `#f0ece3` and hover stage
+`#e7dfd1`. Text is dark brown `#302a24`, muted copy `#665c50`, and the saddle-brown accent
+`#805437`. Borders derive from dark ink at 16% opacity. Text and accents exceed 4.5:1 on all
+three surfaces; the minimum ratio is 4.90:1. Desktop copy sits in the pale horizontal wash.
+Phone copy sits on the opaque canvas, with a separate full-color photo below. Browser controls
+use the light scheme. See [website-redesign.md](website-redesign.md) for the design references.
 
 ## Temporary scenery
+
 
 The former shoreline and twelve catalog-review images have been removed from the website.
 Three temporary Minecraft scenes now provide the backdrop and regional-browser imagery.
@@ -94,9 +88,23 @@ in `Website/src/data/imagery.ts`, so replacement does not require changing compo
 ## Preview and publishing
 
 The local preview is `http://127.0.0.1:45173`. Reviewed desktop and mobile captures live in
-`docs/website-preview/`. `/` is the landing page; `/brand` is the asset library. Old direction,
-study and `/play` links redirect home. `/atlas`, `/stories` and `/setup` redirect to the relevant
-section. Redirects preserve query parameters and, where no section is specified, existing hashes.
+`docs/website-preview/`. `/` is the player landing page. Old `/brand` and identity-preview links
+redirect home. `/atlas`, `/stories` and `/setup` redirect to their relevant section. Redirects
+preserve query parameters and, where no section is specified, existing hashes.
+
+Browser checks cover intact native outlines, integer display scales, no public design tools,
+the Credits destination, all 17 biome groups, shared selection/history, keyboard focus,
+local/cloud setup, loaded assets, reduced motion and 320-pixel overflow. Inspect the rendered
+homepage at desktop and phone sizes before reporting visual changes as complete.
+
+October 2 verification: all 20 desktop/mobile checks passed with two workers. The 17-group
+traversal has a longer test allowance after the original 30-second budget expired under
+machine load; the final traversal took 2.7 seconds on desktop and 4.5 seconds on mobile.
+The homepage was inspected at 1280 × 900, 390 × 844 and 320 × 720, and the live Credits
+link opened the correct GitHub list. Strict TypeScript/build, lint and formatting passed.
+Gradle `processResources` passed for the packaged K. Native alpha contains only 0 and 255;
+both retained 4× PNG exports match their masters exactly. The updated sharing JPEG was
+captured at 1200 × 630 from the SVG and visually inspected.
 
 This version is not deployed. Earlier domain checks found that `kithkyn.com` served a hiring
 product, while `kithkin.com` redirected to `/lander`. Confirm the intended domain and hosting

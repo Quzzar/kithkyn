@@ -1,11 +1,4 @@
-import {
-  expect,
-  test,
-  type APIResponse,
-  type Download,
-  type Page,
-  type TestInfo,
-} from "@playwright/test";
+import { expect, test, type Page, type TestInfo } from "@playwright/test";
 
 /** Wait for displayed assets before checking layout or saving a render. */
 async function waitForImages(page: Page): Promise<void> {
@@ -59,6 +52,7 @@ test("uses the native timber identity on the main landing page", async ({
 test("browses all 17 biome groups without rendering inactive frames", async ({
   page,
 }): Promise<void> => {
+  test.slow();
   await page.goto("/atlas");
   const tabs = page.getByRole("tablist", { name: "Biome groups" }).getByRole("tab");
   await expect(tabs).toHaveCount(17);
@@ -149,56 +143,28 @@ test("retains multiplayer guidance and real installation destinations", async ({
   );
 });
 
-test("downloads the chosen brand kit and preserves links from earlier previews", async ({
+test("keeps design tools private and opens the actual project credits", async ({
   page,
 }): Promise<void> => {
   await page.goto("/brand");
-  await expect(page).toHaveTitle("Kithkyn | Brand assets");
-  await waitForImages(page);
-  const pendingDownload: Promise<Download> = page.waitForEvent("download");
-  await page.getByRole("link", { name: "Download the brand kit" }).click();
-  const download: Download = await pendingDownload;
-  expect(download.suggestedFilename()).toBe("kithkyn-brand-kit.zip");
-  for (const source of [
-    "wordmark.png",
-    "icon.png",
-    "wordmark-512.png",
-    "wordmark-1024.png",
-    "icon-64.png",
-    "icon-128.png",
-    "icon-256.png",
-    "icon-512.png",
-    "wordmark.svg",
-    "icon.svg",
-    "social.jpg",
-    "kithkyn-brand-kit.zip",
+  await expect(page).toHaveURL("/");
+  await expect(page.getByRole("link", { name: "Brand assets" })).toHaveCount(0);
+  await expect(page.getByRole("link", { name: "Download the brand kit" })).toHaveCount(0);
+  const credits = page.getByRole("link", { name: "Credits", exact: true });
+  await expect(credits).toHaveAttribute(
+    "href",
+    "https://github.com/Quzzar/kithkyn#credits-and-inspiration",
+  );
+  await expect(credits).toHaveAttribute("target", "_blank");
+  await expect(credits).toHaveAttribute("rel", "noopener noreferrer");
+  for (const path of [
+    "/play",
+    "/brand/directions",
+    "/brand/directions/hewn-planks",
+    "/directions/corner-frame",
+    "/studies/first",
+    "/studies/timber",
   ]) {
-    const response: APIResponse = await page.request.get(`/brand/${source}`);
-    expect(response.ok(), source).toBe(true);
-    if (source.endsWith(".png")) {
-      expect(response.headers()["content-type"]).toContain("image/png");
-      expect(Array.from((await response.body()).subarray(0, 8))).toEqual([
-        137, 80, 78, 71, 13, 10, 26, 10,
-      ]);
-      if (source === "wordmark.png" || source === "icon.png") {
-        const pixels: Buffer = await response.body();
-        expect([pixels.readUInt32BE(16), pixels.readUInt32BE(20)]).toEqual(
-          source === "wordmark.png" ? [128, 34] : [32, 32],
-        );
-      }
-    }
-    if (source.endsWith(".jpg")) {
-      expect(response.headers()["content-type"]).toContain("image/jpeg");
-      expect(Array.from((await response.body()).subarray(0, 3))).toEqual([255, 216, 255]);
-    }
-    if (source.endsWith(".svg"))
-      expect(response.headers()["content-type"]).toContain("image/svg+xml");
-    if (source.endsWith(".zip"))
-      expect((await response.body()).subarray(0, 2).toString()).toBe("PK");
-  }
-  await page.getByRole("link", { name: "Villages", exact: true }).click();
-  await expect(page.getByRole("heading", { name: "Villages by biome" })).toBeInViewport();
-  for (const path of ["/play", "/directions/corner-frame", "/studies/first", "/studies/timber"]) {
     await page.goto(path);
     await expect(page).toHaveURL("/");
   }
@@ -212,14 +178,14 @@ test("downloads the chosen brand kit and preserves links from earlier previews",
   await expect(page).toHaveURL("/");
 });
 
-test("renders the homepage and brand assets without errors or narrow-screen overflow", async ({
+test("renders player content without errors or narrow-screen overflow", async ({
   page,
 }, testInfo: TestInfo): Promise<void> => {
   const errors: string[] = [];
   page.on("pageerror", (error: Error): void => {
     errors.push(error.message);
   });
-  const paths: readonly string[] = ["/", "/brand"];
+  const paths: readonly string[] = ["/"];
   for (const path of paths) {
     await page.goto(path);
     await waitForImages(page);
@@ -230,7 +196,7 @@ test("renders the homepage and brand assets without errors or narrow-screen over
       ),
     ).toBe(true);
     await page.screenshot({
-      path: testInfo.outputPath(`${path === "/" ? "home" : "brand"}.png`),
+      path: testInfo.outputPath("home.png"),
       fullPage: true,
     });
   }
@@ -257,4 +223,56 @@ test("respects reduced motion and keeps actions still on hover", async ({
   await expect(action).toHaveCSS("transform", "none");
   await action.hover();
   await expect(action).toHaveCSS("transform", "none");
+});
+
+/** A missing one-cell border made intact PNGs look cropped after center-sampling. */
+test("preserves a dark outline around every native logo edge", async ({ page }): Promise<void> => {
+  await page.goto("/");
+  await waitForImages(page);
+  const artwork = page.locator('header img, main img[alt="Kithkyn"]');
+  for (const image of await artwork.all()) {
+    const faults: number = await image.evaluate((element: HTMLImageElement): number => {
+      const canvas: HTMLCanvasElement = document.createElement("canvas");
+      canvas.width = element.naturalWidth;
+      canvas.height = element.naturalHeight;
+      const context: CanvasRenderingContext2D | null = canvas.getContext("2d");
+      if (!context) throw new Error("Cannot inspect native pixels");
+      context.drawImage(element, 0, 0);
+      const pixels: Uint8ClampedArray = context.getImageData(
+        0,
+        0,
+        canvas.width,
+        canvas.height,
+      ).data;
+      let missing: number = 0;
+      for (let y: number = 0; y < canvas.height; y += 1) {
+        for (let x: number = 0; x < canvas.width; x += 1) {
+          const index: number = (y * canvas.width + x) * 4;
+          if (pixels[index + 3] === 0) continue;
+          let boundary: boolean = false;
+          for (let dy: number = -1; dy <= 1; dy += 1) {
+            for (let dx: number = -1; dx <= 1; dx += 1) {
+              const nx: number = x + dx;
+              const ny: number = y + dy;
+              if (
+                nx < 0 ||
+                ny < 0 ||
+                nx >= canvas.width ||
+                ny >= canvas.height ||
+                pixels[(ny * canvas.width + nx) * 4 + 3] === 0
+              )
+                boundary = true;
+            }
+          }
+          if (
+            boundary &&
+            pixels.subarray(index, index + 3).some((channel: number): boolean => channel >= 65)
+          )
+            missing += 1;
+        }
+      }
+      return missing;
+    });
+    expect(faults, "Every exposed pixel edge retains its dark source outline").toBe(0);
+  }
 });

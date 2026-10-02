@@ -1,5 +1,5 @@
 import { globalStyle, style } from "@vanilla-extract/css";
-import { breakpoint, vars } from "../styles/theme.css";
+import { vars } from "../styles/theme.css";
 export const lead = style({
   color: vars.color.muted,
   fontSize: vars.fontSize.lead,
@@ -30,32 +30,5 @@ export const secondary = style({
 export const platform = style({
   marginTop: vars.space.lg,
   color: vars.color.muted,
-  fontSize: vars.fontSize.tiny,
-});
-export const figure = style({
-  position: "relative",
-  height: vars.size.heroPhoto,
-  minWidth: 0,
-  overflow: "hidden",
-  borderRadius: vars.radius.scene,
-  background: vars.color.surface,
-  "@media": { [breakpoint.narrow]: { height: vars.size.mobilePhoto } },
-});
-globalStyle(`${figure} img`, {
-  width: "100%",
-  height: "100%",
-  objectFit: "cover",
-  objectPosition: "65% center",
-});
-globalStyle(`${figure} figcaption`, {
-  position: "absolute",
-  bottom: vars.space.md,
-  left: vars.space.md,
-  right: vars.space.md,
-  width: "fit-content",
-  background: vars.color.imageOverlay,
-  color: vars.color.text,
-  padding: `${vars.space.xxs} ${vars.space.sm}`,
-  borderRadius: vars.radius.small,
   fontSize: vars.fontSize.tiny,
 });

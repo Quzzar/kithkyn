@@ -1,17 +1,9 @@
 import { NuqsAdapter } from "nuqs/adapters/react-router/v7";
-import { useEffect, type ReactElement } from "react";
-import { Outlet, ScrollRestoration, useLocation } from "react-router-dom";
+import type { ReactElement } from "react";
+import { Outlet, ScrollRestoration } from "react-router-dom";
 
 /** Restore section navigation and the village carousel's shareable selection. */
 export function RootLayout(): ReactElement {
-  const { pathname } = useLocation();
-  useEffect((): void => {
-    document.title = pathname.startsWith("/brand/directions")
-      ? "Kithkyn | Timber directions"
-      : pathname === "/brand"
-        ? "Kithkyn | Brand assets"
-        : "Kithkyn | Autonomous Villages for Minecraft";
-  }, [pathname]);
   return (
     <NuqsAdapter>
       <Outlet />

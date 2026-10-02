@@ -3,8 +3,9 @@
 The project's knowledge, one topic per file. Read the topic covering an area before working
 in it, and update it in the same change that moves what it describes.
 
-- [website-brand.md](website-brand.md): refined timber identity, brand kit, website behavior,
+- [website-brand.md](website-brand.md): refined timber identity, native pixels, website behavior,
   media provenance and publishing status.
+- [website-brand-prompts.md](website-brand-prompts.md): internal artwork prompts and native-grid preparation.
 - [website-redesign.md](website-redesign.md): logo iterations, sleek website layouts, Minecraft mod references and review.
 
 - [project-identity.md](project-identity.md): the Kithkyn name, website, repository, and the
