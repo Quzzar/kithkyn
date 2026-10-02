@@ -12,7 +12,8 @@ The main headline is "Autonomous Villages", with no duplicate eyebrow.
 Copy describes concrete game actions. Local/cloud AI requirements and multiplayer installation
 instructions remain; the Village life section, FAQ, future-catalog note and coming-soon
 placeholders are removed.
-Installation and source links use GitHub. The public page makes no roadmap promises.
+Installation and source links use GitHub. Platform labels stay version-free; the installation
+guide and releases own compatibility details. The public page makes no roadmap promises.
 
 Credits opens the existing [Credits and inspiration](https://github.com/Quzzar/kithkyn#credits-and-inspiration)
 list in a new tab. That README section credits the building projects and their creators,

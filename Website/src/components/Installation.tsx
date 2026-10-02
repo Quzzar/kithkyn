@@ -67,7 +67,7 @@ export function Installation(): ReactElement {
           </div>
           <div className={styles.installCard}>
             <h3>Install Kithkyn</h3>
-            <p className={styles.platform}>Minecraft Java 1.21.1 · NeoForge 21.1</p>
+            <p className={styles.platform}>Minecraft Java · NeoForge</p>
             <ol>
               <li>Install the matching NeoForge loader.</li>
               <li>Add Kithkyn to the server and every client.</li>
