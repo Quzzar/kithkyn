@@ -10,8 +10,8 @@ in the logo rather than literal plank controls or decorative page frames.
 
 The desktop hero uses a full-width Minecraft photograph with a pale horizontal wash and
 soft bottom fade. Phone copy sits on a solid canvas with the photograph below. The headline
-is "Autonomous Villages". Village life, a 17-biome-group browser and local/cloud
-setup make up the rest of the landing page. Keep its spacing and simple navigation.
+is "Autonomous Villages". A 17-biome-group browser and local/cloud setup follow the hero.
+The Village life section is removed. Keep its spacing and simple navigation.
 
 The site is for players. Brand-library and design-comparison pages, downloads, unused identity
 assets and their code are removed. Old links redirect to the homepage while preserving village

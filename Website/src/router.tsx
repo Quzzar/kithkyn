@@ -14,7 +14,7 @@ const routes: RouteObject[] = [
       { path: "directions/:identityId", element: <SectionRedirect /> },
       { path: "play", element: <SectionRedirect /> },
       { path: "atlas", element: <SectionRedirect section="villages" /> },
-      { path: "stories", element: <SectionRedirect section="life" /> },
+      { path: "stories", element: <SectionRedirect /> },
       { path: "setup", element: <SectionRedirect section="get-started" /> },
       { path: "*", element: <Navigate to="/" replace /> },
     ],
