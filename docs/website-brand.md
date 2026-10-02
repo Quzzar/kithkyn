@@ -109,8 +109,19 @@ captured at 1200 × 630 from the SVG and visually inspected.
 
 Production deployment uses the existing Render `kithkyn-website` service
 (`srv-d89gkkjeo5us738rm5o0`) and its verified `kithkyn.com` domain. That service previously
-tracked the retired `Quzzar/kithkyn-old-1` repository; it is being moved to `Quzzar/kithkyn`
-with root directory `Website` and a frozen-lockfile Bun build. Keep its SPA rewrite to
-`/index.html`. Canonical and sharing metadata now use absolute `https://kithkyn.com` URLs.
-The update feed has no version promotions until the mod draft is publicly published.
-Record the successful deployment commit and live desktop/mobile verification after deploying.
+tracked the retired `Quzzar/kithkyn-old-1` repository; it now uses `Quzzar/kithkyn`
+with root directory `Website`, publish directory `dist` and a frozen-lockfile Bun build.
+It tracks `main` and deploys after CI passes. Existing `/*` rewrites to `/index.html`.
+Canonical and sharing metadata use absolute `https://kithkyn.com` URLs. The update feed has
+no version promotions until the mod draft is publicly published.
+
+October 2 production deployment succeeded from main commit
+`0ac94dc93a0df7965829a8c65c54bf98f9e26504` at 11:59 AM EDT:
+[Render deployment](https://dashboard.render.com/static/srv-d89gkkjeo5us738rm5o0/deploys/dep-davt9q142hec73e3j31g).
+The live homepage was inspected at 1280 × 900 and 390 × 844; 320 × 720 also has no horizontal
+overflow. Reviewed [desktop](website-preview/live-desktop.png) and
+[mobile](website-preview/live-mobile.png) captures retain complete logo edges and loaded photos.
+The browser console has no warnings or errors. The shared `/atlas?village=jungle` link selects
+Jungle and preserves its query/section; cloud setup and Credits work. HTTPS and the www
+redirect return the expected page, old brand routes reach the SPA, the sharing JPEG matches
+the repository's file, and `/updates.json` returns JSON with empty promotions.

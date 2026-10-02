@@ -3,8 +3,8 @@
 Seven reviewed captures for the 1.0.0 mod pages. The architecture captures are the
 approved catalog showcases; they show placed structures in review worlds rather than
 claiming to show naturally generated, fully developed villages. The UI captures were
-rendered on macOS from the packaged release candidate on 2026-09-30, connected to the
-production-loader test server with Curios installed on both sides.
+recaptured on macOS from the packaged release candidate on 2026-10-02, connected to the
+NeoForge 21.1.252 production-loader test server with Curios installed on both sides.
 
 Use the captions below when uploading. The chat conversation, villager name and market
 offers use the documented `UiPreview` sample payloads; they are not a live AI transcript.
