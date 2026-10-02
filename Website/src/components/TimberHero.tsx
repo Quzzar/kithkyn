@@ -29,7 +29,7 @@ export function TimberHero(): ReactElement {
             Installation guide
           </a>
         </div>
-        <p className={hero.platform}>Minecraft Java 1.21.1 · NeoForge</p>
+        <p className={hero.platform}>Minecraft Java · NeoForge</p>
       </div>
       <figure className={styles.picture}>
         <img
