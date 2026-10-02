@@ -24,7 +24,7 @@ stockpiles, and its workers carry out the work in the world.
 
 ## Install
 
-Minecraft **1.21.1**, **NeoForge 21.1.72** (the tested loader), and **Java 21**.
+Minecraft **1.21.1**, **NeoForge 21.1.252 or later in the 21.1 line**, and **Java 21**.
 Install the same Kithkyn jar on the server and on every client. Curios is optional.
 
 On the first world or dedicated-server start, Kithkyn downloads the local runtime and its

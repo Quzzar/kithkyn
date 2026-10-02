@@ -15,6 +15,7 @@ p.add_argument('--mode', choices=['chat', 'trade', 'age-lineup', 'undead-lineup'
 p.add_argument("--curios", type=Path)
 args = p.parse_args()
 root = Path(__file__).resolve().parents[2]
+neo_version = next(line.split('=', 1)[1] for line in (root / 'gradle.properties').read_text().splitlines() if line.startswith('neo_version='))
 work = args.directory.resolve()
 work.mkdir(parents=True, exist_ok=True)
 if args.curios:
@@ -26,7 +27,7 @@ if not (runtime / 'clientJoinLocalRunVmArgs.txt').exists():
 program = (runtime / 'clientJoinLocalRunProgramArgs.txt').read_text().replace('localhost:25565', f'127.0.0.1:{args.port}')
 (work / 'client-arguments.txt').write_text(program + '\n--username\nDev\n')
 (work / 'options.txt').write_text('onboardAccessibility:false\npauseOnLostFocus:false\nguiScale:2\nrenderDistance:8\nmaxFps:60\n')
-classpath = os.pathsep.join([str(args.jar.resolve()), str(runtime / 'artifacts/neoforge-21.1.72-minecraft.jar'),
+classpath = os.pathsep.join([str(args.jar.resolve()), str(runtime / f'artifacts/neoforge-{neo_version}-minecraft.jar'),
     *(runtime / 'clientJoinLocalLegacyClasspath.txt').read_text().splitlines()])
 command = [args.java, '-Xmx2G', '-Dfml.modFolders=kithkyn%%' + str(args.jar.resolve()),
     '@' + str(runtime / 'clientJoinLocalRunVmArgs.txt'), '-Dkithkyn.uipreview=' + args.mode,

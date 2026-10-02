@@ -1,10 +1,4 @@
 {
   "homepage": "https://github.com/Quzzar/kithkyn/releases",
-  "1.21.1": {
-    "1.0.0": "First public release: autonomous villages, 17 bundled regional catalogs, families, physical work and trade, and local AI conversation."
-  },
-  "promos": {
-    "1.21.1-latest": "1.0.0",
-    "1.21.1-recommended": "1.0.0"
-  }
+  "promos": {}
 }

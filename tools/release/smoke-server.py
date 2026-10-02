@@ -25,6 +25,8 @@ parser.add_argument('--port', type=int, default=25679)
 parser.add_argument('--jvm-arg', action='append', default=[])
 parser.add_argument('--stop-file', type=Path, help='For a client session, creating this file requests a normal server stop')
 args = parser.parse_args()
+root = Path(__file__).resolve().parents[2]
+neo_version = next(line.split('=', 1)[1] for line in (root / 'gradle.properties').read_text().splitlines() if line.startswith('neo_version='))
 directory = args.directory.resolve()
 directory.mkdir(parents=True, exist_ok=True)
 if (directory / 'world').exists():
@@ -40,11 +42,11 @@ if not args.disable_llm:
         if probe.connect_ex(('127.0.0.1', 8127)) == 0:
             sys.exit('Port 8127 is already in use; stop the other local AI server before testing.')
 install_log = directory / 'installer.log'
-argument_file = directory / 'libraries/net/neoforged/neoforge/21.1.72' / ('win_args.txt' if sys.platform == 'win32' else 'unix_args.txt')
+argument_file = directory / 'libraries/net/neoforged/neoforge' / neo_version / ('win_args.txt' if sys.platform == 'win32' else 'unix_args.txt')
 if not argument_file.exists():
     installer = args.installer.resolve() if args.installer else directory / 'neoforge-installer.jar'
     if not installer.exists():
-        urllib.request.urlretrieve('https://maven.neoforged.net/releases/net/neoforged/neoforge/21.1.72/neoforge-21.1.72-installer.jar', installer)
+        urllib.request.urlretrieve(f'https://maven.neoforged.net/releases/net/neoforged/neoforge/{neo_version}/neoforge-{neo_version}-installer.jar', installer)
     with install_log.open('w') as log:
         subprocess.run([args.java, '-jar', str(installer), '--installServer', str(directory)], cwd=directory, stdout=log, stderr=subprocess.STDOUT, check=True)
 mods = directory / 'mods'
@@ -107,7 +109,7 @@ passed = (not timed_out and process.returncode == 0 and 'Done (' in content
           and '[bundled-catalog-verify] RESULT PASS' in content and not errors and runtime_stopped
           and (config / 'kithkyn-advanced.toml').exists()
           and (args.disable_llm or 'Local runtime ready:' in content))
-report = {'passed': passed, 'os': sys.platform, 'jar_sha256': hashlib.sha256(installed_jar.read_bytes()).hexdigest(),
+report = {'passed': passed, 'os': sys.platform, 'neoforge': neo_version, 'jar_sha256': hashlib.sha256(installed_jar.read_bytes()).hexdigest(),
           'llm_enabled': not args.disable_llm, 'curios': bool(args.curios), 'runtime_stopped': runtime_stopped,
           'exit_code': process.returncode, 'timed_out': timed_out, 'checks': checks, 'errors': errors,
           'log': str(log_path)}

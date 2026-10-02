@@ -6,7 +6,7 @@ new content or features, major for anything that breaks saves.
 
 ## [Unreleased]
 
-## [1.0.0] - unreleased
+## [1.0.0] - 2026-10-02
 
 First public release, for Minecraft 1.21.1 on NeoForge.
 
@@ -33,6 +33,8 @@ First public release, for Minecraft 1.21.1 on NeoForge.
 - One operator warning per failed AI startup and quieter routine worker/path logs.
 - Mod-list logo, credits, update feed source, install guidance and draft distribution copy.
 - Java 21 CI artifacts, Windows/Linux packaged-server smoke checks and tagged draft releases.
+- Updated NeoForge to 21.1.252 with the current network-decoder security fixes. Minecraft
+  compatibility is limited to the tested 1.21.1 release.
 - Undertakings and quests remain experimental; they are not part of the released feature list.
 
 [Unreleased]: https://github.com/Quzzar/kithkyn/compare/v1.0.0...HEAD

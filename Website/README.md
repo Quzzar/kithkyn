@@ -57,9 +57,20 @@ consistent with the actual browser output.
 
 Three temporary Minecraft scenes provide the hero and biome-browser imagery; five groups
 use material and biome notes. Captions and footer links credit their source galleries.
-These photos do not depict Kithkyn builds. Replace them with final Kithkyn captures before launch.
+These photos do not depict Kithkyn builds. They remain clearly credited temporary scenery
+for the approved deployment; replace them with final Kithkyn captures when available.
 See `../docs/website-brand.md` for provenance and publishing status, and
 `../docs/website-redesign.md` for design decisions and references.
 
-Static hosts must rewrite page routes to `index.html`. Production publishing awaits the
-intended domain and hosting destination. Set an absolute sharing-image URL when that host is known.
+## Production
+
+Render's existing `kithkyn-website` static site (`srv-d89gkkjeo5us738rm5o0`) owns
+`kithkyn.com` and redirects `www.kithkyn.com` to it. Deployment uses `Quzzar/kithkyn`, branch
+`main`, root directory `Website`, build command `bun install --frozen-lockfile && bun run build`,
+and publish directory `dist`. Route requests must rewrite to `/index.html` while existing
+assets retain their normal URLs. Canonical, Open Graph URL and sharing image use the absolute
+`https://kithkyn.com` host.
+
+Keep `public/updates.json` promotions empty while the mod release is a draft. Populate the
+released version and its promotions only after the canonical GitHub download is public.
+Keep deployment verification and screenshots in `../docs/website-brand.md`.
