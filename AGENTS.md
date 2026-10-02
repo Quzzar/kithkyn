@@ -26,7 +26,7 @@ looked at it rendered.
 <!-- filled in by /setup from the repo itself. Correct it by hand if it drifts -->
 
 - Package manager: Gradle 8.9 wrapper (`./gradlew`), ModDevGradle 1.0.21
-- Backend / runtime: NeoForge 21.1.72 mod for Minecraft 1.21.1, Java 21 toolchain
+- Backend / runtime: NeoForge 21.1.252 mod for Minecraft 1.21.1, Java 21 toolchain
 - Test: JUnit 5 (`./gradlew test`; also included in `./gradlew check`)
 - Typecheck: `./gradlew compileJava`
 <!-- quzzar-skills:end -->

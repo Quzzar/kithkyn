@@ -38,5 +38,5 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           RELEASE_TAG: ${{ github.ref_name }}
         run: |
-          sha256sum build/libs/*.jar > SHA256SUMS
+          (cd build/libs && sha256sum *.jar) > SHA256SUMS
           gh release create "$RELEASE_TAG" build/libs/*.jar SHA256SUMS --verify-tag --draft --title "Kithkyn $RELEASE_TAG" --notes-file release-notes.md

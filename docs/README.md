@@ -8,6 +8,8 @@ in it, and update it in the same change that moves what it describes.
 - [website-brand-prompts.md](website-brand-prompts.md): internal artwork prompts and native-grid preparation.
 - [website-redesign.md](website-redesign.md): logo iterations, sleek website layouts, Minecraft mod references and review.
 
+- [research/minecraft-version-support-2026-10-02.md](research/minecraft-version-support-2026-10-02.md): first-release target, patched loader and process for evaluating another Minecraft line.
+
 - [project-identity.md](project-identity.md): the Kithkyn name, website, repository, and the
   deliberate break with old mod saves and namespaces.
 

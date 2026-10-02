@@ -45,8 +45,9 @@ The jar that ships is the one CI built from the tag, never a local build.
 
 ## v1.0.0 preparation checklist
 
-Updated 2026-09-30. These four steps describe preparation; public publication remains a
-separate final action. The first release’s changelog is deliberately still undated.
+Updated 2026-10-02. These four steps describe preparation; public publication remains a
+separate final action. The changelog is dated for a draft 1.0.0 release. The ordinary
+Windows-launcher client check remains required before public publication.
 
 ### 1. Bundle every approved catalog
 
@@ -63,6 +64,13 @@ separate final action. The first release’s changelog is deliberately still und
   with physical beds, shared containers, and village save round trips.
 
 ### 2. Verify installation and runtime
+
+The release now targets **Minecraft 1.21.1 / NeoForge 21.1.252 / Java 21**. The old 21.1.72
+receipts below are historical; rerun CI and packaged client/server checks for the new pin.
+The patched loader avoids the [network decoder vulnerability fixed in 21.1.229](https://neoforged.net/news/mitigating-vulnerabilities-network/).
+Metadata admits only Minecraft 1.21.1 and NeoForge 21.1.252 or later in the 21.1 line.
+See [the version-support investigation](research/minecraft-version-support-2026-10-02.md)
+for candidate selection and the validation required before adding another Minecraft line.
 
 - [x] Official NeoForge **21.1.72** installer, Java 21, empty mod directory, fresh disposable
   world, no building datapacks. macOS arm64 reaches `Done` and passes all 68 founding cases.
@@ -122,8 +130,9 @@ to the client. [ui-preview.md](ui-preview.md) explains the sample payloads.
 
 - [x] Fill mod metadata, approved logo, homepage, issue link, creator credits and update URL.
 - [x] Include the GPL license and README/model notices in the jar.
-- [x] Prepare NeoForge’s update feed at `Website/public/updates.json`. Deploy it with the
-  website **after** the release is public; it currently advertises the prepared 1.0.0.
+- [x] Prepare NeoForge’s update feed at `Website/public/updates.json`. The website can deploy before
+  the public mod release: `promos` remains empty until the release is public. Add the 1.0.0
+  notes and latest/recommended promotions in a follow-up website deployment after publication.
 - [x] Java 21 CI runs `check build`, audits the installable jar, uploads an artifact, and
   tests real Windows/Linux dedicated installations both with and without Curios.
 - [x] Tagged release workflow validates `mod_version` and a dated changelog, runs checks
@@ -149,9 +158,13 @@ to the client. [ui-preview.md](ui-preview.md) explains the sample payloads.
   684 Java tests, 18 website checks, both asset audits, and macOS/Windows/Linux production
   checks pass. The preparation PR retains the final commit’s CI results.
 
-### Publish after the remaining checks
+### Draft and publish
 
-Merge the preparation PR through the normal review process. Date the 1.0.0 changelog in the
-release PR, tag `v1.0.0` on main, and let CI build the canonical jar and draft release. Review
-that draft, publish it, upload that same jar to Modrinth and CurseForge, and deploy the website
-update feed. Fresh-install the **downloaded public jar** once as the final distribution check.
+The preparation PR and website PR are merged. The launch PR dates the changelog, updates the
+loader and production website metadata, and leaves the update feed without promotions. After
+its checks pass, tag `v1.0.0` on main and let CI build the canonical jar and draft release.
+Download that CI-built jar, checksums and release notes for the manual platform uploads.
+
+Complete the ordinary Windows-launcher client check before publishing the draft. Review and
+publish it, upload that same jar to Modrinth and CurseForge, and then add the website update
+promotions. Fresh-install the **downloaded public jar** once as the final distribution check.

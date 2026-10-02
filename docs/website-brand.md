@@ -82,7 +82,8 @@ The 17-style roster and descriptions still describe the bundled Kithkyn catalogs
 The first two files are unchanged copies. The desert source is encoded as JPEG at quality 80
 without resizing or repainting. The site crops with CSS and adds a CSS wash in the desktop hero.
 The source projects retain their respective media rights; these are temporary design references.
-Replace them with approved Kithkyn captures before launch. All sources and scene dimensions live
+They remain temporary scenery for the approved Render deployment; replace them with
+approved Kithkyn captures when available. All sources and scene dimensions live
 in `Website/src/data/imagery.ts`, so replacement does not require changing component layouts.
 
 ## Preview and publishing
@@ -106,7 +107,10 @@ Gradle `processResources` passed for the packaged K. Native alpha contains only 
 both retained 4× PNG exports match their masters exactly. The updated sharing JPEG was
 captured at 1200 × 630 from the SVG and visually inspected.
 
-This version is not deployed. Earlier domain checks found that `kithkyn.com` served a hiring
-product, while `kithkin.com` redirected to `/lander`. Confirm the intended domain and hosting
-destination before production deployment. Static hosts must rewrite page routes to `index.html`.
-The sharing-image metadata must use the final host's absolute URL when publishing.
+Production deployment uses the existing Render `kithkyn-website` service
+(`srv-d89gkkjeo5us738rm5o0`) and its verified `kithkyn.com` domain. That service previously
+tracked the retired `Quzzar/kithkyn-old-1` repository; it is being moved to `Quzzar/kithkyn`
+with root directory `Website` and a frozen-lockfile Bun build. Keep its SPA rewrite to
+`/index.html`. Canonical and sharing metadata now use absolute `https://kithkyn.com` URLs.
+The update feed has no version promotions until the mod draft is publicly published.
+Record the successful deployment commit and live desktop/mobile verification after deploying.

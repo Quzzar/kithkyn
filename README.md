@@ -43,7 +43,7 @@ not load old Village Life worlds.
 | | |
 | --- | --- |
 | Minecraft | 1.21.1 |
-| Loader | NeoForge 21.1.72 (tested); metadata allows 21.1.0+ |
+| Loader | NeoForge 21.1.252 or later in the 21.1 line |
 | Java | 21 (use the Minecraft launcher’s bundled runtime, or install Java 21 for a server) |
 | Sides | Both. Install on the server and on every client. |
 | Disk | About 2 GB for the offline language model, downloaded once |
@@ -51,7 +51,7 @@ not load old Village Life worlds.
 
 ## Install
 
-1. Install NeoForge for 1.21.1.
+1. Install NeoForge 21.1.252 or later for Minecraft 1.21.1.
 2. Put `kithkyn-<version>.jar` in the `mods` folder, on the server and on each client.
 3. Start the game. On the first start of any world or server, Kithkyn downloads its
    language model (about 2 GB) into `kithkyn/` inside the game directory. This happens once
