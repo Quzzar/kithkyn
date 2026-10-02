@@ -19,7 +19,7 @@ export function TimberHero(): ReactElement {
           alt="Kithkyn"
           fetchPriority="high"
         />
-        <h1 id="hero-title">Autonomous Villages for Minecraft</h1>
+        <h1 id="hero-title">Autonomous Villages</h1>
         <p className={hero.lead}>Villagers gather resources, build homes, and start families.</p>
         <div className={styles.actions}>
           <a className={hero.primary} href="#villages">

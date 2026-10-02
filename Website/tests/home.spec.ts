@@ -14,10 +14,8 @@ test("uses the native timber identity on the main landing page", async ({
 }): Promise<void> => {
   await page.goto("/play");
   await expect(page).toHaveURL("/");
-  await expect(page).toHaveTitle("Kithkyn | Autonomous Villages for Minecraft");
-  await expect(page.getByRole("heading", { level: 1 })).toHaveText(
-    "Autonomous Villages for Minecraft",
-  );
+  await expect(page).toHaveTitle("Kithkyn | Autonomous Villages");
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Autonomous Villages");
   await expect(page.locator("header img")).toHaveAttribute("src", "/brand/icon.png");
   await expect(page.locator("header img")).toHaveCSS("image-rendering", "pixelated");
   expect(

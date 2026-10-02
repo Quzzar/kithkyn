@@ -8,7 +8,7 @@ identity-comparison pages. Artwork provenance stays in these internal project no
 
 All 17 bundled land catalogs appear under biome-group names, with Radix keyboard navigation
 and nuqs shareable selection and browser history. Existing selection IDs stay stable.
-The main headline is "Autonomous Villages for Minecraft", with no duplicate eyebrow.
+The main headline is "Autonomous Villages", with no duplicate eyebrow.
 Copy describes concrete game actions. Local/cloud AI requirements and multiplayer installation
 instructions remain; the FAQ, future-catalog note and coming-soon placeholders are removed.
 Installation and source links use GitHub. The public page makes no roadmap promises.
