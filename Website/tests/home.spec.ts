@@ -44,7 +44,8 @@ test("uses the native timber identity on the main landing page", async ({
     "src",
     "/brand/wordmark.png",
   );
-  await expect(page.getByText("Mangrove coast · In-game capture")).toBeVisible();
+  await expect(page.getByText("Minecraft village · Placeholder")).toBeVisible();
+  await expect(page.locator("html")).toHaveCSS("color-scheme", "light");
   await expect(page.locator('link[rel="icon"]')).toHaveAttribute("href", "/brand/icon.svg");
   await expect(page.getByRole("link", { name: "Compare identities" })).toHaveCount(0);
   await expect(page.locator('img[src*="diorama"]')).toHaveCount(0);
@@ -69,9 +70,7 @@ test("browses all 17 styles without rendering inactive frames", async ({ page })
     await expect(panel.getByRole("heading", { level: 3, name, exact: true })).toBeVisible();
     await expect(page.locator('#villages [role="tabpanel"]:visible')).toHaveCount(1);
     if (await panel.getByRole("img").count()) {
-      await expect(
-        panel.getByText("In-game building preview · catalog review world"),
-      ).toBeVisible();
+      await expect(panel.getByText("Minecraft scenery · Placeholder")).toBeVisible();
       await waitForImages(page);
       imageCount += 1;
     } else {

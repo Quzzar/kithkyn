@@ -1,6 +1,46 @@
-# Website design decisions
+# Website redesign
 
-## Current identity: Hewn Planks over a game backdrop
+## Current direction: warm light, October 2, 2026
+
+Aaron requested light mode with a saddle-like color direction and different temporary Minecraft
+imagery. The accepted Hewn Planks artwork remains the signature. Warm white, sand and pale tan
+surfaces replace cool slate; brown ink and saddle-brown controls provide the contrast. Outfit
+and the existing spacious hierarchy remain. The full-width desktop photograph gets a pale
+wash and soft bottom fade; phone copy sits on a solid canvas with the photo below it.
+
+The reference pass inspected [Monarch](https://mobbin.com/sites/sections/f64d7aff-77b4-4951-92df-2c9e4411ca67),
+[In Common With](https://mobbin.com/sites/sections/a87f2a50-8a78-4193-b491-5589059041fa), and
+[Aurora](https://mobbin.com/sites/sections/c7d426dd-5880-436c-85cb-ddf9fa2eddce).
+Monarch shows compact light navigation and dark copy against photography. In Common With
+uses warm architecture photography, simple navigation and little decorative framing. Carry
+forward the generous image area, restrained navigation and clear copy contrast. Aurora's
+mostly blank capture supplied no useful composition, so it was rejected. Avoid Monarch's
+promotional strip and text card, and avoid treating wood as the page's surface texture.
+
+The original coastline and twelve building-review screenshots were removed from website
+assets. Three credited Minecraft reference scenes now supply the hero and photographed
+catalog entries. Their "Placeholder" captions link to their source galleries; footer links
+name RealisticWorld and Complementary Shaders. These images do not represent Kithkyn builds.
+The five field-note styles remain. Source URLs, encoding details and the pre-launch replacement
+requirement are recorded in [website-brand.md](website-brand.md).
+
+Canvas `#faf8f2`, surface `#f0ece3`, raised `#e7dfd1`, ink `#302a24`, muted `#665c50`,
+and saddle brown `#805437` form the shared system. Text and accents pass 4.5:1 across all
+three surfaces, with a 4.90:1 minimum. The main site, selected full preview, brand library,
+palette download and sharing card use this system. Earlier identity studies retain their
+own dark palettes.
+
+The rendered homepage, village browser, selected full preview and brand library were inspected
+at desktop, 390-pixel and 320-pixel widths. The first pass kept the timber outline clear and
+the controls readable; moving the phone photograph below the copy avoided washing it out.
+Keyboard focus is visibly outlined, all images load, and the final reload produced no new
+console warnings or errors. Strict TypeScript/build, ESLint, Prettier and all 18 desktop/mobile
+Playwright checks passed. All 16 brand ZIP entries match their published files, including the
+reviewed 1200 × 630 light sharing JPEG.
+
+## Earlier iterations
+
+## October 1 identity: Hewn Planks over a game backdrop
 
 Aaron accepted Hewn Planks, then requested a real game render behind the intro with an overlay,
 using Veilcraft as the general direction. The main homepage now pairs the 128 × 34 native

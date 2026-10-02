@@ -4,7 +4,7 @@ export type Village = {
   readonly biome: string;
   readonly detail: string;
   readonly materials: readonly string[];
-  readonly image?: string;
+  readonly image?: MinecraftScene;
 };
 
 /** The public roster follows the 17 bundled land catalogs in docs/village-biomes.md. */
@@ -14,7 +14,7 @@ export const DEFAULT_VILLAGE: Village = {
   biome: "Plains & sunflower plains",
   detail: "White stone homes, terracotta roofs, orchards, and open courtyards.",
   materials: ["White stone", "Terracotta", "Hedges"],
-  image: "mediterranean-homes",
+  image: MINECRAFT_SCENES.village,
 };
 
 export const VILLAGES: readonly Village[] = [
@@ -25,7 +25,7 @@ export const VILLAGES: readonly Village[] = [
     biome: "Birch woodland",
     detail: "Pale timber and mossy stone make an intimate woodland home.",
     materials: ["Birch", "Mossy stone", "Oak"],
-    image: "birch",
+    image: MINECRAFT_SCENES.woodland,
   },
   {
     id: "rustic",
@@ -33,7 +33,7 @@ export const VILLAGES: readonly Village[] = [
     biome: "Oak forests",
     detail: "Working barns and oak homes gather around a merchant and well.",
     materials: ["Oak", "Stone", "Stripped logs"],
-    image: "rustic",
+    image: MINECRAFT_SCENES.village,
   },
   {
     id: "taiga",
@@ -41,7 +41,7 @@ export const VILLAGES: readonly Village[] = [
     biome: "Conifer forests",
     detail: "Spruce homes, a Viking meeting point, and a timber palisade.",
     materials: ["Spruce", "Cobblestone", "Stripped logs"],
-    image: "taiga",
+    image: MINECRAFT_SCENES.woodland,
   },
   {
     id: "romanian",
@@ -56,7 +56,7 @@ export const VILLAGES: readonly Village[] = [
     biome: "Jungle & bamboo jungle",
     detail: "Bamboo roofs, treehouses, and compact homes under the canopy.",
     materials: ["Bamboo", "Jungle wood", "Timber"],
-    image: "jungle-homes",
+    image: MINECRAFT_SCENES.woodland,
   },
   {
     id: "desert",
@@ -64,7 +64,7 @@ export const VILLAGES: readonly Village[] = [
     biome: "Sandy deserts",
     detail: "Sandstone courts, shaded homes, wells, and oasis planting.",
     materials: ["Sandstone", "Candles", "Oasis gardens"],
-    image: "desert",
+    image: MINECRAFT_SCENES.desert,
   },
   {
     id: "pueblo",
@@ -72,7 +72,7 @@ export const VILLAGES: readonly Village[] = [
     biome: "Badlands & mesas",
     detail: "Terracotta homes and roof terraces meet red sandstone walls.",
     materials: ["Terracotta", "Adobe", "Red sandstone"],
-    image: "pueblo",
+    image: MINECRAFT_SCENES.desert,
   },
   {
     id: "floodplain",
@@ -80,7 +80,7 @@ export const VILLAGES: readonly Village[] = [
     biome: "Mangrove swamps",
     detail: "Mud-brick homes and mangrove details follow the water.",
     materials: ["Mud brick", "Mangrove", "Raised earth"],
-    image: "floodplain",
+    image: MINECRAFT_SCENES.woodland,
   },
   {
     id: "swamp",
@@ -88,7 +88,7 @@ export const VILLAGES: readonly Village[] = [
     biome: "Ordinary wetlands",
     detail: "Mossy ruins and candlelit timber gather around two campfires.",
     materials: ["Oak", "Spruce", "Mossy stone"],
-    image: "mangrove-homes",
+    image: MINECRAFT_SCENES.woodland,
   },
   {
     id: "tundra",
@@ -96,7 +96,7 @@ export const VILLAGES: readonly Village[] = [
     biome: "Snowy plains & frozen lowlands",
     detail: "Snowbound homes, sheltered farms, and packed-ice defenses.",
     materials: ["Packed ice", "Snow", "Spruce"],
-    image: "tundra",
+    image: MINECRAFT_SCENES.woodland,
   },
   {
     id: "alpine",
@@ -104,7 +104,7 @@ export const VILLAGES: readonly Village[] = [
     biome: "Meadows & mountain slopes",
     detail: "Brick and spruce homes, berry plots, and deep wells.",
     materials: ["Brick", "Spruce", "Berries"],
-    image: "alpine",
+    image: MINECRAFT_SCENES.village,
   },
   {
     id: "cherry",
@@ -119,7 +119,7 @@ export const VILLAGES: readonly Village[] = [
     biome: "Warm beaches & sparse jungle",
     detail: "Stilted homes, a king’s hall, and an open-air shrine.",
     materials: ["Stripped spruce", "Oak roofs", "Coral"],
-    image: "polynesian",
+    image: MINECRAFT_SCENES.village,
   },
   {
     id: "nautical",
@@ -143,3 +143,4 @@ export const VILLAGES: readonly Village[] = [
     materials: ["Mushroom caps", "Pale stems", "Oak"],
   },
 ];
+import { MINECRAFT_SCENES, type MinecraftScene } from "./imagery";

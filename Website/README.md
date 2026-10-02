@@ -2,18 +2,18 @@
 
 The landing page at `/` uses the accepted Hewn Planks wordmark and matching square K.
 The artwork uses a real 128 × 34 grid, with a matching reference-edited 32 × 32 icon.
-A full-width in-game shoreline capture sits behind the header and intro. Layered slate
-overlays keep the text readable and fade into the page below. The desktop wordmark is 4×,
-the phone wordmark 2× and header K 1×. The wooden flavor belongs to the logo.
-The website uses slate, ivory, oak accents and Outfit typography. Three surface levels serve the page, content
-panels and logo stages. The sharing card uses the logo stage. Semantic color tokens keep hover,
-focus, borders and captions consistent. Browser controls use the dark color scheme.
+A temporary Minecraft village scene sits behind the desktop header and intro, under a warm-white
+wash that fades into the page. On phones, the scene appears below the intro. The desktop
+wordmark is 4×, the phone wordmark 2× and header K 1×. The wooden flavor belongs to the logo.
+Warm-white, sand and soft tan surfaces pair with dark ink, saddle-brown actions and Outfit.
+Semantic color tokens keep hover, focus, borders and captions consistent. Browser controls
+use the light scheme. The sharing card uses the same light artwork stage.
 
 `/brand` provides the complete kit, individual PNG and SVG logo downloads, and a sharing card.
 The SVG logo containers embed the original pixels, not traced vector paths.
 
 `/brand/directions` compares three new identities designed together with their websites:
-Hewn Planks uses joined honey oak lettering and cool slate; Woven uses one interlocking timber K and
+Hewn Planks uses joined honey oak lettering and warm light surfaces; Woven uses one interlocking timber K and
 ivory lettering over olive charcoal; Cabin Mark builds a K into a little cedar home, over warm
 charcoal. Each has a native 128-pixel-wide wordmark and 32 × 32 K. All full previews keep the
 17-style village browser, setup tabs and FAQ. `/brand/directions/previous` retains the original
@@ -64,8 +64,9 @@ and packages the kit. When changing the sharing SVG, capture it at 1200 × 630 i
 save the browser's JPEG as `public/brand/social.jpg`, inspect it, then rerun the export to include
 the updated card. Keep the extension consistent with the actual browser output.
 
-The scene is a real site-review capture. Twelve catalog images are building-review captures;
-five styles use material and biome notes. See `../docs/website-brand.md` for provenance and
+Three temporary Minecraft scenes replace the old site-review and catalog images; five styles
+use material and biome notes. Captions and footer links credit the original galleries. These
+photos do not depict Kithkyn catalogs. Replace them with final Kithkyn captures before launch. See `../docs/website-brand.md` for provenance and
 publishing status, and `../docs/website-redesign.md` for design decisions and references.
 
 A static host must rewrite page routes to `index.html`. Production deployment waits for the

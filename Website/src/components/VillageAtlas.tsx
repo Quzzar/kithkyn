@@ -94,12 +94,14 @@ export function VillageAtlas(): ReactElement {
               {entry.image ? (
                 <figure className={styles.picture}>
                   <img
-                    src={`/images/${entry.image}.webp`}
-                    alt={`${entry.name} building catalog preview`}
-                    width={1200}
-                    height={675}
+                    src={entry.image.source}
+                    alt={entry.image.alt}
+                    width={entry.image.width}
+                    height={entry.image.height}
                   />
-                  <figcaption>In-game building preview · catalog review world</figcaption>
+                  <figcaption>
+                    <a href={entry.image.creditUrl}>Minecraft scenery · Placeholder</a>
+                  </figcaption>
                 </figure>
               ) : (
                 <div className={styles.fieldNotes}>

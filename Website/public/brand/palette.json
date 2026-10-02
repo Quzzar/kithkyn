@@ -1,8 +1,8 @@
 {
-  "canvas": "#252e35",
-  "surface": "#303e46",
-  "raised": "#40525a",
-  "ink": "#f2eee5",
-  "oak": "#e3bd88",
-  "muted": "#c0cace"
+  "canvas": "#faf8f2",
+  "surface": "#f0ece3",
+  "raised": "#e7dfd1",
+  "ink": "#302a24",
+  "oak": "#805437",
+  "muted": "#665c50"
 }

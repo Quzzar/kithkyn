@@ -1,11 +1,13 @@
 import { ArrowUpRight } from "lucide-react";
 import type { ReactElement } from "react";
+import { MINECRAFT_SCENES, type MinecraftScene } from "../data/imagery";
 import type { TimberIdentity } from "../data/timber-identities";
 import * as hero from "./village-hero.css";
 import * as styles from "./timber-hero.css";
 
-/** The artwork leads each identity, while real gameplay supplies the setting. */
+/** The artwork leads each identity, while credited Minecraft scenery supplies the setting. */
 export function TimberHero({ identity }: { readonly identity: TimberIdentity }): ReactElement {
+  const scene: MinecraftScene = MINECRAFT_SCENES.village;
   return (
     <section className={styles.layout[identity.layout]} aria-labelledby="hero-title">
       <div className={styles.copy[identity.layout]}>
@@ -32,13 +34,15 @@ export function TimberHero({ identity }: { readonly identity: TimberIdentity }):
       </div>
       <figure className={styles.picture[identity.layout]}>
         <img
-          src="/art/village-site.webp"
-          alt="Kithkyn village buildings beside a mangrove coast in Minecraft"
-          width={1708}
-          height={960}
+          src={scene.source}
+          alt={scene.alt}
+          width={scene.width}
+          height={scene.height}
           fetchPriority="high"
         />
-        <figcaption>Mangrove coast · In-game capture</figcaption>
+        <figcaption>
+          <a href={scene.creditUrl}>Minecraft village · Placeholder</a>
+        </figcaption>
       </figure>
     </section>
   );

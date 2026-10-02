@@ -37,6 +37,13 @@ export const copy = styleVariants({
       justifyContent: "center",
       alignItems: "start",
       paddingBlock: vars.space.section,
+      "@media": {
+        [breakpoint.narrow]: {
+          minHeight: "auto",
+          paddingTop: vars.space.xxl,
+          paddingBottom: vars.space.xxl,
+        },
+      },
     },
   ],
 });
@@ -117,12 +124,21 @@ export const picture = styleVariants({
         content: '""',
         position: "absolute",
         inset: 0,
-        background: `linear-gradient(180deg, color-mix(in srgb, ${vars.color.canvas} 80%, transparent) 0%, transparent 35%, transparent 55%, ${vars.color.canvas} 100%), linear-gradient(90deg, color-mix(in srgb, ${vars.color.canvas} 94%, transparent) 0%, color-mix(in srgb, ${vars.color.canvas} 90%, transparent) 45%, color-mix(in srgb, ${vars.color.canvas} 35%, transparent) 72%, color-mix(in srgb, ${vars.color.canvas} 20%, transparent) 100%)`,
+        background: `linear-gradient(180deg, color-mix(in srgb, ${vars.color.canvas} 85%, transparent) 0%, transparent 35%, transparent 55%, ${vars.color.canvas} 100%), linear-gradient(90deg, color-mix(in srgb, ${vars.color.canvas} 98%, transparent) 0%, color-mix(in srgb, ${vars.color.canvas} 92%, transparent) 42%, color-mix(in srgb, ${vars.color.canvas} 35%, transparent) 72%, color-mix(in srgb, ${vars.color.canvas} 12%, transparent) 100%)`,
         "@media": {
           [breakpoint.narrow]: {
-            background: `linear-gradient(180deg, color-mix(in srgb, ${vars.color.canvas} 80%, transparent) 0%, color-mix(in srgb, ${vars.color.canvas} 70%, transparent) 55%, ${vars.color.canvas} 100%)`,
+            background: "none",
           },
         },
+      },
+    },
+    "@media": {
+      [breakpoint.narrow]: {
+        position: "relative",
+        inset: "auto",
+        height: vars.size.mobilePhoto,
+        marginInline: vars.space.gutter,
+        borderRadius: vars.radius.small,
       },
     },
   },
@@ -142,6 +158,15 @@ globalStyle(`${picture.backdrop} figcaption`, {
   color: vars.color.muted,
   fontSize: vars.fontSize.tiny,
   "@media": {
-    [breakpoint.narrow]: { left: vars.space.gutter, right: "auto" },
+    [breakpoint.narrow]: {
+      insetInline: vars.space.sm,
+      bottom: vars.space.sm,
+      width: "fit-content",
+      padding: `${vars.space.xxs} ${vars.space.xs}`,
+      borderRadius: vars.radius.small,
+      background: vars.color.imageOverlay,
+      color: vars.color.text,
+    },
   },
 });
+globalStyle(`${picture.backdrop} figcaption a:hover`, { textDecoration: "underline" });

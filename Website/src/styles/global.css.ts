@@ -9,7 +9,7 @@ globalFontFace("Outfit", {
 globalStyle("*", { boxSizing: "border-box" });
 globalStyle("html", {
   background: vars.color.canvas,
-  colorScheme: "dark",
+  colorScheme: "light",
   scrollbarColor: `${vars.color.line} ${vars.color.canvas}`,
   scrollBehavior: "smooth",
   scrollPaddingTop: vars.space.xl,

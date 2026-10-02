@@ -4,6 +4,7 @@ import { vars } from "./theme.css";
 
 /** Scoped palettes make each full preview internally consistent without changing the chosen site. */
 export const identityTheme = styleVariants(TIMBER_IDENTITIES, (identity: TimberIdentity) => ({
+  colorScheme: identity.id === "hewn-planks" ? "light" : "dark",
   vars: assignVars(vars.color, {
     canvas: identity.palette.canvas,
     surface: identity.palette.surface,

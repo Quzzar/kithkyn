@@ -19,8 +19,15 @@ export type TimberIdentity = {
   readonly palette: TimberPalette;
 };
 
-/** The plank refinement keeps Hewn's cool slate website presentation. */
-const HEWN_PALETTE: TimberPalette = BRAND_PALETTE;
+/** The original spruce study retains its cool slate presentation. */
+const HEWN_PALETTE: TimberPalette = {
+  canvas: "#252e35",
+  surface: "#303e46",
+  raised: "#40525a",
+  ink: "#f2eee5",
+  oak: "#e3bd88",
+  muted: "#c0cace",
+};
 
 /** Each timber identity pairs original artwork with its own complete website palette. */
 export const TIMBER_IDENTITIES: Readonly<Record<TimberIdentity["id"], TimberIdentity>> = {
@@ -72,7 +79,7 @@ export const TIMBER_IDENTITIES: Readonly<Record<TimberIdentity["id"], TimberIden
     description: "Chunky lettering, joined from honey oak planks.",
     wordmark: { source: "/brand/directions/hewn-planks-wordmark.png", width: 128, height: 34 },
     icon: { source: "/brand/directions/hewn-planks-icon.png", width: 32, height: 32 },
-    palette: HEWN_PALETTE,
+    palette: BRAND_PALETTE,
   },
   woven: {
     id: "woven",

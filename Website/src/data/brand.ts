@@ -56,12 +56,12 @@ export const BRAND_ICON: BrandAsset = {
   ],
 };
 
-/** Three slate surface levels frame the timber art; ivory and oak carry content and actions. */
+/** Warm light surfaces support the timber artwork; saddle brown carries actions and focus. */
 export const BRAND_PALETTE = {
-  canvas: "#252e35",
-  surface: "#303e46",
-  raised: "#40525a",
-  ink: "#f2eee5",
-  oak: "#e3bd88",
-  muted: "#c0cace",
+  canvas: "#faf8f2",
+  surface: "#f0ece3",
+  raised: "#e7dfd1",
+  ink: "#302a24",
+  oak: "#805437",
+  muted: "#665c50",
 } as const;

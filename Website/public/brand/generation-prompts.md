@@ -47,9 +47,10 @@ row beyond the visible artwork, yielding 128 × 34. The reference-edited K is sa
 from 1280 × 1280 to 32 × 32 and retains that square canvas. Larger exports copy each
 native pixel into an exact integer square block.
 
-Aaron accepted this direction, then requested a game backdrop with an overlay. The homepage
-and matching preview now use the Hewn slate palette, Outfit text and a full-width real
-game capture. The desktop hero renders the wordmark at 4×; the phone hero is 2×. The header
+Aaron accepted this direction, then requested a game backdrop with an overlay. On October 2,
+the homepage and matching preview changed to warm light surfaces and saddle-brown accents.
+Credited temporary Minecraft scenery supplies the setting, with Outfit text. The desktop
+hero renders the wordmark at 4×; the phone hero is 2×. The header
 K is 1× and footer wordmark 2×. All use pixelated rendering. The original spruce Hewn
 remains available in the earlier-directions gallery for comparison. The same masters also
 ship at the canonical `/brand/wordmark.png` and `/brand/icon.png` paths.

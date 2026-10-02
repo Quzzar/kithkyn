@@ -1,10 +1,10 @@
 # Website and brand status
 
-On October 1, 2026 Aaron accepted Hewn Planks, then requested an in-game backdrop with an
-logo and intro over it. The homepage at `/` now uses this honey-oak identity, cool slate
-surfaces, ivory copy and Outfit typography. The wooden flavor belongs to the wordmark and K.
-The full-width shoreline scene extends behind the navigation and intro, with layered slate
-overlays and a fade into the following section. `/brand` provides the matching kit.
+On October 2, 2026 Aaron requested a light presentation and different temporary Minecraft
+images. The homepage at `/` uses the accepted Hewn Planks wordmark and matching K, warm-white
+surfaces, dark brown copy, saddle-brown actions and Outfit typography. A softly washed Minecraft
+village scene extends behind the desktop navigation and intro. On phones, the photograph sits
+below the intro so it remains visible. `/brand` provides the matching light palette and kit.
 
 All 17 bundled Overworld land styles remain available, with Radix keyboard navigation and
 nuqs shareable selection and browser history. Offline/cloud requirements, multiplayer guidance
@@ -52,12 +52,12 @@ and the Outfit license. The sharing SVG enlarges the wordmark exactly 8×. Its J
 before packaging. `bun run brand:export` regenerates SVG containers and the ZIP from the
 checked-in PNGs and integer exports. The SVGs preserve raster pixels instead of tracing paths.
 
-The fixed dark system uses three slate levels: canvas `#252e35`, content surface `#303e46`
-and artwork/hover stage `#40525a`. Text is ivory `#f2eee5`, muted copy `#c0cace`, and the oak
-accent `#e3bd88`. Borders derive from ivory at 16% opacity. Text and oak accents exceed 4.5:1
-on every surface, with a minimum ratio of 4.63:1. The backdrop's phone overlay has at least
-70% opaque slate; ivory copy exceeds 4.55:1 even over pure white. The desktop oak eyebrow stays
-in the horizontal overlay's 90% region. Browser controls and scrollbars use the dark scheme.
+The fixed light system uses canvas `#faf8f2`, content surface `#f0ece3` and artwork/hover
+stage `#e7dfd1`. Text is dark brown `#302a24`, muted copy `#665c50`, and the saddle-brown
+accent `#805437`. Borders derive from dark ink at 16% opacity. Text and accents exceed 4.5:1
+on all three surfaces; the minimum ratio is 4.90:1. Desktop copy sits in the pale horizontal
+wash. Phone copy sits on the opaque canvas, with a separate full-color photo below. Browser
+controls use the light scheme. Earlier dark studies retain their scoped palettes.
 
 The comparison at `/brand/directions` and the complete `/brand/directions/hewn-planks` preview
 remain available. Their wordmark and K PNGs are byte-identical to the canonical masters.
@@ -65,38 +65,26 @@ The earlier-directions gallery retains the original spruce Hewn, Cabin Joinery a
 The rejected generated village diorama and literal wooden page controls remain deleted.
 See [website-redesign.md](website-redesign.md) for references and design decisions.
 
-## Real capture library
+## Temporary scenery
 
-The scenic backdrop comes from
-`run/floodplain-site-review/screenshots/client/screenshots/mavulena-overview.png`,
-relative to the original project root. It shows real in-game village buildings and terrain.
-Its visible caption is "Mangrove coast · In-game capture". This is a site-review capture,
-not an autonomous-growth timeline.
+The former shoreline and twelve catalog-review images have been removed from the website.
+Three temporary Minecraft scenes now provide the backdrop and regional-browser imagery.
+These are references from other Minecraft projects, not Kithkyn builds or evidence of
+simulation behavior. Captions explicitly say "Placeholder" and link to each source gallery;
+the footer also credits the two source projects. Five styles retain material/biome field notes.
+The 17-style roster and descriptions still describe the bundled Kithkyn catalogs.
 
-Twelve real catalog captures are displayed. Romanian, Japanese Cherry Grove, Nautical Coast,
-Savanna Tent and Mushroom use material/biome field notes. The former Romanian capture was
-removed because the camera was obstructed by a wall. Do not invent a screenshot for a style
-without useful media.
+| Website file | Source gallery | Original image |
+| --- | --- | --- |
+| `Website/public/images/village-reference.jpg` | [RealisticWorld](https://modrinth.com/modpack/realisticworld/gallery), "Complimentary Reimagined Shaders" | [1920 × 1080 JPEG](https://cdn.modrinth.com/data/GO8ghx0J/images/9520376dca34bf77d222aba551e6f22599df8566.jpeg) |
+| `Website/public/images/woodland-reference.jpg` | [Complementary Reimagined](https://modrinth.com/shader/complementary-reimagined/gallery), featured woodland scene | [1920 × 1080 JPEG](https://cdn.modrinth.com/data/HVnmMxH1/images/26327bef581206670288bf7e1b1b5f411291f793.jpeg) |
+| `Website/public/images/desert-reference.jpg` | [Complementary Reimagined](https://modrinth.com/shader/complementary-reimagined/gallery), desert lake | [2560 × 1440 PNG](https://cdn.modrinth.com/data/HVnmMxH1/images/35b1b4eb6a186297fe039995449d17608f510560.png) |
 
-Capture sources, relative to the original project root:
-
-| Catalog | Source |
-| --- | --- |
-| Mediterranean | `docs/release-gallery/mediterranean-homes.png` |
-| Jungle Tribal | `docs/release-gallery/jungle-homes.png` |
-| Swamp | `docs/release-gallery/swamp-homes.png` |
-| Pueblo | `docs/release-gallery/badlands-center.png` |
-| Tundra | `docs/release-gallery/tundra-walls.png` |
-| Birch Forest | `run/full-style-showcase/client/screenshots/approved-birch-reference.png` |
-| Rustic Woodland | `run/full-style-showcase/client/screenshots/rustic-complete-barns.png` |
-| Taiga | `run/viking-full-profile/render/client/screenshots/viking-full-homes.png` |
-| Desert Oasis | `run/pueblo-showcase/desert-center-approved-20260909-224500/screenshots/client/screenshots/desert-center-overview.png` |
-| Floodplain | `run/nilotic-showcase/screenshots/client/screenshots/nilotic-houses.png` |
-| Alpine Highlands | `run/next-village-preview/client/screenshots/alpine_highlands.png` |
-| Polynesian Coast | `run/jungle-showcase/screenshots/client/screenshots/polynesian-center.png` |
-
-These are catalog review images; some contain donor rows in the background. Every displayed
-image is captioned as an in-game building preview from a catalog review world.
+The first two files are unchanged copies. The desert source is encoded as JPEG at quality 80
+without resizing or repainting. The site crops with CSS and adds a CSS wash in the desktop hero.
+The source projects retain their respective media rights; these are temporary design references.
+Replace them with approved Kithkyn captures before launch. All sources and scene dimensions live
+in `Website/src/data/imagery.ts`, so replacement does not require changing component layouts.
 
 ## Preview and publishing
 

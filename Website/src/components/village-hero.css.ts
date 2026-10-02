@@ -17,12 +17,12 @@ export const primary = style({
   gap: vars.space.sm,
   minHeight: vars.size.button,
   padding: `${vars.space.sm} ${vars.space.lg}`,
-  background: vars.color.text,
+  background: vars.color.accent,
   color: vars.color.canvas,
   borderRadius: vars.radius.small,
   fontWeight: vars.weight.medium,
 });
-globalStyle(`${primary}:hover`, { background: vars.color.accent });
+globalStyle(`${primary}:hover`, { background: vars.color.text });
 globalStyle(`${primary} svg`, { width: vars.size.icon, height: vars.size.icon });
 export const secondary = style({
   display: "inline-flex",
