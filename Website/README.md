@@ -67,7 +67,7 @@ See `../docs/website-brand.md` for provenance and publishing status, and
 Render's existing `kithkyn-website` static site (`srv-d89gkkjeo5us738rm5o0`) owns
 `kithkyn.com` and redirects `www.kithkyn.com` to it. Deployment uses `Quzzar/kithkyn`, branch
 `main`, root directory `Website`, build command `bun install --frozen-lockfile && bun run build`,
-and publish directory `dist`. Route requests must rewrite to `/index.html` while existing
+and publish directory `dist`. Automatic deployments wait for passing CI checks. Route requests must rewrite to `/index.html` while existing
 assets retain their normal URLs. Canonical, Open Graph URL and sharing image use the absolute
 `https://kithkyn.com` host.
 

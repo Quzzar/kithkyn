@@ -66,7 +66,10 @@ Windows-launcher client check remains required before public publication.
 ### 2. Verify installation and runtime
 
 The release now targets **Minecraft 1.21.1 / NeoForge 21.1.252 / Java 21**. The old 21.1.72
-receipts below are historical; rerun CI and packaged client/server checks for the new pin.
+receipts below are historical. The new pin passed [main CI](https://github.com/Quzzar/kithkyn/actions/runs/37029904101)
+and the [tagged release workflow](https://github.com/Quzzar/kithkyn/actions/runs/37030708152).
+The native macOS packaged client/server also passed with Curios, all 68 founding cases,
+chat/trade screenshots and clean shutdown: [new receipt](../tools/release/verification/macos-arm64-neoforge252.json).
 The patched loader avoids the [network decoder vulnerability fixed in 21.1.229](https://neoforged.net/news/mitigating-vulnerabilities-network/).
 Metadata admits only Minecraft 1.21.1 and NeoForge 21.1.252 or later in the 21.1 line.
 See [the version-support investigation](research/minecraft-version-support-2026-10-02.md)
@@ -160,10 +163,16 @@ to the client. [ui-preview.md](ui-preview.md) explains the sample payloads.
 
 ### Draft and publish
 
-The preparation PR and website PR are merged. The launch PR dates the changelog, updates the
-loader and production website metadata, and leaves the update feed without promotions. After
-its checks pass, tag `v1.0.0` on main and let CI build the canonical jar and draft release.
-Download that CI-built jar, checksums and release notes for the manual platform uploads.
+Preparation PR #177, website PR #178 and release PR #179 are merged. Tag `v1.0.0` points to
+`0ac94dc93a0df7965829a8c65c54bf98f9e26504` on main. The tagged CI build passed and created the
+1.0.0 draft in [GitHub Releases](https://github.com/Quzzar/kithkyn/releases). Its canonical
+`kithkyn-1.0.0.jar` is 4,243,434 bytes, with SHA-256
+`209b83387f6bdf781bdfb812ebd45cba97f75d250ce6683a9257a13914403811`.
+The downloaded jar passed its checksum, catalog audit and exact Minecraft/loader metadata check.
+
+The author's local upload bundle is `build/release-upload/kithkyn-1.0.0-upload.zip`: canonical
+jar, checksums, release notes, platform description, release manifest, icon, seven captioned
+screenshots and `UPLOAD.md`. The website is live on Render with an empty update feed.
 
 Complete the ordinary Windows-launcher client check before publishing the draft. Review and
 publish it, upload that same jar to Modrinth and CurseForge, and then add the website update
