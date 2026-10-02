@@ -47,17 +47,17 @@ export const copy = styleVariants({
     },
   ],
 });
-globalStyle(`${copyBase} h1`, { fontSize: vars.fontSize.catalog, marginBottom: vars.space.md });
+globalStyle(`${copyBase} h1`, {
+  fontSize: vars.fontSize.catalog,
+  marginBottom: vars.space.md,
+  textWrap: "balance",
+});
 globalStyle(`${copy.centered} p`, { marginInline: "auto" });
 globalStyle(`${copy.backdrop} p`, { maxWidth: vars.size.copy, color: vars.color.text });
 globalStyle(`${copy.backdrop} h1`, {
   fontSize: vars.fontSize.catalog,
   fontWeight: vars.weight.medium,
   maxWidth: vars.size.copy,
-});
-globalStyle(`${copy.backdrop} p:first-child`, {
-  color: vars.color.accent,
-  "@media": { [breakpoint.narrow]: { color: vars.color.text } },
 });
 export const wordmark = style({
   width: vars.size.timberSplitWordmark,

@@ -1,10 +1,5 @@
 import { globalStyle, style } from "@vanilla-extract/css";
 import { breakpoint, vars } from "../styles/theme.css";
-export const label = style({
-  color: vars.color.accent,
-  fontSize: vars.fontSize.small,
-  fontWeight: vars.weight.medium,
-});
 export const lead = style({
   color: vars.color.muted,
   fontSize: vars.fontSize.lead,

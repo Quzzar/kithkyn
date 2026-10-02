@@ -63,26 +63,11 @@ globalStyle(`${modelContent} dl > div`, {
 });
 globalStyle(`${modelContent} dt`, { color: vars.color.muted });
 globalStyle(`${modelContent} dd`, { margin: 0, textAlign: "right" });
-export const guardrail = style({
-  display: "flex",
-  gap: vars.space.xs,
-  fontSize: vars.fontSize.tiny,
-  color: vars.color.muted,
-  marginTop: vars.space.lg,
-});
-globalStyle(`${guardrail} svg`, { width: vars.size.icon, height: vars.size.icon });
 export const installCard = style({
   padding: vars.space.xxl,
   background: vars.color.surface,
   border: `${vars.size.outline} solid ${vars.color.line}`,
   "@media": { [breakpoint.narrow]: { padding: vars.space.lg } },
-});
-export const releaseLabel = style({
-  display: "inline-block",
-  fontSize: vars.fontSize.tiny,
-  color: vars.color.muted,
-  marginBottom: vars.space.lg,
-  fontWeight: vars.weight.strong,
 });
 globalStyle(`${installCard} h3`, { fontSize: vars.fontSize.heading });
 export const platform = style({
@@ -97,21 +82,6 @@ globalStyle(`${installCard} ol`, {
   flexDirection: "column",
   gap: vars.space.md,
 });
-export const destinations = style({
-  display: "flex",
-  gap: vars.space.xl,
-  flexWrap: "wrap",
-  paddingTop: vars.space.xl,
-  marginTop: vars.space.xl,
-  borderTop: `${vars.size.border} solid ${vars.color.line}`,
-});
-globalStyle(`${destinations} span`, { fontWeight: vars.weight.strong });
-globalStyle(`${destinations} small`, {
-  display: "block",
-  color: vars.color.muted,
-  fontWeight: vars.weight.body,
-  fontSize: vars.fontSize.tiny,
-});
 export const sourceLink = style({
   display: "inline-flex",
   alignItems: "center",
@@ -120,44 +90,3 @@ export const sourceLink = style({
   fontSize: vars.fontSize.small,
 });
 globalStyle(`${sourceLink} svg`, { width: vars.size.icon, height: vars.size.icon });
-export const faq = style({
-  display: "grid",
-  gridTemplateColumns: "0.8fr 1.2fr",
-  gap: vars.space.xxl,
-  marginTop: vars.space.section,
-  "@media": { [breakpoint.narrow]: { gridTemplateColumns: "1fr" } },
-});
-export const questions = style({ minWidth: 0 });
-export const question = style({
-  borderBottom: `${vars.size.border} solid ${vars.color.line}`,
-});
-export const questionTrigger = style({
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "space-between",
-  gap: vars.space.md,
-  minHeight: vars.size.button,
-  width: "100%",
-  paddingBlock: vars.space.lg,
-  paddingInline: 0,
-  background: "transparent",
-  color: vars.color.text,
-  border: 0,
-  fontFamily: vars.font.body,
-  fontWeight: vars.weight.strong,
-  fontSize: vars.fontSize.body,
-  textAlign: "left",
-  letterSpacing: "normal",
-});
-globalStyle(`${questionTrigger} svg`, {
-  width: vars.size.icon,
-  height: vars.size.icon,
-  transition: `transform ${vars.motion.short}`,
-});
-globalStyle(`${questionTrigger}[data-state="open"] svg`, { transform: "rotate(180deg)" });
-export const answer = style({
-  color: vars.color.muted,
-  fontSize: vars.fontSize.small,
-  paddingBottom: vars.space.lg,
-  maxWidth: vars.size.reading,
-});

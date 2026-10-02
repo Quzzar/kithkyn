@@ -34,26 +34,23 @@ export function HomePage({ identity }: { readonly identity?: TimberIdentity } = 
         <section className={styles.life} id="life" aria-labelledby="life-title">
           <div className={styles.lifeInner}>
             <div>
-              <p className={site.label}>A village with a life of its own</p>
+              <p className={site.label}>Village life</p>
               <h2 className={site.sectionHeading} id="life-title">
-                They’ve got
-                <br />
-                things to do.
+                Villagers do the building.
               </h2>
-              <p className={styles.lifeLead}>Neighbors who make plans of their own.</p>
             </div>
             <div className={styles.lifeRows}>
               <div className={styles.lifeRow}>
-                <h3>Work together</h3>
-                <p>Gather resources, build homes, and keep the village running.</p>
+                <h3>Gather and build</h3>
+                <p>Cut timber, mine stone, and put up homes and workshops.</p>
               </div>
               <div className={styles.lifeRow}>
-                <h3>Grow roots</h3>
-                <p>Form families, take on jobs, and welcome new neighbors.</p>
+                <h3>Jobs and families</h3>
+                <p>Villagers take on jobs, marry, and raise children.</p>
               </div>
               <div className={styles.lifeRow}>
-                <h3>Think ahead</h3>
-                <p>Make plans around what the community needs next.</p>
+                <h3>Make plans</h3>
+                <p>The village’s AI chooses what to build and who does the work.</p>
               </div>
             </div>
           </div>

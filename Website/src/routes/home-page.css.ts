@@ -17,11 +17,6 @@ export const lifeInner = style([
   },
 ]);
 globalStyle(`${lifeInner} h2`, { marginTop: vars.space.md });
-export const lifeLead = style({
-  color: vars.color.muted,
-  fontSize: vars.fontSize.lead,
-  marginTop: vars.space.lg,
-});
 export const lifeRows = style({ display: "grid", gap: vars.space.lg });
 export const lifeRow = style({
   paddingBottom: vars.space.lg,

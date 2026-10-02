@@ -10,7 +10,7 @@ export function RootLayout(): ReactElement {
       ? "Kithkyn | Timber directions"
       : pathname === "/brand"
         ? "Kithkyn | Brand assets"
-        : "Kithkyn | Bringing villages to life";
+        : "Kithkyn | Autonomous Villages for Minecraft";
   }, [pathname]);
   return (
     <NuqsAdapter>

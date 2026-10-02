@@ -38,6 +38,36 @@ console warnings or errors. Strict TypeScript/build, ESLint, Prettier and all 18
 Playwright checks passed. All 16 brand ZIP entries match their published files, including the
 reviewed 1200 × 630 light sharing JPEG.
 
+## Copy and icon refinement, October 2, 2026
+
+Aaron accepted the light layout and requested less promotional language, biome-group labels,
+a complete square K, and a sparse page without FAQ or roadmap promises. Preserve the accepted
+palette, type and layout. The timber wordmark remains the signature. The main headline is
+"Autonomous Villages for Minecraft", with the duplicate eyebrow removed. The browser names
+its groups Plains, Birch Forest, Forest, Taiga, Dark Forest, Jungle, Desert, Badlands,
+Mangrove Swamp, Swamp, Snowy Lowlands, Mountains, Cherry Grove, Warm Coast, Temperate Coast,
+Savanna and Mushroom Fields. Their existing URL IDs are unchanged.
+
+Writing references: [Microsoft's voice guidance](https://learn.microsoft.com/en-us/style-guide/brand-voice-above-all-simple-human)
+and [Nielsen Norman Group's web-writing research](https://www.nngroup.com/articles/concise-scannable-and-objective-how-to-write-for-the-web/).
+Apply these rules when agents revise public copy:
+
+- Say what the mod does in concrete terms: villagers mine, build, marry and raise children.
+- Use everyday words and short sentences. Delete slogans that add no information.
+- Label controls and categories with the words players recognize, such as biome names.
+- Keep each section to the information needed to understand it or take its next step.
+- Describe current behavior only. Put plans and unreleased feature promises in project notes or a blog.
+
+The FAQ, model-failure explanation, future-catalog note and coming-soon destinations are removed.
+The setup comparison says "AI cloud provider" explicitly and retains the real local model
+requirements. The repaired K preserves the accepted timber design with complete plank ends,
+a dark outline and at least four transparent native grid cells around every edge. Its source,
+exact prompt and export recipe are recorded in [website-brand.md](website-brand.md) and the kit.
+
+The final desktop, 390-pixel and 320-pixel renders were inspected, including the K outline,
+biome browser, setup and brand library. The build, lint, formatting and all 18 existing
+Playwright checks passed. Gradle `processResources` passed for the repaired packaged logo.
+
 ## Earlier iterations
 
 ## October 1 identity: Hewn Planks over a game backdrop

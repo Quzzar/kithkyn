@@ -21,8 +21,10 @@ test("uses the native timber identity on the main landing page", async ({
 }): Promise<void> => {
   await page.goto("/play");
   await expect(page).toHaveURL("/");
-  await expect(page).toHaveTitle("Kithkyn | Bringing villages to life");
-  await expect(page.getByRole("heading", { level: 1 })).toContainText("A world with");
+  await expect(page).toHaveTitle("Kithkyn | Autonomous Villages for Minecraft");
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText(
+    "Autonomous Villages for Minecraft",
+  );
   await expect(page.locator("header img")).toHaveAttribute("src", "/brand/icon.png");
   await expect(page.locator("header img")).toHaveCSS("image-rendering", "pixelated");
   expect(
@@ -51,12 +53,14 @@ test("uses the native timber identity on the main landing page", async ({
   await expect(page.locator('img[src*="diorama"]')).toHaveCount(0);
   await expect(page.getByRole("heading", { level: 1 })).toBeInViewport();
   await page.getByRole("link", { name: "Explore the villages", exact: true }).click();
-  await expect(page.getByRole("heading", { name: "Where will they settle?" })).toBeInViewport();
+  await expect(page.getByRole("heading", { name: "Villages by biome" })).toBeInViewport();
 });
 
-test("browses all 17 styles without rendering inactive frames", async ({ page }): Promise<void> => {
+test("browses all 17 biome groups without rendering inactive frames", async ({
+  page,
+}): Promise<void> => {
   await page.goto("/atlas");
-  const tabs = page.getByRole("tablist", { name: "Village styles" }).getByRole("tab");
+  const tabs = page.getByRole("tablist", { name: "Biome groups" }).getByRole("tab");
   await expect(tabs).toHaveCount(17);
   let imageCount: number = 0;
   let notesCount: number = 0;
@@ -74,45 +78,45 @@ test("browses all 17 styles without rendering inactive frames", async ({ page })
       await waitForImages(page);
       imageCount += 1;
     } else {
-      await expect(panel.getByText("Village field notes")).toBeVisible();
+      await expect(panel.getByText("Building materials")).toBeVisible();
       notesCount += 1;
     }
   }
   expect(imageCount).toBe(12);
   expect(notesCount).toBe(5);
-  await expect(page.getByRole("button", { name: "Next village style" })).toBeDisabled();
+  await expect(page.getByRole("button", { name: "Next biome group" })).toBeDisabled();
 });
 
 test("uses carousel arrows, shareable selection and browser history", async ({
   page,
 }): Promise<void> => {
   await page.goto("/atlas?village=jungle");
-  await expect(page.getByRole("tab", { name: "Jungle Tribal", exact: true })).toHaveAttribute(
+  await expect(page.getByRole("tab", { name: "Jungle", exact: true })).toHaveAttribute(
     "aria-selected",
     "true",
   );
-  await page.getByRole("button", { name: "Next village style" }).click();
+  await page.getByRole("button", { name: "Next biome group" }).click();
   await expect(page).toHaveURL(/village=desert/);
-  await page.getByRole("button", { name: "Previous village style" }).click();
+  await page.getByRole("button", { name: "Previous biome group" }).click();
   await expect(page).toHaveURL(/village=jungle/);
   await page.goBack();
-  await expect(page.getByRole("tab", { name: "Desert Oasis", exact: true })).toHaveAttribute(
+  await expect(page.getByRole("tab", { name: "Desert", exact: true })).toHaveAttribute(
     "aria-selected",
     "true",
   );
   await page.goto("/atlas?village=unknown");
-  await expect(page.getByRole("tab", { name: "Mediterranean", exact: true })).toHaveAttribute(
+  await expect(page.getByRole("tab", { name: "Plains", exact: true })).toHaveAttribute(
     "aria-selected",
     "true",
   );
-  await expect(page.getByRole("button", { name: "Previous village style" })).toBeDisabled();
+  await expect(page.getByRole("button", { name: "Previous biome group" })).toBeDisabled();
 });
 
 test("supports horizontal keyboard selection and visible focus", async ({
   page,
 }): Promise<void> => {
   await page.goto("/atlas");
-  const first = page.getByRole("tab", { name: "Mediterranean", exact: true });
+  const first = page.getByRole("tab", { name: "Plains", exact: true });
   await first.focus();
   await first.press("ArrowRight");
   const next = page.getByRole("tab", { name: "Birch Forest", exact: true });
@@ -136,15 +140,9 @@ test("retains multiplayer guidance and real installation destinations", async ({
   page,
 }): Promise<void> => {
   await page.goto("/setup");
-  const question = page.getByRole("button", { name: "Does it work on a multiplayer server?" });
-  await question.click();
-  await expect(question).toHaveAttribute("aria-expanded", "true");
-  await expect(
-    page.getByText(/Install NeoForge and Kithkyn on the server and every client/),
-  ).toBeVisible();
-  await question.click();
-  await expect(question).toHaveAttribute("aria-expanded", "false");
-  await expect(page.locator('[aria-disabled="true"]')).toHaveCount(2);
+  await expect(page.getByText("Add Kithkyn to the server and every client.")).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Before you move in." })).toHaveCount(0);
+  await expect(page.getByText(/Coming soon|villages are planned/)).toHaveCount(0);
   await expect(page.getByRole("link", { name: "Read the installation guide" })).toHaveAttribute(
     "href",
     "https://github.com/Quzzar/kithkyn#install",
@@ -199,14 +197,14 @@ test("downloads the chosen brand kit and preserves links from earlier previews",
       expect((await response.body()).subarray(0, 2).toString()).toBe("PK");
   }
   await page.getByRole("link", { name: "Villages", exact: true }).click();
-  await expect(page.getByRole("heading", { name: "Where will they settle?" })).toBeInViewport();
+  await expect(page.getByRole("heading", { name: "Villages by biome" })).toBeInViewport();
   for (const path of ["/play", "/directions/corner-frame", "/studies/first", "/studies/timber"]) {
     await page.goto(path);
     await expect(page).toHaveURL("/");
   }
   await page.goto("/directions/unknown?village=jungle#villages");
   await expect(page).toHaveURL("/?village=jungle#villages");
-  await expect(page.getByRole("tab", { name: "Jungle Tribal", exact: true })).toHaveAttribute(
+  await expect(page.getByRole("tab", { name: "Jungle", exact: true })).toHaveAttribute(
     "aria-selected",
     "true",
   );

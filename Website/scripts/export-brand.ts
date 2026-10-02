@@ -26,12 +26,11 @@ writeFileSync(brandPath("wordmark.svg"), artworkSvg(BRAND_WORDMARK));
 writeFileSync(brandPath("icon.svg"), artworkSvg(BRAND_ICON));
 writeFileSync(
   brandPath("social.svg"),
-  `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-label="Kithkyn: a world with neighbors">
+  `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-label="Kithkyn: Autonomous Villages for Minecraft">
   <style>@font-face{font-family:Outfit;src:url(data:font/woff2;base64,${font}) format('woff2');font-weight:100 900}text{font-family:Outfit,sans-serif}</style>
   <rect width="1200" height="630" fill="${BRAND_PALETTE.raised}"/>
-  <text x="600" y="66" text-anchor="middle" font-size="21" font-weight="500" fill="${BRAND_PALETTE.oak}">Autonomous villagers for Minecraft</text>
   <image x="88" y="180" width="1024" height="272" style="image-rendering:pixelated" href="data:image/png;base64,${wordmark}"/>
-  <text x="600" y="570" text-anchor="middle" font-size="46" font-weight="500" fill="${BRAND_PALETTE.ink}">A world with neighbors.</text>
+  <text x="600" y="570" text-anchor="middle" font-size="46" font-weight="500" fill="${BRAND_PALETTE.ink}">Autonomous Villages for Minecraft</text>
 </svg>\n`,
 );
 writeFileSync(brandPath("palette.json"), `${JSON.stringify(BRAND_PALETTE, null, 2)}\n`);
@@ -68,8 +67,9 @@ The canvas is the page background, surface is for content panels, and raised is 
 and hover states. Borders use dark ink at 16% opacity. Reserve saddle brown for active controls and focus.
 
 The edited 2170 × 725 wordmark was center-sampled to 128 × 43, with binary alpha.
-Empty top and bottom rows were trimmed to a 128 × 34 master. The reference-edited K was
-center-sampled from 1280 × 1280 to 32 × 32, using the same binary-alpha threshold.
+Empty top and bottom rows were trimmed to a 128 × 34 master. The repaired K was
+center-sampled from 1254 × 1254 to 32 × 32, using the same binary-alpha threshold.
+Every edge has at least four transparent native pixels of clear space.
 The PNG masters have one actual image pixel per grid cell. The SVG containers embed these pixels.
 The sharing card displays the wordmark at exactly 8×, with native SVG text and layout.
 `,

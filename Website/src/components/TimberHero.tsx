@@ -11,7 +11,6 @@ export function TimberHero({ identity }: { readonly identity: TimberIdentity }):
   return (
     <section className={styles.layout[identity.layout]} aria-labelledby="hero-title">
       <div className={styles.copy[identity.layout]}>
-        <p className={hero.label}>Autonomous villagers for Minecraft</p>
         <img
           className={styles.wordmark}
           src={identity.wordmark.source}
@@ -20,8 +19,8 @@ export function TimberHero({ identity }: { readonly identity: TimberIdentity }):
           alt="Kithkyn"
           fetchPriority="high"
         />
-        <h1 id="hero-title">A world with neighbors.</h1>
-        <p className={hero.lead}>Villagers who build, belong, and think for themselves.</p>
+        <h1 id="hero-title">Autonomous Villages for Minecraft</h1>
+        <p className={hero.lead}>Villagers gather resources, build homes, and start families.</p>
         <div className={styles.actions[identity.layout]}>
           <a className={hero.primary} href="#villages">
             Explore the villages <ArrowUpRight aria-hidden="true" />

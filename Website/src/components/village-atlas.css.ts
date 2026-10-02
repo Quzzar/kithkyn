@@ -136,8 +136,3 @@ globalStyle(`${fieldNotes} > span`, {
   fontFamily: vars.font.display,
   fontSize: vars.fontSize.subheading,
 });
-export const note = style({
-  marginTop: vars.space.xl,
-  color: vars.color.muted,
-  fontSize: vars.fontSize.small,
-});

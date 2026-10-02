@@ -1,3 +1,5 @@
+import { MINECRAFT_SCENES, type MinecraftScene } from "./imagery";
+
 export type Village = {
   readonly id: string;
   readonly name: string;
@@ -10,7 +12,7 @@ export type Village = {
 /** The public roster follows the 17 bundled land catalogs in docs/village-biomes.md. */
 export const DEFAULT_VILLAGE: Village = {
   id: "mediterranean",
-  name: "Mediterranean",
+  name: "Plains",
   biome: "Plains & sunflower plains",
   detail: "White stone homes, terracotta roofs, orchards, and open courtyards.",
   materials: ["White stone", "Terracotta", "Hedges"],
@@ -23,15 +25,15 @@ export const VILLAGES: readonly Village[] = [
     id: "birch",
     name: "Birch Forest",
     biome: "Birch woodland",
-    detail: "Pale timber and mossy stone make an intimate woodland home.",
+    detail: "Birch houses with mossy stone foundations.",
     materials: ["Birch", "Mossy stone", "Oak"],
     image: MINECRAFT_SCENES.woodland,
   },
   {
     id: "rustic",
-    name: "Rustic Woodland",
+    name: "Forest",
     biome: "Oak forests",
-    detail: "Working barns and oak homes gather around a merchant and well.",
+    detail: "Oak homes, barns, and a central market and well.",
     materials: ["Oak", "Stone", "Stripped logs"],
     image: MINECRAFT_SCENES.village,
   },
@@ -39,20 +41,20 @@ export const VILLAGES: readonly Village[] = [
     id: "taiga",
     name: "Taiga",
     biome: "Conifer forests",
-    detail: "Spruce homes, a Viking meeting point, and a timber palisade.",
+    detail: "Spruce homes, a meeting hall, and a timber palisade.",
     materials: ["Spruce", "Cobblestone", "Stripped logs"],
     image: MINECRAFT_SCENES.woodland,
   },
   {
     id: "romanian",
-    name: "Romanian",
+    name: "Dark Forest",
     biome: "Dark forests & wooded valleys",
     detail: "Steep roofs, heavy timber frames, and enclosed woodland yards.",
     materials: ["Dark oak", "Birch", "Deepslate"],
   },
   {
     id: "jungle",
-    name: "Jungle Tribal",
+    name: "Jungle",
     biome: "Jungle & bamboo jungle",
     detail: "Bamboo roofs, treehouses, and compact homes under the canopy.",
     materials: ["Bamboo", "Jungle wood", "Timber"],
@@ -60,7 +62,7 @@ export const VILLAGES: readonly Village[] = [
   },
   {
     id: "desert",
-    name: "Desert Oasis",
+    name: "Desert",
     biome: "Sandy deserts",
     detail: "Sandstone courts, shaded homes, wells, and oasis planting.",
     materials: ["Sandstone", "Candles", "Oasis gardens"],
@@ -68,17 +70,17 @@ export const VILLAGES: readonly Village[] = [
   },
   {
     id: "pueblo",
-    name: "Pueblo",
+    name: "Badlands",
     biome: "Badlands & mesas",
-    detail: "Terracotta homes and roof terraces meet red sandstone walls.",
+    detail: "Terracotta homes, roof terraces, and red sandstone walls.",
     materials: ["Terracotta", "Adobe", "Red sandstone"],
     image: MINECRAFT_SCENES.desert,
   },
   {
     id: "floodplain",
-    name: "Floodplain",
+    name: "Mangrove Swamp",
     biome: "Mangrove swamps",
-    detail: "Mud-brick homes and mangrove details follow the water.",
+    detail: "Mud-brick homes with mangrove timber on raised ground.",
     materials: ["Mud brick", "Mangrove", "Raised earth"],
     image: MINECRAFT_SCENES.woodland,
   },
@@ -86,13 +88,13 @@ export const VILLAGES: readonly Village[] = [
     id: "swamp",
     name: "Swamp",
     biome: "Ordinary wetlands",
-    detail: "Mossy ruins and candlelit timber gather around two campfires.",
+    detail: "Mossy stone buildings, oak homes, and candlelit timber walls.",
     materials: ["Oak", "Spruce", "Mossy stone"],
     image: MINECRAFT_SCENES.woodland,
   },
   {
     id: "tundra",
-    name: "Tundra",
+    name: "Snowy Lowlands",
     biome: "Snowy plains & frozen lowlands",
     detail: "Snowbound homes, sheltered farms, and packed-ice defenses.",
     materials: ["Packed ice", "Snow", "Spruce"],
@@ -100,7 +102,7 @@ export const VILLAGES: readonly Village[] = [
   },
   {
     id: "alpine",
-    name: "Alpine Highlands",
+    name: "Mountains",
     biome: "Meadows & mountain slopes",
     detail: "Brick and spruce homes, berry plots, and deep wells.",
     materials: ["Brick", "Spruce", "Berries"],
@@ -108,14 +110,14 @@ export const VILLAGES: readonly Village[] = [
   },
   {
     id: "cherry",
-    name: "Japanese Cherry Grove",
+    name: "Cherry Grove",
     biome: "Cherry groves & flower forests",
     detail: "Spruce frames, ponds, and gardens behind flowering walls.",
     materials: ["Spruce", "Cherry leaves", "Garden ponds"],
   },
   {
     id: "polynesian",
-    name: "Polynesian Coast",
+    name: "Warm Coast",
     biome: "Warm beaches & sparse jungle",
     detail: "Stilted homes, a king’s hall, and an open-air shrine.",
     materials: ["Stripped spruce", "Oak roofs", "Coral"],
@@ -123,24 +125,23 @@ export const VILLAGES: readonly Village[] = [
   },
   {
     id: "nautical",
-    name: "Nautical Coast",
+    name: "Temperate Coast",
     biome: "Temperate beaches & stony shores",
-    detail: "Lighthouse life, fishing jetties, and thatched beach cottages.",
+    detail: "A lighthouse, fishing jetties, and thatched beach cottages.",
     materials: ["Sandstone", "Jungle timber", "Thatch"],
   },
   {
     id: "savanna",
-    name: "Savanna Tent",
+    name: "Savanna",
     biome: "Savannas & dry grasslands",
     detail: "Canvas tents, colorful tipis, and an acacia palisade.",
     materials: ["Canvas", "Acacia", "Cobblestone"],
   },
   {
     id: "mushroom",
-    name: "Mushroom",
+    name: "Mushroom Fields",
     biome: "Mushroom fields",
     detail: "Homes under mushroom caps, trade gazebos, and mooshroom pens.",
     materials: ["Mushroom caps", "Pale stems", "Oak"],
   },
 ];
-import { MINECRAFT_SCENES, type MinecraftScene } from "./imagery";

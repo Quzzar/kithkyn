@@ -6,10 +6,12 @@ surfaces, dark brown copy, saddle-brown actions and Outfit typography. A softly 
 village scene extends behind the desktop navigation and intro. On phones, the photograph sits
 below the intro so it remains visible. `/brand` provides the matching light palette and kit.
 
-All 17 bundled Overworld land styles remain available, with Radix keyboard navigation and
-nuqs shareable selection and browser history. Offline/cloud requirements, multiplayer guidance
-and the expandable FAQ are retained. Modrinth and CurseForge remain coming soon; installation
-and source links use GitHub. Ocean and Nether catalogs are planned.
+All 17 bundled land catalogs remain available under biome-group names, with Radix keyboard
+navigation and nuqs shareable selection and browser history. Existing selection IDs stay stable.
+The main headline is "Autonomous Villages for Minecraft", with no duplicate eyebrow.
+Copy describes concrete game actions. Local/cloud AI requirements and multiplayer installation
+instructions remain; the FAQ, future-catalog note and coming-soon download placeholders are removed.
+Installation and source links use GitHub. The public page makes no roadmap promises.
 
 ## Chosen identity
 
@@ -25,7 +27,7 @@ K tips remain absent. The matching K is a reference edit, not a pixel-identical 
 
 The built-in image editor produced wordmark source
 `exec-59a21a0e-4ab7-4f47-a0d8-e2971099b9b1.png` (2170 × 725) and icon source
-`exec-62248666-f059-4673-8261-828d4ea957ab.png` (1280 × 1280) in this chat's generated-images
+`exec-9e890def-5c77-401c-8e74-2fd076b5e979.png` (1254 × 1254) in this chat's generated-images
 directory. Exact edit prompts, input roles and the sampling recipe ship in
 `Website/public/brand/generation-prompts.md`. The previous 116 × 48 identity and its original
 provenance remain in Git at `0212509`.
@@ -34,7 +36,10 @@ The wordmark is center-sampled to 128 × 43. For output cell `(x, y)`, sample so
 `floor((x + 0.5) * 2170 / 128)` and `floor((y + 0.5) * 725 / 43)`. Retain sampled RGB;
 alpha below 128 becomes transparent with zero RGB, while alpha at or above 128 becomes fully
 opaque. Trim empty top and bottom rows to one transparent row beyond the visible art, yielding
-128 × 34. The K uses the same sampling and alpha rule from 1280 × 1280 to 32 × 32.
+128 × 34. The repaired K uses the same sampling and alpha rule from 1254 × 1254 to 32 × 32.
+Its visible bounds are `(7, 4)` through `(25, 27)`, leaving at least four empty grid cells
+on every edge. The repair retains the original plank silhouette and makes the end faces
+and dark outline complete at small sizes. Earlier K artwork remains in Git history.
 
 The kit includes wordmark exports at 512 × 136 and 1024 × 272, and square K exports at 64,
 128, 256 and 512 pixels. Every larger PNG copies each native pixel into a whole-number square

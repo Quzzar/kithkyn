@@ -25,7 +25,8 @@ The canvas is the page background, surface is for content panels, and raised is 
 and hover states. Borders use dark ink at 16% opacity. Reserve saddle brown for active controls and focus.
 
 The edited 2170 × 725 wordmark was center-sampled to 128 × 43, with binary alpha.
-Empty top and bottom rows were trimmed to a 128 × 34 master. The reference-edited K was
-center-sampled from 1280 × 1280 to 32 × 32, using the same binary-alpha threshold.
+Empty top and bottom rows were trimmed to a 128 × 34 master. The repaired K was
+center-sampled from 1254 × 1254 to 32 × 32, using the same binary-alpha threshold.
+Every edge has at least four transparent native pixels of clear space.
 The PNG masters have one actual image pixel per grid cell. The SVG containers embed these pixels.
 The sharing card displays the wordmark at exactly 8×, with native SVG text and layout.

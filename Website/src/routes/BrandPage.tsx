@@ -13,7 +13,7 @@ export function BrandPage(): ReactElement {
       <SiteHeader />
       <main id="main" className={styles.page}>
         <div className={styles.intro}>
-          <h1>Made of timber.</h1>
+          <h1>Brand assets</h1>
           <p>The Kithkyn logo, icon and sharing artwork.</p>
           <a className={styles.kit} href="/brand/kithkyn-brand-kit.zip" download>
             Download the brand kit <Download aria-hidden="true" />
@@ -61,8 +61,8 @@ export function BrandPage(): ReactElement {
         </div>
         <section className={styles.sharing} aria-labelledby="sharing-title">
           <div>
-            <h2 id="sharing-title">Ready to share.</h2>
-            <p>A clean card for posts and project links.</p>
+            <h2 id="sharing-title">Sharing card</h2>
+            <p>1200 × 630 pixels, in JPEG and SVG.</p>
             <div className={styles.downloads}>
               <a href="/brand/social.jpg" download>
                 Download sharing card <Download aria-hidden="true" />
@@ -71,7 +71,7 @@ export function BrandPage(): ReactElement {
           </div>
           <img
             src="/brand/social.svg"
-            alt="Kithkyn sharing card: a world with neighbors"
+            alt="Kithkyn sharing card: Autonomous Villages for Minecraft"
             width={1200}
             height={630}
           />

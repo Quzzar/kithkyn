@@ -6,7 +6,7 @@ import { DEFAULT_VILLAGE, VILLAGES, type Village } from "../data/villages";
 import * as site from "./site.css";
 import * as styles from "./village-atlas.css";
 
-/** Regional postcards keep all catalogs reachable by pointer, keyboard or a shared link. */
+/** Biome groups keep all catalogs reachable by pointer, keyboard or a shared link. */
 export function VillageAtlas(): ReactElement {
   const [villageId, setVillageId] = useQueryState(
     "village",
@@ -35,9 +35,9 @@ export function VillageAtlas(): ReactElement {
       <div className={site.container}>
         <div className={styles.heading}>
           <div>
-            <p className={site.label}>17 regional village styles</p>
+            <p className={site.label}>17 biome groups</p>
             <h2 className={site.sectionHeading} id="villages-title">
-              Where will they settle?
+              Villages by biome
             </h2>
           </div>
           <div className={styles.controls}>
@@ -47,7 +47,7 @@ export function VillageAtlas(): ReactElement {
             <button
               className={styles.arrow}
               type="button"
-              aria-label="Previous village style"
+              aria-label="Previous biome group"
               disabled={index === 0}
               onClick={(): void => {
                 moveVillage(-1);
@@ -58,7 +58,7 @@ export function VillageAtlas(): ReactElement {
             <button
               className={styles.arrow}
               type="button"
-              aria-label="Next village style"
+              aria-label="Next biome group"
               disabled={index === VILLAGES.length - 1}
               onClick={(): void => {
                 moveVillage(1);
@@ -74,7 +74,7 @@ export function VillageAtlas(): ReactElement {
             void setVillageId(value);
           }}
         >
-          <Tabs.List className={styles.selector} aria-label="Village styles" ref={selectorRef}>
+          <Tabs.List className={styles.selector} aria-label="Biome groups" ref={selectorRef}>
             {VILLAGES.map((entry: Village): ReactElement => (
               <Tabs.Trigger
                 className={styles.tab}
@@ -106,7 +106,7 @@ export function VillageAtlas(): ReactElement {
               ) : (
                 <div className={styles.fieldNotes}>
                   <Trees aria-hidden="true" />
-                  <span>Village field notes</span>
+                  <span>Building materials</span>
                   <p>{entry.materials.join(" · ")}</p>
                 </div>
               )}
@@ -126,7 +126,6 @@ export function VillageAtlas(): ReactElement {
             </Tabs.Content>
           ))}
         </Tabs.Root>
-        <p className={styles.note}>Overworld land biomes. Ocean and Nether villages are planned.</p>
       </div>
     </section>
   );
