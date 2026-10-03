@@ -29,14 +29,6 @@ export function SiteFooter(): ReactElement {
           <p className={styles.footerNote}>
             An independent Minecraft mod. Not affiliated with Mojang or Microsoft.
           </p>
-          <p className={styles.footerNote}>
-            Scenery:{" "}
-            <a href="https://modrinth.com/modpack/realisticworld/gallery">RealisticWorld</a>
-            {" · "}
-            <a href="https://modrinth.com/shader/complementary-reimagined/gallery">
-              Complementary Shaders
-            </a>
-          </p>
         </div>
       </div>
     </footer>

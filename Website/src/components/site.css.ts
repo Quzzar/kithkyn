@@ -1,5 +1,5 @@
 import { globalStyle, style } from "@vanilla-extract/css";
-import { breakpoint, vars } from "../styles/theme.css";
+import { vars } from "../styles/theme.css";
 
 export const container = style({
   width: "100%",
@@ -32,49 +32,6 @@ export const primaryButton = style({
 globalStyle(`${primaryButton} svg, ${label} svg`, {
   width: vars.size.icon,
   height: vars.size.icon,
-});
-export const header = style([
-  container,
-  {
-    minHeight: vars.size.header,
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "space-between",
-    gap: vars.space.lg,
-    position: "relative",
-    zIndex: 2,
-  },
-]);
-export const iconBrand = style({
-  display: "grid",
-  placeItems: "center",
-  width: vars.size.button,
-  minHeight: vars.size.button,
-  flexShrink: 0,
-});
-globalStyle(`${iconBrand} img`, {
-  width: vars.size.headerIcon,
-  height: vars.size.headerIcon,
-  imageRendering: "pixelated",
-});
-export const headerNav = style({
-  display: "flex",
-  alignItems: "center",
-  gap: vars.space.xl,
-  fontSize: vars.fontSize.small,
-  "@media": { [breakpoint.narrow]: { gap: vars.space.lg } },
-});
-globalStyle(`${headerNav} a`, {
-  display: "flex",
-  alignItems: "center",
-  minHeight: vars.size.button,
-  gap: vars.space.xs,
-});
-globalStyle(`${headerNav} a:hover`, { textDecoration: "underline" });
-globalStyle(`${headerNav} svg`, { width: vars.size.icon, height: vars.size.icon });
-export const sourceText = style({});
-globalStyle(`${headerNav} a.${sourceText}`, {
-  "@media": { [breakpoint.narrow]: { display: "none" } },
 });
 export const footer = style({
   background: vars.color.canvas,

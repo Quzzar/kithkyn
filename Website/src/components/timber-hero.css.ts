@@ -49,7 +49,7 @@ export const actions = style({
 });
 export const picture = style({
   position: "absolute",
-  top: `calc(-1 * ${vars.size.header})`,
+  top: vars.space.none,
   left: 0,
   right: 0,
   bottom: 0,

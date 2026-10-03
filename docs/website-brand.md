@@ -2,8 +2,9 @@
 
 The player homepage uses the accepted Hewn Planks wordmark and matching K, warm-white
 surfaces, dark brown copy, saddle-brown actions and Outfit typography. A softly washed
-Minecraft village scene extends behind the desktop navigation and intro. On phones, the
-photograph sits below the intro. The site has no public brand library, download kit or
+Minecraft village scene sits behind the desktop intro. There is no top navigation; the
+hero links to villages and setup, and the footer retains GitHub, issue and Credits links.
+On phones, the photograph sits below the intro. The site has no public brand library, download kit or
 identity-comparison pages. Artwork provenance stays in these internal project notes.
 
 All 17 bundled land catalogs appear under biome-group names, with Radix keyboard navigation
@@ -51,7 +52,8 @@ The website retains only the assets it uses: native PNGs, a 512 × 148 wordmark 
 a 128 × 128 K for `src/main/resources/kithkyn-logo.png`, the SVG favicon and a 1200 × 630 sharing
 card in JPEG and SVG. Larger PNGs copy each native pixel into an exact 4 × 4 square. Their
 pixel data matches the native masters, and the mod logo is byte-identical to the 128-pixel K.
-The header K is 1×, desktop hero wordmark 4×, phone hero 2× and footer wordmark 2×.
+The desktop hero wordmark is 4×, phone hero 2× and footer wordmark 2×. The K remains
+the favicon and mod icon.
 CSS uses `image-rendering: pixelated`. The README renders its 4× PNG at native size.
 
 `bun run brand:export` embeds the corrected native PNGs into the favicon and sharing SVG
@@ -72,7 +74,7 @@ The former shoreline and twelve catalog-review images have been removed from the
 Three temporary Minecraft scenes now provide the backdrop and regional-browser imagery.
 These are references from other Minecraft projects, not Kithkyn builds or evidence of
 simulation behavior. Captions explicitly say "Placeholder" and link to each source gallery;
-the footer also credits the two source projects. Five styles retain material/biome field notes.
+the footer omits the temporary scenery credits. Five styles retain material/biome field notes.
 The 17-style roster and descriptions still describe the bundled Kithkyn catalogs.
 
 | Website file | Source gallery | Original image |
