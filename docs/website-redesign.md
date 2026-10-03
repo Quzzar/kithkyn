@@ -11,7 +11,8 @@ in the logo rather than literal plank controls or decorative page frames.
 The desktop hero uses a full-width Minecraft photograph with a pale horizontal wash and
 soft bottom fade. Phone copy sits on a solid canvas with the photograph below. The headline
 is "Autonomous Villages". A 17-biome-group browser and local/cloud setup follow the hero.
-The Village life section is removed. Keep its spacing and simple navigation.
+The Village life section and top header are removed. The hero supplies section links,
+and the footer retains GitHub, issue and Credits links.
 
 The site is for players. Brand-library and design-comparison pages, downloads, unused identity
 assets and their code are removed. Old links redirect to the homepage while preserving village
@@ -21,8 +22,8 @@ and the K is 32 × 32. Source provenance, palette, media sources and the export 
 [website-brand.md](website-brand.md) and [website-brand-prompts.md](website-brand-prompts.md).
 
 Three credited Minecraft reference scenes supply the hero and photographed biome entries.
-Their "Placeholder" captions link to the source galleries; footer links name RealisticWorld
-and Complementary Shaders. They do not represent Kithkyn builds. Five biome entries use material
+Their "Placeholder" captions link to the source galleries. The footer omits temporary
+scenery credits. They do not represent Kithkyn builds. Five biome entries use material
 field notes. Replace the references with approved Kithkyn captures before launch.
 
 ## Layout references

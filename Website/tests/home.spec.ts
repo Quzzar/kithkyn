@@ -16,14 +16,7 @@ test("uses the native timber identity on the main landing page", async ({
   await expect(page).toHaveURL("/");
   await expect(page).toHaveTitle("Kithkyn | Autonomous Villages");
   await expect(page.getByRole("heading", { level: 1 })).toHaveText("Autonomous Villages");
-  await expect(page.locator("header img")).toHaveAttribute("src", "/brand/icon.png");
-  await expect(page.locator("header img")).toHaveCSS("image-rendering", "pixelated");
-  expect(
-    await page
-      .locator("header img")
-      .evaluate((image: HTMLImageElement): number[] => [image.naturalWidth, image.naturalHeight]),
-  ).toEqual([32, 32]);
-  for (const image of await page.locator('header img, footer img, img[alt="Kithkyn"]').all()) {
+  for (const image of await page.locator('footer img, img[alt="Kithkyn"]').all()) {
     const scales: number[] = await image.evaluate((element: HTMLImageElement): number[] => {
       const bounds: DOMRect = element.getBoundingClientRect();
       return [bounds.width / element.naturalWidth, bounds.height / element.naturalHeight];
@@ -227,7 +220,7 @@ test("respects reduced motion and keeps actions still on hover", async ({
 test("preserves a dark outline around every native logo edge", async ({ page }): Promise<void> => {
   await page.goto("/");
   await waitForImages(page);
-  const artwork = page.locator('header img, main img[alt="Kithkyn"]');
+  const artwork = page.locator('main img[alt="Kithkyn"]');
   for (const image of await artwork.all()) {
     const faults: number = await image.evaluate((element: HTMLImageElement): number => {
       const canvas: HTMLCanvasElement = document.createElement("canvas");

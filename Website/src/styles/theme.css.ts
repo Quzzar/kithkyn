@@ -50,13 +50,11 @@ export const vars = createGlobalTheme(":root", {
     border: "0.0625rem",
     focus: "0.1875rem",
     button: "3rem",
-    header: "5rem",
     photo: "27rem",
     mobilePhoto: "17rem",
     outline: "0.125rem",
     backdropWordmark: "32rem",
     backdropHero: "41rem",
-    headerIcon: "2rem",
   },
   motion: { short: "180ms", ease: "cubic-bezier(0.2, 0.8, 0.2, 1)" },
 });
