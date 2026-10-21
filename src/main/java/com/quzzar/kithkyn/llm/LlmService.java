@@ -162,7 +162,11 @@ public final class LlmService {
 
   private static final int PERSONA_QUEUE_LIMIT = 64;
   private final java.util.ArrayDeque<QueuedPersona> personaQueue = new java.util.ArrayDeque<>();
-  private boolean personaInFlight = false; // guarded by personaQueue
+  // Queue ownership and provider admission share one lock, so a world cannot
+  // stop between selecting a provider and handing it a request.
+  private QueuedPersona personaInFlight; // guarded by providerLock
+  private long providerEpoch; // guarded by providerLock
+  private boolean stopped; // guarded by providerLock
 
   private LlmService() {
     // Backstop only, for paths that never reach ServerStoppingEvent (a crash,
@@ -199,6 +203,7 @@ public final class LlmService {
     }
     LlmCallLog.install();
     synchronized (providerLock) {
+      stopped = false;
       if (provider == null) {
         provider = createProvider(KithkynConfig.LlmProviderName);
         Kithkyn.LOGGER.info("LLM provider: {}", KithkynConfig.LlmProviderName);
@@ -249,10 +254,24 @@ public final class LlmService {
 
   /** Stops and releases the provider when a world or dedicated server shuts down. */
   public void shutdown() {
+    List<QueuedPersona> abandoned;
     synchronized (providerLock) {
+      providerEpoch++;
+      stopped = true;
+      abandoned = new java.util.ArrayList<>(personaQueue);
+      personaQueue.clear();
+      if (personaInFlight != null) abandoned.add(personaInFlight);
+      personaInFlight = null;
+      activeForeground.set(0);
+      activeChat.set(0);
+      chatWindowUntilMs = 0;
       LlmProvider active = provider;
       provider = null;
       if (active != null) active.shutdown();
+    }
+    for (QueuedPersona work : abandoned) {
+      LlmCallLog.skipped(work.lane(), work.purpose(), "world or server stopped");
+      work.future().complete(Optional.empty());
     }
   }
 
@@ -266,22 +285,34 @@ public final class LlmService {
       String purpose, CompletionRequest request) {
     long id = LlmCallLog.request(lane, purpose, request);
     long startedMs = System.currentTimeMillis();
-    return active.complete(request).whenComplete((result, error) ->
-        LlmCallLog.reply(id, lane, purpose, result, error, System.currentTimeMillis() - startedMs));
+    try {
+      return active.complete(request).whenComplete((result, error) ->
+          LlmCallLog.reply(id, lane, purpose, result, error, System.currentTimeMillis() - startedMs));
+    } catch (RuntimeException failed) {
+      LlmCallLog.reply(id, lane, purpose, null, failed, System.currentTimeMillis() - startedMs);
+      return CompletableFuture.failedFuture(failed);
+    }
   }
 
   private CompletableFuture<Optional<String>> foregroundComplete(String lane, String purpose,
       CompletionRequest request) {
-    LlmProvider active = provider;
-    if (active == null || active.getStatus() != Status.READY) {
-      LlmCallLog.skipped(lane, purpose, "provider not ready (" + getStatus() + ")");
-      return CompletableFuture.completedFuture(Optional.empty());
+    synchronized (providerLock) {
+      LlmProvider active = provider;
+      if (stopped || active == null || active.getStatus() != Status.READY) {
+        LlmCallLog.skipped(lane, purpose, "provider not ready (" + getStatus() + ")");
+        return CompletableFuture.completedFuture(Optional.empty());
+      }
+      long epoch = providerEpoch;
+      activeForeground.incrementAndGet();
+      return callProvider(active, lane, purpose, request).handle((result, error) -> {
+        synchronized (providerLock) {
+          if (providerEpoch != epoch || stopped) return Optional.<String>empty();
+          activeForeground.decrementAndGet();
+        }
+        tryDispatchPersona(epoch);
+        return result != null ? result : Optional.empty();
+      });
     }
-    activeForeground.incrementAndGet();
-    return callProvider(active, lane, purpose, request).whenComplete((result, error) -> {
-      activeForeground.decrementAndGet();
-      tryDispatchPersona();
-    });
   }
 
   /**
@@ -393,17 +424,24 @@ public final class LlmService {
       List<FewShotExample> examples, int maxNewTokens, double temperature, double frequencyPenalty) {
     // Mark a conversation live so village work yields, and keep the window open
     // a few seconds past this reply for the player's next line.
-    activeChat.incrementAndGet();
-    chatWindowUntilMs = System.currentTimeMillis() + CHAT_PRIORITY_WINDOW_MS;
-    return foregroundComplete(LANE_CHAT, purpose,
-        new CompletionRequest(system, user, examples, maxNewTokens, temperature, frequencyPenalty))
-        .whenComplete((result, error) -> {
-          activeChat.decrementAndGet();
-          chatWindowUntilMs = System.currentTimeMillis() + CHAT_PRIORITY_WINDOW_MS;
-          // Quiet queues have no completion callback to wake them when the player's grace period ends.
-          CompletableFuture.delayedExecutor(CHAT_PRIORITY_WINDOW_MS, java.util.concurrent.TimeUnit.MILLISECONDS)
-              .execute(this::tryDispatchPersona);
-        });
+    synchronized (providerLock) {
+      if (stopped) return CompletableFuture.completedFuture(Optional.empty());
+      long epoch = providerEpoch;
+      activeChat.incrementAndGet();
+      chatWindowUntilMs = System.currentTimeMillis() + CHAT_PRIORITY_WINDOW_MS;
+      return foregroundComplete(LANE_CHAT, purpose,
+          new CompletionRequest(system, user, examples, maxNewTokens, temperature, frequencyPenalty))
+          .whenComplete((result, error) -> {
+            synchronized (providerLock) {
+              if (providerEpoch != epoch || stopped) return;
+              activeChat.decrementAndGet();
+              chatWindowUntilMs = System.currentTimeMillis() + CHAT_PRIORITY_WINDOW_MS;
+            }
+            // The grace period may end without any other request waking this world's queue.
+            CompletableFuture.delayedExecutor(CHAT_PRIORITY_WINDOW_MS, java.util.concurrent.TimeUnit.MILLISECONDS)
+                .execute(() -> tryDispatchPersona(epoch));
+          });
+    }
   }
 
   /**
@@ -450,7 +488,11 @@ public final class LlmService {
       return CompletableFuture.completedFuture(Optional.empty());
     }
     CompletableFuture<Optional<String>> future = new CompletableFuture<>();
-    synchronized (personaQueue) {
+    synchronized (providerLock) {
+      if (stopped) {
+        LlmCallLog.skipped(lane, purpose, "world or server stopped");
+        return CompletableFuture.completedFuture(Optional.empty());
+      }
       if (personaQueue.size() >= PERSONA_QUEUE_LIMIT) {
         Kithkyn.LOGGER.warn("Background LLM queue full ({}), rejecting request", PERSONA_QUEUE_LIMIT);
         LlmCallLog.skipped(lane, purpose, "background queue full (" + PERSONA_QUEUE_LIMIT + ")");
@@ -464,30 +506,36 @@ public final class LlmService {
   }
 
   private void tryDispatchPersona() {
-    QueuedPersona next;
-    synchronized (personaQueue) {
-      if (personaInFlight || !isReady() || activeForeground.get() > 0
+    synchronized (providerLock) { tryDispatchPersona(providerEpoch); }
+  }
+
+  private void tryDispatchPersona(long epoch) {
+    synchronized (providerLock) {
+      LlmProvider active = provider;
+      if (providerEpoch != epoch || stopped || personaInFlight != null
+          || active == null || active.getStatus() != Status.READY || activeForeground.get() > 0
           || playerTalking() || personaQueue.isEmpty()) {
         return;
       }
-      next = personaQueue.poll();
-      personaInFlight = true;
+      QueuedPersona next = personaQueue.poll();
+      personaInFlight = next;
+      // NOTE: this re-wraps the request rather than carrying one through, so any
+      // field added to CompletionRequest has to be added HERE too (and to
+      // QueuedPersona) or it silently reverts to its default on the background
+      // path only. Nothing fails loudly: the knob works in chat, does nothing
+      // here, and looks like a model problem. Chat reaches the provider via
+      // foregroundComplete and is not affected.
+      callProvider(active, next.lane(), next.purpose(), new CompletionRequest(next.system(), next.user(),
+          next.examples(), next.maxNewTokens(), next.temperature(), next.frequencyPenalty()))
+          .whenComplete((result, error) -> {
+            synchronized (providerLock) {
+              if (providerEpoch != epoch || personaInFlight != next || stopped) return;
+              personaInFlight = null;
+              next.future().complete(result != null ? result : Optional.empty());
+            }
+            tryDispatchPersona(epoch);
+          });
     }
-    // NOTE: this re-wraps the request rather than carrying one through, so any
-    // field added to CompletionRequest has to be added HERE too (and to
-    // QueuedPersona) or it silently reverts to its default on the background
-    // path only. Nothing fails loudly: the knob works in chat, does nothing
-    // here, and looks like a model problem. Chat reaches the provider via
-    // foregroundComplete and is not affected.
-    callProvider(provider, next.lane(), next.purpose(), new CompletionRequest(next.system(), next.user(),
-        next.examples(), next.maxNewTokens(), next.temperature(), next.frequencyPenalty()))
-        .whenComplete((result, error) -> {
-          synchronized (personaQueue) {
-            personaInFlight = false;
-          }
-          next.future().complete(result != null ? result : Optional.empty());
-          tryDispatchPersona();
-        });
   }
 
   private static final Pattern CHOICE_PATTERN = Pattern.compile("\"choice\"\\s*:\\s*\"?(\\d+)");

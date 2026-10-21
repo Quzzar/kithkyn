@@ -323,6 +323,7 @@ public final class ResidentReactionVerification {
       ((LivePerson) injured).name("Tessa", "Reed");
       report.addProperty("status", "running"); report.addProperty("controlled_replies", false);
       report.addProperty("native_goals_removed", false); report.addProperty("tick_rate", 20);
+      report.addProperty("native_policy_validated", true);
       report.addProperty("dialogue_model", KithkynConfig.LlmLocalModel);
       report.addProperty("decision_model", KithkynConfig.ReactionModel);
       report.addProperty("danger_confidence", KithkynConfig.ReactionDangerConfidence);
@@ -362,7 +363,6 @@ public final class ResidentReactionVerification {
       if (threat != null) { threat.discard(); threat = null; }
       freshObserver(); ((LivePerson) observer).name(scenario == 0 ? "Mira" : scenario == 1 ? "Bram" : "Alden", "Flint");
       ((LivePerson) observer).character(scenario);
-      if (scenario == 2) observer.setOccupation(Occupation.GUARD);
       injured.setHealth(injured.getMaxHealth()); injured.moveTo(108.5, 161, 100.5);
       observer.personMainInv.addItem(new net.minecraft.world.item.ItemStack(net.minecraft.world.item.Items.DIAMOND, 3));
       if (scenario == 0) observer.personMainInv.addItem(new net.minecraft.world.item.ItemStack(net.minecraft.world.item.Items.BREAD, 3));
@@ -453,6 +453,7 @@ public final class ResidentReactionVerification {
     private LivePerson(ServerLevel level) { super(PersonEntityType.PERSON.get(), level); name("Resident", "Test"); setGender(Gender.FEMALE); }
     private void name(String first, String last) { setFirstName(first); setLastName(last); }
     private void character(int scenario) {
+      setOccupation(scenario == 2 ? Occupation.GUARD : Occupation.WANDERER);
       setVirtue(Virtue.AGGRESSION, scenario == 2 ? .4F : -.35F);
       setVirtue(Virtue.CURIOSITY, scenario == 1 ? -.45F : .45F);
       setVirtue(Virtue.PROTECT_OTHERS, scenario == 1 ? -.45F : .45F);
@@ -462,7 +463,13 @@ public final class ResidentReactionVerification {
           ? "A private, incurious resident who avoids getting involved in other people's trouble. Admits what she does not know."
           : "A concerned, observant resident who notices injured neighbors and cares about others. Admits what she does not know.",
           "Speaks plainly.", "live-model-fixture", 0, 1));
-      registerGoals();
+      reloadState();
+      check(goalSelector.getAvailableGoals().stream().filter(goal -> goal.getGoal() instanceof
+          com.quzzar.kithkyn.entities.ai.goals.ResidentReactionGoal).count() == 1,
+          "Live resident must have exactly one reaction goal after rebuilding native AI");
+      if (scenario == 2) check(targetSelector.getAvailableGoals().stream().filter(goal -> goal.getGoal() instanceof
+          com.quzzar.kithkyn.entities.ai.goals.GuardThreatGoal).count() == 1,
+          "Live guard must have exactly one native threat-targeting goal");
     }
   }
   private static void check(boolean value, String message) { if (!value) throw new AssertionError(message); }
