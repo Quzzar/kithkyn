@@ -150,3 +150,7 @@ a scripted response or a convincing single scene is not the full acceptance resu
 Delivery order: action foundation, grounded awareness, decision capability and durable intentions,
 voice/presence, then populated-village acceptance. Model evaluation can run alongside those stages.
 The tracker holds progress; this document records the agreed direction and implementation contract.
+
+The next implementation slice is the independent, default-off [resident reaction lane](npc-reactions.md).
+It consumes witnessed evidence and offers only implemented effects, with game-owned routes,
+freshness and confidence gates. Its model replay and game execution fixtures are separate evidence.

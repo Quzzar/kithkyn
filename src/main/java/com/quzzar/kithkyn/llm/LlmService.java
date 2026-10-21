@@ -318,85 +318,19 @@ public final class LlmService {
 
   /** The strict path never accepts a bare number, fuzzy action, missing echo, or truncated response. */
   public static Optional<LlmDecision> parseStrictDecision(String raw, List<String> options) {
-    try (var reader = new com.google.gson.stream.JsonReader(new java.io.StringReader(raw))) {
-      if (!hasStrictJsonStrings(raw)) {
-        return Optional.empty();
-      }
-      // JsonParser.parseString temporarily enables leniency and silently overwrites duplicate keys.
-      reader.setLenient(false);
-      java.util.Set<String> fields = new java.util.HashSet<>();
-      Integer number = null;
-      String action = null;
-      String reason = null;
-      reader.beginObject();
-      while (reader.hasNext()) {
-        String field = reader.nextName();
-        if (!fields.add(field)) {
-          return Optional.empty();
-        }
-        switch (field) {
-          case "choice" -> {
-            if (reader.peek() != com.google.gson.stream.JsonToken.NUMBER) {
-              return Optional.empty();
-            }
-            number = new java.math.BigDecimal(reader.nextString()).intValueExact();
-          }
-          case "action", "reason" -> {
-            if (reader.peek() != com.google.gson.stream.JsonToken.STRING) {
-              return Optional.empty();
-            }
-            String value = reader.nextString();
-            if (field.equals("action")) {
-              action = value;
-            } else {
-              reason = value;
-            }
-          }
-          default -> {
-            return Optional.empty();
-          }
-        }
-      }
-      reader.endObject();
-      if (reader.peek() != com.google.gson.stream.JsonToken.END_DOCUMENT
-          || number == null || reason == null || action == null || number < 1 || number > options.size()
-          || !options.get(number - 1).equals(action)) {
-        return Optional.empty();
-      }
-      return Optional.of(new LlmDecision(action, number - 1, reason));
-    } catch (RuntimeException | java.io.IOException invalid) {
-      return Optional.empty();
-    }
-  }
-
-  /** Gson 2.10's legacy strict reader still tolerates raw control characters and escaped apostrophes. */
-  private static boolean hasStrictJsonStrings(String raw) {
-    boolean quoted = false;
-    for (int index = 0; index < raw.length(); index++) {
-      char character = raw.charAt(index);
-      if (!quoted) {
-        quoted = character == '"';
-      } else if (character == '"') {
-        quoted = false;
-      } else if (character < 0x20) {
-        return false;
-      } else if (character == '\\') {
-        if (++index >= raw.length()) {
-          return false;
-        }
-        char escape = raw.charAt(index);
-        if (escape == 'u') {
-          for (int digit = 0; digit < 4; digit++) {
-            if (++index >= raw.length() || Character.digit(raw.charAt(index), 16) < 0) {
-              return false;
-            }
-          }
-        } else if ("\"\\/bfnrt".indexOf(escape) < 0) {
-          return false;
-        }
-      }
-    }
-    return !quoted;
+    var parsed = StrictJson.object(raw);
+    if (parsed.isEmpty()) return Optional.empty();
+    var object = parsed.get();
+    try {
+      if (!object.keySet().equals(java.util.Set.of("choice", "action", "reason"))
+          || !object.get("choice").isJsonPrimitive() || !object.getAsJsonPrimitive("choice").isNumber()
+          || !object.get("action").isJsonPrimitive() || !object.getAsJsonPrimitive("action").isString()
+          || !object.get("reason").isJsonPrimitive() || !object.getAsJsonPrimitive("reason").isString()) return Optional.empty();
+      int number = object.get("choice").getAsBigDecimal().intValueExact();
+      String action = object.get("action").getAsString();
+      return number >= 1 && number <= options.size() && options.get(number - 1).equals(action)
+          ? Optional.of(new LlmDecision(action, number - 1, object.get("reason").getAsString())) : Optional.empty();
+    } catch (RuntimeException invalid) { return Optional.empty(); }
   }
 
   /**

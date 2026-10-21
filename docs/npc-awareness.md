@@ -81,3 +81,6 @@ phase. The separate repeated-speech burst exercised budget exhaustion.
 That isolated population has no work simulation or dialogue generation. It is not a populated
 village frame/tick benchmark or proof that the model will reliably use the evidence. Keep
 #187 open for populated gameplay and model acceptance, and #192 for the full companion scenario.
+
+The default-off [reaction experiment](npc-reactions.md) consumes these snapshots for bounded
+choices. Awareness itself still makes no model calls; disabling reactions preserves that behavior.

@@ -111,7 +111,7 @@ public final class ResidentAwareness {
     return nearby;
   }
 
-  private static boolean visible(RealPerson observer, Entity subject) {
+  public static boolean visible(RealPerson observer, Entity subject) {
     return observer.level() instanceof ServerLevel level && observer.level() == subject.level()
         && awake(observer) && take(level, Work.VISIBILITY)
         && Witnesses.canIdentify(level, observer, subject);

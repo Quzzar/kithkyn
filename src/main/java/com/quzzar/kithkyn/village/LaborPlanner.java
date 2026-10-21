@@ -338,6 +338,13 @@ public final class LaborPlanner {
     return count;
   }
 
+  /** Optional excursions must respect the same essential staffing protections as reassignment. */
+  public static boolean mustKeepOnPost(RealPerson person) {
+    Village village = person.getVillage();
+    return village != null && mustKeep(person.getOccupation(), countOf(village, person.getOccupation()),
+        isHungry(village), village.isStorageBackedUp());
+  }
+
   /** Pure protection rule used before any urgent reassignment is offered. */
   static boolean mustKeep(Occupation occupation, int sameOccupationCount,
       boolean hungry, boolean storageBackedUp) {

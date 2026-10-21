@@ -148,6 +148,9 @@ public class RealPerson extends Person {
   private final com.quzzar.kithkyn.agency.ResidentAgency agency = new com.quzzar.kithkyn.agency.ResidentAgency(this);
   private final com.quzzar.kithkyn.awareness.ResidentAwareness awareness = new com.quzzar.kithkyn.awareness.ResidentAwareness(this);
 
+  private final com.quzzar.kithkyn.decision.ResidentReactions reactions = new com.quzzar.kithkyn.decision.ResidentReactions(this);
+  public com.quzzar.kithkyn.decision.ResidentReactions reactions() { return reactions; }
+
   public com.quzzar.kithkyn.awareness.ResidentAwareness awareness() { return awareness; }
 
   /** Accepted conversational actions share this controller across goal re-registration. */
@@ -2581,7 +2584,7 @@ public class RealPerson extends Person {
   }
 
   /** Whether a hostile is close enough for an idle resident to defend the camp from it. */
-  private boolean isCampfireThreat(LivingEntity mob) {
+  public boolean isCampfireThreat(LivingEntity mob) {
     // The dead at the gate are a threat to everyone who fights, wherever they stand.
     if (mob instanceof RealPerson raider && raider.isRaider()) {
       return !isRaider();
@@ -2782,6 +2785,7 @@ public class RealPerson extends Person {
     this.goalSelector.addGoal(1, new com.quzzar.kithkyn.entities.ai.goals.VillageTravelGoal(this));
     this.goalSelector.addGoal(com.quzzar.kithkyn.entities.ai.goals.ResidentActionGoal.PRIORITY,
         new com.quzzar.kithkyn.entities.ai.goals.ResidentActionGoal(this));
+    this.goalSelector.addGoal(3, new com.quzzar.kithkyn.entities.ai.goals.ResidentReactionGoal(this));
     this.goalSelector.addGoal(3, new com.quzzar.kithkyn.entities.ai.goals.PauseForConversationGoal(this));
 
     if (doesCombat()) {

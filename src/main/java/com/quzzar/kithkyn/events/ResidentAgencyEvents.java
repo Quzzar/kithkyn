@@ -20,13 +20,14 @@ public final class ResidentAgencyEvents {
 
   @SubscribeEvent
   public static void tick(EntityTickEvent.Post event) {
-    if (event.getEntity() instanceof RealPerson person && !person.level().isClientSide()) person.agency().maintain();
+    if (event.getEntity() instanceof RealPerson person && !person.level().isClientSide()) { person.agency().maintain(); person.reactions().tick(); }
   }
 
   @SubscribeEvent
   public static void left(EntityLeaveLevelEvent event) {
     if (event.getEntity() instanceof RealPerson person && !person.level().isClientSide()) {
       person.agency().finish(End.INTERRUPTED, "The resident left the loaded world.");
+      person.reactions().interrupt("The resident left the loaded world.");
     }
   }
 
@@ -38,5 +39,6 @@ public final class ResidentAgencyEvents {
   @SubscribeEvent
   public static void stopped(ServerStoppedEvent event) {
     PointedLocations.forget(event.getServer());
+    com.quzzar.kithkyn.decision.ReactionDecisions.stop(event.getServer());
   }
 }
