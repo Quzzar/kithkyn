@@ -93,11 +93,14 @@ last essential worker protection, eligible age/post changes and a warning withou
 from model quality. `runResidentAgencyVerification` independently checks the shared navigation
 against the existing player action contract.
 
-The Kev research note records a separate pinned local model replay. Model quality, per-purpose
+The [Kev research note](research/kev-reaction-evaluation-2026-10-21.md) records a separate pinned
+local model replay: 38/48 authored labels matched, option order changed four of sixteen states,
+and none met the fixed 0.8 confidence gate. The near-duplicate split is not independent validation.
+No threshold or default was changed from these results. Model quality, per-purpose
 calibration, larger populations in working villages, multiplayer, custody and posted guard
 scenarios still need acceptance before enabling or recommending this experiment. #188 remains
 open. Durable intentions and voice remain separate work in #189 and #190.
 
-Latest local validation: 719 JUnit tests passed, all 17 bundled catalogs and 459 structure
+Latest local validation: 720 JUnit tests passed, all 17 bundled catalogs and 459 structure
 templates passed auditing, and both movement and reaction isolated-world fixtures passed.
 The reaction fixture uses controlled model results; this is not multiplayer acceptance.

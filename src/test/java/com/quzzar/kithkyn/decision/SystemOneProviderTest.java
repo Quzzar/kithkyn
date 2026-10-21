@@ -67,6 +67,21 @@ class SystemOneProviderTest {
     } finally { release.complete(null); provider.close(); server.stop(0); }
   }
 
+  @Test void parsesAllActualPinnedKevReplayResponses() throws Exception {
+    var lines = java.nio.file.Files.readAllLines(java.nio.file.Path.of(System.getProperty("kithkyn.reactionReplay")));
+    assertEquals(48, lines.size());
+    for (String line : lines) {
+      var row = JsonParser.parseString(line).getAsJsonObject();
+      var payload = JsonParser.parseString(row.get("request_body").getAsString()).getAsJsonObject();
+      var question = payload.getAsJsonObject("questions").getAsJsonObject("reaction");
+      var options = question.getAsJsonObject("criteria").entrySet().stream()
+          .map(entry -> new DecisionProvider.Option(entry.getKey(), entry.getValue().getAsString())).toList();
+      var request = new DecisionProvider.Request(payload.get("state").getAsString(), question.get("instructions").getAsString(), options);
+      assertEquals(200, row.get("http_status").getAsInt());
+      assertInstanceOf(DecisionProvider.Selected.class, SystemOneProvider.parse(row.get("response_body").getAsString(), request), row.get("id").getAsString());
+    }
+  }
+
   @Test void rejectsInvalidEndpointAndDuplicateOptions() {
     for (String url : List.of("file:///tmp/model", "https://user:secret@example.test", "http://localhost?key=x")) {
       assertThrows(IllegalArgumentException.class, () -> new SystemOneProvider(url, "kev", ""));

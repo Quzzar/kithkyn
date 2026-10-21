@@ -237,6 +237,8 @@ dependencies {
 
 tasks.withType(Test).configureEach {
     useJUnitPlatform()
+    inputs.file('tools/llm/results/2026-10-21/kev-reactions-raw.jsonl')
+    systemProperty 'kithkyn.reactionReplay', project.file('tools/llm/results/2026-10-21/kev-reactions-raw.jsonl').getAbsolutePath()
 }
 
 var auditStructureTemplates = tasks.register("auditStructureTemplates", Exec) {
