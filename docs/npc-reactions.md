@@ -68,7 +68,7 @@ There is no population-wide reaction latency guarantee.
 
 Offers expire after at most 100 game ticks and never outlive their captured observation.
 Callbacks revalidate before applying anything. Movement expires after 200 game ticks and
-uses bounded native path refresh/failure detection shared with player movement actions.
+uses bounded native path refresh/failure detection.
 Perception visibility checks use the awareness system's shared budget.
 
 `/kkdev reaction <entity>` reports the latest pending/deferred/uncertain/failed/stale/started/
@@ -108,3 +108,12 @@ open. The undertaking rework is tracked in #189; voice remains separate work in 
 Run `./gradlew check` and the reaction fixture for current validation. The reaction fixture
 uses controlled model results; this is not multiplayer acceptance. There are no added
 action-status popups, HUD messages or technical status lines in player conversation.
+
+For actual providers, run the same fixture with `-PreactionModels=true`. It uses
+`run/npc-reaction-model-verification`, port 25685, normal 20-tick speed and native goals.
+Enable the local stock Llama 3B dialogue provider in that isolated config, disable village
+generation and autonomous villager conversations, and configure a real Kev endpoint. The
+fixture retains the 0.8 confidence gates and never injects a reaction or a chat answer.
+It records three scenes, player-dispatcher conversation, summaries, reload and a requested
+bread transfer. Its `RESULT RECORDED` marker means evidence exists, not that model quality
+passed. See [the actual gameplay results](research/resident-model-gameplay-2026-10-21.md).

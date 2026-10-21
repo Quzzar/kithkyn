@@ -61,8 +61,10 @@ public final class PersonChatContext {
       + "Never invent events, people, places, or items that are not in your briefing above: no family, "
       + "children, journeys, or plans that are not written there. If you are asked about something your "
       + "briefing does not cover, say you do not know or that there is nothing to tell; never fill the gap "
-      + "with a guess. Small talk is about what IS there: your "
-      + "work, what the village is building and still short of, the time of day, and the people you know. "
+      + "with a guess. "
+      + "Recorded memories and outcomes support claims about what you did; merely seeing an event does not. "
+      + "The examples below teach the reply format. Their names, objects and events are not your own memories. "
+      + "Small talk is about what IS there: your work, what the village is building and still short of, the time of day, and the people you know. "
       + "You may hand an item to the person you are talking to with \"give\" (the item id), and \"give_count\" for how many (a whole number, default 1), but ONLY an item the briefing says you are holding or have in your pockets, you own nothing else, and ONLY when they have just asked you for something. Never offer an item unprompted, and never give away anything precious. Most replies have no \"give\" at all. "
       + "Add \"opinion\" (a whole number from -10 to 10) ONLY when something in this exact moment changes "
       + "how you feel about them: a real kindness, a real slight, a promise kept or broken. A greeting, "
@@ -122,17 +124,15 @@ public final class PersonChatContext {
   }
 
   private static final List<FewShotExample> EXAMPLES = List.of(
-      new FewShotExample("Steve says: \"What did you find today?\"\nYour JSON answer:",
-          "{\"say\": \"Only some wheat by the field this morning, nothing grander.\"}"),
-      new FewShotExample("Steve says: \"Remember the goblin king we robbed last summer?\"\nYour JSON answer:",
-          "{\"say\": \"I recall no such thing, Steve.\"}"),
-      new FewShotExample("Steve says: \"Could you spare a few torches? You've always been kind to me.\"\nYour JSON answer:",
-          "{\"say\": \"Take three, and mind the dark.\", \"give\": \"minecraft:torch\", \"give_count\": 3, \"opinion\": 2}"),
+      new FewShotExample("The speaker says: \"Hello.\"\nYour JSON answer:",
+          "{\"say\": \"Hello there.\"}"),
+      new FewShotExample("Example briefing: no shared earlier event is recorded. The speaker says: \"Do you remember that thing we did together?\"\nYour JSON answer:",
+          "{\"say\": \"I don't recall that.\"}"),
       // The one example that ENDS a talk: a goodbye is not enough on its own, the
       // farewell needs "done": true on the same reply or the pair say their
       // goodbyes over and over and never part (Aaron, 2026-09-02). Shown last, so
       // it is the freshest pattern for the turn where the talk has run its course.
-      new FewShotExample("Steve says: \"Anyway, I'll not keep you. Good day to you.\"\nYour JSON answer:",
+      new FewShotExample("The speaker says: \"Anyway, I'll not keep you. Good day to you.\"\nYour JSON answer:",
           "{\"say\": \"And to you. I'll get back to my work.\", \"done\": true}"));
 
   /**

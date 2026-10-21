@@ -1,14 +1,25 @@
 # The villager LLM brain
 
-The experimental [NPC agency](npc-agency.md) work adds validated follow, wait, pointed movement
-and resume actions to player conversation when explicitly enabled. Its offers capture references
-before inference and its execution records real outcomes. It does not change the local model
-defaults or add a production Kev/Jev decision provider.
+The experimental [resident work](npc-agency.md) grounds conversation in recent evidence and
+game-owned autonomous reaction outcomes. Companion follow/wait/point/release commands were
+removed. The optional reaction endpoint is independent of this generative provider and does
+not change local model defaults.
 
-The [paired local replay](research/local-model-replay-2026-10-21.md) compares those defaults
+The historical [paired local replay](research/local-model-replay-2026-10-21.md) compares those defaults
 with pinned Heretic/abliterated variants using shared production request builders. It records
 raw replies, timings and template requirements. Its synthetic cases do not establish full
 gameplay acceptance, and its results do not justify changing the recommended models.
+
+The [real-world model run](research/resident-model-gameplay-2026-10-21.md) exposed a background
+queue bug: summaries queued during chat's six-second grace period had no later completion
+callback to wake them. Chat completion now schedules a drain at that existing deadline,
+retaining the same queue and player priority. A regression test verifies the summary starts
+without another request. The live run then produced all three summaries before reload.
+
+The same run exposed illustrative wheat/torch examples being copied as personal events.
+The existing chat examples now demonstrate format without those invented objects or transfers;
+empty outcome context explicitly distinguishes seeing an event from performing an action.
+This fixes the observed example-copying in one targeted rerun, not general hallucination.
 
 **This is the decided design for LLM-driven villager decisions.** A small language model
 answers multiple-choice questions and holds short conversations; deterministic game logic

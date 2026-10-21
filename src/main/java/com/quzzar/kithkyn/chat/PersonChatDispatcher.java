@@ -151,12 +151,12 @@ public final class PersonChatDispatcher {
   private PersonChatDispatcher() {
   }
 
-  public static void handle(ServerPlayer player, RealPerson person, String message) {
+  public static CompletableFuture<Reply> handle(ServerPlayer player, RealPerson person, String message) {
     if (!IN_FLIGHT.add(player.getUUID())) {
-      return; // one chat request in flight per player
+      return CompletableFuture.completedFuture(null); // one chat request in flight per player
     }
     com.quzzar.kithkyn.awareness.ResidentAwareness.addressed(person, player, message);
-    dispatch(person, player, message, message);
+    return dispatch(person, player, message, message);
   }
 
   /**
@@ -182,7 +182,7 @@ public final class PersonChatDispatcher {
    * dropped in silence: the villager never spoke and the send button looked
    * broken. A guard that can leak is worse than no guard at all.
    */
-  private static void dispatch(RealPerson person, ServerPlayer player, String message, String historyLine) {
+  private static CompletableFuture<Reply> dispatch(RealPerson person, ServerPlayer player, String message, String historyLine) {
     CompletableFuture<Reply> pending;
     try {
       pending = converse(person, player.getGameProfile().getName(), player.getUUID(), message, historyLine, false);
@@ -215,6 +215,7 @@ public final class PersonChatDispatcher {
       }
       PacketDistributor.sendToPlayer(player, new PersonChatReplyPacket(person.getId(), reply.say(), reply.done()));
     }));
+    return pending;
   }
 
   /**

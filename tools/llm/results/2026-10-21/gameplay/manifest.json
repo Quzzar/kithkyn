@@ -1,0 +1,38 @@
+{
+  "notes": [
+    "Synthetic disposable world with a simulated player; registered native goals retained.",
+    "Three successive development runs, not held-out validation or a controlled statistical comparison.",
+    "Decision requests and parsed production-provider outputs retained; raw generative requests/responses retained separately.",
+    "No confidence threshold or recommended model changed. Initial serialization-only harness error excluded from the three complete runs."
+  ],
+  "files": {
+    "baseline.json": {
+      "bytes": 16507,
+      "sha256": "a2d4b3c8ea52b3699366978f25c73f71fd1c3f93ea3139c5f66911f215508e53"
+    },
+    "decision-model.json": {
+      "bytes": 1749,
+      "sha256": "d29c9737555a8d2e11eb2f58c5d07b4077b976b74ae14c69e004f8aeb3ae504c"
+    },
+    "generative-raw.txt": {
+      "bytes": 230036,
+      "sha256": "22f415bb8e860a8261a26603699734db89c22069f3ebe2b6ce70e412522cb898"
+    },
+    "grounded.json": {
+      "bytes": 15445,
+      "sha256": "85907fe95c1b275610b7ee0a7ca41d82004ad420e9925e6eba466c2c28e2660e"
+    },
+    "memory-kev.txt": {
+      "bytes": 6325,
+      "sha256": "51520fa717930fc2f46d07560092ff32e963acc205fbbe1e43951c193eee6786"
+    },
+    "memory-llama.txt": {
+      "bytes": 6301,
+      "sha256": "881ccc95baaf7b5ca18f11b2305da7a9200c14167a7b46512f194017e76a08d7"
+    },
+    "queue-fix.json": {
+      "bytes": 15085,
+      "sha256": "335c3cccd650dcee0c85dc7867f5a954fa90938c91208c06628db1a96480280c"
+    }
+  }
+}

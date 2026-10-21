@@ -400,6 +400,9 @@ public final class LlmService {
         .whenComplete((result, error) -> {
           activeChat.decrementAndGet();
           chatWindowUntilMs = System.currentTimeMillis() + CHAT_PRIORITY_WINDOW_MS;
+          // Quiet queues have no completion callback to wake them when the player's grace period ends.
+          CompletableFuture.delayedExecutor(CHAT_PRIORITY_WINDOW_MS, java.util.concurrent.TimeUnit.MILLISECONDS)
+              .execute(this::tryDispatchPersona);
         });
   }
 

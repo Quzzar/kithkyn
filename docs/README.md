@@ -59,6 +59,8 @@ in it, and update it in the same change that moves what it describes.
   Kev-4B request replay, memory/latency, confidence, option-order effects and recommendation limits.
 - [research/kev-local-evaluation-2026-10-21.md](research/kev-local-evaluation-2026-10-21.md): pinned
   Kev 0.8B runtime/artifacts, Mac setup, author-reported routing limits and the separate decision experiment.
+- [research/resident-model-gameplay-2026-10-21.md](research/resident-model-gameplay-2026-10-21.md): actual
+  Kev/Llama world runs, conversation and reload evidence, queue/example fixes and remaining quality failures.
 - [research/local-model-replay-2026-10-21.md](research/local-model-replay-2026-10-21.md): paired
   stock/modified local model replay, raw synthetic evidence, template requirements and measured limitations.
 - [villager-requests.md](villager-requests.md): how a villager petitions the brain to

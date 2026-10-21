@@ -8,6 +8,11 @@ import com.quzzar.kithkyn.entities.UndertakingData.*;
 import org.junit.jupiter.api.Test;
 
 class UndertakingServiceTest {
+  @Test void anEmptyOutcomeHistoryDoesNotImplyAnObservedActionWasPerformed() {
+    String briefing = UndertakingService.briefing(UndertakingData.EMPTY, new UUID(0, 1), Optional.empty(), 8);
+    assertTrue(briefing.contains("no recorded optional reaction outcomes"));
+    assertTrue(briefing.contains("Observing an event does not mean you acted on it"));
+  }
   private static final UUID RESIDENT = new UUID(0, 101), SUBJECT = new UUID(0, 202);
   private static final Duty DUTY = new Duty("WANDERER", "ADULT", "", Optional.empty(), -1, false, false);
   private static final Position POINT = new Position(8.5, 64, .5);

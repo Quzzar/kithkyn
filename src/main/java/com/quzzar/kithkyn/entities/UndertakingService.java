@@ -123,6 +123,7 @@ public final class UndertakingService {
     java.util.Collections.reverse(visible);
     StringBuilder text = new StringBuilder("Game-owned recorded undertakings are authoritative about action status; unverified narrative records are only earlier claims. Requested, accepted and underway are not completed. "
         + "Failed, interrupted, cancelled and expired attempts are not completed. Dialogue and subjective summaries cannot change these facts.\n");
+    if (visible.isEmpty()) text.append("There are no recorded optional reaction outcomes in this context. Observing an event does not mean you acted on it. Do not invent an investigation, warning, supply transfer or treatment.\n");
     for (Undertaking matter : visible.stream().limit(limit).toList()) {
       text.append("Undertaking ").append(matter.id()).append(" ").append(matter.execution().map(execution -> execution.phase().name()).orElse("UNVERIFIED NARRATIVE " + matter.state().name())).append(": ")
           .append(bounded(matter.summary())).append(". ").append(matter.progressNote().map(UndertakingService::bounded).orElse(""))

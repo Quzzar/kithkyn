@@ -6,6 +6,8 @@ import com.quzzar.kithkyn.Kithkyn;
 import com.quzzar.kithkyn.PersonEntityType;
 import com.quzzar.kithkyn.awareness.ResidentAwareness;
 import com.quzzar.kithkyn.configuration.KithkynConfig;
+import com.quzzar.kithkyn.chat.PersonChatDispatcher;
+import com.quzzar.kithkyn.llm.LlmService;
 import com.quzzar.kithkyn.decision.ReactionState.Status;
 import com.quzzar.kithkyn.entities.*;
 import com.quzzar.kithkyn.village.*;
@@ -25,6 +27,8 @@ import net.neoforged.neoforge.event.tick.ServerTickEvent;
 /** Isolated real-world routes and lifecycle with a controlled typed endpoint. Separate from model quality replay. */
 @EventBusSubscriber(modid = Kithkyn.MODID)
 public final class ResidentReactionVerification {
+  private static final boolean LIVE_MODELS = Boolean.getBoolean("kithkyn.residentReactions.models");
+  private static LiveRun live;
   private static int ticks, phase, calls;
   private static boolean finished;
   private static ServerLevel level;
@@ -39,7 +43,13 @@ public final class ResidentReactionVerification {
   @SubscribeEvent public static void tick(ServerTickEvent.Post event) {
     if (!Boolean.getBoolean("kithkyn.residentReactions.verify") || finished || ++ticks < 40) return;
     try {
+      if (LIVE_MODELS && !LlmService.get().isReady()) {
+        check(LlmService.get().getStatus() != LlmService.Status.FAILED, "Local dialogue provider failed: " + LlmService.get().getStatusDetail());
+        check(ticks < 1800, "Timed out waiting for the real dialogue model");
+        return;
+      }
       if (level == null) setup(event.getServer().overworld());
+      if (LIVE_MODELS) { live.tick(); check(ticks < 7200, "Timed out in live-model acceptance"); return; }
       check(ticks < 1800, "Timed out in phase " + phase + ": " + observer.reactions().report());
       switch (phase) {
         case 0 -> {
@@ -202,6 +212,7 @@ public final class ResidentReactionVerification {
         default -> throw new AssertionError("Unknown phase");
       }
     } catch (Exception | AssertionError failure) {
+      if (live != null) live.failure(failure);
       finished = true; Kithkyn.LOGGER.error("[resident-reaction-verify] RESULT FAIL", failure); event.getServer().halt(false);
     }
   }
@@ -213,7 +224,7 @@ public final class ResidentReactionVerification {
     world.getGameRules().getRule(GameRules.RULE_DOMOBSPAWNING).set(false, world.getServer());
     world.getGameRules().getRule(GameRules.RULE_DAYLIGHT).set(false, world.getServer());
     world.getGameRules().getRule(GameRules.RULE_RANDOMTICKING).set(0, world.getServer());
-    world.setDayTime(6000); world.updateSkyBrightness(); world.getServer().tickRateManager().setTickRate(100);
+    world.setDayTime(6000); world.updateSkyBrightness(); world.getServer().tickRateManager().setTickRate(LIVE_MODELS ? 20 : 100);
     for (int x = 4; x <= 9; x++) for (int z = 4; z <= 9; z++) world.setChunkForced(x, z, true);
     for (var entity : world.getAllEntities()) if (entity instanceof RealPerson || entity instanceof Zombie) entity.discard();
     VillageManager.get(world).getVillages().clear();
@@ -227,6 +238,7 @@ public final class ResidentReactionVerification {
     village.attach(world); VillageManager.get(world).getVillages().put(village.getID(), village);
     injured = person(108.5, 100.5); injured.setNoAi(true);
     freshObserver();
+    if (LIVE_MODELS) { live = new LiveRun(); return; }
     ReactionDecisions.verificationProvider(world.getServer(), new DecisionProvider() {
       @Override public CompletableFuture<Result> choose(Request next) {
         check(pending == null, "Concurrent reaction request"); calls++; request = next; pending = new CompletableFuture<>(); return pending;
@@ -236,7 +248,7 @@ public final class ResidentReactionVerification {
     ResidentAwareness.injured(injured, null);
   }
   private static RealPerson person(double x, double z) {
-    RealPerson person = PersonEntityType.PERSON.get().create(level);
+    RealPerson person = LIVE_MODELS ? new LivePerson(level) : PersonEntityType.PERSON.get().create(level);
     person.setVillage(village.getID()); person.setOccupation(Occupation.WANDERER); person.setLifeStage(AgeStage.ADULT);
     person.setPersistenceRequired(); person.moveTo(x, 161, z); village.getPopulation().add(person.getUUID());
     check(level.addFreshEntity(person), "Resident spawn failed"); return person;
@@ -245,7 +257,7 @@ public final class ResidentReactionVerification {
     if (observer != null) observer.discard();
     observer = person(100.5, 100.5);
     // Isolate reaction navigation from ordinary work and panic, while keeping the registered reaction goal and native navigation.
-    keepReactionGoal();
+    if (!LIVE_MODELS) keepReactionGoal();
   }
   private static void verifySavedHistory() {
     long now = level.getGameTime();
@@ -285,6 +297,173 @@ public final class ResidentReactionVerification {
   private static boolean offered(String key) { return request.options().stream().anyMatch(option -> option.key().equals(key)); }
   private static void complete(String key, double confidence) {
     var completion = pending; pending = null; completion.complete(new DecisionProvider.Selected(key, confidence, Map.of()));
+  }
+
+  /** Same registered entities, game event capture, HTTP decision provider and player chat dispatcher as live play. */
+  private static final class LiveRun {
+    private final com.google.gson.Gson json = new com.google.gson.GsonBuilder().setPrettyPrinting().create();
+    private final com.google.gson.JsonObject report = new com.google.gson.JsonObject();
+    private final com.google.gson.JsonArray cases = new com.google.gson.JsonArray();
+    private final com.google.gson.JsonArray decisions = new com.google.gson.JsonArray();
+    private final java.nio.file.Path output = net.neoforged.fml.loading.FMLPaths.GAMEDIR.get().resolve("results/gameplay-" + System.currentTimeMillis() + ".json");
+    private final net.minecraft.server.level.ServerPlayer speaker;
+    private final UUID speakerId = new UUID(0, 1701);
+    private com.google.gson.JsonObject current;
+    private CompletableFuture<PersonChatDispatcher.Reply> chat;
+    private int scenario = -1, stage, since, question, chatDoneAt = -1;
+    private long chatStarted;
+    private final long started = System.nanoTime();
+
+    private LiveRun() {
+      check(KithkynConfig.LlmEnabled && "local".equals(KithkynConfig.LlmProviderName)
+          && "llama-3b".equals(KithkynConfig.LlmLocalModel), "Live acceptance requires the configured stock local Llama 3B");
+      speaker = net.neoforged.neoforge.common.util.FakePlayerFactory.get(level,
+          new com.mojang.authlib.GameProfile(speakerId, "Rowan"));
+      level.addNewPlayer(speaker);
+      ((LivePerson) injured).name("Tessa", "Reed");
+      report.addProperty("status", "running"); report.addProperty("controlled_replies", false);
+      report.addProperty("native_goals_removed", false); report.addProperty("tick_rate", 20);
+      report.addProperty("dialogue_model", KithkynConfig.LlmLocalModel);
+      report.addProperty("decision_model", KithkynConfig.ReactionModel);
+      report.addProperty("danger_confidence", KithkynConfig.ReactionDangerConfidence);
+      report.addProperty("injury_confidence", KithkynConfig.ReactionInjuryConfidence);
+      report.addProperty("chat_entry", "Existing player chat dispatcher with simulated player; no rendered client");
+      report.add("cases", cases); report.add("decisions", decisions);
+      var provider = new SystemOneProvider(KithkynConfig.ReactionEndpoint, KithkynConfig.ReactionModel, KithkynConfig.ReactionApiKey);
+      ReactionDecisions.verificationProvider(level.getServer(), new DecisionProvider() {
+        @Override public CompletableFuture<Result> choose(Request next) {
+          long begin = System.nanoTime();
+          var row = new com.google.gson.JsonObject(); row.addProperty("case", scenario);
+          row.addProperty("game_tick", level.getGameTime()); row.add("request", SystemOneProvider.payload(next, KithkynConfig.ReactionModel));
+          decisions.add(row); calls++;
+          return provider.choose(next).thenApply(result -> {
+            level.getServer().execute(() -> { row.addProperty("latency_ms", (System.nanoTime() - begin) / 1_000_000.0);
+              row.add("parsed_provider_result", json.toJsonTree(result)); save(); });
+            return result;
+          });
+        }
+        @Override public void close() { provider.close(); }
+      });
+      save(); beginCase();
+    }
+
+    private void beginCase() {
+      scenario++;
+      if (scenario == 3) {
+        report.addProperty("status", "recorded");
+        report.addProperty("acceptance", "Requires review against actual outcomes; harness completion is not a quality pass");
+        report.addProperty("elapsed_seconds", (System.nanoTime() - started) / 1_000_000_000.0);
+        report.addProperty("decision_calls", calls);
+        report.addProperty("generative_calls", com.quzzar.kithkyn.llm.LlmCallLog.requestCount()); save();
+        finished = true;
+        Kithkyn.LOGGER.info("[resident-model-verify] RESULT RECORDED: {}. Real providers; review outcomes and dialogue before claiming acceptance.", output);
+        level.getServer().halt(false); return;
+      }
+      if (threat != null) { threat.discard(); threat = null; }
+      freshObserver(); ((LivePerson) observer).name(scenario == 0 ? "Mira" : scenario == 1 ? "Bram" : "Alden", "Flint");
+      ((LivePerson) observer).character(scenario);
+      if (scenario == 2) observer.setOccupation(Occupation.GUARD);
+      injured.setHealth(injured.getMaxHealth()); injured.moveTo(108.5, 161, 100.5);
+      observer.personMainInv.addItem(new net.minecraft.world.item.ItemStack(net.minecraft.world.item.Items.DIAMOND, 3));
+      if (scenario == 0) observer.personMainInv.addItem(new net.minecraft.world.item.ItemStack(net.minecraft.world.item.Items.BREAD, 3));
+      current = new com.google.gson.JsonObject();
+      current.addProperty("scenario", new String[] {"helpful-injury", "reserved-injury", "guard-threat"}[scenario]);
+      current.addProperty("resident", observer.getFullName()); current.addProperty("start_position", observer.position().toString());
+      current.add("dialogue", new com.google.gson.JsonArray()); cases.add(current);
+      if (scenario == 2) {
+        threat = EntityType.ZOMBIE.create(level); threat.setNoAi(true); threat.moveTo(observer.position().add(6, 0, 0));
+        check(level.addFreshEntity(threat), "Live threat did not spawn");
+      } else check(injured.hurt(level.damageSources().fall(), 4), "Actual injury event was not delivered");
+      stage = question = 0; since = ticks; save();
+    }
+
+    private void tick() {
+      if (stage == 0) {
+        Status status = observer.reactions().status();
+        boolean ended = status != Status.IDLE && status != Status.PENDING && status != Status.DEFERRED && status != Status.STARTED;
+        if (!ended && ticks - since < 300) return;
+        check(status != Status.PENDING, "Reaction did not finish its bounded provider request");
+        current.addProperty("reaction_status", status.name()); current.addProperty("reaction_report", observer.reactions().report());
+        current.addProperty("end_position", observer.position().toString());
+        current.add("recorded_undertakings", UndertakingData.CODEC.encodeStart(com.mojang.serialization.JsonOps.INSTANCE,
+            observer.getData(KithkynAttachments.UNDERTAKINGS.get())).getOrThrow());
+        current.add("recent_observations", json.toJsonTree(observer.awareness().snapshot()));
+        current.addProperty("victim_health", injured.getHealth());
+        current.addProperty("native_target", observer.getTarget() == null ? "none" : observer.getTarget().getType().toShortString());
+        if (threat != null) {
+          current.addProperty("threat_alive", threat.isAlive());
+          var damage = threat.getLastDamageSource();
+          current.addProperty("last_damager", damage == null || damage.getEntity() == null ? "unknown" : damage.getEntity().getUUID().toString());
+          threat.discard(); observer.setTarget(null);
+        }
+        ask("What did you notice nearby just now, and what did you actually do about it?"); stage = 1;
+      } else if (stage == 1 || stage == 3) {
+        if (!chat.isDone()) return;
+        if (chatDoneAt < 0) { chatDoneAt = ticks; return; }
+        if (ticks == chatDoneAt) return;
+        PersonChatDispatcher.Reply reply = chat.join();
+        var row = new com.google.gson.JsonObject(); row.addProperty("question", question);
+        row.addProperty("after_reload", stage == 3); row.addProperty("usable", reply != null);
+        row.addProperty("latency_ms", (System.nanoTime() - chatStarted) / 1_000_000.0);
+        row.add("reply", json.toJsonTree(reply)); current.getAsJsonArray("dialogue").add(row); save();
+        if (stage == 3) {
+          if (scenario == 0 && question == 2) { question++; ask("Could you spare one bread from your pockets?"); return; }
+          current.addProperty("bread_remaining", observer.personMainInv.countItem(net.minecraft.world.item.Items.BREAD));
+          PersonChatDispatcher.markClosed(observer.getId(), speakerId); beginCase(); return;
+        }
+        if (++question == 1) {
+          ask(scenario == 2 ? "Did you kill that zombie yourself? Tell me only what actually happened."
+              : "Did you heal Tessa or make her injury better?"); return;
+        }
+        PersonChatDispatcher.markClosed(observer.getId(), speakerId);
+        PersonChatDispatcher.summarizeSession(observer, speakerId, "Rowan");
+        stage = 2; since = ticks;
+      } else if (stage == 2) {
+        String summary = observer.getData(KithkynAttachments.CHAT_SUMMARY.get()).with(speakerId);
+        if (summary.isBlank() && ticks - since < 500) return;
+        current.addProperty("summary", summary); current.addProperty("summary_available", !summary.isBlank());
+        UUID id = observer.getUUID(); int diamonds = observer.personMainInv.countItem(net.minecraft.world.item.Items.DIAMOND);
+        current.addProperty("diamonds_before_reload", diamonds);
+        var tag = new net.minecraft.nbt.CompoundTag();
+        check(observer.save(tag), "Live resident could not serialize");
+        observer.remove(net.minecraft.world.entity.Entity.RemovalReason.UNLOADED_TO_CHUNK);
+        observer = (RealPerson) EntityType.create(tag, level).orElseThrow();
+        check(level.addFreshEntity(observer), "Live resident could not reload");
+        check(observer.getUUID().equals(id) && observer.personMainInv.countItem(net.minecraft.world.item.Items.DIAMOND) == diamonds, "Live reload changed identity or inventory");
+        current.addProperty("reload_identity_and_inventory_preserved", true);
+        ask(scenario == 2 ? "Thinking back, what do you remember actually doing about the zombie?"
+            : "Thinking back, what do you remember actually doing when Tessa was hurt?"); stage = 3;
+      }
+    }
+
+    private void ask(String message) {
+      speaker.moveTo(observer.position().add(0, 0, 2));
+      PersonChatDispatcher.markOpen(observer, speaker);
+      current.addProperty("last_question", message); chatStarted = System.nanoTime(); chatDoneAt = -1;
+      chat = PersonChatDispatcher.handle(speaker, observer, message); save();
+    }
+    private void save() {
+      try { java.nio.file.Files.createDirectories(output.getParent()); java.nio.file.Files.writeString(output, json.toJson(report)); }
+      catch (java.io.IOException failed) { throw new IllegalStateException("Cannot preserve real-model evidence", failed); }
+    }
+    private void failure(Throwable failure) { report.addProperty("status", "error"); report.addProperty("error", failure.toString()); save(); }
+  }
+
+  private static final class LivePerson extends RealPerson {
+    private LivePerson(ServerLevel level) { super(PersonEntityType.PERSON.get(), level); name("Resident", "Test"); setGender(Gender.FEMALE); }
+    private void name(String first, String last) { setFirstName(first); setLastName(last); }
+    private void character(int scenario) {
+      setVirtue(Virtue.AGGRESSION, scenario == 2 ? .4F : -.35F);
+      setVirtue(Virtue.CURIOSITY, scenario == 1 ? -.45F : .45F);
+      setVirtue(Virtue.PROTECT_OTHERS, scenario == 1 ? -.45F : .45F);
+      setVirtue(Virtue.PROTECT_SELF, .3F); setVirtue(Virtue.DRIVE, .2F);
+      setPersonality(Personality.generateFromVirtues(getVirtue(Virtue.AGGRESSION), getVirtue(Virtue.CURIOSITY), getVirtue(Virtue.DRIVE), getVirtue(Virtue.PROTECT_OTHERS), getVirtue(Virtue.PROTECT_SELF)));
+      setData(KithkynAttachments.PERSONA.get(), new com.quzzar.kithkyn.persona.PersonaData(scenario == 1
+          ? "A private, incurious resident who avoids getting involved in other people's trouble. Admits what she does not know."
+          : "A concerned, observant resident who notices injured neighbors and cares about others. Admits what she does not know.",
+          "Speaks plainly.", "live-model-fixture", 0, 1));
+      registerGoals();
+    }
   }
   private static void check(boolean value, String message) { if (!value) throw new AssertionError(message); }
 }

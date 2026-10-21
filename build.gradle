@@ -123,9 +123,11 @@ neoForge {
 
         residentReactionVerification {
             server()
-            gameDirectory = project.file('run/npc-reaction-verification')
-            programArguments.addAll '--nogui', '--world', 'world', '--port', '25682'
+            gameDirectory = project.file(findProperty('reactionModels') == 'true'
+                ? 'run/npc-reaction-model-verification' : 'run/npc-reaction-verification')
+            programArguments.addAll '--nogui', '--world', 'world', '--port', (findProperty('reactionModels') == 'true' ? '25685' : '25682')
             systemProperty 'kithkyn.residentReactions.verify', 'true'
+            systemProperty 'kithkyn.residentReactions.models', (findProperty('reactionModels') ?: 'false')
         }
 
         residentAwarenessVerification {

@@ -1,0 +1,75 @@
+Process:         python3.13 [44547]
+Path:            /Users/USER/*/python3.13
+Load Address:    0x102384000
+Identifier:      python3.13
+Version:         ???
+Code Type:       ARM64
+Platform:        macOS
+Parent Process:  codex [1738]
+Target Type:     live task (Roots Present)
+
+Date/Time:       2026-10-21 19:14:35.261 -0400
+Launch Time:     2026-10-21 19:01:31.434 -0400
+OS Version:      macOS 27.0 (26A428)
+Report Version:  7
+Analysis Tool:   /usr/bin/vmmap
+
+Physical footprint:         9.6G
+Physical footprint (peak):  15.6G
+Idle exit:                  untracked
+----
+
+ReadOnly portion of Libraries: Total=2.3G resident=186.1M(8%) swapped_out_or_unallocated=2.2G(92%)
+Writable regions: Total=9.9G written=525.1M(5%) resident=9.1G(92%) swapped_out=6.7G(67%) unallocated=16777216.0T(173500841984%)
+
+                                VIRTUAL RESIDENT    DIRTY  SWAPPED VOLATILE   NONVOL    EMPTY   REGION 
+REGION TYPE                        SIZE     SIZE     SIZE     SIZE     SIZE     SIZE     SIZE    COUNT (non-coalesced) 
+===========                     ======= ========    =====  ======= ========   ======    =====  ======= 
+Activity Tracing                   256K      32K       0K      32K       0K      32K       0K        1 
+Deferred Reclaim                  64.0M      16K      16K       0K       0K       0K       0K        1 
+Dispatch Continuations            80.0M      32K      32K     160K       0K       0K       0K        1 
+Dyld Private Memory                896K      16K      16K     640K       0K       0K       0K        8 
+Guard                            385.0G       0K       0K       0K       0K       0K       0K        1 
+IOAccelerator                     4608K     256K     256K      16K       0K       0K       0K        7 
+IOAccelerator (graphics)           9.1G     9.1G     2.9G     6.2G       0K     9.1G    1312K     1062 
+IOKit                               96K      96K      96K       0K       0K      16K       0K        6 
+IOSurface                           16K       0K       0K       0K       0K       0K       0K        1 
+Malloc Guard Page                 3472K       0K       0K       0K       0K       0K       0K        4         see MALLOC ZONE table below
+Malloc Large                      87.2M    4512K    4512K    73.4M       0K       0K       0K        9         see MALLOC ZONE table below
+Malloc Large (empty)              16.7M       0K       0K    16.5M       0K       0K       0K        2         see MALLOC ZONE table below
+Malloc Metadata                    176K      32K      32K     144K       0K       0K       0K        3         see MALLOC ZONE table below
+Malloc Metadata metadata          2224K     768K     768K     512K       0K       0K       0K        4         see MALLOC ZONE table below
+Malloc Small                     212.0M    13.3M    13.3M   176.0M       0K       0K       0K       55         see MALLOC ZONE table below
+Malloc Small (empty)              8192K       0K       0K    2128K       0K       0K       0K        2         see MALLOC ZONE table below
+Malloc Tiny                       4096K      96K      96K     144K       0K       0K       0K        1         see MALLOC ZONE table below
+OS Alloc Once                       32K      16K      16K       0K       0K       0K       0K        1 
+Stack                            106.3M      96K      96K     464K       0K       0K       0K       28 
+Stack Guard                       56.4M       0K       0K       0K       0K       0K       0K       28 
+Untagged                         230.1M    10.1M    10.1M   219.4M       0K       0K       0K      233 
+__AUTH                            1575K     543K       5K     112K       0K       0K       0K      179 
+__AUTH_CONST                      20.6M    9139K       0K       0K       0K       0K       0K      340 
+__CTF                               824      824       0K       0K       0K       0K       0K        1 
+__DATA                            17.5M    3164K    1178K    6762K       0K       0K       0K      567 
+__DATA_CONST                      26.6M    8337K     464K    8480K       0K       0K       0K      535 
+__DATA_DIRTY                      1344K     552K     210K     263K       0K       0K       0K      298 
+__FONT_DATA                        2352     2352       0K       0K       0K       0K       0K        1 
+__LINKEDIT                         1.7G    28.5M       0K       0K       0K       0K       0K      200 
+__OBJC_RO                        118.0M    51.4M       0K       0K       0K       0K       0K        1 
+__OBJC_RW                         2735K    1455K      15K      32K       0K       0K       0K        1 
+__TEXT                           683.6M   157.6M       0K       0K       0K       0K       0K      604 
+__TPRO_CONST                       132K       4K       0K     128K       0K       0K       0K        4 
+mapped file                       84.7M     176K       0K       0K       0K       0K       0K       14 
+page table in kernel              5160K    5160K    5160K       0K       0K       0K       0K        1 
+shared memory                      656K     112K     112K      32K       0K       0K       0K        8 
+unused but dirty shlib __DATA      190K      96K      96K      94K       0K       0K       0K       90 
+===========                     ======= ========    =====  ======= ========   ======    =====  ======= 
+TOTAL                            397.6G     9.4G     2.9G     6.7G       0K     9.1G    1312K     4302 
+
+                                 VIRTUAL   RESIDENT      DIRTY    SWAPPED ALLOCATION      BYTES DIRTY+SWAP          REGION
+MALLOC ZONE                         SIZE       SIZE       SIZE       SIZE      COUNT  ALLOCATED  FRAG SIZE  % FRAG   COUNT
+===========                      =======  =========  =========  =========  =========  =========  =========  ======  ======
+DefaultMallocZone_0x1027c8000     313.3M      18.6M      18.6M     252.1M     986728     253.6M      17.1M      7%      69
+objc-class_rw_t_0x102878000          32K        32K        32K         0K        972        23K         9K     29%       2
+===========                      =======  =========  =========  =========  =========  =========  =========  ======  ======
+TOTAL                             313.4M      18.6M      18.6M     252.1M     987700     253.6M      17.2M      7%      71
+
