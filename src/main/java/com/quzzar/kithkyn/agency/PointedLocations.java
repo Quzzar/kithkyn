@@ -19,7 +19,7 @@ import net.minecraft.world.phys.Vec3;
 public final class PointedLocations {
   private static final long LIFETIME = 1200L;
   private record Key(MinecraftServer server, UUID player) { }
-  private record Point(String dimension, ResidentActionState.Position position, long expiresAt) { }
+  private record Point(String dimension, com.quzzar.kithkyn.entities.UndertakingData.Position position, long expiresAt) { }
   private static final Map<Key, Point> POINTS = new HashMap<>();
 
   private PointedLocations() { }
@@ -47,7 +47,7 @@ public final class PointedLocations {
       player.displayClientMessage(Component.literal("That location is unavailable."), true);
       return false;
     }
-    ResidentActionState.Position position = new ResidentActionState.Position(
+    com.quzzar.kithkyn.entities.UndertakingData.Position position = new com.quzzar.kithkyn.entities.UndertakingData.Position(
         target.getX() + 0.5D, target.getY(), target.getZ() + 0.5D);
     POINTS.put(key, new Point(player.level().dimension().location().toString(), position,
         player.level().getGameTime() + LIFETIME));
@@ -55,7 +55,7 @@ public final class PointedLocations {
     return true;
   }
 
-  public static Optional<ResidentActionState.Position> get(ServerPlayer player) {
+  public static Optional<com.quzzar.kithkyn.entities.UndertakingData.Position> get(ServerPlayer player) {
     Key key = new Key(player.getServer(), player.getUUID());
     Point point = POINTS.get(key);
     if (point == null) return Optional.empty();

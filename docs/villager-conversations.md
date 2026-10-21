@@ -178,3 +178,6 @@ a quarrel target. Direct retaliation against any attacker uses the same personal
 `PauseForConversationGoal` and `PanicToBedGoal` both yield while a quarrel runs, so the
 villager neither stands politely still for the chat nor flees the first blow of the fight it
 picked. The exchange logs `[fight]`, and the villager logs "picks a fight with".
+
+Undertakings are now recorded by game execution, not by a conversation tool. Resident talks
+read the same authoritative [undertaking lifecycle](undertakings.md) as player talks.

@@ -1,14 +1,17 @@
 package com.quzzar.kithkyn.agency;
 
+import com.quzzar.kithkyn.entities.KithkynAttachments;
+import com.quzzar.kithkyn.entities.UndertakingService;
+import com.quzzar.kithkyn.entities.UndertakingData.Lane;
+import com.quzzar.kithkyn.entities.UndertakingData.Phase;
 import java.util.Optional;
 
 import com.quzzar.kithkyn.Kithkyn;
 import com.quzzar.kithkyn.agency.ResidentActionState.Action;
-import com.quzzar.kithkyn.agency.ResidentActionState.End;
 import com.quzzar.kithkyn.agency.ResidentActionState.Offer;
 import com.quzzar.kithkyn.agency.ResidentActionState.Order;
 import com.quzzar.kithkyn.agency.ResidentActionState.Outcome;
-import com.quzzar.kithkyn.agency.ResidentActionState.Position;
+import com.quzzar.kithkyn.entities.UndertakingData.Position;
 import com.quzzar.kithkyn.entities.AgeStage;
 import com.quzzar.kithkyn.entities.RealPerson;
 import com.quzzar.kithkyn.entities.ai.goals.ResidentActionGoal;
@@ -25,14 +28,26 @@ import net.minecraft.world.entity.ai.goal.Goal;
 /** The server-owned bridge from an offered conversational action to navigation and truthful memory. */
 public final class ResidentAgency {
   private final RealPerson person;
-  private final ResidentActionState state = new ResidentActionState();
+  private final ResidentActionState state;
+  private long nextReconsider;
+  private int reconsiderCursor;
+  private static final java.util.Map<net.minecraft.server.MinecraftServer, Integer> RECONSIDERATION_TICKS = new java.util.WeakHashMap<>();
 
   public ResidentAgency(RealPerson person) {
     this.person = person;
+    state = new ResidentActionState(person::getUUID, () -> person.getData(KithkynAttachments.UNDERTAKINGS.get()),
+        result -> UndertakingService.commit(person, result), () -> person.level().getDayTime(), () -> ResidentObligations.snapshot(person));
   }
 
   public Optional<Order> current() {
     return state.current();
+  }
+
+  public void underway(Order order) { state.underway(order); }
+  public boolean valid(Order order) {
+    return current().filter(value -> value.revision() == order.revision()).isPresent() && interruption().isEmpty()
+        && order.dimension().equals(person.level().dimension().location().toString())
+        && order.duty().equals(ResidentObligations.snapshot(person));
   }
 
   public Offer offer(ServerPlayer requester) {
@@ -73,6 +88,7 @@ public final class ResidentAgency {
       rejected = Optional.of("The pointed location is no longer usable standing ground.");
     }
     if (rejected.isPresent()) {
+      state.rejected(offer, action, rejected.get(), person.level().getGameTime());
       reportFailure(requester, rejected.get());
       return;
     }
@@ -83,8 +99,7 @@ public final class ResidentAgency {
     }
     accepted.replaced().ifPresent(this::record);
     if (action == Action.RESUME) state.latest().ifPresent(this::record);
-    else person.logMemory("I agreed to " + action.wireName() + " for " + offer.requesterName()
-        + ". This was an agreement, not a completed action.", Optional.of(offer.requester()));
+
     requester.displayClientMessage(Component.literal(person.getFullName() + ": " + accepted.detail()), true);
     Kithkyn.LOGGER.info("[resident action] {} accepted {}", person.getUUID(), action.wireName());
   }
@@ -95,7 +110,7 @@ public final class ResidentAgency {
       return Optional.of("The conversation participants are no longer nearby.");
     }
     if (action == Action.RESUME) return Optional.empty();
-    if (person.isRaider() || person.isWanderingMerchant() || person.isFixedRangedGuard()
+    if (person.isRaider() || person.isWanderingMerchant() || !ResidentObligations.mayLeavePost(person)
         || person.getLifeStage() == AgeStage.TODDLER || person.getLifeStage() == AgeStage.KID) {
       return Optional.of("This resident cannot take that movement request.");
     }
@@ -104,7 +119,8 @@ public final class ResidentAgency {
 
   private Optional<String> interruption() {
     if (!KithkynConfig.LlmResidentActions) return Optional.of("Resident actions were disabled.");
-    if (!person.isAlive() || person.isRemoved()) return Optional.of("The resident is no longer available.");
+    if (!person.isAlive() || person.isRemoved() || person.isNoAi()) return Optional.of("The resident is no longer available.");
+    if (!ResidentObligations.mayLeavePost(person)) return Optional.of("An essential or fixed post needs this resident.");
     if (person.getTarget() != null || person.isQuarrelling() || person.isOnFire()
         || person.isInLava() || person.getAirSupply() <= 0) return Optional.of("Immediate danger interrupted the request.");
     if (person.isPassenger() || person.isSleeping() || person.shouldSleepAtNight() && person.level().isNight()
@@ -125,24 +141,78 @@ public final class ResidentAgency {
 
   /** Tick only the existing intention. No model call, world scan or path search happens here. */
   public void maintain() {
+    maintainUndertakings();
     state.expire(person.level().getGameTime()).ifPresent(this::record);
     if (state.current().isEmpty()) return;
     Order order = state.current().get();
+    if (!order.duty().equals(ResidentObligations.snapshot(person))) {
+      finish(Phase.INTERRUPTED, "The captured age or assignment changed."); return;
+    }
+    if (!order.dimension().equals(person.level().dimension().location().toString())) {
+      finish(Phase.INTERRUPTED, "The request belongs to another dimension."); return;
+    }
     Optional<String> interrupted = interruption();
     if (interrupted.isPresent()) {
-      finish(End.INTERRUPTED, interrupted.get());
+      finish(Phase.INTERRUPTED, interrupted.get());
       return;
     }
     if (!(person.level() instanceof ServerLevel level)) return;
     ServerPlayer requester = requester(order).orElse(null);
     if (requester == null || !requester.isAlive() || requester.level() != level) {
-      finish(End.FAILED, "The requester left or became unavailable.");
+      finish(Phase.FAILED, "The requester left or became unavailable.");
     } else if (requester.distanceToSqr(person) > 48 * 48) {
-      finish(End.FAILED, "The requester moved out of range.");
+      finish(Phase.FAILED, "The requester moved out of range.");
     }
   }
 
-  public void finish(End end, String detail) {
+  /** Existing saved matters, not a retry queue. Expiry is deterministic; one relevant availability change is recorded once. */
+  private void maintainUndertakings() {
+    if (!(person.level() instanceof ServerLevel level) || !person.isAlive() || person.isRemoved()) return;
+    long now = level.getGameTime();
+    var key = KithkynAttachments.UNDERTAKINGS.get();
+    for (var matter : person.getData(key).allOpen()) {
+      var execution = matter.execution();
+      if (execution.isEmpty()) {
+        UndertakingService.commit(person,
+            UndertakingService.archiveNarrative(person.getData(key), matter.id(), level.getDayTime()));
+      } else if (execution.get().resident().equals(person.getUUID())
+          && (now >= execution.get().expiresAt() || now < execution.get().startedAt())) {
+        UndertakingService.commit(person,
+            UndertakingService.transition(person.getData(key), person.getUUID(), matter.id(), Phase.EXPIRED,
+                "The undertaking's bounded lifetime ended; no success is claimed.", level.getDayTime()));
+      }
+    }
+    if (!KithkynConfig.LlmResidentActions || now < nextReconsider || Math.floorMod(now + person.getId(), 20) != 0
+        || current().isPresent() || interruption().isPresent() || person.reactions().movement().isPresent()) return;
+    nextReconsider = now + 100;
+    var candidates = person.getData(key).allOpen().stream().filter(matter -> matter.execution().filter(execution ->
+        execution.resident().equals(person.getUUID()) && execution.lane() == Lane.PLAYER_REQUEST
+        && !execution.reconsidered() && (execution.phase() == Phase.FAILED || execution.phase() == Phase.INTERRUPTED)).isPresent()).toList();
+    if (candidates.isEmpty()) return;
+    var matter = candidates.get(Math.floorMod(reconsiderCursor++, candidates.size()));
+    var execution = matter.execution().orElseThrow();
+    if (!execution.dimension().equals(level.dimension().location().toString())) return;
+    var requester = matter.withWhom().map(level::getEntity).filter(ServerPlayer.class::isInstance).map(ServerPlayer.class::cast).orElse(null);
+    if (requester == null || !requester.isAlive() || !com.quzzar.kithkyn.awareness.ResidentAwareness.visible(person, requester)) return;
+    int serverTick = level.getServer().getTickCount();
+    if (RECONSIDERATION_TICKS.getOrDefault(level.getServer(), Integer.MIN_VALUE) == serverTick) return;
+    RECONSIDERATION_TICKS.put(level.getServer(), serverTick);
+    boolean available = true;
+    if (!execution.action().equals("follow")) {
+      Position destination = execution.destination().orElse(null);
+      if (!validGround(destination)) return;
+      var path = com.quzzar.kithkyn.entities.ai.ResidentWalk.path(person, vector(destination), false);
+      available = path != null && path.canReach();
+    }
+    if (available) {
+      var result = UndertakingService.reconsider(person.getData(key), person.getUUID(), matter.id(),
+          "The requester and captured destination are available again.", level.getDayTime(), now);
+      if (UndertakingService.commit(person, result)) requester.displayClientMessage(Component.literal(
+          person.getFullName() + ": That earlier " + execution.action() + " request is available to reconsider. Ask again to start a new attempt."), false);
+    }
+  }
+
+  public void finish(Phase end, String detail) {
     state.finish(end, detail).ifPresent(this::record);
   }
 
@@ -153,10 +223,6 @@ public final class ResidentAgency {
   }
 
   private void record(Outcome outcome) {
-    String detail = "My " + outcome.order().action().wireName() + " request for "
-        + outcome.order().requesterName() + " ended " + outcome.end().name().toLowerCase(java.util.Locale.ROOT)
-        + ": " + outcome.detail();
-    person.logMemory(detail, Optional.of(outcome.order().requester()));
     Kithkyn.LOGGER.info("[resident action] {} {} {}", person.getUUID(), outcome.order().action().wireName(),
         outcome.end());
     requester(outcome.order()).ifPresent(player -> player.displayClientMessage(
@@ -164,7 +230,6 @@ public final class ResidentAgency {
   }
 
   private void reportFailure(ServerPlayer requester, String detail) {
-    person.logMemory("A requested action was not started: " + detail, Optional.of(requester.getUUID()));
     requester.displayClientMessage(Component.literal(person.getFullName() + ": " + detail), true);
     Kithkyn.LOGGER.info("[resident action] {} rejected: {}", person.getUUID(), detail);
   }

@@ -1,192 +1,128 @@
 package com.quzzar.kithkyn.entities;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
-
-import com.google.gson.JsonObject;
-
+import com.quzzar.kithkyn.entities.UndertakingData.Execution;
 import com.quzzar.kithkyn.entities.UndertakingData.Milestone;
-import com.quzzar.kithkyn.entities.UndertakingData.Origin;
+import com.quzzar.kithkyn.entities.UndertakingData.Phase;
 import com.quzzar.kithkyn.entities.UndertakingData.State;
 import com.quzzar.kithkyn.entities.UndertakingData.Undertaking;
-import com.quzzar.kithkyn.entities.UndertakingData.Valence;
 
-/**
- * Takes an op the model PROPOSED and decides whether the villager's undertakings
- * change (docs/undertakings.md). The model never edits the store directly: it
- * asks, and this validates and applies, the same discipline as the give and
- * opinion tools. An invented op, an open with no summary, or a resolve with no
- * open matter to resolve is dropped, not honoured.
- *
- * The apply is a pure function over {@link UndertakingData} so it can be tested
- * without a world (see the selftest). The standing effect of a resolved amends,
- * which needs the entity, is layered on at the call site once the chat tool is
- * wired; the state machine itself lives here and stands alone.
- */
+/** The sole transition path for event-owned commitments. Model prose is never evidence of physical progress. */
 public final class UndertakingService {
+  private UndertakingService() { }
+  public record Result(UndertakingData data, Optional<Undertaking> affected, String detail) {
+    public boolean changed() { return affected.isPresent(); }
+  }
 
-    private UndertakingService() {
+  public static Result requested(UndertakingData data, Execution execution, Optional<UUID> requester, long day) {
+    if (!execution.valid() || execution.lane() == UndertakingData.Lane.PLAYER_REQUEST && requester.isEmpty() || execution.phase() != Phase.REQUESTED || data.allOpen().size() >= UndertakingData.MAX_OPEN) {
+      return new Result(data, Optional.empty(), "No capacity for a new undertaking.");
     }
+    Undertaking matter = new Undertaking(UUID.randomUUID(), UndertakingData.Valence.POSITIVE, State.OPEN,
+        execution.lane() == UndertakingData.Lane.PLAYER_REQUEST ? UndertakingData.Origin.PLAYER : UndertakingData.Origin.EVENT,
+        execution.action() + (execution.requesterName().isBlank() ? "" : " for " + execution.requesterName()), requester,
+        List.of(new Milestone("REQUESTED", true)), Optional.of("A request was recorded; nothing has been agreed or completed."),
+        Optional.empty(), day, day, Optional.of(execution));
+    return new Result(data.with(matter), Optional.of(matter), "Requested.");
+  }
 
-    /** The parsed proposal from a chat reply's optional {@code undertaking} field. */
-    public record Op(String op, String summary, String valence, String note, String step) {
-
-        /** Reads an op out of the JSON the model emitted, or empty if it is unusable. */
-        public static Optional<Op> parse(JsonObject json) {
-            if (json == null || !json.has("op")) {
-                return Optional.empty();
-            }
-            String op = str(json, "op").toLowerCase();
-            if (!op.equals("open") && !op.equals("advance") && !op.equals("resolve")) {
-                return Optional.empty(); // an op the model invented
-            }
-            return Optional.of(new Op(op, str(json, "summary"), str(json, "valence"),
-                    str(json, "note"), str(json, "step")));
-        }
-
-        private static String str(JsonObject json, String key) {
-            return json.has(key) && !json.get(key).isJsonNull() ? json.get(key).getAsString().trim() : "";
-        }
+  public static Result transition(UndertakingData data, UUID resident, UUID id, Phase next, String detail, long day) {
+    Optional<Undertaking> found = data.byId(id);
+    if (found.isEmpty() || !found.get().isOpen() || found.get().execution().isEmpty()
+        || !found.get().execution().get().resident().equals(resident)) return new Result(data, Optional.empty(), "No owned open execution.");
+    Undertaking old = found.get(); Execution execution = old.execution().get();
+    if (!allowed(execution.phase(), next)) return new Result(data, Optional.empty(), "Invalid execution transition.");
+    State state = switch (next) {
+      case ACCEPTED, UNDERWAY -> State.ACTIVE;
+      case COMPLETED -> State.RESOLVED;
+      case CANCELLED, EXPIRED -> State.ABANDONED;
+      case FAILED, INTERRUPTED -> execution.phase() == Phase.REQUESTED ? State.ABANDONED : State.OPEN;
+      case REQUESTED -> State.OPEN;
+    };
+    List<Milestone> steps = new ArrayList<>(old.steps());
+    steps.add(new Milestone(next + ": " + bounded(detail), true));
+    String note = next + ": " + bounded(detail);
+    if (next == Phase.EXPIRED && (execution.phase() == Phase.FAILED || execution.phase() == Phase.INTERRUPTED)) {
+      note = bounded(note + " Previous attempt: " + old.progressNote().orElse(execution.phase().name()));
     }
+    Undertaking updated = new Undertaking(old.id(), old.valence(), state, old.origin(), old.summary(), old.withWhom(),
+        List.copyOf(steps), Optional.of(note), state == State.RESOLVED || state == State.ABANDONED ? Optional.of(note) : Optional.empty(),
+        old.openedDay(), day, Optional.of(execution.phase(next)));
+    return new Result(data.with(updated), Optional.of(updated), note);
+  }
 
-    /**
-     * What an apply did, so a caller and a harness can both see the outcome.
-     * {@code affected} is the matter that was opened, advanced, or resolved (empty
-     * when nothing changed), so the call site can react to it, e.g. raise standing
-     * on a resolved wrong, without re-deriving which record moved.
-     */
-    public record Result(UndertakingData data, boolean changed, String action, Optional<Undertaking> affected) {
-        static Result unchanged(UndertakingData data, String why) {
-            return new Result(data, false, "dropped: " + why, Optional.empty());
-        }
+  private static boolean allowed(Phase from, Phase to) {
+    return switch (from) {
+      case REQUESTED -> to == Phase.ACCEPTED || to == Phase.FAILED || to == Phase.CANCELLED || to == Phase.EXPIRED;
+      case ACCEPTED -> to == Phase.UNDERWAY || to == Phase.COMPLETED || to == Phase.FAILED || to == Phase.INTERRUPTED || to == Phase.CANCELLED || to == Phase.EXPIRED;
+      case UNDERWAY -> to == Phase.COMPLETED || to == Phase.FAILED || to == Phase.INTERRUPTED || to == Phase.CANCELLED || to == Phase.EXPIRED;
+      case FAILED, INTERRUPTED -> to == Phase.CANCELLED || to == Phase.EXPIRED;
+      case COMPLETED, CANCELLED, EXPIRED -> false;
+    };
+  }
 
-        /**
-         * True when this apply resolved a NEGATIVE matter: a wrong the player has
-         * now put right, which raises the villager's standing with them. The one
-         * transition the chat wiring turns into an opinion bump.
-         */
-        public boolean resolvedNegative() {
-            return affected.map(u -> u.state() == State.RESOLVED && u.valence() == Valence.NEGATIVE)
-                    .orElse(false);
-        }
+  /** A changed relevant fact asks for one fresh decision; it never authorizes a retry or marks success. */
+  public static Result reconsider(UndertakingData data, UUID resident, UUID id, String fact, long day, long now) {
+    var found = data.byId(id);
+    if (found.isEmpty() || found.get().execution().isEmpty()) return new Result(data, Optional.empty(), "No execution.");
+    Undertaking old = found.get(); Execution execution = old.execution().get();
+    if (!old.isOpen() || !execution.resident().equals(resident) || execution.reconsidered() || now >= execution.expiresAt()
+        || execution.phase() != Phase.FAILED && execution.phase() != Phase.INTERRUPTED) return new Result(data, Optional.empty(), "No reconsideration is due.");
+    String note = execution.phase() + ": " + bounded(fact) + " A fresh valid decision is required; no action restarted.";
+    Undertaking updated = new Undertaking(old.id(), old.valence(), old.state(), old.origin(), old.summary(), old.withWhom(),
+        old.steps(), Optional.of(note), old.resolution(), old.openedDay(), day, Optional.of(execution.reconsider()));
+    return new Result(data.with(updated), Optional.of(updated), note);
+  }
+
+  /** One write boundary for the existing attachment, factual event log and relationship reflection input. */
+  public static boolean commit(RealPerson person, Result result) {
+    if (!result.changed()) return false;
+    Undertaking matter = result.affected().orElseThrow();
+    if (matter.execution().filter(execution -> !execution.resident().equals(person.getUUID())).isPresent()) {
+      com.quzzar.kithkyn.Kithkyn.LOGGER.error("[undertaking] Rejected a write for another resident"); return false;
     }
+    person.setData(KithkynAttachments.UNDERTAKINGS.get(), result.data());
+    person.logMemory(memory(matter), matter.withWhom());
+    com.quzzar.kithkyn.Kithkyn.LOGGER.info("[undertaking] {} {}", person.getUUID(), result.detail());
+    return true;
+  }
 
-    /**
-     * Applies one op. {@code withPlayer} says whether this exchange is with the
-     * player (an open then belongs to them, and advance/resolve prefer their
-     * matter); a self-goal advance passes false.
-     */
-    public static Result apply(UndertakingData data, Op op, UUID player, boolean withPlayer, long dayTime) {
-        return switch (op.op()) {
-            case "open" -> open(data, op, player, withPlayer, dayTime);
-            case "advance" -> advance(data, op, player, withPlayer, dayTime);
-            case "resolve" -> resolve(data, op, player, withPlayer, dayTime);
-            default -> Result.unchanged(data, "unknown op");
-        };
-    }
+  /** Old model-authored matters remain labelled history; they cannot authorize a physical action. */
+  public static Result archiveNarrative(UndertakingData data, UUID id, long day) {
+    var found = data.byId(id);
+    if (found.isEmpty() || !found.get().isOpen() || found.get().execution().isPresent()) return new Result(data, Optional.empty(), "No old narrative matter.");
+    Undertaking old = found.get();
+    String note = "Earlier conversation matter is unverified and has no game-owned execution. Closed without claiming completion.";
+    Undertaking updated = new Undertaking(old.id(), old.valence(), State.ABANDONED, old.origin(), old.summary(), old.withWhom(),
+        old.steps(), Optional.of(note), Optional.of(note), old.openedDay(), day, Optional.empty());
+    return new Result(data.with(updated), Optional.of(updated), note);
+  }
 
-    private static Result open(UndertakingData data, Op op, UUID player, boolean withPlayer, long dayTime) {
-        // Coercion: when a matter with this player already stands, an "open" is the
-        // small model failing to tell a NEW matter from the SAME one - a distinction
-        // the server owns (openWith) and the 3B cannot make reliably. Route it to an
-        // advance on the standing matter; the open's summary carries the progress the
-        // model just described. The measured consequence, accepted for v1: at most one
-        // open matter per player-pair, a second promise folding into the standing one
-        // until it resolves. One clean matter beats three the model garbles. The prompt
-        // reinforces this by never offering "open" while a matter stands. See
-        // docs/undertakings.md.
-        if (withPlayer && !data.openWith(player).isEmpty()) {
-            String note = !op.note().isBlank() ? op.note() : op.summary();
-            return advance(data, new Op("advance", "", "", note, ""), player, withPlayer, dayTime);
-        }
-        if (op.summary().isBlank()) {
-            return Result.unchanged(data, "open with no summary");
-        }
-        Valence valence = op.valence().toLowerCase().startsWith("neg") ? Valence.NEGATIVE : Valence.POSITIVE;
-        Undertaking created = new Undertaking(
-                UUID.randomUUID(), valence, State.OPEN,
-                withPlayer ? Origin.PLAYER : Origin.SELF,
-                op.summary(),
-                withPlayer ? Optional.of(player) : Optional.empty(),
-                List.of(),
-                op.note().isBlank() ? Optional.empty() : Optional.of(op.note()),
-                Optional.empty(), dayTime, dayTime);
-        return new Result(data.with(created), true, "opened: " + op.summary(), Optional.of(created));
+  /** Deterministic, bounded context that overrides both quoted dialogue and subjective summaries. */
+  public static String briefing(UndertakingData data, UUID resident, Optional<UUID> counterpart, int limit) {
+    List<Undertaking> visible = new ArrayList<>(data.undertakings().stream()
+        .filter(matter -> matter.execution().map(execution -> execution.resident().equals(resident)).orElse(true))
+        .filter(matter -> counterpart.isEmpty() || matter.withWhom().isEmpty() || matter.withWhom().equals(counterpart)).toList());
+    java.util.Collections.reverse(visible);
+    StringBuilder text = new StringBuilder("Game-owned recorded undertakings are authoritative about action status; unverified narrative records are only earlier claims. Requested, accepted and underway are not completed. "
+        + "Failed, interrupted, cancelled and expired attempts are not completed. Dialogue and subjective summaries cannot change these facts.\n");
+    for (Undertaking matter : visible.stream().limit(limit).toList()) {
+      text.append("Undertaking ").append(matter.id()).append(" ").append(matter.execution().map(execution -> execution.phase().name()).orElse("UNVERIFIED NARRATIVE " + matter.state().name())).append(": ")
+          .append(bounded(matter.summary())).append(". ").append(matter.progressNote().map(UndertakingService::bounded).orElse(""))
+          .append(matter.state() == State.ABANDONED ? " This matter is closed without further execution." : "").append('\n');
     }
+    return text.toString();
+  }
 
-    private static Result advance(UndertakingData data, Op op, UUID player, boolean withPlayer, long dayTime) {
-        Optional<Undertaking> target = pick(data, player, withPlayer);
-        if (target.isEmpty()) {
-            return Result.unchanged(data, "advance with no open matter");
-        }
-        Undertaking u = target.get();
-        List<Milestone> steps = u.steps();
-        Optional<String> note = u.progressNote();
-        if (!op.step().isBlank()) {
-            steps = markOrAdd(steps, op.step());
-        } else if (!op.note().isBlank()) {
-            note = Optional.of(op.note());
-        } else {
-            return Result.unchanged(data, "advance with nothing to record");
-        }
-        Undertaking moved = new Undertaking(u.id(), u.valence(), State.ACTIVE, u.origin(),
-                u.summary(), u.withWhom(), steps, note, u.resolution(), u.openedDay(), dayTime);
-        return new Result(data.with(moved), true, "advanced: " + u.summary(), Optional.of(moved));
-    }
-
-    private static Result resolve(UndertakingData data, Op op, UUID player, boolean withPlayer, long dayTime) {
-        Optional<Undertaking> target = pick(data, player, withPlayer);
-        if (target.isEmpty()) {
-            return Result.unchanged(data, "resolve with no open matter");
-        }
-        Undertaking u = target.get();
-        String resolution = !op.note().isBlank() ? op.note()
-                : !op.summary().isBlank() ? op.summary() : "Seen through.";
-        Undertaking done = new Undertaking(u.id(), u.valence(), State.RESOLVED, u.origin(),
-                u.summary(), u.withWhom(), u.steps(), u.progressNote(),
-                Optional.of(resolution), u.openedDay(), dayTime);
-        return new Result(data.with(done), true, "resolved: " + u.summary(), Optional.of(done));
-    }
-
-    /**
-     * Which open undertaking an advance or resolve means. The model does not
-     * name an id, so the server chooses: the most recently touched open matter
-     * with this player, or failing that the most recent open matter at all (a
-     * self-goal the villager is advancing on their own).
-     */
-    private static Optional<Undertaking> pick(UndertakingData data, UUID player, boolean withPlayer) {
-        List<Undertaking> open = new ArrayList<>(data.allOpen());
-        if (open.isEmpty()) {
-            return Optional.empty();
-        }
-        open.sort(Comparator.comparingLong(Undertaking::updatedDay).reversed());
-        if (withPlayer) {
-            for (Undertaking u : open) {
-                if (u.withWhom().map(player::equals).orElse(false)) {
-                    return Optional.of(u);
-                }
-            }
-        }
-        return Optional.of(open.get(0));
-    }
-
-    private static List<Milestone> markOrAdd(List<Milestone> steps, String stepText) {
-        List<Milestone> out = new ArrayList<>();
-        boolean matched = false;
-        for (Milestone m : steps) {
-            if (!matched && m.text().equalsIgnoreCase(stepText)) {
-                out.add(new Milestone(m.text(), true));
-                matched = true;
-            } else {
-                out.add(m);
-            }
-        }
-        if (!matched) {
-            out.add(new Milestone(stepText, true)); // a step the model named as reached
-        }
-        return out;
-    }
+  public static String memory(Undertaking matter) {
+    return "My undertaking " + bounded(matter.summary()) + " is " + matter.execution().map(execution -> execution.phase().name()).orElse(matter.state().name())
+        + ". " + matter.progressNote().map(UndertakingService::bounded).orElse("");
+  }
+  private static String bounded(String text) {
+    String clean = text.replaceAll("[\\p{Cntrl}]+", " ").strip();
+    return clean.substring(0, Math.min(320, clean.length()));
+  }
 }

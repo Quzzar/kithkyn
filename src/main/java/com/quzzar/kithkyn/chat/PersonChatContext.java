@@ -13,7 +13,6 @@ import com.quzzar.kithkyn.Utils;
 import com.quzzar.kithkyn.compat.AccessoryCompat;
 import com.quzzar.kithkyn.entities.MarriageStatus;
 import com.quzzar.kithkyn.entities.PersonalLogData;
-import com.quzzar.kithkyn.entities.UndertakingData;
 import com.quzzar.kithkyn.entities.ClericPotions;
 import com.quzzar.kithkyn.entities.RealPerson;
 import com.quzzar.kithkyn.entities.KithkynAttachments;
@@ -81,77 +80,6 @@ public final class PersonChatContext {
       + "or {\"say\": \"<reply>\", \"give\": \"<item id>\", \"give_count\": <how many>, \"opinion\": <number>, "
       + "\"fight\": true, \"done\": true}.";
 
-  private static final String SHAPE_UNDERTAKING =
-      "Answer with ONLY a JSON object: {\"say\": \"<reply>\"}, adding any of \"give\", \"opinion\", \"fight\", "
-      + "\"done\", or \"undertaking\" only when it applies.";
-
-  /**
-   * The undertaking clause is split by the state the SERVER already knows, and
-   * the model is shown only the ops that are legal in that state - the same
-   * discipline the decision brain uses when it never shows an unaffordable
-   * building (llm-brain.md). The audit (7b) measured why it must be: shown all
-   * three ops at once, the 3B defaults nearly every matter to "open", opening a
-   * second matter when the briefing plainly says one already stands. It cannot
-   * pick open vs advance from context, so it is not asked to.
-   *
-   * The whole clause stays gated on top of that (undertakings map #24): on a
-   * turn where no matter is in play at all, none of these variants is used and
-   * the field is never mentioned - the give tool's lesson that a small model
-   * reaches for an always-present field on turns that do not warrant it.
-   *
-   * NEW_MATTER: no matter stands, but this turn opens one (opensACommitment).
-   * Only "open" is offered.
-   */
-  private static final String RULES_NEW_MATTER = RULES_BODY
-      + "Something worth seeing through over time has come up - a task you mean to tackle, a problem to sort out, a "
-      + "goal you are working toward, or something this person will do for you or put right - and no such matter yet "
-      + "stands. If this turn truly begins one, record it so you remember it later: \"undertaking\": {\"op\": "
-      + "\"open\", \"summary\": \"<what is to be seen through, in a few words>\", \"valence\": \"positive\" for a hope "
-      + "or a kindness, \"negative\" for a problem or a wrong to right}. Most turns begin nothing - leave it out "
-      + "unless this one does. "
-      + SHAPE_UNDERTAKING;
-
-  /**
-   * OPEN_MATTER: a matter already stands with this person (openWith non-empty).
-   * "Open" is withheld entirely - the server coerces a stray open to advance
-   * anyway (7b's UndertakingService change), so the model's only real call is
-   * the one the server cannot make: has this settled the matter (resolve) or
-   * merely moved it (advance). Framed as that binary, with the completion-
-   * language contrast carried by the few-shots below.
-   */
-  private static final String RULES_OPEN_MATTER = RULES_BODY
-      + "A matter already stands between you and this person (named above). You are NOT opening a new one - you are "
-      + "moving it forward or settling it. If this exchange moves it along, \"undertaking\": {\"op\": \"advance\", "
-      + "\"note\": \"<what moved>\"}. If it settles the matter for good, \"undertaking\": {\"op\": \"resolve\", "
-      + "\"note\": \"<how it ended>\"}. When their words mark it FINISHED - the LAST of it, the FINAL piece, the WHOLE "
-      + "amount, all of it now, the debt PAID, the task DONE - that is resolve, never advance. If it does neither, "
-      + "leave \"undertaking\" out. You never name which matter - the game knows. "
-      + SHAPE_UNDERTAKING;
-
-  /**
-   * Whether the player's line plausibly opens a NEW matter - amends, a promise,
-   * a debt. An existing open matter opens the gate on its own (see assemble),
-   * so this only has to catch the moments that START one; the strong signals
-   * are apology, owing, and promising. Delivery words ("here's the last of it")
-   * are deliberately absent: they only mean anything when a matter already
-   * stands, and that case is already gated in structurally.
-   */
-  private static boolean opensACommitment(String playerLine) {
-    String line = playerLine.toLowerCase(java.util.Locale.ROOT);
-    for (String marker : COMMITMENT_MARKERS) {
-      if (line.contains(marker)) {
-        return true;
-      }
-    }
-    return false;
-  }
-
-  private static final String[] COMMITMENT_MARKERS = {
-      "sorry", "apolog", "make it right", "make up for", "my fault", "forgive", "make amends",
-      "owe", "repay", "pay you back", "i'll get you", "i will get you", "i'll bring", "i will bring",
-      "promise", "i swear", "you have my word"
-  };
-
   /**
    * Collapses a run of turns where the villager gave the same answer down to
    * the last of them.
@@ -206,54 +134,6 @@ public final class PersonChatContext {
       // it is the freshest pattern for the turn where the talk has run its course.
       new FewShotExample("Steve says: \"Anyway, I'll not keep you. Good day to you.\"\nYour JSON answer:",
           "{\"say\": \"And to you. I'll get back to my work.\", \"done\": true}"));
-
-  /**
-   * Shown when a NEW matter may open. Both are the villager's OWN matters - a
-   * problem to sort (negative) and a goal in progress (positive) - because the
-   * point of undertakings is a villager tracking its own things over time, not
-   * only what a player owes. Kept clear of any one test scenario (roof, ox) so a
-   * match on a different matter is generalisation, not the 3B copying the example
-   * wholesale (the failure the live test caught with the old debt-only examples).
-   */
-  private static final List<FewShotExample> OPEN_EXAMPLES = List.of(
-      new FewShotExample("Steve says: \"That roof of yours is still letting the rain in, isn't it?\"\nYour JSON answer:",
-          "{\"say\": \"It is, and it's past time I patched it properly.\", "
-          + "\"undertaking\": {\"op\": \"open\", \"summary\": \"Patch the leaking roof over my house\", \"valence\": \"negative\"}}"),
-      new FewShotExample("Steve says: \"I hear you've been setting coin aside for something.\"\nYour JSON answer:",
-          "{\"say\": \"Bit by bit, toward a second ox to work the field.\", "
-          + "\"undertaking\": {\"op\": \"open\", \"summary\": \"Save up for a second ox for the plough\", \"valence\": \"positive\"}}"));
-
-  /**
-   * Shown when a matter STANDS, all on the villager's OWN matter so progress
-   * tracking is taught the same way opening is: a neutral turn that records
-   * NOTHING (advance was firing on every turn once the tool was offered), a step
-   * of progress (advance), and a completion (resolve). Completion leans on "at
-   * last", "done" so the 3B separates a final step from a partial one. Kept off
-   * any one test scenario so a match is generalisation, not copying.
-   */
-  private static final List<FewShotExample> PROGRESS_EXAMPLES = List.of(
-      new FewShotExample("Steve says: \"Just passing through, don't mind me.\"\nYour JSON answer:",
-          "{\"say\": \"Mind yourself, the roads are dark this hour.\"}"),
-      new FewShotExample("Steve says: \"How's that roof coming along?\"\nYour JSON answer:",
-          "{\"say\": \"Half the shingles are back on. The rest tomorrow.\", "
-          + "\"undertaking\": {\"op\": \"advance\", \"note\": \"Half the roof re-shingled\"}}"),
-      new FewShotExample("Steve says: \"Looks like you've got that roof finished at last.\"\nYour JSON answer:",
-          "{\"say\": \"Every last shingle, and dry beneath it now.\", "
-          + "\"undertaking\": {\"op\": \"resolve\", \"note\": \"The roof is fully patched\"}}"));
-
-  /** Which undertaking state a turn is in - drives both the rules and examples. */
-  private enum UndertakingMode { NONE, NEW_MATTER, OPEN_MATTER }
-
-  /** The base examples, plus the few-shots for the op(s) legal in this state. */
-  private static List<FewShotExample> examplesFor(UndertakingMode mode) {
-    List<FewShotExample> all = new ArrayList<>(EXAMPLES);
-    switch (mode) {
-      case OPEN_MATTER -> all.addAll(PROGRESS_EXAMPLES);
-      case NEW_MATTER -> all.addAll(OPEN_EXAMPLES);
-      case NONE -> { }
-    }
-    return all;
-  }
 
   /**
    * Offered when the player is urging a village-wide direction. The villager may
@@ -437,26 +317,10 @@ public final class PersonChatContext {
           .append(pastTalks).append('\n');
     }
 
-    // At most one structured tool is offered per turn: a small model reaches for
-    // an always-present optional field on turns that do not warrant it (the
-    // undertaking audit, #24). A village-direction the player is urging takes the
-    // turn - the villager may forward it to the brain as a request - and the
-    // undertaking tool stands down until a plainer turn.
-    //
-    // Otherwise the undertaking tool is offered only when a matter is plausibly in
-    // play, and then only the ops legal in the current state. A matter already
-    // standing takes precedence: the model is shown advance/resolve, never open,
-    // because the server knows one stands and coerces a stray open anyway. Only
-    // when nothing stands and the line opens a new commitment is "open" offered.
-    // Open matters are stated so an advance or resolve knows its target.
+    system.append(com.quzzar.kithkyn.entities.UndertakingService.briefing(
+        person.getData(KithkynAttachments.UNDERTAKINGS.get()), person.getUUID(), Optional.of(playerUUID), 8));
     boolean discussesPlanning = village != null && discussesVillagePlanning(playerLine);
     boolean proposesChange = village != null && proposesVillageChange(playerLine);
-    List<UndertakingData.Undertaking> openMatters =
-        person.getData(KithkynAttachments.UNDERTAKINGS.get()).openWith(playerUUID);
-    UndertakingMode mode = proposesChange ? UndertakingMode.NONE
-        : !openMatters.isEmpty() ? UndertakingMode.OPEN_MATTER
-        : opensACommitment(playerLine) ? UndertakingMode.NEW_MATTER
-        : UndertakingMode.NONE;
     if (discussesPlanning) {
       // Ground a build the player is urging: hand the villager the menu of what the
       // village can actually raise and what each brings, so "build a lumberjack" has a
@@ -465,21 +329,7 @@ public final class PersonChatContext {
       system.append("Village planning options right now: ")
           .append(UrbanPlanner.buildableCatalogue(village)).append('\n');
     }
-    if (proposesChange) {
-      system.append(RULES_REQUEST);
-    } else {
-      if (mode == UndertakingMode.OPEN_MATTER) {
-        system.append("Still between you and ").append(playerName).append(": ")
-            .append(openMatters.stream().map(UndertakingData.Undertaking::summary)
-                .collect(java.util.stream.Collectors.joining("; ")))
-            .append(". If one moves forward or is settled now, mark it.\n");
-      }
-      system.append(switch (mode) {
-        case OPEN_MATTER -> RULES_OPEN_MATTER;
-        case NEW_MATTER -> RULES_NEW_MATTER;
-        case NONE -> RULES;
-      });
-    }
+    system.append(proposesChange ? RULES_REQUEST : RULES);
 
     StringBuilder user = new StringBuilder();
     List<Turn> transcript = withoutRepeats(history);
@@ -492,7 +342,7 @@ public final class PersonChatContext {
     user.append(playerName).append(" says: \"").append(playerLine).append("\"\nYour JSON answer:");
 
     return new AssembledChat(system.toString(), user.toString(),
-        proposesChange ? withRequestExamples() : examplesFor(mode));
+        proposesChange ? withRequestExamples() : EXAMPLES);
   }
 
   /** What's in their hands — held items live outside the pockets inventory. */

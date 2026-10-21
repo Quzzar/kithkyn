@@ -21,9 +21,8 @@ in it, and update it in the same change that moves what it describes.
   matrix that turns stats into Minecraft attribute modifiers.
 - [personas.md](personas.md): AI-generated character blurbs and quirks. The prompt
   contract, the generate-before-spawn lifecycle, and the persona package code map.
-- [undertakings.md](undertakings.md): the tracked matters a villager sees through, good or
-  bad, with progress and resolution. One generic model for making amends, needing rescue,
-  and self-set goals. Design only so far; grows out of PersonalLogData's event memories.
+- [undertakings.md](undertakings.md): the one saved commitment store, game-owned action lifecycle,
+  ownership, bounded reconsideration, factual memory and reload verification.
 - [relationships.md](relationships.md): pairwise villager opinions. The one-pair-one-object
   model that keeps opinions roughly shared, the newcomer integration pass, and the code map.
 - [marriage.md](marriage.md): two villagers who have grown close ask the brain to wed them,

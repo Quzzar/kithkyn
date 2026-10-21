@@ -74,7 +74,9 @@ Perception visibility checks use the awareness system's shared budget.
 `/kkdev reaction <entity>` reports the latest pending/deferred/uncertain/failed/stale/started/
 completed/interrupted state when developer commands are enabled. The same bounded status
 is available to conversation context. Logs record outcomes without credentials or full
-resident prompts. These transient reactions are not durable intentions or memories.
+resident prompts. Reaction outcomes now use the existing [undertaking lifecycle](undertakings.md) and factual
+personal log. Transient reaction execution is not resumed after reload; a fresh decision
+is required.
 
 ## Verification and remaining acceptance
 
@@ -102,7 +104,7 @@ and none met the fixed 0.8 confidence gate. The near-duplicate split is not inde
 No threshold or default was changed from these results. Model quality, per-purpose
 calibration, larger populations in working villages, multiplayer, custody and posted guard
 scenarios still need acceptance before enabling or recommending this experiment. #188 remains
-open. Durable intentions and voice remain separate work in #189 and #190.
+open. The undertaking rework is tracked in #189; voice remains separate work in #190.
 
 Latest local validation: 720 JUnit tests passed, all 17 bundled catalogs and 459 structure
 templates passed auditing, and both movement and reaction isolated-world fixtures passed.

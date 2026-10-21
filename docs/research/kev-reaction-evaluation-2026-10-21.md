@@ -266,3 +266,7 @@ backend, precision, or endpoint after an error. Confirm `/v1/models`, then repla
 labelled requests, measuring HTTP wall time, compute time, cold/cache behavior, confidence,
 choice correctness, and legality. Only measured results should decide whether this backend
 is useful for the reaction path.
+
+The later #189 undertaking rework adds recorded outcomes to live reaction context. The
+48-response replay above preserves the earlier request schema and revision; its scores
+are historical evidence, not a measurement of that revised prompt.

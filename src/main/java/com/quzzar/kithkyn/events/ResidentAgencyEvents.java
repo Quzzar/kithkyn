@@ -2,7 +2,7 @@ package com.quzzar.kithkyn.events;
 
 import com.quzzar.kithkyn.Kithkyn;
 import com.quzzar.kithkyn.agency.PointedLocations;
-import com.quzzar.kithkyn.agency.ResidentActionState.End;
+import com.quzzar.kithkyn.entities.UndertakingData.Phase;
 import com.quzzar.kithkyn.entities.RealPerson;
 
 import net.minecraft.server.level.ServerPlayer;
@@ -26,7 +26,10 @@ public final class ResidentAgencyEvents {
   @SubscribeEvent
   public static void left(EntityLeaveLevelEvent event) {
     if (event.getEntity() instanceof RealPerson person && !person.level().isClientSide()) {
-      person.agency().finish(End.INTERRUPTED, "The resident left the loaded world.");
+      var reason = person.getRemovalReason();
+      if (reason == net.minecraft.world.entity.Entity.RemovalReason.KILLED || reason == net.minecraft.world.entity.Entity.RemovalReason.DISCARDED) {
+        person.agency().finish(Phase.CANCELLED, "The resident was permanently removed.");
+      }
       person.reactions().interrupt("The resident left the loaded world.");
     }
   }

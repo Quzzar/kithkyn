@@ -46,6 +46,8 @@ public final class ResidentAgencyVerification {
   private static int phase;
   private static int phaseStarted;
   private static boolean finished;
+  private static net.minecraft.nbt.CompoundTag savedResident;
+  private static java.util.UUID savedPromise;
 
   private ResidentAgencyVerification() { }
 
@@ -56,12 +58,12 @@ public final class ResidentAgencyVerification {
       ServerLevel level = event.getServer().overworld();
       if (resident == null) setup(level);
       observe(level);
-      check(ticks < 1600, "Timed out in phase " + phase + " at " + resident.position()
+      check(ticks < 2400, "Timed out in phase " + phase + " at " + resident.position()
           + ": " + resident.agency().describe());
       if (finished) {
         Kithkyn.LOGGER.info("[resident-agency-verify] RESULT PASS: server raycast, actual pointed walk, "
             + "follow, wait, release, danger interruption, existing avoidance, quarrel precedence, "
-            + "blocked route and invalidated ground; no inference");
+            + "blocked route, invalidated ground, actual entity reload, persistent unfinished promises, inventory preservation and one reconsideration without auto-retry; no inference");
         event.getServer().halt(false);
       }
     } catch (Exception | AssertionError failure) {
@@ -73,6 +75,9 @@ public final class ResidentAgencyVerification {
 
   private static void setup(ServerLevel level) {
     KithkynConfig.LlmResidentActions = true;
+    KithkynConfig.ResidentReactions = false;
+    for (var entity : level.getAllEntities()) if (entity instanceof RealPerson || entity instanceof Zombie) entity.discard();
+    VillageManager.get(level).getVillages().clear();
     level.getGameRules().getRule(GameRules.RULE_DOMOBSPAWNING).set(false, level.getServer());
     level.getGameRules().getRule(GameRules.RULE_DAYLIGHT).set(false, level.getServer());
     level.getGameRules().getRule(GameRules.RULE_RANDOMTICKING).set(0, level.getServer());
@@ -182,11 +187,102 @@ public final class ResidentAgencyVerification {
       case 6 -> {
         if (resident.agency().current().isPresent()) return;
         check(resident.agency().describe().contains("FAILED"), "Removed ground was reported as success");
-        verifyQuarrelPrecedence();
-        finished = true;
+        level.setBlock(destination.below(), Blocks.STONE.defaultBlockState(), 2);
+        destination = resident.blockPosition().offset(-8, 0, 0);
+        requester.moveTo(resident.position().add(0, 0, 2));
+        resident.personMainInv.addItem(new net.minecraft.world.item.ItemStack(net.minecraft.world.item.Items.DIAMOND, 3));
+        point(level, destination); ask(Action.GO_TO_POINT); next();
+      }
+      case 7 -> {
+        if (ticks - phaseStarted < 4) return;
+        check(resident.agency().current().isPresent(), "Reload walk ended before serialization");
+        savedPromise = resident.getData(com.quzzar.kithkyn.entities.KithkynAttachments.UNDERTAKINGS.get()).allOpen().stream()
+            .filter(matter -> matter.execution().filter(value -> value.phase().executing()).isPresent()).findFirst().orElseThrow().id();
+        saveAndUnload(); next();
+      }
+      case 8 -> {
+        if (ticks - phaseStarted < 5) return;
+        restore(level);
+        check(resident.agency().current().isPresent(), "The saved movement promise did not restore");
+        var matter = resident.getData(com.quzzar.kithkyn.entities.KithkynAttachments.UNDERTAKINGS.get()).byId(savedPromise).orElseThrow();
+        check(matter.execution().orElseThrow().phase() == com.quzzar.kithkyn.entities.UndertakingData.Phase.UNDERWAY, "Save upgraded or lost the underway state");
+        next();
+      }
+      case 9 -> {
+        if (resident.agency().current().isPresent()) return;
+        check(resident.agency().describe().contains("COMPLETED") && resident.distanceToSqr(Vec3.atBottomCenterOf(destination)) <= 1, "Reloaded promise did not physically finish");
+        check(resident.personMainInv.countItem(net.minecraft.world.item.Items.DIAMOND) == 3, "Reload changed physical inventory");
+        destination = resident.blockPosition().offset(-6, 0, 0);
+        sealed(level, true);
+        requester.moveTo(resident.position().add(0, 0, 2));
+        point(level, destination); ask(Action.GO_TO_POINT); next();
+      }
+      case 10 -> {
+        if (resident.agency().current().isPresent()) return;
+        check(resident.agency().describe().contains("FAILED"), "Sealed retry fixture did not fail");
+        savedPromise = resident.getData(com.quzzar.kithkyn.entities.KithkynAttachments.UNDERTAKINGS.get()).allOpen().stream()
+            .filter(matter -> matter.execution().filter(value -> value.phase() == com.quzzar.kithkyn.entities.UndertakingData.Phase.FAILED).isPresent())
+            .reduce((first, second) -> second).orElseThrow().id();
+        saveAndUnload(); next();
+      }
+      case 11 -> {
+        if (ticks - phaseStarted < 5) return;
+        restore(level);
+        check(resident.agency().current().isEmpty(), "An interrupted promise restarted itself after load");
+        resident.setData(com.quzzar.kithkyn.entities.KithkynAttachments.CHAT_SUMMARY.get(),
+            resident.getData(com.quzzar.kithkyn.entities.KithkynAttachments.CHAT_SUMMARY.get()).withSummary(requester.getUUID(), "The requester said the trip was completed."));
+        var prompt = com.quzzar.kithkyn.chat.PersonChatContext.assemble(resident, "Requester", requester.getUUID(), java.util.List.of(), "Did you get there?");
+        check(prompt.system().contains("FAILED: go_to_point") && prompt.system().contains("authoritative about action status"), "A stale subjective summary hid the actual failure");
+        check(!prompt.system().contains("\"undertaking\""), "The obsolete model-write tool is still offered");
+        next();
+      }
+      case 12 -> {
+        check(resident.agency().current().isEmpty(), "Blocked promise silently restarted");
+        if (ticks - phaseStarted < 130) return;
+        check(!promise().execution().orElseThrow().reconsidered(), "Blocked route was treated as newly available: " + promise().execution().orElseThrow());
+        sealed(level, false); next();
+      }
+      case 13 -> {
+        if (!promise().execution().orElseThrow().reconsidered()) return;
+        check(resident.agency().current().isEmpty(), "Reconsideration executed without a fresh valid decision");
+        check(promise().execution().orElseThrow().phase() == com.quzzar.kithkyn.entities.UndertakingData.Phase.FAILED, "Reconsideration upgraded failure to completion"); next();
+      }
+      case 14 -> {
+        check(resident.agency().current().isEmpty(), "An unchanged reference caused automatic retry");
+        if (ticks - phaseStarted < 130) return;
+        long notes = resident.getData(com.quzzar.kithkyn.entities.KithkynAttachments.PERSONAL_LOG.get()).memoriesNewestFirst().stream()
+            .filter(entry -> entry.text().contains("A fresh valid decision is required")).count();
+        check(notes == 1, "Reconsideration repeated instead of recording one changed fact: " + notes);
+        requester.moveTo(resident.position().add(0, 0, 2));
+        point(level, destination); ask(Action.GO_TO_POINT); next();
+      }
+      case 15 -> {
+        if (resident.agency().current().isPresent()) return;
+        check(resident.agency().describe().contains("COMPLETED"), "A fresh approved attempt did not finish");
+        check(promise().execution().orElseThrow().phase() == com.quzzar.kithkyn.entities.UndertakingData.Phase.CANCELLED, "The new instruction did not explicitly close the earlier failed attempt");
+        verifyQuarrelPrecedence(); finished = true;
       }
       default -> throw new AssertionError("Unknown verification phase " + phase);
     }
+  }
+
+  private static com.quzzar.kithkyn.entities.UndertakingData.Undertaking promise() {
+    return resident.getData(com.quzzar.kithkyn.entities.KithkynAttachments.UNDERTAKINGS.get()).byId(savedPromise).orElseThrow();
+  }
+  private static void sealed(ServerLevel level, boolean closed) {
+    for (BlockPos pos : BlockPos.betweenClosed(destination.offset(-1, 0, -1), destination.offset(1, 2, 1))) {
+      if (pos.getX() != destination.getX() || pos.getZ() != destination.getZ()) level.setBlock(pos,
+          (closed ? Blocks.STONE : Blocks.AIR).defaultBlockState(), 2);
+    }
+  }
+  private static void saveAndUnload() {
+    savedResident = new net.minecraft.nbt.CompoundTag();
+    check(resident.save(savedResident), "Could not serialize resident and attachments");
+    resident.remove(net.minecraft.world.entity.Entity.RemovalReason.UNLOADED_TO_CHUNK);
+  }
+  private static void restore(ServerLevel level) {
+    resident = (RealPerson) EntityType.create(savedResident, level).orElseThrow();
+    check(level.addFreshEntity(resident), "Could not reload serialized resident");
   }
 
   private static void point(ServerLevel level, BlockPos target) {

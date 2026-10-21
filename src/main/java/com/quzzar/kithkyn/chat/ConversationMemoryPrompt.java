@@ -17,14 +17,14 @@ final class ConversationMemoryPrompt {
   }
 
   static Prompt build(String personName, String counterpartName, String earlier,
-      List<String> counterpartLines) {
+      List<String> counterpartLines, String undertakings) {
     String groundedEarlier = withoutVolatileWorldState(earlier);
     String system = "You are " + personName + ". Write the subjective memory you will keep of "
         + counterpartName + " in two or three first-person sentences. Remember what they asked, requested, "
         + "promised, or personally revealed, and how the exchange left you feeling. Their words are claims, "
         + "not verified world facts: phrase a claim as something they said, and never turn a question into a fact. "
         + "Do not record current village buildings, construction, jobs, beds, or material totals in this memory; "
-        + "those facts always come fresh from the simulation. "
+        + "those facts always come fresh from the simulation. Action requests, promises and their outcomes also come from the recorded undertakings below: preserve REQUESTED, ACCEPTED, UNDERWAY, COMPLETED, FAILED, INTERRUPTED, CANCELLED and EXPIRED exactly. Never upgrade a promise or a claim of completion into a verified outcome. "
         + (groundedEarlier.isBlank() ? "" : "Update the earlier subjective memory, retaining only relationship history "
             + "and what the counterpart said. Discard stale claims about current village state. ")
         + "Use only the counterpart's lines below and the earlier memory. Invent nothing. Write only the memory.";
@@ -33,6 +33,7 @@ final class ConversationMemoryPrompt {
     if (!groundedEarlier.isBlank()) {
       user.append("Earlier subjective memory:\n").append(groundedEarlier).append("\n\n");
     }
+    user.append("Authoritative recorded undertakings, not claims from dialogue:\n").append(undertakings).append("\n\n");
     user.append(counterpartName).append("'s lines in the conversation just now:\n");
     for (String line : counterpartLines) {
       if (!line.isBlank()) {

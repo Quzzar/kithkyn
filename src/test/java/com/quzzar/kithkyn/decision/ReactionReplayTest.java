@@ -65,6 +65,6 @@ class ReactionReplayTest {
   private static void add(List<Case> cases, String id, String split, String pair, List<String> expected,
       ReactionRequests.Character character, Observation observation, List<Action> options) {
     assertTrue(options.stream().map(Action::key).toList().containsAll(expected));
-    cases.add(new Case(id, split, pair, expected, ReactionRequests.build(character, observation, options)));
+    cases.add(new Case(id, split, pair, expected, ReactionRequests.build(character, observation, options, "No recorded undertakings.")));
   }
 }

@@ -16,7 +16,7 @@ public final class ResidentReactionGoal extends Goal {
   @Override public boolean canUse() { return person.reactions().movement().isPresent(); }
   @Override public boolean canContinueToUse() { return person.reactions().movement().filter(value -> value == movement).isPresent(); }
   @Override public boolean requiresUpdateEveryTick() { return true; }
-  @Override public void start() { movement = person.reactions().movement().orElseThrow(); walk = new ResidentWalk(); }
+  @Override public void start() { movement = person.reactions().movement().orElseThrow(); walk = new ResidentWalk(); person.reactions().underway(); }
   @Override public void stop() {
     if (canContinueToUse()) person.reactions().finish(Status.INTERRUPTED, "Native activity interrupted the reaction walk.");
     person.getNavigation().stop(); movement = null;

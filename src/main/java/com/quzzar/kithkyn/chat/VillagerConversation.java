@@ -23,7 +23,7 @@ import net.minecraft.server.level.ServerPlayer;
  * pipeline a player uses. Each turn, one villager's reply becomes the line the
  * other answers, so everything the chat system already does per-interlocutor
  * simply happens between the two of them: transcripts and close-of-session
- * summaries on both sides, undertakings opened and advanced with each other,
+ * summaries on both sides, with game-owned undertakings available as context,
  * items handed over with {@code give}, opinions moved through OpinionService (a
  * resident lands on the relationship pair), and village {@code request}s filed
  * when one talks the other into one.
@@ -256,7 +256,7 @@ public final class VillagerConversation {
           .converse(speaker, listener.getFullName(), listener.getUUID(), message, historyLine, true)
           .whenComplete((reply, error) -> server.execute(() -> {
             try {
-              if (error != null || reply == null || PersonChatDispatcher.isFallback(speaker, reply.say())) {
+              if (error != null || reply == null) {
                 turn.complete(Dialogue.Turn.abort());
                 return;
               }

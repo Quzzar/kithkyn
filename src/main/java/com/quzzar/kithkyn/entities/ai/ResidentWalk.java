@@ -14,6 +14,15 @@ public final class ResidentWalk {
   private double closest = Double.MAX_VALUE;
   private Vec3 progressPosition;
 
+  /** A reachable flag alone may describe an adjusted or cached target rather than the captured fixed point. */
+  public static net.minecraft.world.level.pathfinder.Path path(RealPerson person, Vec3 target, boolean movingTarget) {
+    BlockPos feet = BlockPos.containing(target);
+    var path = person.getNavigation().createPath(feet, movingTarget ? 2 : 0);
+    if (path == null || !path.canReach() || path.getEndNode() == null) return null;
+    var end = path.getEndNode();
+    return movingTarget || end.x == feet.getX() && end.y == feet.getY() && end.z == feet.getZ() ? path : null;
+  }
+
   public Step tick(RealPerson person, Vec3 target, double arrivalSquared, boolean movingTarget, double speed) {
     if (progressPosition == null) progressPosition = person.position();
     double distance = person.distanceToSqr(target);
@@ -31,7 +40,7 @@ public final class ResidentWalk {
     } else if (++stalledTicks >= 200) return new Step(State.FAILED, "Could not make progress toward the destination.");
     if (person.tickCount >= nextPathTick) {
       nextPathTick = person.tickCount + 10;
-      var path = person.getNavigation().createPath(BlockPos.containing(target), movingTarget ? 2 : 0);
+      var path = path(person, target, movingTarget);
       if (path != null && path.canReach() && person.getNavigation().moveTo(path, speed)) failedPaths = 0;
       else if (++failedPaths >= 3) return new Step(State.FAILED, "Could not find a reachable route to the destination.");
     }

@@ -154,3 +154,8 @@ The tracker holds progress; this document records the agreed direction and imple
 The next implementation slice is the independent, default-off [resident reaction lane](npc-reactions.md).
 It consumes witnessed evidence and offers only implemented effects, with game-owned routes,
 freshness and confidence gates. Its model replay and game execution fixtures are separate evidence.
+
+Movement intentions now use the existing [saved undertakings](undertakings.md), including
+actual lifecycle outcomes, captured duties, expiry and one reconsideration of a changed
+reference. The temporary current-order/outcome store and the old model-written undertaking
+tool have been replaced. Optional movement and reaction defaults remain off.

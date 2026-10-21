@@ -243,8 +243,8 @@ public final class LocalModelEvaluation {
     }
     var assembled = PersonChatContext.assemble(person, "Rowan", SPEAKER, history, scenario.message());
     var offer = new ResidentActionState.Offer(1, SPEAKER, "Rowan", level.dimension().location().toString(),
-        scenario.point() ? new ResidentActionState.Position(6.5D, 80, 2.5D) : null,
-        new ResidentActionState.Position(0.5D, 80, 0.5D), level.getGameTime() + 600);
+        scenario.point() ? new com.quzzar.kithkyn.entities.UndertakingData.Position(6.5D, 80, 2.5D) : null,
+        new com.quzzar.kithkyn.entities.UndertakingData.Position(0.5D, 80, 0.5D), level.getGameTime() + 600);
     var grounded = new PersonChatContext.AssembledChat(assembled.system() + person.agency().prompt(offer), assembled.user(), assembled.examples());
     return PersonChatDispatcher.initialRequest(grounded);
   }

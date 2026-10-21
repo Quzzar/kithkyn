@@ -1,5 +1,12 @@
 package com.quzzar.kithkyn.decision;
 
+import com.quzzar.kithkyn.entities.KithkynAttachments;
+import com.quzzar.kithkyn.entities.UndertakingService;
+import com.quzzar.kithkyn.entities.UndertakingData.Lane;
+import com.quzzar.kithkyn.entities.UndertakingData.Execution;
+import com.quzzar.kithkyn.entities.UndertakingData.Phase;
+import com.quzzar.kithkyn.entities.UndertakingData.Duty;
+import com.quzzar.kithkyn.agency.ResidentObligations;
 import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.LinkedHashSet;
@@ -39,7 +46,6 @@ import net.minecraft.world.phys.Vec3;
 public final class ResidentReactions {
   public record Movement(long revision, Action action, Vec3 destination, long expiresAt) { }
   private record Episode(Kind kind, UUID subject, long firstTick) { }
-  private record Duty(Occupation occupation, AgeStage age, String village, UUID workplace, int station, boolean essential) { }
   private record Capture(Offer offer, Observation event, String dimension, Map<Action, Vec3> routes, UUID helper, Duty duty) { }
   private final RealPerson person;
   private final ReactionState state = new ReactionState();
@@ -50,6 +56,10 @@ public final class ResidentReactions {
   private Status status = Status.IDLE;
   private String detail = "No optional reaction has run.";
   private long nextDecision;
+  private UUID undertaking;
+  private LivingEntity defending;
+  private long defenseExpires;
+  private boolean loadedMattersChecked;
 
   public ResidentReactions(RealPerson person) { this.person = person; }
   public Optional<Movement> movement() { return Optional.ofNullable(movement); }
@@ -76,6 +86,22 @@ public final class ResidentReactions {
   public void tick() {
     if (!(person.level() instanceof ServerLevel level)) return;
     long now = level.getGameTime();
+    if (!loadedMattersChecked) {
+      loadedMattersChecked = true;
+      for (var matter : person.getData(KithkynAttachments.UNDERTAKINGS.get()).allOpen()) {
+        if (matter.execution().filter(execution -> execution.resident().equals(person.getUUID())
+            && execution.lane() == Lane.REACTION && execution.phase().executing()).isPresent()) {
+          persist(matter.id(), Phase.INTERRUPTED, "The reaction session ended before a verified outcome; fresh perception and a new decision are required.");
+        }
+      }
+    }
+    if (defending != null) {
+      if (!defending.isAlive() && ResidentAwareness.visible(person, defending)) update(Status.COMPLETED, "The witnessed threat died; no claim about who killed it.");
+      else if (!KithkynConfig.ResidentReactions || !person.isAlive() || person.getTarget() != defending || now >= defenseExpires) {
+        update(Status.INTERRUPTED, "Native defense ended or expired without a verified completion.");
+      }
+      return;
+    }
     if (!KithkynConfig.ResidentReactions) {
       if (pending != null || movement != null) interrupt("Optional reactions were disabled.");
       return;
@@ -103,11 +129,13 @@ public final class ResidentReactions {
         person.getVirtue(Virtue.PROTECT_SELF), person.getVirtue(Virtue.PROTECT_OTHERS),
         person.getVirtue(Virtue.DRIVE), person.getHealth() / person.getMaxHealth(), LaborPlanner.mustKeepOnPost(person),
         person.distanceTo(subject(event)), com.quzzar.kithkyn.relationships.OpinionService.opinionOf(person, event.subject().id()));
-    decisions.choose(level.getServer(), ReactionRequests.build(character, event, capture.offer().actions()), result -> apply(capture, result));
+    decisions.choose(level.getServer(), ReactionRequests.build(character, event, capture.offer().actions(),
+        UndertakingService.briefing(person.getData(KithkynAttachments.UNDERTAKINGS.get()),
+            person.getUUID(), Optional.empty(), 3)), result -> apply(capture, result));
   }
 
   private String persona() {
-    String blurb = person.getData(com.quzzar.kithkyn.entities.KithkynAttachments.PERSONA.get()).blurb();
+    String blurb = person.getData(KithkynAttachments.PERSONA.get()).blurb();
     return person.getPersonality().displayName() + ": " + blurb.substring(0, Math.min(1200, blurb.length()));
   }
 
@@ -133,7 +161,7 @@ public final class ResidentReactions {
     if (!eventValid(event)) return null;
     var actions = new ArrayList<>(List.of(Action.CONTINUE, Action.WARN));
     Map<Action, Vec3> routes = new EnumMap<>(Action.class);
-    boolean mobile = !hasFixedPost() && !LaborPlanner.mustKeepOnPost(person);
+    boolean mobile = ResidentObligations.mayLeavePost(person);
     UUID helper = null;
     LivingEntity subject = subject(event);
     if (event.kind() == Kind.VISIBLE_THREAT) {
@@ -179,21 +207,25 @@ public final class ResidentReactions {
     if (!KithkynConfig.ResidentReactions || !eligible() || !capture.duty().equals(duty()) || !capture.dimension().equals(person.level().dimension().location().toString())
         || !eventValid(capture.event())) { update(Status.STALE, "The resident, evidence, or duties changed while deciding."); return; }
     Action action = ((Accepted) verdict).action();
-    if (action == Action.CONTINUE) { update(Status.COMPLETED, "Selected continue; no optional reaction started."); return; }
-    if (action == Action.WARN) { callOut(capture); return; }
+    if (action == Action.CONTINUE) { if (!begin(capture, action, null)) return; update(Status.COMPLETED, "Selected continue; no optional reaction started."); return; }
+    if (action == Action.WARN) { if (begin(capture, action, null)) callOut(capture); return; }
     if (action == Action.DEFEND) {
       LivingEntity threat = subject(capture.event());
       if (!canDefend(threat)) {
         update(Status.STALE, "Native combat no longer permits this target."); return;
       }
+      if (!begin(capture, action, null)) return;
       person.setTarget(threat);
+      defending = threat; defenseExpires = person.level().getGameTime() + 200;
+      underway();
       update(Status.STARTED, "Set the witnessed hostile as the native combat target; no victory is claimed.");
       return;
     }
     Vec3 destination = capture.routes().get(action);
-    if (hasFixedPost() || LaborPlanner.mustKeepOnPost(person) || !reachable(destination) || !destinationValid(capture, action, destination)) {
+    if (!ResidentObligations.mayLeavePost(person) || !reachable(destination) || !destinationValid(capture, action, destination)) {
       update(Status.STALE, "The captured route, post, or destination changed."); return;
     }
+    if (!begin(capture, action, destination)) return;
     active = capture;
     movement = new Movement(capture.offer().revision(), action, destination, person.level().getGameTime() + 200);
     update(Status.STARTED, "Started " + action.key() + "; arrival has not happened yet.");
@@ -204,7 +236,7 @@ public final class ResidentReactions {
     return movement == expected && KithkynConfig.ResidentReactions && eligible() && active.duty().equals(duty())
         && active.dimension().equals(person.level().dimension().location().toString())
         && person.level().getGameTime() < expected.expiresAt()
-        && !hasFixedPost() && !LaborPlanner.mustKeepOnPost(person)
+        && ResidentObligations.mayLeavePost(person)
         && person.agency().validGround(ResidentAgency.position(expected.destination()))
         && (expected.action() != Action.INVESTIGATE || person.awareness().snapshot().stream().noneMatch(event -> event.kind() == Kind.VISIBLE_THREAT))
         && (person.tickCount % 10 != 0 || destinationValid(active, expected.action(), expected.destination()));
@@ -235,22 +267,18 @@ public final class ResidentReactions {
 
   public void finish(Status outcome, String message) { movement = null; active = null; update(outcome, message); }
   public void interrupt(String message) {
-    if (pending == null && movement == null) return;
+    if (pending == null && movement == null && defending == null) return;
     state.invalidate(); pending = null; finish(Status.INTERRUPTED, message);
   }
 
   private void callOut(Capture capture) {
+    underway();
     VillagerConversation.speak(person, capture.event().kind() == Kind.INJURY ? "Someone is hurt!" : "Watch out, there's danger nearby!");
     update(Status.COMPLETED, "Called out a warning. No listener response is claimed.");
   }
 
-  private boolean hasFixedPost() { return com.quzzar.kithkyn.village.GuardDuty.of(person) != null; }
-
   private Duty duty() {
-    var village = person.getVillage();
-    var job = village == null ? null : village.getJobAssignment(person.getUUID());
-    return new Duty(person.getOccupation(), person.getLifeStage(), village == null ? null : village.getID(),
-        job == null ? null : job.getBuildingUUID(), job == null ? -1 : job.getStationIndex(), LaborPlanner.mustKeepOnPost(person));
+    return ResidentObligations.snapshot(person);
   }
 
   private boolean canDefend(LivingEntity threat) {
@@ -272,7 +300,7 @@ public final class ResidentReactions {
   private boolean allied(RealPerson other) { return !other.isRaider() && person.getVillage() != null && other.getVillage() == person.getVillage(); }
   private boolean reachable(Vec3 destination) {
     if (destination == null || !person.agency().validGround(ResidentAgency.position(destination))) return false;
-    var path = person.getNavigation().createPath(BlockPos.containing(destination), 0);
+    var path = com.quzzar.kithkyn.entities.ai.ResidentWalk.path(person, destination, false);
     return path != null && path.canReach();
   }
   private Vec3 near(LivingEntity entity) {
@@ -285,7 +313,39 @@ public final class ResidentReactions {
   private static Vec3 standing(Vec3 point) { return Vec3.atBottomCenterOf(BlockPos.containing(point)); }
   private static Episode episode(Observation event) { return new Episode(event.kind(), event.subject().id(), event.firstTick()); }
   private void remember(Observation event) { handled.add(episode(event)); while (handled.size() > 32) handled.remove(handled.iterator().next()); }
+  private boolean begin(Capture capture, Action action, Vec3 destination) {
+    var key = KithkynAttachments.UNDERTAKINGS.get();
+    var execution = new Execution(person.getUUID(),
+        Lane.REACTION, action.key(), Phase.REQUESTED,
+        "", capture.dimension(), Optional.ofNullable(destination).map(ResidentAgency::position),
+        Optional.of(action == Action.SEEK_HELP ? capture.helper() : capture.event().subject().id()), capture.offer().revision(), person.level().getGameTime(), person.level().getGameTime() + 200, false, capture.duty());
+    var result = UndertakingService.requested(person.getData(key), execution, Optional.empty(), person.level().getDayTime());
+    if (!UndertakingService.commit(person, result)) { update(Status.FAILED, "No capacity to record this reaction undertaking."); return false; }
+    undertaking = result.affected().orElseThrow().id();
+    persist(undertaking, Phase.ACCEPTED, "Validated reaction accepted; no outcome is claimed.");
+    return true;
+  }
+
+  public void underway() {
+    if (undertaking == null) return;
+    var matter = person.getData(KithkynAttachments.UNDERTAKINGS.get()).byId(undertaking);
+    if (matter.flatMap(value -> value.execution()).filter(value -> value.phase() == Phase.ACCEPTED).isPresent()) {
+      persist(undertaking, Phase.UNDERWAY, "The physical reaction began; it has not completed.");
+    }
+  }
+
+  private void persist(UUID id, Phase phase, String message) {
+    var key = KithkynAttachments.UNDERTAKINGS.get();
+    UndertakingService.commit(person,
+        UndertakingService.transition(person.getData(key), person.getUUID(), id, phase, message, person.level().getDayTime()));
+  }
+
   private void update(Status next, String message) {
+    if (undertaking != null && (next == Status.COMPLETED || next == Status.FAILED || next == Status.INTERRUPTED || next == Status.STALE)) {
+      persist(undertaking, next == Status.COMPLETED ? Phase.COMPLETED
+          : next == Status.FAILED ? Phase.FAILED : Phase.INTERRUPTED, message);
+      undertaking = null; defending = null;
+    }
     status = next; detail = message;
     Kithkyn.LOGGER.info("[resident reaction] {} {}: {}", person.getUUID(), next, message);
   }
