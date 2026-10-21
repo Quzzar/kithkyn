@@ -368,6 +368,7 @@ public final class VillagerConversation {
     if (!(speaker.level() instanceof ServerLevel level)) {
       return;
     }
+    com.quzzar.kithkyn.awareness.ResidentAwareness.spoken(speaker, line);
     for (ServerPlayer player : level.players()) {
       if (player.distanceToSqr(speaker) <= EARSHOT * EARSHOT) {
         net.neoforged.neoforge.network.PacketDistributor.sendToPlayer(player,

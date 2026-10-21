@@ -109,6 +109,12 @@ assault still go through reflection like anything else, and the victim's own log
 they feel in their skin before they have had time to think. The village-scale consequences
 (standing, and its hostile rung) are on [economy.md](economy.md).
 
+New injury memories identify an attacker only when the victim could see them within the
+shared sight range; an unseen attacker is recorded without a name or source UUID. This
+grounding change leaves the immediate pain/opinion rule above in place. Recent perceived
+injuries and quoted speech use [resident awareness](npc-awareness.md), separate from
+durable memories and village blame.
+
 **A stranger is not zero but a baseline.** An opinion with no entry yet reads as the
 villager's kind's stranger baseline: 0 for the living, a grudge on sight for the undead
 ([undead.md](undead.md)). The baseline is never stored; it is what an absent entry means,

@@ -138,14 +138,20 @@ public class CoreEvents {
       return;
     }
 
+    java.util.Optional<net.minecraft.world.entity.Entity> recognizedAttacker = event.getNewDamage() > 0
+        ? com.quzzar.kithkyn.awareness.ResidentAwareness.injured(event.getEntity(), event.getSource().getEntity())
+        : java.util.Optional.empty();
+
     if (event.getEntity() instanceof RealPerson person) {
 
       // Being attacked is worth remembering: it lands in the personal log with
       // the calendar time and surfaces in conversation.
       if (event.getSource().getEntity() instanceof net.minecraft.world.entity.LivingEntity attacker
-          && attacker != person) {
-        person.logMemory("I was attacked by " + attacker.getName().getString(),
-            java.util.Optional.of(attacker.getUUID()));
+          && attacker != person && event.getNewDamage() > 0) {
+        boolean recognized = recognizedAttacker.isPresent();
+        person.logMemory(recognized ? "I was attacked by " + attacker.getName().getString()
+                : "I was injured by an attacker I could not identify",
+            recognized ? java.util.Optional.of(attacker.getUUID()) : java.util.Optional.empty());
 
         // Pain needs no interpretation (docs/relationships.md): a blow from a
         // player moves the victim's own opinion of them at once, scaled by how

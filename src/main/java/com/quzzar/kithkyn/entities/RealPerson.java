@@ -146,6 +146,9 @@ import net.minecraft.util.RandomSource;
 public class RealPerson extends Person {
 
   private final com.quzzar.kithkyn.agency.ResidentAgency agency = new com.quzzar.kithkyn.agency.ResidentAgency(this);
+  private final com.quzzar.kithkyn.awareness.ResidentAwareness awareness = new com.quzzar.kithkyn.awareness.ResidentAwareness(this);
+
+  public com.quzzar.kithkyn.awareness.ResidentAwareness awareness() { return awareness; }
 
   /** Accepted conversational actions share this controller across goal re-registration. */
   public com.quzzar.kithkyn.agency.ResidentAgency agency() {
@@ -824,6 +827,7 @@ public class RealPerson extends Person {
       maybeOrderPet();
     }
     if (!this.level().isClientSide) {
+      awareness.tick();
       if (this.tickCount % 20 == 0) refreshGuardCaptain();
       GuardWeapons.tick(this);
     }

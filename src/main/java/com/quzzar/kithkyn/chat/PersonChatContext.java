@@ -400,6 +400,7 @@ public final class PersonChatContext {
     // the day they are; this gives the larger calendar for a chat to lean on.
     int worldYear = (int) YearManager.getYears(person.level()) + 1;
     system.append("The year is ").append(worldYear).append(" MCE.\n");
+    system.append(person.awareness().briefing());
 
     PersonalLogData log = person.getData(KithkynAttachments.PERSONAL_LOG.get());
     String memories = memorySummary(log, 3);

@@ -129,6 +129,13 @@ neoForge {
             systemProperty 'kithkyn.models.repeats', (findProperty('evalRepeats') ?: '3')
         }
 
+        residentAwarenessVerification {
+            server()
+            gameDirectory = project.file('run/npc-awareness-verification')
+            programArguments.addAll '--nogui', '--world', 'world', '--port', '25681'
+            systemProperty 'kithkyn.residentAwareness.verify', 'true'
+        }
+
         data {
             data()
 

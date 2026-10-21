@@ -117,6 +117,7 @@ public final class PersonChatDispatcher {
   /** Called when the chat screen opens (right-click path). */
   public static void markOpen(RealPerson person, ServerPlayer player) {
     markTalking(person, player.getUUID());
+    com.quzzar.kithkyn.awareness.ResidentAwareness.approached(person, player);
   }
 
   /**
@@ -162,6 +163,7 @@ public final class PersonChatDispatcher {
     if (!IN_FLIGHT.add(player.getUUID())) {
       return; // one chat request in flight per player
     }
+    com.quzzar.kithkyn.awareness.ResidentAwareness.addressed(person, player, message);
     dispatch(person, player, message, message);
   }
 

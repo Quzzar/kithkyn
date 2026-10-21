@@ -6,6 +6,7 @@ import java.util.List;
 import com.quzzar.kithkyn.entities.RealPerson;
 
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.HitResult;
@@ -53,14 +54,25 @@ public final class Witnesses {
     return seen;
   }
 
-  /** True when anything solid stands between the villager's eyes and the spot. */
-  private static boolean canSee(ServerLevel level, RealPerson person, Vec3 where) {
+  /** Shared sight gate: awake, within sixteen blocks, loaded terrain and a clear line to the target. */
+  public static boolean canSee(ServerLevel level, RealPerson person, Vec3 where) {
     Vec3 eyes = person.getEyePosition();
+    if (person.isSleeping() || !person.isAlive() || !Double.isFinite(where.x) || !Double.isFinite(where.y)
+        || !Double.isFinite(where.z) || eyes.distanceToSqr(where) > SIGHT_RANGE * SIGHT_RANGE) return false;
+    BlockPos from = BlockPos.containing(eyes);
+    BlockPos to = BlockPos.containing(where);
+    // Check every chunk in the tiny ray rectangle; point samples can miss a short diagonal crossing.
+    for (int x = Math.min(from.getX(), to.getX()) >> 4; x <= (Math.max(from.getX(), to.getX()) >> 4); x++) {
+      for (int z = Math.min(from.getZ(), to.getZ()) >> 4; z <= (Math.max(from.getZ(), to.getZ()) >> 4); z++) {
+        if (!level.hasChunkAt(new BlockPos(x << 4, from.getY(), z << 4))) return false;
+      }
+    }
     HitResult hit = level.clip(new ClipContext(eyes, where,
         ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, person));
     // A wall between them stops at the wall; a clear line reaches the spot.
     return hit.getType() == HitResult.Type.MISS
-        || hit.getLocation().distanceToSqr(where) < 2.0D;
+        || hit instanceof net.minecraft.world.phys.BlockHitResult block
+            && block.getBlockPos().equals(BlockPos.containing(where));
   }
 
 }

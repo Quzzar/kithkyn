@@ -34,6 +34,9 @@ by villager talk for free.
    (16 blocks) as a short-lived speech bubble above the speaker. A new line
    replaces the previous one, and disappears after six seconds, so ambient
    talk stays in the world instead of filling the player's chat transcript.
+   Nearby awake residents also retain a bounded quote with the speaker's actual UUID,
+   through [resident awareness](npc-awareness.md). Initial hearing requires an unobstructed
+   line within sixteen blocks. Quotes stay reported/heard speech rather than verified facts.
 4. **Close.** When either side takes their leave (`"done": true` on the
    reply, the model's own call; see "Taking leave" below), or on any
    failure, both sides summarize the session into their memory of the other,

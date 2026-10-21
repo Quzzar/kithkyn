@@ -56,6 +56,9 @@ public final class LlmCallLog {
   private LlmCallLog() {
   }
 
+  /** Outgoing provider calls, including failed calls; skipped scheduling does not increment this counter. */
+  public static long requestCount() { return SEQUENCE.get(); }
+
   /**
    * Attaches the rolling file to the live log4j configuration. Safe to call
    * more than once; only the first call does anything.

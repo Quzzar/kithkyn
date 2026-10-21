@@ -72,6 +72,11 @@ existing avoidance, quarrel precedence, a sealed destination and removed ground.
 
 ### Grounded awareness: #187
 
+The initial capture and conversation-grounding layer is implemented. Its exact provenance,
+visibility/expiry limits, budgets and verification are documented in
+[npc-awareness.md](npc-awareness.md). It makes no new model requests and does not yet choose
+autonomous reactions. Populated-village and real-model acceptance remain open.
+
 Reuse witness checks, personal logs and existing village context. Represent facts with source,
 speaker/entity identity, time, expiry and whether they were seen, heard or reported. Begin with
 addressed speech, visible threats, nearby injury and existing resident speech. Bound distance,

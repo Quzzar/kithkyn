@@ -52,6 +52,8 @@ in it, and update it in the same change that moves what it describes.
   player setup. The two offline models, the three cloud services, and failure semantics.
 - [npc-agency.md](npc-agency.md): the approved plan for grounded awareness, conversational
   actions, personality, memory and voice, plus the experimental movement-action contract.
+- [npc-awareness.md](npc-awareness.md): recent witnessed/reported evidence, bounded perception,
+  conversation grounding and the isolated-world awareness verification.
 - [research/kev-local-evaluation-2026-10-21.md](research/kev-local-evaluation-2026-10-21.md): pinned
   Kev 0.8B runtime/artifacts, Mac setup, author-reported routing limits and the separate decision experiment.
 - [research/local-model-replay-2026-10-21.md](research/local-model-replay-2026-10-21.md): paired
