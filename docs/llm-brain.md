@@ -14,12 +14,17 @@ The [real-world model run](research/resident-model-gameplay-2026-10-21.md) expos
 queue bug: summaries queued during chat's six-second grace period had no later completion
 callback to wake them. Chat completion now schedules a drain at that existing deadline,
 retaining the same queue and player priority. A regression test verifies the summary starts
-without another request. The live run then produced all three summaries before reload.
+without another request. Queue ownership, scheduled wakes and completion callbacks are scoped
+to the provider lifecycle: stopping a world closes unfinished background work, and old callbacks
+cannot release a new world's queue or alter its priority counters. The live run then produced
+all three summaries before reload.
 
 The same run exposed illustrative wheat/torch examples being copied as personal events.
 The existing chat examples now demonstrate format without those invented objects or transfers;
 empty outcome context explicitly distinguishes seeing an event from performing an action.
-This fixes the observed example-copying in one targeted rerun, not general hallucination.
+One targeted rerun stopped the observed example-copying; this does not establish general
+grounding or reliable item giving. The gameplay report distinguishes the original fixture
+configuration error from the corrected native-goal run.
 
 **This is the decided design for LLM-driven villager decisions.** A small language model
 answers multiple-choice questions and holds short conversations; deterministic game logic

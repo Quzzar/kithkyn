@@ -113,7 +113,8 @@ For actual providers, run the same fixture with `-PreactionModels=true`. It uses
 `run/npc-reaction-model-verification`, port 25685, normal 20-tick speed and native goals.
 Enable the local stock Llama 3B dialogue provider in that isolated config, disable village
 generation and autonomous villager conversations, and configure a real Kev endpoint. The
-fixture retains the 0.8 confidence gates and never injects a reaction or a chat answer.
+fixture sets final traits and occupation before rebuilding native goals through `reloadState()`,
+asserts one reaction goal and the guard's native threat goal, and retains the 0.8 confidence gates and never injects a reaction or a chat answer.
 It records three scenes, player-dispatcher conversation, summaries, reload and a requested
 bread transfer. Its `RESULT RECORDED` marker means evidence exists, not that model quality
 passed. See [the actual gameplay results](research/resident-model-gameplay-2026-10-21.md).
