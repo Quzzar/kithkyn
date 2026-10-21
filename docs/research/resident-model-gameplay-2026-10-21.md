@@ -42,8 +42,8 @@ asked for one carried bread through the existing item-giving path.
    admission and queue ownership share one lock. Regression cases cover restart, stale chat
    and background completion, and a synchronous provider exception.
 2. **Example facts leaked into claims about personal actions.** The baseline invented wheat
-   gathering and torch gifts, including giving torches to a zombie. Adding a general grounding
-   reminder alone did not fix this: the intermediate run still copied torch transfers.
+   gathering and torch gifts. Adding a general grounding reminder alone did not fix this:
+   the intermediate run still copied torch transfers, including giving torches to a zombie.
    The existing examples now teach format without those invented objects, transfers or named
    example interlocutors. Empty outcome context explicitly separates noticing from doing.
 3. **The third targeted run avoided those fabricated transfers and completion claims.** Its
