@@ -305,14 +305,19 @@ public final class LlmService {
       return CompletableFuture.completedFuture(Optional.empty());
     }
     List<String> optionsCopy = List.copyOf(options);
-    return foregroundComplete(LANE_DECIDE, purpose, new CompletionRequest(strict ? REDEVELOPMENT_SYSTEM : DECIDE_SYSTEM,
-        optionsPrompt(situation, options), strict ? REDEVELOPMENT_EXAMPLES : DECIDE_EXAMPLES, KithkynConfig.LlmDecisionMaxNewTokens,
-        KithkynConfig.LlmDecisionTemperature))
+    return foregroundComplete(LANE_DECIDE, purpose, decisionRequest(situation, options, strict))
         .thenApply(raw -> raw.flatMap(text -> strict ? parseStrictDecision(text, optionsCopy) : parseDecision(text, optionsCopy)));
   }
 
+  /** The production decision prompt and sampling contract, also used by local-model evaluation. */
+  public static CompletionRequest decisionRequest(String situation, List<String> options, boolean strict) {
+    return new CompletionRequest(strict ? REDEVELOPMENT_SYSTEM : DECIDE_SYSTEM,
+        optionsPrompt(situation, options), strict ? REDEVELOPMENT_EXAMPLES : DECIDE_EXAMPLES,
+        KithkynConfig.LlmDecisionMaxNewTokens, KithkynConfig.LlmDecisionTemperature);
+  }
+
   /** The strict path never accepts a bare number, fuzzy action, missing echo, or truncated response. */
-  static Optional<LlmDecision> parseStrictDecision(String raw, List<String> options) {
+  public static Optional<LlmDecision> parseStrictDecision(String raw, List<String> options) {
     try (var reader = new com.google.gson.stream.JsonReader(new java.io.StringReader(raw))) {
       if (!hasStrictJsonStrings(raw)) {
         return Optional.empty();

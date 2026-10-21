@@ -17,6 +17,7 @@ import com.google.gson.JsonParser;
 import com.quzzar.kithkyn.Kithkyn;
 import com.quzzar.kithkyn.agency.ResidentActionSelection;
 import com.quzzar.kithkyn.agency.ResidentActionState.Offer;
+import com.quzzar.kithkyn.llm.provider.LlmProvider.CompletionRequest;
 import com.quzzar.kithkyn.chat.PersonChatContext.AssembledChat;
 import com.quzzar.kithkyn.chat.PersonChatContext.Turn;
 import com.quzzar.kithkyn.configuration.KithkynConfig;
@@ -288,14 +289,15 @@ public final class PersonChatDispatcher {
     String lastAnswer = history.isEmpty() ? null : history.get(history.size() - 1).villagerLine();
 
     String purpose = speakerName + " -> " + person.getFullName();
-    return ask(purpose, chat, KithkynConfig.LlmChatTemperature, CHAT_REPETITION_PENALTY, background)
+    return ask(purpose, initialRequest(chat), background)
         .thenCompose(first -> {
           if (!echoesLastAnswer(first, lastAnswer)) {
             return CompletableFuture.completedFuture(first);
           }
           Kithkyn.LOGGER.debug("{} opened exactly as they did last time; sampling once more",
               person.getFullName());
-          return ask(purpose + " (resampled)", chat, RETRY_TEMPERATURE, RETRY_REPETITION_PENALTY, background)
+          return ask(purpose + " (resampled)", new CompletionRequest(chat.system(), chat.user(), chat.examples(),
+              KithkynConfig.LlmChatMaxNewTokens, RETRY_TEMPERATURE, RETRY_REPETITION_PENALTY), background)
               .thenApply(second -> echoesLastAnswer(second, lastAnswer) ? first : second);
         })
         .thenApply(result -> {
@@ -340,13 +342,18 @@ public final class PersonChatDispatcher {
         });
   }
 
-  private static CompletableFuture<Optional<String>> ask(String purpose, AssembledChat chat, double temperature,
-      double penalty, boolean background) {
+  /** Exposes the exact initial chat request for paired replay without copying its sampling policy. */
+  public static CompletionRequest initialRequest(AssembledChat chat) {
+    return new CompletionRequest(chat.system(), chat.user(), chat.examples(), KithkynConfig.LlmChatMaxNewTokens,
+        KithkynConfig.LlmChatTemperature, CHAT_REPETITION_PENALTY);
+  }
+
+  private static CompletableFuture<Optional<String>> ask(String purpose, CompletionRequest request, boolean background) {
     return background
-        ? LlmService.get().submitBackgroundChat(purpose, chat.system(), chat.user(), chat.examples(),
-            KithkynConfig.LlmChatMaxNewTokens, temperature, penalty)
-        : LlmService.get().submitChat(purpose, chat.system(), chat.user(), chat.examples(),
-            KithkynConfig.LlmChatMaxNewTokens, temperature, penalty);
+        ? LlmService.get().submitBackgroundChat(purpose, request.system(), request.user(), request.examples(),
+            request.maxNewTokens(), request.temperature(), request.frequencyPenalty())
+        : LlmService.get().submitChat(purpose, request.system(), request.user(), request.examples(),
+            request.maxNewTokens(), request.temperature(), request.frequencyPenalty());
   }
 
   /**

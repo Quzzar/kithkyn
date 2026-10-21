@@ -1,7 +1,9 @@
 # Heretic and abliterated variants of Kithkyn's local models
 
 Reviewed 2026-10-21 against the model publishers' Hugging Face cards, reproduction records,
-Hub file metadata, and the original model licenses. No weights were downloaded or run.
+Hub file metadata, and the original model licenses. The initial research did not download or
+run weights. Follow-up local evaluation downloaded and SHA-256-verified the Llama Heretic file;
+its packaging findings below supersede the metadata-only compatibility inference.
 
 ## Answer
 
@@ -72,17 +74,32 @@ Pinned downloads:
 
 ## Compatibility and memory
 
-The Hub GGUF metadata reports standard `llama` and `gemma2` architectures respectively, with
-the expected native chat templates. Both use the same architecture and quantization families
+The Hub GGUF metadata reports standard `llama` and `gemma2` architectures respectively. Both
+use the same architecture and quantization families
 as Kithkyn's existing choices, and their file sizes are essentially unchanged. The Gemma
 conversion card records llama.cpp `b3496` for quantization. This supports compatibility in
-principle; neither file has been loaded with Kithkyn's pinned runtime in this research.
+principle, but does not establish correct packaging or successful inference.
 See the Hub metadata above and [Gemma conversion card](https://huggingface.co/bartowski/gemma-2-2b-it-abliterated-GGUF).
 
-The Gemma template rejects a native system role and requires alternating user/assistant
-turns. Preserve the existing Gemma prompt adaptation when testing it. Do not assume changing
-weights also changes the supported message format. Disk size is not total runtime memory:
-context and inference buffers remain additional.
+The verified Llama Heretic GGUF has **no `tokenizer.chat_template` entry**, while the stock
+Llama GGUF does. Out of the box, llama.cpp b10653 selected ChatML; the first Kithkyn action
+request took 62.6 seconds including a retry and returned several fake assistant turns with
+ChatML delimiters. That is an artifact/runtime configuration failure, not a clean model-quality
+comparison. Do not recommend this file with the unmodified launcher. The comparison therefore
+configures the Llama pair explicitly with `--no-jinja --chat-template llama3` and checks the
+rendered template before scoring.
+
+With b10653's default Jinja engine, `--chat-template llama3` alone was treated as literal text;
+the runtime's `/apply-template` response was exactly `llama3`, omitting the messages. This failed
+test configuration was discarded. Always verify a template override against actual rendered
+system/user text rather than inferring its meaning from a flag name.
+
+Gemma's native template requires alternating user/assistant turns and treats system roles
+differently from Llama. The existing Java provider sends a system message; it has no dedicated
+Gemma adaptation. The comparison explicitly selects the runtime's `gemma` format and checks
+that it includes both system instructions and user text. Do not assume a weight edit changes
+the supported message format. Disk size is not total runtime memory: context and inference
+buffers remain additional.
 
 Inference: refusal edits do not inherently require a larger model or a second resident model.
 These candidates should occupy the same broad memory class as the originals, but generated
@@ -123,4 +140,5 @@ notices and use restrictions. Gemma 4's different licensing does not apply to Ge
 See [Gemma Terms](https://ai.google.dev/gemma/terms). These are reported source terms, not a
 legal determination about a proposed distribution.
 
-No defaults, model selector, runtime, or release configuration were changed by this research.
+No recommended defaults, production model selector, pinned runtime, or release configuration
+were changed by this research or the experimental replay harness.
