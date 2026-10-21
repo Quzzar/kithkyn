@@ -139,8 +139,8 @@ public final class PersonChatContext {
    * Offered when the player is urging a village-wide direction. The villager may
    * forward it to the brain as a request but never decides it: the request only
    * reaches the planner's option list and states its case (VillageRequests,
-   * UrbanPlanner). Gated like the undertaking tool so a small model is not tempted
-   * to file a request on a turn that is not one.
+   * UrbanPlanner). Gated to direct village proposals so ordinary talk does not
+   * invite a planning request.
    */
   private static final String RULES_REQUEST = RULES_BODY
       + "This person is urging a direction for the whole village. You do NOT decide what the village "

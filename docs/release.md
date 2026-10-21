@@ -153,8 +153,9 @@ to the client. [ui-preview.md](ui-preview.md) explains the sample payloads.
 
 - [x] README, changelog, website and mod-page copy describe seventeen bundled regional
   catalogs and explain that local model weights are downloaded.
-- [x] Remove undertakings from the released feature list. That system remains parked;
-  the release work does not enable it. Ships and Nether settlement catalogs remain future work.
+- [x] Remove undertakings from the released feature list. The later experimental rework
+  in #193 is documented in [undertakings.md](undertakings.md) and is not part of this release.
+  Ships and Nether settlement catalogs remain future work.
 - [x] Document rules while AI starts or is unavailable, model memory/disk use, both-side
   installation and the new-chunks rule for world generation.
 - [x] Review the candidate diff, packaged metadata, credits, screenshots and evidence:
