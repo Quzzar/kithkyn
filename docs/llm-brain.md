@@ -1,5 +1,10 @@
 # The villager LLM brain
 
+The experimental [NPC agency](npc-agency.md) work adds validated follow, wait, pointed movement
+and resume actions to player conversation when explicitly enabled. Its offers capture references
+before inference and its execution records real outcomes. It does not change the local model
+defaults or add a production Kev/Jev decision provider.
+
 **This is the decided design for LLM-driven villager decisions.** A small language model
 answers multiple-choice questions and holds short conversations; deterministic game logic
 decides *what the options are*, and the model only picks among them and supplies an

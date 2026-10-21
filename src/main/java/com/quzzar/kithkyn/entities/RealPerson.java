@@ -146,6 +146,13 @@ import net.minecraft.util.RandomSource;
 
 public class RealPerson extends Person {
 
+  private final com.quzzar.kithkyn.agency.ResidentAgency agency = new com.quzzar.kithkyn.agency.ResidentAgency(this);
+
+  /** Accepted conversational actions share this controller across goal re-registration. */
+  public com.quzzar.kithkyn.agency.ResidentAgency agency() {
+    return agency;
+  }
+
   // Constants
   private static final int MIN_FAV_ITEMS = 3, MAX_FAV_ITEMS = 7;
 
@@ -2770,6 +2777,7 @@ public class RealPerson extends Person {
     // food and fleeing ahead of it while still pulling them off ordinary work.
     this.goalSelector.addGoal(2, new CampfireRecoveryGoal(this));
     this.goalSelector.addGoal(1, new com.quzzar.kithkyn.entities.ai.goals.VillageTravelGoal(this));
+    this.goalSelector.addGoal(3, new com.quzzar.kithkyn.entities.ai.goals.ResidentActionGoal(this));
     this.goalSelector.addGoal(3, new com.quzzar.kithkyn.entities.ai.goals.PauseForConversationGoal(this));
 
     if (doesCombat()) {

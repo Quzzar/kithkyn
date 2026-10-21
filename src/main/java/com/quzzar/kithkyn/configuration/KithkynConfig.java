@@ -59,6 +59,7 @@ public class KithkynConfig {
     public static String LlmCloudModel;
     public static String LlmLocalModel;
     public static boolean LlmVillagerConversations;
+    public static boolean LlmResidentActions;
 
     // --- llm (advanced: sampling) ---
     public static int LlmChatMaxNewTokens;
@@ -143,6 +144,7 @@ public class KithkynConfig {
         LlmCloudModel = COMMON.LlmCloudModel.get();
         LlmLocalModel = COMMON.LlmLocalModel.get();
         LlmVillagerConversations = COMMON.LlmVillagerConversations.get();
+        LlmResidentActions = COMMON.LlmResidentActions.get();
     }
 
     public static void bakeAdvancedConfig() {
@@ -243,6 +245,7 @@ public class KithkynConfig {
         public final ModConfigSpec.ConfigValue<String> LlmCloudModel;
         public final ModConfigSpec.ConfigValue<String> LlmLocalModel;
         public final ModConfigSpec.BooleanValue LlmVillagerConversations;
+        public final ModConfigSpec.BooleanValue LlmResidentActions;
 
         public CommonConfig(ModConfigSpec.Builder builder) {
 
@@ -267,6 +270,7 @@ public class KithkynConfig {
             LlmCloudModel = builder.comment("Model id for the cloud provider", "Look at the cloud provider's documentation for the supported options").translation(Kithkyn.MODID + ".config.LlmCloudModel").define("LLM cloud model", "gpt-5.6-luna");
             LlmLocalModel = builder.comment("Which offline model the 'local' provider downloads and runs:", "Supported options:", "- 'llama-3b' (download size: 2.0 GB, additional RAM needed: about 3 GB)", "- 'gemma-2-2b' (download size: 1.7 GB, additional RAM needed: about 2.5 to 3 GB)").translation(Kithkyn.MODID + ".config.LlmLocalModel").define("LLM local model", "llama-3b");
             LlmVillagerConversations = builder.comment("Whether villagers strike up conversations with each other").translation(Kithkyn.MODID + ".config.LlmVillagerConversations").define("Villagers talk to each other", true);
+            LlmResidentActions = builder.comment("Experimental: residents may agree to follow, wait, or walk to a pointed location during player conversation.", "Point at nearby ground with the remappable Point out a location key before asking. Requires in-game model validation before recommendation.").translation(Kithkyn.MODID + ".config.LlmResidentActions").define("Experimental resident actions", false);
 
             builder.pop();
         }

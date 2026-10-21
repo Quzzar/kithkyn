@@ -50,6 +50,8 @@ in it, and update it in the same change that moves what it describes.
 - [llm-brain.md](llm-brain.md): the required LLM that picks among rule-generated
   options for villagers, run offline via llama.cpp (or a cloud provider) with zero
   player setup. The two offline models, the three cloud services, and failure semantics.
+- [npc-agency.md](npc-agency.md): the approved plan for grounded awareness, conversational
+  actions, personality, memory and voice, plus the experimental movement-action contract.
 - [villager-requests.md](villager-requests.md): how a villager petitions the brain to
   build something, with a reason, and the brain still decides. The propose-not-dispose
   invariant, the chat-tool-to-planner loop, and requests as raw context the brain weighs.
@@ -190,6 +192,11 @@ in it, and update it in the same change that moves what it describes.
 
 Findings gathered against primary sources, kept as read at the time. The topic files above
 carry the decisions; these carry the evidence behind them.
+
+- [research/halo-companion-stack-2026-10-21.md](research/halo-companion-stack-2026-10-21.md):
+  chasm's Halo companion, its Kev/Gemma/Parakeet/Breeze stack, and the practical Kithkyn fit.
+- [research/heretic-local-models-2026-10-21.md](research/heretic-local-models-2026-10-21.md):
+  verified exact-family Llama Heretic and Gemma abliterated downloads, provenance and evaluation limits.
 
 - [research/building-cost-rebalance-2026-09-12.md](research/building-cost-rebalance-2026-09-12.md):
   locked first-pass construction prices and grants for all 224 current definitions, with the

@@ -15,6 +15,8 @@ import java.util.regex.Pattern;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.quzzar.kithkyn.Kithkyn;
+import com.quzzar.kithkyn.agency.ResidentActionSelection;
+import com.quzzar.kithkyn.agency.ResidentActionState.Offer;
 import com.quzzar.kithkyn.chat.PersonChatContext.AssembledChat;
 import com.quzzar.kithkyn.chat.PersonChatContext.Turn;
 import com.quzzar.kithkyn.configuration.KithkynConfig;
@@ -186,9 +188,11 @@ public final class PersonChatDispatcher {
    * broken. A guard that can leak is worse than no guard at all.
    */
   private static void dispatch(RealPerson person, ServerPlayer player, String message, String historyLine) {
+    Offer actionOffer = KithkynConfig.LlmResidentActions ? person.agency().offer(player) : null;
     CompletableFuture<Reply> pending;
     try {
-      pending = converse(person, player.getGameProfile().getName(), player.getUUID(), message, historyLine);
+      pending = converse(person, player.getGameProfile().getName(), player.getUUID(), message, historyLine, false,
+          actionOffer);
     } catch (RuntimeException e) {
       IN_FLIGHT.remove(player.getUUID());
       throw e;
@@ -210,6 +214,7 @@ public final class PersonChatDispatcher {
       if (reply.fight() && person.isAlive()) {
         person.pickFightWith(player);
       }
+      if (actionOffer != null) person.agency().apply(actionOffer, reply.action(), player);
       // The villager's own leave-taking: the screen shows the farewell and
       // closes itself a little later, which closes the session the usual way.
       if (reply.done()) {
@@ -250,6 +255,12 @@ public final class PersonChatDispatcher {
    */
   public static CompletableFuture<Reply> converse(RealPerson person, String speakerName, UUID speakerUUID,
       String message, String historyLine, boolean background) {
+    return converse(person, speakerName, speakerUUID, message, historyLine, background, null);
+  }
+
+  /** Carries the frozen action offer through asynchronous generation without trusting generated targets. */
+  private static CompletableFuture<Reply> converse(RealPerson person, String speakerName, UUID speakerUUID,
+      String message, String historyLine, boolean background, Offer actionOffer) {
     long askedAtMs = System.currentTimeMillis();
     // Refresh the open session (never create one: console/RCON chats via
     // /kithkyn chat should not make the villager stand at attention).
@@ -266,7 +277,9 @@ public final class PersonChatDispatcher {
         .map(e -> new Turn(e.playerLine(), e.reply(), e.dayTime()))
         .toList();
 
-    AssembledChat chat = PersonChatContext.assemble(person, speakerName, speakerUUID, history, message);
+    AssembledChat assembled = PersonChatContext.assemble(person, speakerName, speakerUUID, history, message);
+    AssembledChat chat = actionOffer == null ? assembled
+        : new AssembledChat(assembled.system() + person.agency().prompt(actionOffer), assembled.user(), assembled.examples());
 
     // What the villager said last time, so an identical answer can be caught
     // rather than shipped. The penalty above makes the lock less likely; this
@@ -294,6 +307,7 @@ public final class PersonChatDispatcher {
           JsonObject request = null;
           boolean fight = false;
           boolean done = false;
+          ResidentActionSelection action = ResidentActionSelection.none();
           if (result.isPresent()) {
             Reply parsed = parseReply(result.get());
             if (parsed != null) {
@@ -305,6 +319,7 @@ public final class PersonChatDispatcher {
               request = parsed.request();
               fight = parsed.fight();
               done = parsed.done();
+              action = parsed.action();
             }
           }
           if (say == null || say.isBlank()) {
@@ -316,11 +331,12 @@ public final class PersonChatDispatcher {
             request = null;
             fight = false;
             done = false;
+            action = ResidentActionSelection.none();
           }
           say = VillagerText.clean(say);
           finalizeExchange(person, speakerName, speakerUUID, historyLine, say, give, giveCount, opinion, undertaking,
               request, fight, System.currentTimeMillis() - askedAtMs);
-          return new Reply(say, give, giveCount, opinion, undertaking, request, fight, done);
+          return new Reply(say, give, giveCount, opinion, undertaking, request, fight, done, action);
         });
   }
 
@@ -590,7 +606,7 @@ public final class PersonChatDispatcher {
    * screen and the villager-to-villager driver alike.
    */
   public record Reply(String say, String give, int giveCount, int opinionDelta, JsonObject undertaking,
-      JsonObject request, boolean fight, boolean done) {
+      JsonObject request, boolean fight, boolean done, ResidentActionSelection action) {
   }
 
   /** Largest single-call opinion step the model may take. */
@@ -615,6 +631,7 @@ public final class PersonChatDispatcher {
 
   /** Strict-then-regex, the parsing discipline used everywhere in llm-land. */
   private static Reply parseReply(String raw) {
+    ResidentActionSelection action = ResidentActionSelection.parse(raw);
     int start = raw.indexOf('{');
     for (int end : new int[] { raw.indexOf('}', start), raw.lastIndexOf('}') }) {
       if (start >= 0 && end > start) {
@@ -659,7 +676,7 @@ public final class PersonChatDispatcher {
               }
             }
             return new Reply(node.get("say").getAsString(), give, giveCount, opinion, undertaking, request, fight,
-                done);
+                done, action);
           }
         } catch (Exception ignored) {
           // fall through to the regex pass
@@ -678,7 +695,8 @@ public final class PersonChatDispatcher {
           give.find() ? give.group(1) : null,
           giveCount.find() ? Math.max(1, Integer.parseInt(giveCount.group(1))) : 1,
           opinion.find() ? clampStep(Integer.parseInt(opinion.group(1))) : 0,
-          null, null, FIGHT_PATTERN.matcher(raw).find(), DONE_PATTERN.matcher(raw).find());
+          null, null, FIGHT_PATTERN.matcher(raw).find(), DONE_PATTERN.matcher(raw).find(),
+          action);
     }
     return null;
   }
