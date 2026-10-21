@@ -76,7 +76,7 @@ def summarize(report: dict[str, Any], corpus: dict[str, Any]) -> dict[str, Any]:
     if len(samples) != expected or len(set(keys)) != expected:
         raise ValueError(f"{report['candidate']}: missing or duplicate samples")
     chats = [row for row in samples if row["category"] != "decision"]
-    decoded = {id(row): reply(row.get("raw", "")) for row in chats}
+    decoded = {id(row): reply(row.get("raw", "")) if row.get("reply_valid") is True else None for row in chats}
     items = [row for row in chats if row["category"] == "item"]
     decisions = [row for row in samples if row["category"] == "decision"]
     conversation = [row for row in chats if row["category"] == "conversation"]

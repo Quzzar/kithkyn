@@ -42,6 +42,17 @@ class ReplayScoringTest(unittest.TestCase):
         self.assertEqual({"passed": 0, "total": 1}, result["item_claims_legal"])
         self.assertEqual({"passed": 0, "total": 1}, result["strict_chat_object"])
 
+    def test_production_parser_rejections_are_not_usable_conversation(self) -> None:
+        corpus = {"scenarios": [], "conversation": ["Hello"]}
+        report = {"candidate": "fixture", "status": "complete", "chat_format": "llama3", "repeats": 1,
+                  "samples": [{"id": "conversation-0", "category": "conversation", "repeat": 0,
+                               "raw": '{"say":"Sure", "fight":"true"}', "reply_valid": False,
+                               "response_present": True, "latency_ms": 200, "rss_kib": None}]}
+        result = summarize(report, corpus)
+        self.assertEqual({"passed": 0, "total": 1}, result["strict_chat_object"])
+        self.assertEqual(0, result["conversation_strict_objects"])
+        self.assertEqual(0, result["conversation_distinct_openings"])
+
 
 if __name__ == "__main__":
     unittest.main()
