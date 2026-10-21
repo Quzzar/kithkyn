@@ -86,8 +86,11 @@ confidence gates and the live request builder. The synthetic replay uses that sa
 KITHKYN_REACTION_REPLAY=/absolute/path/reaction-requests.jsonl ./gradlew test --tests '*ReactionReplayTest'
 ```
 
-The optional `runResidentReactionVerification` profile uses its own disposable world and a
-controlled typed provider. It exercises actual investigation and retreat navigation plus
+The optional `runResidentReactionVerification` profile uses `run/npc-reaction-verification`
+as its disposable game directory and a controlled typed provider. Accept Minecraft's EULA
+in that directory, and set `general."Generate villages" = false` and `llm."Enable LLM?" = false`
+in its `config/kithkyn-common.toml` before running. Require the log's
+`[resident-reaction-verify] RESULT PASS`; a successful Gradle exit alone does not prove the fixture passed. It exercises actual investigation and retreat navigation plus
 invalid, uncertain, late, changed-child and disabled outcomes, a guard moving away mid-route,
 last essential worker protection, eligible age/post changes and a warning without movement. This isolates game execution
 from model quality. `runResidentAgencyVerification` independently checks the shared navigation
