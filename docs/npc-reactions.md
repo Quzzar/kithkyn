@@ -49,12 +49,12 @@ them again on the server thread. The following effects are implemented:
 
 Raiders, merchants, young children, sleeping/passenger/NoAI residents, village travelers,
 active player movement orders and urgent native activities do not request reactions.
-Posted ranged guards and residents protected by the labor planner's essential staffing
+Guards assigned a fixed post (including ranged sentries, sword posts and jailers), and residents protected by the labor planner's essential staffing
 rules do not receive optional movement routes. Custody remains in its existing player
 policy; reaction defense never targets players. The native recovery, panic, combat and
 travel goals have priority over reaction navigation. No inference request holds a goal flag.
 A changed age, post, dimension, reference, destination or urgent need invalidates an offer
-or interrupts a walk. Investigation also stops when a threat is noticed.
+or interrupts a walk. Captured subjects and helpers are rechecked every ten movement ticks. Investigation also stops when a threat is noticed.
 
 ## Scheduling and visibility
 
@@ -88,7 +88,8 @@ KITHKYN_REACTION_REPLAY=/absolute/path/reaction-requests.jsonl ./gradlew test --
 
 The optional `runResidentReactionVerification` profile uses its own disposable world and a
 controlled typed provider. It exercises actual investigation and retreat navigation plus
-invalid, uncertain, late, changed-child and disabled outcomes. This isolates game execution
+invalid, uncertain, late, changed-child and disabled outcomes, a guard moving away mid-route,
+last essential worker protection, eligible age/post changes and a warning without movement. This isolates game execution
 from model quality. `runResidentAgencyVerification` independently checks the shared navigation
 against the existing player action contract.
 
@@ -96,3 +97,7 @@ The Kev research note records a separate pinned local model replay. Model qualit
 calibration, larger populations in working villages, multiplayer, custody and posted guard
 scenarios still need acceptance before enabling or recommending this experiment. #188 remains
 open. Durable intentions and voice remain separate work in #189 and #190.
+
+Latest local validation: 719 JUnit tests passed, all 17 bundled catalogs and 459 structure
+templates passed auditing, and both movement and reaction isolated-world fixtures passed.
+The reaction fixture uses controlled model results; this is not multiplayer acceptance.

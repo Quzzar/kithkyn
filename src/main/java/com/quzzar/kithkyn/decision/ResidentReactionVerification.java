@@ -29,7 +29,8 @@ public final class ResidentReactionVerification {
   private static boolean finished;
   private static ServerLevel level;
   private static Village village;
-  private static RealPerson observer, injured;
+  private static RealPerson observer, injured, guard;
+  private static Zombie threat;
   private static CompletableFuture<DecisionProvider.Result> pending;
   private static DecisionProvider.Request request;
   private static Vec3 destination;
@@ -111,7 +112,7 @@ public final class ResidentReactionVerification {
           check(observer.reactions().status() == Status.INTERRUPTED, "Disabling reactions retained a walk");
           KithkynConfig.ResidentReactions = true;
           freshObserver();
-          Zombie threat = EntityType.ZOMBIE.create(level); threat.setNoAi(true); threat.moveTo(observer.position().add(6, 0, 0));
+          threat = EntityType.ZOMBIE.create(level); threat.setNoAi(true); threat.moveTo(observer.position().add(6, 0, 0));
           check(level.addFreshEntity(threat), "Threat spawn failed"); phase++;
         }
         case 14 -> {
@@ -127,8 +128,53 @@ public final class ResidentReactionVerification {
           if (observer.reactions().movement().isPresent()) return;
           check(observer.reactions().status() == Status.COMPLETED && observer.distanceToSqr(destination) <= 1,
               "Retreat did not physically complete: " + observer.reactions().report());
+          threat.discard();
+          freshObserver(); guard = person(112.5, 102.5); guard.setOccupation(Occupation.GUARD); guard.setNoAi(true);
+          ResidentAwareness.injured(injured, null); phase++;
+        }
+        case 17 -> {
+          if (pending == null) return;
+          check(offered("seek_help"), "Visible allied guard did not offer help route");
+          complete("seek_help", 1); phase++;
+        }
+        case 18 -> {
+          if (observer.reactions().movement().isEmpty()) return;
+          guard.moveTo(guard.position().add(8, 0, 0)); phase++;
+        }
+        case 19 -> {
+          if (observer.reactions().movement().isPresent()) return;
+          check(observer.reactions().status() == Status.INTERRUPTED, "Moved helper did not interrupt walk");
+          freshObserver(); observer.setOccupation(Occupation.BUILDER); keepReactionGoal();
+          ResidentAwareness.injured(injured, null); phase++;
+        }
+        case 20 -> {
+          if (pending == null) return;
+          check(!offered("investigate") && !offered("seek_help") && !offered("retreat"), "Essential last worker was offered an excursion");
+          complete("warn", 1); phase++;
+        }
+        case 21 -> {
+          if (observer.reactions().status() == Status.PENDING) return;
+          check(observer.reactions().status() == Status.COMPLETED && observer.reactions().movement().isEmpty(), "Warning did not finish without movement");
+          freshObserver(); ResidentAwareness.injured(injured, null); phase++;
+        }
+        case 22 -> {
+          if (pending == null) return;
+          observer.setLifeStage(AgeStage.TEENAGER); keepReactionGoal(); complete("investigate", 1); phase++;
+        }
+        case 23 -> {
+          if (observer.reactions().status() == Status.PENDING) return;
+          check(observer.reactions().status() == Status.STALE && observer.reactions().movement().isEmpty(), "Eligible age change did not stale offer");
+          freshObserver(); ResidentAwareness.injured(injured, null); phase++;
+        }
+        case 24 -> {
+          if (pending == null) return;
+          observer.setOccupation(Occupation.GUARD); keepReactionGoal(); complete("investigate", 1); phase++;
+        }
+        case 25 -> {
+          if (observer.reactions().status() == Status.PENDING) return;
+          check(observer.reactions().status() == Status.STALE && observer.reactions().movement().isEmpty(), "Changed nonessential post did not stale offer");
           finished = true;
-          Kithkyn.LOGGER.info("[resident-reaction-verify] RESULT PASS: physical investigate and retreat, episode deduplication, uncertain, invalid, stale subject, late child, disable interruption; controlled decisions, no model-quality claim");
+          Kithkyn.LOGGER.info("[resident-reaction-verify] RESULT PASS: physical investigate and retreat, episode deduplication, uncertain, invalid, stale subject, late child, disable interruption, moved help reference, last essential worker, warning, eligible age and nonessential post changes; controlled decisions, no model-quality claim");
           level.getServer().halt(false);
         }
         default -> throw new AssertionError("Unknown phase");
@@ -177,6 +223,9 @@ public final class ResidentReactionVerification {
     if (observer != null) observer.discard();
     observer = person(100.5, 100.5);
     // Isolate reaction navigation from ordinary work and panic, while keeping the registered reaction goal and native navigation.
+    keepReactionGoal();
+  }
+  private static void keepReactionGoal() {
     observer.goalSelector.removeAllGoals(goal -> !(goal instanceof com.quzzar.kithkyn.entities.ai.goals.ResidentReactionGoal));
     observer.targetSelector.removeAllGoals(goal -> true);
   }

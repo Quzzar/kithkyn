@@ -39,7 +39,8 @@ import net.minecraft.world.phys.Vec3;
 public final class ResidentReactions {
   public record Movement(long revision, Action action, Vec3 destination, long expiresAt) { }
   private record Episode(Kind kind, UUID subject, long firstTick) { }
-  private record Capture(Offer offer, Observation event, String dimension, Map<Action, Vec3> routes, UUID helper) { }
+  private record Duty(Occupation occupation, AgeStage age, String village, UUID workplace, int station, boolean essential) { }
+  private record Capture(Offer offer, Observation event, String dimension, Map<Action, Vec3> routes, UUID helper, Duty duty) { }
   private final RealPerson person;
   private final ReactionState state = new ReactionState();
   private final LinkedHashSet<Episode> handled = new LinkedHashSet<>();
@@ -132,7 +133,7 @@ public final class ResidentReactions {
     if (!eventValid(event)) return null;
     var actions = new ArrayList<>(List.of(Action.CONTINUE, Action.WARN));
     Map<Action, Vec3> routes = new EnumMap<>(Action.class);
-    boolean mobile = !person.isFixedRangedGuard() && !LaborPlanner.mustKeepOnPost(person);
+    boolean mobile = !hasFixedPost() && !LaborPlanner.mustKeepOnPost(person);
     UUID helper = null;
     LivingEntity subject = subject(event);
     if (event.kind() == Kind.VISIBLE_THREAT) {
@@ -145,7 +146,7 @@ public final class ResidentReactions {
           }
         }
       }
-      if (person.getTarget() == null && person.willInitiateCombat() && person.isCampfireThreat(subject)) actions.add(Action.DEFEND);
+      if (canDefend(subject)) actions.add(Action.DEFEND);
     } else if (mobile && subject instanceof RealPerson resident && allied(resident) && subject != person
         && observations.stream().noneMatch(observation -> observation.kind() == Kind.VISIBLE_THREAT)) {
       Vec3 destination = near(subject);
@@ -166,7 +167,7 @@ public final class ResidentReactions {
       }
     }
     return new Capture(state.offer(Math.min(now + 100, event.expiresTick()), actions), event,
-        person.level().dimension().location().toString(), Map.copyOf(routes), helper);
+        person.level().dimension().location().toString(), Map.copyOf(routes), helper, duty());
   }
 
   private void apply(Capture capture, DecisionProvider.Result result) {
@@ -175,14 +176,14 @@ public final class ResidentReactions {
     double threshold = capture.event().kind() == Kind.VISIBLE_THREAT ? KithkynConfig.ReactionDangerConfidence : KithkynConfig.ReactionInjuryConfidence;
     Verdict verdict = state.resolve(capture.offer(), result, threshold, person.level().getGameTime());
     if (verdict instanceof Rejected rejected) { update(rejected.status(), rejected.detail()); return; }
-    if (!KithkynConfig.ResidentReactions || !eligible() || !capture.dimension().equals(person.level().dimension().location().toString())
+    if (!KithkynConfig.ResidentReactions || !eligible() || !capture.duty().equals(duty()) || !capture.dimension().equals(person.level().dimension().location().toString())
         || !eventValid(capture.event())) { update(Status.STALE, "The resident, evidence, or duties changed while deciding."); return; }
     Action action = ((Accepted) verdict).action();
     if (action == Action.CONTINUE) { update(Status.COMPLETED, "Selected continue; no optional reaction started."); return; }
     if (action == Action.WARN) { callOut(capture); return; }
     if (action == Action.DEFEND) {
       LivingEntity threat = subject(capture.event());
-      if (person.getTarget() != null || !person.willInitiateCombat() || !person.isCampfireThreat(threat)) {
+      if (!canDefend(threat)) {
         update(Status.STALE, "Native combat no longer permits this target."); return;
       }
       person.setTarget(threat);
@@ -190,7 +191,7 @@ public final class ResidentReactions {
       return;
     }
     Vec3 destination = capture.routes().get(action);
-    if (person.isFixedRangedGuard() || LaborPlanner.mustKeepOnPost(person) || !reachable(destination) || !destinationValid(capture, action, destination)) {
+    if (hasFixedPost() || LaborPlanner.mustKeepOnPost(person) || !reachable(destination) || !destinationValid(capture, action, destination)) {
       update(Status.STALE, "The captured route, post, or destination changed."); return;
     }
     active = capture;
@@ -200,12 +201,13 @@ public final class ResidentReactions {
 
   /** Called by the registered native goal; never infers completion from a model response. */
   public boolean validMovement(Movement expected) {
-    return movement == expected && KithkynConfig.ResidentReactions && eligible()
+    return movement == expected && KithkynConfig.ResidentReactions && eligible() && active.duty().equals(duty())
         && active.dimension().equals(person.level().dimension().location().toString())
         && person.level().getGameTime() < expected.expiresAt()
-        && !person.isFixedRangedGuard() && !LaborPlanner.mustKeepOnPost(person)
+        && !hasFixedPost() && !LaborPlanner.mustKeepOnPost(person)
         && person.agency().validGround(ResidentAgency.position(expected.destination()))
-        && (expected.action() != Action.INVESTIGATE || person.awareness().snapshot().stream().noneMatch(event -> event.kind() == Kind.VISIBLE_THREAT));
+        && (expected.action() != Action.INVESTIGATE || person.awareness().snapshot().stream().noneMatch(event -> event.kind() == Kind.VISIBLE_THREAT))
+        && (person.tickCount % 10 != 0 || destinationValid(active, expected.action(), expected.destination()));
   }
 
   public void arrived(Movement expected) {
@@ -240,6 +242,21 @@ public final class ResidentReactions {
   private void callOut(Capture capture) {
     VillagerConversation.speak(person, capture.event().kind() == Kind.INJURY ? "Someone is hurt!" : "Watch out, there's danger nearby!");
     update(Status.COMPLETED, "Called out a warning. No listener response is claimed.");
+  }
+
+  private boolean hasFixedPost() { return com.quzzar.kithkyn.village.GuardDuty.of(person) != null; }
+
+  private Duty duty() {
+    var village = person.getVillage();
+    var job = village == null ? null : village.getJobAssignment(person.getUUID());
+    return new Duty(person.getOccupation(), person.getLifeStage(), village == null ? null : village.getID(),
+        job == null ? null : job.getBuildingUUID(), job == null ? -1 : job.getStationIndex(), LaborPlanner.mustKeepOnPost(person));
+  }
+
+  private boolean canDefend(LivingEntity threat) {
+    return threat != null && person.getTarget() == null && person.willInitiateCombat()
+        && person.canAttack(threat) && !person.isAlliedTo(threat) && person.isCampfireThreat(threat)
+        && (!(threat instanceof net.minecraft.world.entity.NeutralMob neutral) || neutral.isAngryAt(person));
   }
 
   private boolean eventValid(Observation event) {
