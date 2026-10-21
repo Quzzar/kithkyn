@@ -50,7 +50,8 @@ def legal_inventory(value: dict[str, Any]) -> bool:
     if ":" not in item:
         item = f"minecraft:{item}"
     count = value.get("give_count", 1)
-    return type(count) is int and 0 < count <= STOCK.get(item, 0)
+    whole_number = type(count) is int or type(count) is float and math.isfinite(count) and count.is_integer()
+    return whole_number and 0 < count <= STOCK.get(item, 0)
 
 
 def percentile(values: list[float], fraction: float) -> float | None:
@@ -77,13 +78,14 @@ def summarize(report: dict[str, Any], corpus: dict[str, Any]) -> dict[str, Any]:
         raise ValueError(f"{report['candidate']}: missing or duplicate samples")
     chats = [row for row in samples if row["category"] != "decision"]
     decoded = {id(row): reply(row.get("raw", "")) for row in chats}
+    expected_actions = {case["id"]: case["action"] for case in corpus["scenarios"] if case["category"] == "action"}
 
     def matches(row: dict[str, Any]) -> bool:
         value = decoded[id(row)]
-        return value is not None and value.get("action", "none") == row["expected_action"]
+        return value is not None and value.get("action", "none") == expected_actions[row["id"]]
 
-    positive = [row for row in chats if row["category"] == "action" and row["expected_action"] != "none"]
-    negative = [row for row in chats if row["category"] == "action" and row["expected_action"] == "none"]
+    positive = [row for row in chats if row["category"] == "action" and expected_actions[row["id"]] != "none"]
+    negative = [row for row in chats if row["category"] == "action" and expected_actions[row["id"]] == "none"]
     items = [row for row in chats if row["category"] == "item"]
     decisions = [row for row in samples if row["category"] == "decision"]
     conversation = [row for row in chats if row["category"] == "conversation"]
@@ -94,10 +96,13 @@ def summarize(report: dict[str, Any], corpus: dict[str, Any]) -> dict[str, Any]:
         "candidate": report["candidate"],
         "samples": len(samples),
         "response_present": ratio([row["response_present"] for row in samples]),
-        "usable_chat_structure": ratio([decoded[id(row)] is not None for row in chats]),
+        "strict_chat_object": ratio([decoded[id(row)] is not None for row in chats]),
         "requested_action_match": ratio([matches(row) for row in positive]),
         "negative_action_cases": ratio([matches(row) for row in negative]),
         "item_claims_legal": ratio([decoded[id(row)] is not None and legal_inventory(decoded[id(row)]) for row in items]),
+        "illegal_item_claims_in_strict_objects": sum(
+            decoded[id(row)] is not None and not legal_inventory(decoded[id(row)]) for row in items
+        ),
         "decision_format_valid": ratio([row.get("decision_valid", False) for row in decisions]),
         "decision_correct": ratio([row.get("decision_correct", False) for row in decisions]),
         "extra_actions_outside_action_cases": sum(
@@ -108,7 +113,7 @@ def summarize(report: dict[str, Any], corpus: dict[str, Any]) -> dict[str, Any]:
             decoded[id(row)] is not None and decoded[id(row)].get("fight") is True
             for row in chats if row["id"] != "threat"
         ),
-        "conversation_usable": len(says),
+        "conversation_strict_objects": len(says),
         "conversation_distinct_openings": len(set(openings)),
         "median_latency_ms": statistics.median(row["latency_ms"] for row in samples),
         "p95_latency_ms": percentile([row["latency_ms"] for row in samples], 0.95),
@@ -143,6 +148,7 @@ def main() -> None:
         "notes": [
             "Positive matches measure literal request fulfillment; a grounded refusal can be legitimate.",
             "Valid JSON and distinct openings do not establish personality, truthfulness, or conversation quality.",
+            "Strict chat objects exclude Markdown fences; production dialogue can recover text that the strict action boundary rejects.",
             "Memory, roleplay and full conversations require human reading; no automated quality judge is used.",
             "RSS is sampled process memory, not peak total RAM or GPU/unified memory.",
             "Strict decision scoring can be stricter than the production generic decision parser.",

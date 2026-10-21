@@ -3,7 +3,7 @@ from __future__ import annotations
 
 import unittest
 
-from summarize import legal_inventory, reply
+from summarize import legal_inventory, reply, summarize
 
 
 class ReplayScoringTest(unittest.TestCase):
@@ -22,6 +22,7 @@ class ReplayScoringTest(unittest.TestCase):
     def test_minecraft_default_namespace_is_accepted(self) -> None:
         self.assertTrue(legal_inventory({"give": "bread", "give_count": 1}))
         self.assertTrue(legal_inventory({"give": "minecraft:bread", "give_count": 3}))
+        self.assertTrue(legal_inventory({"give": "bread", "give_count": 1.0}))
 
     def test_impossible_inventory_claims_never_pass(self) -> None:
         for value in [
@@ -30,6 +31,15 @@ class ReplayScoringTest(unittest.TestCase):
             {"give": "bread", "give_count": True}, {"give": "bread", "give_count": "1"},
         ]:
             self.assertFalse(legal_inventory(value), value)
+
+    def test_empty_response_counts_as_failure_without_requiring_model_output_labels(self) -> None:
+        corpus = {"scenarios": [{"id": "follow", "category": "action", "action": "follow"}], "conversation": []}
+        report = {"candidate": "fixture", "status": "complete", "chat_format": "llama3", "repeats": 1,
+                  "samples": [{"id": "follow", "category": "action", "repeat": 0,
+                               "response_present": False, "latency_ms": 45000, "rss_kib": None}]}
+        result = summarize(report, corpus)
+        self.assertEqual({"passed": 0, "total": 1}, result["requested_action_match"])
+        self.assertEqual({"passed": 0, "total": 1}, result["strict_chat_object"])
 
 
 if __name__ == "__main__":

@@ -5,6 +5,11 @@ and resume actions to player conversation when explicitly enabled. Its offers ca
 before inference and its execution records real outcomes. It does not change the local model
 defaults or add a production Kev/Jev decision provider.
 
+The [paired local replay](research/local-model-replay-2026-10-21.md) compares those defaults
+with pinned Heretic/abliterated variants using shared production request builders. It records
+raw replies, timings and template requirements. Its synthetic cases do not establish full
+gameplay acceptance, and its results do not justify changing the recommended models.
+
 **This is the decided design for LLM-driven villager decisions.** A small language model
 answers multiple-choice questions and holds short conversations; deterministic game logic
 decides *what the options are*, and the model only picks among them and supplies an

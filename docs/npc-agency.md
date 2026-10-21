@@ -124,7 +124,10 @@ establish better action selection, JSON correctness, memory or sustained convers
 
 Verified candidates and known limitations are in the
 [Heretic model research](research/heretic-local-models-2026-10-21.md). The existing recommended
-defaults remain unchanged. Test a smaller Kev decision model separately from generative models;
+defaults remain unchanged. The [initial paired replay](research/local-model-replay-2026-10-21.md)
+records real-provider outputs and repeatable cases, including word/action mismatches and
+invented context. It does not complete the in-game action or inventory acceptance work.
+Test a smaller Kev decision model separately from generative models;
 neither belongs in the other's provider contract merely because both run locally.
 
 ## Acceptance and delivery: #192

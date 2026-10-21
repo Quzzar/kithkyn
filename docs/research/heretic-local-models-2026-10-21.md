@@ -2,7 +2,7 @@
 
 Reviewed 2026-10-21 against the model publishers' Hugging Face cards, reproduction records,
 Hub file metadata, and the original model licenses. The initial research did not download or
-run weights. Follow-up local evaluation downloaded and SHA-256-verified the Llama Heretic file;
+run weights. Follow-up local evaluation downloaded and SHA-256-verified both modified GGUF files;
 its packaging findings below supersede the metadata-only compatibility inference.
 
 ## Answer
@@ -121,9 +121,9 @@ JSON adherence, dialogue variety, persona consistency, memory, or game performan
 does not establish unchanged ability. The Gemma 2 author's card supplies examples but no
 corresponding quantitative Kithkyn or general-capability comparison.
 
-The useful next evaluation is a paired replay against the current models: the same legitimate
+The [initial paired replay](local-model-replay-2026-10-21.md) uses the current models: the same legitimate
 in-character requests, multi-turn conversations, action payloads, and bounded village choices.
-Measure refusals that obstruct gameplay, usable decisions, invalid JSON/actions, repetition,
+It records refusals that obstruct gameplay, usable decisions, invalid JSON/actions, repetition,
 persona drift, latency, and memory. Changing refusal behavior does not add missing game tools
 or make a model's chosen action executable.
 

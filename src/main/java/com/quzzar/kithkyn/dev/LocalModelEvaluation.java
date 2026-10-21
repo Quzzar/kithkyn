@@ -96,6 +96,9 @@ public final class LocalModelEvaluation {
     level.setDayTime(6000);
     worker = new Thread(() -> {
       try {
+        if (KithkynConfig.LlmEnabled || !KithkynConfig.LlmResidentActions || KithkynConfig.GenerateVillages) {
+          throw new IllegalStateException("Evaluation requires Enable LLM?=false, Experimental resident actions=true, and Generate villages=false");
+        }
         Corpus corpus = JSON.fromJson(Files.readString(Path.of(System.getProperty("kithkyn.models.corpus"))), Corpus.class);
         validate(corpus);
         int repeats = Integer.getInteger("kithkyn.models.repeats", 3);
@@ -231,8 +234,13 @@ public final class LocalModelEvaluation {
     ServerPlayer speaker = FakePlayerFactory.get(level, new GameProfile(SPEAKER, "Rowan"));
     speaker.moveTo(0.5D, 80, 3.5D);
     if (scenario.memory() != null) person.logMemory(scenario.memory(), Optional.of(SPEAKER));
-    if (scenario.following()) person.agency().apply(person.agency().offer(speaker),
-        new ResidentActionSelection(Optional.of(Action.FOLLOW), Optional.empty()), speaker);
+    if (scenario.following()) {
+      person.agency().apply(person.agency().offer(speaker),
+          new ResidentActionSelection(Optional.of(Action.FOLLOW), Optional.empty()), speaker);
+      if (person.agency().current().filter(intent -> intent.action() == Action.FOLLOW).isEmpty()) {
+        throw new IllegalStateException("The active-follow evaluation fixture was rejected");
+      }
+    }
     var assembled = PersonChatContext.assemble(person, "Rowan", SPEAKER, history, scenario.message());
     var offer = new ResidentActionState.Offer(1, SPEAKER, "Rowan", level.dimension().location().toString(),
         scenario.point() ? new ResidentActionState.Position(6.5D, 80, 2.5D) : null,
@@ -247,6 +255,8 @@ public final class LocalModelEvaluation {
     row.addProperty("id", scenario.id());
     row.addProperty("category", scenario.category());
     row.addProperty("repeat", repeat);
+    if (scenario.category().equals("decision")) row.addProperty("expected_choice", scenario.choice());
+    else row.addProperty("expected_action", scenario.action());
     row.add("request", JSON.toJsonTree(request));
     row.addProperty("prompt_sha256", digest(JSON.toJson(request).getBytes(java.nio.charset.StandardCharsets.UTF_8)));
     long started = System.nanoTime();
@@ -260,13 +270,11 @@ public final class LocalModelEvaluation {
     if (scenario.category().equals("decision")) {
       var decision = LlmService.parseStrictDecision(raw, scenario.options());
       row.addProperty("decision_valid", decision.isPresent());
-      row.addProperty("expected_choice", scenario.choice());
       row.addProperty("decision_correct", decision.isPresent() && decision.get().choiceIndex() == scenario.choice());
       return row;
     }
     ResidentActionSelection selected = ResidentActionSelection.parse(raw);
     row.addProperty("action_valid", selected.error().isEmpty());
-    row.addProperty("expected_action", scenario.action());
     String action = selected.action().map(Action::wireName).orElse("none");
     row.addProperty("selected_action", action);
     row.addProperty("action_matches", selected.error().isEmpty() && action.equals(scenario.action()));

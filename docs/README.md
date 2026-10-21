@@ -54,6 +54,8 @@ in it, and update it in the same change that moves what it describes.
   actions, personality, memory and voice, plus the experimental movement-action contract.
 - [research/kev-local-evaluation-2026-10-21.md](research/kev-local-evaluation-2026-10-21.md): pinned
   Kev 0.8B runtime/artifacts, Mac setup, author-reported routing limits and the separate decision experiment.
+- [research/local-model-replay-2026-10-21.md](research/local-model-replay-2026-10-21.md): paired
+  stock/modified local model replay, raw synthetic evidence, template requirements and measured limitations.
 - [villager-requests.md](villager-requests.md): how a villager petitions the brain to
   build something, with a reason, and the brain still decides. The propose-not-dispose
   invariant, the chat-tool-to-planner loop, and requests as raw context the brain weighs.
