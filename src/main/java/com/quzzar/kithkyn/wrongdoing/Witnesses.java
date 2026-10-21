@@ -56,6 +56,16 @@ public final class Witnesses {
 
   /** Shared sight gate: awake, within sixteen blocks, loaded terrain and a clear line to the target. */
   public static boolean canSee(ServerLevel level, RealPerson person, Vec3 where) {
+    return visible(level, person, where, true);
+  }
+
+  /** An entity must be visible itself; seeing a block containing its eyes is insufficient. */
+  public static boolean canIdentify(ServerLevel level, RealPerson person, net.minecraft.world.entity.Entity subject) {
+    return subject.level() == level && !subject.isRemoved() && !subject.isInvisible()
+        && visible(level, person, subject.getEyePosition(), false);
+  }
+
+  private static boolean visible(ServerLevel level, RealPerson person, Vec3 where, boolean targetBlockAllowed) {
     Vec3 eyes = person.getEyePosition();
     if (person.isSleeping() || !person.isAlive() || !Double.isFinite(where.x) || !Double.isFinite(where.y)
         || !Double.isFinite(where.z) || eyes.distanceToSqr(where) > SIGHT_RANGE * SIGHT_RANGE) return false;
@@ -71,7 +81,7 @@ public final class Witnesses {
         ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, person));
     // A wall between them stops at the wall; a clear line reaches the spot.
     return hit.getType() == HitResult.Type.MISS
-        || hit instanceof net.minecraft.world.phys.BlockHitResult block
+        || targetBlockAllowed && hit instanceof net.minecraft.world.phys.BlockHitResult block
             && block.getBlockPos().equals(BlockPos.containing(where));
   }
 

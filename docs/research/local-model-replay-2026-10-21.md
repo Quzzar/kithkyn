@@ -17,6 +17,11 @@ five cases that should select no movement, three inventory requests, two memory 
 two roleplay exchanges and six simple bounded decisions. This is a small regression corpus,
 not a measure of general intelligence or a populated village acceptance test.
 
+The checked-in capture predates the recent-awareness briefing added later in this branch.
+Replays on newer revisions use that revision's production prompts. Keep the historical raw
+requests when comparing results across code changes; do not assume different revisions offer
+identical prompts.
+
 The synthetic resident is Mira Flint, a friendly but independent adult wanderer with a stone
 axe, three bread and four oak logs, no village and no urgent duties. Rowan is a simulated
 speaker. The release case first establishes a real active follow intention; its captured

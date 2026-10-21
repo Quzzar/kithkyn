@@ -113,8 +113,8 @@ public final class ResidentAwareness {
 
   private static boolean visible(RealPerson observer, Entity subject) {
     return observer.level() instanceof ServerLevel level && observer.level() == subject.level()
-        && !subject.isInvisible() && !subject.isRemoved() && awake(observer) && take(level, Work.VISIBILITY)
-        && Witnesses.canSee(level, observer, subject.getEyePosition());
+        && awake(observer) && take(level, Work.VISIBILITY)
+        && Witnesses.canIdentify(level, observer, subject);
   }
 
   private void record(Kind kind, Evidence evidence, Entity subject, Entity source, String detail) {

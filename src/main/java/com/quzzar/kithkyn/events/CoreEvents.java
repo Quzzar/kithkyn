@@ -321,9 +321,11 @@ public class CoreEvents {
       // witnesses on its own terms, so it is left out of this path.
       if (person.level() instanceof ServerLevel serverLevel
           && !(event.getSource().getEntity() instanceof Player)) {
-        String memory = deathMemory(person, event.getSource().getEntity());
         for (RealPerson witness : Witnesses.around(serverLevel, person.getEyePosition(), person)) {
-          witness.logMemory(memory, java.util.Optional.empty());
+          if (!Witnesses.canIdentify(serverLevel, witness, person)) continue;
+          Entity killer = event.getSource().getEntity();
+          Entity identified = killer != null && Witnesses.canIdentify(serverLevel, witness, killer) ? killer : null;
+          witness.logMemory(deathMemory(person, identified), java.util.Optional.empty());
         }
       }
 

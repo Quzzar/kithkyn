@@ -63,7 +63,11 @@ public final class Wrongdoing {
    */
   public static boolean report(ServerLevel level, Village village, UUID culprit, Offence offence,
       Vec3 where, String fact, RealPerson victim) {
-    List<RealPerson> witnesses = Witnesses.around(level, where, victim);
+    net.minecraft.world.entity.Entity actor = level.getEntity(culprit);
+    List<RealPerson> witnesses = actor == null ? List.of()
+        : Witnesses.around(level, where, victim).stream()
+            .filter(witness -> victim == null || Witnesses.canIdentify(level, witness, victim))
+            .filter(witness -> Witnesses.canIdentify(level, witness, actor)).toList();
     if (witnesses.isEmpty()) {
       Kithkyn.LOGGER.debug("An offence at {} went unseen, so it never happened",
           String.format("%.0f,%.0f,%.0f", where.x, where.y, where.z));

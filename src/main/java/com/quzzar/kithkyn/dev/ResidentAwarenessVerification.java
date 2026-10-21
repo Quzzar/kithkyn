@@ -17,8 +17,12 @@ import com.quzzar.kithkyn.chat.VillagerConversation;
 import com.quzzar.kithkyn.configuration.KithkynConfig;
 import com.quzzar.kithkyn.entities.AgeStage;
 import com.quzzar.kithkyn.entities.RealPerson;
+import com.quzzar.kithkyn.entities.KithkynAttachments;
 import com.quzzar.kithkyn.llm.LlmCallLog;
 import com.quzzar.kithkyn.village.Occupation;
+import com.quzzar.kithkyn.village.Village;
+import com.quzzar.kithkyn.village.VillageManager;
+import com.quzzar.kithkyn.village.buildings.Building;
 import com.quzzar.kithkyn.wrongdoing.Witnesses;
 
 import net.minecraft.core.BlockPos;
@@ -31,6 +35,9 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.SlabBlock;
+import net.minecraft.world.level.block.Rotation;
+import net.minecraft.world.level.block.state.properties.SlabType;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.common.util.FakePlayerFactory;
@@ -75,6 +82,7 @@ public final class ResidentAwarenessVerification {
         PEOPLE.forEach(RealPerson::discard);
         PEOPLE.clear();
         player.discard();
+        VillageManager.get(level).getVillages().clear();
         populationStart = ResidentAwareness.counts(event.getServer());
         for (int index = 0; index < 64; index++) person(level, "Resident" + index, 200 + index % 8 * 3, 200 + index / 8 * 3);
         threat = zombie(level, 211.5, 211.5);
@@ -83,7 +91,7 @@ public final class ResidentAwarenessVerification {
       } else if (phase == 2 && ticks - phaseStart >= 1200) {
         var counts = ResidentAwareness.counts(event.getServer());
         long queries = counts.queries() - populationStart.queries();
-        check(queries > 0 && queries <= 1200L * PerceptionBudget.QUERIES_PER_TICK, "Population query volume was not bounded: " + queries);
+        check(queries == 64L * 60, "Expected exactly 64 resident scans per second: " + queries);
         check(LlmCallLog.requestCount() == requests, "Awareness dispatched model requests");
         finished = true;
         Kithkyn.LOGGER.info("[resident-awareness-verify] RESULT PASS: walls, distance, sleeping, invisibility, "
@@ -112,6 +120,12 @@ public final class ResidentAwarenessVerification {
     level.getServer().tickRateManager().setTickRate(100);
     for (int x = 5; x <= 8; x++) for (int z = 5; z <= 8; z++) level.setChunkForced(x, z, true);
     for (int x = 12; x <= 14; x++) for (int z = 12; z <= 14; z++) level.setChunkForced(x, z, true);
+    // Re-running this disposable fixture must not count the previous run's saved population.
+    for (var entity : level.getEntitiesOfClass(net.minecraft.world.entity.LivingEntity.class,
+        new net.minecraft.world.phys.AABB(90, 150, 90, 230, 180, 230))) {
+      if (entity instanceof RealPerson || entity instanceof Zombie) entity.discard();
+    }
+    VillageManager.get(level).getVillages().clear();
     for (BlockPos pos : BlockPos.betweenClosed(96, 160, 96, 120, 165, 142)) {
       level.setBlock(pos, (pos.getY() == 160 ? Blocks.STONE : Blocks.AIR).defaultBlockState(), 2);
     }
@@ -128,6 +142,15 @@ public final class ResidentAwarenessVerification {
     player = FakePlayerFactory.get(level, new GameProfile(UUID.fromString("194cf127-c74b-43d3-9631-97ea270c0703"), "Rowan"));
     player.moveTo(102.5, 161, 101.5);
     level.addNewPlayer(player);
+    Village village = new Village("Awareness fixture") {
+      private final Building center = new Building(new BlockPos(100, 160, 104), "village_center_birch_forest_1", Rotation.NONE);
+      @Override public Building getTownCenter() { return center; }
+      @Override public void update(ServerLevel ignored) { }
+    };
+    village.attach(level);
+    VillageManager.get(level).getVillages().put(village.getID(), village);
+    victim.setVillage(village.getID());
+    village.getPopulation().add(victim.getUUID());
 
     check(Witnesses.canSee(level, observer, victim.getEyePosition()), "Clear line unexpectedly blocked");
     check(!Witnesses.canSee(level, hidden, victim.getEyePosition()), "Wall did not block sight");
@@ -140,6 +163,39 @@ public final class ResidentAwarenessVerification {
     check(victim.awareness().snapshot().stream().anyMatch(item -> item.evidence() == Evidence.EXPERIENCED), "Victim did not retain own injury");
     String victimContext = PersonChatContext.assemble(victim, "Rowan", player.getUUID(), List.of(), "Who injured you?").system();
     check(!victimContext.contains("HiddenAttacker"), "Durable memory revealed an unseen attacker");
+
+    player.moveTo(100.5, 161, 112.5);
+    victim.invulnerableTime = 0;
+    check(victim.hurt(level.damageSources().playerAttack(player), 1), "Hidden player attack did not land");
+    check(!remembersCulprit(observer, player.getUUID()), "Existing village blame identified a hidden player");
+    player.moveTo(102.5, 161, 101.5);
+    player.setInvisible(true);
+    victim.invulnerableTime = 0;
+    check(victim.hurt(level.damageSources().playerAttack(player), 1), "Invisible player attack did not land");
+    check(!remembersCulprit(observer, player.getUUID()), "Existing village blame identified an invisible player");
+    player.setInvisible(false);
+    victim.invulnerableTime = 0;
+    check(victim.hurt(level.damageSources().playerAttack(player), 1), "Visible player attack did not land");
+    check(remembersCulprit(observer, player.getUUID()), "Visible culprit was never identified");
+
+    BlockPos partial = new BlockPos(116, 163, 100);
+    level.setBlock(partial, Blocks.OAK_SLAB.defaultBlockState().setValue(SlabBlock.TYPE, SlabType.TOP), 2);
+    observer.moveTo(116.5, 165 - observer.getEyeHeight(), 99.5);
+    player.moveTo(116.5, 163.25 - player.getEyeHeight(), 100.5);
+    check(Witnesses.canSee(level, observer, player.getEyePosition()), "Solid-target block exception was not exercised");
+    check(!Witnesses.canIdentify(level, observer, player), "Partial block containing the eyes did not occlude identity");
+    observer.moveTo(100.5, 161, 100.5);
+    player.moveTo(102.5, 161, 101.5);
+
+    RealPerson doomed = person(level, "Doomed", 102, 104);
+    check(doomed.hurt(level.damageSources().mobAttack(attacker), 100), "Hidden resident lethal attack did not land");
+    var memories = observer.getData(KithkynAttachments.PERSONAL_LOG.get()).memoriesNewestFirst();
+    check(memories.stream().anyMatch(memory -> memory.text().equals("I saw Doomed Fixture die.")), "Unidentified witnessed death was lost");
+    check(memories.stream().noneMatch(memory -> memory.text().contains("HiddenAttacker")), "Death memory revealed a hidden resident killer");
+    RealPerson visibleDeath = person(level, "VisibleDeath", 103, 104);
+    check(visibleDeath.hurt(level.damageSources().mobAttack(speaker), 100), "Visible resident lethal attack did not land");
+    check(observer.getData(KithkynAttachments.PERSONAL_LOG.get()).memoriesNewestFirst().stream()
+        .anyMatch(memory -> memory.text().equals("I saw VisibleDeath Fixture killed by Elin Fixture.")), "Visible resident killer was not identified");
 
     observer.startSleeping(observer.blockPosition());
     ResidentAwareness.addressed(observer, player, "Sleeping test");
@@ -166,6 +222,7 @@ public final class ResidentAwarenessVerification {
     var after = ResidentAwareness.counts(level.getServer());
     check(after.queries() - before.queries() <= PerceptionBudget.QUERIES_PER_TICK, "Speech bypassed query budget");
     check(after.deliveries() - before.deliveries() <= PerceptionBudget.DELIVERIES_PER_TICK, "Speech bypassed delivery budget");
+    check(after.denied() > before.denied(), "Repeated speech never exercised budget exhaustion");
     check(observer.awareness().snapshot().stream().filter(item -> item.detail().equals("Repeated speech")).count() <= 1, "Repeated speech flooded memory");
     threat = zombie(level, 104.5, 101.5);
     phaseStart = ticks;
@@ -202,4 +259,9 @@ public final class ResidentAwarenessVerification {
   }
 
   private static void check(boolean condition, String detail) { if (!condition) throw new AssertionError(detail); }
+
+  private static boolean remembersCulprit(RealPerson person, UUID culprit) {
+    return person.getData(KithkynAttachments.PERSONAL_LOG.get()).memoriesNewestFirst().stream()
+        .anyMatch(memory -> memory.who().filter(culprit::equals).isPresent());
+  }
 }

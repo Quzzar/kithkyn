@@ -33,6 +33,13 @@ existing saved memories are not rewritten. The existing immediate pain/opinion a
 combat rules remain in place. Recent evidence does not replace the personal log or village
 planning snapshot.
 
+Identified village blame now requires seeing both the incident and its culprit. Seeing only
+an injured victim cannot attach an unseen player's UUID to a witness's durable memory or
+subsequent reflection. Entity sight requires a clear ray even when an obstruction occupies
+the same partial block as the subject's eyes; the solid-target exception is for block events.
+Witnessed non-player deaths likewise name a killer only when each witness could identify
+that killer. A visible victim's death is still remembered when its cause remains unknown.
+
 ## Limits and timing
 
 Each resident keeps at most sixteen observations. Chat includes the six most recently

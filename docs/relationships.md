@@ -115,6 +115,10 @@ grounding change leaves the immediate pain/opinion rule above in place. Recent p
 injuries and quoted speech use [resident awareness](npc-awareness.md), separate from
 durable memories and village blame.
 
+Village blame requires witnesses who can identify the culprit as well as see the incident.
+An occluded or invisible player's UUID is not attached to a bystander's memory merely because
+they saw someone get hurt. The victim's immediate pain/opinion exception remains separate.
+
 **A stranger is not zero but a baseline.** An opinion with no entry yet reads as the
 villager's kind's stranger baseline: 0 for the living, a grudge on sight for the undead
 ([undead.md](undead.md)). The baseline is never stored; it is what an absent entry means,
