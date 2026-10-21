@@ -111,14 +111,6 @@ neoForge {
             systemProperty 'kithkyn.occupationWork.verify', 'true'
         }
 
-        // Actual resident navigation and interruption, isolated from normal development saves/config.
-        residentAgencyVerification {
-            server()
-            gameDirectory = project.file('run/npc-agency-verification')
-            programArguments.addAll '--nogui', '--world', 'world', '--port', '25679'
-            systemProperty 'kithkyn.residentAgency.verify', 'true'
-        }
-
         localModelEvaluation {
             server()
             gameDirectory = project.file('run/local-model-evaluation')

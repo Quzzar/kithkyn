@@ -190,12 +190,13 @@ public final class ResidentReactionVerification {
               .filter(value -> value.execution().filter(execution -> execution.action().equals("defend")).isPresent()).findFirst().orElseThrow();
           level.getServer().getWorldData().overworldData().setGameTime(matter.execution().orElseThrow().expiresAt());
           threat.setHealth(0);
-          observer.agency().maintain(); observer.reactions().tick();
+          UndertakingService.maintain(observer); observer.reactions().tick();
           check(observer.reactions().status() == Status.INTERRUPTED, "Defense claimed completion at its expiry boundary");
           check(observer.getData(KithkynAttachments.UNDERTAKINGS.get()).byId(matter.id()).orElseThrow().execution().orElseThrow().phase() == UndertakingData.Phase.EXPIRED,
               "Defense report disagreed with its authoritative expired undertaking");
+          verifySavedHistory();
           finished = true;
-          Kithkyn.LOGGER.info("[resident-reaction-verify] RESULT PASS: physical investigate and retreat, episode deduplication, uncertain, invalid, stale subject, late child, disable interruption, moved help reference, last essential worker, warning, eligible age and nonessential post changes, defense deadline and authoritative expiry; controlled decisions, no model-quality claim");
+          Kithkyn.LOGGER.info("[resident-reaction-verify] RESULT PASS: physical investigate and retreat, episode deduplication, uncertain, invalid, stale subject, late child, disable interruption, moved help reference, last essential worker, warning, eligible age and nonessential post changes, defense deadline and authoritative expiry, actual reload without replay, retired command closure and inventory preservation; controlled decisions, no model-quality claim");
           level.getServer().halt(false);
         }
         default -> throw new AssertionError("Unknown phase");
@@ -207,7 +208,7 @@ public final class ResidentReactionVerification {
 
   private static void setup(ServerLevel world) {
     level = world;
-    KithkynConfig.ResidentReactions = true; KithkynConfig.LlmResidentActions = false;
+    KithkynConfig.ResidentReactions = true;
     KithkynConfig.ReactionDangerConfidence = KithkynConfig.ReactionInjuryConfidence = .8;
     world.getGameRules().getRule(GameRules.RULE_DOMOBSPAWNING).set(false, world.getServer());
     world.getGameRules().getRule(GameRules.RULE_DAYLIGHT).set(false, world.getServer());
@@ -245,6 +246,37 @@ public final class ResidentReactionVerification {
     observer = person(100.5, 100.5);
     // Isolate reaction navigation from ordinary work and panic, while keeping the registered reaction goal and native navigation.
     keepReactionGoal();
+  }
+  private static void verifySavedHistory() {
+    long now = level.getGameTime();
+    var key = KithkynAttachments.UNDERTAKINGS.get();
+    var execution = new UndertakingData.Execution(observer.getUUID(), UndertakingData.Lane.REACTION, "investigate", UndertakingData.Phase.REQUESTED,
+        level.dimension().location().toString(), Optional.of(new UndertakingData.Position(108.5, 161, 100.5)), Optional.of(injured.getUUID()), 99,
+        now, now + 200, ResidentObligations.snapshot(observer));
+    var request = UndertakingService.requested(observer.getData(key), execution, Optional.empty(), level.getDayTime());
+    check(UndertakingService.commit(observer, request), "Could not record the unfinished reaction before reload");
+    UUID reaction = request.affected().orElseThrow().id();
+    UndertakingService.commit(observer, UndertakingService.transition(observer.getData(key), observer.getUUID(), reaction, UndertakingData.Phase.ACCEPTED, "Accepted", level.getDayTime()));
+    UndertakingService.commit(observer, UndertakingService.transition(observer.getData(key), observer.getUUID(), reaction, UndertakingData.Phase.UNDERWAY, "Began before reload", level.getDayTime()));
+    // Seed the former experimental save shape, never the removed input/execution implementation.
+    UUID retired = UUID.randomUUID(); UUID requester = new UUID(0, 1234);
+    var oldExecution = new UndertakingData.Execution(observer.getUUID(), UndertakingData.Lane.PLAYER_REQUEST, "wait", UndertakingData.Phase.UNDERWAY,
+        level.dimension().location().toString(), execution.destination(), Optional.empty(), 1, now, now + 6000, execution.duty());
+    observer.setData(key, observer.getData(key).with(new UndertakingData.Undertaking(retired, UndertakingData.Valence.POSITIVE, UndertakingData.State.ACTIVE,
+        UndertakingData.Origin.PLAYER, "An earlier private wait request", Optional.of(requester), List.of(), Optional.empty(), Optional.empty(), level.getDayTime(), level.getDayTime(), Optional.of(oldExecution))));
+    observer.personMainInv.addItem(new net.minecraft.world.item.ItemStack(net.minecraft.world.item.Items.DIAMOND, 3));
+    UUID residentId = observer.getUUID(); var saved = new net.minecraft.nbt.CompoundTag();
+    check(observer.save(saved), "Could not serialize reaction history and inventory");
+    observer.remove(net.minecraft.world.entity.Entity.RemovalReason.UNLOADED_TO_CHUNK);
+    observer = (RealPerson) EntityType.create(saved, level).orElseThrow();
+    check(level.addFreshEntity(observer), "Could not restore serialized resident");
+    UndertakingService.maintain(observer); observer.reactions().tick();
+    check(observer.getUUID().equals(residentId) && observer.personMainInv.countItem(net.minecraft.world.item.Items.DIAMOND) == 3, "Reload changed identity or inventory");
+    check(observer.getData(key).byId(reaction).orElseThrow().execution().orElseThrow().phase() == UndertakingData.Phase.INTERRUPTED
+        && observer.reactions().movement().isEmpty(), "Reload silently resumed the saved reaction");
+    check(observer.getData(key).byId(retired).orElseThrow().execution().orElseThrow().phase() == UndertakingData.Phase.CANCELLED, "Retired player command was not closed as history");
+    var other = com.quzzar.kithkyn.chat.PersonChatContext.assemble(observer, "Other", new UUID(0, 9876), List.of(), "What happened?");
+    check(!other.system().contains("earlier private wait request") && !other.system().contains("Movement requests:"), "Removed/private command context leaked into normal chat");
   }
   private static void keepReactionGoal() {
     observer.goalSelector.removeAllGoals(goal -> !(goal instanceof com.quzzar.kithkyn.entities.ai.goals.ResidentReactionGoal));

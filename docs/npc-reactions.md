@@ -48,7 +48,7 @@ them again on the server thread. The following effects are implemented:
   neutral creature, creeper or enderman as a new target. It does not assert a kill or victory.
 
 Raiders, merchants, young children, sleeping/passenger/NoAI residents, village travelers,
-active player movement orders and urgent native activities do not request reactions.
+and urgent native activities do not request reactions.
 Guards assigned a fixed post (including ranged sentries, sword posts and jailers), and residents protected by the labor planner's essential staffing
 rules do not receive optional movement routes. Custody remains in its existing player
 policy; reaction defense never targets players. The native recovery, panic, combat and
@@ -73,7 +73,7 @@ Perception visibility checks use the awareness system's shared budget.
 
 `/kkdev reaction <entity>` reports the latest pending/deferred/uncertain/failed/stale/started/
 completed/interrupted state when developer commands are enabled. The same bounded status
-is available to conversation context. Logs record outcomes without credentials or full
+stays in explicit developer diagnostics. Conversation reads factual undertaking outcomes instead. Logs record outcomes without credentials or full
 resident prompts. Reaction outcomes now use the existing [undertaking lifecycle](undertakings.md) and factual
 personal log. Transient reaction execution is not resumed after reload; a fresh decision
 is required.
@@ -94,9 +94,8 @@ in that directory, and set `general."Generate villages" = false` and `llm."Enabl
 in its `config/kithkyn-common.toml` before running. Require the log's
 `[resident-reaction-verify] RESULT PASS`; a successful Gradle exit alone does not prove the fixture passed. It exercises actual investigation and retreat navigation plus
 invalid, uncertain, late, changed-child and disabled outcomes, a guard moving away mid-route,
-last essential worker protection, eligible age/post changes and a warning without movement. This isolates game execution
-from model quality. `runResidentAgencyVerification` independently checks the shared navigation
-against the existing player action contract.
+last essential worker protection, eligible age/post changes and a warning without movement. The fixture also checks death at the exact defense deadline without claiming completion. This isolates game execution
+from model quality. Player companion controls and their fixture have been removed.
 
 The [Kev research note](research/kev-reaction-evaluation-2026-10-21.md) records a separate pinned
 local model replay: 38/48 authored labels matched, option order changed four of sixteen states,
@@ -106,6 +105,6 @@ calibration, larger populations in working villages, multiplayer, custody and po
 scenarios still need acceptance before enabling or recommending this experiment. #188 remains
 open. The undertaking rework is tracked in #189; voice remains separate work in #190.
 
-Latest local validation: 720 JUnit tests passed, all 17 bundled catalogs and 459 structure
-templates passed auditing, and both movement and reaction isolated-world fixtures passed.
-The reaction fixture uses controlled model results; this is not multiplayer acceptance.
+Run `./gradlew check` and the reaction fixture for current validation. The reaction fixture
+uses controlled model results; this is not multiplayer acceptance. There are no added
+action-status popups, HUD messages or technical status lines in player conversation.

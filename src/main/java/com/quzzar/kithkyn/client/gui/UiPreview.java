@@ -194,7 +194,7 @@ public final class UiPreview {
             return;
         }
         boolean trade = !"chat".equalsIgnoreCase(MODE) && !"typing".equalsIgnoreCase(MODE)
-                && !"plain".equalsIgnoreCase(MODE) && !"reveal".equalsIgnoreCase(MODE);
+                && !"plain".equalsIgnoreCase(MODE) && !"reveal".equalsIgnoreCase(MODE) && !"empty-reply".equalsIgnoreCase(MODE);
         // "plain" is somebody with no job to offer: no tabs at all, chat only,
         // which is what most villagers are and what had never been rendered.
         boolean merchant = !"plain".equalsIgnoreCase(MODE);
@@ -219,6 +219,14 @@ public final class UiPreview {
                 new com.quzzar.kithkyn.networking.OpenPersonChatPacket.ExchangeLine(
                         "Do you sell bread?",
                         "Aye, though the harvest was thin and I cannot let it go cheap.")));
+        if ("empty-reply".equalsIgnoreCase(MODE)) {
+            PersonChatScreen.openChat(0, List.of());
+            if (!PersonChatScreen.previewState().contains("awaitingReply=true")) throw new AssertionError("The empty greeting did not wait for a response");
+            PersonChatScreen.onReply(0, "", false);
+            String state = PersonChatScreen.previewState();
+            if (!state.contains("awaitingReply=false") || !state.endsWith("lines=0")) throw new AssertionError("Quiet acknowledgement added text or retained the wait: " + state);
+            Kithkyn.LOGGER.info("UI preview: empty reply released input with no status or NPC line");
+        }
         // A believable pack: a couple of stacks, a hotbar, and gaps.
         PersonChatScreen.previewInventory.put(0, new net.minecraft.world.item.ItemStack(
                 net.minecraft.world.item.Items.EMERALD, 41));

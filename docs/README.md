@@ -22,7 +22,7 @@ in it, and update it in the same change that moves what it describes.
 - [personas.md](personas.md): AI-generated character blurbs and quirks. The prompt
   contract, the generate-before-spawn lifecycle, and the persona package code map.
 - [undertakings.md](undertakings.md): the one saved commitment store, game-owned action lifecycle,
-  ownership, bounded reconsideration, factual memory and reload verification.
+  ownership, factual reaction memory and saved history.
 - [relationships.md](relationships.md): pairwise villager opinions. The one-pair-one-object
   model that keeps opinions roughly shared, the newcomer integration pass, and the code map.
 - [marriage.md](marriage.md): two villagers who have grown close ask the brain to wed them,
@@ -49,8 +49,8 @@ in it, and update it in the same change that moves what it describes.
 - [llm-brain.md](llm-brain.md): the required LLM that picks among rule-generated
   options for villagers, run offline via llama.cpp (or a cloud provider) with zero
   player setup. The two offline models, the three cloud services, and failure semantics.
-- [npc-agency.md](npc-agency.md): the approved plan for grounded awareness, conversational
-  actions, personality, memory and voice, plus the experimental movement-action contract.
+- [npc-agency.md](npc-agency.md): the approved plan for grounded awareness, autonomous
+  reactions, personality, memory and voice through existing interactions; player companion commands are removed.
 - [npc-reactions.md](npc-reactions.md): experimental independent typed decisions, legal reactions,
   scheduling, failure visibility and verification limits.
 - [npc-awareness.md](npc-awareness.md): recent witnessed/reported evidence, bounded perception,

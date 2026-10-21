@@ -281,7 +281,6 @@ public final class PersonChatContext {
     int worldYear = (int) YearManager.getYears(person.level()) + 1;
     system.append("The year is ").append(worldYear).append(" MCE.\n");
     system.append(person.awareness().briefing());
-    system.append(person.reactions().briefing());
 
     PersonalLogData log = person.getData(KithkynAttachments.PERSONAL_LOG.get());
     String memories = memorySummary(log, playerUUID, 3);

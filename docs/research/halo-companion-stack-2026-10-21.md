@@ -1,5 +1,10 @@
 # Halo companion model stack
 
+Current scope, 2026-10-21: player companion commands and their status UI were removed.
+The interaction is the existing right-click conversation. Any companion-command prompts,
+counts or suggestions below are historical evidence, not current implemented scope.
+The live evaluation corpus and parser no longer offer or score those commands.
+
 Reviewed 2026-10-21 against the model authors' cards, runtime repositories, and TypeSafe's API
 documentation. This is research, not a model benchmark or an implementation decision.
 

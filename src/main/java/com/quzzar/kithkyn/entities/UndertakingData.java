@@ -30,6 +30,7 @@ public record UndertakingData(List<Undertaking> undertakings) {
     /** Who raised it: the villager themselves, the world, or the player's doing. */
     public enum Origin { SELF, EVENT, PLAYER }
 
+    /** PLAYER_REQUEST is read-only provenance for history from the removed companion experiment. */
     public enum Lane { PLAYER_REQUEST, REACTION }
     public enum Phase {
         REQUESTED, ACCEPTED, UNDERWAY, COMPLETED, FAILED, INTERRUPTED, CANCELLED, EXPIRED;
@@ -53,22 +54,20 @@ public record UndertakingData(List<Undertaking> undertakings) {
     }
 
     /** Game-owned arguments. Dialogue cannot create, edit, or resolve an execution record. */
-    public record Execution(UUID resident, Lane lane, String action, Phase phase, String requesterName,
+    public record Execution(UUID resident, Lane lane, String action, Phase phase,
             String dimension, Optional<Position> destination, Optional<UUID> reference, long revision,
-            long startedAt, long expiresAt, boolean reconsidered, Duty duty) {
+            long startedAt, long expiresAt, Duty duty) {
         public static final Codec<Execution> CODEC = RecordCodecBuilder.<Execution>create(inst -> inst.group(
             UUIDUtil.STRING_CODEC.fieldOf("resident").forGetter(Execution::resident),
             com.quzzar.kithkyn.utils.KithkynCodecs.forEnum(Lane.class).fieldOf("lane").forGetter(Execution::lane),
             Codec.STRING.fieldOf("action").forGetter(Execution::action),
             com.quzzar.kithkyn.utils.KithkynCodecs.forEnum(Phase.class).fieldOf("phase").forGetter(Execution::phase),
-            Codec.STRING.fieldOf("requester_name").forGetter(Execution::requesterName),
             Codec.STRING.fieldOf("dimension").forGetter(Execution::dimension),
             Position.CODEC.optionalFieldOf("destination").forGetter(Execution::destination),
             UUIDUtil.STRING_CODEC.optionalFieldOf("reference").forGetter(Execution::reference),
             Codec.LONG.fieldOf("revision").forGetter(Execution::revision),
             Codec.LONG.fieldOf("started_at").forGetter(Execution::startedAt),
             Codec.LONG.fieldOf("expires_at").forGetter(Execution::expiresAt),
-            Codec.BOOL.optionalFieldOf("reconsidered", false).forGetter(Execution::reconsidered),
             Duty.CODEC.fieldOf("duty").forGetter(Execution::duty)
         ).apply(inst, Execution::new)).validate(execution -> execution.valid()
             ? com.mojang.serialization.DataResult.success(execution)
@@ -76,18 +75,16 @@ public record UndertakingData(List<Undertaking> undertakings) {
         public boolean valid() {
             var verbs = lane == Lane.PLAYER_REQUEST ? java.util.Set.of("follow", "wait", "go_to_point", "resume")
                 : java.util.Set.of("continue", "warn", "retreat", "seek_help", "investigate", "defend");
-            return verbs.contains(action) && !dimension.isBlank() && dimension.length() <= 128 && requesterName.length() <= 64
-                && revision > 0 && startedAt >= 0 && expiresAt > startedAt && expiresAt - startedAt <= 6000
+            return verbs.contains(action) && !dimension.isBlank() && dimension.length() <= 128
+                && revision > 0 && startedAt >= 0 && expiresAt > startedAt && expiresAt - startedAt <= (lane == Lane.REACTION ? 200 : 6000)
                 && (!instant() || !phase.executing())
                 && destination.map(Position::finite).orElse(true)
                 && (!(phase.executing() || phase == Phase.COMPLETED)
                     || !java.util.Set.of("wait", "go_to_point", "retreat", "seek_help", "investigate").contains(action) || destination.isPresent());
         }
         public boolean instant() { return action.equals("resume") || action.equals("continue"); }
-        public Execution phase(Phase next) { return new Execution(resident, lane, action, next, requesterName,
-            dimension, destination, reference, revision, startedAt, expiresAt, reconsidered, duty); }
-        public Execution reconsider() { return new Execution(resident, lane, action, phase, requesterName,
-            dimension, destination, reference, revision, startedAt, expiresAt, true, duty); }
+        public Execution phase(Phase next) { return new Execution(resident, lane, action, next,
+            dimension, destination, reference, revision, startedAt, expiresAt, duty); }
     }
 
     /** One ordered progress marker on a milestoned undertaking. */

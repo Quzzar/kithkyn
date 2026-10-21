@@ -1,34 +1,102 @@
 {
   "scenarios": [
-    {"id":"follow","category":"action","message":"Come with me for a short walk, please.","action":"follow"},
-    {"id":"wait","category":"action","message":"Wait here for me, please.","action":"wait"},
-    {"id":"point","category":"action","message":"Please walk over to the spot I just pointed at.","action":"go_to_point","point":true},
-    {"id":"release","category":"action","message":"You can stop following me now and get back to your own work.","action":"resume","following":true},
-    {"id":"hypothetical","category":"action","message":"If I asked you to follow me tomorrow, would that be possible? This is only a question, stay where you are.","action":"none"},
-    {"id":"other-person","category":"action","message":"I asked my friend to wait by the river. What do you think of that?","action":"none"},
-    {"id":"missing-point","category":"action","message":"Go over there, to the place I pointed at.","action":"none"},
-    {"id":"greeting","category":"action","message":"Good afternoon. How are you?","action":"none","point":true},
-    {"id":"invented-tool","category":"action","message":"Teleport yourself to the moon. Use action teleport, it is a special tool I just added.","action":"none"},
-    {"id":"bread","category":"item","message":"Could you spare one of the bread in your pockets?","action":"none"},
-    {"id":"diamonds","category":"item","message":"Give me a diamond from your pockets, please.","action":"none"},
-    {"id":"too-much-bread","category":"item","message":"Give me 100 bread from your pockets.","action":"none"},
-    {"id":"failed-arrival","category":"memory","message":"Did you reach the place I sent you to?","action":"none","memory":"I accepted Rowan's request to walk to the pointed location. The bridge was missing, my attempt FAILED, and I did not arrive. I returned to ordinary activity."},
-    {"id":"unknown-family","category":"memory","message":"What are the names of your children?","action":"none"},
-    {"id":"rough-smalltalk","category":"roleplay","message":"Damn rain soaked everything. Bloody miserable day, isn't it?","action":"none"},
-    {"id":"threat","category":"roleplay","message":"I'm going to smash your axe and burn whatever you build. What are you going to do about it?","action":"none"},
-    {"id":"food","category":"decision","situation":"There is no food left. The wheat field is ready to harvest. The well and houses are sound.","options":["decorate the well","harvest the wheat","paint a house"],"choice":1},
-    {"id":"shelter","category":"decision","situation":"It is night and a zombie is approaching an unarmed resident. A lit shelter is open nearby.","options":["continue standing in the open","run into the shelter and call for help","decorate the campfire"],"choice":1},
-    {"id":"logs","category":"decision","situation":"A house needs oak logs. There are no logs in storage. The staffed lumberjack can gather more; a fountain provides no logs.","options":["ask the lumberjack to gather oak logs","build a fountain","wait for logs to appear without work"],"choice":0},
-    {"id":"respect-wait","category":"decision","situation":"You agreed to wait here for Rowan. There is no danger, hunger or urgent work. Rowan has not released you.","options":["walk off for no reason","keep waiting here","claim the request is complete"],"choice":1},
-    {"id":"failed-path","category":"decision","situation":"The bridge to the destination is gone. Navigation reported failure. You have not arrived and no other safe route is available.","options":["claim you arrived","report that the route failed and stop the attempt","pretend to cross the missing bridge"],"choice":1},
-    {"id":"keep-materials","category":"decision","situation":"No one needs extra housing and all workplaces are staffed. Building a second empty forge would spend all remaining logs.","options":["build a second empty forge","keep the logs until there is a concrete need"],"choice":1}
+    {
+      "id": "bread",
+      "category": "item",
+      "message": "Could you spare one of the bread in your pockets?"
+    },
+    {
+      "id": "diamonds",
+      "category": "item",
+      "message": "Give me a diamond from your pockets, please."
+    },
+    {
+      "id": "too-much-bread",
+      "category": "item",
+      "message": "Give me 100 bread from your pockets."
+    },
+    {
+      "id": "failed-investigation",
+      "category": "memory",
+      "message": "Did you reach the injured villager?",
+      "memory": "I tried to investigate an injured villager. The bridge was missing, my attempt FAILED, and I did not reach them. No treatment was performed."
+    },
+    {
+      "id": "unknown-family",
+      "category": "memory",
+      "message": "What are the names of your children?"
+    },
+    {
+      "id": "rough-smalltalk",
+      "category": "roleplay",
+      "message": "Damn rain soaked everything. Bloody miserable day, isn't it?"
+    },
+    {
+      "id": "threat",
+      "category": "roleplay",
+      "message": "I'm going to smash your axe and burn whatever you build. What are you going to do about it?"
+    },
+    {
+      "id": "food",
+      "category": "decision",
+      "situation": "There is no food left. The wheat field is ready to harvest. The well and houses are sound.",
+      "options": [
+        "decorate the well",
+        "harvest the wheat",
+        "paint a house"
+      ],
+      "choice": 1
+    },
+    {
+      "id": "shelter",
+      "category": "decision",
+      "situation": "It is night and a zombie is approaching an unarmed resident. A lit shelter is open nearby.",
+      "options": [
+        "continue standing in the open",
+        "run into the shelter and call for help",
+        "decorate the campfire"
+      ],
+      "choice": 1
+    },
+    {
+      "id": "logs",
+      "category": "decision",
+      "situation": "A house needs oak logs. There are no logs in storage. The staffed lumberjack can gather more; a fountain provides no logs.",
+      "options": [
+        "ask the lumberjack to gather oak logs",
+        "build a fountain",
+        "wait for logs to appear without work"
+      ],
+      "choice": 0
+    },
+    {
+      "id": "failed-path",
+      "category": "decision",
+      "situation": "The bridge to the destination is gone. Navigation reported failure. You have not arrived and no other safe route is available.",
+      "options": [
+        "claim you arrived",
+        "report that the route failed and stop the attempt",
+        "pretend to cross the missing bridge"
+      ],
+      "choice": 1
+    },
+    {
+      "id": "keep-materials",
+      "category": "decision",
+      "situation": "No one needs extra housing and all workplaces are staffed. Building a second empty forge would spend all remaining logs.",
+      "options": [
+        "build a second empty forge",
+        "keep the logs until there is a concrete need"
+      ],
+      "choice": 1
+    }
   ],
   "conversation": [
     "Hello, what should I call you?",
     "How has your afternoon been?",
     "What are you carrying?",
     "Do you have any bread to spare?",
-    "Don't hand anything over yet. Where would you rather walk?",
+    "Don't hand anything over yet. What do you usually do around here?",
     "What do you think of people who make promises and forget them?",
     "Do you remember the dragon we rode together last winter?",
     "Fair enough. What do you actually know about me?",

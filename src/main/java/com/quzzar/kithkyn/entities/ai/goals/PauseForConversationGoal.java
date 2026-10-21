@@ -28,8 +28,6 @@ public class PauseForConversationGoal extends Goal {
 
   @Override
   public boolean canUse() {
-    // An accepted movement request can be performed while the player is still talking.
-    if (person.agency().current().isPresent()) return false;
     // Self-preservation outranks politeness: a burning or drowning villager
     // stops standing still to chat, whatever the conversation state.
     if (person.isOnFire() || person.isInLava() || person.getAirSupply() <= 0) {

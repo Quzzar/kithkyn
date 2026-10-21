@@ -9,7 +9,6 @@ import statistics
 from pathlib import Path
 from typing import Any
 
-ACTIONS = {"follow", "wait", "go_to_point", "resume"}
 STOCK = {"minecraft:bread": 3, "minecraft:oak_log": 4, "minecraft:stone_axe": 1}
 
 
@@ -28,14 +27,14 @@ def invalid_constant(value: str) -> None:
 
 
 def reply(raw: str) -> dict[str, Any] | None:
-    """Require a single strict object, spoken text, and a supported optional action."""
+    """Require a single strict chat object without removed companion tools."""
     try:
         value = json.loads(raw, object_pairs_hook=unique_object, parse_constant=invalid_constant)
     except (ValueError, TypeError):
         return None
     if not isinstance(value, dict) or not isinstance(value.get("say"), str) or not value["say"].strip():
         return None
-    if "action" in value and (not isinstance(value["action"], str) or value["action"] not in ACTIONS):
+    if not value.keys() <= {"say", "give", "give_count", "opinion", "request", "fight", "done"}:
         return None
     return value
 
@@ -78,14 +77,6 @@ def summarize(report: dict[str, Any], corpus: dict[str, Any]) -> dict[str, Any]:
         raise ValueError(f"{report['candidate']}: missing or duplicate samples")
     chats = [row for row in samples if row["category"] != "decision"]
     decoded = {id(row): reply(row.get("raw", "")) for row in chats}
-    expected_actions = {case["id"]: case["action"] for case in corpus["scenarios"] if case["category"] == "action"}
-
-    def matches(row: dict[str, Any]) -> bool:
-        value = decoded[id(row)]
-        return value is not None and value.get("action", "none") == expected_actions[row["id"]]
-
-    positive = [row for row in chats if row["category"] == "action" and expected_actions[row["id"]] != "none"]
-    negative = [row for row in chats if row["category"] == "action" and expected_actions[row["id"]] == "none"]
     items = [row for row in chats if row["category"] == "item"]
     decisions = [row for row in samples if row["category"] == "decision"]
     conversation = [row for row in chats if row["category"] == "conversation"]
@@ -97,18 +88,12 @@ def summarize(report: dict[str, Any], corpus: dict[str, Any]) -> dict[str, Any]:
         "samples": len(samples),
         "response_present": ratio([row["response_present"] for row in samples]),
         "strict_chat_object": ratio([decoded[id(row)] is not None for row in chats]),
-        "requested_action_match": ratio([matches(row) for row in positive]),
-        "negative_action_cases": ratio([matches(row) for row in negative]),
         "item_claims_legal": ratio([decoded[id(row)] is not None and legal_inventory(decoded[id(row)]) for row in items]),
         "illegal_item_claims_in_strict_objects": sum(
             decoded[id(row)] is not None and not legal_inventory(decoded[id(row)]) for row in items
         ),
         "decision_format_valid": ratio([row.get("decision_valid", False) for row in decisions]),
         "decision_correct": ratio([row.get("decision_correct", False) for row in decisions]),
-        "extra_actions_outside_action_cases": sum(
-            decoded[id(row)] is not None and "action" in decoded[id(row)]
-            for row in chats if row["category"] != "action"
-        ),
         "unrequested_fights": sum(
             decoded[id(row)] is not None and decoded[id(row)].get("fight") is True
             for row in chats if row["id"] != "threat"
@@ -146,9 +131,8 @@ def main() -> None:
         "corpus_sha256": hashlib.sha256(args.corpus.read_bytes()).hexdigest(),
         "source_report_sha256": {path.name: hashlib.sha256(path.read_bytes()).hexdigest() for path in args.reports},
         "notes": [
-            "Positive matches measure literal request fulfillment; a grounded refusal can be legitimate.",
             "Valid JSON and distinct openings do not establish personality, truthfulness, or conversation quality.",
-            "Strict chat objects exclude Markdown fences; production dialogue can recover text that the strict action boundary rejects.",
+            "Strict chat objects exclude Markdown fences and removed companion action fields.",
             "Memory, roleplay and full conversations require human reading; no automated quality judge is used.",
             "RSS is sampled process memory, not peak total RAM or GPU/unified memory.",
             "Strict decision scoring can be stricter than the production generic decision parser.",

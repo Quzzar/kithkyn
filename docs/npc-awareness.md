@@ -1,8 +1,9 @@
 # Resident awareness
 
 Initial capture and conversation grounding for [#187](https://github.com/Quzzar/kithkyn/issues/187).
-This supplies recent evidence to existing conversations. It does not yet add autonomous
-model-driven reactions, voice input, or durable intentions. The larger delivery plan is in
+This supplies recent evidence to existing conversations. Autonomous reactions and their
+saved outcome history use the separate reaction/undertaking systems; awareness itself
+does not choose actions or record durable commitments. Voice input remains future work. The larger delivery plan is in
 [npc-agency.md](npc-agency.md).
 
 ## What a resident knows

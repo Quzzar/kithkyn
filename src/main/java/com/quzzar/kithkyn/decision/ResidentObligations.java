@@ -1,4 +1,4 @@
-package com.quzzar.kithkyn.agency;
+package com.quzzar.kithkyn.decision;
 
 import java.util.Optional;
 import com.quzzar.kithkyn.entities.RealPerson;

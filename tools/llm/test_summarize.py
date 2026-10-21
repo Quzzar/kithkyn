@@ -7,16 +7,17 @@ from summarize import legal_inventory, reply, summarize
 
 
 class ReplayScoringTest(unittest.TestCase):
-    def test_missing_dialogue_and_ambiguous_actions_are_not_usable(self) -> None:
+    def test_missing_dialogue_and_removed_actions_are_not_usable(self) -> None:
         for raw in [
             '{"action":"follow"}', '{"say":"", "action":"follow"}',
             '{"say":"Yes", "action":"teleport"}', '{"say":"Yes", "action":null}',
+            '{"say":"Yes", "action":"follow"}',
             '{"say":"Yes", "action":"follow", "action":"wait"}',
             '{"say":"Yes"} trailing', '{"say":"Yes", "x":NaN}',
         ]:
             self.assertIsNone(reply(raw), raw)
 
-    def test_refusal_is_valid_dialogue_without_a_selected_action(self) -> None:
+    def test_ordinary_dialogue_remains_valid(self) -> None:
         self.assertEqual({"say": "I need to stay here."}, reply('{"say":"I need to stay here."}'))
 
     def test_minecraft_default_namespace_is_accepted(self) -> None:
@@ -33,12 +34,12 @@ class ReplayScoringTest(unittest.TestCase):
             self.assertFalse(legal_inventory(value), value)
 
     def test_empty_response_counts_as_failure_without_requiring_model_output_labels(self) -> None:
-        corpus = {"scenarios": [{"id": "follow", "category": "action", "action": "follow"}], "conversation": []}
+        corpus = {"scenarios": [{"id": "bread", "category": "item"}], "conversation": []}
         report = {"candidate": "fixture", "status": "complete", "chat_format": "llama3", "repeats": 1,
-                  "samples": [{"id": "follow", "category": "action", "repeat": 0,
+                  "samples": [{"id": "bread", "category": "item", "repeat": 0,
                                "response_present": False, "latency_ms": 45000, "rss_kib": None}]}
         result = summarize(report, corpus)
-        self.assertEqual({"passed": 0, "total": 1}, result["requested_action_match"])
+        self.assertEqual({"passed": 0, "total": 1}, result["item_claims_legal"])
         self.assertEqual({"passed": 0, "total": 1}, result["strict_chat_object"])
 
 

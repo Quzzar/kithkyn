@@ -6,7 +6,6 @@ import com.quzzar.kithkyn.entities.UndertakingData.Lane;
 import com.quzzar.kithkyn.entities.UndertakingData.Execution;
 import com.quzzar.kithkyn.entities.UndertakingData.Phase;
 import com.quzzar.kithkyn.entities.UndertakingData.Duty;
-import com.quzzar.kithkyn.agency.ResidentObligations;
 import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.LinkedHashSet;
@@ -16,7 +15,8 @@ import java.util.Optional;
 import java.util.UUID;
 
 import com.quzzar.kithkyn.Kithkyn;
-import com.quzzar.kithkyn.agency.ResidentAgency;
+import com.quzzar.kithkyn.entities.ai.ResidentWalk;
+import com.quzzar.kithkyn.entities.UndertakingData.Position;
 import com.quzzar.kithkyn.awareness.ObservationLog.Evidence;
 import com.quzzar.kithkyn.awareness.ObservationLog.Kind;
 import com.quzzar.kithkyn.awareness.ObservationLog.Observation;
@@ -75,11 +75,6 @@ public final class ResidentReactions {
           context.getSource().sendSuccess(() -> net.minecraft.network.chat.Component.literal(resident.reactions().report()), false);
           return 1;
         }));
-  }
-
-  public String briefing() {
-    return KithkynConfig.ResidentReactions || status != Status.IDLE && status != Status.DISABLED
-        ? "\nOptional reaction status: " + status + ". " + detail + "\n" : "";
   }
 
   /** Staggered admission, one decision per episode, ten-second resident cooldown. No model call from an active goal. */
@@ -154,7 +149,6 @@ public final class ResidentReactions {
         && !person.isOnFire() && !person.isInLava() && person.getAirSupply() > 0
         && person.getHealth() >= person.getMaxHealth() / 3F
         && !(person.shouldSleepAtNight() && person.level().isNight())
-        && person.agency().current().isEmpty()
         && (person.getVillage() == null || !person.getVillage().isTraveler(person.getUUID()))
         && person.goalSelector.getAvailableGoals().stream().noneMatch(goal -> goal.isRunning() && goal.getPriority() < 3
             && (goal.getGoal().getFlags().contains(Goal.Flag.MOVE) || goal.getGoal().getFlags().contains(Goal.Flag.LOOK)));
@@ -240,7 +234,7 @@ public final class ResidentReactions {
         && active.dimension().equals(person.level().dimension().location().toString())
         && person.level().getGameTime() < expected.expiresAt()
         && ResidentObligations.mayLeavePost(person)
-        && person.agency().validGround(ResidentAgency.position(expected.destination()))
+        && ResidentWalk.usableGround(person, expected.destination())
         && (expected.action() != Action.INVESTIGATE || person.awareness().snapshot().stream().noneMatch(event -> event.kind() == Kind.VISIBLE_THREAT))
         && (person.tickCount % 10 != 0 || destinationValid(active, expected.action(), expected.destination()));
   }
@@ -302,8 +296,8 @@ public final class ResidentReactions {
   }
   private boolean allied(RealPerson other) { return !other.isRaider() && person.getVillage() != null && other.getVillage() == person.getVillage(); }
   private boolean reachable(Vec3 destination) {
-    if (destination == null || !person.agency().validGround(ResidentAgency.position(destination))) return false;
-    var path = com.quzzar.kithkyn.entities.ai.ResidentWalk.path(person, destination, false);
+    if (!ResidentWalk.usableGround(person, destination)) return false;
+    var path = ResidentWalk.path(person, destination);
     return path != null && path.canReach();
   }
   private Vec3 near(LivingEntity entity) {
@@ -319,9 +313,9 @@ public final class ResidentReactions {
   private boolean begin(Capture capture, Action action, Vec3 destination) {
     var key = KithkynAttachments.UNDERTAKINGS.get();
     var execution = new Execution(person.getUUID(),
-        Lane.REACTION, action.key(), Phase.REQUESTED,
-        "", capture.dimension(), Optional.ofNullable(destination).map(ResidentAgency::position),
-        Optional.of(action == Action.SEEK_HELP ? capture.helper() : capture.event().subject().id()), capture.offer().revision(), person.level().getGameTime(), person.level().getGameTime() + 200, false, capture.duty());
+        Lane.REACTION, action.key(), Phase.REQUESTED, capture.dimension(),
+        Optional.ofNullable(destination).map(value -> new Position(value.x, value.y, value.z)),
+        Optional.of(action == Action.SEEK_HELP ? capture.helper() : capture.event().subject().id()), capture.offer().revision(), person.level().getGameTime(), person.level().getGameTime() + 200, capture.duty());
     var result = UndertakingService.requested(person.getData(key), execution, Optional.empty(), person.level().getDayTime());
     if (!UndertakingService.commit(person, result)) { update(Status.FAILED, "No capacity to record this reaction undertaking."); return false; }
     undertaking = result.affected().orElseThrow().id();

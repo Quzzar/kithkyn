@@ -1,5 +1,10 @@
 # Local model replay, 2026-10-21
 
+Current scope, 2026-10-21: player companion commands and their status UI were removed.
+The interaction is the existing right-click conversation. Any companion-command prompts,
+counts or suggestions below are historical evidence, not current implemented scope.
+The live evaluation corpus and parser no longer offer or score those commands.
+
 Keep the current model recommendations. The modified checkpoints are experiments, and this
 replay does not establish that either improves Kithkyn's residents. Conversational action
 selection remains experimental and disabled by default.

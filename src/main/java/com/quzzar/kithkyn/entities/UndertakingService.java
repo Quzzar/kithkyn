@@ -18,12 +18,14 @@ public final class UndertakingService {
   }
 
   public static Result requested(UndertakingData data, Execution execution, Optional<UUID> requester, long day) {
-    if (!execution.valid() || execution.lane() == UndertakingData.Lane.PLAYER_REQUEST && requester.isEmpty() || execution.phase() != Phase.REQUESTED || data.allOpen().size() >= UndertakingData.MAX_OPEN) {
+    if (!execution.valid() || execution.lane() != UndertakingData.Lane.REACTION || execution.phase() != Phase.REQUESTED) {
+      return new Result(data, Optional.empty(), "No supported new reaction undertaking.");
+    }
+    if (data.allOpen().size() >= UndertakingData.MAX_OPEN) {
       return new Result(data, Optional.empty(), "No capacity for a new undertaking.");
     }
     Undertaking matter = new Undertaking(UUID.randomUUID(), UndertakingData.Valence.POSITIVE, State.OPEN,
-        execution.lane() == UndertakingData.Lane.PLAYER_REQUEST ? UndertakingData.Origin.PLAYER : UndertakingData.Origin.EVENT,
-        execution.action() + (execution.requesterName().isBlank() ? "" : " for " + execution.requesterName()), requester,
+        UndertakingData.Origin.EVENT, execution.action(), requester,
         List.of(new Milestone("REQUESTED", true)), Optional.of("A request was recorded; nothing has been agreed or completed."),
         Optional.empty(), day, day, Optional.of(execution));
     return new Result(data.with(matter), Optional.of(matter), "Requested.");
@@ -34,6 +36,9 @@ public final class UndertakingService {
     if (found.isEmpty() || !found.get().isOpen() || found.get().execution().isEmpty()
         || !found.get().execution().get().resident().equals(resident)) return new Result(data, Optional.empty(), "No owned open execution.");
     Undertaking old = found.get(); Execution execution = old.execution().get();
+    if (execution.lane() == UndertakingData.Lane.PLAYER_REQUEST && next != Phase.CANCELLED && next != Phase.EXPIRED) {
+      return new Result(data, Optional.empty(), "Retired companion requests can only be closed as history.");
+    }
     if (!allowed(execution, next) || !execution.phase(next).valid()) return new Result(data, Optional.empty(), "Invalid execution transition.");
     State state = switch (next) {
       case ACCEPTED, UNDERWAY -> State.ACTIVE;
@@ -65,17 +70,25 @@ public final class UndertakingService {
     };
   }
 
-  /** A changed relevant fact asks for one fresh decision; it never authorizes a retry or marks success. */
-  public static Result reconsider(UndertakingData data, UUID resident, UUID id, String fact, long day, long now) {
-    var found = data.byId(id);
-    if (found.isEmpty() || found.get().execution().isEmpty()) return new Result(data, Optional.empty(), "No execution.");
-    Undertaking old = found.get(); Execution execution = old.execution().get();
-    if (!old.isOpen() || !execution.resident().equals(resident) || execution.reconsidered() || now >= execution.expiresAt()
-        || execution.phase() != Phase.FAILED && execution.phase() != Phase.INTERRUPTED) return new Result(data, Optional.empty(), "No reconsideration is due.");
-    String note = execution.phase() + ": " + bounded(fact) + " A fresh valid decision is required; no action restarted.";
-    Undertaking updated = new Undertaking(old.id(), old.valence(), old.state(), old.origin(), old.summary(), old.withWhom(),
-        old.steps(), Optional.of(note), old.resolution(), old.openedDay(), day, Optional.of(execution.reconsider()));
-    return new Result(data.with(updated), Optional.of(updated), note);
+  /** Saves remain factual history; neither retired companion requests nor old model claims restart work. */
+  public static void maintain(RealPerson person) {
+    if (!(person.level() instanceof net.minecraft.server.level.ServerLevel level) || !person.isAlive() || person.isRemoved()) return;
+    var key = KithkynAttachments.UNDERTAKINGS.get();
+    for (var matter : person.getData(key).allOpen()) {
+      if (matter.execution().isEmpty()) {
+        commit(person, archiveNarrative(person.getData(key), matter.id(), level.getDayTime()));
+        continue;
+      }
+      var execution = matter.execution().orElseThrow();
+      if (!execution.resident().equals(person.getUUID())) continue;
+      if (execution.lane() == UndertakingData.Lane.PLAYER_REQUEST) {
+        commit(person, transition(person.getData(key), person.getUUID(), matter.id(), Phase.CANCELLED,
+            "The companion-command experiment was removed. This earlier request is closed without claiming completion.", level.getDayTime()));
+      } else if (level.getGameTime() >= execution.expiresAt() || level.getGameTime() < execution.startedAt()) {
+        commit(person, transition(person.getData(key), person.getUUID(), matter.id(), Phase.EXPIRED,
+            "The reaction's bounded lifetime ended; no success is claimed.", level.getDayTime()));
+      }
+    }
   }
 
   /** One write boundary for the existing attachment, factual event log and relationship reflection input. */

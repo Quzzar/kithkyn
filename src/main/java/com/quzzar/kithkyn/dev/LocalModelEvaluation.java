@@ -26,12 +26,8 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonNull;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.mojang.authlib.GameProfile;
 import com.quzzar.kithkyn.Kithkyn;
 import com.quzzar.kithkyn.PersonEntityType;
-import com.quzzar.kithkyn.agency.ResidentActionSelection;
-import com.quzzar.kithkyn.agency.ResidentActionState;
-import com.quzzar.kithkyn.agency.ResidentActionState.Action;
 import com.quzzar.kithkyn.chat.PersonChatContext;
 import com.quzzar.kithkyn.chat.PersonChatContext.Turn;
 import com.quzzar.kithkyn.chat.PersonChatDispatcher;
@@ -50,14 +46,12 @@ import com.quzzar.kithkyn.village.Occupation;
 
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.GameRules;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.loading.FMLPaths;
-import net.neoforged.neoforge.common.util.FakePlayerFactory;
 import net.neoforged.neoforge.event.server.ServerStartedEvent;
 import net.neoforged.neoforge.event.server.ServerStoppingEvent;
 
@@ -80,8 +74,8 @@ public final class LocalModelEvaluation {
   private static volatile Thread worker;
 
   private record Candidate(String id, Model model) { }
-  private record Scenario(String id, String category, String message, String action, boolean point,
-      boolean following, String memory, String situation, List<String> options, int choice) { }
+  private record Scenario(String id, String category, String message, String memory,
+      String situation, List<String> options, int choice) { }
   private record Corpus(List<Scenario> scenarios, List<String> conversation) { }
 
   private LocalModelEvaluation() { }
@@ -96,8 +90,8 @@ public final class LocalModelEvaluation {
     level.setDayTime(6000);
     worker = new Thread(() -> {
       try {
-        if (KithkynConfig.LlmEnabled || !KithkynConfig.LlmResidentActions || KithkynConfig.GenerateVillages) {
-          throw new IllegalStateException("Evaluation requires Enable LLM?=false, Experimental resident actions=true, and Generate villages=false");
+        if (KithkynConfig.LlmEnabled || KithkynConfig.GenerateVillages) {
+          throw new IllegalStateException("Evaluation requires Enable LLM?=false and Generate villages=false");
         }
         Corpus corpus = JSON.fromJson(Files.readString(Path.of(System.getProperty("kithkyn.models.corpus"))), Corpus.class);
         validate(corpus);
@@ -138,9 +132,8 @@ public final class LocalModelEvaluation {
             || scenario.choice() < 0 || scenario.choice() >= scenario.options().size()) {
           throw new IllegalArgumentException("Invalid decision case " + scenario.id());
         }
-      } else if (!List.of("action", "item", "memory", "roleplay").contains(scenario.category())
-          || scenario.message() == null || scenario.message().isBlank() || scenario.action() == null
-          || !scenario.action().equals("none") && Action.parse(scenario.action()).isEmpty()) {
+      } else if (!List.of("item", "memory", "roleplay").contains(scenario.category())
+          || scenario.message() == null || scenario.message().isBlank()) {
         throw new IllegalArgumentException("Invalid conversation case " + scenario.id());
       }
     }
@@ -202,8 +195,7 @@ public final class LocalModelEvaluation {
       List<Turn> history = new ArrayList<>();
       for (int index = 0; index < corpus.conversation().size(); index++) {
         String line = corpus.conversation().get(index);
-        Scenario scenario = new Scenario("conversation-" + index, "conversation", line, "none", false,
-            false, null, null, List.of(), 0);
+        Scenario scenario = new Scenario("conversation-" + index, "conversation", line, null, null, List.of(), 0);
         List<Turn> captured = List.copyOf(history);
         CompletionRequest request = server.submit(() -> request(server.overworld(), scenario, captured)).get(30, TimeUnit.SECONDS);
         JsonObject sample = sample(provider, process, scenario, request, 0);
@@ -231,22 +223,9 @@ public final class LocalModelEvaluation {
   private static CompletionRequest request(ServerLevel level, Scenario scenario, List<Turn> history) {
     if (scenario.category().equals("decision")) return LlmService.decisionRequest(scenario.situation(), scenario.options(), false);
     EvaluationPerson person = new EvaluationPerson(level);
-    ServerPlayer speaker = FakePlayerFactory.get(level, new GameProfile(SPEAKER, "Rowan"));
-    speaker.moveTo(0.5D, 80, 3.5D);
     if (scenario.memory() != null) person.logMemory(scenario.memory(), Optional.of(SPEAKER));
-    if (scenario.following()) {
-      person.agency().apply(person.agency().offer(speaker),
-          new ResidentActionSelection(Optional.of(Action.FOLLOW), Optional.empty()), speaker);
-      if (person.agency().current().filter(intent -> intent.action() == Action.FOLLOW).isEmpty()) {
-        throw new IllegalStateException("The active-follow evaluation fixture was rejected");
-      }
-    }
     var assembled = PersonChatContext.assemble(person, "Rowan", SPEAKER, history, scenario.message());
-    var offer = new ResidentActionState.Offer(1, SPEAKER, "Rowan", level.dimension().location().toString(),
-        scenario.point() ? new com.quzzar.kithkyn.entities.UndertakingData.Position(6.5D, 80, 2.5D) : null,
-        new com.quzzar.kithkyn.entities.UndertakingData.Position(0.5D, 80, 0.5D), level.getGameTime() + 600);
-    var grounded = new PersonChatContext.AssembledChat(assembled.system() + person.agency().prompt(offer), assembled.user(), assembled.examples());
-    return PersonChatDispatcher.initialRequest(grounded);
+    return PersonChatDispatcher.initialRequest(assembled);
   }
 
   private static JsonObject sample(OpenAiCompatibleProvider provider, Process process, Scenario scenario,
@@ -256,7 +235,6 @@ public final class LocalModelEvaluation {
     row.addProperty("category", scenario.category());
     row.addProperty("repeat", repeat);
     if (scenario.category().equals("decision")) row.addProperty("expected_choice", scenario.choice());
-    else row.addProperty("expected_action", scenario.action());
     row.add("request", JSON.toJsonTree(request));
     row.addProperty("prompt_sha256", digest(JSON.toJson(request).getBytes(java.nio.charset.StandardCharsets.UTF_8)));
     long started = System.nanoTime();
@@ -273,41 +251,27 @@ public final class LocalModelEvaluation {
       row.addProperty("decision_correct", decision.isPresent() && decision.get().choiceIndex() == scenario.choice());
       return row;
     }
-    ResidentActionSelection selected = ResidentActionSelection.parse(raw);
-    row.addProperty("action_valid", selected.error().isEmpty());
-    String action = selected.action().map(Action::wireName).orElse("none");
-    row.addProperty("selected_action", action);
-    row.addProperty("action_matches", selected.error().isEmpty() && action.equals(scenario.action()));
-    selected.error().ifPresent(error -> row.addProperty("action_error", error));
-    try {
-      JsonObject reply = JsonParser.parseString(raw).getAsJsonObject();
-      if (reply.has("say") && reply.get("say").isJsonPrimitive() && reply.getAsJsonPrimitive("say").isString()) {
-        String say = reply.get("say").getAsString();
-        row.addProperty("say", say);
-        row.addProperty("dialogue_present", !say.isBlank());
-      }
-      row.addProperty("inventory_legal", inventoryLegal(reply));
-      row.addProperty("fight", reply.has("fight") && reply.get("fight").getAsBoolean());
-    } catch (RuntimeException malformed) {
-      row.addProperty("dialogue_present", false);
-    }
+    var reply = PersonChatDispatcher.parseReply(raw);
+    row.addProperty("reply_valid", reply != null);
+    row.addProperty("dialogue_present", reply != null);
+    if (reply == null) return row;
+    row.addProperty("say", reply.say());
+    row.addProperty("inventory_legal", inventoryLegal(reply));
+    row.addProperty("fight", reply.fight());
     return row;
   }
 
-  private static boolean inventoryLegal(JsonObject reply) {
-    if (!reply.has("give")) return true;
-    try {
-      String itemId = reply.get("give").getAsString();
-      if (!itemId.contains(":")) itemId = "minecraft:" + itemId;
-      int available = switch (itemId) {
-        case "minecraft:bread" -> 3;
-        case "minecraft:oak_log" -> 4;
-        case "minecraft:stone_axe" -> 1;
-        default -> 0;
-      };
-      int count = reply.has("give_count") ? reply.get("give_count").getAsBigDecimal().intValueExact() : 1;
-      return count > 0 && count <= available;
-    } catch (RuntimeException malformed) { return false; }
+  private static boolean inventoryLegal(PersonChatDispatcher.Reply reply) {
+    if (reply.give() == null) return true;
+    String itemId = reply.give();
+    if (!itemId.contains(":")) itemId = "minecraft:" + itemId;
+    int available = switch (itemId) {
+      case "minecraft:bread" -> 3;
+      case "minecraft:oak_log" -> 4;
+      case "minecraft:stone_axe" -> 1;
+      default -> 0;
+    };
+    return reply.giveCount() > 0 && reply.giveCount() <= available;
   }
 
   private static void awaitHealthy(HttpClient client, Process process, int port) throws Exception {
@@ -377,7 +341,7 @@ public final class LocalModelEvaluation {
       setLifeStage(AgeStage.ADULT);
       setOccupation(Occupation.WANDERER);
       setData(KithkynAttachments.PERSONA.get(), new PersonaData(
-          "A friendly, blunt traveler who enjoys helping with short walks. She is independent, dislikes threats,"
+          "A friendly, blunt traveler who enjoys conversation. She is independent, dislikes threats,"
               + " and admits when she does not know something. She has no current urgent duties or commitments.",
           "Taps her axe handle while thinking.", "evaluation-fixture", 0, 1));
       setItemSlot(net.minecraft.world.entity.EquipmentSlot.MAINHAND, new ItemStack(Items.STONE_AXE));

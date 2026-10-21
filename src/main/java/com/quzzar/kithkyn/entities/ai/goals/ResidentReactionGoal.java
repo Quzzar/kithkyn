@@ -24,7 +24,7 @@ public final class ResidentReactionGoal extends Goal {
   @Override public void tick() {
     if (!canContinueToUse()) return;
     if (!person.reactions().validMovement(movement)) { person.reactions().finish(Status.INTERRUPTED, "The reaction walk became unavailable."); return; }
-    var step = walk.tick(person, movement.destination(), 1, false, 0.65D);
+    var step = walk.tick(person, movement.destination(), 1, 0.65D);
     if (step.state() == ResidentWalk.State.FAILED) person.reactions().finish(Status.FAILED, step.detail());
     else if (step.state() == ResidentWalk.State.ARRIVED) person.reactions().arrived(movement);
   }

@@ -13,8 +13,6 @@ import java.util.concurrent.ConcurrentHashMap;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.quzzar.kithkyn.Kithkyn;
-import com.quzzar.kithkyn.agency.ResidentActionSelection;
-import com.quzzar.kithkyn.agency.ResidentActionState.Offer;
 import com.quzzar.kithkyn.llm.provider.LlmProvider.CompletionRequest;
 import com.quzzar.kithkyn.chat.PersonChatContext.AssembledChat;
 import com.quzzar.kithkyn.chat.PersonChatContext.Turn;
@@ -185,11 +183,9 @@ public final class PersonChatDispatcher {
    * broken. A guard that can leak is worse than no guard at all.
    */
   private static void dispatch(RealPerson person, ServerPlayer player, String message, String historyLine) {
-    Offer actionOffer = KithkynConfig.LlmResidentActions ? person.agency().offer(player) : null;
     CompletableFuture<Reply> pending;
     try {
-      pending = converse(person, player.getGameProfile().getName(), player.getUUID(), message, historyLine, false,
-          actionOffer);
+      pending = converse(person, player.getGameProfile().getName(), player.getUUID(), message, historyLine, false);
     } catch (RuntimeException e) {
       IN_FLIGHT.remove(player.getUUID());
       throw e;
@@ -200,7 +196,7 @@ public final class PersonChatDispatcher {
         Kithkyn.LOGGER.warn("Chat with {} failed for {}", person.getFullName(),
             player.getGameProfile().getName(), error);
         PacketDistributor.sendToPlayer(player,
-            new PersonChatReplyPacket(person.getId(), "Chat error: the model returned no usable reply. Please try again.", false));
+            new PersonChatReplyPacket(person.getId(), "", false));
         return;
       }
       if (reply.give() != null && person.isAlive()) {
@@ -211,7 +207,6 @@ public final class PersonChatDispatcher {
       if (reply.fight() && person.isAlive()) {
         person.pickFightWith(player);
       }
-      if (actionOffer != null) person.agency().apply(actionOffer, reply.action(), player);
       // The villager's own leave-taking: the screen shows the farewell and
       // closes itself a little later, which closes the session the usual way.
       if (reply.done()) {
@@ -252,12 +247,6 @@ public final class PersonChatDispatcher {
    */
   public static CompletableFuture<Reply> converse(RealPerson person, String speakerName, UUID speakerUUID,
       String message, String historyLine, boolean background) {
-    return converse(person, speakerName, speakerUUID, message, historyLine, background, null);
-  }
-
-  /** Carries the frozen action offer through asynchronous generation without trusting generated targets. */
-  private static CompletableFuture<Reply> converse(RealPerson person, String speakerName, UUID speakerUUID,
-      String message, String historyLine, boolean background, Offer actionOffer) {
     long askedAtMs = System.currentTimeMillis();
     // Refresh the open session (never create one: console/RCON chats via
     // /kithkyn chat should not make the villager stand at attention).
@@ -274,9 +263,7 @@ public final class PersonChatDispatcher {
         .map(e -> new Turn(e.playerLine(), e.reply(), e.dayTime()))
         .toList();
 
-    AssembledChat assembled = PersonChatContext.assemble(person, speakerName, speakerUUID, history, message);
-    AssembledChat chat = actionOffer == null ? assembled
-        : new AssembledChat(assembled.system() + person.agency().prompt(actionOffer), assembled.user(), assembled.examples());
+    AssembledChat chat = PersonChatContext.assemble(person, speakerName, speakerUUID, history, message);
 
     // What the villager said last time, so an identical answer can be caught
     // rather than shipped. The penalty above makes the lock less likely; this
@@ -304,7 +291,6 @@ public final class PersonChatDispatcher {
           JsonObject request = null;
           boolean fight = false;
           boolean done = false;
-          ResidentActionSelection action = ResidentActionSelection.none();
           if (result.isPresent()) {
             Reply parsed = parseReply(result.get());
             if (parsed != null) {
@@ -315,8 +301,7 @@ public final class PersonChatDispatcher {
               request = parsed.request();
               fight = parsed.fight();
               done = parsed.done();
-              action = parsed.action();
-            } else action = ResidentActionSelection.parse(result.get());
+            }
           }
           if (say == null || say.isBlank()) {
             Kithkyn.LOGGER.warn("[chat] No valid model reply for {}", person.getUUID());
@@ -325,7 +310,7 @@ public final class PersonChatDispatcher {
           say = VillagerText.clean(say);
           finalizeExchange(person, speakerName, speakerUUID, historyLine, say, give, giveCount, opinion,
               request, fight, System.currentTimeMillis() - askedAtMs);
-          return new Reply(say, give, giveCount, opinion, request, fight, done, action);
+          return new Reply(say, give, giveCount, opinion, request, fight, done);
         });
   }
 
@@ -551,7 +536,7 @@ public final class PersonChatDispatcher {
 
   /** A validated conversational reply. Physical action outcomes are recorded separately by the game. */
   public record Reply(String say, String give, int giveCount, int opinionDelta,
-      JsonObject request, boolean fight, boolean done, ResidentActionSelection action) {
+      JsonObject request, boolean fight, boolean done) {
   }
 
   /** Largest single-call opinion step the model may take. */
@@ -566,11 +551,11 @@ public final class PersonChatDispatcher {
   private static final Map<Long, OpinionBudget> OPINION_BUDGETS = new ConcurrentHashMap<>();
 
   /** Strict contract shared by player and resident dialogue; malformed output has no side effects or substitute narrative. */
-  static Reply parseReply(String raw) {
+  public static Reply parseReply(String raw) {
     var parsed = com.quzzar.kithkyn.llm.StrictJson.object(raw);
     if (parsed.isEmpty()) return null;
     JsonObject node = parsed.get();
-    if (!Set.of("say", "give", "give_count", "opinion", "request", "fight", "done", "action").containsAll(node.keySet())) return null;
+    if (!Set.of("say", "give", "give_count", "opinion", "request", "fight", "done").containsAll(node.keySet())) return null;
     try {
       if (!node.has("say") || !node.getAsJsonPrimitive("say").isString()) return null;
       String say = node.get("say").getAsString();
@@ -598,8 +583,7 @@ public final class PersonChatDispatcher {
             || !entry.getValue().getAsJsonPrimitive().isString() || entry.getValue().getAsString().length() > 320) return null;
       }
       boolean fight = bool(node, "fight"), done = bool(node, "done");
-      var action = ResidentActionSelection.parse(raw);
-      return action.error().isPresent() ? null : new Reply(say, give, count, opinion, request, fight, done, action);
+      return new Reply(say, give, count, opinion, request, fight, done);
     } catch (RuntimeException invalid) { return null; }
   }
   private static boolean bool(JsonObject node, String key) {
