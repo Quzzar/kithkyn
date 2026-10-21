@@ -173,8 +173,29 @@ public final class ResidentReactionVerification {
         case 25 -> {
           if (observer.reactions().status() == Status.PENDING) return;
           check(observer.reactions().status() == Status.STALE && observer.reactions().movement().isEmpty(), "Changed nonessential post did not stale offer");
+          injured.setHealth(injured.getMaxHealth());
+          freshObserver(); observer.setOccupation(Occupation.GUARD); keepReactionGoal();
+          threat = EntityType.ZOMBIE.create(level); threat.setNoAi(true); threat.moveTo(observer.position().add(6, 0, 0));
+          check(level.addFreshEntity(threat), "Defense threat spawn failed"); phase++;
+        }
+        case 26 -> {
+          if (pending == null) return;
+          check(offered("defend"), "Native guard defense was not offered");
+          complete("defend", 1); phase++;
+        }
+        case 27 -> {
+          if (observer.reactions().status() == Status.PENDING) return;
+          check(observer.reactions().status() == Status.STARTED && observer.getTarget() == threat, "Defense did not set the actual combat target");
+          var matter = observer.getData(KithkynAttachments.UNDERTAKINGS.get()).allOpen().stream()
+              .filter(value -> value.execution().filter(execution -> execution.action().equals("defend")).isPresent()).findFirst().orElseThrow();
+          level.getServer().getWorldData().overworldData().setGameTime(matter.execution().orElseThrow().expiresAt());
+          threat.setHealth(0);
+          observer.agency().maintain(); observer.reactions().tick();
+          check(observer.reactions().status() == Status.INTERRUPTED, "Defense claimed completion at its expiry boundary");
+          check(observer.getData(KithkynAttachments.UNDERTAKINGS.get()).byId(matter.id()).orElseThrow().execution().orElseThrow().phase() == UndertakingData.Phase.EXPIRED,
+              "Defense report disagreed with its authoritative expired undertaking");
           finished = true;
-          Kithkyn.LOGGER.info("[resident-reaction-verify] RESULT PASS: physical investigate and retreat, episode deduplication, uncertain, invalid, stale subject, late child, disable interruption, moved help reference, last essential worker, warning, eligible age and nonessential post changes; controlled decisions, no model-quality claim");
+          Kithkyn.LOGGER.info("[resident-reaction-verify] RESULT PASS: physical investigate and retreat, episode deduplication, uncertain, invalid, stale subject, late child, disable interruption, moved help reference, last essential worker, warning, eligible age and nonessential post changes, defense deadline and authoritative expiry; controlled decisions, no model-quality claim");
           level.getServer().halt(false);
         }
         default -> throw new AssertionError("Unknown phase");

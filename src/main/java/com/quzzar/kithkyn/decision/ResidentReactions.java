@@ -96,9 +96,12 @@ public final class ResidentReactions {
       }
     }
     if (defending != null) {
-      if (!defending.isAlive() && ResidentAwareness.visible(person, defending)) update(Status.COMPLETED, "The witnessed threat died; no claim about who killed it.");
-      else if (!KithkynConfig.ResidentReactions || !person.isAlive() || person.getTarget() != defending || now >= defenseExpires) {
+      if (!KithkynConfig.ResidentReactions || !person.isAlive() || now >= defenseExpires) {
         update(Status.INTERRUPTED, "Native defense ended or expired without a verified completion.");
+      } else if (!defending.isAlive() && ResidentAwareness.visible(person, defending)) {
+        update(Status.COMPLETED, "The witnessed threat died; no claim about who killed it.");
+      } else if (person.getTarget() != defending) {
+        update(Status.INTERRUPTED, "Native defense lost its target without a verified completion.");
       }
       return;
     }
@@ -322,7 +325,9 @@ public final class ResidentReactions {
     var result = UndertakingService.requested(person.getData(key), execution, Optional.empty(), person.level().getDayTime());
     if (!UndertakingService.commit(person, result)) { update(Status.FAILED, "No capacity to record this reaction undertaking."); return false; }
     undertaking = result.affected().orElseThrow().id();
-    persist(undertaking, Phase.ACCEPTED, "Validated reaction accepted; no outcome is claimed.");
+    if (!execution.instant() && !persist(undertaking, Phase.ACCEPTED, "Validated reaction accepted; no outcome is claimed.")) {
+      update(Status.STALE, "The reaction could not be accepted in its saved undertaking."); return false;
+    }
     return true;
   }
 
@@ -334,16 +339,27 @@ public final class ResidentReactions {
     }
   }
 
-  private void persist(UUID id, Phase phase, String message) {
+  private boolean persist(UUID id, Phase phase, String message) {
     var key = KithkynAttachments.UNDERTAKINGS.get();
-    UndertakingService.commit(person,
+    return UndertakingService.commit(person,
         UndertakingService.transition(person.getData(key), person.getUUID(), id, phase, message, person.level().getDayTime()));
   }
 
   private void update(Status next, String message) {
     if (undertaking != null && (next == Status.COMPLETED || next == Status.FAILED || next == Status.INTERRUPTED || next == Status.STALE)) {
-      persist(undertaking, next == Status.COMPLETED ? Phase.COMPLETED
-          : next == Status.FAILED ? Phase.FAILED : Phase.INTERRUPTED, message);
+      if (!persist(undertaking, next == Status.COMPLETED ? Phase.COMPLETED
+          : next == Status.FAILED ? Phase.FAILED : Phase.INTERRUPTED, message)) {
+        var saved = person.getData(KithkynAttachments.UNDERTAKINGS.get()).byId(undertaking);
+        Phase phase = saved.flatMap(value -> value.execution()).map(value -> value.phase()).orElse(Phase.INTERRUPTED);
+        next = switch (phase) {
+          case COMPLETED -> Status.COMPLETED;
+          case FAILED -> Status.FAILED;
+          case INTERRUPTED, CANCELLED, EXPIRED -> Status.INTERRUPTED;
+          default -> Status.STALE;
+        };
+        message = "No new outcome was recorded. Saved status: " + phase + ". "
+            + saved.flatMap(value -> value.progressNote()).orElse("The saved undertaking is unavailable.");
+      }
       undertaking = null; defending = null;
     }
     status = next; detail = message;

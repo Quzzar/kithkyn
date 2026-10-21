@@ -34,7 +34,7 @@ public final class UndertakingService {
     if (found.isEmpty() || !found.get().isOpen() || found.get().execution().isEmpty()
         || !found.get().execution().get().resident().equals(resident)) return new Result(data, Optional.empty(), "No owned open execution.");
     Undertaking old = found.get(); Execution execution = old.execution().get();
-    if (!allowed(execution.phase(), next)) return new Result(data, Optional.empty(), "Invalid execution transition.");
+    if (!allowed(execution, next) || !execution.phase(next).valid()) return new Result(data, Optional.empty(), "Invalid execution transition.");
     State state = switch (next) {
       case ACCEPTED, UNDERWAY -> State.ACTIVE;
       case COMPLETED -> State.RESOLVED;
@@ -54,9 +54,10 @@ public final class UndertakingService {
     return new Result(data.with(updated), Optional.of(updated), note);
   }
 
-  private static boolean allowed(Phase from, Phase to) {
-    return switch (from) {
-      case REQUESTED -> to == Phase.ACCEPTED || to == Phase.FAILED || to == Phase.CANCELLED || to == Phase.EXPIRED;
+  private static boolean allowed(Execution execution, Phase to) {
+    return switch (execution.phase()) {
+      case REQUESTED -> to == Phase.ACCEPTED || to == Phase.COMPLETED && execution.instant()
+          || to == Phase.FAILED || to == Phase.CANCELLED || to == Phase.EXPIRED;
       case ACCEPTED -> to == Phase.UNDERWAY || to == Phase.COMPLETED || to == Phase.FAILED || to == Phase.INTERRUPTED || to == Phase.CANCELLED || to == Phase.EXPIRED;
       case UNDERWAY -> to == Phase.COMPLETED || to == Phase.FAILED || to == Phase.INTERRUPTED || to == Phase.CANCELLED || to == Phase.EXPIRED;
       case FAILED, INTERRUPTED -> to == Phase.CANCELLED || to == Phase.EXPIRED;
@@ -85,7 +86,7 @@ public final class UndertakingService {
       com.quzzar.kithkyn.Kithkyn.LOGGER.error("[undertaking] Rejected a write for another resident"); return false;
     }
     person.setData(KithkynAttachments.UNDERTAKINGS.get(), result.data());
-    person.logMemory(memory(matter), matter.withWhom());
+    person.logUndertaking(memory(matter), matter.withWhom());
     com.quzzar.kithkyn.Kithkyn.LOGGER.info("[undertaking] {} {}", person.getUUID(), result.detail());
     return true;
   }

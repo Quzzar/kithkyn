@@ -284,7 +284,7 @@ public final class PersonChatContext {
     system.append(person.reactions().briefing());
 
     PersonalLogData log = person.getData(KithkynAttachments.PERSONAL_LOG.get());
-    String memories = memorySummary(log, 3);
+    String memories = memorySummary(log, playerUUID, 3);
     if (!memories.isEmpty()) {
       system.append("Things you remember happening: ").append(memories).append(".\n");
     }
@@ -673,9 +673,9 @@ public final class PersonChatContext {
     return String.join(" ", parts);
   }
 
-  private static String memorySummary(PersonalLogData log, int limit) {
+  private static String memorySummary(PersonalLogData log, UUID counterpart, int limit) {
     List<String> parts = new ArrayList<>();
-    for (PersonalLogData.Entry entry : log.memoriesNewestFirst()) {
+    for (PersonalLogData.Entry entry : log.memoriesFor(counterpart)) {
       if (parts.size() >= limit) {
         break;
       }

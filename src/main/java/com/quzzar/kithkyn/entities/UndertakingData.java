@@ -78,9 +78,12 @@ public record UndertakingData(List<Undertaking> undertakings) {
                 : java.util.Set.of("continue", "warn", "retreat", "seek_help", "investigate", "defend");
             return verbs.contains(action) && !dimension.isBlank() && dimension.length() <= 128 && requesterName.length() <= 64
                 && revision > 0 && startedAt >= 0 && expiresAt > startedAt && expiresAt - startedAt <= 6000
+                && (!instant() || !phase.executing())
                 && destination.map(Position::finite).orElse(true)
-                && (!java.util.Set.of("wait", "go_to_point", "retreat", "seek_help", "investigate").contains(action) || destination.isPresent());
+                && (!(phase.executing() || phase == Phase.COMPLETED)
+                    || !java.util.Set.of("wait", "go_to_point", "retreat", "seek_help", "investigate").contains(action) || destination.isPresent());
         }
+        public boolean instant() { return action.equals("resume") || action.equals("continue"); }
         public Execution phase(Phase next) { return new Execution(resident, lane, action, next, requesterName,
             dimension, destination, reference, revision, startedAt, expiresAt, reconsidered, duty); }
         public Execution reconsider() { return new Execution(resident, lane, action, phase, requesterName,
@@ -135,9 +138,9 @@ public record UndertakingData(List<Undertaking> undertakings) {
                 Codec.LONG.fieldOf("opened_day").forGetter(Undertaking::openedDay),
                 Codec.LONG.fieldOf("updated_day").forGetter(Undertaking::updatedDay),
                 Execution.CODEC.optionalFieldOf("execution").forGetter(Undertaking::execution)
-        ).apply(inst, Undertaking::new)).validate(matter -> matter.execution().filter(execution -> execution.lane() == Lane.PLAYER_REQUEST && matter.withWhom().isEmpty()).isPresent()
-            ? com.mojang.serialization.DataResult.error(() -> "Player undertaking is missing its requester")
-            : com.mojang.serialization.DataResult.success(matter));
+        ).apply(inst, Undertaking::new)).validate(matter -> matter.valid()
+            ? com.mojang.serialization.DataResult.success(matter)
+            : com.mojang.serialization.DataResult.error(() -> "Inconsistent undertaking lifecycle or requester"));
 
         public Undertaking { steps = List.copyOf(steps); }
 
@@ -145,7 +148,17 @@ public record UndertakingData(List<Undertaking> undertakings) {
             return state == State.OPEN || state == State.ACTIVE;
         }
 
-
+        public boolean valid() {
+            return execution.map(value -> value.valid() && (value.lane() != Lane.PLAYER_REQUEST || withWhom.isPresent())
+                && switch (value.phase()) {
+                    case REQUESTED -> state == State.OPEN;
+                    case ACCEPTED, UNDERWAY -> state == State.ACTIVE;
+                    case COMPLETED -> state == State.RESOLVED;
+                    case FAILED -> state == State.OPEN || state == State.ABANDONED;
+                    case INTERRUPTED -> state == State.OPEN;
+                    case CANCELLED, EXPIRED -> state == State.ABANDONED;
+                }).orElse(true);
+        }
     }
 
     public static final Codec<UndertakingData> CODEC = RecordCodecBuilder.<UndertakingData>create(inst -> inst.group(

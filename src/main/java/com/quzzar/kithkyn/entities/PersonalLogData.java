@@ -14,13 +14,15 @@ import net.minecraft.core.UUIDUtil;
 /**
  * A person's memory, kept like a proper log: every entry carries the Minecraft
  * calendar time it happened and, for operational blockers, the monotonic game
- * time used for recency. Three kinds of entry:
+ * time used for recency. Four kinds of entry:
  *
  * - {@code pickup}: an item picked up, with the thrower when a player threw it
  *   — the ground truth for emergent gifting (a diamond is salvage until its
  *   thrower says otherwise in chat).
  * - {@code memory}: a completed or witnessed event, such as an attack or job
  *   change. Legacy {@code issue} entries are read as memories.
+ * - {@code undertaking}: a factual lifecycle change, sharing the memory cap and
+ *   reflection path while keeping player requests scoped to their requester.
  * - {@code blocker}: a current operational impediment. Re-reporting refreshes
  *   it and successful work can resolve it explicitly.
  *
@@ -30,6 +32,7 @@ public record PersonalLogData(List<Entry> entries, long reflectedThrough, long r
 
   public static final String KIND_PICKUP = "pickup";
   public static final String KIND_MEMORY = "memory";
+  public static final String KIND_UNDERTAKING = "undertaking";
   public static final String KIND_ISSUE = "issue";
   public static final String KIND_BLOCKER = "blocker";
 
@@ -40,7 +43,7 @@ public record PersonalLogData(List<Entry> entries, long reflectedThrough, long r
   public static final PersonalLogData EMPTY = new PersonalLogData(List.of(), 0L, -1L);
 
   /**
-   * @param kind    pickup, memory, legacy issue, or blocker
+   * @param kind    pickup, memory, undertaking, legacy issue, or blocker
    * @param item    pickup only: item id, e.g. "minecraft:diamond"
    * @param count   pickup only: stack count
    * @param text    memory/blocker only: what happened, one plain sentence
@@ -71,6 +74,10 @@ public record PersonalLogData(List<Entry> entries, long reflectedThrough, long r
 
   public static Entry memory(String text, long dayTime, long gameTime, Optional<UUID> who) {
     return new Entry(KIND_MEMORY, "", 0, text, dayTime, gameTime, gameTime, who);
+  }
+
+  public static Entry undertaking(String text, long dayTime, long gameTime, Optional<UUID> requester) {
+    return new Entry(KIND_UNDERTAKING, "", 0, text, dayTime, gameTime, gameTime, requester);
   }
 
   public static Entry blocker(String text, long dayTime, long gameTime) {
@@ -172,7 +179,7 @@ public record PersonalLogData(List<Entry> entries, long reflectedThrough, long r
   }
 
   private static boolean isMemory(Entry entry) {
-    return KIND_MEMORY.equals(entry.kind()) || KIND_ISSUE.equals(entry.kind());
+    return KIND_MEMORY.equals(entry.kind()) || KIND_ISSUE.equals(entry.kind()) || KIND_UNDERTAKING.equals(entry.kind());
   }
 
   /** Newest-first view for prompt assembly. */
@@ -188,6 +195,12 @@ public record PersonalLogData(List<Entry> entries, long reflectedThrough, long r
 
   public List<Entry> memoriesNewestFirst() {
     return newestFirst().stream().filter(PersonalLogData::isMemory).toList();
+  }
+
+  /** Player commitments are private to their requester; witnessed events remain ordinary memories. */
+  public List<Entry> memoriesFor(UUID counterpart) {
+    return memoriesNewestFirst().stream().filter(entry -> !KIND_UNDERTAKING.equals(entry.kind())
+        || entry.who().isEmpty() || entry.who().filter(counterpart::equals).isPresent()).toList();
   }
 
   public List<Entry> blockersNewestFirst() {

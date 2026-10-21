@@ -60,7 +60,7 @@ public final class ResidentAgency {
   public String prompt(Offer offer) {
     String point = offer.pointedAt() == null ? "No pointed location was supplied. Do not use go_to_point."
         : "The speaker pointed at " + coordinates(offer.pointedAt()) + ".";
-    return "\nMovement requests: " + point + " " + describe()
+    return "\nMovement requests: " + point + " " + describe(Optional.of(offer.requester()))
         + " If this speaker explicitly asks you to follow them, wait here, go to their pointed location, or resume"
         + " your ordinary activity, decide whether to agree, considering your personality and duties."
         + " You may refuse. For an agreed request add exactly one string field to the reply JSON:"
@@ -79,7 +79,8 @@ public final class ResidentAgency {
     }
     if (selection.action().isEmpty()) return;
     Action action = selection.action().get();
-    Optional<String> rejected = state.rejection(offer, action, person.level().getGameTime());
+    Optional<String> rejected = !offer.requester().equals(requester.getUUID())
+        ? Optional.of("The request belongs to another speaker.") : state.rejection(offer, action, person.level().getGameTime());
     if (rejected.isEmpty() && !offer.dimension().equals(person.level().dimension().location().toString())) {
       rejected = Optional.of("The request came from another dimension.");
     }
@@ -141,8 +142,8 @@ public final class ResidentAgency {
 
   /** Tick only the existing intention. No model call, world scan or path search happens here. */
   public void maintain() {
-    maintainUndertakings();
     state.expire(person.level().getGameTime()).ifPresent(this::record);
+    maintainUndertakings();
     if (state.current().isEmpty()) return;
     Order order = state.current().get();
     if (!order.duty().equals(ResidentObligations.snapshot(person))) {
@@ -246,9 +247,16 @@ public final class ResidentAgency {
   }
 
   public String describe() {
-    String active = state.current().map(order -> "Current movement request: " + order.action().wireName()
-        + " for " + order.requesterName() + ", still active and not completed.").orElse("No movement request is active.");
-    return active + state.latest().map(outcome -> " Last movement outcome: " + outcome.end() + ", "
+    return describe(Optional.empty());
+  }
+
+  private String describe(Optional<java.util.UUID> counterpart) {
+    String active = state.current().map(order -> counterpart.isPresent() && !counterpart.get().equals(order.requester())
+        ? "Busy with another request; you cannot accept a new movement request from this speaker."
+        : "Current movement request: " + order.action().wireName() + " for " + order.requesterName()
+            + ", still active and not completed.").orElse("No movement request is active.");
+    return active + state.latest().filter(outcome -> counterpart.isEmpty() || counterpart.get().equals(outcome.order().requester()))
+        .map(outcome -> " Last movement outcome: " + outcome.end() + ", "
         + outcome.detail()).orElse("");
   }
 

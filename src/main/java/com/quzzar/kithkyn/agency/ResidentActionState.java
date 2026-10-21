@@ -65,8 +65,8 @@ public final class ResidentActionState {
     Optional<Undertaking> requested = request(offer, action, now);
     if (requested.isEmpty()) return new Acceptance(false, "The resident cannot track another open undertaking.", replaced);
     UUID id = requested.get().id();
-    update(UndertakingService.transition(read.get(), resident.get(), id, Phase.ACCEPTED, "Agreed; execution has not begun.", day.getAsLong()));
-    if (action == Action.RESUME) update(UndertakingService.transition(read.get(), resident.get(), id, Phase.COMPLETED, "Released from the request.", day.getAsLong()));
+    update(UndertakingService.transition(read.get(), resident.get(), id, action == Action.RESUME ? Phase.COMPLETED : Phase.ACCEPTED,
+        action == Action.RESUME ? "Agreed and released from the request." : "Agreed; execution has not begun.", day.getAsLong()));
     revision++;
     return new Acceptance(true, switch (action) {
       case FOLLOW -> "Agreed to follow you."; case WAIT -> "Agreed to wait here.";
@@ -109,9 +109,10 @@ public final class ResidentActionState {
             "Native navigation started; completion has not happened.", day.getAsLong())));
   }
   public Optional<Outcome> expire(long now) {
-    return current().filter(order -> now >= order.expiresAt()).flatMap(order -> finish(Phase.EXPIRED, "The agreed time ran out."));
+    return currentMatter().filter(matter -> now >= matter.execution().orElseThrow().expiresAt()
+        || now < matter.execution().orElseThrow().startedAt()).flatMap(matter -> finish(Phase.EXPIRED, "The agreed time ran out or its clock changed."));
   }
-  private Optional<Undertaking> currentMatter() { return matters().filter(matter -> matter.execution().orElseThrow().phase().executing()).findFirst(); }
+  private Optional<Undertaking> currentMatter() { return matters().filter(matter -> matter.isOpen() && matter.execution().orElseThrow().phase().executing()).findFirst(); }
   private java.util.stream.Stream<Undertaking> matters() {
     return read.get().undertakings().stream().filter(matter -> matter.execution().filter(execution -> execution.resident().equals(resident.get())
         && execution.lane() == Lane.PLAYER_REQUEST).isPresent());

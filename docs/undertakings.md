@@ -13,6 +13,10 @@ is no new memory database or separate standing reward. `ChatHistoryData` remains
 of what people said, and `ChatSummaryData` remains subjective conversation memory. Neither
 is evidence that a physical action happened.
 
+Lifecycle events have a typed entry in that same personal log, sharing its memory cap,
+deduplication and relationship reflection. Player entries retain their requester scope in
+conversation prompts. Public witnessed events remain available as ordinary memories.
+
 Each undertaking retains its stable ID, origin, valence, counterpart, progress markers,
 notes and terminal history. Its optional game-owned execution records the resident UUID,
 player-request or reaction lane, implemented verb, requester, dimension, captured destination
@@ -44,6 +48,8 @@ Failed and interrupted accepted attempts remain unfinished matters until their o
 lifetime ends or the requester supplies a fresh instruction. A new instruction explicitly
 cancels earlier unfinished promises to that requester rather than merging them. Releasing
 a request completes only the release; it cancels the previous instruction.
+Instant release/continue decisions go directly from requested to completed in one saved
+transition. They cannot reload as executing navigation.
 
 ## Persistence and ownership
 
@@ -63,7 +69,9 @@ Player promises retain their original 6,000-game-tick lifetime; reactions retain
 There are at most sixteen open and sixteen closed matters per resident. Admission fails
 explicitly when open capacity is exhausted. Active promises are never silently evicted;
 closed history trims oldest first. The codec rejects unknown executable verbs, invalid
-coordinates/lifetimes, missing player ownership, duplicate IDs and oversized lists.
+coordinates/lifetimes, missing player ownership, contradictory phase/state pairs, executing
+instant actions, duplicate IDs and oversized lists. Ending an active player order, including
+expiry or a clock change, invalidates answers captured before that end.
 
 ## Reconsideration without an implicit retry
 
@@ -114,6 +122,8 @@ Require `[resident-agency-verify] RESULT PASS`, not merely a successful Gradle e
 serializes and reloads actual entities/attachments, verifies resumed native arrival and
 unchanged physical inventory, retains a failed route through reload, rejects stale summary
 claims, observes one reconsideration after the route changes and requires a fresh approved
-attempt before movement resumes. Decisions are controlled; this is not a real-model or
+attempt before movement resumes. It also checks the complete conversation/action prompt
+against another player and rejects a still-pending answer across order expiry.
+Decisions are controlled; this is not a real-model or
 multiplayer acceptance claim. The reaction fixture independently checks the shared lifecycle
-and movement safety.
+and movement safety, including death at the exact defense deadline without a false completion.

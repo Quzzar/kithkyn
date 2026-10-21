@@ -63,7 +63,7 @@ public final class ResidentAgencyVerification {
       if (finished) {
         Kithkyn.LOGGER.info("[resident-agency-verify] RESULT PASS: server raycast, actual pointed walk, "
             + "follow, wait, release, danger interruption, existing avoidance, quarrel precedence, "
-            + "blocked route, invalidated ground, actual entity reload, persistent unfinished promises, inventory preservation and one reconsideration without auto-retry; no inference");
+            + "blocked route, invalidated ground, actual entity reload, persistent unfinished promises, inventory preservation, counterpart prompt isolation, expiry freshness and one reconsideration without auto-retry; no inference");
         event.getServer().halt(false);
       }
     } catch (Exception | AssertionError failure) {
@@ -260,6 +260,7 @@ public final class ResidentAgencyVerification {
         if (resident.agency().current().isPresent()) return;
         check(resident.agency().describe().contains("COMPLETED"), "A fresh approved attempt did not finish");
         check(promise().execution().orElseThrow().phase() == com.quzzar.kithkyn.entities.UndertakingData.Phase.CANCELLED, "The new instruction did not explicitly close the earlier failed attempt");
+        verifyPromptIsolationAndExpiry(level);
         verifyQuarrelPrecedence(); finished = true;
       }
       default -> throw new AssertionError("Unknown verification phase " + phase);
@@ -268,6 +269,30 @@ public final class ResidentAgencyVerification {
 
   private static com.quzzar.kithkyn.entities.UndertakingData.Undertaking promise() {
     return resident.getData(com.quzzar.kithkyn.entities.KithkynAttachments.UNDERTAKINGS.get()).byId(savedPromise).orElseThrow();
+  }
+
+  private static void verifyPromptIsolationAndExpiry(ServerLevel level) {
+    requester.moveTo(resident.position().add(0, 0, 2)); ask(Action.WAIT);
+    var other = FakePlayerFactory.get(level, new com.mojang.authlib.GameProfile(new java.util.UUID(0, 1234), "OtherRequester"));
+    var otherOffer = resident.agency().offer(other);
+    String active = com.quzzar.kithkyn.chat.PersonChatContext.assemble(resident, "OtherRequester", other.getUUID(), java.util.List.of(), "Hello").system()
+        + resident.agency().prompt(otherOffer);
+    String privateName = "for " + requester.getGameProfile().getName();
+    check(!active.contains(privateName) && active.contains("Busy with another request"), "Active request leaked through the assembled/action prompt");
+    resident.agency().finish(com.quzzar.kithkyn.entities.UndertakingData.Phase.FAILED, "Private route note for the requester alone.");
+    String ended = com.quzzar.kithkyn.chat.PersonChatContext.assemble(resident, "OtherRequester", other.getUUID(), java.util.List.of(), "What happened?").system()
+        + resident.agency().prompt(resident.agency().offer(other));
+    check(!ended.contains(privateName) && !ended.contains("Private route note"), "Private lifecycle facts leaked through memory or action outcome context");
+    var owner = com.quzzar.kithkyn.chat.PersonChatContext.assemble(resident, "Requester", requester.getUUID(), java.util.List.of(), "What happened?");
+    check(owner.system().contains("Private route note"), "The requester lost their actual outcome");
+    ask(Action.WAIT);
+    long expires = resident.agency().current().orElseThrow().expiresAt();
+    level.getServer().getWorldData().overworldData().setGameTime(expires - 1);
+    var pending = resident.agency().offer(requester);
+    level.getServer().getWorldData().overworldData().setGameTime(expires); resident.agency().maintain();
+    check(resident.agency().current().isEmpty() && resident.agency().describe().contains("EXPIRED"), "The saved order did not expire");
+    resident.agency().apply(pending, new ResidentActionSelection(Optional.of(Action.FOLLOW), Optional.empty()), requester);
+    check(resident.agency().current().isEmpty(), "An answer captured before order expiry executed afterward");
   }
   private static void sealed(ServerLevel level, boolean closed) {
     for (BlockPos pos : BlockPos.betweenClosed(destination.offset(-1, 0, -1), destination.offset(1, 2, 1))) {

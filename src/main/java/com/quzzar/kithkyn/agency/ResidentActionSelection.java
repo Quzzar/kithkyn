@@ -13,10 +13,6 @@ public record ResidentActionSelection(Optional<ResidentActionState.Action> actio
     return new ResidentActionSelection(Optional.empty(), Optional.of(detail));
   }
 
-  public ResidentActionSelection withoutDialogue() {
-    return action.isPresent() ? invalid("The movement response did not include dialogue.") : this;
-  }
-
   public static ResidentActionSelection parse(String raw) {
     var parsed = StrictJson.object(raw);
     if (parsed.isEmpty()) return invalid("The movement response was not one strict JSON object.");

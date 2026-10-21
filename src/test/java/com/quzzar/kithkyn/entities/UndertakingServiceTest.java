@@ -103,4 +103,30 @@ class UndertakingServiceTest {
     execution.addProperty("action", "teleport");
     assertTrue(UndertakingData.CODEC.parse(JsonOps.INSTANCE, json).error().isPresent());
   }
+
+  @Test void savedInstantActionsAndContradictoryLifecyclesCannotBecomeMovement() {
+    for (String state : List.of("OPEN", "RESOLVED", "ABANDONED")) {
+      var json = UndertakingData.CODEC.encodeStart(JsonOps.INSTANCE, begun()).getOrThrow().getAsJsonObject();
+      json.getAsJsonArray("undertakings").get(0).getAsJsonObject().addProperty("state", state);
+      assertTrue(UndertakingData.CODEC.parse(JsonOps.INSTANCE, json).error().isPresent(), state);
+    }
+    for (String phase : List.of("ACCEPTED", "UNDERWAY")) {
+      var json = UndertakingData.CODEC.encodeStart(JsonOps.INSTANCE, begun()).getOrThrow().getAsJsonObject();
+      var execution = json.getAsJsonArray("undertakings").get(0).getAsJsonObject().getAsJsonObject("execution");
+      execution.addProperty("action", "resume"); execution.addProperty("phase", phase); execution.remove("destination");
+      assertTrue(UndertakingData.CODEC.parse(JsonOps.INSTANCE, json).error().isPresent(), phase);
+    }
+  }
+
+  @Test void anUnacceptedMissingPointCanBeRememberedButNeverStarted() {
+    var store = new AtomicReference<>(UndertakingData.EMPTY); var state = state(store, RESIDENT);
+    var missing = state.offer(REQUESTER, "Requester", "minecraft:overworld", null, POINT, 0);
+    state.rejected(missing, ResidentActionState.Action.GO_TO_POINT, "No point supplied", 1);
+    var matter = roundTrip(store.get()).undertakings().getFirst();
+    assertEquals(Phase.FAILED, matter.execution().orElseThrow().phase()); assertEquals(State.ABANDONED, matter.state());
+    assertTrue(state.current().isEmpty());
+    var execution = matter.execution().orElseThrow().phase(Phase.REQUESTED);
+    var requested = UndertakingService.requested(UndertakingData.EMPTY, execution, Optional.of(REQUESTER), 1);
+    assertFalse(UndertakingService.transition(requested.data(), RESIDENT, requested.affected().orElseThrow().id(), Phase.ACCEPTED, "Agreed", 2).changed());
+  }
 }

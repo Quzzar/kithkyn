@@ -54,12 +54,4 @@ class ResidentActionSelectionTest {
     }
   }
 
-  @Test
-  void missingDialogueDoesNotHideARejectedActionOrExecuteAnUnspokenAgreement() {
-    var rejected = parse("{\"say\":\"\",\"action\":\"teleport\"}");
-    assertEquals(rejected, rejected.withoutDialogue());
-    assertTrue(parse("{\"action\":\"follow\"}").withoutDialogue().error().isPresent());
-    assertTrue(parse("{\"action\":\"follow\"}").withoutDialogue().action().isEmpty());
-    assertEquals(ResidentActionSelection.none(), parse("{\"say\":\"\"}").withoutDialogue());
-  }
 }
