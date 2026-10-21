@@ -19,6 +19,10 @@ public record ResidentActionSelection(Optional<ResidentActionState.Action> actio
     return new ResidentActionSelection(Optional.empty(), Optional.of(detail));
   }
 
+  public ResidentActionSelection withoutDialogue() {
+    return action.isPresent() ? invalid("The movement response did not include dialogue.") : this;
+  }
+
   public static ResidentActionSelection parse(String raw) {
     String selected = null;
     Set<String> fields = new HashSet<>();

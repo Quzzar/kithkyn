@@ -11,6 +11,7 @@ import com.quzzar.kithkyn.agency.ResidentAgency;
 import com.quzzar.kithkyn.configuration.KithkynConfig;
 import com.quzzar.kithkyn.entities.AgeStage;
 import com.quzzar.kithkyn.entities.RealPerson;
+import com.quzzar.kithkyn.entities.ai.goals.PersonAvoidGoal;
 import com.quzzar.kithkyn.village.Occupation;
 import com.quzzar.kithkyn.village.Village;
 import com.quzzar.kithkyn.village.VillageManager;
@@ -22,6 +23,9 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.Rotation;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.monster.Zombie;
+import net.minecraft.world.entity.ai.goal.AvoidEntityGoal;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -36,6 +40,8 @@ public final class ResidentAgencyVerification {
   private static ServerPlayer requester;
   private static BlockPos destination;
   private static Vec3 waitingAt;
+  private static Zombie threat;
+  private static float healthBeforeThreat;
   private static int ticks;
   private static int phase;
   private static int phaseStarted;
@@ -54,7 +60,8 @@ public final class ResidentAgencyVerification {
           + ": " + resident.agency().describe());
       if (finished) {
         Kithkyn.LOGGER.info("[resident-agency-verify] RESULT PASS: server raycast, actual pointed walk, "
-            + "follow, wait, release, danger interruption, blocked route and invalidated ground; no inference");
+            + "follow, wait, release, danger interruption, existing avoidance, quarrel precedence, "
+            + "blocked route and invalidated ground; no inference");
         event.getServer().halt(false);
       }
     } catch (Exception | AssertionError failure) {
@@ -130,6 +137,27 @@ public final class ResidentAgencyVerification {
         check(resident.agency().current().isEmpty()
             && resident.agency().describe().contains("INTERRUPTED"), "Danger did not interrupt follow");
         resident.clearFire();
+        ask(Action.FOLLOW);
+        healthBeforeThreat = resident.getHealth();
+        threat = EntityType.ZOMBIE.create(level);
+        threat.setNoAi(true);
+        threat.moveTo(resident.position().add(5, 0, 0));
+        check(level.addFreshEntity(threat), "Could not spawn approaching threat");
+        next();
+      }
+      case 3 -> {
+        if (resident.agency().current().isPresent()) return;
+        check(resident.agency().describe().contains("INTERRUPTED"), "Threat did not interrupt movement");
+        check(resident.getHealth() == healthBeforeThreat, "Resident was hurt before interrupting movement");
+        resident.agency().apply(resident.agency().offer(requester),
+            new ResidentActionSelection(Optional.of(Action.WAIT), Optional.empty()), requester);
+        check(resident.agency().current().isEmpty(), "Accepted an instruction during active avoidance");
+        threat.discard();
+        next();
+      }
+      case 4 -> {
+        if (resident.goalSelector.getAvailableGoals().stream()
+            .anyMatch(running -> running.isRunning() && running.getGoal() instanceof AvoidEntityGoal)) return;
         destination = resident.blockPosition().offset(6, 0, 0);
         for (BlockPos pos : BlockPos.betweenClosed(destination.offset(-1, 0, -1), destination.offset(1, 2, 1))) {
           if (pos.getX() != destination.getX() || pos.getZ() != destination.getZ()) {
@@ -141,7 +169,7 @@ public final class ResidentAgencyVerification {
         ask(Action.GO_TO_POINT);
         next();
       }
-      case 3 -> {
+      case 5 -> {
         if (resident.agency().current().isPresent()) return;
         check(resident.agency().describe().contains("FAILED"), "Blocked route was reported as success");
         check(resident.distanceToSqr(Vec3.atBottomCenterOf(destination)) > 1, "Resident crossed sealed walls");
@@ -151,9 +179,10 @@ public final class ResidentAgencyVerification {
         level.setBlock(destination.below(), Blocks.AIR.defaultBlockState(), 2);
         next();
       }
-      case 4 -> {
+      case 6 -> {
         if (resident.agency().current().isPresent()) return;
         check(resident.agency().describe().contains("FAILED"), "Removed ground was reported as success");
+        verifyQuarrelPrecedence();
         finished = true;
       }
       default -> throw new AssertionError("Unknown verification phase " + phase);
@@ -175,6 +204,20 @@ public final class ResidentAgencyVerification {
         new ResidentActionSelection(Optional.of(action), Optional.empty()), requester);
     check(action == Action.RESUME || resident.agency().current().filter(order -> order.action() == action).isPresent(),
         "Action was not accepted: " + action + "; " + resident.agency().describe());
+  }
+
+  private static void verifyQuarrelPrecedence() {
+    resident.getNavigation().stop();
+    requester.moveTo(resident.position().add(2, 0, 0));
+    PersonAvoidGoal<ServerPlayer> avoidance = new PersonAvoidGoal<>(resident, ServerPlayer.class, target -> true);
+    boolean found = false;
+    for (int attempt = 0; attempt < 32 && !found; attempt++) found = avoidance.canUse();
+    check(found, "Could not start civilian avoidance for quarrel check");
+    avoidance.start();
+    check(avoidance.canContinueToUse(), "Avoidance was not running before quarrel");
+    resident.pickFightWith(requester);
+    check(!avoidance.canContinueToUse() && !avoidance.canUse(), "Avoidance suppressed an explicit quarrel");
+    avoidance.stop();
   }
 
   private static void next() {

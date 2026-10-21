@@ -10,11 +10,14 @@ import com.quzzar.kithkyn.entities.RealPerson;
 
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.ai.goal.Goal;
+import net.minecraft.world.level.pathfinder.Path;
 import net.minecraft.world.phys.Vec3;
 
 /** Executes an accepted intention below danger/recovery and above ordinary work, without inference. */
 public final class ResidentActionGoal extends Goal {
+  public static final int PRIORITY = 3;
   private final RealPerson person;
   private Order order;
   private int nextPathTick;
@@ -62,7 +65,9 @@ public final class ResidentActionGoal extends Goal {
 
   @Override
   public void tick() {
-    if (order == null || !(person.level() instanceof ServerLevel level)) return;
+    // GoalSelector can tick an old goal briefly before its next continuation check.
+    // A completed walk must never finish a newer follow/wait request in that interval.
+    if (!canContinueToUse() || !(person.level() instanceof ServerLevel level)) return;
     ServerPlayer requester = person.agency().requester(order).orElse(null);
     if (requester == null || requester.level() != level) {
       person.agency().finish(End.FAILED, "The requester is no longer here.");
@@ -97,7 +102,8 @@ public final class ResidentActionGoal extends Goal {
     }
     if (person.tickCount >= nextPathTick) {
       nextPathTick = person.tickCount + 10;
-      if (person.getNavigation().moveTo(target.x, target.y, target.z, 0.65D)) failedPaths = 0;
+      Path path = person.getNavigation().createPath(BlockPos.containing(target), order.action() == Action.FOLLOW ? 2 : 0);
+      if (path != null && path.canReach() && person.getNavigation().moveTo(path, 0.65D)) failedPaths = 0;
       else if (++failedPaths >= 3) person.agency().finish(End.FAILED, "Could not find a route to the requested destination.");
     }
   }

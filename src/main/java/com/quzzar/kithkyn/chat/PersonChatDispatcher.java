@@ -320,7 +320,7 @@ public final class PersonChatDispatcher {
               fight = parsed.fight();
               done = parsed.done();
               action = parsed.action();
-            }
+            } else action = ResidentActionSelection.parse(result.get());
           }
           if (say == null || say.isBlank()) {
             say = fallbackLine(person);
@@ -331,7 +331,7 @@ public final class PersonChatDispatcher {
             request = null;
             fight = false;
             done = false;
-            action = ResidentActionSelection.none();
+            action = action.withoutDialogue();
           }
           say = VillagerText.clean(say);
           finalizeExchange(person, speakerName, speakerUUID, historyLine, say, give, giveCount, opinion, undertaking,

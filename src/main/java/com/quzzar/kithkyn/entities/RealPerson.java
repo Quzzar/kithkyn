@@ -116,7 +116,6 @@ import com.quzzar.kithkyn.entities.ai.HealthRecoveryPolicy;
 import com.quzzar.kithkyn.entities.ai.SelfDefensePolicy;
 import com.quzzar.kithkyn.other.EquipmentUpgrade;
 
-import net.minecraft.world.entity.ai.goal.AvoidEntityGoal;
 import net.minecraft.world.entity.ai.goal.FloatGoal;
 import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
 import net.minecraft.world.entity.ai.goal.OpenDoorGoal;
@@ -2777,7 +2776,8 @@ public class RealPerson extends Person {
     // food and fleeing ahead of it while still pulling them off ordinary work.
     this.goalSelector.addGoal(2, new CampfireRecoveryGoal(this));
     this.goalSelector.addGoal(1, new com.quzzar.kithkyn.entities.ai.goals.VillageTravelGoal(this));
-    this.goalSelector.addGoal(3, new com.quzzar.kithkyn.entities.ai.goals.ResidentActionGoal(this));
+    this.goalSelector.addGoal(com.quzzar.kithkyn.entities.ai.goals.ResidentActionGoal.PRIORITY,
+        new com.quzzar.kithkyn.entities.ai.goals.ResidentActionGoal(this));
     this.goalSelector.addGoal(3, new com.quzzar.kithkyn.entities.ai.goals.PauseForConversationGoal(this));
 
     if (doesCombat()) {
@@ -2799,14 +2799,15 @@ public class RealPerson extends Person {
 
       this.goalSelector.addGoal(1, new PanicToBedGoal(this, 0.6D));
 
-      this.goalSelector.addGoal(5, new AvoidEntityGoal<>(this, Mob.class, 12.0F, 0.5D, 0.5D, (mob) -> {
+      // Flee before conversational movement, even before the threat has dealt damage.
+      this.goalSelector.addGoal(2, new com.quzzar.kithkyn.entities.ai.goals.PersonAvoidGoal<>(this, Mob.class, (mob) -> {
         return mob instanceof Enemy || mob instanceof RealPerson raider && raider.isRaider();
       }));
 
       // The unarmed answer to a grudge or a village threat is distance: the
       // same shape as avoiding monsters, because that is what a player who
       // beats villagers has made of themselves here.
-      this.goalSelector.addGoal(5, new AvoidEntityGoal<>(this, Player.class, 12.0F, 0.5D, 0.5D,
+      this.goalSelector.addGoal(2, new com.quzzar.kithkyn.entities.ai.goals.PersonAvoidGoal<>(this, Player.class,
           (target) -> target instanceof Player player
               && (holdsGrudgeAgainst(player) || villageConsidersThreat(player))));
 

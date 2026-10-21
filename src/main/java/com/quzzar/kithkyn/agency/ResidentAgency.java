@@ -11,6 +11,7 @@ import com.quzzar.kithkyn.agency.ResidentActionState.Outcome;
 import com.quzzar.kithkyn.agency.ResidentActionState.Position;
 import com.quzzar.kithkyn.entities.AgeStage;
 import com.quzzar.kithkyn.entities.RealPerson;
+import com.quzzar.kithkyn.entities.ai.goals.ResidentActionGoal;
 import com.quzzar.kithkyn.configuration.KithkynConfig;
 
 import net.minecraft.core.BlockPos;
@@ -19,6 +20,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.entity.ai.goal.Goal;
 
 /** The server-owned bridge from an offered conversational action to navigation and truthful memory. */
 public final class ResidentAgency {
@@ -108,6 +110,12 @@ public final class ResidentAgency {
     if (person.isPassenger() || person.isSleeping() || person.shouldSleepAtNight() && person.level().isNight()
         || person.getHealth() < person.getMaxHealth() / 3.0F) {
       return Optional.of("Rest or recovery interrupted the request.");
+    }
+    if (person.goalSelector.getAvailableGoals().stream().anyMatch(running -> running.isRunning()
+        && running.getPriority() < ResidentActionGoal.PRIORITY
+        && (running.getGoal().getFlags().contains(Goal.Flag.MOVE)
+            || running.getGoal().getFlags().contains(Goal.Flag.LOOK)))) {
+      return Optional.of("An urgent activity needs the resident's attention.");
     }
     if (person.getVillage() != null && person.getVillage().isTraveler(person.getUUID())) {
       return Optional.of("Village travel interrupted the request.");

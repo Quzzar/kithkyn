@@ -60,6 +60,16 @@ world interrupts an active order. Save/reload continuity and persistent unfinish
 The availability flag is an experiment gate, not evidence that the current model has passed the
 full companion scenario. Do not close #186 on unit tests alone.
 
+Run `./gradlew check` for the lifecycle/parser tests and existing project checks. The physical
+execution fixture is `./gradlew runResidentAgencyVerification`, in the isolated
+`run/npc-agency-verification` directory. Before its first run, accept Minecraft's EULA there
+and set `general."Generate villages" = false` and `llm."Enable LLM?" = false` in that directory's
+`config/kithkyn-common.toml`. The fixture enables actions for its own run, uses a simulated
+speaker and real registered resident goals, and does not perform inference. It checks the
+pointing ray, arrival, follow/wait/release, approaching danger before injury, rejection during
+existing avoidance, quarrel precedence, a sealed destination and removed ground. Read the
+`[resident-agency-verify] RESULT PASS` marker; server shutdown alone is not a passing result.
+
 ### Grounded awareness: #187
 
 Reuse witness checks, personal logs and existing village context. Represent facts with source,
