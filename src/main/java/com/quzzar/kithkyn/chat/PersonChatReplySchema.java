@@ -8,12 +8,11 @@ import com.google.gson.JsonObject;
 final class PersonChatReplySchema {
   private PersonChatReplySchema() { }
 
-  static String build(List<String> carriedItemIds, boolean planning) {
+  static String build(List<String> carriedItemIds, boolean planning, String speakerLine) {
     JsonObject properties = new JsonObject();
     JsonObject say = typed("string"); say.addProperty("minLength", 1); say.addProperty("maxLength", 2048);
     properties.add("say", say);
-    JsonObject opinion = typed("integer"); opinion.addProperty("minimum", -10); opinion.addProperty("maximum", 10);
-    properties.add("opinion", opinion); properties.add("fight", typed("boolean")); properties.add("done", typed("boolean"));
+    properties.add("opinion", opinion(speakerLine)); properties.add("fight", typed("boolean")); properties.add("done", typed("boolean"));
     if (planning) {
       JsonObject requestProperties = new JsonObject();
       JsonObject text = typed("string"); text.addProperty("maxLength", 320);
@@ -32,6 +31,23 @@ final class PersonChatReplySchema {
     JsonArray alternatives = new JsonArray(); alternatives.add(withoutGift); alternatives.add(withGift);
     JsonObject schema = new JsonObject(); schema.add("oneOf", alternatives);
     return schema.toString();
+  }
+
+  private static JsonObject opinion(String speakerLine) {
+    JsonArray alternatives = new JsonArray();
+    for (boolean positive : List.of(false, true)) {
+      JsonObject properties = new JsonObject();
+      JsonObject kind = typed("string"); JsonArray kinds = new JsonArray();
+      kinds.add(positive ? "kindness" : "insult"); kinds.add(positive ? "apology" : "threat"); kind.add("enum", kinds);
+      properties.add("kind", kind);
+      JsonObject quote = typed("string"); quote.addProperty("const", speakerLine); properties.add("quote", quote);
+      JsonObject delta = typed("integer"); delta.addProperty("minimum", positive ? 1 : -10);
+      delta.addProperty("maximum", positive ? 10 : -1); properties.add("delta", delta);
+      JsonObject change = object(properties, "kind");
+      change.getAsJsonArray("required").add("quote"); change.getAsJsonArray("required").add("delta");
+      alternatives.add(change);
+    }
+    JsonObject result = new JsonObject(); result.add("oneOf", alternatives); return result;
   }
 
   private static JsonObject typed(String type) { JsonObject value = new JsonObject(); value.addProperty("type", type); return value; }

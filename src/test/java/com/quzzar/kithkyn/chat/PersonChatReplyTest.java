@@ -11,4 +11,14 @@ class PersonChatReplyTest {
         "{\"say\":\"Done\",", "{}")) assertNull(PersonChatDispatcher.parseReply(raw), raw);
     assertNotNull(PersonChatDispatcher.parseReply("{\"say\":\"I could not reach it.\"}"));
   }
+  @Test void opinionsRequireActualCurrentSpeakerEvidenceAndConsistentPolarity() {
+    String insult = "{\"say\":\"That was unkind.\",\"opinion\":{\"kind\":\"insult\",\"quote\":\"You're an idiot.\",\"delta\":-3}}";
+    assertEquals(-3, PersonChatDispatcher.parseReply(insult, "You're an idiot.").opinionDelta());
+    assertNull(PersonChatDispatcher.parseReply(insult, "Did you help?"));
+    assertNull(PersonChatDispatcher.parseReply(insult.replace("-3", "3"), "You're an idiot."));
+    assertNull(PersonChatDispatcher.parseReply("{\"say\":\"No.\",\"opinion\":-3}", "Did you help?"));
+    String apology = "{\"say\":\"Thank you.\",\"opinion\":{\"kind\":\"apology\",\"quote\":\"I'm sorry.\",\"delta\":2}}";
+    assertEquals(2, PersonChatDispatcher.parseReply(apology, "I'm sorry.").opinionDelta());
+  }
+
 }

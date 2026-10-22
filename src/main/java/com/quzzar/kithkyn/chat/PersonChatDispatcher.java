@@ -290,7 +290,7 @@ public final class PersonChatDispatcher {
           boolean fight = false;
           boolean done = false;
           if (result.isPresent()) {
-            Reply parsed = parseReply(result.get());
+            Reply parsed = parseReply(result.get(), message);
             if (parsed != null) {
               say = parsed.say();
               give = parsed.give();
@@ -501,7 +501,10 @@ public final class PersonChatDispatcher {
   private static final Map<Long, OpinionBudget> OPINION_BUDGETS = new ConcurrentHashMap<>();
 
   /** Strict contract shared by player and resident dialogue; malformed output has no side effects or substitute narrative. */
-  public static Reply parseReply(String raw) {
+  public static Reply parseReply(String raw) { return parseReply(raw, null); }
+
+  /** Live dialogue additionally verifies that opinion evidence is the current counterpart's actual line. */
+  public static Reply parseReply(String raw, String speakerLine) {
     var parsed = com.quzzar.kithkyn.llm.StrictJson.object(raw);
     if (parsed.isEmpty()) return null;
     JsonObject node = parsed.get();
@@ -522,8 +525,17 @@ public final class PersonChatDispatcher {
         if (give == null || count < 1 || count > 64) return null;
       }
       if (node.has("opinion")) {
-        if (!node.getAsJsonPrimitive("opinion").isNumber()) return null;
-        opinion = clampStep(node.get("opinion").getAsBigDecimal().intValueExact());
+        JsonObject change = node.getAsJsonObject("opinion");
+        if (!change.keySet().equals(Set.of("kind", "quote", "delta"))
+            || !change.getAsJsonPrimitive("kind").isString() || !change.getAsJsonPrimitive("quote").isString()
+            || !change.getAsJsonPrimitive("delta").isNumber()) return null;
+        String kind = change.get("kind").getAsString(), quote = change.get("quote").getAsString();
+        int delta = change.get("delta").getAsBigDecimal().intValueExact();
+        boolean positive = Set.of("kindness", "apology").contains(kind);
+        if (!positive && !Set.of("insult", "threat").contains(kind) || delta == 0
+            || positive != (delta > 0) || quote.isBlank() || quote.length() > 2048
+            || speakerLine != null && !speakerLine.equals(quote)) return null;
+        opinion = clampStep(delta);
       }
       JsonObject request = null;
       if (node.has("request")) {

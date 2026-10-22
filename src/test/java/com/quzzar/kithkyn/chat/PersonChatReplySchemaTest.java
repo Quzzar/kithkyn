@@ -7,12 +7,12 @@ import org.junit.jupiter.api.Test;
 
 class PersonChatReplySchemaTest {
   @Test void localItemArgumentsAreStringsFromActualCarriedItems() {
-    var properties = JsonParser.parseString(PersonChatReplySchema.build(List.of("minecraft:bread"), false))
+    var properties = JsonParser.parseString(PersonChatReplySchema.build(List.of("minecraft:bread"), false, "Could I have bread?"))
         .getAsJsonObject().getAsJsonArray("oneOf").get(1).getAsJsonObject().getAsJsonObject("properties");
     assertEquals("string", properties.getAsJsonObject("give").get("type").getAsString());
     assertEquals("[\"minecraft:bread\"]", properties.getAsJsonObject("give").get("enum").toString());
     assertFalse(properties.has("request"));
-    var alternatives = JsonParser.parseString(PersonChatReplySchema.build(List.of("minecraft:bread"), false))
+    var alternatives = JsonParser.parseString(PersonChatReplySchema.build(List.of("minecraft:bread"), false, "Could I have bread?"))
         .getAsJsonObject().getAsJsonArray("oneOf");
     assertFalse(alternatives.get(0).getAsJsonObject().getAsJsonObject("properties").has("give_count"));
     assertTrue(alternatives.get(1).getAsJsonObject().getAsJsonArray("required").toString().contains("give"));
@@ -20,7 +20,7 @@ class PersonChatReplySchemaTest {
     assertNull(PersonChatDispatcher.parseReply("{\"say\":\"Here.\",\"give\":1}"));
   }
   @Test void emptyPocketsDoNotOfferAnItemToolAndPlanningRemainsExplicit() {
-    var properties = JsonParser.parseString(PersonChatReplySchema.build(List.of(), true))
+    var properties = JsonParser.parseString(PersonChatReplySchema.build(List.of(), true, "Could you build a farm?"))
         .getAsJsonObject().getAsJsonObject("properties");
     assertFalse(properties.has("give"));
     assertFalse(properties.has("give_count"));

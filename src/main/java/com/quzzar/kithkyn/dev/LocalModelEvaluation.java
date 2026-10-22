@@ -251,7 +251,7 @@ public final class LocalModelEvaluation {
       row.addProperty("decision_correct", decision.isPresent() && decision.get().choiceIndex() == scenario.choice());
       return row;
     }
-    var reply = PersonChatDispatcher.parseReply(raw);
+    var reply = PersonChatDispatcher.parseReply(raw, scenario.message());
     row.addProperty("reply_valid", reply != null);
     row.addProperty("dialogue_present", reply != null);
     if (reply == null) return row;

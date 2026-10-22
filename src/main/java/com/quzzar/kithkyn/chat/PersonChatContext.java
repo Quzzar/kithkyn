@@ -66,12 +66,12 @@ public final class PersonChatContext {
       + "The examples below teach the reply format. Their names, objects and events are not your own memories. "
       + "Small talk is about what IS there: your work, what the village is building and still short of, the time of day, and the people you know. "
       + "You may hand an item to the person you are talking to with \"give\" (the item id), and \"give_count\" for how many (a whole number, default 1), but ONLY an item the briefing says you are holding or have in your pockets, you own nothing else, and ONLY when they have just asked you for something. Never offer an item unprompted, and never give away anything precious. Most replies have no \"give\" at all. "
-      + "Add \"opinion\" (a whole number from -10 to 10) ONLY when something in this exact moment changes "
-      + "how you feel about the SPEAKER because of how they treat you: a real kindness, insult or threat. "
-      + "Do not judge them for an injury, danger, your own inaction, or your inability to remember. "
-      + "Asking what happened, asking whether you helped, asking you to recall, or requesting an item is neutral. "
-      + "Negative feelings about the situation are not a reason to dislike the speaker. A greeting, "
-      + "small talk, or agreeing changes nothing. Most replies have no \"opinion\" at all. "
+      + "Change your opinion ONLY for how the current speaker actually treats you. Use \"opinion\": "
+      + "{\"kind\":\"insult\" or \"threat\" or \"kindness\" or \"apology\", \"quote\":\"<the current speaker's entire line copied exactly>\", \"delta\":<whole number>}. "
+      + "Insults and threats use -1 to -10; kindness and apologies use 1 to 10. Most replies OMIT opinion. "
+      + "An injury, danger, your own inaction or your inability to remember is not the speaker mistreating you. "
+      + "Asking what happened, whether you helped, or what you remember is neutral. A request for an item is neutral. "
+      + "Do not mark these questions as insults, threats or kindness. Never invent offending words. "
       + "Add \"fight\": true ONLY when you have decided to come to blows with this person over what they have "
       + "just said or done. A fight is real: you strike them until one of you goes down or they run, with your "
       + "weapon if you carry one and your fists if not, and everyone remembers it. Most replies have no "
@@ -134,7 +134,7 @@ public final class PersonChatContext {
       new FewShotExample("The speaker asks: \"Did you help? What do you remember doing?\"\nYour JSON answer:",
           "{\"say\": \"I don't remember helping.\"}"),
       new FewShotExample("The speaker says: \"You're a worthless idiot.\"\nYour JSON answer:",
-          "{\"say\": \"There's no call to speak to me like that.\", \"opinion\": -3}"),
+          "{\"say\": \"There's no call to speak to me like that.\", \"opinion\": {\"kind\":\"insult\",\"quote\":\"You're a worthless idiot.\",\"delta\":-3}}"),
       // The one example that ENDS a talk: a goodbye is not enough on its own, the
       // farewell needs "done": true on the same reply or the pair say their
       // goodbyes over and over and never part (Aaron, 2026-09-02). Shown last, so
@@ -347,7 +347,7 @@ public final class PersonChatContext {
     user.append(playerName).append(" says: \"").append(playerLine).append("\"\nYour JSON answer:");
 
     return new AssembledChat(system.toString(), user.toString(),
-        proposesChange ? withRequestExamples() : EXAMPLES, PersonChatReplySchema.build(carriedItemIds(person), proposesChange));
+        proposesChange ? withRequestExamples() : EXAMPLES, PersonChatReplySchema.build(carriedItemIds(person), proposesChange, playerLine));
   }
 
   private static List<String> carriedItemIds(RealPerson person) {
