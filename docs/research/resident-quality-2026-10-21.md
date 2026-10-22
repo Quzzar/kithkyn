@@ -14,7 +14,7 @@ One actual-model scene completed observation, choice, physical approach and accu
 post-reload description. This remains experimental work, not acceptance for populated villages
 or multiplayer.
 
-## Changes
+## Earlier iterations before the gift-policy correction
 
 - The existing conversation attachment now saves up to four exact counterpart quotes. The model
   chooses source indices instead of writing a first-person event story. Invalid references,
@@ -186,6 +186,62 @@ uncertain; no investigate route was offered in this capture, and the reason was 
 This does not measure her preference for an approach or add another successful physical action.
 The earlier bounded approach remains the sole demonstrated full action/recall loop here.
 
+## Gift choice and durable event records after the user's correction
+
+At source `763176ec`, residents can choose unsolicited gifts, valuables and equipment from
+their actual carried stock. The blacklist and English request matcher are deleted. Local
+generation explicitly selects `give:null` or a carried item and bounded count before speech.
+The first compatible component variant determines the offer; native removal still enforces
+actual ownership and the existing cleric seed rule. This changes generation structure, not
+the resident's freedom to choose generosity or refusal.
+
+Actual delivery counts now enter the existing bounded personal log. Inventory receipt,
+ground placement and returned unspawned overflow are distinct. The recipient logs a pickup
+only for items inserted into their inventory. Each real transaction is appended, bypassing
+the old day-long duplicate-text suppression: the controlled game fixture transfers two
+identical one-diamond gifts and preserves both receipts across entity reload. It also
+transfers a named equipped diamond sword to another resident without losing components.
+
+New witnessed injury episodes enter that same saved log without inferring an attacker,
+treatment or later condition. The actual awareness fixture checks visibility exclusion,
+hidden-attacker isolation and injury recall after serialization. The transient observation
+buffer remains bounded and session-local. Conversation exchanges now save optional game
+ticks, which order native events and speech when calendar time is frozen or rewound. Legacy
+timestamps remain readable with their relative ordering explicitly unknown.
+
+The earlier `gift-choice-partial-*` capture stopped after its first scene because the harness
+tried to serialize `Optional` through Gson reflection. It retains ten replies and eleven
+logical requests, including a neutral question that incorrectly selected a real fight, and
+confused claims about bread/diamond offers that had not transferred. This is an incomplete
+run, not a quality pass. Report serialization now uses the existing personal-log codec.
+
+The completed `gift-choice-*` run has nineteen usable replies, four completed source
+selections and 23 generative calls. All seventeen neutral requests produced zero opinion
+change; the insult and apology also produced zero. No reply selected a fight. Median observed
+response latency was about 5.55 seconds, maximum 7.40 seconds, under the same development
+limitations as earlier runs.
+
+The concerned resident handed one bread to the player (three to two in her pack, zero to
+one for the player) and later accurately recalled that completed gift. She kept her diamonds;
+the refusal said she had none to give even though three remained carried and eligible. This
+does not demonstrate a model-selected valuable or unsolicited gift; those native behaviors
+are verified by the controlled fixture. The reserved resident still confused the injured
+Tessa with the player despite the correct durable witness record.
+
+The inquisitive resident selected investigate at confidence 0.9141 and physically moved from
+`(100.5, 161, 100.5)` to approximately `(104.69, 161, 100.50)`. Native execution completed the
+approach without treatment. Her initial explanation incorrectly described approaching to
+talk to the player; after reload she accurately stated that she reached the injured resident
+without treating them. This adds a physical approach and accurate post-reload outcome, but
+not another fully correct description both before and after reload. The concerned resident
+remained uncertain, the reserved resident continued and the guard decision timed out.
+
+Verification now passes 740 Java tests and six Python scoring tests. Controlled native gift,
+reload and awareness checks pass. These data and generation changes improve grounding and
+restore the intended gift freedom; they do not solve general factual dialogue, personality
+consistency or populated-village acceptance. No status UI, provider substitution, model
+default or confidence threshold changed. Both model processes were stopped after capture.
+
 ## Evidence and limits
 
 [The evidence directory](../../tools/llm/results/2026-10-21/quality/) retains the corrected corpus,
@@ -205,7 +261,7 @@ player is simulated and no client UI is rendered. Raw conversation history remai
 reload, so this does not isolate quote memory from history or test a new Minecraft day. A
 successful single resident interaction does not complete #188/#189/#192 acceptance.
 
-Verification: 732 Java tests pass, six Python replay-scoring tests pass, and the controlled
+Earlier verification before the gift correction: 732 Java tests pass, six Python replay-scoring tests pass, and the controlled
 actual-game reaction fixture reports PASS on two subsequent runs after an intermittent missing
 seek-help offer. The earlier failed run was not a pass; its assertion now includes the captured
 request, helper position, occupation, village and visibility to diagnose a recurrence. That

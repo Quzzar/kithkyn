@@ -7,7 +7,9 @@
     "The bundled local delegate retains its existing minimum 1024-token HTTP cap; the logical configured chat budget shown in call logs is not that wire cap.",
     "The historical final-* required-order capture confirms emitted opinion precedes say. Request-prefix and requested-object captures add gift authorization; source/effect validation does not prove truthful speech.",
     "No confidence threshold, model default or provider was changed to turn a failure into a pass.",
-    "Historical final-* captures include two unsolicited three-diamond transfers. Later captures preserve these failures and add native precious-stock assertions plus requested-object authorization."
+    "Historical final-* captures include two unsolicited three-diamond transfers. Later captures preserve these failures and add native precious-stock assertions plus requested-object authorization.",
+    "User clarification supersedes earlier gift restrictions: valuables and unsolicited gifts are allowed. Keeping diamonds is not current acceptance; physical ownership, conservation and truthful receipts are.",
+    "gift-choice-partial-* is an incomplete first-scene capture. The harness failed serializing Optional through Gson; the later run uses the existing codec. Its 11 logical requests and behavioral errors are retained, not counted as completed acceptance."
   ],
   "source_commits": {
     "intermediate-gameplay.json": "1789e6cfd917035b043dee796d448f2a4ff157c1",
@@ -16,7 +18,9 @@
     "optional-order-gameplay.json": "97cbfcf506ca1fdb4787ecf8a9b02a6319c0ec4a",
     "final-gameplay.json": "d319abf34146037f867a37bffa9a930c9ee6ba00",
     "request-prefix-gameplay.json": "84be2cb1a98cbcf2d7fbea281dfed5a259dc2c07",
-    "requested-object-gameplay.json": "03ff5a3bd19bb0d607d5ba0c9b6f54ebfe7f6798"
+    "requested-object-gameplay.json": "03ff5a3bd19bb0d607d5ba0c9b6f54ebfe7f6798",
+    "gift-choice-partial-gameplay.json": "523629f13fd9533cff7e697fb00fd814caa98302",
+    "gift-choice-gameplay.json": "763176eca3850d38de32c09346e67f73289a90d9"
   },
   "files": {
     "bounded-gift-gameplay.json": {
@@ -30,6 +34,10 @@
     "decision-model-final.json": {
       "bytes": 1264,
       "sha256": "f01ecf13e8bdea18c7d656e8ee3298ed49894b3fe4a25e854d0493300dff6b7d"
+    },
+    "decision-model-gift-choice.json": {
+      "bytes": 1252,
+      "sha256": "9d3493148c19836c062313ead4d591df579c8a8866d1d0cd8a2363bd0ec6988f"
     },
     "decision-model-gift.json": {
       "bytes": 1252,
@@ -50,6 +58,22 @@
     "final-generative-raw.txt": {
       "bytes": 179221,
       "sha256": "84347a29f8aa5853c44087d697b7b7624fa02b7ad5ccf95978f3b2f116e52af6"
+    },
+    "gift-choice-gameplay.json": {
+      "bytes": 31967,
+      "sha256": "609135bf76b0a1c7170ca5952db42dc0add687c8c41ace85cc1ce3d0c54ced49"
+    },
+    "gift-choice-generative-raw.txt": {
+      "bytes": 249773,
+      "sha256": "d0ca883c88c520950d1fead4ef0355e5550339d52c6303674d86ea35feb21202"
+    },
+    "gift-choice-partial-gameplay.json": {
+      "bytes": 8780,
+      "sha256": "35596d1805a9563b97f9d7921a03ceb4b0da5d80ae4d3196015ca97c46267dea"
+    },
+    "gift-choice-partial-generative-raw.txt": {
+      "bytes": 133679,
+      "sha256": "0e798a680897adb56c1a3915cdf5beb50982b8402c65f7e7351f4265fb0d16f2"
     },
     "intermediate-gameplay.json": {
       "bytes": 19330,
