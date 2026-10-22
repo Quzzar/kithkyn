@@ -1,5 +1,7 @@
 # Resident model gameplay, 2026-10-21
 
+Follow-up: [source-quoted memory, argument constraints and reaction prompt rework](resident-quality-2026-10-21.md).
+
 The complete reaction-to-action-to-recall acceptance has **not passed**. Actual model runs
 found useful fixes, but no optional reaction executed under the unchanged confidence gates.
 Do not enable the experiment by default or describe this as a proven intelligent village.

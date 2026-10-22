@@ -60,6 +60,7 @@ in it, and update it in the same change that moves what it describes.
 - [research/kev-local-evaluation-2026-10-21.md](research/kev-local-evaluation-2026-10-21.md): pinned
   Kev 0.8B runtime/artifacts, Mac setup, author-reported routing limits and the separate decision experiment.
 - [research/resident-model-gameplay-2026-10-21.md](research/resident-model-gameplay-2026-10-21.md): actual
+- [research/resident-quality-2026-10-21.md](research/resident-quality-2026-10-21.md): source-quoted recall, local argument constraints, social judgement and corrected legal reaction replay.
   Kev/Llama world runs, conversation and reload evidence, queue/example fixes and remaining quality failures.
 - [research/local-model-replay-2026-10-21.md](research/local-model-replay-2026-10-21.md): paired
   stock/modified local model replay, raw synthetic evidence, template requirements and measured limitations.

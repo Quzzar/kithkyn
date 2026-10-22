@@ -240,7 +240,8 @@ Additional ignored experiment records remain under `run/kev-evaluation/`:
 - `reaction-replay-manifest.json`: fixed threshold, source hash, and run times.
 - `reaction-analysis.json`: every scored row, confidence/distribution checks, split/order
   summaries, state choices, and pair comparisons.
-- `replay_reactions.py` and `analyze_reactions.py`: sequential runner and reproducible analyzer.
+- The sequential runner is now maintained at `tools/llm/replay_reactions.py`, alongside
+  `tools/llm/analyze_reactions.py`; its historical outputs remain unchanged.
 - `startup.json`, `models-after-replay.json`, `endpoint-smoke.json`, `kev-server.log`, and
   `memory-before-replay.txt` / `memory-after-replay.txt`: runtime and memory evidence.
 

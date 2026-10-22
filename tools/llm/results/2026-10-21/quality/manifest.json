@@ -1,0 +1,84 @@
+{
+  "notes": [
+    "Synthetic disposable worlds and simulated player, not a rendered client, human play session or populated village.",
+    "Sequential development runs, not held-out statistical comparisons. Original held_out split is near-duplicate historical data.",
+    "Corrected legal reaction corpus only; an earlier corpus had three inadmissible health/distance cases and was regenerated before these captures.",
+    "Generative logs contain logical completion requests (prompts, examples, local schemas and raw responses), not complete HTTP wire captures. Decision replay retains exact HTTP request/response bodies.",
+    "The bundled local delegate retains its existing minimum 1024-token HTTP cap; the logical configured chat budget shown in call logs is not that wire cap.",
+    "Final runtime output confirms required opinion precedes say; source/effect attribution does not prove semantic judgement for all inputs.",
+    "No confidence threshold, model default or provider was changed to turn a failure into a pass."
+  ],
+  "source_commits": {
+    "intermediate-gameplay.json": "1789e6cfd917035b043dee796d448f2a4ff157c1",
+    "bounded-gift-gameplay.json": "6cf5afe3629afe233a9e2bd66e1be1372e58b702",
+    "sourced-opinion-gameplay.json": "1eb05db2710289bd011492d85ae47150534e1fe2",
+    "optional-order-gameplay.json": "97cbfcf506ca1fdb4787ecf8a9b02a6319c0ec4a",
+    "final-gameplay.json": "d319abf34146037f867a37bffa9a930c9ee6ba00"
+  },
+  "files": {
+    "bounded-gift-gameplay.json": {
+      "bytes": 23462,
+      "sha256": "1d0a416ac2f4b4a0820f76d8de36154356e283fe3e5afba1c1d05e5f3cf72ea6"
+    },
+    "bounded-gift-generative-raw.txt": {
+      "bytes": 160858,
+      "sha256": "9c910dec083cd01272abb843773a68a775912d839c416515b510fa128cc922be"
+    },
+    "decision-model-final.json": {
+      "bytes": 1264,
+      "sha256": "f01ecf13e8bdea18c7d656e8ee3298ed49894b3fe4a25e854d0493300dff6b7d"
+    },
+    "decision-model.json": {
+      "bytes": 1252,
+      "sha256": "ee790a532ca299623c0f02d09f5bfa81685f9f35d23fcbdb39d97678352df1e1"
+    },
+    "final-gameplay.json": {
+      "bytes": 27845,
+      "sha256": "5070a773834080764f176a0861fdb886f555c76b7d711e6ce28489eab8984de0"
+    },
+    "final-generative-raw.txt": {
+      "bytes": 179221,
+      "sha256": "84347a29f8aa5853c44087d697b7b7624fa02b7ad5ccf95978f3b2f116e52af6"
+    },
+    "intermediate-gameplay.json": {
+      "bytes": 19330,
+      "sha256": "3f27e238259753cca7f23997d275214b3484fcf21520520a5a2cb1392298a211"
+    },
+    "intermediate-generative-raw.txt": {
+      "bytes": 112603,
+      "sha256": "a0235f3ec6fb9120b5ea9f7e86c4e38dac366fd60bcd6275a398fbac34ba7655"
+    },
+    "optional-order-gameplay.json": {
+      "bytes": 26997,
+      "sha256": "3d9cdb0466cb6c1fa97d712a8cbfb6c95649424cacaf1deae75f27a87b4d70d9"
+    },
+    "optional-order-generative-raw.txt": {
+      "bytes": 159802,
+      "sha256": "3cf07651af2975322c58f8758017c24b327eb36ae6b09c49cd82fedfdcc7f77a"
+    },
+    "reaction-analysis.json": {
+      "bytes": 72267,
+      "sha256": "cb08c053b417de2ff9a13025b0284d640cc8665190c09f6da65f2559da4d68a2"
+    },
+    "reaction-corpus.jsonl": {
+      "bytes": 125424,
+      "sha256": "a956cceb17eb8e1455f35c707fc7d6ca084e451a3b1b092a093dfa8b913bd8dd"
+    },
+    "reaction-raw.jsonl": {
+      "bytes": 294239,
+      "sha256": "677272829a08f23642146e83026d8b5509970db25dcd5ff84e149163ec03e18d"
+    },
+    "reaction-replay-manifest.json": {
+      "bytes": 387,
+      "sha256": "6c6e9107a547934170d0b05e7f5fec627e4e796eab03109f479a42670a8dc2e5"
+    },
+    "sourced-opinion-gameplay.json": {
+      "bytes": 24816,
+      "sha256": "fc1f6d36d346c1826b425b3b695e48c49d4fead15c02454c565be70980f425f5"
+    },
+    "sourced-opinion-generative-raw.txt": {
+      "bytes": 159085,
+      "sha256": "321ad00b655f7d94462d67e604c69a03ea03b231626158d125872a0ddd34867d"
+    }
+  }
+}

@@ -26,6 +26,7 @@ One targeted rerun stopped the observed example-copying; this does not establish
 grounding or reliable item giving. The gameplay report distinguishes the original fixture
 configuration error from the corrected native-goal run.
 
+The [quality rework](research/resident-quality-2026-10-21.md) records the follow-up measurements.
 Conversation consolidation now selects exact source lines instead of writing subjective event
 prose. The bundled llama.cpp provider applies local output schemas to these selections and chat
 item arguments; cloud protocols retain their existing behavior and shared strict parsing.
