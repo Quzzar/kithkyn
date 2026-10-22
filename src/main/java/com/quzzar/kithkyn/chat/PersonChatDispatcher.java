@@ -592,12 +592,9 @@ public final class PersonChatDispatcher {
   }
 
   /**
-   * A give is honoured for any item actually in the villager's pockets, as
-   * often as they like: a villager's things are theirs to part with (Aaron,
-   * 2026-09-12: no cooldown, and no guard on the job's own gear). The model
-   * once offered items on ordinary turns, a torch when asked how business is,
-   * a diamond for asking a question; the prompt now tells them to give only
-   * when asked, and that is the only brake on how often.
+   * Transfer an explicitly requested, eligible stack after shared reply validation.
+   * There is no gift cooldown. Slot removal independently protects valuables and
+   * seed stock; possessing an item or merely mentioning it does not authorize a gift.
    */
   private static void executeGive(RealPerson person, ServerPlayer player, String itemId, int requestedCount) {
     ResourceLocation id = ResourceLocation.tryParse(itemId.contains(":") ? itemId : "minecraft:" + itemId);

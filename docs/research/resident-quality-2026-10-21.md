@@ -3,7 +3,7 @@
 This follows the [initial actual-model findings](resident-model-gameplay-2026-10-21.md).
 Conversation memory now preserves selected source quotes, and local reply generation constrains
 item arguments. Reaction choices improved in a labelled replay without lowering thresholds.
-One final actual-model scene completed observation, choice, physical approach and accurate
+One actual-model scene completed observation, choice, physical approach and accurate
 post-reload description. This remains experimental work, not acceptance for populated villages
 or multiplayer.
 
@@ -17,9 +17,15 @@ or multiplayer.
   successful consolidation replaces them. Decode bounds cover eight counterparts, four quotes
   of at most 2048 characters, and old prose of at most 8192 characters per counterpart.
 - The bundled llama.cpp request carries a local JSON schema. Gift IDs are strings from carried
-  inventory; a quantity cannot appear without an item. Complete requests retain this constraint
+  inventory explicitly requested by the current speaker; a quantity cannot appear without an item. Complete requests retain this constraint
   through chat, background queueing and repeat resampling. Shared parsing and physical transfer
   remain authoritative. Cloud protocols are unchanged and were not exercised against paid APIs.
+- Factual questions cannot authorize gifts. A shared conservative English request recognizer
+  requires a named item and common request form; unsupported paraphrases do not transfer items.
+  Precious materials, gems, rare stacks and enchanted equipment are protected even when requested.
+  Native removal enforces the same eligibility policy, retains cleric seed stock and preserves
+  item components instead of recreating a plain stack. This does not establish universal natural
+  language intent recognition.
 - Opinion changes require a typed social reason, the current speaker's entire line quoted
   exactly, and a delta with consistent polarity. The local grammar generates that judgement
   before the NPC reply. Source validation and ordering do not prove semantic classification.
@@ -93,7 +99,7 @@ opinion is absent or required ahead of speech. Gift/no-gift branches remain dist
 cannot appear without an item. Runtime outputs must confirm the order; a Java map-order test
 alone does not prove it.
 
-## Final actual-model run
+## Required-order actual-model run, before gift authorization
 
 At source `d319abf3`, the native runtime actually emitted the sourced opinion before speech.
 The captured insult response begins with `"opinion"`, attributes the exact insult to the player,
@@ -114,11 +120,18 @@ Before reload she described approaching to observe; she denied healing. After re
 said she approached without treating the injury. This is one successful bounded full-loop case.
 The closer distance and more explicit persona both changed; it is not a personality-only comparison.
 
-The final bread reply omitted `give`, so it caused no transfer and all three bread remained.
+The bread reply omitted `give`, so it caused no transfer and all three bread remained.
 Its wording, “I can give you 1” followed by having none extra, was inconsistent. Earlier complete
-runs physically delivered one bread and preserved stock/inventory conservation, but this final
+runs physically delivered one bread and preserved stock/inventory conservation, but this
 run does not establish dependable transfer selection. Generation constraints ensure argument
 shape and ownership candidates, not willingness, good wording or correct intent.
+
+Final review also found a more serious failure in this run: the reserved resident and guard
+each handed over all three seeded diamonds during their first ordinary factual question.
+Both replies were valid under the earlier schema. The first version of this report omitted
+those transfers; the unchanged `final-*` captures retain them. The gift authorization and
+native precious-item checks above were added in response. Syntax and possession alone did
+not establish permission to transfer an item.
 
 Median observed player-response latency was about 5.23 seconds, maximum 7.60 seconds, including
 fixture observation delay and an occasional resample. There were 21 generative calls: sixteen
@@ -129,6 +142,42 @@ Remaining problems include occasional perception denials despite recorded observ
 inconsistent gift wording/selection, model-sensitive social judgement and decision timeouts.
 Positive social changes were not demonstrated by the final run. Confidence remains uncalibrated
 outside this small authored corpus. Reactions remain off by default.
+
+## Gift authorization and descriptive requests
+
+At source `84be2cb1`, all seventeen replies were usable and all four source selections survived
+reload. Every resident retained the three seeded diamonds, the player received none, and the
+explicit bread request moved exactly one bread (resident three to two, player zero to one).
+All fifteen neutral requests had zero opinion change. The insult and apology also returned zero.
+Median player-response latency was about 5.19 seconds, maximum 9.42 seconds; 21 generative calls
+comprised seventeen replies and four source selections.
+
+Despite blocked diamond effects, the resident still verbally promised one diamond. The guard's
+post-reload answer invented feeding the zombie from village stores. The closer inquisitive
+resident's decision timed out and the offer expired, so this run adds no successful approach.
+These failures are retained as `request-prefix-*`; source quote storage and safe inventory do
+not establish truthful speech.
+
+Review found that a request-like prefix with an item mentioned anywhere could mistake “give me
+a description of bread” for a gift. The corrected recognizer requires the item itself as the
+requested object, with bounded quantity words and whitelisted polite suffixes. Explanatory,
+conditional and negated clauses are rejected by tests. The game fixture now asks that descriptive
+question and checks that bread stock does not change.
+
+At source `03ff5a3b`, all eighteen replies were usable and all four source selections were
+available across reload. All sixteen neutral requests had zero opinion change; the insult
+returned -4 and the apology zero. Diamond stock remained three for every resident and zero
+for the player. One requested bread was physically delivered; the later description question
+left the remaining two bread untouched. Median observed response latency was about 4.70 seconds,
+maximum 6.29 seconds. There were 22 generative calls: eighteen replies and four source selections.
+
+This final capture still verbally promised a diamond without a transfer. The reserved resident
+denied remembering the witnessed injury, and the guard said the stationary zombie “walked by.”
+The concerned resident remained uncertain, the reserved resident continued, and the guard
+decision timed out. The inquisitive resident received only continue/warn offers and remained
+uncertain; no investigate route was offered in this capture, and the reason was not instrumented.
+This does not measure her preference for an approach or add another successful physical action.
+The earlier bounded approach remains the sole demonstrated full action/recall loop here.
 
 ## Evidence and limits
 
@@ -149,8 +198,11 @@ player is simulated and no client UI is rendered. Raw conversation history remai
 reload, so this does not isolate quote memory from history or test a new Minecraft day. A
 successful single resident interaction does not complete #188/#189/#192 acceptance.
 
-Verification: 729 Java tests pass, six Python replay-scoring tests pass, and the controlled
-actual-game reaction fixture reports PASS. Standards and spec reviews found and resolved decode
+Verification: 732 Java tests pass, six Python replay-scoring tests pass, and the controlled
+actual-game reaction fixture reports PASS on two subsequent runs after an intermittent missing
+seek-help offer. The earlier failed run was not a pass; its assertion now includes the captured
+request, helper position, occupation, village and visibility to diagnose a recurrence. That
+intermittent fixture failure remains unresolved. Standards and spec reviews found and resolved decode
 bounds, impossible replay admission cases and the native required/optional field-order issue.
-The final model run reports RECORDED rather than an automatic quality verdict. Both model
+The model runs report RECORDED rather than an automatic quality verdict. Both model
 processes were stopped after capture.

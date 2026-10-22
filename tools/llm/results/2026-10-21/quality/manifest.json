@@ -5,15 +5,18 @@
     "Corrected legal reaction corpus only; an earlier corpus had three inadmissible health/distance cases and was regenerated before these captures.",
     "Generative logs contain logical completion requests (prompts, examples, local schemas and raw responses), not complete HTTP wire captures. Decision replay retains exact HTTP request/response bodies.",
     "The bundled local delegate retains its existing minimum 1024-token HTTP cap; the logical configured chat budget shown in call logs is not that wire cap.",
-    "Final runtime output confirms required opinion precedes say; source/effect attribution does not prove semantic judgement for all inputs.",
-    "No confidence threshold, model default or provider was changed to turn a failure into a pass."
+    "The historical final-* required-order capture confirms emitted opinion precedes say. Request-prefix and requested-object captures add gift authorization; source/effect validation does not prove truthful speech.",
+    "No confidence threshold, model default or provider was changed to turn a failure into a pass.",
+    "Historical final-* captures include two unsolicited three-diamond transfers. Later captures preserve these failures and add native precious-stock assertions plus requested-object authorization."
   ],
   "source_commits": {
     "intermediate-gameplay.json": "1789e6cfd917035b043dee796d448f2a4ff157c1",
     "bounded-gift-gameplay.json": "6cf5afe3629afe233a9e2bd66e1be1372e58b702",
     "sourced-opinion-gameplay.json": "1eb05db2710289bd011492d85ae47150534e1fe2",
     "optional-order-gameplay.json": "97cbfcf506ca1fdb4787ecf8a9b02a6319c0ec4a",
-    "final-gameplay.json": "d319abf34146037f867a37bffa9a930c9ee6ba00"
+    "final-gameplay.json": "d319abf34146037f867a37bffa9a930c9ee6ba00",
+    "request-prefix-gameplay.json": "84be2cb1a98cbcf2d7fbea281dfed5a259dc2c07",
+    "requested-object-gameplay.json": "03ff5a3bd19bb0d607d5ba0c9b6f54ebfe7f6798"
   },
   "files": {
     "bounded-gift-gameplay.json": {
@@ -27,6 +30,14 @@
     "decision-model-final.json": {
       "bytes": 1264,
       "sha256": "f01ecf13e8bdea18c7d656e8ee3298ed49894b3fe4a25e854d0493300dff6b7d"
+    },
+    "decision-model-gift.json": {
+      "bytes": 1252,
+      "sha256": "cb56217d6e22e998d55b0deec83ea111fdb8bb9c278df20c9b77afcab13c9581"
+    },
+    "decision-model-object.json": {
+      "bytes": 1252,
+      "sha256": "43039619a372a9120fe0cea64d3ad127554ef8457656af379c99a733f5ba39cd"
     },
     "decision-model.json": {
       "bytes": 1252,
@@ -71,6 +82,22 @@
     "reaction-replay-manifest.json": {
       "bytes": 387,
       "sha256": "6c6e9107a547934170d0b05e7f5fec627e4e796eab03109f479a42670a8dc2e5"
+    },
+    "request-prefix-gameplay.json": {
+      "bytes": 26084,
+      "sha256": "e5af6e4bca68094f5988b4307bac27e131570bec5e10f37d5f8ccf8d7abac15c"
+    },
+    "request-prefix-generative-raw.txt": {
+      "bytes": 166241,
+      "sha256": "d69ceae14f3db219a7a554a99933c38b161cbf0106cd3d214eef963555328a73"
+    },
+    "requested-object-gameplay.json": {
+      "bytes": 26130,
+      "sha256": "ad7045517e5001ff4bca38e3dc0f907f85a2268959886c1e4ce55f931e256985"
+    },
+    "requested-object-generative-raw.txt": {
+      "bytes": 178689,
+      "sha256": "65e8806a3c0dd4a7e7f2475bc51ef21dc11529755f3c0e5dea6bd0d7290690fd"
     },
     "sourced-opinion-gameplay.json": {
       "bytes": 24816,
