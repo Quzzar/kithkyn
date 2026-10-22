@@ -29,7 +29,6 @@ import com.quzzar.kithkyn.decision.ReactionState.Offer;
 import com.quzzar.kithkyn.decision.ReactionState.Verdict;
 import com.quzzar.kithkyn.decision.ReactionState.Accepted;
 import com.quzzar.kithkyn.decision.ReactionState.Rejected;
-import com.quzzar.kithkyn.entities.AgeStage;
 import com.quzzar.kithkyn.entities.RealPerson;
 import com.quzzar.kithkyn.entities.Virtue;
 import com.quzzar.kithkyn.village.LaborPlanner;
@@ -112,11 +111,11 @@ public final class ResidentReactions {
     List<Observation> observations = person.awareness().snapshot();
     Observation event = observations.stream().filter(this::trigger)
         .filter(observation -> !handled.contains(episode(observation)))
-        .max(java.util.Comparator.comparingLong(Observation::lastTick)).orElse(null);
+        .max(java.util.Comparator.comparingLong(Observation::firstTick)).orElse(null);
     if (event == null) return;
     var decisions = ReactionDecisions.of(level.getServer());
     if (!decisions.available(level.getServer())) { status = Status.DEFERRED; detail = "Waiting for the shared decision budget."; return; }
-    Capture capture = capture(event, observations, now);
+    Capture capture = capture(event, now);
     if (capture == null) { remember(event); return; }
     pending = capture;
     update(Status.PENDING, "A bounded reaction decision is pending.");
@@ -125,8 +124,9 @@ public final class ResidentReactions {
     var character = new ReactionRequests.Character(person.getOccupation().name(), persona(),
         person.getVirtue(Virtue.AGGRESSION), person.getVirtue(Virtue.CURIOSITY),
         person.getVirtue(Virtue.PROTECT_SELF), person.getVirtue(Virtue.PROTECT_OTHERS),
-        person.getVirtue(Virtue.DRIVE), person.getHealth() / person.getMaxHealth(), LaborPlanner.mustKeepOnPost(person),
-        person.distanceTo(subject(event)), com.quzzar.kithkyn.relationships.OpinionService.opinionOf(person, event.subject().id()));
+        person.getVirtue(Virtue.DRIVE), person.getHealth() / person.getMaxHealth(), LaborPlanner.hasEssentialStaffingPressure(person),
+        person.distanceTo(subject(event)), com.quzzar.kithkyn.relationships.OpinionService.opinionOf(person, event.subject().id()),
+        circumstances(capture, observations));
     decisions.choose(level.getServer(), ReactionRequests.build(character, event, capture.offer().actions(),
         UndertakingService.briefing(person.getData(KithkynAttachments.UNDERTAKINGS.get()),
             person.getUUID(), Optional.empty(), 3)), result -> apply(capture, result));
@@ -137,58 +137,60 @@ public final class ResidentReactions {
     return person.getPersonality().displayName() + ": " + blurb.substring(0, Math.min(1200, blurb.length()));
   }
 
+  private String circumstances(Capture capture, List<Observation> observations) {
+    LivingEntity subject = subject(capture.event());
+    var helper = capture.helper() == null ? null : ((ServerLevel) person.level()).getEntity(capture.helper());
+    return "Life stage: " + person.getLifeStage() + "; wandering merchant: " + person.isWanderingMerchant()
+        + "; raider: " + person.isRaider() + "; village travel: "
+        + (person.getVillage() != null && person.getVillage().isTraveler(person.getUUID()))
+        + "; assigned fixed post: " + capture.duty().fixedPost()
+        + "; observed subject belongs to the same village: " + (subject instanceof RealPerson resident && sameVillage(resident))
+        + "; other visible danger was observed: " + observations.stream().anyMatch(event -> event.kind() == Kind.VISIBLE_THREAT)
+        + "; available helper: " + (helper instanceof RealPerson guard ? guard.getFullName()
+            + ", same village: " + sameVillage(guard) + ", raider: " + guard.isRaider() : "none") + ".";
+  }
+
   private boolean trigger(Observation event) {
     return (event.kind() == Kind.VISIBLE_THREAT && event.evidence() == Evidence.SEEN
         || event.kind() == Kind.INJURY && (event.evidence() == Evidence.SEEN || event.evidence() == Evidence.EXPERIENCED));
   }
 
   private boolean eligible() {
-    return person.isAlive() && !person.isRemoved() && !person.isNoAi() && !person.isRaider() && !person.isWanderingMerchant()
-        && person.getLifeStage() != AgeStage.TODDLER && person.getLifeStage() != AgeStage.KID
+    return person.isAlive() && !person.isRemoved() && !person.isNoAi()
         && !person.isSleeping() && !person.isPassenger() && !person.isQuarrelling()
-        && !person.isOnFire() && !person.isInLava() && person.getAirSupply() > 0
-        && person.getHealth() >= person.getMaxHealth() / 3F
-        && !(person.shouldSleepAtNight() && person.level().isNight())
-        && (person.getVillage() == null || !person.getVillage().isTraveler(person.getUUID()))
         && person.goalSelector.getAvailableGoals().stream().noneMatch(goal -> goal.isRunning() && goal.getPriority() < 3
             && (goal.getGoal().getFlags().contains(Goal.Flag.MOVE) || goal.getGoal().getFlags().contains(Goal.Flag.LOOK)));
   }
 
-  private Capture capture(Observation event, List<Observation> observations, long now) {
+  private Capture capture(Observation event, long now) {
     if (!eventValid(event)) return null;
     var actions = new ArrayList<>(List.of(Action.CONTINUE, Action.WARN));
     Map<Action, Vec3> routes = new EnumMap<>(Action.class);
-    boolean mobile = ResidentObligations.mayLeavePost(person);
     UUID helper = null;
     LivingEntity subject = subject(event);
     if (event.kind() == Kind.VISIBLE_THREAT) {
-      if (mobile) {
-        Vec3 away = person.position().subtract(subject.position()).multiply(1, 0, 1).normalize();
-        for (int distance : new int[] {8, 6, 4}) {
-          Vec3 destination = standing(person.position().add(away.scale(distance)));
-          if (destination.distanceToSqr(subject.position()) > person.distanceToSqr(subject) + 9 && reachable(destination)) {
-            routes.put(Action.RETREAT, destination); actions.add(Action.RETREAT); break;
-          }
+      Vec3 away = person.position().subtract(subject.position()).multiply(1, 0, 1).normalize();
+      for (int distance : new int[] {8, 6, 4}) {
+        Vec3 destination = standing(person.position().add(away.scale(distance)));
+        if (destination.distanceToSqr(subject.position()) > person.distanceToSqr(subject) + 9 && reachable(destination)) {
+          routes.put(Action.RETREAT, destination); actions.add(Action.RETREAT); break;
         }
       }
       if (canDefend(subject)) actions.add(Action.DEFEND);
-    } else if (mobile && subject instanceof RealPerson resident && allied(resident) && subject != person
-        && observations.stream().noneMatch(observation -> observation.kind() == Kind.VISIBLE_THREAT)) {
+    } else if (subject != person) {
       Vec3 destination = near(subject);
       if (destination != null) { routes.put(Action.INVESTIGATE, destination); actions.add(Action.INVESTIGATE); }
     }
-    if (mobile) {
-      List<RealPerson> guards = new ArrayList<>();
-      ServerLevel level = (ServerLevel) person.level();
-      level.getEntities(EntityTypeTest.forClass(RealPerson.class), person.getBoundingBox().inflate(16),
-          guard -> guard != person && guard.isAlive() && guard.getOccupation() == Occupation.GUARD && allied(guard), guards, 8);
-      for (RealPerson guard : guards) {
-        if (!ResidentAwareness.visible(person, guard)) continue;
-        Vec3 destination = near(guard);
-        if (destination != null && (event.kind() != Kind.VISIBLE_THREAT
-            || destination.distanceToSqr(subject.position()) > person.distanceToSqr(subject))) {
-          helper = guard.getUUID(); routes.put(Action.SEEK_HELP, destination); actions.add(Action.SEEK_HELP); break;
-        }
+    List<RealPerson> guards = new ArrayList<>();
+    ServerLevel level = (ServerLevel) person.level();
+    level.getEntities(EntityTypeTest.forClass(RealPerson.class), person.getBoundingBox().inflate(16),
+        guard -> guard != person && guard.isAlive() && guard.getOccupation() == Occupation.GUARD, guards, 8);
+    guards.sort(java.util.Comparator.comparingDouble(person::distanceToSqr));
+    for (RealPerson guard : guards) {
+      if (!ResidentAwareness.visible(person, guard)) continue;
+      Vec3 destination = near(guard);
+      if (destination != null) {
+        helper = guard.getUUID(); routes.put(Action.SEEK_HELP, destination); actions.add(Action.SEEK_HELP); break;
       }
     }
     return new Capture(state.offer(Math.min(now + 100, event.expiresTick()), actions), event,
@@ -198,8 +200,7 @@ public final class ResidentReactions {
   private void apply(Capture capture, DecisionProvider.Result result) {
     if (pending != capture) return;
     pending = null;
-    double threshold = capture.event().kind() == Kind.VISIBLE_THREAT ? KithkynConfig.ReactionDangerConfidence : KithkynConfig.ReactionInjuryConfidence;
-    Verdict verdict = state.resolve(capture.offer(), result, threshold, person.level().getGameTime());
+    Verdict verdict = state.resolve(capture.offer(), result, person.level().getGameTime());
     if (verdict instanceof Rejected rejected) { update(rejected.status(), rejected.detail()); return; }
     if (!KithkynConfig.ResidentReactions || !eligible() || !capture.duty().equals(duty()) || !capture.dimension().equals(person.level().dimension().location().toString())
         || !eventValid(capture.event())) { update(Status.STALE, "The resident, evidence, or duties changed while deciding."); return; }
@@ -219,7 +220,7 @@ public final class ResidentReactions {
       return;
     }
     Vec3 destination = capture.routes().get(action);
-    if (!ResidentObligations.mayLeavePost(person) || !reachable(destination) || !destinationValid(capture, action, destination)) {
+    if (!reachable(destination) || !destinationValid(capture, action, destination)) {
       update(Status.STALE, "The captured route, post, or destination changed."); return;
     }
     if (!begin(capture, action, destination)) return;
@@ -233,9 +234,7 @@ public final class ResidentReactions {
     return movement == expected && KithkynConfig.ResidentReactions && eligible() && active.duty().equals(duty())
         && active.dimension().equals(person.level().dimension().location().toString())
         && person.level().getGameTime() < expected.expiresAt()
-        && ResidentObligations.mayLeavePost(person)
         && ResidentWalk.usableGround(person, expected.destination())
-        && (expected.action() != Action.INVESTIGATE || person.awareness().snapshot().stream().noneMatch(event -> event.kind() == Kind.VISIBLE_THREAT))
         && (person.tickCount % 10 != 0 || destinationValid(active, expected.action(), expected.destination()));
   }
 
@@ -247,7 +246,7 @@ public final class ResidentReactions {
     }
     if (expected.action() == Action.SEEK_HELP) callOut(capture);
     else update(Status.COMPLETED, expected.action() == Action.RETREAT ? "Reached the captured retreat point; safety is not guaranteed."
-        : "Reached the observed injured resident; no treatment was performed.");
+        : "Reached " + capture.event().subject().name() + ", the observed injured subject; no treatment was performed.");
     movement = null; active = null;
   }
 
@@ -255,9 +254,9 @@ public final class ResidentReactions {
     if (action == Action.SEEK_HELP) {
       var entity = ((ServerLevel) person.level()).getEntity(capture.helper());
       return entity instanceof RealPerson guard && guard.isAlive() && guard.getOccupation() == Occupation.GUARD
-          && allied(guard) && guard.position().distanceToSqr(destination) <= 16 && ResidentAwareness.visible(person, guard);
+          && guard.position().distanceToSqr(destination) <= 16 && ResidentAwareness.visible(person, guard);
     }
-    if (action == Action.INVESTIGATE) return person.awareness().snapshot().stream().noneMatch(observation -> observation.kind() == Kind.VISIBLE_THREAT) && eventValid(capture.event()) && subject(capture.event()).position().distanceToSqr(destination) <= 16;
+    if (action == Action.INVESTIGATE) return eventValid(capture.event()) && subject(capture.event()).position().distanceToSqr(destination) <= 16;
     LivingEntity threat = subject(capture.event());
     return threat != null && threat.isAlive() && threat.position().distanceToSqr(destination) > 16;
   }
@@ -294,15 +293,18 @@ public final class ResidentReactions {
   private LivingEntity subject(Observation event) {
     return person.level() instanceof ServerLevel level && level.getEntity(event.subject().id()) instanceof LivingEntity living ? living : null;
   }
-  private boolean allied(RealPerson other) { return !other.isRaider() && person.getVillage() != null && other.getVillage() == person.getVillage(); }
+  private boolean sameVillage(RealPerson other) { return person.getVillage() != null && other.getVillage() == person.getVillage(); }
   private boolean reachable(Vec3 destination) {
     if (!ResidentWalk.usableGround(person, destination)) return false;
     var path = ResidentWalk.path(person, destination);
     return path != null && path.canReach();
   }
   private Vec3 near(LivingEntity entity) {
-    for (Vec3 offset : List.of(new Vec3(2, 0, 0), new Vec3(-2, 0, 0), new Vec3(0, 0, 2), new Vec3(0, 0, -2))) {
-      Vec3 point = standing(entity.position().add(offset));
+    // Approach the near side first; a fixed offset can route straight through the person or animal.
+    var candidates = List.of(new Vec3(2, 0, 0), new Vec3(-2, 0, 0), new Vec3(0, 0, 2), new Vec3(0, 0, -2)).stream()
+        .map(offset -> standing(entity.position().add(offset)))
+        .sorted(java.util.Comparator.comparingDouble(person::distanceToSqr)).toList();
+    for (Vec3 point : candidates) {
       if (reachable(point)) return point;
     }
     return null;

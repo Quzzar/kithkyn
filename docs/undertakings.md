@@ -25,7 +25,7 @@ reaction requires fresh admissible evidence and a valid new decision.
 
 Records retain stable ID, origin, valence, counterpart, milestones, notes and lifecycle.
 Game-owned execution includes resident UUID, verb, dimension, captured destination/reference,
-original age/assignment/post constraints and monotonic start/expiry times. Reactions have a
+original age/assignment/post context and monotonic start/expiry times. Reactions have a
 200-tick lifetime. Maintenance expires them conservatively on clock rewind as well.
 
 Transient reaction perception and execution handles are not replayed after load. A saved

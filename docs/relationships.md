@@ -136,9 +136,12 @@ change per person and a short reason. The answer is applied through `OpinionServ
 is the single tool for "how I feel about someone" and takes any UUID, so a fellow villager
 and a player go through exactly the same call. Only the storage differs: feelings about a
 resident live as that person's private lean on the pair, feelings about a player live on
-the villager. The `"opinion"` field a villager may return mid-conversation carries a typed reason,
-an exact quote of the current counterpart's line and a signed delta. Neutral questions do not
-justify an adjustment. The parser validates attribution and polarity before this same tool is
+the villager. The `"opinion"` field a villager may return mid-conversation carries a free-text
+reason, an exact quote of the current counterpart's line and a signed delta. Personality,
+values, the exchange and recorded history determine the reaction. Bargains, promises,
+betrayal and other reasons are permitted without categorizing them as kindness or insults;
+questions and requests have no predetermined social meaning. The parser validates the
+shape and counterpart attribution without prescribing the reason's polarity before this same tool is
 invoked while talking instead of while thinking. A villager may also answer words with blows:
 `"fight": true` in the reply picks a minute-long quarrel with whoever they were talking to,
 player or villager (villager-conversations.md), the villager's own decision rather than a

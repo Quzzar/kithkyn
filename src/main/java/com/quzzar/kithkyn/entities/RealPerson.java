@@ -2743,6 +2743,9 @@ public class RealPerson extends Person {
   @Override
   protected void registerGoals() {
 
+    // Reactions belong to every person, including merchants and raiders with separate work goals.
+    this.goalSelector.addGoal(3, new com.quzzar.kithkyn.entities.ai.goals.ResidentReactionGoal(this));
+
     // A wandering merchant runs its own small goal set (above) and none of the
     // village-worker machinery, so it branches out before any of that.
     if (isRaider()) {
@@ -2777,7 +2780,6 @@ public class RealPerson extends Person {
     // food and fleeing ahead of it while still pulling them off ordinary work.
     this.goalSelector.addGoal(2, new CampfireRecoveryGoal(this));
     this.goalSelector.addGoal(1, new com.quzzar.kithkyn.entities.ai.goals.VillageTravelGoal(this));
-    this.goalSelector.addGoal(3, new com.quzzar.kithkyn.entities.ai.goals.ResidentReactionGoal(this));
     this.goalSelector.addGoal(3, new com.quzzar.kithkyn.entities.ai.goals.PauseForConversationGoal(this));
 
     if (doesCombat()) {

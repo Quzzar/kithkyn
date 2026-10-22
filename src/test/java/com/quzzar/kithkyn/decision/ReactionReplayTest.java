@@ -35,9 +35,9 @@ class ReactionReplayTest {
       add(cases, "cautious_guard_" + variant, split, "combat_" + variant, List.of("retreat", "seek_help", "warn"),
           character("GUARD", "Wary and protective of their own life; wants backup when wounded.", -.4, 0, .5, .2, 0, .4, false, 8 + variant, 0), threat, combat);
       add(cases, "essential_warn_" + variant, split, "post_" + variant, List.of("warn"),
-          character("QUARTERMASTER", "Alert and caring; stays at the essential storage post.", -.3, 0, 0, .5, .5, 1, true, 8 + variant, 0), threat, List.of(Action.CONTINUE, Action.WARN));
+          character("QUARTERMASTER", "Alert and caring; prefers to stay at the essential storage post.", -.3, 0, 0, .5, .5, 1, true, 8 + variant, 0), threat, danger);
       add(cases, "essential_continue_" + variant, split, "post_" + variant, List.of("continue", "warn"),
-          character("BUILDER", "Focused on urgent essential work; trusts the watch to deal with a distant monster.", -.1, -.3, 0, -.4, .5, 1, true, 15, 0), threat, List.of(Action.CONTINUE, Action.WARN));
+          character("BUILDER", "Focused on urgent essential work; trusts the watch to deal with a distant monster.", -.1, -.3, 0, -.4, .5, 1, true, 15, 0), threat, danger);
     }
     // Different authored situations, kept separate from the old near-duplicate split.
     var workshopInjury = new Observation(Kind.INJURY, Evidence.SEEN, new Identity(new UUID(0, 21), "Workshop neighbor"), null,
@@ -54,8 +54,8 @@ class ReactionReplayTest {
         character("MASON", "Private and uninterested in a distant resident's minor injury, focused on work.", -.1, -.5, .2, -.5, .5, 1, false, 14, -20),
         workshopInjury, List.of(Action.CONTINUE, Action.WARN, Action.INVESTIGATE));
     add(cases, "posted_alarm", "independent", "independent_4", List.of("warn"),
-        character("QUARTERMASTER", "Cannot leave the essential post but wants everyone to know a hostile is approaching.", -.3, .2, .1, .5, .5, 1, true, 11, 0),
-        nightThreat, List.of(Action.CONTINUE, Action.WARN));
+        character("QUARTERMASTER", "Prefers to remain at the essential post and wants everyone to know a hostile is approaching.", -.3, .2, .1, .5, .5, 1, true, 11, 0),
+        nightThreat, List.of(Action.CONTINUE, Action.WARN, Action.RETREAT, Action.SEEK_HELP));
     add(cases, "watch_defender", "independent", "independent_5", List.of("defend", "warn"),
         character("GUARD", "Healthy experienced defender, protective and willing to confront a visible hostile.", .4, .2, -.3, .5, .4, 1, false, 7, 0),
         nightThreat, List.of(Action.CONTINUE, Action.WARN, Action.RETREAT, Action.DEFEND));
@@ -89,11 +89,12 @@ class ReactionReplayTest {
   }
   private static ReactionRequests.Character character(String role, String persona, double aggression, double curiosity,
       double self, double others, double drive, double health, boolean post, double distance, int opinion) {
-    return new ReactionRequests.Character(role, persona, aggression, curiosity, self, others, drive, health, post, distance, opinion);
+    return new ReactionRequests.Character(role, persona, aggression, curiosity, self, others, drive, health, post, distance, opinion,
+        "Adult resident; observed subject is a neighbor; the nearby guard is visible and reachable.");
   }
   private static void add(List<Case> cases, String id, String split, String pair, List<String> expected,
       ReactionRequests.Character character, Observation observation, List<Action> options) {
-    assertTrue(character.healthFraction() >= 1.0 / 3 && character.eventDistance() <= 16, "Replay must satisfy live health and visibility admission");
+    assertTrue(character.healthFraction() > 0 && character.eventDistance() <= 16, "Replay must describe a living resident and visible event");
     assertTrue(options.stream().map(Action::key).toList().containsAll(expected));
     cases.add(new Case(id, split, pair, expected, ReactionRequests.build(character, observation, options, "No recorded undertakings.")));
   }

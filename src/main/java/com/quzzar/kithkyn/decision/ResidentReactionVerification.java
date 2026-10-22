@@ -39,6 +39,9 @@ public final class ResidentReactionVerification {
   private static CompletableFuture<DecisionProvider.Result> pending;
   private static DecisionProvider.Request request;
   private static Vec3 destination;
+  private static UUID postedObserver, travelingObserver;
+  private static int freedomCase, freedomStage;
+  private static net.minecraft.world.entity.LivingEntity freedomSubject;
   private ResidentReactionVerification() { }
 
   @SubscribeEvent public static void tick(ServerTickEvent.Post event) {
@@ -64,6 +67,7 @@ public final class ResidentReactionVerification {
           if (observer.reactions().movement().isEmpty()) return;
           destination = observer.reactions().movement().orElseThrow().destination();
           check(observer.distanceToSqr(destination) > 4, "Approach fixture did not require movement");
+          check(destination.x < injured.getX(), "Approach routed through the injured resident instead of stopping on the near side");
           phase++;
         }
         case 2 -> {
@@ -79,7 +83,7 @@ public final class ResidentReactionVerification {
         }
         case 4 -> {
           if (observer.reactions().status() == Status.PENDING) return;
-          check(observer.reactions().status() == Status.UNCERTAIN && observer.reactions().movement().isEmpty(), "Low confidence executed");
+          check(observer.reactions().status() == Status.COMPLETED && observer.reactions().movement().isEmpty(), "Uncalibrated confidence vetoed a valid warning");
           freshObserver(); ResidentAwareness.injured(injured, null); phase++;
         }
         case 5 -> {
@@ -106,8 +110,8 @@ public final class ResidentReactionVerification {
           observer.setLifeStage(AgeStage.KID); complete("investigate", 1); phase++;
         }
         case 10 -> {
-          check(observer.reactions().movement().isEmpty(), "Child moved for a late adult offer");
-          if (pending != null) return;
+          if (observer.reactions().status() == Status.PENDING) return;
+          check(observer.reactions().status() == Status.STALE && observer.reactions().movement().isEmpty(), "Changed life-stage context did not stale the adult offer");
           freshObserver(); ResidentAwareness.injured(injured, null); phase++;
         }
         case 11 -> {
@@ -123,12 +127,12 @@ public final class ResidentReactionVerification {
           check(observer.reactions().status() == Status.INTERRUPTED, "Disabling reactions retained a walk");
           KithkynConfig.ResidentReactions = true;
           freshObserver();
-          threat = EntityType.ZOMBIE.create(level); threat.setNoAi(true); threat.moveTo(observer.position().add(6, 0, 0));
+          threat = zombie(observer.position().add(6, 0, 0));
           check(level.addFreshEntity(threat), "Threat spawn failed"); phase++;
         }
         case 14 -> {
           if (pending == null) return;
-          check(offered("retreat"), "Reachable retreat was not offered");
+          check(offered("retreat"), "Reachable retreat was not offered: " + request);
           complete("retreat", 1); phase++;
         }
         case 15 -> {
@@ -163,12 +167,14 @@ public final class ResidentReactionVerification {
         }
         case 20 -> {
           if (pending == null) return;
-          check(!offered("investigate") && !offered("seek_help") && !offered("retreat"), "Essential last worker was offered an excursion");
-          complete("warn", 1); phase++;
+          check(ResidentObligations.snapshot(observer).essential(), "Fixture lost essential staffing pressure");
+          check(offered("investigate"), "Essential work vetoed a reachable investigation");
+          complete("investigate", 1); phase++;
         }
         case 21 -> {
-          if (observer.reactions().status() == Status.PENDING) return;
-          check(observer.reactions().status() == Status.COMPLETED && observer.reactions().movement().isEmpty(), "Warning did not finish without movement");
+          if (observer.reactions().status() == Status.PENDING || observer.reactions().movement().isPresent()) return;
+          check(observer.reactions().status() == Status.COMPLETED, "Essential worker's chosen investigation did not complete: "
+              + observer.reactions().report() + "; observer=" + observer.position() + "; subject=" + injured.position());
           freshObserver(); ResidentAwareness.injured(injured, null); phase++;
         }
         case 22 -> {
@@ -189,7 +195,7 @@ public final class ResidentReactionVerification {
           check(observer.reactions().status() == Status.STALE && observer.reactions().movement().isEmpty(), "Changed nonessential post did not stale offer");
           injured.setHealth(injured.getMaxHealth());
           freshObserver(); observer.setOccupation(Occupation.GUARD); keepReactionGoal();
-          threat = EntityType.ZOMBIE.create(level); threat.setNoAi(true); threat.moveTo(observer.position().add(6, 0, 0));
+          threat = zombie(observer.position().add(6, 0, 0));
           check(level.addFreshEntity(threat), "Defense threat spawn failed"); phase++;
         }
         case 26 -> {
@@ -210,8 +216,13 @@ public final class ResidentReactionVerification {
               "Defense report disagreed with its authoritative expired undertaking");
           verifySavedHistory();
           verifyGifts();
+          threat.discard();
+          phase++;
+        }
+        case 28 -> {
+          if (!verifyReactionFreedom()) return;
           finished = true;
-          Kithkyn.LOGGER.info("[resident-reaction-verify] RESULT PASS: physical investigate and retreat, episode deduplication, uncertain, invalid, stale subject, late child, disable interruption, moved help reference, last essential worker, warning, eligible age and nonessential post changes, defense deadline and authoritative expiry, actual reload without replay, retired command closure and inventory preservation; controlled decisions, no model-quality claim");
+          Kithkyn.LOGGER.info("[resident-reaction-verify] RESULT PASS: physical investigation and retreat, episode deduplication, valid low-confidence warning, invalid/stale/disabled outcomes, moved helper, essential worker excursion, changed context, defense expiry, reload without replay, retired command closure, gifts and components; children, merchant, raider, fixed guard, traveler, injured stranger/player/animal and visible danger all retain reachable choices; controlled decisions, no model-quality claim");
           level.getServer().halt(false);
         }
         default -> throw new AssertionError("Unknown phase");
@@ -225,7 +236,6 @@ public final class ResidentReactionVerification {
   private static void setup(ServerLevel world) {
     level = world;
     KithkynConfig.ResidentReactions = true;
-    KithkynConfig.ReactionDangerConfidence = KithkynConfig.ReactionInjuryConfidence = .8;
     world.getGameRules().getRule(GameRules.RULE_DOMOBSPAWNING).set(false, world.getServer());
     world.getGameRules().getRule(GameRules.RULE_DAYLIGHT).set(false, world.getServer());
     world.getGameRules().getRule(GameRules.RULE_RANDOMTICKING).set(0, world.getServer());
@@ -239,6 +249,15 @@ public final class ResidentReactionVerification {
       private final Building center = new Building(new BlockPos(100, 160, 100), "village_center_birch_forest_1", Rotation.NONE);
       @Override public Building getTownCenter() { return center; }
       @Override public void update(ServerLevel ignored) { }
+      @Override public boolean isTraveler(UUID id) { return id.equals(travelingObserver) || super.isTraveler(id); }
+      @Override public JobAssignment getJobAssignment(UUID id) {
+        return id.equals(postedObserver) ? new JobAssignment(id, Occupation.GUARD, JobAssignment.WALL_WORKPLACE_ID, 0) : super.getJobAssignment(id);
+      }
+      @Override public com.quzzar.kithkyn.village.buildings.WallPost getWallPost(JobAssignment job) {
+        return job != null && job.isWallPost() ? new com.quzzar.kithkyn.village.buildings.WallPost(
+            new BlockPos(100, 161, 100), new BlockPos(100, 161, 92), BlockPos.asLong(100, 160, 100),
+            com.quzzar.kithkyn.village.buildings.WallPost.Duty.WATCHTOWER_CROSSBOW) : super.getWallPost(job);
+      }
     };
     village.attach(world); VillageManager.get(world).getVillages().put(village.getID(), village);
     injured = person(108.5, 100.5); injured.setNoAi(true);
@@ -258,11 +277,86 @@ public final class ResidentReactionVerification {
     person.setPersistenceRequired(); person.moveTo(x, 161, z); village.getPopulation().add(person.getUUID());
     check(level.addFreshEntity(person), "Resident spawn failed"); return person;
   }
+  private static Zombie zombie(Vec3 position) {
+    var zombie = EntityType.ZOMBIE.create(level); zombie.setNoAi(true); zombie.moveTo(position);
+    // Keep danger scenes free of unrelated sunburn injuries on the threat itself.
+    zombie.setItemSlot(net.minecraft.world.entity.EquipmentSlot.HEAD, new net.minecraft.world.item.ItemStack(net.minecraft.world.item.Items.IRON_HELMET));
+    return zombie;
+  }
   private static void freshObserver() {
     if (observer != null) observer.discard();
+    postedObserver = null; travelingObserver = null;
     observer = person(100.5, 100.5);
     // Isolate reaction navigation from ordinary work and panic, while keeping the registered reaction goal and native navigation.
     if (!LIVE_MODELS) keepReactionGoal();
+  }
+
+  /** Actual registered navigation with controlled choices; roles never force the chosen response. */
+  private static boolean verifyReactionFreedom() {
+    if (freedomCase >= 11) return true;
+    if (freedomStage == 0) {
+      freshObserver();
+      injured.moveTo(108.5, 161, 100.5); injured.setVillage(village.getID());
+      freedomSubject = injured;
+      switch (freedomCase) {
+        case 0 -> observer.setLifeStage(AgeStage.KID);
+        case 1 -> observer.setLifeStage(AgeStage.TODDLER);
+        case 2 -> { observer.setWanderingMerchant(true); observer.reloadState(); }
+        case 3 -> observer.becomeRaider("other-village", "Fixture raiders");
+        case 4 -> observer.setOccupation(Occupation.BUILDER);
+        case 5 -> { postedObserver = observer.getUUID(); observer.setOccupation(Occupation.GUARD); observer.reloadState(); }
+        case 6 -> travelingObserver = observer.getUUID();
+        case 7 -> injured.setVillage("");
+        case 8 -> {
+          injured.moveTo(130.5, 161, 120.5);
+          var player = net.neoforged.neoforge.common.util.FakePlayerFactory.get(level,
+              new com.mojang.authlib.GameProfile(new UUID(0, 1703), "InjuredVisitor"));
+          level.addNewPlayer(player); player.moveTo(108.5, 161, 100.5); freedomSubject = player;
+        }
+        case 9 -> {
+          injured.moveTo(130.5, 161, 120.5);
+          var cow = EntityType.COW.create(level); cow.setNoAi(true); cow.moveTo(108.5, 161, 100.5);
+          check(level.addFreshEntity(cow), "Injured creature spawn failed"); freedomSubject = cow;
+        }
+        case 10 -> {
+          threat = zombie(new Vec3(100.5, 161, 109.5));
+          check(level.addFreshEntity(threat), "Nearby danger spawn failed");
+          for (int i = 0; i < 40 && observer.awareness().snapshot().isEmpty(); i++) {
+            level.getServer().getWorldData().overworldData().setGameTime(level.getGameTime() + 1);
+            observer.awareness().tick();
+          }
+          check(observer.awareness().snapshot().stream().anyMatch(event -> event.kind() == com.quzzar.kithkyn.awareness.ObservationLog.Kind.VISIBLE_THREAT),
+              "Visible-danger fixture did not record the threat");
+        }
+        default -> throw new AssertionError("Unknown freedom fixture");
+      }
+      check(observer.goalSelector.getAvailableGoals().stream().filter(goal -> goal.getGoal() instanceof com.quzzar.kithkyn.entities.ai.goals.ResidentReactionGoal).count() == 1,
+          "Role did not register exactly one reaction goal: " + freedomCase);
+      keepReactionGoal();
+      freedomSubject.setHealth(freedomSubject.getMaxHealth() / 2);
+      level.getServer().getWorldData().overworldData().setGameTime(level.getGameTime() + 1);
+      ResidentAwareness.injured(freedomSubject, null); freedomStage++;
+    } else if (freedomStage == 1) {
+      if (pending == null) return false;
+      check(offered("investigate"), "Role or village membership vetoed investigation in fixture " + freedomCase + ": " + request);
+      check(freedomCase != 5 || ResidentObligations.snapshot(observer).fixedPost(), "Fixture lost the fixed guard post");
+      check(freedomCase != 6 || village.isTraveler(observer.getUUID()), "Fixture lost traveler context");
+      complete("investigate", .1); freedomStage++;
+    } else {
+      if (observer.reactions().status() == Status.PENDING || observer.reactions().movement().isPresent()) return false;
+      check(observer.reactions().status() == Status.COMPLETED && observer.distanceToSqr(freedomSubject) <= 16,
+          "Chosen investigation did not physically complete in fixture " + freedomCase + ": " + observer.reactions().report()
+              + "; observer=" + observer.position() + "; subject=" + freedomSubject.position()
+              + "; movement=" + observer.reactions().movement() + "; duty=" + ResidentObligations.snapshot(observer));
+      check(observer.getData(KithkynAttachments.PERSONAL_LOG.get()).memoriesNewestFirst().stream()
+          .anyMatch(entry -> entry.text().contains("Reached " + freedomSubject.getName().getString()) || entry.text().contains("observed injured subject")),
+          "Completed investigation lacked a factual outcome in fixture " + freedomCase);
+      if (freedomSubject != injured) freedomSubject.discard();
+      if (freedomCase == 10) threat.discard();
+      Kithkyn.LOGGER.info("[resident-reaction-verify] Freedom fixture {} physically completed", freedomCase);
+      freedomCase++; freedomStage = 0;
+    }
+    return false;
   }
   private static void verifySavedHistory() {
     long now = level.getGameTime();
@@ -361,8 +455,7 @@ public final class ResidentReactionVerification {
       report.addProperty("native_policy_validated", true);
       report.addProperty("dialogue_model", KithkynConfig.LlmLocalModel);
       report.addProperty("decision_model", KithkynConfig.ReactionModel);
-      report.addProperty("danger_confidence", KithkynConfig.ReactionDangerConfidence);
-      report.addProperty("injury_confidence", KithkynConfig.ReactionInjuryConfidence);
+      report.addProperty("confidence_gate", false);
       report.addProperty("chat_entry", "Existing player chat dispatcher with simulated player; no rendered client");
       report.add("cases", cases); report.add("decisions", decisions);
       var provider = new SystemOneProvider(KithkynConfig.ReactionEndpoint, KithkynConfig.ReactionModel, KithkynConfig.ReactionApiKey);

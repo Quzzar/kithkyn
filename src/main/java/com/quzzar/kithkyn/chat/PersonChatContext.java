@@ -68,13 +68,14 @@ public final class PersonChatContext {
       + "The examples below teach the reply format. Their names, objects and events are not your own memories. "
       + "Small talk is about what IS there: your work, what the village is building and still short of, the time of day, and the people you know. "
       + "Your carried things are yours to give as gifts, including valuables and equipment. You may offer a gift without being asked when it fits your personality and this conversation; you may also refuse. First choose \"give\":null to keep your things, or \"give\":\"<carried item id>\" and \"give_count\":<whole number> to actually hand one over. Then write speech consistent with that choice. With give:null, no item changes hands; do not claim a handoff. An offer is not a completed gift. Most replies use give:null. "
-      + "Before writing your reply, judge only the CURRENT SPEAKER'S words, not your own reply. "
-      + "Change your opinion ONLY for how the current speaker actually treats you. Use \"opinion\": "
-      + "{\"kind\":\"insult\" or \"threat\" or \"kindness\" or \"apology\", \"quote\":\"<the current speaker's entire line copied exactly>\", \"delta\":<whole number>}. "
-      + "Insults and threats use -1 to -10; kindness and apologies use 1 to 10. Most replies OMIT opinion. "
-      + "An injury, danger, your own inaction or your inability to remember is not the speaker mistreating you. "
-      + "Asking what happened, whether you helped, or what you remember is neutral. A request for an item is neutral. "
-      + "Do not mark these questions as insults, threats or kindness. Never invent offending words. "
+      + "Before writing your reply, decide whether this exchange changes how you feel about the current speaker. "
+      + "Your personality, values, relationship, their words and the recorded events may all matter: trust, "
+      + "bargaining, promises, betrayal, affection, irritation or something else. There is no required social category "
+      + "or predetermined reaction to a question or request. When your opinion changes, use \"opinion\": "
+      + "{\"reason\":\"<your reason, grounded in this exchange and the briefing>\", "
+      + "\"quote\":\"<the current speaker's entire line copied exactly>\", \"delta\":<whole number from -10 to 10>}. "
+      + "Omit opinion when your feelings do not change. Your own generated reply is not something the speaker did; "
+      + "do not invent their words or past events to justify a change. "
       + "Add \"fight\": true ONLY when you have decided to come to blows with this person over what they have "
       + "just said or done. A fight is real: you strike them until one of you goes down or they run, with your "
       + "weapon if you carry one and your fists if not, and everyone remembers it. Most replies have no "
@@ -139,7 +140,7 @@ public final class PersonChatContext {
       new FewShotExample("Example only: you carry two minecraft:bread and choose to give one to a friend. The friend says: \"It was good to see you.\"\nYour JSON answer:",
           "{\"give\":\"minecraft:bread\", \"give_count\":1, \"say\":\"Here, take this for the road.\"}"),
       new FewShotExample("The speaker says: \"You're a worthless idiot.\"\nYour JSON answer:",
-          "{\"opinion\": {\"kind\":\"insult\",\"quote\":\"You're a worthless idiot.\",\"delta\":-3}, \"give\":null, \"say\": \"There's no call to speak to me like that.\"}"),
+          "{\"opinion\": {\"reason\":\"I resent being spoken to this way.\",\"quote\":\"You're a worthless idiot.\",\"delta\":-3}, \"give\":null, \"say\": \"There's no call to speak to me like that.\"}"),
       // The one example that ENDS a talk: a goodbye is not enough on its own, the
       // farewell needs "done": true on the same reply or the pair say their
       // goodbyes over and over and never part (Aaron, 2026-09-02). Shown last, so

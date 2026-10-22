@@ -338,8 +338,8 @@ public final class LaborPlanner {
     return count;
   }
 
-  /** Optional excursions must respect the same essential staffing protections as reassignment. */
-  public static boolean mustKeepOnPost(RealPerson person) {
+  /** Describes essential staffing pressure; optional reactions weigh it without changing the assignment. */
+  public static boolean hasEssentialStaffingPressure(RealPerson person) {
     Village village = person.getVillage();
     return village != null && mustKeep(person.getOccupation(), countOf(village, person.getOccupation()),
         isHungry(village), village.isStorageBackedUp());

@@ -269,3 +269,32 @@ intermittent fixture failure remains unresolved. Standards and spec reviews foun
 bounds, impossible replay admission cases and the native required/optional field-order issue.
 The model runs report RECORDED rather than an automatic quality verdict. Both model
 processes were stopped after capture.
+
+## Behavior policy revision after these captures
+
+The later review removed the four social-reason categories and their prescribed signs.
+Chat now requests a free-text reason grounded in the exchange and recorded context, retaining
+exact counterpart attribution and the pre-existing opinion pacing caps. Bargaining, trust,
+promises and other feelings need not masquerade as an insult or kindness.
+
+Age, merchant/raider status, travel, fixed posts and essential work no longer remove reachable
+reaction choices. The model receives those circumstances as context. Investigation can approach
+an injured stranger, player or animal, including when another threat has been observed. Seeking
+help no longer requires a guard from the same village. Native needs and combat retain priority.
+The uncalibrated confidence cutoffs and their config entries are deleted. Gift count validation
+uses native offer capacity rather than an additional 64-item cap; component and stack checks remain.
+
+Controlled checks exposed approaches aimed beyond the subject, where entity collisions could
+stall the walk until expiry. Approach candidates now try the near side first. Danger fixtures
+also keep zombies from burning in daylight: an unrelated sunburn had created a newer injury
+and changed which event was under test. This does not change live sunburn or injury perception.
+
+`./gradlew check` passes 743 Java tests. The reaction fixture reports PASS after physically
+completing all eleven additional role/target scenes, including visible danger. The awareness
+fixture also reports PASS. These checks use controlled choices and isolated navigation, not
+model-generated judgment or a working village. The earlier incomplete and failed development
+runs remain failures; a successful Gradle exit alone does not establish fixture success.
+
+The model captures and replay scores above predate this policy revision. They are historical
+evidence, not measurements of the current opinion schema or broader reaction choice sets.
+Real-provider, ordinary-village and multiplayer acceptance remain open.

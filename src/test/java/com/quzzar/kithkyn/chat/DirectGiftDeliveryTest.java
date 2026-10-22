@@ -102,4 +102,15 @@ class DirectGiftDeliveryTest {
         stack -> stack.has(net.minecraft.core.component.DataComponents.CUSTOM_NAME) ? 0 : stack.getCount());
     assertEquals(java.util.Map.of("minecraft:bread", 2), offers);
   }
+
+  @Test
+  void nativeStackCapacityDeterminesTheGiftWithoutAnAdditionalSixtyFourItemCap() {
+    ItemStack stack = new ItemStack(Items.DIAMOND, 99);
+    stack.set(net.minecraft.core.component.DataComponents.MAX_STACK_SIZE, 99);
+    assertEquals(java.util.Map.of("minecraft:diamond", 99), DirectGiftDelivery.offers(java.util.List.of(stack), ItemStack::getCount));
+    var reply = PersonChatDispatcher.parseReply("{\"give\":\"minecraft:diamond\",\"give_count\":99,\"say\":\"These are yours.\"}");
+    org.junit.jupiter.api.Assertions.assertNotNull(reply);
+    assertEquals(99, PersonChatDispatcher.takeInto(ItemStack.EMPTY, stack, reply.giveCount(), 99).getCount());
+    assertTrue(stack.isEmpty());
+  }
 }

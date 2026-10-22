@@ -524,18 +524,16 @@ public final class PersonChatDispatcher {
       if (node.has("give_count")) {
         if (!node.getAsJsonPrimitive("give_count").isNumber()) return null;
         count = node.get("give_count").getAsBigDecimal().intValueExact();
-        if (give == null || count < 1 || count > 64) return null;
+        if (give == null || count < 1) return null;
       }
       if (node.has("opinion")) {
         JsonObject change = node.getAsJsonObject("opinion");
-        if (!change.keySet().equals(Set.of("kind", "quote", "delta"))
-            || !change.getAsJsonPrimitive("kind").isString() || !change.getAsJsonPrimitive("quote").isString()
+        if (!change.keySet().equals(Set.of("reason", "quote", "delta"))
+            || !change.getAsJsonPrimitive("reason").isString() || !change.getAsJsonPrimitive("quote").isString()
             || !change.getAsJsonPrimitive("delta").isNumber()) return null;
-        String kind = change.get("kind").getAsString(), quote = change.get("quote").getAsString();
+        String reason = change.get("reason").getAsString(), quote = change.get("quote").getAsString();
         int delta = change.get("delta").getAsBigDecimal().intValueExact();
-        boolean positive = Set.of("kindness", "apology").contains(kind);
-        if (!positive && !Set.of("insult", "threat").contains(kind) || delta == 0
-            || positive != (delta > 0) || quote.isBlank() || quote.length() > 2048
+        if (reason.isBlank() || reason.length() > 640 || delta == 0 || quote.isBlank() || quote.length() > 2048
             || speakerLine != null && !speakerLine.equals(quote)) return null;
         opinion = clampStep(delta);
       }

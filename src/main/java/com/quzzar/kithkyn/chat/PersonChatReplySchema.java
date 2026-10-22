@@ -28,7 +28,7 @@ final class PersonChatReplySchema {
       JsonObject giftProperties = new JsonObject();
       giftProperties.add("opinion", properties.get("opinion").deepCopy());
       JsonObject give = typed("string"); give.addProperty("const", entry.getKey()); giftProperties.add("give", give);
-      JsonObject count = typed("integer"); count.addProperty("minimum", 1); count.addProperty("maximum", Math.min(64, entry.getValue()));
+      JsonObject count = typed("integer"); count.addProperty("minimum", 1); count.addProperty("maximum", entry.getValue());
       giftProperties.add("give_count", count);
       properties.entrySet().stream().filter(property -> !List.of("opinion", "give").contains(property.getKey()))
           .forEach(property -> giftProperties.add(property.getKey(), property.getValue().deepCopy()));
@@ -56,13 +56,12 @@ final class PersonChatReplySchema {
     JsonArray alternatives = new JsonArray();
     for (boolean positive : List.of(false, true)) {
       JsonObject properties = new JsonObject();
-      JsonObject kind = typed("string"); JsonArray kinds = new JsonArray();
-      kinds.add(positive ? "kindness" : "insult"); kinds.add(positive ? "apology" : "threat"); kind.add("enum", kinds);
-      properties.add("kind", kind);
+      JsonObject reason = typed("string"); reason.addProperty("minLength", 1); reason.addProperty("maxLength", 640);
+      properties.add("reason", reason);
       JsonObject quote = typed("string"); quote.addProperty("const", speakerLine); properties.add("quote", quote);
       JsonObject delta = typed("integer"); delta.addProperty("minimum", positive ? 1 : -10);
       delta.addProperty("maximum", positive ? 10 : -1); properties.add("delta", delta);
-      JsonObject change = object(properties, "kind");
+      JsonObject change = object(properties, "reason");
       change.getAsJsonArray("required").add("quote"); change.getAsJsonArray("required").add("delta");
       alternatives.add(change);
     }

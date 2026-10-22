@@ -11,14 +11,16 @@ class PersonChatReplyTest {
         "{\"say\":\"Done\",", "{}")) assertNull(PersonChatDispatcher.parseReply(raw), raw);
     assertNotNull(PersonChatDispatcher.parseReply("{\"say\":\"I could not reach it.\"}"));
   }
-  @Test void opinionsRequireActualCurrentSpeakerEvidenceAndConsistentPolarity() {
-    String insult = "{\"say\":\"That was unkind.\",\"opinion\":{\"kind\":\"insult\",\"quote\":\"You're an idiot.\",\"delta\":-3}}";
-    assertEquals(-3, PersonChatDispatcher.parseReply(insult, "You're an idiot.").opinionDelta());
-    assertNull(PersonChatDispatcher.parseReply(insult, "Did you help?"));
-    assertNull(PersonChatDispatcher.parseReply(insult.replace("-3", "3"), "You're an idiot."));
+  @Test void residentsCanJudgeBargainingOrPromisesWithoutASocialCategoryOrPrescribedSign() {
+    String bargain = "{\"say\":\"A fair offer.\",\"opinion\":{\"reason\":\"I respect a shrewd bargain.\",\"quote\":\"Two emeralds for the bread?\",\"delta\":3}}";
+    assertEquals(3, PersonChatDispatcher.parseReply(bargain, "Two emeralds for the bread?").opinionDelta());
+    assertEquals(-3, PersonChatDispatcher.parseReply(bargain.replace("\"delta\":3", "\"delta\":-3"),
+        "Two emeralds for the bread?").opinionDelta(), "The parser does not decide what feelings a reason permits");
+    String promise = "{\"say\":\"I'll remember that.\",\"opinion\":{\"reason\":\"I trust their promise after the help I witnessed.\",\"quote\":\"I'll return tomorrow.\",\"delta\":2}}";
+    assertEquals(2, PersonChatDispatcher.parseReply(promise, "I'll return tomorrow.").opinionDelta());
+    assertNull(PersonChatDispatcher.parseReply(bargain, "Did you help?"), "Attribution must still match the actual speaker");
+    assertNull(PersonChatDispatcher.parseReply(bargain.replace("I respect a shrewd bargain.", ""), "Two emeralds for the bread?"));
     assertNull(PersonChatDispatcher.parseReply("{\"say\":\"No.\",\"opinion\":-3}", "Did you help?"));
-    String apology = "{\"say\":\"Thank you.\",\"opinion\":{\"kind\":\"apology\",\"quote\":\"I'm sorry.\",\"delta\":2}}";
-    assertEquals(2, PersonChatDispatcher.parseReply(apology, "I'm sorry.").opinionDelta());
   }
 
 }

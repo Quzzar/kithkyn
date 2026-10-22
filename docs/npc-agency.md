@@ -25,6 +25,12 @@ the generative model handles conversation, summaries and existing village delibe
 Neither can execute an invented tool. The decision endpoint stays independent of the dialogue
 provider. Population growth must not become one inference request per resident per tick.
 
+Personality and circumstances determine social choices. Do not turn age, occupation,
+village membership or work importance into blanket reaction permissions. Describe them
+to the model while offering implemented, reachable actions. Chat opinion reasons are open
+text, with attribution to the actual counterpart, rather than a fixed list of social categories
+or predetermined feelings about questions. Existing relationship pacing remains in place.
+
 Residents may choose to give their own carried things as gifts, including valuables and
 equipment, without an explicit player request. Gift choice belongs to the resident; game code
 checks physical ownership and conservation. Do not add a valuables blacklist or an English
@@ -45,13 +51,14 @@ Populated gameplay and real-model use of this evidence still need acceptance.
 
 The independent default-off [reaction experiment](npc-reactions.md) offers continue, warn,
 retreat, seek help, investigate and legal native defense. Game code owns routes, references,
-duties and permitted targets. Native panic, recovery, combat and travel take precedence.
-Confidence, freshness and live-reference checks can reject a choice without executing it.
+duties and native combat targets. Duties are context, not a ban on optional excursions.
+Native panic, recovery, combat and travel take precedence.
+Freshness and live-reference checks can reject a choice without executing it.
 A warning does not order a guard to help; approaching an injured resident does not heal them.
 
 The shared request budget, episode deduplication and resident cooldown bound inference.
-No uncertainty or provider failure silently switches endpoints or invents another action.
-Model quality and confidence calibration remain acceptance work.
+Provider failure never switches endpoints or invents another action. Uncalibrated confidence
+scores are recorded but no longer veto valid choices. Model quality remains acceptance work.
 
 ## Factual memory: #189
 

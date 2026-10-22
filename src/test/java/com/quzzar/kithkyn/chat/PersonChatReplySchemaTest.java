@@ -37,4 +37,23 @@ class PersonChatReplySchemaTest {
     assertFalse(properties.has("give_count"));
     assertTrue(properties.has("request"));
   }
+
+  @Test void socialReasonsAreFreeTextWhileAttributionStillUsesTheActualSpeaker() {
+    var opinion = JsonParser.parseString(PersonChatReplySchema.build(Map.of(), false, "I'll return tomorrow."))
+        .getAsJsonObject().getAsJsonArray("oneOf").get(1).getAsJsonObject()
+        .getAsJsonObject("properties").getAsJsonObject("opinion");
+    for (var alternative : opinion.getAsJsonArray("oneOf")) {
+      var properties = alternative.getAsJsonObject().getAsJsonObject("properties");
+      assertFalse(properties.has("kind"));
+      assertFalse(properties.getAsJsonObject("reason").has("enum"));
+      assertEquals("I'll return tomorrow.", properties.getAsJsonObject("quote").get("const").getAsString());
+    }
+  }
+
+  @Test void giftArgumentsUseTheNativeOfferCapacity() {
+    var alternatives = JsonParser.parseString(PersonChatReplySchema.build(Map.of("minecraft:diamond", 99), false, "Hello."))
+        .getAsJsonObject().getAsJsonArray("oneOf");
+    assertEquals(99, alternatives.get(2).getAsJsonObject().getAsJsonObject("properties")
+        .getAsJsonObject("give_count").get("maximum").getAsInt());
+  }
 }

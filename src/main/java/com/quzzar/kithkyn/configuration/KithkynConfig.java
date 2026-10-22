@@ -65,8 +65,6 @@ public class KithkynConfig {
     public static String ReactionEndpoint;
     public static String ReactionModel;
     public static String ReactionApiKey;
-    public static double ReactionDangerConfidence;
-    public static double ReactionInjuryConfidence;
 
     // --- llm (advanced: sampling) ---
     public static int LlmChatMaxNewTokens;
@@ -155,8 +153,6 @@ public class KithkynConfig {
         ReactionEndpoint = COMMON.ReactionEndpoint.get();
         ReactionModel = COMMON.ReactionModel.get();
         ReactionApiKey = COMMON.ReactionApiKey.get();
-        ReactionDangerConfidence = COMMON.ReactionDangerConfidence.get();
-        ReactionInjuryConfidence = COMMON.ReactionInjuryConfidence.get();
     }
 
     public static void bakeAdvancedConfig() {
@@ -262,8 +258,6 @@ public class KithkynConfig {
         public final ModConfigSpec.ConfigValue<String> ReactionEndpoint;
         public final ModConfigSpec.ConfigValue<String> ReactionModel;
         public final ModConfigSpec.ConfigValue<String> ReactionApiKey;
-        public final ModConfigSpec.DoubleValue ReactionDangerConfidence;
-        public final ModConfigSpec.DoubleValue ReactionInjuryConfidence;
 
         public CommonConfig(ModConfigSpec.Builder builder) {
 
@@ -291,13 +285,11 @@ public class KithkynConfig {
 
             builder.pop();
             builder.comment("Experimental bounded reactions, separate from the dialogue LLM. No automatic model download.",
-                "Configure an existing Kev/System One compatible server. Failed or uncertain decisions start no reaction.").push("reactions");
+                "Configure an existing Kev/System One compatible server. Failed decisions start no reaction.").push("reactions");
             ResidentReactions = builder.define("Experimental resident reactions", false);
             ReactionEndpoint = builder.comment("Base URL, without /v1/systemone. Endpoint changes require restart.").define("Decision endpoint", "http://127.0.0.1:8008");
             ReactionModel = builder.define("Decision model", "kev-latest");
             ReactionApiKey = builder.comment("Optional bearer key. Do not share this file.").define("Decision API key", "");
-            ReactionDangerConfidence = builder.comment("Experimental chance-corrected confidence threshold, not a calibrated safety probability.").defineInRange("Danger confidence", 0.8D, 0D, 1D);
-            ReactionInjuryConfidence = builder.defineInRange("Injury confidence", 0.8D, 0D, 1D);
             builder.pop();
         }
     }

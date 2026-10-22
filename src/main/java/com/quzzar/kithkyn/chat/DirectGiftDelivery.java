@@ -30,9 +30,9 @@ final class DirectGiftDelivery {
       if (stack.isEmpty() || giveable.applyAsInt(stack) <= 0) continue;
       String id = BuiltInRegistries.ITEM.getKey(stack.getItem()).toString();
       ItemStack sample = samples.get(id);
-      if (sample == null) samples.put(id, stack.copyWithCount(Math.min(64, Math.min(stack.getCount(), stack.getMaxStackSize()))));
+      if (sample == null) samples.put(id, stack.copyWithCount(Math.min(stack.getCount(), stack.getMaxStackSize())));
       else if (ItemStack.isSameItemSameComponents(sample, stack))
-        sample.grow(Math.min(stack.getCount(), Math.min(64, sample.getMaxStackSize()) - sample.getCount()));
+        sample.grow(Math.min(stack.getCount(), sample.getMaxStackSize() - sample.getCount()));
     }
     Map<String, Integer> offers = new TreeMap<>();
     samples.forEach((id, sample) -> {

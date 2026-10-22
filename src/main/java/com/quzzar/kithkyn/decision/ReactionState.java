@@ -3,7 +3,7 @@ package com.quzzar.kithkyn.decision;
 import java.util.List;
 import java.util.Optional;
 
-/** Freshness and confidence boundary between a bounded decision and an optional game reaction. */
+/** Freshness and valid-choice boundary between a decision and an optional game reaction. */
 public final class ReactionState {
   public enum Action {
     CONTINUE, WARN, RETREAT, SEEK_HELP, INVESTIGATE, DEFEND;
@@ -12,7 +12,7 @@ public final class ReactionState {
       return java.util.Arrays.stream(values()).filter(action -> action.key().equals(key)).findFirst();
     }
   }
-  public enum Status { DISABLED, IDLE, PENDING, DEFERRED, UNCERTAIN, FAILED, STALE, STARTED, COMPLETED, INTERRUPTED }
+  public enum Status { DISABLED, IDLE, PENDING, DEFERRED, FAILED, STALE, STARTED, COMPLETED, INTERRUPTED }
   public record Offer(long revision, long expiresAt, List<Action> actions) {
     public Offer { actions = List.copyOf(actions); }
   }
@@ -24,16 +24,14 @@ public final class ReactionState {
   public Offer offer(long expiresAt, List<Action> actions) { return new Offer(++revision, expiresAt, actions); }
   public void invalidate() { revision++; }
 
-  public Verdict resolve(Offer offer, DecisionProvider.Result result, double minimumConfidence, long now) {
+  public Verdict resolve(Offer offer, DecisionProvider.Result result, long now) {
     if (offer.revision() != revision || now >= offer.expiresAt()) return new Rejected(Status.STALE, "The reaction offer changed or expired.");
     revision++;
     if (result instanceof DecisionProvider.Failure failure) return new Rejected(Status.FAILED, failure.error() + ": " + failure.detail());
     if (!(result instanceof DecisionProvider.Selected selected)) return new Rejected(Status.FAILED, "No decision result.");
     Optional<Action> action = Action.parse(selected.key());
     if (action.isEmpty() || !offer.actions().contains(action.get()) || !Double.isFinite(selected.confidence())
-        || selected.confidence() < 0 || selected.confidence() > 1 || !Double.isFinite(minimumConfidence)
-        || minimumConfidence < 0 || minimumConfidence > 1) return new Rejected(Status.FAILED, "The decision did not select an offered action with valid confidence.");
-    if (selected.confidence() < minimumConfidence) return new Rejected(Status.UNCERTAIN, "Decision confidence was below this purpose's threshold.");
+        || selected.confidence() < 0 || selected.confidence() > 1) return new Rejected(Status.FAILED, "The decision did not select an offered action with valid confidence.");
     return new Accepted(action.get());
   }
 }
