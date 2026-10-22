@@ -28,12 +28,14 @@ public record ChatHistoryData(Map<UUID, List<Exchange>> byPlayer) {
 
     public static final ChatHistoryData EMPTY = new ChatHistoryData(Map.of());
 
-    /** One player line and the villager's reply, stamped with world day time. */
-    public record Exchange(String playerLine, String reply, long dayTime) {
+    /** Calendar time labels the day; game time orders exchanges against physical events. */
+    public record Exchange(String playerLine, String reply, long dayTime, long gameTime) {
+        public Exchange(String playerLine, String reply, long dayTime) { this(playerLine, reply, dayTime, -1L); }
         public static final Codec<Exchange> CODEC = RecordCodecBuilder.create(inst -> inst.group(
                 Codec.STRING.fieldOf("player").forGetter(Exchange::playerLine),
                 Codec.STRING.fieldOf("reply").forGetter(Exchange::reply),
-                Codec.LONG.optionalFieldOf("day_time", 0L).forGetter(Exchange::dayTime)
+                Codec.LONG.optionalFieldOf("day_time", 0L).forGetter(Exchange::dayTime),
+                Codec.LONG.optionalFieldOf("game_time", -1L).forGetter(Exchange::gameTime)
         ).apply(inst, Exchange::new));
     }
 

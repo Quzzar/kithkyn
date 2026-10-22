@@ -100,6 +100,11 @@ their inventory as pickups; a ground drop is not a claimed pickup. The chat prom
 interleaves these game-recorded events with the timestamped session transcript. The model
 sees “I said I handed over dirt,” then “I picked up dirt,” in the order those
 events occurred instead of receiving pickups as a detached system-summary fact.
+New exchanges save monotonic game ticks alongside calendar labels, so freezing or setting
+the sun clock does not reorder dialogue and physical events. Same-tick speech precedes the
+native results recorded by its callback. Old entries without game ticks remain readable and
+are shown separately with their relative ordering explicitly unknown. Each physical handoff
+gets its own bounded log entry; identical gifts are not collapsed by daily text deduplication.
 
 ## Conversation memory and local reply constraints
 
@@ -128,6 +133,9 @@ and valuables blacklist were removed following the user's correction. Local gram
 physical slot removal enforce actual ownership rather than a judgement about generosity.
 Transfers preserve item components, stack limits and the existing cleric's last seed potion.
 Local gift branches choose the carried item and a bounded quantity before generating speech.
+The no-gift branch explicitly chooses `give:null` before speech. A resident may still make
+an offer, but a null choice cannot be described as a completed handoff. Older cloud responses
+that omit the gift field remain valid and cause no transfer.
 The count bound covers the first compatible item variant that native removal can transfer;
 different named or enchanted variants are never merged into a plain item. A count
 cannot appear without an item. The strict shared parser and

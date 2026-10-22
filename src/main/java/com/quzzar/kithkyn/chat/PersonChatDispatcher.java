@@ -259,7 +259,7 @@ public final class PersonChatDispatcher {
         .with(speakerUUID);
     List<Turn> history = exchanges.stream()
         .skip(Math.max(0, exchanges.size() - MAX_HISTORY_TURNS))
-        .map(e -> new Turn(e.playerLine(), e.reply(), e.dayTime()))
+        .map(e -> new Turn(e.playerLine(), e.reply(), e.dayTime(), e.gameTime()))
         .toList();
 
     AssembledChat chat = PersonChatContext.assemble(person, speakerName, speakerUUID, history, message);
@@ -394,7 +394,7 @@ public final class PersonChatDispatcher {
       person.setData(KithkynAttachments.CHAT_HISTORY.get(),
           person.getData(KithkynAttachments.CHAT_HISTORY.get())
               .withExchange(speakerUUID,
-                  new ChatHistoryData.Exchange(playerLine, reply, person.level().getDayTime())));
+                  new ChatHistoryData.Exchange(playerLine, reply, person.level().getDayTime(), person.level().getGameTime())));
       String asked = applyRequest(person, request);
       Kithkyn.LOGGER.info("[chat] ({}ms) {} -> {}: \"{}\"{}{}{}{}", elapsedMs, speakerName, person.getFullName(), reply,
           give != null ? " [give: " + giveCount + "x " + give + "]" : "",
@@ -516,7 +516,7 @@ public final class PersonChatDispatcher {
       String say = node.get("say").getAsString();
       if (say.isBlank() || say.length() > 2048) return null;
       String give = null; int count = 1; int opinion = 0;
-      if (node.has("give")) {
+      if (node.has("give") && !node.get("give").isJsonNull()) {
         if (!node.getAsJsonPrimitive("give").isString()) return null;
         give = node.get("give").getAsString();
         if (!give.matches("[a-z0-9_.:/-]+")) return null;
@@ -719,7 +719,9 @@ public final class PersonChatDispatcher {
   private static void recordGift(RealPerson person, String recipient, String itemId, int requested,
       DirectGiftDelivery.Receipt receipt) {
     String fact = DirectGiftDelivery.receipt(recipient, itemId, requested, receipt);
-    person.logMemory(fact, Optional.empty());
+    person.setData(KithkynAttachments.PERSONAL_LOG.get(), person.getData(KithkynAttachments.PERSONAL_LOG.get())
+        .withEntry(com.quzzar.kithkyn.entities.PersonalLogData.memory(fact,
+            person.level().getDayTime(), person.level().getGameTime(), Optional.empty())));
     Kithkyn.LOGGER.info("[chat give] {}: {}", person.getFullName(), fact);
   }
 

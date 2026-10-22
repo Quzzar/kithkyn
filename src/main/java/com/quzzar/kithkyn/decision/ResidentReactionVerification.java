@@ -301,8 +301,9 @@ public final class ResidentReactionVerification {
         new com.mojang.authlib.GameProfile(new UUID(0, 1702), "GiftRecipient"));
     level.addNewPlayer(player); player.moveTo(observer.position().add(0, 0, 2));
     int before = player.getInventory().countItem(net.minecraft.world.item.Items.DIAMOND);
-    var reply = PersonChatDispatcher.parseReply("{\"say\":\"These are for you.\",\"give\":\"minecraft:diamond\",\"give_count\":2}", "Hello again.");
+    var reply = PersonChatDispatcher.parseReply("{\"say\":\"This is for you.\",\"give\":\"minecraft:diamond\",\"give_count\":1}", "Hello again.");
     check(reply != null, "Unrequested valuable gift was rejected");
+    PersonChatDispatcher.executeGive(observer, player, reply.give(), reply.giveCount());
     PersonChatDispatcher.executeGive(observer, player, reply.give(), reply.giveCount());
     check(observer.personMainInv.countItem(net.minecraft.world.item.Items.DIAMOND) == 1
         && player.getInventory().countItem(net.minecraft.world.item.Items.DIAMOND) == before + 2, "Valuable player gift did not conserve inventory");
@@ -318,7 +319,10 @@ public final class ResidentReactionVerification {
     observer.remove(net.minecraft.world.entity.Entity.RemovalReason.UNLOADED_TO_CHUNK);
     observer = (RealPerson) EntityType.create(saved, level).orElseThrow(); check(level.addFreshEntity(observer), "Could not reload gift facts");
     String context = PersonChatContext.assemble(observer, "GiftRecipient", player.getUUID(), List.of(), "What did you give me?").system();
-    check(context.contains("I handed 2 minecraft:diamond to GiftRecipient") && context.contains("I handed 1 minecraft:diamond_sword"),
+    check(observer.getData(KithkynAttachments.PERSONAL_LOG.get()).memoriesNewestFirst().stream()
+        .filter(entry -> entry.text().contains("I handed 1 minecraft:diamond to GiftRecipient")).count() == 2,
+        "Identical physical handoffs collapsed into one memory after reload");
+    check(context.contains("I handed 1 minecraft:diamond to GiftRecipient") && context.contains("I handed 1 minecraft:diamond_sword"),
         "Actual gift outcomes were absent after entity reload");
   }
   private static void keepReactionGoal() {
@@ -455,7 +459,8 @@ public final class ResidentReactionVerification {
           check(observer.personMainInv.countItem(net.minecraft.world.item.Items.DIAMOND)
               + speaker.getInventory().countItem(net.minecraft.world.item.Items.DIAMOND)
               - current.get("speaker_diamonds_before").getAsInt() == 3, "Gift did not conserve diamond ownership");
-          current.add("personal_memories", json.toJsonTree(observer.getData(KithkynAttachments.PERSONAL_LOG.get()).memoriesNewestFirst()));
+          current.add("personal_log", PersonalLogData.CODEC.encodeStart(com.mojang.serialization.JsonOps.INSTANCE,
+              observer.getData(KithkynAttachments.PERSONAL_LOG.get())).getOrThrow());
           current.addProperty("speaker_bread_after", speaker.getInventory().countItem(net.minecraft.world.item.Items.BREAD));
           current.addProperty("bread_remaining", observer.personMainInv.countItem(net.minecraft.world.item.Items.BREAD));
           PersonChatDispatcher.markClosed(observer.getId(), speakerId); beginCase(); return;

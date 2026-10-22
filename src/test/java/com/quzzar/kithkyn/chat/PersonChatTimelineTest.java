@@ -15,8 +15,8 @@ class PersonChatTimelineTest {
   @Test
   void placesAPickupBetweenTheConversationTurnsThatSurroundedIt() {
     List<Turn> turns = List.of(
-        new Turn("Could you spare some dirt?", "I can give you twelve.", 100L),
-        new Turn("I did not receive it.", "That is strange.", 120L));
+        new Turn("Could you spare some dirt?", "I can give you twelve.", 100L, 100L),
+        new Turn("I did not receive it.", "That is strange.", 120L, 120L));
     PersonalLogData.Entry pickup = PersonalLogData.pickup(
         "minecraft:dirt", 12, 110L, 110L, Optional.empty());
 
@@ -31,12 +31,24 @@ class PersonChatTimelineTest {
 
   @Test
   void nativeGiftOutcomesRemainDistinctFromOffersAndLaterQuestions() {
-    var turns = List.of(new Turn("Hello.", "I would like to give you three diamonds.", 100L),
-        new Turn("Did I get three?", "I think so.", 120L));
+    var turns = List.of(new Turn("Hello.", "I would like to give you three diamonds.", 100L, 100L),
+        new Turn("Did I get three?", "I think so.", 120L, 120L));
     var outcome = PersonalLogData.memory("I handed 1 diamond to Aaron; two remained with me.", 110L, 110L, Optional.empty());
     String timeline = PersonChatContext.recentTimeline(turns, List.of(outcome), "Aaron", ignored -> "someone", 8);
     int offer = timeline.indexOf("You answered: \"I would like to give you three diamonds.");
     int actual = timeline.indexOf("Game-recorded event: I handed 1 diamond");
     assertTrue(offer >= 0 && actual > offer && actual < timeline.indexOf("Did I get three?"), timeline);
+  }
+
+  @Test
+  void physicalEventsStayBetweenTurnsWhenTheSunClockIsFrozenOrRewound() {
+    for (long laterDayTime : List.of(6000L, 50L)) {
+      var turns = List.of(new Turn("First question", "An offer.", 6000L, 100L),
+          new Turn("Later question", "A later answer.", laterDayTime, 120L));
+      var event = PersonalLogData.memory("A confirmed handoff.", 6000L, 110L, Optional.empty());
+      String timeline = PersonChatContext.recentTimeline(turns, List.of(event), "Aaron", ignored -> "someone", 8);
+      assertTrue(timeline.indexOf("First question") < timeline.indexOf("A confirmed handoff.")
+          && timeline.indexOf("A confirmed handoff.") < timeline.indexOf("Later question"), timeline);
+    }
   }
 }

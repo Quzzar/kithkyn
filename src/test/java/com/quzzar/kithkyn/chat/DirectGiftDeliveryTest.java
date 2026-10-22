@@ -41,6 +41,15 @@ class DirectGiftDeliveryTest {
   }
 
   @Test
+  void anExplicitNoGiftChoiceHasNoItemEffect() {
+    var reply = PersonChatDispatcher.parseReply("{\"give\":null,\"say\":\"I need to keep these.\"}", "Can I have one?");
+    org.junit.jupiter.api.Assertions.assertNotNull(reply);
+    org.junit.jupiter.api.Assertions.assertNull(reply.give());
+    org.junit.jupiter.api.Assertions.assertNull(PersonChatDispatcher.parseReply(
+        "{\"give\":null,\"give_count\":1,\"say\":\"Here.\"}", "Hello."));
+  }
+
+  @Test
   void transfersPreserveComponentsAndDoNotMergeDifferentVariants() {
     ItemStack named = new ItemStack(Items.DIAMOND_SWORD);
     named.set(net.minecraft.core.component.DataComponents.CUSTOM_NAME,

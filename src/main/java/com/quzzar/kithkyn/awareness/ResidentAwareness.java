@@ -128,8 +128,11 @@ public final class ResidentAwareness {
     boolean episode = log.record(kind, evidence, witnessed, source == null ? null : identity(source),
         new Place(level.dimension().location().toString(), subject.getX(), subject.getY(), subject.getZ()), detail, now);
     if (episode && kind == Kind.INJURY && evidence == Evidence.SEEN) {
-      person.logMemory("I saw " + witnessed.name() + " suffer an injury. That sighting does not establish "
-          + "their later condition or any treatment.", Optional.empty());
+      var memory = com.quzzar.kithkyn.entities.PersonalLogData.memory("I saw " + witnessed.name()
+          + " suffer an injury. That sighting does not establish their later condition or any treatment.",
+          level.getDayTime(), now, Optional.empty());
+      var attachment = com.quzzar.kithkyn.entities.KithkynAttachments.PERSONAL_LOG.get();
+      person.setData(attachment, person.getData(attachment).withEntry(memory));
     }
   }
 

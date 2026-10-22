@@ -12,6 +12,7 @@ final class PersonChatReplySchema {
   static String build(Map<String, Integer> carriedGifts, boolean planning, String speakerLine) {
     JsonObject properties = new JsonObject();
     properties.add("opinion", opinion(speakerLine));
+    properties.add("give", typed("null"));
     JsonObject say = typed("string"); say.addProperty("minLength", 1); say.addProperty("maxLength", 2048);
     properties.add("say", say);
     properties.add("fight", typed("boolean")); properties.add("done", typed("boolean"));
@@ -29,7 +30,7 @@ final class PersonChatReplySchema {
       JsonObject give = typed("string"); give.addProperty("const", entry.getKey()); giftProperties.add("give", give);
       JsonObject count = typed("integer"); count.addProperty("minimum", 1); count.addProperty("maximum", Math.min(64, entry.getValue()));
       giftProperties.add("give_count", count);
-      properties.entrySet().stream().filter(property -> !property.getKey().equals("opinion"))
+      properties.entrySet().stream().filter(property -> !List.of("opinion", "give").contains(property.getKey()))
           .forEach(property -> giftProperties.add(property.getKey(), property.getValue().deepCopy()));
       addOpinionAlternatives(alternatives, giftProperties, true);
     });
@@ -40,11 +41,13 @@ final class PersonChatReplySchema {
   /** llama.cpp emits required fields first; an opinion must be required in its own branch. */
   private static void addOpinionAlternatives(JsonArray alternatives, JsonObject properties, boolean gift) {
     JsonObject neutral = properties.deepCopy(); neutral.remove("opinion");
-    JsonObject withoutOpinion = object(neutral, gift ? "give" : "say");
-    if (gift) { withoutOpinion.getAsJsonArray("required").add("give_count"); withoutOpinion.getAsJsonArray("required").add("say"); }
+    JsonObject withoutOpinion = object(neutral, "give");
+    if (gift) withoutOpinion.getAsJsonArray("required").add("give_count");
+    withoutOpinion.getAsJsonArray("required").add("say");
     alternatives.add(withoutOpinion);
     JsonObject withOpinion = object(properties.deepCopy(), "opinion");
-    if (gift) { withOpinion.getAsJsonArray("required").add("give"); withOpinion.getAsJsonArray("required").add("give_count"); }
+    withOpinion.getAsJsonArray("required").add("give");
+    if (gift) withOpinion.getAsJsonArray("required").add("give_count");
     withOpinion.getAsJsonArray("required").add("say");
     alternatives.add(withOpinion);
   }

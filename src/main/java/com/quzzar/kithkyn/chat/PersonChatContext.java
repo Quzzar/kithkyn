@@ -54,7 +54,8 @@ public final class PersonChatContext {
   }
 
   /** One exchange, stamped so physical events can be placed around it coherently. */
-  public record Turn(String playerLine, String villagerLine, long dayTime) {
+  public record Turn(String playerLine, String villagerLine, long dayTime, long gameTime) {
+    public Turn(String playerLine, String villagerLine, long dayTime) { this(playerLine, villagerLine, dayTime, -1L); }
   }
 
   private static final String RULES_BODY = "Rules: Answer in one or two short sentences, always in character. "
@@ -66,7 +67,7 @@ public final class PersonChatContext {
       + "Recorded memories and outcomes support claims about what you did; merely seeing an event does not. "
       + "The examples below teach the reply format. Their names, objects and events are not your own memories. "
       + "Small talk is about what IS there: your work, what the village is building and still short of, the time of day, and the people you know. "
-      + "Your carried things are yours to give as gifts, including valuables and equipment. You may offer a gift without being asked when it fits your personality and this conversation; you may also refuse. Use \"give\" (the carried item id) and \"give_count\" (a whole number, default 1) to actually hand it over. Say you are giving an item only when you include its \"give\" field. Talking about an item does not itself hand it over. Most replies have no \"give\" at all. "
+      + "Your carried things are yours to give as gifts, including valuables and equipment. You may offer a gift without being asked when it fits your personality and this conversation; you may also refuse. First choose \"give\":null to keep your things, or \"give\":\"<carried item id>\" and \"give_count\":<whole number> to actually hand one over. Then write speech consistent with that choice. With give:null, no item changes hands; do not claim a handoff. An offer is not a completed gift. Most replies use give:null. "
       + "Before writing your reply, judge only the CURRENT SPEAKER'S words, not your own reply. "
       + "Change your opinion ONLY for how the current speaker actually treats you. Use \"opinion\": "
       + "{\"kind\":\"insult\" or \"threat\" or \"kindness\" or \"apology\", \"quote\":\"<the current speaker's entire line copied exactly>\", \"delta\":<whole number>}. "
@@ -83,9 +84,9 @@ public final class PersonChatContext {
       + "reply. Most replies are not the last one, so most have no \"done\" at all. ";
 
   private static final String RULES = RULES_BODY
-      + "Answer with ONLY a JSON object: {\"say\": \"<reply>\"}. Add optional fields only when they apply. "
+      + "Answer with ONLY a JSON object: {\"give\":null, \"say\": \"<reply>\"}. Add optional fields only when they apply. "
       + "For a chosen gift use \"give\": \"minecraft:<item_id>\" and \"give_count\": <whole number>. Decide the item and count before writing speech about it. "
-      + "The item id is a string, never a number. Most replies only contain \"say\".";
+      + "The item id is a string, never a number. Most replies contain give:null and say.";
 
   /**
    * Collapses a run of turns where the villager gave the same answer down to
@@ -130,19 +131,21 @@ public final class PersonChatContext {
 
   private static final List<FewShotExample> EXAMPLES = List.of(
       new FewShotExample("The speaker says: \"Hello.\"\nYour JSON answer:",
-          "{\"say\": \"Hello there.\"}"),
+          "{\"give\":null, \"say\": \"Hello there.\"}"),
       new FewShotExample("Example briefing: no shared earlier event is recorded. The speaker says: \"Do you remember that thing we did together?\"\nYour JSON answer:",
-          "{\"say\": \"I don't recall that.\"}"),
+          "{\"give\":null, \"say\": \"I don't recall that.\"}"),
       new FewShotExample("The speaker asks: \"Did you help? What do you remember doing?\"\nYour JSON answer:",
-          "{\"say\": \"I don't remember helping.\"}"),
+          "{\"give\":null, \"say\": \"I don't remember helping.\"}"),
+      new FewShotExample("Example only: you carry two minecraft:bread and choose to give one to a friend. The friend says: \"It was good to see you.\"\nYour JSON answer:",
+          "{\"give\":\"minecraft:bread\", \"give_count\":1, \"say\":\"Here, take this for the road.\"}"),
       new FewShotExample("The speaker says: \"You're a worthless idiot.\"\nYour JSON answer:",
-          "{\"opinion\": {\"kind\":\"insult\",\"quote\":\"You're a worthless idiot.\",\"delta\":-3}, \"say\": \"There's no call to speak to me like that.\"}"),
+          "{\"opinion\": {\"kind\":\"insult\",\"quote\":\"You're a worthless idiot.\",\"delta\":-3}, \"give\":null, \"say\": \"There's no call to speak to me like that.\"}"),
       // The one example that ENDS a talk: a goodbye is not enough on its own, the
       // farewell needs "done": true on the same reply or the pair say their
       // goodbyes over and over and never part (Aaron, 2026-09-02). Shown last, so
       // it is the freshest pattern for the turn where the talk has run its course.
       new FewShotExample("The speaker says: \"Anyway, I'll not keep you. Good day to you.\"\nYour JSON answer:",
-          "{\"say\": \"And to you. I'll get back to my work.\", \"done\": true}"));
+          "{\"give\":null, \"say\": \"And to you. I'll get back to my work.\", \"done\": true}"));
 
   /**
    * Offered when the player is urging a village-wide direction. The villager may
@@ -156,16 +159,16 @@ public final class PersonChatContext {
       + "does. But if you genuinely agree it should, you may put the idea to the village's judgement: "
       + "\"request\": {\"subject\": \"<what to build, a word or two>\", \"reason\": \"<why, a few words>\"}. "
       + "Add it only when you truly back the idea; if you do not, simply answer in character with no request. "
-      + "Answer with ONLY a JSON object: {\"say\": \"<reply>\"}, adding \"give\", \"opinion\", \"done\", or \"request\" "
+      + "Answer with ONLY a JSON object: {\"give\":null, \"say\": \"<reply>\"}, choosing a gift or adding \"opinion\", \"done\", or \"request\" "
       + "only when it applies.";
 
   /** Teaches the request field, and (second) that most urgings are declined, not forwarded. */
   private static final List<FewShotExample> REQUEST_EXAMPLES = List.of(
       new FewShotExample("Steve says: \"With those wolves about, you lot should build a wall.\"\nYour JSON answer:",
-          "{\"say\": \"Aye, a wall would let us sleep easier. I'll put it to the village.\", "
+          "{\"give\":null, \"say\": \"Aye, a wall would let us sleep easier. I'll put it to the village.\", "
           + "\"request\": {\"subject\": \"walls\", \"reason\": \"wolves at the fields after dark\"}}"),
       new FewShotExample("Steve says: \"You should build a great statue of me in the square.\"\nYour JSON answer:",
-          "{\"say\": \"Ha. I think the village has better uses for its stone, friend.\"}"));
+          "{\"give\":null, \"say\": \"Ha. I think the village has better uses for its stone, friend.\"}"));
 
   /** The base examples plus the request few-shots, for a village-direction turn. */
   private static List<FewShotExample> withRequestExamples() {
@@ -346,7 +349,8 @@ public final class PersonChatContext {
     List<Turn> transcript = withoutRepeats(history);
     List<PersonalLogData.Entry> events = new ArrayList<>(log.pickupsNewestFirst());
     events.addAll(log.memoriesFor(playerUUID));
-    events.sort(java.util.Comparator.comparingLong(PersonalLogData.Entry::dayTime).reversed());
+    events.sort(java.util.Comparator.comparingLong((PersonalLogData.Entry entry) -> entry.gameTime() >= 0 ? entry.gameTime() : Long.MIN_VALUE)
+        .reversed().thenComparing(java.util.Comparator.comparingLong(PersonalLogData.Entry::dayTime).reversed()));
     String timeline = recentTimeline(transcript, events, playerName, uuid -> resolveName(person, uuid), 8);
     if (!timeline.isEmpty()) {
       user.append("Recent event timeline, oldest to newest. Earlier dialogue is not authoritative world fact; "
@@ -616,7 +620,7 @@ public final class PersonChatContext {
     return line.toString();
   }
 
-  private record TimelineLine(long dayTime, int kindOrder, int sequence, String text) {
+  private record TimelineLine(long dayTime, long gameTime, int kindOrder, int sequence, String text) {
   }
 
   /**
@@ -640,7 +644,7 @@ public final class PersonChatContext {
             + "briefing.");
       }
       if (!exchange.isEmpty()) {
-        lines.add(new TimelineLine(turn.dayTime(), 0, sequence++, exchange.toString()));
+        lines.add(new TimelineLine(turn.dayTime(), turn.gameTime(), 0, sequence++, exchange.toString()));
       }
     }
 
@@ -651,23 +655,26 @@ public final class PersonChatContext {
           PersonalLogData.KIND_UNDERTAKING).contains(pickup.kind());
       if ((!collected && !recorded) || kept++ >= eventLimit) continue;
       if (recorded) {
-        lines.add(new TimelineLine(pickup.dayTime(), 1, sequence++, "Game-recorded event: " + pickup.text()));
+        lines.add(new TimelineLine(pickup.dayTime(), pickup.gameTime(), 1, -sequence++, "Game-recorded event: " + pickup.text()));
         continue;
       }
       String item = pickup.item().replace("minecraft:", "").replace('_', ' ');
       String source = pickup.who()
           .map(uuid -> " that " + resolveName.apply(uuid) + " threw to you")
           .orElse(" from the ground");
-      lines.add(new TimelineLine(pickup.dayTime(), 1, sequence++,
+      lines.add(new TimelineLine(pickup.dayTime(), pickup.gameTime(), 1, -sequence++,
           "You picked up " + pickup.count() + " " + item + source + "."));
     }
 
-    lines.sort(java.util.Comparator.comparingLong(TimelineLine::dayTime)
+    lines.sort(java.util.Comparator.comparingInt((TimelineLine line) -> line.gameTime() < 0 ? 0 : 1)
+        .thenComparingLong(line -> line.gameTime() >= 0 ? line.gameTime() : line.dayTime())
         .thenComparingInt(TimelineLine::kindOrder)
         .thenComparingInt(TimelineLine::sequence));
     StringBuilder timeline = new StringBuilder();
     for (TimelineLine line : lines) {
-      timeline.append('[').append(PersonalLogData.formatDay(line.dayTime())).append("] ")
+      timeline.append('[').append(PersonalLogData.formatDay(line.dayTime()))
+          .append(line.gameTime() >= 0 ? "; game tick " + line.gameTime()
+              : "; legacy time, ordering relative to timed events is unknown").append("] ")
           .append(line.text()).append('\n');
     }
     return timeline.toString();

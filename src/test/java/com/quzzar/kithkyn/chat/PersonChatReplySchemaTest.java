@@ -33,7 +33,7 @@ class PersonChatReplySchemaTest {
   @Test void emptyPocketsDoNotOfferAnItemToolAndPlanningRemainsExplicit() {
     var properties = JsonParser.parseString(PersonChatReplySchema.build(Map.of(), true, "Could you build a farm?"))
         .getAsJsonObject().getAsJsonArray("oneOf").get(0).getAsJsonObject().getAsJsonObject("properties");
-    assertFalse(properties.has("give"));
+    assertEquals("null", properties.getAsJsonObject("give").get("type").getAsString());
     assertFalse(properties.has("give_count"));
     assertTrue(properties.has("request"));
   }
