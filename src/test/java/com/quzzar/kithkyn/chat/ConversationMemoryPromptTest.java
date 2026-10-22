@@ -45,6 +45,15 @@ class ConversationMemoryPromptTest {
     assertEquals(List.of("My name is Steve.", "Did you help?"), prompt.select("{\"keep\":[2,1]}").orElseThrow());
   }
 
+  @Test void savedMemoryCannotBypassCounterpartAndLegacyTextBounds() {
+    var tooMany = new com.google.gson.JsonObject();
+    for (int i = 0; i < 9; i++) tooMany.addProperty(new UUID(0, i).toString(), "old memory");
+    assertTrue(ChatSummaryData.CODEC.parse(JsonOps.INSTANCE, tooMany).result().isEmpty());
+    var oversized = new com.google.gson.JsonObject();
+    oversized.addProperty(new UUID(0, 1).toString(), "x".repeat(8193));
+    assertTrue(ChatSummaryData.CODEC.parse(JsonOps.INSTANCE, oversized).result().isEmpty());
+  }
+
   @Test void quotedBuildingRequestsAreRetainedWithoutBecomingCurrentWorldState() {
     var data = ChatSummaryData.EMPTY.withQuotes(new UUID(0, 1), List.of("Could you build a windmill?"));
     assertTrue(data.with(new UUID(0, 1)).contains("Could you build a windmill?"));

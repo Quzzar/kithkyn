@@ -125,6 +125,7 @@ Enable the local stock Llama 3B dialogue provider in that isolated config, disab
 generation and autonomous villager conversations, and configure a real Kev endpoint. The
 fixture sets final traits and occupation before rebuilding native goals through `reloadState()`,
 asserts one reaction goal and the guard's native threat goal, and retains the 0.8 confidence gates and never injects a reaction or a chat answer.
-It records three scenes, player-dispatcher conversation, summaries, reload and a requested
-bread transfer. Its `RESULT RECORDED` marker means evidence exists, not that model quality
+It records four scenes, including a nearby injury and an explicitly inquisitive resident,
+player-dispatcher conversation, summaries, reload and a requested bread transfer. Neutral
+questions, a real insult and an apology exercise opinion changes without disabling them. Its `RESULT RECORDED` marker means evidence exists, not that model quality
 passed. See [the actual gameplay results](research/resident-model-gameplay-2026-10-21.md).

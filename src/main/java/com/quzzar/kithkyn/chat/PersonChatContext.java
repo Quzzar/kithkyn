@@ -50,7 +50,6 @@ import net.minecraft.world.item.ItemStack;
 public final class PersonChatContext {
 
   public record AssembledChat(String system, String user, List<FewShotExample> examples, String localJsonSchema) {
-    public AssembledChat(String system, String user, List<FewShotExample> examples) { this(system, user, examples, null); }
   }
 
   /** One exchange, stamped so physical events can be placed around it coherently. */

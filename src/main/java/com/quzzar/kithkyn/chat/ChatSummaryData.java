@@ -14,6 +14,7 @@ import net.minecraft.core.UUIDUtil;
 public record ChatSummaryData(Map<UUID, Memory> byPlayer) {
   public static final int MAX_PLAYERS = 8;
   public static final int MAX_QUOTES = 4;
+  private static final int MAX_LEGACY_CHARACTERS = 8192;
   public static final ChatSummaryData EMPTY = new ChatSummaryData(Map.of());
 
   /** Old prose remains explicitly unverified; new memories contain only selected source lines. */
@@ -21,13 +22,17 @@ public record ChatSummaryData(Map<UUID, Memory> byPlayer) {
     private static final Codec<List<String>> QUOTES = Codec.STRING.listOf().validate(lines ->
         lines.size() <= MAX_QUOTES && lines.stream().allMatch(line -> !line.isBlank() && line.length() <= 2048)
             ? DataResult.success(lines) : DataResult.error(() -> "Invalid conversation memory bounds"));
-    private static final Codec<Memory> CODEC = Codec.either(Codec.STRING, QUOTES).xmap(
+    private static final Codec<String> LEGACY = Codec.STRING.validate(text -> text.length() <= MAX_LEGACY_CHARACTERS
+        ? DataResult.success(text) : DataResult.error(() -> "Historical conversation memory exceeds its bounds"));
+    private static final Codec<Memory> CODEC = Codec.either(LEGACY, QUOTES).xmap(
         value -> value.map(old -> new Memory(List.of(), old), quotes -> new Memory(quotes, "")),
         memory -> memory.unverified().isBlank() ? Either.right(memory.quotes()) : Either.left(memory.unverified()));
     public Memory { quotes = List.copyOf(quotes); }
   }
 
   public static final Codec<ChatSummaryData> CODEC = Codec.unboundedMap(UUIDUtil.STRING_CODEC, Memory.CODEC)
+      .validate(memories -> memories.size() <= MAX_PLAYERS ? DataResult.success(memories)
+          : DataResult.error(() -> "Too many conversation counterparts"))
       .xmap(ChatSummaryData::new, ChatSummaryData::byPlayer);
 
   public ChatSummaryData { byPlayer = Map.copyOf(byPlayer); }

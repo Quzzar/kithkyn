@@ -350,7 +350,7 @@ public final class ResidentReactionVerification {
 
     private void beginCase() {
       scenario++;
-      if (scenario == 3) {
+      if (scenario == 4) {
         report.addProperty("status", "recorded");
         report.addProperty("acceptance", "Requires review against actual outcomes; harness completion is not a quality pass");
         report.addProperty("elapsed_seconds", (System.nanoTime() - started) / 1_000_000_000.0);
@@ -361,13 +361,13 @@ public final class ResidentReactionVerification {
         level.getServer().halt(false); return;
       }
       if (threat != null) { threat.discard(); threat = null; }
-      freshObserver(); ((LivePerson) observer).name(scenario == 0 ? "Mira" : scenario == 1 ? "Bram" : "Alden", "Flint");
+      freshObserver(); ((LivePerson) observer).name(scenario == 0 ? "Mira" : scenario == 1 ? "Bram" : scenario == 2 ? "Alden" : "Nora", "Flint");
       ((LivePerson) observer).character(scenario);
-      injured.setHealth(injured.getMaxHealth()); injured.moveTo(108.5, 161, 100.5);
+      injured.setHealth(injured.getMaxHealth()); injured.moveTo(scenario == 3 ? 103.5 : 108.5, 161, 100.5);
       observer.personMainInv.addItem(new net.minecraft.world.item.ItemStack(net.minecraft.world.item.Items.DIAMOND, 3));
       if (scenario == 0) observer.personMainInv.addItem(new net.minecraft.world.item.ItemStack(net.minecraft.world.item.Items.BREAD, 3));
       current = new com.google.gson.JsonObject();
-      current.addProperty("scenario", new String[] {"helpful-injury", "reserved-injury", "guard-threat"}[scenario]);
+      current.addProperty("scenario", new String[] {"helpful-injury", "reserved-injury", "guard-threat", "nearby-curious-injury"}[scenario]);
       current.addProperty("resident", observer.getFullName()); current.addProperty("start_position", observer.position().toString());
       current.addProperty("speaker_bread_before", speaker.getInventory().countItem(net.minecraft.world.item.Items.BREAD));
       current.add("dialogue", new com.google.gson.JsonArray()); cases.add(current);
@@ -466,6 +466,7 @@ public final class ResidentReactionVerification {
       setPersonality(Personality.generateFromVirtues(getVirtue(Virtue.AGGRESSION), getVirtue(Virtue.CURIOSITY), getVirtue(Virtue.DRIVE), getVirtue(Virtue.PROTECT_OTHERS), getVirtue(Virtue.PROTECT_SELF)));
       setData(KithkynAttachments.PERSONA.get(), new com.quzzar.kithkyn.persona.PersonaData(scenario == 1
           ? "A private, incurious resident who avoids getting involved in other people's trouble. Admits what she does not know."
+          : scenario == 3 ? "An inquisitive resident who checks on visibly injured neighbors by approaching to observe. Does not pretend to heal them. Admits what she does not know."
           : "A concerned, observant resident who notices injured neighbors and cares about others. Admits what she does not know.",
           "Speaks plainly.", "live-model-fixture", 0, 1));
       reloadState();

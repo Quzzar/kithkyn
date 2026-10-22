@@ -12,12 +12,6 @@ final class PersonChatReplySchema {
     JsonObject properties = new JsonObject();
     JsonObject say = typed("string"); say.addProperty("minLength", 1); say.addProperty("maxLength", 2048);
     properties.add("say", say);
-    if (!carriedItemIds.isEmpty()) {
-      JsonObject give = typed("string"); JsonArray ids = new JsonArray();
-      carriedItemIds.stream().distinct().sorted().forEach(ids::add); give.add("enum", ids); properties.add("give", give);
-      JsonObject count = typed("integer"); count.addProperty("minimum", 1); count.addProperty("maximum", 64);
-      properties.add("give_count", count);
-    }
     JsonObject opinion = typed("integer"); opinion.addProperty("minimum", -10); opinion.addProperty("maximum", 10);
     properties.add("opinion", opinion); properties.add("fight", typed("boolean")); properties.add("done", typed("boolean"));
     if (planning) {
@@ -26,7 +20,18 @@ final class PersonChatReplySchema {
       requestProperties.add("subject", text); requestProperties.add("reason", text.deepCopy());
       properties.add("request", object(requestProperties, "subject"));
     }
-    return object(properties, "say").toString();
+    JsonObject withoutGift = object(properties, "say");
+    if (carriedItemIds.isEmpty()) return withoutGift.toString();
+    JsonObject giftProperties = properties.deepCopy();
+    JsonObject give = typed("string"); JsonArray ids = new JsonArray();
+    carriedItemIds.stream().distinct().sorted().forEach(ids::add); give.add("enum", ids); giftProperties.add("give", give);
+    JsonObject count = typed("integer"); count.addProperty("minimum", 1); count.addProperty("maximum", 64);
+    giftProperties.add("give_count", count);
+    JsonObject withGift = object(giftProperties, "say");
+    withGift.getAsJsonArray("required").add("give");
+    JsonArray alternatives = new JsonArray(); alternatives.add(withoutGift); alternatives.add(withGift);
+    JsonObject schema = new JsonObject(); schema.add("oneOf", alternatives);
+    return schema.toString();
   }
 
   private static JsonObject typed(String type) { JsonObject value = new JsonObject(); value.addProperty("type", type); return value; }

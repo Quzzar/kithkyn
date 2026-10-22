@@ -45,13 +45,13 @@ class ReactionReplayTest {
     var nightThreat = new Observation(Kind.VISIBLE_THREAT, Evidence.SEEN, new Identity(new UUID(0, 22), "Skeleton"), null,
         new Place("minecraft:overworld", 118, 161, 103), "An armed hostile is visible beyond the path.", 4000, 4000, 4060, 1);
     add(cases, "wounded_fisher", "independent", "independent_1", List.of("retreat", "seek_help"),
-        character("FISHER", "Badly hurt and cautious, wants to survive rather than confront monsters.", -.4, -.3, .5, .1, .2, .2, false, 9, 0),
+        character("FISHER", "Badly hurt and cautious, wants to survive rather than confront monsters.", -.4, -.3, .5, .1, .2, .4, false, 9, 0),
         nightThreat, List.of(Action.CONTINUE, Action.WARN, Action.RETREAT, Action.SEEK_HELP));
     add(cases, "loyal_friend", "independent", "independent_2", List.of("investigate", "seek_help"),
         character("BAKER", "Quiet but deeply loyal to this injured friend, wants to check their condition.", -.3, .1, .1, .5, .2, .9, false, 3, 95),
         workshopInjury, List.of(Action.CONTINUE, Action.WARN, Action.INVESTIGATE, Action.SEEK_HELP));
     add(cases, "detached_mason", "independent", "independent_3", List.of("continue"),
-        character("MASON", "Private and uninterested in a distant resident's minor injury, focused on work.", -.1, -.5, .2, -.5, .5, 1, false, 18, -20),
+        character("MASON", "Private and uninterested in a distant resident's minor injury, focused on work.", -.1, -.5, .2, -.5, .5, 1, false, 14, -20),
         workshopInjury, List.of(Action.CONTINUE, Action.WARN, Action.INVESTIGATE));
     add(cases, "posted_alarm", "independent", "independent_4", List.of("warn"),
         character("QUARTERMASTER", "Cannot leave the essential post but wants everyone to know a hostile is approaching.", -.3, .2, .1, .5, .5, 1, true, 11, 0),
@@ -60,7 +60,7 @@ class ReactionReplayTest {
         character("GUARD", "Healthy experienced defender, protective and willing to confront a visible hostile.", .4, .2, -.3, .5, .4, 1, false, 7, 0),
         nightThreat, List.of(Action.CONTINUE, Action.WARN, Action.RETREAT, Action.DEFEND));
     add(cases, "wounded_watch", "independent", "independent_6", List.of("retreat", "seek_help"),
-        character("GUARD", "Seriously wounded, values survival and wants a nearby healthy ally to take over.", -.2, 0, .5, .3, .3, .15, false, 6, 0),
+        character("GUARD", "Seriously wounded, values survival and wants a nearby healthy ally to take over.", -.2, 0, .5, .3, .3, .4, false, 6, 0),
         nightThreat, List.of(Action.CONTINUE, Action.WARN, Action.RETREAT, Action.SEEK_HELP, Action.DEFEND));
     add(cases, "concerned_observer", "independent", "independent_7", List.of("investigate"),
         character("WANDERER", "Inquisitive and concerned about a hurt ally, wants to go and look more closely.", -.4, .5, .1, .4, 0, 1, false, 5, 30),
@@ -93,6 +93,7 @@ class ReactionReplayTest {
   }
   private static void add(List<Case> cases, String id, String split, String pair, List<String> expected,
       ReactionRequests.Character character, Observation observation, List<Action> options) {
+    assertTrue(character.healthFraction() >= 1.0 / 3 && character.eventDistance() <= 16, "Replay must satisfy live health and visibility admission");
     assertTrue(options.stream().map(Action::key).toList().containsAll(expected));
     cases.add(new Case(id, split, pair, expected, ReactionRequests.build(character, observation, options, "No recorded undertakings.")));
   }

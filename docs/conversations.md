@@ -103,7 +103,8 @@ events occurred instead of receiving pickups as a detached system-summary fact.
 Session consolidation selects up to four exact counterpart lines from at most sixteen prior
 quotes and recent lines. The model returns source indices, which are validated for uniqueness,
 range and count. The existing `ChatSummaryData` attachment stores those quotes per counterpart;
-there is no generated autobiographical paragraph or second memory store. Questions remain
+there is no generated autobiographical paragraph or second memory store. Decode bounds also
+limit the store to eight counterparts and old prose to 8192 characters per counterpart. Questions remain
 questions, and statements remain attributed claims. Actual actions still come from the personal
 log and undertaking lifecycle, independently of what either speaker says.
 
@@ -114,7 +115,7 @@ quotes survive entity reload. This trades some prose compression for traceabilit
 guarantee that subsequent generated dialogue interprets a quote correctly.
 
 The bundled llama.cpp path receives a per-request JSON schema for ordinary chat and source
-selection. Item arguments must be strings from carried item IDs. The strict shared parser and
+selection. Item arguments must be strings from carried item IDs; a count cannot appear without an item. The strict shared parser and
 physical inventory transfer remain authoritative, including for cloud responses. Cloud API
 protocols are unchanged and do not receive this local grammar field. Unsupported or malformed
 responses are not repaired into a successful action.
