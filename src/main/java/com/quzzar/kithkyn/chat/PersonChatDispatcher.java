@@ -1,8 +1,6 @@
 package com.quzzar.kithkyn.chat;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
@@ -11,7 +9,6 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentHashMap;
 
 import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 import com.quzzar.kithkyn.Kithkyn;
 import com.quzzar.kithkyn.llm.provider.LlmProvider.CompletionRequest;
 import com.quzzar.kithkyn.chat.PersonChatContext.AssembledChat;
@@ -281,7 +278,7 @@ public final class PersonChatDispatcher {
           Kithkyn.LOGGER.debug("{} opened exactly as they did last time; sampling once more",
               person.getFullName());
           return ask(purpose + " (resampled)", new CompletionRequest(chat.system(), chat.user(), chat.examples(),
-              KithkynConfig.LlmChatMaxNewTokens, RETRY_TEMPERATURE, RETRY_REPETITION_PENALTY), background)
+              KithkynConfig.LlmChatMaxNewTokens, RETRY_TEMPERATURE, RETRY_REPETITION_PENALTY, chat.localJsonSchema()), background)
               .thenApply(second -> echoesLastAnswer(second, lastAnswer) ? first : second);
         })
         .thenApply(result -> {
@@ -318,15 +315,13 @@ public final class PersonChatDispatcher {
   /** Exposes the exact initial chat request for paired replay without copying its sampling policy. */
   public static CompletionRequest initialRequest(AssembledChat chat) {
     return new CompletionRequest(chat.system(), chat.user(), chat.examples(), KithkynConfig.LlmChatMaxNewTokens,
-        KithkynConfig.LlmChatTemperature, CHAT_REPETITION_PENALTY);
+        KithkynConfig.LlmChatTemperature, CHAT_REPETITION_PENALTY, chat.localJsonSchema());
   }
 
   private static CompletableFuture<Optional<String>> ask(String purpose, CompletionRequest request, boolean background) {
     return background
-        ? LlmService.get().submitBackgroundChat(purpose, request.system(), request.user(), request.examples(),
-            request.maxNewTokens(), request.temperature(), request.frequencyPenalty())
-        : LlmService.get().submitChat(purpose, request.system(), request.user(), request.examples(),
-            request.maxNewTokens(), request.temperature(), request.frequencyPenalty());
+        ? LlmService.get().submitBackgroundChat(purpose, request)
+        : LlmService.get().submitChat(purpose, request);
   }
 
   /**
@@ -436,9 +431,9 @@ public final class PersonChatDispatcher {
     return "request: " + subject;
   }
 
-  /** How the consolidation summary is generated: room for a few sentences, low heat. */
-  private static final int SUMMARY_MAX_TOKENS = 150;
-  private static final double SUMMARY_TEMPERATURE = 0.3D;
+  /** Consolidation selects source indices, with a small generation budget. */
+  private static final int SUMMARY_MAX_TOKENS = 48;
+  private static final double SUMMARY_TEMPERATURE = 0.0D;
 
   /**
    * Fold a villager's conversation with someone (a player, or a fellow
@@ -465,74 +460,28 @@ public final class PersonChatDispatcher {
     if (!playerSpoke) {
       return;
     }
-    String earlier = person.getData(KithkynAttachments.CHAT_SUMMARY.get()).with(playerId);
-
-    ConversationMemoryPrompt.Prompt memoryPrompt = ConversationMemoryPrompt.build(
-        person.getFullName(), playerName, earlier,
-        session.stream().map(ChatHistoryData.Exchange::playerLine).filter(line -> !line.isBlank()).toList(),
-        com.quzzar.kithkyn.entities.UndertakingService.briefing(person.getData(KithkynAttachments.UNDERTAKINGS.get()), person.getUUID(), Optional.of(playerId), 8));
-
-    LlmService.get().submitPersona(person.getFullName() + " keeps a memory of " + playerName,
-        memoryPrompt.system(), memoryPrompt.user(), SUMMARY_MAX_TOKENS, SUMMARY_TEMPERATURE)
+    ConversationMemoryPrompt.Prompt prompt = ConversationMemoryPrompt.build(
+        person.getFullName(), playerName,
+        person.getData(KithkynAttachments.CHAT_SUMMARY.get()).quotesWith(playerId),
+        session.stream().map(ChatHistoryData.Exchange::playerLine).filter(line -> !line.isBlank()).toList());
+    var request = new CompletionRequest(prompt.system(), prompt.user(), List.of(), SUMMARY_MAX_TOKENS,
+        SUMMARY_TEMPERATURE, 0, prompt.localJsonSchema());
+    LlmService.get().submitPersona(person.getFullName() + " keeps a memory of " + playerName, request)
         .whenComplete((result, error) -> {
-          if (error != null || result == null || result.isEmpty()) {
-            return;
-          }
-          String summary = VillagerText.clean(result.get().trim());
-          if (summary.isEmpty()) {
-            return;
-          }
-          // An echo of the old memory is not a new memory. Keep the stored one
-          // rather than overwrite it with a clone, so a copied summary cannot
-          // accrete embellishments ("over the years") talk after talk.
-          if (isEcho(summary, earlier)) {
-            Kithkyn.LOGGER.info("[chat summary] {} keeps their memory of {} (new summary echoed the old)",
-                person.getFullName(), playerName);
+          if (error != null || result == null || result.isEmpty()) return;
+          var quotes = prompt.select(result.get());
+          if (quotes.isEmpty()) {
+            Kithkyn.LOGGER.warn("[chat summary] Invalid source selection for {}", person.getUUID());
             return;
           }
           server.execute(() -> {
+            if (person.isRemoved()) return;
             person.setData(KithkynAttachments.CHAT_SUMMARY.get(),
-                person.getData(KithkynAttachments.CHAT_SUMMARY.get()).withSummary(playerId, summary));
-            // The one INFO the summary path emits: the write is otherwise silent,
-            // so headless verification and "why didn't they remember me" debugging
-            // both read this line, as the rest of the chat pipeline is read.
-            Kithkyn.LOGGER.info("[chat summary] {} now remembers {}: \"{}\"",
-                person.getFullName(), playerName, summary);
+                person.getData(KithkynAttachments.CHAT_SUMMARY.get()).withQuotes(playerId, quotes.get()));
+            Kithkyn.LOGGER.info("[chat summary] {} retained {} exact conversation lines from {}",
+                person.getFullName(), quotes.get().size(), playerName);
           });
         });
-  }
-
-
-  /** Share of the earlier memory's words the new one must reuse to count as an echo. */
-  private static final double ECHO_THRESHOLD = 0.85D;
-
-  /**
-   * Whether a fresh summary is just the earlier one back again. Compared on the
-   * bag of words rather than exact text, so a copy with one flourish swapped
-   * ("a mix of kindness and frustration" for "a test of my patience") still
-   * reads as the echo it is.
-   */
-  private static boolean isEcho(String fresh, String earlier) {
-    if (earlier == null || earlier.isBlank()) {
-      return false;
-    }
-    Set<String> before = words(earlier);
-    Set<String> now = words(fresh);
-    if (before.isEmpty() || now.isEmpty()) {
-      return false;
-    }
-    long shared = now.stream().filter(before::contains).count();
-    return shared >= ECHO_THRESHOLD * Math.max(before.size(), now.size());
-  }
-
-  private static Set<String> words(String text) {
-    Set<String> out = new HashSet<>();
-    for (String word : text.toLowerCase(Locale.ROOT).split("[^a-z0-9']+")) {
-      if (word.length() > 2) {
-        out.add(word);
-      }
-    }
-    return out;
   }
 
   /** A validated conversational reply. Physical action outcomes are recorded separately by the game. */

@@ -98,6 +98,32 @@ now interleaves those events with the timestamped session transcript. The model
 sees “I said I handed over dirt,” then “I picked up dirt,” in the order those
 events occurred instead of receiving pickups as a detached system-summary fact.
 
+## Conversation memory and local reply constraints
+
+Session consolidation selects up to four exact counterpart lines from at most sixteen prior
+quotes and recent lines. The model returns source indices, which are validated for uniqueness,
+range and count. The existing `ChatSummaryData` attachment stores those quotes per counterpart;
+there is no generated autobiographical paragraph or second memory store. Questions remain
+questions, and statements remain attributed claims. Actual actions still come from the personal
+log and undertaking lifecycle, independently of what either speaker says.
+
+Earlier freeform summary strings still decode, explicitly labelled unverified. They are never
+candidate source quotes. The next successful consolidation replaces that prose with selected
+conversation lines; invalid or failed selection leaves existing memory untouched. Selected
+quotes survive entity reload. This trades some prose compression for traceability and cannot
+guarantee that subsequent generated dialogue interprets a quote correctly.
+
+The bundled llama.cpp path receives a per-request JSON schema for ordinary chat and source
+selection. Item arguments must be strings from carried item IDs. The strict shared parser and
+physical inventory transfer remain authoritative, including for cloud responses. Cloud API
+protocols are unchanged and do not receive this local grammar field. Unsupported or malformed
+responses are not repaired into a successful action.
+
+Conversation instructions distinguish feelings about the situation from feelings about the
+speaker. Factual questions, recall requests and ordinary requests for an item do not themselves
+justify an opinion change. Actual insults, threats and kindness can still affect relationships;
+the existing opinion and session caps remain unchanged.
+
 ## The one-shot siblings, left alone
 
 Not every question the village asks the model is a conversation. A one-shot

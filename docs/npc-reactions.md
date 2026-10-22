@@ -97,6 +97,16 @@ invalid, uncertain, late, changed-child and disabled outcomes, a guard moving aw
 last essential worker protection, eligible age/post changes and a warning without movement. The fixture also checks death at the exact defense deadline without claiming completion. This isolates game execution
 from model quality. Player companion controls and their fixture have been removed.
 
+Reaction requests now describe observed events, numeric traits with plain-language labels,
+health and duties in readable text. Criteria describe the implemented action directly; game
+validation, admission limits, freshness and confidence thresholds are unchanged. The replay
+fixture retains the historical personality/order cases and adds eight separately authored
+situations, explicitly labelled `independent`, rather than treating coordinate variants as
+independent evidence. Capture with `KITHKYN_REACTION_REPLAY`, send sequentially using
+`tools/llm/replay_reactions.py --source <capture> --output <raw>`, and score with
+`tools/llm/analyze_reactions.py --source <capture> --raw <raw> --output <analysis>`.
+Transport failures stop the replay without retry or provider substitution.
+
 The [Kev research note](research/kev-reaction-evaluation-2026-10-21.md) records a separate pinned
 local model replay: 38/48 authored labels matched, option order changed four of sixteen states,
 and none met the fixed 0.8 confidence gate. The near-duplicate split is not independent validation.

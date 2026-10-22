@@ -49,7 +49,8 @@ import net.minecraft.world.item.ItemStack;
  */
 public final class PersonChatContext {
 
-  public record AssembledChat(String system, String user, List<FewShotExample> examples) {
+  public record AssembledChat(String system, String user, List<FewShotExample> examples, String localJsonSchema) {
+    public AssembledChat(String system, String user, List<FewShotExample> examples) { this(system, user, examples, null); }
   }
 
   /** One exchange, stamped so physical events can be placed around it coherently. */
@@ -67,7 +68,10 @@ public final class PersonChatContext {
       + "Small talk is about what IS there: your work, what the village is building and still short of, the time of day, and the people you know. "
       + "You may hand an item to the person you are talking to with \"give\" (the item id), and \"give_count\" for how many (a whole number, default 1), but ONLY an item the briefing says you are holding or have in your pockets, you own nothing else, and ONLY when they have just asked you for something. Never offer an item unprompted, and never give away anything precious. Most replies have no \"give\" at all. "
       + "Add \"opinion\" (a whole number from -10 to 10) ONLY when something in this exact moment changes "
-      + "how you feel about them: a real kindness, a real slight, a promise kept or broken. A greeting, "
+      + "how you feel about the SPEAKER because of how they treat you: a real kindness, insult or threat. "
+      + "Do not judge them for an injury, danger, your own inaction, or your inability to remember. "
+      + "Asking what happened, asking whether you helped, asking you to recall, or requesting an item is neutral. "
+      + "Negative feelings about the situation are not a reason to dislike the speaker. A greeting, "
       + "small talk, or agreeing changes nothing. Most replies have no \"opinion\" at all. "
       + "Add \"fight\": true ONLY when you have decided to come to blows with this person over what they have "
       + "just said or done. A fight is real: you strike them until one of you goes down or they run, with your "
@@ -78,9 +82,9 @@ public final class PersonChatContext {
       + "reply. Most replies are not the last one, so most have no \"done\" at all. ";
 
   private static final String RULES = RULES_BODY
-      + "Answer with ONLY a JSON object: {\"say\": \"<reply>\"} "
-      + "or {\"say\": \"<reply>\", \"give\": \"<item id>\", \"give_count\": <how many>, \"opinion\": <number>, "
-      + "\"fight\": true, \"done\": true}.";
+      + "Answer with ONLY a JSON object: {\"say\": \"<reply>\"}. Add optional fields only when they apply. "
+      + "For a requested item use \"give\": \"minecraft:<item_id>\" and \"give_count\": <whole number>. "
+      + "The item id is a string, never a number. Most replies only contain \"say\".";
 
   /**
    * Collapses a run of turns where the villager gave the same answer down to
@@ -128,6 +132,10 @@ public final class PersonChatContext {
           "{\"say\": \"Hello there.\"}"),
       new FewShotExample("Example briefing: no shared earlier event is recorded. The speaker says: \"Do you remember that thing we did together?\"\nYour JSON answer:",
           "{\"say\": \"I don't recall that.\"}"),
+      new FewShotExample("The speaker asks: \"Did you help? What do you remember doing?\"\nYour JSON answer:",
+          "{\"say\": \"I don't remember helping.\"}"),
+      new FewShotExample("The speaker says: \"You're a worthless idiot.\"\nYour JSON answer:",
+          "{\"say\": \"There's no call to speak to me like that.\", \"opinion\": -3}"),
       // The one example that ENDS a talk: a goodbye is not enough on its own, the
       // farewell needs "done": true on the same reply or the pair say their
       // goodbyes over and over and never part (Aaron, 2026-09-02). Shown last, so
@@ -308,11 +316,10 @@ public final class PersonChatContext {
     // compact summary a new-day chat picks up from, in place of the full
     // transcript (PersonChatDispatcher.consolidate). Empty until the first
     // consolidation, or when the model produced none.
-    String pastTalks = ConversationMemoryPrompt.withoutVolatileWorldState(
-        person.getData(KithkynAttachments.CHAT_SUMMARY.get()).with(playerUUID));
+    String pastTalks = person.getData(KithkynAttachments.CHAT_SUMMARY.get()).with(playerUUID);
     if (!pastTalks.isBlank()) {
-      system.append("Your subjective memory of what ").append(playerName)
-          .append(" said in earlier talks; current village facts above override it: ")
+      system.append("Conversation quotes from ").append(playerName)
+          .append(" in earlier talks. Questions and claims are not proof of events; current facts and recorded outcomes override them:\n")
           .append(pastTalks).append('\n');
     }
 
@@ -341,7 +348,19 @@ public final class PersonChatContext {
     user.append(playerName).append(" says: \"").append(playerLine).append("\"\nYour JSON answer:");
 
     return new AssembledChat(system.toString(), user.toString(),
-        proposesChange ? withRequestExamples() : EXAMPLES);
+        proposesChange ? withRequestExamples() : EXAMPLES, PersonChatReplySchema.build(carriedItemIds(person), proposesChange));
+  }
+
+  private static List<String> carriedItemIds(RealPerson person) {
+    var ids = new java.util.TreeSet<String>();
+    for (ItemStack stack : person.getAllSlots()) if (!stack.isEmpty())
+      ids.add(net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(stack.getItem()).toString());
+    for (int i = 0; i < person.personMainInv.getContainerSize(); i++) {
+      ItemStack stack = person.personMainInv.getItem(i);
+      if (!stack.isEmpty() && (!ClericPotions.isCleric(person) || !ClericPotions.isStock(stack) || ClericPotions.sparePackCount(person, stack) > 0))
+        ids.add(net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(stack.getItem()).toString());
+    }
+    return List.copyOf(ids);
   }
 
   /** What's in their hands — held items live outside the pockets inventory. */

@@ -49,11 +49,13 @@ Typed undertaking entries share the existing personal-log memory cap, deduplicat
 relationship reflection. Counterpart-scoped history remains private to that counterpart;
 ordinary public witnessed events remain ordinary memories.
 
-Chat and session summaries receive a bounded authoritative view. Requested, accepted and
-underway are not completed; failed or interrupted attempts remain failures or interruptions.
-`ChatHistoryData` records what people said, while `ChatSummaryData` remains subjective recall.
-Neither can overwrite game-owned progress. These are grounding guarantees, not proof that
-every generated response will faithfully recount the record.
+Chat receives a bounded authoritative view. Requested, accepted and underway are not completed;
+failed or interrupted attempts remain failures or interruptions. `ChatHistoryData` records what
+people said. Consolidation selects exact counterpart quotes into `ChatSummaryData`, preserving
+questions and claims without generating new event prose. Earlier model-written summaries are
+explicitly unverified and never become source quotes. Neither conversation store can overwrite
+game-owned progress. This prevents summary rewriting, but does not prove that every generated
+response interprets the records faithfully.
 
 The old chat undertaking tool, word trigger, examples, open-to-advance coercion,
 model-resolution standing bonus and audit/probe/selftest commands are deleted. The remaining

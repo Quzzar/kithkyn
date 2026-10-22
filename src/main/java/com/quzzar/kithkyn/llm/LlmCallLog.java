@@ -126,6 +126,7 @@ public final class LlmCallLog {
       section(text, "example assistant", example.assistant());
     }
     section(text, "user", request.user());
+    if (request.localJsonSchema() != null) section(text, "local JSON schema", request.localJsonSchema());
     write(text.toString());
     return id;
   }

@@ -140,6 +140,12 @@ public final class OpenAiCompatibleProvider implements LlmProvider {
     }
     messages.add(message("user", request.user()));
     body.add("messages", messages);
+    if (spec.keyless() && request.localJsonSchema() != null) {
+      JsonObject format = new JsonObject();
+      format.addProperty("type", "json_object");
+      format.add("schema", JsonParser.parseString(request.localJsonSchema()).getAsJsonObject());
+      body.add("response_format", format);
+    }
     // Reasoning models spend hidden tokens against the cap, so it sits well
     // above the visible reply budget.
     int cap = Math.max(1024, request.maxNewTokens() * 4);

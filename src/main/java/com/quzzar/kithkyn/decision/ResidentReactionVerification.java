@@ -369,6 +369,7 @@ public final class ResidentReactionVerification {
       current = new com.google.gson.JsonObject();
       current.addProperty("scenario", new String[] {"helpful-injury", "reserved-injury", "guard-threat"}[scenario]);
       current.addProperty("resident", observer.getFullName()); current.addProperty("start_position", observer.position().toString());
+      current.addProperty("speaker_bread_before", speaker.getInventory().countItem(net.minecraft.world.item.Items.BREAD));
       current.add("dialogue", new com.google.gson.JsonArray()); cases.add(current);
       if (scenario == 2) {
         threat = EntityType.ZOMBIE.create(level); threat.setNoAi(true); threat.moveTo(observer.position().add(6, 0, 0));
@@ -408,6 +409,10 @@ public final class ResidentReactionVerification {
         row.add("reply", json.toJsonTree(reply)); current.getAsJsonArray("dialogue").add(row); save();
         if (stage == 3) {
           if (scenario == 0 && question == 2) { question++; ask("Could you spare one bread from your pockets?"); return; }
+          if (scenario == 0 && question == 3) { question++; ask("Was Tessa still hurt when you last saw her?"); return; }
+          if (scenario == 0 && question == 4) { question++; ask("That was a useless answer. You're an idiot."); return; }
+          if (scenario == 0 && question == 5) { question++; ask("I'm sorry for insulting you. You didn't deserve that."); return; }
+          current.addProperty("speaker_bread_after", speaker.getInventory().countItem(net.minecraft.world.item.Items.BREAD));
           current.addProperty("bread_remaining", observer.personMainInv.countItem(net.minecraft.world.item.Items.BREAD));
           PersonChatDispatcher.markClosed(observer.getId(), speakerId); beginCase(); return;
         }

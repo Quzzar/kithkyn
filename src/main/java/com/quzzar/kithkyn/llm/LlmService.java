@@ -149,8 +149,7 @@ public final class LlmService {
   }
 
   /** Background requests wait here so foreground work always jumps the line. */
-  private record QueuedPersona(String lane, String purpose, String system, String user,
-      List<FewShotExample> examples, int maxNewTokens, double temperature, double frequencyPenalty,
+  private record QueuedPersona(String lane, String purpose, CompletionRequest request,
       CompletableFuture<Optional<String>> future) {
   }
 
@@ -422,6 +421,11 @@ public final class LlmService {
    */
   public CompletableFuture<Optional<String>> submitChat(String purpose, String system, String user,
       List<FewShotExample> examples, int maxNewTokens, double temperature, double frequencyPenalty) {
+    return submitChat(purpose, new CompletionRequest(system, user, examples, maxNewTokens, temperature, frequencyPenalty));
+  }
+
+  /** Chat admission preserves the complete provider request, including local output constraints. */
+  public CompletableFuture<Optional<String>> submitChat(String purpose, CompletionRequest request) {
     // Mark a conversation live so village work yields, and keep the window open
     // a few seconds past this reply for the player's next line.
     synchronized (providerLock) {
@@ -429,8 +433,7 @@ public final class LlmService {
       long epoch = providerEpoch;
       activeChat.incrementAndGet();
       chatWindowUntilMs = System.currentTimeMillis() + CHAT_PRIORITY_WINDOW_MS;
-      return foregroundComplete(LANE_CHAT, purpose,
-          new CompletionRequest(system, user, examples, maxNewTokens, temperature, frequencyPenalty))
+      return foregroundComplete(LANE_CHAT, purpose, request)
           .whenComplete((result, error) -> {
             synchronized (providerLock) {
               if (providerEpoch != epoch || stopped) return;
@@ -465,7 +468,12 @@ public final class LlmService {
    */
   public CompletableFuture<Optional<String>> submitPersona(String purpose, String system, String user,
       List<FewShotExample> examples, int maxNewTokens, double temperature) {
-    return submitBackground(LANE_BACKGROUND, purpose, system, user, examples, maxNewTokens, temperature, 0.0D);
+    return submitPersona(purpose, new CompletionRequest(system, user, examples, maxNewTokens, temperature));
+  }
+
+  /** Background admission preserves the complete request rather than rebuilding selected fields. */
+  public CompletableFuture<Optional<String>> submitPersona(String purpose, CompletionRequest request) {
+    return submitBackground(LANE_BACKGROUND, purpose, request);
   }
 
   /**
@@ -476,13 +484,14 @@ public final class LlmService {
    */
   public CompletableFuture<Optional<String>> submitBackgroundChat(String purpose, String system, String user,
       List<FewShotExample> examples, int maxNewTokens, double temperature, double frequencyPenalty) {
-    return submitBackground(LANE_VILLAGER_CHAT, purpose, system, user, examples, maxNewTokens, temperature,
-        frequencyPenalty);
+    return submitBackgroundChat(purpose, new CompletionRequest(system, user, examples, maxNewTokens, temperature, frequencyPenalty));
   }
 
-  private CompletableFuture<Optional<String>> submitBackground(String lane, String purpose, String system,
-      String user, List<FewShotExample> examples, int maxNewTokens, double temperature,
-      double frequencyPenalty) {
+  public CompletableFuture<Optional<String>> submitBackgroundChat(String purpose, CompletionRequest request) {
+    return submitBackground(LANE_VILLAGER_CHAT, purpose, request);
+  }
+
+  private CompletableFuture<Optional<String>> submitBackground(String lane, String purpose, CompletionRequest request) {
     if (!KithkynConfig.LlmEnabled) {
       LlmCallLog.skipped(lane, purpose, "the LLM is disabled in the config");
       return CompletableFuture.completedFuture(Optional.empty());
@@ -498,8 +507,7 @@ public final class LlmService {
         LlmCallLog.skipped(lane, purpose, "background queue full (" + PERSONA_QUEUE_LIMIT + ")");
         return CompletableFuture.completedFuture(Optional.empty());
       }
-      personaQueue.add(new QueuedPersona(lane, purpose, system, user, List.copyOf(examples), maxNewTokens,
-          temperature, frequencyPenalty, future));
+      personaQueue.add(new QueuedPersona(lane, purpose, request, future));
     }
     tryDispatchPersona();
     return future;
@@ -519,14 +527,7 @@ public final class LlmService {
       }
       QueuedPersona next = personaQueue.poll();
       personaInFlight = next;
-      // NOTE: this re-wraps the request rather than carrying one through, so any
-      // field added to CompletionRequest has to be added HERE too (and to
-      // QueuedPersona) or it silently reverts to its default on the background
-      // path only. Nothing fails loudly: the knob works in chat, does nothing
-      // here, and looks like a model problem. Chat reaches the provider via
-      // foregroundComplete and is not affected.
-      callProvider(active, next.lane(), next.purpose(), new CompletionRequest(next.system(), next.user(),
-          next.examples(), next.maxNewTokens(), next.temperature(), next.frequencyPenalty()))
+      callProvider(active, next.lane(), next.purpose(), next.request())
           .whenComplete((result, error) -> {
             synchronized (providerLock) {
               if (providerEpoch != epoch || personaInFlight != next || stopped) return;

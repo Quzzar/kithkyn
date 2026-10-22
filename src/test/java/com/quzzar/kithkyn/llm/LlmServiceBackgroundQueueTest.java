@@ -112,6 +112,16 @@ class LlmServiceBackgroundQueueTest {
     assertEquals(Optional.of("next"), memory("next").get(1, TimeUnit.SECONDS));
   }
 
+  @Test void queuedRequestKeepsItsOutputConstraintAndExamples() throws Exception {
+    var expected = new LlmProvider.CompletionRequest("system", "user", List.of(new LlmService.FewShotExample("a", "b")),
+        32, .2, .1, "{\"type\":\"object\"}");
+    install(new FixtureProvider(request -> {
+      assertEquals(expected, request);
+      return CompletableFuture.completedFuture(Optional.of("result"));
+    }));
+    assertEquals(Optional.of("result"), service.submitPersona("fixture", expected).get(1, TimeUnit.SECONDS));
+  }
+
   private CompletableFuture<Optional<String>> chat() {
     return service.submitChat("fixture chat", "system", "hello", List.of(), 16, .4, 0);
   }

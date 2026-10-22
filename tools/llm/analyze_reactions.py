@@ -1,4 +1,4 @@
-"""Score the fixed replay without fitting thresholds or modifying any response."""
+"""Score captured legal-choice replays without fitting thresholds or changing responses."""
 from __future__ import annotations
 
 import argparse
@@ -53,13 +53,15 @@ def main() -> None:
                         help="Optional original request JSONL to verify against embedded source lines")
     args = parser.parse_args()
     raw_rows = [json.loads(line) for line in args.raw.read_text().splitlines()]
-    if len(raw_rows) != 48:
-        raise RuntimeError("Expected all 48 replay outputs")
     source_bytes = ("\n".join(row["source_line"] for row in raw_rows) + "\n").encode()
-    if hashlib.sha256(source_bytes).hexdigest() != SOURCE_SHA256:
-        raise RuntimeError("Recorded replay source changed")
-    if args.source is not None and args.source.read_bytes() != source_bytes:
+    source_hash = hashlib.sha256(source_bytes).hexdigest()
+    if args.source is None:
+        if len(raw_rows) != 48 or source_hash != SOURCE_SHA256:
+            raise RuntimeError("Historical replay source changed; pass --source for another corpus")
+    elif args.source.read_bytes() != source_bytes:
         raise RuntimeError("Original replay source differs from embedded source lines")
+    if not raw_rows or len({row["id"] for row in raw_rows}) != len(raw_rows):
+        raise RuntimeError("Replay must contain unique, nonempty request ids")
     rows = []
     for raw in raw_rows:
         original = json.loads(raw["source_line"])
@@ -116,6 +118,7 @@ def main() -> None:
         })
     pair_details = []
     for pair, members in pairs.items():
+        if len(members) == 1: continue  # Independent scenarios are not personality pairs.
         if len(members) != 2: raise RuntimeError(f"Expected two states in pair {pair}")
         names = list(members)
         left, right = [sorted(members[name], key=lambda row: row["order"]) for name in names]
@@ -128,7 +131,7 @@ def main() -> None:
         })
     result = {
         "threshold": THRESHOLD, "threshold_tuned": False,
-        "source_sha256": SOURCE_SHA256, "overall": summarize(rows),
+        "source_sha256": source_hash, "overall": summarize(rows),
         "by_split": {split: summarize([row for row in rows if row["split"] == split]) for split in dict.fromkeys(row["split"] for row in rows)},
         "by_order": {str(order): summarize([row for row in rows if row["order"] == order]) for order in range(3)},
         "order_consistency": {"states": len(states), "stable_choices": sum(row["all_choices_same"] for row in state_details),
@@ -138,7 +141,7 @@ def main() -> None:
                     "stable_choices": sum(row["split"] == split and row["all_choices_same"] for row in state_details)}
             for split in dict.fromkeys(row["split"] for row in rows)
         },
-        "pair_summary": {"pairs": len(pair_details), "matched_order_comparisons": sum(len(group) for group in states.values()) // 2,
+        "pair_summary": {"pairs": len(pair_details), "matched_order_comparisons": sum(len(pair["choices"][0]) for pair in pair_details),
                          "different_choices": sum(row["different_choices"] for row in pair_details),
                          "both_correct": sum(row["both_correct"] for row in pair_details)},
         "pair_summary_by_split": {

@@ -26,6 +26,12 @@ One targeted rerun stopped the observed example-copying; this does not establish
 grounding or reliable item giving. The gameplay report distinguishes the original fixture
 configuration error from the corrected native-goal run.
 
+Conversation consolidation now selects exact source lines instead of writing subjective event
+prose. The bundled llama.cpp provider applies local output schemas to these selections and chat
+item arguments; cloud protocols retain their existing behavior and shared strict parsing.
+Whole completion requests travel through foreground and background admission, so queueing and
+resampling cannot silently drop output constraints. See [conversations](conversations.md).
+
 **This is the decided design for LLM-driven villager decisions.** A small language model
 answers multiple-choice questions and holds short conversations; deterministic game logic
 decides *what the options are*, and the model only picks among them and supplies an
