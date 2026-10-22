@@ -20,18 +20,29 @@ final class PersonChatReplySchema {
       requestProperties.add("subject", text); requestProperties.add("reason", text.deepCopy());
       properties.add("request", object(requestProperties, "subject"));
     }
-    JsonObject withoutGift = object(properties, "say");
-    if (carriedItemIds.isEmpty()) return withoutGift.toString();
+    JsonArray alternatives = new JsonArray();
+    addOpinionAlternatives(alternatives, properties, false);
+    if (carriedItemIds.isEmpty()) { JsonObject schema = new JsonObject(); schema.add("oneOf", alternatives); return schema.toString(); }
     JsonObject giftProperties = properties.deepCopy();
     JsonObject give = typed("string"); JsonArray ids = new JsonArray();
     carriedItemIds.stream().distinct().sorted().forEach(ids::add); give.add("enum", ids); giftProperties.add("give", give);
     JsonObject count = typed("integer"); count.addProperty("minimum", 1); count.addProperty("maximum", 64);
     giftProperties.add("give_count", count);
-    JsonObject withGift = object(giftProperties, "say");
-    withGift.getAsJsonArray("required").add("give");
-    JsonArray alternatives = new JsonArray(); alternatives.add(withoutGift); alternatives.add(withGift);
+    addOpinionAlternatives(alternatives, giftProperties, true);
     JsonObject schema = new JsonObject(); schema.add("oneOf", alternatives);
     return schema.toString();
+  }
+
+  /** llama.cpp emits required fields first; an opinion must be required in its own branch. */
+  private static void addOpinionAlternatives(JsonArray alternatives, JsonObject properties, boolean gift) {
+    JsonObject neutral = properties.deepCopy(); neutral.remove("opinion");
+    JsonObject withoutOpinion = object(neutral, "say");
+    if (gift) withoutOpinion.getAsJsonArray("required").add("give");
+    alternatives.add(withoutOpinion);
+    JsonObject withOpinion = object(properties.deepCopy(), "opinion");
+    withOpinion.getAsJsonArray("required").add("say");
+    if (gift) withOpinion.getAsJsonArray("required").add("give");
+    alternatives.add(withOpinion);
   }
 
   private static JsonObject opinion(String speakerLine) {
