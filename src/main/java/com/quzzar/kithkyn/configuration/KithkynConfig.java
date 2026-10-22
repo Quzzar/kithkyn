@@ -60,6 +60,12 @@ public class KithkynConfig {
     public static String LlmLocalModel;
     public static boolean LlmVillagerConversations;
 
+    // Optional, independent bounded-choice endpoint.
+    public static boolean ResidentReactions;
+    public static String ReactionEndpoint;
+    public static String ReactionModel;
+    public static String ReactionApiKey;
+
     // --- llm (advanced: sampling) ---
     public static int LlmChatMaxNewTokens;
     public static double LlmChatTemperature;
@@ -143,6 +149,10 @@ public class KithkynConfig {
         LlmCloudModel = COMMON.LlmCloudModel.get();
         LlmLocalModel = COMMON.LlmLocalModel.get();
         LlmVillagerConversations = COMMON.LlmVillagerConversations.get();
+        ResidentReactions = COMMON.ResidentReactions.get();
+        ReactionEndpoint = COMMON.ReactionEndpoint.get();
+        ReactionModel = COMMON.ReactionModel.get();
+        ReactionApiKey = COMMON.ReactionApiKey.get();
     }
 
     public static void bakeAdvancedConfig() {
@@ -244,6 +254,11 @@ public class KithkynConfig {
         public final ModConfigSpec.ConfigValue<String> LlmLocalModel;
         public final ModConfigSpec.BooleanValue LlmVillagerConversations;
 
+        public final ModConfigSpec.BooleanValue ResidentReactions;
+        public final ModConfigSpec.ConfigValue<String> ReactionEndpoint;
+        public final ModConfigSpec.ConfigValue<String> ReactionModel;
+        public final ModConfigSpec.ConfigValue<String> ReactionApiKey;
+
         public CommonConfig(ModConfigSpec.Builder builder) {
 
             builder.comment("Villages and the passage of time: the settings most worlds want to set once.").push("general");
@@ -268,6 +283,13 @@ public class KithkynConfig {
             LlmLocalModel = builder.comment("Which offline model the 'local' provider downloads and runs:", "Supported options:", "- 'llama-3b' (download size: 2.0 GB, additional RAM needed: about 3 GB)", "- 'gemma-2-2b' (download size: 1.7 GB, additional RAM needed: about 2.5 to 3 GB)").translation(Kithkyn.MODID + ".config.LlmLocalModel").define("LLM local model", "llama-3b");
             LlmVillagerConversations = builder.comment("Whether villagers strike up conversations with each other").translation(Kithkyn.MODID + ".config.LlmVillagerConversations").define("Villagers talk to each other", true);
 
+            builder.pop();
+            builder.comment("Experimental bounded reactions, separate from the dialogue LLM. No automatic model download.",
+                "Configure an existing Kev/System One compatible server. Failed decisions start no reaction.").push("reactions");
+            ResidentReactions = builder.define("Experimental resident reactions", false);
+            ReactionEndpoint = builder.comment("Base URL, without /v1/systemone. Endpoint changes require restart.").define("Decision endpoint", "http://127.0.0.1:8008");
+            ReactionModel = builder.define("Decision model", "kev-latest");
+            ReactionApiKey = builder.comment("Optional bearer key. Do not share this file.").define("Decision API key", "");
             builder.pop();
         }
     }

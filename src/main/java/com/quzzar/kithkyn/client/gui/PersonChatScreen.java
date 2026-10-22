@@ -209,7 +209,7 @@ public class PersonChatScreen
     return "screen=PersonChatScreen tab=" + screen.tab + " canTrade=" + screen.canTrade
         + " offers=" + (screen.offers == null ? "null"
             : screen.offers.selling().size() + "sell/" + screen.offers.wanted().size() + "want")
-        + " deals=" + screen.allDeals.size();
+        + " deals=" + screen.allDeals.size() + " awaitingReply=" + screen.awaitingReply + " lines=" + screen.lines.size();
   }
 
   /** First row where the player PAYS emeralds, so a test picks a known shape. */
@@ -365,12 +365,14 @@ public class PersonChatScreen
 
   public static void onReply(int entityId, String text, boolean done) {
     if (Minecraft.getInstance().screen instanceof PersonChatScreen screen && screen.entityId == entityId) {
+      screen.awaitingReply = false;
+      // An empty acknowledgement releases the send control without inventing NPC speech or a status line.
+      if (text.isBlank()) return;
       // Start revealing this line as it is added: its index is the current size.
       screen.revealingLine = screen.lines.size();
       screen.revealStartMs = System.currentTimeMillis();
       screen.lines.add(new ChatLine(screen.headerName, text, false));
       screen.chatScrollUp = 0;
-      screen.awaitingReply = false;
       // The villager took their leave: the farewell shows, then the screen closes
       // itself, which closes the session the ordinary way (removed()). A later
       // reply that is not a farewell cancels it: they had more to say after all.

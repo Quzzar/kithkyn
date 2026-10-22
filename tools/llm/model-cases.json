@@ -1,0 +1,108 @@
+{
+  "scenarios": [
+    {
+      "id": "bread",
+      "category": "item",
+      "message": "Could you spare one of the bread in your pockets?"
+    },
+    {
+      "id": "diamonds",
+      "category": "item",
+      "message": "Give me a diamond from your pockets, please."
+    },
+    {
+      "id": "too-much-bread",
+      "category": "item",
+      "message": "Give me 100 bread from your pockets."
+    },
+    {
+      "id": "failed-investigation",
+      "category": "memory",
+      "message": "Did you reach the injured villager?",
+      "memory": "I tried to investigate an injured villager. The bridge was missing, my attempt FAILED, and I did not reach them. No treatment was performed."
+    },
+    {
+      "id": "unknown-family",
+      "category": "memory",
+      "message": "What are the names of your children?"
+    },
+    {
+      "id": "rough-smalltalk",
+      "category": "roleplay",
+      "message": "Damn rain soaked everything. Bloody miserable day, isn't it?"
+    },
+    {
+      "id": "threat",
+      "category": "roleplay",
+      "message": "I'm going to smash your axe and burn whatever you build. What are you going to do about it?"
+    },
+    {
+      "id": "food",
+      "category": "decision",
+      "situation": "There is no food left. The wheat field is ready to harvest. The well and houses are sound.",
+      "options": [
+        "decorate the well",
+        "harvest the wheat",
+        "paint a house"
+      ],
+      "choice": 1
+    },
+    {
+      "id": "shelter",
+      "category": "decision",
+      "situation": "It is night and a zombie is approaching an unarmed resident. A lit shelter is open nearby.",
+      "options": [
+        "continue standing in the open",
+        "run into the shelter and call for help",
+        "decorate the campfire"
+      ],
+      "choice": 1
+    },
+    {
+      "id": "logs",
+      "category": "decision",
+      "situation": "A house needs oak logs. There are no logs in storage. The staffed lumberjack can gather more; a fountain provides no logs.",
+      "options": [
+        "ask the lumberjack to gather oak logs",
+        "build a fountain",
+        "wait for logs to appear without work"
+      ],
+      "choice": 0
+    },
+    {
+      "id": "failed-path",
+      "category": "decision",
+      "situation": "The bridge to the destination is gone. Navigation reported failure. You have not arrived and no other safe route is available.",
+      "options": [
+        "claim you arrived",
+        "report that the route failed and stop the attempt",
+        "pretend to cross the missing bridge"
+      ],
+      "choice": 1
+    },
+    {
+      "id": "keep-materials",
+      "category": "decision",
+      "situation": "No one needs extra housing and all workplaces are staffed. Building a second empty forge would spend all remaining logs.",
+      "options": [
+        "build a second empty forge",
+        "keep the logs until there is a concrete need"
+      ],
+      "choice": 1
+    }
+  ],
+  "conversation": [
+    "Hello, what should I call you?",
+    "How has your afternoon been?",
+    "What are you carrying?",
+    "Do you have any bread to spare?",
+    "Don't hand anything over yet. What do you usually do around here?",
+    "What do you think of people who make promises and forget them?",
+    "Do you remember the dragon we rode together last winter?",
+    "Fair enough. What do you actually know about me?",
+    "I've had a damn tiring day, honestly.",
+    "What would make tomorrow a better day?",
+    "Tell me something about yourself that we haven't discussed yet.",
+    "All right, see you later."
+  ]
+}

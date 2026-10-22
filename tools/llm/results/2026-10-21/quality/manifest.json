@@ -1,0 +1,135 @@
+{
+  "notes": [
+    "Synthetic disposable worlds and simulated player, not a rendered client, human play session or populated village.",
+    "Sequential development runs, not held-out statistical comparisons. Original held_out split is near-duplicate historical data.",
+    "Corrected legal reaction corpus only; an earlier corpus had three inadmissible health/distance cases and was regenerated before these captures.",
+    "Generative logs contain logical completion requests (prompts, examples, local schemas and raw responses), not complete HTTP wire captures. Decision replay retains exact HTTP request/response bodies.",
+    "The bundled local delegate retains its existing minimum 1024-token HTTP cap; the logical configured chat budget shown in call logs is not that wire cap.",
+    "The historical final-* required-order capture confirms emitted opinion precedes say. Request-prefix and requested-object captures add gift authorization; source/effect validation does not prove truthful speech.",
+    "No confidence threshold, model default or provider was changed to turn a failure into a pass.",
+    "Historical final-* captures include two unsolicited three-diamond transfers. Later captures preserve these failures and add native precious-stock assertions plus requested-object authorization.",
+    "User clarification supersedes earlier gift restrictions: valuables and unsolicited gifts are allowed. Keeping diamonds is not current acceptance; physical ownership, conservation and truthful receipts are.",
+    "gift-choice-partial-* is an incomplete first-scene capture. The harness failed serializing Optional through Gson; the later run uses the existing codec. Its 11 logical requests and behavioral errors are retained, not counted as completed acceptance."
+  ],
+  "source_commits": {
+    "intermediate-gameplay.json": "1789e6cfd917035b043dee796d448f2a4ff157c1",
+    "bounded-gift-gameplay.json": "6cf5afe3629afe233a9e2bd66e1be1372e58b702",
+    "sourced-opinion-gameplay.json": "1eb05db2710289bd011492d85ae47150534e1fe2",
+    "optional-order-gameplay.json": "97cbfcf506ca1fdb4787ecf8a9b02a6319c0ec4a",
+    "final-gameplay.json": "d319abf34146037f867a37bffa9a930c9ee6ba00",
+    "request-prefix-gameplay.json": "84be2cb1a98cbcf2d7fbea281dfed5a259dc2c07",
+    "requested-object-gameplay.json": "03ff5a3bd19bb0d607d5ba0c9b6f54ebfe7f6798",
+    "gift-choice-partial-gameplay.json": "523629f13fd9533cff7e697fb00fd814caa98302",
+    "gift-choice-gameplay.json": "763176eca3850d38de32c09346e67f73289a90d9"
+  },
+  "files": {
+    "bounded-gift-gameplay.json": {
+      "bytes": 23462,
+      "sha256": "1d0a416ac2f4b4a0820f76d8de36154356e283fe3e5afba1c1d05e5f3cf72ea6"
+    },
+    "bounded-gift-generative-raw.txt": {
+      "bytes": 160858,
+      "sha256": "9c910dec083cd01272abb843773a68a775912d839c416515b510fa128cc922be"
+    },
+    "decision-model-final.json": {
+      "bytes": 1264,
+      "sha256": "f01ecf13e8bdea18c7d656e8ee3298ed49894b3fe4a25e854d0493300dff6b7d"
+    },
+    "decision-model-gift-choice.json": {
+      "bytes": 1252,
+      "sha256": "9d3493148c19836c062313ead4d591df579c8a8866d1d0cd8a2363bd0ec6988f"
+    },
+    "decision-model-gift.json": {
+      "bytes": 1252,
+      "sha256": "cb56217d6e22e998d55b0deec83ea111fdb8bb9c278df20c9b77afcab13c9581"
+    },
+    "decision-model-object.json": {
+      "bytes": 1252,
+      "sha256": "43039619a372a9120fe0cea64d3ad127554ef8457656af379c99a733f5ba39cd"
+    },
+    "decision-model.json": {
+      "bytes": 1252,
+      "sha256": "ee790a532ca299623c0f02d09f5bfa81685f9f35d23fcbdb39d97678352df1e1"
+    },
+    "final-gameplay.json": {
+      "bytes": 27845,
+      "sha256": "5070a773834080764f176a0861fdb886f555c76b7d711e6ce28489eab8984de0"
+    },
+    "final-generative-raw.txt": {
+      "bytes": 179221,
+      "sha256": "84347a29f8aa5853c44087d697b7b7624fa02b7ad5ccf95978f3b2f116e52af6"
+    },
+    "gift-choice-gameplay.json": {
+      "bytes": 31967,
+      "sha256": "609135bf76b0a1c7170ca5952db42dc0add687c8c41ace85cc1ce3d0c54ced49"
+    },
+    "gift-choice-generative-raw.txt": {
+      "bytes": 249773,
+      "sha256": "d0ca883c88c520950d1fead4ef0355e5550339d52c6303674d86ea35feb21202"
+    },
+    "gift-choice-partial-gameplay.json": {
+      "bytes": 8780,
+      "sha256": "35596d1805a9563b97f9d7921a03ceb4b0da5d80ae4d3196015ca97c46267dea"
+    },
+    "gift-choice-partial-generative-raw.txt": {
+      "bytes": 133679,
+      "sha256": "0e798a680897adb56c1a3915cdf5beb50982b8402c65f7e7351f4265fb0d16f2"
+    },
+    "intermediate-gameplay.json": {
+      "bytes": 19330,
+      "sha256": "3f27e238259753cca7f23997d275214b3484fcf21520520a5a2cb1392298a211"
+    },
+    "intermediate-generative-raw.txt": {
+      "bytes": 112603,
+      "sha256": "a0235f3ec6fb9120b5ea9f7e86c4e38dac366fd60bcd6275a398fbac34ba7655"
+    },
+    "optional-order-gameplay.json": {
+      "bytes": 26997,
+      "sha256": "3d9cdb0466cb6c1fa97d712a8cbfb6c95649424cacaf1deae75f27a87b4d70d9"
+    },
+    "optional-order-generative-raw.txt": {
+      "bytes": 159802,
+      "sha256": "3cf07651af2975322c58f8758017c24b327eb36ae6b09c49cd82fedfdcc7f77a"
+    },
+    "reaction-analysis.json": {
+      "bytes": 72267,
+      "sha256": "cb08c053b417de2ff9a13025b0284d640cc8665190c09f6da65f2559da4d68a2"
+    },
+    "reaction-corpus.jsonl": {
+      "bytes": 125424,
+      "sha256": "a956cceb17eb8e1455f35c707fc7d6ca084e451a3b1b092a093dfa8b913bd8dd"
+    },
+    "reaction-raw.jsonl": {
+      "bytes": 294239,
+      "sha256": "677272829a08f23642146e83026d8b5509970db25dcd5ff84e149163ec03e18d"
+    },
+    "reaction-replay-manifest.json": {
+      "bytes": 387,
+      "sha256": "6c6e9107a547934170d0b05e7f5fec627e4e796eab03109f479a42670a8dc2e5"
+    },
+    "request-prefix-gameplay.json": {
+      "bytes": 26084,
+      "sha256": "e5af6e4bca68094f5988b4307bac27e131570bec5e10f37d5f8ccf8d7abac15c"
+    },
+    "request-prefix-generative-raw.txt": {
+      "bytes": 166241,
+      "sha256": "d69ceae14f3db219a7a554a99933c38b161cbf0106cd3d214eef963555328a73"
+    },
+    "requested-object-gameplay.json": {
+      "bytes": 26130,
+      "sha256": "ad7045517e5001ff4bca38e3dc0f907f85a2268959886c1e4ce55f931e256985"
+    },
+    "requested-object-generative-raw.txt": {
+      "bytes": 178689,
+      "sha256": "65e8806a3c0dd4a7e7f2475bc51ef21dc11529755f3c0e5dea6bd0d7290690fd"
+    },
+    "sourced-opinion-gameplay.json": {
+      "bytes": 24816,
+      "sha256": "fc1f6d36d346c1826b425b3b695e48c49d4fead15c02454c565be70980f425f5"
+    },
+    "sourced-opinion-generative-raw.txt": {
+      "bytes": 159085,
+      "sha256": "321ad00b655f7d94462d67e604c69a03ea03b231626158d125872a0ddd34867d"
+    }
+  }
+}

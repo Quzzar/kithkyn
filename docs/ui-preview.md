@@ -19,6 +19,7 @@ Reasoning about a layout is not looking at it. If you are changing anything unde
 ```bash
 ./gradlew runClientJoinLocal -Puipreview=trade
 ./gradlew runClientJoinLocal -Puipreview=chat
+./gradlew runClientJoinLocal -Puipreview=empty-reply
 ./gradlew runClientJoinLocal -Puipreview=age-lineup
 ./gradlew runClientJoinLocal -Puipreview=age-lineup-asleep
 ./gradlew runClientJoinLocal -Puipreview=age-lineup-world
@@ -41,7 +42,8 @@ Takes roughly two to four minutes, most of it client startup.
 
 `client/gui/UiPreview.java` waits for the loading overlay to clear, opens the requested screen,
 lets it settle, then calls `Screenshot.grab` and stops the client. Chat and trade use a fixed
-`PersonChatScreen` payload. `age-lineup` creates four unspawned client-side people with identical
+`PersonChatScreen` payload. `empty-reply` starts with an awaited greeting, applies a quiet
+empty acknowledgement and checks that input is released with zero transcript lines. `age-lineup` creates four unspawned client-side people with identical
 appearance inputs, changes only their age stage, and renders them through the real entity renderer.
 `age-lineup-asleep` is the same four given a client-side sleeping position, which shuts their eyes
 through the sleeping face bake and rests their heads to one side through the model

@@ -1,5 +1,38 @@
 # The villager LLM brain
 
+The experimental [resident work](npc-agency.md) grounds conversation in recent evidence and
+game-owned autonomous reaction outcomes. Companion follow/wait/point/release commands were
+removed. The optional reaction endpoint is independent of this generative provider and does
+not change local model defaults.
+
+The historical [paired local replay](research/local-model-replay-2026-10-21.md) compares those defaults
+with pinned Heretic/abliterated variants using shared production request builders. It records
+raw replies, timings and template requirements. Its synthetic cases do not establish full
+gameplay acceptance, and its results do not justify changing the recommended models.
+
+The [real-world model run](research/resident-model-gameplay-2026-10-21.md) exposed a background
+queue bug: summaries queued during chat's six-second grace period had no later completion
+callback to wake them. Chat completion now schedules a drain at that existing deadline,
+retaining the same queue and player priority. A regression test verifies the summary starts
+without another request. Queue ownership, scheduled wakes and completion callbacks are scoped
+to the provider lifecycle: stopping a world closes unfinished background work, and old callbacks
+cannot release a new world's queue or alter its priority counters. The live run then produced
+all three summaries before reload.
+
+The same run exposed illustrative wheat/torch examples being copied as personal events.
+The existing chat examples now demonstrate format without those invented objects or transfers;
+empty outcome context explicitly distinguishes seeing an event from performing an action.
+One targeted rerun stopped the observed example-copying; this does not establish general
+grounding or reliable item giving. The gameplay report distinguishes the original fixture
+configuration error from the corrected native-goal run.
+
+The [quality rework](research/resident-quality-2026-10-21.md) records the follow-up measurements.
+Conversation consolidation now selects exact source lines instead of writing subjective event
+prose. The bundled llama.cpp provider applies local output schemas to these selections and chat
+item arguments; cloud protocols retain their existing behavior and shared strict parsing.
+Whole completion requests travel through foreground and background admission, so queueing and
+resampling cannot silently drop output constraints. See [conversations](conversations.md).
+
 **This is the decided design for LLM-driven villager decisions.** A small language model
 answers multiple-choice questions and holds short conversations; deterministic game logic
 decides *what the options are*, and the model only picks among them and supplies an

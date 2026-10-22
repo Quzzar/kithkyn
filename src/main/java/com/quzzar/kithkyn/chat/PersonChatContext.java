@@ -5,6 +5,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 import java.util.UUID;
 import java.util.function.Function;
 
@@ -13,7 +14,6 @@ import com.quzzar.kithkyn.Utils;
 import com.quzzar.kithkyn.compat.AccessoryCompat;
 import com.quzzar.kithkyn.entities.MarriageStatus;
 import com.quzzar.kithkyn.entities.PersonalLogData;
-import com.quzzar.kithkyn.entities.UndertakingData;
 import com.quzzar.kithkyn.entities.ClericPotions;
 import com.quzzar.kithkyn.entities.RealPerson;
 import com.quzzar.kithkyn.entities.KithkynAttachments;
@@ -50,11 +50,12 @@ import net.minecraft.world.item.ItemStack;
  */
 public final class PersonChatContext {
 
-  public record AssembledChat(String system, String user, List<FewShotExample> examples) {
+  public record AssembledChat(String system, String user, List<FewShotExample> examples, String localJsonSchema) {
   }
 
   /** One exchange, stamped so physical events can be placed around it coherently. */
-  public record Turn(String playerLine, String villagerLine, long dayTime) {
+  public record Turn(String playerLine, String villagerLine, long dayTime, long gameTime) {
+    public Turn(String playerLine, String villagerLine, long dayTime) { this(playerLine, villagerLine, dayTime, -1L); }
   }
 
   private static final String RULES_BODY = "Rules: Answer in one or two short sentences, always in character. "
@@ -62,12 +63,19 @@ public final class PersonChatContext {
       + "Never invent events, people, places, or items that are not in your briefing above: no family, "
       + "children, journeys, or plans that are not written there. If you are asked about something your "
       + "briefing does not cover, say you do not know or that there is nothing to tell; never fill the gap "
-      + "with a guess. Small talk is about what IS there: your "
-      + "work, what the village is building and still short of, the time of day, and the people you know. "
-      + "You may hand an item to the person you are talking to with \"give\" (the item id), and \"give_count\" for how many (a whole number, default 1), but ONLY an item the briefing says you are holding or have in your pockets, you own nothing else, and ONLY when they have just asked you for something. Never offer an item unprompted, and never give away anything precious. Most replies have no \"give\" at all. "
-      + "Add \"opinion\" (a whole number from -10 to 10) ONLY when something in this exact moment changes "
-      + "how you feel about them: a real kindness, a real slight, a promise kept or broken. A greeting, "
-      + "small talk, or agreeing changes nothing. Most replies have no \"opinion\" at all. "
+      + "with a guess. "
+      + "Recorded memories and outcomes support claims about what you did; merely seeing an event does not. "
+      + "The examples below teach the reply format. Their names, objects and events are not your own memories. "
+      + "Small talk is about what IS there: your work, what the village is building and still short of, the time of day, and the people you know. "
+      + "Your carried things are yours to give as gifts, including valuables and equipment. You may offer a gift without being asked when it fits your personality and this conversation; you may also refuse. First choose \"give\":null to keep your things, or \"give\":\"<carried item id>\" and \"give_count\":<whole number> to actually hand one over. Then write speech consistent with that choice. With give:null, no item changes hands; do not claim a handoff. An offer is not a completed gift. Most replies use give:null. "
+      + "Before writing your reply, decide whether this exchange changes how you feel about the current speaker. "
+      + "Your personality, values, relationship, their words and the recorded events may all matter: trust, "
+      + "bargaining, promises, betrayal, affection, irritation or something else. There is no required social category "
+      + "or predetermined reaction to a question or request. When your opinion changes, use \"opinion\": "
+      + "{\"reason\":\"<your reason, grounded in this exchange and the briefing>\", "
+      + "\"quote\":\"<the current speaker's entire line copied exactly>\", \"delta\":<whole number from -10 to 10>}. "
+      + "Omit opinion when your feelings do not change. Your own generated reply is not something the speaker did; "
+      + "do not invent their words or past events to justify a change. "
       + "Add \"fight\": true ONLY when you have decided to come to blows with this person over what they have "
       + "just said or done. A fight is real: you strike them until one of you goes down or they run, with your "
       + "weapon if you carry one and your fists if not, and everyone remembers it. Most replies have no "
@@ -77,80 +85,9 @@ public final class PersonChatContext {
       + "reply. Most replies are not the last one, so most have no \"done\" at all. ";
 
   private static final String RULES = RULES_BODY
-      + "Answer with ONLY a JSON object: {\"say\": \"<reply>\"} "
-      + "or {\"say\": \"<reply>\", \"give\": \"<item id>\", \"give_count\": <how many>, \"opinion\": <number>, "
-      + "\"fight\": true, \"done\": true}.";
-
-  private static final String SHAPE_UNDERTAKING =
-      "Answer with ONLY a JSON object: {\"say\": \"<reply>\"}, adding any of \"give\", \"opinion\", \"fight\", "
-      + "\"done\", or \"undertaking\" only when it applies.";
-
-  /**
-   * The undertaking clause is split by the state the SERVER already knows, and
-   * the model is shown only the ops that are legal in that state - the same
-   * discipline the decision brain uses when it never shows an unaffordable
-   * building (llm-brain.md). The audit (7b) measured why it must be: shown all
-   * three ops at once, the 3B defaults nearly every matter to "open", opening a
-   * second matter when the briefing plainly says one already stands. It cannot
-   * pick open vs advance from context, so it is not asked to.
-   *
-   * The whole clause stays gated on top of that (undertakings map #24): on a
-   * turn where no matter is in play at all, none of these variants is used and
-   * the field is never mentioned - the give tool's lesson that a small model
-   * reaches for an always-present field on turns that do not warrant it.
-   *
-   * NEW_MATTER: no matter stands, but this turn opens one (opensACommitment).
-   * Only "open" is offered.
-   */
-  private static final String RULES_NEW_MATTER = RULES_BODY
-      + "Something worth seeing through over time has come up - a task you mean to tackle, a problem to sort out, a "
-      + "goal you are working toward, or something this person will do for you or put right - and no such matter yet "
-      + "stands. If this turn truly begins one, record it so you remember it later: \"undertaking\": {\"op\": "
-      + "\"open\", \"summary\": \"<what is to be seen through, in a few words>\", \"valence\": \"positive\" for a hope "
-      + "or a kindness, \"negative\" for a problem or a wrong to right}. Most turns begin nothing - leave it out "
-      + "unless this one does. "
-      + SHAPE_UNDERTAKING;
-
-  /**
-   * OPEN_MATTER: a matter already stands with this person (openWith non-empty).
-   * "Open" is withheld entirely - the server coerces a stray open to advance
-   * anyway (7b's UndertakingService change), so the model's only real call is
-   * the one the server cannot make: has this settled the matter (resolve) or
-   * merely moved it (advance). Framed as that binary, with the completion-
-   * language contrast carried by the few-shots below.
-   */
-  private static final String RULES_OPEN_MATTER = RULES_BODY
-      + "A matter already stands between you and this person (named above). You are NOT opening a new one - you are "
-      + "moving it forward or settling it. If this exchange moves it along, \"undertaking\": {\"op\": \"advance\", "
-      + "\"note\": \"<what moved>\"}. If it settles the matter for good, \"undertaking\": {\"op\": \"resolve\", "
-      + "\"note\": \"<how it ended>\"}. When their words mark it FINISHED - the LAST of it, the FINAL piece, the WHOLE "
-      + "amount, all of it now, the debt PAID, the task DONE - that is resolve, never advance. If it does neither, "
-      + "leave \"undertaking\" out. You never name which matter - the game knows. "
-      + SHAPE_UNDERTAKING;
-
-  /**
-   * Whether the player's line plausibly opens a NEW matter - amends, a promise,
-   * a debt. An existing open matter opens the gate on its own (see assemble),
-   * so this only has to catch the moments that START one; the strong signals
-   * are apology, owing, and promising. Delivery words ("here's the last of it")
-   * are deliberately absent: they only mean anything when a matter already
-   * stands, and that case is already gated in structurally.
-   */
-  private static boolean opensACommitment(String playerLine) {
-    String line = playerLine.toLowerCase(java.util.Locale.ROOT);
-    for (String marker : COMMITMENT_MARKERS) {
-      if (line.contains(marker)) {
-        return true;
-      }
-    }
-    return false;
-  }
-
-  private static final String[] COMMITMENT_MARKERS = {
-      "sorry", "apolog", "make it right", "make up for", "my fault", "forgive", "make amends",
-      "owe", "repay", "pay you back", "i'll get you", "i will get you", "i'll bring", "i will bring",
-      "promise", "i swear", "you have my word"
-  };
+      + "Answer with ONLY a JSON object: {\"give\":null, \"say\": \"<reply>\"}. Add optional fields only when they apply. "
+      + "For a chosen gift use \"give\": \"minecraft:<item_id>\" and \"give_count\": <whole number>. Decide the item and count before writing speech about it. "
+      + "The item id is a string, never a number. Most replies contain give:null and say.";
 
   /**
    * Collapses a run of turns where the villager gave the same answer down to
@@ -194,89 +131,45 @@ public final class PersonChatContext {
   }
 
   private static final List<FewShotExample> EXAMPLES = List.of(
-      new FewShotExample("Steve says: \"What did you find today?\"\nYour JSON answer:",
-          "{\"say\": \"Only some wheat by the field this morning, nothing grander.\"}"),
-      new FewShotExample("Steve says: \"Remember the goblin king we robbed last summer?\"\nYour JSON answer:",
-          "{\"say\": \"I recall no such thing, Steve.\"}"),
-      new FewShotExample("Steve says: \"Could you spare a few torches? You've always been kind to me.\"\nYour JSON answer:",
-          "{\"say\": \"Take three, and mind the dark.\", \"give\": \"minecraft:torch\", \"give_count\": 3, \"opinion\": 2}"),
+      new FewShotExample("The speaker says: \"Hello.\"\nYour JSON answer:",
+          "{\"give\":null, \"say\": \"Hello there.\"}"),
+      new FewShotExample("Example briefing: no shared earlier event is recorded. The speaker says: \"Do you remember that thing we did together?\"\nYour JSON answer:",
+          "{\"give\":null, \"say\": \"I don't recall that.\"}"),
+      new FewShotExample("The speaker asks: \"Did you help? What do you remember doing?\"\nYour JSON answer:",
+          "{\"give\":null, \"say\": \"I don't remember helping.\"}"),
+      new FewShotExample("Example only: you carry two minecraft:bread and choose to give one to a friend. The friend says: \"It was good to see you.\"\nYour JSON answer:",
+          "{\"give\":\"minecraft:bread\", \"give_count\":1, \"say\":\"Here, take this for the road.\"}"),
+      new FewShotExample("The speaker says: \"You're a worthless idiot.\"\nYour JSON answer:",
+          "{\"opinion\": {\"reason\":\"I resent being spoken to this way.\",\"quote\":\"You're a worthless idiot.\",\"delta\":-3}, \"give\":null, \"say\": \"There's no call to speak to me like that.\"}"),
       // The one example that ENDS a talk: a goodbye is not enough on its own, the
       // farewell needs "done": true on the same reply or the pair say their
       // goodbyes over and over and never part (Aaron, 2026-09-02). Shown last, so
       // it is the freshest pattern for the turn where the talk has run its course.
-      new FewShotExample("Steve says: \"Anyway, I'll not keep you. Good day to you.\"\nYour JSON answer:",
-          "{\"say\": \"And to you. I'll get back to my work.\", \"done\": true}"));
-
-  /**
-   * Shown when a NEW matter may open. Both are the villager's OWN matters - a
-   * problem to sort (negative) and a goal in progress (positive) - because the
-   * point of undertakings is a villager tracking its own things over time, not
-   * only what a player owes. Kept clear of any one test scenario (roof, ox) so a
-   * match on a different matter is generalisation, not the 3B copying the example
-   * wholesale (the failure the live test caught with the old debt-only examples).
-   */
-  private static final List<FewShotExample> OPEN_EXAMPLES = List.of(
-      new FewShotExample("Steve says: \"That roof of yours is still letting the rain in, isn't it?\"\nYour JSON answer:",
-          "{\"say\": \"It is, and it's past time I patched it properly.\", "
-          + "\"undertaking\": {\"op\": \"open\", \"summary\": \"Patch the leaking roof over my house\", \"valence\": \"negative\"}}"),
-      new FewShotExample("Steve says: \"I hear you've been setting coin aside for something.\"\nYour JSON answer:",
-          "{\"say\": \"Bit by bit, toward a second ox to work the field.\", "
-          + "\"undertaking\": {\"op\": \"open\", \"summary\": \"Save up for a second ox for the plough\", \"valence\": \"positive\"}}"));
-
-  /**
-   * Shown when a matter STANDS, all on the villager's OWN matter so progress
-   * tracking is taught the same way opening is: a neutral turn that records
-   * NOTHING (advance was firing on every turn once the tool was offered), a step
-   * of progress (advance), and a completion (resolve). Completion leans on "at
-   * last", "done" so the 3B separates a final step from a partial one. Kept off
-   * any one test scenario so a match is generalisation, not copying.
-   */
-  private static final List<FewShotExample> PROGRESS_EXAMPLES = List.of(
-      new FewShotExample("Steve says: \"Just passing through, don't mind me.\"\nYour JSON answer:",
-          "{\"say\": \"Mind yourself, the roads are dark this hour.\"}"),
-      new FewShotExample("Steve says: \"How's that roof coming along?\"\nYour JSON answer:",
-          "{\"say\": \"Half the shingles are back on. The rest tomorrow.\", "
-          + "\"undertaking\": {\"op\": \"advance\", \"note\": \"Half the roof re-shingled\"}}"),
-      new FewShotExample("Steve says: \"Looks like you've got that roof finished at last.\"\nYour JSON answer:",
-          "{\"say\": \"Every last shingle, and dry beneath it now.\", "
-          + "\"undertaking\": {\"op\": \"resolve\", \"note\": \"The roof is fully patched\"}}"));
-
-  /** Which undertaking state a turn is in - drives both the rules and examples. */
-  private enum UndertakingMode { NONE, NEW_MATTER, OPEN_MATTER }
-
-  /** The base examples, plus the few-shots for the op(s) legal in this state. */
-  private static List<FewShotExample> examplesFor(UndertakingMode mode) {
-    List<FewShotExample> all = new ArrayList<>(EXAMPLES);
-    switch (mode) {
-      case OPEN_MATTER -> all.addAll(PROGRESS_EXAMPLES);
-      case NEW_MATTER -> all.addAll(OPEN_EXAMPLES);
-      case NONE -> { }
-    }
-    return all;
-  }
+      new FewShotExample("The speaker says: \"Anyway, I'll not keep you. Good day to you.\"\nYour JSON answer:",
+          "{\"give\":null, \"say\": \"And to you. I'll get back to my work.\", \"done\": true}"));
 
   /**
    * Offered when the player is urging a village-wide direction. The villager may
    * forward it to the brain as a request but never decides it: the request only
    * reaches the planner's option list and states its case (VillageRequests,
-   * UrbanPlanner). Gated like the undertaking tool so a small model is not tempted
-   * to file a request on a turn that is not one.
+   * UrbanPlanner). Gated to direct village proposals so ordinary talk does not
+   * invite a planning request.
    */
   private static final String RULES_REQUEST = RULES_BODY
       + "This person is urging a direction for the whole village. You do NOT decide what the village "
       + "does. But if you genuinely agree it should, you may put the idea to the village's judgement: "
       + "\"request\": {\"subject\": \"<what to build, a word or two>\", \"reason\": \"<why, a few words>\"}. "
       + "Add it only when you truly back the idea; if you do not, simply answer in character with no request. "
-      + "Answer with ONLY a JSON object: {\"say\": \"<reply>\"}, adding \"give\", \"opinion\", \"done\", or \"request\" "
+      + "Answer with ONLY a JSON object: {\"give\":null, \"say\": \"<reply>\"}, choosing a gift or adding \"opinion\", \"done\", or \"request\" "
       + "only when it applies.";
 
   /** Teaches the request field, and (second) that most urgings are declined, not forwarded. */
   private static final List<FewShotExample> REQUEST_EXAMPLES = List.of(
       new FewShotExample("Steve says: \"With those wolves about, you lot should build a wall.\"\nYour JSON answer:",
-          "{\"say\": \"Aye, a wall would let us sleep easier. I'll put it to the village.\", "
+          "{\"give\":null, \"say\": \"Aye, a wall would let us sleep easier. I'll put it to the village.\", "
           + "\"request\": {\"subject\": \"walls\", \"reason\": \"wolves at the fields after dark\"}}"),
       new FewShotExample("Steve says: \"You should build a great statue of me in the square.\"\nYour JSON answer:",
-          "{\"say\": \"Ha. I think the village has better uses for its stone, friend.\"}"));
+          "{\"give\":null, \"say\": \"Ha. I think the village has better uses for its stone, friend.\"}"));
 
   /** The base examples plus the request few-shots, for a village-direction turn. */
   private static List<FewShotExample> withRequestExamples() {
@@ -400,9 +293,10 @@ public final class PersonChatContext {
     // the day they are; this gives the larger calendar for a chat to lean on.
     int worldYear = (int) YearManager.getYears(person.level()) + 1;
     system.append("The year is ").append(worldYear).append(" MCE.\n");
+    system.append(person.awareness().briefing());
 
     PersonalLogData log = person.getData(KithkynAttachments.PERSONAL_LOG.get());
-    String memories = memorySummary(log, 3);
+    String memories = memorySummary(log, playerUUID, 3);
     if (!memories.isEmpty()) {
       system.append("Things you remember happening: ").append(memories).append(".\n");
     }
@@ -427,34 +321,17 @@ public final class PersonChatContext {
     // compact summary a new-day chat picks up from, in place of the full
     // transcript (PersonChatDispatcher.consolidate). Empty until the first
     // consolidation, or when the model produced none.
-    String pastTalks = ConversationMemoryPrompt.withoutVolatileWorldState(
-        person.getData(KithkynAttachments.CHAT_SUMMARY.get()).with(playerUUID));
+    String pastTalks = person.getData(KithkynAttachments.CHAT_SUMMARY.get()).with(playerUUID);
     if (!pastTalks.isBlank()) {
-      system.append("Your subjective memory of what ").append(playerName)
-          .append(" said in earlier talks; current village facts above override it: ")
+      system.append("Conversation quotes from ").append(playerName)
+          .append(" in earlier talks. Questions and claims are not proof of events; current facts and recorded outcomes override them:\n")
           .append(pastTalks).append('\n');
     }
 
-    // At most one structured tool is offered per turn: a small model reaches for
-    // an always-present optional field on turns that do not warrant it (the
-    // undertaking audit, #24). A village-direction the player is urging takes the
-    // turn - the villager may forward it to the brain as a request - and the
-    // undertaking tool stands down until a plainer turn.
-    //
-    // Otherwise the undertaking tool is offered only when a matter is plausibly in
-    // play, and then only the ops legal in the current state. A matter already
-    // standing takes precedence: the model is shown advance/resolve, never open,
-    // because the server knows one stands and coerces a stray open anyway. Only
-    // when nothing stands and the line opens a new commitment is "open" offered.
-    // Open matters are stated so an advance or resolve knows its target.
+    system.append(com.quzzar.kithkyn.entities.UndertakingService.briefing(
+        person.getData(KithkynAttachments.UNDERTAKINGS.get()), person.getUUID(), Optional.of(playerUUID), 8));
     boolean discussesPlanning = village != null && discussesVillagePlanning(playerLine);
     boolean proposesChange = village != null && proposesVillageChange(playerLine);
-    List<UndertakingData.Undertaking> openMatters =
-        person.getData(KithkynAttachments.UNDERTAKINGS.get()).openWith(playerUUID);
-    UndertakingMode mode = proposesChange ? UndertakingMode.NONE
-        : !openMatters.isEmpty() ? UndertakingMode.OPEN_MATTER
-        : opensACommitment(playerLine) ? UndertakingMode.NEW_MATTER
-        : UndertakingMode.NONE;
     if (discussesPlanning) {
       // Ground a build the player is urging: hand the villager the menu of what the
       // village can actually raise and what each brings, so "build a lumberjack" has a
@@ -463,26 +340,19 @@ public final class PersonChatContext {
       system.append("Village planning options right now: ")
           .append(UrbanPlanner.buildableCatalogue(village)).append('\n');
     }
-    if (proposesChange) {
-      system.append(RULES_REQUEST);
-    } else {
-      if (mode == UndertakingMode.OPEN_MATTER) {
-        system.append("Still between you and ").append(playerName).append(": ")
-            .append(openMatters.stream().map(UndertakingData.Undertaking::summary)
-                .collect(java.util.stream.Collectors.joining("; ")))
-            .append(". If one moves forward or is settled now, mark it.\n");
-      }
-      system.append(switch (mode) {
-        case OPEN_MATTER -> RULES_OPEN_MATTER;
-        case NEW_MATTER -> RULES_NEW_MATTER;
-        case NONE -> RULES;
-      });
-    }
+    var gifts = carriedGifts(person);
+    system.append(proposesChange ? RULES_REQUEST : RULES);
+    system.append(gifts.isEmpty()
+        ? " You currently carry nothing available to hand over. "
+        : " Carried gifts, item ID to maximum transferable count: " + gifts + ". Choose whether to give; include give and give_count for an actual handoff. ");
 
     StringBuilder user = new StringBuilder();
     List<Turn> transcript = withoutRepeats(history);
-    String timeline = recentTimeline(transcript, log.pickupsNewestFirst(), playerName,
-        uuid -> resolveName(person, uuid), 5);
+    List<PersonalLogData.Entry> events = new ArrayList<>(log.pickupsNewestFirst());
+    events.addAll(log.memoriesFor(playerUUID));
+    events.sort(java.util.Comparator.comparingLong((PersonalLogData.Entry entry) -> entry.gameTime() >= 0 ? entry.gameTime() : Long.MIN_VALUE)
+        .reversed().thenComparing(java.util.Comparator.comparingLong(PersonalLogData.Entry::dayTime).reversed()));
+    String timeline = recentTimeline(transcript, events, playerName, uuid -> resolveName(person, uuid), 8);
     if (!timeline.isEmpty()) {
       user.append("Recent event timeline, oldest to newest. Earlier dialogue is not authoritative world fact; "
           + "the current briefing above overrides it:\n").append(timeline);
@@ -490,7 +360,16 @@ public final class PersonChatContext {
     user.append(playerName).append(" says: \"").append(playerLine).append("\"\nYour JSON answer:");
 
     return new AssembledChat(system.toString(), user.toString(),
-        proposesChange ? withRequestExamples() : examplesFor(mode));
+        proposesChange ? withRequestExamples() : EXAMPLES, PersonChatReplySchema.build(gifts, proposesChange, playerLine));
+  }
+
+  private static java.util.Map<String, Integer> carriedGifts(RealPerson person) {
+    List<ItemStack> slots = new ArrayList<>();
+    for (var slot : net.minecraft.world.entity.EquipmentSlot.values()) slots.add(person.getItemBySlot(slot));
+    for (int i = 0; i < person.personMainInv.getContainerSize(); i++) {
+      slots.add(person.personMainInv.getItem(i));
+    }
+    return DirectGiftDelivery.offers(slots, stack -> PersonChatDispatcher.giveable(person, stack));
   }
 
   /** What's in their hands — held items live outside the pockets inventory. */
@@ -742,17 +621,15 @@ public final class PersonChatContext {
     return line.toString();
   }
 
-  private record TimelineLine(long dayTime, int kindOrder, int sequence, String text) {
+  private record TimelineLine(long dayTime, long gameTime, int kindOrder, int sequence, String text) {
   }
 
   /**
-   * Interleaves observed pickups with the persisted conversation instead of
-   * presenting them as a detached fact in the system briefing. A villager can
-   * now connect "I handed that over" with "I immediately picked it up" in the
-   * order those events happened.
+   * Interleave game-recorded memories, outcomes and pickups with spoken claims.
+   * A spoken offer is not evidence of delivery; the native receipt establishes what moved.
    */
-  static String recentTimeline(List<Turn> history, List<PersonalLogData.Entry> pickups,
-      String speakerName, Function<UUID, String> resolveName, int pickupLimit) {
+  static String recentTimeline(List<Turn> history, List<PersonalLogData.Entry> events,
+      String speakerName, Function<UUID, String> resolveName, int eventLimit) {
     List<TimelineLine> lines = new ArrayList<>();
     int sequence = 0;
     for (Turn turn : history) {
@@ -768,29 +645,37 @@ public final class PersonChatContext {
             + "briefing.");
       }
       if (!exchange.isEmpty()) {
-        lines.add(new TimelineLine(turn.dayTime(), 0, sequence++, exchange.toString()));
+        lines.add(new TimelineLine(turn.dayTime(), turn.gameTime(), 0, sequence++, exchange.toString()));
       }
     }
 
     int kept = 0;
-    for (PersonalLogData.Entry pickup : pickups) {
-      if (!PersonalLogData.KIND_PICKUP.equals(pickup.kind()) || kept++ >= pickupLimit) {
+    for (PersonalLogData.Entry pickup : events) {
+      boolean collected = PersonalLogData.KIND_PICKUP.equals(pickup.kind());
+      boolean recorded = Set.of(PersonalLogData.KIND_MEMORY, PersonalLogData.KIND_ISSUE,
+          PersonalLogData.KIND_UNDERTAKING).contains(pickup.kind());
+      if ((!collected && !recorded) || kept++ >= eventLimit) continue;
+      if (recorded) {
+        lines.add(new TimelineLine(pickup.dayTime(), pickup.gameTime(), 1, -sequence++, "Game-recorded event: " + pickup.text()));
         continue;
       }
       String item = pickup.item().replace("minecraft:", "").replace('_', ' ');
       String source = pickup.who()
           .map(uuid -> " that " + resolveName.apply(uuid) + " threw to you")
           .orElse(" from the ground");
-      lines.add(new TimelineLine(pickup.dayTime(), 1, sequence++,
+      lines.add(new TimelineLine(pickup.dayTime(), pickup.gameTime(), 1, -sequence++,
           "You picked up " + pickup.count() + " " + item + source + "."));
     }
 
-    lines.sort(java.util.Comparator.comparingLong(TimelineLine::dayTime)
+    lines.sort(java.util.Comparator.comparingInt((TimelineLine line) -> line.gameTime() < 0 ? 0 : 1)
+        .thenComparingLong(line -> line.gameTime() >= 0 ? line.gameTime() : line.dayTime())
         .thenComparingInt(TimelineLine::kindOrder)
         .thenComparingInt(TimelineLine::sequence));
     StringBuilder timeline = new StringBuilder();
     for (TimelineLine line : lines) {
-      timeline.append('[').append(PersonalLogData.formatDay(line.dayTime())).append("] ")
+      timeline.append('[').append(PersonalLogData.formatDay(line.dayTime()))
+          .append(line.gameTime() >= 0 ? "; game tick " + line.gameTime()
+              : "; legacy time, ordering relative to timed events is unknown").append("] ")
           .append(line.text()).append('\n');
     }
     return timeline.toString();
@@ -821,9 +706,9 @@ public final class PersonChatContext {
     return String.join(" ", parts);
   }
 
-  private static String memorySummary(PersonalLogData log, int limit) {
+  private static String memorySummary(PersonalLogData log, UUID counterpart, int limit) {
     List<String> parts = new ArrayList<>();
-    for (PersonalLogData.Entry entry : log.memoriesNewestFirst()) {
+    for (PersonalLogData.Entry entry : log.memoriesFor(counterpart)) {
       if (parts.size() >= limit) {
         break;
       }

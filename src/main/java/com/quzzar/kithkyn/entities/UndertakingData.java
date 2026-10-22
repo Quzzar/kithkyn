@@ -10,29 +10,14 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 
 import net.minecraft.core.UUIDUtil;
 
-/**
- * The matters a villager is seeing through (docs/undertakings.md): objectives
- * with a lifecycle, good or bad, held on the person as
- * {@code kithkyn:undertakings}. This is the persistence and the model; the
- * chat tool that creates them and the item-detection that advances them are
- * wired separately, so the record can be built and tested before the LLM seam
- * is agreed.
- *
- * The system is generic on purpose, so it is driven ENTIRELY through the model:
- * the model opens a matter, and the model advances and resolves it, from what it
- * sees in conversation. There is no game-side counter watching for wheat, because
- * an undertaking can be about anything the game cannot observe (a truce, a wait,
- * a change of heart). Progress is qualitative, not a tally: milestones the model
- * marks reached, or a plain note it sets. What keeps a small model honest is not
- * the game keeping the count, but the count being PERSISTED between turns: the
- * model reads the stored progress from its briefing, updates it from what just
- * happened, and writes it back, rather than holding a running total in its head.
- */
+/** One saved store for a resident's matters, including server-owned action commitments and their actual lifecycle. */
 public record UndertakingData(List<Undertaking> undertakings) {
 
     /** Open matters kept per villager; resolved ones trim oldest-first past this. */
     public static final int MAX_OPEN = 16;
     public static final int MAX_RESOLVED = 16;
+
+    public UndertakingData { undertakings = List.copyOf(undertakings); }
 
     public static final UndertakingData EMPTY = new UndertakingData(List.of());
 
@@ -44,6 +29,63 @@ public record UndertakingData(List<Undertaking> undertakings) {
 
     /** Who raised it: the villager themselves, the world, or the player's doing. */
     public enum Origin { SELF, EVENT, PLAYER }
+
+    /** PLAYER_REQUEST is read-only provenance for history from the removed companion experiment. */
+    public enum Lane { PLAYER_REQUEST, REACTION }
+    public enum Phase {
+        REQUESTED, ACCEPTED, UNDERWAY, COMPLETED, FAILED, INTERRUPTED, CANCELLED, EXPIRED;
+        public boolean executing() { return this == ACCEPTED || this == UNDERWAY; }
+    }
+
+    public record Position(double x, double y, double z) {
+        public static final Codec<Position> CODEC = RecordCodecBuilder.create(inst -> inst.group(
+            Codec.DOUBLE.fieldOf("x").forGetter(Position::x), Codec.DOUBLE.fieldOf("y").forGetter(Position::y),
+            Codec.DOUBLE.fieldOf("z").forGetter(Position::z)).apply(inst, Position::new));
+        public boolean finite() { return Double.isFinite(x) && Double.isFinite(y) && Double.isFinite(z); }
+    }
+
+    public record Duty(String occupation, String age, String village, Optional<UUID> workplace, int station,
+            boolean essential, boolean fixedPost) {
+        public static final Codec<Duty> CODEC = RecordCodecBuilder.create(inst -> inst.group(
+            Codec.STRING.fieldOf("occupation").forGetter(Duty::occupation), Codec.STRING.fieldOf("age").forGetter(Duty::age),
+            Codec.STRING.fieldOf("village").forGetter(Duty::village), UUIDUtil.STRING_CODEC.optionalFieldOf("workplace").forGetter(Duty::workplace),
+            Codec.INT.fieldOf("station").forGetter(Duty::station), Codec.BOOL.fieldOf("essential").forGetter(Duty::essential),
+            Codec.BOOL.fieldOf("fixed_post").forGetter(Duty::fixedPost)).apply(inst, Duty::new));
+    }
+
+    /** Game-owned arguments. Dialogue cannot create, edit, or resolve an execution record. */
+    public record Execution(UUID resident, Lane lane, String action, Phase phase,
+            String dimension, Optional<Position> destination, Optional<UUID> reference, long revision,
+            long startedAt, long expiresAt, Duty duty) {
+        public static final Codec<Execution> CODEC = RecordCodecBuilder.<Execution>create(inst -> inst.group(
+            UUIDUtil.STRING_CODEC.fieldOf("resident").forGetter(Execution::resident),
+            com.quzzar.kithkyn.utils.KithkynCodecs.forEnum(Lane.class).fieldOf("lane").forGetter(Execution::lane),
+            Codec.STRING.fieldOf("action").forGetter(Execution::action),
+            com.quzzar.kithkyn.utils.KithkynCodecs.forEnum(Phase.class).fieldOf("phase").forGetter(Execution::phase),
+            Codec.STRING.fieldOf("dimension").forGetter(Execution::dimension),
+            Position.CODEC.optionalFieldOf("destination").forGetter(Execution::destination),
+            UUIDUtil.STRING_CODEC.optionalFieldOf("reference").forGetter(Execution::reference),
+            Codec.LONG.fieldOf("revision").forGetter(Execution::revision),
+            Codec.LONG.fieldOf("started_at").forGetter(Execution::startedAt),
+            Codec.LONG.fieldOf("expires_at").forGetter(Execution::expiresAt),
+            Duty.CODEC.fieldOf("duty").forGetter(Execution::duty)
+        ).apply(inst, Execution::new)).validate(execution -> execution.valid()
+            ? com.mojang.serialization.DataResult.success(execution)
+            : com.mojang.serialization.DataResult.error(() -> "Invalid saved execution arguments"));
+        public boolean valid() {
+            var verbs = lane == Lane.PLAYER_REQUEST ? java.util.Set.of("follow", "wait", "go_to_point", "resume")
+                : java.util.Set.of("continue", "warn", "retreat", "seek_help", "investigate", "defend");
+            return verbs.contains(action) && !dimension.isBlank() && dimension.length() <= 128
+                && revision > 0 && startedAt >= 0 && expiresAt > startedAt && expiresAt - startedAt <= (lane == Lane.REACTION ? 200 : 6000)
+                && (!instant() || !phase.executing())
+                && destination.map(Position::finite).orElse(true)
+                && (!(phase.executing() || phase == Phase.COMPLETED)
+                    || !java.util.Set.of("wait", "go_to_point", "retreat", "seek_help", "investigate").contains(action) || destination.isPresent());
+        }
+        public boolean instant() { return action.equals("resume") || action.equals("continue"); }
+        public Execution phase(Phase next) { return new Execution(resident, lane, action, next,
+            dimension, destination, reference, revision, startedAt, expiresAt, duty); }
+    }
 
     /** One ordered progress marker on a milestoned undertaking. */
     public record Milestone(String text, boolean reached) {
@@ -60,9 +102,8 @@ public record UndertakingData(List<Undertaking> undertakings) {
      * @param origin    who raised it
      * @param summary   the villager's own one sentence
      * @param withWhom  the player or villager it concerns, if any
-     * @param steps     ordered milestones the model marks reached; empty for a stepless matter
-     * @param progressNote free text the model keeps for a stepless matter ("four of ten brought"),
-     *                     since the game cannot count an arbitrary undertaking; empty when milestoned
+     * @param steps     recorded lifecycle markers, or milestones retained from earlier narrative matters
+     * @param progressNote the latest factual execution status, or an earlier narrative note
      * @param resolution one sentence, filled only when it ends
      * @param openedDay  level day-time when it began
      * @param updatedDay level day-time it last moved
@@ -78,55 +119,50 @@ public record UndertakingData(List<Undertaking> undertakings) {
             Optional<String> progressNote,
             Optional<String> resolution,
             long openedDay,
-            long updatedDay) {
+            long updatedDay,
+            Optional<Execution> execution) {
 
-        public static final Codec<Undertaking> CODEC = RecordCodecBuilder.create(inst -> inst.group(
+        public static final Codec<Undertaking> CODEC = RecordCodecBuilder.<Undertaking>create(inst -> inst.group(
                 UUIDUtil.STRING_CODEC.fieldOf("id").forGetter(Undertaking::id),
-                Codec.STRING.xmap(Valence::valueOf, Valence::name).fieldOf("valence").forGetter(Undertaking::valence),
-                Codec.STRING.xmap(State::valueOf, State::name).fieldOf("state").forGetter(Undertaking::state),
-                Codec.STRING.xmap(Origin::valueOf, Origin::name).fieldOf("origin").forGetter(Undertaking::origin),
+                com.quzzar.kithkyn.utils.KithkynCodecs.forEnum(Valence.class).fieldOf("valence").forGetter(Undertaking::valence),
+                com.quzzar.kithkyn.utils.KithkynCodecs.forEnum(State.class).fieldOf("state").forGetter(Undertaking::state),
+                com.quzzar.kithkyn.utils.KithkynCodecs.forEnum(Origin.class).fieldOf("origin").forGetter(Undertaking::origin),
                 Codec.STRING.fieldOf("summary").forGetter(Undertaking::summary),
                 UUIDUtil.STRING_CODEC.optionalFieldOf("with").forGetter(Undertaking::withWhom),
                 Milestone.CODEC.listOf().optionalFieldOf("steps", List.of()).forGetter(Undertaking::steps),
                 Codec.STRING.optionalFieldOf("progress_note").forGetter(Undertaking::progressNote),
                 Codec.STRING.optionalFieldOf("resolution").forGetter(Undertaking::resolution),
                 Codec.LONG.fieldOf("opened_day").forGetter(Undertaking::openedDay),
-                Codec.LONG.fieldOf("updated_day").forGetter(Undertaking::updatedDay)
-        ).apply(inst, Undertaking::new));
+                Codec.LONG.fieldOf("updated_day").forGetter(Undertaking::updatedDay),
+                Execution.CODEC.optionalFieldOf("execution").forGetter(Undertaking::execution)
+        ).apply(inst, Undertaking::new)).validate(matter -> matter.valid()
+            ? com.mojang.serialization.DataResult.success(matter)
+            : com.mojang.serialization.DataResult.error(() -> "Inconsistent undertaking lifecycle or requester"));
+
+        public Undertaking { steps = List.copyOf(steps); }
 
         public boolean isOpen() {
             return state == State.OPEN || state == State.ACTIVE;
         }
 
-        /**
-         * How far along, for a milestoned matter only. A stepless matter has no
-         * numeric fraction, because there is nothing to divide - its progress is
-         * the {@link #progressNote}, in words, which is the price of the system
-         * being generic over things the game cannot count.
-         */
-        public Optional<Float> milestoneFraction() {
-            if (steps.isEmpty()) {
-                return Optional.empty();
-            }
-            long reached = steps.stream().filter(Milestone::reached).count();
-            return Optional.of((float) reached / steps.size());
+        public boolean valid() {
+            return execution.map(value -> value.valid() && (value.lane() != Lane.PLAYER_REQUEST || withWhom.isPresent())
+                && switch (value.phase()) {
+                    case REQUESTED -> state == State.OPEN;
+                    case ACCEPTED, UNDERWAY -> state == State.ACTIVE;
+                    case COMPLETED -> state == State.RESOLVED;
+                    case FAILED -> state == State.OPEN || state == State.ABANDONED;
+                    case INTERRUPTED -> state == State.OPEN;
+                    case CANCELLED, EXPIRED -> state == State.ABANDONED;
+                }).orElse(true);
         }
     }
 
-    public static final Codec<UndertakingData> CODEC = RecordCodecBuilder.create(inst -> inst.group(
+    public static final Codec<UndertakingData> CODEC = RecordCodecBuilder.<UndertakingData>create(inst -> inst.group(
             Undertaking.CODEC.listOf().fieldOf("undertakings").forGetter(UndertakingData::undertakings)
-    ).apply(inst, UndertakingData::new));
-
-    /** This player's open matters with the villager, for the chat briefing. */
-    public List<Undertaking> openWith(UUID player) {
-        List<Undertaking> out = new ArrayList<>();
-        for (Undertaking u : undertakings) {
-            if (u.isOpen() && u.withWhom().map(player::equals).orElse(false)) {
-                out.add(u);
-            }
-        }
-        return out;
-    }
+    ).apply(inst, UndertakingData::new)).validate(data -> data.undertakings().size() <= MAX_OPEN + MAX_RESOLVED
+        && data.allOpen().size() <= MAX_OPEN && data.undertakings().stream().map(Undertaking::id).distinct().count() == data.undertakings().size()
+        ? com.mojang.serialization.DataResult.success(data) : com.mojang.serialization.DataResult.error(() -> "Invalid undertaking bounds or duplicate IDs"));
 
     /** Everything the villager is currently seeing through, for "what's on your plate?". */
     public List<Undertaking> allOpen() {
@@ -137,19 +173,22 @@ public record UndertakingData(List<Undertaking> undertakings) {
         return undertakings.stream().filter(u -> u.id().equals(id)).findFirst();
     }
 
-    /** Adds a matter and trims to the caps, open and resolved counted separately. */
+    /** Replaces a matter without evicting open promises; closed history is capped. */
     public UndertakingData with(Undertaking added) {
         List<Undertaking> updated = new ArrayList<>(undertakings);
         updated.removeIf(u -> u.id().equals(added.id())); // replace in place on update
         updated.add(added);
-        trim(updated, true, MAX_OPEN);
-        trim(updated, false, MAX_RESOLVED);
+        if (updated.stream().filter(Undertaking::isOpen).count() > MAX_OPEN) {
+            throw new IllegalStateException("Open undertaking capacity must be checked before writing");
+        }
+        trimHistory(updated);
         return new UndertakingData(List.copyOf(updated));
     }
 
-    /** Keeps at most {@code max} of the open (or terminal) matters, oldest dropped first. */
-    private static void trim(List<Undertaking> list, boolean open, int max) {
-        List<Undertaking> kind = list.stream().filter(u -> u.isOpen() == open).toList();
+    /** Keeps bounded closed history, oldest dropped first. */
+    private static void trimHistory(List<Undertaking> list) {
+        int max = MAX_RESOLVED;
+        List<Undertaking> kind = list.stream().filter(u -> !u.isOpen()).toList();
         if (kind.size() <= max) {
             return;
         }

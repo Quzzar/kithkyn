@@ -138,14 +138,20 @@ public class CoreEvents {
       return;
     }
 
+    java.util.Optional<net.minecraft.world.entity.Entity> recognizedAttacker = event.getNewDamage() > 0
+        ? com.quzzar.kithkyn.awareness.ResidentAwareness.injured(event.getEntity(), event.getSource().getEntity())
+        : java.util.Optional.empty();
+
     if (event.getEntity() instanceof RealPerson person) {
 
       // Being attacked is worth remembering: it lands in the personal log with
       // the calendar time and surfaces in conversation.
       if (event.getSource().getEntity() instanceof net.minecraft.world.entity.LivingEntity attacker
-          && attacker != person) {
-        person.logMemory("I was attacked by " + attacker.getName().getString(),
-            java.util.Optional.of(attacker.getUUID()));
+          && attacker != person && event.getNewDamage() > 0) {
+        boolean recognized = recognizedAttacker.isPresent();
+        person.logMemory(recognized ? "I was attacked by " + attacker.getName().getString()
+                : "I was injured by an attacker I could not identify",
+            recognized ? java.util.Optional.of(attacker.getUUID()) : java.util.Optional.empty());
 
         // Pain needs no interpretation (docs/relationships.md): a blow from a
         // player moves the victim's own opinion of them at once, scaled by how
@@ -315,9 +321,11 @@ public class CoreEvents {
       // witnesses on its own terms, so it is left out of this path.
       if (person.level() instanceof ServerLevel serverLevel
           && !(event.getSource().getEntity() instanceof Player)) {
-        String memory = deathMemory(person, event.getSource().getEntity());
         for (RealPerson witness : Witnesses.around(serverLevel, person.getEyePosition(), person)) {
-          witness.logMemory(memory, java.util.Optional.empty());
+          if (!Witnesses.canIdentify(serverLevel, witness, person)) continue;
+          Entity killer = event.getSource().getEntity();
+          Entity identified = killer != null && Witnesses.canIdentify(serverLevel, witness, killer) ? killer : null;
+          witness.logMemory(deathMemory(person, identified), java.util.Optional.empty());
         }
       }
 

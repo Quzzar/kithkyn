@@ -43,6 +43,18 @@ class OpenAiCompatibleProviderTest {
     }
   }
 
+  @Test void bundledRuntimeReceivesSchemaButCloudProtocolIsUnchanged() {
+    var local = provider(OpenAiCompatibleProvider.local("http://127.0.0.1:8127", "fixture"));
+    var cloud = provider(OpenAiCompatibleProvider.OPENAI);
+    var request = new CompletionRequest("system", "user", List.of(), 64, .4, 0,
+        "{\"type\":\"object\",\"properties\":{\"say\":{\"type\":\"string\"}}}");
+    try {
+      assertEquals("object", local.requestBody(request).getAsJsonObject("response_format")
+          .getAsJsonObject("schema").get("type").getAsString());
+      assertFalse(cloud.requestBody(request).has("response_format"));
+    } finally { local.shutdown(); cloud.shutdown(); }
+  }
+
   private static OpenAiCompatibleProvider provider(OpenAiCompatibleProvider.Spec spec) {
     return new OpenAiCompatibleProvider(spec, () -> "test-key", () -> "");
   }

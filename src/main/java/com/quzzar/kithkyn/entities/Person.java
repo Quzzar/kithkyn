@@ -875,15 +875,22 @@ public class Person extends PathfinderMob implements CrossbowAttackMob, NeutralM
    * cannot spam the log. Current work problems use {@link #logBlocker} instead.
    */
   public void logMemory(String text, Optional<UUID> who) {
+    logMemory(PersonalLogData.memory(text, level().getDayTime(), level().getGameTime(), who));
+  }
+
+  /** Lifecycle facts share the existing log, with requester scoping retained for conversation prompts. */
+  public void logUndertaking(String text, Optional<UUID> requester) {
+    logMemory(PersonalLogData.undertaking(text, level().getDayTime(), level().getGameTime(), requester));
+  }
+
+  private void logMemory(PersonalLogData.Entry entry) {
     PersonalLogData log = getData(KithkynAttachments.PERSONAL_LOG.get());
-    long dayTime = this.level().getDayTime();
-    long gameTime = this.level().getGameTime();
-    if (log.hasRecentMemory(text, dayTime, gameTime)) {
+    if (log.hasRecentMemory(entry.text(), entry.dayTime(), entry.gameTime())) {
       return;
     }
     setData(KithkynAttachments.PERSONAL_LOG.get(),
-        log.withEntry(PersonalLogData.memory(text, dayTime, gameTime, who)));
-    Kithkyn.LOGGER.debug("[{}] remembered: {}", this.getName().getString(), text);
+        log.withEntry(entry));
+    Kithkyn.LOGGER.debug("[{}] remembered: {}", this.getName().getString(), entry.text());
   }
 
   /** Records or refreshes a current operational impediment. */

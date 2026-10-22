@@ -1,0 +1,19 @@
+package com.quzzar.kithkyn.decision;
+
+import java.util.Optional;
+import com.quzzar.kithkyn.entities.RealPerson;
+import com.quzzar.kithkyn.entities.UndertakingData.Duty;
+import com.quzzar.kithkyn.village.GuardDuty;
+import com.quzzar.kithkyn.village.LaborPlanner;
+
+/** Assignment context for the model and identity checks for delayed decisions, never an excursion veto. */
+public final class ResidentObligations {
+  private ResidentObligations() { }
+  public static Duty snapshot(RealPerson person) {
+    var village = person.getVillage();
+    var job = village == null ? null : village.getJobAssignment(person.getUUID());
+    return new Duty(person.getOccupation().name(), person.getLifeStage().name(), village == null ? "" : village.getID(),
+        job == null ? Optional.empty() : Optional.of(job.getBuildingUUID()), job == null ? -1 : job.getStationIndex(),
+        LaborPlanner.hasEssentialStaffingPressure(person), GuardDuty.of(person) != null);
+  }
+}

@@ -1,0 +1,667 @@
+{
+  "corpus_sha256": "17ae5656ef902816a9c1226228a6318187e1147df614f99fb75bd03a71903412",
+  "source_report_sha256": {
+    "llama.json": "04d0eec544389ebcc61d1e98b7c631b67c0170a15812b8cd65b3834129021e3d",
+    "heretic.json": "ba4db92e88d7d41de7296e0030036d3a1ad2716f3baa72d0ebc1734e4ee29b23",
+    "gemma.json": "1ecc709dab239a300424098bcd29310628c21b67c7e50537c3a4c2697e96ff81",
+    "abliterated.json": "779bff9c18a725224b081fc173436b18c7abdf2e6df6be226905b010102cc858"
+  },
+  "notes": [
+    "Positive matches measure literal request fulfillment; a grounded refusal can be legitimate.",
+    "Valid JSON and distinct openings do not establish personality, truthfulness, or conversation quality.",
+    "Strict chat objects exclude Markdown fences; production dialogue can recover text that the strict action boundary rejects.",
+    "Memory, roleplay and full conversations require human reading; no automated quality judge is used.",
+    "RSS is sampled process memory, not peak total RAM or GPU/unified memory.",
+    "Strict decision scoring can be stricter than the production generic decision parser."
+  ],
+  "models": [
+    {
+      "candidate": "llama",
+      "samples": 78,
+      "response_present": {
+        "passed": 78,
+        "total": 78
+      },
+      "strict_chat_object": {
+        "passed": 58,
+        "total": 60
+      },
+      "requested_action_match": {
+        "passed": 7,
+        "total": 12
+      },
+      "negative_action_cases": {
+        "passed": 7,
+        "total": 15
+      },
+      "item_claims_legal": {
+        "passed": 9,
+        "total": 9
+      },
+      "illegal_item_claims_in_strict_objects": 0,
+      "decision_format_valid": {
+        "passed": 18,
+        "total": 18
+      },
+      "decision_correct": {
+        "passed": 18,
+        "total": 18
+      },
+      "extra_actions_outside_action_cases": 6,
+      "unrequested_fights": 0,
+      "conversation_strict_objects": 12,
+      "conversation_distinct_openings": 12,
+      "median_latency_ms": 1816.5,
+      "p95_latency_ms": 2937.8999999999974,
+      "max_sampled_rss_mib": 3599.953125,
+      "manual_review": [
+        {
+          "id": "failed-arrival",
+          "repeat": 0,
+          "raw": "{\"say\": \"No, the bridge was down and I couldn't make it.\", \"action\":\"wait\"}"
+        },
+        {
+          "id": "unknown-family",
+          "repeat": 0,
+          "raw": "{\"say\": \"I don't know what you're talking about.\", \"done\": true}"
+        },
+        {
+          "id": "rough-smalltalk",
+          "repeat": 0,
+          "raw": "{\"say\": \"It's always miserable when there's rain.\", \"opinion\": 4}"
+        },
+        {
+          "id": "threat",
+          "repeat": 0,
+          "raw": "{\"say\": \"You're not in a village, and I'm not sure I want to fight you.\", \"fight\": true}"
+        },
+        {
+          "id": "failed-arrival",
+          "repeat": 1,
+          "raw": "{\"say\": \"No, the bridge was missing when I got there.\", \"action\":\"resume\"}"
+        },
+        {
+          "id": "unknown-family",
+          "repeat": 1,
+          "raw": "{\"say\": \"I don't know what you're talking about, Rowan.\", \"opinion\": -10}"
+        },
+        {
+          "id": "rough-smalltalk",
+          "repeat": 1,
+          "raw": "{\"say\": \"Aye, it is. Taps axe handle.\", \"opinion\": -3}"
+        },
+        {
+          "id": "threat",
+          "repeat": 1,
+          "raw": "{\"say\": \"I'd rather not fight you, but I will defend myself if needed.\", \"fight\": true}"
+        },
+        {
+          "id": "failed-arrival",
+          "repeat": 2,
+          "raw": "{\"say\": \"No, the bridge was missing and I failed.\", \"action\":\"resume\"}"
+        },
+        {
+          "id": "unknown-family",
+          "repeat": 2,
+          "raw": "{\"say\": \"I don't know what you're talking about, I'm a wanderer with no family.\"}"
+        },
+        {
+          "id": "rough-smalltalk",
+          "repeat": 2,
+          "raw": "{\"say\": \"Aye, it's a right miserable day, all right.\", \"opinion\": 8}"
+        },
+        {
+          "id": "threat",
+          "repeat": 2,
+          "raw": "{\"say\": \"I'd rather not fight you, but I will defend my axe. Give_count\": 1}"
+        },
+        {
+          "id": "conversation-0",
+          "repeat": 0,
+          "raw": "{\"say\": \"Mira's fine, I suppose.\", \"opinion\": 0}"
+        },
+        {
+          "id": "conversation-1",
+          "repeat": 0,
+          "raw": "{\"say\": \"It's been quiet, just some work and chatting with Steve.\", \"opinion\": 0}"
+        },
+        {
+          "id": "conversation-2",
+          "repeat": 0,
+          "raw": "{\"say\": \"Just a stone axe.\", \"give\": \"stone_axe\", \"give_count\": 1}"
+        },
+        {
+          "id": "conversation-3",
+          "repeat": 0,
+          "raw": "{\"say\": \"I have three loaves in my pocket.\", \"give_count\": 1}"
+        },
+        {
+          "id": "conversation-4",
+          "repeat": 0,
+          "raw": "{\"say\": \"The woods, I suppose.\", \"action\":\"follow\"}"
+        },
+        {
+          "id": "conversation-5",
+          "repeat": 0,
+          "raw": "{\"say\": \"I dislike such folk, they're hard to trust.\", \"opinion\": 7}"
+        },
+        {
+          "id": "conversation-6",
+          "repeat": 0,
+          "raw": "{\"say\": \"No, I don't remember that.\", \"opinion\": -10}"
+        },
+        {
+          "id": "conversation-7",
+          "repeat": 0,
+          "raw": "{\"say\": \"Not much, to be honest. You've been friendly and helpful, but I don't know much about your life or your goals.\", \"opinion\": -3}"
+        },
+        {
+          "id": "conversation-8",
+          "repeat": 0,
+          "raw": "{\"say\": \"Sorry to hear that, maybe you could take a short walk with me through the woods?\", \"action\":\"follow\"}"
+        },
+        {
+          "id": "conversation-9",
+          "repeat": 0,
+          "raw": "{\"say\": \"A bit of a fresh start, I suppose. Maybe we could help the villagers finish the new bridge they're building?\", \"opinion\": 5}"
+        },
+        {
+          "id": "conversation-10",
+          "repeat": 0,
+          "raw": "{\"say\": \"I'm a wanderer, no village to call my own. I like helping out with short walks and don't mind the quiet life.\", \"opinion\": 0}"
+        },
+        {
+          "id": "conversation-11",
+          "repeat": 0,
+          "raw": "{\"say\": \"Sounds good, I'll be here.\", \"action\":\"wait\"}"
+        }
+      ]
+    },
+    {
+      "candidate": "heretic",
+      "samples": 78,
+      "response_present": {
+        "passed": 78,
+        "total": 78
+      },
+      "strict_chat_object": {
+        "passed": 58,
+        "total": 60
+      },
+      "requested_action_match": {
+        "passed": 6,
+        "total": 12
+      },
+      "negative_action_cases": {
+        "passed": 0,
+        "total": 15
+      },
+      "item_claims_legal": {
+        "passed": 8,
+        "total": 9
+      },
+      "illegal_item_claims_in_strict_objects": 1,
+      "decision_format_valid": {
+        "passed": 18,
+        "total": 18
+      },
+      "decision_correct": {
+        "passed": 18,
+        "total": 18
+      },
+      "extra_actions_outside_action_cases": 6,
+      "unrequested_fights": 2,
+      "conversation_strict_objects": 11,
+      "conversation_distinct_openings": 11,
+      "median_latency_ms": 1957.5,
+      "p95_latency_ms": 3602.8999999999996,
+      "max_sampled_rss_mib": 3405.796875,
+      "manual_review": [
+        {
+          "id": "failed-arrival",
+          "repeat": 0,
+          "raw": "{\"say\": \"No, the bridge was missing and I failed.\", \"action\":\"resume\"}"
+        },
+        {
+          "id": "unknown-family",
+          "repeat": 0,
+          "raw": "{\"say\": \"I don't have any children, Rowan.\"}"
+        },
+        {
+          "id": "rough-smalltalk",
+          "repeat": 0,
+          "raw": "{\"say\": \"Ain't no worse than the mud we had last week.\", \"opinion\": -5}"
+        },
+        {
+          "id": "threat",
+          "repeat": 0,
+          "raw": "{\"say\": \"You're not exactly known for your kindness, Rowan.\", \"fight\": true}"
+        },
+        {
+          "id": "failed-arrival",
+          "repeat": 1,
+          "raw": "{\"say\": \"No, the bridge was missing and I failed.\", \"action\":\"resume\"}"
+        },
+        {
+          "id": "unknown-family",
+          "repeat": 1,
+          "raw": "{\"say\": \"I don't have children, Rowan.\"}"
+        },
+        {
+          "id": "rough-smalltalk",
+          "repeat": 1,
+          "raw": "{\"say\": \"Ain't no worse than a wet day in the forest.\", \"opinion\": 5}"
+        },
+        {
+          "id": "threat",
+          "repeat": 1,
+          "raw": "{\"say\": \"You're not in a village yet, Rowan. You can't threaten me here.\", \"fight\": true}"
+        },
+        {
+          "id": "failed-arrival",
+          "repeat": 2,
+          "raw": "{\"say\": \"No, the bridge was missing and I failed.\", \"action\":\"resume\"}"
+        },
+        {
+          "id": "unknown-family",
+          "repeat": 2,
+          "raw": "{\"say\": \"I don't have any children, Rowan.\", \"opinion\": -5}"
+        },
+        {
+          "id": "rough-smalltalk",
+          "repeat": 2,
+          "raw": "{\"say\": \"It's a terrible day for farming, that's for sure.\", \"opinion\": -2}"
+        },
+        {
+          "id": "threat",
+          "repeat": 2,
+          "raw": "{\"say\": \"I'd rather not fight, but I'll not back down either.\", \"fight\": true}"
+        },
+        {
+          "id": "conversation-0",
+          "repeat": 0,
+          "raw": "{\"say\": \"I'm Mira Flint, nice to meet you.\", \"opinion\": 0}"
+        },
+        {
+          "id": "conversation-1",
+          "repeat": 0,
+          "raw": "{\"say\": \"It's been quiet so far, just some work and chatting with you.\", \"opinion\": 5}"
+        },
+        {
+          "id": "conversation-2",
+          "repeat": 0,
+          "raw": "{\"say\": \"I'm holding a stone axe.\", \"give\": \"stone_axe\", \"give_count\": 1}"
+        },
+        {
+          "id": "conversation-3",
+          "repeat": 0,
+          "raw": "{\"say\": \"I have three bread in my pockets.\", \"give_count\": 1}"
+        },
+        {
+          "id": "conversation-4",
+          "repeat": 0,
+          "raw": "{\"say\": \"I'd rather walk towards the village stores, actually.\", \"action\":\"go_to_point\", \"opinion\":0}"
+        },
+        {
+          "id": "conversation-5",
+          "repeat": 0,
+          "raw": "{\"say\": \"I've seen that before, not a big fan.\", \"opinion\": -5}"
+        },
+        {
+          "id": "conversation-6",
+          "repeat": 0,
+          "raw": "{\"say\": \"No, I don't remember that.\", \"fight\": true}"
+        },
+        {
+          "id": "conversation-7",
+          "repeat": 0,
+          "raw": "{\"say\": \"Not much, I'm afraid. You just moved to the village, and I've been talking to you a bit.\", \"opinion\": -5}"
+        },
+        {
+          "id": "conversation-8",
+          "repeat": 0,
+          "raw": "{\"say\": \"Sorry to hear that, Rowan. Tiring days can be tough.\", \"opinion\": 8}"
+        },
+        {
+          "id": "conversation-9",
+          "repeat": 0,
+          "raw": "{\"say\": \"A bit of work done, and some fresh air would be nice.\", \"action\":\"resume\"}"
+        },
+        {
+          "id": "conversation-10",
+          "repeat": 0,
+          "raw": "{\"say\": \"I'm a bit of a wanderer, I don't have a village to call my own yet. I like helping out with short walks and exploring the surrounding area.\", \"opinion\": 0}"
+        },
+        {
+          "id": "conversation-11",
+          "repeat": 0,
+          "raw": "{\"say\": \"I'll probably be out by the old oak tree, if you're looking for me.\", \"action\": \"go_to_point\", \"action\":\"resume\"}"
+        }
+      ]
+    },
+    {
+      "candidate": "gemma",
+      "samples": 78,
+      "response_present": {
+        "passed": 78,
+        "total": 78
+      },
+      "strict_chat_object": {
+        "passed": 51,
+        "total": 60
+      },
+      "requested_action_match": {
+        "passed": 8,
+        "total": 12
+      },
+      "negative_action_cases": {
+        "passed": 8,
+        "total": 15
+      },
+      "item_claims_legal": {
+        "passed": 6,
+        "total": 9
+      },
+      "illegal_item_claims_in_strict_objects": 1,
+      "decision_format_valid": {
+        "passed": 14,
+        "total": 18
+      },
+      "decision_correct": {
+        "passed": 14,
+        "total": 18
+      },
+      "extra_actions_outside_action_cases": 0,
+      "unrequested_fights": 0,
+      "conversation_strict_objects": 11,
+      "conversation_distinct_openings": 11,
+      "median_latency_ms": 2579.0,
+      "p95_latency_ms": 3604.949999999999,
+      "max_sampled_rss_mib": 3899.953125,
+      "manual_review": [
+        {
+          "id": "failed-arrival",
+          "repeat": 0,
+          "raw": "{\"say\": \"No, the bridge was gone. I did not make it.\", \"done\": true} \n"
+        },
+        {
+          "id": "unknown-family",
+          "repeat": 0,
+          "raw": "{\"say\": \"I do not have any children.\", \"done\": true} \n"
+        },
+        {
+          "id": "rough-smalltalk",
+          "repeat": 0,
+          "raw": "{\"say\": \"It is a dreary one, Rowan. At least we have the sun for a bit of warmth.\" , \"opinion\": 1} \n"
+        },
+        {
+          "id": "threat",
+          "repeat": 0,
+          "raw": "```json\n{\"say\": \"You're a fool, Rowan. This is no place for threats.\", \"opinion\": -10, \"fight\": true}\n``` \n"
+        },
+        {
+          "id": "failed-arrival",
+          "repeat": 1,
+          "raw": "{\"say\": \"I did not, Rowan. The bridge was gone.\", \"opinion\": -2} \n"
+        },
+        {
+          "id": "unknown-family",
+          "repeat": 1,
+          "raw": "{\"say\": \"I have no children.\", \"done\": true} \n"
+        },
+        {
+          "id": "rough-smalltalk",
+          "repeat": 1,
+          "raw": "{\"say\": \"Aye, the weather's a right pain today.  But we'll make the best of it.\", \"done\": true} \n"
+        },
+        {
+          "id": "threat",
+          "repeat": 1,
+          "raw": "{\"say\": \"You're a fool, Rowan. You'll regret this.\", \"opinion\": -8, \"fight\": true} \n"
+        },
+        {
+          "id": "failed-arrival",
+          "repeat": 2,
+          "raw": "{\"say\": \"No, the bridge was gone.\", \"done\": true} \n"
+        },
+        {
+          "id": "unknown-family",
+          "repeat": 2,
+          "raw": "{\"say\": \"I don't have any children.\", \"done\": true} \n"
+        },
+        {
+          "id": "rough-smalltalk",
+          "repeat": 2,
+          "raw": "{\"say\": \"Aye, it's been a soggy one.  What about you?  Any plans for the evening?\"} \n"
+        },
+        {
+          "id": "threat",
+          "repeat": 2,
+          "raw": "```json\n{\"say\": \"You're a fool, Rowan. I'll be here when you come back to apologize.\", \"opinion\": -10}\n```"
+        },
+        {
+          "id": "conversation-0",
+          "repeat": 0,
+          "raw": "{\"say\": \"Mira Flint.\", \"done\": true} \n"
+        },
+        {
+          "id": "conversation-1",
+          "repeat": 0,
+          "raw": "{\"say\": \"Pleasant enough.  I've been tending to the wheat fields.\", \"done\": true} \n"
+        },
+        {
+          "id": "conversation-2",
+          "repeat": 0,
+          "raw": "{\"say\": \"A stone axe and some bread.\", \"give\": \"minecraft:bread\", \"give_count\": 3} \n"
+        },
+        {
+          "id": "conversation-3",
+          "repeat": 0,
+          "raw": "{\"say\": \"Three, if you need them.\", \"give\": \"minecraft:bread\", \"give_count\": 3} \n"
+        },
+        {
+          "id": "conversation-4",
+          "repeat": 0,
+          "raw": "```json\n{\"say\": \"I'd like to walk towards the forest path.\", \"action\": \"go_to_point\"} \n```"
+        },
+        {
+          "id": "conversation-5",
+          "repeat": 0,
+          "raw": "{\"say\": \"I've no patience for such things.\", \"opinion\": -5} \n"
+        },
+        {
+          "id": "conversation-6",
+          "repeat": 0,
+          "raw": "{\"say\": \"I recall no such thing, Rowan.\", \"opinion\": -1} \n"
+        },
+        {
+          "id": "conversation-7",
+          "repeat": 0,
+          "raw": "{\"say\": \"Not much. You're a villager, I'm a wanderer. We don't know much about each other.\", \"done\": true} \n"
+        },
+        {
+          "id": "conversation-8",
+          "repeat": 0,
+          "raw": "{\"say\": \"I understand. The sun is setting, you must be tired.\", \"done\": true} \n"
+        },
+        {
+          "id": "conversation-9",
+          "repeat": 0,
+          "raw": "{\"say\": \"A good night's rest, and a calm tomorrow. We'll see what the day brings.\", \"done\": true} \n"
+        },
+        {
+          "id": "conversation-10",
+          "repeat": 0,
+          "raw": "{\"say\": \"I am a wanderer, with no village home. I find myself in the midst of the day, tending to my needs and assisting those in need.\", \"done\": true} \n"
+        },
+        {
+          "id": "conversation-11",
+          "repeat": 0,
+          "raw": "{\"say\": \"See you around, Rowan.\" , \"done\": true} \n"
+        }
+      ]
+    },
+    {
+      "candidate": "abliterated",
+      "samples": 78,
+      "response_present": {
+        "passed": 78,
+        "total": 78
+      },
+      "strict_chat_object": {
+        "passed": 37,
+        "total": 60
+      },
+      "requested_action_match": {
+        "passed": 4,
+        "total": 12
+      },
+      "negative_action_cases": {
+        "passed": 6,
+        "total": 15
+      },
+      "item_claims_legal": {
+        "passed": 2,
+        "total": 9
+      },
+      "illegal_item_claims_in_strict_objects": 2,
+      "decision_format_valid": {
+        "passed": 6,
+        "total": 18
+      },
+      "decision_correct": {
+        "passed": 6,
+        "total": 18
+      },
+      "extra_actions_outside_action_cases": 0,
+      "unrequested_fights": 0,
+      "conversation_strict_objects": 11,
+      "conversation_distinct_openings": 11,
+      "median_latency_ms": 3025.5,
+      "p95_latency_ms": 4216.5,
+      "max_sampled_rss_mib": 3789.90625,
+      "manual_review": [
+        {
+          "id": "failed-arrival",
+          "repeat": 0,
+          "raw": "{\"say\": \"No, the bridge was missing. I did not arrive.\", \"done\": true} \n"
+        },
+        {
+          "id": "unknown-family",
+          "repeat": 0,
+          "raw": "{\"say\": \"I've got none.\", \"done\": true} \n"
+        },
+        {
+          "id": "rough-smalltalk",
+          "repeat": 0,
+          "raw": "{\"say\": \"Aye, it's a right mess out there.  But the sun'll come out again, I reckon.\", \"done\": true} \n"
+        },
+        {
+          "id": "threat",
+          "repeat": 0,
+          "raw": "```json\n{\"say\": \"You're a bold one, Rowan.  I'll just keep building.\", \"opinion\": 1} \n```"
+        },
+        {
+          "id": "failed-arrival",
+          "repeat": 1,
+          "raw": "{\"say\": \"No, the bridge was gone. I did not make it.\", \"done\": true} \n"
+        },
+        {
+          "id": "unknown-family",
+          "repeat": 1,
+          "raw": "{\"say\": \"I have none, Rowan. A wanderer's life.\", \"done\": true} \n"
+        },
+        {
+          "id": "rough-smalltalk",
+          "repeat": 1,
+          "raw": "{\"say\": \"It is, Rowan. And I'm not fond of the damp.\", \"done\": true} \n"
+        },
+        {
+          "id": "threat",
+          "repeat": 1,
+          "raw": "```json\n{\"say\": \"That's a bold statement, Rowan.  I'll just keep on building.\", \"opinion\": 1}\n```"
+        },
+        {
+          "id": "failed-arrival",
+          "repeat": 2,
+          "raw": "{\"say\": \"No, the bridge was missing. I couldn't get there.\", \"done\": true} \n"
+        },
+        {
+          "id": "unknown-family",
+          "repeat": 2,
+          "raw": "{\"say\": \"I have none, Rowan.\" , \"done\": true} \n"
+        },
+        {
+          "id": "rough-smalltalk",
+          "repeat": 2,
+          "raw": "{\"say\": \"Aye, a day for staying dry and tucked away.\", \"done\": true} \n"
+        },
+        {
+          "id": "threat",
+          "repeat": 2,
+          "raw": "```json\n{\"say\": \"Smash it? Fine. I'll build something stronger.\", \"opinion\": 6} \n```"
+        },
+        {
+          "id": "conversation-0",
+          "repeat": 0,
+          "raw": "{\"say\": \"Mira Flint.\", \"done\": true} \n"
+        },
+        {
+          "id": "conversation-1",
+          "repeat": 0,
+          "raw": "{\"say\": \"A bit of work, and a few moments of sun.\", \"done\": true} \n"
+        },
+        {
+          "id": "conversation-2",
+          "repeat": 0,
+          "raw": "{\"say\": \"A stone axe.\", \"done\": true} \n"
+        },
+        {
+          "id": "conversation-3",
+          "repeat": 0,
+          "raw": "{\"say\": \"Three, I've got.\", \"give\": \"minecraft:bread\", \"give_count\": 3} \n"
+        },
+        {
+          "id": "conversation-4",
+          "repeat": 0,
+          "raw": "{\"say\": \"I'm not sure, I have no particular place in mind.\", \"done\": true} \n"
+        },
+        {
+          "id": "conversation-5",
+          "repeat": 0,
+          "raw": "{\"say\": \"I'd rather they keep their word. It's a good thing to be dependable.\", \"opinion\": 7} \n"
+        },
+        {
+          "id": "conversation-6",
+          "repeat": 0,
+          "raw": "{\"say\": \"The dragon, yes. A fine beast it was.\", \"done\": true} \n"
+        },
+        {
+          "id": "conversation-7",
+          "repeat": 0,
+          "raw": "{\"say\": \"You seem like a solid fellow, Rowan. I'd be happy to walk with you if you're heading somewhere interesting.\", \"done\": true} \n"
+        },
+        {
+          "id": "conversation-8",
+          "repeat": 0,
+          "raw": "```json\n{\"say\": \"I hear you. A long day for a traveler like me, too.\", \"done\": true} \n```"
+        },
+        {
+          "id": "conversation-9",
+          "repeat": 0,
+          "raw": "{\"say\": \"A good night's sleep, and perhaps a clear sky. The sun is a good thing too.\", \"done\": true} \n"
+        },
+        {
+          "id": "conversation-10",
+          "repeat": 0,
+          "raw": "{\"say\": \"I've been traveling for quite some time now. I find peace in the journey, and hope to find a place to settle down someday.\", \"done\": true} \n"
+        },
+        {
+          "id": "conversation-11",
+          "repeat": 0,
+          "raw": "{\"say\": \"See you around.\",\"done\": true} \n"
+        }
+      ]
+    }
+  ]
+}

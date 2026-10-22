@@ -43,6 +43,7 @@ public final class DevCommands {
         .then(FamilyCommands.branch())
         .then(EconomyCommands.branch())
         .then(PersonaCommands.branch())
+        .then(com.quzzar.kithkyn.decision.ResidentReactions.branch())
         .then(RelationshipCommands.branch())
         .then(com.quzzar.kithkyn.entities.UndertakingCommands.branch())
         .then(com.quzzar.kithkyn.llm.LlmEvents.devBranch())

@@ -111,6 +111,32 @@ neoForge {
             systemProperty 'kithkyn.occupationWork.verify', 'true'
         }
 
+        localModelEvaluation {
+            server()
+            gameDirectory = project.file('run/local-model-evaluation')
+            programArguments.addAll '--nogui', '--world', 'world', '--port', '25680'
+            systemProperty 'kithkyn.models.evaluate', 'true'
+            systemProperty 'kithkyn.models.corpus', project.file('tools/llm/model-cases.json').getAbsolutePath()
+            systemProperty 'kithkyn.models.candidates', (findProperty('evalModels') ?: 'llama,heretic,gemma,abliterated')
+            systemProperty 'kithkyn.models.repeats', (findProperty('evalRepeats') ?: '3')
+        }
+
+        residentReactionVerification {
+            server()
+            gameDirectory = project.file(findProperty('reactionModels') == 'true'
+                ? 'run/npc-reaction-model-verification' : 'run/npc-reaction-verification')
+            programArguments.addAll '--nogui', '--world', 'world', '--port', (findProperty('reactionModels') == 'true' ? '25685' : '25682')
+            systemProperty 'kithkyn.residentReactions.verify', 'true'
+            systemProperty 'kithkyn.residentReactions.models', (findProperty('reactionModels') ?: 'false')
+        }
+
+        residentAwarenessVerification {
+            server()
+            gameDirectory = project.file('run/npc-awareness-verification')
+            programArguments.addAll '--nogui', '--world', 'world', '--port', '25681'
+            systemProperty 'kithkyn.residentAwareness.verify', 'true'
+        }
+
         data {
             data()
 
@@ -205,6 +231,8 @@ dependencies {
 
 tasks.withType(Test).configureEach {
     useJUnitPlatform()
+    inputs.file('tools/llm/results/2026-10-21/kev-reactions-raw.jsonl')
+    systemProperty 'kithkyn.reactionReplay', project.file('tools/llm/results/2026-10-21/kev-reactions-raw.jsonl').getAbsolutePath()
 }
 
 var auditStructureTemplates = tasks.register("auditStructureTemplates", Exec) {

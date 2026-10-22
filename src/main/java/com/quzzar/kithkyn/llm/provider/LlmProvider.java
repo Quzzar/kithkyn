@@ -28,7 +28,15 @@ public interface LlmProvider {
    *                    (Anthropic's newest models) omit it
    */
   record CompletionRequest(String system, String user, List<LlmService.FewShotExample> examples,
-      int maxNewTokens, double temperature, double frequencyPenalty) {
+      int maxNewTokens, double temperature, double frequencyPenalty, String localJsonSchema) {
+
+    public CompletionRequest { examples = List.copyOf(examples); }
+
+    /** A schema for the bundled llama.cpp runtime; cloud providers retain their own protocol. */
+    public CompletionRequest(String system, String user, List<LlmService.FewShotExample> examples,
+        int maxNewTokens, double temperature, double frequencyPenalty) {
+      this(system, user, examples, maxNewTokens, temperature, frequencyPenalty, null);
+    }
 
     /**
      * No repetition penalty, which is what every caller but chat wants: their

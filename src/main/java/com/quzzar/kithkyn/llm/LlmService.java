@@ -149,8 +149,7 @@ public final class LlmService {
   }
 
   /** Background requests wait here so foreground work always jumps the line. */
-  private record QueuedPersona(String lane, String purpose, String system, String user,
-      List<FewShotExample> examples, int maxNewTokens, double temperature, double frequencyPenalty,
+  private record QueuedPersona(String lane, String purpose, CompletionRequest request,
       CompletableFuture<Optional<String>> future) {
   }
 
@@ -162,7 +161,11 @@ public final class LlmService {
 
   private static final int PERSONA_QUEUE_LIMIT = 64;
   private final java.util.ArrayDeque<QueuedPersona> personaQueue = new java.util.ArrayDeque<>();
-  private boolean personaInFlight = false; // guarded by personaQueue
+  // Queue ownership and provider admission share one lock, so a world cannot
+  // stop between selecting a provider and handing it a request.
+  private QueuedPersona personaInFlight; // guarded by providerLock
+  private long providerEpoch; // guarded by providerLock
+  private boolean stopped; // guarded by providerLock
 
   private LlmService() {
     // Backstop only, for paths that never reach ServerStoppingEvent (a crash,
@@ -199,6 +202,7 @@ public final class LlmService {
     }
     LlmCallLog.install();
     synchronized (providerLock) {
+      stopped = false;
       if (provider == null) {
         provider = createProvider(KithkynConfig.LlmProviderName);
         Kithkyn.LOGGER.info("LLM provider: {}", KithkynConfig.LlmProviderName);
@@ -249,10 +253,24 @@ public final class LlmService {
 
   /** Stops and releases the provider when a world or dedicated server shuts down. */
   public void shutdown() {
+    List<QueuedPersona> abandoned;
     synchronized (providerLock) {
+      providerEpoch++;
+      stopped = true;
+      abandoned = new java.util.ArrayList<>(personaQueue);
+      personaQueue.clear();
+      if (personaInFlight != null) abandoned.add(personaInFlight);
+      personaInFlight = null;
+      activeForeground.set(0);
+      activeChat.set(0);
+      chatWindowUntilMs = 0;
       LlmProvider active = provider;
       provider = null;
       if (active != null) active.shutdown();
+    }
+    for (QueuedPersona work : abandoned) {
+      LlmCallLog.skipped(work.lane(), work.purpose(), "world or server stopped");
+      work.future().complete(Optional.empty());
     }
   }
 
@@ -266,22 +284,34 @@ public final class LlmService {
       String purpose, CompletionRequest request) {
     long id = LlmCallLog.request(lane, purpose, request);
     long startedMs = System.currentTimeMillis();
-    return active.complete(request).whenComplete((result, error) ->
-        LlmCallLog.reply(id, lane, purpose, result, error, System.currentTimeMillis() - startedMs));
+    try {
+      return active.complete(request).whenComplete((result, error) ->
+          LlmCallLog.reply(id, lane, purpose, result, error, System.currentTimeMillis() - startedMs));
+    } catch (RuntimeException failed) {
+      LlmCallLog.reply(id, lane, purpose, null, failed, System.currentTimeMillis() - startedMs);
+      return CompletableFuture.failedFuture(failed);
+    }
   }
 
   private CompletableFuture<Optional<String>> foregroundComplete(String lane, String purpose,
       CompletionRequest request) {
-    LlmProvider active = provider;
-    if (active == null || active.getStatus() != Status.READY) {
-      LlmCallLog.skipped(lane, purpose, "provider not ready (" + getStatus() + ")");
-      return CompletableFuture.completedFuture(Optional.empty());
+    synchronized (providerLock) {
+      LlmProvider active = provider;
+      if (stopped || active == null || active.getStatus() != Status.READY) {
+        LlmCallLog.skipped(lane, purpose, "provider not ready (" + getStatus() + ")");
+        return CompletableFuture.completedFuture(Optional.empty());
+      }
+      long epoch = providerEpoch;
+      activeForeground.incrementAndGet();
+      return callProvider(active, lane, purpose, request).handle((result, error) -> {
+        synchronized (providerLock) {
+          if (providerEpoch != epoch || stopped) return Optional.<String>empty();
+          activeForeground.decrementAndGet();
+        }
+        tryDispatchPersona(epoch);
+        return result != null ? result : Optional.empty();
+      });
     }
-    activeForeground.incrementAndGet();
-    return callProvider(active, lane, purpose, request).whenComplete((result, error) -> {
-      activeForeground.decrementAndGet();
-      tryDispatchPersona();
-    });
   }
 
   /**
@@ -305,93 +335,32 @@ public final class LlmService {
       return CompletableFuture.completedFuture(Optional.empty());
     }
     List<String> optionsCopy = List.copyOf(options);
-    return foregroundComplete(LANE_DECIDE, purpose, new CompletionRequest(strict ? REDEVELOPMENT_SYSTEM : DECIDE_SYSTEM,
-        optionsPrompt(situation, options), strict ? REDEVELOPMENT_EXAMPLES : DECIDE_EXAMPLES, KithkynConfig.LlmDecisionMaxNewTokens,
-        KithkynConfig.LlmDecisionTemperature))
+    return foregroundComplete(LANE_DECIDE, purpose, decisionRequest(situation, options, strict))
         .thenApply(raw -> raw.flatMap(text -> strict ? parseStrictDecision(text, optionsCopy) : parseDecision(text, optionsCopy)));
   }
 
-  /** The strict path never accepts a bare number, fuzzy action, missing echo, or truncated response. */
-  static Optional<LlmDecision> parseStrictDecision(String raw, List<String> options) {
-    try (var reader = new com.google.gson.stream.JsonReader(new java.io.StringReader(raw))) {
-      if (!hasStrictJsonStrings(raw)) {
-        return Optional.empty();
-      }
-      // JsonParser.parseString temporarily enables leniency and silently overwrites duplicate keys.
-      reader.setLenient(false);
-      java.util.Set<String> fields = new java.util.HashSet<>();
-      Integer number = null;
-      String action = null;
-      String reason = null;
-      reader.beginObject();
-      while (reader.hasNext()) {
-        String field = reader.nextName();
-        if (!fields.add(field)) {
-          return Optional.empty();
-        }
-        switch (field) {
-          case "choice" -> {
-            if (reader.peek() != com.google.gson.stream.JsonToken.NUMBER) {
-              return Optional.empty();
-            }
-            number = new java.math.BigDecimal(reader.nextString()).intValueExact();
-          }
-          case "action", "reason" -> {
-            if (reader.peek() != com.google.gson.stream.JsonToken.STRING) {
-              return Optional.empty();
-            }
-            String value = reader.nextString();
-            if (field.equals("action")) {
-              action = value;
-            } else {
-              reason = value;
-            }
-          }
-          default -> {
-            return Optional.empty();
-          }
-        }
-      }
-      reader.endObject();
-      if (reader.peek() != com.google.gson.stream.JsonToken.END_DOCUMENT
-          || number == null || reason == null || action == null || number < 1 || number > options.size()
-          || !options.get(number - 1).equals(action)) {
-        return Optional.empty();
-      }
-      return Optional.of(new LlmDecision(action, number - 1, reason));
-    } catch (RuntimeException | java.io.IOException invalid) {
-      return Optional.empty();
-    }
+  /** The production decision prompt and sampling contract, also used by local-model evaluation. */
+  public static CompletionRequest decisionRequest(String situation, List<String> options, boolean strict) {
+    return new CompletionRequest(strict ? REDEVELOPMENT_SYSTEM : DECIDE_SYSTEM,
+        optionsPrompt(situation, options), strict ? REDEVELOPMENT_EXAMPLES : DECIDE_EXAMPLES,
+        KithkynConfig.LlmDecisionMaxNewTokens, KithkynConfig.LlmDecisionTemperature);
   }
 
-  /** Gson 2.10's legacy strict reader still tolerates raw control characters and escaped apostrophes. */
-  private static boolean hasStrictJsonStrings(String raw) {
-    boolean quoted = false;
-    for (int index = 0; index < raw.length(); index++) {
-      char character = raw.charAt(index);
-      if (!quoted) {
-        quoted = character == '"';
-      } else if (character == '"') {
-        quoted = false;
-      } else if (character < 0x20) {
-        return false;
-      } else if (character == '\\') {
-        if (++index >= raw.length()) {
-          return false;
-        }
-        char escape = raw.charAt(index);
-        if (escape == 'u') {
-          for (int digit = 0; digit < 4; digit++) {
-            if (++index >= raw.length() || Character.digit(raw.charAt(index), 16) < 0) {
-              return false;
-            }
-          }
-        } else if ("\"\\/bfnrt".indexOf(escape) < 0) {
-          return false;
-        }
-      }
-    }
-    return !quoted;
+  /** The strict path never accepts a bare number, fuzzy action, missing echo, or truncated response. */
+  public static Optional<LlmDecision> parseStrictDecision(String raw, List<String> options) {
+    var parsed = StrictJson.object(raw);
+    if (parsed.isEmpty()) return Optional.empty();
+    var object = parsed.get();
+    try {
+      if (!object.keySet().equals(java.util.Set.of("choice", "action", "reason"))
+          || !object.get("choice").isJsonPrimitive() || !object.getAsJsonPrimitive("choice").isNumber()
+          || !object.get("action").isJsonPrimitive() || !object.getAsJsonPrimitive("action").isString()
+          || !object.get("reason").isJsonPrimitive() || !object.getAsJsonPrimitive("reason").isString()) return Optional.empty();
+      int number = object.get("choice").getAsBigDecimal().intValueExact();
+      String action = object.get("action").getAsString();
+      return number >= 1 && number <= options.size() && options.get(number - 1).equals(action)
+          ? Optional.of(new LlmDecision(action, number - 1, object.get("reason").getAsString())) : Optional.empty();
+    } catch (RuntimeException invalid) { return Optional.empty(); }
   }
 
   /**
@@ -452,16 +421,30 @@ public final class LlmService {
    */
   public CompletableFuture<Optional<String>> submitChat(String purpose, String system, String user,
       List<FewShotExample> examples, int maxNewTokens, double temperature, double frequencyPenalty) {
+    return submitChat(purpose, new CompletionRequest(system, user, examples, maxNewTokens, temperature, frequencyPenalty));
+  }
+
+  /** Chat admission preserves the complete provider request, including local output constraints. */
+  public CompletableFuture<Optional<String>> submitChat(String purpose, CompletionRequest request) {
     // Mark a conversation live so village work yields, and keep the window open
     // a few seconds past this reply for the player's next line.
-    activeChat.incrementAndGet();
-    chatWindowUntilMs = System.currentTimeMillis() + CHAT_PRIORITY_WINDOW_MS;
-    return foregroundComplete(LANE_CHAT, purpose,
-        new CompletionRequest(system, user, examples, maxNewTokens, temperature, frequencyPenalty))
-        .whenComplete((result, error) -> {
-          activeChat.decrementAndGet();
-          chatWindowUntilMs = System.currentTimeMillis() + CHAT_PRIORITY_WINDOW_MS;
-        });
+    synchronized (providerLock) {
+      if (stopped) return CompletableFuture.completedFuture(Optional.empty());
+      long epoch = providerEpoch;
+      activeChat.incrementAndGet();
+      chatWindowUntilMs = System.currentTimeMillis() + CHAT_PRIORITY_WINDOW_MS;
+      return foregroundComplete(LANE_CHAT, purpose, request)
+          .whenComplete((result, error) -> {
+            synchronized (providerLock) {
+              if (providerEpoch != epoch || stopped) return;
+              activeChat.decrementAndGet();
+              chatWindowUntilMs = System.currentTimeMillis() + CHAT_PRIORITY_WINDOW_MS;
+            }
+            // The grace period may end without any other request waking this world's queue.
+            CompletableFuture.delayedExecutor(CHAT_PRIORITY_WINDOW_MS, java.util.concurrent.TimeUnit.MILLISECONDS)
+                .execute(() -> tryDispatchPersona(epoch));
+          });
+    }
   }
 
   /**
@@ -485,7 +468,12 @@ public final class LlmService {
    */
   public CompletableFuture<Optional<String>> submitPersona(String purpose, String system, String user,
       List<FewShotExample> examples, int maxNewTokens, double temperature) {
-    return submitBackground(LANE_BACKGROUND, purpose, system, user, examples, maxNewTokens, temperature, 0.0D);
+    return submitPersona(purpose, new CompletionRequest(system, user, examples, maxNewTokens, temperature));
+  }
+
+  /** Background admission preserves the complete request rather than rebuilding selected fields. */
+  public CompletableFuture<Optional<String>> submitPersona(String purpose, CompletionRequest request) {
+    return submitBackground(LANE_BACKGROUND, purpose, request);
   }
 
   /**
@@ -496,56 +484,59 @@ public final class LlmService {
    */
   public CompletableFuture<Optional<String>> submitBackgroundChat(String purpose, String system, String user,
       List<FewShotExample> examples, int maxNewTokens, double temperature, double frequencyPenalty) {
-    return submitBackground(LANE_VILLAGER_CHAT, purpose, system, user, examples, maxNewTokens, temperature,
-        frequencyPenalty);
+    return submitBackgroundChat(purpose, new CompletionRequest(system, user, examples, maxNewTokens, temperature, frequencyPenalty));
   }
 
-  private CompletableFuture<Optional<String>> submitBackground(String lane, String purpose, String system,
-      String user, List<FewShotExample> examples, int maxNewTokens, double temperature,
-      double frequencyPenalty) {
+  public CompletableFuture<Optional<String>> submitBackgroundChat(String purpose, CompletionRequest request) {
+    return submitBackground(LANE_VILLAGER_CHAT, purpose, request);
+  }
+
+  private CompletableFuture<Optional<String>> submitBackground(String lane, String purpose, CompletionRequest request) {
     if (!KithkynConfig.LlmEnabled) {
       LlmCallLog.skipped(lane, purpose, "the LLM is disabled in the config");
       return CompletableFuture.completedFuture(Optional.empty());
     }
     CompletableFuture<Optional<String>> future = new CompletableFuture<>();
-    synchronized (personaQueue) {
+    synchronized (providerLock) {
+      if (stopped) {
+        LlmCallLog.skipped(lane, purpose, "world or server stopped");
+        return CompletableFuture.completedFuture(Optional.empty());
+      }
       if (personaQueue.size() >= PERSONA_QUEUE_LIMIT) {
         Kithkyn.LOGGER.warn("Background LLM queue full ({}), rejecting request", PERSONA_QUEUE_LIMIT);
         LlmCallLog.skipped(lane, purpose, "background queue full (" + PERSONA_QUEUE_LIMIT + ")");
         return CompletableFuture.completedFuture(Optional.empty());
       }
-      personaQueue.add(new QueuedPersona(lane, purpose, system, user, List.copyOf(examples), maxNewTokens,
-          temperature, frequencyPenalty, future));
+      personaQueue.add(new QueuedPersona(lane, purpose, request, future));
     }
     tryDispatchPersona();
     return future;
   }
 
   private void tryDispatchPersona() {
-    QueuedPersona next;
-    synchronized (personaQueue) {
-      if (personaInFlight || !isReady() || activeForeground.get() > 0
+    synchronized (providerLock) { tryDispatchPersona(providerEpoch); }
+  }
+
+  private void tryDispatchPersona(long epoch) {
+    synchronized (providerLock) {
+      LlmProvider active = provider;
+      if (providerEpoch != epoch || stopped || personaInFlight != null
+          || active == null || active.getStatus() != Status.READY || activeForeground.get() > 0
           || playerTalking() || personaQueue.isEmpty()) {
         return;
       }
-      next = personaQueue.poll();
-      personaInFlight = true;
+      QueuedPersona next = personaQueue.poll();
+      personaInFlight = next;
+      callProvider(active, next.lane(), next.purpose(), next.request())
+          .whenComplete((result, error) -> {
+            synchronized (providerLock) {
+              if (providerEpoch != epoch || personaInFlight != next || stopped) return;
+              personaInFlight = null;
+              next.future().complete(result != null ? result : Optional.empty());
+            }
+            tryDispatchPersona(epoch);
+          });
     }
-    // NOTE: this re-wraps the request rather than carrying one through, so any
-    // field added to CompletionRequest has to be added HERE too (and to
-    // QueuedPersona) or it silently reverts to its default on the background
-    // path only. Nothing fails loudly: the knob works in chat, does nothing
-    // here, and looks like a model problem. Chat reaches the provider via
-    // foregroundComplete and is not affected.
-    callProvider(provider, next.lane(), next.purpose(), new CompletionRequest(next.system(), next.user(),
-        next.examples(), next.maxNewTokens(), next.temperature(), next.frequencyPenalty()))
-        .whenComplete((result, error) -> {
-          synchronized (personaQueue) {
-            personaInFlight = false;
-          }
-          next.future().complete(result != null ? result : Optional.empty());
-          tryDispatchPersona();
-        });
   }
 
   private static final Pattern CHOICE_PATTERN = Pattern.compile("\"choice\"\\s*:\\s*\"?(\\d+)");

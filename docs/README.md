@@ -21,9 +21,8 @@ in it, and update it in the same change that moves what it describes.
   matrix that turns stats into Minecraft attribute modifiers.
 - [personas.md](personas.md): AI-generated character blurbs and quirks. The prompt
   contract, the generate-before-spawn lifecycle, and the persona package code map.
-- [undertakings.md](undertakings.md): the tracked matters a villager sees through, good or
-  bad, with progress and resolution. One generic model for making amends, needing rescue,
-  and self-set goals. Design only so far; grows out of PersonalLogData's event memories.
+- [undertakings.md](undertakings.md): the one saved commitment store, game-owned action lifecycle,
+  ownership, factual reaction memory and saved history.
 - [relationships.md](relationships.md): pairwise villager opinions. The one-pair-one-object
   model that keeps opinions roughly shared, the newcomer integration pass, and the code map.
 - [marriage.md](marriage.md): two villagers who have grown close ask the brain to wed them,
@@ -50,6 +49,22 @@ in it, and update it in the same change that moves what it describes.
 - [llm-brain.md](llm-brain.md): the required LLM that picks among rule-generated
   options for villagers, run offline via llama.cpp (or a cloud provider) with zero
   player setup. The two offline models, the three cloud services, and failure semantics.
+- [npc-agency.md](npc-agency.md): the approved plan for grounded awareness, autonomous
+  reactions, personality, memory and voice through existing interactions; player companion commands are removed.
+- [npc-reactions.md](npc-reactions.md): experimental independent typed decisions, legal reactions,
+  scheduling, failure visibility and verification limits.
+- [npc-awareness.md](npc-awareness.md): recent witnessed/reported evidence, bounded perception,
+  conversation grounding and the isolated-world awareness verification.
+- [research/kev-reaction-evaluation-2026-10-21.md](research/kev-reaction-evaluation-2026-10-21.md): pinned
+  Kev-4B request replay, memory/latency, confidence, option-order effects and recommendation limits.
+- [research/kev-local-evaluation-2026-10-21.md](research/kev-local-evaluation-2026-10-21.md): pinned
+  Kev 0.8B runtime/artifacts, Mac setup, author-reported routing limits and the separate decision experiment.
+- [research/resident-model-gameplay-2026-10-21.md](research/resident-model-gameplay-2026-10-21.md): actual
+  Kev/Llama world runs, conversation and reload evidence, queue/example fixes and remaining quality failures.
+- [research/resident-quality-2026-10-21.md](research/resident-quality-2026-10-21.md): source-quoted recall,
+  resident gift choice, factual receipts, physical event timing, social judgement and legal reaction replay.
+- [research/local-model-replay-2026-10-21.md](research/local-model-replay-2026-10-21.md): paired
+  stock/modified local model replay, raw synthetic evidence, template requirements and measured limitations.
 - [villager-requests.md](villager-requests.md): how a villager petitions the brain to
   build something, with a reason, and the brain still decides. The propose-not-dispose
   invariant, the chat-tool-to-planner loop, and requests as raw context the brain weighs.
@@ -190,6 +205,11 @@ in it, and update it in the same change that moves what it describes.
 
 Findings gathered against primary sources, kept as read at the time. The topic files above
 carry the decisions; these carry the evidence behind them.
+
+- [research/halo-companion-stack-2026-10-21.md](research/halo-companion-stack-2026-10-21.md):
+  chasm's Halo companion, its Kev/Gemma/Parakeet/Breeze stack, and the practical Kithkyn fit.
+- [research/heretic-local-models-2026-10-21.md](research/heretic-local-models-2026-10-21.md):
+  verified exact-family Llama Heretic and Gemma abliterated downloads, provenance and evaluation limits.
 
 - [research/building-cost-rebalance-2026-09-12.md](research/building-cost-rebalance-2026-09-12.md):
   locked first-pass construction prices and grants for all 224 current definitions, with the

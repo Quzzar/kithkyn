@@ -338,6 +338,13 @@ public final class LaborPlanner {
     return count;
   }
 
+  /** Describes essential staffing pressure; optional reactions weigh it without changing the assignment. */
+  public static boolean hasEssentialStaffingPressure(RealPerson person) {
+    Village village = person.getVillage();
+    return village != null && mustKeep(person.getOccupation(), countOf(village, person.getOccupation()),
+        isHungry(village), village.isStorageBackedUp());
+  }
+
   /** Pure protection rule used before any urgent reassignment is offered. */
   static boolean mustKeep(Occupation occupation, int sameOccupationCount,
       boolean hungry, boolean storageBackedUp) {

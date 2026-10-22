@@ -1,27 +1,21 @@
 package com.quzzar.kithkyn.chat;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 import com.quzzar.kithkyn.Kithkyn;
+import com.quzzar.kithkyn.llm.provider.LlmProvider.CompletionRequest;
 import com.quzzar.kithkyn.chat.PersonChatContext.AssembledChat;
 import com.quzzar.kithkyn.chat.PersonChatContext.Turn;
 import com.quzzar.kithkyn.configuration.KithkynConfig;
 import com.quzzar.kithkyn.entities.ClericPotions;
 import com.quzzar.kithkyn.entities.RealPerson;
-import com.quzzar.kithkyn.entities.UndertakingData;
-import com.quzzar.kithkyn.entities.UndertakingService;
 import com.quzzar.kithkyn.village.Village;
 import com.quzzar.kithkyn.village.VillageRequests;
 import com.quzzar.kithkyn.entities.KithkynAttachments;
@@ -42,10 +36,8 @@ import net.minecraft.world.entity.EquipmentSlot;
 /**
  * The conversation pipeline (conversation map #28): assembles the villager's
  * briefing, asks the LLM through the chat-priority slot, parses the
- * {@code {say, give?, opinion?, undertaking?}} reply, executes a validated
- * give, records any undertaking against the villager (the write path the
- * briefing's read side depends on), and answers the player. Every failure path
- * ends in one in-fiction fallback line, so the player can simply say it again.
+ * structured reply, applies validated conversation effects, and records the real transcript.
+ * Game-owned undertaking outcomes are read as context; dialogue cannot write them.
  *
  * <p>The same {@link #converse} core also serves talk between two villagers
  * ({@link VillagerConversation}): the speaker is a name and a UUID either way,
@@ -114,6 +106,7 @@ public final class PersonChatDispatcher {
   /** Called when the chat screen opens (right-click path). */
   public static void markOpen(RealPerson person, ServerPlayer player) {
     markTalking(person, player.getUUID());
+    com.quzzar.kithkyn.awareness.ResidentAwareness.approached(person, player);
   }
 
   /**
@@ -155,11 +148,12 @@ public final class PersonChatDispatcher {
   private PersonChatDispatcher() {
   }
 
-  public static void handle(ServerPlayer player, RealPerson person, String message) {
+  public static CompletableFuture<Reply> handle(ServerPlayer player, RealPerson person, String message) {
     if (!IN_FLIGHT.add(player.getUUID())) {
-      return; // one chat request in flight per player
+      return CompletableFuture.completedFuture(null); // one chat request in flight per player
     }
-    dispatch(person, player, message, message);
+    com.quzzar.kithkyn.awareness.ResidentAwareness.addressed(person, player, message);
+    return dispatch(person, player, message, message);
   }
 
   /**
@@ -185,21 +179,22 @@ public final class PersonChatDispatcher {
    * dropped in silence: the villager never spoke and the send button looked
    * broken. A guard that can leak is worse than no guard at all.
    */
-  private static void dispatch(RealPerson person, ServerPlayer player, String message, String historyLine) {
+  private static CompletableFuture<Reply> dispatch(RealPerson person, ServerPlayer player, String message, String historyLine) {
     CompletableFuture<Reply> pending;
     try {
-      pending = converse(person, player.getGameProfile().getName(), player.getUUID(), message, historyLine);
+      pending = converse(person, player.getGameProfile().getName(), player.getUUID(), message, historyLine, false);
     } catch (RuntimeException e) {
       IN_FLIGHT.remove(player.getUUID());
       throw e;
     }
     pending.whenComplete((reply, error) -> player.getServer().execute(() -> {
       IN_FLIGHT.remove(player.getUUID());
-      if (error != null || reply == null) {
+      if (error != null || reply == null || !person.isAlive() || person.isRemoved() || player.isRemoved()
+          || person.level() != player.level()) {
         Kithkyn.LOGGER.warn("Chat with {} failed for {}", person.getFullName(),
             player.getGameProfile().getName(), error);
         PacketDistributor.sendToPlayer(player,
-            new PersonChatReplyPacket(person.getId(), "...", false));
+            new PersonChatReplyPacket(person.getId(), "", false));
         return;
       }
       if (reply.give() != null && person.isAlive()) {
@@ -218,6 +213,7 @@ public final class PersonChatDispatcher {
       }
       PacketDistributor.sendToPlayer(player, new PersonChatReplyPacket(person.getId(), reply.say(), reply.done()));
     }));
+    return pending;
   }
 
   /**
@@ -263,7 +259,7 @@ public final class PersonChatDispatcher {
         .with(speakerUUID);
     List<Turn> history = exchanges.stream()
         .skip(Math.max(0, exchanges.size() - MAX_HISTORY_TURNS))
-        .map(e -> new Turn(e.playerLine(), e.reply(), e.dayTime()))
+        .map(e -> new Turn(e.playerLine(), e.reply(), e.dayTime(), e.gameTime()))
         .toList();
 
     AssembledChat chat = PersonChatContext.assemble(person, speakerName, speakerUUID, history, message);
@@ -275,14 +271,15 @@ public final class PersonChatDispatcher {
     String lastAnswer = history.isEmpty() ? null : history.get(history.size() - 1).villagerLine();
 
     String purpose = speakerName + " -> " + person.getFullName();
-    return ask(purpose, chat, KithkynConfig.LlmChatTemperature, CHAT_REPETITION_PENALTY, background)
+    return ask(purpose, initialRequest(chat), background)
         .thenCompose(first -> {
           if (!echoesLastAnswer(first, lastAnswer)) {
             return CompletableFuture.completedFuture(first);
           }
           Kithkyn.LOGGER.debug("{} opened exactly as they did last time; sampling once more",
               person.getFullName());
-          return ask(purpose + " (resampled)", chat, RETRY_TEMPERATURE, RETRY_REPETITION_PENALTY, background)
+          return ask(purpose + " (resampled)", new CompletionRequest(chat.system(), chat.user(), chat.examples(),
+              KithkynConfig.LlmChatMaxNewTokens, RETRY_TEMPERATURE, RETRY_REPETITION_PENALTY, chat.localJsonSchema()), background)
               .thenApply(second -> echoesLastAnswer(second, lastAnswer) ? first : second);
         })
         .thenApply(result -> {
@@ -290,47 +287,42 @@ public final class PersonChatDispatcher {
           String give = null;
           int giveCount = 1;
           int opinion = 0;
-          JsonObject undertaking = null;
           JsonObject request = null;
           boolean fight = false;
           boolean done = false;
           if (result.isPresent()) {
-            Reply parsed = parseReply(result.get());
+            Reply parsed = parseReply(result.get(), message);
             if (parsed != null) {
               say = parsed.say();
               give = parsed.give();
               giveCount = parsed.giveCount();
               opinion = parsed.opinionDelta();
-              undertaking = parsed.undertaking();
               request = parsed.request();
               fight = parsed.fight();
               done = parsed.done();
             }
           }
           if (say == null || say.isBlank()) {
-            say = fallbackLine(person);
-            give = null;
-            giveCount = 1;
-            opinion = 0;
-            undertaking = null; // a fallback line committed to nothing; record nothing
-            request = null;
-            fight = false;
-            done = false;
+            Kithkyn.LOGGER.warn("[chat] No valid model reply for {}", person.getUUID());
+            return null;
           }
           say = VillagerText.clean(say);
-          finalizeExchange(person, speakerName, speakerUUID, historyLine, say, give, giveCount, opinion, undertaking,
+          finalizeExchange(person, speakerName, speakerUUID, historyLine, say, give, giveCount, opinion,
               request, fight, System.currentTimeMillis() - askedAtMs);
-          return new Reply(say, give, giveCount, opinion, undertaking, request, fight, done);
+          return new Reply(say, give, giveCount, opinion, request, fight, done);
         });
   }
 
-  private static CompletableFuture<Optional<String>> ask(String purpose, AssembledChat chat, double temperature,
-      double penalty, boolean background) {
+  /** Exposes the exact initial chat request for paired replay without copying its sampling policy. */
+  public static CompletionRequest initialRequest(AssembledChat chat) {
+    return new CompletionRequest(chat.system(), chat.user(), chat.examples(), KithkynConfig.LlmChatMaxNewTokens,
+        KithkynConfig.LlmChatTemperature, CHAT_REPETITION_PENALTY, chat.localJsonSchema());
+  }
+
+  private static CompletableFuture<Optional<String>> ask(String purpose, CompletionRequest request, boolean background) {
     return background
-        ? LlmService.get().submitBackgroundChat(purpose, chat.system(), chat.user(), chat.examples(),
-            KithkynConfig.LlmChatMaxNewTokens, temperature, penalty)
-        : LlmService.get().submitChat(purpose, chat.system(), chat.user(), chat.examples(),
-            KithkynConfig.LlmChatMaxNewTokens, temperature, penalty);
+        ? LlmService.get().submitBackgroundChat(purpose, request)
+        : LlmService.get().submitChat(purpose, request);
   }
 
   /**
@@ -354,7 +346,7 @@ public final class PersonChatDispatcher {
     }
     Reply parsed = parseReply(raw.get());
     if (parsed == null || parsed.say() == null || parsed.say().isBlank()) {
-      return false; // unparseable is a different problem, with its own fallback
+      return false; // An invalid response is handled explicitly by the caller.
     }
     return sameAnswer(parsed.say(), lastAnswer);
   }
@@ -390,68 +382,26 @@ public final class PersonChatDispatcher {
    * are invisible to RCON sources, so headless capture reads the log.
    */
   private static void finalizeExchange(RealPerson person, String speakerName, UUID speakerUUID,
-      String playerLine, String reply, String give, int giveCount, int requestedOpinion, JsonObject undertaking,
+      String playerLine, String reply, String give, int giveCount, int requestedOpinion,
       JsonObject request, boolean fight, long elapsedMs) {
     var server = person.getServer();
     if (server == null) {
       return;
     }
     server.execute(() -> {
+      if (!person.isAlive() || person.isRemoved() || server.getLevel(person.level().dimension()) != person.level()) return;
       int applied = applyOpinion(person, speakerUUID, requestedOpinion);
       person.setData(KithkynAttachments.CHAT_HISTORY.get(),
           person.getData(KithkynAttachments.CHAT_HISTORY.get())
               .withExchange(speakerUUID,
-                  new ChatHistoryData.Exchange(playerLine, reply, person.level().getDayTime())));
-      String matter = applyUndertaking(person, speakerUUID, undertaking);
+                  new ChatHistoryData.Exchange(playerLine, reply, person.level().getDayTime(), person.level().getGameTime())));
       String asked = applyRequest(person, request);
-      Kithkyn.LOGGER.info("[chat] ({}ms) {} -> {}: \"{}\"{}{}{}{}{}", elapsedMs, speakerName, person.getFullName(), reply,
+      Kithkyn.LOGGER.info("[chat] ({}ms) {} -> {}: \"{}\"{}{}{}{}", elapsedMs, speakerName, person.getFullName(), reply,
           give != null ? " [give: " + giveCount + "x " + give + "]" : "",
           applied != 0 ? " [opinion: " + (applied > 0 ? "+" : "") + applied + "]" : "",
-          matter != null ? " [" + matter + "]" : "",
           asked != null ? " [" + asked + "]" : "",
           fight ? " [fight]" : "");
     });
-  }
-
-  /**
-   * The write path for the undertaking tool: the model's op is applied to the
-   * villager's matters and persisted, closing the loop the READ side
-   * ({@link PersonChatContext}'s briefing and gate) depends on. Returns the
-   * applied action for the log, or null when nothing changed.
-   *
-   * <p>Resolution is left to the model's own op (best-effort) and the
-   * {@link UndertakingService} open&#8594;advance coercion; a matter the model
-   * never resolves simply lingers, which is harmless. Detecting completion from
-   * the player's chat text was tried and pulled: pattern-matching prose to
-   * confirm an event is brittle, and the reliable signal is the item actually
-   * changing hands, not the words.
-   */
-  private static String applyUndertaking(RealPerson person, UUID playerUUID, JsonObject undertaking) {
-    if (undertaking == null) {
-      return null;
-    }
-    Optional<UndertakingService.Op> parsed = UndertakingService.Op.parse(undertaking);
-    if (parsed.isEmpty()) {
-      return null;
-    }
-    UndertakingService.Op op = parsed.get();
-    UndertakingData data = person.getData(KithkynAttachments.UNDERTAKINGS.get());
-    UndertakingService.Result result = UndertakingService.apply(data, op, playerUUID, true,
-        person.level().getDayTime());
-    if (!result.changed()) {
-      return null;
-    }
-    person.setData(KithkynAttachments.UNDERTAKINGS.get(), result.data());
-    if (result.resolvedNegative()) {
-      // A wrong the player has now put right raises the villager's standing with
-      // them (docs/undertakings.md), through the same capped opinion channel a
-      // chat opinion delta uses, so one conversation cannot swing standing wildly.
-      int bump = applyOpinion(person, playerUUID, RIGHTED_WRONG_BONUS);
-      if (bump != 0) {
-        return result.action() + " (standing +" + bump + ")";
-      }
-    }
-    return result.action();
   }
 
   /**
@@ -483,9 +433,9 @@ public final class PersonChatDispatcher {
     return "request: " + subject;
   }
 
-  /** How the consolidation summary is generated: room for a few sentences, low heat. */
-  private static final int SUMMARY_MAX_TOKENS = 150;
-  private static final double SUMMARY_TEMPERATURE = 0.3D;
+  /** Consolidation selects source indices, with a small generation budget. */
+  private static final int SUMMARY_MAX_TOKENS = 48;
+  private static final double SUMMARY_TEMPERATURE = 0.0D;
 
   /**
    * Fold a villager's conversation with someone (a player, or a fellow
@@ -512,84 +462,32 @@ public final class PersonChatDispatcher {
     if (!playerSpoke) {
       return;
     }
-    String earlier = person.getData(KithkynAttachments.CHAT_SUMMARY.get()).with(playerId);
-
-    ConversationMemoryPrompt.Prompt memoryPrompt = ConversationMemoryPrompt.build(
-        person.getFullName(), playerName, earlier,
+    ConversationMemoryPrompt.Prompt prompt = ConversationMemoryPrompt.build(
+        person.getFullName(), playerName,
+        person.getData(KithkynAttachments.CHAT_SUMMARY.get()).quotesWith(playerId),
         session.stream().map(ChatHistoryData.Exchange::playerLine).filter(line -> !line.isBlank()).toList());
-
-    LlmService.get().submitPersona(person.getFullName() + " keeps a memory of " + playerName,
-        memoryPrompt.system(), memoryPrompt.user(), SUMMARY_MAX_TOKENS, SUMMARY_TEMPERATURE)
+    var request = new CompletionRequest(prompt.system(), prompt.user(), List.of(), SUMMARY_MAX_TOKENS,
+        SUMMARY_TEMPERATURE, 0, prompt.localJsonSchema());
+    LlmService.get().submitPersona(person.getFullName() + " keeps a memory of " + playerName, request)
         .whenComplete((result, error) -> {
-          if (error != null || result == null || result.isEmpty()) {
-            return;
-          }
-          String summary = VillagerText.clean(result.get().trim());
-          if (summary.isEmpty()) {
-            return;
-          }
-          // An echo of the old memory is not a new memory. Keep the stored one
-          // rather than overwrite it with a clone, so a copied summary cannot
-          // accrete embellishments ("over the years") talk after talk.
-          if (isEcho(summary, earlier)) {
-            Kithkyn.LOGGER.info("[chat summary] {} keeps their memory of {} (new summary echoed the old)",
-                person.getFullName(), playerName);
+          if (error != null || result == null || result.isEmpty()) return;
+          var quotes = prompt.select(result.get());
+          if (quotes.isEmpty()) {
+            Kithkyn.LOGGER.warn("[chat summary] Invalid source selection for {}", person.getUUID());
             return;
           }
           server.execute(() -> {
+            if (person.isRemoved()) return;
             person.setData(KithkynAttachments.CHAT_SUMMARY.get(),
-                person.getData(KithkynAttachments.CHAT_SUMMARY.get()).withSummary(playerId, summary));
-            // The one INFO the summary path emits: the write is otherwise silent,
-            // so headless verification and "why didn't they remember me" debugging
-            // both read this line, as the rest of the chat pipeline is read.
-            Kithkyn.LOGGER.info("[chat summary] {} now remembers {}: \"{}\"",
-                person.getFullName(), playerName, summary);
+                person.getData(KithkynAttachments.CHAT_SUMMARY.get()).withQuotes(playerId, quotes.get()));
+            Kithkyn.LOGGER.info("[chat summary] {} retained {} exact conversation lines from {}",
+                person.getFullName(), quotes.get().size(), playerName);
           });
         });
   }
 
-
-  /** Share of the earlier memory's words the new one must reuse to count as an echo. */
-  private static final double ECHO_THRESHOLD = 0.85D;
-
-  /**
-   * Whether a fresh summary is just the earlier one back again. Compared on the
-   * bag of words rather than exact text, so a copy with one flourish swapped
-   * ("a mix of kindness and frustration" for "a test of my patience") still
-   * reads as the echo it is.
-   */
-  private static boolean isEcho(String fresh, String earlier) {
-    if (earlier == null || earlier.isBlank()) {
-      return false;
-    }
-    Set<String> before = words(earlier);
-    Set<String> now = words(fresh);
-    if (before.isEmpty() || now.isEmpty()) {
-      return false;
-    }
-    long shared = now.stream().filter(before::contains).count();
-    return shared >= ECHO_THRESHOLD * Math.max(before.size(), now.size());
-  }
-
-  private static Set<String> words(String text) {
-    Set<String> out = new HashSet<>();
-    for (String word : text.toLowerCase(Locale.ROOT).split("[^a-z0-9']+")) {
-      if (word.length() > 2) {
-        out.add(word);
-      }
-    }
-    return out;
-  }
-
-  /**
-   * A parsed reply. {@code undertaking} carries the raw {@code "undertaking"}
-   * object when the model emitted one (null otherwise); it is applied as a
-   * side effect in {@link #finalizeExchange}, not by the caller, which only
-   * reads {@code say}/{@code give}. {@code done} is the villager taking their
-   * leave: the model's own call to end the talk, honoured by the player's
-   * screen and the villager-to-villager driver alike.
-   */
-  public record Reply(String say, String give, int giveCount, int opinionDelta, JsonObject undertaking,
+  /** A validated conversational reply. Physical action outcomes are recorded separately by the game. */
+  public record Reply(String say, String give, int giveCount, int opinionDelta,
       JsonObject request, boolean fight, boolean done) {
   }
 
@@ -598,89 +496,63 @@ public final class PersonChatDispatcher {
   /** Largest total swing one conversation window may produce (#44's cap). */
   private static final int OPINION_CONVERSATION_CAP = 15;
   private static final long OPINION_WINDOW_MS = 10 * 60 * 1000;
-  /** Standing gained when the player makes a wrong right (a resolved NEGATIVE matter). */
-  private static final int RIGHTED_WRONG_BONUS = 8;
 
   private record OpinionBudget(long windowStartMs, int spent) {
   }
 
   private static final Map<Long, OpinionBudget> OPINION_BUDGETS = new ConcurrentHashMap<>();
 
-  private static final Pattern SAY_PATTERN = Pattern.compile("\"say\"\\s*:\\s*\"((?:[^\"\\\\]|\\\\.)*)\"");
-  private static final Pattern GIVE_PATTERN = Pattern.compile("\"give\"\\s*:\\s*\"([a-z0-9_.:/-]+)\"");
-  private static final Pattern GIVE_COUNT_PATTERN = Pattern.compile("\"give_count\"\\s*:\\s*(\\d+)");
-  private static final Pattern OPINION_PATTERN = Pattern.compile("\"opinion\"\\s*:\\s*(-?\\d+)");
-  private static final Pattern FIGHT_PATTERN = Pattern.compile("\"fight\"\\s*:\\s*true");
-  private static final Pattern DONE_PATTERN = Pattern.compile("\"done\"\\s*:\\s*true");
+  /** Strict contract shared by player and resident dialogue; malformed output has no side effects or substitute narrative. */
+  public static Reply parseReply(String raw) { return parseReply(raw, null); }
 
-  /** Strict-then-regex, the parsing discipline used everywhere in llm-land. */
-  private static Reply parseReply(String raw) {
-    int start = raw.indexOf('{');
-    for (int end : new int[] { raw.indexOf('}', start), raw.lastIndexOf('}') }) {
-      if (start >= 0 && end > start) {
-        try {
-          JsonObject node = JsonParser.parseString(raw.substring(start, end + 1)).getAsJsonObject();
-          if (node.has("say")) {
-            String give = node.has("give") && node.get("give").isJsonPrimitive()
-                ? node.get("give").getAsString()
-                : null;
-            int giveCount = 1;
-            if (give != null && node.has("give_count") && node.get("give_count").isJsonPrimitive()) {
-              try {
-                giveCount = Math.max(1, node.get("give_count").getAsInt());
-              } catch (Exception ignored) {
-              }
-            }
-            int opinion = 0;
-            if (node.has("opinion") && node.get("opinion").isJsonPrimitive()) {
-              try {
-                opinion = clampStep(node.get("opinion").getAsInt());
-              } catch (Exception ignored) {
-              }
-            }
-            JsonObject undertaking = node.has("undertaking") && node.get("undertaking").isJsonObject()
-                ? node.getAsJsonObject("undertaking")
-                : null;
-            JsonObject request = node.has("request") && node.get("request").isJsonObject()
-                ? node.getAsJsonObject("request")
-                : null;
-            boolean fight = false;
-            if (node.has("fight") && node.get("fight").isJsonPrimitive()) {
-              try {
-                fight = node.get("fight").getAsBoolean();
-              } catch (Exception ignored) {
-              }
-            }
-            boolean done = false;
-            if (node.has("done") && node.get("done").isJsonPrimitive()) {
-              try {
-                done = node.get("done").getAsBoolean();
-              } catch (Exception ignored) {
-              }
-            }
-            return new Reply(node.get("say").getAsString(), give, giveCount, opinion, undertaking, request, fight,
-                done);
-          }
-        } catch (Exception ignored) {
-          // fall through to the regex pass
-        }
+  /** Live dialogue additionally verifies that opinion evidence is the current counterpart's actual line. */
+  public static Reply parseReply(String raw, String speakerLine) {
+    var parsed = com.quzzar.kithkyn.llm.StrictJson.object(raw);
+    if (parsed.isEmpty()) return null;
+    JsonObject node = parsed.get();
+    if (!Set.of("say", "give", "give_count", "opinion", "request", "fight", "done").containsAll(node.keySet())) return null;
+    try {
+      if (!node.has("say") || !node.getAsJsonPrimitive("say").isString()) return null;
+      String say = node.get("say").getAsString();
+      if (say.isBlank() || say.length() > 2048) return null;
+      String give = null; int count = 1; int opinion = 0;
+      if (node.has("give") && !node.get("give").isJsonNull()) {
+        if (!node.getAsJsonPrimitive("give").isString()) return null;
+        give = node.get("give").getAsString();
+        if (!give.matches("[a-z0-9_.:/-]+")) return null;
       }
-    }
-    Matcher say = SAY_PATTERN.matcher(raw);
-    if (say.find()) {
-      Matcher give = GIVE_PATTERN.matcher(raw);
-      Matcher giveCount = GIVE_COUNT_PATTERN.matcher(raw);
-      Matcher opinion = OPINION_PATTERN.matcher(raw);
-      // The regex fallback does not recover the nested undertaking object; it
-      // only runs when the JSON failed to parse, and a malformed reply is not a
-      // turn to be recording lasting commitments from anyway.
-      return new Reply(say.group(1).replace("\\\"", "\""),
-          give.find() ? give.group(1) : null,
-          giveCount.find() ? Math.max(1, Integer.parseInt(giveCount.group(1))) : 1,
-          opinion.find() ? clampStep(Integer.parseInt(opinion.group(1))) : 0,
-          null, null, FIGHT_PATTERN.matcher(raw).find(), DONE_PATTERN.matcher(raw).find());
-    }
-    return null;
+      if (node.has("give_count")) {
+        if (!node.getAsJsonPrimitive("give_count").isNumber()) return null;
+        count = node.get("give_count").getAsBigDecimal().intValueExact();
+        if (give == null || count < 1) return null;
+      }
+      if (node.has("opinion")) {
+        JsonObject change = node.getAsJsonObject("opinion");
+        if (!change.keySet().equals(Set.of("reason", "quote", "delta"))
+            || !change.getAsJsonPrimitive("reason").isString() || !change.getAsJsonPrimitive("quote").isString()
+            || !change.getAsJsonPrimitive("delta").isNumber()) return null;
+        String reason = change.get("reason").getAsString(), quote = change.get("quote").getAsString();
+        int delta = change.get("delta").getAsBigDecimal().intValueExact();
+        if (reason.isBlank() || reason.length() > 640 || delta == 0 || quote.isBlank() || quote.length() > 2048
+            || speakerLine != null && !speakerLine.equals(quote)) return null;
+        opinion = clampStep(delta);
+      }
+      JsonObject request = null;
+      if (node.has("request")) {
+        request = node.getAsJsonObject("request");
+        if (!Set.of("subject", "reason").containsAll(request.keySet()) || !request.has("subject")) return null;
+        for (var entry : request.entrySet()) if (!entry.getValue().isJsonPrimitive()
+            || !entry.getValue().getAsJsonPrimitive().isString() || entry.getValue().getAsString().length() > 320) return null;
+      }
+      boolean fight = bool(node, "fight"), done = bool(node, "done");
+      return new Reply(say, give, count, opinion, request, fight, done);
+    } catch (RuntimeException invalid) { return null; }
+  }
+  private static boolean bool(JsonObject node, String key) {
+    if (!node.has(key)) return false;
+    var value = node.getAsJsonPrimitive(key);
+    if (!value.isBoolean()) throw new IllegalArgumentException("Expected boolean");
+    return value.getAsBoolean();
   }
 
   private static int clampStep(int delta) {
@@ -719,14 +591,11 @@ public final class PersonChatDispatcher {
   }
 
   /**
-   * A give is honoured for any item actually in the villager's pockets, as
-   * often as they like: a villager's things are theirs to part with (Aaron,
-   * 2026-09-12: no cooldown, and no guard on the job's own gear). The model
-   * once offered items on ordinary turns, a torch when asked how business is,
-   * a diamond for asking a question; the prompt now tells them to give only
-   * when asked, and that is the only brake on how often.
+   * Transfer a gift chosen by the resident, including unsolicited or valuable gifts.
+   * Slot removal enforces ownership and preserves the existing cleric seed stock.
    */
-  private static void executeGive(RealPerson person, ServerPlayer player, String itemId, int requestedCount) {
+  public static void executeGive(RealPerson person, ServerPlayer player, String itemId, int requestedCount) {
+    if (!canHandOver(person, player)) return;
     ResourceLocation id = ResourceLocation.tryParse(itemId.contains(":") ? itemId : "minecraft:" + itemId);
     if (id == null || !BuiltInRegistries.ITEM.containsKey(id)) {
       Kithkyn.LOGGER.info("[chat give] REJECTED '{}': not a valid item id", itemId);
@@ -744,37 +613,29 @@ public final class PersonChatDispatcher {
     if (before == 0) {
       Kithkyn.LOGGER.info("[chat give] REJECTED '{}': {} has none in any slot "
           + "(hand, off-hand, armour, or carry-inventory)", itemId, person.getFullName());
-      return;
+      recordGift(person, player.getGameProfile().getName(), itemId, want, new DirectGiftDelivery.Receipt(0, 0, 0)); return;
     }
 
-    int collected = takeFromSlots(person, item, want);
+    var equipment = equipmentSnapshot(person);
+    ItemStack transferred = takeFromSlots(person, item, want);
+    int collected = transferred.getCount();
+    if (collected == 0) { recordGift(person, player.getGameProfile().getName(), itemId, want, new DirectGiftDelivery.Receipt(0, 0, 0)); return; }
 
     // A hand-off is an inventory move, not loose loot. The old path spawned the
     // whole stack at the player's feet with no pickup delay, where the giver's
     // ordinary litter-pickup goal could immediately take it back. Insert first;
     // only a full player's overflow becomes an item at the player's feet.
-    DirectGiftDelivery.Result delivery = DirectGiftDelivery.insert(
-        new ItemStack(item, collected), player.getInventory()::add);
+    DirectGiftDelivery.Receipt delivery = DirectGiftDelivery.deliver(
+        transferred, player.getInventory()::add, overflow -> {
+          ItemEntity drop = new ItemEntity(person.level(), player.getX(), player.getY() + 0.2, player.getZ(), overflow);
+          drop.setDeltaMovement(Vec3.ZERO); drop.setDefaultPickUpDelay();
+          drop.setTarget(player.getUUID()); drop.setThrower(player);
+          return person.level().addFreshEntity(drop);
+        }, overflow -> restoreGift(person, overflow, equipment));
     if (delivery.inserted() > 0) {
       player.getInventory().setChanged();
     }
-    ItemEntity overflowDrop = null;
-    boolean overflowSpawned = false;
-    if (!delivery.overflow().isEmpty()) {
-      overflowDrop = new ItemEntity(person.level(), player.getX(), player.getY() + 0.2,
-          player.getZ(), delivery.overflow());
-      overflowDrop.setDeltaMovement(Vec3.ZERO);
-      overflowDrop.setDefaultPickUpDelay();
-      overflowDrop.setTarget(player.getUUID());
-      overflowDrop.setThrower(player);
-      overflowSpawned = person.level().addFreshEntity(overflowDrop);
-    }
-
-    Kithkyn.LOGGER.info(
-        "[chat give] {} handed {}x {} to {} (asked {}); villager now holds {}; inserted={}, overflow={}{}",
-        person.getFullName(), collected, itemId, player.getGameProfile().getName(), want,
-        countHeld(person, item), delivery.inserted(), delivery.overflow().getCount(),
-        overflowDrop == null ? "" : " in drop #" + overflowDrop.getId() + " spawned=" + overflowSpawned);
+    recordGift(person, player.getGameProfile().getName(), itemId, want, delivery);
   }
 
   /**
@@ -786,7 +647,8 @@ public final class PersonChatDispatcher {
    * The receiver also logs the gift as a pickup from the giver, so their next
    * reflection can decide what the gesture meant to them.
    */
-  static void executeGive(RealPerson from, RealPerson to, String itemId, int requestedCount) {
+  public static void executeGive(RealPerson from, RealPerson to, String itemId, int requestedCount) {
+    if (!canHandOver(from, to)) return;
     ResourceLocation id = ResourceLocation.tryParse(itemId.contains(":") ? itemId : "minecraft:" + itemId);
     if (id == null || !BuiltInRegistries.ITEM.containsKey(id)) {
       Kithkyn.LOGGER.info("[chat give] REJECTED '{}': not a valid item id", itemId);
@@ -800,69 +662,112 @@ public final class PersonChatDispatcher {
     if (before == 0) {
       Kithkyn.LOGGER.info("[chat give] REJECTED '{}': {} has none in any slot "
           + "(hand, off-hand, armour, or carry-inventory)", itemId, from.getFullName());
-      return;
+      recordGift(from, to.getFullName(), itemId, want, new DirectGiftDelivery.Receipt(0, 0, 0)); return;
     }
 
-    int collected = takeFromSlots(from, item, want);
-    ItemStack leftover = to.personMainInv.addItem(new ItemStack(item, collected));
-    if (!leftover.isEmpty()) {
-      // Full pockets: what did not fit lands at the receiver's feet.
-      ItemEntity drop = new ItemEntity(to.level(), to.getX(), to.getY() + 0.2, to.getZ(), leftover);
-      drop.setDeltaMovement(Vec3.ZERO);
-      to.level().addFreshEntity(drop);
-    }
+    var equipment = equipmentSnapshot(from);
+    ItemStack transferred = takeFromSlots(from, item, want);
+    int collected = transferred.getCount();
+    if (collected == 0) { recordGift(from, to.getFullName(), itemId, want, new DirectGiftDelivery.Receipt(0, 0, 0)); return; }
+    var delivery = DirectGiftDelivery.deliver(transferred,
+        stack -> stack.setCount(to.personMainInv.addItem(stack).getCount()),
+        overflow -> {
+          ItemEntity drop = new ItemEntity(to.level(), to.getX(), to.getY() + 0.2, to.getZ(), overflow);
+          drop.setDeltaMovement(Vec3.ZERO); drop.setDefaultPickUpDelay();
+          return to.level().addFreshEntity(drop);
+        }, overflow -> restoreGift(from, overflow, equipment));
 
-    to.setData(KithkynAttachments.PERSONAL_LOG.get(),
+    if (delivery.inserted() > 0) to.setData(KithkynAttachments.PERSONAL_LOG.get(),
         to.getData(KithkynAttachments.PERSONAL_LOG.get())
             .withEntry(com.quzzar.kithkyn.entities.PersonalLogData.pickup(
-                BuiltInRegistries.ITEM.getKey(item).toString(), collected,
+                BuiltInRegistries.ITEM.getKey(item).toString(), delivery.inserted(),
                 to.level().getDayTime(), to.level().getGameTime(), Optional.of(from.getUUID()))));
 
-    Kithkyn.LOGGER.info("[chat give] {} handed {}x {} to {} (asked {}); giver now holds {}",
-        from.getFullName(), collected, itemId, to.getFullName(), want, countHeld(from, item));
+    recordGift(from, to.getFullName(), itemId, want, delivery);
+  }
+
+  private static boolean canHandOver(RealPerson from, net.minecraft.world.entity.LivingEntity to) {
+    boolean valid = from != to && from.isAlive() && !from.isRemoved() && to.isAlive() && !to.isRemoved()
+        && from.level() == to.level() && from.distanceToSqr(to) <= 16 * 16;
+    if (!valid) Kithkyn.LOGGER.info("[chat give] REJECTED: giver or recipient is unavailable or out of reach");
+    return valid;
+  }
+
+  private static Map<EquipmentSlot, ItemStack> equipmentSnapshot(RealPerson person) {
+    Map<EquipmentSlot, ItemStack> original = new java.util.EnumMap<>(EquipmentSlot.class);
+    for (EquipmentSlot slot : EquipmentSlot.values()) original.put(slot, person.getItemBySlot(slot).copy());
+    return original;
+  }
+
+  /** Return an unspawned remainder to the slots freed by this synchronous handoff. */
+  private static void restoreGift(RealPerson person, ItemStack remainder, Map<EquipmentSlot, ItemStack> original) {
+    for (EquipmentSlot slot : EquipmentSlot.values()) {
+      ItemStack before = original.get(slot), current = person.getItemBySlot(slot);
+      if (!ItemStack.isSameItemSameComponents(before, remainder)
+          || !current.isEmpty() && !ItemStack.isSameItemSameComponents(current, remainder)) continue;
+      int amount = Math.min(remainder.getCount(), before.getCount() - current.getCount());
+      if (amount <= 0) continue;
+      person.setItemSlot(slot, remainder.copyWithCount(current.getCount() + amount)); remainder.shrink(amount);
+      if (remainder.isEmpty()) return;
+    }
+    remainder.setCount(person.personMainInv.addItem(remainder).getCount());
+    if (!remainder.isEmpty()) Kithkyn.LOGGER.error("[chat give] Could not restore {} unspawned gift items", remainder.getCount());
+  }
+
+  private static void recordGift(RealPerson person, String recipient, String itemId, int requested,
+      DirectGiftDelivery.Receipt receipt) {
+    String fact = DirectGiftDelivery.receipt(recipient, itemId, requested, receipt);
+    person.setData(KithkynAttachments.PERSONAL_LOG.get(), person.getData(KithkynAttachments.PERSONAL_LOG.get())
+        .withEntry(com.quzzar.kithkyn.entities.PersonalLogData.memory(fact,
+            person.level().getDayTime(), person.level().getGameTime(), Optional.empty())));
+    Kithkyn.LOGGER.info("[chat give] {}: {}", person.getFullName(), fact);
   }
 
   /**
    * Takes up to {@code want} of the item from the villager's slots and returns
-   * how many actually came out. Equipment first (hand, off-hand, armour), then
-   * carry-inventory, across as many stacks as it takes. Anything goes, the job's
-   * own tool or token included: a villager parting with what they work with is
-   * their business, and by day the tool-tending pass draws it back
-   * ({@link RealPerson#tendJobTool}, {@link RealPerson#tendSignatureGear}).
+   * the transferred stack. Equipment first (hand, off-hand, armour), then
+   * carry-inventory, across compatible stacks. Value and enchantments do not prevent gifts.
    *
    * <p>The one exception is the cleric's last potion of a brew. Potions are
    * stock the cleric can only grow from a bottle they already hold
    * ({@link ClericPotions}), so giving the last one away loses the brew for
    * good; everything above that seed is theirs to give like anything else.
    */
-  private static int takeFromSlots(RealPerson person, net.minecraft.world.item.Item item, int want) {
-    int collected = 0;
+  private static ItemStack takeFromSlots(RealPerson person, net.minecraft.world.item.Item item, int want) {
+    ItemStack collected = ItemStack.EMPTY;
     for (EquipmentSlot eq : EquipmentSlot.values()) {
-      if (collected >= want) {
-        break;
-      }
+      if (collected.getCount() >= want) break;
       ItemStack worn = person.getItemBySlot(eq);
       if (!worn.isEmpty() && worn.getItem() == item) {
-        int take = Math.min(want - collected, giveable(person, worn));
-        worn.shrink(take);
+        collected = takeInto(collected, worn, want, giveable(person, worn));
         person.setItemSlot(eq, worn.isEmpty() ? ItemStack.EMPTY : worn);
-        collected += take;
       }
     }
-    for (int i = 0; i < person.personMainInv.getContainerSize() && collected < want; i++) {
+    for (int i = 0; i < person.personMainInv.getContainerSize() && collected.getCount() < want; i++) {
       ItemStack stack = person.personMainInv.getItem(i);
       if (!stack.isEmpty() && stack.getItem() == item) {
-        int take = Math.min(want - collected, giveable(person, stack));
-        person.personMainInv.removeItem(i, take);
-        collected += take;
+        collected = takeInto(collected, stack, want, giveable(person, stack));
+        person.personMainInv.setItem(i, stack.isEmpty() ? ItemStack.EMPTY : stack);
       }
     }
     return collected;
   }
 
-  /** How much of a stack may leave: all of it, except a cleric's seed potion. */
-  private static int giveable(RealPerson person, ItemStack stack) {
+  /** Carried items remain the resident's to give, except the existing cleric's seed potion. */
+  static int giveable(RealPerson person, ItemStack stack) {
     return ClericPotions.isCleric(person) ? ClericPotions.giveable(person, stack) : stack.getCount();
+  }
+
+  /** Preserve components and stack limits; incompatible variants remain in their original slots. */
+  static ItemStack takeInto(ItemStack collected, ItemStack source, int wanted, int available) {
+    if (!collected.isEmpty() && !ItemStack.isSameItemSameComponents(collected, source)) return collected;
+    int amount = Math.min(Math.min(wanted, source.getMaxStackSize()) - collected.getCount(),
+        Math.min(available, source.getCount()));
+    if (amount <= 0) return collected;
+    if (collected.isEmpty()) collected = source.copyWithCount(amount);
+    else collected.grow(amount);
+    source.shrink(amount);
+    return collected;
   }
 
   /** How many of {@code item} the villager holds across every slot. */
@@ -901,19 +806,6 @@ public final class PersonChatDispatcher {
       }
     }
     return snapshot.length() == 0 ? "nothing" : snapshot.substring(0, snapshot.length() - 2);
-  }
-
-  private static String fallbackLine(RealPerson person) {
-    return person.getFullName() + " looks at you for a long moment, then goes back to their thoughts.";
-  }
-
-  /**
-   * Whether a reply is this villager's in-fiction "the model had nothing"
-   * line. A player just says it again; the villager-to-villager driver ends
-   * the conversation instead, rather than have two villagers trade silences.
-   */
-  static boolean isFallback(RealPerson person, String say) {
-    return fallbackLine(person).equals(say);
   }
 
 }

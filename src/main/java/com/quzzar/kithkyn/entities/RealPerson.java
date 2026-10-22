@@ -116,7 +116,6 @@ import com.quzzar.kithkyn.entities.ai.HealthRecoveryPolicy;
 import com.quzzar.kithkyn.entities.ai.SelfDefensePolicy;
 import com.quzzar.kithkyn.other.EquipmentUpgrade;
 
-import net.minecraft.world.entity.ai.goal.AvoidEntityGoal;
 import net.minecraft.world.entity.ai.goal.FloatGoal;
 import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
 import net.minecraft.world.entity.ai.goal.OpenDoorGoal;
@@ -145,6 +144,13 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.util.RandomSource;
 
 public class RealPerson extends Person {
+
+  private final com.quzzar.kithkyn.awareness.ResidentAwareness awareness = new com.quzzar.kithkyn.awareness.ResidentAwareness(this);
+
+  private final com.quzzar.kithkyn.decision.ResidentReactions reactions = new com.quzzar.kithkyn.decision.ResidentReactions(this);
+  public com.quzzar.kithkyn.decision.ResidentReactions reactions() { return reactions; }
+
+  public com.quzzar.kithkyn.awareness.ResidentAwareness awareness() { return awareness; }
 
   // Constants
   private static final int MIN_FAV_ITEMS = 3, MAX_FAV_ITEMS = 7;
@@ -818,6 +824,7 @@ public class RealPerson extends Person {
       maybeOrderPet();
     }
     if (!this.level().isClientSide) {
+      awareness.tick();
       if (this.tickCount % 20 == 0) refreshGuardCaptain();
       GuardWeapons.tick(this);
     }
@@ -2571,7 +2578,7 @@ public class RealPerson extends Person {
   }
 
   /** Whether a hostile is close enough for an idle resident to defend the camp from it. */
-  private boolean isCampfireThreat(LivingEntity mob) {
+  public boolean isCampfireThreat(LivingEntity mob) {
     // The dead at the gate are a threat to everyone who fights, wherever they stand.
     if (mob instanceof RealPerson raider && raider.isRaider()) {
       return !isRaider();
@@ -2736,6 +2743,9 @@ public class RealPerson extends Person {
   @Override
   protected void registerGoals() {
 
+    // Reactions belong to every person, including merchants and raiders with separate work goals.
+    this.goalSelector.addGoal(3, new com.quzzar.kithkyn.entities.ai.goals.ResidentReactionGoal(this));
+
     // A wandering merchant runs its own small goal set (above) and none of the
     // village-worker machinery, so it branches out before any of that.
     if (isRaider()) {
@@ -2791,14 +2801,15 @@ public class RealPerson extends Person {
 
       this.goalSelector.addGoal(1, new PanicToBedGoal(this, 0.6D));
 
-      this.goalSelector.addGoal(5, new AvoidEntityGoal<>(this, Mob.class, 12.0F, 0.5D, 0.5D, (mob) -> {
+      // Flee before conversational movement, even before the threat has dealt damage.
+      this.goalSelector.addGoal(2, new com.quzzar.kithkyn.entities.ai.goals.PersonAvoidGoal<>(this, Mob.class, (mob) -> {
         return mob instanceof Enemy || mob instanceof RealPerson raider && raider.isRaider();
       }));
 
       // The unarmed answer to a grudge or a village threat is distance: the
       // same shape as avoiding monsters, because that is what a player who
       // beats villagers has made of themselves here.
-      this.goalSelector.addGoal(5, new AvoidEntityGoal<>(this, Player.class, 12.0F, 0.5D, 0.5D,
+      this.goalSelector.addGoal(2, new com.quzzar.kithkyn.entities.ai.goals.PersonAvoidGoal<>(this, Player.class,
           (target) -> target instanceof Player player
               && (holdsGrudgeAgainst(player) || villageConsidersThreat(player))));
 

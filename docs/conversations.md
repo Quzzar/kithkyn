@@ -93,10 +93,66 @@ Player-to-villager chat is not a caller: it runs its own reactive packet loop
 A player handoff goes straight from the villager's slots into the player's
 inventory. Only the part that does not fit becomes a targeted item at the
 player's feet, so the giver cannot immediately collect the gift again. Physical
-pickups observed by a villager remain in `PersonalLogData`, but the chat prompt
-now interleaves those events with the timestamped session transcript. The model
+pickups observed by a villager remain in `PersonalLogData`. The giver now records the
+actual delivery counts there too: recipient inventory, items placed at their feet, and any
+unspawned remainder returned to the giver. A recipient remembers only items that entered
+their inventory as pickups; a ground drop is not a claimed pickup. The chat prompt
+interleaves these game-recorded events with the timestamped session transcript. The model
 sees “I said I handed over dirt,” then “I picked up dirt,” in the order those
 events occurred instead of receiving pickups as a detached system-summary fact.
+New exchanges save monotonic game ticks alongside calendar labels, so freezing or setting
+the sun clock does not reorder dialogue and physical events. Same-tick speech precedes the
+native results recorded by its callback. Old entries without game ticks remain readable and
+are shown separately with their relative ordering explicitly unknown. Each physical handoff
+gets its own bounded log entry; identical gifts are not collapsed by daily text deduplication.
+
+## Conversation memory and local reply constraints
+
+Session consolidation selects up to four exact counterpart lines from at most sixteen prior
+quotes and recent lines. The model returns source indices, which are validated for uniqueness,
+range and count. The existing `ChatSummaryData` attachment stores those quotes per counterpart;
+there is no generated autobiographical paragraph or second memory store. Decode bounds also
+limit the store to eight counterparts and old prose to 8192 characters per counterpart. Questions remain
+questions, and statements remain attributed claims. Actual actions still come from the personal
+log and undertaking lifecycle, independently of what either speaker says.
+
+Earlier freeform summary strings still decode, explicitly labelled unverified. They are never
+candidate source quotes. The next successful consolidation replaces that prose with selected
+conversation lines; invalid or failed selection leaves existing memory untouched. Selected
+quotes survive entity reload. This trades some prose compression for traceability and cannot
+guarantee that subsequent generated dialogue interprets a quote correctly.
+The old jar cannot decode newly saved quote arrays; back up worlds before testing this memory
+format, and restore the backup when reverting the jar. Older string memories remain readable
+by this version.
+
+The bundled llama.cpp path receives a per-request JSON schema for ordinary chat and source
+selection. Residents choose whether to give their carried items, including valuables, enchanted
+equipment and unsolicited gifts that fit the relationship and conversation. The speaker does
+not need to use a request phrase or name the item in English. The temporary request recognizer
+and valuables blacklist were removed following the user's correction. Local grammar and
+physical slot removal enforce actual ownership rather than a judgement about generosity.
+Transfers preserve item components, stack limits and the existing cleric's last seed potion.
+Local gift branches choose the carried item and a bounded quantity before generating speech.
+The no-gift branch explicitly chooses `give:null` before speech. A resident may still make
+an offer, but a null choice cannot be described as a completed handoff. Older cloud responses
+that omit the gift field remain valid and cause no transfer.
+The count bound covers the first compatible item variant that native removal can transfer;
+different named or enchanted variants are never merged into a plain item. A count
+cannot appear without an item. The strict shared parser and
+physical inventory transfer remain authoritative, including for cloud responses. Cloud API
+protocols are unchanged and do not receive this local grammar field. Unsupported or malformed
+responses are not repaired into a successful action. Valid arguments do not guarantee that
+the resident chooses a gift or describes its choice consistently.
+
+Conversation instructions distinguish feelings about the situation from feelings about the
+speaker. Factual questions, recall requests and ordinary requests for an item do not themselves
+justify an opinion change. Actual insults, threats and kindness can still affect relationships;
+the existing opinion and session caps remain unchanged. An optional opinion change now requires
+a typed kindness/apology/insult/threat reason, the current speaker's entire line quoted exactly,
+and a delta with the matching sign. Invented evidence, old numeric-only opinions and inconsistent
+polarity are rejected. The local grammar puts this judgement before the reply text, to avoid
+classifying the resident's own answer as the speaker's behavior. This validates attribution, not
+the model's interpretation of the words.
 
 ## The one-shot siblings, left alone
 

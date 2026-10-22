@@ -1,0 +1,11 @@
+{
+  "started_at": "2026-10-22T01:14:38.361637+00:00",
+  "source": "run/kev-evaluation/quality-legal-requests.jsonl",
+  "source_sha256": "a956cceb17eb8e1455f35c707fc7d6ca084e451a3b1b092a093dfa8b913bd8dd",
+  "requests": 72,
+  "endpoint": "http://127.0.0.1:8008/v1/systemone",
+  "threshold": 0.8,
+  "sequential": true,
+  "retries": 0,
+  "completed_at": "2026-10-22T01:15:33.355375+00:00"
+}

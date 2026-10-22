@@ -44,10 +44,8 @@ are absent, and those could not be acted on anyway.
 1. **File.** When the player urges a village direction in chat ("you should
    build a wall"), the villager is offered a gated `request` tool and may emit
    `{"request": {"subject": "walls", "reason": "wolves at the fields"}}`. The
-   tool is mutually exclusive with the undertaking tool: a small model
-   over-reaches when shown two optional fields at once (see the undertaking
-   audit), so a village-direction turn shows `request` and stands the
-   undertaking tool down. Questions about housing or construction receive the
+   tool is offered only for a direct proposal; undertaking progress is supplied
+   as read-only game context and has no model-write tool. Questions about housing or construction receive the
    village's current planning facts without opening the tool. A direct urging
    (`VillageChangeIntent.proposes`) opens it, including plural language such as
    "we need houses" or "we could use more housing". Ordinary talk does not.
