@@ -1,5 +1,12 @@
 # Resident quality rework, 2026-10-21
 
+The user subsequently clarified that residents should choose gifts from their own inventory,
+including valuables and unsolicited gifts. The request recognizer and valuables blacklist
+described in the historical captures below have been removed. Those captures remain unchanged;
+keeping diamonds is no longer the acceptance criterion. Current checks cover actual ownership,
+component preservation, conservation and factual delivery records. See the later gift-choice
+capture for the corrected behavior. General truthful-dialogue acceptance remains open.
+
 This follows the [initial actual-model findings](resident-model-gameplay-2026-10-21.md).
 Conversation memory now preserves selected source quotes, and local reply generation constrains
 item arguments. Reaction choices improved in a labelled replay without lowering thresholds.

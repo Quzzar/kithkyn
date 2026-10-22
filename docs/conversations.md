@@ -93,8 +93,11 @@ Player-to-villager chat is not a caller: it runs its own reactive packet loop
 A player handoff goes straight from the villager's slots into the player's
 inventory. Only the part that does not fit becomes a targeted item at the
 player's feet, so the giver cannot immediately collect the gift again. Physical
-pickups observed by a villager remain in `PersonalLogData`, but the chat prompt
-now interleaves those events with the timestamped session transcript. The model
+pickups observed by a villager remain in `PersonalLogData`. The giver now records the
+actual delivery counts there too: recipient inventory, items placed at their feet, and any
+unspawned remainder returned to the giver. A recipient remembers only items that entered
+their inventory as pickups; a ground drop is not a claimed pickup. The chat prompt
+interleaves these game-recorded events with the timestamped session transcript. The model
 sees “I said I handed over dirt,” then “I picked up dirt,” in the order those
 events occurred instead of receiving pickups as a detached system-summary fact.
 
@@ -118,13 +121,15 @@ format, and restore the backup when reverting the jar. Older string memories rem
 by this version.
 
 The bundled llama.cpp path receives a per-request JSON schema for ordinary chat and source
-selection. A gift requires an explicit request naming the carried item; factual questions do
-not authorize transfers. The conservative English request recognizer accepts common request
-forms and exact item names or simple plurals. Other paraphrases can receive speech but do not
-authorize inventory changes. Precious materials, gems, rare stacks and enchanted equipment
-cannot be given through chat, even when requested. The same eligibility policy constrains the
-local grammar and physical slot removal; the shared parser also checks the current request.
-Transfers preserve item components, stack limits and the cleric's last seed potion. A count
+selection. Residents choose whether to give their carried items, including valuables, enchanted
+equipment and unsolicited gifts that fit the relationship and conversation. The speaker does
+not need to use a request phrase or name the item in English. The temporary request recognizer
+and valuables blacklist were removed following the user's correction. Local grammar and
+physical slot removal enforce actual ownership rather than a judgement about generosity.
+Transfers preserve item components, stack limits and the existing cleric's last seed potion.
+Local gift branches choose the carried item and a bounded quantity before generating speech.
+The count bound covers the first compatible item variant that native removal can transfer;
+different named or enchanted variants are never merged into a plain item. A count
 cannot appear without an item. The strict shared parser and
 physical inventory transfer remain authoritative, including for cloud responses. Cloud API
 protocols are unchanged and do not receive this local grammar field. Unsupported or malformed

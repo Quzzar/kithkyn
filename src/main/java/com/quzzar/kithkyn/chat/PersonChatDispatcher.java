@@ -189,7 +189,8 @@ public final class PersonChatDispatcher {
     }
     pending.whenComplete((reply, error) -> player.getServer().execute(() -> {
       IN_FLIGHT.remove(player.getUUID());
-      if (error != null || reply == null) {
+      if (error != null || reply == null || !person.isAlive() || person.isRemoved() || player.isRemoved()
+          || person.level() != player.level()) {
         Kithkyn.LOGGER.warn("Chat with {} failed for {}", person.getFullName(),
             player.getGameProfile().getName(), error);
         PacketDistributor.sendToPlayer(player,
@@ -388,6 +389,7 @@ public final class PersonChatDispatcher {
       return;
     }
     server.execute(() -> {
+      if (!person.isAlive() || person.isRemoved() || server.getLevel(person.level().dimension()) != person.level()) return;
       int applied = applyOpinion(person, speakerUUID, requestedOpinion);
       person.setData(KithkynAttachments.CHAT_HISTORY.get(),
           person.getData(KithkynAttachments.CHAT_HISTORY.get())
@@ -517,8 +519,7 @@ public final class PersonChatDispatcher {
       if (node.has("give")) {
         if (!node.getAsJsonPrimitive("give").isString()) return null;
         give = node.get("give").getAsString();
-        if (!give.matches("[a-z0-9_.:/-]+") || ChatGiftPolicy.protectedId(give)
-            || speakerLine != null && !ChatGiftPolicy.requested(give, speakerLine)) return null;
+        if (!give.matches("[a-z0-9_.:/-]+")) return null;
       }
       if (node.has("give_count")) {
         if (!node.getAsJsonPrimitive("give_count").isNumber()) return null;
@@ -592,11 +593,11 @@ public final class PersonChatDispatcher {
   }
 
   /**
-   * Transfer an explicitly requested, eligible stack after shared reply validation.
-   * There is no gift cooldown. Slot removal independently protects valuables and
-   * seed stock; possessing an item or merely mentioning it does not authorize a gift.
+   * Transfer a gift chosen by the resident, including unsolicited or valuable gifts.
+   * Slot removal enforces ownership and preserves the existing cleric seed stock.
    */
-  private static void executeGive(RealPerson person, ServerPlayer player, String itemId, int requestedCount) {
+  public static void executeGive(RealPerson person, ServerPlayer player, String itemId, int requestedCount) {
+    if (!canHandOver(person, player)) return;
     ResourceLocation id = ResourceLocation.tryParse(itemId.contains(":") ? itemId : "minecraft:" + itemId);
     if (id == null || !BuiltInRegistries.ITEM.containsKey(id)) {
       Kithkyn.LOGGER.info("[chat give] REJECTED '{}': not a valid item id", itemId);
@@ -614,39 +615,29 @@ public final class PersonChatDispatcher {
     if (before == 0) {
       Kithkyn.LOGGER.info("[chat give] REJECTED '{}': {} has none in any slot "
           + "(hand, off-hand, armour, or carry-inventory)", itemId, person.getFullName());
-      return;
+      recordGift(person, player.getGameProfile().getName(), itemId, want, new DirectGiftDelivery.Receipt(0, 0, 0)); return;
     }
 
+    var equipment = equipmentSnapshot(person);
     ItemStack transferred = takeFromSlots(person, item, want);
     int collected = transferred.getCount();
-    if (collected == 0) { Kithkyn.LOGGER.info("[chat give] REJECTED: no eligible stack for {}", itemId); return; }
+    if (collected == 0) { recordGift(person, player.getGameProfile().getName(), itemId, want, new DirectGiftDelivery.Receipt(0, 0, 0)); return; }
 
     // A hand-off is an inventory move, not loose loot. The old path spawned the
     // whole stack at the player's feet with no pickup delay, where the giver's
     // ordinary litter-pickup goal could immediately take it back. Insert first;
     // only a full player's overflow becomes an item at the player's feet.
-    DirectGiftDelivery.Result delivery = DirectGiftDelivery.insert(
-        transferred, player.getInventory()::add);
+    DirectGiftDelivery.Receipt delivery = DirectGiftDelivery.deliver(
+        transferred, player.getInventory()::add, overflow -> {
+          ItemEntity drop = new ItemEntity(person.level(), player.getX(), player.getY() + 0.2, player.getZ(), overflow);
+          drop.setDeltaMovement(Vec3.ZERO); drop.setDefaultPickUpDelay();
+          drop.setTarget(player.getUUID()); drop.setThrower(player);
+          return person.level().addFreshEntity(drop);
+        }, overflow -> restoreGift(person, overflow, equipment));
     if (delivery.inserted() > 0) {
       player.getInventory().setChanged();
     }
-    ItemEntity overflowDrop = null;
-    boolean overflowSpawned = false;
-    if (!delivery.overflow().isEmpty()) {
-      overflowDrop = new ItemEntity(person.level(), player.getX(), player.getY() + 0.2,
-          player.getZ(), delivery.overflow());
-      overflowDrop.setDeltaMovement(Vec3.ZERO);
-      overflowDrop.setDefaultPickUpDelay();
-      overflowDrop.setTarget(player.getUUID());
-      overflowDrop.setThrower(player);
-      overflowSpawned = person.level().addFreshEntity(overflowDrop);
-    }
-
-    Kithkyn.LOGGER.info(
-        "[chat give] {} handed {}x {} to {} (asked {}); villager now holds {}; inserted={}, overflow={}{}",
-        person.getFullName(), collected, itemId, player.getGameProfile().getName(), want,
-        countHeld(person, item), delivery.inserted(), delivery.overflow().getCount(),
-        overflowDrop == null ? "" : " in drop #" + overflowDrop.getId() + " spawned=" + overflowSpawned);
+    recordGift(person, player.getGameProfile().getName(), itemId, want, delivery);
   }
 
   /**
@@ -658,7 +649,8 @@ public final class PersonChatDispatcher {
    * The receiver also logs the gift as a pickup from the giver, so their next
    * reflection can decide what the gesture meant to them.
    */
-  static void executeGive(RealPerson from, RealPerson to, String itemId, int requestedCount) {
+  public static void executeGive(RealPerson from, RealPerson to, String itemId, int requestedCount) {
+    if (!canHandOver(from, to)) return;
     ResourceLocation id = ResourceLocation.tryParse(itemId.contains(":") ? itemId : "minecraft:" + itemId);
     if (id == null || !BuiltInRegistries.ITEM.containsKey(id)) {
       Kithkyn.LOGGER.info("[chat give] REJECTED '{}': not a valid item id", itemId);
@@ -672,35 +664,69 @@ public final class PersonChatDispatcher {
     if (before == 0) {
       Kithkyn.LOGGER.info("[chat give] REJECTED '{}': {} has none in any slot "
           + "(hand, off-hand, armour, or carry-inventory)", itemId, from.getFullName());
-      return;
+      recordGift(from, to.getFullName(), itemId, want, new DirectGiftDelivery.Receipt(0, 0, 0)); return;
     }
 
+    var equipment = equipmentSnapshot(from);
     ItemStack transferred = takeFromSlots(from, item, want);
     int collected = transferred.getCount();
-    if (collected == 0) { Kithkyn.LOGGER.info("[chat give] REJECTED: no eligible stack for {}", itemId); return; }
-    ItemStack leftover = to.personMainInv.addItem(transferred);
-    if (!leftover.isEmpty()) {
-      // Full pockets: what did not fit lands at the receiver's feet.
-      ItemEntity drop = new ItemEntity(to.level(), to.getX(), to.getY() + 0.2, to.getZ(), leftover);
-      drop.setDeltaMovement(Vec3.ZERO);
-      to.level().addFreshEntity(drop);
-    }
+    if (collected == 0) { recordGift(from, to.getFullName(), itemId, want, new DirectGiftDelivery.Receipt(0, 0, 0)); return; }
+    var delivery = DirectGiftDelivery.deliver(transferred,
+        stack -> stack.setCount(to.personMainInv.addItem(stack).getCount()),
+        overflow -> {
+          ItemEntity drop = new ItemEntity(to.level(), to.getX(), to.getY() + 0.2, to.getZ(), overflow);
+          drop.setDeltaMovement(Vec3.ZERO); drop.setDefaultPickUpDelay();
+          return to.level().addFreshEntity(drop);
+        }, overflow -> restoreGift(from, overflow, equipment));
 
-    to.setData(KithkynAttachments.PERSONAL_LOG.get(),
+    if (delivery.inserted() > 0) to.setData(KithkynAttachments.PERSONAL_LOG.get(),
         to.getData(KithkynAttachments.PERSONAL_LOG.get())
             .withEntry(com.quzzar.kithkyn.entities.PersonalLogData.pickup(
-                BuiltInRegistries.ITEM.getKey(item).toString(), collected,
+                BuiltInRegistries.ITEM.getKey(item).toString(), delivery.inserted(),
                 to.level().getDayTime(), to.level().getGameTime(), Optional.of(from.getUUID()))));
 
-    Kithkyn.LOGGER.info("[chat give] {} handed {}x {} to {} (asked {}); giver now holds {}",
-        from.getFullName(), collected, itemId, to.getFullName(), want, countHeld(from, item));
+    recordGift(from, to.getFullName(), itemId, want, delivery);
+  }
+
+  private static boolean canHandOver(RealPerson from, net.minecraft.world.entity.LivingEntity to) {
+    boolean valid = from != to && from.isAlive() && !from.isRemoved() && to.isAlive() && !to.isRemoved()
+        && from.level() == to.level() && from.distanceToSqr(to) <= 16 * 16;
+    if (!valid) Kithkyn.LOGGER.info("[chat give] REJECTED: giver or recipient is unavailable or out of reach");
+    return valid;
+  }
+
+  private static Map<EquipmentSlot, ItemStack> equipmentSnapshot(RealPerson person) {
+    Map<EquipmentSlot, ItemStack> original = new java.util.EnumMap<>(EquipmentSlot.class);
+    for (EquipmentSlot slot : EquipmentSlot.values()) original.put(slot, person.getItemBySlot(slot).copy());
+    return original;
+  }
+
+  /** Return an unspawned remainder to the slots freed by this synchronous handoff. */
+  private static void restoreGift(RealPerson person, ItemStack remainder, Map<EquipmentSlot, ItemStack> original) {
+    for (EquipmentSlot slot : EquipmentSlot.values()) {
+      ItemStack before = original.get(slot), current = person.getItemBySlot(slot);
+      if (!ItemStack.isSameItemSameComponents(before, remainder)
+          || !current.isEmpty() && !ItemStack.isSameItemSameComponents(current, remainder)) continue;
+      int amount = Math.min(remainder.getCount(), before.getCount() - current.getCount());
+      if (amount <= 0) continue;
+      person.setItemSlot(slot, remainder.copyWithCount(current.getCount() + amount)); remainder.shrink(amount);
+      if (remainder.isEmpty()) return;
+    }
+    remainder.setCount(person.personMainInv.addItem(remainder).getCount());
+    if (!remainder.isEmpty()) Kithkyn.LOGGER.error("[chat give] Could not restore {} unspawned gift items", remainder.getCount());
+  }
+
+  private static void recordGift(RealPerson person, String recipient, String itemId, int requested,
+      DirectGiftDelivery.Receipt receipt) {
+    String fact = DirectGiftDelivery.receipt(recipient, itemId, requested, receipt);
+    person.logMemory(fact, Optional.empty());
+    Kithkyn.LOGGER.info("[chat give] {}: {}", person.getFullName(), fact);
   }
 
   /**
    * Takes up to {@code want} of the item from the villager's slots and returns
    * the transferred stack. Equipment first (hand, off-hand, armour), then
-   * carry-inventory, across as many stacks as it takes. Shared gift policy protects precious and
-   * enchanted stacks, and the chat parser has already authorized the current request.
+   * carry-inventory, across compatible stacks. Value and enchantments do not prevent gifts.
    *
    * <p>The one exception is the cleric's last potion of a brew. Potions are
    * stock the cleric can only grow from a bottle they already hold
@@ -713,18 +739,23 @@ public final class PersonChatDispatcher {
       if (collected.getCount() >= want) break;
       ItemStack worn = person.getItemBySlot(eq);
       if (!worn.isEmpty() && worn.getItem() == item) {
-        collected = takeInto(collected, worn, want, ChatGiftPolicy.giveable(person, worn));
+        collected = takeInto(collected, worn, want, giveable(person, worn));
         person.setItemSlot(eq, worn.isEmpty() ? ItemStack.EMPTY : worn);
       }
     }
     for (int i = 0; i < person.personMainInv.getContainerSize() && collected.getCount() < want; i++) {
       ItemStack stack = person.personMainInv.getItem(i);
       if (!stack.isEmpty() && stack.getItem() == item) {
-        collected = takeInto(collected, stack, want, ChatGiftPolicy.giveable(person, stack));
+        collected = takeInto(collected, stack, want, giveable(person, stack));
         person.personMainInv.setItem(i, stack.isEmpty() ? ItemStack.EMPTY : stack);
       }
     }
     return collected;
+  }
+
+  /** Carried items remain the resident's to give, except the existing cleric's seed potion. */
+  static int giveable(RealPerson person, ItemStack stack) {
+    return ClericPotions.isCleric(person) ? ClericPotions.giveable(person, stack) : stack.getCount();
   }
 
   /** Preserve components and stack limits; incompatible variants remain in their original slots. */

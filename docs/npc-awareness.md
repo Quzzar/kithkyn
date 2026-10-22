@@ -32,7 +32,10 @@ Actual post-damage events supply injury evidence. Seeing the victim does not ide
 hidden attacker. New personal injury memories likewise withhold an unseen attacker's name;
 existing saved memories are not rewritten. The existing immediate pain/opinion and native
 combat rules remain in place. Recent evidence does not replace the personal log or village
-planning snapshot.
+planning snapshot. A newly witnessed injury also adds a factual entry to the existing personal
+log, at most once per coalesced observation episode. It names the injured subject without
+guessing an attacker, treatment or later health. This lets the witnessed event survive reload
+without persisting every transient sighting or promoting reported speech to fact.
 
 Identified village blame now requires seeing both the incident and its culprit. Seeing only
 an injured victim cannot attach an unseen player's UUID to a witness's durable memory or
@@ -60,7 +63,8 @@ overload a resident can miss an event or a scan, and candidate truncation is con
 Perception itself never calls a model, starts conversation or chooses a movement/combat goal.
 Existing player and villager conversations read the snapshot when they assemble a turn.
 Automatic event-driven decisions and their inference budgets belong to #188. Awareness
-stays session-local, and clears on dimension changes. Save/reload memory is part of #189.
+stays session-local and clears on dimension changes; the factual witnessed-injury entry uses
+the existing saved personal log. Save/reload memory is part of #189.
 
 ## Verification and limits of the evidence
 

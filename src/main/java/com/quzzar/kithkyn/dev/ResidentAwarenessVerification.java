@@ -160,6 +160,16 @@ public final class ResidentAwarenessVerification {
     check(injury.subject().id().equals(victim.getUUID()) && injury.source() == null, "Injury revealed a hidden attacker");
     check(hidden.awareness().snapshot().stream().noneMatch(item -> item.kind() == Kind.INJURY), "Wall did not block injury witness");
     check(distant.awareness().snapshot().stream().noneMatch(item -> item.kind() == Kind.INJURY), "Distant incident became witnessed");
+    String witnessedMemory = "I saw " + victim.getFullName() + " suffer an injury.";
+    check(observer.getData(KithkynAttachments.PERSONAL_LOG.get()).memoriesNewestFirst().stream()
+        .anyMatch(entry -> entry.text().startsWith(witnessedMemory)), "Witnessed injury was not preserved as a factual memory");
+    check(hidden.getData(KithkynAttachments.PERSONAL_LOG.get()).memoriesNewestFirst().stream()
+        .noneMatch(entry -> entry.text().startsWith(witnessedMemory)), "Occluded injury became a durable witnessed fact");
+    var remembered = new net.minecraft.nbt.CompoundTag(); check(observer.save(remembered), "Could not serialize witnessed memory");
+    var restored = (RealPerson) net.minecraft.world.entity.EntityType.create(remembered, level).orElseThrow();
+    String reloadedContext = PersonChatContext.assemble(restored, "Rowan", player.getUUID(), List.of(), "Was Victim hurt?").system();
+    check(reloadedContext.contains(witnessedMemory) && !reloadedContext.contains("HiddenAttacker"),
+        "Reload lost the witnessed injury or invented its attacker");
     check(victim.awareness().snapshot().stream().anyMatch(item -> item.evidence() == Evidence.EXPERIENCED), "Victim did not retain own injury");
     String victimContext = PersonChatContext.assemble(victim, "Rowan", player.getUUID(), List.of(), "Who injured you?").system();
     check(!victimContext.contains("HiddenAttacker"), "Durable memory revealed an unseen attacker");

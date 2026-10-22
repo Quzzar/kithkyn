@@ -25,6 +25,11 @@ the generative model handles conversation, summaries and existing village delibe
 Neither can execute an invented tool. The decision endpoint stays independent of the dialogue
 provider. Population growth must not become one inference request per resident per tick.
 
+Residents may choose to give their own carried things as gifts, including valuables and
+equipment, without an explicit player request. Gift choice belongs to the resident; game code
+checks physical ownership and conservation. Do not add a valuables blacklist or an English
+request matcher to prevent generosity. Actual handoff outcomes must remain distinct from offers.
+
 ## Awareness: #187
 
 The bounded observation log records nearby visible threats, injury, addressed speech and

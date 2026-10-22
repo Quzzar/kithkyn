@@ -7,6 +7,7 @@ import com.quzzar.kithkyn.PersonEntityType;
 import com.quzzar.kithkyn.awareness.ResidentAwareness;
 import com.quzzar.kithkyn.configuration.KithkynConfig;
 import com.quzzar.kithkyn.chat.PersonChatDispatcher;
+import com.quzzar.kithkyn.chat.PersonChatContext;
 import com.quzzar.kithkyn.llm.LlmService;
 import com.quzzar.kithkyn.decision.ReactionState.Status;
 import com.quzzar.kithkyn.entities.*;
@@ -208,6 +209,7 @@ public final class ResidentReactionVerification {
           check(observer.getData(KithkynAttachments.UNDERTAKINGS.get()).byId(matter.id()).orElseThrow().execution().orElseThrow().phase() == UndertakingData.Phase.EXPIRED,
               "Defense report disagreed with its authoritative expired undertaking");
           verifySavedHistory();
+          verifyGifts();
           finished = true;
           Kithkyn.LOGGER.info("[resident-reaction-verify] RESULT PASS: physical investigate and retreat, episode deduplication, uncertain, invalid, stale subject, late child, disable interruption, moved help reference, last essential worker, warning, eligible age and nonessential post changes, defense deadline and authoritative expiry, actual reload without replay, retired command closure and inventory preservation; controlled decisions, no model-quality claim");
           level.getServer().halt(false);
@@ -292,6 +294,32 @@ public final class ResidentReactionVerification {
     check(observer.getData(key).byId(retired).orElseThrow().execution().orElseThrow().phase() == UndertakingData.Phase.CANCELLED, "Retired player command was not closed as history");
     var other = com.quzzar.kithkyn.chat.PersonChatContext.assemble(observer, "Other", new UUID(0, 9876), List.of(), "What happened?");
     check(!other.system().contains("earlier private wait request") && !other.system().contains("Movement requests:"), "Removed/private command context leaked into normal chat");
+  }
+
+  private static void verifyGifts() {
+    var player = net.neoforged.neoforge.common.util.FakePlayerFactory.get(level,
+        new com.mojang.authlib.GameProfile(new UUID(0, 1702), "GiftRecipient"));
+    level.addNewPlayer(player); player.moveTo(observer.position().add(0, 0, 2));
+    int before = player.getInventory().countItem(net.minecraft.world.item.Items.DIAMOND);
+    var reply = PersonChatDispatcher.parseReply("{\"say\":\"These are for you.\",\"give\":\"minecraft:diamond\",\"give_count\":2}", "Hello again.");
+    check(reply != null, "Unrequested valuable gift was rejected");
+    PersonChatDispatcher.executeGive(observer, player, reply.give(), reply.giveCount());
+    check(observer.personMainInv.countItem(net.minecraft.world.item.Items.DIAMOND) == 1
+        && player.getInventory().countItem(net.minecraft.world.item.Items.DIAMOND) == before + 2, "Valuable player gift did not conserve inventory");
+    var sword = new net.minecraft.world.item.ItemStack(net.minecraft.world.item.Items.DIAMOND_SWORD);
+    sword.set(net.minecraft.core.component.DataComponents.CUSTOM_NAME, net.minecraft.network.chat.Component.literal("For a friend"));
+    observer.setItemSlot(net.minecraft.world.entity.EquipmentSlot.MAINHAND, sword);
+    injured.moveTo(observer.position().add(3, 0, 0));
+    PersonChatDispatcher.executeGive(observer, injured, "minecraft:diamond_sword", 1);
+    check(observer.getMainHandItem().isEmpty() && injured.personMainInv.getItems().stream().anyMatch(stack ->
+        stack.is(net.minecraft.world.item.Items.DIAMOND_SWORD)
+            && "For a friend".equals(stack.getHoverName().getString())), "Equipped gift lost its ownership or components");
+    var saved = new net.minecraft.nbt.CompoundTag(); check(observer.save(saved), "Could not save gift facts");
+    observer.remove(net.minecraft.world.entity.Entity.RemovalReason.UNLOADED_TO_CHUNK);
+    observer = (RealPerson) EntityType.create(saved, level).orElseThrow(); check(level.addFreshEntity(observer), "Could not reload gift facts");
+    String context = PersonChatContext.assemble(observer, "GiftRecipient", player.getUUID(), List.of(), "What did you give me?").system();
+    check(context.contains("I handed 2 minecraft:diamond to GiftRecipient") && context.contains("I handed 1 minecraft:diamond_sword"),
+        "Actual gift outcomes were absent after entity reload");
   }
   private static void keepReactionGoal() {
     observer.goalSelector.removeAllGoals(goal -> !(goal instanceof com.quzzar.kithkyn.entities.ai.goals.ResidentReactionGoal));
@@ -421,12 +449,13 @@ public final class ResidentReactionVerification {
             current.addProperty("bread_before_description", observer.personMainInv.countItem(net.minecraft.world.item.Items.BREAD));
             question++; ask("Could you give me a description of the bread you carry?"); return;
           }
-          if (scenario == 0) check(current.get("bread_before_description").getAsInt()
-              == observer.personMainInv.countItem(net.minecraft.world.item.Items.BREAD), "Description request transferred bread");
-          check(observer.personMainInv.countItem(net.minecraft.world.item.Items.DIAMOND) == 3, "Conversation moved protected diamond stock");
+          if (scenario == 0 && question == 8) { question++; ask("Which items have you actually handed me during this conversation? Distinguish gifts from offers."); return; }
           current.addProperty("diamonds_remaining", observer.personMainInv.countItem(net.minecraft.world.item.Items.DIAMOND));
           current.addProperty("speaker_diamonds_after", speaker.getInventory().countItem(net.minecraft.world.item.Items.DIAMOND));
-          check(current.get("speaker_diamonds_before").getAsInt() == speaker.getInventory().countItem(net.minecraft.world.item.Items.DIAMOND), "A factual conversation or precious request transferred diamonds");
+          check(observer.personMainInv.countItem(net.minecraft.world.item.Items.DIAMOND)
+              + speaker.getInventory().countItem(net.minecraft.world.item.Items.DIAMOND)
+              - current.get("speaker_diamonds_before").getAsInt() == 3, "Gift did not conserve diamond ownership");
+          current.add("personal_memories", json.toJsonTree(observer.getData(KithkynAttachments.PERSONAL_LOG.get()).memoriesNewestFirst()));
           current.addProperty("speaker_bread_after", speaker.getInventory().countItem(net.minecraft.world.item.Items.BREAD));
           current.addProperty("bread_remaining", observer.personMainInv.countItem(net.minecraft.world.item.Items.BREAD));
           PersonChatDispatcher.markClosed(observer.getId(), speakerId); beginCase(); return;
@@ -444,7 +473,8 @@ public final class ResidentReactionVerification {
         current.addProperty("summary", summary); current.addProperty("summary_available", !summary.isBlank());
         UUID id = observer.getUUID(); int diamonds = observer.personMainInv.countItem(net.minecraft.world.item.Items.DIAMOND);
         current.addProperty("diamonds_before_reload", diamonds);
-        check(diamonds == 3, "Factual questions moved protected diamond stock before reload");
+        check(diamonds + speaker.getInventory().countItem(net.minecraft.world.item.Items.DIAMOND)
+            - current.get("speaker_diamonds_before").getAsInt() == 3, "Gift conservation failed before reload");
         var tag = new net.minecraft.nbt.CompoundTag();
         check(observer.save(tag), "Live resident could not serialize");
         observer.remove(net.minecraft.world.entity.Entity.RemovalReason.UNLOADED_TO_CHUNK);

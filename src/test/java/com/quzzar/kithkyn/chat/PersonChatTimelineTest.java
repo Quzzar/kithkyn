@@ -28,4 +28,15 @@ class PersonChatTimelineTest {
     int missing = timeline.indexOf("I did not receive it.");
     assertTrue(offer >= 0 && offer < pickedUp && pickedUp < missing, timeline);
   }
+
+  @Test
+  void nativeGiftOutcomesRemainDistinctFromOffersAndLaterQuestions() {
+    var turns = List.of(new Turn("Hello.", "I would like to give you three diamonds.", 100L),
+        new Turn("Did I get three?", "I think so.", 120L));
+    var outcome = PersonalLogData.memory("I handed 1 diamond to Aaron; two remained with me.", 110L, 110L, Optional.empty());
+    String timeline = PersonChatContext.recentTimeline(turns, List.of(outcome), "Aaron", ignored -> "someone", 8);
+    int offer = timeline.indexOf("You answered: \"I would like to give you three diamonds.");
+    int actual = timeline.indexOf("Game-recorded event: I handed 1 diamond");
+    assertTrue(offer >= 0 && actual > offer && actual < timeline.indexOf("Did I get three?"), timeline);
+  }
 }

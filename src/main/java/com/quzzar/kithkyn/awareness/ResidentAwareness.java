@@ -124,8 +124,13 @@ public final class ResidentAwareness {
     if (deliveries >= 8 || !take(level, Work.DELIVERY)) return;
     deliveries++;
     checkDimension();
-    log.record(kind, evidence, identity(subject), source == null ? null : identity(source),
+    Identity witnessed = identity(subject);
+    boolean episode = log.record(kind, evidence, witnessed, source == null ? null : identity(source),
         new Place(level.dimension().location().toString(), subject.getX(), subject.getY(), subject.getZ()), detail, now);
+    if (episode && kind == Kind.INJURY && evidence == Evidence.SEEN) {
+      person.logMemory("I saw " + witnessed.name() + " suffer an injury. That sighting does not establish "
+          + "their later condition or any treatment.", Optional.empty());
+    }
   }
 
   private void checkDimension() {

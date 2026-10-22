@@ -1,6 +1,7 @@
 package com.quzzar.kithkyn.chat;
 
 import java.util.List;
+import java.util.Map;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
@@ -8,7 +9,7 @@ import com.google.gson.JsonObject;
 final class PersonChatReplySchema {
   private PersonChatReplySchema() { }
 
-  static String build(List<String> carriedItemIds, boolean planning, String speakerLine) {
+  static String build(Map<String, Integer> carriedGifts, boolean planning, String speakerLine) {
     JsonObject properties = new JsonObject();
     properties.add("opinion", opinion(speakerLine));
     JsonObject say = typed("string"); say.addProperty("minLength", 1); say.addProperty("maxLength", 2048);
@@ -22,13 +23,16 @@ final class PersonChatReplySchema {
     }
     JsonArray alternatives = new JsonArray();
     addOpinionAlternatives(alternatives, properties, false);
-    if (carriedItemIds.isEmpty()) { JsonObject schema = new JsonObject(); schema.add("oneOf", alternatives); return schema.toString(); }
-    JsonObject giftProperties = properties.deepCopy();
-    JsonObject give = typed("string"); JsonArray ids = new JsonArray();
-    carriedItemIds.stream().distinct().sorted().forEach(ids::add); give.add("enum", ids); giftProperties.add("give", give);
-    JsonObject count = typed("integer"); count.addProperty("minimum", 1); count.addProperty("maximum", 64);
-    giftProperties.add("give_count", count);
-    addOpinionAlternatives(alternatives, giftProperties, true);
+    carriedGifts.entrySet().stream().sorted(Map.Entry.comparingByKey()).forEach(entry -> {
+      JsonObject giftProperties = new JsonObject();
+      giftProperties.add("opinion", properties.get("opinion").deepCopy());
+      JsonObject give = typed("string"); give.addProperty("const", entry.getKey()); giftProperties.add("give", give);
+      JsonObject count = typed("integer"); count.addProperty("minimum", 1); count.addProperty("maximum", Math.min(64, entry.getValue()));
+      giftProperties.add("give_count", count);
+      properties.entrySet().stream().filter(property -> !property.getKey().equals("opinion"))
+          .forEach(property -> giftProperties.add(property.getKey(), property.getValue().deepCopy()));
+      addOpinionAlternatives(alternatives, giftProperties, true);
+    });
     JsonObject schema = new JsonObject(); schema.add("oneOf", alternatives);
     return schema.toString();
   }
@@ -36,12 +40,12 @@ final class PersonChatReplySchema {
   /** llama.cpp emits required fields first; an opinion must be required in its own branch. */
   private static void addOpinionAlternatives(JsonArray alternatives, JsonObject properties, boolean gift) {
     JsonObject neutral = properties.deepCopy(); neutral.remove("opinion");
-    JsonObject withoutOpinion = object(neutral, "say");
-    if (gift) withoutOpinion.getAsJsonArray("required").add("give");
+    JsonObject withoutOpinion = object(neutral, gift ? "give" : "say");
+    if (gift) { withoutOpinion.getAsJsonArray("required").add("give_count"); withoutOpinion.getAsJsonArray("required").add("say"); }
     alternatives.add(withoutOpinion);
     JsonObject withOpinion = object(properties.deepCopy(), "opinion");
+    if (gift) { withOpinion.getAsJsonArray("required").add("give"); withOpinion.getAsJsonArray("required").add("give_count"); }
     withOpinion.getAsJsonArray("required").add("say");
-    if (gift) withOpinion.getAsJsonArray("required").add("give");
     alternatives.add(withOpinion);
   }
 

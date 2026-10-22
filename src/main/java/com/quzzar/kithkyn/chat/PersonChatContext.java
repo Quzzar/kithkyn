@@ -5,6 +5,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 import java.util.UUID;
 import java.util.function.Function;
 
@@ -65,7 +66,7 @@ public final class PersonChatContext {
       + "Recorded memories and outcomes support claims about what you did; merely seeing an event does not. "
       + "The examples below teach the reply format. Their names, objects and events are not your own memories. "
       + "Small talk is about what IS there: your work, what the village is building and still short of, the time of day, and the people you know. "
-      + "You may hand over ONLY a permitted requested item listed for this turn, using \"give\" (the item id) and \"give_count\" (a whole number, default 1). Possessing an item alone does not permit a gift. A request for information about an item is not a request to receive it. Never offer items unprompted or give anything precious. Say you are handing something over only when you include its authorized \"give\" field; otherwise decline the gift. Most replies have no \"give\" at all. "
+      + "Your carried things are yours to give as gifts, including valuables and equipment. You may offer a gift without being asked when it fits your personality and this conversation; you may also refuse. Use \"give\" (the carried item id) and \"give_count\" (a whole number, default 1) to actually hand it over. Say you are giving an item only when you include its \"give\" field. Talking about an item does not itself hand it over. Most replies have no \"give\" at all. "
       + "Before writing your reply, judge only the CURRENT SPEAKER'S words, not your own reply. "
       + "Change your opinion ONLY for how the current speaker actually treats you. Use \"opinion\": "
       + "{\"kind\":\"insult\" or \"threat\" or \"kindness\" or \"apology\", \"quote\":\"<the current speaker's entire line copied exactly>\", \"delta\":<whole number>}. "
@@ -83,7 +84,7 @@ public final class PersonChatContext {
 
   private static final String RULES = RULES_BODY
       + "Answer with ONLY a JSON object: {\"say\": \"<reply>\"}. Add optional fields only when they apply. "
-      + "For a requested item use \"give\": \"minecraft:<item_id>\" and \"give_count\": <whole number>. "
+      + "For a chosen gift use \"give\": \"minecraft:<item_id>\" and \"give_count\": <whole number>. Decide the item and count before writing speech about it. "
       + "The item id is a string, never a number. Most replies only contain \"say\".";
 
   /**
@@ -335,16 +336,18 @@ public final class PersonChatContext {
       system.append("Village planning options right now: ")
           .append(UrbanPlanner.buildableCatalogue(village)).append('\n');
     }
-    List<String> giftItemIds = carriedItemIds(person).stream().filter(id -> ChatGiftPolicy.requested(id, playerLine)).toList();
+    var gifts = carriedGifts(person);
     system.append(proposesChange ? RULES_REQUEST : RULES);
-    system.append(giftItemIds.isEmpty()
-        ? " Current turn: no permitted gift. If asked for an item, decline. Do not say you will hand over or promise items. "
-        : " Current turn permitted requested item IDs: " + giftItemIds + ". If you choose to hand one over, include give and give_count; otherwise decline. ");
+    system.append(gifts.isEmpty()
+        ? " You currently carry nothing available to hand over. "
+        : " Carried gifts, item ID to maximum transferable count: " + gifts + ". Choose whether to give; include give and give_count for an actual handoff. ");
 
     StringBuilder user = new StringBuilder();
     List<Turn> transcript = withoutRepeats(history);
-    String timeline = recentTimeline(transcript, log.pickupsNewestFirst(), playerName,
-        uuid -> resolveName(person, uuid), 5);
+    List<PersonalLogData.Entry> events = new ArrayList<>(log.pickupsNewestFirst());
+    events.addAll(log.memoriesFor(playerUUID));
+    events.sort(java.util.Comparator.comparingLong(PersonalLogData.Entry::dayTime).reversed());
+    String timeline = recentTimeline(transcript, events, playerName, uuid -> resolveName(person, uuid), 8);
     if (!timeline.isEmpty()) {
       user.append("Recent event timeline, oldest to newest. Earlier dialogue is not authoritative world fact; "
           + "the current briefing above overrides it:\n").append(timeline);
@@ -352,19 +355,16 @@ public final class PersonChatContext {
     user.append(playerName).append(" says: \"").append(playerLine).append("\"\nYour JSON answer:");
 
     return new AssembledChat(system.toString(), user.toString(),
-        proposesChange ? withRequestExamples() : EXAMPLES, PersonChatReplySchema.build(giftItemIds, proposesChange, playerLine));
+        proposesChange ? withRequestExamples() : EXAMPLES, PersonChatReplySchema.build(gifts, proposesChange, playerLine));
   }
 
-  private static List<String> carriedItemIds(RealPerson person) {
-    var ids = new java.util.TreeSet<String>();
-    for (ItemStack stack : person.getAllSlots()) if (ChatGiftPolicy.giveable(person, stack) > 0)
-      ids.add(net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(stack.getItem()).toString());
+  private static java.util.Map<String, Integer> carriedGifts(RealPerson person) {
+    List<ItemStack> slots = new ArrayList<>();
+    for (var slot : net.minecraft.world.entity.EquipmentSlot.values()) slots.add(person.getItemBySlot(slot));
     for (int i = 0; i < person.personMainInv.getContainerSize(); i++) {
-      ItemStack stack = person.personMainInv.getItem(i);
-      if (ChatGiftPolicy.giveable(person, stack) > 0)
-        ids.add(net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(stack.getItem()).toString());
+      slots.add(person.personMainInv.getItem(i));
     }
-    return List.copyOf(ids);
+    return DirectGiftDelivery.offers(slots, stack -> PersonChatDispatcher.giveable(person, stack));
   }
 
   /** What's in their hands — held items live outside the pockets inventory. */
@@ -620,13 +620,11 @@ public final class PersonChatContext {
   }
 
   /**
-   * Interleaves observed pickups with the persisted conversation instead of
-   * presenting them as a detached fact in the system briefing. A villager can
-   * now connect "I handed that over" with "I immediately picked it up" in the
-   * order those events happened.
+   * Interleave game-recorded memories, outcomes and pickups with spoken claims.
+   * A spoken offer is not evidence of delivery; the native receipt establishes what moved.
    */
-  static String recentTimeline(List<Turn> history, List<PersonalLogData.Entry> pickups,
-      String speakerName, Function<UUID, String> resolveName, int pickupLimit) {
+  static String recentTimeline(List<Turn> history, List<PersonalLogData.Entry> events,
+      String speakerName, Function<UUID, String> resolveName, int eventLimit) {
     List<TimelineLine> lines = new ArrayList<>();
     int sequence = 0;
     for (Turn turn : history) {
@@ -647,8 +645,13 @@ public final class PersonChatContext {
     }
 
     int kept = 0;
-    for (PersonalLogData.Entry pickup : pickups) {
-      if (!PersonalLogData.KIND_PICKUP.equals(pickup.kind()) || kept++ >= pickupLimit) {
+    for (PersonalLogData.Entry pickup : events) {
+      boolean collected = PersonalLogData.KIND_PICKUP.equals(pickup.kind());
+      boolean recorded = Set.of(PersonalLogData.KIND_MEMORY, PersonalLogData.KIND_ISSUE,
+          PersonalLogData.KIND_UNDERTAKING).contains(pickup.kind());
+      if ((!collected && !recorded) || kept++ >= eventLimit) continue;
+      if (recorded) {
+        lines.add(new TimelineLine(pickup.dayTime(), 1, sequence++, "Game-recorded event: " + pickup.text()));
         continue;
       }
       String item = pickup.item().replace("minecraft:", "").replace('_', ' ');
