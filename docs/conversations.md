@@ -115,10 +115,18 @@ quotes survive entity reload. This trades some prose compression for traceabilit
 guarantee that subsequent generated dialogue interprets a quote correctly.
 
 The bundled llama.cpp path receives a per-request JSON schema for ordinary chat and source
-selection. Item arguments must be strings from carried item IDs; a count cannot appear without an item. The strict shared parser and
+selection. A gift requires an explicit request naming the carried item; factual questions do
+not authorize transfers. The conservative English request recognizer accepts common request
+forms and exact item names or simple plurals. Other paraphrases can receive speech but do not
+authorize inventory changes. Precious materials, gems, rare stacks and enchanted equipment
+cannot be given through chat, even when requested. The same eligibility policy constrains the
+local grammar and physical slot removal; the shared parser also checks the current request.
+Transfers preserve item components, stack limits and the cleric's last seed potion. A count
+cannot appear without an item. The strict shared parser and
 physical inventory transfer remain authoritative, including for cloud responses. Cloud API
 protocols are unchanged and do not receive this local grammar field. Unsupported or malformed
-responses are not repaired into a successful action.
+responses are not repaired into a successful action. Valid arguments do not guarantee that
+the resident chooses a gift or describes its choice consistently.
 
 Conversation instructions distinguish feelings about the situation from feelings about the
 speaker. Factual questions, recall requests and ordinary requests for an item do not themselves

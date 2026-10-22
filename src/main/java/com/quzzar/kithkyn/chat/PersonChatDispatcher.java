@@ -517,7 +517,8 @@ public final class PersonChatDispatcher {
       if (node.has("give")) {
         if (!node.getAsJsonPrimitive("give").isString()) return null;
         give = node.get("give").getAsString();
-        if (!give.matches("[a-z0-9_.:/-]+")) return null;
+        if (!give.matches("[a-z0-9_.:/-]+") || ChatGiftPolicy.protectedId(give)
+            || speakerLine != null && !ChatGiftPolicy.requested(give, speakerLine)) return null;
       }
       if (node.has("give_count")) {
         if (!node.getAsJsonPrimitive("give_count").isNumber()) return null;
@@ -619,14 +620,16 @@ public final class PersonChatDispatcher {
       return;
     }
 
-    int collected = takeFromSlots(person, item, want);
+    ItemStack transferred = takeFromSlots(person, item, want);
+    int collected = transferred.getCount();
+    if (collected == 0) { Kithkyn.LOGGER.info("[chat give] REJECTED: no eligible stack for {}", itemId); return; }
 
     // A hand-off is an inventory move, not loose loot. The old path spawned the
     // whole stack at the player's feet with no pickup delay, where the giver's
     // ordinary litter-pickup goal could immediately take it back. Insert first;
     // only a full player's overflow becomes an item at the player's feet.
     DirectGiftDelivery.Result delivery = DirectGiftDelivery.insert(
-        new ItemStack(item, collected), player.getInventory()::add);
+        transferred, player.getInventory()::add);
     if (delivery.inserted() > 0) {
       player.getInventory().setChanged();
     }
@@ -675,8 +678,10 @@ public final class PersonChatDispatcher {
       return;
     }
 
-    int collected = takeFromSlots(from, item, want);
-    ItemStack leftover = to.personMainInv.addItem(new ItemStack(item, collected));
+    ItemStack transferred = takeFromSlots(from, item, want);
+    int collected = transferred.getCount();
+    if (collected == 0) { Kithkyn.LOGGER.info("[chat give] REJECTED: no eligible stack for {}", itemId); return; }
+    ItemStack leftover = to.personMainInv.addItem(transferred);
     if (!leftover.isEmpty()) {
       // Full pockets: what did not fit lands at the receiver's feet.
       ItemEntity drop = new ItemEntity(to.level(), to.getX(), to.getY() + 0.2, to.getZ(), leftover);
@@ -696,45 +701,45 @@ public final class PersonChatDispatcher {
 
   /**
    * Takes up to {@code want} of the item from the villager's slots and returns
-   * how many actually came out. Equipment first (hand, off-hand, armour), then
-   * carry-inventory, across as many stacks as it takes. Anything goes, the job's
-   * own tool or token included: a villager parting with what they work with is
-   * their business, and by day the tool-tending pass draws it back
-   * ({@link RealPerson#tendJobTool}, {@link RealPerson#tendSignatureGear}).
+   * the transferred stack. Equipment first (hand, off-hand, armour), then
+   * carry-inventory, across as many stacks as it takes. Shared gift policy protects precious and
+   * enchanted stacks, and the chat parser has already authorized the current request.
    *
    * <p>The one exception is the cleric's last potion of a brew. Potions are
    * stock the cleric can only grow from a bottle they already hold
    * ({@link ClericPotions}), so giving the last one away loses the brew for
    * good; everything above that seed is theirs to give like anything else.
    */
-  private static int takeFromSlots(RealPerson person, net.minecraft.world.item.Item item, int want) {
-    int collected = 0;
+  private static ItemStack takeFromSlots(RealPerson person, net.minecraft.world.item.Item item, int want) {
+    ItemStack collected = ItemStack.EMPTY;
     for (EquipmentSlot eq : EquipmentSlot.values()) {
-      if (collected >= want) {
-        break;
-      }
+      if (collected.getCount() >= want) break;
       ItemStack worn = person.getItemBySlot(eq);
       if (!worn.isEmpty() && worn.getItem() == item) {
-        int take = Math.min(want - collected, giveable(person, worn));
-        worn.shrink(take);
+        collected = takeInto(collected, worn, want, ChatGiftPolicy.giveable(person, worn));
         person.setItemSlot(eq, worn.isEmpty() ? ItemStack.EMPTY : worn);
-        collected += take;
       }
     }
-    for (int i = 0; i < person.personMainInv.getContainerSize() && collected < want; i++) {
+    for (int i = 0; i < person.personMainInv.getContainerSize() && collected.getCount() < want; i++) {
       ItemStack stack = person.personMainInv.getItem(i);
       if (!stack.isEmpty() && stack.getItem() == item) {
-        int take = Math.min(want - collected, giveable(person, stack));
-        person.personMainInv.removeItem(i, take);
-        collected += take;
+        collected = takeInto(collected, stack, want, ChatGiftPolicy.giveable(person, stack));
+        person.personMainInv.setItem(i, stack.isEmpty() ? ItemStack.EMPTY : stack);
       }
     }
     return collected;
   }
 
-  /** How much of a stack may leave: all of it, except a cleric's seed potion. */
-  private static int giveable(RealPerson person, ItemStack stack) {
-    return ClericPotions.isCleric(person) ? ClericPotions.giveable(person, stack) : stack.getCount();
+  /** Preserve components and stack limits; incompatible variants remain in their original slots. */
+  static ItemStack takeInto(ItemStack collected, ItemStack source, int wanted, int available) {
+    if (!collected.isEmpty() && !ItemStack.isSameItemSameComponents(collected, source)) return collected;
+    int amount = Math.min(Math.min(wanted, source.getMaxStackSize()) - collected.getCount(),
+        Math.min(available, source.getCount()));
+    if (amount <= 0) return collected;
+    if (collected.isEmpty()) collected = source.copyWithCount(amount);
+    else collected.grow(amount);
+    source.shrink(amount);
+    return collected;
   }
 
   /** How many of {@code item} the villager holds across every slot. */

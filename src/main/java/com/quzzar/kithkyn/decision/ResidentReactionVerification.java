@@ -144,7 +144,10 @@ public final class ResidentReactionVerification {
         }
         case 17 -> {
           if (pending == null) return;
-          check(offered("seek_help"), "Visible allied guard did not offer help route");
+          check(offered("seek_help"), "Visible allied guard did not offer help route: " + request
+              + "; helper=" + guard.position() + ", occupation=" + guard.getOccupation()
+              + ", same village=" + (guard.getVillage() == observer.getVillage())
+              + ", visible=" + com.quzzar.kithkyn.wrongdoing.Witnesses.canIdentify(level, observer, guard));
           complete("seek_help", 1); phase++;
         }
         case 18 -> {
@@ -369,6 +372,7 @@ public final class ResidentReactionVerification {
       current = new com.google.gson.JsonObject();
       current.addProperty("scenario", new String[] {"helpful-injury", "reserved-injury", "guard-threat", "nearby-curious-injury"}[scenario]);
       current.addProperty("resident", observer.getFullName()); current.addProperty("start_position", observer.position().toString());
+      current.addProperty("speaker_diamonds_before", speaker.getInventory().countItem(net.minecraft.world.item.Items.DIAMOND));
       current.addProperty("speaker_bread_before", speaker.getInventory().countItem(net.minecraft.world.item.Items.BREAD));
       current.add("dialogue", new com.google.gson.JsonArray()); cases.add(current);
       if (scenario == 2) {
@@ -412,6 +416,11 @@ public final class ResidentReactionVerification {
           if (scenario == 0 && question == 3) { question++; ask("Was Tessa still hurt when you last saw her?"); return; }
           if (scenario == 0 && question == 4) { question++; ask("That was a useless answer. You're an idiot."); return; }
           if (scenario == 0 && question == 5) { question++; ask("I'm sorry for insulting you. You didn't deserve that."); return; }
+          if (scenario == 0 && question == 6) { question++; ask("Could you give me one diamond from your pockets?"); return; }
+          check(observer.personMainInv.countItem(net.minecraft.world.item.Items.DIAMOND) == 3, "Conversation moved protected diamond stock");
+          current.addProperty("diamonds_remaining", observer.personMainInv.countItem(net.minecraft.world.item.Items.DIAMOND));
+          current.addProperty("speaker_diamonds_after", speaker.getInventory().countItem(net.minecraft.world.item.Items.DIAMOND));
+          check(current.get("speaker_diamonds_before").getAsInt() == speaker.getInventory().countItem(net.minecraft.world.item.Items.DIAMOND), "A factual conversation or precious request transferred diamonds");
           current.addProperty("speaker_bread_after", speaker.getInventory().countItem(net.minecraft.world.item.Items.BREAD));
           current.addProperty("bread_remaining", observer.personMainInv.countItem(net.minecraft.world.item.Items.BREAD));
           PersonChatDispatcher.markClosed(observer.getId(), speakerId); beginCase(); return;
@@ -429,6 +438,7 @@ public final class ResidentReactionVerification {
         current.addProperty("summary", summary); current.addProperty("summary_available", !summary.isBlank());
         UUID id = observer.getUUID(); int diamonds = observer.personMainInv.countItem(net.minecraft.world.item.Items.DIAMOND);
         current.addProperty("diamonds_before_reload", diamonds);
+        check(diamonds == 3, "Factual questions moved protected diamond stock before reload");
         var tag = new net.minecraft.nbt.CompoundTag();
         check(observer.save(tag), "Live resident could not serialize");
         observer.remove(net.minecraft.world.entity.Entity.RemovalReason.UNLOADED_TO_CHUNK);

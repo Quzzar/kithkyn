@@ -335,6 +335,10 @@ public final class PersonChatContext {
       system.append("Village planning options right now: ")
           .append(UrbanPlanner.buildableCatalogue(village)).append('\n');
     }
+    List<String> giftItemIds = carriedItemIds(person).stream().filter(id -> ChatGiftPolicy.requested(id, playerLine)).toList();
+    system.append(giftItemIds.isEmpty()
+        ? "No item transfer is authorized for this line. Do not say you are handing over or promising items. "
+        : "If you choose to fulfill this explicit request, the permitted item IDs are " + giftItemIds + ". Use give and give_count to actually hand it over. ");
     system.append(proposesChange ? RULES_REQUEST : RULES);
 
     StringBuilder user = new StringBuilder();
@@ -348,16 +352,16 @@ public final class PersonChatContext {
     user.append(playerName).append(" says: \"").append(playerLine).append("\"\nYour JSON answer:");
 
     return new AssembledChat(system.toString(), user.toString(),
-        proposesChange ? withRequestExamples() : EXAMPLES, PersonChatReplySchema.build(carriedItemIds(person), proposesChange, playerLine));
+        proposesChange ? withRequestExamples() : EXAMPLES, PersonChatReplySchema.build(giftItemIds, proposesChange, playerLine));
   }
 
   private static List<String> carriedItemIds(RealPerson person) {
     var ids = new java.util.TreeSet<String>();
-    for (ItemStack stack : person.getAllSlots()) if (!stack.isEmpty())
+    for (ItemStack stack : person.getAllSlots()) if (ChatGiftPolicy.giveable(person, stack) > 0)
       ids.add(net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(stack.getItem()).toString());
     for (int i = 0; i < person.personMainInv.getContainerSize(); i++) {
       ItemStack stack = person.personMainInv.getItem(i);
-      if (!stack.isEmpty() && (!ClericPotions.isCleric(person) || !ClericPotions.isStock(stack) || ClericPotions.sparePackCount(person, stack) > 0))
+      if (ChatGiftPolicy.giveable(person, stack) > 0)
         ids.add(net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(stack.getItem()).toString());
     }
     return List.copyOf(ids);
