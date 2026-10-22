@@ -10,9 +10,10 @@ final class PersonChatReplySchema {
 
   static String build(List<String> carriedItemIds, boolean planning, String speakerLine) {
     JsonObject properties = new JsonObject();
+    properties.add("opinion", opinion(speakerLine));
     JsonObject say = typed("string"); say.addProperty("minLength", 1); say.addProperty("maxLength", 2048);
     properties.add("say", say);
-    properties.add("opinion", opinion(speakerLine)); properties.add("fight", typed("boolean")); properties.add("done", typed("boolean"));
+    properties.add("fight", typed("boolean")); properties.add("done", typed("boolean"));
     if (planning) {
       JsonObject requestProperties = new JsonObject();
       JsonObject text = typed("string"); text.addProperty("maxLength", 320);

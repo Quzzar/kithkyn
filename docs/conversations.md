@@ -126,7 +126,9 @@ justify an opinion change. Actual insults, threats and kindness can still affect
 the existing opinion and session caps remain unchanged. An optional opinion change now requires
 a typed kindness/apology/insult/threat reason, the current speaker's entire line quoted exactly,
 and a delta with the matching sign. Invented evidence, old numeric-only opinions and inconsistent
-polarity are rejected. This validates attribution, not the model's interpretation of the words.
+polarity are rejected. The local grammar puts this judgement before the reply text, to avoid
+classifying the resident's own answer as the speaker's behavior. This validates attribution, not
+the model's interpretation of the words.
 
 ## The one-shot siblings, left alone
 
