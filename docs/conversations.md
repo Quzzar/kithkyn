@@ -113,6 +113,9 @@ candidate source quotes. The next successful consolidation replaces that prose w
 conversation lines; invalid or failed selection leaves existing memory untouched. Selected
 quotes survive entity reload. This trades some prose compression for traceability and cannot
 guarantee that subsequent generated dialogue interprets a quote correctly.
+The old jar cannot decode newly saved quote arrays; back up worlds before testing this memory
+format, and restore the backup when reverting the jar. Older string memories remain readable
+by this version.
 
 The bundled llama.cpp path receives a per-request JSON schema for ordinary chat and source
 selection. A gift requires an explicit request naming the carried item; factual questions do

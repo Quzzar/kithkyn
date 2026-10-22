@@ -17,10 +17,10 @@ final class ChatGiftPolicy {
       "minecraft:gold_ingot", "minecraft:gold_nugget", "minecraft:gold_block", "minecraft:diamond_block",
       "minecraft:emerald_block", "minecraft:netherite_block", "minecraft:golden_apple", "minecraft:enchanted_golden_apple");
   private static final Pattern REQUEST = Pattern.compile("^(?:hey )?(?:please )?(?:"
-      + "(?:can|could|would|will) you (?:please )?(?:give|hand|pass|share|spare|lend)"
+      + "(?:can|could|would|will) you (?:please )?(?:give|hand|pass|share|spare|lend)(?: (?:me|us))?"
       + "|(?:can|could|may) (?:i|we) (?:please )?(?:have|get|take|borrow)"
       + "|i (?:need|would like|could use)"
-      + "|(?:give|hand|pass|share|spare|lend) (?:me|us))\\b");
+      + "|(?:give|hand|pass|share|spare|lend) (?:me|us)) ");
 
   private ChatGiftPolicy() { }
 
@@ -32,10 +32,13 @@ final class ChatGiftPolicy {
   static boolean requested(String itemId, String speakerLine) {
     if (protectedId(itemId) || speakerLine == null) return false;
     String words = normalize(speakerLine);
-    if (!REQUEST.matcher(words).find()) return false;
+    var request = REQUEST.matcher(words);
+    if (!request.find()) return false;
     String name = normalize(itemId.substring(itemId.indexOf(':') + 1));
-    return (" " + words + " ").contains(" " + name + " ")
-        || (" " + words + " ").contains(" " + name + "s ");
+    // Match the object itself, not a mention inside an explanation, condition or negation.
+    String object = words.substring(request.end());
+    return object.matches("(?:(?:some|a|an|one|two|three|four|five|six|seven|eight|nine|ten|[1-9][0-9]*|your|the) )?"
+        + Pattern.quote(name) + "s?(?: from your (?:pockets|pack|inventory))?(?: (?:for|with) (?:me|us))?(?: please)?");
   }
 
   /** Precious stacks and enchanted equipment are never gifts, even if a model names them. */

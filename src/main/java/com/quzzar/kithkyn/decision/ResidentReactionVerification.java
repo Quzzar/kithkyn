@@ -417,6 +417,12 @@ public final class ResidentReactionVerification {
           if (scenario == 0 && question == 4) { question++; ask("That was a useless answer. You're an idiot."); return; }
           if (scenario == 0 && question == 5) { question++; ask("I'm sorry for insulting you. You didn't deserve that."); return; }
           if (scenario == 0 && question == 6) { question++; ask("Could you give me one diamond from your pockets?"); return; }
+          if (scenario == 0 && question == 7) {
+            current.addProperty("bread_before_description", observer.personMainInv.countItem(net.minecraft.world.item.Items.BREAD));
+            question++; ask("Could you give me a description of the bread you carry?"); return;
+          }
+          if (scenario == 0) check(current.get("bread_before_description").getAsInt()
+              == observer.personMainInv.countItem(net.minecraft.world.item.Items.BREAD), "Description request transferred bread");
           check(observer.personMainInv.countItem(net.minecraft.world.item.Items.DIAMOND) == 3, "Conversation moved protected diamond stock");
           current.addProperty("diamonds_remaining", observer.personMainInv.countItem(net.minecraft.world.item.Items.DIAMOND));
           current.addProperty("speaker_diamonds_after", speaker.getInventory().countItem(net.minecraft.world.item.Items.DIAMOND));

@@ -65,7 +65,7 @@ public final class PersonChatContext {
       + "Recorded memories and outcomes support claims about what you did; merely seeing an event does not. "
       + "The examples below teach the reply format. Their names, objects and events are not your own memories. "
       + "Small talk is about what IS there: your work, what the village is building and still short of, the time of day, and the people you know. "
-      + "You may hand an item to the person you are talking to with \"give\" (the item id), and \"give_count\" for how many (a whole number, default 1), but ONLY an item the briefing says you are holding or have in your pockets, you own nothing else, and ONLY when they have just asked you for something. Never offer an item unprompted, and never give away anything precious. Most replies have no \"give\" at all. "
+      + "You may hand over ONLY a permitted requested item listed for this turn, using \"give\" (the item id) and \"give_count\" (a whole number, default 1). Possessing an item alone does not permit a gift. A request for information about an item is not a request to receive it. Never offer items unprompted or give anything precious. Say you are handing something over only when you include its authorized \"give\" field; otherwise decline the gift. Most replies have no \"give\" at all. "
       + "Before writing your reply, judge only the CURRENT SPEAKER'S words, not your own reply. "
       + "Change your opinion ONLY for how the current speaker actually treats you. Use \"opinion\": "
       + "{\"kind\":\"insult\" or \"threat\" or \"kindness\" or \"apology\", \"quote\":\"<the current speaker's entire line copied exactly>\", \"delta\":<whole number>}. "
@@ -336,10 +336,10 @@ public final class PersonChatContext {
           .append(UrbanPlanner.buildableCatalogue(village)).append('\n');
     }
     List<String> giftItemIds = carriedItemIds(person).stream().filter(id -> ChatGiftPolicy.requested(id, playerLine)).toList();
-    system.append(giftItemIds.isEmpty()
-        ? "No item transfer is authorized for this line. Do not say you are handing over or promising items. "
-        : "If you choose to fulfill this explicit request, the permitted item IDs are " + giftItemIds + ". Use give and give_count to actually hand it over. ");
     system.append(proposesChange ? RULES_REQUEST : RULES);
+    system.append(giftItemIds.isEmpty()
+        ? " Current turn: no permitted gift. If asked for an item, decline. Do not say you will hand over or promise items. "
+        : " Current turn permitted requested item IDs: " + giftItemIds + ". If you choose to hand one over, include give and give_count; otherwise decline. ");
 
     StringBuilder user = new StringBuilder();
     List<Turn> transcript = withoutRepeats(history);

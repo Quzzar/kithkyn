@@ -12,6 +12,11 @@ class ChatGiftPolicyTest {
     assertFalse(ChatGiftPolicy.requested("minecraft:bread", "What did you notice nearby?"));
     assertFalse(ChatGiftPolicy.requested("minecraft:bread", "Could you give me dirt?"));
     assertFalse(ChatGiftPolicy.requested("minecraft:bread", "Tell me about breadfruit."));
+    assertFalse(ChatGiftPolicy.requested("minecraft:bread", "Can I have your opinion on bread?"));
+    assertFalse(ChatGiftPolicy.requested("minecraft:bread", "Could you give me a description of bread?"));
+    assertFalse(ChatGiftPolicy.requested("minecraft:bread", "Could you give me dirt, not bread?"));
+    assertFalse(ChatGiftPolicy.requested("minecraft:bread", "Could you give me bread if I ask later?"));
+    assertFalse(ChatGiftPolicy.requested("minecraft:bread", "I need no bread."));
   }
   @Test void preciousGiftsCannotBeAuthorizedEvenWhenRequested() {
     assertFalse(ChatGiftPolicy.requested("minecraft:diamond", "Could you give me one diamond?"));
